@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "23.0.2"
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+    defaultConfig {
+        applicationId "com.arjanvlek.oxygenupdater"
+        minSdkVersion 19
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            buildConfigField "Boolean", "USE_TEST_SERVER", "false"
+            minifyEnabled true
+            shrinkResources false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+	debug {
+            buildConfigField "Boolean", "USE_TEST_SERVER", "true"
+            debuggable true
+        }
+    }
+    dexOptions {
+        incremental true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    
+    //General Android libraries
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    
+    //JSON libraries
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.0'
+    
+    //Date and time libraries
+    compile 'joda-time:joda-time:2.9.4'
+    compile 'org.joda:joda-convert:1.8.1'
+
+    //Google Play Services libraries
+    compile 'com.google.android.gms:play-services-ads:9.2.1'
+    compile 'com.google.android.gms:play-services-gcm:9.2.1'
+}
