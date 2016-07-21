@@ -7,23 +7,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OxygenOTAUpdate {
 
-    private int size;
-    private String downloadUrl;
-    private String fileName;
+    private String versionNumber;
+    private String otaVersionNumber;
     private String description;
-    private String name;
+    private String downloadUrl;
+    private int downloadSize;
+    private String filename;
     private String MD5Sum;
     private String information;
     private boolean updateInformationAvailable;
     private boolean systemIsUpToDate;
 
-    public int getSize() {
-        return size;
+
+
+    public String getVersionNumber() {
+        return versionNumber;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    @JsonProperty("version_number")
+    public void setVersionNumber(String versionNumber) {
+        this.versionNumber = versionNumber;
     }
+
+
+    public String getOtaVersionNumber() {
+        return otaVersionNumber;
+    }
+
+    @JsonProperty("ota_version_number")
+    public void setOtaVersionNumber(String otaVersionNumber) {
+        this.otaVersionNumber = otaVersionNumber;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
     public String getDownloadUrl() {
         return downloadUrl;
@@ -34,30 +59,35 @@ public class OxygenOTAUpdate {
         this.downloadUrl = downloadUrl;
     }
 
-    public String getFileName() {
-        return fileName;
+
+    public int getDownloadSize() {
+        return downloadSize;
     }
 
-    @JsonProperty("filename")
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    @JsonProperty("download_size")
+    public void setDownloadSize(int downloadSize) {
+        this.downloadSize = downloadSize;
     }
 
-    public String getDescription() {
-        return description;
+
+    public String getFilename() {
+        return filename;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
-    public String getName() {
-        return name;
+
+    public String getMD5Sum() {
+        return MD5Sum;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @JsonProperty("md5sum")
+    public void setMD5Sum(String MD5Sum) {
+        this.MD5Sum = MD5Sum;
     }
+
 
     public String getInformation() {
         return information;
@@ -68,7 +98,7 @@ public class OxygenOTAUpdate {
     }
 
     public boolean isUpdateInformationAvailable() {
-        return updateInformationAvailable || (name != null);
+        return updateInformationAvailable || (versionNumber != null);
     }
 
     @JsonProperty("update_information_available")
@@ -94,12 +124,4 @@ public class OxygenOTAUpdate {
         this.systemIsUpToDate = systemIsUpToDate;
     }
 
-    public String getMD5Sum() {
-        return MD5Sum;
-    }
-
-    @JsonProperty("md5sum")
-    public void setMD5Sum(String MD5Sum) {
-        this.MD5Sum = MD5Sum;
-    }
-}
+ }

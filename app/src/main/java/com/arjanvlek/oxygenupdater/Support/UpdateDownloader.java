@@ -74,8 +74,8 @@ public class UpdateDownloader {
 
         DownloadManager.Request request = new DownloadManager.Request(downloadUri)
                 .setDescription(baseActivity.getString(R.string.download_description))
-                .setTitle(oxygenOTAUpdate.getName() != null && !oxygenOTAUpdate.getName().equals("null") && !oxygenOTAUpdate.getName().isEmpty() ? oxygenOTAUpdate.getName() : baseActivity.getString(R.string.download_unknown_update_name))
-                .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, oxygenOTAUpdate.getFileName())
+                .setTitle(oxygenOTAUpdate.getVersionNumber() != null && !oxygenOTAUpdate.getVersionNumber().equals("null") && !oxygenOTAUpdate.getVersionNumber().isEmpty() ? oxygenOTAUpdate.getVersionNumber() : baseActivity.getString(R.string.download_unknown_update_name))
+                .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, oxygenOTAUpdate.getFilename())
                 .setVisibleInDownloadsUi(false)
                 .setNotificationVisibility(VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
@@ -285,7 +285,7 @@ public class UpdateDownloader {
 
         @Override
         protected Boolean doInBackground(OxygenOTAUpdate... params) {
-            String filename = params[0].getFileName();
+            String filename = params[0].getFilename();
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + filename);
             return params[0] == null || params[0].getMD5Sum() == null || MD5.checkMD5(params[0].getMD5Sum(), file);
         }

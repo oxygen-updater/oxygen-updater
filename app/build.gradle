@@ -15,7 +15,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
     buildTypes {
         release {
@@ -26,7 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 	debug {
-            buildConfigField "Boolean", "USE_TEST_SERVER", "true"
+            buildConfigField "Boolean", "USE_TEST_SERVER", "false"
             debuggable true
         }
     }
@@ -48,8 +48,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     
     //General Android libraries
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.1.0'
+    compile 'com.android.support:support-v4:24.1.0'
     
     //JSON libraries
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.0'
@@ -61,5 +61,8 @@ dependencies {
 
     //Google Play Services libraries
     compile 'com.google.android.gms:play-services-ads:9.2.1'
-    compile 'com.google.android.gms:play-services-gcm:9.2.1'
+    compile 'com.google.firebase:firebase-messaging:9.2.1'
+
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -6,13 +6,13 @@ public class Device {
 
     public Device() {}
 
-    public Device(long id, String deviceName) {
+    public Device(long id, String name) {
         this.id = id;
-        this.deviceName = deviceName;
+        this.name = name;
     }
     private long id;
-    private String deviceName;
-    private String modelNumber;
+    private String name;
+    private String productName;
 
     public long getId() {
         return id;
@@ -22,23 +22,21 @@ public class Device {
         this.id = id;
     }
 
-    @JsonProperty("device_name")
-    public String getDeviceName() {
-        return deviceName;
+    public String getName() {
+        return name;
     }
 
-    @JsonProperty("device_name")
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @JsonProperty("model_number")
-    public String getModelNumber() {
-        return modelNumber;
+    @JsonProperty("product_name")
+    public String getProductName() {
+        return productName;
     }
 
-    @JsonProperty("model_number")
-    public void setModelNumber(String modelNumber) {
-        this.modelNumber = modelNumber;
+    @JsonProperty("product_name")
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

@@ -112,41 +112,14 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <!-- Push notifications services and receiver, Package updated receiver -->
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.arjanvlek.oxygenupdater" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".GcmPackageReplacedReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-            </intent-filter>
-        </receiver>
 
         <service
-            android:name=".GcmNotificationListenerService"
-            android:exported="false" >
+            android:name=".notifications.NotificationService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-        <service
-            android:name=".GcmInstanceIDListenerService"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".GcmRegistrationIntentService"
-            android:exported="false" >
-        </service>
+
 
         <activity
             android:name=".views.FAQActivity"

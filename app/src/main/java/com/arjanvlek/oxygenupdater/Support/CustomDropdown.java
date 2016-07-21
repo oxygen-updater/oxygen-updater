@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
@@ -28,7 +27,7 @@ public class CustomDropdown {
         }
 
         TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-        textView.setText(devices.get(position).getDeviceName());
+        textView.setText(devices.get(position).getName());
 
         if(recommendedPosition != -1) {
             if(position == recommendedPosition) {
@@ -53,10 +52,10 @@ public class CustomDropdown {
         Locale locale = Locale.getDefault();
         switch(locale.getDisplayLanguage()) {
             case LOCALE_DUTCH:
-                textView.setText(updateMethods.get(position).getUpdateMethodNl());
+                textView.setText(updateMethods.get(position).getDutchName());
                 break;
             default:
-                textView.setText(updateMethods.get(position).getUpdateMethod());
+                textView.setText(updateMethods.get(position).getEnglishName());
         }
 
         textView.setTextColor(Color.BLACK);

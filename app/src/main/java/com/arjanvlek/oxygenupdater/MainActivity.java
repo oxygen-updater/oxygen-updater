@@ -34,9 +34,6 @@ import com.arjanvlek.oxygenupdater.views.DeviceInformationFragment;
 import com.arjanvlek.oxygenupdater.views.TutorialActivity;
 import com.arjanvlek.oxygenupdater.views.UpdateInformationFragment;
 import com.arjanvlek.oxygenupdater.views.UpdateInstallationGuideActivity;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.*;
 
 
@@ -47,17 +44,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     private SettingsManager settingsManager;
     private NetworkConnectionManager networkConnectionManager;
 
-    // Used for Google Play Services check
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     // Permissions constants
     public final static String DOWNLOAD_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
     public final static int PERMISSION_REQUEST_CODE = 200;
-
-    private String device = "";
-    private long deviceId = 0L;
-    private String updateMethod = "";
-    private long updateMethodId = 0L;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,12 +61,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             SupportedDeviceManager supportedDeviceManager = new SupportedDeviceManager(this, ((ApplicationContext)getApplication()));
             supportedDeviceManager.execute();
         }
-
-        //Fetch currently selected device and update method
-        device = settingsManager.getPreference(PROPERTY_DEVICE);
-        deviceId = settingsManager.getLongPreference(PROPERTY_DEVICE_ID);
-        updateMethod = settingsManager.getPreference(PROPERTY_UPDATE_METHOD);
-        updateMethodId = settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -119,33 +103,21 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     @Override
     public void onStart() {
         super.onStart();
-        // Check if Google Play services are installed on the device
-        if (checkPlayServices()) {
-            // Check if a device and update method have been set
-            if (settingsManager.checkIfDeviceIsSet()) {
-                //Check if app needs to register for push notifications (like after device type change etc.)
-                if(device != null && updateMethod != null) {
-                    if (!settingsManager.checkIfRegistrationIsValid(deviceId, updateMethodId) || settingsManager.checkIfRegistrationHasFailed() && networkConnectionManager.checkNetworkConnection()) {
-                        registerInBackground();
-                    }
-                }
-            }
 
-            // Mark the welcome tutorial as finished if the user is moving from older app version. This is checked by either having stored update information for offline viewing, or if the last update checked date is set (if user always had up to date system and never viewed update information before).
-            if(!settingsManager.getBooleanPreference(PROPERTY_SETUP_DONE) && (settingsManager.checkIfCacheIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
-                settingsManager.saveBooleanPreference(PROPERTY_SETUP_DONE, true);
-            }
-
-            // Show the welcome tutorial if the app needs to be set up.
-            if(!settingsManager.getBooleanPreference(PROPERTY_SETUP_DONE)) {
-                if(networkConnectionManager.checkNetworkConnection()) {
-                    Tutorial();
-                } else {
-                    showNetworkError();
-                }
-            }
-
+        // Mark the welcome tutorial as finished if the user is moving from older app version. This is checked by either having stored update information for offline viewing, or if the last update checked date is set (if user always had up to date system and never viewed update information before).
+        if(!settingsManager.getBooleanPreference(PROPERTY_SETUP_DONE) && (settingsManager.checkIfCacheIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
+            settingsManager.saveBooleanPreference(PROPERTY_SETUP_DONE, true);
         }
+
+        // Show the welcome tutorial if the app needs to be set up.
+        if(!settingsManager.getBooleanPreference(PROPERTY_SETUP_DONE)) {
+            if(networkConnectionManager.checkNetworkConnection()) {
+                Tutorial();
+            } else {
+                showNetworkError();
+            }
+        }
+
     }
 
     @Override
@@ -153,15 +125,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         // Inflate the menu; this adds items to the action bar.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    private void showNetworkError() {
-        MessageDialog errorDialog = new MessageDialog()
-                .setTitle(getString(R.string.error_app_requires_network_connection))
-                .setMessage(getString(R.string.error_app_requires_network_connection_message))
-                .setNegativeButtonText(getString(R.string.download_error_close))
-                .setClosable(false);
-        errorDialog.show(getSupportFragmentManager(), "NetworkError");
     }
 
     @Override
@@ -233,6 +196,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             });
             builder.show();
         }
+    }
+
+    private void showNetworkError() {
+        MessageDialog errorDialog = new MessageDialog()
+                .setTitle(getString(R.string.error_app_requires_network_connection))
+                .setMessage(getString(R.string.error_app_requires_network_connection_message))
+                .setNegativeButtonText(getString(R.string.download_error_close))
+                .setClosable(false);
+        errorDialog.show(getSupportFragmentManager(), "NetworkError");
     }
 
 
@@ -343,35 +315,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
 
-    /**
-     * Checks if the Google Play Services are installed on the device.
-     * @return Returns if the Google Play Services are installed.
-     */
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Registers the application with GCM servers asynchronously.
-     * Stores the registration ID and app versionCode in the application's
-     * shared preferences.
-     */
-    private void registerInBackground() {
-        Intent intent = new Intent(this,GcmRegistrationIntentService.class);
-        startService(intent);
-    }
-
-    // New Android 6.0 permissions methods
+    // Android 6.0 Run-time permissions methods
 
     public void requestDownloadPermissions() {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {

@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ServerMessage {
     private long id;
-    private String message;
-    private String messageNl;
+    private String englishMessage;
+    private String dutchMessage;
     private Long deviceId;
     private Long updateMethodId;
     private ServerMessagePriority priority;
-    private boolean marquee;
 
     public enum ServerMessagePriority {
         LOW, MEDIUM, HIGH
@@ -23,21 +22,22 @@ public class ServerMessage {
         this.id = id;
     }
 
-    public String getMessage() {
-        return message;
+    public String getEnglishMessage() {
+        return englishMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    @JsonProperty("english_message")
+    public void setEnglishMessage(String englishMessage) {
+        this.englishMessage = englishMessage;
     }
 
-    public String getMessageNl() {
-        return messageNl;
+    public String getDutchMessage() {
+        return dutchMessage;
     }
 
-    @JsonProperty("message_nl")
-    public void setMessageNl(String messageNl) {
-        this.messageNl = messageNl;
+    @JsonProperty("dutch_message")
+    public void setDutchMessage(String dutchMessage) {
+        this.dutchMessage = dutchMessage;
     }
 
     public long getDeviceId() {
@@ -66,21 +66,6 @@ public class ServerMessage {
         this.priority = priority;
     }
 
-    public boolean isMarquee() {
-        return marquee;
-    }
-
-    public void setMarquee(String marquee) {
-        this.marquee = marquee.equals("1");
-    }
-
-    public boolean isDeviceSpecific() {
-        return deviceId != null;
-    }
-
-    public boolean isUpdateMethodSpecific() {
-        return updateMethodId != null;
-    }
 }
 
 

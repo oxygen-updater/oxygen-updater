@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater;
 
+import android.app.Activity;
 import android.app.Application;
 import android.os.Build;
 import android.util.Log;
@@ -7,6 +8,8 @@ import android.util.Log;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Support.ServerConnector;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.joda.time.LocalDateTime;
 
@@ -22,9 +25,12 @@ public class ApplicationContext extends Application {
     public static final String NO_OXYGEN_OS = "no_oxygen_os_ver_found";
 
     public static final String APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME;
-    public static final String PACKAGE_REPLACED_KEY = "package_upgrade";
     public static final String LOCALE_DUTCH = "Nederlands";
     private static SystemVersionProperties SYSTEM_VERSION_PROPERTIES_INSTANCE;
+
+
+    // Used for Google Play Services check
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     /**
      * Prevents the /devices request to be performed more than once by storing it in the Application class.
@@ -110,5 +116,24 @@ public class ApplicationContext extends Application {
         } else {
             return SYSTEM_VERSION_PROPERTIES_INSTANCE;
         }
+    }
+
+    /**
+     * Checks if the Google Play Services are installed on the device.
+     * @return Returns if the Google Play Services are installed.
+     */
+    public boolean checkPlayServices(Activity activity) {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (googleApiAvailability.isUserResolvableError(resultCode)) {
+                googleApiAvailability.getErrorDialog(activity, resultCode,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                System.exit(0);
+            }
+            return false;
+        }
+        return true;
     }
 }

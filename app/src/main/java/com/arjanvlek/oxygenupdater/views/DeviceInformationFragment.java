@@ -58,8 +58,8 @@ public class DeviceInformationFragment extends AbstractFragment {
 
             if (devices != null) {
                 for (Device device : devices) {
-                    if (device.getModelNumber() != null && device.getModelNumber().equals(systemVersionProperties.getOxygenDeviceName())) {
-                        deviceName = device.getDeviceName();
+                    if (device.getProductName() != null && device.getProductName().equals(systemVersionProperties.getOxygenDeviceName())) {
+                        deviceName = device.getName();
                     }
                 }
             }
@@ -172,6 +172,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
     private void showAds() {
 
+        //TODO replace with Firebase ads
         // Gets the ad view defined in layout/ad_fragment.xml with ad unit ID set in
         // values/strings.xml.
         adView = (AdView) rootView.findViewById(R.id.device_information_banner_field);

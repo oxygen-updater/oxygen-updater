@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UpdateMethod {
 
     private long id;
-    private String updateMethod;
-    private String updateMethodNl;
+    private String englishName;
+    private String dutchName;
     private boolean recommended;
 
     public long getId() {
@@ -17,24 +17,24 @@ public class UpdateMethod {
         this.id = id;
     }
 
-    @JsonProperty("update_method")
-    public String getUpdateMethod() {
-        return updateMethod;
+    @JsonProperty("english_name")
+    public String getEnglishName() {
+        return englishName;
     }
 
-    @JsonProperty("update_method")
-    public void setUpdateMethod(String updateMethod) {
-        this.updateMethod = updateMethod;
+    @JsonProperty("english_name")
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
     }
 
-    @JsonProperty("update_method_nl")
-    public String getUpdateMethodNl() {
-        return updateMethodNl;
+    @JsonProperty("dutch_name")
+    public String getDutchName() {
+        return dutchName;
     }
 
-    @JsonProperty("update_method_nl")
-    public void setUpdateMethodNl(String updateMethodNl) {
-        this.updateMethodNl = updateMethodNl;
+    @JsonProperty("dutch_name")
+    public void setDutchName(String dutchName) {
+        this.dutchName = dutchName;
     }
 
     public boolean isRecommended() {

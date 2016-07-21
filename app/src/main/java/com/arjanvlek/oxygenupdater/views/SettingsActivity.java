@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.notifications.TopicSubscriptionData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
@@ -25,12 +27,14 @@ import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_WARNING_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 public class SettingsActivity extends AbstractActivity {
     private ProgressBar progressBar;
@@ -87,7 +91,7 @@ public class SettingsActivity extends AbstractActivity {
                     settingsManager.saveBooleanPreference(PROPERTY_RECEIVE_WARNING_NOTIFICATIONS, isChecked);
                 }
             });
-            importantPushNotificationsSwitch.setChecked(settingsManager.receiveWarningNotifications());
+            importantPushNotificationsSwitch.setChecked(settingsManager.receiveGenericNotifications());
         }
 
         SwitchCompat newVersionPushNotificationsSwitch = (SwitchCompat) findViewById(R.id.settingsNewVersionPushNotificationsSwitch);
@@ -148,10 +152,10 @@ public class SettingsActivity extends AbstractActivity {
             SystemVersionProperties systemVersionProperties = ((ApplicationContext)getApplication()).getSystemVersionProperties();
             if (currentDeviceName != null) {
                 for (int i = 0; i < devices.size(); i++) {
-                    if (devices.get(i).getDeviceName().equals(currentDeviceName)) {
+                    if (devices.get(i).getName().equals(currentDeviceName)) {
                         position = i;
                     }
-                    if (devices.get(i).getModelNumber() != null && devices.get(i).getModelNumber().equals(systemVersionProperties.getOxygenDeviceName())) {
+                    if (devices.get(i).getProductName() != null && devices.get(i).getProductName().equals(systemVersionProperties.getOxygenDeviceName())) {
                         tempRecommendedPosition = i;
                     }
                 }
@@ -183,7 +187,7 @@ public class SettingsActivity extends AbstractActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         Device device = (Device) adapterView.getItemAtPosition(i);
-                        settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getDeviceName());
+                        settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getName());
                         settingsManager.saveLongPreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
 
                         try {
@@ -249,7 +253,7 @@ public class SettingsActivity extends AbstractActivity {
             final List<Integer> recommendedPositions = new ArrayList<>();
 
             for (int i = 0; i < updateMethods.size(); i++) {
-                if (currentUpdateMethod != null && updateMethods.get(i).getUpdateMethod().equals(currentUpdateMethod) || updateMethods.get(i).getUpdateMethodNl().equalsIgnoreCase(currentUpdateMethod)) {
+                if (currentUpdateMethod != null && updateMethods.get(i).getEnglishName().equals(currentUpdateMethod) || updateMethods.get(i).getDutchName().equalsIgnoreCase(currentUpdateMethod)) {
                     position = i;
                 }
                 if(updateMethods.get(i).isRecommended()) {
@@ -288,7 +292,14 @@ public class SettingsActivity extends AbstractActivity {
                         }
 
                         settingsManager.saveLongPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
-                        settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getUpdateMethod());
+                        settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
+
+                        if(getAppApplicationContext().checkPlayServices(getParent())) {
+                            // Subscribe to notifications for the newly selected device and update method
+                            TopicSubscriptionData data = new TopicSubscriptionData(getAppApplicationContext(), settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
+                            new NotificationTopicSubscriber().execute(data);
+                        }
+
                         try {
                             if (progressBar != null) {
                                 progressBar.setVisibility(View.GONE);

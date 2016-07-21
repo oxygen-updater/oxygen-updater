@@ -66,7 +66,7 @@ public class TutorialStep3Fragment extends AbstractFragment {
         SystemVersionProperties systemVersionProperties = ((ApplicationContext)getActivity().getApplication()).getSystemVersionProperties();
 
         for(int i=0; i<devices.size(); i++) {
-            if(devices.get(i).getModelNumber() != null && devices.get(i).getModelNumber().equals(systemVersionProperties.getOxygenDeviceName())) {
+            if(devices.get(i).getProductName() != null && devices.get(i).getProductName().equals(systemVersionProperties.getOxygenDeviceName())) {
                 selectedIndex = i;
             }
         }
@@ -104,7 +104,7 @@ public class TutorialStep3Fragment extends AbstractFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Device device = (Device)adapterView.getItemAtPosition(i);
-                settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getDeviceName());
+                settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getName());
                 settingsManager.saveLongPreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
             }
 

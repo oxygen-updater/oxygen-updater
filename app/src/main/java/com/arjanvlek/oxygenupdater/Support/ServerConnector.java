@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_USER_AGENT;
+import static com.arjanvlek.oxygenupdater.Support.ServerRequest.ALL_UPDATE_METHODS;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.MOST_RECENT_UPDATE_DATA;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.DEVICES;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.SERVER_MESSAGES;
@@ -24,8 +25,9 @@ import static com.arjanvlek.oxygenupdater.Support.ServerRequest.UPDATE_METHODS;
 
 public class ServerConnector {
 
-    public final static String SERVER_URL = "https://oxygenupdater.com/api/v3.1/";
-    public final static String TEST_SERVER_URL = "https://oxygenupdater.com/test/api/v3.1/";
+    public final static String SERVER_URL = "https://oxygenupdater.com/api/v1/";
+    public final static String TEST_SERVER_URL = "https://oxygenupdater.com/test/api/v1/";
+    public final static String USER_AGENT_TAG = "User-Agent";
 
     private ObjectMapper objectMapper;
 
@@ -43,6 +45,10 @@ public class ServerConnector {
 
     public OxygenOTAUpdate getMostRecentOxygenOTAUpdate(Long deviceId, Long updateMethodId) {
         return findOneFromServerResponse(fetchDataFromServer(MOST_RECENT_UPDATE_DATA, deviceId.toString(), updateMethodId.toString()), OxygenOTAUpdate.class);
+    }
+
+    public List<UpdateMethod> getAllUpdateMethods() {
+        return findMultipleFromServerResponse(fetchDataFromServer(ALL_UPDATE_METHODS), UpdateMethod.class);
     }
 
     public List<UpdateMethod> getUpdateMethods(Long deviceId) {
@@ -81,7 +87,7 @@ public class ServerConnector {
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
             //setup request
-            urlConnection.setRequestProperty("User-Agent", APP_USER_AGENT);
+            urlConnection.setRequestProperty(USER_AGENT_TAG, APP_USER_AGENT);
             urlConnection.setConnectTimeout(60000);
             urlConnection.setReadTimeout(60000);
 

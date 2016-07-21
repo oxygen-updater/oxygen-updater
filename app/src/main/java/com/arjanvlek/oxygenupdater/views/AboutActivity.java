@@ -16,8 +16,8 @@ import com.arjanvlek.oxygenupdater.R;
 
 public class AboutActivity extends AppCompatActivity {
 
-    private static final String GOOGLE_PLAY_BASE_URL = "market://details?id=";
-    private static final String GOOGLE_PLAY_BROWSER__BASE_URL = "https://play.google.com/store/apps/details?id=";
+    private static final String GOOGLE_PLAY_BASE_URL = "market://details?id=com.arjanvlek.oxygenupdater";
+    private static final String GOOGLE_PLAY_BROWSER__BASE_URL = "https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater";
 
     @Override
     public void onCreate(Bundle savedInstanceSate) {

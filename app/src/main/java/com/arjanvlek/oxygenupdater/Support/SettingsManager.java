@@ -8,8 +8,6 @@ import android.preference.PreferenceManager;
 
 import com.arjanvlek.oxygenupdater.MainActivity;
 
-import static com.arjanvlek.oxygenupdater.GcmRegistrationIntentService.*;
-
 public class SettingsManager {
 
     //Offline cache properties
@@ -21,12 +19,10 @@ public class SettingsManager {
 
     //Settings properties
     public static final String PROPERTY_APP_VERSION = "appVersion";
-    public static final String PROPERTY_DEVICE = "device_type"; // Cannot be changed due to older versions of app
+    public static final String PROPERTY_DEVICE = "device";
     public static final String PROPERTY_DEVICE_ID = "device_id";
-    public static final String PROPERTY_UPDATE_METHOD = "update_type"; // Cannot be changed due to older versions of app
+    public static final String PROPERTY_UPDATE_METHOD = "update_method";
     public static final String PROPERTY_UPDATE_METHOD_ID = "update_method_id";
-    public static final String PROPERTY_REGISTRATION_ERROR = "registration_error";
-    public static final String PROPERTY_UPDATE_DATA_LINK = "update_link"; // Cannot be changed due to older versions of app
     public static final String PROPERTY_UPDATE_CHECKED_DATE = "update_checked_date";
     public static final String PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS = "receive_system_update_notifications";
     public static final String PROPERTY_RECEIVE_WARNING_NOTIFICATIONS = "recive_warning_notifications";
@@ -55,7 +51,7 @@ public class SettingsManager {
         return prefs.getBoolean(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true);
     }
 
-    public boolean receiveWarningNotifications() {
+    public boolean receiveGenericNotifications() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(PROPERTY_RECEIVE_WARNING_NOTIFICATIONS, true);
     }
@@ -217,57 +213,6 @@ public class SettingsManager {
      */
     public boolean checkIfDeviceIsSet() {
         return containsPreference(PROPERTY_DEVICE) && containsPreference(PROPERTY_UPDATE_METHOD);
-    }
-
-
-    /**
-     * Checks if the registration token for push notifications is still valid.
-     * @return returns if the registration token is valid.
-     */
-    public boolean checkIfRegistrationIsValid(long deviceId, long updateMethodId) {
-        final SharedPreferences prefs = getGCMPreferences();
-        String registrationToken = prefs.getString(PROPERTY_GCM_REGISTRATION_TOKEN, "");
-        long registeredDeviceId;
-        long registeredUpdateMethodId;
-
-        // Older app versions stored these in strings. If this is still the case when checking, an exception is thrown.
-        // In that case, re-register again to obtain a long value.
-        try {
-            registeredDeviceId = prefs.getLong(PROPERTY_GCM_DEVICE_ID, Long.MIN_VALUE);
-            registeredUpdateMethodId = prefs.getLong(PROPERTY_GCM_UPDATE_METHOD_ID, Long.MIN_VALUE);
-        }
-        catch(ClassCastException e) {
-            return false;
-        }
-
-        // The registration token is empty, so not valid.
-        if (registrationToken.isEmpty()) {
-            return false;
-        }
-
-        // The registration token does not match the registered device type.
-        if (deviceId != registeredDeviceId) {
-            return false;
-        }
-
-        // The registration token does not match the registered update method.
-        if (updateMethodId != registeredUpdateMethodId) {
-            return false;
-        }
-        // Check if app was updated; if so, it must clear the registration ID
-        // since the existing registration ID is not guaranteed to work with
-        // the new app version.
-        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = getAppVersion();
-        return registeredVersion == currentVersion;
-    }
-
-    /**
-     * Checks if the registration for push notifications has failed before.
-     */
-    public boolean checkIfRegistrationHasFailed() {
-        SharedPreferences preferences = getGCMPreferences();
-        return preferences.getBoolean(PROPERTY_REGISTRATION_ERROR, false);
     }
 
 

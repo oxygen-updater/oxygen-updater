@@ -26,6 +26,6 @@ public class ServerStatus {
     }
 
     public enum Status {
-        OK, WARNING, ERROR, TAKEN_DOWN, MAINTENANCE, UNREACHABLE
+        NORMAL, WARNING, ERROR, MAINTENANCE, OUTDATED, UNREACHABLE
     }
 }

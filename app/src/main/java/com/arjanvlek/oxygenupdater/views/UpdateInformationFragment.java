@@ -69,7 +69,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.BELOW;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
-import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.OK;
+import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.NORMAL;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.*;
 import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.NOT_SET;
 
@@ -302,7 +302,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         List<Object> serverErrorBars = new ArrayList<>(1);
         List<Object> appUpdateBars = new ArrayList<>(1);
 
-        if(serverStatus != null && isAdded() && serverStatus.getStatus() != OK) {
+        if(serverStatus != null && isAdded() && serverStatus.getStatus() != NORMAL) {
             serverErrorBars.add(serverStatus);
         }
 
@@ -394,7 +394,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 case MAINTENANCE:
                     showMaintenanceError();
                     break;
-                case TAKEN_DOWN:
+                case OUTDATED:
                     showAppNotValidError();
                     break;
                 case UNREACHABLE:
@@ -443,9 +443,9 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             String appLocale = Locale.getDefault().getDisplayLanguage();
 
             if (appLocale.equals(LOCALE_DUTCH)) {
-                serverMessageTextView.setText(message.getMessageNl());
+                serverMessageTextView.setText(message.getDutchMessage());
             } else {
-                serverMessageTextView.setText(message.getMessage());
+                serverMessageTextView.setText(message.getEnglishMessage());
             }
 
             // Set the background color of the view according to the priority data from the backend.
@@ -461,17 +461,14 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                     break;
             }
 
-            // Set the message as moving text if it is marked as being marquee from the backend.
-            if (message.isMarquee()) {
-                serverMessageTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                serverMessageTextView.setHorizontallyScrolling(true);
-                serverMessageTextView.setSingleLine(true);
-                serverMessageTextView.setMarqueeRepeatLimit(-1); // -1 is forever
-                serverMessageTextView.setFocusable(true);
-                serverMessageTextView.setFocusableInTouchMode(true);
-                serverMessageTextView.requestFocus();
-                serverMessageTextView.setSelected(true);
-            }
+            serverMessageTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            serverMessageTextView.setHorizontallyScrolling(true);
+            serverMessageTextView.setSingleLine(true);
+            serverMessageTextView.setMarqueeRepeatLimit(-1); // -1 is forever
+            serverMessageTextView.setFocusable(true);
+            serverMessageTextView.setFocusableInTouchMode(true);
+            serverMessageTextView.requestFocus();
+            serverMessageTextView.setSelected(true);
 
             numberOfBars = addMessageBar(serverMessageView, numberOfBars);
         }
@@ -519,10 +516,10 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
 
         if(online) {
             // Save update data for offline viewing
-            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, oxygenOTAUpdate.getName());
-            settingsManager.saveIntPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, oxygenOTAUpdate.getSize());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, oxygenOTAUpdate.getVersionNumber());
+            settingsManager.saveIntPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, oxygenOTAUpdate.getDownloadSize());
             settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, oxygenOTAUpdate.getDescription());
-            settingsManager.savePreference(PROPERTY_OFFLINE_FILE_NAME, oxygenOTAUpdate.getFileName());
+            settingsManager.savePreference(PROPERTY_OFFLINE_FILE_NAME, oxygenOTAUpdate.getFilename());
             settingsManager.saveBooleanPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, oxygenOTAUpdate.isUpdateInformationAvailable());
             settingsManager.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString());
         }
@@ -581,15 +578,15 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
 
         // Display available update version number.
         TextView buildNumberView = (TextView) rootView.findViewById(R.id.updateInformationBuildNumberView);
-        if (oxygenOTAUpdate.getName() != null && !oxygenOTAUpdate.getName().equals("null")) {
-            buildNumberView.setText(oxygenOTAUpdate.getName());
+        if (oxygenOTAUpdate.getVersionNumber() != null && !oxygenOTAUpdate.getVersionNumber().equals("null")) {
+            buildNumberView.setText(oxygenOTAUpdate.getVersionNumber());
         } else {
             buildNumberView.setText(String.format(getString(R.string.unknown_update_name), deviceName));
         }
 
         // Display download size.
         TextView downloadSizeView = (TextView) rootView.findViewById(R.id.updateInformationDownloadSizeView);
-        downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), oxygenOTAUpdate.getSize()));
+        downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), oxygenOTAUpdate.getDownloadSize()));
 
         // Display update description.
         String description = oxygenOTAUpdate.getDescription();
@@ -598,7 +595,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
 
         // Display update file name.
         TextView fileNameView = (TextView) rootView.findViewById(R.id.updateFileNameView);
-        fileNameView.setText(String.format(getString(R.string.update_information_file_name), oxygenOTAUpdate.getFileName()));
+        fileNameView.setText(String.format(getString(R.string.update_information_file_name), oxygenOTAUpdate.getFilename()));
 
         final Button downloadButton = (Button) rootView.findViewById(R.id.updateInformationDownloadButton);
 
@@ -650,11 +647,11 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     @Override
     protected OxygenOTAUpdate buildOfflineOxygenOTAUpdate() {
         OxygenOTAUpdate oxygenOTAUpdate = new OxygenOTAUpdate();
-        oxygenOTAUpdate.setName(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
-        oxygenOTAUpdate.setSize(settingsManager.getIntPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
+        oxygenOTAUpdate.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
+        oxygenOTAUpdate.setDownloadSize(settingsManager.getIntPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
         oxygenOTAUpdate.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
         oxygenOTAUpdate.setUpdateInformationAvailable(settingsManager.getBooleanPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
-        oxygenOTAUpdate.setFileName(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
+        oxygenOTAUpdate.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
         return oxygenOTAUpdate;
     }
 
@@ -670,7 +667,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             SystemVersionProperties systemVersionProperties = ((ApplicationContext)getActivity().getApplication()).getSystemVersionProperties();
 
             String oxygenOSVersion = systemVersionProperties.getOxygenOSVersion();
-            String newOxygenOSVersion = oxygenOTAUpdate.getName();
+            String newOxygenOSVersion = oxygenOTAUpdate.getVersionNumber();
 
             if(newOxygenOSVersion == null || newOxygenOSVersion.isEmpty()) {
                 return false;
@@ -952,7 +949,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         public void onVerifyError() {
                             if(isAdded()) {
                                 showDownloadError(getString(R.string.download_error), getString(R.string.download_error_corrupt), getString(R.string.download_error_close), getString(R.string.download_error_retry), true);
-                                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFileName());
+                                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
                                 try {
                                     //noinspection ResultOfMethodCallIgnored
                                     file.delete();
@@ -1046,7 +1043,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.lightBlue));
 
                 if(fileMayBeDeleted) {
-                    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFileName());
+                    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
                     //noinspection ResultOfMethodCallIgnored
                     file.delete();
                 }
@@ -1095,7 +1092,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                     @Override
                     public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
                         if(oxygenOTAUpdate != null) {
-                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFileName());
+                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
                             if(file.exists()) {
                                 if(file.delete()) {
                                     getDownloadButton().setText(getString(R.string.download));
@@ -1118,7 +1115,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     @Override
     public void checkIfUpdateIsAlreadyDownloaded(OxygenOTAUpdate oxygenOTAUpdate) {
         if(oxygenOTAUpdate != null) {
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFileName());
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
             onUpdateDownloaded(file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID), false);
         }
     }

@@ -10,6 +10,7 @@ public class SystemVersionProperties {
 
     private String oxygenDeviceName;
     private String oxygenOSVersion;
+    private String oxygenOSOTAVersion;
     private String securityPatchDate;
     private String modelNumber;
 
@@ -27,6 +28,14 @@ public class SystemVersionProperties {
 
     public void setOxygenOSVersion(String oxygenOSVersion) {
         this.oxygenOSVersion = oxygenOSVersion;
+    }
+
+    public String getOxygenOSOTAVersion() {
+        return oxygenOSOTAVersion;
+    }
+
+    public void setOxygenOSOTAVersion(String oxygenOSOTAVersion) {
+        this.oxygenOSOTAVersion = oxygenOSOTAVersion;
     }
 
     public String getSecurityPatchDate() {
@@ -54,7 +63,7 @@ public class SystemVersionProperties {
         }
 
         for(Device device : devices) {
-            if(device.getModelNumber() != null && device.getModelNumber().equals(getOxygenDeviceName()) && Build.TAGS.contains("release-keys")) {
+            if(device.getProductName() != null && device.getProductName().equals(getOxygenDeviceName()) && Build.TAGS.contains("release-keys")) {
                 supported = true;
                 break;
             }

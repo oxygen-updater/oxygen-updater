@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
+import com.arjanvlek.oxygenupdater.notifications.TopicSubscriptionData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
@@ -110,7 +112,14 @@ public class TutorialStep4Fragment extends AbstractFragment {
 
                     //Set update method in preferences.
                     settingsManager.saveLongPreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
-                    settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getUpdateMethod());
+                    settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
+
+                    if(getApplicationContext().checkPlayServices(getActivity())) {
+                        // Subscribe to notifications
+                        // Subscribe to notifications for the newly selected device and update method
+                        TopicSubscriptionData data = new TopicSubscriptionData(getApplicationContext(), settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
+                        new NotificationTopicSubscriber().execute(data);
+                    }
                 }
 
                 @Override

@@ -7,6 +7,12 @@ import java.net.URL;
 
 public enum ServerRequest {
 
+    ALL_UPDATE_METHODS {
+        @Override
+        URL getURL(String... params) throws MalformedURLException {
+            return new URL(getBaseUrl() + "allUpdateMethods");
+        }
+    },
     DEVICES {
         @Override
         URL getURL(String... params) throws MalformedURLException {
