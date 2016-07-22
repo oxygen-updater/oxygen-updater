@@ -67,7 +67,9 @@ public class ApplicationContext extends Application {
         if(SYSTEM_VERSION_PROPERTIES_INSTANCE == null) {
             SystemVersionProperties systemVersionProperties = new SystemVersionProperties();
             String oxygenOSVersion = NO_OXYGEN_OS;
-            String oxygenDeviceName = NO_OXYGEN_OS;
+            String oxygenOSOTAVersion = NO_OXYGEN_OS;
+            String oxygenDeviceName = Build.PRODUCT;
+            String oemFingerprint = NO_OXYGEN_OS;
             String securityPatchDate = NO_OXYGEN_OS;
             try {
                 Process getBuildPropProcess = new ProcessBuilder()
@@ -79,16 +81,22 @@ public class ApplicationContext extends Application {
                 String inputLine;
 
                 while ((inputLine = in.readLine()) != null) {
-                    if (inputLine.contains("ro.cm.display.version")) {
-                        oxygenOSVersion = inputLine.replace("[ro.cm.display.version]: ", "");
+                    if (inputLine.contains("ro.build.ota.versionname")) {
+                        oxygenOSVersion = inputLine.replace("[ro.build.ota.versionname]: ", "");
                         oxygenOSVersion = oxygenOSVersion.replace("[", "");
                         oxygenOSVersion = oxygenOSVersion.replace("]", "");
                     }
 
-                    if (inputLine.contains("ro.cm.device")) {
-                        oxygenDeviceName = inputLine.replace("[ro.cm.device]: ", "");
-                        oxygenDeviceName = oxygenDeviceName.replace("[", "");
-                        oxygenDeviceName = oxygenDeviceName.replace("]", "");
+                    if (inputLine.contains("ro.build.version.ota")) {
+                        oxygenOSOTAVersion = inputLine.replace("[ro.build.version.ota]: ", "");
+                        oxygenOSOTAVersion = oxygenOSOTAVersion.replace("[", "");
+                        oxygenOSOTAVersion = oxygenOSOTAVersion.replace("]", "");
+                    }
+
+                    if(inputLine.contains("ro.build.oemfingerprint")) {
+                        oemFingerprint = inputLine.replace("[ro.build.oemfingerprint]: ", "");
+                        oemFingerprint = oemFingerprint.replace("[", "");
+                        oemFingerprint = oemFingerprint.replace("]", "");
                     }
 
                     if(securityPatchDate.equals(NO_OXYGEN_OS)) {
@@ -110,6 +118,8 @@ public class ApplicationContext extends Application {
             }
             systemVersionProperties.setOxygenDeviceName(oxygenDeviceName);
             systemVersionProperties.setOxygenOSVersion(oxygenOSVersion);
+            systemVersionProperties.setOxygenOSOTAVersion(oxygenOSOTAVersion);
+            systemVersionProperties.setOemFingerprint(oemFingerprint);
             systemVersionProperties.setSecurityPatchDate(securityPatchDate);
             SYSTEM_VERSION_PROPERTIES_INSTANCE = systemVersionProperties;
             return SYSTEM_VERSION_PROPERTIES_INSTANCE;

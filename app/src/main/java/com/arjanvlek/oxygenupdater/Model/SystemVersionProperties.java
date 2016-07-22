@@ -12,7 +12,7 @@ public class SystemVersionProperties {
     private String oxygenOSVersion;
     private String oxygenOSOTAVersion;
     private String securityPatchDate;
-    private String modelNumber;
+    private String oemFingerprint;
 
     public String getOxygenDeviceName() {
         return oxygenDeviceName;
@@ -46,24 +46,24 @@ public class SystemVersionProperties {
         this.securityPatchDate = securityPatchDate;
     }
 
-    public String getModelNumber() {
-        return modelNumber;
+    public String getOemFingerprint() {
+        return oemFingerprint;
     }
 
-    public void setModelNumber(String modelNumber) {
-        this.modelNumber = modelNumber;
+    public void setOemFingerprint(String oemFingerprint) {
+        this.oemFingerprint = oemFingerprint;
     }
 
     public boolean isSupportedDevice(List<Device> devices) {
         boolean supported = false;
 
         if(devices == null || devices.isEmpty()) {
-            return Build.TAGS.contains("release-keys") && getOxygenOSVersion() != null && !getOxygenOSVersion().equals(NO_OXYGEN_OS);
+            return getOemFingerprint() != null && !getOemFingerprint().equals(NO_OXYGEN_OS) && getOemFingerprint().contains("release-keys") && getOxygenOSVersion() != null && !getOxygenOSVersion().equals(NO_OXYGEN_OS);
             // To bypass false positives on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
         }
 
         for(Device device : devices) {
-            if(device.getProductName() != null && device.getProductName().equals(getOxygenDeviceName()) && Build.TAGS.contains("release-keys")) {
+            if(device.getProductName() != null && device.getProductName().equals(getOxygenDeviceName()) && getOemFingerprint() != null && !getOemFingerprint().equals(NO_OXYGEN_OS) && getOemFingerprint().contains("release-keys")) {
                 supported = true;
                 break;
             }

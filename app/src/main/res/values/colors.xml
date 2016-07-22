@@ -2,6 +2,7 @@
 <resources>
     <!-- Color used in the status bar and the Action Bar-->
     <color name="oneplus_red">#EB0028</color>
+    <color name="oneplus_lighter_red">#eb4460</color>
 
     <!-- Color used on disabled buttons -->
     <color name="dark_grey">#ee999999</color>
