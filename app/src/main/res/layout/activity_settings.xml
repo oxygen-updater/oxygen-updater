@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_header"
-                android:textColor="#ff88e0ff"
+                android:textColor="@color/oneplus_red"
                 android:textStyle="bold" />
 
             <View
@@ -54,7 +54,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
                 android:layout_below="@id/settingsDescriptionView"
-                android:background="#ff88e0ff" />
+                android:background="@color/oneplus_red" />
 
             <TextView
                 android:id="@+id/settingsDeviceView"
@@ -119,7 +119,7 @@
                 android:layout_below="@id/settingsUpdateMethodSpinner"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_server_messages"
-                android:textColor="#ff88e0ff"
+                android:textColor="@color/oneplus_red"
                 android:textStyle="bold" />
 
             <View
@@ -127,7 +127,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
                 android:layout_below="@id/settingsServerMessagesLabel"
-                android:background="#ff88e0ff" />
+                android:background="@color/oneplus_red" />
 
             <TextView
                 android:id="@+id/settingsServerMessagesView"
@@ -145,6 +145,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/settingsMiddleDivisor"
                 android:layout_marginTop="5dp"
+                app:theme="@style/Theme.Oxygen.Switch"
                 app:showText="false" />
 
             <TextView
@@ -161,6 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                app:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsAppUpdatesSwitch"
                 android:layout_marginTop="5dp" />
 
@@ -172,7 +174,7 @@
                 android:layout_below="@id/settingsAppMessagesSwitch"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_push_notifications"
-                android:textColor="#ff88e0ff"
+                android:textColor="@color/oneplus_red"
                 android:textStyle="bold" />
 
             <View
@@ -181,7 +183,7 @@
                 android:layout_height="2dip"
                 android:layout_below="@id/settingsPushNotificationsLabel"
 
-                android:background="#ff88e0ff" />
+                android:background="@color/oneplus_red" />
 
             <TextView
                 android:id="@+id/settingsImportantPushNotificationsView"
@@ -198,6 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/settingsMiddle2Divisor"
+                app:theme="@style/Theme.Oxygen.Switch"
                 android:layout_marginTop="5dp" />
 
             <TextView
@@ -214,6 +217,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                app:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsImportantPushNotificationsSwitch"
                 android:layout_marginTop="5dp" />
 
@@ -231,6 +235,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                app:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsNewVersionPushNotificationsSwitch"
                 android:layout_marginTop="5dp" />
 
@@ -241,7 +246,7 @@
                 android:layout_below="@id/settingsNewDevicePushNotificationsSwitch"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_system_up_to_date"
-                android:textColor="#ff88e0ff"
+                android:textColor="@color/oneplus_red"
                 android:textStyle="bold" />
 
             <View
@@ -250,7 +255,7 @@
                 android:layout_height="2dip"
                 android:layout_below="@id/settingsHideUpdateInformationTextView"
 
-                android:background="#ff88e0ff" />
+                android:background="@color/oneplus_red" />
 
             <TextView
                 android:id="@+id/settingsSystemIsUpToDateView"
@@ -266,6 +271,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                app:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsLowerDivisor"
                 android:layout_marginTop="5dp" />
 
@@ -276,7 +282,7 @@
                 android:layout_below="@id/settingsSystemIsUpToDateSwitch"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_explanation_update_methods"
-                android:textColor="#ff88e0ff"
+                android:textColor="@color/oneplus_red"
                 android:textStyle="bold" />
 
             <View
@@ -285,7 +291,7 @@
                 android:layout_height="2dip"
                 android:layout_below="@id/settingsDescriptionTextView"
 
-                android:background="#ff88e0ff" />
+                android:background="@color/oneplus_red" />
 
 
             <TextView

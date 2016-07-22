@@ -33,7 +33,7 @@ public class FAQActivity extends AppCompatActivity {
         super.onStart();
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
         if(refreshLayout != null) {
-            refreshLayout.setColorSchemeResources(R.color.lightBlue, R.color.holo_orange_light, R.color.holo_red_light);
+            refreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
             refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {

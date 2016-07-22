@@ -78,7 +78,7 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:onClick="rateApp"
         android:text="@string/about_rate_app_button_text"
-        android:textColor="@color/lightBlue" />
+        android:textColor="@color/oneplus_red" />
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
             android:linksClickable="true"
             android:text="@string/about_background_story"
             android:textAppearance="?android:textAppearanceSmall"
-            android:textColorLink="@color/lightBlue"
+            android:textColorLink="@color/oneplus_red"
             android:textSize="13sp" />
     </ScrollView>
 

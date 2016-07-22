@@ -130,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:enabled="false"
                             android:text="@string/download"
-                            android:textColor="@color/lightBlue" />
+                            android:textColor="@color/oneplus_red" />
 
                         <Button
                             android:id="@+id/updateInstallationInstructionsButton"
@@ -142,7 +142,7 @@
                             android:onClick="UpdateInstructions"
                             android:text="@string/install_guide"
                             android:textAppearance="?android:textAppearanceSmall"
-                            android:textColor="@color/lightBlue" />
+                            android:textColor="@color/oneplus_red" />
 
                     </TableRow>
                 </TableLayout>

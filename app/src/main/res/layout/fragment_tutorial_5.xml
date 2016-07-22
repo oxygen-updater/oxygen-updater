@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:onClick="closeInitialTutorial"
         android:text="@string/introduction_close_button"
-        android:textColor="@color/lightBlue" />
+        android:textColor="@color/oneplus_red" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

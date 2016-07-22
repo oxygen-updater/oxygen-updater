@@ -197,7 +197,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         }
                     }
                 });
-                updateInformationRefreshLayout.setColorSchemeResources(R.color.lightBlue, R.color.holo_orange_light, R.color.holo_red_light);
+                updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
             }
             if(systemIsUpToDateRefreshLayout != null) {
                 systemIsUpToDateRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -213,7 +213,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         }
                     }
                 });
-                systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.lightBlue, R.color.holo_orange_light, R.color.holo_red_light);
+                systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
             }
         }
     }
@@ -608,7 +608,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 }
             });
             downloadButton.setEnabled(true);
-            downloadButton.setTextColor(ContextCompat.getColor(context, R.color.lightBlue));
+            downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
         } else {
             downloadButton.setEnabled(false);
             downloadButton.setTextColor(ContextCompat.getColor(context, R.color.dark_grey));
@@ -1017,7 +1017,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
 
         if(updateIsDownloaded && isAdded()) {
             downloadButton.setEnabled(true);
-            downloadButton.setTextColor(ContextCompat.getColor(context, R.color.lightBlue));
+            downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
             downloadButton.setClickable(true);
             downloadButton.setText(getString(R.string.downloaded));
             downloadButton.setOnClickListener(new View.OnClickListener() {
@@ -1040,7 +1040,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                     }
                 });
                 downloadButton.setEnabled(true);
-                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.lightBlue));
+                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
 
                 if(fileMayBeDeleted) {
                     File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());

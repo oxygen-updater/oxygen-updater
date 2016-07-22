@@ -70,6 +70,6 @@
             android:layout_centerHorizontal="true"
             android:onClick="closeTutorial"
             android:text="@string/install_guide_step5_close_button"
-            android:textColor="@color/lightBlue" />
+            android:textColor="@color/oneplus_red" />
     </RelativeLayout>
 </ScrollView>

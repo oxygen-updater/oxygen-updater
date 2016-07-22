@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Color used in the status bar and the Action Bar-->
-    <color name="lightBlue">#33B5E5</color>
+    <color name="oneplus_red">#EB0028</color>
 
     <!-- Color used on disabled buttons -->
     <color name="dark_grey">#ee999999</color>
@@ -17,6 +17,7 @@
     <color name="holo_green_light">#ff99cc00</color>
     <!-- A light Holo shade of red -->
     <color name="holo_red_light">#ffff4444</color>
+    <color name="holo_red_lighter">#ff5252</color>
     <!-- A dark Holo shade of blue -->
     <color name="holo_blue_dark">#ff0099cc</color>
     <!-- A dark Holo shade of green -->
