@@ -87,6 +87,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
 
     private DateTime refreshedDate;
     private boolean isFetched;
+    private boolean adsAreSupported;
     private String deviceName;
 
     public static final int NOTIFICATION_ID = 1;
@@ -115,6 +116,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             context = getActivity().getApplicationContext();
         }
 
+        adsAreSupported = getApplicationContext().checkPlayServices(getActivity(), false);
+
     }
 
     @Override
@@ -136,7 +139,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     @Override
     public void onPause() {
         super.onPause();
-        if (adView != null) {
+        if (adView != null && adsAreSupported) {
             adView.pause();
         }
 
@@ -146,7 +149,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     public void onResume() {
         super.onResume();
 
-        if (adView != null) {
+        if (adView != null && adsAreSupported) {
             adView.resume();
         }
         if (refreshedDate != null && isFetched && settingsManager.checkIfSettingsAreValid() && isAdded()) {
@@ -168,7 +171,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (adView != null) {
+        if (adView != null && adsAreSupported) {
             adView.destroy();
         }
     }
@@ -761,7 +764,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         if(rootView != null) {
             adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
         }
-        if (adView != null) {
+        if (adView != null && adsAreSupported) {
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(ADS_TEST_DEVICE_ID_OWN_DEVICE)
                     .addTestDevice(ADS_TEST_DEVICE_ID_EMULATOR_1)
@@ -774,7 +777,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     }
 
     private void hideAds() {
-        if (adView != null) {
+        if (adView != null && adsAreSupported) {
             adView.destroy();
         }
     }

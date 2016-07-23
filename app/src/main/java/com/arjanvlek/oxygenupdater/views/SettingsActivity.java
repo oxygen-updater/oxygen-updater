@@ -294,10 +294,17 @@ public class SettingsActivity extends AbstractActivity {
                         settingsManager.saveLongPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
                         settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
 
-                        if(getAppApplicationContext().checkPlayServices(getParent())) {
+                        // Google Play services are not required if the user doesn't notifications
+                        if(getAppApplicationContext().checkPlayServices(getParent(), false)) {
                             // Subscribe to notifications for the newly selected device and update method
                             TopicSubscriptionData data = new TopicSubscriptionData(getAppApplicationContext(), settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
                             new NotificationTopicSubscriber().execute(data);
+                        } else {
+                            try {
+                                Toast.makeText(getApplication().getApplicationContext(), getString(R.string.no_notification_support), Toast.LENGTH_LONG).show();
+                            } catch (Exception ignored) {
+
+                            }
                         }
 
                         try {

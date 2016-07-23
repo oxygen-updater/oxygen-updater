@@ -27,6 +27,7 @@ public class ApplicationContext extends Application {
     public static final String APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME;
     public static final String LOCALE_DUTCH = "Nederlands";
     private static SystemVersionProperties SYSTEM_VERSION_PROPERTIES_INSTANCE;
+    public static final String TAG = "ApplicationContext";
 
 
     // Used for Google Play Services check
@@ -45,8 +46,10 @@ public class ApplicationContext extends Application {
 
         else {
             if(serverConnector == null) {
+                Log.v(TAG, "Created ServerConnector for use within the application...");
                 serverConnector = new ServerConnector();
             }
+            Log.v(TAG, "Used ServerConnector to fetch devices...");
             devices = serverConnector.getDevices();
             deviceFetchDate = LocalDateTime.now();
             return devices;
@@ -55,6 +58,7 @@ public class ApplicationContext extends Application {
 
     public ServerConnector getServerConnector() {
         if(serverConnector == null) {
+            Log.v(TAG, "Created ServerConnector for use within the application...");
             serverConnector = new ServerConnector();
             return serverConnector;
         }
@@ -76,6 +80,7 @@ public class ApplicationContext extends Application {
                         .command("getprop")
                         .redirectErrorStream(true)
                         .start();
+                Log.v(TAG, "Started fetching device properties using 'getprop' command...");
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(getBuildPropProcess.getInputStream()));
                 String inputLine;
@@ -85,12 +90,14 @@ public class ApplicationContext extends Application {
                         oxygenOSVersion = inputLine.replace("[ro.build.ota.versionname]: ", "");
                         oxygenOSVersion = oxygenOSVersion.replace("[", "");
                         oxygenOSVersion = oxygenOSVersion.replace("]", "");
+                        Log.v(TAG, "Found Oxygen OS ROM with version " + oxygenOSVersion + " on this device...");
                     }
 
                     if (inputLine.contains("ro.build.version.ota")) {
                         oxygenOSOTAVersion = inputLine.replace("[ro.build.version.ota]: ", "");
                         oxygenOSOTAVersion = oxygenOSOTAVersion.replace("[", "");
                         oxygenOSOTAVersion = oxygenOSOTAVersion.replace("]", "");
+                        Log.v(TAG, "Found Oxygen OS ROM with OTA version " + oxygenOSOTAVersion + " on this device...");
                     }
 
                     if(inputLine.contains("ro.build.oemfingerprint")) {
@@ -112,9 +119,10 @@ public class ApplicationContext extends Application {
                     }
                 }
                 getBuildPropProcess.destroy();
+                Log.v(TAG, "Finished fetching device properties using 'getprop' command...");
 
             } catch (IOException e) {
-                Log.e("IOException buildProp", e.getLocalizedMessage());
+                Log.e(TAG, e.getLocalizedMessage());
             }
             systemVersionProperties.setOxygenDeviceName(oxygenDeviceName);
             systemVersionProperties.setOxygenOSVersion(oxygenOSVersion);
@@ -132,10 +140,11 @@ public class ApplicationContext extends Application {
      * Checks if the Google Play Services are installed on the device.
      * @return Returns if the Google Play Services are installed.
      */
-    public boolean checkPlayServices(Activity activity) {
+    public boolean checkPlayServices(Activity activity, boolean showErrorIfMissing) {
+        Log.v(TAG, "Executing Google Play Services check...");
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
+        if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
             if (googleApiAvailability.isUserResolvableError(resultCode)) {
                 googleApiAvailability.getErrorDialog(activity, resultCode,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
@@ -143,7 +152,8 @@ public class ApplicationContext extends Application {
                 System.exit(0);
             }
             return false;
+        } else {
+            return resultCode == ConnectionResult.SUCCESS;
         }
-        return true;
     }
 }

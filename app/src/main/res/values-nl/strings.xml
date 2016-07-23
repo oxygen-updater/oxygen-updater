@@ -68,7 +68,7 @@
     <string name="notification_new_device_short">Open de app om dit apparaat te kiezen.</string>
     <string name="notification_update_short">Open de app om de update te downloaden.</string>
     <string name="notification_is_now_available">is nu beschikbaar voor de</string>
-    <string name="notification_new_device_2">kunnen nu worden gevolgd!</string>
+    <string name="notification_new_device_2">kunnen nu worden download met deze app!</string>
     <string name="notification_version">Versie</string>
     <string name="settings_entered_incorrectly">Een ogenblik geduld terwijl uw instellingen worden opgeslagen.</string>
     <string name="introduction_choose_device">Kies je apparaat:</string>
@@ -135,7 +135,6 @@
     <string name="update_information_header_short">Update-info</string>
     <string name="device_information_patch_level_version">Datum beveiligingspatch:</string>
     <string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
-    <string name="settings_cannot_launch_downloading">Je kunt het Instellingen-scherm niet openen tijdens het downloaden van een update…</string>
     <string name="unsupported_device_warning_checkbox_title">Toon dit bericht niet nogmaals</string>
     <string name="unsupported_device_warning_message">Het lijkt erop dat jouw apparaat (momenteel) geen Oxygen OS draait. Deze app kan alleen systeemupdates voor apparaten met Oxygen OS downloaden. \n\nAndere apparaten of apparaten met Custom ROMs worden niet ondersteund.</string>
     <string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
@@ -169,5 +168,6 @@
     <string name="download_progress_text_one_hour_remaining">%1$d%%, ongeveer 1 uur resterend</string>
     <string name="download_unknown_update_name">Oxygen OS-update</string>
     <string name="device_information_incremental_os_version">Incrementele OS-versie</string>
+    <string name="no_notification_support">Installeer Google Play services of werk deze bij om notificaties te kunnen ontvangen.</string>
 
 </resources>

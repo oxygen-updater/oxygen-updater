@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.notifications.TopicSubscriptionData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
@@ -114,11 +115,17 @@ public class TutorialStep4Fragment extends AbstractFragment {
                     settingsManager.saveLongPreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
                     settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
 
-                    if(getApplicationContext().checkPlayServices(getActivity())) {
+                    if(getApplicationContext().checkPlayServices(getActivity(), false)) {
                         // Subscribe to notifications
                         // Subscribe to notifications for the newly selected device and update method
                         TopicSubscriptionData data = new TopicSubscriptionData(getApplicationContext(), settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
                         new NotificationTopicSubscriber().execute(data);
+                    } else {
+                        try {
+                            Toast.makeText(getApplicationContext(), getString(R.string.no_notification_support), Toast.LENGTH_LONG).show();
+                        } catch (Exception ignored) {
+
+                        }
                     }
                 }
 

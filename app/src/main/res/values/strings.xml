@@ -203,6 +203,7 @@
     <string name="notification_new_device_2">can now be downloaded using this app!</string>
     <string name="notification_new_device_short">Open the app to choose this device.</string>
     <string name="notification_unknown_version_number">A new version is available for your</string>
+    <string name="no_notification_support">Install or update Google Play services to enable notifications.</string>
 
     <!-- Help strings -->
     <string name="help">Help</string>
