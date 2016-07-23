@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1001657004975",
+    "firebase_url": "https://oxygen-updater.firebaseio.com",
+    "project_id": "oxygen-updater",
+    "storage_bucket": "oxygen-updater.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001657004975:android:8b2d25838b38ce94",
+        "android_client_info": {
+          "package_name": "com.arjanvlek.oxygenupdater"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001657004975-pknrr0lh6ujura1445gure3co4nl7lg5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXJ8hFaIflJkIevO-JhQQUCse0k1Yrj7g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

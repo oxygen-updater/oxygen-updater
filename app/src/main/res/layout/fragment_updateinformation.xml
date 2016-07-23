@@ -253,5 +253,5 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/update_information_advertising_id" />
+        ads:adUnitId="@string/advertising_id" />
 </RelativeLayout>

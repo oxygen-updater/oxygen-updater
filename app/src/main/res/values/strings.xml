@@ -192,9 +192,8 @@
     <string name="about_app_description">An app to download Oxygen OS updates.</string>
     <string name="about_background_story">This app is written by Arjan Vlek, an IT-interested guy living in Zoetermeer, The Netherlands.\n\nThis app is a follow-up on another app of me, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>), which provides similar functionality for Cyanogen OS users.\n\nIf you like my app, please rate it on Google play now:</string>
 
-    <!-- Advertisement strings TODO move to google-services.json file -->
-    <string name="update_information_advertising_id" translatable="false">ca-app-pub-0760639008316468/6728323224</string>
-    <string name="device_information_advertising_id" translatable="false">ca-app-pub-0760639008316468/3635256026</string>
+    <!-- Advertisement strings -->
+    <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
 
     <!-- Notification strings -->
     <string name="notification_version">Version</string>
