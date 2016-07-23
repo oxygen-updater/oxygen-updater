@@ -18,7 +18,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/install_guide_image_description"
-            android:src="@drawable/icon_available_updates" />
+            android:src="@drawable/ic_available_updates" />
 
         <TextView
             android:id="@+id/introduction_step_5_header_text"

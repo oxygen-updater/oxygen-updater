@@ -74,7 +74,7 @@ public class NotificationService extends FirebaseMessagingService {
                         message = messageContents.get(ENGLISH_MESSAGE.toString());
                         break;
                 }
-                builder = displayGenericServerNotification(message);
+                builder = displayGeneralServerNotification(message);
         }
         if(builder == null) {
             return;
@@ -93,7 +93,7 @@ public class NotificationService extends FirebaseMessagingService {
         notificationManager.notify(getNotificationId(notificationType), builder.build());
     }
 
-    private Notification.Builder displayGenericServerNotification(String message) {
+    private Notification.Builder displayGeneralServerNotification(String message) {
        return new Notification.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_notification_general)
                         .setStyle(new Notification.BigTextStyle()
@@ -102,11 +102,10 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     private Notification.Builder displayNewDeviceNotification(String newDeviceName) {
-        // TODO make one string of this.
         String message = getString(R.string.notification_new_device) + " " + newDeviceName + " " + getString(R.string.notification_new_device_2);
 
         return new Notification.Builder(this)
-                        .setSmallIcon(R.drawable.ic_stat_notification_new_phone)
+                        .setSmallIcon(R.drawable.ic_stat_notification_new_device)
                         .setStyle(new Notification.BigTextStyle()
                                 .bigText(message)
                                 .setSummaryText(getString(R.string.notification_new_device_short)))
@@ -114,10 +113,9 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     private Notification.Builder displayNewVersionNotification(String deviceName, String versionNumber) {
-        // TODO make one string of this.
         String message = getString(R.string.notification_version) + " " + versionNumber + " " + getString(R.string.notification_is_now_available) + " " + deviceName + "!";
         return new Notification.Builder(this)
-                        .setSmallIcon(R.drawable.ic_stat_notification_update)
+                        .setSmallIcon(R.drawable.ic_stat_notification_new_version)
                         .setStyle(new Notification.BigTextStyle()
                                 .bigText(message)
                                 .setSummaryText(getString(R.string.notification_update_short)))

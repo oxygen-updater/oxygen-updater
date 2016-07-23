@@ -43,7 +43,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="45dp"
                 android:contentDescription="@string/device_information_image_description"
-                android:src="@drawable/icon_phone" />
+                android:src="@drawable/ic_phone" />
 
             <TextView
                 android:id="@+id/device_information_soc_label"

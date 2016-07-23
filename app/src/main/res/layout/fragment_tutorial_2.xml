@@ -90,7 +90,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/tut1bText4"
             android:contentDescription="@string/icon"
-            android:src="@drawable/icon_download_size" />
+            android:src="@drawable/ic_download_size" />
 
     </RelativeLayout>
 </ScrollView>

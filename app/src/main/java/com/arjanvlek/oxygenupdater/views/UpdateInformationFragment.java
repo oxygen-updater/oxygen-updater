@@ -66,6 +66,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.BELOW;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
@@ -479,6 +480,9 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             if (lastServerMessageView != null) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
                 params.addRule(BELOW, lastServerMessageView.getId());
+                if(adView != null) {
+                    params.addRule(ABOVE, adView.getId());
+                }
 
                 if(systemIsUpToDateRefreshLayout != null) {
                     systemIsUpToDateRefreshLayout.setLayoutParams(params);

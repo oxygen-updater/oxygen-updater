@@ -61,7 +61,7 @@ public class OxygenOTAUpdate {
 
 
     public int getDownloadSize() {
-        return downloadSize;
+        return (downloadSize / 1048576 );
     }
 
     @JsonProperty("download_size")
