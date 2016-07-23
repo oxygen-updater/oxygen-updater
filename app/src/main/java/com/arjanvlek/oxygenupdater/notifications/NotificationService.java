@@ -60,8 +60,8 @@ public class NotificationService extends FirebaseMessagingService {
                 }
                 builder = displayNewVersionNotification(messageContents.get(DEVICE_NAME.toString()), messageContents.get(NEW_VERSION_NUMBER.toString()));
                 break;
-            case GENERIC_NOTIFICATION:
-                if(!settingsManager.receiveGenericNotifications()) {
+            case GENERAL_NOTIFICATION:
+                if(!settingsManager.receiveGeneralNotifications()) {
                     return;
                 }
                 String appLocale = Locale.getDefault().getDisplayLanguage();
@@ -131,7 +131,7 @@ public class NotificationService extends FirebaseMessagingService {
                 return NEW_DEVICE_NOTIFICATION_ID;
             case NEW_VERSION:
                 return NEW_UPDATE_NOTIFICATION_ID;
-            case GENERIC_NOTIFICATION:
+            case GENERAL_NOTIFICATION:
                 return GENERIC_NOTIFICATION_ID;
             default:
                 return UNKNOWN_NOTIFICATION_ID;

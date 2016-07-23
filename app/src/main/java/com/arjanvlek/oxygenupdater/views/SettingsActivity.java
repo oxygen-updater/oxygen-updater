@@ -30,7 +30,7 @@ import java.util.List;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_WARNING_NOTIFICATIONS;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
@@ -88,10 +88,10 @@ public class SettingsActivity extends AbstractActivity {
             importantPushNotificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    settingsManager.saveBooleanPreference(PROPERTY_RECEIVE_WARNING_NOTIFICATIONS, isChecked);
+                    settingsManager.saveBooleanPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, isChecked);
                 }
             });
-            importantPushNotificationsSwitch.setChecked(settingsManager.receiveGenericNotifications());
+            importantPushNotificationsSwitch.setChecked(settingsManager.receiveGeneralNotifications());
         }
 
         SwitchCompat newVersionPushNotificationsSwitch = (SwitchCompat) findViewById(R.id.settingsNewVersionPushNotificationsSwitch);

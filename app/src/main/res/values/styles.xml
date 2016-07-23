@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Oxygen" parent="@style/Theme.AppCompat.Light">
+    <style name="Theme.Oxygen" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarItemBackground">@drawable/selectable_background_oxygen</item>
         <item name="popupMenuStyle">@style/PopupMenu.Oxygen</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Oxygen</item>
@@ -39,11 +39,11 @@
         
     </style>
 
-    <style name="Theme.Oxygen.Switch" parent="@style/Theme.AppCompat.Light">
+    <style name="Theme.Oxygen.Switch" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="colorAccent">@color/oneplus_red</item>
     </style>
 
-    <style name="ActionBar.Solid.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+    <style name="ActionBar.Solid.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_oxygen</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_oxygen</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_oxygen</item>

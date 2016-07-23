@@ -2,11 +2,7 @@ package com.arjanvlek.oxygenupdater.Support;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-
-import com.arjanvlek.oxygenupdater.MainActivity;
 
 public class SettingsManager {
 
@@ -18,14 +14,13 @@ public class SettingsManager {
     public static final String PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE = "offlineUpdateInformationAvailable";
 
     //Settings properties
-    public static final String PROPERTY_APP_VERSION = "appVersion";
     public static final String PROPERTY_DEVICE = "device";
     public static final String PROPERTY_DEVICE_ID = "device_id";
     public static final String PROPERTY_UPDATE_METHOD = "update_method";
     public static final String PROPERTY_UPDATE_METHOD_ID = "update_method_id";
     public static final String PROPERTY_UPDATE_CHECKED_DATE = "update_checked_date";
     public static final String PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS = "receive_system_update_notifications";
-    public static final String PROPERTY_RECEIVE_WARNING_NOTIFICATIONS = "recive_warning_notifications";
+    public static final String PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS = "recive_general_notifications";
     public static final String PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS = "receive_new_device_notifications";
     public static final String PROPERTY_SHOW_NEWS_MESSAGES = "show_news_messages";
     public static final String PROPERTY_SHOW_APP_UPDATE_MESSAGES = "show_app_update_messages";
@@ -51,9 +46,9 @@ public class SettingsManager {
         return prefs.getBoolean(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true);
     }
 
-    public boolean receiveGenericNotifications() {
+    public boolean receiveGeneralNotifications() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PROPERTY_RECEIVE_WARNING_NOTIFICATIONS, true);
+        return prefs.getBoolean(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true);
     }
 
     public boolean receiveNewDeviceNotifications() {
@@ -184,29 +179,6 @@ public class SettingsManager {
         return preferences.getLong(key, -1);
     }
 
-
-    /**
-     * Fetches the Google Cloud Messaging (GCM) preferences which are stored in a separate file.
-     * @return Shared Preferences with GCM preferences.
-     */
-    public SharedPreferences getGCMPreferences() {
-        return context.getSharedPreferences(MainActivity.class.getSimpleName(),
-                Context.MODE_PRIVATE);
-    }
-
-    /**
-     * @return Application's version code from the {@code PackageManager}.
-     */
-    public int getAppVersion() {
-        try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException ignored) {
-            return 0;
-        }
-    }
-
     /**
      * Checks if a device and update method have been set.
      * @return if the application is set up properly.
@@ -228,13 +200,6 @@ public class SettingsManager {
         } catch(Exception ignored) {
             return false;
         }
-    }
-
-    public void removePreference(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove(key);
-        editor.apply();
     }
 
 }
