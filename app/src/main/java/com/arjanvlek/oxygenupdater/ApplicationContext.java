@@ -72,7 +72,7 @@ public class ApplicationContext extends Application {
             SystemVersionProperties systemVersionProperties = new SystemVersionProperties();
             String oxygenOSVersion = NO_OXYGEN_OS;
             String oxygenOSOTAVersion = NO_OXYGEN_OS;
-            String oxygenDeviceName = Build.PRODUCT;
+            String oxygenDeviceName = NO_OXYGEN_OS;
             String oemFingerprint = NO_OXYGEN_OS;
             String securityPatchDate = NO_OXYGEN_OS;
             try {
@@ -98,6 +98,13 @@ public class ApplicationContext extends Application {
                         oxygenOSOTAVersion = oxygenOSOTAVersion.replace("[", "");
                         oxygenOSOTAVersion = oxygenOSOTAVersion.replace("]", "");
                         Log.v(TAG, "Found Oxygen OS ROM with OTA version " + oxygenOSOTAVersion + " on this device...");
+                    }
+
+                    if (inputLine.contains("ro.build.product")) {
+                        oxygenDeviceName = inputLine.replace("[ro.build.product]: ", "");
+                        oxygenDeviceName = oxygenDeviceName.replace("[", "");
+                        oxygenDeviceName = oxygenDeviceName.replace("]", "");
+                        Log.v(TAG, "Detected Oxygen OS Device with product name " + oxygenDeviceName + " ...");
                     }
 
                     if(inputLine.contains("ro.build.oemfingerprint")) {
