@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/tut4Image1"
-            android:layout_width="260dp"
-            android:layout_height="100dp"
+            android:layout_width="330dp"
+            android:layout_height="280dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/install_guide_image_description"
             android:src="@drawable/tutorial_step4a" />

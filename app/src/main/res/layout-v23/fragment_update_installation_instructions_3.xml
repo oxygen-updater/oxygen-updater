@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/tut3Image1"
-            android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_width="350dp"
+            android:layout_height="280dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/install_guide_image_description"
             android:src="@drawable/tutorial_step3" />
