@@ -47,8 +47,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     //General Android libraries
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
     
     //JSON libraries
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.0'
