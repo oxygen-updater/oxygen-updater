@@ -161,7 +161,7 @@ public class TutorialActivity extends AppCompatActivity implements SupportedDevi
      * Contains the basic / non interactive tutorial fragments.
      */
     @SuppressLint("ValidFragment")
-    public class SimpleTutorialFragment extends Fragment {
+    public static class SimpleTutorialFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
