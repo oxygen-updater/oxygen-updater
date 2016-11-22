@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 23
     buildToolsVersion "24.0.2"
 
     packagingOptions {
@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 19
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0.0"
     }
@@ -44,8 +44,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     //General Android libraries
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
     
     //JSON libraries
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.0'
