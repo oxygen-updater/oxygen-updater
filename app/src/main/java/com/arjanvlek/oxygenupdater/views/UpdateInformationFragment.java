@@ -35,6 +35,7 @@ import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Support.DateTimeFormatter;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.Support.UpdateDescriptionParser;
 import com.arjanvlek.oxygenupdater.Support.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.Support.UpdateDownloader;
 import com.google.android.gms.ads.AdRequest;
@@ -422,12 +423,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 appUpdateMessageBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_green_light));
 
                 // The text contains an HTML link to the Google Play store to allow quick updating of the app.
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    appUpdateMessageTextView.setText(Html.fromHtml(String.format(getString(R.string.new_app_version), serverStatus.getLatestAppVersion()), Html.FROM_HTML_MODE_LEGACY));
-                } else {
-                    //noinspection deprecation as it is only for older Android versions
-                    appUpdateMessageTextView.setText(Html.fromHtml(String.format(getString(R.string.new_app_version), serverStatus.getLatestAppVersion())));
-                }
+                appUpdateMessageTextView.setText(Html.fromHtml(String.format(getString(R.string.new_app_version), serverStatus.getLatestAppVersion())));
                 appUpdateMessageTextView.setMovementMethod(LinkMovementMethod.getInstance());
                 numberOfBars = addMessageBar(appUpdateMessageView, numberOfBars);
             }
@@ -598,7 +594,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         // Display update description.
         String description = oxygenOTAUpdate.getDescription();
         TextView descriptionView = (TextView) rootView.findViewById(R.id.updateDescriptionView);
-        descriptionView.setText(description != null && !description.isEmpty() && !description.equals("null") ? description : getString(R.string.update_description_not_available));
+        descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
+        descriptionView.setText(description != null && !description.isEmpty() && !description.equals("null") ? UpdateDescriptionParser.parse(description) : getString(R.string.update_description_not_available));
 
         // Display update file name.
         TextView fileNameView = (TextView) rootView.findViewById(R.id.updateFileNameView);

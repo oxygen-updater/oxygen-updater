@@ -55,8 +55,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/updateInformationBuildNumberView"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="@dimen/activity_vertical_margin" />
 
                 <TextView
@@ -65,8 +65,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/updateDescriptionView"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="@dimen/activity_vertical_margin" />
 
                 <TableLayout
