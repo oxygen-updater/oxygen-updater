@@ -10,6 +10,7 @@ public class ServerMessage {
     private Long updateMethodId;
     private ServerMessagePriority priority;
 
+    @SuppressWarnings("WeakerAccess")
     public enum ServerMessagePriority {
         LOW, MEDIUM, HIGH
     }

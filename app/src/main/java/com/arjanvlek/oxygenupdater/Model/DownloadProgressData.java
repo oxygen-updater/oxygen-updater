@@ -1,9 +1,7 @@
 package com.arjanvlek.oxygenupdater.Model;
 
-import com.arjanvlek.oxygenupdater.Support.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Support.UpdateDownloader.DownloadSpeedUnits;
 
-import java.util.Locale;
 
 import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.NOT_SET;
 

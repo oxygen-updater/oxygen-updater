@@ -12,7 +12,7 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceSate) {
         super.onCreate(savedInstanceSate);
-        setContentView(R.layout.fragment_tutorial_2);
+        setContentView(R.layout.fragment_setup_2);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public enum ServerRequest {
+enum ServerRequest {
 
     ALL_UPDATE_METHODS {
         @Override
@@ -17,6 +17,12 @@ public enum ServerRequest {
         @Override
         URL getURL(String... params) throws MalformedURLException {
             return new URL(getBaseUrl() + "devices");
+        }
+    },
+    INSTALL_GUIDE {
+        @Override
+        URL getURL(String... params) throws MalformedURLException {
+            return new URL(getBaseUrl() + "installGuide/" + params[0] + "/" + params[1] + "/" + params[2]);
         }
     },
     UPDATE_METHODS {

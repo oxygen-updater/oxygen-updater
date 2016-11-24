@@ -23,6 +23,7 @@ public class ApplicationContext extends Application {
     private LocalDateTime deviceFetchDate;
     private ServerConnector serverConnector;
     public static final String NO_OXYGEN_OS = "no_oxygen_os_ver_found";
+    public static final int NUMBER_OF_INSTALL_GUIDE_PAGES = 5;
 
     public static final String APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME;
     public static final String LOCALE_DUTCH = "Nederlands";
@@ -33,14 +34,18 @@ public class ApplicationContext extends Application {
     // Used for Google Play Services check
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+    public List<Device> getDevices() {
+        return getDevices(false);
+    }
+
     /**
      * Prevents the /devices request to be performed more than once by storing it in the Application class.
      * If the stored data is more than 5 minutes old, one new request is allowed and so on for each 5 minutes.
      * @return List of Devices that are enabled on the server.
      */
-    public List<Device> getDevices() {
+    public List<Device> getDevices(boolean alwaysFetch) {
         LocalDateTime now = LocalDateTime.now();
-        if(devices != null && deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(now)) {
+        if(devices != null && deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(now) && !alwaysFetch) {
             return devices;
         }
 

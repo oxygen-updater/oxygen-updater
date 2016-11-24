@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Oxygen Updater</string>
-    <string name="settings_header">Apparaat en update-methode</string>
+    <string name="settings_header">Kies je apparaat en update-methode</string>
     <string name="at">om</string>
     <string name="settings_device">Apparaat</string>
     <string name="settings_update_method">Update-methode</string>
     <string name="download">Downloaden</string>
-    <string name="download_description">Oxygen Updater Downloader</string>
+    <string name="download_description">Oxygen Updater</string>
     <string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar:</string>
     <string name="install_guide">Installatiehandleiding</string>
     <string name="update_information_header">Update-informatie</string>
     <string name="device_information_header">Apparaat-informatie</string>
-    <string name="error_app_requires_network_connection">Voor deze app is een werkende internetverbinding vereist</string>
-    <string name="error_app_requires_network_connection_message">Kan geen update-informatie van de server ophalen. Zorg ervoor dat je een werkende internetverbinding hebt. De app zal nu afsluiten.</string>
+    <string name="error_app_requires_network_connection">Geen verbinding</string>
+    <string name="error_app_requires_network_connection_message">Kan geen update-informatie verkrijgen. Zorg ervoor dat je een werkende verbinding hebt. De app zal nu afsluiten.</string>
     <string name="download_in_background">De update zal op de achtergrond worden gedownload…</string>
     <string name="error_exit_button_text">Afsluiten</string>
     <string name="today">Vandaag</string>
@@ -20,61 +20,62 @@
     <string name="update_information_for">voor</string>
     <string name="download_size_megabyte">%1$d MB</string>
     <string name="update">Update</string>
-    <string name="unknown_update_name">Update voor %1$s</string>
+    <string name="unknown_update_name">Naamloze update voor %1$s</string>
     <string name="update_description">Beschrijving van de update</string>
-    <string name="settings_explanation_incremental_full_update">Een incrementele update kan alleen worden geïnstalleerd als je de laatste versie had voordat deze update verscheen.\n\nEen volledige update kan altijd worden geïnstalleerd - ongeacht de huidge versie op je apparaat.</string>
+    <string name="settings_explanation_incremental_full_update">Een incrementele update kan alleen worden geïnstalleerd als je over de laatste systeemsoftware beschikte, voordat de nieuwe update verscheen.\n\nEen volledige update kan altijd worden geïnstalleerd - ongeacht de huidige systeemversie van je apparaat.</string>
 
     <string name="update_information_close">Sluiten</string>
     <string name="about">Over deze app</string>
-    <string name="install_guide_image_description">Plaatje van de handleiding.</string>
-    <string name="install_guide_step1_download_update">Download de update.</string>
-    <string name="install_guide_step1_explanation">Druk op de Download-knop om het downloaden te starten. De voortgang van de download is zichtbaar als melding in uw notificatiescherm en in de app. Als het downloaden bezig is, ziet u een melding zoals onderstaand. Wacht totdat het downloaden klaar is (er staat dan \"Download voltooid\").</string>
-    <string name="install_guide_step2_press_buttons">- houdt zowel de aan-uit knop als de volume-omhoog knop tegelijkertijd ingedrukt.</string>
-    <string name="install_guide_step2_recovery_mode">Ga naar de Recovery-modus.</string>
-    <string name="install_guide_step2_turn_off_phone">- Zet uw apparaat eerst uit.</string>
-    <string name="install_guide_step2_wait">- Wacht totdat u het recovery-menu op het scherm ziet.</string>
-    <string name="install_guide_step3_apply_update">Installeer de gedownloade update.</string>
-    <string name="install_guide_step3_browse_for_update">- Gebruik het scherm of de volume-knoppen om omlaag te scrollen naar "Download".\n\n- Kies "Download".\n\n- Kies het bestand met dezelfde bestandsnaam als in de app getoond.\n\n- De installatie begint vanzelf. De voortgang wordt op het scherm weergegeven. Wacht totdat de installatie is voltooid.</string>
-    <string name="install_guide_step3_recovery_apply">- Kies in het recovery-menu de gewenste taal.</string>
-    <string name="install_guide_step3_recovery_internal_storage">- Kies Install from SD.</string>
-    <string name="install_guide_step4_android_is_upgrading">- Na deze stap, zult u  \'Android wordt bijgewerkt\' zien, terwijl uw apps worden geoptimaliseerd.</string>
-    <string name="install_guide_step4_oxygen_logo">- Uw apparaat zal het opstart-logo een poosje laten zien terwijl de update wordt uitgevoerd.</string>
-    <string name="install_guide_step4_reboot_now">- In het recovery-menu, kies Reboot.</string>
-    <string name="install_guide_step4_restart">Start uw apparaat opnieuw op.</string>
-    <string name="install_guide_step5_check_version">- Nadat het updateproces is voltooid, kunt u de geïnstalleerde systeemversie controleren:</string>
-    <string name="install_guide_step5_close_button">Sluit de installatiehandleiding</string>
-    <string name="install_guide_step5_done">Klaar. Geniet van de nieuwe Oxygen OS-versie!</string>
-    <string name="install_guide_step5_rate_app">- Als u deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
-    <string name="install_guide_step5_settings_app">- Ga naar Instellingen, Over de telefoon en bekijk de Oxygen OS-versie en de Android-versie</string>
-    <string name="device_information_amount_of_memory">Hoeveelheid geheugen:</string>
-    <string name="device_information_cpu_frequency">Frequentie van de processor:</string>
-    <string name="device_information_image_description">Plaatje van uw apparaat</string>
+
+    <string name="install_guide_image_description">Extra afbeelding voor de duidelijkheid. Tik lager op het scherm voor de installatiehandleiding.</string>
+
+    <string name="install_guide_page_1_title">Download de update.</string>
+    <string name="install_guide_page_1_text">- Het is aan te raden om alle stappen ergens op te schrijven, omdat jouw apparaat moet worden uitgezet tijdens de installatie van de update.\n\n-Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n- Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play-store doen, onder het tabblad \"Mijn apps\".</string>
+
+    <string name="install_guide_page_2_title">Ga naar de Recovery Modus.</string>
+    <string name="install_guide_page_2_text">- Schakel je apparaat eerst volledig uit.\n\n- Houd hierna zowel de aan-uit knop als de volume-omlaag knop tegelijkertijd ingedrukt.\n\n- Je apparaat start nu op in Recovery Modus. Wacht totdat je het Recovery Modus-menu op het scherm ziet.</string>
+
+    <string name="install_guide_page_3_title">Installeer de gedownloade update.</string>
+    <string name="install_guide_page_3_text">- In het recovery-menu, tik op (of gebruik de volumeknoppen om te scrollen en de aan-uit knop voor het selecteren van) \"Apply Update\".\n\n- Tik op \"Choose from Internal Storage\" of \"Choose from Emulated\", afhankelijk van welke optie zichtbaar is.\n\n- Tik hierna op \"0\", als dit zichtbaar is. Als \"0\" niet zichtbaar is, ga je door naar de volgende stap.\n\n- Gebruik de volume-omlaag-toets om omlaag te scrollen naar een rij genaamd \"Download\".\n\n- Tik op \"Download\", en tik op het \".zip\" bestand met dezelfde bestandsnaam als in de app getoond. Dit is meestal een bestand beginnend met \"cm-\".\n\n- De installatie van de update begint vanzelf.</string>
+
+    <string name="install_guide_page_4_title">Start je apparaat opnieuw op.</string>
+    <string name="install_guide_page_4_text">- Als de installatie van de update is voltooid, keert je apparaat vanzelf terug naar het Recovery-menu. In het Recovery-menu, tik je op \"Reboot System Now\".\n\n- Je apparaat zal het Cyanogen-logo een lange tijd laten zien terwijl het opstart.\n\n- Hierna verschijnt er een wit venster met de titel \"Android wordt bijgewerkt\" , terwijl je apps worden geoptimaliseerd.</string>
+
+    <string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe Cyanogen OS-versie!</string>
+    <string name="install_guide_page_5_text">- Nadat het optimaliseren van de apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de Cyanogen OS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
+
+    <string name="install_guide_close_button">Sluit de installatiehandleiding</string>
+
+
+    <string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
+    <string name="device_information_cpu_frequency">Processorsnelheid:</string>
+    <string name="device_information_image_description">Plaatje van jouw apparaat</string>
     <string name="device_information_os_version">Android-versie:</string>
     <string name="device_information_serial_number">Serienummer:</string>
-    <string name="device_information_system_on_a_chip">Systeem-op-een-chip:</string>
-    <string name="device_information_your_device">Uw apparaat:</string>
+    <string name="device_information_system_on_a_chip">Chipset:</string>
+    <string name="device_information_your_device">Jouw apparaat:</string>
     <string name="icon">Icoon</string>
-    <string name="device_information_unknown">Onbekend</string>
-    <string name="about_app_description">Een app om Oxygen OS-updates te downloaden.</string>
+    <string name="device_information_unknown">onbekend</string>
+    <string name="about_app_description">De ultieme app voor alles over Oxygen OS-updates.</string>
     <string name="about_rate_app_button_text">Beoordeel op Google Play</string>
     <string name="about_version">Versie: %1$s</string>
-    <string name="about_background_story">Deze app is gemaakt door Arjan Vlek, een IT-student uit Zoetermeer.\n\nDeze app is gebaseerd op mijn eerdere app, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>) die momenteel ongeveer hetzelfde biedt voor gebruikers van Cyanogen OS.\n\nAls je deze app leuk vindt, beoordeel hem dan nu op Google Play!</string>
-    <string name="settings_saved">Uw instellingen worden automatisch opgeslagen.</string>
+    <string name="about_background_story">Deze app is gemaakt door Arjan Vlek.\n\nDeze app is gebaseerd op mijn andere app, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>).\n\n\nOpmerking: Dit is géén officiële app van OnePlus.\nDe naam OxygenOS is eigendom van OnePlus. \nAndroid, Google, Google Play en het Google Play-logo zijn geregistreerde handelsmerken van Google Inc. \nDeze app gebruikt gegevens van OnePlus en OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel hem dan nu op Google Play!</string>
+    <string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
     <string name="settings_explanation_update_methods">Toelichting op de update-methodes</string>
     <string name="settings">Instellingen</string>
     <string name="help">Help</string>
-    <string name="error_push_failure">Notificaties konden niet worden aangezet. Start de app over enkele minuten opnieuw op.</string>
-    <string name="notification_new_device">Nieuw apparaat beschikbaar! Updates voor de</string>
+    <string name="error_push_failure">Notificaties konden niet worden aangezet. Sluit de app volledig af en start hem over enkele minuten opnieuw op.</string>
+    <string name="notification_new_device">Nieuw apparaat toegevoegd! Updates voor de</string>
     <string name="notification_new_device_short">Open de app om dit apparaat te kiezen.</string>
     <string name="notification_update_short">Open de app om de update te downloaden.</string>
     <string name="notification_is_now_available">is nu beschikbaar voor de</string>
     <string name="notification_new_device_2">kunnen nu worden download met deze app!</string>
     <string name="notification_version">Versie</string>
-    <string name="settings_entered_incorrectly">Een ogenblik geduld terwijl uw instellingen worden opgeslagen.</string>
+    <string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
     <string name="introduction_choose_device">Kies je apparaat:</string>
     <string name="introduction_choose_update_method">Kies je update-methode:</string>
     <string name="introduction_close_button">start de app</string>
-    <string name="introduction_page_1">Met deze app ben je altijd op de hoogte van de nieuwste Android™-updates voor jouw Oxygen® OS-apparaat. \n\nSwipe naar links om verder te gaan.</string>
+    <string name="introduction_page_1">Met deze app ben je altijd op de hoogte van de nieuwste Android™-updates voor jouw Oxygen® OS-apparaat. \n\nVeeg naar links om verder te gaan.</string>
     <string name="introduction_page_2">Meestal is het juiste apparaat om updates voor te installeren al in de lijst hierboven geselecteerd. Als dit niet zo is, kies het dan hierboven.\n\nZodra er meer apparaten met Oxygen OS verschijnen zullen deze vanzelf worden toegevoegd, je ontvangt hier automatisch een bericht over!\n\nSwipe naar links om verder te gaan.</string>
     <string name="introduction_page_3">De Incrementele Update is meestal de juiste keuze.\n\nGebruik je een \"rooted\" apparaat of sla je regelmatig updates over (je wilt bijv. van 4.4.4 naar 5.1.1 updaten)? Kies dan de Volledige Update.\n\nSwipe naar links om door te gaan.</string>
     <string name="introduction_page_4">Veel plezier met het gebruik van deze app!\n\nJe kan je instellingen altijd veranderen door op de drie puntjes rechtsbovenin te klikken (of de Menu-knop te gebruiken) en vervolgens voor \'kies apparaat en update-methode\' te kiezen. </string>

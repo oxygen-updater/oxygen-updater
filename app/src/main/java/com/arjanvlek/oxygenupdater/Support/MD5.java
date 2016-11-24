@@ -21,10 +21,10 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MD5 {
+class MD5 {
     private static final String TAG = "MD5";
 
-    public static boolean checkMD5(String md5, File updateFile) {
+    static boolean checkMD5(String md5, File updateFile) {
         if (TextUtils.isEmpty(md5) || updateFile == null) {
             Log.e(TAG, "MD5 string empty or updateFile null");
             return false;
@@ -42,7 +42,7 @@ public class MD5 {
         return calculatedDigest.equalsIgnoreCase(md5);
     }
 
-    public static String calculateMD5(File updateFile) {
+    private static String calculateMD5(File updateFile) {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("MD5");

@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.Model;
 
-import android.os.Build;
 
 import java.util.List;
 

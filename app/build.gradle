@@ -26,7 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 	debug {
-            buildConfigField "Boolean", "USE_TEST_SERVER", "false" // There is currently no test server...
+            buildConfigField "Boolean", "USE_TEST_SERVER", "false"
             debuggable true
         }
     }

@@ -20,17 +20,17 @@ import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
 
 public class CustomDropdown {
 
-    public static View initCustomDeviceDropdown(int position, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<Device> devices, int recommendedPosition, Context context) {
+    public static View initCustomDeviceDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<Device> devices, int recommendedPosition, Context context) {
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layoutType, parent, false);
         }
 
         TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-        textView.setText(devices.get(position).getName());
+        textView.setText(devices.get(currentPosition).getName());
 
         if(recommendedPosition != -1) {
-            if(position == recommendedPosition) {
+            if(currentPosition == recommendedPosition) {
                 textView.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
             } else {
                 textView.setTextColor(Color.BLACK);
@@ -42,7 +42,7 @@ public class CustomDropdown {
         return convertView;
     }
 
-    public static View initCustomUpdateMethodDropdown(int position, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<UpdateMethod> updateMethods, List<Integer> recommendedPositions, Context context) {
+    public static View initCustomUpdateMethodDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<UpdateMethod> updateMethods, List<Integer> recommendedPositions, Context context) {
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layoutType, parent, false);
@@ -52,17 +52,17 @@ public class CustomDropdown {
         Locale locale = Locale.getDefault();
         switch(locale.getDisplayLanguage()) {
             case LOCALE_DUTCH:
-                textView.setText(updateMethods.get(position).getDutchName());
+                textView.setText(updateMethods.get(currentPosition).getDutchName());
                 break;
             default:
-                textView.setText(updateMethods.get(position).getEnglishName());
+                textView.setText(updateMethods.get(currentPosition).getEnglishName());
         }
 
         textView.setTextColor(Color.BLACK);
 
         if(recommendedPositions !=  null) {
             for(Integer recommendedPosition : recommendedPositions) {
-                if(position == recommendedPosition) {
+                if(currentPosition == recommendedPosition) {
                     textView.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
                 }
             }

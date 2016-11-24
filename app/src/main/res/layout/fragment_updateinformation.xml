@@ -4,7 +4,16 @@
     android:id="@+id/updateInformationFragmentTop"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MainActivity">
+    tools:context=".views.MainActivity">
+
+    <!-- Loading screen -->
+    <ProgressBar
+        android:id="@+id/updateInformationLoadingScreen"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
     <!-- Main screen -->
     <android.support.v4.widget.SwipeRefreshLayout
@@ -25,7 +34,7 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context=".MainActivity$PlaceholderFragment">
+                tools:context=".views.MainActivity$PlaceholderFragment">
 
                 <TextView
                     android:id="@+id/headerLabel"
@@ -193,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
-                tools:context=".MainActivity$PlaceholderFragment">
+                tools:context=".views.MainActivity$PlaceholderFragment">
 
 
                 <TextView

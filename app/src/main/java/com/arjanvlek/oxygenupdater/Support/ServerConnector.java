@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater.Support;
 
+import com.arjanvlek.oxygenupdater.Model.InstallGuideData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.ServerMessage;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_USER_AGENT;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.ALL_UPDATE_METHODS;
+import static com.arjanvlek.oxygenupdater.Support.ServerRequest.INSTALL_GUIDE;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.MOST_RECENT_UPDATE_DATA;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.DEVICES;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.SERVER_MESSAGES;
@@ -36,31 +38,35 @@ public class ServerConnector {
     }
 
     public List<Device> getDevices() {
-        return findMultipleFromServerResponse(fetchDataFromServer(DEVICES), Device.class);
+        return findMultipleFromServerResponse(fetchDataFromServer(DEVICES, 20), Device.class);
     }
 
     public OxygenOTAUpdate getOxygenOTAUpdate(Long deviceId, Long updateMethodId, String incrementalSystemVersion) {
-        return findOneFromServerResponse(fetchDataFromServer(UPDATE_DATA, deviceId.toString(), updateMethodId.toString(), incrementalSystemVersion), OxygenOTAUpdate.class);
+        return findOneFromServerResponse(fetchDataFromServer(UPDATE_DATA, 15, deviceId.toString(), updateMethodId.toString(), incrementalSystemVersion), OxygenOTAUpdate.class);
     }
 
     public OxygenOTAUpdate getMostRecentOxygenOTAUpdate(Long deviceId, Long updateMethodId) {
-        return findOneFromServerResponse(fetchDataFromServer(MOST_RECENT_UPDATE_DATA, deviceId.toString(), updateMethodId.toString()), OxygenOTAUpdate.class);
+        return findOneFromServerResponse(fetchDataFromServer(MOST_RECENT_UPDATE_DATA, 10, deviceId.toString(), updateMethodId.toString()), OxygenOTAUpdate.class);
     }
 
     public List<UpdateMethod> getAllUpdateMethods() {
-        return findMultipleFromServerResponse(fetchDataFromServer(ALL_UPDATE_METHODS), UpdateMethod.class);
+        return findMultipleFromServerResponse(fetchDataFromServer(ALL_UPDATE_METHODS, 20), UpdateMethod.class);
     }
 
     public List<UpdateMethod> getUpdateMethods(Long deviceId) {
-        return findMultipleFromServerResponse(fetchDataFromServer(UPDATE_METHODS, deviceId.toString()), UpdateMethod.class);
+        return findMultipleFromServerResponse(fetchDataFromServer(UPDATE_METHODS, 20, deviceId.toString()), UpdateMethod.class);
     }
 
     public ServerStatus getServerStatus() {
-        return findOneFromServerResponse(fetchDataFromServer(SERVER_STATUS), ServerStatus.class);
+        return findOneFromServerResponse(fetchDataFromServer(SERVER_STATUS, 10), ServerStatus.class);
     }
 
     public List<ServerMessage> getServerMessages(Long deviceId, Long updateMethodId) {
-        return findMultipleFromServerResponse(fetchDataFromServer(SERVER_MESSAGES, deviceId.toString(), updateMethodId.toString()), ServerMessage.class);
+        return findMultipleFromServerResponse(fetchDataFromServer(SERVER_MESSAGES, 20, deviceId.toString(), updateMethodId.toString()), ServerMessage.class);
+    }
+
+    public InstallGuideData fetchInstallGuidePageFromServer(Long deviceId, Long updateMethodId, Integer pageNumber) {
+        return findOneFromServerResponse(fetchDataFromServer(INSTALL_GUIDE, 10, deviceId.toString(), updateMethodId.toString(), pageNumber.toString()), InstallGuideData.class);
     }
 
     private <T> List<T> findMultipleFromServerResponse(String response, Class<T> returnClass) {
@@ -79,17 +85,19 @@ public class ServerConnector {
         }
     }
 
-    private String fetchDataFromServer(ServerRequest request, String... params) {
+    private String fetchDataFromServer(ServerRequest request, int timeoutInSeconds, String... params) {
 
         try {
             URL requestUrl = request.getURL(params);
 
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
+            int timeOutInMilliseconds = timeoutInSeconds * 1000;
+
             //setup request
             urlConnection.setRequestProperty(USER_AGENT_TAG, APP_USER_AGENT);
-            urlConnection.setConnectTimeout(60000);
-            urlConnection.setReadTimeout(60000);
+            urlConnection.setConnectTimeout(timeOutInMilliseconds);
+            urlConnection.setReadTimeout(timeOutInMilliseconds);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String inputLine;

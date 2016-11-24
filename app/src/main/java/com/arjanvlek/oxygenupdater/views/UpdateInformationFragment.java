@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.views;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,12 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationContext;
-import com.arjanvlek.oxygenupdater.MainActivity;
+import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.Model.ServerMessage;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.Support.DateTimeFormatter;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.UpdateDescriptionParser;
@@ -72,6 +74,7 @@ import static android.widget.RelativeLayout.BELOW;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.NORMAL;
+import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.*;
 import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.NOT_SET;
 
@@ -99,7 +102,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     private static final String KEY_NO_NETWORK_CONNECTION_BARS = "no_network_connection_bars";
     private static final String KEY_SERVER_MESSAGE_BARS = "server_message_bars";
     private Map<String, List<Object>> inAppMessageBarData = new HashMap<>();
-    private List<ServerMessageView> inAppMessageBars = new ArrayList<>();
+    private List<ServerMessageBar> inAppMessageBars = new ArrayList<>();
 
     /*
       -------------- ANDROID ACTIVITY LIFECYCLE METHODS -------------------
@@ -200,6 +203,13 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         } else {
                             showNetworkError();
                         }
+                    }
+                });
+                Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
+                installGuideButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((MainActivity)getActivity()).getActivityLauncher().UpdateInstructions();
                     }
                 });
                 updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
@@ -315,6 +325,13 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             appUpdateBars.add(serverStatus);
         }
 
+        if(serverStatus == null) {
+            ServerStatus status = new ServerStatus();
+            status.setLatestAppVersion(BuildConfig.VERSION_NAME);
+            status.setStatus(UNREACHABLE);
+            serverErrorBars.add(status);
+        }
+
         inAppMessageBarData.put(KEY_SERVER_ERROR_BARS, serverErrorBars);
         inAppMessageBarData.put(KEY_APP_UPDATE_BARS, appUpdateBars);
 
@@ -324,7 +341,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
 
     }
 
-    private int addMessageBar(ServerMessageView view, int numberOfBars) {
+    private int addMessageBar(ServerMessageBar view, int numberOfBars) {
         // Add the message to the update information screen if it is not null.
         if(this.rootView != null) {
             // Set the layout params based on the view count.
@@ -341,7 +358,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     }
 
     private void deleteAllInAppMessageBars() {
-        for(ServerMessageView view : this.inAppMessageBars) {
+        for(ServerMessageBar view : this.inAppMessageBars) {
             if(view != null && isAdded()) {
                 this.rootView.removeView(view);
             }
@@ -358,7 +375,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
 
         // Display the "No connection" bar if no connection is available.
         for(Object ignored : inAppMessageBarData.get(KEY_NO_NETWORK_CONNECTION_BARS)) {
-            ServerMessageView noConnectionError = new ServerMessageView(getApplicationContext(), null);
+            ServerMessageBar noConnectionError = new ServerMessageBar(getApplicationContext(), null);
             View noConnectionErrorBar = noConnectionError.getBackgroundBar();
             TextView noConnectionErrorTextView = noConnectionError.getTextView();
 
@@ -372,7 +389,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             ServerStatus serverStatus = (ServerStatus)serverStatusObject;
 
             // Create a new server message view and get its contents
-            ServerMessageView serverStatusView = new ServerMessageView(getApplicationContext(), null);
+            ServerMessageBar serverStatusView = new ServerMessageBar(getApplicationContext(), null);
             View serverStatusWarningBar = serverStatusView.getBackgroundBar();
             TextView serverStatusWarningTextView = serverStatusView.getTextView();
 
@@ -416,7 +433,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             ServerStatus serverStatus = (ServerStatus)serverStatusObject;
             if (isAdded()) {
                 // getActivity() is required here. Otherwise, clicking on the update message link will crash the application.
-                ServerMessageView appUpdateMessageView = new ServerMessageView(getActivity(), null);
+                ServerMessageBar appUpdateMessageView = new ServerMessageBar(getActivity(), null);
                 View appUpdateMessageBar = appUpdateMessageView.getBackgroundBar();
                 TextView appUpdateMessageTextView = appUpdateMessageView.getTextView();
 
@@ -434,9 +451,9 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         for (Object messageObject : serverMessageObjects) {
             ServerMessage message = (ServerMessage)messageObject;
             // Create a new server message view and get its contents
-            ServerMessageView serverMessageView = new ServerMessageView(getApplicationContext(), null);
-            View serverMessageBackgroundBar = serverMessageView.getBackgroundBar();
-            TextView serverMessageTextView = serverMessageView.getTextView();
+            ServerMessageBar serverMessageBar = new ServerMessageBar(getApplicationContext(), null);
+            View serverMessageBackgroundBar = serverMessageBar.getBackgroundBar();
+            TextView serverMessageTextView = serverMessageBar.getTextView();
 
 
             // Set the right locale text of the message in the view.
@@ -470,7 +487,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             serverMessageTextView.requestFocus();
             serverMessageTextView.setSelected(true);
 
-            numberOfBars = addMessageBar(serverMessageView, numberOfBars);
+            numberOfBars = addMessageBar(serverMessageBar, numberOfBars);
         }
 
         // Set the margins of the app ui to be below the last added server message bar.
@@ -503,7 +520,16 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     @Override
     public void displayUpdateInformation(final OxygenOTAUpdate oxygenOTAUpdate, final boolean online, boolean displayInfoWhenUpToDate) {
         // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
-        if(oxygenOTAUpdate == null || !isAdded()) {
+        if(!isAdded() || rootView == null) {
+            return;
+        }
+
+        View loadingScreen = rootView.findViewById(R.id.updateInformationLoadingScreen);
+        if(loadingScreen != null) {
+            loadingScreen.setVisibility(GONE);
+        }
+
+        if(oxygenOTAUpdate == null) {
             return;
         }
 
@@ -634,7 +660,11 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             downloadSizeImage.setVisibility(GONE);
             downloadSizeView.setVisibility(GONE);
         } else {
-            headerLabel.setText(getString(R.string.update_information_latest_available_update));
+            if(oxygenOTAUpdate.isSystemIsUpToDateCheck()) {
+                headerLabel.setText(getString(R.string.update_information_installed_update));
+            } else {
+                headerLabel.setText(getString(R.string.update_information_latest_available_update));
+            }
             downloadButton.setVisibility(VISIBLE);
             updateInstallationGuideButton.setVisibility(VISIBLE);
             fileNameView.setVisibility(VISIBLE);
@@ -764,6 +794,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         if (adView != null && adsAreSupported) {
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(ADS_TEST_DEVICE_ID_OWN_DEVICE)
+                    .addTestDevice(ADS_TEST_DEVICE_ID_TEST_DEVICE)
                     .addTestDevice(ADS_TEST_DEVICE_ID_EMULATOR_1)
                     .addTestDevice(ADS_TEST_DEVICE_ID_EMULATOR_2)
                     .addTestDevice(ADS_TEST_DEVICE_ID_EMULATOR_3)
@@ -1068,11 +1099,21 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         MainActivity mainActivity = (MainActivity) getActivity();
         if(mainActivity != null) {
             if(mainActivity.hasDownloadPermissions()) {
-                updateDownloader.downloadUpdate(oxygenOTAUpdate);
-                downloadButton.setText(getString(R.string.downloading));
-                downloadButton.setClickable(false);
+                if(updateDownloader != null) {
+                    updateDownloader.downloadUpdate(oxygenOTAUpdate);
+                    downloadButton.setText(getString(R.string.downloading));
+                    downloadButton.setClickable(false);
+                }
             } else {
-                mainActivity.requestDownloadPermissions();
+                Callback callback = new Callback() {
+                    @Override
+                    public void onActionPerformed(Object... result) {
+                        if((int)result[0] == PackageManager.PERMISSION_GRANTED && updateDownloader != null && oxygenOTAUpdate != null) {
+                            updateDownloader.downloadUpdate(oxygenOTAUpdate);
+                        }
+                    }
+                };
+                mainActivity.requestDownloadPermissions(callback);
             }
         }
     }

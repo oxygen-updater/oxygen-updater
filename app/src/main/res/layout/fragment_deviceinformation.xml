@@ -4,7 +4,7 @@
     android:id="@+id/deviceInformationFragmentTop"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MainActivity">
+    tools:context=".views.MainActivity">
 
     <ScrollView
         android:id="@+id/device_information_scrollview"
