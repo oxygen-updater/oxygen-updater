@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_refresh"
         android:orderInCategory="0"
-        android:title="@string/reload"
+        android:title="@string/error_reload"
         android:icon="@drawable/ic_action_navigation_refresh"
         app:showAsAction="always" />
 </menu>

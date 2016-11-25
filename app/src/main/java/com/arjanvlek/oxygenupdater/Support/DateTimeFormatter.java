@@ -39,11 +39,11 @@ public class DateTimeFormatter {
         if ((dateTime.getDayOfMonth() == today.getDayOfMonth()) && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
             return formattedTime;
         } else if ((dateTime.getDayOfMonth() + 1) == today.getDayOfMonth() && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
-            return fragment.getString(R.string.yesterday) + " " + fragment.getString(R.string.at) + " " + formattedTime;
+            return fragment.getString(R.string.time_yesterday) + " " + fragment.getString(R.string.time_at) + " " + formattedTime;
         } else {
             DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
             String formattedDate = dateFormat.format(dateTime.toDate());
-            return formattedDate + " " + fragment.getString(R.string.at) + " " + formattedTime;
+            return formattedDate + " " + fragment.getString(R.string.time_at) + " " + formattedTime;
         }
     }
 

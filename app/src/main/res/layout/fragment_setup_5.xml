@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="closeInitialTutorial"
-        android:text="@string/introduction_close_button"
+        android:text="@string/setup_close_button"
         android:textColor="@color/oneplus_red" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,7 +45,7 @@
                 android:layout_below="@+id/introduction_step_5_image"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="@string/introduction_ready_to_start"
+                android:text="@string/setup_page_5_title"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -61,7 +61,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/introduction_page_4"
+                android:text="@string/setup_page_5_text"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textColor="@color/material_blue_grey" />
 

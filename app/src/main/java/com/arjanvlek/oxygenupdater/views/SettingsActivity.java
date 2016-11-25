@@ -301,7 +301,7 @@ public class SettingsActivity extends AbstractActivity {
                             new NotificationTopicSubscriber().execute(data);
                         } else {
                             try {
-                                Toast.makeText(getApplication().getApplicationContext(), getString(R.string.no_notification_support), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplication().getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
                             } catch (Exception ignored) {
 
                             }

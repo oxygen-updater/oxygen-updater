@@ -113,7 +113,7 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     private Notification.Builder displayNewVersionNotification(String deviceName, String versionNumber) {
-        String message = getString(R.string.notification_version) + " " + versionNumber + " " + getString(R.string.notification_is_now_available) + " " + deviceName + "!";
+        String message = getString(R.string.notification_version) + " " + versionNumber + " " + getString(R.string.notification_version_is_now_available) + " " + deviceName + "!";
         return new Notification.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_notification_new_version)
                         .setStyle(new Notification.BigTextStyle()

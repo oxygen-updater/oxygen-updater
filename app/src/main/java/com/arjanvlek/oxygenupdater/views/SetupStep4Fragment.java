@@ -124,7 +124,7 @@ public class SetupStep4Fragment extends AbstractFragment {
                         new NotificationTopicSubscriber().execute(data);
                     } else {
                         try {
-                            Toast.makeText(getApplicationContext(), getString(R.string.no_notification_support), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
                         } catch (Exception ignored) {
 
                         }

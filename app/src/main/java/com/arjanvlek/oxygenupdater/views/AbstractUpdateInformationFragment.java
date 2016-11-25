@@ -131,8 +131,8 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
 
     protected void showAppNotValidError() {
         MessageDialog appNotValidErrorFragment = new MessageDialog()
-                .setTitle(getString(R.string.error_app_not_valid))
-                .setMessage(getString(R.string.error_app_not_valid_message))
+                .setTitle(getString(R.string.error_app_outdated))
+                .setMessage(getString(R.string.error_app_outdated_message))
                 .setPositiveButtonText(getString(R.string.error_google_play_button_text))
                 .setNegativeButtonText(getString(R.string.download_error_close))
                 .setClosable(false)

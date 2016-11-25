@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/faq_no_network_title"
+            android:text="@string/faq_no_network"
             android:textStyle="bold" />
 
         <ImageView

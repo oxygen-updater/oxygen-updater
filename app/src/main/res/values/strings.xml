@@ -1,146 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Application title; Main activity title-->
+    <!-- Application title, Main activity title-->
     <string name="app_name">Oxygen Updater</string>
     <string name="launcher_app_name">Oxygen Updater</string>
 
     <!-- Update information strings-->
+    <string name="update">Update</string>
+    <string name="update_information_close">Close</string>
+    <string name="update_information_description_not_available" translatable="false">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
+    <string name="update_information_file_name">File name: %1$s</string>
+    <string name="update_information_for">for</string>
     <string name="update_information_header">Update information</string>
     <string name="update_information_header_short">Update info</string>
-    <string name="update_information_latest_available_update">A new system update is available:</string>
-    <string name="update_information_installed_update">This version is currently being distributed:</string>
-    <string name="update">Update</string>
-    <string name="update_information_for">for</string>
-    <string name="update_information_system_is_up_to_date">Your system is up to date.</string>
-    <string name="update_information_no_update_data_available">No update information is available.</string>
-    <string name="update_information_view_update_information">View update information</string>
-    <string name="update_information_version">&#160;version:</string>
+    <string name="update_information_installed_update">The latest system update is:</string>
     <string name="update_information_last_checked_on">Last checked on: %1$s</string>
-    <string name="update_information_file_name">File name: %1$s</string>
-
-    <!-- Update description strings -->
-    <string name="update_description">Update description</string>
-    <string name="update_description_not_available" translatable="false">This maintenance release provides bug fixes, performance enhancements, and critical security updates for your device.</string>
-    <string name="update_information_close">Close</string>
-
-    <!-- Other strings-->
-    <string name="icon">Icon</string>
+    <string name="update_information_latest_available_update">A new system update is available:</string>
+    <string name="update_information_no_update_data_available">No update information is available.</string>
+    <string name="update_information_oxygen_os_version">Oxygen OS Version: %1$s</string>
+    <string name="update_information_system_is_up_to_date">Your system is up to date.</string>
+    <string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
+    <string name="update_information_version">&#160;version:</string>
+    <string name="update_information_view_update_information">View update information</string>
 
     <!-- Server status warning strings -->
-    <string name="server_status_warning">Some features may work incorrectly.</string>
-    <string name="server_status_error">Some features may not work.</string>
-    <string name="server_status_maintenance">There is currently planned maintenance on the server. Come back later!</string>
-    <string name="server_status_taken_down">This application may no longer be used. You can try updating it to the latest version via Google Play. You have to exit it now.</string>
+    <string name="server_status_error">Some features do not work.</string>
     <string name="server_status_unreachable">The server can\'t be reached. Try refreshing the page.</string>
+    <string name="server_status_warning">Some features may work incorrectly.</string>
 
-    <!-- New app version notification strings -->
-    <string name = "new_app_version">App update available! Version &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> has been released!</string>
+    <!-- New app version message strings -->
+    <string name ="new_app_version">App update available! Version &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> has been released!</string>
 
     <!-- Date and time strings -->
-    <string name="at">at</string>
-    <string name="today">Today</string>
-    <string name="yesterday">Yesterday</string>
+    <string name="time_at">at</string>
+    <string name="time_today">Today</string>
+    <string name="time_yesterday">Yesterday</string>
 
     <!-- Downloader strings-->
     <string name="download">Download</string>
     <string name="downloaded">Downloaded</string>
     <string name="downloading">Downloading…</string>
-    <string name="verifying">Verifying…</string>
-    <string name="verifying_error">File is damaged</string>
-    <string name="download_permissions">Click Download again to download the update.</string>
+
+    <string name="download_already_downloaded">The update was already downloaded. It is ready to get installed.</string>
+    <string name="download_complete">Download complete</string>
+
+    <string name="download_description">Oxygen Updater</string>
+
     <string name="download_error">Download Error</string>
-    <string name="download_error_corrupt">The downloaded update file is corrupt! Please try downloading it again.</string>
-    <string name="download_error_network">A network error occurred while downloading the update file. Please make sure your Internet connection works and try downloading it again.</string>
-    <string name="download_error_storage">There is insufficient storage space available on your device to save the downloaded update file. Please remove some files and try downloading it again.</string>
-    <string name="download_error_sd_card">There is no SD card present in your device. Please insert an SD card into your device. After you have done so, try downloading the update again.</string>
-    <string name="download_error_directory">It looks like there is no external storage available on your device. If you have an SD card, please make sure your device is not connected to a PC and make sure the SD card is configured to be used as external storage.</string>
-    <string name="download_size_megabyte">%1$d MB</string>
     <string name="download_error_close">CLOSE</string>
+    <string name="download_error_corrupt">The downloaded update is corrupt! Please try downloading it again.</string>
+    <string name="download_error_directory">It looks like there is no storage available on your device. If you have an SD card, please make sure your device is not connected to a PC and make sure the SD card is working.</string>
+    <string name="download_error_network">A network error occurred while downloading the update. Please make sure your Internet connection works and try downloading it again.</string>
     <string name="download_error_retry">RETRY</string>
+    <string name="download_error_sd_card">There is no SD card present in your device. Please insert an SD card into your device. After you have done so, try downloading the update again.</string>
+    <string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
+    
+    <string name="download_failed">Download failed</string>
+    <string name="download_in_background">Your update will be downloaded in the background…</string>
+    <string name="download_oxygen_os">Oxygen OS Version</string>
+    <string name="download_paused_unknown">Your download may be stuck. Try re-downloading the update…</string>
+    <string name="download_pending">Your download will start soon…</string>
+    <string name="download_permissions">Tap Download again to download the update.</string>
+
+
+    <string name="download_progress_text_hours_remaining">%1$d%%, about %2$d hours remaining</string>
+    <string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, less than a minute remaining</string>
+    <string name="download_progress_text_minutes_remaining">%1$d%%, about %2$d minutes remaining</string>
+    <string name="download_progress_text_one_hour_remaining">%1$d%%, about 1 hour remaining</string>
+    <string name="download_progress_text_one_minute_remaining">%1$d%%, about a minute remaining</string>    
+    <string name="download_progress_text_seconds_remaining">%1$d%%, a few seconds remaining</string>
+    <string name="download_progress_text_unknown_time_remaining">%1$d%%, calculating time remaining…</string>
+    <string name="download_progress_text_verifying">100%, Verifying file…</string>
+
+    <string name="download_size_megabyte">%1$d MB</string>
+    <string name="download_unknown_update_name">Oxygen OS Update</string>
+
+    <string name="download_verifying">Verifying…</string>
+    <string name="download_verifying_error">File is damaged</string>
+    <string name="download_verifying_start">Your download will now be verified…</string>
+
+    <string name="download_waiting_for_network">Waiting for a network connection…</string>
     <string name="download_waiting_for_wifi">Waiting for a Wi-Fi connection…</string>
     <string name="download_will_retry_soon">Your download will re-start soon…</string>
-    <string name="download_pending">Your download will start soon…</string>
-    <string name="download_paused_unknown">Your download may be stuck. Try re-downloading the update…</string>
-    <string name="download_waiting_for_network">Waiting for a network connection…</string>
-    <string name="update_already_downloaded">The update was already downloaded. It is ready to get installed.</string>
-    <string name="download_verifying">Your download will now be verified…</string>
-    <string name="download_progress_text_unknown_time_remaining">%1$d%%, calculating time remaining…</string>
-    <string name="download_progress_text_hours_remaining">%1$d%%, about %2$s hours remaining</string>
-    <string name="download_progress_text_one_hour_remaining">%1$d%%, about 1 hour remaining</string>
-    <string name="download_progress_text_minutes_remaining">%1$d%%, about %2$s minutes remaining</string>
-    <string name="download_progress_text_one_minute_remaining">%1$d%%, about a minute remaining</string>
-    <string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, less than a minute remaining</string>
-    <string name="download_progress_text_seconds_remaining">%1$d%%, a few seconds remaining</string>
-    <string name="download_progress_text_verifying">100%, Verifying file…</string>
-    <string name="download_unknown_update_name">Oxygen OS Update</string>
-    <string name="download_in_background">Your update will be downloaded in the background…</string>
-    <string name="download_description">Oxygen Updater Downloader</string>
-    <string name="oxygen_os_version">Oxygen OS Version: %1$s</string>
-    <string name="download_oxygen_os">Oxygen OS Version</string>
-    <string name="download_complete">Download complete</string>
-    <string name="download_failed">Download failed</string>
 
     <!-- Settings strings-->
     <string name="settings">Settings</string>
-    <string name="settings_header">Choose your device and update method:</string>
     <string name="settings_device">Device</string>
-    <string name="settings_update_method">Update method</string>
+    <string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
+    <string name="settings_explanation_incremental_full_update">An incremental update can only be installed if you were running the latest system software version before this update was released.\n\nA full update can be always be installed - regardless of the current system software version running on your device.</string>
+    <string name="settings_explanation_update_methods">Explanation of the update methods</string>]
+    <string name="settings_header">Choose your device and update method:</string>
+
+    <string name="settings_push">Send me a notification when a:</string>
+    <string name="settings_push_from_server">Critical message is available</string>
+    <string name="settings_push_new_version">System update is available</string>
+    <string name="settings_push_new_device">New device is supported</string>
+
     <string name="settings_saved">Your settings are automatically saved.</string>
-    <string name="settings_explanation_update_methods">Explanation of update methods</string>]
-    <string name="settings_explanation_incremental_full_update">An incremental update can only be installed if you were running the latest version before this update was released.\n\nA full update can be always be installed - regardless of your current software version running on your device.</string>
-    <string name="settings_entered_incorrectly">Please wait while your settings are being saved.</string>
 
-    <string name="settings_server_messages">Show these messages in the app:</string>
-    <string name="settings_in_app">News and warning messages</string>
-    <string name="settings_new_app_version">App update messages</string>
+    <string name="settings_server_messages">Show messages in the app when:</string>
+    <string name="settings_server_messages_in_app">There\'s news or a warning</string>
+    <string name="settings_server_messages_new_app_version">An app update is available</string>
 
-    <string name="settings_push_notifications">Send me these notifications:</string>
-    <string name="settings_push_from_server">Important messages</string>
-    <string name="settings_push_new_version">System update available</string>
-    <string name="settings_push_new_device">New device supported</string>
-
-    <string name="settings_system_up_to_date">Hide update information when:</string>
+    <string name="settings_system_up_to_date">Hide the download button when:</string>
     <string name="settings_system_hide_when_up_to_date">My system is up to date</string>
 
+    <string name="settings_update_method">Update method</string>
+
+
     <!-- FAQ strings -->
-    <string name="faq">FAQ page</string>
+    <string name="faq">FAQ</string>
     <string name="faq_menuitem">FAQ</string>
-    <string name="faq_no_network_title">No internet connection available.</string>
-    <string name="faq_no_network">You\'ll need an internet connection to view the FAQ page.</string>
+    <string name="faq_no_network">No connection.</string>
+    <string name="faq_no_network_text">You\'ll need a working connection to view the FAQ page.</string>
+    <!-- First-time setup strings -->
+    <string name="setup">Welcome</string>
+    <string name="setup_close_button">start app</string>
+
+    <string name="setup_page_1_title">Welcome to Oxygen Updater!</string>
+    <string name="setup_page_1_text">This app will allow you to:\n\n- Download the latest Android™  updates for your Oxygen® OS powered device early after release. \n\n- Update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- View some technical information about your device\n\nSwipe to the left to continue.</string>
+
+    <!-- Page 2 is found under "Help Strings" as it is also the help page of this app -->
+    <string name="setup_page_3_title">Choose your device:</string>
+    <string name="setup_page_3_text">The device to receive updates for is usually automatically detected and selected above. If not, select your device above.\n\nSwipe to the left to continue.</string>
+    <string name="setup_page_4_title">Choose your update method:</string>
+    <string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nIf you are using a rooted device, or use a very old Android version (e.g. you want to update from Android 5.0 to Android 6.0.1), or don\'t know if you are rooted or on a very old version, select Full update.\n\nSwipe to the left to continue.</string>
+    <string name="setup_page_5_title">You are ready to go!</string>
+    <string name="setup_page_5_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
 
 
-    <!-- Error strings-->
-    <string name="reload">Reload</string>
-    <string name="error_button_retry">Retry</string>
-    <string name="error_maintenance">Server maintenance</string>
-    <string name="error_maintenance_message">Please wait while the server undergoes maintenance. The server will be back online very soon.</string>
-    <string name="error_app_not_valid">Outdated  app version</string>
-    <string name="error_app_not_valid_message">This version of the app is too old and can no longer be used. Try updating the app from Google Play. This can be done by clicking on "Google Play" below. Within Google Play, click on "Update".</string>
-    <string name="error_app_requires_network_connection">This app requires an active Internet connection</string>
-    <string name="error_app_requires_network_connection_message">Failed to obtain update information from the server. Please make sure you have an active Internet connection. The app will now close.</string>
-    <string name="error_exit_button_text">Exit</string>
-    <string name="error_google_play_button_text" translatable="false">Google Play</string>
-    <string name="error_push_failure">Failed to enable notifications. Please restart the app again after a few minutes.</string>
-    <string name="error_no_internet_connection">No internet connection.</string>
-    <string name="error_unable_to_rate_app">You can\'t rate the app, because either the Google Play Store or your web browser is missing.</string>
-
-    <!-- Message strings -->
-    <string name="delete_message_title">Delete update file?</string>
-    <string name="delete_message_contents">You have already downloaded this update, but not yet installed it. Click on "Close" to close this message, then click on "Installation Guide" to view how to install this update. Click on "Delete" to permanently delete the file.</string>
-    <string name="delete_message_delete_button">Delete</string>
-
-    <!-- First-time tutorial strings -->
-    <string name="introduction_title">Welcome</string>
-    <string name="introduction_welcome">Welcome to Oxygen Updater!</string>
-    <string name="introduction_page_1">This app will allow you to download the latest Android™  updates for your Oxygen® OS powered device early after release. \n\nSwipe to the left to continue.</string>
-    <string name="introduction_choose_device">Choose your device:</string>
-    <string name="introduction_page_2">The device to receive updates for is usually automatically selected. If not, select the right device above.\n\nWhen more devices running Oxygen OS are released, they\'ll automatically be added and you will be notified!\n\nSwipe to the left to continue.</string>
-    <string name="introduction_choose_update_method">Choose your update method:</string>
-    <string name="introduction_page_3">Usually, the incremental update is the right choice here.\n\nAre you using a rooted device or do you skip updates regularly (e.g. you want to update 5.0 to 6.0)? Select Full update.\n\nSwipe to the left to continue.</string>
-    <string name="introduction_ready_to_start">You are ready to go!</string>
-    <string name="introduction_page_4">Enjoy using this app!\n\nYou can always change your settings by clicking the three dots in the top right corner (or press your Menu button) following a tap on \'change device and update method\'.</string>
-    <string name="introduction_close_button">start app</string>
-
-    <!-- Installation guide strings -->
+    <!-- Install guide strings -->
     <string name="install_guide">Install guide</string>
     <string name="install_guide_image_description">Contextual image. Please tap on a lower place on the screen to hear the install guide.</string>
 
@@ -162,54 +150,79 @@
     <string name="install_guide_close_button">Close Installation Guide</string>
 
     <!-- Device information strings -->
+    <string name="device_information_amount_of_memory">Amount of RAM:</string>
+    <string name="device_information_cpu_frequency">Processor Frequency:</string>
+    <string name="device_information_device_name" translatable="false">%1$s %2$s</string>
+    <string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
     <string name="device_information_header">Device information</string>
     <string name="device_information_header_short">Device info</string>
     <string name="device_information_image_description">Device image</string>
-    <string name="device_information_your_device">Your device: </string>
-    <string name="device_information_system_on_a_chip">System on a Chip:</string>
-    <string name="device_information_cpu_frequency">Processor Frequency:</string>
-    <string name="device_information_amount_of_memory">Amount of memory:</string>
-    <string name="device_information_os_version">Android version:</string>
     <string name="device_information_incremental_os_version">Incremental OS version:</string>
-    <string name="device_information_patch_level_version">Security patch date:</string>
+    <string name="device_information_os_version">Android version:</string>
     <string name="device_information_oxygen_os_version">Oxygen OS version:</string>
+    <string name="device_information_patch_level_version">Security patch date:</string>
     <string name="device_information_serial_number">Serial number:</string>
-    <string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
-    <string name="device_information_unknown">Unknown</string>
-    <string name="device_information_device_name" translatable="false">%1$s %2$s</string>
+    <string name="device_information_system_on_a_chip">System on a Chip:</string>
+    <string name="device_information_unknown">unknown</string>
+    <string name="device_information_your_device">Your device: </string>
 
     <!-- About screen strings -->
     <string name="about">About this app</string>
-    <string name="about_version">Version: %1$s</string>
+    <string name="about_app_description">The ultimate tool for Oxygen OS updates.</string>
+    <string name="about_background_story">This app is written by Arjan Vlek.\n\nThis app is a follow-up on another app of me, called Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>). Cyanogen Update Tracker provides similar functionality for Cyanogen OS users.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and OPPO to show update information.\n\nIf you like my app, please rate it on Google play now:</string>
     <string name="about_rate_app_button_text">Rate on Google Play</string>
-    <string name="about_app_description">An app to download Oxygen OS updates.</string>
-    <string name="about_background_story">This app is written by Arjan Vlek, an IT-interested guy living in Zoetermeer, The Netherlands.\n\nThis app is a follow-up on another app of me, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>), which provides similar functionality for Cyanogen OS users.\n\nIf you like my app, please rate it on Google play now:</string>
+    <string name="about_version">Version: %1$s</string>
 
-    <!-- Advertisement strings -->
-    <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
-
-    <!-- Notification strings -->
-    <string name="notification_version">Version</string>
-    <string name="notification_is_now_available">is now available for the</string>
-    <string name="notification_update_short">Open the app to download the update.</string>
-    <string name="notification_new_device">New device released! Updates for the</string>
-    <string name="notification_new_device_2">can now be downloaded using this app!</string>
+    
+    <!-- Notifications strings -->
+    <string name="notification_new_device">New device released! The</string>
+    <string name="notification_new_device_2">is now supported!</string>
     <string name="notification_new_device_short">Open the app to choose this device.</string>
+    <string name="notification_no_notification_support">Install or update Google Play services to
     <string name="notification_unknown_version_number">A new version is available for your</string>
-    <string name="no_notification_support">Install or update Google Play services to enable notifications.</string>
+    <string name="notification_update_short">Open the app to download the update.</string>
+    <string name="notification_version">Version</string>
+    <string name="notification_version_is_now_available">is now available for the</string>
+ enable notifications.</string>
 
     <!-- Help strings -->
     <string name="help">Help</string>
-    <string name="help_how_works_app">How does the app work?</string>
-    <string name="help_top_update">Version numbers of new updates are displayed in the top.</string>
-    <string name="help_middle_stats">In the middle are the English description, download button and a button for the installation guide.\n\nBelow these, the download size is shown.</string>
-    <string name="help_bottom_description">At the top right you can find the menu. It contains the settings and a help button, which allows you to view this page again.</string>
-    <string name="help_used_symbols">Used icons:</string>
+    <string name="help_bottom">At the top right you can find the menu. From there, you can go to the settings, the FAQ page or this Help screen. In the settings, you can re-select your device, update method and select which notifications to receive.</string>
+    <string name="help_middle">If you want to install a new update, start by tapping on the Download button.\nWhen the update is downloaded, read the Install Guide to learn how to install it.\n\nIf your device is up to date, you can tap on \"View Update Information\" to read what\'s new in the software you are currently using.\n\nSwipe to the left or tap on \"Device Info\" to view some technical specifications of your device.</string>
     <string name="help_symbol_download">Download size of the update.</string>
-    <string name="unknown_update_name">Update for %1$s</string>
+    <string name="help_symbol_download_cancel">Cancels downloading the current update when tapped.</string>
+    <string name="help_title">How to use this app:</string>
+    <string name="help_top">If a new update is available, it\'s version number, new features and download size are displayed on the main screen.</string>
+    <string name="help_used_symbols">Used icons:</string>
 
-    <!-- Unsupported device warning strings -->
+    <!-- Error strings-->
+    <string name="error_app_outdated">Oh no!</string>
+    <string name="error_app_outdated_message">This version of the app is outdated. It\'s time to update it! Tap on \"Google Play\" below. Within Google Play, tap on \"Update\".</string>
+    <string name="error_app_requires_network_connection">No connection</string>
+    <string name="error_app_requires_network_connection_message">Failed to obtain update information. Please make sure you have a working connection. The app will now close.</string>
+    <string name="error_button_retry">Retry</string>
+    <string name="error_exit_button_text">Exit</string>
+    <string name="error_google_play_button_text" translatable="false">Google Play</string>
+    <string name="error_no_internet_connection">No connection.</string>
+    <string name="error_maintenance">Server maintenance</string>
+    <string name="error_maintenance_message">Please wait. The server will be available very soon.</string>
+    <string name="error_push_failure">Failed to enable notifications. Fully close the app, and start it again after waiting a few minutes.</string>
+    <string name="error_reload">Reload</string>
+
+    <string name="error_unable_to_rate_app">You can\'t rate the app, because the Google Play Store is missing on your device.</string>
+    
+    <!-- Message strings -->
+    <string name="delete_message_title">Update already downloaded</string>
+    <string name="delete_message_contents">You have already downloaded this update, but not yet installed it. Tap on \"Close\" to close this message, then tap on \"Install Guide\" to view how to install this update. Tap on \"Delete\" to permanently delete the file.</string>
+    <string name="delete_message_delete_button">Delete</string>
+
     <string name="unsupported_device_warning_title">Unsupported device</string>
-    <string name="unsupported_device_warning_message">It looks like your device is (currently) not running Oxygen OS. Please note that you can only download system updates on devices running Oxygen OS. \n\nOther devices, or devices running Custom ROMs are not supported.</string>
-    <string name="unsupported_device_warning_checkbox_title">Don\'t show this message again</string>
+    <string name="unsupported_device_warning_message">It looks like your device is not running Oxygen OS. Please note that you can only install system updates on devices running Oxygen OS. \n\nOther devices, including OnePlus devices running Custom ROMs, are not supported.</string>
+    <string name="unsupported_device_warning_checkbox_title">Don\'t show this warning again</string>
+
+    <!-- Other strings-->
+    <string name="icon">Icon</string>
+    <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
 </resources>
+
+

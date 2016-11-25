@@ -130,12 +130,12 @@
                 android:background="@color/oneplus_red" />
 
             <TextView
-                android:id="@+id/settingsServerMessagesView"
+                android:id="@+id/settingsAppUpdatesView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/settingsAppUpdatesSwitch"
-                android:text="@string/settings_new_app_version"
+                android:text="@string/settings_server_messages_new_app_version"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <android.support.v7.widget.SwitchCompat
@@ -149,12 +149,12 @@
                 app:showText="false" />
 
             <TextView
-                android:id="@+id/settingsAppUpdatesView"
+                android:id="@+id/settingsAppMessagesView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/settingsAppMessagesSwitch"
-                android:text="@string/settings_in_app"
+                android:text="@string/settings_server_messages_in_app"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <android.support.v7.widget.SwitchCompat
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settingsAppMessagesSwitch"
                 android:layout_marginTop="10dp"
-                android:text="@string/settings_push_notifications"
+                android:text="@string/settings_push"
                 android:textColor="@color/oneplus_red"
                 android:textStyle="bold" />
 

@@ -27,7 +27,7 @@
             android:layout_below="@+id/introduction_step_5_image"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="@string/introduction_choose_update_method"
+            android:text="@string/setup_page_4_title"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -64,7 +64,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="@string/introduction_page_3"
+            android:text="@string/setup_page_4_text"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/material_blue_grey" />
 

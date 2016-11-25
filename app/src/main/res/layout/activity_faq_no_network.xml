@@ -19,7 +19,7 @@
         android:id="@+id/faq_no_network_title"
         android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:text="@string/faq_no_network_title"/>
+        android:text="@string/faq_no_network"/>
 
     <ImageView
         android:id="@+id/faq_no_network_image"
