@@ -22,7 +22,6 @@
     <string name="update_information_version">-versie:</string>
     <string name="update_information_view_update_information">Bekijk update-informatie</string>
 
-
     <!-- Server status warning strings -->
     <string name="server_status_error">Sommige functies werken mogelijk niet zoals verwacht.</string>
     <string name="server_status_unreachable">De server is offline. Probeer de pagina te verversen.</string>
@@ -120,17 +119,17 @@
     <string name="setup_close_button">start de app</string>
 
     <string name="setup_page_1_title">Welkom bij Oxygen updater!</string>
-    <string name="setup_page_1_text">Met deze app ben je altijd op de hoogte van de nieuwste Android™-updates voor jouw Oxygen® OS-apparaat. \n\nVeeg naar links om verder te gaan.</string>
+    <string name="setup_page_1_text">Met deze app kun je:\n\n- De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n\n- Een \"rooted\" apparaat bijwerken\n\n- Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n\n- Enkele technische specificaties van je apparaat bekijken\n\nVeeg naar links om verder te gaan.</string>
 
     <!-- Page 2 is found under "Help Strings" as it is also the help page of this app -->
     <string name="setup_page_3_title">Kies je apparaat:</string>
-    <string name="setup_page_3_text">Meestal is het juiste apparaat om updates voor te installeren al in de lijst hierboven geselecteerd. Als dit niet zo is, kies het dan hierboven.\n\nZodra er meer apparaten met Oxygen OS verschijnen zullen deze vanzelf worden toegevoegd, je ontvangt hier automatisch een bericht over!\n\nSwipe naar links om verder te gaan.</string>
+    <string name="setup_page_3_text">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Als dit niet zo is, kies het dan hierboven.\n\nVeeg naar links om verder te gaan.</string>
 
     <string name="setup_page_4_title">Kies je update-methode:</string>
-    <string name="setup_page_4_text">De Incrementele Update is meestal de juiste keuze.\n\nGebruik je een \"rooted\" apparaat of sla je regelmatig updates over (je wilt bijv. van 4.4.4 naar 5.1.1 updaten)? Kies dan de Volledige Update.\n\nSwipe naar links om door te gaan.</string>
+    <string name="setup_page_4_text">De Incrementele Update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, of regelmatig updates over slaat (je wilt bijv. van 5.0 naar 7.0 updaten), of hierover twijfelt: Je moet dan hierboven de Volledige Update kiezen.\n\nVeeg naar links om door te gaan.</string>
 
     <string name="setup_page_5_title">Klaar!</string>
-    <string name="setup_page_5_text">Veel plezier met het gebruik van deze app!\n\nJe kan je instellingen altijd veranderen door op de drie puntjes rechtsbovenin te klikken (of de Menu-knop te gebruiken) en vervolgens voor \'kies apparaat en update-methode\' te kiezen. </string>
+    <string name="setup_page_5_text">Veel plezier met het gebruik van deze app!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\". </string>
 
     <!-- Install guide strings -->
     <string name="install_guide">Installatiehandleiding</string>
@@ -151,7 +150,7 @@
     <string name="install_guide_page_4_text">- Als de installatie van de update is voltooid, keert je apparaat vanzelf terug naar het Recovery-menu. In het Recovery-menu, tik je op \"Reboot\".\n\n- Je apparaat zal het opstartscherm een lange tijd laten zien terwijl het opstart.\n\n- Hierna verschijnt er een wit venster met de titel \"Android wordt bijgewerkt\" , terwijl je apps worden geoptimaliseerd.</string>
 
     <string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe Oxygen OS-versie!</string>
-    <string name="install_guide_page_5_text">- Nadat het optimaliseren van de apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de Oxygen OS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
+    <string name="install_guide_page_5_text">- Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de Oxygen OS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
 
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>

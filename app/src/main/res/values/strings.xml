@@ -61,7 +61,6 @@
     <string name="download_pending">Your download will start soon…</string>
     <string name="download_permissions">Tap Download again to download the update.</string>
 
-
     <string name="download_progress_text_hours_remaining">%1$d%%, about %2$d hours remaining</string>
     <string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, less than a minute remaining</string>
     <string name="download_progress_text_minutes_remaining">%1$d%%, about %2$d minutes remaining</string>
@@ -117,13 +116,13 @@
     <string name="setup_close_button">start app</string>
 
     <string name="setup_page_1_title">Welcome to Oxygen Updater!</string>
-    <string name="setup_page_1_text">This app will allow you to:\n\n- Download the latest Android™  updates for your Oxygen® OS powered device early after release. \n\n- Update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- View some technical information about your device\n\nSwipe to the left to continue.</string>
+    <string name="setup_page_1_text">This app will allow you to:\n\n- Download the latest Android updates for your OxygenOS powered device early after release. \n\n- Update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- View some technical information about your device\n\nSwipe to the left to continue.</string>
 
     <!-- Page 2 is found under "Help Strings" as it is also the help page of this app -->
     <string name="setup_page_3_title">Choose your device:</string>
     <string name="setup_page_3_text">The device to receive updates for is usually automatically detected and selected above. If not, select your device above.\n\nSwipe to the left to continue.</string>
     <string name="setup_page_4_title">Choose your update method:</string>
-    <string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nIf you are using a rooted device, or use a very old Android version (e.g. you want to update from Android 5.0 to Android 6.0.1), or don\'t know if you are rooted or on a very old version, select Full update.\n\nSwipe to the left to continue.</string>
+    <string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nIf you are using a rooted device, or use a very old Android version (e.g. you want to update from Android 5.0 to Android 7.0), or don\'t know if you are rooted or on a very old version, select Full update.\n\nSwipe to the left to continue.</string>
     <string name="setup_page_5_title">You are ready to go!</string>
     <string name="setup_page_5_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
 

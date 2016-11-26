@@ -965,6 +965,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                                 // Make sure the failed download file gets deleted before the user tries to download it again.
                                 updateDownloader.cancelDownload();
                                 hideDownloadProgressBar();
+                                getDownloadButton().setText(getString(R.string.download));
                                 onUpdateDownloaded(false, true);
                             }
                         }
