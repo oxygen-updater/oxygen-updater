@@ -28,7 +28,7 @@ import static com.arjanvlek.oxygenupdater.Support.ServerRequest.UPDATE_METHODS;
 public class ServerConnector {
 
     public final static String SERVER_URL = "https://oxygenupdater.com/api/v1/";
-    public final static String TEST_SERVER_URL = "https://oxygenupdater.com/test/api/v1/";
+    public final static String TEST_SERVER_URL = "https://test.oxygenupdater.com/api/v1/";
     public final static String USER_AGENT_TAG = "User-Agent";
 
     private ObjectMapper objectMapper;

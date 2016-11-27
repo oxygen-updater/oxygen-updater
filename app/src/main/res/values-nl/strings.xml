@@ -14,10 +14,10 @@
     <string name="update_information_header_short">Update-info</string>
     <string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
     <string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
-    <string name="update_information_latest_available_update">Er is een nieuwe systeemupdate
+    <string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar:</string>
     <string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
     <string name="update_information_oxygen_os_version">Oxygen OS-versie: %1$s</string>
-    <string name="update_information_system_is_up_to_date">Jouw systeem is bijgewerkt.</string>
+    <string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
     <string name="update_information_unknown_update_name">Naamloze update voor %1$s</string>
     <string name="update_information_version">-versie:</string>
     <string name="update_information_view_update_information">Bekijk update-informatie</string>
@@ -91,21 +91,20 @@
     <string name="settings_header">Kies je apparaat en update-methode</string>
 
     <string name="settings_push">Stuur mij meldingen wanneer een:</string>
-    <string name="settings_push_from_server">Mededeling beschikbaar is</string>
+    <string name="settings_push_from_server">Waarschuwing nodig is</string>
     <string name="settings_push_new_version">Systeemupdate is verschenen</string>
     <string name="settings_push_new_device">Nieuw apparaat wordt ondersteund</string>
 
     <string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
 
     <string name="settings_server_messages">Toon meldingen in de app wanneer er:</string>
-    <string name="settings_server_messages_in_app">Nieuws en/of waarschuwingen zijn</string>
+    <string name="settings_server_messages_in_app">Algemene mededelingen zijn</string>
     <string name="settings_server_messages_new_app_version">Een app-update beschikbaar is</string>
 
     <string name="settings_system_up_to_date">Verberg de download-knop wanneer:</string>
     <string name="settings_system_hide_when_up_to_date">Mijn systeem up-to-date is</string>
 
     <string name="settings_update_method">Update-methode</string>
- beschikbaar:</string>
 
     <!-- FAQ strings -->
     <string name="faq">Veelgestelde vragen</string>
@@ -126,7 +125,7 @@
     <string name="setup_page_3_text">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Als dit niet zo is, kies het dan hierboven.\n\nVeeg naar links om verder te gaan.</string>
 
     <string name="setup_page_4_title">Kies je update-methode:</string>
-    <string name="setup_page_4_text">De Incrementele Update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, of regelmatig updates over slaat (je wilt bijv. van 5.0 naar 7.0 updaten), of hierover twijfelt: Je moet dan hierboven de Volledige Update kiezen.\n\nVeeg naar links om door te gaan.</string>
+    <string name="setup_page_4_text">De Incrementele update is hier meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, of een hele oude Android-versie gebruikt (je wilt bijv. van 5.0 naar 7.0 updaten), of hierover twijfelt, dan moet je hierboven de Volledige Update kiezen.\n\nVeeg naar links om door te gaan.</string>
 
     <string name="setup_page_5_title">Klaar!</string>
     <string name="setup_page_5_text">Veel plezier met het gebruik van deze app!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\". </string>
@@ -190,7 +189,7 @@
 
     <!-- Help strings -->
     <string name="help">Help</string>
-    <string name="help_bottom">Rechts boven in de app staat het menu. Daarin kun je naar de instellingen van deze app, naar de pagina met veelgestelde vragen en naar dit Help-scherm gaan.</string>
+    <string name="help_bottom">Rechts boven in de app staat het menu. Daarin kun je naar de instellingen van deze app, naar de pagina met veelgestelde vragen en naar dit Help-scherm gaan.\nIn de instellingen kun je de update-methode en instellingen voor meldingen wijzigen.</string>
     <string name="help_middle">Als je een update wilt installeren, tik je eerst op de \"Download\"-knop.\n\nAls de update is gedownload, tik je op \"Installatiehandleiding\" om te lezen hoe je de update kunt installeren.\n\nAls je apparaat up-to-date is, kun je op \"Bekijk update-informatie\" tikken om de nieuwe functies in je huidige software te bekijken.\n\nVeeg naar links of tik op \"Apparaat-info\" om enkele technische details over je apparaat te bekijken.</string>
     <string name="help_symbol_download">Toont de downloadgrootte van deze update.</string>
     <string name="help_symbol_download_cancel">Indien je hier op tikt, wordt het downloaden van deze update afgebroken.</string>
@@ -218,8 +217,8 @@
     <string name="delete_message_delete_button">Verwijder</string>
 
     <string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
-    <string name="unsupported_device_warning_message">Het lijkt erop dat jouw apparaat (momenteel) niet over OxygenOS-systeemsoftware beschikt. Deze app kan alleen systeemupdates voor apparaten met OxygenOS installeren. \n\nAndere apparaten, waaronder OnePlus-apparaten met Custom ROMs, worden momenteel niet ondersteund.</string>
-    <string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet nogmaals</string>
+    <string name="unsupported_device_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan. \n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
+    <string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
 
     <!-- Other strings -->

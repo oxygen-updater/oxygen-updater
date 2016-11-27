@@ -109,7 +109,7 @@ public class ApplicationContext extends Application {
                         oxygenDeviceName = inputLine.replace("[ro.build.product]: ", "");
                         oxygenDeviceName = oxygenDeviceName.replace("[", "");
                         oxygenDeviceName = oxygenDeviceName.replace("]", "");
-                        Log.v(TAG, "Detected Oxygen OS Device with product name " + oxygenDeviceName + " ...");
+                        Log.v(TAG, "Detected Oxygen OS Device: " + oxygenDeviceName + " ...");
                     }
 
                     if(inputLine.contains("ro.build.oemfingerprint")) {
