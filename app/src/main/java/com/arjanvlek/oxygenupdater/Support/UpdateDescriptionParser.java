@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.graphics.Typeface.BOLD;
+import static android.graphics.Typeface.NORMAL;
 
 public class UpdateDescriptionParser {
 
@@ -34,6 +35,11 @@ public class UpdateDescriptionParser {
                 Log.v(TAG, "Matched type: TEXT");
                 return TEXT;
             }
+
+            // Remove all spaces and newline characters from this line.
+            inputLine = inputLine.replace('\r', ' ');
+            inputLine = inputLine.replace('\n', ' ');
+            inputLine = inputLine.replace(" ", "");
 
             // If the input is exactly one character long, and that character is a backwards slash, return that this should be an empty line.
             char firstChar = inputLine.charAt(0);
@@ -99,11 +105,11 @@ public class UpdateDescriptionParser {
 
                 switch(element) {
                     case UPDATE_HEADER:
-                        modifiedLine = currentLine.substring(2, currentLine.length());
+                        modifiedLine = currentLine.substring(2, currentLine.length()); // Remove the double hashtags (##).
                         break;
                     case UPDATE_TITLE:
-                        modifiedLine = currentLine.substring(1, currentLine.length()) + "\n";
-                    case EMPTY_LINE: // Detected was that the line started with a line separator (\). There could also be more than one OnePlus line separator in this line. Replace each OnePlus line separator with an actual line separator.
+                        modifiedLine = currentLine.substring(1, currentLine.length()) + "\n"; // Remove the single hash tag and add another line separator to the title.
+                    case EMPTY_LINE: // The line starts with a line separator (\). However, there could also be multiple OnePlus line separators in this line. Replace each OnePlus line separator with an actual line separator.
                         char[] chars = currentLine.toCharArray();
                         for(char c : chars) {
                             if(c == '\\') {
@@ -139,7 +145,8 @@ public class UpdateDescriptionParser {
                 UpdateDescriptionElement element = UpdateDescriptionElement.find(currentLine, updateDescription);
 
                 int startPosition = modifiedUpdateDescription.indexOf(currentLine);
-                int endPosition = modifiedUpdateDescription.lastIndexOf(currentLine.charAt(currentLine.length() - 1)) + 1;
+                int endPosition = startPosition + currentLine.length();
+
                 switch(element) {
                     case UPDATE_TITLE:
                         // The update header should be made larger and bold.
@@ -154,6 +161,7 @@ public class UpdateDescriptionParser {
                     case LINK:
                         // A link should be made clickable and must be displayed as a link.
                         result.setSpan(new FormattedURLSpan(links.get(currentLine)), startPosition, endPosition, 0);
+                        break;
                 }
             }
 

@@ -24,6 +24,8 @@ public class ApplicationContext extends Application {
     private ServerConnector serverConnector;
     public static final String NO_OXYGEN_OS = "no_oxygen_os_ver_found";
     public static final int NUMBER_OF_INSTALL_GUIDE_PAGES = 5;
+    public static final String DEVICE_TOPIC_PREFIX = "device_";
+    public static final String UPDATE_METHOD_TOPIC_PREFIX = "_update-method_";
 
     public static final String APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME;
     public static final String LOCALE_DUTCH = "Nederlands";
