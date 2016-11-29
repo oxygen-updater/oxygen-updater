@@ -1,7 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-
+    signingConfigs {
+        release {
+            keyAlias 'androidappskey'
+            keyPassword 'Stoomtrein1'
+            storeFile file('/home/arjan/keyStore.jks')
+            storePassword 'Stoomtrein1'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "24.0.2"
     packagingOptions {
