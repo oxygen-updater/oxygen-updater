@@ -42,6 +42,7 @@
 
     <string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
     <string name="download_complete">Download voltooid</string>
+    <string name="download_complete_notification">Download voltooid. Tik om door te gaan naar de installatiehandleiding.</string>
 
     <string name="download_description">Oxygen Updater</string>
 
@@ -132,12 +133,15 @@
 
     <!-- Install guide strings -->
     <string name="install_guide">Installatiehandleiding</string>
+    <string name="install_guide_title">Installatie - %1$d van %2$d</string>
     <string name="install_guide_close_button">Sluit de installatiehandleiding</string>
+    <string name="install_guide_header">Veeg &lt;- -&gt; om tussen pagina\'s te wisselen.</string>
+    <string name="install_guide_tip">- Het is aan te raden om alle stappen ergens op te schrijven, omdat je apparaat tijdens de installatie van de update opnieuw moet worden opgestart.</string>
 
     <string name="install_guide_image_description">Extra afbeelding voor de duidelijkheid. Tik lager op het scherm voor de installatiehandleiding.</string>
 
     <string name="install_guide_page_1_title">Download de update.</string>
-    <string name="install_guide_page_1_text">- Het is aan te raden om alle stappen ergens op te schrijven, omdat jouw apparaat moet worden uitgezet tijdens de installatie van de update.\n\n-Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n- Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play-store doen, onder het tabblad \"Mijn apps\".</string>
+    <string name="install_guide_page_1_text">-Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n- Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play-store doen, onder het tabblad \"Mijn apps\".</string>
 
     <string name="install_guide_page_2_title">Ga naar de Recovery Modus.</string>
     <string name="install_guide_page_2_text">- Schakel je apparaat eerst volledig uit.\n\n- Houd hierna zowel de aan-uit knop als de volume-omlaag knop tegelijkertijd ingedrukt.\n\n- Je apparaat start nu op in Recovery Modus. Wacht totdat je het Recovery Modus-menu op het scherm ziet.</string>

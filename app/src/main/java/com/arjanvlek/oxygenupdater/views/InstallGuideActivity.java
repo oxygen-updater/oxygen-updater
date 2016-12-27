@@ -20,36 +20,62 @@ public class InstallGuideActivity extends AppCompatActivity {
     private final SparseArray<InstallGuideData> installGuideCache = new SparseArray<>();
     private final SparseArray<Bitmap> installGuideImageCache = new SparseArray<>();
 
+    public static final String INTENT_SHOW_DOWNLOAD_PAGE = "show_download_page";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_install_guide);
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        final boolean showDownloadPage = getIntent() == null || getIntent().getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true);
+
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), showDownloadPage);
+
+        setTitle(getString(R.string.install_guide_title, 1, showDownloadPage ? NUMBER_OF_INSTALL_GUIDE_PAGES : NUMBER_OF_INSTALL_GUIDE_PAGES - 1));
 
         ViewPager mViewPager = (ViewPager) findViewById(R.id.updateInstallationInstructionsPager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setTitle(getString(R.string.install_guide_title, (position + 1), showDownloadPage ? NUMBER_OF_INSTALL_GUIDE_PAGES : NUMBER_OF_INSTALL_GUIDE_PAGES - 1));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        SectionsPagerAdapter(FragmentManager fm) {
+        private boolean showDownloadPage;
+
+        SectionsPagerAdapter(FragmentManager fm, boolean showDownloadPage) {
             super(fm);
+            this.showDownloadPage = showDownloadPage;
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a InstallGuideFragment.
-            return InstallGuideFragment.newInstance(position + 1);
+            int startingPage = position + (showDownloadPage ? 1 : 2);
+            return InstallGuideFragment.newInstance(startingPage, position == 0);
         }
 
         @Override
         public int getCount() {
             // Show the predefined amount of total pages.
-            return NUMBER_OF_INSTALL_GUIDE_PAGES;
+            return showDownloadPage ? NUMBER_OF_INSTALL_GUIDE_PAGES : NUMBER_OF_INSTALL_GUIDE_PAGES - 1;
         }
     }
 

@@ -40,6 +40,7 @@ public class InstallGuideFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_PAGE_NUMBER = "page_number";
+    private static final String ARG_IS_FIRST_PAGE = "is_first_page";
     private static final String RESOURCE_ID_PREFIX = "install_guide_page_";
     private static final String RESOURCE_ID_TITLE = "_title";
     private static final String RESOURCE_ID_TEXT = "_text";
@@ -59,10 +60,11 @@ public class InstallGuideFragment extends Fragment {
      * Returns a new instance of this fragment for the given page
      * number.
      */
-    public static InstallGuideFragment newInstance(int pageNumber) {
+    public static InstallGuideFragment newInstance(int pageNumber, boolean isFirstPage) {
         InstallGuideFragment fragment = new InstallGuideFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE_NUMBER, pageNumber);
+        args.putBoolean(ARG_IS_FIRST_PAGE, isFirstPage);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,11 +74,13 @@ public class InstallGuideFragment extends Fragment {
         View installGuideView =  inflater.inflate(R.layout.fragment_install_guide, container, false);
 
         int pageNumber = getArguments().getInt(ARG_PAGE_NUMBER, 1);
+        boolean isFirstPage = getArguments().getBoolean(ARG_IS_FIRST_PAGE, false);
+
         SettingsManager settingsManager = new SettingsManager(getContext());
         long deviceId = settingsManager.getLongPreference(PROPERTY_DEVICE_ID);
         long updateMethodId = settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID);
 
-        new fetchInstallGuide().execute(installGuideView, pageNumber, deviceId, updateMethodId);
+        new fetchInstallGuide().execute(installGuideView, pageNumber, isFirstPage, deviceId, updateMethodId);
 
         return installGuideView;
     }
@@ -88,8 +92,9 @@ public class InstallGuideFragment extends Fragment {
             View installGuideView = (View) params[0];
 
             int pageNumber = (int) params[1];
-            long deviceId = (long) params[2];
-            long updateMethodId = (long) params[3];
+            boolean isFirstPage = (boolean) params[2];
+            long deviceId = (long) params[3];
+            long updateMethodId = (long) params[4];
 
             SparseArray<InstallGuideData> cache = ((InstallGuideActivity)getActivity()).getInstallGuideCache();
 
@@ -102,6 +107,7 @@ public class InstallGuideFragment extends Fragment {
             result.add(0, installGuideView);
             result.add(1, cache.get(pageNumber));
             result.add(2, pageNumber);
+            result.add(3, isFirstPage);
             return result;
         }
 
@@ -110,8 +116,9 @@ public class InstallGuideFragment extends Fragment {
             View installGuideView = (View) installGuideData.get(0);
             InstallGuideData data = (InstallGuideData) installGuideData.get(1);
             int pageNumber = (int) installGuideData.get(2);
+            boolean isFirstPage = (boolean) installGuideData.get(3);
 
-            displayInstallGuide(installGuideView, data, pageNumber);
+            displayInstallGuide(installGuideView, data, pageNumber, isFirstPage);
         }
     }
 
@@ -158,7 +165,12 @@ public class InstallGuideFragment extends Fragment {
         }
     }
 
-    private void displayInstallGuide(View installGuideView, InstallGuideData installGuideData, int pageNumber) {
+    private void displayInstallGuide(View installGuideView, InstallGuideData installGuideData, int pageNumber, boolean isFirstPage) {
+        if(isFirstPage) {
+            installGuideView.findViewById(R.id.installGuideHeader).setVisibility(View.VISIBLE);
+            installGuideView.findViewById(R.id.installGuideTip).setVisibility(View.VISIBLE);
+        }
+
         if(installGuideData == null || installGuideData.getDeviceId() == null || installGuideData.getUpdateMethodId() == null) {
             displayDefaultInstallGuide(installGuideView, pageNumber);
         } else {

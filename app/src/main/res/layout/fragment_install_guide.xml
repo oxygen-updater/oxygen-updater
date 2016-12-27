@@ -14,11 +14,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/installGuideHeader"
+            android:text="@string/install_guide_header"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
+
         <ImageView
             android:id="@+id/installGuideImage"
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:layout_centerHorizontal="true"
+            android:layout_below="@id/installGuideHeader"
             android:visibility="invisible"
             android:contentDescription="@string/install_guide_image_description"
             />
@@ -34,10 +44,22 @@
             android:textStyle="bold" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/material_blue_grey"
+            android:id="@+id/installGuideTip"
+            android:layout_below="@id/installGuideTitle"
+            android:text="@string/install_guide_tip"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"/>
+
+        <TextView
             android:id="@+id/installGuideText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/installGuideTitle"
+            android:layout_below="@+id/installGuideTip"
             android:layout_marginTop="20dp"
             android:visibility="invisible"
             android:textAppearance="?android:textAppearanceMedium"

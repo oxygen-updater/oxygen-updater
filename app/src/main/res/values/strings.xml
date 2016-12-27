@@ -42,6 +42,7 @@
 
     <string name="download_already_downloaded">The update was already downloaded. It is ready to get installed.</string>
     <string name="download_complete">Download complete</string>
+    <string name="download_complete_notification">Download complete. Tap to continue to the installation guide.</string>
 
     <string name="download_description">Oxygen Updater</string>
 
@@ -129,10 +130,13 @@
 
     <!-- Install guide strings -->
     <string name="install_guide">Install guide</string>
+    <string name="install_guide_title">Install guide - %1$d of %2$d</string>
     <string name="install_guide_image_description">Contextual image. Please tap on a lower place on the screen to hear the install guide.</string>
+    <string name="install_guide_header">Swipe &lt;- -&gt; to navigate between pages.</string>
+    <string name="install_guide_tip">- It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
 
     <string name="install_guide_page_1_title">Download the update.</string>
-    <string name="install_guide_page_1_text">- It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.\n\n- Press the Download button to start downloading the update.\n\n- The download progress will appear in the app, and as a notification in your notifications screen.\n\n- When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
+    <string name="install_guide_page_1_text">- Press the Download button to start downloading the update.\n\n- The download progress will appear in the app, and as a notification in your notifications screen.\n\n- When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
 
     <string name="install_guide_page_2_title">Enter Recovery Mode.</string>
     <string name="install_guide_page_2_text">- First, power off your device.\n\n- Then, press both the power and the volume down buttons at the same time.\n\n- Your device will now start in Recovery Mode. Wait until you see the recovery menu on your screen.</string>

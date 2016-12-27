@@ -10,6 +10,8 @@ import com.arjanvlek.oxygenupdater.views.SettingsActivity;
 import com.arjanvlek.oxygenupdater.views.SetupActivity;
 import com.arjanvlek.oxygenupdater.views.InstallGuideActivity;
 
+import static com.arjanvlek.oxygenupdater.views.InstallGuideActivity.INTENT_SHOW_DOWNLOAD_PAGE;
+
 public class ActivityLauncher {
 
     private final Activity baseActivity;
@@ -58,8 +60,10 @@ public class ActivityLauncher {
     /**
      * Opens the update instructions page.
      */
-    public void UpdateInstructions() {
-        startActivity(InstallGuideActivity.class);
+    public void UpdateInstructions(boolean isDownloaded) {
+        Intent i = new Intent(baseActivity, InstallGuideActivity.class);
+        i.putExtra(INTENT_SHOW_DOWNLOAD_PAGE, (!isDownloaded));
+        baseActivity.startActivity(i);
     }
 
     private <T> void startActivity(Class<T> activityClass) {

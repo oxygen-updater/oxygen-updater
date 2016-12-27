@@ -2,7 +2,9 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -11,6 +13,7 @@ import android.os.Environment;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
@@ -77,6 +80,7 @@ import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.NORMAL;
 import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.*;
 import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.NOT_SET;
+import static com.arjanvlek.oxygenupdater.views.InstallGuideActivity.INTENT_SHOW_DOWNLOAD_PAGE;
 
 public class UpdateInformationFragment extends AbstractUpdateInformationFragment {
 
@@ -95,6 +99,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     private String deviceName;
 
     public static final int NOTIFICATION_ID = 1;
+    public static final int DOWNLOAD_COMPLETE_NOTIFICATION_ID = 1000000000;
 
     // In app message bar collections and identifiers.
     private static final String KEY_APP_UPDATE_BARS = "app_update_bars";
@@ -209,7 +214,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 installGuideButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ((MainActivity)getActivity()).getActivityLauncher().UpdateInstructions();
+                        ((MainActivity)getActivity()).getActivityLauncher().UpdateInstructions(checkIfUpdateIsDownloaded(oxygenOTAUpdate));
+                        hideDownloadCompleteNotification();
                     }
                 });
                 updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
@@ -1003,6 +1009,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                                 hideVerifyingNotification();
                                 onUpdateDownloaded(true, false);
                                 Toast.makeText(getApplicationContext(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
+                                showDownloadCompleteNotification();
                             }
                         }
                     });
@@ -1166,6 +1173,12 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         }
     }
 
+    public boolean checkIfUpdateIsDownloaded(OxygenOTAUpdate oxygenOTAUpdate) {
+        if (oxygenOTAUpdate == null) return false;
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
+        return (file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID));
+    }
+
 
     /*
       -------------- UPDATE VERIFICATION METHODS -------------------
@@ -1214,6 +1227,42 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     }
 
     /**
+     * Shows a notification that the downloaded update file is downloaded successfully.
+\     */
+    private void showDownloadCompleteNotification() {
+        try {
+            // If the download complete notification is clicked, hide the first page of the install guide.
+            Intent resultIntent = new Intent(getActivity(), InstallGuideActivity.class);
+            resultIntent.putExtra(INTENT_SHOW_DOWNLOAD_PAGE, false);
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+            // Adds the back stack
+            stackBuilder.addParentStack(MainActivity.class);
+            // Adds the Intent to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
+            // Gets a PendingIntent containing the entire back stack
+            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
+                    .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                    .setOngoing(false)
+                    .setContentIntent(resultPendingIntent)
+                    .setAutoCancel(true)
+                    .setContentTitle(getString(R.string.app_name))
+                    .setContentText(getString(R.string.download_complete_notification));
+
+            if (Build.VERSION.SDK_INT >= 21) {
+                builder.setCategory(Notification.CATEGORY_SYSTEM);
+            }
+
+            NotificationManager manager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(DOWNLOAD_COMPLETE_NOTIFICATION_ID, builder.build());
+        } catch(Exception ignored) {
+
+        }
+    }
+
+    /**
      * Hides the verifying notification. Used when verification has succeeded.
      */
     private void hideVerifyingNotification() {
@@ -1221,6 +1270,13 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         manager.cancel(NOTIFICATION_ID);
     }
 
+    /**
+     * Hides the download complete notification. Used when the install guide is manually clicked from within the app.
+     */
+    private void hideDownloadCompleteNotification() {
+        NotificationManager manager = (NotificationManager)getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
+    }
 
     /**
      * Converts DiP units to pixels
