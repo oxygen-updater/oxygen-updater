@@ -106,6 +106,9 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     private static final String KEY_SERVER_ERROR_BARS = "server_error_bars";
     private static final String KEY_NO_NETWORK_CONNECTION_BARS = "no_network_connection_bars";
     private static final String KEY_SERVER_MESSAGE_BARS = "server_message_bars";
+    private static final String KEY_HAS_DOWNLOAD_ERROR = "has_download_error";
+    private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
+    private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
     private Map<String, List<Object>> inAppMessageBarData = new HashMap<>();
     private List<ServerMessageBar> inAppMessageBars = new ArrayList<>();
 
@@ -123,6 +126,11 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         }
         if(getActivity() != null) {
             context = getActivity().getApplicationContext();
+            // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
+            if(getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
+                Intent i = getActivity().getIntent();
+                showDownloadError(i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
+            }
         }
 
         adsAreSupported = getApplicationContext().checkPlayServices(getActivity(), false);
@@ -938,23 +946,28 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                             // Handle any other errors according to the error message.
                             if(isAdded()) {
                                 if (statusCode < 1000) {
-                                    showDownloadError(getString(R.string.download_error), getString(R.string.download_error_network), getString(R.string.download_error_close), getString(R.string.download_error_retry), true);
+                                    showDownloadError(getString(R.string.download_error), getString(R.string.download_error_network));
+                                    showDownloadFailedNotification(getString(R.string.download_error), getString(R.string.download_error_network), getString(R.string.download_notification_error_network));
                                 } else {
                                     switch (statusCode) {
                                         case ERROR_UNHANDLED_HTTP_CODE:
                                         case ERROR_HTTP_DATA_ERROR:
                                         case ERROR_TOO_MANY_REDIRECTS:
-                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_network), getString(R.string.download_error_close), getString(R.string.download_error_retry), true);
+                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_network));
+                                            showDownloadFailedNotification(getString(R.string.download_error), getString(R.string.download_error_network), getString(R.string.download_notification_error_network));
                                             break;
                                         case ERROR_FILE_ERROR:
                                             updateDownloader.makeDownloadDirectory();
-                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_directory), getString(R.string.download_error_close), null, true);
+                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_directory));
+                                            showDownloadFailedNotification(getString(R.string.download_error), getString(R.string.download_error_directory), getString(R.string.download_notification_error_storage_not_found));
                                             break;
                                         case ERROR_INSUFFICIENT_SPACE:
-                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_storage), getString(R.string.download_error_close), getString(R.string.download_error_retry), true);
+                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_storage));
+                                            showDownloadFailedNotification(getString(R.string.download_error), getString(R.string.download_error_storage), getString(R.string.download_notification_error_storage_full));
                                             break;
                                         case ERROR_DEVICE_NOT_FOUND:
-                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_sd_card), getString(R.string.download_error_close), getString(R.string.download_error_retry), true);
+                                            showDownloadError(getString(R.string.download_error), getString(R.string.download_error_sd_card));
+                                            showDownloadFailedNotification(getString(R.string.download_error), getString(R.string.download_error_sd_card), getString(R.string.download_notification_error_sd_card_missing));
                                             break;
                                         case ERROR_CANNOT_RESUME:
                                             updateDownloader.cancelDownload();
@@ -990,7 +1003,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         @Override
                         public void onVerifyError() {
                             if(isAdded()) {
-                                showDownloadError(getString(R.string.download_error), getString(R.string.download_error_corrupt), getString(R.string.download_error_close), getString(R.string.download_error_retry), true);
+                                showDownloadError(getString(R.string.download_error), getString(R.string.download_error_corrupt));
+                                showDownloadFailedNotification(getString(R.string.download_error), getString(R.string.download_error_corrupt), getString(R.string.download_notification_error_corrupt));
                                 File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
                                 try {
                                     //noinspection ResultOfMethodCallIgnored
@@ -1021,25 +1035,23 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      * Shows an {@link MessageDialog} with the occured download error.
      * @param title Title of the error message
      * @param message Contents of the error message
-     * @param positiveButtonText Rightmost button text
-     * @param negativeButtonText Leftmost button text
-     * @param closable If the dialog may be closed, this is set to true. If not, this is set to false. In that case, the application will be killed on exiting the dialog.
      */
-    private void showDownloadError(String title, String message, String positiveButtonText, String negativeButtonText, boolean closable) {
+    private void showDownloadError(String title, String message) {
         MessageDialog errorDialog = new MessageDialog()
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButtonText(positiveButtonText)
-                .setNegativeButtonText(negativeButtonText)
-                .setClosable(closable)
+                .setPositiveButtonText(getString(R.string.download_error_close))
+                .setNegativeButtonText(getString(R.string.download_error_retry))
+                .setClosable(true)
                 .setDialogListener(new MessageDialog.DialogListener() {
                     @Override
                     public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
-
+                        hideDownloadCompleteNotification();
                     }
 
                     @Override
                     public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                        hideDownloadCompleteNotification();
                         updateDownloader.cancelDownload();
                         updateDownloader.downloadUpdate(oxygenOTAUpdate);
                     }
@@ -1048,6 +1060,37 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(errorDialog, "DownloadError");
         transaction.commitAllowingStateLoss();
+    }
+
+    private void showDownloadFailedNotification(String title, String message, String notificationMessage) {
+        // If the download complete notification is clicked, hide the first page of the install guide.
+        Intent resultIntent = new Intent(getActivity(), MainActivity.class);
+        resultIntent.putExtra(KEY_HAS_DOWNLOAD_ERROR, true);
+        resultIntent.putExtra(KEY_DOWNLOAD_ERROR_TITLE, title);
+        resultIntent.putExtra(KEY_DOWNLOAD_ERROR_MESSAGE, message);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getActivity());
+        // Adds the back stack
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        // Gets a PendingIntent containing the entire back stack
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity())
+                .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                .setOngoing(false)
+                .setContentIntent(resultPendingIntent)
+                .setAutoCancel(true)
+                .setContentTitle(getString(R.string.download_failed))
+                .setContentText(notificationMessage);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            builder.setCategory(Notification.CATEGORY_SYSTEM);
+        }
+
+        NotificationManager manager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(DOWNLOAD_COMPLETE_NOTIFICATION_ID, builder.build());
     }
 
     /**

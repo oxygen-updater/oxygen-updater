@@ -62,6 +62,12 @@
     <string name="download_pending">Je download begint zometeen…</string>
     <string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
 
+    <string name="download_notification_error_network">Netwerkfout. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="download_notification_error_storage_full">Onvoldoende opslagruimte.</string>
+    <string name="download_notification_error_storage_not_found">Verbreek de verbinding met je computer en probeer het opnieuw.</string>
+    <string name="download_notification_error_sd_card_missing">Plaats een SD-kaart en probeer het opnieuw.</string>
+    <string name="download_notification_error_corrupt">Bestandscontrole mislukt. Controleer je verbinding en probeer het opnieuw.</string>
+
     <string name="download_progress_text_hours_remaining">%1$d%%, ongeveer %2$d uur resterend</string>
     <string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, minder dan een minuut resterend</string>
     <string name="download_progress_text_minutes_remaining">%1$d%%, ongeveer %2$d minuten resterend</string>

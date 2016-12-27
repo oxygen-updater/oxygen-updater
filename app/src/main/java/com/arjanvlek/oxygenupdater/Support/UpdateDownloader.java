@@ -75,23 +75,27 @@ public class UpdateDownloader {
 
     public void downloadUpdate(OxygenOTAUpdate oxygenOTAUpdate) {
         if(oxygenOTAUpdate != null) {
-            Uri downloadUri = Uri.parse(oxygenOTAUpdate.getDownloadUrl());
+            if(!oxygenOTAUpdate.getDownloadUrl().contains("http")) {
+                listener.onDownloadError(404);
+            } else {
+                Uri downloadUri = Uri.parse(oxygenOTAUpdate.getDownloadUrl());
 
-            DownloadManager.Request request = new DownloadManager.Request(downloadUri)
-                    .setDescription(baseActivity.getString(R.string.download_description))
-                    .setTitle(oxygenOTAUpdate.getVersionNumber() != null && !oxygenOTAUpdate.getVersionNumber().equals("null") && !oxygenOTAUpdate.getVersionNumber().isEmpty() ? oxygenOTAUpdate.getVersionNumber() : baseActivity.getString(R.string.download_unknown_update_name))
-                    .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, oxygenOTAUpdate.getFilename())
-                    .setVisibleInDownloadsUi(false)
-                    .setNotificationVisibility(VISIBILITY_VISIBLE);
+                DownloadManager.Request request = new DownloadManager.Request(downloadUri)
+                        .setDescription(baseActivity.getString(R.string.download_description))
+                        .setTitle(oxygenOTAUpdate.getVersionNumber() != null && !oxygenOTAUpdate.getVersionNumber().equals("null") && !oxygenOTAUpdate.getVersionNumber().isEmpty() ? oxygenOTAUpdate.getVersionNumber() : baseActivity.getString(R.string.download_unknown_update_name))
+                        .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, oxygenOTAUpdate.getFilename())
+                        .setVisibleInDownloadsUi(false)
+                        .setNotificationVisibility(VISIBILITY_VISIBLE);
 
-            long downloadID = downloadManager.enqueue(request);
+                long downloadID = downloadManager.enqueue(request);
 
-            previousBytesDownloadedSoFar = NOT_SET;
-            settingsManager.saveLongPreference(PROPERTY_DOWNLOAD_ID, downloadID);
+                previousBytesDownloadedSoFar = NOT_SET;
+                settingsManager.saveLongPreference(PROPERTY_DOWNLOAD_ID, downloadID);
 
-            checkDownloadProgress(oxygenOTAUpdate);
+                checkDownloadProgress(oxygenOTAUpdate);
 
-            listener.onDownloadStarted(downloadID);
+                listener.onDownloadStarted(downloadID);
+            }
         }
 
     }
