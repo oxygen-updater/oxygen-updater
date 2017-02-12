@@ -33,17 +33,27 @@ android {
         signingConfig signingConfigs.macReleaseConfig
     }
     buildTypes {
-        release {
+        release { // Config for releases, or testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v1/\""
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
+            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.build.product\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.ota.versionname\""
+            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\""
+            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint\""
+            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"" // Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported.
             minifyEnabled true
             shrinkResources false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug {
+        debug { // Config for use during debugging. Uses the test server, and reads system properties using the default build.prop values present in any Android device / emulator.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v1/\""
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
+            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.product.name\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
+            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
+            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During debugging, all devices are supported.
             debuggable true
             signingConfig signingConfigs.macReleaseConfig
         }

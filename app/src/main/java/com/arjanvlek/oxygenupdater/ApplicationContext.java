@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.Model.Device;
@@ -93,42 +94,16 @@ public class ApplicationContext extends Application {
                 String inputLine;
 
                 while ((inputLine = in.readLine()) != null) {
-                    if (inputLine.contains("ro.build.ota.versionname")) {
-                        oxygenOSVersion = inputLine.replace("[ro.build.ota.versionname]: ", "");
-                        oxygenOSVersion = oxygenOSVersion.replace("[", "");
-                        oxygenOSVersion = oxygenOSVersion.replace("]", "");
-                        Log.v(TAG, "Found Oxygen OS ROM with version " + oxygenOSVersion + " on this device...");
-                    }
-
-                    if (inputLine.contains("ro.build.version.ota")) {
-                        oxygenOSOTAVersion = inputLine.replace("[ro.build.version.ota]: ", "");
-                        oxygenOSOTAVersion = oxygenOSOTAVersion.replace("[", "");
-                        oxygenOSOTAVersion = oxygenOSOTAVersion.replace("]", "");
-                        Log.v(TAG, "Found Oxygen OS ROM with OTA version " + oxygenOSOTAVersion + " on this device...");
-                    }
-
-                    if (inputLine.contains("ro.build.product")) {
-                        oxygenDeviceName = inputLine.replace("[ro.build.product]: ", "");
-                        oxygenDeviceName = oxygenDeviceName.replace("[", "");
-                        oxygenDeviceName = oxygenDeviceName.replace("]", "");
-                        Log.v(TAG, "Detected Oxygen OS Device: " + oxygenDeviceName + " ...");
-                    }
-
-                    if(inputLine.contains("ro.build.oemfingerprint")) {
-                        oemFingerprint = inputLine.replace("[ro.build.oemfingerprint]: ", "");
-                        oemFingerprint = oemFingerprint.replace("[", "");
-                        oemFingerprint = oemFingerprint.replace("]", "");
-                    }
+                    oxygenDeviceName = readBuildPropItem(oxygenDeviceName, BuildConfig.DEVICE_CODENAME_LOOKUP_KEY, inputLine, "Detected Oxygen OS Device: %s ...");
+                    oxygenOSVersion = readBuildPropItem(oxygenOSVersion, BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, inputLine, "Detected Oxygen OS ROM with version %s ...");
+                    oxygenOSOTAVersion = readBuildPropItem(oxygenOSOTAVersion, BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, inputLine, "Detected Oxygen OS ROM with OTA version %s ...");
+                    oemFingerprint = readBuildPropItem(oemFingerprint, BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, inputLine, "Detected build fingerprint: %s ...");
 
                     if(securityPatchDate.equals(NO_OXYGEN_OS)) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             securityPatchDate = Build.VERSION.SECURITY_PATCH;
                         } else {
-                            if (inputLine.contains("ro.build.version.security_patch")) {
-                                securityPatchDate = inputLine.replace("[ro.build.version.security_patch]: ", "");
-                                securityPatchDate = securityPatchDate.replace("[", "");
-                                securityPatchDate = securityPatchDate.replace("]", "");
-                            }
+                            securityPatchDate = readBuildPropItem(securityPatchDate, "ro.build.version.security_patch", inputLine, "Detected security patch level of %s ...");
                         }
                     }
                 }
@@ -148,6 +123,19 @@ public class ApplicationContext extends Application {
         } else {
             return SYSTEM_VERSION_PROPERTIES_INSTANCE;
         }
+    }
+
+    private String readBuildPropItem(@NonNull String result, String itemKey, String inputLine, String logText) {
+        if (inputLine == null) return result;
+
+        if (inputLine.contains(itemKey)) {
+            result = inputLine.replace("[" + itemKey + "]: ", "");
+            result = result.replace("[", "");
+            result = result.replace("]", "");
+            if(logText != null) Log.v(TAG, String.format(logText, result));
+        }
+
+        return result;
     }
 
     /**
