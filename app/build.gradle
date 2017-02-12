@@ -2,15 +2,21 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        release {
+        ubuntuReleaseConfig {
             keyAlias 'androidappskey'
             keyPassword 'Stoomtrein1'
             storeFile file('/home/arjan/keyStore.jks')
             storePassword 'Stoomtrein1'
         }
+        macReleaseConfig {
+            keyAlias 'androidappskey'
+            keyPassword 'Stoomtrein1'
+            storeFile file('/Users/arjan.vlek/development/personal/keyStore.jks')
+            storePassword 'Stoomtrein1'
+        }
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -24,7 +30,7 @@ android {
         targetSdkVersion 25
         versionCode 3
         versionName "1.1.1"
-        signingConfig signingConfigs.release
+        signingConfig signingConfigs.macReleaseConfig
     }
     buildTypes {
         release {
@@ -39,6 +45,7 @@ android {
             buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v1/\""
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             debuggable true
+            signingConfig signingConfigs.macReleaseConfig
         }
     }
     compileOptions {
@@ -56,8 +63,8 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //General Android libraries
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:support-v4:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:support-v4:25.1.1'
     //JSON libraries
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.0'
