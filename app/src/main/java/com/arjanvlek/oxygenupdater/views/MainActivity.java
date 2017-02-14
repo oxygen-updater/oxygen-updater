@@ -54,9 +54,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         settingsManager = new SettingsManager(context);
         networkConnectionManager = new NetworkConnectionManager(context);
 
-        if(!settingsManager.getBooleanPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && networkConnectionManager.checkNetworkConnection()) {
-            SupportedDeviceManager supportedDeviceManager = new SupportedDeviceManager(this, ((ApplicationContext)getApplication()));
-            supportedDeviceManager.execute();
+        if(! (boolean) settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && networkConnectionManager.checkNetworkConnection()) {
+            new SupportedDeviceManager(this, ((ApplicationContext)getApplication())).execute();
         }
 
         // Set up the action bar.
@@ -104,12 +103,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         super.onStart();
 
         // Mark the welcome tutorial as finished if the user is moving from older app version. This is checked by either having stored update information for offline viewing, or if the last update checked date is set (if user always had up to date system and never viewed update information before).
-        if(!settingsManager.getBooleanPreference(PROPERTY_SETUP_DONE) && (settingsManager.checkIfCacheIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
-            settingsManager.saveBooleanPreference(PROPERTY_SETUP_DONE, true);
+        if(! (boolean) settingsManager.getPreference(PROPERTY_SETUP_DONE) && (settingsManager.checkIfCacheIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
+            settingsManager.savePreference(PROPERTY_SETUP_DONE, true);
         }
 
         // Show the welcome tutorial if the app needs to be set up.
-        if(!settingsManager.getBooleanPreference(PROPERTY_SETUP_DONE)) {
+        if(!(boolean) settingsManager.getPreference(PROPERTY_SETUP_DONE)) {
             if(networkConnectionManager.checkNetworkConnection()) {
                 activityLauncher.Tutorial();
             } else {
@@ -176,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     @Override
     public void displayUnsupportedMessage(boolean deviceIsSupported) {
 
-        if(!settingsManager.getBooleanPreference(PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && !deviceIsSupported) {
+        if(!(boolean) settingsManager.getPreference(PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && !deviceIsSupported) {
             View checkBoxView = View.inflate(MainActivity.this, R.layout.message_dialog_checkbox, null);
             final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
 
@@ -189,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SettingsManager settingsManager = new SettingsManager(getApplicationContext());
-                    settingsManager.saveBooleanPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox.isChecked());
+                    settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox.isChecked());
                     dialog.dismiss();
                 }
             });

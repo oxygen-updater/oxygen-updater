@@ -67,7 +67,7 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
 
         @Override
         protected List<ServerMessage> doInBackground(Void... arg0) {
-            return getApplicationContext().getServerConnector().getServerMessages(settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
+            return getApplicationContext().getServerConnector().getServerMessages((Long)settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long)settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
         }
 
         @Override
@@ -82,10 +82,10 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
         @Override
         protected OxygenOTAUpdate doInBackground(Void... arg0) {
             SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
-            OxygenOTAUpdate oxygenOTAUpdate = getApplicationContext().getServerConnector().getOxygenOTAUpdate(settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID), systemVersionProperties.getOxygenOSOTAVersion());
+            OxygenOTAUpdate oxygenOTAUpdate = getApplicationContext().getServerConnector().getOxygenOTAUpdate((Long)settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long)settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID), systemVersionProperties.getOxygenOSOTAVersion());
             if (oxygenOTAUpdate != null) {
                 if(oxygenOTAUpdate.getInformation() != null && oxygenOTAUpdate.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && oxygenOTAUpdate.isUpdateInformationAvailable() && oxygenOTAUpdate.isSystemIsUpToDateCheck()) {
-                    oxygenOTAUpdate = getApplicationContext().getServerConnector().getMostRecentOxygenOTAUpdate(settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
+                    oxygenOTAUpdate = getApplicationContext().getServerConnector().getMostRecentOxygenOTAUpdate((Long)settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long) settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
                 }
                 return oxygenOTAUpdate;
 

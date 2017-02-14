@@ -77,8 +77,8 @@ public class InstallGuideFragment extends Fragment {
         boolean isFirstPage = getArguments().getBoolean(ARG_IS_FIRST_PAGE, false);
 
         SettingsManager settingsManager = new SettingsManager(getContext());
-        long deviceId = settingsManager.getLongPreference(PROPERTY_DEVICE_ID);
-        long updateMethodId = settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID);
+        long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
+        long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID);
 
         new fetchInstallGuide().execute(installGuideView, pageNumber, isFirstPage, deviceId, updateMethodId);
 
@@ -93,8 +93,8 @@ public class InstallGuideFragment extends Fragment {
 
             int pageNumber = (int) params[1];
             boolean isFirstPage = (boolean) params[2];
-            long deviceId = (long) params[3];
-            long updateMethodId = (long) params[4];
+            long deviceId = (Long) params[3];
+            long updateMethodId = (Long) params[4];
 
             SparseArray<InstallGuideData> cache = ((InstallGuideActivity)getActivity()).getInstallGuideCache();
 

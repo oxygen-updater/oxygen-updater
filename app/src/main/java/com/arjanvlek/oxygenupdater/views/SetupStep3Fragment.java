@@ -85,7 +85,7 @@ public class SetupStep3Fragment extends AbstractFragment {
 
         if (settingsManager.containsPreference(SettingsManager.PROPERTY_DEVICE_ID)) {
             for(Device device : devices) {
-                if(device.getId() == settingsManager.getLongPreference(SettingsManager.PROPERTY_DEVICE_ID) ){
+                if(device.getId() == (Long) settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID) ){
                     selectedIndex = devices.indexOf(device);
                 }
             }
@@ -116,7 +116,7 @@ public class SetupStep3Fragment extends AbstractFragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Device device = (Device)adapterView.getItemAtPosition(i);
                 settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getName());
-                settingsManager.saveLongPreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
+                settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
             }
 
             @Override

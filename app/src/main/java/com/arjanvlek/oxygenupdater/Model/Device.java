@@ -4,15 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Device {
 
-    public Device() {}
-
-    public Device(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
     private long id;
     private String name;
     private String productName;
+    private String chipSet;
 
     public long getId() {
         return id;
@@ -38,5 +33,15 @@ public class Device {
     @JsonProperty("product_name")
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    @JsonProperty("chip_set")
+    public String getChipSet() {
+        return chipSet;
+    }
+
+    @JsonProperty("chip_set")
+    public void setChipSet(String chipSet) {
+        this.chipSet = chipSet;
     }
 }

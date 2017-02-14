@@ -108,7 +108,7 @@ public class OxygenOTAUpdate {
 
     public boolean isSystemIsUpToDate(SettingsManager settingsManager) {
         //noinspection SimplifiableIfStatement
-        if(settingsManager != null && settingsManager.showIfSystemIsUpToDate()) {
+        if(settingsManager != null && settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true)) {
             return systemIsUpToDate;
         } else {
             return false;

@@ -40,7 +40,7 @@ public class SetupStep4Fragment extends AbstractFragment {
 
 
     public void fetchUpdateMethods() {
-        long deviceId = settingsManager.getLongPreference(PROPERTY_DEVICE_ID);
+        Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
         new UpdateDataFetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, deviceId);
     }
 
@@ -82,7 +82,7 @@ public class SetupStep4Fragment extends AbstractFragment {
 
         if (settingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID)) {
             for(UpdateMethod updateMethod : updateMethods) {
-                if(updateMethod.getId() == settingsManager.getLongPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID) ){
+                if(updateMethod.getId() == (Long) settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID) ){
                     recommendedPositions = new ArrayList<>();
                     recommendedPositions.add(updateMethods.indexOf(updateMethod));
                 }
@@ -114,13 +114,13 @@ public class SetupStep4Fragment extends AbstractFragment {
                     UpdateMethod updateMethod= (UpdateMethod) adapterView.getItemAtPosition(i);
 
                     //Set update method in preferences.
-                    settingsManager.saveLongPreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
+                    settingsManager.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
                     settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
 
                     if(getApplicationContext().checkPlayServices(getActivity(), false)) {
                         // Subscribe to notifications
                         // Subscribe to notifications for the newly selected device and update method
-                        TopicSubscriptionData data = new TopicSubscriptionData(getApplicationContext(), settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
+                        TopicSubscriptionData data = new TopicSubscriptionData(getApplicationContext(), (Long) settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long) settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
                         new NotificationTopicSubscriber().execute(data);
                     } else {
                         try {

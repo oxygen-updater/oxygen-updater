@@ -169,7 +169,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         if (adView != null && adsAreSupported) {
             adView.resume();
         }
-        if (refreshedDate != null && isFetched && settingsManager.checkIfSettingsAreValid() && isAdded()) {
+        if (refreshedDate != null && isFetched && settingsManager.checkIfSetupScreenHasBeenCompleted() && isAdded()) {
             if (refreshedDate.plusMinutes(5).isBefore(DateTime.now())) {
                 if (networkConnectionManager.checkNetworkConnection()) {
                     getServerData();
@@ -253,7 +253,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      * If an offline {@link OxygenOTAUpdate} is not available, display a "No network connection error message".
      */
     private void initData() {
-        if (!isFetched && settingsManager.checkIfSettingsAreValid()) {
+        if (!isFetched && settingsManager.checkIfSetupScreenHasBeenCompleted()) {
             if (networkConnectionManager.checkNetworkConnection()) {
                 getServerData();
                 showAds();
@@ -281,7 +281,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         this.inAppMessageBarData = new HashMap<>();
         new GetUpdateInformation().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         new GetServerStatus().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        if(settingsManager.showNewsMessages()) {
+        if(settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true)) {
             new GetServerMessages().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         }
         checkNoConnectionBar();
@@ -310,7 +310,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     public void displayServerMessages(List<ServerMessage> serverMessages) {
         List<Object> serverMessageBars = new ArrayList<>();
 
-        if(serverMessages != null && settingsManager.showNewsMessages()) {
+        if(serverMessages != null && settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true)) {
             for(ServerMessage serverMessage : serverMessages) {
                 serverMessageBars.add(serverMessage);
             }
@@ -335,7 +335,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             serverErrorBars.add(serverStatus);
         }
 
-        if(serverStatus != null && settingsManager.showAppUpdateMessages() && !checkIfAppIsUpToDate(serverStatus.getLatestAppVersion())) {
+        if(serverStatus != null && settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !checkIfAppIsUpToDate(serverStatus.getLatestAppVersion())) {
             appUpdateBars.add(serverStatus);
         }
 
@@ -407,21 +407,23 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             View serverStatusWarningBar = serverStatusView.getBackgroundBar();
             TextView serverStatusWarningTextView = serverStatusView.getTextView();
 
-            if (settingsManager.showNewsMessages()) {
+            boolean showNewsMessages = settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true);
+
+            if (showNewsMessages) {
                 serverStatusWarningBar.setVisibility(VISIBLE);
                 serverStatusWarningTextView.setVisibility(VISIBLE);
             }
 
             switch (serverStatus.getStatus()) {
                 case WARNING:
-                    if (settingsManager.showNewsMessages()) {
+                    if (showNewsMessages) {
                         serverStatusWarningBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_orange_light));
                         serverStatusWarningTextView.setText(getString(R.string.server_status_warning));
                         numberOfBars = addMessageBar(serverStatusView, numberOfBars);
                     }
                     break;
                 case ERROR:
-                    if (settingsManager.showNewsMessages()) {
+                    if (showNewsMessages) {
                         serverStatusWarningBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_red_light));
                         serverStatusWarningTextView.setText(getString(R.string.server_status_error));
                         numberOfBars = addMessageBar(serverStatusView, numberOfBars);
@@ -445,7 +447,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         // Display app update message if available
         for(Object serverStatusObject : inAppMessageBarData.get(KEY_APP_UPDATE_BARS)) {
             ServerStatus serverStatus = (ServerStatus)serverStatusObject;
-            if (isAdded()) {
+            if (isAdded() && settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true)) {
                 // getActivity() is required here. Otherwise, clicking on the update message link will crash the application.
                 ServerMessageBar appUpdateMessageView = new ServerMessageBar(getActivity(), null);
                 View appUpdateMessageBar = appUpdateMessageView.getBackgroundBar();
@@ -560,10 +562,10 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         if(online) {
             // Save update data for offline viewing
             settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, oxygenOTAUpdate.getVersionNumber());
-            settingsManager.saveIntPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, oxygenOTAUpdate.getDownloadSize());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, oxygenOTAUpdate.getDownloadSize());
             settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, oxygenOTAUpdate.getDescription());
             settingsManager.savePreference(PROPERTY_OFFLINE_FILE_NAME, oxygenOTAUpdate.getFilename());
-            settingsManager.saveBooleanPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, oxygenOTAUpdate.isUpdateInformationAvailable());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, oxygenOTAUpdate.isUpdateInformationAvailable());
             settingsManager.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString());
         }
 
@@ -610,7 +612,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         // Show last time checked.
         TextView dateCheckedView = (TextView) rootView.findViewById(R.id.updateInformationSystemIsUpToDateDateTextView);
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(context, this);
-        dateCheckedView.setText(String.format(getString(R.string.update_information_last_checked_on), dateTimeFormatter.formatDateTime(settingsManager.getPreference(PROPERTY_UPDATE_CHECKED_DATE))));
+        dateCheckedView.setText(String.format(getString(R.string.update_information_last_checked_on), dateTimeFormatter.formatDateTime((String) settingsManager.getPreference(PROPERTY_UPDATE_CHECKED_DATE))));
 
     }
 
@@ -695,11 +697,11 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     @Override
     protected OxygenOTAUpdate buildOfflineOxygenOTAUpdate() {
         OxygenOTAUpdate oxygenOTAUpdate = new OxygenOTAUpdate();
-        oxygenOTAUpdate.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
-        oxygenOTAUpdate.setDownloadSize(settingsManager.getIntPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
-        oxygenOTAUpdate.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
-        oxygenOTAUpdate.setUpdateInformationAvailable(settingsManager.getBooleanPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
-        oxygenOTAUpdate.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
+        oxygenOTAUpdate.setVersionNumber((String) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
+        oxygenOTAUpdate.setDownloadSize((int) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
+        oxygenOTAUpdate.setDescription((String) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
+        oxygenOTAUpdate.setUpdateInformationAvailable((boolean) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
+        oxygenOTAUpdate.setFilename((String) settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
         return oxygenOTAUpdate;
     }
 
@@ -710,7 +712,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      * @return True if the system is up to date, false if not.
      */
     private boolean isSystemUpToDateStringCheck(OxygenOTAUpdate oxygenOTAUpdate) {
-        if(settingsManager.showIfSystemIsUpToDate()) {
+        if(settingsManager.getPreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true)) {
             // This grabs the Oxygen OS version from build.prop. As there is no direct SDK way to do this, it has to be done in this way.
             SystemVersionProperties systemVersionProperties = ((ApplicationContext)getActivity().getApplication()).getSystemVersionProperties();
 

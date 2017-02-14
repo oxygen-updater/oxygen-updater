@@ -45,7 +45,7 @@ public class SetupActivity extends AppCompatActivity implements SupportedDeviceC
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
-        if(!settingsManager.getBooleanPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && networkConnectionManager.checkNetworkConnection()) {
+        if(!(boolean)settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && networkConnectionManager.checkNetworkConnection()) {
             SupportedDeviceManager supportedDeviceManager = new SupportedDeviceManager(this, ((ApplicationContext)getApplication()));
             supportedDeviceManager.execute();
         }
@@ -90,7 +90,7 @@ public class SetupActivity extends AppCompatActivity implements SupportedDeviceC
     @Override
     public void displayUnsupportedMessage(boolean deviceIsSupported) {
 
-        if(!settingsManager.getBooleanPreference(PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && !deviceIsSupported) {
+        if(!(boolean) settingsManager.getPreference(PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && !deviceIsSupported) {
             AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
             builder.setTitle(getString(R.string.unsupported_device_warning_title));
             builder.setMessage(getString(R.string.unsupported_device_warning_message));
@@ -181,8 +181,8 @@ public class SetupActivity extends AppCompatActivity implements SupportedDeviceC
     }
 
     public void closeInitialTutorial(View view) {
-        if (settingsManager.checkIfDeviceIsSet()) {
-            settingsManager.saveBooleanPreference(SettingsManager.PROPERTY_SETUP_DONE, true);
+        if (settingsManager.checkIfSetupScreenIsFilledIn()) {
+            settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
             NavUtils.navigateUpFromSameTask(this);
         } else {
             showSettingsWarning();

@@ -20,6 +20,9 @@ import static android.app.Notification.PRIORITY_HIGH;
 import static android.app.Notification.VISIBILITY_PUBLIC;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DEVICE_NAME;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DUTCH_MESSAGE;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.ENGLISH_MESSAGE;
@@ -49,19 +52,19 @@ public class NotificationService extends FirebaseMessagingService {
 
         switch(notificationType) {
             case NEW_DEVICE:
-                if(!settingsManager.receiveNewDeviceNotifications()) {
+                if(!settingsManager.getPreference(PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true)) {
                     return;
                 }
                 builder = displayNewDeviceNotification(messageContents.get(NEW_DEVICE_NAME.toString()));
                 break;
             case NEW_VERSION:
-                if(!settingsManager.receiveSystemUpdateNotifications()) {
+                if(!settingsManager.getPreference(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true)) {
                     return;
                 }
                 builder = displayNewVersionNotification(messageContents.get(DEVICE_NAME.toString()), messageContents.get(NEW_VERSION_NUMBER.toString()));
                 break;
             case GENERAL_NOTIFICATION:
-                if(!settingsManager.receiveGeneralNotifications()) {
+                if(!settingsManager.getPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true)) {
                     return;
                 }
                 String appLocale = Locale.getDefault().getDisplayLanguage();

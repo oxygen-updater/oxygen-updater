@@ -53,12 +53,8 @@ public class ApplicationContext extends Application {
         }
 
         else {
-            if(serverConnector == null) {
-                Log.v(TAG, "Created ServerConnector for use within the application...");
-                serverConnector = new ServerConnector();
-            }
             Log.v(TAG, "Used ServerConnector to fetch devices...");
-            devices = serverConnector.getDevices();
+            devices = getServerConnector().getDevices();
             deviceFetchDate = LocalDateTime.now();
             return devices;
         }
@@ -76,67 +72,16 @@ public class ApplicationContext extends Application {
     }
 
     public SystemVersionProperties getSystemVersionProperties() {
+        // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
         if(SYSTEM_VERSION_PROPERTIES_INSTANCE == null) {
-            SystemVersionProperties systemVersionProperties = new SystemVersionProperties();
-            String oxygenOSVersion = NO_OXYGEN_OS;
-            String oxygenOSOTAVersion = NO_OXYGEN_OS;
-            String oxygenDeviceName = NO_OXYGEN_OS;
-            String oemFingerprint = NO_OXYGEN_OS;
-            String securityPatchDate = NO_OXYGEN_OS;
-            try {
-                Process getBuildPropProcess = new ProcessBuilder()
-                        .command("getprop")
-                        .redirectErrorStream(true)
-                        .start();
-                Log.v(TAG, "Started fetching device properties using 'getprop' command...");
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(getBuildPropProcess.getInputStream()));
-                String inputLine;
-
-                while ((inputLine = in.readLine()) != null) {
-                    oxygenDeviceName = readBuildPropItem(oxygenDeviceName, BuildConfig.DEVICE_CODENAME_LOOKUP_KEY, inputLine, "Detected Oxygen OS Device: %s ...");
-                    oxygenOSVersion = readBuildPropItem(oxygenOSVersion, BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, inputLine, "Detected Oxygen OS ROM with version %s ...");
-                    oxygenOSOTAVersion = readBuildPropItem(oxygenOSOTAVersion, BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, inputLine, "Detected Oxygen OS ROM with OTA version %s ...");
-                    oemFingerprint = readBuildPropItem(oemFingerprint, BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, inputLine, "Detected build fingerprint: %s ...");
-
-                    if(securityPatchDate.equals(NO_OXYGEN_OS)) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            securityPatchDate = Build.VERSION.SECURITY_PATCH;
-                        } else {
-                            securityPatchDate = readBuildPropItem(securityPatchDate, "ro.build.version.security_patch", inputLine, "Detected security patch level of %s ...");
-                        }
-                    }
-                }
-                getBuildPropProcess.destroy();
-                Log.v(TAG, "Finished fetching device properties using 'getprop' command...");
-
-            } catch (IOException e) {
-                Log.e(TAG, e.getLocalizedMessage());
-            }
-            systemVersionProperties.setOxygenDeviceName(oxygenDeviceName);
-            systemVersionProperties.setOxygenOSVersion(oxygenOSVersion);
-            systemVersionProperties.setOxygenOSOTAVersion(oxygenOSOTAVersion);
-            systemVersionProperties.setOemFingerprint(oemFingerprint);
-            systemVersionProperties.setSecurityPatchDate(securityPatchDate);
-            SYSTEM_VERSION_PROPERTIES_INSTANCE = systemVersionProperties;
+            SYSTEM_VERSION_PROPERTIES_INSTANCE = new SystemVersionProperties();
             return SYSTEM_VERSION_PROPERTIES_INSTANCE;
         } else {
             return SYSTEM_VERSION_PROPERTIES_INSTANCE;
         }
     }
 
-    private String readBuildPropItem(@NonNull String result, String itemKey, String inputLine, String logText) {
-        if (inputLine == null) return result;
 
-        if (inputLine.contains(itemKey)) {
-            result = inputLine.replace("[" + itemKey + "]: ", "");
-            result = result.replace("[", "");
-            result = result.replace("]", "");
-            if(logText != null) Log.v(TAG, String.format(logText, result));
-        }
-
-        return result;
-    }
 
     /**
      * Checks if the Google Play Services are installed on the device.

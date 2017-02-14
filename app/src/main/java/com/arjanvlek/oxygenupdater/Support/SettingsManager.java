@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class SettingsManager {
 
     //Offline cache properties
@@ -32,97 +35,20 @@ public class SettingsManager {
     // Notifications properties
     public static final String PROPERTY_NOTIFICATION_TOPIC = "notification_topic";
 
-    private Context context;
+    private final Context context;
 
     public SettingsManager(Context context) {
         this.context = context;
     }
 
 
-
-    public boolean checkIfSettingsAreValid() {
-        return containsPreference(PROPERTY_DEVICE) && containsPreference(PROPERTY_UPDATE_METHOD) && getBooleanPreference(PROPERTY_SETUP_DONE);
+    public <T> T getPreference(String key) {
+        return getPreference(key, null);
     }
 
-    public boolean receiveSystemUpdateNotifications() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true);
-    }
-
-    public boolean receiveGeneralNotifications() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true);
-    }
-
-    public boolean receiveNewDeviceNotifications() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true);
-    }
-
-    public boolean showNewsMessages() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PROPERTY_SHOW_NEWS_MESSAGES, true);
-    }
-
-    public boolean showAppUpdateMessages() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true);
-    }
-
-    public boolean showIfSystemIsUpToDate() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getBoolean(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true);
-    }
-
-
-
-
-    /**
-     * Saves a String preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    public void savePreference(String key, String value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    /**
-     * Saves an Integer preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    public void saveIntPreference(String key, int value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(key, value);
-        editor.apply();
-    }
-
-    /**
-     * Saves a Boolean preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    public void saveBooleanPreference(String key, boolean value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(key, value);
-        editor.apply();
-    }
-
-    /**
-     * Saves a Long preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    public void saveLongPreference(String key, Long value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putLong(key, value);
-        editor.apply();
+    public <T> T getPreference(String key, T defaultValue) {
+        SharedPreferences preferences = getSharedPreferences();
+        return preferences.contains(key) ? (T) preferences.getAll().get(key) : defaultValue;
     }
 
     /**
@@ -131,8 +57,7 @@ public class SettingsManager {
      * @return Returns if the given key is stored in the preferences.
      */
     public boolean containsPreference(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.contains(key);
+        return getSharedPreferences().contains(key);
     }
 
     /**
@@ -140,56 +65,46 @@ public class SettingsManager {
      * @param key Preference Key
      */
     public void deletePreference(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.remove(key);
-        editor.apply();
-    }
-
-
-    /**
-     * Get a String preference from Shared Preferences
-     * @param key Preference Key
-     * @return Preference Value
-     */
-    public String getPreference(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(key, null);
+        getSharedPreferencesEditor()
+                .remove(key)
+                .apply();
     }
 
     /**
-     * Get a String preference from Shared Preferences
-     * @param key Preference Key
-     * @return Preference Value
+     * Saves a preference to sharedPreferences
+     * @param key Item key to later retrieve the item back
+     * @param value Item that needs to be saved in shared preferences.
      */
-    public int getIntPreference(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getInt(key, 0);
+    public void savePreference(String key, Object value) {
+        if (value instanceof String) saveStringPreference(key, (String) value);
+        else if (value instanceof Integer) saveIntPreference(key, (Integer) value);
+        else if (value instanceof Boolean) saveBooleanPreference(key, (Boolean) value);
+        else if (value instanceof Long) saveLongPreference(key, (Long) value);
+        else if (value instanceof Float) saveFloatPreference(key, (Float) value);
+        else if (value instanceof Set<?>)
+            saveStringSetPreference(key, convertToStringSet((Set<?>) value));
+        else
+            throw new UnsupportedOperationException("SettingsManager can't save preferences of the class type " + value.getClass().getName() + "!");
     }
 
-    public boolean getBooleanPreference(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getBoolean(key, false);
-    }
-
-    /**
-     * Get a String preference from Shared Preferences
-     * @param key Preference Key
-     * @return Preference Value
-     */
-    public long getLongPreference(String key) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getLong(key, -1);
-    }
+    // Helper methods for the app
 
     /**
      * Checks if a device and update method have been set.
-     * @return if the application is set up properly.
+     * @return if the user has chosen a device and an update method.
      */
-    public boolean checkIfDeviceIsSet() {
+    public boolean checkIfSetupScreenIsFilledIn() {
         return containsPreference(PROPERTY_DEVICE) && containsPreference(PROPERTY_UPDATE_METHOD);
     }
 
+
+    /**
+     * Checks if a user has completed the initial setup screen.
+     * @return if the user has completed the setup screen.
+     */
+    public boolean checkIfSetupScreenHasBeenCompleted() {
+        return containsPreference(PROPERTY_DEVICE) && containsPreference(PROPERTY_UPDATE_METHOD) && (boolean) getPreference(PROPERTY_SETUP_DONE);
+    }
 
     /**
      * Checks if the update information has been saved before so it can be viewed without a network connection
@@ -203,6 +118,91 @@ public class SettingsManager {
         } catch(Exception ignored) {
             return false;
         }
+    }
+
+    // Helper methods
+
+    private SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+    private SharedPreferences.Editor getSharedPreferencesEditor() {
+        return getSharedPreferences().edit();
+    }
+
+    /**
+     * Saves a String preference to SharedPreferences.
+     * @param key Preference Key
+     * @param value Preference Value
+     */
+    private void saveStringPreference(String key, String value) {
+        getSharedPreferencesEditor()
+                .putString(key, value)
+                .apply();
+    }
+
+    /**
+     * Saves an Integer preference to SharedPreferences.
+     * @param key Preference Key
+     * @param value Preference Value
+     */
+    private void saveIntPreference(String key, int value) {
+        getSharedPreferencesEditor()
+                .putInt(key, value)
+                .apply();
+    }
+
+    /**
+     * Saves a Boolean preference to SharedPreferences.
+     * @param key Preference Key
+     * @param value Preference Value
+     */
+    private void saveBooleanPreference(String key, boolean value) {
+        getSharedPreferencesEditor()
+                .putBoolean(key, value)
+                .apply();
+    }
+
+    /**
+     * Saves a Long preference to SharedPreferences.
+     * @param key Preference Key
+     * @param value Preference Value
+     */
+    private void saveLongPreference(String key, Long value) {
+        getSharedPreferencesEditor()
+                .putLong(key, value)
+                .apply();
+    }
+
+    /**
+     * Saves a Long preference to SharedPreferences.
+     * @param key Preference Key
+     * @param value Preference Value
+     */
+    private void saveFloatPreference(String key, Float value) {
+        getSharedPreferencesEditor()
+                .putFloat(key, value)
+                .apply();
+    }
+
+    /**
+     * Saves a set of strings as preferences in SharedPreferences.
+     * @param key Preference Key
+     * @param values Preference Values
+     */
+    private void saveStringSetPreference(String key, Set<String> values) {
+        getSharedPreferencesEditor()
+                .putStringSet(key, values)
+                .apply();
+    }
+
+    private Set<String> convertToStringSet(Set<?> values) {
+        Set<String> results = new HashSet<>();
+        for(Object o : values) {
+            if (o instanceof String) results.add((String) o);
+            else throw new IllegalArgumentException("SettingsManager can only save preferences of Sets that contain Strings.");
+        }
+        return results;
     }
 
 }

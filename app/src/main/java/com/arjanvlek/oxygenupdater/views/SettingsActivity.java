@@ -66,10 +66,10 @@ public class SettingsActivity extends AbstractActivity {
             appUpdatesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    settingsManager.saveBooleanPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, isChecked);
+                    settingsManager.savePreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, isChecked);
                 }
             });
-            appUpdatesSwitch.setChecked(settingsManager.showAppUpdateMessages());
+            appUpdatesSwitch.setChecked(settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true));
         }
 
         SwitchCompat appMessagesSwitch = (SwitchCompat) findViewById(R.id.settingsAppMessagesSwitch);
@@ -77,10 +77,10 @@ public class SettingsActivity extends AbstractActivity {
             appMessagesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    settingsManager.saveBooleanPreference(PROPERTY_SHOW_NEWS_MESSAGES, isChecked);
+                    settingsManager.savePreference(PROPERTY_SHOW_NEWS_MESSAGES, isChecked);
                 }
             });
-            appMessagesSwitch.setChecked(settingsManager.showNewsMessages());
+            appMessagesSwitch.setChecked(settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true));
         }
 
         SwitchCompat importantPushNotificationsSwitch = (SwitchCompat) findViewById(R.id.settingsImportantPushNotificationsSwitch);
@@ -88,10 +88,10 @@ public class SettingsActivity extends AbstractActivity {
             importantPushNotificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    settingsManager.saveBooleanPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, isChecked);
+                    settingsManager.savePreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, isChecked);
                 }
             });
-            importantPushNotificationsSwitch.setChecked(settingsManager.receiveGeneralNotifications());
+            importantPushNotificationsSwitch.setChecked(settingsManager.getPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true));
         }
 
         SwitchCompat newVersionPushNotificationsSwitch = (SwitchCompat) findViewById(R.id.settingsNewVersionPushNotificationsSwitch);
@@ -99,10 +99,10 @@ public class SettingsActivity extends AbstractActivity {
             newVersionPushNotificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    settingsManager.saveBooleanPreference(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, isChecked);
+                    settingsManager.savePreference(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, isChecked);
                 }
             });
-            newVersionPushNotificationsSwitch.setChecked(settingsManager.receiveSystemUpdateNotifications());
+            newVersionPushNotificationsSwitch.setChecked(settingsManager.getPreference(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true));
         }
 
         SwitchCompat newDevicePushNotificationsSwitch = (SwitchCompat) findViewById(R.id.settingsNewDevicePushNotificationsSwitch);
@@ -110,10 +110,10 @@ public class SettingsActivity extends AbstractActivity {
             newDevicePushNotificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    settingsManager.saveBooleanPreference(PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, isChecked);
+                    settingsManager.savePreference(PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, isChecked);
                 }
             });
-            newDevicePushNotificationsSwitch.setChecked(settingsManager.receiveNewDeviceNotifications());
+            newDevicePushNotificationsSwitch.setChecked(settingsManager.getPreference(PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true));
         }
 
         SwitchCompat systemIsUpToDateSwitch = (SwitchCompat) findViewById(R.id.settingsSystemIsUpToDateSwitch);
@@ -121,10 +121,10 @@ public class SettingsActivity extends AbstractActivity {
             systemIsUpToDateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    settingsManager.saveBooleanPreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, isChecked);
+                    settingsManager.savePreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, isChecked);
                 }
             });
-            systemIsUpToDateSwitch.setChecked(settingsManager.showIfSystemIsUpToDate());
+            systemIsUpToDateSwitch.setChecked(settingsManager.getPreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true));
         }
     }
 
@@ -188,7 +188,7 @@ public class SettingsActivity extends AbstractActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         Device device = (Device) adapterView.getItemAtPosition(i);
                         settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getName());
-                        settingsManager.saveLongPreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
+                        settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
 
                         try {
                             updateMethodsProgressBar.setVisibility(View.VISIBLE);
@@ -291,13 +291,13 @@ public class SettingsActivity extends AbstractActivity {
                         } catch (Exception ignored) {
                         }
 
-                        settingsManager.saveLongPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
+                        settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
                         settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
 
                         // Google Play services are not required if the user doesn't notifications
                         if(getAppApplicationContext().checkPlayServices(getParent(), false)) {
                             // Subscribe to notifications for the newly selected device and update method
-                            TopicSubscriptionData data = new TopicSubscriptionData(getAppApplicationContext(), settingsManager.getLongPreference(PROPERTY_DEVICE_ID), settingsManager.getLongPreference(PROPERTY_UPDATE_METHOD_ID));
+                            TopicSubscriptionData data = new TopicSubscriptionData(getAppApplicationContext(), (Long) settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long)settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
                             new NotificationTopicSubscriber().execute(data);
                         } else {
                             try {
@@ -341,7 +341,7 @@ public class SettingsActivity extends AbstractActivity {
 
     @Override
     public void onBackPressed() {
-        if (settingsManager.checkIfSettingsAreValid() && !progressBar.isShown()) {
+        if (settingsManager.checkIfSetupScreenHasBeenCompleted() && !progressBar.isShown()) {
             NavUtils.navigateUpFromSameTask(this);
         } else {
             showSettingsWarning();
@@ -353,7 +353,7 @@ public class SettingsActivity extends AbstractActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                if (settingsManager.checkIfSettingsAreValid() && !progressBar.isShown()) {
+                if (settingsManager.checkIfSetupScreenHasBeenCompleted() && !progressBar.isShown()) {
                     NavUtils.navigateUpFromSameTask(this);
                     return true;
                 } else {

@@ -90,7 +90,7 @@ public class UpdateDownloader {
                 long downloadID = downloadManager.enqueue(request);
 
                 previousBytesDownloadedSoFar = NOT_SET;
-                settingsManager.saveLongPreference(PROPERTY_DOWNLOAD_ID, downloadID);
+                settingsManager.savePreference(PROPERTY_DOWNLOAD_ID, downloadID);
 
                 checkDownloadProgress(oxygenOTAUpdate);
 
@@ -102,7 +102,7 @@ public class UpdateDownloader {
 
     public void cancelDownload() {
         if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
-            downloadManager.remove(settingsManager.getLongPreference(PROPERTY_DOWNLOAD_ID));
+            downloadManager.remove((long) settingsManager.getPreference(PROPERTY_DOWNLOAD_ID));
             clearUp();
 
             listener.onDownloadCancelled();
@@ -111,9 +111,9 @@ public class UpdateDownloader {
 
     public void checkDownloadProgress(OxygenOTAUpdate oxygenOTAUpdate) {
 
-        final long downloadId = settingsManager.getLongPreference(PROPERTY_DOWNLOAD_ID);
-
         if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
+            final Long downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID);
+
             DownloadManager.Query query = new DownloadManager.Query();
             query.setFilterById(downloadId);
 
