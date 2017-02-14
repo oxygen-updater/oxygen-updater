@@ -3,12 +3,9 @@ package com.arjanvlek.oxygenupdater.Support;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import java.lang.reflect.Field;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class SettingsManager {
 
