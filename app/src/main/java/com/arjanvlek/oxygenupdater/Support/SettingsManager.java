@@ -86,6 +86,7 @@ public class SettingsManager {
             // Obtain the private-access preference store from the SharedPreferences editor
             Field f = editor.getClass().getDeclaredField("mModified");
             f.setAccessible(true);
+            //noinspection unchecked: I know this operation might be unsafe.
             Map<String, Object> preferences = (Map<String, Object>) f.get(editor);
 
             // Save the modified preference to the store
