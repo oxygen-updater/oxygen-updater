@@ -3,8 +3,11 @@ package com.arjanvlek.oxygenupdater.Support;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class SettingsManager {
@@ -76,15 +79,26 @@ public class SettingsManager {
      * @param value Item that needs to be saved in shared preferences.
      */
     public void savePreference(String key, Object value) {
-        if (value instanceof String) saveStringPreference(key, (String) value);
-        else if (value instanceof Integer) saveIntPreference(key, (Integer) value);
-        else if (value instanceof Boolean) saveBooleanPreference(key, (Boolean) value);
-        else if (value instanceof Long) saveLongPreference(key, (Long) value);
-        else if (value instanceof Float) saveFloatPreference(key, (Float) value);
-        else if (value instanceof Set<?>)
-            saveStringSetPreference(key, convertToStringSet((Set<?>) value));
-        else
-            throw new UnsupportedOperationException("SettingsManager can't save preferences of the class type " + value.getClass().getName() + "!");
+
+        try {
+            SharedPreferences.Editor editor = getSharedPreferencesEditor();
+
+            // Obtain the private-access preference store from the SharedPreferences editor
+            Field f = editor.getClass().getDeclaredField("mModified");
+            f.setAccessible(true);
+            Map<String, Object> preferences = (Map<String, Object>) f.get(editor);
+
+            // Save the modified preference to the store
+            preferences.put(key, value);
+
+            // Place the modified preference store back in the editor
+            f.set(editor, preferences);
+
+            // Let the editor apply the edited preferences as usual
+            editor.apply();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save preference with key "  + key + " and value "  + value + " : "  + e.getMessage(), e);
+        }
     }
 
     // Helper methods for the app
@@ -128,81 +142,6 @@ public class SettingsManager {
 
     private SharedPreferences.Editor getSharedPreferencesEditor() {
         return getSharedPreferences().edit();
-    }
-
-    /**
-     * Saves a String preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    private void saveStringPreference(String key, String value) {
-        getSharedPreferencesEditor()
-                .putString(key, value)
-                .apply();
-    }
-
-    /**
-     * Saves an Integer preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    private void saveIntPreference(String key, int value) {
-        getSharedPreferencesEditor()
-                .putInt(key, value)
-                .apply();
-    }
-
-    /**
-     * Saves a Boolean preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    private void saveBooleanPreference(String key, boolean value) {
-        getSharedPreferencesEditor()
-                .putBoolean(key, value)
-                .apply();
-    }
-
-    /**
-     * Saves a Long preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    private void saveLongPreference(String key, Long value) {
-        getSharedPreferencesEditor()
-                .putLong(key, value)
-                .apply();
-    }
-
-    /**
-     * Saves a Long preference to SharedPreferences.
-     * @param key Preference Key
-     * @param value Preference Value
-     */
-    private void saveFloatPreference(String key, Float value) {
-        getSharedPreferencesEditor()
-                .putFloat(key, value)
-                .apply();
-    }
-
-    /**
-     * Saves a set of strings as preferences in SharedPreferences.
-     * @param key Preference Key
-     * @param values Preference Values
-     */
-    private void saveStringSetPreference(String key, Set<String> values) {
-        getSharedPreferencesEditor()
-                .putStringSet(key, values)
-                .apply();
-    }
-
-    private Set<String> convertToStringSet(Set<?> values) {
-        Set<String> results = new HashSet<>();
-        for(Object o : values) {
-            if (o instanceof String) results.add((String) o);
-            else throw new IllegalArgumentException("SettingsManager can only save preferences of Sets that contain Strings.");
-        }
-        return results;
     }
 
 }
