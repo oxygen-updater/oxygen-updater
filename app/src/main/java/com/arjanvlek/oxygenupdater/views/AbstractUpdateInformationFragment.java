@@ -1,26 +1,34 @@
 package com.arjanvlek.oxygenupdater.views;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
+import android.text.Html;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
-import com.arjanvlek.oxygenupdater.Model.ServerMessage;
+import com.arjanvlek.oxygenupdater.Model.ServerResult;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 public abstract class AbstractUpdateInformationFragment extends AbstractFragment {
@@ -38,76 +46,121 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
         networkConnectionManager = new NetworkConnectionManager(getActivity().getApplicationContext());
     }
 
-    protected abstract void displayServerStatus(ServerStatus serverStatus);
+    protected class GetServerData extends AsyncTask<Callback, Void, ServerResult> {
 
-    protected abstract void displayServerMessages(List<ServerMessage> serverMessages);
+        @Override
+        protected ServerResult doInBackground(Callback... callbacks) {
+            ServerResult serverResult = new ServerResult();
+            serverResult.setCallback(callbacks[0]);
+            serverResult.setServerStatus(getApplicationContext().getServerConnector().getServerStatus());
+
+            Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
+            Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID);
+
+            serverResult.setServerMessages(getApplicationContext().getServerConnector().getServerMessages(deviceId, updateMethodId));
+
+
+            SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
+            OxygenOTAUpdate oxygenOTAUpdate = getApplicationContext().getServerConnector().getOxygenOTAUpdate(deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion());
+            if (oxygenOTAUpdate != null) {
+                if(oxygenOTAUpdate.getInformation() != null && oxygenOTAUpdate.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && oxygenOTAUpdate.isUpdateInformationAvailable() && oxygenOTAUpdate.isSystemIsUpToDateCheck()) {
+                    oxygenOTAUpdate = getApplicationContext().getServerConnector().getMostRecentOxygenOTAUpdate(deviceId, updateMethodId);
+                }
+
+            } else {
+                if (settingsManager.checkIfCacheIsAvailable()) {
+                    oxygenOTAUpdate = buildOfflineOxygenOTAUpdate();
+                } else {
+                    showNetworkError();
+                    oxygenOTAUpdate = null;
+                }
+            }
+            serverResult.setUpdateData(oxygenOTAUpdate);
+            return serverResult;
+        }
+
+        @Override
+        protected void onPostExecute(final ServerResult serverResult) {
+            List<Banner> inAppBars = new ArrayList<>();
+
+            // Add the "No connection" bar depending on the network status of the device.
+            boolean online = networkConnectionManager.checkNetworkConnection();
+            if(!online) {
+                inAppBars.add(new Banner() {
+                    @Override
+                    public String getBannerText(Context context) {
+                        return context.getString(R.string.error_no_internet_connection);
+                    }
+
+                    @Override
+                    public int getColor(Context context) {
+                        return ContextCompat.getColor(context, R.color.holo_red_light);
+                    }
+                });
+            }
+
+            if(serverResult.getServerMessages() != null && settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true)) {
+                inAppBars.addAll(serverResult.getServerMessages());
+            }
+
+            if(serverResult.getServerStatus() == null) {
+                ServerStatus serverStatus = new ServerStatus();
+                serverStatus.setStatus(UNREACHABLE);
+                serverStatus.setLatestAppVersion(BuildConfig.VERSION_NAME);
+                serverResult.setServerStatus(serverStatus);
+            }
+
+            ServerStatus.Status status = serverResult.getServerStatus().getStatus();
+
+            if(status.isUserRecoverableError()) {
+                inAppBars.add(serverResult.getServerStatus());
+            }
+
+            if(status.isNonRecoverableError()) {
+                switch (status) {
+                    case MAINTENANCE:
+                        showMaintenanceError();
+                        break;
+                    case OUTDATED:
+                        showAppNotValidError();
+                        break;
+                    default:
+                }
+            }
+
+            if(settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !checkIfAppIsUpToDate(serverResult.getServerStatus().getLatestAppVersion())) {
+                inAppBars.add(new Banner() {
+
+                    @Override
+                    public CharSequence getBannerText(Context context) {
+                        //noinspection deprecation Suggested fix requires API level 24, which is too new for this app.
+                        return Html.fromHtml(String.format(getString(R.string.new_app_version), serverResult.getServerStatus().getLatestAppVersion()));
+                    }
+
+                    @Override
+                    public int getColor(Context context) {
+                        return ContextCompat.getColor(context, R.color.holo_green_light);
+                    }
+                });
+            }
+
+            displayInAppMessageBars(inAppBars);
+            displayUpdateInformation(serverResult.getUpdateData(), online, false);
+            initDownloadManager();
+            checkIfUpdateIsAlreadyDownloaded(serverResult.getUpdateData());
+
+        }
+    }
 
     protected abstract void displayUpdateInformation(OxygenOTAUpdate oxygenOTAUpdate, boolean online, boolean force);
+
+    protected abstract void displayInAppMessageBars(List<Banner> banners);
 
     protected abstract void initDownloadManager();
 
     protected abstract void checkIfUpdateIsAlreadyDownloaded(OxygenOTAUpdate oxygenOTAUpdate);
 
     protected abstract OxygenOTAUpdate buildOfflineOxygenOTAUpdate();
-
-    protected class GetServerStatus extends AsyncTask<Void, Void, ServerStatus> {
-
-        @Override
-        protected ServerStatus doInBackground(Void... arg0) {
-            return getApplicationContext().getServerConnector().getServerStatus();
-        }
-
-        @Override
-        protected void onPostExecute(ServerStatus serverStatus) {
-            displayServerStatus(serverStatus);
-        }
-    }
-
-    protected class GetServerMessages extends  AsyncTask<Void, Void, List<ServerMessage>> {
-
-        @Override
-        protected List<ServerMessage> doInBackground(Void... arg0) {
-            return getApplicationContext().getServerConnector().getServerMessages((Long)settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long)settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
-        }
-
-        @Override
-        protected void onPostExecute(List<ServerMessage> serverMessages) {
-            displayServerMessages(serverMessages);
-        }
-    }
-
-
-    protected class GetUpdateInformation extends AsyncTask<Void, Void, OxygenOTAUpdate> {
-
-        @Override
-        protected OxygenOTAUpdate doInBackground(Void... arg0) {
-            SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
-            OxygenOTAUpdate oxygenOTAUpdate = getApplicationContext().getServerConnector().getOxygenOTAUpdate((Long)settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long)settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID), systemVersionProperties.getOxygenOSOTAVersion());
-            if (oxygenOTAUpdate != null) {
-                if(oxygenOTAUpdate.getInformation() != null && oxygenOTAUpdate.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && oxygenOTAUpdate.isUpdateInformationAvailable() && oxygenOTAUpdate.isSystemIsUpToDateCheck()) {
-                    oxygenOTAUpdate = getApplicationContext().getServerConnector().getMostRecentOxygenOTAUpdate((Long)settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long) settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
-                }
-                return oxygenOTAUpdate;
-
-            } else {
-                if (settingsManager.checkIfCacheIsAvailable()) {
-                    return buildOfflineOxygenOTAUpdate();
-                } else {
-                    showNetworkError();
-                    return null;
-                }
-            }
-        }
-
-        @Override
-        protected void onPostExecute(OxygenOTAUpdate result) {
-            super.onPostExecute(result);
-            oxygenOTAUpdate = result;
-            displayUpdateInformation(result, networkConnectionManager.checkNetworkConnection(), false);
-            initDownloadManager();
-            checkIfUpdateIsAlreadyDownloaded(oxygenOTAUpdate);
-        }
-    }
 
     protected void showNetworkError() {
         MessageDialog errorDialog = new MessageDialog()

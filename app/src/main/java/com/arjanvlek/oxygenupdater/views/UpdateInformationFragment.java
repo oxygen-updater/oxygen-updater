@@ -17,6 +17,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.TypedValue;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.Model.ServerMessage;
@@ -96,7 +98,6 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     private DateTime refreshedDate;
     private boolean isFetched;
     private boolean adsAreSupported;
-    private String deviceName;
 
     public static final int NOTIFICATION_ID = 1;
     public static final int DOWNLOAD_COMPLETE_NOTIFICATION_ID = 1000000000;
@@ -120,10 +121,6 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // SettingsManager is created in the parent class.
-        if(settingsManager != null) {
-            deviceName = settingsManager.getPreference(PROPERTY_DEVICE);
-        }
         if(getActivity() != null) {
             context = getActivity().getApplicationContext();
             // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
@@ -279,12 +276,12 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      */
     private void getServerData() {
         this.inAppMessageBarData = new HashMap<>();
-        new GetUpdateInformation().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        new GetServerStatus().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        if(settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true)) {
-            new GetServerMessages().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        }
-        checkNoConnectionBar();
+        new GetServerData().execute(new Callback() {
+            @Override
+            public void onActionPerformed(Object... result) {
+                System.err.println("hey");
+            }
+        });
     }
 
 
@@ -292,68 +289,6 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
       -------------- METHODS FOR DISPLAYING DATA ON THE FRAGMENT -------------------
      */
 
-
-    private void checkNoConnectionBar() {
-        // Display the "No connection" bar depending on the network status of the device.
-        List<Object> noConnectionBars = new ArrayList<>(1);
-
-        if(!networkConnectionManager.checkNetworkConnection()) {
-            noConnectionBars.add(new Object());
-        }
-
-        inAppMessageBarData.put(KEY_NO_NETWORK_CONNECTION_BARS, noConnectionBars);
-
-        if(areAllServerMessageBarsLoaded()) {
-            displayInAppMessageBars();
-        }
-    }
-    public void displayServerMessages(List<ServerMessage> serverMessages) {
-        List<Object> serverMessageBars = new ArrayList<>();
-
-        if(serverMessages != null && settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true)) {
-            for(ServerMessage serverMessage : serverMessages) {
-                serverMessageBars.add(serverMessage);
-            }
-        }
-        inAppMessageBarData.put(KEY_SERVER_MESSAGE_BARS, serverMessageBars);
-
-        if(areAllServerMessageBarsLoaded()) {
-            displayInAppMessageBars();
-        }
-    }
-
-    /**
-     * Displays the status of the server (warning, error, maintenance or invalid app version)
-     * @param serverStatus Server status data from the backend
-     */
-    public void displayServerStatus(ServerStatus serverStatus) {
-
-        List<Object> serverErrorBars = new ArrayList<>(1);
-        List<Object> appUpdateBars = new ArrayList<>(1);
-
-        if(serverStatus != null && isAdded() && serverStatus.getStatus() != NORMAL) {
-            serverErrorBars.add(serverStatus);
-        }
-
-        if(serverStatus != null && settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !checkIfAppIsUpToDate(serverStatus.getLatestAppVersion())) {
-            appUpdateBars.add(serverStatus);
-        }
-
-        if(serverStatus == null) {
-            ServerStatus status = new ServerStatus();
-            status.setLatestAppVersion(BuildConfig.VERSION_NAME);
-            status.setStatus(UNREACHABLE);
-            serverErrorBars.add(status);
-        }
-
-        inAppMessageBarData.put(KEY_SERVER_ERROR_BARS, serverErrorBars);
-        inAppMessageBarData.put(KEY_APP_UPDATE_BARS, appUpdateBars);
-
-        if(areAllServerMessageBarsLoaded()) {
-            displayInAppMessageBars();
-        }
-
-    }
 
     private int addMessageBar(ServerMessageBar view, int numberOfBars) {
         // Add the message to the update information screen if it is not null.
@@ -371,8 +306,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         return numberOfBars;
     }
 
-    private void deleteAllInAppMessageBars() {
-        for(ServerMessageBar view : this.inAppMessageBars) {
+    private void deleteAllInAppMessageBars(List<ServerMessageBar> inAppMessageBars) {
+        for(ServerMessageBar view : inAppMessageBars) {
             if(view != null && isAdded()) {
                 this.rootView.removeView(view);
             }
@@ -380,135 +315,33 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         this.inAppMessageBars = new ArrayList<>();
     }
 
-    private void displayInAppMessageBars() {
-        if(!isAdded()) {
-            return;
-        }
-        deleteAllInAppMessageBars();
+    protected void displayInAppMessageBars(List<Banner> banners) {
+
+        deleteAllInAppMessageBars(this.inAppMessageBars);
+
         int numberOfBars = 0;
 
-        // Display the "No connection" bar if no connection is available.
-        for(Object ignored : inAppMessageBarData.get(KEY_NO_NETWORK_CONNECTION_BARS)) {
-            ServerMessageBar noConnectionError = new ServerMessageBar(getApplicationContext(), null);
-            View noConnectionErrorBar = noConnectionError.getBackgroundBar();
-            TextView noConnectionErrorTextView = noConnectionError.getTextView();
+        List<ServerMessageBar> createdServerMessageBars = new ArrayList<>();
 
-            noConnectionErrorBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_red_light));
-            noConnectionErrorTextView.setText(getString(R.string.error_no_internet_connection));
-            numberOfBars = addMessageBar(noConnectionError, numberOfBars);
-        }
+        for(Banner banner : banners) {
+            ServerMessageBar bar = new ServerMessageBar(getApplicationContext(), null);
+            View backgroundBar = bar.getBackgroundBar();
+            TextView textView = bar.getTextView();
 
-        // Display server error bars / messages
-        for(Object serverStatusObject : inAppMessageBarData.get(KEY_SERVER_ERROR_BARS)) {
-            ServerStatus serverStatus = (ServerStatus)serverStatusObject;
+            backgroundBar.setBackgroundColor(banner.getColor(context));
+            textView.setText(banner.getBannerText(context));
 
-            // Create a new server message view and get its contents
-            ServerMessageBar serverStatusView = new ServerMessageBar(getApplicationContext(), null);
-            View serverStatusWarningBar = serverStatusView.getBackgroundBar();
-            TextView serverStatusWarningTextView = serverStatusView.getTextView();
-
-            boolean showNewsMessages = settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true);
-
-            if (showNewsMessages) {
-                serverStatusWarningBar.setVisibility(VISIBLE);
-                serverStatusWarningTextView.setVisibility(VISIBLE);
+            if(banner.getBannerText(context) instanceof Spanned) {
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
-            switch (serverStatus.getStatus()) {
-                case WARNING:
-                    if (showNewsMessages) {
-                        serverStatusWarningBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_orange_light));
-                        serverStatusWarningTextView.setText(getString(R.string.server_status_warning));
-                        numberOfBars = addMessageBar(serverStatusView, numberOfBars);
-                    }
-                    break;
-                case ERROR:
-                    if (showNewsMessages) {
-                        serverStatusWarningBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_red_light));
-                        serverStatusWarningTextView.setText(getString(R.string.server_status_error));
-                        numberOfBars = addMessageBar(serverStatusView, numberOfBars);
-                    }
-                    break;
-                case MAINTENANCE:
-                    showMaintenanceError();
-                    break;
-                case OUTDATED:
-                    showAppNotValidError();
-                    break;
-                case UNREACHABLE:
-                    serverStatusWarningBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_red_light));
-                    serverStatusWarningTextView.setText(getString(R.string.server_status_unreachable));
-                    numberOfBars = addMessageBar(serverStatusView, numberOfBars);
-                    break;
-            }
-
-        }
-
-        // Display app update message if available
-        for(Object serverStatusObject : inAppMessageBarData.get(KEY_APP_UPDATE_BARS)) {
-            ServerStatus serverStatus = (ServerStatus)serverStatusObject;
-            if (isAdded() && settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true)) {
-                // getActivity() is required here. Otherwise, clicking on the update message link will crash the application.
-                ServerMessageBar appUpdateMessageView = new ServerMessageBar(getActivity(), null);
-                View appUpdateMessageBar = appUpdateMessageView.getBackgroundBar();
-                TextView appUpdateMessageTextView = appUpdateMessageView.getTextView();
-
-                appUpdateMessageBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_green_light));
-
-                // The text contains an HTML link to the Google Play store to allow quick updating of the app.
-                appUpdateMessageTextView.setText(Html.fromHtml(String.format(getString(R.string.new_app_version), serverStatus.getLatestAppVersion())));
-                appUpdateMessageTextView.setMovementMethod(LinkMovementMethod.getInstance());
-                numberOfBars = addMessageBar(appUpdateMessageView, numberOfBars);
-            }
-        }
-
-        // Display server message bars / messages
-        List<Object> serverMessageObjects = this.inAppMessageBarData.get(KEY_SERVER_MESSAGE_BARS);
-        for (Object messageObject : serverMessageObjects) {
-            ServerMessage message = (ServerMessage)messageObject;
-            // Create a new server message view and get its contents
-            ServerMessageBar serverMessageBar = new ServerMessageBar(getApplicationContext(), null);
-            View serverMessageBackgroundBar = serverMessageBar.getBackgroundBar();
-            TextView serverMessageTextView = serverMessageBar.getTextView();
-
-
-            // Set the right locale text of the message in the view.
-            String appLocale = Locale.getDefault().getDisplayLanguage();
-
-            if (appLocale.equals(LOCALE_DUTCH)) {
-                serverMessageTextView.setText(message.getDutchMessage());
-            } else {
-                serverMessageTextView.setText(message.getEnglishMessage());
-            }
-
-            // Set the background color of the view according to the priority data from the backend.
-            switch (message.getPriority()) {
-                case LOW:
-                    serverMessageBackgroundBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_green_light));
-                    break;
-                case MEDIUM:
-                    serverMessageBackgroundBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_orange_light));
-                    break;
-                case HIGH:
-                    serverMessageBackgroundBar.setBackgroundColor(ContextCompat.getColor(context, R.color.holo_red_light));
-                    break;
-            }
-
-            serverMessageTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-            serverMessageTextView.setHorizontallyScrolling(true);
-            serverMessageTextView.setSingleLine(true);
-            serverMessageTextView.setMarqueeRepeatLimit(-1); // -1 is forever
-            serverMessageTextView.setFocusable(true);
-            serverMessageTextView.setFocusableInTouchMode(true);
-            serverMessageTextView.requestFocus();
-            serverMessageTextView.setSelected(true);
-
-            numberOfBars = addMessageBar(serverMessageBar, numberOfBars);
+            numberOfBars = addMessageBar(bar, numberOfBars);
+            createdServerMessageBars.add(bar);
         }
 
         // Set the margins of the app ui to be below the last added server message bar.
-        if(inAppMessageBars.size() > 0 && isAdded()) {
-            View lastServerMessageView = inAppMessageBars.get(inAppMessageBars.size() - 1);
+        if(!createdServerMessageBars.isEmpty() && isAdded()) {
+            View lastServerMessageView = createdServerMessageBars.get(createdServerMessageBars.size() - 1);
             if (lastServerMessageView != null) {
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
                 params.addRule(BELOW, lastServerMessageView.getId());
@@ -524,7 +357,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 }
             }
         }
-
+        this.inAppMessageBars = createdServerMessageBars;
     }
 
     /**
@@ -626,7 +459,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         if (oxygenOTAUpdate.getVersionNumber() != null && !oxygenOTAUpdate.getVersionNumber().equals("null")) {
             buildNumberView.setText(oxygenOTAUpdate.getVersionNumber());
         } else {
-            buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), deviceName));
+            buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager.getPreference(PROPERTY_DEVICE)));
         }
 
         // Display download size.
@@ -749,10 +582,6 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     /*
       -------------- USER INTERFACE ELEMENT METHODS -------------------
      */
-
-    private boolean areAllServerMessageBarsLoaded() {
-        return inAppMessageBarData.containsKey(KEY_APP_UPDATE_BARS) && inAppMessageBarData.containsKey(KEY_NO_NETWORK_CONNECTION_BARS) && inAppMessageBarData.containsKey(KEY_SERVER_ERROR_BARS) && inAppMessageBarData.containsKey(KEY_SERVER_MESSAGE_BARS);
-    }
 
     private Button getDownloadButton() {
         return (Button) rootView.findViewById(R.id.updateInformationDownloadButton);

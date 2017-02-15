@@ -1,14 +1,39 @@
 package com.arjanvlek.oxygenupdater.Model;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
+
+import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.R;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ServerMessage {
+import java.util.Locale;
+
+public class ServerMessage implements Banner {
     private long id;
     private String englishMessage;
     private String dutchMessage;
     private Long deviceId;
     private Long updateMethodId;
     private ServerMessagePriority priority;
+
+    @Override
+    public String getBannerText(Context ignored) {
+        return Locale.getDefault().getDisplayLanguage().equals(ApplicationContext.LOCALE_DUTCH) ? getDutchMessage() : getEnglishMessage();
+    }
+
+    @Override
+    public int getColor(Context context) {
+        switch (getPriority()) {
+            case LOW:
+                return ContextCompat.getColor(context, R.color.holo_green_light);
+            case MEDIUM:
+                return ContextCompat.getColor(context, R.color.holo_orange_light);
+            case HIGH:
+                return ContextCompat.getColor(context, R.color.holo_red_light);
+            default: return 0;
+        }
+    }
 
     @SuppressWarnings("WeakerAccess")
     public enum ServerMessagePriority {

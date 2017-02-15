@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.Support;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -36,6 +37,7 @@ public class SettingsManager {
     public static final String PROPERTY_NOTIFICATION_TOPIC = "notification_topic";
 
     private final Context context;
+    private static final String TAG = "SettingsManager";
 
     public SettingsManager(Context context) {
         this.context = context;
@@ -95,7 +97,11 @@ public class SettingsManager {
             // Let the editor apply the edited preferences as usual
             editor.apply();
         } catch (Exception e) {
-            throw new RuntimeException("Failed to save preference with key "  + key + " and value "  + value + " : "  + e.getMessage(), e);
+            // If this doesn't work, try to use String instead.
+            getSharedPreferencesEditor()
+                    .putString(key, value.toString())
+                    .apply();
+            Log.e(TAG, "Failed to save preference with key "  + key + " and value "  + value + " . Defaulting to String value! "  + e.getMessage(), e);
         }
     }
 
