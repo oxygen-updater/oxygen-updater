@@ -27,6 +27,11 @@ import java.util.List;
 
 import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
@@ -173,7 +178,19 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
     }
 
 
-    protected abstract OxygenOTAUpdate buildOfflineOxygenOTAUpdate();
+    /**
+     * Builds a {@link OxygenOTAUpdate} class based on the data that was stored when the device was online.
+     * @return OxygenOTAUpdate with data from the latest succesful fetch.
+     */
+    private OxygenOTAUpdate buildOfflineOxygenOTAUpdate() {
+        OxygenOTAUpdate oxygenOTAUpdate = new OxygenOTAUpdate();
+        oxygenOTAUpdate.setVersionNumber((String) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
+        oxygenOTAUpdate.setDownloadSize((int) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
+        oxygenOTAUpdate.setDescription((String) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
+        oxygenOTAUpdate.setUpdateInformationAvailable((boolean) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
+        oxygenOTAUpdate.setFilename((String) settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
+        return oxygenOTAUpdate;
+    }
 
     protected void showNoNetworkConnectionError() {
         MessageDialog errorDialog = new MessageDialog()

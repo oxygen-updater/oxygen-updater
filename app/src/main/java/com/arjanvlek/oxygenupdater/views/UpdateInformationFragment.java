@@ -114,7 +114,10 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         super.onStart();
         if(isAdded()) {
             initLayout();
-            load();
+
+            if(settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+                load();
+            }
         }
     }
 
@@ -134,10 +137,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         if (adView != null && adsAreSupported) {
             adView.resume();
         }
-        if (refreshedDate != null && isLoadedOnce && settingsManager.checkIfSetupScreenHasBeenCompleted() && isAdded()) {
-            if (refreshedDate.plusMinutes(5).isBefore(DateTime.now())) {
-                load();
-            }
+        if (refreshedDate != null && refreshedDate.plusMinutes(5).isBefore(DateTime.now()) &&  settingsManager.checkIfSetupScreenHasBeenCompleted() && isAdded()) {
+            load();
         }
     }
 
@@ -157,9 +158,10 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      * Initializes the layout. Sets refresh listeners for pull-down to refresh and applies the right colors for pull-down to refresh screens.
      */
     private void initLayout() {
-        if (updateInformationRefreshLayout == null && rootView != null && isAdded()) {
+        if (updateInformationRefreshLayout == null && rootView != null) {
             updateInformationRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationRefreshLayout);
             systemIsUpToDateRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
+
             if(updateInformationRefreshLayout != null) {
                 updateInformationRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -167,6 +169,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         load();
                     }
                 });
+
+                updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
 
                 Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
                 installGuideButton.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +180,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         Notifications.hideDownloadCompleteNotification(getActivity());
                     }
                 });
-                updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+
             }
             if(systemIsUpToDateRefreshLayout != null) {
                 systemIsUpToDateRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -208,8 +212,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 else hideAds();
 
                 oxygenOTAUpdate = data.getOxygenOTAUpdate();
-                updateDownloader = initDownloadManager(oxygenOTAUpdate);
-                refreshedDate = DateTime.now();
+                if(!isLoadedOnce) updateDownloader = initDownloadManager(oxygenOTAUpdate);
 
                 // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
                 if(!isLoadedOnce && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
@@ -218,6 +221,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 }
 
                 isLoadedOnce = true;
+                refreshedDate = DateTime.now();
             }
         });
     }
@@ -253,7 +257,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         this.inAppMessageBars = new ArrayList<>();
     }
 
-    protected void displayInAppMessageBars(List<Banner> banners) {
+    private void displayInAppMessageBars(List<Banner> banners) {
 
         deleteAllInAppMessageBars(this.inAppMessageBars);
 
@@ -304,7 +308,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      * @param online Whether or not the device has an active network connection
      * @param displayInfoWhenUpToDate Flag set to show update information anyway, even if the system is up to date.
      */
-    public void displayUpdateInformation(final OxygenOTAUpdate oxygenOTAUpdate, final boolean online, boolean displayInfoWhenUpToDate) {
+    private void displayUpdateInformation(final OxygenOTAUpdate oxygenOTAUpdate, final boolean online, boolean displayInfoWhenUpToDate) {
         // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
         if(!isAdded() || rootView == null) {
             return;
@@ -459,21 +463,6 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             downloadSizeView.setVisibility(VISIBLE);
         }
     }
-
-    /**
-     * Builds a {@link OxygenOTAUpdate} class based on the data that was stored when the device was online.
-     * @return OxygenOTAUpdate with data from the latest succesful fetch.
-     */
-    @Override
-    protected OxygenOTAUpdate buildOfflineOxygenOTAUpdate() {
-        OxygenOTAUpdate oxygenOTAUpdate = new OxygenOTAUpdate();
-        oxygenOTAUpdate.setVersionNumber((String) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
-        oxygenOTAUpdate.setDownloadSize((int) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
-        oxygenOTAUpdate.setDescription((String) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
-        oxygenOTAUpdate.setUpdateInformationAvailable((boolean) settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
-        oxygenOTAUpdate.setFilename((String) settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
-        return oxygenOTAUpdate;
-    }
     /*
       -------------- USER INTERFACE ELEMENT METHODS -------------------
      */
@@ -557,7 +546,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     /**
      * Creates a {@link UpdateDownloader} and applies an {@link UpdateDownloadListener} to it to allow displaying update download progress and error messages.
      */
-    protected UpdateDownloader initDownloadManager(OxygenOTAUpdate oxygenOTAUpdate) {
+    private UpdateDownloader initDownloadManager(OxygenOTAUpdate oxygenOTAUpdate) {
         return new UpdateDownloader(getActivity())
                     .setUpdateDownloadListenerAndStartPolling(new UpdateDownloadListener() {
                         @Override
