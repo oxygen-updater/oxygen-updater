@@ -1,32 +1,18 @@
 package com.arjanvlek.oxygenupdater.Model;
 
-import com.arjanvlek.oxygenupdater.Support.UpdateDownloader.DownloadSpeedUnits;
-
 
 import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.NOT_SET;
 
 public class DownloadProgressData {
 
-    private double downloadSpeed;
-    private DownloadSpeedUnits speedUnits;
     private TimeRemaining timeRemaining;
 
     private int progress;
 
 
-    public DownloadProgressData(double downloadSpeed, DownloadSpeedUnits speedUnits, long numberOfSecondsRemaining, int progress) {
-        this.downloadSpeed = downloadSpeed;
-        this.speedUnits = speedUnits;
+    public DownloadProgressData(long numberOfSecondsRemaining, int progress) {
         this.timeRemaining = calculateTimeRemaining((int)numberOfSecondsRemaining);
         this.progress = progress;
-    }
-
-    public double getDownloadSpeed() {
-        return downloadSpeed;
-    }
-
-    public DownloadSpeedUnits getSpeedUnits() {
-        return speedUnits;
     }
 
     public TimeRemaining getTimeRemaining() {

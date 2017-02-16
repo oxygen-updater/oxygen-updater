@@ -71,7 +71,7 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
                 if (settingsManager.checkIfCacheIsAvailable()) {
                     oxygenOTAUpdate = buildOfflineOxygenOTAUpdate();
                 } else {
-                    showNetworkError();
+                    showNoNetworkConnectionError();
                     oxygenOTAUpdate = null;
                 }
             }
@@ -119,10 +119,10 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
             if(status.isNonRecoverableError()) {
                 switch (status) {
                     case MAINTENANCE:
-                        showMaintenanceError();
+                        showServerMaintenanceError();
                         break;
                     case OUTDATED:
-                        showAppNotValidError();
+                        showAppOutdatedError();
                         break;
                     default:
                 }
@@ -144,25 +144,38 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
                 });
             }
 
-            displayInAppMessageBars(inAppBars);
-            displayUpdateInformation(serverResult.getUpdateData(), online, false);
-            initDownloadManager();
-            checkIfUpdateIsAlreadyDownloaded(serverResult.getUpdateData());
-
+            serverResult.getCallback().onActionPerformed(new ServerResultCallbackData(serverResult.getUpdateData(), online, inAppBars));
         }
     }
 
-    protected abstract void displayUpdateInformation(OxygenOTAUpdate oxygenOTAUpdate, boolean online, boolean force);
+    protected class ServerResultCallbackData {
+        private final OxygenOTAUpdate oxygenOTAUpdate;
+        private final boolean online;
+        private final List<Banner> inAppBars;
 
-    protected abstract void displayInAppMessageBars(List<Banner> banners);
+        ServerResultCallbackData(OxygenOTAUpdate oxygenOTAUpdate, boolean online, List<Banner> inAppBars) {
+            this.oxygenOTAUpdate = oxygenOTAUpdate;
+            this.online = online;
+            this.inAppBars = inAppBars;
+        }
 
-    protected abstract void initDownloadManager();
+        List<Banner> getInAppBars() {
+            return inAppBars;
+        }
 
-    protected abstract void checkIfUpdateIsAlreadyDownloaded(OxygenOTAUpdate oxygenOTAUpdate);
+        boolean isOnline() {
+            return online;
+        }
+
+        OxygenOTAUpdate getOxygenOTAUpdate() {
+            return oxygenOTAUpdate;
+        }
+    }
+
 
     protected abstract OxygenOTAUpdate buildOfflineOxygenOTAUpdate();
 
-    protected void showNetworkError() {
+    protected void showNoNetworkConnectionError() {
         MessageDialog errorDialog = new MessageDialog()
                 .setTitle(getString(R.string.error_app_requires_network_connection))
                 .setMessage(getString(R.string.error_app_requires_network_connection_message))
@@ -172,7 +185,7 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
         errorDialog.show(getFragmentManager(), "NetworkError");
     }
 
-    protected void showMaintenanceError() {
+    protected void showServerMaintenanceError() {
         MessageDialog serverMaintenanceErrorFragment = new MessageDialog()
                 .setTitle(getString(R.string.error_maintenance))
                 .setMessage(getString(R.string.error_maintenance_message))
@@ -182,8 +195,8 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
         serverMaintenanceErrorFragment.show(getFragmentManager(), "MaintenanceError");
     }
 
-    protected void showAppNotValidError() {
-        MessageDialog appNotValidErrorFragment = new MessageDialog()
+    protected void showAppOutdatedError() {
+        MessageDialog appOutdatedErrorFragment = new MessageDialog()
                 .setTitle(getString(R.string.error_app_outdated))
                 .setMessage(getString(R.string.error_app_outdated_message))
                 .setPositiveButtonText(getString(R.string.error_google_play_button_text))
@@ -209,8 +222,8 @@ public abstract class AbstractUpdateInformationFragment extends AbstractFragment
 
                     }
         });
-        appNotValidErrorFragment.setTargetFragment(this, 0);
-        appNotValidErrorFragment.show(getFragmentManager(), "AppNotValidError");
+        appOutdatedErrorFragment.setTargetFragment(this, 0);
+        appOutdatedErrorFragment.show(getFragmentManager(), "AppOutdatedError");
     }
 
     protected boolean checkIfAppIsUpToDate(String appVersionFromResult) {

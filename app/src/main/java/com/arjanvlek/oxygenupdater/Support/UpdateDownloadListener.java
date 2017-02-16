@@ -4,7 +4,7 @@ import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
 
 public interface UpdateDownloadListener {
 
-    void onDownloadManagerInit();
+    void onDownloadManagerInit(UpdateDownloader caller);
 
     void onDownloadStarted(long downloadID);
     void onDownloadPending();
@@ -12,10 +12,10 @@ public interface UpdateDownloadListener {
     void onDownloadPaused(int statusCode);
     void onDownloadComplete();
     void onDownloadCancelled();
-    void onDownloadError(int statusCode);
+    void onDownloadError(UpdateDownloader caller, int statusCode);
 
     void onVerifyStarted();
-    void onVerifyError();
+    void onVerifyError(UpdateDownloader caller);
     void onVerifyComplete();
 
 }

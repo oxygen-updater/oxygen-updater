@@ -2,10 +2,7 @@ package com.arjanvlek.oxygenupdater.Support;
 
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,7 +14,6 @@ import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.R;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,17 +22,20 @@ import static android.app.DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR;
 import static android.app.DownloadManager.COLUMN_REASON;
 import static android.app.DownloadManager.COLUMN_STATUS;
 import static android.app.DownloadManager.COLUMN_TOTAL_SIZE_BYTES;
+import static android.app.DownloadManager.ERROR_CANNOT_RESUME;
+import static android.app.DownloadManager.ERROR_DEVICE_NOT_FOUND;
+import static android.app.DownloadManager.ERROR_FILE_ERROR;
+import static android.app.DownloadManager.ERROR_HTTP_DATA_ERROR;
+import static android.app.DownloadManager.ERROR_INSUFFICIENT_SPACE;
+import static android.app.DownloadManager.ERROR_TOO_MANY_REDIRECTS;
+import static android.app.DownloadManager.ERROR_UNHANDLED_HTTP_CODE;
 import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE;
-import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED;
 import static android.app.DownloadManager.STATUS_PAUSED;
 import static android.app.DownloadManager.STATUS_PENDING;
 import static android.app.DownloadManager.STATUS_RUNNING;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DOWNLOAD_ID;
-import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.DownloadSpeedUnits.BYTES;
-import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.DownloadSpeedUnits.KILO_BYTES;
-import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.DownloadSpeedUnits.MEGA_BYTES;
-import static java.math.BigDecimal.ROUND_CEILING;
+
 
 public class UpdateDownloader {
 
@@ -52,8 +51,6 @@ public class UpdateDownloader {
     private boolean initialized;
     private long previousBytesDownloadedSoFar = NOT_SET;
     private long previousTimeStamp;
-    private DownloadSpeedUnits previousSpeedUnits = BYTES;
-    private double previousDownloadSpeed = NOT_SET;
     private long previousNumberOfSecondsRemaining = NOT_SET;
 
     public UpdateDownloader(Activity baseActivity) {
@@ -62,13 +59,16 @@ public class UpdateDownloader {
         this.settingsManager = new SettingsManager(baseActivity.getApplicationContext());
     }
 
-    public UpdateDownloader setUpdateDownloadListener(UpdateDownloadListener listener) {
+    public UpdateDownloader setUpdateDownloadListenerAndStartPolling(UpdateDownloadListener listener, OxygenOTAUpdate oxygenOTAUpdate) {
         this.listener = listener;
 
-        if(!initialized) {
-            listener.onDownloadManagerInit();
+        if(!initialized && listener != null) {
+            listener.onDownloadManagerInit(this);
             initialized = true;
         }
+
+        checkDownloadProgress(oxygenOTAUpdate);
+
         return this;
     }
 
@@ -76,7 +76,8 @@ public class UpdateDownloader {
     public void downloadUpdate(OxygenOTAUpdate oxygenOTAUpdate) {
         if(oxygenOTAUpdate != null) {
             if(!oxygenOTAUpdate.getDownloadUrl().contains("http")) {
-                listener.onDownloadError(404);
+                showDownloadErrorNotification(baseActivity, oxygenOTAUpdate, 404);
+                if(listener != null) listener.onDownloadError(this, 404);
             } else {
                 Uri downloadUri = Uri.parse(oxygenOTAUpdate.getDownloadUrl());
 
@@ -94,7 +95,7 @@ public class UpdateDownloader {
 
                 checkDownloadProgress(oxygenOTAUpdate);
 
-                listener.onDownloadStarted(downloadID);
+                if(listener != null) listener.onDownloadStarted(downloadID);
             }
         }
 
@@ -105,7 +106,7 @@ public class UpdateDownloader {
             downloadManager.remove((long) settingsManager.getPreference(PROPERTY_DOWNLOAD_ID));
             clearUp();
 
-            listener.onDownloadCancelled();
+            if(listener != null)listener.onDownloadCancelled();
         }
     }
 
@@ -122,12 +123,12 @@ public class UpdateDownloader {
                 int status = cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS));
                 switch (status) {
                     case STATUS_PENDING:
-                        listener.onDownloadPending();
+                        if(listener != null) listener.onDownloadPending();
 
                         recheckDownloadProgress(oxygenOTAUpdate, 1);
                         break;
                     case STATUS_PAUSED:
-                        listener.onDownloadPaused(cursor.getInt(cursor.getColumnIndex(COLUMN_REASON)));
+                        if(listener != null) listener.onDownloadPaused(cursor.getInt(cursor.getColumnIndex(COLUMN_REASON)));
 
                         recheckDownloadProgress(oxygenOTAUpdate, 5);
                         break;
@@ -138,7 +139,7 @@ public class UpdateDownloader {
 
                         DownloadProgressData eta = calculateDownloadETA(bytesDownloadedSoFar, totalSizeBytes);
 
-                        listener.onDownloadProgressUpdate(eta);
+                        if(listener != null) listener.onDownloadProgressUpdate(eta);
 
                         previousBytesDownloadedSoFar = cursor.getInt(cursor.getColumnIndex(COLUMN_BYTES_DOWNLOADED_SO_FAR));
 
@@ -148,14 +149,18 @@ public class UpdateDownloader {
                     case DownloadManager.STATUS_SUCCESSFUL:
                         clearUp();
 
-                        listener.onDownloadComplete();
+                        if(listener != null) listener.onDownloadComplete();
 
                         verifyDownload(oxygenOTAUpdate);
                         break;
                     case DownloadManager.STATUS_FAILED:
                         clearUp();
 
-                        listener.onDownloadError(cursor.getInt(cursor.getColumnIndex(COLUMN_REASON)));
+                        int statusCode = cursor.getInt(cursor.getColumnIndex(COLUMN_REASON));
+
+                        showDownloadErrorNotification(baseActivity, oxygenOTAUpdate, statusCode);
+                        if(listener != null) listener.onDownloadError(this, statusCode);
+                        cancelDownload();
                         break;
                 }
                 cursor.close();
@@ -163,11 +168,11 @@ public class UpdateDownloader {
         }
     }
 
-    public void verifyDownload(OxygenOTAUpdate oxygenOTAUpdate) {
+    private void verifyDownload(OxygenOTAUpdate oxygenOTAUpdate) {
         new DownloadVerifier().execute(oxygenOTAUpdate);
     }
 
-    public boolean makeDownloadDirectory() {
+    private boolean makeDownloadDirectory() {
         File downloadDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         return downloadDirectory.mkdirs();
     }
@@ -184,8 +189,6 @@ public class UpdateDownloader {
     private void clearUp() {
         previousTimeStamp = NOT_SET;
         previousBytesDownloadedSoFar = NOT_SET;
-        previousSpeedUnits = BYTES;
-        previousDownloadSpeed = NOT_SET;
         previousNumberOfSecondsRemaining = NOT_SET;
         settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
     }
@@ -194,13 +197,11 @@ public class UpdateDownloader {
         double bytesDownloadedInSecond;
         boolean validMeasurement = false;
 
-        double downloadSpeed = NOT_SET;
         long numberOfSecondsRemaining = NOT_SET;
         long averageBytesPerSecond = NOT_SET;
         long currentTimeStamp = System.currentTimeMillis();
         long bytesRemainingToDownload = totalSizeBytes - bytesDownloadedSoFar;
 
-        DownloadSpeedUnits speedUnits = BYTES;
         if(previousBytesDownloadedSoFar != NOT_SET) {
 
             double numberOfElapsedSeconds = TimeUnit.MILLISECONDS.toSeconds(currentTimeStamp - previousTimeStamp);
@@ -238,26 +239,11 @@ public class UpdateDownloader {
         }
 
         if(averageBytesPerSecond != NOT_SET) {
-            if (averageBytesPerSecond >= 0 && averageBytesPerSecond < 1024) {
-                downloadSpeed = averageBytesPerSecond;
-                speedUnits = BYTES;
-
-            } else if (averageBytesPerSecond >= 1024 && averageBytesPerSecond < 1048576) {
-                downloadSpeed = new BigDecimal(averageBytesPerSecond).setScale(0, ROUND_CEILING).divide(new BigDecimal(1024), ROUND_CEILING).doubleValue();
-                speedUnits = KILO_BYTES;
-            } else if (averageBytesPerSecond >= 1048576) {
-                downloadSpeed = new BigDecimal(averageBytesPerSecond).setScale(2, ROUND_CEILING).divide(new BigDecimal(1048576), ROUND_CEILING).doubleValue();
-                speedUnits = MEGA_BYTES;
-            }
 
             if(validMeasurement) {
                 previousNumberOfSecondsRemaining = numberOfSecondsRemaining;
                 previousTimeStamp = currentTimeStamp;
-                previousDownloadSpeed = downloadSpeed;
-                previousSpeedUnits = speedUnits;
             } else {
-                downloadSpeed = previousDownloadSpeed;
-                speedUnits = previousSpeedUnits;
                 numberOfSecondsRemaining = previousNumberOfSecondsRemaining;
             }
         }
@@ -270,7 +256,7 @@ public class UpdateDownloader {
             progress = (int) ((bytesDownloadedSoFar * 100) / totalSizeBytes);
         }
 
-        return new DownloadProgressData(downloadSpeed, speedUnits, numberOfSecondsRemaining, progress);
+        return new DownloadProgressData(numberOfSecondsRemaining, progress);
     }
 
     private double calculateAverageBytesDownloadedInSecond(List<Double> measurements) {
@@ -287,43 +273,71 @@ public class UpdateDownloader {
         }
     }
 
+    private UpdateDownloader instance() {
+        return this;
+    }
+
     private class DownloadVerifier extends AsyncTask<OxygenOTAUpdate, Integer, Boolean> {
+
+        private OxygenOTAUpdate oxygenOTAUpdate;
 
         @Override
         protected void onPreExecute() {
-            listener.onVerifyStarted();
+            if(listener != null) listener.onVerifyStarted();
         }
 
         @Override
         protected Boolean doInBackground(OxygenOTAUpdate... params) {
-            String filename = params[0].getFilename();
+            this.oxygenOTAUpdate = params[0];
+            String filename = oxygenOTAUpdate.getFilename();
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + filename);
-            return params[0] == null || params[0].getMD5Sum() == null || MD5.checkMD5(params[0].getMD5Sum(), file);
+            return oxygenOTAUpdate == null || oxygenOTAUpdate.getMD5Sum() == null || MD5.checkMD5(oxygenOTAUpdate.getMD5Sum(), file);
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             if (result) {
-                listener.onVerifyComplete();
+                if(listener != null) listener.onVerifyComplete();
                 clearUp();
             } else {
-                listener.onVerifyError();
+                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
+                try {
+                    //noinspection ResultOfMethodCallIgnored
+                    file.delete();
+                } catch (Exception ignored) {
+
+                }
+                if(listener != null) listener.onVerifyError(instance());
                 clearUp();
             }
         }
     }
 
-    public enum DownloadSpeedUnits {
-        BYTES("B/s"), KILO_BYTES("KB/s"), MEGA_BYTES("MB/s");
-
-        String stringValue;
-
-        DownloadSpeedUnits(String stringValue) {
-            this.stringValue = stringValue;
-        }
-
-        public String getStringValue() {
-            return stringValue;
+    private void showDownloadErrorNotification(Activity activity, OxygenOTAUpdate oxygenOTAUpdate, int statusCode) {
+        if (statusCode < 1000) {
+            Notifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
+        } else {
+            switch (statusCode) {
+                case ERROR_UNHANDLED_HTTP_CODE:
+                case ERROR_HTTP_DATA_ERROR:
+                case ERROR_TOO_MANY_REDIRECTS:
+                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
+                    break;
+                case ERROR_FILE_ERROR:
+                    makeDownloadDirectory();
+                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
+                    break;
+                case ERROR_INSUFFICIENT_SPACE:
+                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_storage, R.string.download_notification_error_storage_full);
+                    break;
+                case ERROR_DEVICE_NOT_FOUND:
+                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
+                    break;
+                case ERROR_CANNOT_RESUME:
+                    cancelDownload();
+                    downloadUpdate(oxygenOTAUpdate);
+                    break;
+            }
         }
     }
 }

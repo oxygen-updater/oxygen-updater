@@ -1,8 +1,14 @@
 package com.arjanvlek.oxygenupdater.Model;
 
+import android.app.Activity;
+
+import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OxygenOTAUpdate {
@@ -114,6 +120,47 @@ public class OxygenOTAUpdate {
             return false;
         }
     }
+
+    /**
+     * Additional check if system is up to date by comparing version Strings.
+     * This is needed to show the "System is up to date" message for full updates as incremental (parent) versions are not checked there.
+     * @return True if the system is up to date, false if not.
+     */
+    public boolean isSystemUpToDateStringCheck(SettingsManager settingsManager, Activity activity) {
+        if(settingsManager.getPreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true)) {
+            // This grabs the Oxygen OS version from build.prop. As there is no direct SDK way to do this, it has to be done in this way.
+            SystemVersionProperties systemVersionProperties = ((ApplicationContext)activity.getApplication()).getSystemVersionProperties();
+
+            String oxygenOSVersion = systemVersionProperties.getOxygenOSVersion();
+            String newOxygenOSVersion = getVersionNumber();
+
+            if(newOxygenOSVersion == null || newOxygenOSVersion.isEmpty()) {
+                return false;
+            }
+
+            if (oxygenOSVersion == null || oxygenOSVersion.isEmpty() || oxygenOSVersion.equals(NO_OXYGEN_OS)) {
+                return false;
+            } else {
+                if (newOxygenOSVersion.equals(oxygenOSVersion)) {
+                    return true;
+                } else {
+                    // remove incremental version naming.
+                    newOxygenOSVersion = newOxygenOSVersion.replace(" Incremental", "");
+                    if (newOxygenOSVersion.equals(oxygenOSVersion)) {
+                        return true;
+                    } else {
+                        newOxygenOSVersion = newOxygenOSVersion.replace("-", " ");
+                        oxygenOSVersion = oxygenOSVersion.replace("-", " ");
+                        return newOxygenOSVersion.contains(oxygenOSVersion);
+                    }
+                }
+            }
+        }
+        else {
+            return false; // Always show update info if user does not want to see if system is up to date.
+        }
+    }
+
 
     public boolean isSystemIsUpToDateCheck() {
         return systemIsUpToDate;
