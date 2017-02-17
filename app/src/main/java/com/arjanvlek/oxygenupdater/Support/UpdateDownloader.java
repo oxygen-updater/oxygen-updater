@@ -101,10 +101,11 @@ public class UpdateDownloader {
 
     }
 
-    public void cancelDownload() {
+    public void cancelDownload(OxygenOTAUpdate oxygenOTAUpdate) {
         if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
             downloadManager.remove((long) settingsManager.getPreference(PROPERTY_DOWNLOAD_ID));
             clearUp();
+            deleteDownload(oxygenOTAUpdate);
 
             if(listener != null)listener.onDownloadCancelled();
         }
@@ -160,7 +161,7 @@ public class UpdateDownloader {
 
                         showDownloadErrorNotification(baseActivity, oxygenOTAUpdate, statusCode);
                         if(listener != null) listener.onDownloadError(this, statusCode);
-                        cancelDownload();
+                        cancelDownload(oxygenOTAUpdate);
                         break;
                 }
                 cursor.close();
@@ -300,16 +301,20 @@ public class UpdateDownloader {
                 if(listener != null) listener.onVerifyComplete();
                 clearUp();
             } else {
-                File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
-                try {
-                    //noinspection ResultOfMethodCallIgnored
-                    file.delete();
-                } catch (Exception ignored) {
+                deleteDownload(oxygenOTAUpdate);
 
-                }
                 if(listener != null) listener.onVerifyError(instance());
                 clearUp();
             }
+        }
+    }
+
+    public boolean deleteDownload(OxygenOTAUpdate oxygenOTAUpdate) {
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
+        try {
+            return file.delete();
+        } catch (Exception ignored) {
+            return false;
         }
     }
 
@@ -334,7 +339,7 @@ public class UpdateDownloader {
                     Notifications.showDownloadFailedNotification(activity, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
                     break;
                 case ERROR_CANNOT_RESUME:
-                    cancelDownload();
+                    cancelDownload(oxygenOTAUpdate);
                     downloadUpdate(oxygenOTAUpdate);
                     break;
             }

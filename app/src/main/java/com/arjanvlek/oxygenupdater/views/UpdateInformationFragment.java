@@ -417,16 +417,18 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         TextView fileNameView = (TextView) rootView.findViewById(R.id.updateFileNameView);
         fileNameView.setText(String.format(getString(R.string.update_information_file_name), oxygenOTAUpdate.getFilename()));
 
-        final Button downloadButton = (Button) rootView.findViewById(R.id.updateInformationDownloadButton);
+        final Button downloadButton = getDownloadButton();
+
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDownloadButtonClick(downloadButton);
+            }
+        });
 
         // Activate download button, or make it gray when the device is offline or if the update is not downloadable.
         if (online && oxygenOTAUpdate.getDownloadUrl() != null) {
-            downloadButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onDownloadButtonClick(downloadButton);
-                }
-            });
+
             downloadButton.setEnabled(true);
             downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
         } else {
@@ -546,7 +548,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     /**
      * Creates a {@link UpdateDownloader} and applies an {@link UpdateDownloadListener} to it to allow displaying update download progress and error messages.
      */
-    private UpdateDownloader initDownloadManager(OxygenOTAUpdate oxygenOTAUpdate) {
+    private UpdateDownloader initDownloadManager(final OxygenOTAUpdate oxygenOTAUpdate) {
         return new UpdateDownloader(getActivity())
                     .setUpdateDownloadListenerAndStartPolling(new UpdateDownloadListener() {
                         @Override
@@ -554,7 +556,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                             getDownloadCancelButton().setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    caller.cancelDownload();
+                                    caller.cancelDownload(oxygenOTAUpdate);
                                 }
                             });
                         }
@@ -738,28 +740,15 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
             downloadButton.setClickable(true);
             downloadButton.setText(getString(R.string.downloaded));
-            downloadButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onDownloadedButtonClick();
-                }
-            });
+
         } else {
             if (networkConnectionManager != null && networkConnectionManager.checkNetworkConnection() && oxygenOTAUpdate != null && oxygenOTAUpdate.getDownloadUrl() != null && isAdded()) {
 
-                downloadButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onDownloadButtonClick(downloadButton);
-                    }
-                });
                 downloadButton.setEnabled(true);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
 
                 if(fileMayBeDeleted) {
-                    File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
-                    //noinspection ResultOfMethodCallIgnored
-                    file.delete();
+                    updateDownloader.deleteDownload(oxygenOTAUpdate);
                 }
             } else {
                 if(isAdded()) {
