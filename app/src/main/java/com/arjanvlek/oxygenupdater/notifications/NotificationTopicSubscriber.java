@@ -3,15 +3,12 @@ package com.arjanvlek.oxygenupdater.notifications;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
-import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.arjanvlek.oxygenupdater.ApplicationContext.DEVICE_TOPIC_PREFIX;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.UPDATE_METHOD_TOPIC_PREFIX;
@@ -34,8 +31,8 @@ public class NotificationTopicSubscriber extends AsyncTask<TopicSubscriptionData
             data.setDevices(data.getApplicationContext().getServerConnector().getDevices());
             data.setUpdateMethods(data.getApplicationContext().getServerConnector().getAllUpdateMethods());
         }
-        if (data.getDevices() == null) data.setDevices(new ArrayList<Device>());
-        if (data.getUpdateMethods() == null) data.setUpdateMethods(new ArrayList<UpdateMethod>());
+        if (data.getDevices() == null) data.setDevices(new ArrayList<>());
+        if (data.getUpdateMethods() == null) data.setUpdateMethods(new ArrayList<>());
         return data;
     }
 

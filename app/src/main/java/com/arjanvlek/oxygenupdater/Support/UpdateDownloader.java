@@ -9,8 +9,8 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 
-import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
+import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.R;
 
 import java.io.File;
@@ -34,6 +34,10 @@ import static android.app.DownloadManager.STATUS_PAUSED;
 import static android.app.DownloadManager.STATUS_PENDING;
 import static android.app.DownloadManager.STATUS_RUNNING;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
+import static com.arjanvlek.oxygenupdater.Support.Notifications.HAS_ERROR;
+import static com.arjanvlek.oxygenupdater.Support.Notifications.HAS_NO_ERROR;
+import static com.arjanvlek.oxygenupdater.Support.Notifications.NOT_ONGOING;
+import static com.arjanvlek.oxygenupdater.Support.Notifications.ONGOING;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DOWNLOAD_ID;
 
 
@@ -49,6 +53,7 @@ public class UpdateDownloader {
     public final static int NOT_SET = -1;
 
     private boolean initialized;
+    private boolean isVerifying;
     private long previousBytesDownloadedSoFar = NOT_SET;
     private long previousTimeStamp;
     private long previousNumberOfSecondsRemaining = NOT_SET;
@@ -111,7 +116,26 @@ public class UpdateDownloader {
         }
     }
 
-    public void checkDownloadProgress(OxygenOTAUpdate oxygenOTAUpdate) {
+    public boolean checkIfUpdateIsDownloaded(OxygenOTAUpdate oxygenOTAUpdate) {
+        if (oxygenOTAUpdate.getId() == null) return false;
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
+        return (file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID));
+    }
+
+    public boolean checkIfAnUpdateIsBeingVerified() {
+        return isVerifying;
+    }
+
+    public boolean deleteDownload(OxygenOTAUpdate oxygenOTAUpdate) {
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
+        try {
+            return file.delete();
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
+    private void checkDownloadProgress(OxygenOTAUpdate oxygenOTAUpdate) {
 
         if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
             final Long downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID);
@@ -142,7 +166,7 @@ public class UpdateDownloader {
 
                         if(listener != null) listener.onDownloadProgressUpdate(eta);
 
-                        previousBytesDownloadedSoFar = cursor.getInt(cursor.getColumnIndex(COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                        previousBytesDownloadedSoFar = bytesDownloadedSoFar;
 
                         recheckDownloadProgress(oxygenOTAUpdate, 1);
 
@@ -152,7 +176,7 @@ public class UpdateDownloader {
 
                         if(listener != null) listener.onDownloadComplete();
 
-                        verifyDownload(oxygenOTAUpdate);
+                        verifyDownload(baseActivity, oxygenOTAUpdate);
                         break;
                     case DownloadManager.STATUS_FAILED:
                         clearUp();
@@ -169,8 +193,8 @@ public class UpdateDownloader {
         }
     }
 
-    private void verifyDownload(OxygenOTAUpdate oxygenOTAUpdate) {
-        new DownloadVerifier().execute(oxygenOTAUpdate);
+    private void verifyDownload(Activity activity, OxygenOTAUpdate oxygenOTAUpdate) {
+        new DownloadVerifier(activity).execute(oxygenOTAUpdate);
     }
 
     private boolean makeDownloadDirectory() {
@@ -179,12 +203,7 @@ public class UpdateDownloader {
     }
 
     private void recheckDownloadProgress(final OxygenOTAUpdate oxygenOTAUpdate, int secondsDelay) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkDownloadProgress(oxygenOTAUpdate);
-            }
-        }, (secondsDelay * 1000));
+        new Handler().postDelayed(() -> checkDownloadProgress(oxygenOTAUpdate), (secondsDelay * 1000));
     }
 
     private void clearUp() {
@@ -223,7 +242,7 @@ public class UpdateDownloader {
                 }
 
                 // Remove old measurements to keep the average calculation based on 5 measurements
-                if (measurements.size() >= 5) {
+                if (measurements.size() > 10) {
                     measurements.subList(0, 1).clear();
                 }
 
@@ -281,10 +300,17 @@ public class UpdateDownloader {
     private class DownloadVerifier extends AsyncTask<OxygenOTAUpdate, Integer, Boolean> {
 
         private OxygenOTAUpdate oxygenOTAUpdate;
+        private final Activity activity;
+
+        public DownloadVerifier(Activity activity) {
+            this.activity = activity;
+        }
 
         @Override
         protected void onPreExecute() {
             if(listener != null) listener.onVerifyStarted();
+            isVerifying = true;
+            Notifications.showVerifyingNotification(activity, ONGOING, HAS_NO_ERROR);
         }
 
         @Override
@@ -297,24 +323,22 @@ public class UpdateDownloader {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            isVerifying = false;
+
             if (result) {
                 if(listener != null) listener.onVerifyComplete();
+                Notifications.hideVerifyingNotification(activity);
+                Notifications.showDownloadCompleteNotification(activity);
+
                 clearUp();
             } else {
                 deleteDownload(oxygenOTAUpdate);
 
                 if(listener != null) listener.onVerifyError(instance());
+                Notifications.showVerifyingNotification(activity, NOT_ONGOING, HAS_ERROR);
+
                 clearUp();
             }
-        }
-    }
-
-    public boolean deleteDownload(OxygenOTAUpdate oxygenOTAUpdate) {
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
-        try {
-            return file.delete();
-        } catch (Exception ignored) {
-            return false;
         }
     }
 

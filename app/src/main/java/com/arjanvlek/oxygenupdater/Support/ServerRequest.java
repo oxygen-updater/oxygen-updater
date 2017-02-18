@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.Support;
 
-import com.arjanvlek.oxygenupdater.BuildConfig;
 
 import java.net.MalformedURLException;
 import java.net.URL;

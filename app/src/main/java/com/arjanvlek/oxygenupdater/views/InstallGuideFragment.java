@@ -297,12 +297,6 @@ public class InstallGuideFragment extends Fragment {
     }
 
     private View.OnClickListener closeButtonOnClickListener () {
-        return new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        };
+        return v -> getActivity().finish();
     }
 }

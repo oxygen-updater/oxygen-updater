@@ -10,6 +10,9 @@ import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 
 import java.util.List;
 
+import java8.util.Optional;
+import java8.util.stream.StreamSupport;
+
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS;
 
@@ -58,11 +61,11 @@ public class SupportedDeviceManager extends AsyncTask<Void, Void, List<Device>> 
             // To prevent false positives on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
         }
 
-        for(Device device : devices) {
-            if(device.getProductName() != null && device.getProductName().equals(systemVersionProperties.getOxygenDeviceName()) && oemFingerPrint != null && !oemFingerPrint.equals(NO_OXYGEN_OS) && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)) {
-                return device.getChipSet().equals("NOT_SET") || device.getChipSet().equals(Build.BOARD);
-            }
-        }
-        return false;
+        Optional<Device> supportedDevice = StreamSupport.stream(devices)
+                .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
+                .filter(d -> d.getChipSet().equals("NOT_SET") || d.getChipSet().equals(Build.BOARD))
+                .findAny();
+
+        return supportedDevice.isPresent() && oemFingerPrint != null && !oemFingerPrint.equals(NO_OXYGEN_OS) && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS);
     }
 }

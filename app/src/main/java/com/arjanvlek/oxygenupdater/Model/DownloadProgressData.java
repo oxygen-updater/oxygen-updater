@@ -1,6 +1,10 @@
 package com.arjanvlek.oxygenupdater.Model;
 
 
+import android.app.Activity;
+
+import com.arjanvlek.oxygenupdater.R;
+
 import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.NOT_SET;
 
 public class DownloadProgressData {
@@ -53,6 +57,24 @@ public class DownloadProgressData {
 
         public int getSecondsRemaining() {
             return secondsRemaining;
+        }
+
+        public String toString(Activity activity) {
+            if (getHoursRemaining() > 1) {
+                return activity.getString(R.string.download_progress_text_hours_remaining, getProgress(), getHoursRemaining());
+            } else if (getHoursRemaining() == 1) {
+                return activity.getString(R.string.download_progress_text_one_hour_remaining, getProgress());
+            } else if (getHoursRemaining() == 0 && getMinutesRemaining() > 1) {
+                return activity.getString(R.string.download_progress_text_minutes_remaining, getProgress(), getMinutesRemaining());
+            } else if (getHoursRemaining() == 0 && getMinutesRemaining() == 1) {
+                return activity.getString(R.string.download_progress_text_one_minute_remaining, getProgress());
+            } else if (getHoursRemaining() == 0 && getMinutesRemaining() == 0 && getSecondsRemaining() > 10) {
+                return activity.getString(R.string.download_progress_text_less_than_a_minute_remaining, getProgress());
+            } else if (getHoursRemaining() == 0 && getMinutesRemaining() == 0 && getSecondsRemaining() <= 10) {
+                return activity.getString(R.string.download_progress_text_seconds_remaining, getProgress());
+            } else {
+                return activity.getString(R.string.download_progress_text_unknown_time_remaining, getProgress());
+            }
         }
     }
 }

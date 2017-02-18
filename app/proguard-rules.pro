@@ -39,3 +39,4 @@
 -dontwarn android.net.http.AndroidHttpClient
 -dontwarn com.google.android.gms.internal.**
 -dontwarn org.joda.convert.**
+-dontwarn java.lang.invoke.*

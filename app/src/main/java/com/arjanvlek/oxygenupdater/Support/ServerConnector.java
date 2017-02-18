@@ -1,8 +1,8 @@
 package com.arjanvlek.oxygenupdater.Support;
 
+import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.InstallGuideData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
-import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.ServerMessage;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
@@ -17,9 +17,9 @@ import java.util.List;
 
 import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_USER_AGENT;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.ALL_UPDATE_METHODS;
+import static com.arjanvlek.oxygenupdater.Support.ServerRequest.DEVICES;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.INSTALL_GUIDE;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.MOST_RECENT_UPDATE_DATA;
-import static com.arjanvlek.oxygenupdater.Support.ServerRequest.DEVICES;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.SERVER_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.SERVER_STATUS;
 import static com.arjanvlek.oxygenupdater.Support.ServerRequest.UPDATE_DATA;
@@ -27,9 +27,7 @@ import static com.arjanvlek.oxygenupdater.Support.ServerRequest.UPDATE_METHODS;
 
 public class ServerConnector {
 
-    public final static String SERVER_URL = "https://oxygenupdater.com/api/v1/";
-    public final static String TEST_SERVER_URL = "https://test.oxygenupdater.com/api/v1/";
-    public final static String USER_AGENT_TAG = "User-Agent";
+    private final static String USER_AGENT_TAG = "User-Agent";
 
     private ObjectMapper objectMapper;
 

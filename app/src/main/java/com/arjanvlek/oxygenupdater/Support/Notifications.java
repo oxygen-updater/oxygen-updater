@@ -29,6 +29,12 @@ public class Notifications {
     private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
     private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
 
+    public static final boolean NOT_ONGOING = false;
+    public static final boolean ONGOING = true;
+
+    public static final boolean HAS_NO_ERROR = false;
+    public static final boolean HAS_ERROR = true;
+
 
     /**
      * Shows a notification that the downloaded update file is downloaded successfully.
@@ -113,16 +119,20 @@ public class Notifications {
      * Shows a notification that the downloaded update file is being verified on MD5 sums.
      * @param error If an error occurred during verification, display an error text in the notification.
      */
-    public static void showVerifyingNotification(Activity activity, boolean error) {
+    public static void showVerifyingNotification(Activity activity, boolean ongoing, boolean error) {
         NotificationCompat.Builder builder;
         try {
             builder = new NotificationCompat.Builder(activity)
                     .setSmallIcon(android.R.drawable.stat_sys_download)
-                    .setOngoing(!error)
-                    .setProgress(100, 50, true);
+                    .setOngoing(ongoing);
+
+            if (ongoing) {
+                builder.setProgress(100, 50, true);
+            }
 
             if(error) {
                 builder.setContentTitle(activity.getString(R.string.download_verifying_error));
+                builder.setContentTitle(activity.getString(R.string.download_notification_error_corrupt));
             } else {
                 builder.setContentTitle(activity.getString(R.string.download_verifying));
             }

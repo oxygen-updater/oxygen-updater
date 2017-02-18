@@ -1,6 +1,7 @@
 package com.arjanvlek.oxygenupdater.views;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 
 import java.util.List;
+
+import java8.util.stream.StreamSupport;
 
 public class SetupStep3Fragment extends AbstractFragment {
 
@@ -72,42 +75,32 @@ public class SetupStep3Fragment extends AbstractFragment {
     private void fillDeviceSettings(final List<Device> devices) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsDeviceSpinner);
 
-        int selectedIndex = -1;
         SystemVersionProperties systemVersionProperties = ((ApplicationContext)getActivity().getApplication()).getSystemVersionProperties();
 
-        for(int i=0; i<devices.size(); i++) {
-            if(devices.get(i).getProductName() != null && devices.get(i).getProductName().equals(systemVersionProperties.getOxygenDeviceName())) {
-                selectedIndex = i;
-            }
-        }
-
-        final int selection = selectedIndex;
-
-        if (settingsManager.containsPreference(SettingsManager.PROPERTY_DEVICE_ID)) {
-            for(Device device : devices) {
-                if(device.getId() == (Long) settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID) ){
-                    selectedIndex = devices.indexOf(device);
-                }
-            }
-        }
+        final int selectedIndex = StreamSupport.stream(devices)
+                .filter(d -> d.getProductName() != null)
+                .filter(d -> d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
+                .filter(d -> (d.getChipSet().equals("NOT_SET") || d.getChipSet().equals(Build.BOARD)))
+                .mapToInt(devices::indexOf).findAny().orElse(-1);
 
         ArrayAdapter<Device> adapter = new ArrayAdapter<Device>(getActivity(), android.R.layout.simple_spinner_item, devices) {
 
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, selection, this.getContext());
+                return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, selectedIndex, this.getContext());
             }
 
             @Override
             public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-                return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, devices, selection, this.getContext());
+                return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, devices, selectedIndex, this.getContext());
             }
 
 
     };
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
         if(selectedIndex != -1) {
             spinner.setSelection(selectedIndex);
         }
@@ -126,10 +119,6 @@ public class SetupStep3Fragment extends AbstractFragment {
 
         });
 
-        try {
-            progressBar.setVisibility(View.GONE);
-        } catch (Exception ignored) {
-
-        }
+        progressBar.setVisibility(View.GONE);
     }
 }

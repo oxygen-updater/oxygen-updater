@@ -10,6 +10,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
+import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 
@@ -19,7 +20,6 @@ public class FAQActivity extends AppCompatActivity {
 
     private NetworkConnectionManager networkConnectionManager;
 
-    private static final String FAQ_SERVER_URL = "https://oxygenupdater.com/inappfaq";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +34,7 @@ public class FAQActivity extends AppCompatActivity {
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
         if(refreshLayout != null) {
             refreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
-            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    loadFaqPage();
-                }
-            });
+            refreshLayout.setOnRefreshListener(this::loadFaqPage);
         }
         loadFaqPage();
     }
@@ -98,7 +93,7 @@ public class FAQActivity extends AppCompatActivity {
                 FAQPageView.getSettings().setJavaScriptEnabled(true);
                 FAQPageView.getSettings().setUserAgentString(APP_USER_AGENT);
                 FAQPageView.clearCache(true);
-                FAQPageView.loadUrl(FAQ_SERVER_URL);
+                FAQPageView.loadUrl(BuildConfig.FAQ_SERVER_URL);
             }
 
             if(refreshLayout != null && refreshLayout.isRefreshing()) {

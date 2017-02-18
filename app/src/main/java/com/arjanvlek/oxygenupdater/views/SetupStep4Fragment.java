@@ -12,17 +12,20 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.arjanvlek.oxygenupdater.notifications.TopicSubscriptionData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
-import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
+import com.arjanvlek.oxygenupdater.notifications.TopicSubscriptionData;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.*;
+import java8.util.stream.StreamSupport;
+
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 public class SetupStep4Fragment extends AbstractFragment {
 
@@ -40,25 +43,19 @@ public class SetupStep4Fragment extends AbstractFragment {
 
 
     public void fetchUpdateMethods() {
-        Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
-        new UpdateDataFetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, deviceId);
+        new UpdateDataFetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, settingsManager.getPreference(PROPERTY_DEVICE_ID));
     }
 
     private class UpdateDataFetcher extends AsyncTask<Long, Integer, List<UpdateMethod>> {
 
         @Override
         protected void onPreExecute() {
-            try {
-                progressBar.setVisibility(View.VISIBLE);
-            } catch (Exception ignored) {
-
-            }
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         public List<UpdateMethod> doInBackground(Long... deviceIds) {
-            long deviceId = deviceIds[0];
-            return getApplicationContext().getServerConnector().getUpdateMethods(deviceId);
+            return getApplicationContext().getServerConnector().getUpdateMethods(deviceIds[0]);
         }
 
         @Override
@@ -70,23 +67,14 @@ public class SetupStep4Fragment extends AbstractFragment {
     private void fillUpdateSettings(final List<UpdateMethod> updateMethods) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsUpdateMethodSpinner);
 
-        List<Integer> recommendedPositions = new ArrayList<>();
+        final int[] recommendedPositions = StreamSupport.stream(updateMethods).filter(UpdateMethod::isRecommended).mapToInt(updateMethods::indexOf).toArray();
 
-        for (int i = 0; i < updateMethods.size(); i++) {
-            if(updateMethods.get(i).isRecommended()) {
-                recommendedPositions.add(i);
-            }
-        }
-
-        final List<Integer> recommendedPositionsDefinitive = recommendedPositions;
+        int selectedPosition = -1;
 
         if (settingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID)) {
-            for(UpdateMethod updateMethod : updateMethods) {
-                if(updateMethod.getId() == (Long) settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID) ){
-                    recommendedPositions = new ArrayList<>();
-                    recommendedPositions.add(updateMethods.indexOf(updateMethod));
-                }
-            }
+            long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID);
+
+            selectedPosition = StreamSupport.stream(updateMethods).filter(um -> um.getId() == currentUpdateMethodId).mapToInt(updateMethods::indexOf).findAny().orElse(-1);
         }
 
         if(getActivity() != null) {
@@ -95,23 +83,23 @@ public class SetupStep4Fragment extends AbstractFragment {
                 @NonNull
                 @Override
                 public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                    return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositionsDefinitive, this.getContext());
+                    return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, this.getContext());
                 }
 
                 @Override
                 public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-                    return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositionsDefinitive, this.getContext());
+                    return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, this.getContext());
                 }
             };
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
-            if(recommendedPositions.size() > 0) {
-                spinner.setSelection(recommendedPositions.get(0));
+            if (selectedPosition != -1) {
+                spinner.setSelection(selectedPosition);
             }
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    UpdateMethod updateMethod= (UpdateMethod) adapterView.getItemAtPosition(i);
+                    UpdateMethod updateMethod = (UpdateMethod) adapterView.getItemAtPosition(i);
 
                     //Set update method in preferences.
                     settingsManager.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
@@ -120,14 +108,11 @@ public class SetupStep4Fragment extends AbstractFragment {
                     if(getApplicationContext().checkPlayServices(getActivity(), false)) {
                         // Subscribe to notifications
                         // Subscribe to notifications for the newly selected device and update method
-                        TopicSubscriptionData data = new TopicSubscriptionData(getApplicationContext(), (Long) settingsManager.getPreference(PROPERTY_DEVICE_ID), (Long) settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
+                        TopicSubscriptionData data = new TopicSubscriptionData(getApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
                         new NotificationTopicSubscriber().execute(data);
                     } else {
-                        try {
-                            Toast.makeText(getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
-                        } catch (Exception ignored) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
 
-                        }
                     }
                 }
 
@@ -137,11 +122,7 @@ public class SetupStep4Fragment extends AbstractFragment {
                 }
             });
 
-            try {
-                progressBar.setVisibility(View.GONE);
-            } catch (Exception ignored) {
-
-            }
+            progressBar.setVisibility(View.GONE);
         }
     }
 }

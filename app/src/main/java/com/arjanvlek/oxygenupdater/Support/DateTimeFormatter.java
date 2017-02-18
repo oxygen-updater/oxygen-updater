@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.Support;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import com.arjanvlek.oxygenupdater.R;
 
@@ -28,7 +28,7 @@ public class DateTimeFormatter {
     }
 
     public String formatDateTime(String dateTimeString) {
-        if(dateTimeString == null || dateTimeString.equals("")) {
+        if (dateTimeString == null || dateTimeString.isEmpty()) {
             return fragment.getString(R.string.device_information_unknown);
         }
         LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);

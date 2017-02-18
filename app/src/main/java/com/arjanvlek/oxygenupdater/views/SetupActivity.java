@@ -2,11 +2,10 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -95,12 +94,7 @@ public class SetupActivity extends AppCompatActivity implements SupportedDeviceC
             builder.setTitle(getString(R.string.unsupported_device_warning_title));
             builder.setMessage(getString(R.string.unsupported_device_warning_message));
 
-            builder.setPositiveButton(getString(R.string.download_error_close), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> dialog.dismiss());
             builder.show();
         }
     }

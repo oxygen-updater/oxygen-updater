@@ -4,17 +4,17 @@ package com.arjanvlek.oxygenupdater.views;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,25 +25,33 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
+import com.arjanvlek.oxygenupdater.Model.ServerResult;
+import com.arjanvlek.oxygenupdater.Model.ServerStatus;
+import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.Support.DateTimeFormatter;
-import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.Dialogs;
+import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.Notifications;
+import com.arjanvlek.oxygenupdater.Support.ServerResultCallbackData;
+import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.Support.UpdateDescriptionParser;
 import com.arjanvlek.oxygenupdater.Support.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.Support.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.Support.Utils;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +73,21 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.BELOW;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.*;
+import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
+import static java8.util.stream.StreamSupport.stream;
 
-public class UpdateInformationFragment extends AbstractUpdateInformationFragment {
+public class UpdateInformationFragment extends AbstractFragment {
 
 
     private SwipeRefreshLayout updateInformationRefreshLayout;
@@ -76,7 +96,11 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     private AdView adView;
 
     private Context context;
+    private SettingsManager settingsManager;
+    private NetworkConnectionManager networkConnectionManager;
     private UpdateDownloader updateDownloader;
+
+    private OxygenOTAUpdate oxygenOTAUpdate;
 
     private DateTime refreshedDate;
     private boolean isLoadedOnce;
@@ -88,6 +112,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     private static final String KEY_HAS_DOWNLOAD_ERROR = "has_download_error";
     private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
     private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
+    private static final String UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build";
+    private static final boolean DOWNLOADED = true;
     private List<ServerMessageBar> inAppMessageBars = new ArrayList<>();
 
     /*
@@ -99,6 +125,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         super.onCreate(savedInstanceState);
 
         context = getActivity();
+        settingsManager = new SettingsManager(getActivity().getApplicationContext());
+        networkConnectionManager = new NetworkConnectionManager(getActivity().getApplicationContext());
         adsAreSupported = getApplicationContext().checkPlayServices(getActivity(), false);
     }
 
@@ -106,6 +134,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         this.rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_updateinformation, container, false);
+        if (adsAreSupported) adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
         return this.rootView;
     }
 
@@ -158,40 +187,21 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      * Initializes the layout. Sets refresh listeners for pull-down to refresh and applies the right colors for pull-down to refresh screens.
      */
     private void initLayout() {
-        if (updateInformationRefreshLayout == null && rootView != null) {
-            updateInformationRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationRefreshLayout);
-            systemIsUpToDateRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
+        updateInformationRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationRefreshLayout);
+        systemIsUpToDateRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
 
-            if(updateInformationRefreshLayout != null) {
-                updateInformationRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        load();
-                    }
-                });
+        updateInformationRefreshLayout.setOnRefreshListener(this::load);
+        updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
 
-                updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+        systemIsUpToDateRefreshLayout.setOnRefreshListener(this::load);
+        systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
 
-                Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
-                installGuideButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((MainActivity)getActivity()).getActivityLauncher().UpdateInstructions(checkIfUpdateIsDownloaded(oxygenOTAUpdate));
-                        Notifications.hideDownloadCompleteNotification(getActivity());
-                    }
-                });
 
-            }
-            if(systemIsUpToDateRefreshLayout != null) {
-                systemIsUpToDateRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        load();
-                    }
-                });
-                systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
-            }
-        }
+        Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
+        installGuideButton.setOnClickListener(v -> {
+            ((MainActivity) getActivity()).getActivityLauncher().UpdateInstructions(updateDownloader.checkIfUpdateIsDownloaded(oxygenOTAUpdate));
+            Notifications.hideDownloadCompleteNotification(getActivity());
+        });
     }
 
     /**
@@ -200,29 +210,26 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
     private void load() {
         final Fragment instance = this;
 
-        new GetServerData().execute(new Callback() {
-            @Override
-            public void onActionPerformed(Object... result) {
-                ServerResultCallbackData data = (ServerResultCallbackData) result[0];
+        new GetServerData().execute(result -> {
+            ServerResultCallbackData data = (ServerResultCallbackData) result[0];
 
-                displayUpdateInformation(data.getOxygenOTAUpdate(), data.isOnline(), false);
-                displayInAppMessageBars(data.getInAppBars());
+            displayUpdateInformation(data.getOxygenOTAUpdate(), data.isOnline(), false);
+            displayInAppMessageBars(data.getInAppBars());
 
-                if(data.isOnline()) showAds();
-                else hideAds();
+            if (data.isOnline()) showAds();
+            else hideAds();
 
-                oxygenOTAUpdate = data.getOxygenOTAUpdate();
-                if(!isLoadedOnce) updateDownloader = initDownloadManager(oxygenOTAUpdate);
+            oxygenOTAUpdate = data.getOxygenOTAUpdate();
+            if (!isLoadedOnce) updateDownloader = initDownloadManager(oxygenOTAUpdate);
 
-                // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
-                if(!isLoadedOnce && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
-                    Intent i = getActivity().getIntent();
-                    Dialogs.showDownloadError(instance, updateDownloader, oxygenOTAUpdate, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
-                }
-
-                isLoadedOnce = true;
-                refreshedDate = DateTime.now();
+            // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
+            if (!isLoadedOnce && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
+                Intent i = getActivity().getIntent();
+                Dialogs.showDownloadError(instance, updateDownloader, oxygenOTAUpdate, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
             }
+
+            isLoadedOnce = true;
+            refreshedDate = DateTime.now();
         });
     }
 
@@ -232,41 +239,35 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      */
 
 
-    private int addMessageBar(ServerMessageBar view, int numberOfBars) {
-        // Add the message to the update information screen if it is not null.
-        if(this.rootView != null) {
-            // Set the layout params based on the view count.
-            // First view should go below the app update message bar (if visible)
-            // Consecutive views should go below their parent / previous view.
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-            params.topMargin = numberOfBars * diPToPixels(20);
-            view.setId((numberOfBars * 20000000 + 1));
-            this.rootView.addView(view, params);
-            numberOfBars = numberOfBars + 1;
-            this.inAppMessageBars.add(view);
-        }
-        return numberOfBars;
+    private void addMessageBar(ServerMessageBar view) {
+        // Add the message to the update information screen.
+        // Set the layout params based on the view count.
+        // First view should go below the app update message bar (if visible)
+        // Consecutive views should go below their parent / previous view.
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+
+        int numberOfBars = this.inAppMessageBars.size();
+
+        params.topMargin = numberOfBars * Utils.diPToPixels(getActivity(), 20);
+        view.setId((numberOfBars * 20000 + 1));
+        this.rootView.addView(view, params);
+        this.inAppMessageBars.add(view);
     }
 
-    private void deleteAllInAppMessageBars(List<ServerMessageBar> inAppMessageBars) {
-        for(ServerMessageBar view : inAppMessageBars) {
-            if(view != null && isAdded()) {
-                this.rootView.removeView(view);
-            }
-        }
+    private void deleteAllInAppMessageBars() {
+        stream(this.inAppMessageBars).filter(v -> v != null).forEach(v -> this.rootView.removeView(v));
+
         this.inAppMessageBars = new ArrayList<>();
     }
 
     private void displayInAppMessageBars(List<Banner> banners) {
 
-        deleteAllInAppMessageBars(this.inAppMessageBars);
-
-        int numberOfBars = 0;
+        deleteAllInAppMessageBars();
 
         List<ServerMessageBar> createdServerMessageBars = new ArrayList<>();
 
         for(Banner banner : banners) {
-            ServerMessageBar bar = new ServerMessageBar(getApplicationContext(), null);
+            ServerMessageBar bar = new ServerMessageBar(getApplicationContext());
             View backgroundBar = bar.getBackgroundBar();
             TextView textView = bar.getTextView();
 
@@ -277,27 +278,20 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
-            numberOfBars = addMessageBar(bar, numberOfBars);
+            addMessageBar(bar);
             createdServerMessageBars.add(bar);
         }
 
         // Set the margins of the app ui to be below the last added server message bar.
-        if(!createdServerMessageBars.isEmpty() && isAdded()) {
+        if (!createdServerMessageBars.isEmpty()) {
             View lastServerMessageView = createdServerMessageBars.get(createdServerMessageBars.size() - 1);
-            if (lastServerMessageView != null) {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
-                params.addRule(BELOW, lastServerMessageView.getId());
-                if(adView != null) {
-                    params.addRule(ABOVE, adView.getId());
-                }
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+            params.addRule(BELOW, lastServerMessageView.getId());
+            if (adsAreSupported) params.addRule(ABOVE, adView.getId());
 
-                if(systemIsUpToDateRefreshLayout != null) {
-                    systemIsUpToDateRefreshLayout.setLayoutParams(params);
-                }
-                if(updateInformationRefreshLayout != null) {
-                    updateInformationRefreshLayout.setLayoutParams(params);
-                }
-            }
+            systemIsUpToDateRefreshLayout.setLayoutParams(params);
+            updateInformationRefreshLayout.setLayoutParams(params);
+
         }
         this.inAppMessageBars = createdServerMessageBars;
     }
@@ -310,27 +304,21 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
      */
     private void displayUpdateInformation(final OxygenOTAUpdate oxygenOTAUpdate, final boolean online, boolean displayInfoWhenUpToDate) {
         // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
-        if(!isAdded() || rootView == null) {
+        if (!isAdded()) {
             return;
         }
 
-        View loadingScreen = rootView.findViewById(R.id.updateInformationLoadingScreen);
-        if(loadingScreen != null) {
-            loadingScreen.setVisibility(GONE);
-        }
+        // Hide the loading screen
+        rootView.findViewById(R.id.updateInformationLoadingScreen).setVisibility(GONE);
 
-        if(oxygenOTAUpdate == null) {
+        if (oxygenOTAUpdate.getId() == null) {
             return;
         }
 
-        if(!oxygenOTAUpdate.isSystemIsUpToDateCheck()) {
-            oxygenOTAUpdate.setSystemIsUpToDate(oxygenOTAUpdate.isSystemUpToDateStringCheck(settingsManager, getActivity()));
-        }
-
-        if(((oxygenOTAUpdate.isSystemIsUpToDate(settingsManager)) && !displayInfoWhenUpToDate) || !oxygenOTAUpdate.isUpdateInformationAvailable()) {
+        if (((oxygenOTAUpdate.isSystemIsUpToDate()) && !displayInfoWhenUpToDate) || !oxygenOTAUpdate.isUpdateInformationAvailable()) {
             displayUpdateInformationWhenUpToDate(oxygenOTAUpdate, online);
         } else {
-            displayUpdateInformationWhenNotUpToDate(oxygenOTAUpdate, online, displayInfoWhenUpToDate);
+            displayUpdateInformationWhenNotUpToDate(oxygenOTAUpdate, displayInfoWhenUpToDate);
         }
 
         if(online) {
@@ -370,12 +358,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         } else {
             updateInformationButton.setText(getString(R.string.update_information_view_update_information));
             updateInformationButton.setClickable(true);
-            updateInformationButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    displayUpdateInformation(oxygenOTAUpdate, true, true);
-                }
-            });
+            updateInformationButton.setOnClickListener(v -> displayUpdateInformation(oxygenOTAUpdate, true, true));
         }
 
         // Save last time checked if online.
@@ -386,11 +369,11 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         // Show last time checked.
         TextView dateCheckedView = (TextView) rootView.findViewById(R.id.updateInformationSystemIsUpToDateDateTextView);
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(context, this);
-        dateCheckedView.setText(String.format(getString(R.string.update_information_last_checked_on), dateTimeFormatter.formatDateTime((String) settingsManager.getPreference(PROPERTY_UPDATE_CHECKED_DATE))));
+        dateCheckedView.setText(String.format(getString(R.string.update_information_last_checked_on), dateTimeFormatter.formatDateTime(settingsManager.getPreference(PROPERTY_UPDATE_CHECKED_DATE))));
 
     }
 
-    private void displayUpdateInformationWhenNotUpToDate(final OxygenOTAUpdate oxygenOTAUpdate, boolean online, boolean displayInfoWhenUpToDate) {
+    private void displayUpdateInformationWhenNotUpToDate(final OxygenOTAUpdate oxygenOTAUpdate, boolean displayInfoWhenUpToDate) {
         // Show "System update available" view.
         rootView.findViewById(R.id.updateInformationRefreshLayout).setVisibility(VISIBLE);
         rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout).setVisibility(GONE);
@@ -417,24 +400,6 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         TextView fileNameView = (TextView) rootView.findViewById(R.id.updateFileNameView);
         fileNameView.setText(String.format(getString(R.string.update_information_file_name), oxygenOTAUpdate.getFilename()));
 
-        final Button downloadButton = getDownloadButton();
-
-        downloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDownloadButtonClick(downloadButton);
-            }
-        });
-
-        // Activate download button, or make it gray when the device is offline or if the update is not downloadable.
-        if (online && oxygenOTAUpdate.getDownloadUrl() != null) {
-
-            downloadButton.setEnabled(true);
-            downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
-        } else {
-            downloadButton.setEnabled(false);
-            downloadButton.setTextColor(ContextCompat.getColor(context, R.color.dark_grey));
-        }
 
         // Format top title based on system version installed.
         TextView headerLabel = (TextView) rootView.findViewById(R.id.headerLabel);
@@ -442,6 +407,8 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         View downloadSizeTable = rootView.findViewById(R.id.buttonTable);
         View downloadSizeImage = rootView.findViewById(R.id.downloadSizeImage);
 
+        final Button downloadButton = getDownloadButton();
+        initUpdateDownloadButton(updateDownloader.checkIfUpdateIsDownloaded(oxygenOTAUpdate) ? DownloadStatus.DOWNLOADED : updateDownloader.checkIfAnUpdateIsBeingVerified() ? DownloadStatus.VERIFYING : DownloadStatus.NOT_DOWNLOADING);
 
         if(displayInfoWhenUpToDate) {
             headerLabel.setText(getString(R.string.update_information_installed_update));
@@ -452,7 +419,7 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
             downloadSizeImage.setVisibility(GONE);
             downloadSizeView.setVisibility(GONE);
         } else {
-            if(oxygenOTAUpdate.isSystemIsUpToDateCheck()) {
+            if (oxygenOTAUpdate.isSystemIsUpToDateCheck(settingsManager)) {
                 headerLabel.setText(getString(R.string.update_information_installed_update));
             } else {
                 headerLabel.setText(getString(R.string.update_information_latest_available_update));
@@ -553,63 +520,47 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                     .setUpdateDownloadListenerAndStartPolling(new UpdateDownloadListener() {
                         @Override
                         public void onDownloadManagerInit(final UpdateDownloader caller) {
-                            getDownloadCancelButton().setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    caller.cancelDownload(oxygenOTAUpdate);
-                                }
-                            });
+                            getDownloadCancelButton().setOnClickListener(v -> caller.cancelDownload(oxygenOTAUpdate));
                         }
 
                         @Override
                         public void onDownloadStarted(long downloadID) {
                             if(isAdded()) {
-                                getDownloadButton().setText(getString(R.string.downloading));
-                                getDownloadButton().setClickable(false);
+                                initUpdateDownloadButton(DownloadStatus.DOWNLOADING);
 
                                 showDownloadProgressBar();
-                                getDownloadProgressBar().setIndeterminate(false);
+                                getDownloadProgressBar().setIndeterminate(true);
+
+                                getDownloadStatusText().setText(getString(R.string.download_pending));
                             }
                         }
 
                         @Override
                         public void onDownloadPending() {
                             if(isAdded()) {
+                                initUpdateDownloadButton(DownloadStatus.DOWNLOADING);
+
                                 showDownloadProgressBar();
-                                getDownloadButton().setText(getString(R.string.downloading));
-                                getDownloadButton().setClickable(false);
-                                TextView downloadStatusText = getDownloadStatusText();
-                                downloadStatusText.setText(getString(R.string.download_pending));
+                                getDownloadProgressBar().setIndeterminate(true);
+
+                                getDownloadStatusText().setText(getString(R.string.download_pending));
                             }
                         }
 
                         @Override
                         public void onDownloadProgressUpdate(DownloadProgressData downloadProgressData) {
                             if(isAdded()) {
-                                showDownloadProgressBar();
                                 getDownloadButton().setText(getString(R.string.downloading));
                                 getDownloadButton().setClickable(false);
+
+                                showDownloadProgressBar();
                                 getDownloadProgressBar().setIndeterminate(false);
                                 getDownloadProgressBar().setProgress(downloadProgressData.getProgress());
 
                                 if(downloadProgressData.getTimeRemaining() == null) {
                                     getDownloadStatusText().setText(getString(R.string.download_progress_text_unknown_time_remaining, downloadProgressData.getProgress()));
                                 } else {
-                                    DownloadProgressData.TimeRemaining timeRemaining = downloadProgressData.getTimeRemaining();
-
-                                    if(timeRemaining.getHoursRemaining() > 1) {
-                                        getDownloadStatusText().setText(getString(R.string.download_progress_text_hours_remaining, downloadProgressData.getProgress(), timeRemaining.getHoursRemaining()));
-                                    } else if(timeRemaining.getHoursRemaining() == 1) {
-                                        getDownloadStatusText().setText(getString(R.string.download_progress_text_one_hour_remaining, downloadProgressData.getProgress()));
-                                    } else if(timeRemaining.getHoursRemaining() == 0 && timeRemaining.getMinutesRemaining() > 1) {
-                                        getDownloadStatusText().setText(getString(R.string.download_progress_text_minutes_remaining, downloadProgressData.getProgress(), timeRemaining.getMinutesRemaining()));
-                                    } else if(timeRemaining.getHoursRemaining() == 0 && timeRemaining.getMinutesRemaining() == 1) {
-                                        getDownloadStatusText().setText(getString(R.string.download_progress_text_one_minute_remaining, downloadProgressData.getProgress()));
-                                    } else if(timeRemaining.getHoursRemaining() == 0 && timeRemaining.getMinutesRemaining() == 0 && timeRemaining.getSecondsRemaining() > 10) {
-                                        getDownloadStatusText().setText(getString(R.string.download_progress_text_less_than_a_minute_remaining, downloadProgressData.getProgress()));
-                                    } else if(timeRemaining.getHoursRemaining() == 0 && timeRemaining.getMinutesRemaining() == 0 && timeRemaining.getSecondsRemaining() <= 10) {
-                                        getDownloadStatusText().setText(getString(R.string.download_progress_text_seconds_remaining, downloadProgressData.getProgress()));
-                                    }
+                                    getDownloadStatusText().setText(downloadProgressData.getTimeRemaining().toString(getActivity()));
                                 }
                             }
                         }
@@ -617,23 +568,22 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         @Override
                         public void onDownloadPaused(int statusCode) {
                             if(isAdded()) {
-                                showDownloadProgressBar();
-                                getDownloadButton().setText(getString(R.string.downloading));
-                                getDownloadButton().setClickable(false);
+                                initUpdateDownloadButton(DownloadStatus.DOWNLOADING);
 
-                                TextView downloadStatusText = getDownloadStatusText();
+                                showDownloadProgressBar();
+
                                 switch (statusCode) {
                                     case PAUSED_QUEUED_FOR_WIFI:
-                                        downloadStatusText.setText(getString(R.string.download_waiting_for_wifi));
+                                        getDownloadStatusText().setText(getString(R.string.download_waiting_for_wifi));
                                         break;
                                     case PAUSED_WAITING_FOR_NETWORK:
-                                        downloadStatusText.setText(getString(R.string.download_waiting_for_network));
+                                        getDownloadStatusText().setText(getString(R.string.download_waiting_for_network));
                                         break;
                                     case PAUSED_WAITING_TO_RETRY:
-                                        downloadStatusText.setText(getString(R.string.download_will_retry_soon));
+                                        getDownloadStatusText().setText(getString(R.string.download_will_retry_soon));
                                         break;
                                     case PAUSED_UNKNOWN:
-                                        downloadStatusText.setText(getString(R.string.download_paused_unknown));
+                                        getDownloadStatusText().setText(getString(R.string.download_paused_unknown));
                                         break;
                                 }
                             }
@@ -649,14 +599,19 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         @Override
                         public void onDownloadCancelled() {
                             if(isAdded()) {
-                                getDownloadButton().setClickable(true);
-                                getDownloadButton().setText(getString(R.string.download));
+                                initUpdateDownloadButton(DownloadStatus.NOT_DOWNLOADING);
+
                                 hideDownloadProgressBar();
                             }
                         }
 
                         @Override
                         public void onDownloadError(UpdateDownloader caller, int statusCode) {
+                            initUpdateDownloadButton(DownloadStatus.NOT_DOWNLOADING);
+
+                            hideDownloadProgressBar();
+
+
                             // Treat any HTTP status code exception (lower than 1000) as a network error.
                             // Handle any other errors according to the error message.
                             if(isAdded()) {
@@ -679,25 +634,19 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                                             showDownloadError(caller, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
                                             break;
                                         case ERROR_FILE_ALREADY_EXISTS:
-                                            Toast.makeText(getApplicationContext(), getString(R.string.download_already_downloaded), Toast.LENGTH_LONG).show();
-                                            onUpdateDownloaded(true, false);
+                                            initUpdateDownloadButton(DownloadStatus.DOWNLOADED);
                                     }
                                 }
-
-                                // Make sure the failed download file gets deleted before the user tries to download it again.
-                                hideDownloadProgressBar();
-                                getDownloadButton().setText(getString(R.string.download));
-                                onUpdateDownloaded(false, true);
                             }
                         }
 
                         @Override
                         public void onVerifyStarted() {
                             if(isAdded()) {
+                                initUpdateDownloadButton(DownloadStatus.VERIFYING);
+
                                 showDownloadProgressBar();
                                 getDownloadProgressBar().setIndeterminate(true);
-                                Notifications.showVerifyingNotification(getActivity(), false);
-                                getDownloadButton().setText(getString(R.string.download_verifying));
                                 getDownloadStatusText().setText(getString(R.string.download_progress_text_verifying));
                             }
                         }
@@ -705,19 +654,22 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
                         @Override
                         public void onVerifyError(UpdateDownloader caller) {
                             if(isAdded()) {
-                                showDownloadError(caller, R.string.download_error_corrupt, R.string.download_notification_error_corrupt);
-                                Notifications.showVerifyingNotification(getActivity(), true);
+                                initUpdateDownloadButton(DownloadStatus.NOT_DOWNLOADING);
+
+                                hideDownloadProgressBar();
+
+                                showDownloadError(caller, R.string.download_error, R.string.download_notification_error_corrupt);
                             }
                         }
 
                         @Override
                         public void onVerifyComplete() {
                             if(isAdded()) {
+                                initUpdateDownloadButton(DownloadStatus.DOWNLOADED);
+
                                 hideDownloadProgressBar();
-                                Notifications.hideVerifyingNotification(getActivity());
-                                onUpdateDownloaded(true, false);
+
                                 Toast.makeText(getApplicationContext(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
-                                Notifications.showDownloadCompleteNotification(getActivity());
                             }
                         }
                     }, oxygenOTAUpdate);
@@ -727,128 +679,216 @@ public class UpdateInformationFragment extends AbstractUpdateInformationFragment
         Dialogs.showDownloadError(this, updateDownloader, oxygenOTAUpdate, title, message);
     }
 
-    /**
-     * Common actions for changing download button parameters and deleting incomplete download files.
-     * @param updateIsDownloaded Whether or not the update is successfully downloaded.
-     * @param fileMayBeDeleted Whether or not the update file may be deleted.
-     */
-    private void onUpdateDownloaded(boolean updateIsDownloaded, boolean fileMayBeDeleted) {
+
+    private enum DownloadStatus {
+        NOT_DOWNLOADING, DOWNLOADING, DOWNLOADED, VERIFYING
+    }
+
+    private void initUpdateDownloadButton(DownloadStatus downloadStatus) {
         final Button downloadButton = getDownloadButton();
 
-        if(updateIsDownloaded && isAdded()) {
-            downloadButton.setEnabled(true);
-            downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
-            downloadButton.setClickable(true);
-            downloadButton.setText(getString(R.string.downloaded));
+        switch (downloadStatus) {
+            case NOT_DOWNLOADING:
+                downloadButton.setText(getString(R.string.download));
 
-        } else {
-            if (networkConnectionManager != null && networkConnectionManager.checkNetworkConnection() && oxygenOTAUpdate != null && oxygenOTAUpdate.getDownloadUrl() != null && isAdded()) {
-
-                downloadButton.setEnabled(true);
-                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
-
-                if(fileMayBeDeleted) {
-                    updateDownloader.deleteDownload(oxygenOTAUpdate);
-                }
-            } else {
-                if(isAdded()) {
+                if (networkConnectionManager.checkNetworkConnection() && oxygenOTAUpdate.getDownloadUrl() != null && oxygenOTAUpdate.getDownloadUrl().contains("http")) {
+                    downloadButton.setEnabled(true);
+                    downloadButton.setClickable(true);
+                    downloadButton.setOnClickListener(new DownloadButtonOnClickListener());
+                    downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+                } else {
                     downloadButton.setEnabled(false);
+                    downloadButton.setClickable(false);
                     downloadButton.setTextColor(ContextCompat.getColor(context, R.color.dark_grey));
                 }
-            }
+                break;
+            case DOWNLOADING:
+                downloadButton.setText(getString(R.string.downloading));
+                downloadButton.setEnabled(true);
+                downloadButton.setClickable(false);
+                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+                break;
+            case DOWNLOADED:
+                downloadButton.setText(getString(R.string.downloaded));
+                downloadButton.setEnabled(true);
+                downloadButton.setClickable(true);
+                downloadButton.setOnClickListener(new AlreadyDownloadedOnClickListener(this));
+                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+                break;
+            case VERIFYING:
+                downloadButton.setText(getString(R.string.download_verifying));
+                downloadButton.setEnabled(true);
+                downloadButton.setClickable(false);
+                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
         }
     }
 
     /**
      * Download button click listener. Performs these actions when the button is clicked.
-     * @param downloadButton Button to perform actions on.
      */
-    private void onDownloadButtonClick(Button downloadButton) {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        if(mainActivity != null) {
-            if(mainActivity.hasDownloadPermissions()) {
-                if(updateDownloader != null) {
+    private class DownloadButtonOnClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            if (mainActivity != null) {
+                if (mainActivity.hasDownloadPermissions()) {
                     updateDownloader.downloadUpdate(oxygenOTAUpdate);
-                    downloadButton.setText(getString(R.string.downloading));
-                    downloadButton.setClickable(false);
-                }
-            } else {
-                Callback callback = new Callback() {
-                    @Override
-                    public void onActionPerformed(Object... result) {
-                        if((int)result[0] == PackageManager.PERMISSION_GRANTED && updateDownloader != null && oxygenOTAUpdate != null) {
+                } else {
+                    Callback callback = result -> {
+                        if ((int) result[0] == PackageManager.PERMISSION_GRANTED) {
                             updateDownloader.downloadUpdate(oxygenOTAUpdate);
                         }
-                    }
-                };
-                mainActivity.requestDownloadPermissions(callback);
+                    };
+                    mainActivity.requestDownloadPermissions(callback);
+                }
             }
         }
     }
     /**
      * Allows an already downloaded update file to be deleted to save storage space.
      */
-    private void onDownloadedButtonClick() {
-        MessageDialog dialog = new MessageDialog()
-                .setTitle(getString(R.string.delete_message_title))
-                .setMessage(getString(R.string.delete_message_contents))
-                .setClosable(true)
-                .setPositiveButtonText(getString(R.string.download_error_close))
-                .setNegativeButtonText(getString(R.string.delete_message_delete_button))
-                .setDialogListener(new MessageDialog.DialogListener() {
-                    @Override
-                    public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+    private class AlreadyDownloadedOnClickListener implements View.OnClickListener {
 
-                    }
+        private final Fragment targetFragment;
+        private static final String TAG = "DeleteDownload";
 
-                    @Override
-                    public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
-                        if(oxygenOTAUpdate != null) {
-                            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
-                            if(file.exists()) {
-                                if(file.delete()) {
-                                    getDownloadButton().setText(getString(R.string.download));
-                                    checkIfUpdateIsAlreadyDownloaded(oxygenOTAUpdate);
-                                }
+        public AlreadyDownloadedOnClickListener(Fragment targetFragment) {
+            this.targetFragment = targetFragment;
+        }
+
+        @Override
+        public void onClick(View v) {
+            MessageDialog dialog = new MessageDialog()
+                    .setTitle(getString(R.string.delete_message_title))
+                    .setMessage(getString(R.string.delete_message_contents))
+                    .setClosable(true)
+                    .setPositiveButtonText(getString(R.string.install_guide))
+                    .setNegativeButtonText(getString(R.string.delete_message_delete_button))
+                    .setDialogListener(new MessageDialog.DialogListener() {
+                        @Override
+                        public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                            ActivityLauncher activityLauncher = new ActivityLauncher(getActivity());
+                            activityLauncher.UpdateInstructions(DOWNLOADED);
+                        }
+
+                        @Override
+                        public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                            if (oxygenOTAUpdate != null) {
+                                updateDownloader.deleteDownload(oxygenOTAUpdate);
+                                initUpdateDownloadButton(DownloadStatus.NOT_DOWNLOADING);
                             }
                         }
+                    });
+            dialog.setTargetFragment(targetFragment, 0);
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.add(dialog, TAG);
+            transaction.commitAllowingStateLoss();
+
+        }
+
+    }
+
+    private class GetServerData extends AsyncTask<Callback, Void, ServerResult> {
+
+        @Override
+        protected ServerResult doInBackground(Callback... callbacks) {
+            ServerResult serverResult = new ServerResult();
+            serverResult.setCallback(callbacks[0]);
+            serverResult.setServerStatus(getApplicationContext().getServerConnector().getServerStatus());
+
+            Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
+            Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID);
+
+            serverResult.setServerMessages(getApplicationContext().getServerConnector().getServerMessages(deviceId, updateMethodId));
+
+
+            SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
+            OxygenOTAUpdate oxygenOTAUpdate = getApplicationContext().getServerConnector().getOxygenOTAUpdate(deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion());
+            if (oxygenOTAUpdate != null && oxygenOTAUpdate.getInformation() != null && oxygenOTAUpdate.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && oxygenOTAUpdate.isUpdateInformationAvailable() && oxygenOTAUpdate.isSystemIsUpToDate()) {
+                oxygenOTAUpdate = getApplicationContext().getServerConnector().getMostRecentOxygenOTAUpdate(deviceId, updateMethodId);
+            } else {
+                if (settingsManager.checkIfCacheIsAvailable()) {
+                    oxygenOTAUpdate = new OxygenOTAUpdate();
+                    oxygenOTAUpdate.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
+                    oxygenOTAUpdate.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
+                    oxygenOTAUpdate.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
+                    oxygenOTAUpdate.setUpdateInformationAvailable(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
+                    oxygenOTAUpdate.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
+                } else {
+                    Dialogs.showNoNetworkConnectionError(getParentFragment());
+                    oxygenOTAUpdate = new OxygenOTAUpdate();
+                }
+            }
+            serverResult.setUpdateData(oxygenOTAUpdate);
+            return serverResult;
+        }
+
+        @Override
+        protected void onPostExecute(final ServerResult serverResult) {
+            List<Banner> inAppBars = new ArrayList<>();
+
+            // Add the "No connection" bar depending on the network status of the device.
+            boolean online = networkConnectionManager.checkNetworkConnection();
+            if (!online) {
+                inAppBars.add(new Banner() {
+                    @Override
+                    public String getBannerText(Context context) {
+                        return context.getString(R.string.error_no_internet_connection);
+                    }
+
+                    @Override
+                    public int getColor(Context context) {
+                        return ContextCompat.getColor(context, R.color.holo_red_light);
                     }
                 });
-        dialog.setTargetFragment(this, 0);
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(dialog, "DeleteDownload");
-        transaction.commitAllowingStateLoss();
-    }
+            }
 
-    /**
-     * Checks if an update file is already downloaded.
-     * @param oxygenOTAUpdate Oxygen OTA Update data containing the file name of the update.
-     */
-    public void checkIfUpdateIsAlreadyDownloaded(OxygenOTAUpdate oxygenOTAUpdate) {
-        if(oxygenOTAUpdate != null) {
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
-            onUpdateDownloaded(file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID), false);
-        }
-    }
+            if (serverResult.getServerMessages() != null && settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true)) {
+                inAppBars.addAll(serverResult.getServerMessages());
+            }
 
-    public boolean checkIfUpdateIsDownloaded(OxygenOTAUpdate oxygenOTAUpdate) {
-        if (oxygenOTAUpdate == null) return false;
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
-        return (file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID));
-    }
+            if (serverResult.getServerStatus() == null) {
+                ServerStatus serverStatus = new ServerStatus();
+                serverStatus.setStatus(UNREACHABLE);
+                serverStatus.setLatestAppVersion(BuildConfig.VERSION_NAME);
+                serverResult.setServerStatus(serverStatus);
+            }
 
-    /**
-     * Converts DiP units to pixels
-     */
-    private int diPToPixels(int numberOfPixels) {
-        if(getActivity() != null && getActivity().getResources() != null) {
-            return (int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    numberOfPixels,
-                    getActivity().getResources().getDisplayMetrics()
-            );
-        } else {
-            return 0;
+            ServerStatus.Status status = serverResult.getServerStatus().getStatus();
+
+            if (status.isUserRecoverableError()) {
+                inAppBars.add(serverResult.getServerStatus());
+            }
+
+            if (status.isNonRecoverableError()) {
+                switch (status) {
+                    case MAINTENANCE:
+                        Dialogs.showServerMaintenanceError(getParentFragment());
+                        break;
+                    case OUTDATED:
+                        Dialogs.showAppOutdatedError(getParentFragment());
+                        break;
+                }
+            }
+
+            if (settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverResult.getServerStatus().checkIfAppIsUpToDate()) {
+                inAppBars.add(new Banner() {
+
+                    @Override
+                    public CharSequence getBannerText(Context context) {
+                        //noinspection deprecation Suggested fix requires API level 24, which is too new for this app, or an ugly if-else statement.
+                        return Html.fromHtml(String.format(getString(R.string.new_app_version), serverResult.getServerStatus().getLatestAppVersion()));
+                    }
+
+                    @Override
+                    public int getColor(Context context) {
+                        return ContextCompat.getColor(context, R.color.holo_green_light);
+                    }
+                });
+            }
+
+            serverResult.getCallback().onActionPerformed(new ServerResultCallbackData(serverResult.getUpdateData(), online, inAppBars));
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.arjanvlek.oxygenupdater.views;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -67,48 +67,30 @@ public class MessageDialog extends DialogFragment {
         builder.setMessage(message);
 
         if(negativeButtonText != null) {
-            builder.setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if(dialogListener != null) {
-                        dialogListener.onDialogNegativeButtonClick(MessageDialog.this);
-                    }
-                    dismiss();
+            builder.setNegativeButton(negativeButtonText, (dialog, which) -> {
+                if (dialogListener != null) {
+                    dialogListener.onDialogNegativeButtonClick(MessageDialog.this);
                 }
+                dismiss();
             });
         }
         if(positiveButtonText != null) {
-            builder.setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if(dialogListener != null) {
-                        dialogListener.onDialogPositiveButtonClick(MessageDialog.this);
-                    }
-                    dismiss();
+            builder.setPositiveButton(positiveButtonText, (dialog, which) -> {
+                if (dialogListener != null) {
+                    dialogListener.onDialogPositiveButtonClick(MessageDialog.this);
                 }
+                dismiss();
             });
         }
 
         if(!closable) {
             builder.setCancelable(false);
-            builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                @Override
-                public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-                    if (i == KeyEvent.KEYCODE_BACK) {
-                        getActivity().finish();
-                        System.exit(0);
-                    }
-                    return true;
-                }
+            builder.setOnKeyListener((dialogInterface, i, keyEvent) -> {
+                if (i == KeyEvent.KEYCODE_BACK) exit();
+                return true;
             });
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        getActivity().finish();
-                        System.exit(0);
-                    }
-                });
+                builder.setOnDismissListener(dialogInterface -> exit());
             }
         }
         return builder.create();
@@ -119,8 +101,19 @@ public class MessageDialog extends DialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
         if(!closable) {
-            getActivity().finish();
-            System.exit(0);
+            exit();
+        }
+    }
+
+
+    private void exit() {
+        exit(getActivity());
+    }
+
+    private void exit(Activity activity) {
+        if (activity != null) {
+            activity.finish();
+            exit(activity.getParent());
         }
     }
 }

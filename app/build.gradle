@@ -41,6 +41,8 @@ android {
     buildTypes {
         release { // Config for releases, or testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v1.1/\""
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
+
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.build.product\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.ota.versionname\""
@@ -54,6 +56,7 @@ android {
         }
         debug { // Config for use during debugging. Uses the test server, and reads system properties using the default build.prop values present in any Android device / emulator.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v1.1/\""
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.product.name\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
@@ -69,10 +72,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     productFlavors {
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
     }
 }
 
@@ -94,6 +107,14 @@ dependencies {
     //Firebase libraries
     compile 'com.google.firebase:firebase-ads:9.2.1'
     compile 'com.google.firebase:firebase-messaging:9.2.1'
+
+    // Java 8 backports:
+    compile 'net.sourceforge.streamsupport:streamsupport:1.5.3'
+    compile 'net.sourceforge.streamsupport:streamsupport-cfuture:1.5.3'
+    compile 'net.sourceforge.streamsupport:streamsupport-atomic:1.5.3'
+    compile 'net.sourceforge.streamsupport:streamsupport-flow:1.5.3'
+    compile 'net.sourceforge.streamsupport:streamsupport-literal:1.5.3'
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'me.tatarka.retrolambda'

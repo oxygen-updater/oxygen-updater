@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.views;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -13,8 +12,8 @@ public class ServerMessageBar extends RelativeLayout {
 
     private final RelativeLayout view;
 
-    public ServerMessageBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public ServerMessageBar(Context context) {
+        super(context, null);
         this.view = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.server_message_bar, this);
     }
 

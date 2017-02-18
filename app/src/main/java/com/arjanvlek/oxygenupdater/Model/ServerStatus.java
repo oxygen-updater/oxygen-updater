@@ -74,4 +74,14 @@ public class ServerStatus implements Banner {
             return !isUserRecoverableError() && !this.equals(NORMAL);
         }
     }
+
+    public boolean checkIfAppIsUpToDate() {
+        try {
+            int appVersionNumeric = Integer.parseInt(BuildConfig.VERSION_NAME.replace(".", ""));
+            int appVersionFromResultNumeric = Integer.parseInt(getLatestAppVersion().replace(".", ""));
+            return appVersionFromResultNumeric <= appVersionNumeric;
+        } catch (Exception e) {
+            return true;
+        }
+    }
 }

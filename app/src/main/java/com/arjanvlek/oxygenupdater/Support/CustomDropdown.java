@@ -42,15 +42,15 @@ public class CustomDropdown {
         return convertView;
     }
 
-    public static View initCustomUpdateMethodDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<UpdateMethod> updateMethods, List<Integer> recommendedPositions, Context context) {
+    public static View initCustomUpdateMethodDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<UpdateMethod> updateMethods, int[] recommendedPositions, Context context) {
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layoutType, parent, false);
         }
 
         TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
-        Locale locale = Locale.getDefault();
-        switch(locale.getDisplayLanguage()) {
+
+        switch (Locale.getDefault().getDisplayLanguage()) {
             case LOCALE_DUTCH:
                 textView.setText(updateMethods.get(currentPosition).getDutchName());
                 break;

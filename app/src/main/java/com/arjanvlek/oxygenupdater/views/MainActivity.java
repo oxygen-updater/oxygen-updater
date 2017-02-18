@@ -2,18 +2,16 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +27,9 @@ import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.Support.SupportedDeviceCallback;
 import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
 
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.*;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SETUP_DONE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
 
 @SuppressWarnings("deprecation")
@@ -184,13 +184,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             builder.setTitle(getString(R.string.unsupported_device_warning_title));
             builder.setMessage(getString(R.string.unsupported_device_warning_message));
 
-            builder.setPositiveButton(getString(R.string.download_error_close), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SettingsManager settingsManager = new SettingsManager(getApplicationContext());
-                    settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox.isChecked());
-                    dialog.dismiss();
-                }
+            builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> {
+                settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox.isChecked());
+                dialog.dismiss();
             });
             builder.show();
         }
