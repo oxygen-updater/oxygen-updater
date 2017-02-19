@@ -6,6 +6,8 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 
+import com.arjanvlek.oxygenupdater.views.FormattedURLSpan;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -13,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.graphics.Typeface.BOLD;
-import static android.graphics.Typeface.NORMAL;
 
 public class UpdateDescriptionParser {
 

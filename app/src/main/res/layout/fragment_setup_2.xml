@@ -97,11 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tut1bText4"
-            android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/tut1bdownloadCancelImage"
-            android:layout_toRightOf="@+id/tut1bdownloadCancelImage"
             android:gravity="center_vertical"
             android:minHeight="50dp"
             android:text="@string/help_symbol_download_cancel"
@@ -112,11 +110,10 @@
             android:id="@+id/tut1bdownloadCancelImage"
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/tut1bText5"
             android:contentDescription="@string/icon"
-            android:src="@drawable/ic_action_highlight_remove" />
+            android:src="@drawable/cancel_download" />
 
     </RelativeLayout>
 </ScrollView>

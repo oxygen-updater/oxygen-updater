@@ -28,24 +28,24 @@ import android.widget.Toast;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.Download.DownloadProgressData;
+import com.arjanvlek.oxygenupdater.Download.UpdateDownloadListener;
+import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Model.Banner;
-import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
-import com.arjanvlek.oxygenupdater.Model.ServerResult;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.Server.ProcessedServerResult;
+import com.arjanvlek.oxygenupdater.Server.ServerResult;
 import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.Support.DateTimeFormatter;
-import com.arjanvlek.oxygenupdater.Support.Dialogs;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
-import com.arjanvlek.oxygenupdater.Support.Notifications;
-import com.arjanvlek.oxygenupdater.Support.ServerResultCallbackData;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.Support.UpdateDescriptionParser;
-import com.arjanvlek.oxygenupdater.Support.UpdateDownloadListener;
-import com.arjanvlek.oxygenupdater.Support.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Support.Utils;
+import com.arjanvlek.oxygenupdater.notifications.Dialogs;
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -54,6 +54,8 @@ import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java8.util.stream.StreamSupport;
 
 import static android.app.DownloadManager.ERROR_DEVICE_NOT_FOUND;
 import static android.app.DownloadManager.ERROR_FILE_ALREADY_EXISTS;
@@ -153,7 +155,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (adView != null && adsAreSupported) {
+        if (adsAreSupported) {
             adView.pause();
         }
 
@@ -163,9 +165,8 @@ public class UpdateInformationFragment extends AbstractFragment {
     public void onResume() {
         super.onResume();
 
-        if (adView != null && adsAreSupported) {
-            adView.resume();
-        }
+        if (adsAreSupported) adView.resume();
+
         if (refreshedDate != null && refreshedDate.plusMinutes(5).isBefore(DateTime.now()) &&  settingsManager.checkIfSetupScreenHasBeenCompleted() && isAdded()) {
             load();
         }
@@ -174,9 +175,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (adView != null && adsAreSupported) {
-            adView.destroy();
-        }
+        hideAds();
     }
 
     /*
@@ -200,7 +199,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
         installGuideButton.setOnClickListener(v -> {
             ((MainActivity) getActivity()).getActivityLauncher().UpdateInstructions(updateDownloader.checkIfUpdateIsDownloaded(oxygenOTAUpdate));
-            Notifications.hideDownloadCompleteNotification(getActivity());
+            LocalNotifications.hideDownloadCompleteNotification(getActivity());
         });
     }
 
@@ -210,8 +209,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     private void load() {
         final Fragment instance = this;
 
-        new GetServerData().execute(result -> {
-            ServerResultCallbackData data = (ServerResultCallbackData) result[0];
+        new GetServerData(data -> {
 
             displayUpdateInformation(data.getOxygenOTAUpdate(), data.isOnline(), false);
             displayInAppMessageBars(data.getInAppBars());
@@ -230,7 +228,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
             isLoadedOnce = true;
             refreshedDate = DateTime.now();
-        });
+        }).execute();
     }
 
 
@@ -486,24 +484,18 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 
     private void showAds() {
-        if(rootView != null) {
-            adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
-        }
-        if (adView != null && adsAreSupported) {
-            AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice(ADS_TEST_DEVICE_ID_OWN_DEVICE)
-                    .addTestDevice(ADS_TEST_DEVICE_ID_TEST_DEVICE)
-                    .addTestDevice(ADS_TEST_DEVICE_ID_EMULATOR_1)
-                    .addTestDevice(ADS_TEST_DEVICE_ID_EMULATOR_2)
-                    .addTestDevice(ADS_TEST_DEVICE_ID_EMULATOR_3)
-                    .build();
+        if (adsAreSupported) {
+            AdRequest.Builder adRequest = new AdRequest.Builder();
 
-            adView.loadAd(adRequest);
+            StreamSupport.stream(ADS_TEST_DEVICES).forEach(adRequest::addTestDevice);
+
+            adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
+            adView.loadAd(adRequest.build());
         }
     }
 
     private void hideAds() {
-        if (adView != null && adsAreSupported) {
+        if (adsAreSupported) {
             adView.destroy();
         }
     }
@@ -735,12 +727,11 @@ public class UpdateInformationFragment extends AbstractFragment {
                 if (mainActivity.hasDownloadPermissions()) {
                     updateDownloader.downloadUpdate(oxygenOTAUpdate);
                 } else {
-                    Callback callback = result -> {
-                        if ((int) result[0] == PackageManager.PERMISSION_GRANTED) {
+                    mainActivity.requestDownloadPermissions(result -> {
+                        if (result == PackageManager.PERMISSION_GRANTED) {
                             updateDownloader.downloadUpdate(oxygenOTAUpdate);
                         }
-                    };
-                    mainActivity.requestDownloadPermissions(callback);
+                    });
                 }
             }
         }
@@ -789,12 +780,17 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     }
 
-    private class GetServerData extends AsyncTask<Callback, Void, ServerResult> {
+    private class GetServerData extends AsyncTask<Void, Void, ServerResult> {
+
+        private final Callback<ProcessedServerResult> callback;
+
+        public GetServerData(Callback<ProcessedServerResult> callback) {
+            this.callback = callback;
+        }
 
         @Override
-        protected ServerResult doInBackground(Callback... callbacks) {
+        protected ServerResult doInBackground(Void... callbacks) {
             ServerResult serverResult = new ServerResult();
-            serverResult.setCallback(callbacks[0]);
             serverResult.setServerStatus(getApplicationContext().getServerConnector().getServerStatus());
 
             Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
@@ -888,7 +884,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                 });
             }
 
-            serverResult.getCallback().onActionPerformed(new ServerResultCallbackData(serverResult.getUpdateData(), online, inAppBars));
+            callback.onActionPerformed(new ProcessedServerResult(serverResult.getUpdateData(), online, inAppBars));
         }
     }
 }

@@ -24,22 +24,20 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
-import com.arjanvlek.oxygenupdater.Support.SupportedDeviceCallback;
 import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
 
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
 
 @SuppressWarnings("deprecation")
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener, SupportedDeviceCallback {
+public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
 
     private ViewPager mViewPager;
     private SettingsManager settingsManager;
     private NetworkConnectionManager networkConnectionManager;
     private ActivityLauncher activityLauncher;
-    private Callback callback;
+    private Callback<Integer> callback;
 
 
     // Permissions constants
@@ -54,8 +52,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         settingsManager = new SettingsManager(context);
         networkConnectionManager = new NetworkConnectionManager(context);
 
-        if(! (boolean) settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && networkConnectionManager.checkNetworkConnection()) {
-            new SupportedDeviceManager(this, ((ApplicationContext)getApplication())).execute();
+        if (!(boolean) settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS)) {
+            ApplicationContext applicationContext = ((ApplicationContext) getApplication());
+            applicationContext.getDevices(result -> {
+                if (!SupportedDeviceManager.isSupportedDevice(applicationContext.getSystemVersionProperties(), result)) {
+                    displayUnsupportedDeviceMessage();
+                }
+            });
         }
 
         // Set up the action bar.
@@ -172,24 +175,20 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-    @Override
-    public void displayUnsupportedMessage(boolean deviceIsSupported) {
+    public void displayUnsupportedDeviceMessage() {
+        View checkBoxView = View.inflate(MainActivity.this, R.layout.message_dialog_checkbox, null);
+        final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
 
-        if(!(boolean) settingsManager.getPreference(PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && !deviceIsSupported) {
-            View checkBoxView = View.inflate(MainActivity.this, R.layout.message_dialog_checkbox, null);
-            final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(checkBoxView);
+        builder.setTitle(getString(R.string.unsupported_device_warning_title));
+        builder.setMessage(getString(R.string.unsupported_device_warning_message));
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(checkBoxView);
-            builder.setTitle(getString(R.string.unsupported_device_warning_title));
-            builder.setMessage(getString(R.string.unsupported_device_warning_message));
-
-            builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> {
-                settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox.isChecked());
-                dialog.dismiss();
-            });
-            builder.show();
-        }
+        builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> {
+            settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox.isChecked());
+            dialog.dismiss();
+        });
+        builder.show();
     }
 
     private void showNetworkError() {
@@ -261,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     // Android 6.0 Run-time permissions methods
 
-    public void requestDownloadPermissions(Callback callback) {
+    public void requestDownloadPermissions(Callback<Integer> callback) {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
             this.callback = callback;
             requestPermissions(new String[]{DOWNLOAD_PERMISSION}, PERMISSION_REQUEST_CODE);

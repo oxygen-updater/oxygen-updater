@@ -185,7 +185,7 @@
     <string name="about_version">Versie: %1$s</string>
 
 
-    <!-- Notifications strings -->
+    <!-- LocalNotifications strings -->
     <string name="notification_new_device">Nieuw apparaat toegevoegd! De</string>
     <string name="notification_new_device_2">wordt nu ondersteund!</string>
     <string name="notification_new_device_short">Open de app om dit apparaat te kiezen.</string>

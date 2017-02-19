@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.views;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -10,11 +10,11 @@ import android.util.Log;
 import android.view.View;
 
 
-class FormattedURLSpan extends ClickableSpan {
+public class FormattedURLSpan extends ClickableSpan {
 
     private final String url;
 
-    FormattedURLSpan(String url) {
+    public FormattedURLSpan(String url) {
         this.url = url;
     }
 
@@ -27,7 +27,7 @@ class FormattedURLSpan extends ClickableSpan {
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Log.w("FormattedURLSpan", "Activity was not found for intent, " + intent.toString());
+            Log.e("FormattedURLSpan", "Activity was not found for intent, " + intent.toString());
         }
     }
 }

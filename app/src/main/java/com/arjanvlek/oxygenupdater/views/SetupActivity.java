@@ -16,14 +16,11 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
-import com.arjanvlek.oxygenupdater.Support.SupportedDeviceCallback;
 import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
 
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS;
 
-public class SetupActivity extends AppCompatActivity implements SupportedDeviceCallback {
+public class SetupActivity extends AppCompatActivity {
 
     private Fragment step3Fragment;
     private Fragment step4Fragment;
@@ -32,21 +29,22 @@ public class SetupActivity extends AppCompatActivity implements SupportedDeviceC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
-            super.onCreate(savedInstanceState);
-        } catch (Exception ignored) {
-
-        }
-        settingsManager = new SettingsManager(getApplicationContext());
-        NetworkConnectionManager networkConnectionManager = new NetworkConnectionManager(getApplicationContext());
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
-        if(!(boolean)settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && networkConnectionManager.checkNetworkConnection()) {
-            SupportedDeviceManager supportedDeviceManager = new SupportedDeviceManager(this, ((ApplicationContext)getApplication()));
-            supportedDeviceManager.execute();
+        settingsManager = new SettingsManager(getApplicationContext());
+
+        if (!(boolean) settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS)) {
+            ApplicationContext applicationContext = ((ApplicationContext) getApplication());
+            applicationContext.getDevices(result -> {
+                if (!SupportedDeviceManager.isSupportedDevice(applicationContext.getSystemVersionProperties(), result)) {
+                    displayUnsupportedDeviceMessage();
+                }
+            });
         }
 
         // Create the adapter that will return a fragment for each of the three
@@ -86,17 +84,13 @@ public class SetupActivity extends AppCompatActivity implements SupportedDeviceC
 
     }
 
-    @Override
-    public void displayUnsupportedMessage(boolean deviceIsSupported) {
+    public void displayUnsupportedDeviceMessage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
+        builder.setTitle(getString(R.string.unsupported_device_warning_title));
+        builder.setMessage(getString(R.string.unsupported_device_warning_message));
 
-        if(!(boolean) settingsManager.getPreference(PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS) && !deviceIsSupported) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
-            builder.setTitle(getString(R.string.unsupported_device_warning_title));
-            builder.setMessage(getString(R.string.unsupported_device_warning_message));
-
-            builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> dialog.dismiss());
-            builder.show();
-        }
+        builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> dialog.dismiss());
+        builder.show();
     }
 
     /**

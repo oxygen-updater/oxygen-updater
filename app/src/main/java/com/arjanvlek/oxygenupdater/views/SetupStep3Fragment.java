@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,39 +37,9 @@ public class SetupStep3Fragment extends AbstractFragment {
     }
 
     public void fetchDevices() {
-        new GetDevices().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        getApplicationContext().getDevices(this::fillDeviceSettings);
     }
 
-    private class GetDevices extends AsyncTask<Void, Void, List<Device>> {
-
-        @Override
-        protected void onPreExecute() {
-            try {
-                progressBar.setVisibility(View.VISIBLE);
-            } catch (Exception ignored) {
-
-            }
-        }
-
-        @Override
-        protected List<Device> doInBackground(Void... params) {
-            int numberOfTimes = 0;
-            List<Device> devices = getApplicationContext().getDevices(true);
-            if(devices == null || devices.isEmpty()) {
-                while(numberOfTimes < 5) {
-                    numberOfTimes++;
-                    devices = getApplicationContext().getServerConnector().getDevices();
-                    if (devices != null && !devices.isEmpty()) break;
-                }
-            }
-            return devices;
-        }
-
-        @Override
-        protected void onPostExecute(List<Device> devices) {
-            fillDeviceSettings(devices);
-        }
-    }
 
     private void fillDeviceSettings(final List<Device> devices) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsDeviceSpinner);

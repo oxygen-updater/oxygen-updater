@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -43,28 +42,13 @@ public class SetupStep4Fragment extends AbstractFragment {
 
 
     public void fetchUpdateMethods() {
-        new UpdateDataFetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, settingsManager.getPreference(PROPERTY_DEVICE_ID));
-    }
-
-    private class UpdateDataFetcher extends AsyncTask<Long, Integer, List<UpdateMethod>> {
-
-        @Override
-        protected void onPreExecute() {
+        if (settingsManager.containsPreference(PROPERTY_DEVICE_ID)) {
             progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public List<UpdateMethod> doInBackground(Long... deviceIds) {
-            return getApplicationContext().getServerConnector().getUpdateMethods(deviceIds[0]);
-        }
-
-        @Override
-        public void onPostExecute(List<UpdateMethod> updateMethods) {
-            fillUpdateSettings(updateMethods);
+            getApplicationContext().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID), this::fillUpdateMethodSettings);
         }
     }
 
-    private void fillUpdateSettings(final List<UpdateMethod> updateMethods) {
+    private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsUpdateMethodSpinner);
 
         final int[] recommendedPositions = StreamSupport.stream(updateMethods).filter(UpdateMethod::isRecommended).mapToInt(updateMethods::indexOf).toArray();
@@ -112,7 +96,6 @@ public class SetupStep4Fragment extends AbstractFragment {
                         new NotificationTopicSubscriber().execute(data);
                     } else {
                         Toast.makeText(getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
-
                     }
                 }
 

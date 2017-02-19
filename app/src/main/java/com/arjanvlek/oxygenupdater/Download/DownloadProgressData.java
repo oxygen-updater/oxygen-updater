@@ -1,11 +1,11 @@
-package com.arjanvlek.oxygenupdater.Model;
+package com.arjanvlek.oxygenupdater.Download;
 
 
 import android.app.Activity;
 
 import com.arjanvlek.oxygenupdater.R;
 
-import static com.arjanvlek.oxygenupdater.Support.UpdateDownloader.NOT_SET;
+import static com.arjanvlek.oxygenupdater.Download.UpdateDownloader.NOT_SET;
 
 public class DownloadProgressData {
 

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.Model.InstallGuideData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.ServerConnector;
+import com.arjanvlek.oxygenupdater.Server.ServerConnector;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 
 import java.io.InputStream;

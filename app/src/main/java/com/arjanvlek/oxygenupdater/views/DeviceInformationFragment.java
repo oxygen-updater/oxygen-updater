@@ -2,7 +2,6 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,10 @@ import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.DeviceInformationData;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
+
 import java.util.List;
+
+import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
 
@@ -34,7 +36,7 @@ public class DeviceInformationFragment extends AbstractFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         if(isAdded()) {
             displayDeviceInformation();
-            new GetDevices().execute();
+            getApplicationContext().getDevices(this::displayDeviceName);
         }
     }
 
@@ -45,11 +47,9 @@ public class DeviceInformationFragment extends AbstractFragment {
             SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
 
             if (devices != null) {
-                for (Device device : devices) {
-                    if (device.getProductName() != null && device.getProductName().equals(systemVersionProperties.getOxygenDeviceName())) {
-                        deviceNameView.setText(device.getName());
-                    }
-                }
+                StreamSupport.stream(devices)
+                        .filter(device -> device.getProductName() != null && device.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
+                        .forEach(device -> deviceNameView.setText(device.getName()));
             }
         }
     }
@@ -121,23 +121,6 @@ public class DeviceInformationFragment extends AbstractFragment {
 
             TextView serialNumberView = (TextView) rootView.findViewById(R.id.device_information_serial_number_field);
             serialNumberView.setText(deviceInformationData.getSerialNumber());
-        }
-    }
-
-    private class GetDevices extends AsyncTask<Void, Void, List<Device>> {
-
-        @Override
-        protected List<Device> doInBackground(Void... params) {
-            try {
-                return getApplicationContext().getDevices();
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<Device> devices) {
-            displayDeviceName(devices);
         }
     }
 

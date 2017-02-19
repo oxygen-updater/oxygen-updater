@@ -52,7 +52,7 @@
                     android:layout_marginBottom="0dp"
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/black"
                     android:textStyle="bold" />
@@ -108,7 +108,7 @@
                             android:layout_weight="0"
                             android:background="@android:color/transparent"
                             android:contentDescription="@string/icon"
-                            android:src="@drawable/ic_action_highlight_remove" />
+                            android:src="@drawable/cancel_download" />
                     </TableRow>
                     <TableRow>
                         <TextView
@@ -148,7 +148,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:enabled="true"
-                            android:onClick="UpdateInstructions"
                             android:text="@string/install_guide"
                             android:textAppearance="?android:textAppearanceSmall"
                             android:textColor="@color/oneplus_red" />

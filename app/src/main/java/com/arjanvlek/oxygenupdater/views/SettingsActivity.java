@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -55,10 +54,11 @@ public class SettingsActivity extends AbstractActivity {
         deviceProgressBar = (ProgressBar) findViewById(R.id.settingsDeviceProgressBar);
         updateMethodsProgressBar = (ProgressBar) findViewById(R.id.settingsUpdateMethodProgressBar);
 
-            progressBar.setVisibility(View.VISIBLE);
-            deviceProgressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        deviceProgressBar.setVisibility(View.VISIBLE);
 
-        new DeviceDataFetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        getAppApplicationContext().getDevices(this::fillDeviceSettings);
+
         initSwitches();
     }
 
@@ -78,19 +78,6 @@ public class SettingsActivity extends AbstractActivity {
             switchView.setOnCheckedChangeListener(((buttonView, isChecked) -> settingsManager.savePreference(pair.second, isChecked)));
             switchView.setChecked(settingsManager.getPreference(pair.second, true));
         });
-    }
-
-    private class DeviceDataFetcher extends AsyncTask<Void, Integer, List<Device>> {
-
-        @Override
-        public List<Device> doInBackground(Void... voids) {
-            return getAppApplicationContext().getDevices();
-        }
-
-        @Override
-        public void onPostExecute(List<Device> devices) {
-            fillDeviceSettings(devices);
-        }
     }
 
     private void fillDeviceSettings(final List<Device> devices) {
@@ -141,7 +128,7 @@ public class SettingsActivity extends AbstractActivity {
                         updateMethodsProgressBar.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.VISIBLE);
 
-                        new UpdateDataFetcher().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, device.getId());
+                        getAppApplicationContext().getUpdateMethods(device.getId(), SettingsActivity.this::fillUpdateMethodSettings);
                     }
 
                     @Override
@@ -160,37 +147,7 @@ public class SettingsActivity extends AbstractActivity {
         }
     }
 
-    private void hideDeviceAndUpdateMethodSettings() {
-        findViewById(R.id.settingsDeviceSpinner).setVisibility(View.GONE);
-        findViewById(R.id.settingsDeviceProgressBar).setVisibility(View.GONE);
-        findViewById(R.id.settingsDeviceView).setVisibility(View.GONE);
-        findViewById(R.id.settingsUpdateMethodProgressBar).setVisibility(View.GONE);
-        findViewById(R.id.settingsUpdateMethodSpinner).setVisibility(View.GONE);
-        findViewById(R.id.settingsUpdateMethodView).setVisibility(View.GONE);
-        findViewById(R.id.settingsDescriptionView).setVisibility(View.GONE);
-        findViewById(R.id.settingsUpperDivisor).setVisibility(View.GONE);
-    }
-
-    private class UpdateDataFetcher extends AsyncTask<Long, Integer, List<UpdateMethod>> {
-
-        @Override
-        public void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public List<UpdateMethod> doInBackground(Long... deviceIds) {
-            return getServerConnector().getUpdateMethods(deviceIds[0]);
-        }
-
-        @Override
-        public void onPostExecute(List<UpdateMethod> updateMethods) {
-            fillUpdateSettings(updateMethods);
-
-        }
-    }
-
-    private void fillUpdateSettings(final List<UpdateMethod> updateMethods) {
+    private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
         if(updateMethods != null && !updateMethods.isEmpty()) {
             Spinner spinner = (Spinner) findViewById(R.id.settingsUpdateMethodSpinner);
             long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID);
@@ -256,6 +213,17 @@ public class SettingsActivity extends AbstractActivity {
             hideDeviceAndUpdateMethodSettings();
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    private void hideDeviceAndUpdateMethodSettings() {
+        findViewById(R.id.settingsDeviceSpinner).setVisibility(View.GONE);
+        findViewById(R.id.settingsDeviceProgressBar).setVisibility(View.GONE);
+        findViewById(R.id.settingsDeviceView).setVisibility(View.GONE);
+        findViewById(R.id.settingsUpdateMethodProgressBar).setVisibility(View.GONE);
+        findViewById(R.id.settingsUpdateMethodSpinner).setVisibility(View.GONE);
+        findViewById(R.id.settingsUpdateMethodView).setVisibility(View.GONE);
+        findViewById(R.id.settingsDescriptionView).setVisibility(View.GONE);
+        findViewById(R.id.settingsUpperDivisor).setVisibility(View.GONE);
     }
 
     private void showSettingsWarning() {

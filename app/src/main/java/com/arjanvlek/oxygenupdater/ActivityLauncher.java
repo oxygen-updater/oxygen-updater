@@ -6,9 +6,9 @@ import android.content.Intent;
 import com.arjanvlek.oxygenupdater.views.AboutActivity;
 import com.arjanvlek.oxygenupdater.views.FAQActivity;
 import com.arjanvlek.oxygenupdater.views.HelpActivity;
+import com.arjanvlek.oxygenupdater.views.InstallGuideActivity;
 import com.arjanvlek.oxygenupdater.views.SettingsActivity;
 import com.arjanvlek.oxygenupdater.views.SetupActivity;
-import com.arjanvlek.oxygenupdater.views.InstallGuideActivity;
 
 import static com.arjanvlek.oxygenupdater.views.InstallGuideActivity.INTENT_SHOW_DOWNLOAD_PAGE;
 

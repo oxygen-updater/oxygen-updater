@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.views;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arjanvlek.oxygenupdater.ApplicationContext;
-import com.arjanvlek.oxygenupdater.Support.ServerConnector;
+import com.arjanvlek.oxygenupdater.Server.ServerConnector;
 
 public class AbstractActivity extends AppCompatActivity {
 
@@ -11,11 +11,8 @@ public class AbstractActivity extends AppCompatActivity {
     private ApplicationContext applicationContext;
 
     public ServerConnector getServerConnector() {
-        if(applicationContext == null) {
-            applicationContext = getAppApplicationContext();
-        }
         if(serverConnector == null) {
-            serverConnector = applicationContext.getServerConnector();
+            serverConnector = getAppApplicationContext().getServerConnector();
         }
         return serverConnector;
     }

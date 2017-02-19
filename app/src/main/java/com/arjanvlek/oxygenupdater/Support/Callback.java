@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.Support;
 
 
-public interface Callback {
+public interface Callback<T> {
 
-    void onActionPerformed(Object... result);
+    void onActionPerformed(T result);
 }

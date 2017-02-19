@@ -1,24 +1,16 @@
-package com.arjanvlek.oxygenupdater.Model;
+package com.arjanvlek.oxygenupdater.Server;
 
-
-import com.arjanvlek.oxygenupdater.Support.Callback;
+import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
+import com.arjanvlek.oxygenupdater.Model.ServerMessage;
+import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 
 import java.util.List;
 
 public class ServerResult {
 
-    private Callback callback;
     private List<ServerMessage> serverMessages;
     private ServerStatus serverStatus;
     private OxygenOTAUpdate updateData;
-
-    public Callback getCallback() {
-        return callback;
-    }
-
-    public void setCallback(Callback callback) {
-        this.callback = callback;
-    }
 
     public List<ServerMessage> getServerMessages() {
         return serverMessages;

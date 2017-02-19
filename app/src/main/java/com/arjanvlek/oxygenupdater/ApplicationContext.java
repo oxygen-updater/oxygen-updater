@@ -2,21 +2,19 @@ package com.arjanvlek.oxygenupdater;
 
 import android.app.Activity;
 import android.app.Application;
-import android.os.Build;
-import android.support.annotation.NonNull;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.Support.ServerConnector;
+import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
+import com.arjanvlek.oxygenupdater.Server.ServerConnector;
+import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import org.joda.time.LocalDateTime;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 public class ApplicationContext extends Application {
@@ -37,8 +35,67 @@ public class ApplicationContext extends Application {
     // Used for Google Play Services check
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    public List<Device> getDevices() {
-        return getDevices(false);
+    public void getDevices(Callback<List<Device>> callback) {
+        new GetDevices(callback, false).execute();
+    }
+
+    public void getDevices(Callback<List<Device>> callback, boolean alwaysFetch) {
+        new GetDevices(callback, alwaysFetch).execute();
+    }
+
+    public void getUpdateMethods(long deviceId, Callback<List<UpdateMethod>> callback) {
+        new GetUpdateMethods(deviceId, callback).execute();
+    }
+
+    private class GetDevices extends AsyncTask<Void, Void, List<Device>> {
+
+        private final Callback<List<Device>> callback;
+        private final boolean alwaysFetch;
+
+        public GetDevices(Callback<List<Device>> callback, boolean alwaysFetch) {
+            this.callback = callback;
+            this.alwaysFetch = alwaysFetch;
+        }
+
+        @Override
+        protected List<Device> doInBackground(Void... params) {
+            int numberOfTimes = 0;
+            List<Device> devices = doGetDevices(alwaysFetch);
+            if (devices == null || devices.isEmpty()) {
+                while (numberOfTimes < 5) {
+                    numberOfTimes++;
+                    devices = doGetDevices(true);
+                    if (devices != null && !devices.isEmpty()) break;
+                }
+            }
+            return devices;
+        }
+
+        @Override
+        protected void onPostExecute(List<Device> devices) {
+            callback.onActionPerformed(devices);
+        }
+    }
+
+    private class GetUpdateMethods extends AsyncTask<Void, Void, List<UpdateMethod>> {
+
+        private final long deviceId;
+        private final Callback<List<UpdateMethod>> callback;
+
+        public GetUpdateMethods(long deviceId, Callback<List<UpdateMethod>> callback) {
+            this.deviceId = deviceId;
+            this.callback = callback;
+        }
+
+        @Override
+        public List<UpdateMethod> doInBackground(Void... params) {
+            return getServerConnector().getUpdateMethods(deviceId);
+        }
+
+        @Override
+        public void onPostExecute(List<UpdateMethod> updateMethods) {
+            callback.onActionPerformed(updateMethods);
+        }
     }
 
     /**
@@ -46,9 +103,9 @@ public class ApplicationContext extends Application {
      * If the stored data is more than 5 minutes old, one new request is allowed and so on for each 5 minutes.
      * @return List of Devices that are enabled on the server.
      */
-    public List<Device> getDevices(boolean alwaysFetch) {
-        LocalDateTime now = LocalDateTime.now();
-        if(devices != null && deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(now) && !alwaysFetch) {
+    private List<Device> doGetDevices(boolean alwaysFetch) {
+        if (devices != null && deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
+            Log.v(TAG, "Used local cache to fetch devices...");
             return devices;
         }
 

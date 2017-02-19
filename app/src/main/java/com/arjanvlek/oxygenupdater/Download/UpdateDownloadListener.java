@@ -1,6 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
-
-import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
+package com.arjanvlek.oxygenupdater.Download;
 
 public interface UpdateDownloadListener {
 

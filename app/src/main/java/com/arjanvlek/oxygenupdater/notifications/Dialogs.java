@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.notifications;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.views.MessageDialog;
@@ -39,12 +40,12 @@ public class Dialogs {
                 .setDialogListener(new MessageDialog.DialogListener() {
                     @Override
                     public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
-                        Notifications.hideDownloadCompleteNotification(fragment.getActivity());
+                        LocalNotifications.hideDownloadCompleteNotification(fragment.getActivity());
                     }
 
                     @Override
                     public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
-                        Notifications.hideDownloadCompleteNotification(fragment.getActivity());
+                        LocalNotifications.hideDownloadCompleteNotification(fragment.getActivity());
                         updateDownloader.cancelDownload(oxygenOTAUpdate);
                         updateDownloader.downloadUpdate(oxygenOTAUpdate);
                     }

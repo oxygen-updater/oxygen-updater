@@ -33,7 +33,7 @@ public class SettingsManager {
     public static final String PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings";
     public static final String PROPERTY_DOWNLOAD_ID = "download_id";
 
-    // Notifications properties
+    // LocalNotifications properties
     public static final String PROPERTY_NOTIFICATION_TOPIC = "notification_topic";
 
     private final Context context;

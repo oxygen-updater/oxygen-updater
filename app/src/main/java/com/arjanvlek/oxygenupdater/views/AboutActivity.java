@@ -22,8 +22,9 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceSate) {
         super.onCreate(savedInstanceSate);
-        String versionNumber = BuildConfig.VERSION_NAME;
         setContentView(R.layout.activity_about);
+
+        String versionNumber = BuildConfig.VERSION_NAME;
         TextView versionNumberView = (TextView) findViewById(R.id.aboutVersionNumberView);
         versionNumberView.setText(String.format(getString(R.string.about_version), versionNumber));
 
@@ -33,19 +34,15 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     public void rateApp(View view) {
+        final String appPackageName = getPackageName();
         try {
-            final String appPackageName = getPackageName();
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BASE_URL + appPackageName)));
+        } catch (ActivityNotFoundException e) {
             try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BASE_URL + appPackageName)));
-            } catch (ActivityNotFoundException e) {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BROWSER__BASE_URL + appPackageName)));
-                } catch (ActivityNotFoundException e1) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_unable_to_rate_app), Toast.LENGTH_LONG).show();
-                }
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BROWSER__BASE_URL + appPackageName)));
+            } catch (ActivityNotFoundException e1) {
+                Toast.makeText(getApplicationContext(), getString(R.string.error_unable_to_rate_app), Toast.LENGTH_LONG).show();
             }
-        } catch (Exception ignored) {
-
         }
     }
 

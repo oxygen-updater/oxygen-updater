@@ -182,8 +182,8 @@
     <string name="about_rate_app_button_text">Rate on Google Play</string>
     <string name="about_version">Version: %1$s</string>
 
-    
-    <!-- Notifications strings -->
+
+    <!-- LocalNotifications strings -->
     <string name="notification_new_device">New device released! The</string>
     <string name="notification_new_device_2">is now supported!</string>
     <string name="notification_new_device_short">Open the app to choose this device.</string>

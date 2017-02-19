@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.Download;
 
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -9,9 +9,10 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 
-import com.arjanvlek.oxygenupdater.Model.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,11 +35,11 @@ import static android.app.DownloadManager.STATUS_PAUSED;
 import static android.app.DownloadManager.STATUS_PENDING;
 import static android.app.DownloadManager.STATUS_RUNNING;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
-import static com.arjanvlek.oxygenupdater.Support.Notifications.HAS_ERROR;
-import static com.arjanvlek.oxygenupdater.Support.Notifications.HAS_NO_ERROR;
-import static com.arjanvlek.oxygenupdater.Support.Notifications.NOT_ONGOING;
-import static com.arjanvlek.oxygenupdater.Support.Notifications.ONGOING;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DOWNLOAD_ID;
+import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR;
+import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR;
+import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING;
+import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.ONGOING;
 
 
 public class UpdateDownloader {
@@ -310,7 +311,7 @@ public class UpdateDownloader {
         protected void onPreExecute() {
             if(listener != null) listener.onVerifyStarted();
             isVerifying = true;
-            Notifications.showVerifyingNotification(activity, ONGOING, HAS_NO_ERROR);
+            LocalNotifications.showVerifyingNotification(activity, ONGOING, HAS_NO_ERROR);
         }
 
         @Override
@@ -327,15 +328,15 @@ public class UpdateDownloader {
 
             if (result) {
                 if(listener != null) listener.onVerifyComplete();
-                Notifications.hideVerifyingNotification(activity);
-                Notifications.showDownloadCompleteNotification(activity);
+                LocalNotifications.hideVerifyingNotification(activity);
+                LocalNotifications.showDownloadCompleteNotification(activity);
 
                 clearUp();
             } else {
                 deleteDownload(oxygenOTAUpdate);
 
                 if(listener != null) listener.onVerifyError(instance());
-                Notifications.showVerifyingNotification(activity, NOT_ONGOING, HAS_ERROR);
+                LocalNotifications.showVerifyingNotification(activity, NOT_ONGOING, HAS_ERROR);
 
                 clearUp();
             }
@@ -344,23 +345,23 @@ public class UpdateDownloader {
 
     private void showDownloadErrorNotification(Activity activity, OxygenOTAUpdate oxygenOTAUpdate, int statusCode) {
         if (statusCode < 1000) {
-            Notifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
+            LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
         } else {
             switch (statusCode) {
                 case ERROR_UNHANDLED_HTTP_CODE:
                 case ERROR_HTTP_DATA_ERROR:
                 case ERROR_TOO_MANY_REDIRECTS:
-                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
+                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
                     break;
                 case ERROR_FILE_ERROR:
                     makeDownloadDirectory();
-                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
+                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
                     break;
                 case ERROR_INSUFFICIENT_SPACE:
-                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_storage, R.string.download_notification_error_storage_full);
+                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_storage, R.string.download_notification_error_storage_full);
                     break;
                 case ERROR_DEVICE_NOT_FOUND:
-                    Notifications.showDownloadFailedNotification(activity, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
+                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
                     break;
                 case ERROR_CANNOT_RESUME:
                     cancelDownload(oxygenOTAUpdate);

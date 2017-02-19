@@ -6,9 +6,9 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 
-import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

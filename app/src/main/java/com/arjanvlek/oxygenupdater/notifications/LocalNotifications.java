@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.notifications;
 
 
 import android.app.Activity;
@@ -19,7 +19,7 @@ import com.arjanvlek.oxygenupdater.views.MainActivity;
 import static com.arjanvlek.oxygenupdater.views.InstallGuideActivity.INTENT_SHOW_DOWNLOAD_PAGE;
 
 
-public class Notifications {
+public class LocalNotifications {
 
     private static final int VERIFYING_NOTIFICATION_ID = 500000000;
     private static final int DOWNLOAD_COMPLETE_NOTIFICATION_ID = 1000000000;
