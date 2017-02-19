@@ -21,19 +21,16 @@ public class ApplicationContext extends Application {
     private List<Device> devices;
     private LocalDateTime deviceFetchDate;
     private ServerConnector serverConnector;
+    private SystemVersionProperties systemVersionProperties;
+
     public static final String NO_OXYGEN_OS = "no_oxygen_os_ver_found";
     public static final int NUMBER_OF_INSTALL_GUIDE_PAGES = 5;
     public static final String DEVICE_TOPIC_PREFIX = "device_";
     public static final String UPDATE_METHOD_TOPIC_PREFIX = "_update-method_";
-
     public static final String APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME;
     public static final String LOCALE_DUTCH = "Nederlands";
-    private static SystemVersionProperties SYSTEM_VERSION_PROPERTIES_INSTANCE;
-    public static final String TAG = "ApplicationContext";
-
-
-    // Used for Google Play Services check
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "ApplicationContext";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public void getDevices(Callback<List<Device>> callback) {
         new GetDevices(callback, false).execute();
@@ -45,6 +42,49 @@ public class ApplicationContext extends Application {
 
     public void getUpdateMethods(long deviceId, Callback<List<UpdateMethod>> callback) {
         new GetUpdateMethods(deviceId, callback).execute();
+    }
+
+    public ServerConnector getServerConnector() {
+        if (serverConnector == null) {
+            Log.v(TAG, "Created ServerConnector for use within the application...");
+            serverConnector = new ServerConnector();
+            return serverConnector;
+        } else {
+            return serverConnector;
+        }
+    }
+
+    public SystemVersionProperties getSystemVersionProperties() {
+        // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
+        if (systemVersionProperties == null) {
+            systemVersionProperties = new SystemVersionProperties();
+            return systemVersionProperties;
+        } else {
+            return systemVersionProperties;
+        }
+    }
+
+
+    /**
+     * Checks if the Google Play Services are installed on the device.
+     *
+     * @return Returns if the Google Play Services are installed.
+     */
+    public boolean checkPlayServices(Activity activity, boolean showErrorIfMissing) {
+        Log.v(TAG, "Executing Google Play Services check...");
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
+            if (googleApiAvailability.isUserResolvableError(resultCode)) {
+                googleApiAvailability.getErrorDialog(activity, resultCode,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                System.exit(0);
+            }
+            return false;
+        } else {
+            return resultCode == ConnectionResult.SUCCESS;
+        }
     }
 
     private class GetDevices extends AsyncTask<Void, Void, List<Device>> {
@@ -114,50 +154,6 @@ public class ApplicationContext extends Application {
             devices = getServerConnector().getDevices();
             deviceFetchDate = LocalDateTime.now();
             return devices;
-        }
-    }
-
-    public ServerConnector getServerConnector() {
-        if(serverConnector == null) {
-            Log.v(TAG, "Created ServerConnector for use within the application...");
-            serverConnector = new ServerConnector();
-            return serverConnector;
-        }
-        else {
-            return serverConnector;
-        }
-    }
-
-    public SystemVersionProperties getSystemVersionProperties() {
-        // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
-        if(SYSTEM_VERSION_PROPERTIES_INSTANCE == null) {
-            SYSTEM_VERSION_PROPERTIES_INSTANCE = new SystemVersionProperties();
-            return SYSTEM_VERSION_PROPERTIES_INSTANCE;
-        } else {
-            return SYSTEM_VERSION_PROPERTIES_INSTANCE;
-        }
-    }
-
-
-
-    /**
-     * Checks if the Google Play Services are installed on the device.
-     * @return Returns if the Google Play Services are installed.
-     */
-    public boolean checkPlayServices(Activity activity, boolean showErrorIfMissing) {
-        Log.v(TAG, "Executing Google Play Services check...");
-        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
-            if (googleApiAvailability.isUserResolvableError(resultCode)) {
-                googleApiAvailability.getErrorDialog(activity, resultCode,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                System.exit(0);
-            }
-            return false;
-        } else {
-            return resultCode == ConnectionResult.SUCCESS;
         }
     }
 }

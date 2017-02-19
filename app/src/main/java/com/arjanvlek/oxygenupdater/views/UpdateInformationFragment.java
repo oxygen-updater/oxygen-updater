@@ -7,9 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
@@ -25,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Download.DownloadProgressData;
@@ -115,7 +112,6 @@ public class UpdateInformationFragment extends AbstractFragment {
     private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
     private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
     private static final String UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build";
-    private static final boolean DOWNLOADED = true;
     private List<ServerMessageBar> inAppMessageBars = new ArrayList<>();
 
     /*
@@ -211,12 +207,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         new GetServerData(data -> {
 
-            displayUpdateInformation(data.getOxygenOTAUpdate(), data.isOnline(), false);
-            displayInAppMessageBars(data.getInAppBars());
-
-            if (data.isOnline()) showAds();
-            else hideAds();
-
             oxygenOTAUpdate = data.getOxygenOTAUpdate();
             if (!isLoadedOnce) updateDownloader = initDownloadManager(oxygenOTAUpdate);
 
@@ -225,6 +215,12 @@ public class UpdateInformationFragment extends AbstractFragment {
                 Intent i = getActivity().getIntent();
                 Dialogs.showDownloadError(instance, updateDownloader, oxygenOTAUpdate, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
             }
+
+            displayUpdateInformation(data.getOxygenOTAUpdate(), data.isOnline(), false);
+            displayInAppMessageBars(data.getInAppBars());
+
+            if (data.isOnline()) showAds();
+            else hideAds();
 
             isLoadedOnce = true;
             refreshedDate = DateTime.now();
@@ -742,7 +738,6 @@ public class UpdateInformationFragment extends AbstractFragment {
     private class AlreadyDownloadedOnClickListener implements View.OnClickListener {
 
         private final Fragment targetFragment;
-        private static final String TAG = "DeleteDownload";
 
         public AlreadyDownloadedOnClickListener(Fragment targetFragment) {
             this.targetFragment = targetFragment;
@@ -750,34 +745,13 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         @Override
         public void onClick(View v) {
-            MessageDialog dialog = new MessageDialog()
-                    .setTitle(getString(R.string.delete_message_title))
-                    .setMessage(getString(R.string.delete_message_contents))
-                    .setClosable(true)
-                    .setPositiveButtonText(getString(R.string.install_guide))
-                    .setNegativeButtonText(getString(R.string.delete_message_delete_button))
-                    .setDialogListener(new MessageDialog.DialogListener() {
-                        @Override
-                        public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
-                            ActivityLauncher activityLauncher = new ActivityLauncher(getActivity());
-                            activityLauncher.UpdateInstructions(DOWNLOADED);
-                        }
-
-                        @Override
-                        public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
-                            if (oxygenOTAUpdate != null) {
-                                updateDownloader.deleteDownload(oxygenOTAUpdate);
-                                initUpdateDownloadButton(DownloadStatus.NOT_DOWNLOADING);
-                            }
-                        }
-                    });
-            dialog.setTargetFragment(targetFragment, 0);
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.add(dialog, TAG);
-            transaction.commitAllowingStateLoss();
-
+            Dialogs.showUpdateAlreadyDownloadedMessage(targetFragment, (ignored) -> {
+                if (oxygenOTAUpdate != null) {
+                    updateDownloader.deleteDownload(oxygenOTAUpdate);
+                    initUpdateDownloadButton(UpdateInformationFragment.DownloadStatus.NOT_DOWNLOADING);
+                }
+            });
         }
-
     }
 
     private class GetServerData extends AsyncTask<Void, Void, ServerResult> {
@@ -803,7 +777,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             OxygenOTAUpdate oxygenOTAUpdate = getApplicationContext().getServerConnector().getOxygenOTAUpdate(deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion());
             if (oxygenOTAUpdate != null && oxygenOTAUpdate.getInformation() != null && oxygenOTAUpdate.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && oxygenOTAUpdate.isUpdateInformationAvailable() && oxygenOTAUpdate.isSystemIsUpToDate()) {
                 oxygenOTAUpdate = getApplicationContext().getServerConnector().getMostRecentOxygenOTAUpdate(deviceId, updateMethodId);
-            } else {
+            } else if (!networkConnectionManager.checkNetworkConnection()) {
                 if (settingsManager.checkIfCacheIsAvailable()) {
                     oxygenOTAUpdate = new OxygenOTAUpdate();
                     oxygenOTAUpdate.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
@@ -813,10 +787,9 @@ public class UpdateInformationFragment extends AbstractFragment {
                     oxygenOTAUpdate.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
                 } else {
                     Dialogs.showNoNetworkConnectionError(getParentFragment());
-                    oxygenOTAUpdate = new OxygenOTAUpdate();
                 }
             }
-            serverResult.setUpdateData(oxygenOTAUpdate);
+            serverResult.setUpdateData(oxygenOTAUpdate != null ? oxygenOTAUpdate : new OxygenOTAUpdate());
             return serverResult;
         }
 

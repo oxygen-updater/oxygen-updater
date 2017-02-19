@@ -166,6 +166,9 @@ public class InstallGuideFragment extends Fragment {
     }
 
     private void displayInstallGuide(View installGuideView, InstallGuideData installGuideData, int pageNumber, boolean isFirstPage) {
+        final TextView titleTextView = (TextView) installGuideView.findViewById(R.id.installGuideTitle);
+        final TextView contentsTextView = (TextView) installGuideView.findViewById(R.id.installGuideText);
+
         if(isFirstPage) {
             installGuideView.findViewById(R.id.installGuideHeader).setVisibility(View.VISIBLE);
             installGuideView.findViewById(R.id.installGuideTip).setVisibility(View.VISIBLE);
@@ -176,6 +179,16 @@ public class InstallGuideFragment extends Fragment {
         } else {
             displayCustomInstallGuide(installGuideView, pageNumber, installGuideData);
         }
+
+        installGuideView.findViewById(R.id.installGuideLoadingScreen).setVisibility(View.GONE);
+        titleTextView.setVisibility(View.VISIBLE);
+        contentsTextView.setVisibility(View.VISIBLE);
+        if (pageNumber == NUMBER_OF_INSTALL_GUIDE_PAGES) {
+            Button closeButton = (Button) installGuideView.findViewById(R.id.installGuideCloseButton);
+            closeButton.setOnClickListener(closeButtonOnClickListener());
+            closeButton.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void displayDefaultInstallGuide(View installGuideView, int pageNumber) {
@@ -187,25 +200,15 @@ public class InstallGuideFragment extends Fragment {
         int titleResourceId = getResources().getIdentifier(RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TITLE, RESOURCE_ID_PACKAGE_STRING, getActivity().getPackageName());
         int contentsResourceId = getResources().getIdentifier(RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TEXT, RESOURCE_ID_PACKAGE_STRING, getActivity().getPackageName());
 
-
         if(appLocale.equals(LOCALE_DUTCH)) {
             titleTextView.setText(getString(titleResourceId));
             contentsTextView.setText(getString(contentsResourceId));
         } else {
-            titleTextView.setText(titleResourceId);
-            contentsTextView.setText(contentsResourceId);
+            titleTextView.setText(getString(titleResourceId));
+            contentsTextView.setText(getString(contentsResourceId));
         }
 
         loadDefaultImage((ImageView)installGuideView.findViewById(R.id.installGuideImage), pageNumber);
-
-        installGuideView.findViewById(R.id.installGuideLoadingScreen).setVisibility(View.GONE);
-        titleTextView.setVisibility(View.VISIBLE);
-        contentsTextView.setVisibility(View.VISIBLE);
-        if(pageNumber == NUMBER_OF_INSTALL_GUIDE_PAGES) {
-            Button closeButton = (Button) installGuideView.findViewById(R.id.installGuideCloseButton);
-            closeButton.setOnClickListener(closeButtonOnClickListener());
-            closeButton.setVisibility(View.VISIBLE);
-        }
     }
 
     private void displayCustomInstallGuide(View installGuideView, int pageNumber, InstallGuideData installGuideData) {
@@ -228,16 +231,6 @@ public class InstallGuideFragment extends Fragment {
             new DownloadCustomImage().execute(imageView, installGuideData);
         } else {
             loadDefaultImage(imageView, pageNumber);
-        }
-
-        installGuideView.findViewById(R.id.installGuideLoadingScreen).setVisibility(View.GONE);
-        titleTextView.setVisibility(View.VISIBLE);
-        contentsTextView.setVisibility(View.VISIBLE);
-
-        if(pageNumber == NUMBER_OF_INSTALL_GUIDE_PAGES) {
-            Button closeButton = (Button) installGuideView.findViewById(R.id.installGuideCloseButton);
-            closeButton.setOnClickListener(closeButtonOnClickListener());
-            closeButton.setVisibility(View.VISIBLE);
         }
     }
 

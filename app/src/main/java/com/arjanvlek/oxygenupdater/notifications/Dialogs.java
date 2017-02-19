@@ -8,10 +8,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
+import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.views.MessageDialog;
 
 public class Dialogs {
@@ -105,6 +107,31 @@ public class Dialogs {
                 });
         appOutdatedErrorFragment.setTargetFragment(fragment, 0);
         appOutdatedErrorFragment.show(fragment.getFragmentManager(), "AppOutdatedError");
+    }
+
+    public static void showUpdateAlreadyDownloadedMessage(final Fragment fragment, final Callback<Void> actionPerformedCallback) {
+        MessageDialog dialog = new MessageDialog()
+                .setTitle(fragment.getString(R.string.delete_message_title))
+                .setMessage(fragment.getString(R.string.delete_message_contents))
+                .setClosable(true)
+                .setPositiveButtonText(fragment.getString(R.string.install_guide))
+                .setNegativeButtonText(fragment.getString(R.string.delete_message_delete_button))
+                .setDialogListener(new MessageDialog.DialogListener() {
+                    @Override
+                    public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                        ActivityLauncher activityLauncher = new ActivityLauncher(fragment.getActivity());
+                        activityLauncher.UpdateInstructions(true);
+                    }
+
+                    @Override
+                    public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                        actionPerformedCallback.onActionPerformed(null);
+                    }
+                });
+        dialog.setTargetFragment(fragment, 0);
+        FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.add(dialog, "DeleteDownload");
+        transaction.commitAllowingStateLoss();
     }
 
 }

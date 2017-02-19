@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     // Android 6.0 Run-time permissions methods
 
-    public void requestDownloadPermissions(Callback<Integer> callback) {
+    public void requestDownloadPermissions(@NonNull Callback<Integer> callback) {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
             this.callback = callback;
             requestPermissions(new String[]{DOWNLOAD_PERMISSION}, PERMISSION_REQUEST_CODE);
@@ -271,18 +271,15 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public void onRequestPermissionsResult(int  permsRequestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (permsRequestCode) {
             case PERMISSION_REQUEST_CODE:
-                try {
-                    if(this.callback != null) {
-                        this.callback.onActionPerformed(grantResults[0]);
-                    }
-                } catch (Exception ignored) {
-
+                if (this.callback != null) {
+                    this.callback.onActionPerformed(grantResults[0]);
                 }
+
         }
     }
 
     public boolean hasDownloadPermissions() {
-        //noinspection SimplifiableIfStatement
+        //noinspection SimplifiableIfStatement Suggested fix results in code that requires API level of M or higher and is not checked against it.
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return (checkSelfPermission(DOWNLOAD_PERMISSION) == PackageManager.PERMISSION_GRANTED);
         } else {

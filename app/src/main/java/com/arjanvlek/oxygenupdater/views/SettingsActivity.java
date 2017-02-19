@@ -57,7 +57,7 @@ public class SettingsActivity extends AbstractActivity {
         progressBar.setVisibility(View.VISIBLE);
         deviceProgressBar.setVisibility(View.VISIBLE);
 
-        getAppApplicationContext().getDevices(this::fillDeviceSettings);
+        getAppApplicationContext().getDevices(this::fillDeviceSettings, true);
 
         initSwitches();
     }
@@ -89,7 +89,7 @@ public class SettingsActivity extends AbstractActivity {
             // Set the spinner to the previously selected device.
             final int recommendedPosition = StreamSupport.stream(devices)
                     .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
-                    .filter(d -> d.getChipSet().equals("NOT_SET") || d.getChipSet().equals(Build.BOARD))
+                    .filter(d -> d.getChipSet() != null && d.getChipSet().equals(Build.BOARD))
                     .mapToInt(devices::indexOf).findAny().orElse(-1);
 
             final int selectedPosition = StreamSupport.stream(devices)
