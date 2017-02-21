@@ -4,13 +4,11 @@ package com.arjanvlek.oxygenupdater.views;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -24,18 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationContext;
-import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.AsyncTask.GetServerData;
 import com.arjanvlek.oxygenupdater.Download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
-import com.arjanvlek.oxygenupdater.Model.ServerStatus;
-import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Server.ProcessedServerResult;
-import com.arjanvlek.oxygenupdater.Server.ServerResult;
-import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.Support.DateTimeFormatter;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
@@ -72,18 +65,13 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.BELOW;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
-import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 import static java8.util.stream.StreamSupport.stream;
 
 public class UpdateInformationFragment extends AbstractFragment {
@@ -111,7 +99,6 @@ public class UpdateInformationFragment extends AbstractFragment {
     private static final String KEY_HAS_DOWNLOAD_ERROR = "has_download_error";
     private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
     private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
-    private static final String UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build";
     private List<ServerMessageBar> inAppMessageBars = new ArrayList<>();
 
     /*
@@ -205,7 +192,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     private void load() {
         final Fragment instance = this;
 
-        new GetServerData(data -> {
+        new GetServerData(this, settingsManager, networkConnectionManager.checkNetworkConnection(), data -> {
 
             oxygenOTAUpdate = data.getOxygenOTAUpdate();
             if (!isLoadedOnce) updateDownloader = initDownloadManager(oxygenOTAUpdate);
@@ -718,8 +705,8 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         @Override
         public void onClick(View v) {
-            MainActivity mainActivity = (MainActivity) getActivity();
-            if (mainActivity != null) {
+            if (isAdded()) {
+                MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity.hasDownloadPermissions()) {
                     updateDownloader.downloadUpdate(oxygenOTAUpdate);
                 } else {
@@ -751,113 +738,6 @@ public class UpdateInformationFragment extends AbstractFragment {
                     initUpdateDownloadButton(UpdateInformationFragment.DownloadStatus.NOT_DOWNLOADING);
                 }
             });
-        }
-    }
-
-    private class GetServerData extends AsyncTask<Void, Void, ServerResult> {
-
-        private final Callback<ProcessedServerResult> callback;
-
-        public GetServerData(Callback<ProcessedServerResult> callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        protected ServerResult doInBackground(Void... callbacks) {
-            ServerResult serverResult = new ServerResult();
-            serverResult.setServerStatus(getApplicationContext().getServerConnector().getServerStatus());
-
-            Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
-            Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID);
-
-            serverResult.setServerMessages(getApplicationContext().getServerConnector().getServerMessages(deviceId, updateMethodId));
-
-
-            SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
-            OxygenOTAUpdate oxygenOTAUpdate = getApplicationContext().getServerConnector().getOxygenOTAUpdate(deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion());
-            if (oxygenOTAUpdate != null && oxygenOTAUpdate.getInformation() != null && oxygenOTAUpdate.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && oxygenOTAUpdate.isUpdateInformationAvailable() && oxygenOTAUpdate.isSystemIsUpToDate()) {
-                oxygenOTAUpdate = getApplicationContext().getServerConnector().getMostRecentOxygenOTAUpdate(deviceId, updateMethodId);
-            } else if (!networkConnectionManager.checkNetworkConnection()) {
-                if (settingsManager.checkIfCacheIsAvailable()) {
-                    oxygenOTAUpdate = new OxygenOTAUpdate();
-                    oxygenOTAUpdate.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
-                    oxygenOTAUpdate.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
-                    oxygenOTAUpdate.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
-                    oxygenOTAUpdate.setUpdateInformationAvailable(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
-                    oxygenOTAUpdate.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
-                } else {
-                    Dialogs.showNoNetworkConnectionError(getParentFragment());
-                }
-            }
-            serverResult.setUpdateData(oxygenOTAUpdate != null ? oxygenOTAUpdate : new OxygenOTAUpdate());
-            return serverResult;
-        }
-
-        @Override
-        protected void onPostExecute(final ServerResult serverResult) {
-            List<Banner> inAppBars = new ArrayList<>();
-
-            // Add the "No connection" bar depending on the network status of the device.
-            boolean online = networkConnectionManager.checkNetworkConnection();
-            if (!online) {
-                inAppBars.add(new Banner() {
-                    @Override
-                    public String getBannerText(Context context) {
-                        return context.getString(R.string.error_no_internet_connection);
-                    }
-
-                    @Override
-                    public int getColor(Context context) {
-                        return ContextCompat.getColor(context, R.color.holo_red_light);
-                    }
-                });
-            }
-
-            if (serverResult.getServerMessages() != null && settingsManager.getPreference(PROPERTY_SHOW_NEWS_MESSAGES, true)) {
-                inAppBars.addAll(serverResult.getServerMessages());
-            }
-
-            if (serverResult.getServerStatus() == null) {
-                ServerStatus serverStatus = new ServerStatus();
-                serverStatus.setStatus(UNREACHABLE);
-                serverStatus.setLatestAppVersion(BuildConfig.VERSION_NAME);
-                serverResult.setServerStatus(serverStatus);
-            }
-
-            ServerStatus.Status status = serverResult.getServerStatus().getStatus();
-
-            if (status.isUserRecoverableError()) {
-                inAppBars.add(serverResult.getServerStatus());
-            }
-
-            if (status.isNonRecoverableError()) {
-                switch (status) {
-                    case MAINTENANCE:
-                        Dialogs.showServerMaintenanceError(getParentFragment());
-                        break;
-                    case OUTDATED:
-                        Dialogs.showAppOutdatedError(getParentFragment());
-                        break;
-                }
-            }
-
-            if (settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverResult.getServerStatus().checkIfAppIsUpToDate()) {
-                inAppBars.add(new Banner() {
-
-                    @Override
-                    public CharSequence getBannerText(Context context) {
-                        //noinspection deprecation Suggested fix requires API level 24, which is too new for this app, or an ugly if-else statement.
-                        return Html.fromHtml(String.format(getString(R.string.new_app_version), serverResult.getServerStatus().getLatestAppVersion()));
-                    }
-
-                    @Override
-                    public int getColor(Context context) {
-                        return ContextCompat.getColor(context, R.color.holo_green_light);
-                    }
-                });
-            }
-
-            callback.onActionPerformed(new ProcessedServerResult(serverResult.getUpdateData(), online, inAppBars));
         }
     }
 }
