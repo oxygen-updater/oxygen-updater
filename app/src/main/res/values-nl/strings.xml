@@ -23,9 +23,9 @@
     <string name="update_information_view_update_information">Bekijk update-informatie</string>
 
     <!-- Server status warning strings -->
-    <string name="server_status_error">Sommige functies werken mogelijk niet zoals verwacht.</string>
-    <string name="server_status_unreachable">De server is offline. Probeer de pagina te verversen.</string>
-    <string name="server_status_warning">Sommige functies kunnen onverwacht gedrag vertonen.</string>
+    <string name="server_status_error">Sommige functies werken niet.</string>
+    <string name="server_status_unreachable">Kan geen verbinding met de server maken…</string>
+    <string name="server_status_warning">Sommige functies werken mogelijk niet goed.</string>
 
     <!-- New app version message strings -->
     <string name="new_app_version">App-update beschikbaar! Versie &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> is uitgebracht!</string>
@@ -221,7 +221,7 @@
     
     <!-- Message box strings -->
     <string name="delete_message_title">Update is al gedownload</string>
-    <string name="delete_message_contents">Je hebt deze update al gedownload, maar nog niet geïnstalleerd. Tik op \"Sluiten\" om dit bericht te sluiten, en tik vervolgens op \"Installatiehandleiding\" voor installatie-instructies. Tik op \"Verwijder\" om het bestand definitief te verwijderen.</string>
+    <string name="delete_message_contents">Je hebt deze update al gedownload, maar nog niet geïnstalleerd. Tik op \"Installatiehandleiding\" voor installatie-instructies. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
     <string name="delete_message_delete_button">Verwijder</string>
 
     <string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>

@@ -38,7 +38,7 @@ public class SetupActivity extends AppCompatActivity {
 
         this.settingsManager = new SettingsManager(getApplicationContext());
 
-        if (!(boolean) settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS)) {
+        if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             ApplicationContext applicationContext = ((ApplicationContext) getApplication());
             applicationContext.getDevices(result -> {
                 if (!SupportedDeviceManager.isSupportedDevice(applicationContext.getSystemVersionProperties(), result)) {

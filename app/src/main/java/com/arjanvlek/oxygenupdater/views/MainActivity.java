@@ -26,6 +26,7 @@ import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
 
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         settingsManager = new SettingsManager(context);
         networkConnectionManager = new NetworkConnectionManager(context);
 
-        if (!(boolean) settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS)) {
+        if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             ApplicationContext applicationContext = ((ApplicationContext) getApplication());
             applicationContext.getDevices(result -> {
                 if (!SupportedDeviceManager.isSupportedDevice(applicationContext.getSystemVersionProperties(), result)) {
@@ -106,12 +107,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         super.onStart();
 
         // Mark the welcome tutorial as finished if the user is moving from older app version. This is checked by either having stored update information for offline viewing, or if the last update checked date is set (if user always had up to date system and never viewed update information before).
-        if(! (boolean) settingsManager.getPreference(PROPERTY_SETUP_DONE) && (settingsManager.checkIfCacheIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
+        if(!settingsManager.getPreference(PROPERTY_SETUP_DONE, false) && (settingsManager.checkIfCacheIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
             settingsManager.savePreference(PROPERTY_SETUP_DONE, true);
         }
 
         // Show the welcome tutorial if the app needs to be set up.
-        if(!(boolean) settingsManager.getPreference(PROPERTY_SETUP_DONE)) {
+        if(!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)) {
             if(networkConnectionManager.checkNetworkConnection()) {
                 activityLauncher.Tutorial();
             } else {

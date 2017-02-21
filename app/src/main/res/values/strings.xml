@@ -25,7 +25,7 @@
     <!-- Server status warning strings -->
     <string name="server_status_error">Some features do not work.</string>
     <string name="server_status_unreachable">The server can\'t be reached. Try refreshing the page.</string>
-    <string name="server_status_warning">Some features may work incorrectly.</string>
+    <string name="server_status_warning">Some features may not work properly.</string>
 
     <!-- New app version message strings -->
     <string name ="new_app_version">App update available! Version &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> has been released!</string>
@@ -219,7 +219,7 @@
     
     <!-- Message strings -->
     <string name="delete_message_title">Update already downloaded</string>
-    <string name="delete_message_contents">You have already downloaded this update, but not yet installed it. Tap on \"Close\" to close this message, then tap on \"Install Guide\" to view how to install this update. Tap on \"Delete\" to permanently delete the file.</string>
+    <string name="delete_message_contents">You have already downloaded this update, but not yet installed it. Tap on \"Install Guide\" to view how to install this update. Tap on \"Delete\" to permanently delete the file. Press the Back button to close this message.</string>
     <string name="delete_message_delete_button">Delete</string>
 
     <string name="unsupported_device_warning_title">Unsupported device</string>

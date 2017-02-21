@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
@@ -114,6 +115,8 @@ public class MessageDialog extends DialogFragment {
         if (activity != null) {
             activity.finish();
             exit(activity.getParent());
+        } else {
+            new Handler().postDelayed(() -> System.exit(0), 2000);
         }
     }
 }

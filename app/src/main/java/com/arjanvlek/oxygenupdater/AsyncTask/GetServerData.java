@@ -122,10 +122,10 @@ public class GetServerData extends AsyncTask<Void, Void, ServerResult> {
         if (status.isNonRecoverableError()) {
             switch (status) {
                 case MAINTENANCE:
-                    Dialogs.showServerMaintenanceError(fragment.getParentFragment());
+                    Dialogs.showServerMaintenanceError(fragment);
                     break;
                 case OUTDATED:
-                    Dialogs.showAppOutdatedError(fragment.getParentFragment());
+                    Dialogs.showAppOutdatedError(fragment);
                     break;
             }
         }
