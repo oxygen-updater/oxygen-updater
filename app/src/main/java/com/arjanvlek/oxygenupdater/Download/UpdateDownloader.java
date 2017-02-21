@@ -51,7 +51,7 @@ public class UpdateDownloader {
     private UpdateDownloadListener listener;
     private List<Double> measurements = new ArrayList<>();
 
-    public final static int NOT_SET = -1;
+    private final static int NOT_SET = -1;
 
     private boolean initialized;
     private boolean isVerifying;
@@ -303,7 +303,7 @@ public class UpdateDownloader {
         private OxygenOTAUpdate oxygenOTAUpdate;
         private final Activity activity;
 
-        public DownloadVerifier(Activity activity) {
+        DownloadVerifier(Activity activity) {
             this.activity = activity;
         }
 

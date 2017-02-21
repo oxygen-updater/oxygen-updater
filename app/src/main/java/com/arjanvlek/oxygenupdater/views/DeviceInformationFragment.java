@@ -37,7 +37,7 @@ public class DeviceInformationFragment extends AbstractFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         if(isAdded()) {
             displayDeviceInformation();
-            getApplicationContext().getDevices(this::displayDeviceName);
+            getApplicationContext().getServerConnector().getDevices(this::displayDeviceName);
         }
     }
 

@@ -80,46 +80,19 @@ public class InstallGuideFragment extends Fragment {
         long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
         long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID);
 
-        new fetchInstallGuide().execute(installGuideView, pageNumber, isFirstPage, deviceId, updateMethodId);
+        SparseArray<InstallGuideData> cache = ((InstallGuideActivity)getActivity()).getInstallGuideCache();
+
+        if(cache.get(pageNumber) == null) {
+            ServerConnector connector = ((ApplicationContext)getActivity().getApplication()).getServerConnector();
+            connector.fetchInstallGuidePageFromServer(deviceId, updateMethodId, pageNumber, (page) -> {
+                cache.put(pageNumber, page);
+                displayInstallGuide(installGuideView, page, pageNumber, isFirstPage);
+            });
+        } else {
+            displayInstallGuide(installGuideView, cache.get(pageNumber), pageNumber, isFirstPage);
+        }
 
         return installGuideView;
-    }
-
-    private class fetchInstallGuide extends AsyncTask<Object, Void, List<Object>> {
-
-        @Override
-        protected List<Object> doInBackground(Object... params) {
-            View installGuideView = (View) params[0];
-
-            int pageNumber = (int) params[1];
-            boolean isFirstPage = (boolean) params[2];
-            long deviceId = (Long) params[3];
-            long updateMethodId = (Long) params[4];
-
-            SparseArray<InstallGuideData> cache = ((InstallGuideActivity)getActivity()).getInstallGuideCache();
-
-            if(cache.get(pageNumber) == null) {
-                ServerConnector connector = ((ApplicationContext)getActivity().getApplication()).getServerConnector();
-                cache.put(pageNumber, connector.fetchInstallGuidePageFromServer(deviceId, updateMethodId, pageNumber));
-            }
-
-            List<Object> result = new ArrayList<>();
-            result.add(0, installGuideView);
-            result.add(1, cache.get(pageNumber));
-            result.add(2, pageNumber);
-            result.add(3, isFirstPage);
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(List<Object> installGuideData) {
-            View installGuideView = (View) installGuideData.get(0);
-            InstallGuideData data = (InstallGuideData) installGuideData.get(1);
-            int pageNumber = (int) installGuideData.get(2);
-            boolean isFirstPage = (boolean) installGuideData.get(3);
-
-            displayInstallGuide(installGuideView, data, pageNumber, isFirstPage);
-        }
     }
 
     private class DownloadCustomImage extends AsyncTask<Object, Void, List<Object>> {

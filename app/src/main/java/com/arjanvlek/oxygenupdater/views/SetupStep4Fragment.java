@@ -44,7 +44,7 @@ public class SetupStep4Fragment extends AbstractFragment {
     public void fetchUpdateMethods() {
         if (settingsManager.containsPreference(PROPERTY_DEVICE_ID)) {
             progressBar.setVisibility(View.VISIBLE);
-            getApplicationContext().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID), this::fillUpdateMethodSettings);
+            getApplicationContext().getServerConnector().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID), this::fillUpdateMethodSettings);
         }
     }
 
@@ -93,7 +93,7 @@ public class SetupStep4Fragment extends AbstractFragment {
                         // Subscribe to notifications
                         // Subscribe to notifications for the newly selected device and update method
                         NotificationTopicSubscriptionData data = new NotificationTopicSubscriptionData(getApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
-                        new NotificationTopicSubscriber().execute(data);
+                        NotificationTopicSubscriber.subscribe(data);
                     } else {
                         Toast.makeText(getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
                     }

@@ -1,12 +1,20 @@
 package com.arjanvlek.oxygenupdater.Server;
 
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.InstallGuideData;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.Model.ServerMessage;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
+import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.joda.time.LocalDateTime;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -23,66 +31,133 @@ public class ServerConnector {
 
     private ObjectMapper objectMapper;
 
+    private List<Device> devices;
+    private LocalDateTime deviceFetchDate;
+
     public ServerConnector() {
         this.objectMapper = new ObjectMapper();
     }
 
-    public List<Device> getDevices() {
-        return findMultipleFromServerResponse(fetchDataFromServer(ServerRequest.DEVICES, 20), Device.class);
+    public void getDevices(Callback<List<Device>> callback) {
+        getDevices(false, callback);
     }
 
-    public OxygenOTAUpdate getOxygenOTAUpdate(Long deviceId, Long updateMethodId, String incrementalSystemVersion) {
-        return findOneFromServerResponse(fetchDataFromServer(ServerRequest.UPDATE_DATA, 15, deviceId.toString(), updateMethodId.toString(), incrementalSystemVersion), OxygenOTAUpdate.class);
+    public void getDevices(boolean alwaysFetch, Callback<List<Device>> callback) {
+        if (devices != null && deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
+            Log.v("ServerConnector", "Used local cache to fetch devices...");
+            callback.onActionPerformed(devices);
+        }
+
+        else {
+            Log.v("ServerConnector", "Used remote server to fetch devices...");
+            new GetMultipleAsync<Device>(ServerRequest.DEVICES, (devices) -> {
+                this.devices = devices;
+                this.deviceFetchDate = LocalDateTime.now();
+                callback.onActionPerformed(devices);
+            }).execute();
+        }
     }
 
-    public OxygenOTAUpdate getMostRecentOxygenOTAUpdate(Long deviceId, Long updateMethodId) {
-        return findOneFromServerResponse(fetchDataFromServer(ServerRequest.MOST_RECENT_UPDATE_DATA, 10, deviceId.toString(), updateMethodId.toString()), OxygenOTAUpdate.class);
+    public void getUpdateMethods(@NonNull Long deviceId, Callback<List<UpdateMethod>> callback) {
+        new GetMultipleAsync<>(ServerRequest.UPDATE_METHODS, callback, deviceId.toString()).execute();
     }
 
-    public List<UpdateMethod> getAllUpdateMethods() {
-        return findMultipleFromServerResponse(fetchDataFromServer(ServerRequest.ALL_UPDATE_METHODS, 20), UpdateMethod.class);
+    public void getAllUpdateMethods(Callback<List<UpdateMethod>> callback) {
+        new GetMultipleAsync<>(ServerRequest.ALL_UPDATE_METHODS, callback).execute();
     }
 
-    public List<UpdateMethod> getUpdateMethods(Long deviceId) {
-        return findMultipleFromServerResponse(fetchDataFromServer(ServerRequest.UPDATE_METHODS, 20, deviceId.toString()), UpdateMethod.class);
+    public void getOxygenOTAUpdate(@NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull String incrementalSystemVersion, Callback<OxygenOTAUpdate> callback) {
+        new GetSingleAsync<>(ServerRequest.UPDATE_DATA, callback, deviceId.toString(), updateMethodId.toString(), incrementalSystemVersion).execute();
     }
 
-    public ServerStatus getServerStatus() {
-        return findOneFromServerResponse(fetchDataFromServer(ServerRequest.SERVER_STATUS, 10), ServerStatus.class);
+    public void getMostRecentOxygenOTAUpdate(@NonNull Long deviceId, @NonNull Long updateMethodId, Callback<OxygenOTAUpdate> callback) {
+        new GetSingleAsync<>(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId.toString(), updateMethodId.toString()).execute();
     }
 
-    public List<ServerMessage> getServerMessages(Long deviceId, Long updateMethodId) {
-        return findMultipleFromServerResponse(fetchDataFromServer(ServerRequest.SERVER_MESSAGES, 20, deviceId.toString(), updateMethodId.toString()), ServerMessage.class);
+    public void getServerStatus(Callback<ServerStatus> callback) {
+        new GetSingleAsync<>(ServerRequest.SERVER_STATUS, callback).execute();
     }
 
-    public InstallGuideData fetchInstallGuidePageFromServer(Long deviceId, Long updateMethodId, Integer pageNumber) {
-        return findOneFromServerResponse(fetchDataFromServer(ServerRequest.INSTALL_GUIDE, 10, deviceId.toString(), updateMethodId.toString(), pageNumber.toString()), InstallGuideData.class);
+    public void getServerMessages(@NonNull Long deviceId, @NonNull Long updateMethodId, Callback<List<ServerMessage>> callback) {
+        new GetMultipleAsync<>(ServerRequest.SERVER_MESSAGES, callback, deviceId.toString(), updateMethodId.toString()).execute();
     }
 
-    private <T> List<T> findMultipleFromServerResponse(String response, Class<T> returnClass) {
+    public void fetchInstallGuidePageFromServer(@NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull Integer pageNumber, Callback<InstallGuideData> callback) {
+        new GetSingleAsync<>(ServerRequest.INSTALL_GUIDE, callback, deviceId.toString(), updateMethodId.toString(), pageNumber.toString()).execute();
+    }
+
+    private class GetMultipleAsync<T> extends AsyncTask<Void, Void, List<T>> {
+
+        private final ServerRequest serverRequest;
+        private final Callback<List<T>> callback;
+        private final String[] params;
+
+        GetMultipleAsync(ServerRequest serverRequest, Callback<List<T>> callback, String... params) {
+            this.serverRequest = serverRequest;
+            this.params = params;
+            this.callback = callback;
+        }
+
+        @Override
+        protected List<T> doInBackground(Void... voids) {
+            return findMultipleFromServerResponse(serverRequest, params);
+        }
+
+        @Override
+        protected void onPostExecute(List<T> results) {
+            if(callback != null) callback.onActionPerformed(results);
+        }
+    }
+
+
+    private class GetSingleAsync<E> extends AsyncTask<Void, Void, E> {
+
+        private final ServerRequest serverRequest;
+        private final Callback<E> callback;
+        private final String[] params;
+
+        GetSingleAsync(@NonNull ServerRequest serverRequest, @Nullable Callback<E> callback, String... params) {
+            this.serverRequest = serverRequest;
+            this.params = params;
+            this.callback = callback;
+        }
+
+        @Override
+        protected E doInBackground(Void... voids) {
+            return findOneFromServerResponse(serverRequest, params);
+        }
+
+        @Override
+        protected void onPostExecute(E result) {
+            if(callback != null) callback.onActionPerformed(result);
+        }
+
+    }
+
+    private <T> List<T> findMultipleFromServerResponse(ServerRequest serverRequest, String... params) {
         try {
-            return objectMapper.readValue(response, objectMapper.getTypeFactory().constructCollectionType(List.class, returnClass));
+            return objectMapper.readValue(fetchDataFromServer(serverRequest, params), objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
         } catch (Exception e) {
             return new ArrayList<>();
         }
     }
 
-    private <T> T findOneFromServerResponse(String response, Class<T> returnClass) {
+    private <T> T findOneFromServerResponse(ServerRequest serverRequest, String... params) {
         try {
-            return objectMapper.readValue(response, returnClass);
+            return objectMapper.readValue(fetchDataFromServer(serverRequest, params), objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
         } catch(Exception e) {
             return null;
         }
     }
 
-    private String fetchDataFromServer(ServerRequest request, int timeoutInSeconds, String... params) {
+    private String fetchDataFromServer(ServerRequest request, String... params) {
 
         try {
             URL requestUrl = request.getURL(params);
 
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
-            int timeOutInMilliseconds = timeoutInSeconds * 1000;
+            int timeOutInMilliseconds = request.getTimeOutInSeconds() * 1000;
 
             //setup request
             urlConnection.setRequestProperty(USER_AGENT_TAG, APP_USER_AGENT);

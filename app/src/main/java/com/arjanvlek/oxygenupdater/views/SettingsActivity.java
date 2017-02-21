@@ -57,7 +57,7 @@ public class SettingsActivity extends AbstractActivity {
         progressBar.setVisibility(View.VISIBLE);
         deviceProgressBar.setVisibility(View.VISIBLE);
 
-        getAppApplicationContext().getDevices(this::fillDeviceSettings, true);
+        getAppApplicationContext().getServerConnector().getDevices(true, this::fillDeviceSettings);
 
         initSwitches();
     }
@@ -128,7 +128,7 @@ public class SettingsActivity extends AbstractActivity {
                         updateMethodsProgressBar.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.VISIBLE);
 
-                        getAppApplicationContext().getUpdateMethods(device.getId(), SettingsActivity.this::fillUpdateMethodSettings);
+                        getAppApplicationContext().getServerConnector().getUpdateMethods(device.getId(), SettingsActivity.this::fillUpdateMethodSettings);
                     }
 
                     @Override
@@ -189,7 +189,7 @@ public class SettingsActivity extends AbstractActivity {
                         if(getAppApplicationContext().checkPlayServices(getParent(), false)) {
                             // Subscribe to notifications for the newly selected device and update method
                             NotificationTopicSubscriptionData data = new NotificationTopicSubscriptionData(getAppApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
-                            new NotificationTopicSubscriber().execute(data);
+                            NotificationTopicSubscriber.subscribe(data);
                         } else {
                             try {
                                 Toast.makeText(getApplication().getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();

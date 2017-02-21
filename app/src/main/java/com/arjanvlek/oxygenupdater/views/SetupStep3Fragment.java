@@ -37,7 +37,7 @@ public class SetupStep3Fragment extends AbstractFragment {
     }
 
     public void fetchDevices() {
-        getApplicationContext().getDevices(this::fillDeviceSettings);
+        getApplicationContext().getServerConnector().getDevices(this::fillDeviceSettings);
     }
 
 
