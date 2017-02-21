@@ -67,9 +67,9 @@ public class NotificationService extends FirebaseMessagingService {
                 if(!settingsManager.getPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true)) {
                     return;
                 }
-                String appLocale = Locale.getDefault().getDisplayLanguage();
+
                 String message;
-                switch(appLocale) {
+                switch(Locale.getDefault().getDisplayLanguage()) {
                     case LOCALE_DUTCH:
                         message = messageContents.get(DUTCH_MESSAGE.toString());
                         break;
@@ -105,7 +105,7 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     private Notification.Builder displayNewDeviceNotification(String newDeviceName) {
-        String message = getString(R.string.notification_new_device) + " " + newDeviceName + " " + getString(R.string.notification_new_device_2);
+        String message = getString(R.string.notification_new_device, newDeviceName);
 
         return new Notification.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_notification_new_device)
@@ -116,7 +116,7 @@ public class NotificationService extends FirebaseMessagingService {
     }
 
     private Notification.Builder displayNewVersionNotification(String deviceName, String versionNumber) {
-        String message = getString(R.string.notification_version) + " " + versionNumber + " " + getString(R.string.notification_version_is_now_available) + " " + deviceName + "!";
+        String message = getString(R.string.notification_version, versionNumber, deviceName);
         return new Notification.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_notification_new_version)
                         .setStyle(new Notification.BigTextStyle()

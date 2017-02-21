@@ -6,7 +6,7 @@ import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 
 import java.util.List;
 
-public class TopicSubscriptionData {
+public class NotificationTopicSubscriptionData {
 
     private final ApplicationContext applicationContext;
     private final Long deviceId;
@@ -14,7 +14,7 @@ public class TopicSubscriptionData {
     private List<Device> devices;
     private List<UpdateMethod> updateMethods;
 
-    public TopicSubscriptionData(ApplicationContext applicationContext, Long deviceId, Long updateMethodId) {
+    public NotificationTopicSubscriptionData(ApplicationContext applicationContext, Long deviceId, Long updateMethodId) {
         this.applicationContext = applicationContext;
         this.deviceId = deviceId;
         this.updateMethodId = updateMethodId;

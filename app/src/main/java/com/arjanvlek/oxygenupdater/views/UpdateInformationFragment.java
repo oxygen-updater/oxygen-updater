@@ -99,7 +99,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     private static final String KEY_HAS_DOWNLOAD_ERROR = "has_download_error";
     private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
     private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
-    private List<ServerMessageBar> inAppMessageBars = new ArrayList<>();
+    private List<ServerMessageBar> serverMessageBars = new ArrayList<>();
 
     /*
       -------------- ANDROID ACTIVITY LIFECYCLE METHODS -------------------
@@ -109,39 +109,48 @@ public class UpdateInformationFragment extends AbstractFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        context = getActivity();
-        settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        networkConnectionManager = new NetworkConnectionManager(getActivity().getApplicationContext());
-        adsAreSupported = getApplicationContext().checkPlayServices(getActivity(), false);
+        this.context = getActivity();
+        this.settingsManager = new SettingsManager(getActivity().getApplicationContext());
+        this.networkConnectionManager = new NetworkConnectionManager(getActivity().getApplicationContext());
+        this.adsAreSupported = getApplicationContext().checkPlayServices(getActivity(), false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         this.rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_updateinformation, container, false);
-        if (adsAreSupported) adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
-        return this.rootView;
+        if (adsAreSupported) this.adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
+        return rootView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if(isAdded()) {
-            initLayout();
+        if(isAdded() && settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+            updateInformationRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationRefreshLayout);
+            systemIsUpToDateRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
 
-            if(settingsManager.checkIfSetupScreenHasBeenCompleted()) {
-                load();
-            }
+            updateInformationRefreshLayout.setOnRefreshListener(this::load);
+            updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+
+            systemIsUpToDateRefreshLayout.setOnRefreshListener(this::load);
+            systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+
+
+            Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
+            installGuideButton.setOnClickListener(v -> {
+                ((MainActivity) getActivity()).getActivityLauncher().UpdateInstructions(updateDownloader.checkIfUpdateIsDownloaded(oxygenOTAUpdate));
+                LocalNotifications.hideDownloadCompleteNotification(getActivity());
+            });
+
+            load();
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (adsAreSupported) {
-            adView.pause();
-        }
-
+        if (adsAreSupported) adView.pause();
     }
 
     @Override
@@ -158,7 +167,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        hideAds();
+        if(adsAreSupported) hideAds();
     }
 
     /*
@@ -166,33 +175,12 @@ public class UpdateInformationFragment extends AbstractFragment {
      */
 
     /**
-     * Initializes the layout. Sets refresh listeners for pull-down to refresh and applies the right colors for pull-down to refresh screens.
-     */
-    private void initLayout() {
-        updateInformationRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationRefreshLayout);
-        systemIsUpToDateRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
-
-        updateInformationRefreshLayout.setOnRefreshListener(this::load);
-        updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
-
-        systemIsUpToDateRefreshLayout.setOnRefreshListener(this::load);
-        systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
-
-
-        Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
-        installGuideButton.setOnClickListener(v -> {
-            ((MainActivity) getActivity()).getActivityLauncher().UpdateInstructions(updateDownloader.checkIfUpdateIsDownloaded(oxygenOTAUpdate));
-            LocalNotifications.hideDownloadCompleteNotification(getActivity());
-        });
-    }
-
-    /**
      * Fetches all server data. This includes update information, server messages and server status checks
      */
     private void load() {
-        final Fragment instance = this;
+        final AbstractFragment instance = this;
 
-        new GetServerData(this, settingsManager, networkConnectionManager.checkNetworkConnection(), data -> {
+        new GetServerData(instance, settingsManager, networkConnectionManager.checkNetworkConnection(), data -> {
 
             oxygenOTAUpdate = data.getOxygenOTAUpdate();
             if (!isLoadedOnce) updateDownloader = initDownloadManager(oxygenOTAUpdate);
@@ -204,9 +192,9 @@ public class UpdateInformationFragment extends AbstractFragment {
             }
 
             displayUpdateInformation(data.getOxygenOTAUpdate(), data.isOnline(), false);
-            displayInAppMessageBars(data.getInAppBars());
+            displayServerMessageBars(data.getServerMessageBars());
 
-            if (data.isOnline()) showAds();
+            if (data.isOnline() && adsAreSupported) showAds();
             else hideAds();
 
             isLoadedOnce = true;
@@ -220,30 +208,30 @@ public class UpdateInformationFragment extends AbstractFragment {
      */
 
 
-    private void addMessageBar(ServerMessageBar view) {
+    private void addServerMessageBar(ServerMessageBar view) {
         // Add the message to the update information screen.
         // Set the layout params based on the view count.
         // First view should go below the app update message bar (if visible)
         // Consecutive views should go below their parent / previous view.
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
 
-        int numberOfBars = this.inAppMessageBars.size();
+        int numberOfBars = this.serverMessageBars.size();
 
         params.topMargin = numberOfBars * Utils.diPToPixels(getActivity(), 20);
         view.setId((numberOfBars * 20000 + 1));
         this.rootView.addView(view, params);
-        this.inAppMessageBars.add(view);
+        this.serverMessageBars.add(view);
     }
 
-    private void deleteAllInAppMessageBars() {
-        stream(this.inAppMessageBars).filter(v -> v != null).forEach(v -> this.rootView.removeView(v));
+    private void deleteAllServerMessageBars() {
+        stream(this.serverMessageBars).filter(v -> v != null).forEach(v -> this.rootView.removeView(v));
 
-        this.inAppMessageBars = new ArrayList<>();
+        this.serverMessageBars = new ArrayList<>();
     }
 
-    private void displayInAppMessageBars(List<Banner> banners) {
+    private void displayServerMessageBars(List<Banner> banners) {
 
-        deleteAllInAppMessageBars();
+        deleteAllServerMessageBars();
 
         List<ServerMessageBar> createdServerMessageBars = new ArrayList<>();
 
@@ -259,7 +247,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                 textView.setMovementMethod(LinkMovementMethod.getInstance());
             }
 
-            addMessageBar(bar);
+            addServerMessageBar(bar);
             createdServerMessageBars.add(bar);
         }
 
@@ -274,7 +262,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             updateInformationRefreshLayout.setLayoutParams(params);
 
         }
-        this.inAppMessageBars = createdServerMessageBars;
+        this.serverMessageBars = createdServerMessageBars;
     }
 
     /**

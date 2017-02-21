@@ -23,7 +23,7 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
-import com.arjanvlek.oxygenupdater.notifications.TopicSubscriptionData;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriptionData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -188,7 +188,7 @@ public class SettingsActivity extends AbstractActivity {
                         // Google Play services are not required if the user doesn't notifications
                         if(getAppApplicationContext().checkPlayServices(getParent(), false)) {
                             // Subscribe to notifications for the newly selected device and update method
-                            TopicSubscriptionData data = new TopicSubscriptionData(getAppApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
+                            NotificationTopicSubscriptionData data = new NotificationTopicSubscriptionData(getAppApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
                             new NotificationTopicSubscriber().execute(data);
                         } else {
                             try {

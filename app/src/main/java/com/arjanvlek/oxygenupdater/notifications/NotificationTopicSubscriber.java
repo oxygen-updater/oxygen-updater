@@ -15,13 +15,13 @@ import static com.arjanvlek.oxygenupdater.ApplicationContext.UPDATE_METHOD_TOPIC
 import static com.arjanvlek.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
 
-public class NotificationTopicSubscriber extends AsyncTask<TopicSubscriptionData, Integer, TopicSubscriptionData> {
+public class NotificationTopicSubscriber extends AsyncTask<NotificationTopicSubscriptionData, Integer, NotificationTopicSubscriptionData> {
 
     private static final String TAG = "NotificationTopicSubscr";
 
     @Override
-    public TopicSubscriptionData doInBackground(TopicSubscriptionData... datas) {
-        TopicSubscriptionData data = datas[0];
+    public NotificationTopicSubscriptionData doInBackground(NotificationTopicSubscriptionData... datas) {
+        NotificationTopicSubscriptionData data = datas[0];
 
         SettingsManager settingsManager = new SettingsManager(data.getApplicationContext().getApplicationContext());
 
@@ -37,7 +37,7 @@ public class NotificationTopicSubscriber extends AsyncTask<TopicSubscriptionData
     }
 
     @Override
-    public void onPostExecute(TopicSubscriptionData data) {
+    public void onPostExecute(NotificationTopicSubscriptionData data) {
         SettingsManager settingsManager = new SettingsManager(data.getApplicationContext().getApplicationContext());
 
         String oldTopic = settingsManager.getPreference(PROPERTY_NOTIFICATION_TOPIC);

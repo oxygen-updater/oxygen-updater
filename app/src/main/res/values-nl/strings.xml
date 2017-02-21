@@ -186,14 +186,12 @@
 
 
     <!-- LocalNotifications strings -->
-    <string name="notification_new_device">Nieuw apparaat toegevoegd! De</string>
-    <string name="notification_new_device_2">wordt nu ondersteund!</string>
+    <string name="notification_new_device">Nieuw apparaat toegevoegd! De %1$s wordt nu ondersteund!</string>
     <string name="notification_new_device_short">Open de app om dit apparaat te kiezen.</string>
     <string name="notification_no_notification_support">Installeer Google Play services of werk deze bij om notificaties te kunnen ontvangen.</string>
     <string name="notification_unknown_version_number">Er is een nieuwe versie beschikbaar voor je</string>
     <string name="notification_update_short">Open de app om de update te downloaden.</string>
-    <string name="notification_version">Versie</string>    
-    <string name="notification_version_is_now_available">is nu beschikbaar voor de</string>
+    <string name="notification_version">Versie %1$s is nu beschikbaar voor de %2$s!</string>
 
 
 

@@ -36,7 +36,7 @@ public class SetupActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
-        settingsManager = new SettingsManager(getApplicationContext());
+        this.settingsManager = new SettingsManager(getApplicationContext());
 
         if (!(boolean) settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS)) {
             ApplicationContext applicationContext = ((ApplicationContext) getApplication());

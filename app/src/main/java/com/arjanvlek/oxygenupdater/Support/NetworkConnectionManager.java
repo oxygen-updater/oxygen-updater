@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 
 public class NetworkConnectionManager {
 
-    private Context context;
+    private final Context context;
 
     public NetworkConnectionManager(Context context) {
         this.context = context;

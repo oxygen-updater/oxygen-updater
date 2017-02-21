@@ -20,22 +20,20 @@ public class FAQActivity extends AppCompatActivity {
 
     private NetworkConnectionManager networkConnectionManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
-        networkConnectionManager = new NetworkConnectionManager(getApplicationContext());
+        this.networkConnectionManager = new NetworkConnectionManager(getApplicationContext());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
-        if(refreshLayout != null) {
-            refreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
-            refreshLayout.setOnRefreshListener(this::loadFaqPage);
-        }
+        refreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+        refreshLayout.setOnRefreshListener(this::loadFaqPage);
+
         loadFaqPage();
     }
 
@@ -79,26 +77,21 @@ public class FAQActivity extends AppCompatActivity {
      */
     @SuppressLint("SetJavaScriptEnabled") // JavaScript is required to toggle the FAQ Item boxes.
     private void loadFaqPage() {
-        if(networkConnectionManager != null && networkConnectionManager.checkNetworkConnection()) {
+        if(networkConnectionManager.checkNetworkConnection()) {
             SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
 
-            if(refreshLayout != null && !refreshLayout.isRefreshing()) {
-                refreshLayout.setRefreshing(true);
-            }
+            refreshLayout.setRefreshing(true);
 
             WebView FAQPageView = (WebView) findViewById(R.id.faqWebView);
-            if(FAQPageView != null) {
-                switchViews(true);
 
-                FAQPageView.getSettings().setJavaScriptEnabled(true);
-                FAQPageView.getSettings().setUserAgentString(APP_USER_AGENT);
-                FAQPageView.clearCache(true);
-                FAQPageView.loadUrl(BuildConfig.FAQ_SERVER_URL);
-            }
+            switchViews(true);
 
-            if(refreshLayout != null && refreshLayout.isRefreshing()) {
-                refreshLayout.setRefreshing(false);
-            }
+            FAQPageView.getSettings().setJavaScriptEnabled(true);
+            FAQPageView.getSettings().setUserAgentString(APP_USER_AGENT);
+            FAQPageView.clearCache(true);
+            FAQPageView.loadUrl(BuildConfig.FAQ_SERVER_URL);
+
+            refreshLayout.setRefreshing(false);
         } else {
             switchViews(false);
         }
@@ -118,14 +111,9 @@ public class FAQActivity extends AppCompatActivity {
      */
     private void switchViews (boolean hasNetwork) {
         RelativeLayout noNetworkLayout = (RelativeLayout) findViewById(R.id.faq_no_network_view);
-
-        if(noNetworkLayout != null) {
-            noNetworkLayout.setVisibility(hasNetwork ? View.GONE : View.VISIBLE);
-        }
+        noNetworkLayout.setVisibility(hasNetwork ? View.GONE : View.VISIBLE);
 
         SwipeRefreshLayout webPageLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
-        if(webPageLayout != null) {
-            webPageLayout.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
-        }
+        webPageLayout.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
     }
 }

@@ -12,7 +12,7 @@ public abstract class AbstractFragment extends Fragment {
 
     private ApplicationContext applicationContext;
     //Test devices for ads.
-    public static final List<String> ADS_TEST_DEVICES = Arrays.asList("");
+    public static final List<String> ADS_TEST_DEVICES = Arrays.asList(""); // TODO add test ads id of my phone...
 
     public ApplicationContext getApplicationContext() {
         if(applicationContext == null) {

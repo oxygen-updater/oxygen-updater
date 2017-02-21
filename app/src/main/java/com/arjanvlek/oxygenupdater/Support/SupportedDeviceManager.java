@@ -19,16 +19,21 @@ public class SupportedDeviceManager {
         String oemFingerPrint = systemVersionProperties.getOemFingerprint();
         String oxygenOsVersion = systemVersionProperties.getOxygenOSVersion();
 
-        boolean firmwareIsSupported = oemFingerPrint != null && !oemFingerPrint.equals(NO_OXYGEN_OS) && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS) && oxygenOsVersion != null && !oxygenOsVersion.equals(NO_OXYGEN_OS);
+        boolean firmwareIsSupported =
+                        oemFingerPrint != null
+                        && !oemFingerPrint.equals(NO_OXYGEN_OS)
+                        && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
+                        && oxygenOsVersion != null
+                        && !oxygenOsVersion.equals(NO_OXYGEN_OS);
 
         if(devices == null || devices.isEmpty()) {
+            // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
             return firmwareIsSupported;
-            // To prevent false positives on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
         }
 
         Optional<Device> supportedDevice = StreamSupport.stream(devices)
                 .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
-                .filter(d -> d.getChipSet().equals("NOT_SET") || d.getChipSet().equals(Build.BOARD))
+                .filter(d -> d.getChipSet()!= null && d.getChipSet().equals(Build.BOARD))
                 .findAny();
 
         return supportedDevice.isPresent() && firmwareIsSupported;

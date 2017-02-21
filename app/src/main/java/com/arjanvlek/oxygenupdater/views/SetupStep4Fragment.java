@@ -16,7 +16,7 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
-import com.arjanvlek.oxygenupdater.notifications.TopicSubscriptionData;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriptionData;
 
 import java.util.List;
 
@@ -92,7 +92,7 @@ public class SetupStep4Fragment extends AbstractFragment {
                     if(getApplicationContext().checkPlayServices(getActivity(), false)) {
                         // Subscribe to notifications
                         // Subscribe to notifications for the newly selected device and update method
-                        TopicSubscriptionData data = new TopicSubscriptionData(getApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
+                        NotificationTopicSubscriptionData data = new NotificationTopicSubscriptionData(getApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
                         new NotificationTopicSubscriber().execute(data);
                     } else {
                         Toast.makeText(getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();

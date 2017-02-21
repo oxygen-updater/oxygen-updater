@@ -76,7 +76,6 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:onClick="rateApp"
         android:text="@string/about_rate_app_button_text"
         android:textColor="@color/oneplus_red" />
 

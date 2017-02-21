@@ -9,16 +9,16 @@ import java.util.List;
 public class ProcessedServerResult {
     private final OxygenOTAUpdate oxygenOTAUpdate;
     private final boolean online;
-    private final List<Banner> inAppBars;
+    private final List<Banner> serverMessageBars;
 
-    public ProcessedServerResult(OxygenOTAUpdate oxygenOTAUpdate, boolean online, List<Banner> inAppBars) {
+    public ProcessedServerResult(OxygenOTAUpdate oxygenOTAUpdate, boolean online, List<Banner> serverMessageBars) {
         this.oxygenOTAUpdate = oxygenOTAUpdate;
         this.online = online;
-        this.inAppBars = inAppBars;
+        this.serverMessageBars = serverMessageBars;
     }
 
-    public List<Banner> getInAppBars() {
-        return inAppBars;
+    public List<Banner> getServerMessageBars() {
+        return serverMessageBars;
     }
 
     public boolean isOnline() {

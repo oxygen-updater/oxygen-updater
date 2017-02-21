@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,26 +25,30 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceSate);
         setContentView(R.layout.activity_about);
 
+        // Set the version number of the app in the version number field.
         String versionNumber = BuildConfig.VERSION_NAME;
         TextView versionNumberView = (TextView) findViewById(R.id.aboutVersionNumberView);
         versionNumberView.setText(String.format(getString(R.string.about_version), versionNumber));
 
-        //Make link clickable
+        //Make the links in the background story clickable.
         TextView storyView = (TextView) findViewById(R.id.aboutBackgroundStoryView);
         storyView.setMovementMethod(LinkMovementMethod.getInstance());
-    }
 
-    public void rateApp(View view) {
-        final String appPackageName = getPackageName();
-        try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BASE_URL + appPackageName)));
-        } catch (ActivityNotFoundException e) {
+        // Set onClick listener to Google Play rate button.
+        Button rateAppButton = (Button) findViewById(R.id.aboutRateButton);
+        rateAppButton.setOnClickListener(v -> {
+            final String appPackageName = getPackageName();
             try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BROWSER__BASE_URL + appPackageName)));
-            } catch (ActivityNotFoundException e1) {
-                Toast.makeText(getApplicationContext(), getString(R.string.error_unable_to_rate_app), Toast.LENGTH_LONG).show();
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BASE_URL + appPackageName)));
+            } catch (ActivityNotFoundException e) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BROWSER__BASE_URL + appPackageName)));
+                } catch (ActivityNotFoundException e1) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_unable_to_rate_app), Toast.LENGTH_LONG).show();
+                }
             }
-        }
+        });
+
     }
 
     @Override
