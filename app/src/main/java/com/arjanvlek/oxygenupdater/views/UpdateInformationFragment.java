@@ -167,7 +167,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(adsAreSupported) hideAds();
+        if(adsAreSupported) adView.destroy();
     }
 
     /*
@@ -195,7 +195,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             displayServerMessageBars(data.getServerMessageBars());
 
             if (data.isOnline() && adsAreSupported) showAds();
-            else hideAds();
+            else if (adsAreSupported) adView.destroy();
 
             isLoadedOnce = true;
             refreshedDate = DateTime.now();
@@ -455,20 +455,11 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 
     private void showAds() {
-        if (adsAreSupported) {
             AdRequest.Builder adRequest = new AdRequest.Builder();
 
             StreamSupport.stream(ADS_TEST_DEVICES).forEach(adRequest::addTestDevice);
 
-            adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
             adView.loadAd(adRequest.build());
-        }
-    }
-
-    private void hideAds() {
-        if (adsAreSupported) {
-            adView.destroy();
-        }
     }
 
     /*

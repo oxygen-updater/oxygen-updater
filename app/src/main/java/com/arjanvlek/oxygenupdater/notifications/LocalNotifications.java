@@ -123,7 +123,7 @@ public class LocalNotifications {
         NotificationCompat.Builder builder;
         try {
             builder = new NotificationCompat.Builder(activity)
-                    .setSmallIcon(android.R.drawable.stat_sys_download)
+                    .setSmallIcon(ongoing ? android.R.drawable.stat_sys_download : android.R.drawable.stat_sys_download_done)
                     .setOngoing(ongoing);
 
             if (ongoing) {
