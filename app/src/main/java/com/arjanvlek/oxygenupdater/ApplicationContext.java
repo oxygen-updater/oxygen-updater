@@ -2,20 +2,14 @@ package com.arjanvlek.oxygenupdater;
 
 import android.app.Activity;
 import android.app.Application;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-import com.arjanvlek.oxygenupdater.Support.Callback;
+import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
+import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-
-import org.joda.time.LocalDateTime;
-
-import java.util.List;
 
 public class ApplicationContext extends Application {
 
@@ -29,12 +23,17 @@ public class ApplicationContext extends Application {
     public static final String APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME;
     public static final String LOCALE_DUTCH = "Nederlands";
     private static final String TAG = "ApplicationContext";
+    public static final String UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build";
+    public static final String NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR";
+    public static final String SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR";
+    public static final String APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR";
+
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public ServerConnector getServerConnector() {
         if (serverConnector == null) {
             Log.v(TAG, "Created ServerConnector for use within the application...");
-            serverConnector = new ServerConnector();
+            serverConnector = new ServerConnector(new SettingsManager(this));
             return serverConnector;
         } else {
             return serverConnector;

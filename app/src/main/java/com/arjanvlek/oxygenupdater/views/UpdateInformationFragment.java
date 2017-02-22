@@ -22,13 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationContext;
-import com.arjanvlek.oxygenupdater.AsyncTask.GetServerData;
 import com.arjanvlek.oxygenupdater.Download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
+import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.Server.ServerConnector;
 import com.arjanvlek.oxygenupdater.Support.DateTimeFormatter;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
@@ -64,14 +65,20 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.BELOW;
+import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_OUTDATED_ERROR;
+import static com.arjanvlek.oxygenupdater.ApplicationContext.NETWORK_CONNECTION_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.ApplicationContext.SERVER_MAINTENANCE_ERROR;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
+import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 import static java8.util.stream.StreamSupport.stream;
 
 public class UpdateInformationFragment extends AbstractFragment {
@@ -87,7 +94,6 @@ public class UpdateInformationFragment extends AbstractFragment {
     private NetworkConnectionManager networkConnectionManager;
     private UpdateDownloader updateDownloader;
 
-    private DateTime refreshedDate;
     private boolean isLoadedOnce;
     private boolean adsAreSupported;
 
@@ -147,12 +153,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     @Override
     public void onResume() {
         super.onResume();
-
         if (adsAreSupported) adView.resume();
-
-        if (refreshedDate != null && refreshedDate.plusMinutes(5).isBefore(DateTime.now()) &&  settingsManager.checkIfSetupScreenHasBeenCompleted() && isAdded()) {
-            load();
-        }
     }
 
     @Override
@@ -171,26 +172,49 @@ public class UpdateInformationFragment extends AbstractFragment {
     private void load() {
         final AbstractFragment instance = this;
 
-        new GetServerData(instance, settingsManager, networkConnectionManager.checkNetworkConnection(), data -> {
+        long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
+        long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
-            OxygenOTAUpdate oxygenOTAUpdate = data.getOxygenOTAUpdate();
-            if (!isLoadedOnce) updateDownloader = initDownloadManager(oxygenOTAUpdate);
+        boolean online = networkConnectionManager.checkNetworkConnection();
+
+        ServerConnector serverConnector = getApplicationContext().getServerConnector();
+        SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
+
+        serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion(), (updateData) -> {
+            if (!isLoadedOnce) updateDownloader = initDownloadManager(updateData);
 
             // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
             if (!isLoadedOnce && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
                 Intent i = getActivity().getIntent();
-                Dialogs.showDownloadError(instance, updateDownloader, oxygenOTAUpdate, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
+                Dialogs.showDownloadError(instance, updateDownloader, updateData, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
             }
 
-            displayUpdateInformation(data.getOxygenOTAUpdate(), data.isOnline(), false);
-            displayServerMessageBars(data.getServerMessageBars());
-
-            if (data.isOnline() && adsAreSupported) showAds();
-            else if (adsAreSupported) adView.destroy();
+            displayUpdateInformation(updateData, online, false);
 
             isLoadedOnce = true;
-            refreshedDate = DateTime.now();
-        }).execute();
+
+        }, (error) -> {
+            if(error.equals(NETWORK_CONNECTION_ERROR)) {
+                Dialogs.showNoNetworkConnectionError(instance);
+            }
+        });
+
+        serverConnector.getInAppMessages(online, this::displayServerMessageBars, (error) -> {
+            switch (error) {
+                case SERVER_MAINTENANCE_ERROR:
+                    Dialogs.showServerMaintenanceError(instance);
+                    break;
+                case APP_OUTDATED_ERROR:
+                    Dialogs.showAppOutdatedError(instance);
+                    break;
+            }
+        });
+
+        if(!isLoadedOnce) {
+            if (online && adsAreSupported) showAds();
+            else if (adsAreSupported) adView.destroy();
+        }
+
     }
 
 
@@ -275,7 +299,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             displayUpdateInformationWhenUpToDate(oxygenOTAUpdate, online);
         }
 
-        if (((oxygenOTAUpdate.isSystemIsUpToDate()) && !displayInfoWhenUpToDate) || !oxygenOTAUpdate.isUpdateInformationAvailable()) {
+        if (((oxygenOTAUpdate.isSystemIsUpToDateCheck(settingsManager)) && !displayInfoWhenUpToDate) || !oxygenOTAUpdate.isUpdateInformationAvailable()) {
             displayUpdateInformationWhenUpToDate(oxygenOTAUpdate, online);
         } else {
             displayUpdateInformationWhenNotUpToDate(oxygenOTAUpdate, displayInfoWhenUpToDate);
@@ -296,6 +320,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             settingsManager.savePreference(PROPERTY_OFFLINE_FILE_NAME, oxygenOTAUpdate.getFilename());
             settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, oxygenOTAUpdate.isUpdateInformationAvailable());
             settingsManager.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString());
+            settingsManager.savePreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, oxygenOTAUpdate.isSystemIsUpToDate());
         }
 
         // Hide the refreshing icon if it is present.
@@ -325,7 +350,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         } else {
             updateInformationButton.setText(getString(R.string.update_information_view_update_information));
             updateInformationButton.setClickable(true);
-            updateInformationButton.setOnClickListener(v -> displayUpdateInformation(oxygenOTAUpdate, true, true));
+            updateInformationButton.setOnClickListener(v -> displayUpdateInformation(oxygenOTAUpdate, online, true));
         }
 
         // Save last time checked if online.
@@ -386,7 +411,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             downloadSizeImage.setVisibility(GONE);
             downloadSizeView.setVisibility(GONE);
         } else {
-            if (oxygenOTAUpdate.isSystemIsUpToDateCheck(settingsManager)) {
+            if (oxygenOTAUpdate.isSystemIsUpToDate()) {
                 headerLabel.setText(getString(R.string.update_information_installed_update));
             } else {
                 headerLabel.setText(getString(R.string.update_information_latest_available_update));
@@ -472,7 +497,10 @@ public class UpdateInformationFragment extends AbstractFragment {
                     .setUpdateDownloadListenerAndStartPolling(new UpdateDownloadListener() {
                         @Override
                         public void onDownloadManagerInit(final UpdateDownloader caller) {
-                            getDownloadCancelButton().setOnClickListener(v -> caller.cancelDownload(oxygenOTAUpdate));
+                            getDownloadCancelButton().setOnClickListener(v -> {
+                                caller.cancelDownload(oxygenOTAUpdate);
+                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.NOT_DOWNLOADING);
+                            });
                         }
 
                         @Override

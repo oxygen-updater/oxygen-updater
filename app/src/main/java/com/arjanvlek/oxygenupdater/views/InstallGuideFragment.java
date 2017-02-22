@@ -84,7 +84,7 @@ public class InstallGuideFragment extends Fragment {
 
         if(cache.get(pageNumber) == null) {
             ServerConnector connector = ((ApplicationContext)getActivity().getApplication()).getServerConnector();
-            connector.fetchInstallGuidePageFromServer(deviceId, updateMethodId, pageNumber, (page) -> {
+            connector.getInstallGuidePage(deviceId, updateMethodId, pageNumber, (page) -> {
                 cache.put(pageNumber, page);
                 displayInstallGuide(installGuideView, page, pageNumber, isFirstPage);
             });

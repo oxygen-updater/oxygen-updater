@@ -51,7 +51,7 @@ public class UpdateDownloader {
     private UpdateDownloadListener listener;
     private List<Double> measurements = new ArrayList<>();
 
-    private final static int NOT_SET = -1;
+    public final static int NOT_SET = -1;
 
     private boolean initialized;
     private boolean isVerifying;

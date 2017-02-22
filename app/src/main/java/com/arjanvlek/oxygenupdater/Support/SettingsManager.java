@@ -16,6 +16,7 @@ public class SettingsManager {
     public static final String PROPERTY_OFFLINE_UPDATE_DESCRIPTION = "offlineUpdateDescription";
     public static final String PROPERTY_OFFLINE_FILE_NAME = "offlineFileName";
     public static final String PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE = "offlineUpdateInformationAvailable";
+    public static final String PROPERTY_OFFLINE_IS_UP_TO_DATE = "offlineIsUpToDate";
 
     //Settings properties
     public static final String PROPERTY_DEVICE = "device";

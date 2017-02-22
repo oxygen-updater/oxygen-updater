@@ -12,12 +12,19 @@ public class ServerStatus implements Banner {
     private Status status;
     private String latestAppVersion;
 
+    public ServerStatus() {}
+
+    public ServerStatus(Status status, String latestAppVersion) {
+        this.status = status;
+        this.latestAppVersion = latestAppVersion;
+    }
+
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status status) {
-        this.status = status != null ? status : Status.UNREACHABLE;
+        this.status = status;
     }
 
     public String getLatestAppVersion() {
@@ -26,7 +33,7 @@ public class ServerStatus implements Banner {
 
     @JsonProperty("latest_app_version")
     public void setLatestAppVersion(String latestAppVersion) {
-        this.latestAppVersion = latestAppVersion != null ? latestAppVersion : BuildConfig.VERSION_NAME; // To prevent incorrect app update messages if response is null / invalid
+        this.latestAppVersion = latestAppVersion;
     }
 
     @Override

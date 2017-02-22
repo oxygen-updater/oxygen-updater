@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             ApplicationContext applicationContext = ((ApplicationContext) getApplication());
-            applicationContext.getDevices(result -> {
+            applicationContext.getServerConnector().getDevices(result -> {
                 if (!SupportedDeviceManager.isSupportedDevice(applicationContext.getSystemVersionProperties(), result)) {
                     displayUnsupportedDeviceMessage();
                 }
