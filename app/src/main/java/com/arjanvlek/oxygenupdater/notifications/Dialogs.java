@@ -13,8 +13,9 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.views.MessageDialog;
+
+import java8.util.function.Consumer;
 
 public class Dialogs {
 
@@ -109,7 +110,7 @@ public class Dialogs {
         appOutdatedErrorFragment.show(fragment.getFragmentManager(), "AppOutdatedError");
     }
 
-    public static void showUpdateAlreadyDownloadedMessage(final Fragment fragment, final Callback<Void> actionPerformedCallback) {
+    public static void showUpdateAlreadyDownloadedMessage(final Fragment fragment, final Consumer<Void> actionPerformedCallback) {
         MessageDialog dialog = new MessageDialog()
                 .setTitle(fragment.getString(R.string.delete_message_title))
                 .setMessage(fragment.getString(R.string.delete_message_contents))
@@ -125,7 +126,7 @@ public class Dialogs {
 
                     @Override
                     public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
-                        actionPerformedCallback.onActionPerformed(null);
+                        actionPerformedCallback.accept(null);
                     }
                 });
         dialog.setTargetFragment(fragment, 0);

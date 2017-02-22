@@ -21,12 +21,12 @@ import android.widget.CheckBox;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationContext;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.Callback;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
 
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS;
+import java8.util.function.Consumer;
+
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     private SettingsManager settingsManager;
     private NetworkConnectionManager networkConnectionManager;
     private ActivityLauncher activityLauncher;
-    private Callback<Integer> callback;
+    private Consumer<Integer> callback;
 
 
     // Permissions constants
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static Fragment newInstance(int sectionNumber) {
+        static Fragment newInstance(int sectionNumber) {
             if (sectionNumber == 1) {
                 return new UpdateInformationFragment();
             }
@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     // Android 6.0 Run-time permissions methods
 
-    public void requestDownloadPermissions(@NonNull Callback<Integer> callback) {
+    public void requestDownloadPermissions(@NonNull Consumer<Integer> callback) {
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
             this.callback = callback;
             requestPermissions(new String[]{DOWNLOAD_PERMISSION}, PERMISSION_REQUEST_CODE);
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         switch (permsRequestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (this.callback != null) {
-                    this.callback.onActionPerformed(grantResults[0]);
+                    this.callback.accept(grantResults[0]);
                 }
 
         }
