@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -43,9 +42,11 @@ public class ApplicationContext extends Application {
     public SystemVersionProperties getSystemVersionProperties() {
         // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
         if (systemVersionProperties == null) {
+            Log.v(TAG, "Creating new SystemVersionProperties instance...");
             systemVersionProperties = new SystemVersionProperties();
             return systemVersionProperties;
         } else {
+            Log.v(TAG, "Using cached instance of SystemVersionProperties");
             return systemVersionProperties;
         }
     }
@@ -67,9 +68,13 @@ public class ApplicationContext extends Application {
             } else {
                 System.exit(0);
             }
+            Log.v(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
             return false;
         } else {
-            return resultCode == ConnectionResult.SUCCESS;
+            boolean result = resultCode == ConnectionResult.SUCCESS;
+            if(result) Log.v(TAG, "Google Play Services are available.");
+            else Log.v(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
+            return result;
         }
     }
 }

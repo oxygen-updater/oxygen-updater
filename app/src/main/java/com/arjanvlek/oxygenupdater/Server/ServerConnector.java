@@ -275,6 +275,9 @@ public class ServerConnector {
         try {
             URL requestUrl = request.getURL(params);
 
+            Log.v(TAG, "Performing GET request to URL " + requestUrl.toString());
+            Log.v(TAG, "Timeout is set to "  + request.getTimeOutInSeconds() + " seconds.");
+
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
             int timeOutInMilliseconds = request.getTimeOutInSeconds() * 1000;
@@ -293,8 +296,11 @@ public class ServerConnector {
             }
 
             in.close();
-            return response.toString();
+            String rawResponse = response.toString();
+            Log.v(TAG, "Response: " + rawResponse);
+            return rawResponse;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
