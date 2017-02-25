@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 
-import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
+import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
@@ -65,7 +65,7 @@ public class UpdateDownloader {
         this.settingsManager = new SettingsManager(baseActivity.getApplicationContext());
     }
 
-    public UpdateDownloader setUpdateDownloadListenerAndStartPolling(UpdateDownloadListener listener, OxygenOTAUpdate oxygenOTAUpdate) {
+    public UpdateDownloader setUpdateDownloadListenerAndStartPolling(UpdateDownloadListener listener, UpdateData updateData) {
         this.listener = listener;
 
         if(!initialized && listener != null) {
@@ -73,24 +73,24 @@ public class UpdateDownloader {
             initialized = true;
         }
 
-        checkDownloadProgress(oxygenOTAUpdate);
+        checkDownloadProgress(updateData);
 
         return this;
     }
 
 
-    public void downloadUpdate(OxygenOTAUpdate oxygenOTAUpdate) {
-        if(oxygenOTAUpdate != null) {
-            if(!oxygenOTAUpdate.getDownloadUrl().contains("http")) {
-                showDownloadErrorNotification(baseActivity, oxygenOTAUpdate, 404);
+    public void downloadUpdate(UpdateData updateData) {
+        if (updateData != null) {
+            if (!updateData.getDownloadUrl().contains("http")) {
+                showDownloadErrorNotification(baseActivity, updateData, 404);
                 if(listener != null) listener.onDownloadError(this, 404);
             } else {
-                Uri downloadUri = Uri.parse(oxygenOTAUpdate.getDownloadUrl());
+                Uri downloadUri = Uri.parse(updateData.getDownloadUrl());
 
                 DownloadManager.Request request = new DownloadManager.Request(downloadUri)
                         .setDescription(baseActivity.getString(R.string.download_description))
-                        .setTitle(oxygenOTAUpdate.getVersionNumber() != null && !oxygenOTAUpdate.getVersionNumber().equals("null") && !oxygenOTAUpdate.getVersionNumber().isEmpty() ? oxygenOTAUpdate.getVersionNumber() : baseActivity.getString(R.string.download_unknown_update_name))
-                        .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, oxygenOTAUpdate.getFilename())
+                        .setTitle(updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null") && !updateData.getVersionNumber().isEmpty() ? updateData.getVersionNumber() : baseActivity.getString(R.string.download_unknown_update_name))
+                        .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, updateData.getFilename())
                         .setVisibleInDownloadsUi(false)
                         .setNotificationVisibility(VISIBILITY_VISIBLE);
 
@@ -99,7 +99,7 @@ public class UpdateDownloader {
                 previousBytesDownloadedSoFar = NOT_SET;
                 settingsManager.savePreference(PROPERTY_DOWNLOAD_ID, downloadID);
 
-                checkDownloadProgress(oxygenOTAUpdate);
+                checkDownloadProgress(updateData);
 
                 if(listener != null) listener.onDownloadStarted(downloadID);
             }
@@ -107,19 +107,19 @@ public class UpdateDownloader {
 
     }
 
-    public void cancelDownload(OxygenOTAUpdate oxygenOTAUpdate) {
+    public void cancelDownload(UpdateData updateData) {
         if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
             downloadManager.remove((long) settingsManager.getPreference(PROPERTY_DOWNLOAD_ID));
             clearUp();
-            deleteDownload(oxygenOTAUpdate);
+            deleteDownload(updateData);
 
             if(listener != null)listener.onDownloadCancelled();
         }
     }
 
-    public boolean checkIfUpdateIsDownloaded(OxygenOTAUpdate oxygenOTAUpdate) {
-        if (oxygenOTAUpdate.getId() == null) return false;
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
+    public boolean checkIfUpdateIsDownloaded(UpdateData updateData) {
+        if (updateData.getId() == null) return false;
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
         return (file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID));
     }
 
@@ -127,8 +127,8 @@ public class UpdateDownloader {
         return isVerifying;
     }
 
-    public boolean deleteDownload(OxygenOTAUpdate oxygenOTAUpdate) {
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + oxygenOTAUpdate.getFilename());
+    public boolean deleteDownload(UpdateData updateData) {
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
         try {
             return file.delete();
         } catch (Exception ignored) {
@@ -136,7 +136,7 @@ public class UpdateDownloader {
         }
     }
 
-    private void checkDownloadProgress(OxygenOTAUpdate oxygenOTAUpdate) {
+    private void checkDownloadProgress(UpdateData updateData) {
 
         if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
             final Long downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID);
@@ -151,12 +151,12 @@ public class UpdateDownloader {
                     case STATUS_PENDING:
                         if(listener != null) listener.onDownloadPending();
 
-                        recheckDownloadProgress(oxygenOTAUpdate, 1);
+                        recheckDownloadProgress(updateData, 1);
                         break;
                     case STATUS_PAUSED:
                         if(listener != null) listener.onDownloadPaused(cursor.getInt(cursor.getColumnIndex(COLUMN_REASON)));
 
-                        recheckDownloadProgress(oxygenOTAUpdate, 5);
+                        recheckDownloadProgress(updateData, 5);
                         break;
                     case STATUS_RUNNING:
 
@@ -169,7 +169,7 @@ public class UpdateDownloader {
 
                         previousBytesDownloadedSoFar = bytesDownloadedSoFar;
 
-                        recheckDownloadProgress(oxygenOTAUpdate, 1);
+                        recheckDownloadProgress(updateData, 1);
 
                         break;
                     case DownloadManager.STATUS_SUCCESSFUL:
@@ -177,25 +177,29 @@ public class UpdateDownloader {
 
                         if(listener != null) listener.onDownloadComplete();
 
-                        verifyDownload(baseActivity, oxygenOTAUpdate);
+                        verifyDownload(baseActivity, updateData);
                         break;
                     case DownloadManager.STATUS_FAILED:
                         clearUp();
 
                         int statusCode = cursor.getInt(cursor.getColumnIndex(COLUMN_REASON));
 
-                        showDownloadErrorNotification(baseActivity, oxygenOTAUpdate, statusCode);
+                        showDownloadErrorNotification(baseActivity, updateData, statusCode);
                         if(listener != null) listener.onDownloadError(this, statusCode);
-                        cancelDownload(oxygenOTAUpdate);
+                        cancelDownload(updateData);
                         break;
                 }
                 cursor.close();
+            } else {
+                clearUp();
+                deleteDownload(updateData);
+                if (listener != null) listener.onDownloadCancelled();
             }
         }
     }
 
-    private void verifyDownload(Activity activity, OxygenOTAUpdate oxygenOTAUpdate) {
-        new DownloadVerifier(activity).execute(oxygenOTAUpdate);
+    private void verifyDownload(Activity activity, UpdateData updateData) {
+        new DownloadVerifier(activity).execute(updateData);
     }
 
     private boolean makeDownloadDirectory() {
@@ -203,8 +207,8 @@ public class UpdateDownloader {
         return downloadDirectory.mkdirs();
     }
 
-    private void recheckDownloadProgress(final OxygenOTAUpdate oxygenOTAUpdate, int secondsDelay) {
-        new Handler().postDelayed(() -> checkDownloadProgress(oxygenOTAUpdate), (secondsDelay * 1000));
+    private void recheckDownloadProgress(final UpdateData updateData, int secondsDelay) {
+        new Handler().postDelayed(() -> checkDownloadProgress(updateData), (secondsDelay * 1000));
     }
 
     private void clearUp() {
@@ -298,9 +302,9 @@ public class UpdateDownloader {
         return this;
     }
 
-    private class DownloadVerifier extends AsyncTask<OxygenOTAUpdate, Integer, Boolean> {
+    private class DownloadVerifier extends AsyncTask<UpdateData, Integer, Boolean> {
 
-        private OxygenOTAUpdate oxygenOTAUpdate;
+        private UpdateData updateData;
         private final Activity activity;
 
         DownloadVerifier(Activity activity) {
@@ -315,11 +319,11 @@ public class UpdateDownloader {
         }
 
         @Override
-        protected Boolean doInBackground(OxygenOTAUpdate... params) {
-            this.oxygenOTAUpdate = params[0];
-            String filename = oxygenOTAUpdate.getFilename();
+        protected Boolean doInBackground(UpdateData... params) {
+            this.updateData = params[0];
+            String filename = updateData.getFilename();
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + filename);
-            return oxygenOTAUpdate == null || oxygenOTAUpdate.getMD5Sum() == null || MD5.checkMD5(oxygenOTAUpdate.getMD5Sum(), file);
+            return updateData == null || updateData.getMD5Sum() == null || MD5.checkMD5(updateData.getMD5Sum(), file);
         }
 
         @Override
@@ -333,7 +337,7 @@ public class UpdateDownloader {
 
                 clearUp();
             } else {
-                deleteDownload(oxygenOTAUpdate);
+                deleteDownload(updateData);
 
                 if(listener != null) listener.onVerifyError(instance());
                 LocalNotifications.showVerifyingNotification(activity, NOT_ONGOING, HAS_ERROR);
@@ -343,7 +347,7 @@ public class UpdateDownloader {
         }
     }
 
-    private void showDownloadErrorNotification(Activity activity, OxygenOTAUpdate oxygenOTAUpdate, int statusCode) {
+    private void showDownloadErrorNotification(Activity activity, UpdateData updateData, int statusCode) {
         if (statusCode < 1000) {
             LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
         } else {
@@ -364,8 +368,8 @@ public class UpdateDownloader {
                     LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
                     break;
                 case ERROR_CANNOT_RESUME:
-                    cancelDownload(oxygenOTAUpdate);
-                    downloadUpdate(oxygenOTAUpdate);
+                    cancelDownload(updateData);
+                    downloadUpdate(updateData);
                     break;
             }
         }

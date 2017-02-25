@@ -21,13 +21,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.Download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.Model.Banner;
-import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
 import com.arjanvlek.oxygenupdater.Support.DateTimeFormatter;
@@ -40,7 +40,6 @@ import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
@@ -65,10 +64,10 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.BELOW;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_OUTDATED_ERROR;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NETWORK_CONNECTION_ERROR;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.SERVER_MAINTENANCE_ERROR;
+import static com.arjanvlek.oxygenupdater.ApplicationData.APP_OUTDATED_ERROR;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NETWORK_CONNECTION_ERROR;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERROR;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
@@ -116,7 +115,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         this.context = getActivity();
         this.settingsManager = new SettingsManager(getActivity().getApplicationContext());
         this.networkConnectionManager = new NetworkConnectionManager(getActivity().getApplicationContext());
-        this.adsAreSupported = getApplicationContext().checkPlayServices(getActivity(), false);
+        this.adsAreSupported = getApplicationData().checkPlayServices(getActivity(), false);
     }
 
     @Override
@@ -177,8 +176,8 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         boolean online = networkConnectionManager.checkNetworkConnection();
 
-        ServerConnector serverConnector = getApplicationContext().getServerConnector();
-        SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
+        ServerConnector serverConnector = getApplicationData().getServerConnector();
+        SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
         serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion(), (updateData) -> {
             if (!isLoadedOnce) updateDownloader = initDownloadManager(updateData);
@@ -251,7 +250,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         List<ServerMessageBar> createdServerMessageBars = new ArrayList<>();
 
         for(Banner banner : banners) {
-            ServerMessageBar bar = new ServerMessageBar(getApplicationContext());
+            ServerMessageBar bar = new ServerMessageBar(getApplicationData());
             View backgroundBar = bar.getBackgroundBar();
             TextView textView = bar.getTextView();
 
@@ -281,59 +280,59 @@ public class UpdateInformationFragment extends AbstractFragment {
     }
 
     /**
-     * Displays the update information from a {@link OxygenOTAUpdate} with update information.
-     * @param oxygenOTAUpdate Update information to display
+     * Displays the update information from a {@link UpdateData} with update information.
+     * @param updateData Update information to display
      * @param online Whether or not the device has an active network connection
      * @param displayInfoWhenUpToDate Flag set to show update information anyway, even if the system is up to date.
      */
-    private void displayUpdateInformation(final OxygenOTAUpdate oxygenOTAUpdate, final boolean online, boolean displayInfoWhenUpToDate) {
+    private void displayUpdateInformation(final UpdateData updateData, final boolean online, boolean displayInfoWhenUpToDate) {
         // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
-        if (!isAdded()) {
+        if (!isAdded() || updateData == null) {
             return;
         }
 
         // Hide the loading screen
         rootView.findViewById(R.id.updateInformationLoadingScreen).setVisibility(GONE);
 
-        if (oxygenOTAUpdate.getId() == null) {
-            displayUpdateInformationWhenUpToDate(oxygenOTAUpdate, online);
+        if (updateData.getId() == null) {
+            displayUpdateInformationWhenUpToDate(updateData, online);
         }
 
-        if (((oxygenOTAUpdate.isSystemIsUpToDateCheck(settingsManager)) && !displayInfoWhenUpToDate) || !oxygenOTAUpdate.isUpdateInformationAvailable()) {
-            displayUpdateInformationWhenUpToDate(oxygenOTAUpdate, online);
+        if (((updateData.isSystemIsUpToDateCheck(settingsManager)) && !displayInfoWhenUpToDate) || !updateData.isUpdateInformationAvailable()) {
+            displayUpdateInformationWhenUpToDate(updateData, online);
         } else {
-            displayUpdateInformationWhenNotUpToDate(oxygenOTAUpdate, displayInfoWhenUpToDate);
+            displayUpdateInformationWhenNotUpToDate(updateData, displayInfoWhenUpToDate);
         }
 
         Button installGuideButton = (Button) updateInformationRefreshLayout.findViewById(R.id.updateInstallationInstructionsButton);
         installGuideButton.setOnClickListener(v -> {
-            ((MainActivity) getActivity()).getActivityLauncher().UpdateInstructions(updateDownloader.checkIfUpdateIsDownloaded(oxygenOTAUpdate));
+            ((MainActivity) getActivity()).getActivityLauncher().UpdateInstructions(updateDownloader.checkIfUpdateIsDownloaded(updateData));
             LocalNotifications.hideDownloadCompleteNotification(getActivity());
         });
 
 
         if(online) {
             // Save update data for offline viewing
-            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, oxygenOTAUpdate.getVersionNumber());
-            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, oxygenOTAUpdate.getDownloadSize());
-            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, oxygenOTAUpdate.getDescription());
-            settingsManager.savePreference(PROPERTY_OFFLINE_FILE_NAME, oxygenOTAUpdate.getFilename());
-            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, oxygenOTAUpdate.isUpdateInformationAvailable());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, updateData.getVersionNumber());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.getDownloadSize());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.getDescription());
+            settingsManager.savePreference(PROPERTY_OFFLINE_FILE_NAME, updateData.getFilename());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable());
             settingsManager.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString());
-            settingsManager.savePreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, oxygenOTAUpdate.isSystemIsUpToDate());
+            settingsManager.savePreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.isSystemIsUpToDate());
         }
 
         // Hide the refreshing icon if it is present.
         hideRefreshIcons();
     }
 
-    private void displayUpdateInformationWhenUpToDate(final OxygenOTAUpdate oxygenOTAUpdate, boolean online) {
+    private void displayUpdateInformationWhenUpToDate(final UpdateData updateData, boolean online) {
         // Show "System is up to date" view.
         rootView.findViewById(R.id.updateInformationRefreshLayout).setVisibility(GONE);
         rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout).setVisibility(VISIBLE);
 
         // Set the current Oxygen OS version if available.
-        String oxygenOSVersion = ((ApplicationContext)getActivity().getApplication()).getSystemVersionProperties().getOxygenOSVersion();
+        String oxygenOSVersion = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties().getOxygenOSVersion();
         TextView versionNumberView = (TextView) rootView.findViewById(R.id.updateInformationSystemIsUpToDateVersionTextView);
         if(!oxygenOSVersion.equals(NO_OXYGEN_OS)) {
             versionNumberView.setVisibility(VISIBLE);
@@ -344,13 +343,13 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         // Set "No Update Information Is Available" button if needed.
         Button updateInformationButton = (Button) rootView.findViewById(R.id.updateInformationSystemIsUpToDateStatisticsButton);
-        if(!oxygenOTAUpdate.isUpdateInformationAvailable()) {
+        if (!updateData.isUpdateInformationAvailable()) {
             updateInformationButton.setText(getString(R.string.update_information_no_update_data_available));
             updateInformationButton.setClickable(false);
         } else {
             updateInformationButton.setText(getString(R.string.update_information_view_update_information));
             updateInformationButton.setClickable(true);
-            updateInformationButton.setOnClickListener(v -> displayUpdateInformation(oxygenOTAUpdate, online, true));
+            updateInformationButton.setOnClickListener(v -> displayUpdateInformation(updateData, online, true));
         }
 
         // Save last time checked if online.
@@ -365,32 +364,32 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     }
 
-    private void displayUpdateInformationWhenNotUpToDate(final OxygenOTAUpdate oxygenOTAUpdate, boolean displayInfoWhenUpToDate) {
+    private void displayUpdateInformationWhenNotUpToDate(final UpdateData updateData, boolean displayInfoWhenUpToDate) {
         // Show "System update available" view.
         rootView.findViewById(R.id.updateInformationRefreshLayout).setVisibility(VISIBLE);
         rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout).setVisibility(GONE);
 
         // Display available update version number.
         TextView buildNumberView = (TextView) rootView.findViewById(R.id.updateInformationBuildNumberView);
-        if (oxygenOTAUpdate.getVersionNumber() != null && !oxygenOTAUpdate.getVersionNumber().equals("null")) {
-            buildNumberView.setText(oxygenOTAUpdate.getVersionNumber());
+        if (updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null")) {
+            buildNumberView.setText(updateData.getVersionNumber());
         } else {
             buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager.getPreference(PROPERTY_DEVICE)));
         }
 
         // Display download size.
         TextView downloadSizeView = (TextView) rootView.findViewById(R.id.updateInformationDownloadSizeView);
-        downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), oxygenOTAUpdate.getDownloadSize()));
+        downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), updateData.getDownloadSize()));
 
         // Display update description.
-        String description = oxygenOTAUpdate.getDescription();
+        String description = updateData.getDescription();
         TextView descriptionView = (TextView) rootView.findViewById(R.id.updateDescriptionView);
         descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         descriptionView.setText(description != null && !description.isEmpty() && !description.equals("null") ? UpdateDescriptionParser.parse(description) : getString(R.string.update_information_description_not_available));
 
         // Display update file name.
         TextView fileNameView = (TextView) rootView.findViewById(R.id.updateFileNameView);
-        fileNameView.setText(String.format(getString(R.string.update_information_file_name), oxygenOTAUpdate.getFilename()));
+        fileNameView.setText(String.format(getString(R.string.update_information_file_name), updateData.getFilename()));
 
 
         // Format top title based on system version installed.
@@ -400,7 +399,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         View downloadSizeImage = rootView.findViewById(R.id.downloadSizeImage);
 
         final Button downloadButton = getDownloadButton();
-        initUpdateDownloadButton(oxygenOTAUpdate, updateDownloader.checkIfUpdateIsDownloaded(oxygenOTAUpdate) ? DownloadStatus.DOWNLOADED : updateDownloader.checkIfAnUpdateIsBeingVerified() ? DownloadStatus.VERIFYING : DownloadStatus.NOT_DOWNLOADING);
+        initUpdateDownloadButton(updateData, updateDownloader.checkIfUpdateIsDownloaded(updateData) ? DownloadStatus.DOWNLOADED : updateDownloader.checkIfAnUpdateIsBeingVerified() ? DownloadStatus.VERIFYING : DownloadStatus.NOT_DOWNLOADING);
 
         if(displayInfoWhenUpToDate) {
             headerLabel.setText(getString(R.string.update_information_installed_update));
@@ -411,7 +410,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             downloadSizeImage.setVisibility(GONE);
             downloadSizeView.setVisibility(GONE);
         } else {
-            if (oxygenOTAUpdate.isSystemIsUpToDate()) {
+            if (updateData.isSystemIsUpToDate()) {
                 headerLabel.setText(getString(R.string.update_information_installed_update));
             } else {
                 headerLabel.setText(getString(R.string.update_information_latest_available_update));
@@ -492,21 +491,21 @@ public class UpdateInformationFragment extends AbstractFragment {
     /**
      * Creates a {@link UpdateDownloader} and applies an {@link UpdateDownloadListener} to it to allow displaying update download progress and error messages.
      */
-    private UpdateDownloader initDownloadManager(final OxygenOTAUpdate oxygenOTAUpdate) {
+    private UpdateDownloader initDownloadManager(final UpdateData updateData) {
         return new UpdateDownloader(getActivity())
                     .setUpdateDownloadListenerAndStartPolling(new UpdateDownloadListener() {
                         @Override
                         public void onDownloadManagerInit(final UpdateDownloader caller) {
                             getDownloadCancelButton().setOnClickListener(v -> {
-                                caller.cancelDownload(oxygenOTAUpdate);
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.NOT_DOWNLOADING);
+                                caller.cancelDownload(updateData);
+                                initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
                             });
                         }
 
                         @Override
                         public void onDownloadStarted(long downloadID) {
                             if(isAdded()) {
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.DOWNLOADING);
+                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
 
                                 showDownloadProgressBar();
                                 getDownloadProgressBar().setIndeterminate(true);
@@ -518,7 +517,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                         @Override
                         public void onDownloadPending() {
                             if(isAdded()) {
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.DOWNLOADING);
+                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
 
                                 showDownloadProgressBar();
                                 getDownloadProgressBar().setIndeterminate(true);
@@ -548,7 +547,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                         @Override
                         public void onDownloadPaused(int statusCode) {
                             if(isAdded()) {
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.DOWNLOADING);
+                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
 
                                 showDownloadProgressBar();
 
@@ -572,14 +571,14 @@ public class UpdateInformationFragment extends AbstractFragment {
                         @Override
                         public void onDownloadComplete() {
                             if(isAdded()) {
-                                Toast.makeText(getApplicationContext(), getString(R.string.download_verifying_start), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationData(), getString(R.string.download_verifying_start), Toast.LENGTH_LONG).show();
                             }
                         }
 
                         @Override
                         public void onDownloadCancelled() {
                             if(isAdded()) {
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.NOT_DOWNLOADING);
+                                initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
                                 hideDownloadProgressBar();
                             }
@@ -587,7 +586,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
                         @Override
                         public void onDownloadError(UpdateDownloader caller, int statusCode) {
-                            initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.NOT_DOWNLOADING);
+                            initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
                             hideDownloadProgressBar();
 
@@ -596,25 +595,25 @@ public class UpdateInformationFragment extends AbstractFragment {
                             // Handle any other errors according to the error message.
                             if(isAdded()) {
                                 if (statusCode < 1000) {
-                                   showDownloadError(oxygenOTAUpdate, caller, R.string.download_error_network,R.string.download_notification_error_network);
+                                    showDownloadError(updateData, caller, R.string.download_error_network, R.string.download_notification_error_network);
                                 } else {
                                     switch (statusCode) {
                                         case ERROR_UNHANDLED_HTTP_CODE:
                                         case ERROR_HTTP_DATA_ERROR:
                                         case ERROR_TOO_MANY_REDIRECTS:
-                                            showDownloadError(oxygenOTAUpdate, caller, R.string.download_error_network, R.string.download_notification_error_network);
+                                            showDownloadError(updateData, caller, R.string.download_error_network, R.string.download_notification_error_network);
                                             break;
                                         case ERROR_FILE_ERROR:
-                                            showDownloadError(oxygenOTAUpdate, caller, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
+                                            showDownloadError(updateData, caller, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
                                             break;
                                         case ERROR_INSUFFICIENT_SPACE:
-                                            showDownloadError(oxygenOTAUpdate, caller, R.string.download_error_storage, R.string.download_notification_error_storage_full);
+                                            showDownloadError(updateData, caller, R.string.download_error_storage, R.string.download_notification_error_storage_full);
                                             break;
                                         case ERROR_DEVICE_NOT_FOUND:
-                                            showDownloadError(oxygenOTAUpdate, caller, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
+                                            showDownloadError(updateData, caller, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
                                             break;
                                         case ERROR_FILE_ALREADY_EXISTS:
-                                            initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.DOWNLOADED);
+                                            initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADED);
                                     }
                                 }
                             }
@@ -623,7 +622,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                         @Override
                         public void onVerifyStarted() {
                             if(isAdded()) {
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.VERIFYING);
+                                initUpdateDownloadButton(updateData, DownloadStatus.VERIFYING);
 
                                 showDownloadProgressBar();
                                 getDownloadProgressBar().setIndeterminate(true);
@@ -634,29 +633,29 @@ public class UpdateInformationFragment extends AbstractFragment {
                         @Override
                         public void onVerifyError(UpdateDownloader caller) {
                             if(isAdded()) {
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.NOT_DOWNLOADING);
+                                initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
                                 hideDownloadProgressBar();
 
-                                showDownloadError(oxygenOTAUpdate, caller, R.string.download_error, R.string.download_notification_error_corrupt);
+                                showDownloadError(updateData, caller, R.string.download_error, R.string.download_notification_error_corrupt);
                             }
                         }
 
                         @Override
                         public void onVerifyComplete() {
                             if(isAdded()) {
-                                initUpdateDownloadButton(oxygenOTAUpdate, DownloadStatus.DOWNLOADED);
+                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADED);
 
                                 hideDownloadProgressBar();
 
-                                Toast.makeText(getApplicationContext(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationData(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
                             }
                         }
-                    }, oxygenOTAUpdate);
+                    }, updateData);
         }
 
-    private void showDownloadError(OxygenOTAUpdate oxygenOTAUpdate, UpdateDownloader updateDownloader, @StringRes  int title, @StringRes int message) {
-        Dialogs.showDownloadError(this, updateDownloader, oxygenOTAUpdate, title, message);
+    private void showDownloadError(UpdateData updateData, UpdateDownloader updateDownloader, @StringRes int title, @StringRes int message) {
+        Dialogs.showDownloadError(this, updateDownloader, updateData, title, message);
     }
 
 
@@ -664,17 +663,17 @@ public class UpdateInformationFragment extends AbstractFragment {
         NOT_DOWNLOADING, DOWNLOADING, DOWNLOADED, VERIFYING
     }
 
-    private void initUpdateDownloadButton(OxygenOTAUpdate oxygenOTAUpdate, DownloadStatus downloadStatus) {
+    private void initUpdateDownloadButton(UpdateData updateData, DownloadStatus downloadStatus) {
         final Button downloadButton = getDownloadButton();
 
         switch (downloadStatus) {
             case NOT_DOWNLOADING:
                 downloadButton.setText(getString(R.string.download));
 
-                if (networkConnectionManager.checkNetworkConnection() && oxygenOTAUpdate.getDownloadUrl() != null && oxygenOTAUpdate.getDownloadUrl().contains("http")) {
+                if (networkConnectionManager.checkNetworkConnection() && updateData.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
                     downloadButton.setEnabled(true);
                     downloadButton.setClickable(true);
-                    downloadButton.setOnClickListener(new DownloadButtonOnClickListener(oxygenOTAUpdate));
+                    downloadButton.setOnClickListener(new DownloadButtonOnClickListener(updateData));
                     downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
                 } else {
                     downloadButton.setEnabled(false);
@@ -692,7 +691,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                 downloadButton.setText(getString(R.string.downloaded));
                 downloadButton.setEnabled(true);
                 downloadButton.setClickable(true);
-                downloadButton.setOnClickListener(new AlreadyDownloadedOnClickListener(this, oxygenOTAUpdate));
+                downloadButton.setOnClickListener(new AlreadyDownloadedOnClickListener(this, updateData));
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
                 break;
             case VERIFYING:
@@ -708,10 +707,10 @@ public class UpdateInformationFragment extends AbstractFragment {
      */
     private class DownloadButtonOnClickListener implements View.OnClickListener {
 
-        private final OxygenOTAUpdate oxygenOTAUpdate;
+        private final UpdateData updateData;
 
-        public DownloadButtonOnClickListener(OxygenOTAUpdate oxygenOTAUpdate) {
-            this.oxygenOTAUpdate = oxygenOTAUpdate;
+        public DownloadButtonOnClickListener(UpdateData updateData) {
+            this.updateData = updateData;
         }
 
         @Override
@@ -719,11 +718,11 @@ public class UpdateInformationFragment extends AbstractFragment {
             if (isAdded()) {
                 MainActivity mainActivity = (MainActivity) getActivity();
                 if (mainActivity.hasDownloadPermissions()) {
-                    updateDownloader.downloadUpdate(oxygenOTAUpdate);
+                    updateDownloader.downloadUpdate(updateData);
                 } else {
                     mainActivity.requestDownloadPermissions(result -> {
                         if (result == PackageManager.PERMISSION_GRANTED) {
-                            updateDownloader.downloadUpdate(oxygenOTAUpdate);
+                            updateDownloader.downloadUpdate(updateData);
                         }
                     });
                 }
@@ -736,19 +735,19 @@ public class UpdateInformationFragment extends AbstractFragment {
     private class AlreadyDownloadedOnClickListener implements View.OnClickListener {
 
         private final Fragment targetFragment;
-        private final OxygenOTAUpdate oxygenOTAUpdate;
+        private final UpdateData updateData;
 
-        public AlreadyDownloadedOnClickListener(Fragment targetFragment, OxygenOTAUpdate oxygenOTAUpdate) {
+        public AlreadyDownloadedOnClickListener(Fragment targetFragment, UpdateData updateData) {
             this.targetFragment = targetFragment;
-            this.oxygenOTAUpdate = oxygenOTAUpdate;
+            this.updateData = updateData;
         }
 
         @Override
         public void onClick(View v) {
             Dialogs.showUpdateAlreadyDownloadedMessage(targetFragment, (ignored) -> {
-                if (oxygenOTAUpdate != null) {
-                    updateDownloader.deleteDownload(oxygenOTAUpdate);
-                    initUpdateDownloadButton(oxygenOTAUpdate, UpdateInformationFragment.DownloadStatus.NOT_DOWNLOADING);
+                if (updateData != null) {
+                    updateDownloader.deleteDownload(updateData);
+                    initUpdateDownloadButton(updateData, UpdateInformationFragment.DownloadStatus.NOT_DOWNLOADING);
                 }
             });
         }

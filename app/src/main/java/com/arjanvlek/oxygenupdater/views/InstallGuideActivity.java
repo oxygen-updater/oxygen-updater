@@ -10,14 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.MenuItem;
 
-import com.arjanvlek.oxygenupdater.Model.InstallGuideData;
+import com.arjanvlek.oxygenupdater.Model.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.R;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NUMBER_OF_INSTALL_GUIDE_PAGES;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
 
 public class InstallGuideActivity extends AppCompatActivity {
 
-    private final SparseArray<InstallGuideData> installGuideCache = new SparseArray<>();
+    private final SparseArray<InstallGuidePage> installGuideCache = new SparseArray<>();
     private final SparseArray<Bitmap> installGuideImageCache = new SparseArray<>();
 
     public static final String INTENT_SHOW_DOWNLOAD_PAGE = "show_download_page";
@@ -97,7 +97,7 @@ public class InstallGuideActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    protected SparseArray<InstallGuideData> getInstallGuideCache() {
+    protected SparseArray<InstallGuidePage> getInstallGuideCache() {
         return this.installGuideCache;
     }
 

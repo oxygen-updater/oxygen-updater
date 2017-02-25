@@ -2,7 +2,7 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.support.v4.app.Fragment;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,18 +10,18 @@ import java.util.List;
 
 public abstract class AbstractFragment extends Fragment {
 
-    private ApplicationContext applicationContext;
+    private ApplicationData applicationData;
     //Test devices for ads.
     public static final List<String> ADS_TEST_DEVICES = Arrays.asList(""); // TODO add test ads id of my phone...
 
-    public ApplicationContext getApplicationContext() {
-        if(applicationContext == null) {
+    public ApplicationData getApplicationData() {
+        if (applicationData == null) {
             try {
-                applicationContext = (ApplicationContext) getActivity().getApplication();
+                applicationData = (ApplicationData) getActivity().getApplication();
             } catch (Exception e) {
-                applicationContext = new ApplicationContext();
+                applicationData = new ApplicationData();
             }
         }
-        return applicationContext;
+        return applicationData;
     }
 }

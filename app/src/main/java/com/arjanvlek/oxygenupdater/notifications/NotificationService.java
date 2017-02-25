@@ -19,7 +19,7 @@ import static android.app.Notification.DEFAULT_ALL;
 import static android.app.Notification.PRIORITY_HIGH;
 import static android.app.Notification.VISIBILITY_PUBLIC;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
+import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;

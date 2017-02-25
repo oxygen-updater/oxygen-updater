@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
-import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
+import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.views.MessageDialog;
 
@@ -24,8 +24,8 @@ public class Dialogs {
      * @param title Title of the error message
      * @param message Contents of the error message
      */
-    public static void showDownloadError(final Fragment fragment, final UpdateDownloader updateDownloader, final OxygenOTAUpdate oxygenOTAUpdate, @StringRes int title, @StringRes int message) {
-        showDownloadError(fragment, updateDownloader, oxygenOTAUpdate, fragment.getString(title), fragment.getString(message));
+    public static void showDownloadError(final Fragment fragment, final UpdateDownloader updateDownloader, final UpdateData updateData, @StringRes int title, @StringRes int message) {
+        showDownloadError(fragment, updateDownloader, updateData, fragment.getString(title), fragment.getString(message));
     }
 
     /**
@@ -33,7 +33,7 @@ public class Dialogs {
      * @param title Title of the error message
      * @param message Contents of the error message
      */
-    public static void showDownloadError(final Fragment fragment, final UpdateDownloader updateDownloader, final OxygenOTAUpdate oxygenOTAUpdate, String title, String message) {
+    public static void showDownloadError(final Fragment fragment, final UpdateDownloader updateDownloader, final UpdateData updateData, String title, String message) {
         MessageDialog errorDialog = new MessageDialog()
                 .setTitle(title)
                 .setMessage(message)
@@ -49,8 +49,8 @@ public class Dialogs {
                     @Override
                     public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
                         LocalNotifications.hideDownloadCompleteNotification(fragment.getActivity());
-                        updateDownloader.cancelDownload(oxygenOTAUpdate);
-                        updateDownloader.downloadUpdate(oxygenOTAUpdate);
+                        updateDownloader.cancelDownload(updateData);
+                        updateDownloader.downloadUpdate(updateData);
                     }
                 });
         errorDialog.setTargetFragment(fragment, 0);

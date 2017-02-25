@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
-import com.arjanvlek.oxygenupdater.Model.InstallGuideData;
+import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.Model.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
@@ -29,8 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NUMBER_OF_INSTALL_GUIDE_PAGES;
+import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
@@ -80,10 +80,10 @@ public class InstallGuideFragment extends Fragment {
         long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID);
         long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID);
 
-        SparseArray<InstallGuideData> cache = ((InstallGuideActivity)getActivity()).getInstallGuideCache();
+        SparseArray<InstallGuidePage> cache = ((InstallGuideActivity) getActivity()).getInstallGuideCache();
 
         if(cache.get(pageNumber) == null) {
-            ServerConnector connector = ((ApplicationContext)getActivity().getApplication()).getServerConnector();
+            ServerConnector connector = ((ApplicationData) getActivity().getApplication()).getServerConnector();
             connector.getInstallGuidePage(deviceId, updateMethodId, pageNumber, (page) -> {
                 cache.put(pageNumber, page);
                 displayInstallGuide(installGuideView, page, pageNumber, isFirstPage);
@@ -100,7 +100,7 @@ public class InstallGuideFragment extends Fragment {
         @Override
         public List<Object> doInBackground(Object...params) {
             ImageView imageView = (ImageView) params[0];
-            InstallGuideData installGuideData = (InstallGuideData) params[1];
+            InstallGuidePage installGuidePage = (InstallGuidePage) params[1];
 
             Bitmap image;
 
@@ -108,12 +108,12 @@ public class InstallGuideFragment extends Fragment {
 
             try {
                 assert cache != null;
-                if(cache.get(installGuideData.getPageNumber()) != null) {
-                    image = cache.get(installGuideData.getPageNumber());
+                if (cache.get(installGuidePage.getPageNumber()) != null) {
+                    image = cache.get(installGuidePage.getPageNumber());
                 } else {
-                    InputStream in = completeImageUrl(installGuideData.getImageUrl(), installGuideData.getFileExtension()).openStream();
+                    InputStream in = completeImageUrl(installGuidePage.getImageUrl(), installGuidePage.getFileExtension()).openStream();
                     image = BitmapFactory.decodeStream(in);
-                    cache.put(installGuideData.getPageNumber(), image);
+                    cache.put(installGuidePage.getPageNumber(), image);
                 }
             } catch(Exception ignored) {
                 image = null;
@@ -138,7 +138,7 @@ public class InstallGuideFragment extends Fragment {
         }
     }
 
-    private void displayInstallGuide(View installGuideView, InstallGuideData installGuideData, int pageNumber, boolean isFirstPage) {
+    private void displayInstallGuide(View installGuideView, InstallGuidePage installGuidePage, int pageNumber, boolean isFirstPage) {
         final TextView titleTextView = (TextView) installGuideView.findViewById(R.id.installGuideTitle);
         final TextView contentsTextView = (TextView) installGuideView.findViewById(R.id.installGuideText);
 
@@ -147,10 +147,10 @@ public class InstallGuideFragment extends Fragment {
             installGuideView.findViewById(R.id.installGuideTip).setVisibility(View.VISIBLE);
         }
 
-        if(installGuideData == null || installGuideData.getDeviceId() == null || installGuideData.getUpdateMethodId() == null) {
+        if (installGuidePage == null || installGuidePage.getDeviceId() == null || installGuidePage.getUpdateMethodId() == null) {
             displayDefaultInstallGuide(installGuideView, pageNumber);
         } else {
-            displayCustomInstallGuide(installGuideView, pageNumber, installGuideData);
+            displayCustomInstallGuide(installGuideView, pageNumber, installGuidePage);
         }
 
         installGuideView.findViewById(R.id.installGuideLoadingScreen).setVisibility(View.GONE);
@@ -184,24 +184,24 @@ public class InstallGuideFragment extends Fragment {
         loadDefaultImage((ImageView)installGuideView.findViewById(R.id.installGuideImage), pageNumber);
     }
 
-    private void displayCustomInstallGuide(View installGuideView, int pageNumber, InstallGuideData installGuideData) {
+    private void displayCustomInstallGuide(View installGuideView, int pageNumber, InstallGuidePage installGuidePage) {
         final TextView titleTextView = (TextView) installGuideView.findViewById(R.id.installGuideTitle);
         final TextView contentsTextView = (TextView) installGuideView.findViewById(R.id.installGuideText);
 
         final String appLocale = Locale.getDefault().getDisplayLanguage();
 
         if(appLocale.equals(LOCALE_DUTCH)) {
-            titleTextView.setText(installGuideData.getDutchTitle());
-            contentsTextView.setText(installGuideData.getDutchText());
+            titleTextView.setText(installGuidePage.getDutchTitle());
+            contentsTextView.setText(installGuidePage.getDutchText());
         } else {
-            titleTextView.setText(installGuideData.getEnglishTitle());
-            contentsTextView.setText(installGuideData.getEnglishText());
+            titleTextView.setText(installGuidePage.getEnglishTitle());
+            contentsTextView.setText(installGuidePage.getEnglishText());
         }
 
         ImageView imageView = (ImageView)installGuideView.findViewById(R.id.installGuideImage);
 
-        if(installGuideData.getUseCustomImage()) {
-            new DownloadCustomImage().execute(imageView, installGuideData);
+        if (installGuidePage.getUseCustomImage()) {
+            new DownloadCustomImage().execute(imageView, installGuidePage);
         } else {
             loadDefaultImage(imageView, pageNumber);
         }

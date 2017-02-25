@@ -122,7 +122,7 @@ public class SettingsManager {
      * @return if the user has completed the setup screen.
      */
     public boolean checkIfSetupScreenHasBeenCompleted() {
-        return containsPreference(PROPERTY_DEVICE) && containsPreference(PROPERTY_UPDATE_METHOD) && (boolean) getPreference(PROPERTY_SETUP_DONE);
+        return getPreference(PROPERTY_DEVICE_ID, -1L) != -1L && getPreference(PROPERTY_UPDATE_METHOD_ID, -1L) != -1L && getPreference(PROPERTY_SETUP_DONE, false);
     }
 
     /**

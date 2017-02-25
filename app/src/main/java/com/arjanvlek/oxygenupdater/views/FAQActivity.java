@@ -14,7 +14,7 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_USER_AGENT;
+import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 
 public class FAQActivity extends AppCompatActivity {
 

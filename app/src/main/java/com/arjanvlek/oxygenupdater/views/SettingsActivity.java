@@ -15,15 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
-import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriptionData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +35,6 @@ import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_RECEI
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 public class SettingsActivity extends AbstractActivity {
     private ProgressBar progressBar;
@@ -57,7 +54,7 @@ public class SettingsActivity extends AbstractActivity {
         progressBar.setVisibility(View.VISIBLE);
         deviceProgressBar.setVisibility(View.VISIBLE);
 
-        getAppApplicationContext().getServerConnector().getDevices(true, this::fillDeviceSettings);
+        getApplicationData().getServerConnector().getDevices(true, this::fillDeviceSettings);
 
         initSwitches();
     }
@@ -82,7 +79,7 @@ public class SettingsActivity extends AbstractActivity {
 
     private void fillDeviceSettings(final List<Device> devices) {
         if (devices != null && !devices.isEmpty()) {
-            SystemVersionProperties systemVersionProperties = ((ApplicationContext) getApplication()).getSystemVersionProperties();
+            SystemVersionProperties systemVersionProperties = ((ApplicationData) getApplication()).getSystemVersionProperties();
 
             Spinner spinner = (Spinner) findViewById(R.id.settingsDeviceSpinner);
 
@@ -128,7 +125,7 @@ public class SettingsActivity extends AbstractActivity {
                         updateMethodsProgressBar.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.VISIBLE);
 
-                        getAppApplicationContext().getServerConnector().getUpdateMethods(device.getId(), SettingsActivity.this::fillUpdateMethodSettings);
+                        getApplicationData().getServerConnector().getUpdateMethods(device.getId(), SettingsActivity.this::fillUpdateMethodSettings);
                     }
 
                     @Override
@@ -186,10 +183,9 @@ public class SettingsActivity extends AbstractActivity {
                         settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
 
                         // Google Play services are not required if the user doesn't notifications
-                        if(getAppApplicationContext().checkPlayServices(getParent(), false)) {
+                        if (getApplicationData().checkPlayServices(getParent(), false)) {
                             // Subscribe to notifications for the newly selected device and update method
-                            NotificationTopicSubscriptionData data = new NotificationTopicSubscriptionData(getAppApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
-                            NotificationTopicSubscriber.subscribe(data);
+                            NotificationTopicSubscriber.subscribe(getApplicationData());
                         } else {
                             try {
                                 Toast.makeText(getApplication().getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();

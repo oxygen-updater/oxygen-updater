@@ -19,7 +19,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
-import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         networkConnectionManager = new NetworkConnectionManager(context);
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-            ApplicationContext applicationContext = ((ApplicationContext) getApplication());
-            applicationContext.getServerConnector().getDevices(result -> {
-                if (!SupportedDeviceManager.isSupportedDevice(applicationContext.getSystemVersionProperties(), result)) {
+            ApplicationData applicationData = ((ApplicationData) getApplication());
+            applicationData.getServerConnector().getDevices(result -> {
+                if (!SupportedDeviceManager.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
                     displayUnsupportedDeviceMessage();
                 }
             });

@@ -11,7 +11,7 @@ import java.util.List;
 import java8.util.Optional;
 import java8.util.stream.StreamSupport;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
 public class SupportedDeviceManager {
 

@@ -13,10 +13,8 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
-import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriptionData;
 
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class SetupStep4Fragment extends AbstractFragment {
     public void fetchUpdateMethods() {
         if (settingsManager.containsPreference(PROPERTY_DEVICE_ID)) {
             progressBar.setVisibility(View.VISIBLE);
-            getApplicationContext().getServerConnector().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID), this::fillUpdateMethodSettings);
+            getApplicationData().getServerConnector().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID, 1L), this::fillUpdateMethodSettings);
         }
     }
 
@@ -89,13 +87,12 @@ public class SetupStep4Fragment extends AbstractFragment {
                     settingsManager.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
                     settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
 
-                    if(getApplicationContext().checkPlayServices(getActivity(), false)) {
+                    if (getApplicationData().checkPlayServices(getActivity(), false)) {
                         // Subscribe to notifications
                         // Subscribe to notifications for the newly selected device and update method
-                        NotificationTopicSubscriptionData data = new NotificationTopicSubscriptionData(getApplicationContext(), settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID));
-                        NotificationTopicSubscriber.subscribe(data);
+                        NotificationTopicSubscriber.subscribe(getApplicationData());
                     } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationData(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
                     }
                 }
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 import java8.util.stream.StreamSupport;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
 public class DeviceInformationFragment extends AbstractFragment {
     private RelativeLayout rootView;
@@ -37,7 +37,7 @@ public class DeviceInformationFragment extends AbstractFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         if(isAdded()) {
             displayDeviceInformation();
-            getApplicationContext().getServerConnector().getDevices(this::displayDeviceName);
+            getApplicationData().getServerConnector().getDevices(this::displayDeviceName);
         }
     }
 
@@ -45,7 +45,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
         if(isAdded()) {
             TextView deviceNameView = (TextView) rootView.findViewById(R.id.device_information_header);
-            SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
+            SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
             if (devices != null) {
                 StreamSupport.stream(devices)
@@ -59,7 +59,7 @@ public class DeviceInformationFragment extends AbstractFragment {
     private void displayDeviceInformation() {
         if(isAdded()) {
             DeviceInformationData deviceInformationData = new DeviceInformationData();
-            SystemVersionProperties systemVersionProperties = getApplicationContext().getSystemVersionProperties();
+            SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
             TextView deviceNameView = (TextView) rootView.findViewById(R.id.device_information_header);
             deviceNameView.setText(String.format(getString(R.string.device_information_device_name), deviceInformationData.getDeviceManufacturer(), deviceInformationData.getDeviceName()));

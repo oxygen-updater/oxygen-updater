@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.views;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,11 +16,11 @@ import com.arjanvlek.oxygenupdater.R;
 import java.util.List;
 import java.util.Locale;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.LOCALE_DUTCH;
+import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 
 public class CustomDropdown {
 
-    public static View initCustomDeviceDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<Device> devices, int recommendedPosition, Context context) {
+    static View initCustomDeviceDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<Device> devices, int recommendedPosition, Context context) {
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layoutType, parent, false);
@@ -42,7 +42,7 @@ public class CustomDropdown {
         return convertView;
     }
 
-    public static View initCustomUpdateMethodDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<UpdateMethod> updateMethods, int[] recommendedPositions, Context context) {
+    static View initCustomUpdateMethodDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<UpdateMethod> updateMethods, int[] recommendedPositions, Context context) {
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layoutType, parent, false);

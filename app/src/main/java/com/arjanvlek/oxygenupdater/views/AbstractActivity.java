@@ -2,18 +2,17 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.support.v7.app.AppCompatActivity;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
-import com.arjanvlek.oxygenupdater.Server.ServerConnector;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 
 public class AbstractActivity extends AppCompatActivity {
 
-    private ApplicationContext applicationContext;
+    private ApplicationData applicationData;
 
 
-    protected ApplicationContext getAppApplicationContext() {
-        if(applicationContext == null) {
-            applicationContext = (ApplicationContext)getApplication();
+    protected ApplicationData getApplicationData() {
+        if (applicationData == null) {
+            applicationData = (ApplicationData) getApplication();
         }
-        return applicationContext;
+        return applicationData;
     }
 }

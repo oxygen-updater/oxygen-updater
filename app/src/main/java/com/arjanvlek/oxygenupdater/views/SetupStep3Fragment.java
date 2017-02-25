@@ -11,11 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.CustomDropdown;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 
 import java.util.List;
@@ -37,14 +36,14 @@ public class SetupStep3Fragment extends AbstractFragment {
     }
 
     public void fetchDevices() {
-        getApplicationContext().getServerConnector().getDevices(this::fillDeviceSettings);
+        getApplicationData().getServerConnector().getDevices(this::fillDeviceSettings);
     }
 
 
     private void fillDeviceSettings(final List<Device> devices) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsDeviceSpinner);
 
-        SystemVersionProperties systemVersionProperties = ((ApplicationContext)getActivity().getApplication()).getSystemVersionProperties();
+        SystemVersionProperties systemVersionProperties = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties();
 
         final int selectedIndex = StreamSupport.stream(devices)
                 .filter(d -> d.getProductName() != null)

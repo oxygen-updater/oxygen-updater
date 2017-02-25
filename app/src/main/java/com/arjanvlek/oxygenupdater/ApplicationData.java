@@ -10,7 +10,7 @@ import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class ApplicationContext extends Application {
+public class ApplicationData extends Application {
 
     private ServerConnector serverConnector;
     private SystemVersionProperties systemVersionProperties;
@@ -21,7 +21,7 @@ public class ApplicationContext extends Application {
     public static final String UPDATE_METHOD_TOPIC_PREFIX = "_update-method_";
     public static final String APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME;
     public static final String LOCALE_DUTCH = "Nederlands";
-    private static final String TAG = "ApplicationContext";
+    private static final String TAG = "ApplicationData";
     public static final String UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build";
     public static final String NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR";
     public static final String SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR";

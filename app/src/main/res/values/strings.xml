@@ -205,7 +205,7 @@
     <string name="error_app_outdated">Oh no!</string>
     <string name="error_app_outdated_message">This version of the app is outdated. It\'s time to update it! Tap on \"Google Play\" below. Within Google Play, tap on \"Update\".</string>
     <string name="error_app_requires_network_connection">No connection</string>
-    <string name="error_app_requires_network_connection_message">Failed to obtain update information. Please make sure you have a working connection. The app will now close.</string>
+    <string name="error_app_requires_network_connection_message">Failed to connect to the server. Please make sure you have a working connection. The app will now close.</string>
     <string name="error_button_retry">Retry</string>
     <string name="error_exit_button_text">Exit</string>
     <string name="error_google_play_button_text" translatable="false">Google Play</string>

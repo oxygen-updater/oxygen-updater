@@ -22,7 +22,7 @@
 
 
     <application
-        android:name=".ApplicationContext"
+        android:name=".ApplicationData"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

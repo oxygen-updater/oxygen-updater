@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.Model;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,7 +19,7 @@ public class ServerMessage implements Banner {
 
     @Override
     public String getBannerText(Context ignored) {
-        return Locale.getDefault().getDisplayLanguage().equals(ApplicationContext.LOCALE_DUTCH) ? getDutchMessage() : getEnglishMessage();
+        return Locale.getDefault().getDisplayLanguage().equals(ApplicationData.LOCALE_DUTCH) ? getDutchMessage() : getEnglishMessage();
     }
 
     @Override

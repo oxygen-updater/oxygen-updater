@@ -11,13 +11,12 @@ import android.util.Log;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.Device;
-import com.arjanvlek.oxygenupdater.Model.InstallGuideData;
-import com.arjanvlek.oxygenupdater.Model.OxygenOTAUpdate;
+import com.arjanvlek.oxygenupdater.Model.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.Model.ServerMessage;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
+import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,11 +31,11 @@ import java.util.List;
 
 import java8.util.function.Consumer;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_OUTDATED_ERROR;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.APP_USER_AGENT;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NETWORK_CONNECTION_ERROR;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.SERVER_MAINTENANCE_ERROR;
-import static com.arjanvlek.oxygenupdater.ApplicationContext.UNABLE_TO_FIND_A_MORE_RECENT_BUILD;
+import static com.arjanvlek.oxygenupdater.ApplicationData.APP_OUTDATED_ERROR;
+import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NETWORK_CONNECTION_ERROR;
+import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERROR;
+import static com.arjanvlek.oxygenupdater.ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD;
 import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.NORMAL;
 import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
 import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
@@ -89,38 +88,38 @@ public class ServerConnector {
     }
 
     public void getUpdateMethods(@NonNull Long deviceId, Consumer<List<UpdateMethod>> callback) {
-        new GetMultipleAsync<>(ServerRequest.UPDATE_METHODS, callback, deviceId.toString()).execute();
+        new GetMultipleAsync<>(ServerRequest.UPDATE_METHODS, callback, deviceId).execute();
     }
 
     public void getAllUpdateMethods(Consumer<List<UpdateMethod>> callback) {
         new GetMultipleAsync<>(ServerRequest.ALL_UPDATE_METHODS, callback).execute();
     }
 
-    public void getUpdateData(boolean online, @NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull String incrementalSystemVersion, Consumer<OxygenOTAUpdate> callback, Consumer<String> errorFunction) {
+    public void getUpdateData(boolean online, @NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull String incrementalSystemVersion, Consumer<UpdateData> callback, Consumer<String> errorFunction) {
 
-        new GetSingleAsync<>(ServerRequest.UPDATE_DATA, new Consumer<OxygenOTAUpdate>() {
+        new GetSingleAsync<>(ServerRequest.UPDATE_DATA, new Consumer<UpdateData>() {
             @Override
-            public void accept(OxygenOTAUpdate oxygenOTAUpdate) {
-                if (oxygenOTAUpdate != null && oxygenOTAUpdate.getInformation() != null && oxygenOTAUpdate.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && oxygenOTAUpdate.isUpdateInformationAvailable() && oxygenOTAUpdate.isSystemIsUpToDate()) {
+            public void accept(UpdateData updateData) {
+                if (updateData != null && updateData.getInformation() != null && updateData.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && updateData.isUpdateInformationAvailable() && updateData.isSystemIsUpToDate()) {
                     getMostRecentOxygenOTAUpdate(deviceId, updateMethodId, callback);
                 } else if(!online) {
                     if (settingsManager.checkIfCacheIsAvailable()) {
-                        oxygenOTAUpdate = new OxygenOTAUpdate();
-                        oxygenOTAUpdate.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
-                        oxygenOTAUpdate.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
-                        oxygenOTAUpdate.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
-                        oxygenOTAUpdate.setUpdateInformationAvailable(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
-                        oxygenOTAUpdate.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
-                        oxygenOTAUpdate.setSystemIsUpToDate(settingsManager.getPreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, false));
-                        callback.accept(oxygenOTAUpdate);
+                        updateData = new UpdateData();
+                        updateData.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
+                        updateData.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
+                        updateData.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
+                        updateData.setUpdateInformationAvailable(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
+                        updateData.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
+                        updateData.setSystemIsUpToDate(settingsManager.getPreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, false));
+                        callback.accept(updateData);
                     } else {
                         errorFunction.accept(NETWORK_CONNECTION_ERROR);
                     }
                 } else {
-                    callback.accept(oxygenOTAUpdate);
+                    callback.accept(updateData);
                 }
             }
-        }, deviceId.toString(), updateMethodId.toString(), incrementalSystemVersion).execute();
+        }, deviceId, updateMethodId, incrementalSystemVersion).execute();
     }
 
     public void getInAppMessages(boolean online, Consumer<List<Banner>> callback, Consumer<String> errorCallback) {
@@ -190,12 +189,12 @@ public class ServerConnector {
         }));
     }
 
-    public void getInstallGuidePage(@NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull Integer pageNumber, Consumer<InstallGuideData> callback) {
-        new GetSingleAsync<>(ServerRequest.INSTALL_GUIDE, callback, deviceId.toString(), updateMethodId.toString(), pageNumber.toString()).execute();
+    public void getInstallGuidePage(@NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull Integer pageNumber, Consumer<InstallGuidePage> callback) {
+        new GetSingleAsync<>(ServerRequest.INSTALL_GUIDE_PAGE, callback, deviceId, updateMethodId, pageNumber).execute();
     }
 
-    private void getMostRecentOxygenOTAUpdate(@NonNull Long deviceId, @NonNull Long updateMethodId, Consumer<OxygenOTAUpdate> callback) {
-        new GetSingleAsync<>(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId.toString(), updateMethodId.toString()).execute();
+    private void getMostRecentOxygenOTAUpdate(@NonNull Long deviceId, @NonNull Long updateMethodId, Consumer<UpdateData> callback) {
+        new GetSingleAsync<>(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId, updateMethodId).execute();
     }
 
     private void getServerStatus(Consumer<ServerStatus> callback) {
@@ -203,16 +202,16 @@ public class ServerConnector {
     }
 
     private void getServerMessages(@NonNull Long deviceId, @NonNull Long updateMethodId, Consumer<List<ServerMessage>> callback) {
-        new GetMultipleAsync<>(ServerRequest.SERVER_MESSAGES, callback, deviceId.toString(), updateMethodId.toString()).execute();
+        new GetMultipleAsync<>(ServerRequest.SERVER_MESSAGES, callback, deviceId, updateMethodId).execute();
     }
 
     private class GetMultipleAsync<T> extends AsyncTask<Void, Void, List<T>> {
 
         private final ServerRequest serverRequest;
         private final Consumer<List<T>> callback;
-        private final String[] params;
+        private final Object[] params;
 
-        GetMultipleAsync(ServerRequest serverRequest, Consumer<List<T>> callback, String... params) {
+        GetMultipleAsync(ServerRequest serverRequest, Consumer<List<T>> callback, Object... params) {
             this.serverRequest = serverRequest;
             this.params = params;
             this.callback = callback;
@@ -234,9 +233,9 @@ public class ServerConnector {
 
         private final ServerRequest serverRequest;
         private final Consumer<E> callback;
-        private final String[] params;
+        private final Object[] params;
 
-        GetSingleAsync(@NonNull ServerRequest serverRequest, @Nullable Consumer<E> callback, String... params) {
+        GetSingleAsync(@NonNull ServerRequest serverRequest, @Nullable Consumer<E> callback, Object... params) {
             this.serverRequest = serverRequest;
             this.params = params;
             this.callback = callback;
@@ -254,7 +253,7 @@ public class ServerConnector {
 
     }
 
-    private <T> List<T> findMultipleFromServerResponse(ServerRequest serverRequest, String... params) {
+    private <T> List<T> findMultipleFromServerResponse(ServerRequest serverRequest, Object... params) {
         try {
             return objectMapper.readValue(fetchDataFromServer(serverRequest, params), objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
         } catch (Exception e) {
@@ -262,7 +261,7 @@ public class ServerConnector {
         }
     }
 
-    private <T> T findOneFromServerResponse(ServerRequest serverRequest, String... params) {
+    private <T> T findOneFromServerResponse(ServerRequest serverRequest, Object... params) {
         try {
             return objectMapper.readValue(fetchDataFromServer(serverRequest, params), objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
         } catch(Exception e) {
@@ -270,10 +269,12 @@ public class ServerConnector {
         }
     }
 
-    private String fetchDataFromServer(ServerRequest request, String... params) {
+    private String fetchDataFromServer(ServerRequest request, Object... params) {
 
         try {
-            URL requestUrl = request.getURL(params);
+            URL requestUrl = request.getUrl(params);
+
+            if (requestUrl == null) return null;
 
             Log.v(TAG, "Performing GET request to URL " + requestUrl.toString());
             Log.v(TAG, "Timeout is set to "  + request.getTimeOutInSeconds() + " seconds.");
@@ -300,7 +301,7 @@ public class ServerConnector {
             Log.v(TAG, "Response: " + rawResponse);
             return rawResponse;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error performing server request: ", e);
             return null;
         }
     }

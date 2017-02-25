@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.arjanvlek.oxygenupdater.ApplicationContext;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
@@ -39,9 +39,9 @@ public class SetupActivity extends AppCompatActivity {
         this.settingsManager = new SettingsManager(getApplicationContext());
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-            ApplicationContext applicationContext = ((ApplicationContext) getApplication());
-            applicationContext.getServerConnector().getDevices(result -> {
-                if (!SupportedDeviceManager.isSupportedDevice(applicationContext.getSystemVersionProperties(), result)) {
+            ApplicationData applicationData = ((ApplicationData) getApplication());
+            applicationData.getServerConnector().getDevices(result -> {
+                if (!SupportedDeviceManager.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
                     displayUnsupportedDeviceMessage();
                 }
             });

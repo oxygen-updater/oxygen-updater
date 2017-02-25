@@ -11,7 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static com.arjanvlek.oxygenupdater.ApplicationContext.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
 public class SystemVersionProperties {
 
