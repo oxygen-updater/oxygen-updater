@@ -6,6 +6,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
+import com.arjanvlek.oxygenupdater.Support.Logger;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -41,7 +42,7 @@ public class NotificationTopicSubscriber {
 
             // Subscribe to the new topic to start receiving notifications.
             FirebaseMessaging.getInstance().subscribeToTopic(newTopic);
-            Log.v(TAG, "Subscribed to notifications on topic " + newTopic + " ...");
+            Logger.logVerbose(TAG, "Subscribed to notifications on topic " + newTopic + " ...");
             settingsManager.savePreference(PROPERTY_NOTIFICATION_TOPIC, newTopic);
         }
     }

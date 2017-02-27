@@ -102,7 +102,7 @@ public class SettingsManager {
             getSharedPreferencesEditor()
                     .putString(key, value.toString())
                     .apply();
-            Log.e(TAG, "Failed to save preference with key "  + key + " and value "  + value + " . Defaulting to String value! "  + e.getMessage(), e);
+            Logger.logError(TAG, "Failed to save preference with key " + key + " and value " + value + " . Defaulting to String value! " + e.getMessage(), e);
         }
     }
 

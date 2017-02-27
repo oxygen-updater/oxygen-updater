@@ -31,7 +31,8 @@ public class ServerMessage implements Banner {
                 return ContextCompat.getColor(context, R.color.holo_orange_light);
             case HIGH:
                 return ContextCompat.getColor(context, R.color.holo_red_light);
-            default: return 0;
+            default:
+                return ContextCompat.getColor(context, R.color.holo_green_light);
         }
     }
 

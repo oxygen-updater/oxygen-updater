@@ -9,6 +9,8 @@ import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 
+import com.arjanvlek.oxygenupdater.Support.Logger;
+
 
 public class FormattedURLSpan extends ClickableSpan {
 
@@ -27,7 +29,7 @@ public class FormattedURLSpan extends ClickableSpan {
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Log.e("FormattedURLSpan", "Activity was not found for intent, " + intent.toString());
+            Logger.logError("FormattedURLSpan", "Activity was not found for intent, " + intent.toString());
         }
     }
 }

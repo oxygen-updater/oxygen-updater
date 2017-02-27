@@ -30,10 +30,10 @@ public class UpdateDescriptionParser {
         // Finds the element type of a given line of OnePlus formatted text.
         private static UpdateDescriptionElement of(String inputLine) {
             // The empty imput gets parsed as TEXT, because no modification to it is required.
-            Log.v(TAG, "Input line: " + inputLine);
+            Logger.logVerbose(TAG, "Input line: " + inputLine);
 
             if(inputLine == null || inputLine.isEmpty()) {
-                Log.v(TAG, "Matched type: TEXT");
+                Logger.logVerbose(TAG, "Matched type: TEXT");
                 return TEXT;
             }
 
@@ -44,31 +44,31 @@ public class UpdateDescriptionParser {
 
             // If the input is exactly one character long, and that character is a backwards slash, return that this should be an empty line.
             char firstChar = inputLine.charAt(0);
-            Log.v(TAG, "First Char: " + firstChar);
+            Logger.logVerbose(TAG, "First Char: " + firstChar);
 
             if(inputLine.length() == 1 && firstChar == '\\') {
-                Log.v(TAG, "Matched type: EMPTY_LINE");
+                Logger.logVerbose(TAG, "Matched type: EMPTY_LINE");
                 return EMPTY_LINE;
             }
 
             // In all other cases, look at the first two chars.
             char secondChar = inputLine.charAt(1);
-            Log.v(TAG, "Second Char: " + secondChar);
+            Logger.logVerbose(TAG, "Second Char: " + secondChar);
 
             if(firstChar == '#' && secondChar == '#') {
-                Log.v(TAG, "Matched type: UPDATE_HEADER");
+                Logger.logVerbose(TAG, "Matched type: UPDATE_HEADER");
                 return UPDATE_HEADER;
             } else if(firstChar == '#') {
-                Log.v(TAG, "Matched type: UPDATE_TITLE");
+                Logger.logVerbose(TAG, "Matched type: UPDATE_TITLE");
                 return UPDATE_TITLE;
             } else if(firstChar == '\\') {
-                Log.v(TAG, "Matched type: EMPTY_LINE");
+                Logger.logVerbose(TAG, "Matched type: EMPTY_LINE");
                 return EMPTY_LINE;
             } else if(firstChar == '[' && secondChar != '[' && inputLine.contains("]") && inputLine.contains("(") && inputLine.contains(")") && (inputLine.contains("http") || inputLine.contains("www"))) {
-                Log.v(TAG, "Matched type: LINK");
+                Logger.logVerbose(TAG, "Matched type: LINK");
                 return LINK;
             } else {
-                Log.v(TAG, "Matched type: TEXT");
+                Logger.logVerbose(TAG, "Matched type: TEXT");
                 return TEXT;
             }
         }
@@ -169,7 +169,7 @@ public class UpdateDescriptionParser {
 
         } catch (Exception e) {
             // If an error occurred, log it and return the original / unmodified update description
-            Log.e(TAG, "Error parsing update description", e);
+            Logger.logError(TAG, "Error parsing update description", e);
             return new SpannableString(updateDescription);
         }
 

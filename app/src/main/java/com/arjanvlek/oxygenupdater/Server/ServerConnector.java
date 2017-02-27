@@ -12,18 +12,22 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.InstallGuidePage;
+import com.arjanvlek.oxygenupdater.Model.LogResult;
 import com.arjanvlek.oxygenupdater.Model.ServerMessage;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.Support.Logger;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.joda.time.LocalDateTime;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -78,7 +82,7 @@ public class ServerConnector {
 
         else {
             Log.v(TAG, "Used remote server to fetch devices...");
-            new GetMultipleAsync<Device>(ServerRequest.DEVICES, (devices) -> {
+            new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, (devices) -> {
                 this.devices.clear();
                 this.devices.addAll(devices);
                 this.deviceFetchDate = LocalDateTime.now();
@@ -88,16 +92,16 @@ public class ServerConnector {
     }
 
     public void getUpdateMethods(@NonNull Long deviceId, Consumer<List<UpdateMethod>> callback) {
-        new GetMultipleAsync<>(ServerRequest.UPDATE_METHODS, callback, deviceId).execute();
+        new CollectionResponseExecutor<>(ServerRequest.UPDATE_METHODS, callback, deviceId).execute();
     }
 
     public void getAllUpdateMethods(Consumer<List<UpdateMethod>> callback) {
-        new GetMultipleAsync<>(ServerRequest.ALL_UPDATE_METHODS, callback).execute();
+        new CollectionResponseExecutor<>(ServerRequest.ALL_UPDATE_METHODS, callback).execute();
     }
 
     public void getUpdateData(boolean online, @NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull String incrementalSystemVersion, Consumer<UpdateData> callback, Consumer<String> errorFunction) {
 
-        new GetSingleAsync<>(ServerRequest.UPDATE_DATA, new Consumer<UpdateData>() {
+        new ObjectResponseExecutor<>(ServerRequest.UPDATE_DATA, new Consumer<UpdateData>() {
             @Override
             public void accept(UpdateData updateData) {
                 if (updateData != null && updateData.getInformation() != null && updateData.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && updateData.isUpdateInformationAvailable() && updateData.isSystemIsUpToDate()) {
@@ -190,36 +194,46 @@ public class ServerConnector {
     }
 
     public void getInstallGuidePage(@NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull Integer pageNumber, Consumer<InstallGuidePage> callback) {
-        new GetSingleAsync<>(ServerRequest.INSTALL_GUIDE_PAGE, callback, deviceId, updateMethodId, pageNumber).execute();
+        new ObjectResponseExecutor<>(ServerRequest.INSTALL_GUIDE_PAGE, callback, deviceId, updateMethodId, pageNumber).execute();
+    }
+
+    public void log(@NonNull JSONObject logData, Consumer<LogResult> callback) {
+        new ObjectResponseExecutor<>(ServerRequest.LOG, logData, callback).execute();
     }
 
     private void getMostRecentOxygenOTAUpdate(@NonNull Long deviceId, @NonNull Long updateMethodId, Consumer<UpdateData> callback) {
-        new GetSingleAsync<>(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId, updateMethodId).execute();
+        new ObjectResponseExecutor<>(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId, updateMethodId).execute();
     }
 
     private void getServerStatus(Consumer<ServerStatus> callback) {
-        new GetSingleAsync<>(ServerRequest.SERVER_STATUS, callback).execute();
+        new ObjectResponseExecutor<>(ServerRequest.SERVER_STATUS, callback).execute();
     }
 
     private void getServerMessages(@NonNull Long deviceId, @NonNull Long updateMethodId, Consumer<List<ServerMessage>> callback) {
-        new GetMultipleAsync<>(ServerRequest.SERVER_MESSAGES, callback, deviceId, updateMethodId).execute();
+        new CollectionResponseExecutor<>(ServerRequest.SERVER_MESSAGES, callback, deviceId, updateMethodId).execute();
     }
 
-    private class GetMultipleAsync<T> extends AsyncTask<Void, Void, List<T>> {
+    private class CollectionResponseExecutor<T> extends AsyncTask<Void, Void, List<T>> {
 
         private final ServerRequest serverRequest;
+        private final JSONObject body;
         private final Consumer<List<T>> callback;
         private final Object[] params;
 
-        GetMultipleAsync(ServerRequest serverRequest, Consumer<List<T>> callback, Object... params) {
+        CollectionResponseExecutor(ServerRequest serverRequest, Consumer<List<T>> callback, Object... params) {
+            this(serverRequest, null, callback, params);
+        }
+
+        CollectionResponseExecutor(ServerRequest serverRequest, JSONObject body, Consumer<List<T>> callback, Object... params) {
             this.serverRequest = serverRequest;
+            this.body = body;
             this.params = params;
             this.callback = callback;
         }
 
         @Override
         protected List<T> doInBackground(Void... voids) {
-            return findMultipleFromServerResponse(serverRequest, params);
+            return findMultipleFromServerResponse(serverRequest, body, params);
         }
 
         @Override
@@ -229,21 +243,27 @@ public class ServerConnector {
     }
 
 
-    private class GetSingleAsync<E> extends AsyncTask<Void, Void, E> {
+    private class ObjectResponseExecutor<E> extends AsyncTask<Void, Void, E> {
 
         private final ServerRequest serverRequest;
+        private final JSONObject body;
         private final Consumer<E> callback;
         private final Object[] params;
 
-        GetSingleAsync(@NonNull ServerRequest serverRequest, @Nullable Consumer<E> callback, Object... params) {
+        ObjectResponseExecutor(@NonNull ServerRequest serverRequest, @Nullable Consumer<E> callback, Object... params) {
+            this(serverRequest, null, callback, params);
+        }
+
+        ObjectResponseExecutor(@NonNull ServerRequest serverRequest, JSONObject body, @Nullable Consumer<E> callback, Object... params) {
             this.serverRequest = serverRequest;
+            this.body = body;
             this.params = params;
             this.callback = callback;
         }
 
         @Override
         protected E doInBackground(Void... voids) {
-            return findOneFromServerResponse(serverRequest, params);
+            return findOneFromServerResponse(serverRequest, body, params);
         }
 
         @Override
@@ -253,31 +273,31 @@ public class ServerConnector {
 
     }
 
-    private <T> List<T> findMultipleFromServerResponse(ServerRequest serverRequest, Object... params) {
+    private <T> List<T> findMultipleFromServerResponse(ServerRequest serverRequest, JSONObject body, Object... params) {
         try {
-            return objectMapper.readValue(fetchDataFromServer(serverRequest, params), objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
+            return objectMapper.readValue(performServerRequest(serverRequest, body, params), objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
         } catch (Exception e) {
             return new ArrayList<>();
         }
     }
 
-    private <T> T findOneFromServerResponse(ServerRequest serverRequest, Object... params) {
+    private <T> T findOneFromServerResponse(ServerRequest serverRequest, JSONObject body, Object... params) {
         try {
-            return objectMapper.readValue(fetchDataFromServer(serverRequest, params), objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
+            return objectMapper.readValue(performServerRequest(serverRequest, body, params), objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
         } catch(Exception e) {
             return null;
         }
     }
 
-    private String fetchDataFromServer(ServerRequest request, Object... params) {
+    private String performServerRequest(ServerRequest request, JSONObject body, Object... params) {
 
         try {
             URL requestUrl = request.getUrl(params);
 
             if (requestUrl == null) return null;
 
-            Log.v(TAG, "Performing GET request to URL " + requestUrl.toString());
-            Log.v(TAG, "Timeout is set to "  + request.getTimeOutInSeconds() + " seconds.");
+            Logger.logVerbose(TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
+            Logger.logVerbose(TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
 
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
@@ -285,8 +305,19 @@ public class ServerConnector {
 
             //setup request
             urlConnection.setRequestProperty(USER_AGENT_TAG, APP_USER_AGENT);
+            urlConnection.setRequestMethod(request.getRequestMethod().toString());
             urlConnection.setConnectTimeout(timeOutInMilliseconds);
             urlConnection.setReadTimeout(timeOutInMilliseconds);
+
+            if (body != null) {
+                urlConnection.setDoOutput(true);
+                urlConnection.setRequestProperty("Accept", "application/json");
+
+                OutputStream out = urlConnection.getOutputStream();
+                byte[] outputBytes = body.toString().getBytes();
+                out.write(outputBytes);
+                out.close();
+            }
 
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String inputLine;
@@ -298,10 +329,10 @@ public class ServerConnector {
 
             in.close();
             String rawResponse = response.toString();
-            Log.v(TAG, "Response: " + rawResponse);
+            Logger.logVerbose(TAG, "Response: " + rawResponse);
             return rawResponse;
         } catch (Exception e) {
-            Log.e(TAG, "Error performing server request: ", e);
+            Logger.logError(TAG, "Error performing server request: ", e);
             return null;
         }
     }

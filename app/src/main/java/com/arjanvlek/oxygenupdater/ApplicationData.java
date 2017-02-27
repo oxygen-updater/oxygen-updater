@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
+import com.arjanvlek.oxygenupdater.Support.Logger;
 import com.arjanvlek.oxygenupdater.Support.SettingsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -31,7 +32,7 @@ public class ApplicationData extends Application {
 
     public ServerConnector getServerConnector() {
         if (serverConnector == null) {
-            Log.v(TAG, "Created ServerConnector for use within the application...");
+            Logger.logVerbose(TAG, "Created ServerConnector for use within the application...");
             serverConnector = new ServerConnector(new SettingsManager(this));
             return serverConnector;
         } else {
@@ -42,11 +43,11 @@ public class ApplicationData extends Application {
     public SystemVersionProperties getSystemVersionProperties() {
         // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
         if (systemVersionProperties == null) {
-            Log.v(TAG, "Creating new SystemVersionProperties instance...");
+            Logger.logVerbose(TAG, "Creating new SystemVersionProperties instance...");
             systemVersionProperties = new SystemVersionProperties();
             return systemVersionProperties;
         } else {
-            Log.v(TAG, "Using cached instance of SystemVersionProperties");
+            Logger.logVerbose(TAG, "Using cached instance of SystemVersionProperties");
             return systemVersionProperties;
         }
     }
@@ -58,7 +59,7 @@ public class ApplicationData extends Application {
      * @return Returns if the Google Play Services are installed.
      */
     public boolean checkPlayServices(Activity activity, boolean showErrorIfMissing) {
-        Log.v(TAG, "Executing Google Play Services check...");
+        Logger.logVerbose(TAG, "Executing Google Play Services check...");
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
@@ -68,12 +69,13 @@ public class ApplicationData extends Application {
             } else {
                 System.exit(0);
             }
-            Log.v(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
+            Logger.logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
             return false;
         } else {
             boolean result = resultCode == ConnectionResult.SUCCESS;
-            if(result) Log.v(TAG, "Google Play Services are available.");
-            else Log.v(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
+            if (result) Logger.logVerbose(TAG, "Google Play Services are available.");
+            else
+                Logger.logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
             return result;
         }
     }
