@@ -20,7 +20,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.Model.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -31,8 +31,8 @@ import java.util.Locale;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 public class InstallGuideFragment extends Fragment {
     /**

@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Banner;
@@ -18,8 +17,8 @@ import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.Logger;
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.Logger;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.joda.time.LocalDateTime;
@@ -42,18 +41,18 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERR
 import static com.arjanvlek.oxygenupdater.ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD;
 import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.NORMAL;
 import static com.arjanvlek.oxygenupdater.Model.ServerStatus.Status.UNREACHABLE;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
-public class ServerConnector {
+public class ServerConnector implements Cloneable {
 
     private final static String USER_AGENT_TAG = "User-Agent";
     private static final String TAG = "ServerConnector";
@@ -64,10 +63,17 @@ public class ServerConnector {
     private final List<Device> devices;
     private LocalDateTime deviceFetchDate;
 
-    public ServerConnector(SettingsManager settingsManager) {
+    private boolean uploadLog = false;
+
+    public ServerConnector(SettingsManager settingsManager, boolean uploadLog) {
+        this.uploadLog = uploadLog;
         this.settingsManager = settingsManager;
         this.objectMapper = new ObjectMapper();
         this.devices = new ArrayList<>();
+    }
+
+    public ServerConnector(SettingsManager settingsManager) {
+        this(settingsManager, true);
     }
 
     public void getDevices(Consumer<List<Device>> callback) {
@@ -76,12 +82,12 @@ public class ServerConnector {
 
     public void getDevices(boolean alwaysFetch, Consumer<List<Device>> callback) {
         if (deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
-            Log.v(TAG, "Used local cache to fetch devices...");
+            Logger.logVerbose(uploadLog, TAG, "Used local cache to fetch devices...");
             callback.accept(devices);
         }
 
         else {
-            Log.v(TAG, "Used remote server to fetch devices...");
+            Logger.logVerbose(uploadLog, TAG, "Used remote server to fetch devices...");
             new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, (devices) -> {
                 this.devices.clear();
                 this.devices.addAll(devices);
@@ -129,7 +135,7 @@ public class ServerConnector {
     public void getInAppMessages(boolean online, Consumer<List<Banner>> callback, Consumer<String> errorCallback) {
         List<Banner> inAppBars = new ArrayList<>();
 
-        getServerStatus((serverStatus) -> getServerMessages(settingsManager.getPreference(PROPERTY_DEVICE_ID), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID), (serverMessages) -> {
+        getServerStatus((serverStatus) -> getServerMessages(settingsManager.getPreference(PROPERTY_DEVICE_ID,-1L), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID,-1L), (serverMessages) -> {
             // Add the "No connection" bar depending on the network status of the device.
             if (!online) {
                 inAppBars.add(new Banner() {
@@ -296,8 +302,8 @@ public class ServerConnector {
 
             if (requestUrl == null) return null;
 
-            Logger.logVerbose(TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
-            Logger.logVerbose(TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
+            Logger.logVerbose(uploadLog, TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
+            Logger.logVerbose(uploadLog, TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
 
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
@@ -329,11 +335,24 @@ public class ServerConnector {
 
             in.close();
             String rawResponse = response.toString();
-            Logger.logVerbose(TAG, "Response: " + rawResponse);
+            Logger.logVerbose(uploadLog, TAG, "Response: " + rawResponse);
             return rawResponse;
         } catch (Exception e) {
-            Logger.logError(TAG, "Error performing server request: ", e);
+            Logger.logError(uploadLog, TAG, "Error performing server request: ", e);
             return null;
+        }
+    }
+
+    public void setUploadLog(boolean uploadLog) {
+        this.uploadLog = uploadLog;
+    }
+
+    public ServerConnector clone() {
+        try {
+            return (ServerConnector) super.clone();
+        } catch (CloneNotSupportedException e) {
+            Logger.logError(false, TAG, "Internal error: ", e);
+            return new ServerConnector(settingsManager, uploadLog);
         }
     }
 }

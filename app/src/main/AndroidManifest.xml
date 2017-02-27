@@ -132,6 +132,8 @@
                 android:value="com.arjanvlek.oxygenupdater.views.MainActivity" /> >
         </activity>
 
+        <service android:name=".support.LoggerService" android:exported="false"/>
+
     </application>
 
 </manifest>

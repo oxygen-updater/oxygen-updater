@@ -1,119 +1,116 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.support;
 
-import android.os.Build;
+import android.content.Intent;
 import android.util.Log;
 
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
-import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-
-import org.joda.time.LocalDateTime;
-import org.json.JSONObject;
 
 import java.io.CharArrayWriter;
 import java.io.PrintWriter;
 
-import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
-
 public class Logger {
 
     public static String TAG = "Logger";
+    public static ApplicationData applicationData;
 
 
-    public static void logVerbose(String tag, String message) {
+    public static void logVerbose(boolean upload, String tag, String message) {
         if (isDebugBuild()) {
             Log.v(tag, message);
-            storeLog(LogLevel.VERBOSE, tag, message);
+            if(upload) uploadLog(LogLevel.VERBOSE, tag, message);
         }
+    }
+
+    public static void logVerbose(String tag, String message) {
+        logVerbose(true, tag, message);
     }
 
     public static void logVerbose(String tag, String message, Throwable cause) {
         if (isDebugBuild()) {
             Log.v(tag, message, cause);
-            storeLog(LogLevel.VERBOSE, tag, message, cause);
+            uploadLog(LogLevel.VERBOSE, tag, message, cause);
         }
     }
 
     public static void logDebug(String tag, String message) {
         if (isDebugBuild()) {
             Log.d(tag, message);
-            storeLog(LogLevel.DEBUG, tag, message);
+            uploadLog(LogLevel.DEBUG, tag, message);
         }
     }
 
     public static void logDebug(String tag, String message, Throwable cause) {
         if (isDebugBuild()) {
             Log.d(tag, message, cause);
-            storeLog(LogLevel.DEBUG, tag, message, cause);
+            uploadLog(LogLevel.DEBUG, tag, message, cause);
         }
     }
 
     public static void logInfo(String tag, String message) {
         if (isDebugBuild()) {
             Log.i(tag, message);
-            storeLog(LogLevel.INFO, tag, message);
+            uploadLog(LogLevel.INFO, tag, message);
         }
     }
 
     public static void logInfo(String tag, String message, Throwable cause) {
         if (isDebugBuild()) {
             Log.i(tag, message, cause);
-            storeLog(LogLevel.INFO, tag, message, cause);
+            uploadLog(LogLevel.INFO, tag, message, cause);
         }
     }
 
     public static void logWarning(String tag, String message) {
         Log.w(tag, message);
-        storeLog(LogLevel.WARNING, tag, message);
+        uploadLog(LogLevel.WARNING, tag, message);
     }
 
     public static void logWarning(String tag, String message, Throwable cause) {
         Log.w(tag, message, cause);
-        storeLog(LogLevel.WARNING, tag, message, cause);
+        uploadLog(LogLevel.WARNING, tag, message, cause);
+    }
+
+    public static void logError(boolean upload, String tag, String  message) {
+        Log.e(tag, message);
+        if(upload) uploadLog(LogLevel.ERROR, tag, message);
     }
 
     public static void logError(String tag, String message) {
-        Log.e(tag, message);
-        storeLog(LogLevel.ERROR, tag, message);
+        logError(true, tag, message);
+    }
+
+    public static void logError(boolean upload, String tag, String message, Throwable cause) {
+        Log.e(tag, message, cause);
+        if(upload) uploadLog(LogLevel.ERROR, tag, message, cause);
     }
 
     public static void logError(String tag, String message, Throwable cause) {
-        Log.e(tag, message, cause);
-        storeLog(LogLevel.ERROR, tag, message, cause);
+        logError(true, tag, message, cause);
     }
 
-    private static void storeLog(LogLevel logLevel, String tag, String message, Throwable cause) {
+    private static void uploadLog(LogLevel logLevel, String tag, String message, Throwable cause) {
         CharArrayWriter charArrayWriter = new CharArrayWriter();
         PrintWriter printWriter = new PrintWriter(charArrayWriter);
         cause.printStackTrace(printWriter);
         printWriter.close();
         String stackTrace = charArrayWriter.toString();
-        storeLog(logLevel, tag, message + ":\n\n" + stackTrace);
+        try {
+            uploadLog(logLevel, tag, message + ":\n\n" + stackTrace);
+        } catch (Throwable throwable) {
+            logError(false, TAG, "", throwable);
+        }
     }
 
-    private static void storeLog(LogLevel logLevel, String tag, String message) {
-        ServerConnector serverConnector = new ServerConnector(null);
-        SystemVersionProperties systemVersionProperties = new SystemVersionProperties();
+    private static void uploadLog(LogLevel logLevel, String tag, String message) {
 
-        serverConnector.getDevices((devices) -> {
-            boolean deviceIsSupported = SupportedDeviceManager.isSupportedDevice(systemVersionProperties, devices);
-
-            try {
-                JSONObject logData = new JSONObject();
-                logData.put("incident_type", logLevel.toString());
-                logData.put("device_is_supported", deviceIsSupported);
-                logData.put("device", Build.BRAND + " " + Build.PRODUCT);
-                logData.put("os_version", !systemVersionProperties.getOxygenOSVersion().equals(NO_OXYGEN_OS) ? systemVersionProperties.getOxygenOSVersion() : Build.VERSION.RELEASE);
-                logData.put("error_message", tag + " : " + message);
-                logData.put("event_date", LocalDateTime.now().toString());
-                serverConnector.log(logData, (logResult) -> {
-                    if (logResult != null && !logResult.isSuccess())
-                        Log.e(TAG, "Error uploading log to server:" + logResult.getErrorMessage());
-                });
-            } catch (Exception e) {
-                Log.e(TAG, "Error preparing log data for uploading to the server:", e);
-            }
-        });
+        if(applicationData != null) {
+            Intent intent = new Intent(applicationData, LoggerService.class);
+            intent.putExtra("event_type", logLevel.toString());
+            intent.putExtra("tag", tag);
+            intent.putExtra("message", message);
+            applicationData.startService(intent);
+        }
     }
 
     private enum LogLevel {

@@ -1,6 +1,6 @@
 package com.arjanvlek.oxygenupdater.Model;
 
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

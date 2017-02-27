@@ -9,9 +9,7 @@ import com.arjanvlek.oxygenupdater.Model.ServerMessage;
 import com.arjanvlek.oxygenupdater.Model.ServerStatus;
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
-import com.arjanvlek.oxygenupdater.Support.Logger;
-
-import org.json.JSONObject;
+import com.arjanvlek.oxygenupdater.support.Logger;
 
 import java.net.MalformedURLException;
 import java.net.URL;

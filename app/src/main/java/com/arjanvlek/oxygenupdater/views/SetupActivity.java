@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
-import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.SupportedDeviceManager;
 
 
 public class SetupActivity extends AppCompatActivity {

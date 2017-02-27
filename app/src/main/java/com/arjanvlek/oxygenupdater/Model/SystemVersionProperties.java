@@ -3,9 +3,9 @@ package com.arjanvlek.oxygenupdater.Model;
 
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.support.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,10 +19,12 @@ public class SystemVersionProperties {
     private final String oxygenOSVersion;
     private final String oxygenOSOTAVersion;
     private final String securityPatchDate;
+    private final boolean uploadLog;
     private final String oemFingerprint;
     private static final String TAG = "SystemVersionProperties";
 
-    public SystemVersionProperties() {
+    public SystemVersionProperties(boolean uploadLog) {
+        this.uploadLog = uploadLog;
         String oxygenOSVersion = NO_OXYGEN_OS;
         String oxygenOSOTAVersion = NO_OXYGEN_OS;
         String oxygenDeviceName = NO_OXYGEN_OS;
@@ -33,7 +35,7 @@ public class SystemVersionProperties {
                     .command("getprop")
                     .redirectErrorStream(true)
                     .start();
-            Log.v(TAG, "Started fetching device properties using 'getprop' command...");
+            Logger.logVerbose(uploadLog, TAG, "Started fetching device properties using 'getprop' command...");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(getBuildPropProcess.getInputStream()));
             String inputLine;
@@ -53,10 +55,10 @@ public class SystemVersionProperties {
                 }
             }
             getBuildPropProcess.destroy();
-            Log.v(TAG, "Finished fetching device properties using 'getprop' command...");
+            Logger.logVerbose(uploadLog, TAG, "Finished fetching device properties using 'getprop' command...");
 
         } catch (IOException e) {
-            Log.e(TAG, e.getLocalizedMessage());
+            Logger.logError(uploadLog, TAG, e.getLocalizedMessage());
         }
         this.oxygenDeviceName = oxygenDeviceName;
         this.oxygenOSVersion = oxygenOSVersion;
@@ -72,7 +74,7 @@ public class SystemVersionProperties {
             result = inputLine.replace("[" + itemKey + "]: ", "");
             result = result.replace("[", "");
             result = result.replace("]", "");
-            if(logText != null) Log.v(TAG, String.format(logText, result));
+            if(logText != null) Logger.logVerbose(uploadLog, TAG, String.format(logText, result));
         }
 
         return result;

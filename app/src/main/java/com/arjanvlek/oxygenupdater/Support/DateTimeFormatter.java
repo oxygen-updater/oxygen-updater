@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.support;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

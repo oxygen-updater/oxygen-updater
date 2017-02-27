@@ -21,14 +21,14 @@ import android.widget.CheckBox;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
-import com.arjanvlek.oxygenupdater.Support.SupportedDeviceManager;
+import com.arjanvlek.oxygenupdater.support.NetworkConnectionManager;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.SupportedDeviceManager;
 
 import java8.util.function.Consumer;
 
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_SETUP_DONE;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SETUP_DONE;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
 
 @SuppressWarnings("deprecation")

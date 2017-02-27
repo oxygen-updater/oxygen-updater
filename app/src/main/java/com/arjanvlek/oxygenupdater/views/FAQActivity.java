@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.NetworkConnectionManager;
+import com.arjanvlek.oxygenupdater.support.NetworkConnectionManager;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 

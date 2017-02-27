@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.Browser;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 
-import com.arjanvlek.oxygenupdater.Support.Logger;
+import com.arjanvlek.oxygenupdater.support.Logger;
 
 
 public class FormattedURLSpan extends ClickableSpan {

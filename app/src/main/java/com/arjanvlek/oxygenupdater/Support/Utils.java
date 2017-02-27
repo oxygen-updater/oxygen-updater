@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Support;
+package com.arjanvlek.oxygenupdater.support;
 
 import android.app.Activity;
 import android.util.TypedValue;

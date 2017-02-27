@@ -11,7 +11,7 @@ import android.os.Handler;
 
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 
 import java.io.File;
@@ -35,7 +35,7 @@ import static android.app.DownloadManager.STATUS_PAUSED;
 import static android.app.DownloadManager.STATUS_PENDING;
 import static android.app.DownloadManager.STATUS_RUNNING;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DOWNLOAD_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DOWNLOAD_ID;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING;

@@ -10,9 +10,8 @@
 package com.arjanvlek.oxygenupdater.Download;
 
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.arjanvlek.oxygenupdater.Support.Logger;
+import com.arjanvlek.oxygenupdater.support.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;

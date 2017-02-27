@@ -1,21 +1,19 @@
 package com.arjanvlek.oxygenupdater.notifications;
 
-import android.util.Log;
-
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-import com.arjanvlek.oxygenupdater.Support.Logger;
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.Logger;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.DEVICE_TOPIC_PREFIX;
 import static com.arjanvlek.oxygenupdater.ApplicationData.UPDATE_METHOD_TOPIC_PREFIX;
 import static com.arjanvlek.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_DEVICE_ID;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
-import static com.arjanvlek.oxygenupdater.Support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 public class NotificationTopicSubscriber {
 

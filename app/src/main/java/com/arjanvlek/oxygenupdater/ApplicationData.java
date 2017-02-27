@@ -2,12 +2,11 @@ package com.arjanvlek.oxygenupdater;
 
 import android.app.Activity;
 import android.app.Application;
-import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-import com.arjanvlek.oxygenupdater.Support.Logger;
-import com.arjanvlek.oxygenupdater.Support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.Logger;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -30,6 +29,23 @@ public class ApplicationData extends Application {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        try {
+            Class.forName("com.arjanvlek.oxygenupdater.support.Logger");
+            Logger.applicationData = this;
+        } catch (Exception e) {
+            Logger.logError(TAG, "Failed to start application: ", e);
+        }
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Logger.applicationData = null;
+    }
+
     public ServerConnector getServerConnector() {
         if (serverConnector == null) {
             Logger.logVerbose(TAG, "Created ServerConnector for use within the application...");
@@ -44,7 +60,7 @@ public class ApplicationData extends Application {
         // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
         if (systemVersionProperties == null) {
             Logger.logVerbose(TAG, "Creating new SystemVersionProperties instance...");
-            systemVersionProperties = new SystemVersionProperties();
+            systemVersionProperties = new SystemVersionProperties(true);
             return systemVersionProperties;
         } else {
             Logger.logVerbose(TAG, "Using cached instance of SystemVersionProperties");
