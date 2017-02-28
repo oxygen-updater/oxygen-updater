@@ -16,8 +16,12 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.arjanvlek.oxygenupdater.support.SupportedDeviceManager;
+
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DEVICE_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 
 public class SetupActivity extends AppCompatActivity {
@@ -173,11 +177,10 @@ public class SetupActivity extends AppCompatActivity {
             settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
             NavUtils.navigateUpFromSameTask(this);
         } else {
-            showSettingsWarning();
+            Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
+            Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
+            Logger.logWarning("SetupActivity", "Setup screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
+            Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void showSettingsWarning() {
-        Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
     }
 }

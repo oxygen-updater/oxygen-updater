@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.support.Logger;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -45,6 +46,7 @@ public class AboutActivity extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BROWSER__BASE_URL + appPackageName)));
                 } catch (ActivityNotFoundException e1) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_unable_to_rate_app), Toast.LENGTH_LONG).show();
+                    Logger.logWarning("AboutActivity", "App rating without google play store support, because of: ", e1);
                 }
             }
         });

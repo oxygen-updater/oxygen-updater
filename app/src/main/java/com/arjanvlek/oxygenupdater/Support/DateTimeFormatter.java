@@ -28,22 +28,27 @@ public class DateTimeFormatter {
     }
 
     public String formatDateTime(String dateTimeString) {
-        if (dateTimeString == null || dateTimeString.isEmpty()) {
-            return fragment.getString(R.string.device_information_unknown);
-        }
-        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
-        DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-        String formattedTime = timeFormat.format(dateTime.toDate());
+        try {
+            if (dateTimeString == null || dateTimeString.isEmpty()) {
+                return fragment.getString(R.string.device_information_unknown);
+            }
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+            String formattedTime = timeFormat.format(dateTime.toDate());
 
-        LocalDateTime today = LocalDateTime.now();
-        if ((dateTime.getDayOfMonth() == today.getDayOfMonth()) && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
-            return formattedTime;
-        } else if ((dateTime.getDayOfMonth() + 1) == today.getDayOfMonth() && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
-            return fragment.getString(R.string.time_yesterday) + " " + fragment.getString(R.string.time_at) + " " + formattedTime;
-        } else {
-            DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-            String formattedDate = dateFormat.format(dateTime.toDate());
-            return formattedDate + " " + fragment.getString(R.string.time_at) + " " + formattedTime;
+            LocalDateTime today = LocalDateTime.now();
+            if ((dateTime.getDayOfMonth() == today.getDayOfMonth()) && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
+                return formattedTime;
+            } else if ((dateTime.getDayOfMonth() + 1) == today.getDayOfMonth() && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
+                return fragment.getString(R.string.time_yesterday) + " " + fragment.getString(R.string.time_at) + " " + formattedTime;
+            } else {
+                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+                String formattedDate = dateFormat.format(dateTime.toDate());
+                return formattedDate + " " + fragment.getString(R.string.time_at) + " " + formattedTime;
+            }
+        } catch (Exception e) {
+            Logger.logError("DateTimeFormatter", "Unable to parse date: ", e);
+            return dateTimeString;
         }
     }
 

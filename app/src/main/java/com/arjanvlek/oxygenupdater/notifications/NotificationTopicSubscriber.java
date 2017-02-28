@@ -17,7 +17,7 @@ import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDAT
 
 public class NotificationTopicSubscriber {
 
-    private static final String TAG = "NotificationTopicSubscr";
+    private static final String TAG = "NotificationTopicSubscriber";
 
     public static void subscribe(ApplicationData data) {
         SettingsManager settingsManager = new SettingsManager(data.getApplicationContext());

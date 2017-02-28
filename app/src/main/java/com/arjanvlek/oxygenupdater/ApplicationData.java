@@ -36,7 +36,7 @@ public class ApplicationData extends Application {
             Class.forName("com.arjanvlek.oxygenupdater.support.Logger");
             Logger.applicationData = this;
         } catch (Exception e) {
-            Logger.logError(false, TAG, "Failed to start application: ", e);
+            Logger.logError(false, TAG, "Failed to start logging system: ", e);
         }
     }
 
@@ -90,8 +90,7 @@ public class ApplicationData extends Application {
         } else {
             boolean result = resultCode == ConnectionResult.SUCCESS;
             if (result) Logger.logVerbose(TAG, "Google Play Services are available.");
-            else
-                Logger.logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
+            else Logger.logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
             return result;
         }
     }

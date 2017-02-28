@@ -20,6 +20,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.Model.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
+import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
 
 import java.io.InputStream;
@@ -115,8 +116,9 @@ public class InstallGuideFragment extends Fragment {
                     image = BitmapFactory.decodeStream(in);
                     cache.put(installGuidePage.getPageNumber(), image);
                 }
-            } catch(Exception ignored) {
+            } catch(Exception e) {
                 image = null;
+                Logger.logError("InstallGuideFragment", "Error loading custom image: ", e);
             }
 
             List<Object> result = new ArrayList<>();

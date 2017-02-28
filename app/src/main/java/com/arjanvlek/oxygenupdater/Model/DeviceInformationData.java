@@ -2,6 +2,8 @@ package com.arjanvlek.oxygenupdater.Model;
 
 import android.os.Build;
 
+import com.arjanvlek.oxygenupdater.support.Logger;
+
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
@@ -68,6 +70,7 @@ public class DeviceInformationData {
             BigDecimal cpuFrequencyGhz = new BigDecimal(cpuFrequency).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_DOWN);
             return cpuFrequencyGhz.toString();
         } catch (Exception e) {
+            Logger.logVerbose("DeviceInformationData", "CPU Frequency information is not available: " ,e);
             return UNKNOWN;
         }
     }

@@ -20,6 +20,7 @@ import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 
@@ -35,6 +36,7 @@ import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_RECEI
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
 public class SettingsActivity extends AbstractActivity {
     private ProgressBar progressBar;
@@ -187,11 +189,7 @@ public class SettingsActivity extends AbstractActivity {
                             // Subscribe to notifications for the newly selected device and update method
                             NotificationTopicSubscriber.subscribe(getApplicationData());
                         } else {
-                            try {
-                                Toast.makeText(getApplication().getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
-                            } catch (Exception ignored) {
-
-                            }
+                            Toast.makeText(getApplication().getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
                         }
 
                         progressBar.setVisibility(View.GONE);
@@ -223,6 +221,10 @@ public class SettingsActivity extends AbstractActivity {
     }
 
     private void showSettingsWarning() {
+        Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
+        Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
+        
+        Logger.logWarning("SettingsActivity", "Settings screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
         Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
     }
 

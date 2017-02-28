@@ -11,6 +11,7 @@ import android.os.Handler;
 
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 
@@ -58,6 +59,7 @@ public class UpdateDownloader {
     private long previousBytesDownloadedSoFar = NOT_SET;
     private long previousTimeStamp;
     private long previousNumberOfSecondsRemaining = NOT_SET;
+    private static final String TAG = "UpdateDownloader";
 
     public UpdateDownloader(Activity baseActivity) {
         this.baseActivity = baseActivity;
@@ -82,6 +84,7 @@ public class UpdateDownloader {
     public void downloadUpdate(UpdateData updateData) {
         if (updateData != null) {
             if (!updateData.getDownloadUrl().contains("http")) {
+                Logger.logError(TAG, "Invalid download URL: " + updateData.getDownloadUrl());
                 showDownloadErrorNotification(baseActivity, updateData, 404);
                 if(listener != null) listener.onDownloadError(this, 404);
             } else {
@@ -103,6 +106,8 @@ public class UpdateDownloader {
 
                 if(listener != null) listener.onDownloadStarted(downloadID);
             }
+        } else {
+            Logger.logError(TAG, "Update data is null while trying to download an update. This should not be possible!");
         }
 
     }
@@ -128,10 +133,11 @@ public class UpdateDownloader {
     }
 
     public boolean deleteDownload(UpdateData updateData) {
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
         try {
-            return file.delete();
-        } catch (Exception ignored) {
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
+            return !file.exists() || file.delete();
+        } catch (Exception e) {
+            Logger.logError(TAG, "Failed to delete downloaded update file: ", e);
             return false;
         }
     }
