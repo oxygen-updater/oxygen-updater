@@ -15,49 +15,39 @@ public class Logger {
     public static ApplicationData applicationData;
 
 
-    public static void logVerbose(boolean upload, String tag, String message) {
+    public static void logVerbose(String tag, String message) {
         if (isDebugBuild()) {
             Log.v(tag, message);
-            if(upload) uploadLog(LogLevel.VERBOSE, tag, message);
         }
-    }
-
-    public static void logVerbose(String tag, String message) {
-        logVerbose(true, tag, message);
     }
 
     public static void logVerbose(String tag, String message, Throwable cause) {
         if (isDebugBuild()) {
             Log.v(tag, message, cause);
-            uploadLog(LogLevel.VERBOSE, tag, message, cause);
         }
     }
 
     public static void logDebug(String tag, String message) {
         if (isDebugBuild()) {
             Log.d(tag, message);
-            uploadLog(LogLevel.DEBUG, tag, message);
         }
     }
 
     public static void logDebug(String tag, String message, Throwable cause) {
         if (isDebugBuild()) {
             Log.d(tag, message, cause);
-            uploadLog(LogLevel.DEBUG, tag, message, cause);
         }
     }
 
     public static void logInfo(String tag, String message) {
         if (isDebugBuild()) {
             Log.i(tag, message);
-            uploadLog(LogLevel.INFO, tag, message);
         }
     }
 
     public static void logInfo(String tag, String message, Throwable cause) {
         if (isDebugBuild()) {
             Log.i(tag, message, cause);
-            uploadLog(LogLevel.INFO, tag, message, cause);
         }
     }
 
@@ -105,11 +95,14 @@ public class Logger {
     private static void uploadLog(LogLevel logLevel, String tag, String message) {
 
         if(applicationData != null) {
-            Intent intent = new Intent(applicationData, LoggerService.class);
-            intent.putExtra("event_type", logLevel.toString());
-            intent.putExtra("tag", tag);
-            intent.putExtra("message", message);
-            applicationData.startService(intent);
+            NetworkConnectionManager nm = new NetworkConnectionManager(applicationData.getApplicationContext());
+            if(nm.checkNetworkConnection()) {
+                Intent intent = new Intent(applicationData, LoggerService.class);
+                intent.putExtra("event_type", logLevel.toString());
+                intent.putExtra("tag", tag);
+                intent.putExtra("message", message);
+                applicationData.startService(intent);
+            }
         }
     }
 

@@ -82,12 +82,12 @@ public class ServerConnector implements Cloneable {
 
     public void getDevices(boolean alwaysFetch, Consumer<List<Device>> callback) {
         if (deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
-            Logger.logVerbose(uploadLog, TAG, "Used local cache to fetch devices...");
+            Logger.logVerbose(TAG, "Used local cache to fetch devices...");
             callback.accept(devices);
         }
 
         else {
-            Logger.logVerbose(uploadLog, TAG, "Used remote server to fetch devices...");
+            Logger.logVerbose(TAG, "Used remote server to fetch devices...");
             new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, (devices) -> {
                 this.devices.clear();
                 this.devices.addAll(devices);
@@ -302,8 +302,8 @@ public class ServerConnector implements Cloneable {
 
             if (requestUrl == null) return null;
 
-            Logger.logVerbose(uploadLog, TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
-            Logger.logVerbose(uploadLog, TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
+            Logger.logVerbose(TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
+            Logger.logVerbose(TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
 
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
@@ -335,7 +335,7 @@ public class ServerConnector implements Cloneable {
 
             in.close();
             String rawResponse = response.toString();
-            Logger.logVerbose(uploadLog, TAG, "Response: " + rawResponse);
+            Logger.logVerbose(TAG, "Response: " + rawResponse);
             return rawResponse;
         } catch (Exception e) {
             Logger.logError(uploadLog, TAG, "Error performing server request: ", e);

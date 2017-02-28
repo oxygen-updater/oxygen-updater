@@ -36,7 +36,7 @@ public class ApplicationData extends Application {
             Class.forName("com.arjanvlek.oxygenupdater.support.Logger");
             Logger.applicationData = this;
         } catch (Exception e) {
-            Logger.logError(TAG, "Failed to start application: ", e);
+            Logger.logError(false, TAG, "Failed to start application: ", e);
         }
     }
 

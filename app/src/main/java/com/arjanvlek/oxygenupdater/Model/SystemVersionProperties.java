@@ -19,12 +19,10 @@ public class SystemVersionProperties {
     private final String oxygenOSVersion;
     private final String oxygenOSOTAVersion;
     private final String securityPatchDate;
-    private final boolean uploadLog;
     private final String oemFingerprint;
     private static final String TAG = "SystemVersionProperties";
 
     public SystemVersionProperties(boolean uploadLog) {
-        this.uploadLog = uploadLog;
         String oxygenOSVersion = NO_OXYGEN_OS;
         String oxygenOSOTAVersion = NO_OXYGEN_OS;
         String oxygenDeviceName = NO_OXYGEN_OS;
@@ -35,7 +33,7 @@ public class SystemVersionProperties {
                     .command("getprop")
                     .redirectErrorStream(true)
                     .start();
-            Logger.logVerbose(uploadLog, TAG, "Started fetching device properties using 'getprop' command...");
+            Logger.logVerbose(TAG, "Started fetching device properties using 'getprop' command...");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(getBuildPropProcess.getInputStream()));
             String inputLine;
@@ -55,9 +53,9 @@ public class SystemVersionProperties {
                 }
             }
             getBuildPropProcess.destroy();
-            Logger.logVerbose(uploadLog, TAG, "Finished fetching device properties using 'getprop' command...");
+            Logger.logVerbose(TAG, "Finished fetching device properties using 'getprop' command...");
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             Logger.logError(uploadLog, TAG, e.getLocalizedMessage());
         }
         this.oxygenDeviceName = oxygenDeviceName;
@@ -74,7 +72,7 @@ public class SystemVersionProperties {
             result = inputLine.replace("[" + itemKey + "]: ", "");
             result = result.replace("[", "");
             result = result.replace("]", "");
-            if(logText != null) Logger.logVerbose(uploadLog, TAG, String.format(logText, result));
+            if(logText != null) Logger.logVerbose(TAG, String.format(logText, result));
         }
 
         return result;
