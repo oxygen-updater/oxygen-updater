@@ -1,18 +1,49 @@
 package com.arjanvlek.oxygenupdater.support;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 
 public class Logger {
 
-    public static String TAG = "Logger";
+    public static final String TAG = "Logger";
+    private static final String ERROR_FILE = "error.txt";
     public static ApplicationData applicationData;
+
+    public static void init (ApplicationData data) {
+        applicationData = data;
+
+        try {
+            File errorFile = new File(data.getFilesDir(), ERROR_FILE);
+            if (errorFile.exists()) {
+                StringBuilder stackTrace = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new FileReader(errorFile));
+
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    stackTrace.append(line);
+                    stackTrace.append(System.getProperty("line.separator"));
+                }
+
+                logError("ApplicationData", "The application has crashed: " + stackTrace.toString());
+            }
+        } catch (Exception e) {
+            logError(false, TAG, "Failed to read crashdump: ", e);
+
+        }
+    }
 
 
     public static void logVerbose(String tag, String message) {
@@ -75,18 +106,37 @@ public class Logger {
         if(upload) uploadLog(LogLevel.ERROR, tag, message, cause);
     }
 
+    public static void logApplicationCrash(Context context, Throwable cause) {
+        try {
+            File errorFile = new File(context.getFilesDir(), ERROR_FILE);
+
+            if(errorFile.exists()) {
+                errorFile.delete();
+            }
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter(errorFile));
+            writer.write(stacktraceToString(cause));
+            writer.flush();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void logError(String tag, String message, Throwable cause) {
         logError(true, tag, message, cause);
     }
 
-    private static void uploadLog(LogLevel logLevel, String tag, String message, Throwable cause) {
+    private static String stacktraceToString(Throwable throwable) {
         CharArrayWriter charArrayWriter = new CharArrayWriter();
         PrintWriter printWriter = new PrintWriter(charArrayWriter);
-        cause.printStackTrace(printWriter);
+        throwable.printStackTrace(printWriter);
         printWriter.close();
-        String stackTrace = charArrayWriter.toString();
+        return charArrayWriter.toString();
+    }
+
+    private static void uploadLog(LogLevel logLevel, String tag, String message, Throwable cause) {
         try {
-            uploadLog(logLevel, tag, message + ":\n\n" + stackTrace);
+            uploadLog(logLevel, tag, message + ":\n\n" + stacktraceToString(cause));
         } catch (Throwable throwable) {
             logError(false, TAG, "", throwable);
         }

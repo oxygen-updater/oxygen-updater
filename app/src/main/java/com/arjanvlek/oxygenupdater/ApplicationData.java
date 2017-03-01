@@ -33,10 +33,16 @@ public class ApplicationData extends Application {
     public void onCreate() {
         super.onCreate();
         try {
-            Class.forName("com.arjanvlek.oxygenupdater.support.Logger");
-            Logger.applicationData = this;
+            Logger.init(this);
+
+            // Set a global exception handler which logs all exceptions to the server, if possible.
+            // Afterwards, throw the exception to crash the application (these errors can't be prevented anyway).
+            Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+                Logger.logApplicationCrash(this, e);
+            });
         } catch (Exception e) {
-            Logger.logError(false, TAG, "Failed to start logging system: ", e);
+            Logger.logError(false, TAG, "Failed to set up logger: ", e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -50,10 +56,8 @@ public class ApplicationData extends Application {
         if (serverConnector == null) {
             Logger.logVerbose(TAG, "Created ServerConnector for use within the application...");
             serverConnector = new ServerConnector(new SettingsManager(this));
-            return serverConnector;
-        } else {
-            return serverConnector;
         }
+        return serverConnector;
     }
 
     public SystemVersionProperties getSystemVersionProperties() {
@@ -61,11 +65,10 @@ public class ApplicationData extends Application {
         if (systemVersionProperties == null) {
             Logger.logVerbose(TAG, "Creating new SystemVersionProperties instance...");
             systemVersionProperties = new SystemVersionProperties(true);
-            return systemVersionProperties;
         } else {
             Logger.logVerbose(TAG, "Using cached instance of SystemVersionProperties");
-            return systemVersionProperties;
         }
+        return systemVersionProperties;
     }
 
 
