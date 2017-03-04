@@ -8,7 +8,6 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.support.Logger;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
@@ -39,7 +38,7 @@ public class SystemVersionProperties {
             String inputLine;
 
             while ((inputLine = in.readLine()) != null) {
-                oxygenDeviceName = readBuildPropItem(oxygenDeviceName, BuildConfig.DEVICE_CODENAME_LOOKUP_KEY, inputLine, "Detected Oxygen OS Device: %s ...");
+                oxygenDeviceName = readBuildPropItem(oxygenDeviceName, BuildConfig.DEVICE_NAME_LOOKUP_KEY, inputLine, "Detected Oxygen OS Device: %s ...");
                 oxygenOSVersion = readBuildPropItem(oxygenOSVersion, BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, inputLine, "Detected Oxygen OS ROM with version %s ...");
                 oxygenOSOTAVersion = readBuildPropItem(oxygenOSOTAVersion, BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, inputLine, "Detected Oxygen OS ROM with OTA version %s ...");
                 oemFingerprint = readBuildPropItem(oemFingerprint, BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, inputLine, "Detected build fingerprint: %s ...");

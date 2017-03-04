@@ -2,7 +2,6 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,6 @@ public class DeviceInformationFragment extends AbstractFragment {
             if (devices != null) {
                 StreamSupport.stream(devices)
                         .filter(device -> device.getProductName() != null && device.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
-                        .filter(d -> d.getChipSet() != null && d.getChipSet().equals(Build.BOARD))
                         .forEach(device -> deviceNameView.setText(device.getName()));
             }
         }

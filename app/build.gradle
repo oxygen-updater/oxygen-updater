@@ -44,6 +44,7 @@ android {
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
 
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
+            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series\""
             buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.build.product\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.ota.versionname\""
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\""
@@ -58,6 +59,7 @@ android {
             buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v1.1/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
+            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
             buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.product.name\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""

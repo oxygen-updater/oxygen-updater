@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -46,9 +45,7 @@ public class SetupStep3Fragment extends AbstractFragment {
         SystemVersionProperties systemVersionProperties = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties();
 
         final int selectedIndex = StreamSupport.stream(devices)
-                .filter(d -> d.getProductName() != null)
-                .filter(d -> d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
-                .filter(d -> (d.getChipSet().equals("NOT_SET") || d.getChipSet().equals(Build.BOARD)))
+                .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
                 .mapToInt(devices::indexOf).findAny().orElse(-1);
 
         ArrayAdapter<Device> adapter = new ArrayAdapter<Device>(getActivity(), android.R.layout.simple_spinner_item, devices) {

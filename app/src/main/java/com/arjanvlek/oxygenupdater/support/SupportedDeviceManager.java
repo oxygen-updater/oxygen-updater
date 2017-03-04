@@ -1,7 +1,5 @@
 package com.arjanvlek.oxygenupdater.support;
 
-import android.os.Build;
-
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
@@ -33,7 +31,6 @@ public class SupportedDeviceManager {
 
         Optional<Device> supportedDevice = StreamSupport.stream(devices)
                 .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
-                .filter(d -> d.getChipSet()!= null && d.getChipSet().equals(Build.BOARD))
                 .findAny();
 
         return supportedDevice.isPresent() && firmwareIsSupported;

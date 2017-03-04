@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
@@ -20,9 +19,9 @@ import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
-import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 
 import java.util.Arrays;
 import java.util.List;
@@ -88,7 +87,6 @@ public class SettingsActivity extends AbstractActivity {
             // Set the spinner to the previously selected device.
             final int recommendedPosition = StreamSupport.stream(devices)
                     .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
-                    .filter(d -> d.getChipSet() != null && d.getChipSet().equals(Build.BOARD))
                     .mapToInt(devices::indexOf).findAny().orElse(-1);
 
             final int selectedPosition = StreamSupport.stream(devices)
