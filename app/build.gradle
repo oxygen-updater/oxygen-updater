@@ -30,8 +30,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 4
+        versionName "1.2.0"
         if (Os.isFamily(Os.FAMILY_MAC)) {
             signingConfig signingConfigs.macReleaseConfig
         } else {
@@ -85,13 +85,15 @@ buildscript {
     }
 
     dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
     }
 }
 
 repositories {
     mavenCentral()
 }
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -118,3 +120,8 @@ dependencies {
 
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'me.tatarka.retrolambda'
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
+    defaultMethods true
+}

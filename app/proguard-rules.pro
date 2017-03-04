@@ -40,3 +40,5 @@
 -dontwarn com.google.android.gms.internal.**
 -dontwarn org.joda.convert.**
 -dontwarn java.lang.invoke.*
+-dontwarn sun.misc.Unsafe
+-dontwarn build.IgnoreJava8API

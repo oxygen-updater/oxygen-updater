@@ -53,7 +53,7 @@ public class LoggerService extends IntentService {
                 logData.put("device_id", settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L));
                 logData.put("update_method_id", settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L));
                 logData.put("device_name", Build.BRAND + " " + Build.PRODUCT + " (" + Build.BOARD + ")");
-                logData.put("operating_system_version", !systemVersionProperties.getOxygenOSVersion().equals(NO_OXYGEN_OS) ? systemVersionProperties.getOxygenOSVersion() : Build.VERSION.RELEASE);
+                logData.put("operating_system_version", !systemVersionProperties.getOxygenOSVersion().equals(NO_OXYGEN_OS) ? systemVersionProperties.getOxygenOSVersion() : "Android " + Build.VERSION.RELEASE);
                 logData.put("error_message", tag + " : " + message);
                 logData.put("app_version", BuildConfig.VERSION_NAME);
                 logData.put("event_date", LocalDateTime.now().toString());
