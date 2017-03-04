@@ -38,7 +38,7 @@ public class ApplicationData extends Application {
             // Set a global exception handler which logs all exceptions to the server, if possible.
             // Afterwards, throw the exception to crash the application (these errors can't be prevented anyway).
             Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-                Logger.logApplicationCrash(this, e);
+                Logger.writeApplicationCrashLog(this, e);
             });
         } catch (Exception e) {
             Logger.logError(false, TAG, "Failed to set up logger: ", e);
