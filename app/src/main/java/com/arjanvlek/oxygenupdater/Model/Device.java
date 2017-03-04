@@ -7,7 +7,6 @@ public class Device {
     private long id;
     private String name;
     private String productName;
-    private String chipSet;
 
     public long getId() {
         return id;
@@ -33,15 +32,5 @@ public class Device {
     @JsonProperty("product_name")
     public void setProductName(String productName) {
         this.productName = productName;
-    }
-
-    @JsonProperty("chip_set")
-    public String getChipSet() {
-        return chipSet;
-    }
-
-    @JsonProperty("chip_set")
-    public void setChipSet(String chipSet) {
-        this.chipSet = chipSet;
     }
 }
