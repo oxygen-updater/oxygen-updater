@@ -14,6 +14,7 @@ import com.arjanvlek.oxygenupdater.support.Logger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Locale;
 
 import static com.arjanvlek.oxygenupdater.BuildConfig.SERVER_BASE_URL;
 import static com.arjanvlek.oxygenupdater.Server.ServerRequest.RequestMethod.GET;
@@ -53,7 +54,7 @@ enum ServerRequest {
 
     URL getUrl(Object... params) {
         try {
-            return new URL(String.format(this.url, params).replace(" ", ""));
+            return new URL(String.format(Locale.US, this.url, params).replace(" ", ""));
         } catch (MalformedURLException e) {
             Logger.logError("ServerRequest", "Malformed URL: " + this.url);
             return null;

@@ -9,6 +9,7 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.json.JSONObject;
 
@@ -56,7 +57,7 @@ public class LoggerService extends IntentService {
                 logData.put("operating_system_version", !systemVersionProperties.getOxygenOSVersion().equals(NO_OXYGEN_OS) ? systemVersionProperties.getOxygenOSVersion() : "Android " + Build.VERSION.RELEASE);
                 logData.put("error_message", tag + " : " + message);
                 logData.put("app_version", BuildConfig.VERSION_NAME);
-                logData.put("event_date", LocalDateTime.now().toString());
+                logData.put("event_date", LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString());
                 serverConnector.log(logData, (logResult) -> {
                     if (logResult != null && !logResult.isSuccess()) {
                         Logger.logError(false, TAG, "Error uploading log to server:" + logResult.getErrorMessage());
