@@ -86,11 +86,12 @@
     
     <string name="download_waiting_for_network">Wachten op een netwerkverbinding…</string>
     <string name="download_waiting_for_wifi">Wachten op een Wi-Fi-verbinding…</string>
-    <string name="download_will_retry_soon">Je download zal zometeen herstarten…</string>
+    <string name="download_will_retry_soon">Je download wordt zometeen hervat…</string>
     
     
     <!-- Settings strings -->
     <string name="settings">Instellingen</string>
+    <string name="settings_category_other">Overig:</string>
     <string name="settings_device">Apparaat</string>
     <string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
     <string name="settings_explanation_incremental_full_update">Een incrementele update kan alleen worden geïnstalleerd als je over de laatste systeemsoftware beschikte, voordat de nieuwe update verscheen.\n\nEen volledige update kan altijd worden geïnstalleerd - ongeacht de huidge systeemversie van je apparaat.</string>
@@ -103,6 +104,7 @@
     <string name="settings_push_new_device">Nieuw apparaat wordt ondersteund</string>
 
     <string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
+    <string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een internetverbinding hebt en open je de app opnieuw.</string>
 
     <string name="settings_server_messages">Toon meldingen in de app wanneer er:</string>
     <string name="settings_server_messages_in_app">Algemene mededelingen zijn</string>
@@ -112,6 +114,7 @@
     <string name="settings_system_hide_when_up_to_date">Mijn systeem up-to-date is</string>
 
     <string name="settings_update_method">Update-methode</string>
+    <string name="settings_upload_logs">Verstuur logs naar ontwikkelaar</string>
 
     <!-- FAQ strings -->
     <string name="faq">Veelgestelde vragen</string>

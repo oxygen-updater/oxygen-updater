@@ -14,12 +14,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <permission
-        android:name="com.arjanvlek.oxygenupdater.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="com.arjanvlek.oxygenupdater.permission.C2D_MESSAGE" />
-
 
     <application
         android:name=".ApplicationData"
@@ -114,9 +108,18 @@
         <!-- Push notifications services and receiver, Package updated receiver -->
 
         <service
-            android:name=".notifications.NotificationService">
+            android:name=".notifications.NotificationService"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".notifications.NotificationInstanceIDService"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
@@ -132,7 +135,13 @@
                 android:value="com.arjanvlek.oxygenupdater.views.MainActivity" /> >
         </activity>
 
-        <service android:name=".support.LoggerService" android:exported="false"/>
+        <service
+            android:name=".support.LogUploadService"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

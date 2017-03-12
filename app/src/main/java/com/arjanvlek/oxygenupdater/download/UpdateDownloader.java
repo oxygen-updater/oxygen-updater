@@ -1,6 +1,5 @@
-package com.arjanvlek.oxygenupdater.Download;
+package com.arjanvlek.oxygenupdater.download;
 
-import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,9 +10,10 @@ import android.os.Handler;
 
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
+import com.arjanvlek.oxygenupdater.support.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,23 +36,23 @@ import static android.app.DownloadManager.STATUS_PAUSED;
 import static android.app.DownloadManager.STATUS_PENDING;
 import static android.app.DownloadManager.STATUS_RUNNING;
 import static android.os.Environment.DIRECTORY_DOWNLOADS;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DOWNLOAD_ID;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.ONGOING;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DOWNLOAD_ID;
 
 
 public class UpdateDownloader {
 
-    private final Activity baseActivity;
+    private final Context context;
     private final DownloadManager downloadManager;
     private final SettingsManager settingsManager;
 
     private UpdateDownloadListener listener;
     private List<Double> measurements = new ArrayList<>();
 
-    public final static int NOT_SET = -1;
+    final static int NOT_SET = -1;
 
     private boolean initialized;
     private boolean isVerifying;
@@ -61,10 +61,10 @@ public class UpdateDownloader {
     private long previousNumberOfSecondsRemaining = NOT_SET;
     private static final String TAG = "UpdateDownloader";
 
-    public UpdateDownloader(Activity baseActivity) {
-        this.baseActivity = baseActivity;
-        this.downloadManager = (DownloadManager) baseActivity.getSystemService(Context.DOWNLOAD_SERVICE);
-        this.settingsManager = new SettingsManager(baseActivity.getApplicationContext());
+    public UpdateDownloader(Context context) {
+        this.context = context;
+        this.downloadManager = (DownloadManager) Utils.getSystemService(context, Context.DOWNLOAD_SERVICE);
+        this.settingsManager = new SettingsManager(context.getApplicationContext());
     }
 
     public UpdateDownloader setUpdateDownloadListenerAndStartPolling(UpdateDownloadListener listener, UpdateData updateData) {
@@ -82,17 +82,17 @@ public class UpdateDownloader {
 
 
     public void downloadUpdate(UpdateData updateData) {
-        if (updateData != null) {
+        if (updateData != null && downloadManager != null) {
             if (!updateData.getDownloadUrl().contains("http")) {
                 Logger.logError(TAG, "Invalid download URL: " + updateData.getDownloadUrl());
-                showDownloadErrorNotification(baseActivity, updateData, 404);
+                showDownloadErrorNotification(context, updateData, 404);
                 if(listener != null) listener.onDownloadError(this, 404);
             } else {
                 Uri downloadUri = Uri.parse(updateData.getDownloadUrl());
 
                 DownloadManager.Request request = new DownloadManager.Request(downloadUri)
-                        .setDescription(baseActivity.getString(R.string.download_description))
-                        .setTitle(updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null") && !updateData.getVersionNumber().isEmpty() ? updateData.getVersionNumber() : baseActivity.getString(R.string.download_unknown_update_name))
+                        .setDescription(context.getString(R.string.download_description))
+                        .setTitle(updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null") && !updateData.getVersionNumber().isEmpty() ? updateData.getVersionNumber() : context.getString(R.string.download_unknown_update_name))
                         .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, updateData.getFilename())
                         .setVisibleInDownloadsUi(false)
                         .setNotificationVisibility(VISIBILITY_VISIBLE);
@@ -113,13 +113,16 @@ public class UpdateDownloader {
     }
 
     public void cancelDownload(UpdateData updateData) {
-        if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
-            downloadManager.remove((long) settingsManager.getPreference(PROPERTY_DOWNLOAD_ID));
-            clearUp();
-            deleteDownload(updateData);
 
-            if(listener != null)listener.onDownloadCancelled();
+        long downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1L);
+        if (downloadId != -1L && downloadManager != null) {
+            downloadManager.remove(downloadId);
         }
+
+        clearUp();
+        deleteDownload(updateData);
+
+        if (listener != null) listener.onDownloadCancelled();
     }
 
     public boolean checkIfUpdateIsDownloaded(UpdateData updateData) {
@@ -135,7 +138,7 @@ public class UpdateDownloader {
     public boolean deleteDownload(UpdateData updateData) {
         try {
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
-            return !file.exists() || file.delete();
+            return file.delete();
         } catch (Exception e) {
             Logger.logError(TAG, "Failed to delete downloaded update file: ", e);
             return false;
@@ -144,8 +147,10 @@ public class UpdateDownloader {
 
     private void checkDownloadProgress(UpdateData updateData) {
 
-        if(settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID)) {
-            final Long downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID);
+        if (settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID) && downloadManager != null) {
+            final long downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1L);
+
+            if (downloadId == -1L) return;
 
             DownloadManager.Query query = new DownloadManager.Query();
             query.setFilterById(downloadId);
@@ -183,14 +188,14 @@ public class UpdateDownloader {
 
                         if(listener != null) listener.onDownloadComplete();
 
-                        verifyDownload(baseActivity, updateData);
+                        verifyDownload(context, updateData);
                         break;
                     case DownloadManager.STATUS_FAILED:
                         clearUp();
 
                         int statusCode = cursor.getInt(cursor.getColumnIndex(COLUMN_REASON));
 
-                        showDownloadErrorNotification(baseActivity, updateData, statusCode);
+                        showDownloadErrorNotification(context, updateData, statusCode);
                         if(listener != null) listener.onDownloadError(this, statusCode);
                         cancelDownload(updateData);
                         break;
@@ -204,8 +209,8 @@ public class UpdateDownloader {
         }
     }
 
-    private void verifyDownload(Activity activity, UpdateData updateData) {
-        new DownloadVerifier(activity).execute(updateData);
+    private void verifyDownload(Context context, UpdateData updateData) {
+        new DownloadVerifier(context).execute(updateData);
     }
 
     private boolean makeDownloadDirectory() {
@@ -310,26 +315,28 @@ public class UpdateDownloader {
 
     private class DownloadVerifier extends AsyncTask<UpdateData, Integer, Boolean> {
 
+        private final Context context;
         private UpdateData updateData;
-        private final Activity activity;
 
-        DownloadVerifier(Activity activity) {
-            this.activity = activity;
+        DownloadVerifier(Context context) {
+            this.context = context;
         }
 
         @Override
         protected void onPreExecute() {
             if(listener != null) listener.onVerifyStarted();
             isVerifying = true;
-            LocalNotifications.showVerifyingNotification(activity, ONGOING, HAS_NO_ERROR);
+            LocalNotifications.showVerifyingNotification(context, ONGOING, HAS_NO_ERROR);
         }
 
         @Override
         protected Boolean doInBackground(UpdateData... params) {
             this.updateData = params[0];
-            String filename = updateData.getFilename();
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + filename);
-            return updateData == null || updateData.getMD5Sum() == null || MD5.checkMD5(updateData.getMD5Sum(), file);
+
+            if (updateData == null || updateData.getMD5Sum() == null) return true;
+
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
+            return MD5.checkMD5(updateData.getMD5Sum(), file);
         }
 
         @Override
@@ -338,40 +345,41 @@ public class UpdateDownloader {
 
             if (result) {
                 if(listener != null) listener.onVerifyComplete();
-                LocalNotifications.hideVerifyingNotification(activity);
-                LocalNotifications.showDownloadCompleteNotification(activity);
+                LocalNotifications.hideVerifyingNotification(context);
+                LocalNotifications.showDownloadCompleteNotification(context);
 
                 clearUp();
             } else {
                 deleteDownload(updateData);
 
                 if(listener != null) listener.onVerifyError(instance());
-                LocalNotifications.showVerifyingNotification(activity, NOT_ONGOING, HAS_ERROR);
+                LocalNotifications.showVerifyingNotification(context, NOT_ONGOING, HAS_ERROR);
 
                 clearUp();
             }
         }
     }
 
-    private void showDownloadErrorNotification(Activity activity, UpdateData updateData, int statusCode) {
+    private void showDownloadErrorNotification(Context context, UpdateData updateData, int statusCode) {
         if (statusCode < 1000) {
-            LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
+            LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_network, R.string.download_notification_error_network);
         } else {
             switch (statusCode) {
                 case ERROR_UNHANDLED_HTTP_CODE:
                 case ERROR_HTTP_DATA_ERROR:
                 case ERROR_TOO_MANY_REDIRECTS:
-                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_network, R.string.download_notification_error_network);
+                    LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_network, R.string.download_notification_error_network);
                     break;
                 case ERROR_FILE_ERROR:
                     makeDownloadDirectory();
-                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
+                    LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
                     break;
                 case ERROR_INSUFFICIENT_SPACE:
-                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_storage, R.string.download_notification_error_storage_full);
+                    LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_storage, R.string.download_notification_error_storage_full);
+                    cancelDownload(updateData);
                     break;
                 case ERROR_DEVICE_NOT_FOUND:
-                    LocalNotifications.showDownloadFailedNotification(activity, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
+                    LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
                     break;
                 case ERROR_CANNOT_RESUME:
                     cancelDownload(updateData);

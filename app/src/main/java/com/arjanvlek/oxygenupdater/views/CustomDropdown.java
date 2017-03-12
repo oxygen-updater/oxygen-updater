@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.arjanvlek.oxygenupdater.Model.Device;
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.support.Utils;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,7 +23,9 @@ public class CustomDropdown {
 
     static View initCustomDeviceDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<Device> devices, int recommendedPosition, Context context) {
         if(convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) Utils.getSystemService(context, Context.LAYOUT_INFLATER_SERVICE);
+            if (inflater == null) return new View(context);
+
             convertView = inflater.inflate(layoutType, parent, false);
         }
 
@@ -44,7 +47,9 @@ public class CustomDropdown {
 
     static View initCustomUpdateMethodDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<UpdateMethod> updateMethods, int[] recommendedPositions, Context context) {
         if(convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) Utils.getSystemService(context, Context.LAYOUT_INFLATER_SERVICE);
+            if (inflater == null) return new View(context);
+
             convertView = inflater.inflate(layoutType, parent, false);
         }
 

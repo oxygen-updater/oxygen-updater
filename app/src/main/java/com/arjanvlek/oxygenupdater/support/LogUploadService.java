@@ -17,15 +17,15 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
-public class LoggerService extends IntentService {
+public class LogUploadService extends IntentService {
 
-    public static String TAG = "LoggerService";
+    public static String TAG = "LogUploadService";
 
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      */
-    public LoggerService() {
+    public LogUploadService() {
         super(TAG);
     }
 
@@ -45,7 +45,7 @@ public class LoggerService extends IntentService {
         SystemVersionProperties systemVersionProperties = new SystemVersionProperties(false);
 
         serverConnector.getDevices(devices -> {
-            boolean deviceIsSupported = SupportedDeviceManager.isSupportedDevice(systemVersionProperties, devices);
+            boolean deviceIsSupported = Utils.isSupportedDevice(systemVersionProperties, devices);
 
             try {
                 JSONObject logData = new JSONObject();

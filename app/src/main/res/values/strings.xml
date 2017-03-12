@@ -48,7 +48,7 @@
 
     <string name="download_error">Download Error</string>
     <string name="download_error_close">CLOSE</string>
-    <string name="download_error_corrupt">The downloaded update is corrupt! Please try downloading it again.</string>
+    <string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
     <string name="download_error_directory">It looks like there is no storage available on your device. If you have an SD card, please make sure your device is not connected to a PC and make sure the SD card is working.</string>
     <string name="download_error_network">A network error occurred while downloading the update. Please make sure your Internet connection works and try downloading it again.</string>
     <string name="download_error_retry">RETRY</string>
@@ -86,10 +86,11 @@
 
     <string name="download_waiting_for_network">Waiting for a network connection…</string>
     <string name="download_waiting_for_wifi">Waiting for a Wi-Fi connection…</string>
-    <string name="download_will_retry_soon">Your download will re-start soon…</string>
+    <string name="download_will_retry_soon">Your download will resume soon…</string>
 
     <!-- Settings strings-->
     <string name="settings">Settings</string>
+    <string name="settings_category_other">Other:</string>
     <string name="settings_device">Device</string>
     <string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
     <string name="settings_explanation_incremental_full_update">An incremental update can only be installed if you were running the latest system software version before this update was released.\n\nA full update can be always be installed - regardless of the current system software version running on your device.</string>
@@ -102,6 +103,7 @@
     <string name="settings_push_new_device">New device is supported</string>
 
     <string name="settings_saved">Your settings are automatically saved.</string>
+    <string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
 
     <string name="settings_server_messages">Show messages in the app when:</string>
     <string name="settings_server_messages_in_app">There\'s news or a warning</string>
@@ -111,6 +113,7 @@
     <string name="settings_system_hide_when_up_to_date">My system is up to date</string>
 
     <string name="settings_update_method">Update method</string>
+    <string name="settings_upload_logs">Send crash logs to developer</string>
 
 
     <!-- FAQ strings -->

@@ -65,7 +65,7 @@ public class ServerConnector implements Cloneable {
 
     private boolean uploadLog = false;
 
-    public ServerConnector(SettingsManager settingsManager, boolean uploadLog) {
+    private ServerConnector(SettingsManager settingsManager, boolean uploadLog) {
         this.uploadLog = uploadLog;
         this.settingsManager = settingsManager;
         this.objectMapper = new ObjectMapper();
@@ -107,27 +107,24 @@ public class ServerConnector implements Cloneable {
 
     public void getUpdateData(boolean online, @NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull String incrementalSystemVersion, Consumer<UpdateData> callback, Consumer<String> errorFunction) {
 
-        new ObjectResponseExecutor<>(ServerRequest.UPDATE_DATA, new Consumer<UpdateData>() {
-            @Override
-            public void accept(UpdateData updateData) {
-                if (updateData != null && updateData.getInformation() != null && updateData.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && updateData.isUpdateInformationAvailable() && updateData.isSystemIsUpToDate()) {
-                    getMostRecentOxygenOTAUpdate(deviceId, updateMethodId, callback);
-                } else if(!online) {
-                    if (settingsManager.checkIfCacheIsAvailable()) {
-                        updateData = new UpdateData();
-                        updateData.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME));
-                        updateData.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE));
-                        updateData.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION));
-                        updateData.setUpdateInformationAvailable(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE));
-                        updateData.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME));
-                        updateData.setSystemIsUpToDate(settingsManager.getPreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, false));
-                        callback.accept(updateData);
-                    } else {
-                        errorFunction.accept(NETWORK_CONNECTION_ERROR);
-                    }
-                } else {
+        new ObjectResponseExecutor<>(ServerRequest.UPDATE_DATA, (Consumer<UpdateData>) updateData -> {
+            if (updateData != null && updateData.getInformation() != null && updateData.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && updateData.isUpdateInformationAvailable() && updateData.isSystemIsUpToDate()) {
+                getMostRecentOxygenOTAUpdate(deviceId, updateMethodId, callback);
+            } else if (!online) {
+                if (settingsManager.checkIfOfflineUpdateDataIsAvailable()) {
+                    updateData = new UpdateData();
+                    updateData.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME, null));
+                    updateData.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0));
+                    updateData.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null));
+                    updateData.setUpdateInformationAvailable(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false));
+                    updateData.setFilename(settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME, null));
+                    updateData.setSystemIsUpToDate(settingsManager.getPreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, false));
                     callback.accept(updateData);
+                } else {
+                    errorFunction.accept(NETWORK_CONNECTION_ERROR);
                 }
+            } else {
+                callback.accept(updateData);
             }
         }, deviceId, updateMethodId, incrementalSystemVersion).execute();
     }
@@ -302,6 +299,7 @@ public class ServerConnector implements Cloneable {
 
             if (requestUrl == null) return null;
 
+            Logger.logVerbose(TAG, "");
             Logger.logVerbose(TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
             Logger.logVerbose(TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
 

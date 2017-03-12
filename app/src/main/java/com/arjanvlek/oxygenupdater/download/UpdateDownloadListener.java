@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.Download;
+package com.arjanvlek.oxygenupdater.download;
 
 public interface UpdateDownloadListener {
 

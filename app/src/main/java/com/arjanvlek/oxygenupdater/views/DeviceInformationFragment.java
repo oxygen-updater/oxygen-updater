@@ -14,6 +14,7 @@ import com.arjanvlek.oxygenupdater.Model.DeviceInformationData;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.support.Logger;
+import com.arjanvlek.oxygenupdater.support.Utils;
 
 import java.util.List;
 
@@ -77,11 +78,11 @@ public class DeviceInformationFragment extends AbstractFragment {
             long totalMemory;
             try {
                 ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-                ActivityManager activityManager = (ActivityManager) getActivity().getBaseContext().getSystemService(Context.ACTIVITY_SERVICE);
+                ActivityManager activityManager = (ActivityManager) Utils.getSystemService(getActivity().getBaseContext(), Context.ACTIVITY_SERVICE);
                 activityManager.getMemoryInfo(mi);
                 totalMemory = mi.totalMem / 1048576L;
             } catch (Exception e) {
-                Logger.logWarning("DeviceInformationFragment", "Memory information unavailable due to error: ", e);
+                Logger.logWarning("DeviceInformationFragment", "Memory information is unavailable due to error: ", e);
                 totalMemory = 0;
             }
 

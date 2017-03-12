@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.Model.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
+import com.arjanvlek.oxygenupdater.support.SettingsManager;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class SetupStep4Fragment extends AbstractFragment {
         int selectedPosition = -1;
 
         if (settingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID)) {
-            long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID);
+            long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
 
             selectedPosition = StreamSupport.stream(updateMethods).filter(um -> um.getId() == currentUpdateMethodId).mapToInt(updateMethods::indexOf).findAny().orElse(-1);
         }

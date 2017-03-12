@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.arjanvlek.oxygenupdater.Download;
+package com.arjanvlek.oxygenupdater.download;
 
 import android.text.TextUtils;
 

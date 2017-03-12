@@ -18,7 +18,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
-import com.arjanvlek.oxygenupdater.support.SupportedDeviceManager;
+import com.arjanvlek.oxygenupdater.support.Utils;
 
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
@@ -45,7 +45,7 @@ public class SetupActivity extends AppCompatActivity {
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             ApplicationData applicationData = ((ApplicationData) getApplication());
             applicationData.getServerConnector().getDevices(result -> {
-                if (!SupportedDeviceManager.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
+                if (!Utils.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
                     displayUnsupportedDeviceMessage();
                 }
             });
@@ -103,7 +103,7 @@ public class SetupActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

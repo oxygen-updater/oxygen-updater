@@ -9,14 +9,6 @@ import java.util.Map;
 
 public class SettingsManager {
 
-    //Offline cache properties
-    public static final String PROPERTY_OFFLINE_UPDATE_NAME = "offlineUpdateName";
-    public static final String PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE = "offlineUpdateDownloadSize";
-    public static final String PROPERTY_OFFLINE_UPDATE_DESCRIPTION = "offlineUpdateDescription";
-    public static final String PROPERTY_OFFLINE_FILE_NAME = "offlineFileName";
-    public static final String PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE = "offlineUpdateInformationAvailable";
-    public static final String PROPERTY_OFFLINE_IS_UP_TO_DATE = "offlineIsUpToDate";
-
     //Settings properties
     public static final String PROPERTY_DEVICE = "device";
     public static final String PROPERTY_DEVICE_ID = "device_id";
@@ -32,8 +24,17 @@ public class SettingsManager {
     public static final String PROPERTY_SETUP_DONE = "setup_done";
     public static final String PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings";
     public static final String PROPERTY_DOWNLOAD_ID = "download_id";
+    public static final String PROPERTY_UPLOAD_LOGS = "upload_logs";
 
-    // LocalNotifications properties
+    //Offline cache properties
+    public static final String PROPERTY_OFFLINE_UPDATE_NAME = "offlineUpdateName";
+    public static final String PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE = "offlineUpdateDownloadSize";
+    public static final String PROPERTY_OFFLINE_UPDATE_DESCRIPTION = "offlineUpdateDescription";
+    public static final String PROPERTY_OFFLINE_FILE_NAME = "offlineFileName";
+    public static final String PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE = "offlineUpdateInformationAvailable";
+    public static final String PROPERTY_OFFLINE_IS_UP_TO_DATE = "offlineIsUpToDate";
+
+    // Notifications properties
     public static final String PROPERTY_NOTIFICATION_TOPIC = "notification_topic";
 
     private final Context context;
@@ -41,11 +42,6 @@ public class SettingsManager {
 
     public SettingsManager(Context context) {
         this.context = context;
-    }
-
-
-    public <T> T getPreference(String key) {
-        return getPreference(key, null);
     }
 
     public <T> T getPreference(String key, T defaultValue) {
@@ -83,8 +79,10 @@ public class SettingsManager {
             SharedPreferences.Editor editor = getSharedPreferencesEditor();
 
             // Obtain the private-access preference store from the SharedPreferences editor
+            // The preference store is placed in a private field called "mModified".
             Field f = editor.getClass().getDeclaredField("mModified");
             f.setAccessible(true);
+
             //noinspection unchecked: Without unsafe operations, SharedPreferences will never have a clean-looking API to work with...
             Map<String, Object> preferences = (Map<String, Object>) f.get(editor);
 
@@ -112,25 +110,26 @@ public class SettingsManager {
      * @return if the user has chosen a device and an update method.
      */
     public boolean checkIfSetupScreenIsFilledIn() {
-        return containsPreference(PROPERTY_DEVICE) && containsPreference(PROPERTY_UPDATE_METHOD);
+        return getPreference(PROPERTY_DEVICE_ID, -1L) != -1L && getPreference(PROPERTY_UPDATE_METHOD_ID, -1L) != -1L;
     }
 
 
     /**
      * Checks if a user has completed the initial setup screen.
+     * This means the user has filled it in and also pressed the "Start app" button at the very last screen.
      * @return if the user has completed the setup screen.
      */
     public boolean checkIfSetupScreenHasBeenCompleted() {
-        return getPreference(PROPERTY_DEVICE_ID, -1L) != -1L && getPreference(PROPERTY_UPDATE_METHOD_ID, -1L) != -1L && getPreference(PROPERTY_SETUP_DONE, false);
+        return checkIfSetupScreenIsFilledIn() && getPreference(PROPERTY_SETUP_DONE, false);
     }
 
     /**
      * Checks if the update information has been saved before so it can be viewed without a network connection
      * @return true or false.
      */
-    public boolean checkIfCacheIsAvailable() {
+    public boolean checkIfOfflineUpdateDataIsAvailable() {
         try {
-            return  containsPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE) // update description may be null; should not be checked.
+            return containsPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE)
                     && containsPreference(PROPERTY_OFFLINE_UPDATE_NAME)
                     && containsPreference(PROPERTY_OFFLINE_FILE_NAME);
         } catch(Exception ignored) {

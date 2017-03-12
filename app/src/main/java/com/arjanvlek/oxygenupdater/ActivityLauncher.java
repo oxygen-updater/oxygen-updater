@@ -63,11 +63,13 @@ public class ActivityLauncher {
     public void UpdateInstructions(boolean isDownloaded) {
         Intent i = new Intent(baseActivity, InstallGuideActivity.class);
         i.putExtra(INTENT_SHOW_DOWNLOAD_PAGE, (!isDownloaded));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         baseActivity.startActivity(i);
     }
 
     private <T> void startActivity(Class<T> activityClass) {
         Intent i = new Intent(baseActivity, activityClass);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         baseActivity.startActivity(i);
     }
 
