@@ -24,6 +24,7 @@ public class FormattedURLSpan extends ClickableSpan {
         Uri uri = Uri.parse(this.url);
         Context context = widget.getContext();
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
         try {
             context.startActivity(intent);

@@ -1,11 +1,11 @@
-package com.arjanvlek.oxygenupdater.Download;
+package com.arjanvlek.oxygenupdater.download;
 
 
 import android.app.Activity;
 
 import com.arjanvlek.oxygenupdater.R;
 
-import static com.arjanvlek.oxygenupdater.Download.UpdateDownloader.NOT_SET;
+import static com.arjanvlek.oxygenupdater.download.UpdateDownloader.NOT_SET;
 
 public class DownloadProgressData {
 
@@ -14,7 +14,7 @@ public class DownloadProgressData {
     private int progress;
 
 
-    public DownloadProgressData(long numberOfSecondsRemaining, int progress) {
+    DownloadProgressData(long numberOfSecondsRemaining, int progress) {
         this.timeRemaining = calculateTimeRemaining((int)numberOfSecondsRemaining);
         this.progress = progress;
     }
@@ -35,27 +35,29 @@ public class DownloadProgressData {
         return new TimeRemaining(numberOfSecondsRemaining / 3600, numberOfSecondsRemaining / 60, numberOfSecondsRemaining % 60);
     }
 
+    @SuppressWarnings("WeakerAccess")
+    // Can't be private, because UpdateInformationFragment calls this.
     public class TimeRemaining {
 
         private int hoursRemaining;
         private int minutesRemaining;
         private int secondsRemaining;
 
-        public TimeRemaining(int hoursRemaining, int minutesRemaining, int secondsRemaining) {
+        TimeRemaining(int hoursRemaining, int minutesRemaining, int secondsRemaining) {
             this.hoursRemaining = hoursRemaining;
             this.minutesRemaining = minutesRemaining;
             this.secondsRemaining = secondsRemaining;
         }
 
-        public int getHoursRemaining() {
+        int getHoursRemaining() {
             return hoursRemaining;
         }
 
-        public int getMinutesRemaining() {
+        int getMinutesRemaining() {
             return minutesRemaining;
         }
 
-        public int getSecondsRemaining() {
+        int getSecondsRemaining() {
             return secondsRemaining;
         }
 

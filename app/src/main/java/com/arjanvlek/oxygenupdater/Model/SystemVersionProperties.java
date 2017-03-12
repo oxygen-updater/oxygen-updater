@@ -28,10 +28,8 @@ public class SystemVersionProperties {
         String oemFingerprint = NO_OXYGEN_OS;
         String securityPatchDate = NO_OXYGEN_OS;
         try {
-            Process getBuildPropProcess = new ProcessBuilder()
-                    .command("getprop")
-                    .redirectErrorStream(true)
-                    .start();
+            Process getBuildPropProcess = Runtime.getRuntime().exec("getprop");
+
             Logger.logVerbose(TAG, "Started fetching device properties using 'getprop' command...");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(getBuildPropProcess.getInputStream()));

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -12,19 +11,17 @@ import android.widget.RelativeLayout;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.support.NetworkConnectionManager;
+import com.arjanvlek.oxygenupdater.support.Utils;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 
 public class FAQActivity extends AppCompatActivity {
 
-    private NetworkConnectionManager networkConnectionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
-        this.networkConnectionManager = new NetworkConnectionManager(getApplicationContext());
     }
 
     @Override
@@ -38,13 +35,6 @@ public class FAQActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar.
-        getMenuInflater().inflate(R.menu.menu_faq, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handles action bar item clicks.
         int id = item.getItemId();
@@ -55,17 +45,11 @@ public class FAQActivity extends AppCompatActivity {
             return true;
         }
 
-        // Refreshes the web page if the Refresh button is clicked.
-        if (id == R.id.action_refresh) {
-            loadFaqPage();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     /**
-     * Gracefully quit the activity if the Back button is pressed to prevent downloads getting stuck.
+     * Gracefully quit the activity if the Back button is pressed to speed the app up.
      */
     @Override
     public void onBackPressed() {
@@ -77,7 +61,7 @@ public class FAQActivity extends AppCompatActivity {
      */
     @SuppressLint("SetJavaScriptEnabled") // JavaScript is required to toggle the FAQ Item boxes.
     private void loadFaqPage() {
-        if(networkConnectionManager.checkNetworkConnection()) {
+        if (Utils.checkNetworkConnection(getApplicationContext())) {
             SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
 
             refreshLayout.setRefreshing(true);

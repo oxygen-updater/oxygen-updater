@@ -22,21 +22,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
-import com.arjanvlek.oxygenupdater.Download.DownloadProgressData;
-import com.arjanvlek.oxygenupdater.Download.UpdateDownloadListener;
-import com.arjanvlek.oxygenupdater.Download.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-import com.arjanvlek.oxygenupdater.support.DateTimeFormatter;
-import com.arjanvlek.oxygenupdater.support.NetworkConnectionManager;
+import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
+import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener;
+import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.notifications.Dialogs;
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
 import com.arjanvlek.oxygenupdater.support.UpdateDescriptionParser;
 import com.arjanvlek.oxygenupdater.support.Utils;
-import com.arjanvlek.oxygenupdater.notifications.Dialogs;
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -90,7 +89,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     private Context context;
     private SettingsManager settingsManager;
-    private NetworkConnectionManager networkConnectionManager;
     private UpdateDownloader updateDownloader;
 
     private boolean isLoadedOnce;
@@ -114,8 +112,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         this.context = getActivity();
         this.settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        this.networkConnectionManager = new NetworkConnectionManager(getActivity().getApplicationContext());
-        this.adsAreSupported = getApplicationData().checkPlayServices(getActivity(), false);
+        this.adsAreSupported = getApplicationData().checkPlayServices(getActivity(), false) && BuildConfig.ADS_ARE_SUPPORTED;
     }
 
     @Override
@@ -174,7 +171,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
         long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
-        boolean online = networkConnectionManager.checkNetworkConnection();
+        boolean online = Utils.checkNetworkConnection(getActivity().getApplicationContext());
 
         ServerConnector serverConnector = getApplicationData().getServerConnector();
         SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
@@ -359,8 +356,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         // Show last time checked.
         TextView dateCheckedView = (TextView) rootView.findViewById(R.id.updateInformationSystemIsUpToDateDateTextView);
-        DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(context, this);
-        dateCheckedView.setText(String.format(getString(R.string.update_information_last_checked_on), dateTimeFormatter.formatDateTime(settingsManager.getPreference(PROPERTY_UPDATE_CHECKED_DATE))));
+        dateCheckedView.setText(String.format(getString(R.string.update_information_last_checked_on), Utils.formatDateTime(context, settingsManager.getPreference(PROPERTY_UPDATE_CHECKED_DATE, null))));
 
     }
 
@@ -374,7 +370,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         if (updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null")) {
             buildNumberView.setText(updateData.getVersionNumber());
         } else {
-            buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager.getPreference(PROPERTY_DEVICE)));
+            buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager.getPreference(PROPERTY_DEVICE, context.getString(R.string.device_information_unknown))));
         }
 
         // Display download size.
@@ -595,22 +591,22 @@ public class UpdateInformationFragment extends AbstractFragment {
                             // Handle any other errors according to the error message.
                             if(isAdded()) {
                                 if (statusCode < 1000) {
-                                    showDownloadError(updateData, caller, R.string.download_error_network, R.string.download_notification_error_network);
+                                    showDownloadError(updateData, caller, R.string.download_error_network);
                                 } else {
                                     switch (statusCode) {
                                         case ERROR_UNHANDLED_HTTP_CODE:
                                         case ERROR_HTTP_DATA_ERROR:
                                         case ERROR_TOO_MANY_REDIRECTS:
-                                            showDownloadError(updateData, caller, R.string.download_error_network, R.string.download_notification_error_network);
+                                            showDownloadError(updateData, caller, R.string.download_error_network);
                                             break;
                                         case ERROR_FILE_ERROR:
-                                            showDownloadError(updateData, caller, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
+                                            showDownloadError(updateData, caller, R.string.download_error_directory);
                                             break;
                                         case ERROR_INSUFFICIENT_SPACE:
-                                            showDownloadError(updateData, caller, R.string.download_error_storage, R.string.download_notification_error_storage_full);
+                                            showDownloadError(updateData, caller, R.string.download_error_storage);
                                             break;
                                         case ERROR_DEVICE_NOT_FOUND:
-                                            showDownloadError(updateData, caller, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
+                                            showDownloadError(updateData, caller, R.string.download_error_sd_card);
                                             break;
                                         case ERROR_FILE_ALREADY_EXISTS:
                                             initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADED);
@@ -637,7 +633,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
                                 hideDownloadProgressBar();
 
-                                showDownloadError(updateData, caller, R.string.download_error, R.string.download_notification_error_corrupt);
+                                showDownloadError(updateData, caller, R.string.download_error_corrupt);
                             }
                         }
 
@@ -654,8 +650,8 @@ public class UpdateInformationFragment extends AbstractFragment {
                     }, updateData);
         }
 
-    private void showDownloadError(UpdateData updateData, UpdateDownloader updateDownloader, @StringRes int title, @StringRes int message) {
-        Dialogs.showDownloadError(this, updateDownloader, updateData, title, message);
+    private void showDownloadError(UpdateData updateData, UpdateDownloader updateDownloader, @StringRes int message) {
+        Dialogs.showDownloadError(this, updateDownloader, updateData, R.string.download_error, message);
     }
 
 
@@ -670,7 +666,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             case NOT_DOWNLOADING:
                 downloadButton.setText(getString(R.string.download));
 
-                if (networkConnectionManager.checkNetworkConnection() && updateData.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
+                if (Utils.checkNetworkConnection(getActivity().getApplicationContext()) && updateData.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
                     downloadButton.setEnabled(true);
                     downloadButton.setClickable(true);
                     downloadButton.setOnClickListener(new DownloadButtonOnClickListener(updateData));
@@ -709,7 +705,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         private final UpdateData updateData;
 
-        public DownloadButtonOnClickListener(UpdateData updateData) {
+        DownloadButtonOnClickListener(UpdateData updateData) {
             this.updateData = updateData;
         }
 
@@ -737,7 +733,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         private final Fragment targetFragment;
         private final UpdateData updateData;
 
-        public AlreadyDownloadedOnClickListener(Fragment targetFragment, UpdateData updateData) {
+        AlreadyDownloadedOnClickListener(Fragment targetFragment, UpdateData updateData) {
             this.targetFragment = targetFragment;
             this.updateData = updateData;
         }

@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.views;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.ThreeTuple;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +36,7 @@ import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPLOAD_LOGS;
 
 public class SettingsActivity extends AbstractActivity {
     private ProgressBar progressBar;
@@ -47,6 +48,7 @@ public class SettingsActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
         settingsManager = new SettingsManager(getApplicationContext());
         progressBar = (ProgressBar) findViewById(R.id.settingsProgressBar);
         deviceProgressBar = (ProgressBar) findViewById(R.id.settingsDeviceProgressBar);
@@ -61,20 +63,20 @@ public class SettingsActivity extends AbstractActivity {
     }
 
     private void initSwitches() {
-
-        List<Pair<Integer, String>> switchesAndSettingsItems = Arrays.asList(
-                Pair.create(R.id.settingsAppUpdatesSwitch, PROPERTY_SHOW_APP_UPDATE_MESSAGES),
-                Pair.create(R.id.settingsAppMessagesSwitch, PROPERTY_SHOW_NEWS_MESSAGES),
-                Pair.create(R.id.settingsImportantPushNotificationsSwitch, PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS),
-                Pair.create(R.id.settingsNewVersionPushNotificationsSwitch, PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS),
-                Pair.create(R.id.settingsNewDevicePushNotificationsSwitch, PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS),
-                Pair.create(R.id.settingsSystemIsUpToDateSwitch, PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
+        List<ThreeTuple<Integer, String, Boolean>> switchesAndSettingsItemsAndDefaultValues = Arrays.asList(
+                ThreeTuple.create(R.id.settingsAppUpdatesSwitch, PROPERTY_SHOW_APP_UPDATE_MESSAGES, true),
+                ThreeTuple.create(R.id.settingsAppMessagesSwitch, PROPERTY_SHOW_NEWS_MESSAGES, true),
+                ThreeTuple.create(R.id.settingsImportantPushNotificationsSwitch, PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true),
+                ThreeTuple.create(R.id.settingsNewVersionPushNotificationsSwitch, PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true),
+                ThreeTuple.create(R.id.settingsNewDevicePushNotificationsSwitch, PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true),
+                ThreeTuple.create(R.id.settingsSystemIsUpToDateSwitch, PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true),
+                ThreeTuple.create(R.id.settingsUploadLogsSwitch, PROPERTY_UPLOAD_LOGS, true)
         );
 
-        StreamSupport.stream(switchesAndSettingsItems).forEach(pair -> {
-            SwitchCompat switchView = (SwitchCompat) findViewById(pair.first);
-            switchView.setOnCheckedChangeListener(((buttonView, isChecked) -> settingsManager.savePreference(pair.second, isChecked)));
-            switchView.setChecked(settingsManager.getPreference(pair.second, true));
+        StreamSupport.stream(switchesAndSettingsItemsAndDefaultValues).forEach(tuple -> {
+            SwitchCompat switchView = (SwitchCompat) findViewById(tuple.getFirst());
+            switchView.setOnCheckedChangeListener(((buttonView, isChecked) -> settingsManager.savePreference(tuple.getSecond(), isChecked)));
+            switchView.setChecked(settingsManager.getPreference(tuple.getSecond(), tuple.getThird()));
         });
     }
 
@@ -84,13 +86,15 @@ public class SettingsActivity extends AbstractActivity {
 
             Spinner spinner = (Spinner) findViewById(R.id.settingsDeviceSpinner);
 
+            if (spinner == null) return;
+
             // Set the spinner to the previously selected device.
             final int recommendedPosition = StreamSupport.stream(devices)
                     .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
                     .mapToInt(devices::indexOf).findAny().orElse(-1);
 
             final int selectedPosition = StreamSupport.stream(devices)
-                    .filter(d -> d.getId() == (long) settingsManager.getPreference(PROPERTY_DEVICE_ID))
+                    .filter(d -> d.getId() == settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L))
                     .mapToInt(devices::indexOf).findAny().orElse(-1);
 
 
@@ -109,30 +113,28 @@ public class SettingsActivity extends AbstractActivity {
             };
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            if(spinner != null) {
-                spinner.setAdapter(adapter);
-                if (selectedPosition != -1) {
-                    spinner.setSelection(selectedPosition);
+            spinner.setAdapter(adapter);
+            if (selectedPosition != -1) {
+                spinner.setSelection(selectedPosition);
+            }
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    Device device = (Device) adapterView.getItemAtPosition(i);
+                    settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getName());
+                    settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
+
+                    updateMethodsProgressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    getApplicationData().getServerConnector().getUpdateMethods(device.getId(), SettingsActivity.this::fillUpdateMethodSettings);
                 }
 
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        Device device = (Device) adapterView.getItemAtPosition(i);
-                        settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getName());
-                        settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
-
-                        updateMethodsProgressBar.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.VISIBLE);
-
-                        getApplicationData().getServerConnector().getUpdateMethods(device.getId(), SettingsActivity.this::fillUpdateMethodSettings);
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-                    }
-                });
-            }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+            });
 
 
             deviceProgressBar.setVisibility(View.GONE);
@@ -147,7 +149,9 @@ public class SettingsActivity extends AbstractActivity {
     private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
         if(updateMethods != null && !updateMethods.isEmpty()) {
             Spinner spinner = (Spinner) findViewById(R.id.settingsUpdateMethodSpinner);
-            long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID);
+            if (spinner == null) return;
+
+            long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
 
             final int[] recommendedPositions = StreamSupport.stream(updateMethods).filter(UpdateMethod::isRecommended).mapToInt(updateMethods::indexOf).toArray();
             final int selectedPosition = StreamSupport.stream(updateMethods).filter(um -> um.getId() == currentUpdateMethodId).mapToInt(updateMethods::indexOf).findAny().orElse(-1);
@@ -167,42 +171,40 @@ public class SettingsActivity extends AbstractActivity {
             };
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            if(spinner != null) {
-                spinner.setAdapter(adapter);
+            spinner.setAdapter(adapter);
 
-                if (selectedPosition != -1) {
-                    spinner.setSelection(selectedPosition);
+            if (selectedPosition != -1) {
+                spinner.setSelection(selectedPosition);
+            }
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    UpdateMethod updateMethod = (UpdateMethod) adapterView.getItemAtPosition(i);
+
+                    settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
+                    settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
+
+                    // Google Play services are not required if the user doesn't notifications
+                    if (getApplicationData().checkPlayServices(getParent(), false)) {
+                        // Subscribe to notifications for the newly selected device and update method
+                        NotificationTopicSubscriber.subscribe(getApplicationData());
+                    } else {
+                        Toast.makeText(getApplication().getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
+                    }
+
+                    progressBar.setVisibility(View.GONE);
                 }
 
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        UpdateMethod updateMethod = (UpdateMethod) adapterView.getItemAtPosition(i);
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
 
-                        settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
-                        settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
-
-                        // Google Play services are not required if the user doesn't notifications
-                        if (getApplicationData().checkPlayServices(getParent(), false)) {
-                            // Subscribe to notifications for the newly selected device and update method
-                            NotificationTopicSubscriber.subscribe(getApplicationData());
-                        } else {
-                            Toast.makeText(getApplication().getApplicationContext(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
-                        }
-
-                        progressBar.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-            }
+                }
+            });
 
             updateMethodsProgressBar.setVisibility(View.GONE);
         } else {
-            hideDeviceAndUpdateMethodSettings();
+            hideUpdateMethodSettings();
             progressBar.setVisibility(View.GONE);
         }
     }
@@ -218,12 +220,25 @@ public class SettingsActivity extends AbstractActivity {
         findViewById(R.id.settingsUpperDivisor).setVisibility(View.GONE);
     }
 
+    private void hideUpdateMethodSettings() {
+        findViewById(R.id.settingsUpdateMethodProgressBar).setVisibility(View.GONE);
+        findViewById(R.id.settingsUpdateMethodSpinner).setVisibility(View.GONE);
+        findViewById(R.id.settingsUpdateMethodView).setVisibility(View.GONE);
+        findViewById(R.id.settingsDescriptionView).setVisibility(View.GONE);
+        findViewById(R.id.settingsUpperDivisor).setVisibility(View.GONE);
+    }
+
     private void showSettingsWarning() {
         Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
         Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
-        
-        Logger.logWarning("SettingsActivity", "Settings screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
-        Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
+
+        if (deviceId == -1L || updateMethodId == -1L) {
+            Logger.logWarning("SettingsActivity", "Settings screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
+            Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
+        } else {
+            Logger.logWarning(false, "SettingsActivity", "Settings screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
+            Toast.makeText(this, getString(R.string.settings_saving), Toast.LENGTH_LONG).show();
+        }
     }
 
 

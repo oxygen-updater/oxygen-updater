@@ -22,15 +22,23 @@ import static com.arjanvlek.oxygenupdater.Server.ServerRequest.RequestMethod.POS
 
 enum ServerRequest {
 
-    DEVICES(SERVER_BASE_URL + "devices", 20, Device.class),
-    UPDATE_METHODS(SERVER_BASE_URL + "updateMethods/%1d", 20, UpdateMethod.class),
-    ALL_UPDATE_METHODS(SERVER_BASE_URL + "allUpdateMethods", 20, UpdateMethod.class),
-    UPDATE_DATA(SERVER_BASE_URL + "updateData/%1d/%2d/%3$s", 15, UpdateData.class),
-    MOST_RECENT_UPDATE_DATA(SERVER_BASE_URL + "mostRecentUpdateData/%1d/%2d", 10, UpdateData.class),
-    INSTALL_GUIDE_PAGE(SERVER_BASE_URL + "installGuide/%1d/%2d/%3d", 10, InstallGuidePage.class),
-    SERVER_STATUS(SERVER_BASE_URL + "serverStatus", 10, ServerStatus.class),
-    SERVER_MESSAGES(SERVER_BASE_URL + "serverMessages/%1d/%2d", 20, ServerMessage.class),
-    LOG(POST, SERVER_BASE_URL + "log", 20, LogResult.class);
+    DEVICES("devices", 20, Device.class),
+
+    UPDATE_METHODS("updateMethods/%1d", 20, UpdateMethod.class),
+
+    ALL_UPDATE_METHODS("allUpdateMethods", 20, UpdateMethod.class),
+
+    UPDATE_DATA("updateData/%1d/%2d/%3$s", 20, UpdateData.class),
+
+    MOST_RECENT_UPDATE_DATA("mostRecentUpdateData/%1d/%2d", 20, UpdateData.class),
+
+    INSTALL_GUIDE_PAGE("installGuide/%1d/%2d/%3d", 10, InstallGuidePage.class),
+
+    SERVER_STATUS("serverStatus", 10, ServerStatus.class),
+
+    SERVER_MESSAGES("serverMessages/%1d/%2d", 10, ServerMessage.class),
+
+    LOG(POST, "log", 20, LogResult.class);
 
     private final RequestMethod requestMethod;
     private final String url;
@@ -54,7 +62,7 @@ enum ServerRequest {
 
     URL getUrl(Object... params) {
         try {
-            return new URL(String.format(Locale.US, this.url, params).replace(" ", ""));
+            return new URL(String.format(Locale.US, SERVER_BASE_URL + this.url, params).replace(" ", ""));
         } catch (MalformedURLException e) {
             Logger.logError("ServerRequest", "Malformed URL: " + this.url);
             return null;

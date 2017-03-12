@@ -10,6 +10,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.support.Logger;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
+import com.arjanvlek.oxygenupdater.support.Utils;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -19,18 +20,17 @@ import java.util.Map;
 
 import static android.app.Notification.DEFAULT_ALL;
 import static android.app.Notification.PRIORITY_HIGH;
-import static android.app.Notification.VISIBILITY_PUBLIC;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DEVICE_NAME;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DUTCH_MESSAGE;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.ENGLISH_MESSAGE;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEW_DEVICE_NAME;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEW_VERSION_NUMBER;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.TYPE;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 
 public class NotificationService extends FirebaseMessagingService {
 
@@ -44,9 +44,11 @@ public class NotificationService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         try {
+            NotificationManager notificationManager = (NotificationManager) Utils.getSystemService(this, NOTIFICATION_SERVICE);
+            if (notificationManager == null) return;
+
             Map<String, String> messageContents = remoteMessage.getData();
 
-            NotificationManager notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
             SettingsManager settingsManager = new SettingsManager(getApplicationContext());
             PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
@@ -88,7 +90,7 @@ public class NotificationService extends FirebaseMessagingService {
             }
 
             if (Build.VERSION.SDK_INT >= LOLLIPOP) {
-                builder.setVisibility(VISIBILITY_PUBLIC);
+                builder.setVisibility(Notification.VISIBILITY_PUBLIC);
                 builder.setPriority(PRIORITY_HIGH);
             }
 

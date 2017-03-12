@@ -37,7 +37,10 @@ public class Logger {
                     stackTrace.append(System.getProperty("line.separator"));
                 }
 
-                logAppCrash("ApplicationData", "The application has crashed: " + stackTrace.toString());
+                uploadLog(LogLevel.CRASH, "ApplicationData", "The application has crashed: " + stackTrace.toString());
+
+                //noinspection ResultOfMethodCallIgnored
+                errorFile.delete();
             }
         } catch (Exception e) {
             logError(false, TAG, "Failed to read crashdump: ", e);
@@ -92,6 +95,17 @@ public class Logger {
         uploadLog(LogLevel.WARNING, tag, message, cause);
     }
 
+    public static void logWarning(boolean upload, String tag, String message) {
+        Log.w(tag, message);
+        if (upload) uploadLog(LogLevel.WARNING, tag, message);
+    }
+
+
+    public static void logWarning(boolean upload, String tag, String message, Throwable cause) {
+        Log.w(tag, message, cause);
+        if (upload) uploadLog(LogLevel.WARNING, tag, message, cause);
+    }
+
     public static void logError(boolean upload, String tag, String message) {
         Log.e(tag, message);
         if (upload) uploadLog(LogLevel.ERROR, tag, message);
@@ -106,28 +120,21 @@ public class Logger {
         if (upload) uploadLog(LogLevel.ERROR, tag, message, cause);
     }
 
-    public static void logAppCrash(String tag, String message) {
-        uploadLog(LogLevel.CRASH, tag, message);
+    public static void logError(String tag, String message, Throwable cause) {
+        logError(true, tag, message, cause);
     }
 
-    public static void writeApplicationCrashLog(Context context, Throwable cause) {
+    public static void logApplicationCrash(Context context, Throwable cause) {
         try {
             File errorFile = new File(context.getFilesDir(), ERROR_FILE);
-
-            if (errorFile.exists()) {
-                errorFile.delete();
-            }
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(errorFile));
             writer.write(stacktraceToString(cause));
             writer.flush();
+            Log.e("ApplicationData", "The application has crashed: ", cause);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void logError(String tag, String message, Throwable cause) {
-        logError(true, tag, message, cause);
     }
 
     private static String stacktraceToString(Throwable throwable) {
@@ -149,9 +156,10 @@ public class Logger {
     private static void uploadLog(LogLevel logLevel, String tag, String message) {
 
         if (applicationData != null) {
-            NetworkConnectionManager nm = new NetworkConnectionManager(applicationData.getApplicationContext());
-            if (nm.checkNetworkConnection()) {
-                Intent intent = new Intent(applicationData, LoggerService.class);
+            SettingsManager settingsManager = new SettingsManager(applicationData);
+
+            if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true) && Utils.checkNetworkConnection(applicationData)) {
+                Intent intent = new Intent(applicationData, LogUploadService.class);
                 intent.putExtra("event_type", logLevel.toString());
                 intent.putExtra("tag", tag);
                 intent.putExtra("message", message);

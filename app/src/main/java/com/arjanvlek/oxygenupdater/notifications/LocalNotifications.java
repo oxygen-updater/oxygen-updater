@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.notifications;
 
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,6 +13,7 @@ import android.support.v4.app.TaskStackBuilder;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.support.Logger;
+import com.arjanvlek.oxygenupdater.support.Utils;
 import com.arjanvlek.oxygenupdater.views.InstallGuideActivity;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 
@@ -41,13 +41,13 @@ public class LocalNotifications {
     /**
      * Shows a notification that the downloaded update file is downloaded successfully.
      */
-    public static void showDownloadCompleteNotification(Activity activity) {
+    public static void showDownloadCompleteNotification(Context context) {
         try {
             // If the download complete notification is clicked, hide the first page of the install guide.
-            Intent resultIntent = new Intent(activity, InstallGuideActivity.class);
+            Intent resultIntent = new Intent(context, InstallGuideActivity.class);
             resultIntent.putExtra(INTENT_SHOW_DOWNLOAD_PAGE, false);
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             // Adds the back stack
             stackBuilder.addParentStack(MainActivity.class);
             // Adds the Intent to the top of the stack
@@ -55,19 +55,19 @@ public class LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(activity)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(android.R.drawable.stat_sys_download_done)
                     .setOngoing(false)
                     .setContentIntent(resultPendingIntent)
                     .setAutoCancel(true)
-                    .setContentTitle(activity.getString(R.string.app_name))
-                    .setContentText(activity.getString(R.string.download_complete_notification));
+                    .setContentTitle(context.getString(R.string.app_name))
+                    .setContentText(context.getString(R.string.download_complete_notification));
 
             if (Build.VERSION.SDK_INT >= 21) {
                 builder.setCategory(Notification.CATEGORY_SYSTEM);
             }
 
-            NotificationManager manager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.notify(DOWNLOAD_COMPLETE_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
             Logger.logError(TAG, "Can't display download complete notification: ", e);
@@ -78,9 +78,9 @@ public class LocalNotifications {
     /**
      * Hides the download complete notification. Used when the install guide is manually clicked from within the app.
      */
-    public static void hideDownloadCompleteNotification(Activity activity) {
+    public static void hideDownloadCompleteNotification(Context context) {
         try {
-            NotificationManager manager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
         } catch(Exception e) {
             Logger.logError(TAG, "Can't hide download complete notification: ", e);
@@ -88,15 +88,15 @@ public class LocalNotifications {
     }
 
 
-    public static void showDownloadFailedNotification(Activity activity, @StringRes int message, @StringRes int notificationMessage) {
+    public static void showDownloadFailedNotification(Context context, @StringRes int message, @StringRes int notificationMessage) {
         try {
             // If the download complete notification is clicked, hide the first page of the install guide.
-            Intent resultIntent = new Intent(activity, MainActivity.class);
+            Intent resultIntent = new Intent(context, MainActivity.class);
             resultIntent.putExtra(KEY_HAS_DOWNLOAD_ERROR, true);
-            resultIntent.putExtra(KEY_DOWNLOAD_ERROR_TITLE, activity.getString(R.string.download_failed));
-            resultIntent.putExtra(KEY_DOWNLOAD_ERROR_MESSAGE, activity.getString(message));
+            resultIntent.putExtra(KEY_DOWNLOAD_ERROR_TITLE, context.getString(R.string.download_failed));
+            resultIntent.putExtra(KEY_DOWNLOAD_ERROR_MESSAGE, context.getString(message));
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(activity);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             // Adds the back stack
             stackBuilder.addParentStack(MainActivity.class);
             // Adds the Intent to the top of the stack
@@ -104,19 +104,19 @@ public class LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(activity)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(android.R.drawable.stat_sys_download_done)
                     .setOngoing(false)
                     .setContentIntent(resultPendingIntent)
                     .setAutoCancel(true)
-                    .setContentTitle(activity.getString(R.string.download_failed))
-                    .setContentText(activity.getString(notificationMessage));
+                    .setContentTitle(context.getString(R.string.download_failed))
+                    .setContentText(context.getString(notificationMessage));
 
             if (Build.VERSION.SDK_INT >= 21) {
                 builder.setCategory(Notification.CATEGORY_SYSTEM);
             }
 
-            NotificationManager manager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.notify(DOWNLOAD_FAILED_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
             Logger.logError(TAG, "Can't display download failed notification: ", e);
@@ -127,9 +127,9 @@ public class LocalNotifications {
      * Shows a notification that the downloaded update file is being verified on MD5 sums.
      * @param error If an error occurred during verification, display an error text in the notification.
      */
-    public static void showVerifyingNotification(Activity activity, boolean ongoing, boolean error) {
+    public static void showVerifyingNotification(Context context, boolean ongoing, boolean error) {
         try {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(activity)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(ongoing ? android.R.drawable.stat_sys_download : android.R.drawable.stat_sys_download_done)
                     .setOngoing(ongoing);
 
@@ -138,16 +138,16 @@ public class LocalNotifications {
             }
 
             if(error) {
-                builder.setContentTitle(activity.getString(R.string.download_verifying_error));
-                builder.setContentTitle(activity.getString(R.string.download_notification_error_corrupt));
+                builder.setContentTitle(context.getString(R.string.download_verifying_error));
+                builder.setContentTitle(context.getString(R.string.download_notification_error_corrupt));
             } else {
-                builder.setContentTitle(activity.getString(R.string.download_verifying));
+                builder.setContentTitle(context.getString(R.string.download_verifying));
             }
 
             if (Build.VERSION.SDK_INT >= 21) {
                 builder.setCategory(Notification.CATEGORY_PROGRESS);
             }
-            NotificationManager manager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.notify(VERIFYING_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
             Logger.logError(TAG, "Can't display verifying (ongoing: " + ongoing + ", error: " + error + ") notification: ", e);
@@ -157,9 +157,9 @@ public class LocalNotifications {
     /**
      * Hides the verifying notification. Used when verification has succeeded.
      */
-    public static void hideVerifyingNotification(Activity activity) {
+    public static void hideVerifyingNotification(Context context) {
         try {
-            NotificationManager manager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.cancel(VERIFYING_NOTIFICATION_ID);
         } catch(Exception e) {
             Logger.logError(TAG, "Can't hide verifying notification: ", e);

@@ -21,12 +21,13 @@ import android.widget.CheckBox;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.support.NetworkConnectionManager;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.support.SettingsManager;
-import com.arjanvlek.oxygenupdater.support.SupportedDeviceManager;
+import com.arjanvlek.oxygenupdater.support.Utils;
 
 import java8.util.function.Consumer;
 
+import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     private ViewPager mViewPager;
     private SettingsManager settingsManager;
-    private NetworkConnectionManager networkConnectionManager;
     private ActivityLauncher activityLauncher;
     private Consumer<Integer> callback;
 
@@ -51,12 +51,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         setContentView(R.layout.activity_main_activity);
         Context context = getApplicationContext();
         settingsManager = new SettingsManager(context);
-        networkConnectionManager = new NetworkConnectionManager(context);
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             ApplicationData applicationData = ((ApplicationData) getApplication());
             applicationData.getServerConnector().getDevices(result -> {
-                if (!SupportedDeviceManager.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
+                if (!Utils.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
                     displayUnsupportedDeviceMessage();
                 }
             });
@@ -107,16 +106,20 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         super.onStart();
 
         // Mark the welcome tutorial as finished if the user is moving from older app version. This is checked by either having stored update information for offline viewing, or if the last update checked date is set (if user always had up to date system and never viewed update information before).
-        if(!settingsManager.getPreference(PROPERTY_SETUP_DONE, false) && (settingsManager.checkIfCacheIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
+        if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false) && (settingsManager.checkIfOfflineUpdateDataIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
             settingsManager.savePreference(PROPERTY_SETUP_DONE, true);
         }
 
         // Show the welcome tutorial if the app needs to be set up.
         if(!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)) {
-            if(networkConnectionManager.checkNetworkConnection()) {
+            if (Utils.checkNetworkConnection(getApplicationContext())) {
                 activityLauncher.Tutorial();
             } else {
                 showNetworkError();
+            }
+        } else {
+            if (!settingsManager.containsPreference(PROPERTY_NOTIFICATION_TOPIC)) {
+                NotificationTopicSubscriber.subscribe((ApplicationData) getApplication());
             }
         }
 
@@ -193,12 +196,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     private void showNetworkError() {
-        MessageDialog errorDialog = new MessageDialog()
-                .setTitle(getString(R.string.error_app_requires_network_connection))
-                .setMessage(getString(R.string.error_app_requires_network_connection_message))
-                .setNegativeButtonText(getString(R.string.download_error_close))
-                .setClosable(false);
-        errorDialog.show(getSupportFragmentManager(), "NetworkError");
+        if (!isFinishing()) {
+            MessageDialog errorDialog = new MessageDialog()
+                    .setTitle(getString(R.string.error_app_requires_network_connection))
+                    .setMessage(getString(R.string.error_app_requires_network_connection_message))
+                    .setNegativeButtonText(getString(R.string.download_error_close))
+                    .setClosable(false);
+            errorDialog.show(getSupportFragmentManager(), "NetworkError");
+        }
     }
 
 
