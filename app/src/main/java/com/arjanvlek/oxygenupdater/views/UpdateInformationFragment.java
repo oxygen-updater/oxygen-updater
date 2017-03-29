@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.Model.Banner;
 import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.Model.UpdateData;
@@ -111,7 +112,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         this.context = getActivity();
         this.settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        this.adsAreSupported = getApplicationData().checkPlayServices(getActivity(), false);
+        this.adsAreSupported = getApplicationData().checkPlayServices(getActivity(), false) && BuildConfig.ADS_ARE_SUPPORTED;
     }
 
     @Override

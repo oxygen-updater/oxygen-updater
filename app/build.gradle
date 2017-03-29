@@ -42,7 +42,6 @@ android {
         release { // Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v1.1/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
-
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series\""
             buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.build.product\""
@@ -50,6 +49,8 @@ android {
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\""
             buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint\""
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"" // Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported.
+            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true"
+
             minifyEnabled true
             shrinkResources false
             debuggable false
@@ -65,6 +66,26 @@ android {
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
             buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During debugging, all devices are supported.
+            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
+
+            debuggable true
+            if (Os.isFamily(Os.FAMILY_MAC)) {
+                signingConfig signingConfigs.macReleaseConfig
+            } else {
+                signingConfig signingConfigs.ubuntuReleaseConfig
+            }
+        }
+        screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v1.1/\""
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
+            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
+            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
+            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.product.name\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
+            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
+            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During taking screenshots, all devices are supported.
+            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "false" // On screenshots no ads!
             debuggable true
             if (Os.isFamily(Os.FAMILY_MAC)) {
                 signingConfig signingConfigs.macReleaseConfig
