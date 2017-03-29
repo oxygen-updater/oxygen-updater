@@ -35,7 +35,6 @@ import static android.app.DownloadManager.Request.VISIBILITY_VISIBLE;
 import static android.app.DownloadManager.STATUS_PAUSED;
 import static android.app.DownloadManager.STATUS_PENDING;
 import static android.app.DownloadManager.STATUS_RUNNING;
-import static android.os.Environment.DIRECTORY_DOWNLOADS;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING;
@@ -60,6 +59,7 @@ public class UpdateDownloader {
     private long previousTimeStamp;
     private long previousNumberOfSecondsRemaining = NOT_SET;
     private static final String TAG = "UpdateDownloader";
+    private static final String DIRECTORY_ROOT = "";
 
     public UpdateDownloader(Context context) {
         this.context = context;
@@ -93,7 +93,7 @@ public class UpdateDownloader {
                 DownloadManager.Request request = new DownloadManager.Request(downloadUri)
                         .setDescription(context.getString(R.string.download_description))
                         .setTitle(updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null") && !updateData.getVersionNumber().isEmpty() ? updateData.getVersionNumber() : context.getString(R.string.download_unknown_update_name))
-                        .setDestinationInExternalPublicDir(DIRECTORY_DOWNLOADS, updateData.getFilename())
+                        .setDestinationInExternalPublicDir(DIRECTORY_ROOT, updateData.getFilename())
                         .setVisibleInDownloadsUi(false)
                         .setNotificationVisibility(VISIBILITY_VISIBLE);
 
@@ -127,7 +127,7 @@ public class UpdateDownloader {
 
     public boolean checkIfUpdateIsDownloaded(UpdateData updateData) {
         if (updateData.getId() == null) return false;
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
+        File file = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename());
         return (file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID));
     }
 
@@ -137,7 +137,7 @@ public class UpdateDownloader {
 
     public boolean deleteDownload(UpdateData updateData) {
         try {
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
+            File file = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename());
             return file.delete();
         } catch (Exception e) {
             Logger.logError(TAG, "Failed to delete downloaded update file: ", e);
@@ -211,11 +211,6 @@ public class UpdateDownloader {
 
     private void verifyDownload(Context context, UpdateData updateData) {
         new DownloadVerifier(context).execute(updateData);
-    }
-
-    private boolean makeDownloadDirectory() {
-        File downloadDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        return downloadDirectory.mkdirs();
     }
 
     private void recheckDownloadProgress(final UpdateData updateData, int secondsDelay) {
@@ -335,7 +330,7 @@ public class UpdateDownloader {
 
             if (updateData == null || updateData.getMD5Sum() == null) return true;
 
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + updateData.getFilename());
+            File file = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename());
             return MD5.checkMD5(updateData.getMD5Sum(), file);
         }
 
@@ -371,7 +366,6 @@ public class UpdateDownloader {
                     LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_network, R.string.download_notification_error_network);
                     break;
                 case ERROR_FILE_ERROR:
-                    makeDownloadDirectory();
                     LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_directory, R.string.download_notification_error_storage_not_found);
                     break;
                 case ERROR_INSUFFICIENT_SPACE:
