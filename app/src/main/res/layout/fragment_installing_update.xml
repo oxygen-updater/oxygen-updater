@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/installingUpdateSpinner"
+        android:layout_width="100dp"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_centerHorizontal="true"
+        android:layout_height="100dp">
+    </ProgressBar>
+    <TextView
+        android:id="@+id/preparingInstallationText"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/installingUpdateSpinner"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/install_preparing_installation"
+        android:textSize="20sp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/preparingInstallationText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/install_grant_root_permissions"
+        android:textSize="15sp" />
+
+</RelativeLayout>

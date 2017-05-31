@@ -30,8 +30,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.2.3"
+        versionCode 8
+        versionName "2.0.0"
         if (Os.isFamily(Os.FAMILY_MAC)) {
             signingConfig signingConfigs.macReleaseConfig
         } else {
@@ -40,7 +40,7 @@ android {
     }
     buildTypes {
         release { // Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v1.1/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series\""
@@ -57,7 +57,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug { // Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v1.1/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
@@ -76,7 +76,7 @@ android {
             }
         }
         screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v1.1/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
@@ -86,6 +86,24 @@ android {
             buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During taking screenshots, all devices are supported.
             buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "false" // On screenshots no ads!
+            debuggable true
+            if (Os.isFamily(Os.FAMILY_MAC)) {
+                signingConfig signingConfigs.macReleaseConfig
+            } else {
+                signingConfig signingConfigs.ubuntuReleaseConfig
+            }
+        }
+        device { // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop.
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2/\""
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
+            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
+            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.cm.device\""
+            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"rro.cm.device\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
+            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
+            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // On test device all build types are supported.
+            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // On test device use ads!
             debuggable true
             if (Os.isFamily(Os.FAMILY_MAC)) {
                 signingConfig signingConfigs.macReleaseConfig
@@ -120,18 +138,27 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
     //General Android libraries
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:support-v4:25.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+
     //JSON libraries
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.7'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.7'
+
     //Date and time libraries
     compile 'joda-time:joda-time:2.9.7'
     compile 'org.joda:joda-convert:1.8.1'
+
     //Firebase libraries
     compile 'com.google.firebase:firebase-ads:10.2.0'
     compile 'com.google.firebase:firebase-messaging:10.2.0'
+
+    // Update installation libraries
+    compile 'eu.chainfire:libsuperuser:1.0.0.+'
+    compile 'andhradroid.dev:aFilechooser:1.0.1'
 
     // Java 8 backports:
     compile 'net.sourceforge.streamsupport:streamsupport:1.5.3'

@@ -10,10 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
-import com.arjanvlek.oxygenupdater.Model.UpdateData;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
-import com.arjanvlek.oxygenupdater.views.MessageDialog;
 
 import java8.util.function.Consumer;
 
@@ -118,19 +117,21 @@ public class Dialogs {
         });
     }
 
-    public static void showUpdateAlreadyDownloadedMessage(final Fragment fragment, final Consumer<Void> actionPerformedCallback) {
+    public static void showUpdateAlreadyDownloadedMessage(final UpdateData updateData, final Fragment fragment, final Consumer<Void> actionPerformedCallback) {
         checkPreconditions(fragment, () -> {
             MessageDialog dialog = new MessageDialog()
                     .setTitle(fragment.getString(R.string.delete_message_title))
                     .setMessage(fragment.getString(R.string.delete_message_contents))
                     .setClosable(true)
-                    .setPositiveButtonText(fragment.getString(R.string.install_guide))
+                    .setPositiveButtonText(fragment.getString(R.string.install))
                     .setNegativeButtonText(fragment.getString(R.string.delete_message_delete_button))
                     .setDialogListener(new MessageDialog.DialogListener() {
                         @Override
                         public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                            if(fragment.getActivity().getApplication() == null) return;
+
                             ActivityLauncher activityLauncher = new ActivityLauncher(fragment.getActivity());
-                            activityLauncher.UpdateInstructions(true);
+                            activityLauncher.UpdateInstallation(true, updateData);
                         }
 
                         @Override

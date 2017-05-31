@@ -42,7 +42,7 @@
 
     <string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
     <string name="download_complete">Download voltooid</string>
-    <string name="download_complete_notification">Download voltooid. Tik om door te gaan naar de installatiehandleiding.</string>
+    <string name="download_complete_notification">Download voltooid. Tik om te beginnen met de installatie.</string>
 
     <string name="download_description">Oxygen Updater</string>
 
@@ -135,13 +135,74 @@
     <string name="setup_page_3_text">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Als dit niet zo is, kies het dan hierboven.\n\nVeeg naar links om verder te gaan.</string>
 
     <string name="setup_page_4_title">Kies je update-methode:</string>
-    <string name="setup_page_4_text">De Incrementele update is hier meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, of een hele oude Android-versie gebruikt (je wilt bijv. van 5.0 naar 7.0 updaten), of hierover twijfelt, dan moet je hierboven de Volledige Update kiezen.\n\nVeeg naar links om door te gaan.</string>
+    <string name="setup_page_4_text">De Incrementele update is hier meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een beta-versie van OxygenOS? Kies dan de Community-Editie.\n\nVeeg naar links om door te gaan.</string>
 
     <string name="setup_page_5_title">Klaar!</string>
     <string name="setup_page_5_text">Veel plezier met het gebruik van deze app!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\". </string>
 
+    <!-- Automatic install strings -->
+    <string name="install">Installeren</string>
+    <string name="install_checking_root">Controleren of je root-toegang hebt…</string>
+    <string name="install_grant_root_permissions">Geef toestemming voor root-toegang als dit wordt gevraagd.</string>
+    <string name="install_going_back_not_possible">Helaas, je kunt nu niet teruggaan.</string>
+    <string name="install_preparing_installation">Installatie voorbereiden…</string>
+
+    <string name="install_error_reboot_failed">"Kan je apparaat niet opnieuw opstarten. Heb je wel toestemming voor root-toegang gegeven?"</string>
+    <string name="install_error_write_script_failed">"Kan het installeren van de update niet voorbereiden. Heb je wel toestemming voor root-toegang gegeven?"</string>
+
+    <string name="install_options_backup">Maak een back-up</string>
+    <string name="install_options_header">Je kan het installatieproces aanpassen door onderstaande instellingen te veranderen. Tik op \'Start de installatie\' om de installatie te starten.</string>
+    <string name="install_options_keep_root">Behoud root-toegang</string>
+    <string name="install_options_reboot_after_install">Opnieuw opstarten na installatie</string>
+    <string name="install_options_select_root_package">Selecteer het root-bestand om te installeren…</string>
+    <string name="install_options_start_install">Start de installatie</string>
+    <string name="install_options_title">Kies je installatie-opties</string>
+    <string name="install_options_wipe_cache_partition">Wis de cache-partitie</string>
+
+    <string name="install_options_explanation_title">Wat doen de bovenstaande opties?</string>
+    <string name="install_options_explanation_backup">Maak een back-up:\nWanneer je deze optie kiest, wordt er voordat de installatie begint een back-up van je systeem en al je opgelagen apps / gegevens gemaakt. Altijd handig om te hebben, mocht er bij het installeren toch iets fout gaan.</string>
+    <string name="install_options_explanation_keep_root">Behoud root-toegang:\nWanneer je deze optie kiest, kun je een root-bestand selecteren wat na de installatie (opnieuw) wordt geïnstalleerd. Op deze manier behoud je root-toegang op je apparaat. Let wel op dat het root-bestand geschikt is voor de NIEUWE OxygenOS-versie die je installeert!</string>
+    <string name="install_options_explanation_wipe_cache">Wis de cache-partitie:\nWanneer je deze optie kiest, wordt de cache-partitie na de installatie gewist. Hierdoor blijft je apparaat snel en is de kans op bugs, veroorzaakt door de update, kleiner.</string>
+    <string name="install_options_explanation_reboot">Opnieuw opstarten na installatie:\nWanneer je deze optie kiest, start je apparaat na de installatie vanzelf op naar OxygenOS. Anders blijft het in de herstelmodus staan, waar je eventueel nog andere bestanden kunt installeren.</string>
+
+    <string name="install_recovery_installer_title">Update-installatie</string>
+    <string name="install_recovery_backing_up">Back-up aan het maken. Dit duurt een poosje!</string>
+    <string name="install_recovery_clearing_cache">Cache-partitie wissen…</string>
+    <string name="install_recovery_done">Klaar. Je apparaat zal herstarten.</string>
+    <string name="install_recovery_installing_additional_zip">Root-bestand installeren…</string>
+    <string name="install_recovery_installing_update">Update installeren…</string>
+    <string name="install_recovery_thank_you">Bedankt voor het gebruiken van Oxygen Updater. Als je deze app leuk vindt, geef hem dan 5 sterren op Google Play :-)</string>
+
+    <string name="install_select_method_title">Hoe wil je deze update installeren?</string>
+    <string name="install_select_method_automatic_title">Automatische installatie*</string>
+    <string name="install_select_method_automatic_image">Plaatje van de automatische installatie</string>
+    <string name="install_select_method_automatic_description">De eenvoudigste manier om de update te installeren.\nJe apparaat start opnieuw op en installeert de update vervolgens vanzelf.\n\n* Vereist root-toegang en TWRP-recovery.</string>
+
+    <string name="install_select_method_manual_title">Handmatige installatie</string>
+    <string name="install_select_method_manual_image">Plaatje van de handmatige installatie</string>
+    <string name="install_select_method_manual_description">Lees de installatie-handleiding om te leren hoe je de update zelf kunt installeren. Je installeert de update via de herstelmodus van je apparaat.</string>
+
+    <string name="install_temporary_error">Er heeft zich een tijdelijke fout voorgedaan bij het voorbereiden van de installatie van de update. Probeer het opnieuw.</string>
+
+    <string name="install_verify_error_title">Installatie mislukt</string>
+    <string name="install_verify_error_nothing_installed">Fout bij het installeren van de update. Er zijn geen wijzigingen in de software van je apparaat aangebracht. Probeer de update opnieuw te installeren.</string>
+    <string name="install_verify_error_unable_to_verify">Kan niet controleren of de update succesvol is geïnstalleerd. Open Oxygen Updater om te kijken of de update succesvol is geïnstalleerd.</string>
+    <string name="install_verify_error_wrong_version_installed">Er is een andere versie van OxygenOS geïnstalleerd. Kies bij het selecteren van een root-bestand geen OxygenOS-updatebestand.</string>
+
+    <string name="install_verify_success_title">Installatie voltooid</string>
+    <string name="install_verify_success_message">OxygenOS-versie %1$s is succesvol geïnstalleerd.</string>
+
+    <string name="install_zip_file_clear">Wis root-bestand</string>
+    <string name="install_zip_file_pick">Kies root-bestand</string>
+    <string name="install_zip_file_placeholder">Selecteer een root-bestand…</string>
+    <string name="install_zip_file_wrong_file_type">Je kunt alleen een zipbestand selecteren. Selecteer het juiste bestand.</string>
+
+
     <!-- Install guide strings -->
+    <string name="install_guide_no_root">Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
+    <string name="install_guide_automatic_install_disabled">Automatiche installaties zijn vanwege technische mankementen tijdelijk uitgeschakeld. Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
     <string name="install_guide">Installatiehandleiding</string>
+    <string name="install_guide_loading">Installatiehandleiding laden …</string>
     <string name="install_guide_title">Installatie - %1$d van %2$d</string>
     <string name="install_guide_close_button">Sluit de installatiehandleiding</string>
     <string name="install_guide_header">Veeg &lt;- -&gt; om tussen pagina\'s te wisselen.</string>
@@ -163,6 +224,10 @@
 
     <string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe Oxygen OS-versie!</string>
     <string name="install_guide_page_5_text">- Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de Oxygen OS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
+
+    <string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
+    <string name="install_guide_zip_file_missing">"Als je root-toegang wilt behouden, moet je hierboven een root-bestand selecteren."</string>
+    <string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
 
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
@@ -201,13 +266,18 @@
     <!-- Help strings -->
     <string name="help">Help</string>
     <string name="help_bottom">Rechts boven in de app staat het menu. Daarin kun je naar de instellingen van deze app, naar de pagina met veelgestelde vragen en naar dit Help-scherm gaan.\nIn de instellingen kun je de update-methode en instellingen voor meldingen wijzigen.</string>
-    <string name="help_middle">Als je een update wilt installeren, tik je eerst op de \"Download\"-knop.\n\nAls de update is gedownload, tik je op \"Installatiehandleiding\" om te lezen hoe je de update kunt installeren.\n\nAls je apparaat up-to-date is, kun je op \"Bekijk update-informatie\" tikken om de nieuwe functies in je huidige software te bekijken.\n\nVeeg naar links of tik op \"Apparaat-info\" om enkele technische details over je apparaat te bekijken.</string>
+    <string name="help_middle">Als je een update wilt installeren, tik je eerst op de \"Download\"-knop.\n\nAls de update is gedownload, tik je op \"Installatie\" om te beginnen met de installatie.\n\nAls je apparaat up-to-date is, kun je op \"Bekijk update-informatie\" tikken om de nieuwe functies in je huidige software te bekijken.\n\nVeeg naar links of tik op \"Apparaat-info\" om enkele technische details over je apparaat te bekijken.</string>
     <string name="help_symbol_download">Toont de downloadgrootte van deze update.</string>
     <string name="help_symbol_download_cancel">Indien je hier op tikt, wordt het downloaden van deze update afgebroken.</string>
     <string name="help_title">Hoe werkt deze app?</string>
     <string name="help_top">Als een nieuwe update beschikbaar is, staan het versienummer, de nieuwe functies (Engels) en de downloadgrootte op het hoofdscherm.</string>
     <string name="help_used_symbols">Gebruikte symoblen:</string>
-    
+
+    <!-- News strings -->
+    <string name="news">Nieuws</string>
+    <string name="news_author">Geschreven door: %1$s</string>
+    <string name="news_date_published">Laatste update: %1$s</string>
+
     <!-- Error strings -->
     <string name="error_app_outdated">Oeps!</string>
     <string name="error_app_outdated_message">Deze versie van de app is wel erg oud. Het is tijd om hem bij te werken! Dit kan door hieronder op \"Play Store\" te tikken. Tik vervolgens in Google Play op \"Bijwerken\".</string>
@@ -224,14 +294,18 @@
     
     <!-- Message box strings -->
     <string name="delete_message_title">Update is al gedownload</string>
-    <string name="delete_message_contents">Je hebt deze update al gedownload, maar nog niet geïnstalleerd. Tik op \"Installatiehandleiding\" voor installatie-instructies. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
+    <string name="delete_message_contents">Je hebt deze update al gedownload, maar nog niet geïnstalleerd. Tik op \"Installatie\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
     <string name="delete_message_delete_button">Verwijder</string>
 
     <string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
     <string name="unsupported_device_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan. \n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
     <string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
+    <string name="root_check_title">Root-toegang</string>
+    <string name="root_check_message">Sommige instellingen zijn niet geschikt voor apparaten met root-toegang. Oxygen Updater kan hierop controleren, en biedt vervolgens enkel de juisite opties aan. \n\nAls je root-toegang hebt, is het sterk aanbevolen om na het sluiten van deze melding toestemming voor het gebruik van root-toegang te geven.\n\nGeen root-toegang? Dan merk je hier niets van en kun je gewoon verder gaan.</string>
 
     <!-- Other strings -->
     <string name="icon">Icoon</string>
+    <string name="loading">Laden…</string>
+    <string name="choose_file">Kies een bestand</string>
 </resources>

@@ -3,4 +3,4 @@
     android:id="@+id/tutorialActivityPager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.SetupActivity" />
+    tools:context=".setupwizard.SetupActivity" />

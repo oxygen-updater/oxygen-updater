@@ -11,13 +11,15 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.support.Logger;
-import com.arjanvlek.oxygenupdater.support.Utils;
-import com.arjanvlek.oxygenupdater.views.InstallGuideActivity;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.installation.InstallActivity;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 
-import static com.arjanvlek.oxygenupdater.views.InstallGuideActivity.INTENT_SHOW_DOWNLOAD_PAGE;
+import static com.arjanvlek.oxygenupdater.installation.InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE;
+import static com.arjanvlek.oxygenupdater.installation.InstallActivity.INTENT_UPDATE_DATA;
 
 
 public class LocalNotifications {
@@ -41,11 +43,12 @@ public class LocalNotifications {
     /**
      * Shows a notification that the downloaded update file is downloaded successfully.
      */
-    public static void showDownloadCompleteNotification(Context context) {
+    public static void showDownloadCompleteNotification(Context context, UpdateData updateData) {
         try {
             // If the download complete notification is clicked, hide the first page of the install guide.
-            Intent resultIntent = new Intent(context, InstallGuideActivity.class);
+            Intent resultIntent = new Intent(context, InstallActivity.class);
             resultIntent.putExtra(INTENT_SHOW_DOWNLOAD_PAGE, false);
+            resultIntent.putExtra(INTENT_UPDATE_DATA, updateData);
 
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
             // Adds the back stack

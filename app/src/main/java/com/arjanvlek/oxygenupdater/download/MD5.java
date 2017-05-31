@@ -11,7 +11,7 @@ package com.arjanvlek.oxygenupdater.download;
 
 import android.text.TextUtils;
 
-import com.arjanvlek.oxygenupdater.support.Logger;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;

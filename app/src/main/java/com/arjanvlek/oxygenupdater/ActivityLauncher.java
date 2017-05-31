@@ -3,14 +3,16 @@ package com.arjanvlek.oxygenupdater;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.arjanvlek.oxygenupdater.views.AboutActivity;
-import com.arjanvlek.oxygenupdater.views.FAQActivity;
-import com.arjanvlek.oxygenupdater.views.HelpActivity;
-import com.arjanvlek.oxygenupdater.views.InstallGuideActivity;
-import com.arjanvlek.oxygenupdater.views.SettingsActivity;
-import com.arjanvlek.oxygenupdater.views.SetupActivity;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
+import com.arjanvlek.oxygenupdater.about.AboutActivity;
+import com.arjanvlek.oxygenupdater.faq.FAQActivity;
+import com.arjanvlek.oxygenupdater.help.HelpActivity;
+import com.arjanvlek.oxygenupdater.installation.InstallActivity;
+import com.arjanvlek.oxygenupdater.settings.SettingsActivity;
+import com.arjanvlek.oxygenupdater.setupwizard.SetupActivity;
 
-import static com.arjanvlek.oxygenupdater.views.InstallGuideActivity.INTENT_SHOW_DOWNLOAD_PAGE;
+import static com.arjanvlek.oxygenupdater.installation.InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE;
+import static com.arjanvlek.oxygenupdater.installation.InstallActivity.INTENT_UPDATE_DATA;
 
 public class ActivityLauncher {
 
@@ -58,11 +60,12 @@ public class ActivityLauncher {
 
 
     /**
-     * Opens the update instructions page.
+     * Opens the update installation page.
      */
-    public void UpdateInstructions(boolean isDownloaded) {
-        Intent i = new Intent(baseActivity, InstallGuideActivity.class);
+    public void UpdateInstallation(boolean isDownloaded, UpdateData updateData) {
+        Intent i = new Intent(baseActivity, InstallActivity.class);
         i.putExtra(INTENT_SHOW_DOWNLOAD_PAGE, (!isDownloaded));
+        i.putExtra(INTENT_UPDATE_DATA, updateData);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         baseActivity.startActivity(i);
     }

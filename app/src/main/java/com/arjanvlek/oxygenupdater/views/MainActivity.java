@@ -21,15 +21,19 @@ import android.widget.CheckBox;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment;
+import com.arjanvlek.oxygenupdater.news.NewsFragment;
+import com.arjanvlek.oxygenupdater.notifications.MessageDialog;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
-import com.arjanvlek.oxygenupdater.support.SettingsManager;
-import com.arjanvlek.oxygenupdater.support.Utils;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
 
 import java8.util.function.Consumer;
 
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SETUP_DONE;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
 
 @SuppressWarnings("deprecation")
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         mViewPager = (ViewPager) findViewById(R.id.mainActivityPager);
 
-        if(mViewPager != null) {
+        if (mViewPager != null) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
@@ -83,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 }
             });
         }
-
 
 
         // For each of the sections in the app, add a tab to the action bar.
@@ -99,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         this.activityLauncher = new ActivityLauncher(this);
 
+        try {
+            mViewPager.setCurrentItem(1);
+        } catch (IndexOutOfBoundsException ignored) {
+
+        }
     }
 
     @Override
@@ -226,8 +234,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         @Override
         public int getCount() {
-            // Show 2 total pages.
-            return 2;
+            // Show 3 total pages.
+            return 3;
         }
 
         @Override
@@ -235,8 +243,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             boolean MorHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
             switch (position) {
                 case 0:
-                    return MorHigher ? getString(R.string.update_information_header_short) : getString(R.string.update_information_header);
+                    return getString(R.string.news);
                 case 1:
+                    return MorHigher ? getString(R.string.update_information_header_short) : getString(R.string.update_information_header);
+                case 2:
                     return MorHigher ? getString(R.string.device_information_header_short) : getString(R.string.device_information_header);
             }
             return null;
@@ -253,10 +263,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
          * number.
          */
         static Fragment newInstance(int sectionNumber) {
-            if (sectionNumber == 1) {
-                return new UpdateInformationFragment();
+            if(sectionNumber == 1) {
+                return new NewsFragment();
             }
             if (sectionNumber == 2) {
+                return new UpdateInformationFragment();
+            }
+            if (sectionNumber == 3) {
                 return new DeviceInformationFragment();
             }
             return null;
