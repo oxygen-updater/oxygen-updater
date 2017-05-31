@@ -21,15 +21,19 @@ import android.widget.CheckBox;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment;
+import com.arjanvlek.oxygenupdater.news.NewsFragment;
+import com.arjanvlek.oxygenupdater.notifications.MessageDialog;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
-import com.arjanvlek.oxygenupdater.support.SettingsManager;
-import com.arjanvlek.oxygenupdater.support.Utils;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
 
 import java8.util.function.Consumer;
 
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_SETUP_DONE;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
 
 @SuppressWarnings("deprecation")
@@ -40,10 +44,16 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     private ActivityLauncher activityLauncher;
     private Consumer<Integer> callback;
 
+    public static final int PAGE_NEWS = 0;
+    public static final int PAGE_UPDATE_INFORMATION = 1;
+    public static final int PAGE_DEVICE_INFORMATION = 2;
+
 
     // Permissions constants
     public final static String DOWNLOAD_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
     public final static int PERMISSION_REQUEST_CODE = 200;
+
+    public static final String INTENT_START_PAGE = "start_page";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         mViewPager = (ViewPager) findViewById(R.id.mainActivityPager);
 
-        if(mViewPager != null) {
+        if (mViewPager != null) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
             mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
@@ -83,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                 }
             });
         }
-
 
 
         // For each of the sections in the app, add a tab to the action bar.
@@ -99,6 +108,17 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         this.activityLauncher = new ActivityLauncher(this);
 
+        try {
+            int startPage = PAGE_UPDATE_INFORMATION;
+
+            if(getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras().containsKey(INTENT_START_PAGE)) {
+                startPage = getIntent().getExtras().getInt(INTENT_START_PAGE);
+            }
+
+            mViewPager.setCurrentItem(startPage);
+        } catch (IndexOutOfBoundsException ignored) {
+
+        }
     }
 
     @Override
@@ -221,22 +241,24 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a FragmentBuilder (defined as a static inner class below).
-            return FragmentBuilder.newInstance(position + 1);
+            return FragmentBuilder.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            // Show 2 total pages.
-            return 2;
+            // Show 3 total pages.
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             boolean MorHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
             switch (position) {
-                case 0:
+                case PAGE_NEWS:
+                    return getString(R.string.news);
+                case PAGE_UPDATE_INFORMATION:
                     return MorHigher ? getString(R.string.update_information_header_short) : getString(R.string.update_information_header);
-                case 1:
+                case PAGE_DEVICE_INFORMATION:
                     return MorHigher ? getString(R.string.device_information_header_short) : getString(R.string.device_information_header);
             }
             return null;
@@ -253,10 +275,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
          * number.
          */
         static Fragment newInstance(int sectionNumber) {
-            if (sectionNumber == 1) {
+            if(sectionNumber == PAGE_NEWS) {
+                return new NewsFragment();
+            }
+            if (sectionNumber == PAGE_UPDATE_INFORMATION) {
                 return new UpdateInformationFragment();
             }
-            if (sectionNumber == 2) {
+            if (sectionNumber == PAGE_DEVICE_INFORMATION) {
                 return new DeviceInformationFragment();
             }
             return null;

@@ -2,6 +2,7 @@ package com.arjanvlek.oxygenupdater.download;
 
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.arjanvlek.oxygenupdater.R;
 
@@ -61,7 +62,9 @@ public class DownloadProgressData {
             return secondsRemaining;
         }
 
-        public String toString(Activity activity) {
+        public String toString(Context activity) {
+            if(activity == null) return "";
+
             if (getHoursRemaining() > 1) {
                 return activity.getString(R.string.download_progress_text_hours_remaining, getProgress(), getHoursRemaining());
             } else if (getHoursRemaining() == 1) {

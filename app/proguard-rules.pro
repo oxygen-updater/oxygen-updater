@@ -28,11 +28,12 @@
    public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *;
 }
 
-#We need to keep the method names of all getters and setters of the models to allow Jackson to find them.
--keep public class com.arjanvlek.oxygenupdater.Model.** {
+#We need to keep the method names of all getters and setters to allow Jackson to find them.
+-keep public class com.arjanvlek.oxygenupdater.** {
   public void set*(***);
   public *** get*();
 }
+
 -dontwarn javax.xml.**
 #Due to removal of Apache http components in Android 6.0 these lines have to be added here.
 -dontwarn org.apache.http.**

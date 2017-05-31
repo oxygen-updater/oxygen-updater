@@ -8,12 +8,12 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 
-import com.arjanvlek.oxygenupdater.Model.UpdateData;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
-import com.arjanvlek.oxygenupdater.support.Logger;
-import com.arjanvlek.oxygenupdater.support.SettingsManager;
-import com.arjanvlek.oxygenupdater.support.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.internal.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_E
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.ONGOING;
-import static com.arjanvlek.oxygenupdater.support.SettingsManager.PROPERTY_DOWNLOAD_ID;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOAD_ID;
 
 
 public class UpdateDownloader {
@@ -59,12 +59,17 @@ public class UpdateDownloader {
     private long previousTimeStamp;
     private long previousNumberOfSecondsRemaining = NOT_SET;
     private static final String TAG = "UpdateDownloader";
-    private static final String DIRECTORY_ROOT = "";
+    public static final String DIRECTORY_ROOT = "";
 
     public UpdateDownloader(Context context) {
         this.context = context;
-        this.downloadManager = (DownloadManager) Utils.getSystemService(context, Context.DOWNLOAD_SERVICE);
-        this.settingsManager = new SettingsManager(context.getApplicationContext());
+        if(context != null) {
+            this.downloadManager = (DownloadManager) Utils.getSystemService(context, Context.DOWNLOAD_SERVICE);
+            this.settingsManager = new SettingsManager(context);
+        } else {
+            this.downloadManager = null;
+            this.settingsManager = new SettingsManager(null);
+        }
     }
 
     public UpdateDownloader setUpdateDownloadListenerAndStartPolling(UpdateDownloadListener listener, UpdateData updateData) {
@@ -126,7 +131,7 @@ public class UpdateDownloader {
     }
 
     public boolean checkIfUpdateIsDownloaded(UpdateData updateData) {
-        if (updateData.getId() == null) return false;
+        if (updateData == null || updateData.getId() == null) return false;
         File file = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename());
         return (file.exists() && !settingsManager.containsPreference(PROPERTY_DOWNLOAD_ID));
     }
@@ -341,7 +346,7 @@ public class UpdateDownloader {
             if (result) {
                 if(listener != null) listener.onVerifyComplete();
                 LocalNotifications.hideVerifyingNotification(context);
-                LocalNotifications.showDownloadCompleteNotification(context);
+                LocalNotifications.showDownloadCompleteNotification(context, updateData);
 
                 clearUp();
             } else {
@@ -353,6 +358,10 @@ public class UpdateDownloader {
                 clearUp();
             }
         }
+    }
+
+    public static String getFilePath(UpdateData updateData) {
+        return Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename();
     }
 
     private void showDownloadErrorNotification(Context context, UpdateData updateData, int statusCode) {

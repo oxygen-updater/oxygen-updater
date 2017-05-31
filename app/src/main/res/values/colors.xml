@@ -6,6 +6,7 @@
 
     <!-- Color used on disabled buttons -->
     <color name="dark_grey">#ee999999</color>
+    <color name="darker_grey">#6b6969</color>
 
 
     <!-- HOLO theme colors -->

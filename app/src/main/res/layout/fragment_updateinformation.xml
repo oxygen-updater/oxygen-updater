@@ -148,7 +148,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:enabled="true"
-                            android:text="@string/install_guide"
+                            android:text="@string/install"
                             android:textAppearance="?android:textAppearanceSmall"
                             android:textColor="@color/oneplus_red" />
 

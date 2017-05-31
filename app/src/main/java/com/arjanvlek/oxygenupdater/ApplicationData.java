@@ -3,10 +3,10 @@ package com.arjanvlek.oxygenupdater;
 import android.app.Activity;
 import android.app.Application;
 
-import com.arjanvlek.oxygenupdater.Model.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.Server.ServerConnector;
-import com.arjanvlek.oxygenupdater.support.Logger;
-import com.arjanvlek.oxygenupdater.support.SettingsManager;
+import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
@@ -71,7 +71,7 @@ public class ApplicationData extends Application {
             Logger.logVerbose(TAG, "Creating new SystemVersionProperties instance...");
             systemVersionProperties = new SystemVersionProperties(true);
         } else {
-            Logger.logVerbose(TAG, "Using cached instance of SystemVersionProperties");
+            Logger.logVerbose(false, TAG, "Using cached instance of SystemVersionProperties");
         }
         return systemVersionProperties;
     }

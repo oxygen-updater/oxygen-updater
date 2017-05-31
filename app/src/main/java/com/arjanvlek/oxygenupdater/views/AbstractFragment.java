@@ -3,9 +3,10 @@ package com.arjanvlek.oxygenupdater.views;
 import android.support.v4.app.Fragment;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
-import com.arjanvlek.oxygenupdater.support.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,8 +14,10 @@ import java.util.List;
 public abstract class AbstractFragment extends Fragment {
 
     private ApplicationData applicationData;
+    private SettingsManager settingsManager;
+
     //Test devices for ads.
-    public static final List<String> ADS_TEST_DEVICES = Collections.singletonList("0F6A86C5D00DC51588D523BE3905D484");
+    public static final List<String> ADS_TEST_DEVICES = Collections.singletonList("BE7E0AF85E0332807B1EA3FE4236F93C");
 
     public ApplicationData getApplicationData() {
         if (applicationData == null) {
@@ -22,8 +25,29 @@ public abstract class AbstractFragment extends Fragment {
                 applicationData = (ApplicationData) getActivity().getApplication();
             } catch (Exception e) {
                 Logger.logError("AbstractFragment", "FAILED to get application data: ", e);
+                // Return empty application data which can still be used for SystemVersionProperties and to check for root access.
+                applicationData = new ApplicationData();
             }
         }
         return applicationData;
+    }
+
+    public ServerConnector getServerConnector() {
+        if(applicationData == null) {
+            applicationData = (ApplicationData) getActivity().getApplication();
+        }
+        return applicationData.getServerConnector();
+    }
+
+    public SettingsManager getSettingsManager() {
+        if(applicationData == null) {
+            applicationData = (ApplicationData) getActivity().getApplication();
+        }
+
+        if(settingsManager == null) {
+            settingsManager = new SettingsManager(applicationData);
+        }
+
+        return settingsManager;
     }
 }
