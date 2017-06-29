@@ -182,7 +182,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             if (!isLoadedOnce) updateDownloader = initDownloadManager(updateData);
 
             // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
-            if (!isLoadedOnce && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
+            if (!isLoadedOnce && getActivity() != null && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
                 Intent i = getActivity().getIntent();
                 Dialogs.showDownloadError(instance, updateDownloader, updateData, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
             }
@@ -365,7 +365,11 @@ public class UpdateInformationFragment extends AbstractFragment {
         // Display available update version number.
         TextView buildNumberView = (TextView) rootView.findViewById(R.id.updateInformationBuildNumberView);
         if (updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null")) {
-            buildNumberView.setText(updateData.getVersionNumber());
+            if(UpdateDescriptionParser.containsHeaderLine(updateData.getDescription())) {
+                buildNumberView.setText(UpdateDescriptionParser.getFormattedUpdateTitle(updateData.getDescription()));
+            } else {
+                buildNumberView.setText(updateData.getVersionNumber());
+            }
         } else {
             buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager.getPreference(PROPERTY_DEVICE, context.getString(R.string.device_information_unknown))));
         }

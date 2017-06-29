@@ -34,10 +34,10 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECE
 
 public class NotificationService extends FirebaseMessagingService {
 
-    public static final int NEW_DEVICE_NOTIFICATION_ID = 1;
-    public static final int NEW_UPDATE_NOTIFICATION_ID = 2;
-    public static final int GENERIC_NOTIFICATION_ID = 3;
-    public static final int UNKNOWN_NOTIFICATION_ID = 4;
+    public static final int NEW_DEVICE_NOTIFICATION_ID = 10010;
+    public static final int NEW_UPDATE_NOTIFICATION_ID = 20020;
+    public static final int GENERIC_NOTIFICATION_ID = 30030;
+    public static final int UNKNOWN_NOTIFICATION_ID = 40040;
 
     public static final String TAG = "NotificationService";
 
@@ -94,7 +94,9 @@ public class NotificationService extends FirebaseMessagingService {
                 builder.setPriority(PRIORITY_HIGH);
             }
 
-            builder.setContentTitle(getString(R.string.app_name));
+            if(notificationType != NotificationType.NEW_VERSION) {
+                builder.setContentTitle(getString(R.string.app_name));
+            }
             builder.setContentIntent(contentIntent);
             builder.setDefaults(DEFAULT_ALL);
             builder.setAutoCancel(true);
@@ -129,9 +131,10 @@ public class NotificationService extends FirebaseMessagingService {
         String message = getString(R.string.notification_version, versionNumber, deviceName);
         return new Notification.Builder(this)
                         .setSmallIcon(R.drawable.ic_stat_notification_new_version)
+                        .setContentTitle(getString(R.string.notification_version_title))
                         .setStyle(new Notification.BigTextStyle()
-                                .bigText(message)
-                                .setSummaryText(getString(R.string.notification_update_short)))
+                                .bigText(message))
+                        .setWhen(System.currentTimeMillis())
                         .setContentText(message);
 
     }

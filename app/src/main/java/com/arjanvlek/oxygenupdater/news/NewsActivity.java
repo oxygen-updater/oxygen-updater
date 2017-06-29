@@ -58,7 +58,7 @@ public class NewsActivity extends AppCompatActivity {
             datePublishedView.setText(getString(R.string.news_date_published, Utils.formatDateTime(getApplication(), newsItem.getDateLastEdited())));
         }
 
-        if(getApplication() != null && getApplication() instanceof ApplicationData) {
+        if(getApplication() != null && getApplication() instanceof ApplicationData && Utils.checkNetworkConnection(getApplication())) {
             ((ApplicationData)getApplication()).getServerConnector().markNewsItemAsRead(newsItem.getId(), (result) -> {
                 if (result != null && !result.isSuccess()) {
                     Logger.logError("NewsActivity", "Error marking news item as read on the server:" + result.getErrorMessage());

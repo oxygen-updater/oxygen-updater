@@ -8,112 +8,33 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".setupwizard.SetupActivity">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tut1bText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="@string/help_title"
+            android:text="@string/setup_page_2_title"
             android:textAppearance="?android:textAppearanceLarge"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tut1bText2"
+            android:id="@+id/introduction_step_1_text_block_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tut1bText1"
-            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="@string/help_top"
+            android:text="@string/setup_page_2_text"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="@color/material_blue_grey" />
 
-        <TextView
-            android:id="@+id/tut1bText2a"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tut1bText2"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/help_middle"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/material_blue_grey" />
-
-        <TextView
-            android:id="@+id/tut1bText2b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tut1bText2a"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/help_bottom"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/material_blue_grey" />
-
-        <TextView
-            android:id="@+id/tut1bText2c"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tut1bText2b"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="@string/help_used_symbols"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/tut1bText4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tut1bText2c"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@+id/tut1bdownloadSizeImage"
-            android:gravity="center_vertical"
-            android:minHeight="50dp"
-            android:text="@string/help_symbol_download"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/material_blue_grey" />
-
-        <ImageView
-            android:id="@+id/tut1bdownloadSizeImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/tut1bText4"
-            android:contentDescription="@string/icon"
-            android:src="@drawable/ic_download_size" />
-
-        <TextView
-            android:id="@+id/tut1bText5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tut1bText4"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_toEndOf="@+id/tut1bdownloadCancelImage"
-            android:gravity="center_vertical"
-            android:minHeight="50dp"
-            android:text="@string/help_symbol_download_cancel"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/material_blue_grey" />
-
-        <ImageView
-            android:id="@+id/tut1bdownloadCancelImage"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/tut1bText5"
-            android:contentDescription="@string/icon"
-            android:src="@drawable/cancel_download" />
-
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

@@ -78,14 +78,24 @@ public class SetupStep4Fragment extends AbstractFragment {
     private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
         Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsUpdateMethodSpinner);
 
-        final int[] recommendedPositions = StreamSupport.stream(updateMethods).filter(UpdateMethod::isRecommended).mapToInt(updateMethods::indexOf).toArray();
+        final int[] recommendedPositions = StreamSupport
+                .stream(updateMethods)
+                .filter(UpdateMethod::isRecommended)
+                .mapToInt(updateMethods::indexOf)
+                .toArray();
 
         int selectedPosition = -1;
+        long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
-        if (settingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID)) {
-            long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
-
-            selectedPosition = StreamSupport.stream(updateMethods).filter(um -> um.getId() == currentUpdateMethodId).mapToInt(updateMethods::indexOf).findAny().orElse(-1);
+        if(updateMethodId != -1L) {
+            selectedPosition = StreamSupport
+                    .stream(updateMethods)
+                    .filter(updateMethod -> updateMethod.getId() == updateMethodId)
+                    .mapToInt(updateMethods::indexOf)
+                    .findAny()
+                    .orElse(-1);
+        } else if(recommendedPositions.length > 0) {
+            selectedPosition = recommendedPositions[recommendedPositions.length - 1];
         }
 
         if(getActivity() != null) {
@@ -104,9 +114,11 @@ public class SetupStep4Fragment extends AbstractFragment {
             };
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
+
             if (selectedPosition != -1) {
                 spinner.setSelection(selectedPosition);
             }
+
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
