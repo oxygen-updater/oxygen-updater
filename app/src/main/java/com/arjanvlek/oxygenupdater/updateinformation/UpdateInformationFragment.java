@@ -182,7 +182,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             if (!isLoadedOnce) updateDownloader = initDownloadManager(updateData);
 
             // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
-            if (!isLoadedOnce && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
+            if (!isLoadedOnce && getActivity() != null && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
                 Intent i = getActivity().getIntent();
                 Dialogs.showDownloadError(instance, updateDownloader, updateData, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
             }
