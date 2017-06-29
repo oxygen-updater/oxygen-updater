@@ -12,11 +12,14 @@
         android:id="@+id/action_faq"
         android:orderInCategory="30"
         android:title="@string/faq_menuitem"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_action_faq"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_help"
         android:orderInCategory="50"
+        android:icon="@drawable/ic_action_help"
+        app:showAsAction="ifRoom"
         android:title="@string/help" />
 
     <item

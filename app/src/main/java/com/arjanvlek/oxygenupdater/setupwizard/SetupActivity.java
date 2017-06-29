@@ -75,7 +75,9 @@ public class SetupActivity extends AppCompatActivity {
                 if (position == 3) {
                     if (step4Fragment != null) {
                         SetupStep4Fragment setupStep4Fragment = (SetupStep4Fragment) step4Fragment;
-                        setupStep4Fragment.fetchUpdateMethods();
+                        if(!setupStep4Fragment.isSet) {
+                            setupStep4Fragment.fetchUpdateMethods();
+                        }
                     }
                 }
             }

@@ -1,0 +1,104 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Help -->
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/help_text"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/material_blue_grey" />
+
+        <!-- Updating your device -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:text="@string/help_updating_your_device_title"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/help_updating_your_device_text"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/material_blue_grey" />
+
+
+        <!-- Reading news -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:text="@string/help_reading_news_title"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/help_reading_news_text"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/material_blue_grey" />
+
+        <!-- Viewing device information -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:text="@string/help_device_information_title"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/help_device_information_text"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/material_blue_grey" />
+
+        <!-- Changing settings -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:text="@string/help_change_settings_title"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/help_change_settings_text"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/material_blue_grey" />
+
+
+    </LinearLayout>
+</ScrollView>

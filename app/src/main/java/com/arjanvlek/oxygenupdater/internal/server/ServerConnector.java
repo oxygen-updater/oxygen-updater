@@ -345,7 +345,10 @@ public class ServerConnector implements Cloneable {
 
     private <T> List<T> findMultipleFromServerResponse(ServerRequest serverRequest, JSONObject body, Object... params) {
         try {
-            return objectMapper.readValue(performServerRequest(serverRequest, body, params), objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
+            String response = performServerRequest(serverRequest, body, params);
+            if(response == null || response.isEmpty()) return new ArrayList<>();
+
+            return objectMapper.readValue(response, objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
         } catch (Exception e) {
             Logger.logError("ServerConnector", "JSON parse error: ", e);
             return new ArrayList<>();
@@ -354,7 +357,10 @@ public class ServerConnector implements Cloneable {
 
     private <T> T findOneFromServerResponse(ServerRequest serverRequest, JSONObject body, Object... params) {
         try {
-            return objectMapper.readValue(performServerRequest(serverRequest, body, params), objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
+            String response = performServerRequest(serverRequest, body, params);
+            if(response == null || response.isEmpty()) return null;
+
+            return objectMapper.readValue(response, objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
         } catch(Exception e) {
             Logger.logError("ServerConnector", "JSON parse error: ", e);
             return null;

@@ -93,7 +93,7 @@
     <string name="settings_category_other">Other:</string>
     <string name="settings_device">Device</string>
     <string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
-    <string name="settings_explanation_incremental_full_update">An incremental update can only be installed if you were running the latest system software version before this update was released.\n\nA full update can be always be installed - regardless of the current system software version running on your device.</string>
+    <string name="settings_explanation_incremental_full_update">An incremental update can only be installed if you were running the latest system software version before this update was released.\n\nA full update can be always be installed - regardless of the current system software version running on your device.\n\nA beta update of OxygenOS can only be installed if you are already using a beta version.</string>
     <string name="settings_explanation_update_methods">Explanation of the update methods</string>]
     <string name="settings_header">Choose your device and update method:</string>
 
@@ -115,24 +115,24 @@
     <string name="settings_update_method">Update method</string>
     <string name="settings_upload_logs">Send crash logs to developer</string>
 
-
     <!-- FAQ strings -->
     <string name="faq">FAQ</string>
     <string name="faq_menuitem">FAQ</string>
     <string name="faq_no_network">No connection.</string>
     <string name="faq_no_network_text">You\'ll need a working connection to view the FAQ page.</string>
+
     <!-- First-time setup strings -->
     <string name="setup">Welcome</string>
     <string name="setup_close_button">start app</string>
 
     <string name="setup_page_1_title">Welcome to Oxygen Updater!</string>
-    <string name="setup_page_1_text">This app will allow you to:\n\n- Download the latest Android updates for your OxygenOS powered device, early after release. \n\n- Update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- View some technical information about your device\n\nSwipe to the left to continue.</string>
-
-    <!-- Page 2 is found under "Help Strings" as it is also the help page of this app -->
+    <string name="setup_page_1_text">This app will allow you to:\n\n- Get faster access to the latest Android updates for your OxygenOS powered device\n\n- Easily update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
+    <string name="setup_page_2_title">Important notice:</string>
+    <string name="setup_page_2_text">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions nor for any damage caused by your usage of this app. By using this app, you agree to the terms and conditions as stated above.\n\nSwipe to the left to continue.</string>
     <string name="setup_page_3_title">Choose your device:</string>
     <string name="setup_page_3_text">Your device is usually already selected above. If not, select your device above.\n\nSwipe to the left to continue.</string>
     <string name="setup_page_4_title">Choose your update method:</string>
-    <string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have root access, select Full update.\n\nIf you have a beta version of OxygenOS, choose the Community Edition update method.\n\nSwipe to the left to continue.</string>
+    <string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose the Community Edition update method.\n\nSwipe to the left to continue.</string>
     <string name="setup_page_5_title">You are ready to go!</string>
     <string name="setup_page_5_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
 
@@ -253,20 +253,23 @@
     <!-- LocalNotifications strings -->
     <string name="notification_new_device">New device released! The %1$s is now supported!</string>
     <string name="notification_new_device_short">Open the app to choose this device.</string>
-    <string name="notification_no_notification_support">Install or update Google Play services to enable notifications.</string>
+    <string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
     <string name="notification_unknown_version_number">A new version is available for your</string>
     <string name="notification_update_short">Open the app to download the update.</string>
-    <string name="notification_version">Version %1$S is now available for the %2$s!</string>
+    <string name="notification_version_title">System update available</string>
+    <string name="notification_version">%1$s is now available for the %2$s!</string>
 
     <!-- Help strings -->
-    <string name="help">Help</string>
-    <string name="help_bottom">At the top right you can find the menu. From there, you can go to the settings, the FAQ page or this Help screen. In the settings, you can re-select your device, update method and select which notifications to receive.</string>
-    <string name="help_middle">If you want to install a new update, start by tapping on the Download button.\nWhen the update is downloaded, read the Install Guide to learn how to install it.\n\nIf your device is up to date, you can tap on \"View Update Information\" to read what\'s new in the software you are currently using.\n\nSwipe to the left or tap on \"Device Info\" to view some technical specifications of your device.</string>
-    <string name="help_symbol_download">Download size of the update.</string>
-    <string name="help_symbol_download_cancel">Cancels downloading the current update when tapped.</string>
-    <string name="help_title">How to use this app:</string>
-    <string name="help_top">If a new update is available, it\'s version number, new features and download size are displayed on the main screen.</string>
-    <string name="help_used_symbols">Used icons:</string>
+    <string name="help">Instruction manual</string>
+    <string name="help_text">Welcome to the instruction manual for Oxygen Updater.\n\nThe following topics are covered:\n\n• Updating your device\n• Reading the latest news\n• Viewing device information\n• Changing settings\n\nScroll down to browse through the topics.</string>
+    <string name="help_updating_your_device_title">Updating your device</string>
+    <string name="help_updating_your_device_text">When opening the app, you\'ll see if a system update is available. If an update is available, you can install it.\n\nTo start the installation, tap the \"Download\" button (below the update description) to start the download. When the download has finished, the installation screen pops up. If you left the app or the screen didn\'t pop up, tap the \"Install\" button, which is now shown next to the \"Download\" button.\n\nThe install screen will first check if you have a rooted device. If you have a rooted device, grant root permission when asked and choose how you want to install the update. Otherwise, follow the instructions for Manual install.\n\nAutomatic install:\nYou\'ll only have to choose your install options. The default settings are recommended, except that you have to specify the root package which needs to be (re)installed. Select a root package (zip file) using the blue folder button and tap on \"Start install\" to start the installation.\n\nManual install:\nYou\'ll see an installation guide on your screen. Write the instructions down and perform them as stated to install the update.</string>
+    <string name="help_reading_news_title">Reading the latest news</string>
+    <string name="help_reading_news_text">News is displayed to the left of the update information screen. The most recent items appear on top. Just tap on an item to read it.\nTap the back arrow or press your back key to return to the news items screen.</string>
+    <string name="help_device_information_title">Viewing information about your device</string>
+    <string name="help_device_information_text">You may view some of the specifications of your device using the screen to the right of the update information. This comes in handy when making a support request, during which you might be asked for some of the specifications of your device.</string>
+    <string name="help_change_settings_title">Changing settings</string>
+    <string name="help_change_settings_text">You can change your settings by tapping the three dots in the top right, following a tap on Settings.\nYou can change the following settings:\n\n• Device and update method\n• Push notifications\n• In app notifications\n• Privacy settings (log uploading).\n\nUse the switches to turn notification / privacy settings on and off. Select a device and / or update method using the dropdown menus shown above the switches. Dropdown menus not visible? Check your Internet connection and open the Settings screen again.</string>
 
     <!-- News strings -->
     <string name="news">News</string>

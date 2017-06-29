@@ -18,52 +18,49 @@ import static android.graphics.Typeface.BOLD;
 public class UpdateDescriptionParser {
 
     private static final String TAG = "UpdateDescriptionParser";
+    private static final String EMPTY_STRING = "";
+    private static final String NEWLINE = "\n";
+    private static final String OXYGEN_OS_BETA_IDENTIFIER = "O2_Open_";
+    private static final String OXYGEN_OS_BETA_DISPLAY_PREFIX = "OxygenOS open beta ";
+    private static final String OXYGEN_OS_VERSION_PREFIX_UPPERCASE = "OS Version: ";
+    private static final String OXYGEN_OS_VERSION_PREFIX_LOWERCASE = "OS version: ";
 
     private enum UpdateDescriptionElement {
-        UPDATE_TITLE,
-        UPDATE_HEADER,
-        EMPTY_LINE,
-        LINK,
-        TEXT;
 
-        // Finds the element type of a given line of OnePlus formatted text.
+        // Grammar for OnePlus update descriptions
+        HEADING_1,              //      #(char*)\n
+        HEADING_2,              //      ##(char*)\n
+        HEADING_3,              //      ###(char*)\n
+        LINE_SEPARATORS,        //      \(\*)\n
+        LIST_ITEM,              //      *(char*)\n
+        LINK,                   //      [(char*)](space*)((char*))\n
+        TEXT,                   //      (char*)
+        EMPTY;                  //
+
+        // Finds the element type for a given line of OnePlus formatted text.
         private static UpdateDescriptionElement of(String inputLine) {
-            // The empty imput gets parsed as TEXT, because no modification to it is required.
+            // The empty string gets parsed as EMPTY
             Logger.logVerbose(TAG, "Input line: " + inputLine);
 
             if (inputLine == null || inputLine.isEmpty()) {
-                Logger.logVerbose(TAG, "Matched type: TEXT");
-                return TEXT;
-            }
-
-            // Remove all spaces and newline characters from this line.
-            inputLine = inputLine.replace('\r', ' ');
-            inputLine = inputLine.replace('\n', ' ');
-            inputLine = inputLine.replace(" ", "");
-
-            // If the input is exactly one character long, and that character is a backwards slash, return that this should be an empty line.
-            char firstChar = inputLine.charAt(0);
-            Logger.logVerbose(TAG, "First Char: " + firstChar);
-
-            if (inputLine.length() == 1 && firstChar == '\\') {
-                Logger.logVerbose(TAG, "Matched type: EMPTY_LINE");
-                return EMPTY_LINE;
-            }
-
-            // In all other cases, look at the first two chars.
-            char secondChar = inputLine.charAt(1);
-            Logger.logVerbose(TAG, "Second Char: " + secondChar);
-
-            if (firstChar == '#' && secondChar == '#') {
-                Logger.logVerbose(TAG, "Matched type: UPDATE_HEADER");
-                return UPDATE_HEADER;
-            } else if (firstChar == '#') {
-                Logger.logVerbose(TAG, "Matched type: UPDATE_TITLE");
-                return UPDATE_TITLE;
-            } else if (firstChar == '\\') {
-                Logger.logVerbose(TAG, "Matched type: EMPTY_LINE");
-                return EMPTY_LINE;
-            } else if (firstChar == '[' && secondChar != '[' && inputLine.contains("]") && inputLine.contains("(") && inputLine.contains(")") && (inputLine.contains("http") || inputLine.contains("www"))) {
+                Logger.logVerbose(TAG, "Matched type: EMPTY");
+                return EMPTY;
+            } else if(inputLine.contains("###")) {
+                Logger.logVerbose(TAG, "Matched type: HEADING_3");
+                return HEADING_3;
+            } else if (inputLine.contains("##")) {
+                Logger.logVerbose(TAG, "Matched type: HEADING_2");
+                return HEADING_2;
+            } else if (inputLine.contains("#")) {
+                Logger.logVerbose(TAG, "Matched type: HEADING_1");
+                return HEADING_1;
+            } else if(inputLine.contains("*")) {
+                Logger.logVerbose(TAG, "Matched type: LIST_ITEM");
+                return LIST_ITEM;
+            } else if (inputLine.contains("\\")) {
+                Logger.logVerbose(TAG, "Matched type: LINE_SEPARATORS");
+                return LINE_SEPARATORS;
+            } else if (inputLine.contains("[") && inputLine.contains("]") && inputLine.contains("(") && inputLine.contains(")")) {
                 Logger.logVerbose(TAG, "Matched type: LINK");
                 return LINK;
             } else {
@@ -88,6 +85,45 @@ public class UpdateDescriptionParser {
         }
     }
 
+    public static boolean containsHeaderLine(String updateDescription) {
+        String firstLine = getFirstLine(updateDescription);
+        return firstLine.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE) || firstLine.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE);
+    }
+
+    public static String getFirstLine(String updateDescription) {
+        if (updateDescription == null || updateDescription.isEmpty()) return EMPTY_STRING;
+
+        BufferedReader reader = new BufferedReader(new StringReader(updateDescription));
+
+        try {
+            String line = reader.readLine();
+            return line == null ? EMPTY_STRING : line;
+        } catch (IOException e) {
+            return EMPTY_STRING;
+        }
+    }
+
+    public static boolean isBeta(String updateTitle) {
+        return updateTitle != null && updateTitle.contains(OXYGEN_OS_BETA_IDENTIFIER);
+    }
+
+    public static String getFormattedUpdateTitle(String updateDescription) {
+        try {
+            if (isBeta(getFirstLine(updateDescription))) {
+                return OXYGEN_OS_BETA_DISPLAY_PREFIX + updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_BETA_IDENTIFIER) + OXYGEN_OS_BETA_IDENTIFIER.length(), updateDescription.indexOf(NEWLINE));
+            } else if (updateDescription.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE)) {
+                return updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_VERSION_PREFIX_UPPERCASE) + OXYGEN_OS_VERSION_PREFIX_UPPERCASE.length(), updateDescription.indexOf(NEWLINE));
+            } else if (updateDescription.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE)) {
+                return updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_VERSION_PREFIX_LOWERCASE) + OXYGEN_OS_VERSION_PREFIX_LOWERCASE.length(), updateDescription.indexOf(NEWLINE));
+            } else {
+                return updateDescription;
+            }
+        } catch (Exception e) {
+            Logger.logError(TAG, "Failed to format update title: ", e);
+            return updateDescription;
+        }
+    }
+
     public static Spanned parse(String updateDescription) {
         SpannableString result;
 
@@ -96,20 +132,32 @@ public class UpdateDescriptionParser {
         String currentLine;
         try {
             BufferedReader reader = new BufferedReader(new StringReader(updateDescription));
-            String modifiedUpdateDescription = "";
+            String modifiedUpdateDescription = EMPTY_STRING;
 
-            // First, loop through all lines and modify them were needed. This includes placing line separators and html-style links.
+            // First, loop through all lines and modify them were needed.
+            // This consists of removing heading symbols, making list items, adding line separators and displaying link texts.
             while ((currentLine = reader.readLine()) != null) {
                 UpdateDescriptionElement element = UpdateDescriptionElement.of(currentLine);
-                String modifiedLine = "";
+                String modifiedLine = EMPTY_STRING;
+
+                // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
+                if(currentLine.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE) || currentLine.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE)) continue;
 
                 switch (element) {
-                    case UPDATE_HEADER:
-                        modifiedLine = currentLine.substring(2, currentLine.length()); // Remove the double hashtags (##).
+                    case HEADING_3:
+                        modifiedLine = currentLine.replace("###", "");
                         break;
-                    case UPDATE_TITLE:
-                        modifiedLine = currentLine.substring(1, currentLine.length()) + "\n"; // Remove the single hash tag and add another line separator to the title.
-                    case EMPTY_LINE: // The line starts with a line separator (\). However, there could also be multiple OnePlus line separators in this line. Replace each OnePlus line separator with an actual line separator.
+                    case HEADING_2:
+                        modifiedLine = currentLine.replace("##", "");
+                        break;
+                    case HEADING_1:
+                        modifiedLine = currentLine.replace("#", "");
+                        break;
+                    case LIST_ITEM:
+                        modifiedLine = currentLine.replace("*", "•");
+                    case LINE_SEPARATORS:
+                        // There could also be multiple OnePlus line separators in this line.
+                        // Replace each OnePlus line separator with an actual line separator.
                         char[] chars = currentLine.toCharArray();
                         for (char c : chars) {
                             if (c == '\\') {
@@ -131,10 +179,10 @@ public class UpdateDescriptionParser {
                         modifiedLine = currentLine;
                 }
 
-                modifiedUpdateDescription = modifiedUpdateDescription.concat(modifiedLine + (element.equals(UpdateDescriptionElement.EMPTY_LINE) ? "" : "\n"));
+                modifiedUpdateDescription = modifiedUpdateDescription.concat(modifiedLine + (element.equals(UpdateDescriptionElement.LINE_SEPARATORS) ? "" : "\n"));
             }
 
-            // Next, loop through the modified update description and place formatting attributes for the title / headers.
+            // Finally, loop through the modified update description and set formatting attributes for the headers and links.
             reader = new BufferedReader(new StringReader(modifiedUpdateDescription));
             result = new SpannableString(modifiedUpdateDescription);
 
@@ -148,18 +196,22 @@ public class UpdateDescriptionParser {
                 int endPosition = startPosition + currentLine.length();
 
                 switch (element) {
-                    case UPDATE_TITLE:
-                        // The update header should be made larger and bold.
+                    case HEADING_1:
+                        // Heading 1 should be made bold and pretty large.
                         result.setSpan(new RelativeSizeSpan(1.3f), startPosition, endPosition, 0);
                         result.setSpan(new StyleSpan(BOLD), startPosition, endPosition, 0);
                         break;
-                    case UPDATE_HEADER:
-                        // The update header should be a bit larger than normal, but smaller than the title, and bold.
+                    case HEADING_2:
+                        // Heading 2 should be made bold and a bit larger than normal, but smaller than heading 1.
                         result.setSpan(new RelativeSizeSpan(1.1f), startPosition, endPosition, 0);
                         result.setSpan(new StyleSpan(BOLD), startPosition, endPosition, 0);
                         break;
+                    case HEADING_3:
+                        // Heading 3 is the same size as normal text but will be displayed in bold.
+                        result.setSpan(new StyleSpan(BOLD), startPosition, endPosition, 0);
+                        break;
                     case LINK:
-                        // A link should be made clickable and must be displayed as a link.
+                        // A link should be made clickable and must be displayed as a hyperlink.
                         result.setSpan(new FormattedURLSpan(links.get(currentLine)), startPosition, endPosition, 0);
                         break;
                 }
