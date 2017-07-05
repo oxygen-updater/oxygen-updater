@@ -365,7 +365,11 @@ public class UpdateInformationFragment extends AbstractFragment {
         // Display available update version number.
         TextView buildNumberView = (TextView) rootView.findViewById(R.id.updateInformationBuildNumberView);
         if (updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null")) {
-            buildNumberView.setText(updateData.getVersionNumber());
+            if(UpdateDescriptionParser.containsHeaderLine(updateData.getDescription())) {
+                buildNumberView.setText(UpdateDescriptionParser.getFormattedUpdateTitle(updateData.getDescription()));
+            } else {
+                buildNumberView.setText(updateData.getVersionNumber());
+            }
         } else {
             buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager.getPreference(PROPERTY_DEVICE, context.getString(R.string.device_information_unknown))));
         }
