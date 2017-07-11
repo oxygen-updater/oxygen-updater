@@ -20,9 +20,21 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
+            android:visibility="invisible"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/icon" />
+
+        <ImageView
+            android:id="@+id/newsItemImagePlaceholder"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:visibility="visible"
+            android:indeterminate="true"
             android:layout_marginTop="10dp"
             android:contentDescription="@string/icon"
-            android:src="@drawable/ic_auto_install" />
+            android:src="@mipmap/image_error"
+            />
 
         <TextView
             android:id="@+id/newsItemTitle"

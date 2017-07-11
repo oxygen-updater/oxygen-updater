@@ -152,7 +152,6 @@
     <string name="install_recovery_installing_update">Installing the update…</string>
     <string name="install_recovery_thank_you">Thank you for using Oxygen Updater. If you like this app, please rate it 5 stars at Google Play :-)</string>
 
-    <string name="install_error_reboot_failed">"Failed to restart your device. Did you allow root access?"</string>
     <string name="install_error_write_script_failed">"Failed to prepare the installation of the update. Did you allow root access?"</string>
 
     <string name="install_options_backup">Backup my device</string>
@@ -235,7 +234,7 @@
     <string name="device_information_image_description">Device image</string>
     <string name="device_information_incremental_os_version">Incremental OS version:</string>
     <string name="device_information_os_version">Android version:</string>
-    <string name="device_information_oxygen_os_version">Oxygen OS version:</string>
+    <string name="device_information_oxygen_os_version">OxygenOS version:</string>
     <string name="device_information_patch_level_version">Security patch date:</string>
     <string name="device_information_serial_number">Serial number:</string>
     <string name="device_information_system_on_a_chip">System on a Chip:</string>
@@ -254,14 +253,12 @@
     <string name="notification_new_device">New device released! The %1$s is now supported!</string>
     <string name="notification_new_device_short">Open the app to choose this device.</string>
     <string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
-    <string name="notification_unknown_version_number">A new version is available for your</string>
-    <string name="notification_update_short">Open the app to download the update.</string>
     <string name="notification_version_title">System update available</string>
     <string name="notification_version">%1$s is now available for the %2$s!</string>
 
     <!-- Help strings -->
-    <string name="help">Instruction manual</string>
-    <string name="help_text">Welcome to the instruction manual for Oxygen Updater.\n\nThe following topics are covered:\n\n• Updating your device\n• Reading the latest news\n• Viewing device information\n• Changing settings\n\nScroll down to browse through the topics.</string>
+    <string name="help">Help</string>
+    <string name="help_text">Welcome to the help section of Oxygen Updater.\n\nHelp covers the following topics:\n\n• Updating your device\n• Reading the latest news\n• Viewing device information\n• Changing settings\n\nScroll down to browse through the topics.</string>
     <string name="help_updating_your_device_title">Updating your device</string>
     <string name="help_updating_your_device_text">When opening the app, you\'ll see if a system update is available. If an update is available, you can install it.\n\nTo start the installation, tap the \"Download\" button (below the update description) to start the download. When the download has finished, the installation screen pops up. If you left the app or the screen didn\'t pop up, tap the \"Install\" button, which is now shown next to the \"Download\" button.\n\nThe install screen will first check if you have a rooted device. If you have a rooted device, grant root permission when asked and choose how you want to install the update. Otherwise, follow the instructions for Manual install.\n\nAutomatic install:\nYou\'ll only have to choose your install options. The default settings are recommended, except that you have to specify the root package which needs to be (re)installed. Select a root package (zip file) using the blue folder button and tap on \"Start install\" to start the installation.\n\nManual install:\nYou\'ll see an installation guide on your screen. Write the instructions down and perform them as stated to install the update.</string>
     <string name="help_reading_news_title">Reading the latest news</string>

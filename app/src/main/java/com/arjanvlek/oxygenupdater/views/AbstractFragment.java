@@ -7,6 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public abstract class AbstractFragment extends Fragment {
     private SettingsManager settingsManager;
 
     //Test devices for ads.
-    public static final List<String> ADS_TEST_DEVICES = Collections.singletonList("BE7E0AF85E0332807B1EA3FE4236F93C");
+    public static final List<String> ADS_TEST_DEVICES = Arrays.asList("BE7E0AF85E0332807B1EA3FE4236F93C", "0FD2DE005EB9DD19BD02FB2CD4D87902");
 
     public ApplicationData getApplicationData() {
         if (applicationData == null) {

@@ -141,6 +141,7 @@ public class InstallGuideFragment extends Fragment {
     }
 
     private void displayInstallGuide(View installGuideView, InstallGuidePage installGuidePage, int pageNumber, boolean isFirstPage) {
+        if(!isAdded()) return;
 
         // Display a reminder to write everything down on the first page.
         if(isFirstPage) {

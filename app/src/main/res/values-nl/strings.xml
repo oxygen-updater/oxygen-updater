@@ -145,11 +145,10 @@
     <!-- Automatic install strings -->
     <string name="install">Installeren</string>
     <string name="install_checking_root">Controleren of je root-toegang hebt…</string>
-    <string name="install_grant_root_permissions">Geef toestemming voor root-toegang als dit wordt gevraagd.</string>
+    <string name="install_grant_root_permissions">Geef toestemming voor root-toegang indien dit wordt gevraagd.</string>
     <string name="install_going_back_not_possible">Helaas, je kunt nu niet teruggaan.</string>
     <string name="install_preparing_installation">Installatie voorbereiden…</string>
 
-    <string name="install_error_reboot_failed">"Kan je apparaat niet opnieuw opstarten. Heb je wel toestemming voor root-toegang gegeven?"</string>
     <string name="install_error_write_script_failed">"Kan het installeren van de update niet voorbereiden. Heb je wel toestemming voor root-toegang gegeven?"</string>
 
     <string name="install_options_backup">Maak een back-up</string>
@@ -239,7 +238,7 @@
     <string name="device_information_image_description">Plaatje van jouw apparaat</string>
     <string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
     <string name="device_information_os_version">Android-versie:</string>
-    <string name="device_information_oxygen_os_version">Oxygen OS-versie:</string>
+    <string name="device_information_oxygen_os_version">OxygenOS-versie:</string>
     <string name="device_information_patch_level_version">Datum beveiligingspatch:</string>
     <string name="device_information_serial_number">Serienummer:</string>
     <string name="device_information_system_on_a_chip">Chipset:</string>
@@ -258,19 +257,17 @@
     <!-- LocalNotifications strings -->
     <string name="notification_new_device">Nieuw apparaat toegevoegd! De %1$s wordt nu ondersteund!</string>
     <string name="notification_new_device_short">Open de app om dit apparaat te kiezen.</string>
-    <string name="notification_no_notification_support">Installeer Google Play services of werk deze bij om notificaties te kunnen ontvangen.</string>
-    <string name="notification_unknown_version_number">Er is een nieuwe versie beschikbaar voor je</string>
-    <string name="notification_update_short">Open de app om de update te downloaden.</string>
+    <string name="notification_no_notification_support">Installeer Google Play services of werk deze bij om pushnotificaties te kunnen ontvangen.</string>
     <string name="notification_version_title">Systeemupdate beschikbaar</string>
     <string name="notification_version">%1$s is nu beschikbaar voor de %2$s!</string>
 
 
 
     <!-- Help strings -->
-    <string name="help">Instructiehandleiding</string>
-    <string name="help_text">Welkom bij de instructiehandleiding van Oxygen Updater.\n\nDe handleiding bevat informatie over de volgende onderwerpen:\n\n• Je apparaat bijwerken\n• Nieuwsberichten lezen\n• Specificaties apparaat bekijken\n• Instellingen wijzigen\n\nScroll omlaag om door de inhoud te bladeren.</string>
+    <string name="help">Help</string>
+    <string name="help_text">Welkom bij de helpfunctie van Oxygen Updater.\n\nHelp bevat informatie over de volgende onderwerpen:\n\n• Je apparaat bijwerken\n• Nieuwsberichten lezen\n• Specificaties apparaat bekijken\n• Instellingen wijzigen\n\nScrol omlaag om door de inhoud te bladeren.</string>
     <string name="help_updating_your_device_title">Je apparaat bijwerken</string>
-    <string name="help_updating_your_device_text">Als je de app opent, kun je zien of er een systeemupdate beschikbaar is. Als deze beschikbaar is, kun je hem installeren.\nOm de update te installeren, tik je als eerste op de \"Download\"-knop (onder de update-omschrijving).\n\nAls het downloaden klaar is, opent het installatie-scherm. Heb je de app inmiddels verlaten of verschijnt het installatie-scherm niet? Tik dan op de \"Installatie\"-knop, die nu naast de Downloadknop staat.\n\nHet installatie-scherm zal als eerste op root-toegang controleren. Als je root-toegang hebt, moet je de app hiervoor toestemming geven. Geen root-toegang? Volg dan de instructies voor Handmatige Installatie.\n\nAutomatische installatie:\nJe hoeft alleen de installatie-opties te bekijken en waar nodig aan te passen. Selecteer eventueel een root-bestand om te (her)installeren en je bent er helemaal klaar voor. Tik op \"Start installatie\" om de installatie te starten.\n\nHandmatige installatie:\nEr verschijnt een installatiehandleiding op het scherm. Deze bevat de instructies voor het handmatig installeren van de update. Omdat je je apparaat tijdens het installeren moet uitschakelen, is het aanbevolen om alle instructies eerst op te schrijven, en ze vervolgens pas uit te voeren.</string>
+    <string name="help_updating_your_device_text">Als je de app opent, kun je zien of er een systeemupdate beschikbaar is. Als deze beschikbaar is, kun je hem installeren.\nOm de update te installeren, tik je als eerste op de \"Download\"-knop (onder de update-omschrijving).\n\nAls het downloaden klaar is, opent het installatie-scherm. Heb je de app inmiddels verlaten of verschijnt het installatie-scherm niet? Tik dan op de \"Installatie\"-knop, die nu naast de Downloadknop staat.\n\nHet installatie-scherm zal als eerste op root-toegang controleren. Als je root-toegang hebt, moet je de app hiervoor toestemming geven. Heb je geen root-toegang of weet je niet wat dit is? Volg dan de instructies voor Handmatige Installatie.\n\nAutomatische installatie:\nJe hoeft alleen de installatie-opties te bekijken en waar nodig aan te passen. Selecteer eventueel een root-bestand om te (her)installeren en je bent er helemaal klaar voor. Tik op \"Start installatie\" om de installatie te starten.\n\nHandmatige installatie:\nEr verschijnt een installatiehandleiding op het scherm. Deze bevat de instructies voor het handmatig installeren van de update. Omdat je je apparaat tijdens het installeren moet uitschakelen, is het aanbevolen om alle instructies eerst op te schrijven, en ze vervolgens pas uit te voeren.</string>
     <string name="help_reading_news_title">Nieuwsberichten lezen</string>
     <string name="help_reading_news_text">Nieuwsberichten worden aan de linkerkant van de update-informatie getoond. De meest recente berichten staan bovenaan de lijst. Tik op een item om het te bekijken, en tik op het pijltje naar links (of de terug-toets) om terug te keren naar het nieuwsoverzicht.</string>
     <string name="help_device_information_title">Specificaties apparaat bekijken</string>
@@ -299,7 +296,7 @@
     
     <!-- Message box strings -->
     <string name="delete_message_title">Update is al gedownload</string>
-    <string name="delete_message_contents">Je hebt deze update al gedownload, maar nog niet geïnstalleerd. Tik op \"Installatie\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
+    <string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installatie\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
     <string name="delete_message_delete_button">Verwijder</string>
 
     <string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>

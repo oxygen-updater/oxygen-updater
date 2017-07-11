@@ -13,12 +13,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.arjanvlek.oxygenupdater.R;
@@ -37,6 +40,7 @@ import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM;
 
 public class NewsFragment extends AbstractFragment {
 
+    private static final SparseArray<Bitmap> imageCache = new SparseArray<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -63,12 +67,15 @@ public class NewsFragment extends AbstractFragment {
     private static class NewsItemView {
         private CardView container;
         private ImageView image;
+        private ImageView imagePlaceholder;
         private TextView title;
         private TextView subtitle;
     }
 
     private void displayNewsItems(View view, List<NewsItem> newsItems, Consumer<Void> callback) {
         ListView newsContainer = (ListView) view.findViewById(R.id.newsContainer);
+
+        if(!isAdded() || getActivity() == null) return;
 
         newsContainer.setAdapter(new ListAdapter() {
 
@@ -128,6 +135,7 @@ public class NewsFragment extends AbstractFragment {
 
                     newsItemView.container = (CardView) convertView.findViewById(R.id.newsItemContainer);
                     newsItemView.image = (ImageView) convertView.findViewById(R.id.newsItemImage);
+                    newsItemView.imagePlaceholder = (ImageView) convertView.findViewById(R.id.newsItemImagePlaceholder);
                     newsItemView.title = (TextView) convertView.findViewById(R.id.newsItemTitle);
                     newsItemView.subtitle = (TextView) convertView.findViewById(R.id.newsItemSubTitle);
 
@@ -141,6 +149,8 @@ public class NewsFragment extends AbstractFragment {
                 Locale locale = Locale.getLocale();
 
                 NewsItem newsItem = newsItems.get(position);
+                if(newsItem == null) return convertView;
+
                 newsItemView.title.setText(newsItem.getTitle(locale));
                 newsItemView.subtitle.setText(newsItem.getSubtitle(locale));
                 newsItemView.container.setOnClickListener(v -> openNewsItem(view, getApplicationData(), newsItem));
@@ -153,14 +163,26 @@ public class NewsFragment extends AbstractFragment {
                 new AsyncTask<Void, Void, Bitmap>() {
 
                     @Override
+                    public void onPreExecute() {
+                        newsItemView.image.setVisibility(View.INVISIBLE);
+                        newsItemView.imagePlaceholder.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
                     public Bitmap doInBackground(Void...params) {
-                        Bitmap image;
+                        if(newsItem.getId() == null) return null;
+
+                        Bitmap image = imageCache.get(newsItem.getId().intValue());
+
+                        if(image != null) return image;
 
                         try {
                             InputStream in = new URL(newsItem.getImageUrl()).openStream();
                             image = BitmapFactory.decodeStream(in);
+                            imageCache.put(newsItem.getId().intValue(), image);
                         } catch(Exception e) {
                             image = null;
+                            imageCache.put(newsItem.getId().intValue(), null);
                             Logger.logError("NewsFragment", "Error loading news image: ", e);
                         }
 
@@ -169,12 +191,16 @@ public class NewsFragment extends AbstractFragment {
 
                     @Override
                     public void onPostExecute(Bitmap result) {
-                        if(result == null) {
+                        if(result == null && isAdded() && getActivity() != null) {
                             Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
                             newsItemView.image.setImageDrawable(errorImage);
                         } else {
                             newsItemView.image.setImageBitmap(result);
                         }
+                        newsItemView.image.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                        newsItemView.image.setVisibility(View.VISIBLE);
+
+                        newsItemView.imagePlaceholder.setVisibility(View.INVISIBLE);
                     }
                 }.execute();
 
@@ -193,7 +219,7 @@ public class NewsFragment extends AbstractFragment {
 
             @Override
             public boolean isEmpty() {
-                return false;
+                return newsItems.isEmpty();
             }
         });
 

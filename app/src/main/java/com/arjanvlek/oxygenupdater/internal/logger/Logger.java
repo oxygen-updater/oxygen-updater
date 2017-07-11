@@ -16,6 +16,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.net.ConnectException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 
 public class Logger {
 
@@ -167,7 +174,7 @@ public class Logger {
 
     private static void uploadLog(LogLevel logLevel, String tag, String message, Throwable cause) {
         try {
-            uploadLog(logLevel, tag, message + ":\n\n" + stacktraceToString(cause));
+            uploadLog(isNetworkError(cause) ? LogLevel.NETWORK_ERROR : logLevel, tag, message + ":\n\n" + stacktraceToString(cause));
         } catch (Throwable throwable) {
             logError(false, TAG, "An error has occurred, but it can't be uploaded: \n\n", cause);
         }
@@ -188,8 +195,12 @@ public class Logger {
         }
     }
 
+    private static boolean isNetworkError(Throwable cause) {
+        return (cause instanceof SocketException || cause instanceof SocketTimeoutException || cause instanceof SSLException || cause instanceof UnknownHostException);
+    }
+
     private enum LogLevel {
-        VERBOSE, DEBUG, INFO, WARNING, ERROR, CRASH
+        VERBOSE, DEBUG, INFO, WARNING, ERROR, CRASH, NETWORK_ERROR
     }
 
 
