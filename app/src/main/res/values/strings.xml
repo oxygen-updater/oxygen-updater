@@ -128,7 +128,7 @@
     <string name="setup_page_1_title">Welcome to Oxygen Updater!</string>
     <string name="setup_page_1_text">This app will allow you to:\n\n- Get faster access to the latest Android updates for your OxygenOS powered device\n\n- Easily update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
     <string name="setup_page_2_title">Important notice:</string>
-    <string name="setup_page_2_text">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions nor for any damage caused by your usage of this app. By using this app, you agree to the terms and conditions as stated above.\n\nSwipe to the left to continue.</string>
+    <string name="setup_page_2_text">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app. \n\nBy using this app, you agree to the terms and conditions as stated above.\n\nSwipe to the left to continue.</string>
     <string name="setup_page_3_title">Choose your device:</string>
     <string name="setup_page_3_text">Your device is usually already selected above. If not, select your device above.\n\nSwipe to the left to continue.</string>
     <string name="setup_page_4_title">Choose your update method:</string>

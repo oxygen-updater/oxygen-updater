@@ -105,9 +105,9 @@ public class InstallGuideFragment extends Fragment {
 
             Bitmap image;
 
-            SparseArray<Bitmap> cache = ((InstallActivity)getActivity()).getInstallGuideImageCache();
-
             try {
+                SparseArray<Bitmap> cache = ((InstallActivity)getActivity()).getInstallGuideImageCache();
+
                 assert cache != null;
                 if (cache.get(installGuidePage.getPageNumber()) != null) {
                     image = cache.get(installGuidePage.getPageNumber());

@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -196,7 +197,7 @@ public class Logger {
     }
 
     private static boolean isNetworkError(Throwable cause) {
-        return (cause instanceof SocketException || cause instanceof SocketTimeoutException || cause instanceof SSLException || cause instanceof UnknownHostException);
+        return (cause instanceof SocketException || cause instanceof SocketTimeoutException || cause instanceof SSLException || cause instanceof UnknownHostException || (cause instanceof FileNotFoundException && cause.getMessage().contains("http")));
     }
 
     private enum LogLevel {

@@ -191,7 +191,16 @@ public class NewsFragment extends AbstractFragment {
 
                     @Override
                     public void onPostExecute(Bitmap result) {
-                        if(result == null && isAdded() && getActivity() != null) {
+                        if(!isAdded() || getActivity() == null) return;
+
+                        // If a fragment is not attached, do not crash the entire application but return an empty view.
+                        try {
+                            getResources();
+                        } catch (Exception e) {
+                            return;
+                        }
+
+                        if(result == null) {
                             Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
                             newsItemView.image.setImageDrawable(errorImage);
                         } else {
