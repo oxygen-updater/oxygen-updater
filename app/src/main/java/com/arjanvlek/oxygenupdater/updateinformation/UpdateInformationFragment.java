@@ -244,12 +244,13 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     private void displayServerMessageBars(List<Banner> banners) {
 
+        if(!isAdded()) return;
         deleteAllServerMessageBars();
 
         List<ServerMessageBar> createdServerMessageBars = new ArrayList<>();
 
         for(Banner banner : banners) {
-            ServerMessageBar bar = new ServerMessageBar(getApplicationData());
+            ServerMessageBar bar = new ServerMessageBar(getActivity());
             View backgroundBar = bar.getBackgroundBar();
             TextView textView = bar.getTextView();
 
