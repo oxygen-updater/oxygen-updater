@@ -155,18 +155,6 @@
             </intent-filter>
         </activity>
 
-        <!--<provider-->
-            <!--android:name="com.ianhanniballake.localstorage.LocalStorageProvider"-->
-            <!--android:authorities="com.ianhanniballake.localstorage.documents"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="true"-->
-            <!--android:grantUriPermissions="true"-->
-            <!--android:permission="android.permission.MANAGE_DOCUMENTS">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.content.action.DOCUMENTS_PROVIDER" />-->
-            <!--</intent-filter>-->
-        <!--</provider>-->
-
         <!-- Advertisements -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

@@ -22,12 +22,22 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment;
+import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.news.NewsFragment;
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
-import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
+import org.joda.time.LocalDateTime;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import java8.util.function.Consumer;
 
@@ -54,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public final static int PERMISSION_REQUEST_CODE = 200;
 
     public static final String INTENT_START_PAGE = "start_page";
+    private InterstitialAd newsAd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,6 +130,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         } catch (IndexOutOfBoundsException ignored) {
 
         }
+
+        this.newsAd = new InterstitialAd(this);
+        this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+        this.newsAd.loadAd(new AdRequest.Builder().build());
     }
 
     @Override
@@ -223,6 +238,37 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                     .setNegativeButtonText(getString(R.string.download_error_close))
                     .setClosable(false);
             errorDialog.show(getSupportFragmentManager(), "NetworkError");
+        }
+    }
+
+    public InterstitialAd getNewsAd() {
+        if (newsAd != null) {
+            return this.newsAd;
+        } else {
+            InterstitialAd interstitialAd = new InterstitialAd(this);
+            interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+            interstitialAd.loadAd(new AdRequest.Builder().build());
+            this.newsAd = interstitialAd;
+            return this.newsAd;
+        }
+    }
+
+    public boolean mayShowNewsAd() {
+        try {
+            File file = new File(getFilesDir(), ApplicationData.NEWS_ADS_SHOWN_DATE_FILENAME);
+            if (!file.exists()) {
+                return true; // If an ad was never shown, it's time to show one now.
+            }
+            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file));
+            LocalDateTime lastShownDate = (LocalDateTime) stream.readObject();
+
+            // If an ad was never shown, it's time to show one. Else, only show one ad every 5 minutes...
+            return lastShownDate == null || lastShownDate.isBefore(LocalDateTime.now().minusMinutes(5));
+
+        } catch (IOException | ClassNotFoundException e) {
+            Logger.logError("MainActivity", "Failed to check whether news ads are supported: ", e);
+            // If it cannot be checked, assume no ad was shown yet. Time to show an ad...
+            return true;
         }
     }
 

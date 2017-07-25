@@ -306,6 +306,7 @@
     <string name="loading">Loading…</string>
     <string name="choose_file">Select a file</string>
     <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
+    <string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
 

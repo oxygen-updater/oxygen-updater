@@ -24,27 +24,24 @@ import android.widget.Toast;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
-import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
+import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
-import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import java8.util.stream.StreamSupport;
 
 import static android.app.DownloadManager.ERROR_DEVICE_NOT_FOUND;
 import static android.app.DownloadManager.ERROR_FILE_ALREADY_EXISTS;
@@ -476,11 +473,9 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 
     private void showAds() {
-            AdRequest.Builder adRequest = new AdRequest.Builder();
-
-            StreamSupport.stream(ADS_TEST_DEVICES).forEach(adRequest::addTestDevice);
-
-            adView.loadAd(adRequest.build());
+        if (getApplicationData() != null) {
+            adView.loadAd(getApplicationData().buildAdRequest());
+        }
     }
 
     /*

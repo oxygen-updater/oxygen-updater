@@ -21,16 +21,26 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
+import com.arjanvlek.oxygenupdater.views.MainActivity;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.InterstitialAd;
 
+import org.joda.time.LocalDateTime;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.List;
 
@@ -238,6 +248,40 @@ public class NewsFragment extends AbstractFragment {
     }
 
     private void openNewsItem(View view, Context context, NewsItem newsItem) {
+        if (getActivity() instanceof MainActivity) {
+            MainActivity activity = (MainActivity) getActivity();
+            if (activity.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
+                try {
+                    InterstitialAd ad = activity.getNewsAd();
+                    ad.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdClosed() {
+                            super.onAdClosed();
+                            doOpenNewsItem(view, context, newsItem);
+                            ad.loadAd(getApplicationData().buildAdRequest());
+                        }
+                    });
+                    ad.show();
+
+                    // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
+                    ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File(context.getFilesDir(), ApplicationData.NEWS_ADS_SHOWN_DATE_FILENAME)));
+                    stream.writeObject(LocalDateTime.now());
+
+                } catch (IOException e) {
+                    Logger.logError("NewsFragment", "Failed to store last shown date for news ads: ", e);
+                    // Ad is already shown and can be closed. Nothing to do anymore...
+                }
+            } else {
+                // If offline or when too many ads are shown, open the news item.
+                doOpenNewsItem(view, context, newsItem);
+            }
+        } else {
+            // If not attached to main activity or coming from other activity, open the news item.
+            doOpenNewsItem(view, context, newsItem);
+        }
+    }
+
+    private void doOpenNewsItem(View view, Context context, NewsItem newsItem) {
         Intent intent = new Intent(getActivity(), NewsActivity.class);
         intent.putExtra(INTENT_NEWS_ITEM, newsItem);
         startActivity(intent);

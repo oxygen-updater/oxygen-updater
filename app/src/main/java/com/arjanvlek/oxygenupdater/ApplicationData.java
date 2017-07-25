@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
+import java8.util.stream.StreamSupport;
+
+import static com.arjanvlek.oxygenupdater.views.AbstractFragment.ADS_TEST_DEVICES;
 
 public class ApplicationData extends Application {
 
@@ -23,6 +28,7 @@ public class ApplicationData extends Application {
     public static final String LOCALE_DUTCH = "Nederlands";
     private static final String TAG = "ApplicationData";
     public static final String UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build";
+    public static final String NEWS_ADS_SHOWN_DATE_FILENAME = "news-ad-shown-date";
     public static final String NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR";
     public static final String SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR";
     public static final String APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR";
@@ -74,6 +80,13 @@ public class ApplicationData extends Application {
             Logger.logVerbose(false, TAG, "Using cached instance of SystemVersionProperties");
         }
         return systemVersionProperties;
+    }
+
+    public AdRequest buildAdRequest() {
+        AdRequest.Builder adRequest = new AdRequest.Builder();
+
+        StreamSupport.stream(ADS_TEST_DEVICES).forEach(adRequest::addTestDevice);
+        return adRequest.build();
     }
 
 
