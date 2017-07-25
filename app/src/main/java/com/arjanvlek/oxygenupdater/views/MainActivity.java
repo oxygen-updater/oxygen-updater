@@ -29,7 +29,6 @@ import com.arjanvlek.oxygenupdater.notifications.MessageDialog;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import org.joda.time.LocalDateTime;
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         this.newsAd = new InterstitialAd(this);
         this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-        this.newsAd.loadAd(new AdRequest.Builder().build());
+        this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
     }
 
     @Override
@@ -247,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         } else {
             InterstitialAd interstitialAd = new InterstitialAd(this);
             interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-            interstitialAd.loadAd(new AdRequest.Builder().build());
+            interstitialAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
             this.newsAd = interstitialAd;
             return this.newsAd;
         }
