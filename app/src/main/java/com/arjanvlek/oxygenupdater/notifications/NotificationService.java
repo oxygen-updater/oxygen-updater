@@ -8,9 +8,10 @@ import android.os.Build;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.news.NewsActivity;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -22,13 +23,17 @@ import static android.app.Notification.DEFAULT_ALL;
 import static android.app.Notification.PRIORITY_HIGH;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
+import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
+import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_START_WITH_AD;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DEVICE_NAME;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DUTCH_MESSAGE;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.ENGLISH_MESSAGE;
+import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEWS_ITEM_ID;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEW_DEVICE_NAME;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEW_VERSION_NUMBER;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.TYPE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 
@@ -37,6 +42,7 @@ public class NotificationService extends FirebaseMessagingService {
     public static final int NEW_DEVICE_NOTIFICATION_ID = 10010;
     public static final int NEW_UPDATE_NOTIFICATION_ID = 20020;
     public static final int GENERIC_NOTIFICATION_ID = 30030;
+    public static final int NEWS_NOTIFICATION_ID = 50050;
     public static final int UNKNOWN_NOTIFICATION_ID = 40040;
 
     public static final String TAG = "NotificationService";
@@ -50,7 +56,7 @@ public class NotificationService extends FirebaseMessagingService {
             Map<String, String> messageContents = remoteMessage.getData();
 
             SettingsManager settingsManager = new SettingsManager(getApplicationContext());
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+
 
             NotificationType notificationType = NotificationType.valueOf(messageContents.get(TYPE.toString()));
 
@@ -84,6 +90,25 @@ public class NotificationService extends FirebaseMessagingService {
                             break;
                     }
                     builder = displayGeneralServerNotification(message);
+                    break;
+                case NEWS:
+                    if (!settingsManager.getPreference(PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true)) {
+                        return;
+                    }
+
+                    String newsMessage;
+                    switch (Locale.getDefault().getDisplayLanguage()) {
+                        case LOCALE_DUTCH:
+                            newsMessage = messageContents.get(DUTCH_MESSAGE.toString());
+                            break;
+                        default:
+                            newsMessage = messageContents.get(ENGLISH_MESSAGE.toString());
+                            break;
+                    }
+                    // Same as general server notification, so reuse method.
+                    builder = displayGeneralServerNotification(newsMessage);
+                    break;
+
             }
             if (builder == null) {
                 return;
@@ -97,6 +122,18 @@ public class NotificationService extends FirebaseMessagingService {
             if(notificationType != NotificationType.NEW_VERSION) {
                 builder.setContentTitle(getString(R.string.app_name));
             }
+
+            PendingIntent contentIntent;
+
+            if (notificationType == NotificationType.NEWS) {
+                Intent newsIntent = new Intent(this, NewsActivity.class);
+                newsIntent.putExtra(INTENT_NEWS_ITEM_ID, Long.valueOf(messageContents.get(NEWS_ITEM_ID.toString())));
+                newsIntent.putExtra(INTENT_START_WITH_AD, true);
+                contentIntent = PendingIntent.getActivity(this, 0, newsIntent, 0);
+            } else {
+                contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+            }
+
             builder.setContentIntent(contentIntent);
             builder.setDefaults(DEFAULT_ALL);
             builder.setAutoCancel(true);
@@ -147,6 +184,8 @@ public class NotificationService extends FirebaseMessagingService {
                 return NEW_UPDATE_NOTIFICATION_ID;
             case GENERAL_NOTIFICATION:
                 return GENERIC_NOTIFICATION_ID;
+            case NEWS:
+                return NEWS_NOTIFICATION_ID;
             default:
                 return UNKNOWN_NOTIFICATION_ID;
         }

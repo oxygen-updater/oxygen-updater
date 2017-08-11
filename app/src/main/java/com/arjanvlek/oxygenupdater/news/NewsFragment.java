@@ -46,7 +46,7 @@ import java.util.List;
 
 import java8.util.function.Consumer;
 
-import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM;
+import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
 
 public class NewsFragment extends AbstractFragment {
 
@@ -163,7 +163,7 @@ public class NewsFragment extends AbstractFragment {
 
                 newsItemView.title.setText(newsItem.getTitle(locale));
                 newsItemView.subtitle.setText(newsItem.getSubtitle(locale));
-                newsItemView.container.setOnClickListener(v -> openNewsItem(view, getApplicationData(), newsItem));
+                newsItemView.container.setOnClickListener(v -> openNewsItem(view, getApplicationData(), newsItem.getId()));
 
                 if(newsItem.isRead()) {
                     newsItemView.title.setAlpha(0.5f);
@@ -247,7 +247,7 @@ public class NewsFragment extends AbstractFragment {
         }
     }
 
-    private void openNewsItem(View view, Context context, NewsItem newsItem) {
+    private void openNewsItem(View view, Context context, Long newsItemId) {
         if (getActivity() instanceof MainActivity) {
             MainActivity activity = (MainActivity) getActivity();
             if (activity.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
@@ -257,7 +257,7 @@ public class NewsFragment extends AbstractFragment {
                         @Override
                         public void onAdClosed() {
                             super.onAdClosed();
-                            doOpenNewsItem(view, context, newsItem);
+                            doOpenNewsItem(view, newsItemId);
                             ad.loadAd(getApplicationData().buildAdRequest());
                         }
                     });
@@ -273,25 +273,23 @@ public class NewsFragment extends AbstractFragment {
                 }
             } else {
                 // If offline or when too many ads are shown, open the news item.
-                doOpenNewsItem(view, context, newsItem);
+                doOpenNewsItem(view, newsItemId);
             }
         } else {
             // If not attached to main activity or coming from other activity, open the news item.
-            doOpenNewsItem(view, context, newsItem);
+            doOpenNewsItem(view, newsItemId);
         }
     }
 
-    private void doOpenNewsItem(View view, Context context, NewsItem newsItem) {
+    private void doOpenNewsItem(View view, Long newsItemId) {
         Intent intent = new Intent(getActivity(), NewsActivity.class);
-        intent.putExtra(INTENT_NEWS_ITEM, newsItem);
+        intent.putExtra(INTENT_NEWS_ITEM_ID, newsItemId);
         startActivity(intent);
-
-        NewsDatabaseHelper helper = new NewsDatabaseHelper(context);
-        helper.markNewsItemAsRead(newsItem);
-        helper.close();
 
         SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.newsRefreshContainer);
 
         new Handler().postDelayed(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)), 2000);
+
+
     }
 }

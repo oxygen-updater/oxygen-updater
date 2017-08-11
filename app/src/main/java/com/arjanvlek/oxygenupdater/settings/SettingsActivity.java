@@ -14,13 +14,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
-import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.ThreeTuple;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.views.AbstractActivity;
 import com.arjanvlek.oxygenupdater.views.CustomDropdown;
 
@@ -31,6 +31,7 @@ import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
@@ -70,6 +71,7 @@ public class SettingsActivity extends AbstractActivity {
                 ThreeTuple.create(R.id.settingsImportantPushNotificationsSwitch, PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true),
                 ThreeTuple.create(R.id.settingsNewVersionPushNotificationsSwitch, PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true),
                 ThreeTuple.create(R.id.settingsNewDevicePushNotificationsSwitch, PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true),
+                ThreeTuple.create(R.id.settingsNewsPushNotificationsSwitch, PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true),
                 ThreeTuple.create(R.id.settingsSystemIsUpToDateSwitch, PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true),
                 ThreeTuple.create(R.id.settingsUploadLogsSwitch, PROPERTY_UPLOAD_LOGS, true)
         );

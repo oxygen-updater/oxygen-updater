@@ -1,15 +1,14 @@
 package com.arjanvlek.oxygenupdater.internal.server;
 
 
-
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.news.NewsItem;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerStatus;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -39,6 +38,7 @@ enum ServerRequest {
     SERVER_MESSAGES("serverMessages/%1d/%2d", 20, ServerMessage.class),
 
     NEWS("news/%1d/%2d", 20, NewsItem.class),
+    NEWS_ITEM("news-item/%1d", 20, NewsItem.class),
     NEWS_READ(POST, "news-read", 20, ServerPostResult.class),
 
     LOG(POST, "log", 20, ServerPostResult.class);

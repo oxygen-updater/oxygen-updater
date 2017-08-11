@@ -36,8 +36,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 12
-        versionName "2.1.3"
+        versionCode 13
+        versionName "2.2.0"
         if (Os.isFamily(Os.FAMILY_MAC)) {
             signingConfig signingConfigs.macReleaseConfig
         } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
@@ -48,7 +48,7 @@ android {
     }
     buildTypes {
         release { // Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.1/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series\""
@@ -66,7 +66,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug { // Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.1/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
@@ -88,7 +88,7 @@ android {
             }
         }
         screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.1/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
@@ -109,7 +109,7 @@ android {
             }
         }
         device { // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.1/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.cm.device\""

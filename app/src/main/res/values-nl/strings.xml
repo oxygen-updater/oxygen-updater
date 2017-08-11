@@ -102,6 +102,7 @@
     <string name="settings_push_from_server">Waarschuwing nodig is</string>
     <string name="settings_push_new_version">Systeemupdate is verschenen</string>
     <string name="settings_push_new_device">Nieuw apparaat wordt ondersteund</string>
+    <string name="settings_push_news">Nieuwsbericht is gepubliceerd</string>
 
     <string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
     <string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een internetverbinding hebt en open je de app opnieuw.</string>
@@ -279,6 +280,8 @@
     <string name="news">Nieuws</string>
     <string name="news_author">Geschreven door: %1$s</string>
     <string name="news_date_published">Laatste update: %1$s</string>
+    <string name="news_empty">Dit artikel bevat geen inhoud.</string>
+    <string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en open het artikel vervolgens opnieuw.</string>
 
     <!-- Error strings -->
     <string name="error_app_outdated">Oeps!</string>

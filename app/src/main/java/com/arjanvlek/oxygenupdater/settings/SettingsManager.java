@@ -18,7 +18,8 @@ public class SettingsManager {
     public static final String PROPERTY_UPDATE_METHOD_ID = "update_method_id";
     public static final String PROPERTY_UPDATE_CHECKED_DATE = "update_checked_date";
     public static final String PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS = "receive_system_update_notifications";
-    public static final String PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS = "recive_general_notifications";
+    public static final String PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS = "recive_general_notifications"; // Typo can't be fixed due to older versions of the app being released with it.
+    public static final String PROPERTY_RECEIVE_NEWS_NOTIFICATIONS = "receive_news_notifications";
     public static final String PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS = "receive_new_device_notifications";
     public static final String PROPERTY_SHOW_NEWS_MESSAGES = "show_news_messages";
     public static final String PROPERTY_SHOW_APP_UPDATE_MESSAGES = "show_app_update_messages";

@@ -8,20 +8,20 @@ import android.support.v4.content.ContextCompat;
 import android.text.Html;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
-import com.arjanvlek.oxygenupdater.updateinformation.Banner;
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
+import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
+import com.arjanvlek.oxygenupdater.news.NewsDatabaseHelper;
 import com.arjanvlek.oxygenupdater.news.NewsItem;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.updateinformation.Banner;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerStatus;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
-import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
-import com.arjanvlek.oxygenupdater.news.NewsDatabaseHelper;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.settings.SettingsManager;
-import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.joda.time.LocalDateTime;
@@ -45,8 +45,6 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NETWORK_CONNECTION_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD;
-import static com.arjanvlek.oxygenupdater.updateinformation.ServerStatus.Status.NORMAL;
-import static com.arjanvlek.oxygenupdater.updateinformation.ServerStatus.Status.UNREACHABLE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL;
@@ -60,6 +58,8 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFL
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
+import static com.arjanvlek.oxygenupdater.updateinformation.ServerStatus.Status.NORMAL;
+import static com.arjanvlek.oxygenupdater.updateinformation.ServerStatus.Status.UNREACHABLE;
 
 public class ServerConnector implements Cloneable {
 
@@ -281,6 +281,20 @@ public class ServerConnector implements Cloneable {
 
             databaseHelper.close();
         }), deviceId, updateMethodId).execute();
+    }
+
+    public void getNewsItem(Context context, @NonNull Long newsItemId, Consumer<NewsItem> callback) {
+        new ObjectResponseExecutor<NewsItem>(ServerRequest.NEWS_ITEM, (newsItem -> {
+            NewsDatabaseHelper databaseHelper = new NewsDatabaseHelper(context);
+
+            if (newsItem != null && Utils.checkNetworkConnection(context)) {
+                databaseHelper.saveNewsItem(newsItem);
+            }
+
+            callback.accept(databaseHelper.getNewsItem(newsItemId));
+
+            databaseHelper.close();
+        }), newsItemId).execute();
     }
 
     private class CollectionResponseExecutor<T> extends AsyncTask<Void, Void, List<T>> {

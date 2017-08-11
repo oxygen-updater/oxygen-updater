@@ -240,10 +240,28 @@
                 android:layout_marginTop="5dp" />
 
             <TextView
+                android:id="@+id/settingsNewsPushNotificationsView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/settingsNewsPushNotificationsSwitch"
+                android:text="@string/settings_push_news"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/settingsNewsPushNotificationsSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                app:theme="@style/Theme.Oxygen.Switch"
+                android:layout_below="@id/settingsNewDevicePushNotificationsSwitch"
+                android:layout_marginTop="5dp" />
+
+            <TextView
                 android:id="@+id/settingsHideUpdateInformationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsNewDevicePushNotificationsSwitch"
+                android:layout_below="@id/settingsNewsPushNotificationsSwitch"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_system_up_to_date"
                 android:textColor="@color/oneplus_red"

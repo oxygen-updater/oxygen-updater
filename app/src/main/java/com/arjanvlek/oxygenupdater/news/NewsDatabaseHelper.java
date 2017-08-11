@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import org.joda.time.LocalDateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,6 +108,9 @@ public class NewsDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public NewsItem getNewsItem(Long id) {
+        if (id == null) {
+            return null;
+        }
         String selection = COLUMN_ID + " = ?";
         String[] selectionArgs = { String.valueOf(id) };
         String sortOrder = COLUMN_ID + " ASC";
@@ -207,6 +208,10 @@ public class NewsDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private ContentValues toDatabaseContents(NewsItem newsItem) {
+        if (newsItem == null) {
+            return new ContentValues();
+        }
+
         ContentValues values = new ContentValues();
 
         values.put(COLUMN_ID, newsItem.getId());

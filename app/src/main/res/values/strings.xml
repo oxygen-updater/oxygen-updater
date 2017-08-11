@@ -101,6 +101,7 @@
     <string name="settings_push_from_server">Critical message is available</string>
     <string name="settings_push_new_version">System update is available</string>
     <string name="settings_push_new_device">New device is supported</string>
+    <string name="settings_push_news">News story has been published</string>
 
     <string name="settings_saved">Your settings are automatically saved.</string>
     <string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
@@ -272,6 +273,8 @@
     <string name="news">News</string>
     <string name="news_author">Author: %1$s</string>
     <string name="news_date_published">Last update: %1$s</string>
+    <string name="news_empty">This article has no contents.</string>
+    <string name="news_load_error">Failed to load article. Check your connection and try opening the article again.</string>
 
     <!-- Error strings-->
     <string name="error_app_outdated">Oh no!</string>
