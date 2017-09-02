@@ -41,7 +41,8 @@ enum ServerRequest {
     NEWS_ITEM("news-item/%1d", 20, NewsItem.class),
     NEWS_READ(POST, "news-read", 20, ServerPostResult.class),
 
-    LOG(POST, "log", 20, ServerPostResult.class);
+    LOG(POST, "log", 20, ServerPostResult.class),
+    VERIFY_PURCHASE(POST, "verify-purchase", 120, ServerPostResult.class);
 
     private final RequestMethod requestMethod;
     private final String url;

@@ -51,6 +51,9 @@ public class SettingsManager {
     // Notifications properties
     public static final String PROPERTY_NOTIFICATION_TOPIC = "notification_topic";
 
+    // IAB properties
+    public static final String PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj";
+
     private final Context context;
     private static final String TAG = "SettingsManager";
 

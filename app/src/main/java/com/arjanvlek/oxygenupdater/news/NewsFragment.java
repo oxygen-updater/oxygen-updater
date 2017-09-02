@@ -270,9 +270,11 @@ public class NewsFragment extends AbstractFragment {
                 } catch (IOException e) {
                     Logger.logError("NewsFragment", "Failed to store last shown date for news ads: ", e);
                     // Ad is already shown and can be closed. Nothing to do anymore...
+                } catch (NullPointerException e) {
+                    // Ad is not loaded, because the user bought the ad-free upgrade. Nothing to do here...
                 }
             } else {
-                // If offline or when too many ads are shown, open the news item.
+                // If offline, too many ads are shown or the user has bought the ad-free upgrade, open the news item directly.
                 doOpenNewsItem(view, newsItemId);
             }
         } else {

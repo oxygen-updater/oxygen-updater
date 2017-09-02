@@ -40,6 +40,7 @@ import java.io.ObjectInputStream;
 
 import java8.util.function.Consumer;
 
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
@@ -130,9 +131,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         }
 
-        this.newsAd = new InterstitialAd(this);
-        this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-        this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
+        if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
+            this.newsAd = new InterstitialAd(this);
+            this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+            this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
+        }
     }
 
     @Override
@@ -243,16 +246,21 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public InterstitialAd getNewsAd() {
         if (newsAd != null) {
             return this.newsAd;
-        } else {
+        } else if (mayShowNewsAd()) {
             InterstitialAd interstitialAd = new InterstitialAd(this);
             interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
             interstitialAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
             this.newsAd = interstitialAd;
             return this.newsAd;
+        } else {
+            return null;
         }
     }
 
     public boolean mayShowNewsAd() {
+        if (settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
+            return false;
+        }
         try {
             File file = new File(getFilesDir(), ApplicationData.NEWS_ADS_SHOWN_DATE_FILENAME);
             if (!file.exists()) {

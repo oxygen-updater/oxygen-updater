@@ -15,6 +15,7 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.google.android.gms.ads.InterstitialAd;
 
 public class NewsActivity extends AppCompatActivity {
@@ -94,7 +95,7 @@ public class NewsActivity extends AppCompatActivity {
                     }
 
                     // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
-                    if (getIntent().getBooleanExtra(INTENT_START_WITH_AD, false)) {
+                    if (getIntent().getBooleanExtra(INTENT_START_WITH_AD, false) && !new SettingsManager(getApplication()).getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
                         InterstitialAd interstitialAd = new InterstitialAd(getApplication());
                         interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
                         interstitialAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());

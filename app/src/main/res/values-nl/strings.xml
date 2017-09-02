@@ -91,6 +91,10 @@
     
     <!-- Settings strings -->
     <string name="settings">Instellingen</string>
+    <string name="settings_buy_button_buy">Koop (%1$s)</string>
+    <string name="settings_buy_button_bought">Gekocht</string>
+    <string name="settings_buy_button_not_possible">Niet beschikb.</string>
+    <string name="settings_buy_ad_free_label">Verwijder advertenties:</string>
     <string name="settings_category_other">Overig:</string>
     <string name="settings_device">Apparaat</string>
     <string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
@@ -309,8 +313,13 @@
     <string name="root_check_title">Root-toegang</string>
     <string name="root_check_message">Sommige update-methodes zijn niet geschikt voor apparaten met root-toegang. Oxygen Updater kan hierop controleren, en raadt vervolgens de juiste update-methode aan. \n\nAls je root-toegang hebt, wordt het aanbevolen om na het sluiten van deze melding toestemming voor het gebruik van root-toegang te geven.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
 
+    <!-- Purchase strings -->
+    <string name="purchase_error_before_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw.</string>
+    <string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
+
     <!-- Other strings -->
     <string name="icon">Icoon</string>
     <string name="loading">Laden…</string>
+    <string name="processing">Verwerken…</string>
     <string name="choose_file">Kies een bestand</string>
 </resources>

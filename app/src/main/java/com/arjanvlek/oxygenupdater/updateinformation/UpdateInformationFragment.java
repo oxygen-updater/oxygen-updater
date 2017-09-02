@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
-import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
@@ -34,6 +34,9 @@ import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.google.android.gms.ads.AdView;
@@ -41,7 +44,10 @@ import com.google.android.gms.ads.AdView;
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import java8.util.function.Consumer;
 
 import static android.app.DownloadManager.ERROR_DEVICE_NOT_FOUND;
 import static android.app.DownloadManager.ERROR_FILE_ALREADY_EXISTS;
@@ -64,6 +70,8 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.APP_OUTDATED_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NETWORK_CONNECTION_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERROR;
+import static com.arjanvlek.oxygenupdater.settings.SettingsActivity.SKU_AD_FREE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL;
@@ -91,9 +99,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     private UpdateDownloader updateDownloader;
 
     private boolean isLoadedOnce;
-    private boolean adsAreSupported;
-
-
+    private boolean adsAreSupported = false;
 
     // In app message bar collections and identifiers.
     private static final String KEY_HAS_DOWNLOAD_ERROR = "has_download_error";
@@ -111,14 +117,13 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         this.context = getApplicationData();
         this.settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        this.adsAreSupported = getApplicationData().checkPlayServices(getActivity(), false) && BuildConfig.ADS_ARE_SUPPORTED;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         this.rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_updateinformation, container, false);
-        if (adsAreSupported) this.adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
+        this.adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
         return rootView;
     }
 
@@ -129,42 +134,86 @@ public class UpdateInformationFragment extends AbstractFragment {
             updateInformationRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationRefreshLayout);
             systemIsUpToDateRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
 
-            updateInformationRefreshLayout.setOnRefreshListener(this::load);
+            updateInformationRefreshLayout.setOnRefreshListener(() -> load(this.adsAreSupported));
             updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
 
-            systemIsUpToDateRefreshLayout.setOnRefreshListener(this::load);
+            systemIsUpToDateRefreshLayout.setOnRefreshListener(() -> load(this.adsAreSupported));
             systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
 
-            load();
+            checkAdSupportStatus((adsAreSupported) -> {
+                this.adsAreSupported = adsAreSupported;
+
+                load(adsAreSupported);
+
+                if (adsAreSupported) {
+                    showAds();
+                }
+            });
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (adsAreSupported) adView.pause();
+        if (adView != null) adView.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (adsAreSupported) adView.resume();
+        if (adView != null) adView.resume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(adsAreSupported) adView.destroy();
+        if (adView != null) adView.destroy();
     }
 
     /*
       -------------- INITIALIZATION / DATA FETCHING METHODS -------------------
      */
 
+    private void checkAdSupportStatus(Consumer<Boolean> callback) {
+        IabHelper helper = new IabHelper(getActivity(), PK1.A + "/" + PK2.B);
+
+        helper.startSetup(setupResult -> {
+            if (!setupResult.isSuccess()) {
+                // Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
+                callback.accept(!settingsManager.getPreference(PROPERTY_AD_FREE, false));
+                return;
+            }
+
+            try {
+                helper.queryInventoryAsync(true, Collections.singletonList(SKU_AD_FREE), null, (queryResult, inventory) -> {
+                    if (!queryResult.isSuccess()) {
+                        // Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
+                        callback.accept(!settingsManager.getPreference(PROPERTY_AD_FREE, false));
+                        return;
+                    }
+
+                    if (queryResult.isSuccess()) {
+                        if (inventory.hasPurchase(SKU_AD_FREE)) {
+                            // User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
+                            settingsManager.savePreference(PROPERTY_AD_FREE, true);
+                            callback.accept(false);
+                        } else {
+                            // User has not bought the item and we're online, so ads are definitely supported
+                            callback.accept(true);
+                        }
+                    }
+                });
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                // A check is already in progress, so wait 3 secs and try to check again.
+                new Handler().postDelayed(() -> checkAdSupportStatus(callback), 3000);
+            }
+        });
+    }
+
     /**
      * Fetches all server data. This includes update information, server messages and server status checks
      */
-    private void load() {
+    private void load(boolean adsAreSupported) {
         final AbstractFragment instance = this;
 
         long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
@@ -194,7 +243,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             }
         });
 
-        serverConnector.getInAppMessages(online, this::displayServerMessageBars, (error) -> {
+        serverConnector.getInAppMessages(online, (banners -> this.displayServerMessageBars(banners, adsAreSupported)), (error) -> {
             switch (error) {
                 case SERVER_MAINTENANCE_ERROR:
                     Dialogs.showServerMaintenanceError(instance);
@@ -204,12 +253,6 @@ public class UpdateInformationFragment extends AbstractFragment {
                     break;
             }
         });
-
-        if(!isLoadedOnce) {
-            if (online && adsAreSupported) showAds();
-            else if (adsAreSupported) adView.destroy();
-        }
-
     }
 
 
@@ -239,7 +282,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         this.serverMessageBars = new ArrayList<>();
     }
 
-    private void displayServerMessageBars(List<Banner> banners) {
+    private void displayServerMessageBars(List<Banner> banners, boolean adsAreSupported) {
 
         if(!isAdded()) return;
         deleteAllServerMessageBars();

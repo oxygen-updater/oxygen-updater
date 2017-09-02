@@ -36,8 +36,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 13
-        versionName "2.2.0"
+        versionCode 16
+        versionName "2.3.0"
         if (Os.isFamily(Os.FAMILY_MAC)) {
             signingConfig signingConfigs.macReleaseConfig
         } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {

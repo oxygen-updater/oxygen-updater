@@ -330,10 +330,28 @@
                 android:layout_marginTop="5dp" />
 
             <TextView
+                android:id="@+id/settingsBuyAdFreeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignBaseline="@+id/settingsBuyAdFreeButton"
+                android:text="@string/settings_buy_ad_free_label"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/settingsBuyAdFreeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:enabled="false"
+                android:text="@string/settings_buy_button_not_possible"
+                android:layout_below="@id/settingsUploadLogsSwitch" />
+
+            <TextView
                 android:id="@+id/settingsDescriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsUploadLogsSwitch"
+                android:layout_below="@id/settingsBuyAdFreeButton"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_explanation_update_methods"
                 android:textColor="@color/oneplus_red"

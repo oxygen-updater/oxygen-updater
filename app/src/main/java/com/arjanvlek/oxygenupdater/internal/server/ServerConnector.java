@@ -18,6 +18,8 @@ import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
 import com.arjanvlek.oxygenupdater.news.NewsDatabaseHelper;
 import com.arjanvlek.oxygenupdater.news.NewsItem;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase;
 import com.arjanvlek.oxygenupdater.updateinformation.Banner;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerStatus;
@@ -221,6 +223,25 @@ public class ServerConnector implements Cloneable {
 
     public void log(@NonNull JSONObject logData, Consumer<ServerPostResult> callback) {
         new ObjectResponseExecutor<>(ServerRequest.LOG, logData, callback).execute();
+    }
+
+    public void verifyPurchase(@NonNull Purchase purchase, PurchaseType purchaseType, Consumer<ServerPostResult> callback) {
+        JSONObject purchaseData;
+
+        try {
+            purchaseData = new JSONObject(purchase.getOriginalJson());
+            purchaseData.put("purchaseType", purchaseType.toString());
+            purchaseData.put("itemType", purchase.getItemType());
+            purchaseData.put("signature", purchase.getSignature());
+        } catch (JSONException ignored) {
+            ServerPostResult result = new ServerPostResult();
+            result.setSuccess(false);
+            result.setErrorMessage("IN-APP ERROR (ServerConnector): JSON parse error on input data " + purchase.getOriginalJson());
+            callback.accept(result);
+            return;
+        }
+
+        new ObjectResponseExecutor<>(ServerRequest.VERIFY_PURCHASE, purchaseData, callback).execute();
     }
 
     public void markNewsItemAsRead(@NonNull Long newsItemId, Consumer<ServerPostResult> callback) {

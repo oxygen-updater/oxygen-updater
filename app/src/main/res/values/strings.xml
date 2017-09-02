@@ -90,6 +90,10 @@
 
     <!-- Settings strings-->
     <string name="settings">Settings</string>
+    <string name="settings_buy_button_buy">Buy (%1$s)</string>
+    <string name="settings_buy_button_bought">Purchased</string>
+    <string name="settings_buy_button_not_possible">Unavailable</string>
+    <string name="settings_buy_ad_free_label">Upgrade to Ad-Free:</string>
     <string name="settings_category_other">Other:</string>
     <string name="settings_device">Device</string>
     <string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
@@ -304,9 +308,14 @@
     <string name="root_check_title">Root access</string>
     <string name="root_check_message">Some update methods are not compatible with rooted devices. Oxygen Updater can check if you have root access, and then recommends the appropriate update method for you. \n\nIf you have root access, It\'s highly recommended that you allow root access after closing this message. \n\nNo root access? Just press \"Close\" and continue using the app.</string>
 
+    <!-- Purchasing strings -->
+    <string name="purchase_error_before_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes.</string>
+    <string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
+
     <!-- Other strings-->
     <string name="icon">Icon</string>
     <string name="loading">Loading…</string>
+    <string name="processing">Processing…</string>
     <string name="choose_file">Select a file</string>
     <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
     <string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
