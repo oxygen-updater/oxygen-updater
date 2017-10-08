@@ -116,7 +116,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         super.onCreate(savedInstanceState);
 
         this.context = getApplicationData();
-        this.settingsManager = new SettingsManager(getActivity().getApplicationContext());
+        this.settingsManager = new SettingsManager(getApplicationData());
     }
 
     @Override
@@ -219,7 +219,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
         long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
-        boolean online = Utils.checkNetworkConnection(getActivity().getApplicationContext());
+        boolean online = Utils.checkNetworkConnection(getApplicationData());
 
         ServerConnector serverConnector = getApplicationData().getServerConnector();
         SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
@@ -728,7 +728,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             case NOT_DOWNLOADING:
                 downloadButton.setText(getString(R.string.download));
 
-                if (Utils.checkNetworkConnection(getActivity().getApplicationContext()) && updateData.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
+                if (Utils.checkNetworkConnection(getApplicationData()) && updateData.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
                     downloadButton.setEnabled(true);
                     downloadButton.setClickable(true);
                     downloadButton.setOnClickListener(new DownloadButtonOnClickListener(updateData));

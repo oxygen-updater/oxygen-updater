@@ -154,4 +154,8 @@ public class NewsItem implements Serializable{
         if(locale == Locale.NL) return getDutchText();
         return getEnglishText();
     }
+
+    public boolean isFullyLoaded() {
+        return id != null && dutchTitle != null && englishTitle != null && dutchText != null && englishText != null;
+    }
 }

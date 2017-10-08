@@ -19,7 +19,7 @@ android {
         windowsReleaseConfig {
             keyAlias 'androidappskey'
             keyPassword 'Stoomtrein1'
-            storeFile file('C:\\Users\\Arjan\\development\\keyStore.jks')
+            storeFile file('C\\Users\\Arjan\\development\\keyStore.jks')
             storePassword 'Stoomtrein1'
         }
     }
@@ -36,8 +36,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 16
-        versionName "2.3.0"
+        versionCode 17
+        versionName "2.3.1"
         if (Os.isFamily(Os.FAMILY_MAC)) {
             signingConfig signingConfigs.macReleaseConfig
         } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {

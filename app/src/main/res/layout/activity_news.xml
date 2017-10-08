@@ -34,6 +34,7 @@
             android:layout_marginEnd="20dp"
             android:text="@string/news_date_published"/>
 
+
         <WebView
             android:id="@+id/newsContent"
             android:layout_width="match_parent"
@@ -41,6 +42,14 @@
             android:layout_marginStart="@dimen/news_horizontal_margin"
             android:layout_marginEnd="@dimen/news_horizontal_margin"
             android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/newsRetryButton"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="@string/download_error_retry"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/newsAuthor"

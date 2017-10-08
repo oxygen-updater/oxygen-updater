@@ -21,36 +21,44 @@ import static com.arjanvlek.oxygenupdater.internal.server.ServerRequest.RequestM
 
 enum ServerRequest {
 
-    DEVICES("devices", 20, Device.class),
+    DEVICES("devices", Device.class),
 
-    UPDATE_METHODS("updateMethods/%1d", 20, UpdateMethod.class),
+    UPDATE_METHODS("updateMethods/%1d", UpdateMethod.class),
+    ALL_UPDATE_METHODS("allUpdateMethods", UpdateMethod.class),
 
-    ALL_UPDATE_METHODS("allUpdateMethods", 20, UpdateMethod.class),
+    UPDATE_DATA("updateData/%1d/%2d/%3$s", UpdateData.class),
+    MOST_RECENT_UPDATE_DATA("mostRecentUpdateData/%1d/%2d", UpdateData.class),
 
-    UPDATE_DATA("updateData/%1d/%2d/%3$s", 20, UpdateData.class),
+    INSTALL_GUIDE_PAGE("installGuide/%1d/%2d/%3d", InstallGuidePage.class),
 
-    MOST_RECENT_UPDATE_DATA("mostRecentUpdateData/%1d/%2d", 20, UpdateData.class),
+    SERVER_STATUS("serverStatus", ServerStatus.class),
 
-    INSTALL_GUIDE_PAGE("installGuide/%1d/%2d/%3d", 20, InstallGuidePage.class),
+    SERVER_MESSAGES("serverMessages/%1d/%2d", ServerMessage.class),
 
-    SERVER_STATUS("serverStatus", 20, ServerStatus.class),
+    NEWS("news/%1d/%2d", NewsItem.class),
+    NEWS_ITEM("news-item/%1d", NewsItem.class),
+    NEWS_READ(POST, "news-read", ServerPostResult.class),
 
-    SERVER_MESSAGES("serverMessages/%1d/%2d", 20, ServerMessage.class),
+    LOG(POST, "log", ServerPostResult.class),
 
-    NEWS("news/%1d/%2d", 20, NewsItem.class),
-    NEWS_ITEM("news-item/%1d", 20, NewsItem.class),
-    NEWS_READ(POST, "news-read", 20, ServerPostResult.class),
-
-    LOG(POST, "log", 20, ServerPostResult.class),
     VERIFY_PURCHASE(POST, "verify-purchase", 120, ServerPostResult.class);
 
     private final RequestMethod requestMethod;
     private final String url;
     private final int timeOutInSeconds;
     private final Class<?> returnClass;
+    private static final int DEFAULT_TIMEOUT = 20;
+
+    ServerRequest(String url, Class<?> returnClass) {
+        this(GET, url, DEFAULT_TIMEOUT, returnClass);
+    }
 
     ServerRequest(String url, int timeOutInSeconds, Class<?> returnClass) {
         this(GET, url, timeOutInSeconds, returnClass);
+    }
+
+    ServerRequest(RequestMethod requestMethod, String url, Class<?> returnClass) {
+        this(requestMethod, url, DEFAULT_TIMEOUT, returnClass);
     }
 
     ServerRequest(RequestMethod requestMethod, String url, int timeOutInSeconds, Class<?> returnClass) {

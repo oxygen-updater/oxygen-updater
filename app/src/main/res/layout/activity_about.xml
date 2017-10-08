@@ -65,40 +65,48 @@
         android:textAppearance="?android:textAppearanceSmall"
         android:textStyle="italic" />
 
-    <Button
-        android:id="@+id/aboutRateButton"
-        style="?android:buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="@string/about_rate_app_button_text"
-        android:textColor="@color/oneplus_red" />
-
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/aboutRateButton"
         android:layout_below="@+id/aboutSlogan"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/transparent"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin">
 
-        <TextView
-            android:id="@+id/aboutBackgroundStoryView"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:linksClickable="true"
-            android:text="@string/about_background_story"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColorLink="@color/oneplus_red"
-            android:textSize="13sp" />
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/aboutBackgroundStoryView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:text="@string/about_background_story"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColorLink="@color/oneplus_red"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/aboutRateButton"
+                style="?android:buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="@string/about_rate_app_button_text"
+                android:textColor="@color/oneplus_red" />
+
+        </LinearLayout>
+
+
     </ScrollView>
 
 </RelativeLayout>

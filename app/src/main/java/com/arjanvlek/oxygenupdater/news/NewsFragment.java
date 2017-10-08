@@ -23,7 +23,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
@@ -36,11 +35,7 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import org.joda.time.LocalDateTime;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.List;
 
@@ -190,10 +185,17 @@ public class NewsFragment extends AbstractFragment {
                             InputStream in = new URL(newsItem.getImageUrl()).openStream();
                             image = BitmapFactory.decodeStream(in);
                             imageCache.put(newsItem.getId().intValue(), image);
-                        } catch(Exception e) {
-                            image = null;
-                            imageCache.put(newsItem.getId().intValue(), null);
-                            Logger.logError("NewsFragment", "Error loading news image: ", e);
+                        } catch(Exception ignored) {
+                            try {
+                                // Retry 1 time before handling exception
+                                InputStream in = new URL(newsItem.getImageUrl()).openStream();
+                                image = BitmapFactory.decodeStream(in);
+                                imageCache.put(newsItem.getId().intValue(), image);
+                            } catch (Exception e) {
+                                image = null;
+                                imageCache.put(newsItem.getId().intValue(), null);
+                                Logger.logError("NewsFragment", "Error loading news image: ", e);
+                            }
                         }
 
                         return image;
@@ -264,12 +266,7 @@ public class NewsFragment extends AbstractFragment {
                     ad.show();
 
                     // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                    ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(new File(context.getFilesDir(), ApplicationData.NEWS_ADS_SHOWN_DATE_FILENAME)));
-                    stream.writeObject(LocalDateTime.now());
-
-                } catch (IOException e) {
-                    Logger.logError("NewsFragment", "Failed to store last shown date for news ads: ", e);
-                    // Ad is already shown and can be closed. Nothing to do anymore...
+                    getSettingsManager().savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime.now().toString());
                 } catch (NullPointerException e) {
                     // Ad is not loaded, because the user bought the ad-free upgrade. Nothing to do here...
                 }

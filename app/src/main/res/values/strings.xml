@@ -278,7 +278,7 @@
     <string name="news_author">Author: %1$s</string>
     <string name="news_date_published">Last update: %1$s</string>
     <string name="news_empty">This article has no contents.</string>
-    <string name="news_load_error">Failed to load article. Check your connection and try opening the article again.</string>
+    <string name="news_load_error">Failed to open article. Check your connection and press the \'RETRY\' button to open the article.</string>
 
     <!-- Error strings-->
     <string name="error_app_outdated">Oh no!</string>

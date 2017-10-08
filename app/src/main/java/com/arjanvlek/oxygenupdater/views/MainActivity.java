@@ -23,7 +23,6 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.news.NewsFragment;
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
@@ -33,14 +32,10 @@ import com.google.android.gms.ads.InterstitialAd;
 
 import org.joda.time.LocalDateTime;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import java8.util.function.Consumer;
 
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
@@ -258,25 +253,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     }
 
     public boolean mayShowNewsAd() {
-        if (settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
-            return false;
-        }
-        try {
-            File file = new File(getFilesDir(), ApplicationData.NEWS_ADS_SHOWN_DATE_FILENAME);
-            if (!file.exists()) {
-                return true; // If an ad was never shown, it's time to show one now.
-            }
-            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(file));
-            LocalDateTime lastShownDate = (LocalDateTime) stream.readObject();
+        return !settingsManager.getPreference(PROPERTY_AD_FREE, false) &&
+                LocalDateTime.parse(settingsManager.getPreference(PROPERTY_LAST_NEWS_AD_SHOWN, "1970-01-01T00:00:00.000"))
+                        .isBefore(LocalDateTime.now().minusMinutes(5));
 
-            // If an ad was never shown, it's time to show one. Else, only show one ad every 5 minutes...
-            return lastShownDate == null || lastShownDate.isBefore(LocalDateTime.now().minusMinutes(5));
-
-        } catch (IOException | ClassNotFoundException e) {
-            Logger.logError("MainActivity", "Failed to check whether news ads are supported: ", e);
-            // If it cannot be checked, assume no ad was shown yet. Time to show an ad...
-            return true;
-        }
     }
 
 
