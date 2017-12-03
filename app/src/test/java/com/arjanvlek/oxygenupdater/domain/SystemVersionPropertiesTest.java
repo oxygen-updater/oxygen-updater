@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater.domain;
 
+import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 
 import junit.framework.Assert;
@@ -22,6 +23,13 @@ abstract class SystemVersionPropertiesTest {
 
     private final SystemVersionProperties systemVersionProperties = new SystemVersionProperties(null, null, null, null, null);
 
+
+    private static final String OS_OTA_VERSION_NUMBER_LOOKUP_KEY = "ro.build.version.ota";
+    private static final String OS_VERSION_NUMBER_LOOKUP_KEY = "ro.oxygen.version, ro.build.ota.versionname";
+    private static final String SUPPORTED_BUILD_FINGERPRINT_KEYS = "release-keys";
+    private static final String BUILD_FINGERPRINT_LOOKUP_KEY = "ro.build.oemfingerprint, ro.build.fingerprint";
+    private static final String DEVICE_NAME_LOOKUP_KEY = "ro.display.series, ro.build.product";
+
     /*
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series\""
             buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.build.product\""
@@ -32,27 +40,38 @@ abstract class SystemVersionPropertiesTest {
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"" // Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported.
      */
 
-    boolean isSupportedDevice(String propertiesInDir, String propertiesOfVersion, String expectedDeviceDisplayName, String expectedDeviceInternalName, String expectedOxygenOs1, String expectedOxygenOs2, String expectedOxygenOsOta) {
+    /**
+     * Test if a device is supported in the app
+     * @param propertiesInDir Directory name of properties files
+     * @param propertiesOfVersion OS version of build.prop file
+     * @param expectedDeviceDisplayName23x Display name as shown in app 2.3.2 and newer.
+     * @param expectedDeviceDisplayName12x Display name as shown in app between 1.2.0 and 2.3.1.
+     * @param expectedDeviceDisplayName11x Display name as shown in app between 1.1.x and older.
+     * @param expectedOxygenOs Expected OxygenOS version. Is the same as propertiesOfVersion on newer devices (and op1) or like expectedOxygenOSOta in other cases.
+     * @param expectedOxygenOsOta Expected OxygenOS OTA version (as sent to the server to query for updates).
+     * @return Whether or not the device is marked as supported in the app.
+     */
+    boolean isSupportedDevice(String propertiesInDir, String propertiesOfVersion, String expectedDeviceDisplayName23x, String expectedDeviceDisplayName12x, String expectedDeviceDisplayName11x, String expectedOxygenOs, String expectedOxygenOsOta) {
         String properties = readPropertiesFile(propertiesInDir, propertiesOfVersion);
 
-        String deviceDisplayName = readProperty("ro.display.series", properties);
-        String deviceInternalName = readProperty("ro.build.product", properties);
+        String deviceDisplayName23x = readProperty(DEVICE_NAME_LOOKUP_KEY, properties);
+        String deviceDisplayName12x = readProperty("ro.display.series", properties);
+        String deviceDisplayName11x = readProperty("ro.build.product", properties);
 
-        String oxygenOSDisplayVersion1 = readProperty("ro.oxygen.version", properties);
-        String oxygenOSDisplayVersion2 = readProperty("ro.build.ota.versionname", properties);
-        String oxygenOSOtaVersion = readProperty("ro.build.version.ota", properties);
+        String oxygenOSDisplayVersion = readProperty(OS_VERSION_NUMBER_LOOKUP_KEY, properties);
+        String oxygenOSOtaVersion = readProperty(OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties);
 
-        String buildFingerPrint = readProperty("ro.build.oemfingerprint", properties);
+        String buildFingerPrint = readProperty(BUILD_FINGERPRINT_LOOKUP_KEY, properties);
 
-        Assert.assertEquals(expectedDeviceDisplayName, deviceDisplayName);
-        Assert.assertEquals(expectedDeviceInternalName, deviceInternalName);
-        Assert.assertEquals(expectedOxygenOs1, oxygenOSDisplayVersion1);
-        Assert.assertEquals(expectedOxygenOs2, oxygenOSDisplayVersion2);
+        Assert.assertEquals(expectedDeviceDisplayName23x, deviceDisplayName23x);
+        Assert.assertEquals(expectedDeviceDisplayName12x, deviceDisplayName12x);
+        Assert.assertEquals(expectedDeviceDisplayName11x, deviceDisplayName11x);
+        Assert.assertEquals(expectedOxygenOs, oxygenOSDisplayVersion);
         Assert.assertEquals(expectedOxygenOsOta, oxygenOSOtaVersion);
-        Assert.assertTrue(buildFingerPrint.contains("release-keys"));
+        Assert.assertTrue(buildFingerPrint.contains(SUPPORTED_BUILD_FINGERPRINT_KEYS));
 
-        SystemVersionProperties systemVersionProperties = new SystemVersionProperties(deviceDisplayName, !oxygenOSDisplayVersion1.equals(NO_OXYGEN_OS) ? oxygenOSDisplayVersion1 : oxygenOSDisplayVersion2, oxygenOSOtaVersion, null, buildFingerPrint);
-        Assert.assertTrue(Utils.isSupportedDevice(systemVersionProperties, getAllOnePlusDevices_app12Until231()));
+        SystemVersionProperties systemVersionProperties = new SystemVersionProperties(expectedDeviceDisplayName23x, oxygenOSDisplayVersion, oxygenOSOtaVersion, null, buildFingerPrint);
+        Assert.assertTrue(Utils.isSupportedDevice(systemVersionProperties, getAllOnePlusDevices_app232AndNewer()));
 
         return true;
     }
@@ -71,28 +90,23 @@ abstract class SystemVersionPropertiesTest {
 
         String result = NO_OXYGEN_OS;
         try {
-            Method readBuildPropItem = SystemVersionProperties.class.getDeclaredMethod("readBuildPropItem", String.class, String.class, String.class, String.class);
+            Method readBuildPropItem = SystemVersionProperties.class.getDeclaredMethod("readBuildPropItem", String.class, String.class, String.class);
             readBuildPropItem.setAccessible(true);
 
-            BufferedReader reader = new BufferedReader(new StringReader(propertyFileContents));
-            String line;
+            String rawResult = (String) readBuildPropItem.invoke(systemVersionProperties, key, propertyFileContents, null);
 
-            while ((line = reader.readLine()) != null) {
-                String rawResult = (String) readBuildPropItem.invoke(systemVersionProperties, result, key, line, null);
-
-                if(!rawResult.equals(NO_OXYGEN_OS)) {
-                    String[] keyValue = rawResult.split("=");
-                    if(keyValue.length > 1) {
-                        result = keyValue[1];
-                    }
+            if(!rawResult.equals(NO_OXYGEN_OS)) {
+                String[] keyValue = rawResult.split("=");
+                if(keyValue.length > 1) {
+                    result = keyValue[1];
                 }
             }
 
-            return result;
-
-        } catch (IOException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
+
+        return result;
     }
 
     private List<Device> getAllOnePlusDevices_app11AndOlder() {
@@ -122,7 +136,7 @@ abstract class SystemVersionPropertiesTest {
     private List<Device> getAllOnePlusDevices_app232AndNewer() {
         Device OnePlusOne = new Device(5, "OnePlus One", "OnePlus, One");
         Device OnePlus2 = new Device(1, "OnePlus 2", "OnePlus2");
-        Device OnePlusX = new Device(3, "OnePlus X", "OnePlus X, OnePlus");
+        Device OnePlusX = new Device(3, "OnePlus X", "OnePlus X");
         Device OnePlus3 = new Device(2, "OnePlus 3", "OnePlus 3");
         Device OnePlus3T = new Device(6, "OnePlus 3T", "OnePlus 3T");
         Device OnePlus5 = new Device(7, "OnePlus 5", "OnePlus 5");

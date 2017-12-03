@@ -131,7 +131,7 @@ public class SettingsActivity extends AbstractActivity {
 
             // Set the spinner to the previously selected device.
             final int recommendedPosition = StreamSupport.stream(devices)
-                    .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
+                    .filter(d -> d.getProductNames() != null && d.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
                     .mapToInt(devices::indexOf).findAny().orElse(-1);
 
             final int selectedPosition = StreamSupport.stream(devices)

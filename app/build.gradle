@@ -9,6 +9,16 @@ android {
             storePassword 'Stoomtrein1'
         }
     }
+
+    defaultConfig {
+        applicationId "com.arjanvlek.oxygenupdater"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 18
+        versionName "2.3.2"
+        signingConfig signingConfigs.signingConfig
+    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     packagingOptions {
@@ -18,25 +28,16 @@ android {
         exclude 'META-INF/NOTICE'
         return true
     }
-    defaultConfig {
-        applicationId "com.arjanvlek.oxygenupdater"
-        minSdkVersion 19
-        targetSdkVersion 25
-        versionCode 17
-        versionName "2.3.1"
-        signingConfig signingConfigs.signingConfig
-    }
+
     buildTypes {
         release { // Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.1/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.2/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
-            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series\""
-            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.build.product\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_1", "\"ro.oxygen.version\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_2", "\"ro.build.ota.versionname\""
+            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series, ro.build.product\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.oxygen.version, ro.build.ota.versionname\""
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\""
-            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint\""
+            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint, ro.build.fingerprint\"" // Latter one is only used on very old OOS versions.
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"" // Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported.
             buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true"
 
@@ -46,13 +47,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug { // Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.1/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.2/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
-            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.product.name\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_1", "\"ro.build.version.release\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_2", "\"ro.build.version.release\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
             buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During debugging, all devices are supported.
@@ -62,13 +61,11 @@ android {
             signingConfig signingConfigs.signingConfig
         }
         screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.1/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.2/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
-            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"ro.product.name\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_1", "\"ro.build.version.release\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_2", "\"ro.build.version.release\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
             buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During taking screenshots, all devices are supported.
@@ -78,13 +75,11 @@ android {
 
         }
         device { // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.1/\""
+            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.2/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.cm.device\""
-            buildConfigField "String", "DEVICE_CODENAME_LOOKUP_KEY", "\"rro.cm.device\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_1", "\"ro.cm.display.version\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY_2", "\"ro.cm.display.version\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
             buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
             buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // On test device all build types are supported.

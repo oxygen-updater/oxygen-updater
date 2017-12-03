@@ -50,7 +50,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
             if (devices != null) {
                 StreamSupport.stream(devices)
-                        .filter(device -> device.getProductName() != null && device.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
+                        .filter(device -> device.getProductNames() != null && device.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
                         .forEach(device -> deviceNameView.setText(device.getName()));
             }
         }

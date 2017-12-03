@@ -68,7 +68,7 @@ public class Utils {
         }
 
         Optional<Device> supportedDevice = StreamSupport.stream(devices)
-                .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
+                .filter(d -> d.getProductNames() != null && d.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
                 .findAny();
 
         return supportedDevice.isPresent() && firmwareIsSupported;

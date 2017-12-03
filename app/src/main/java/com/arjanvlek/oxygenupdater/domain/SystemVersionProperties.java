@@ -8,7 +8,10 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.util.Scanner;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
@@ -22,8 +25,7 @@ public class SystemVersionProperties {
     private static final String TAG = "SystemVersionProperties";
 
     public SystemVersionProperties(boolean uploadLog) {
-        String oxygenOSVersion1 = NO_OXYGEN_OS;
-        String oxygenOSVersion2 = NO_OXYGEN_OS;
+        String oxygenOSVersion = NO_OXYGEN_OS;
         String oxygenOSOTAVersion = NO_OXYGEN_OS;
         String oxygenDeviceName = NO_OXYGEN_OS;
         String oemFingerprint = NO_OXYGEN_OS;
@@ -33,36 +35,29 @@ public class SystemVersionProperties {
 
             Logger.logVerbose(TAG, "Started fetching device properties using 'getprop' command...");
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(getBuildPropProcess.getInputStream()));
-            String inputLine;
+            Scanner scanner = new Scanner(getBuildPropProcess.getInputStream()).useDelimiter("\\A");
+            String properties = scanner.hasNext() ? scanner.next() : "";
 
-            while ((inputLine = in.readLine()) != null) {
-                oxygenDeviceName = readBuildPropItem(oxygenDeviceName, BuildConfig.DEVICE_NAME_LOOKUP_KEY, inputLine, "Detected Oxygen OS Device: %s ...");
-                oxygenOSVersion1 = readBuildPropItem(oxygenOSVersion1, BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY_1, inputLine, "Detected Oxygen OS ROM with version %s ...");
-                oxygenOSVersion2 = readBuildPropItem(oxygenOSVersion2, BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY_2, inputLine, "Detected Oxygen OS ROM with version %s (legacy method)...");
-                oxygenOSOTAVersion = readBuildPropItem(oxygenOSOTAVersion, BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, inputLine, "Detected Oxygen OS ROM with OTA version %s ...");
-                oemFingerprint = readBuildPropItem(oemFingerprint, BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, inputLine, "Detected build fingerprint: %s ...");
-
-                if(securityPatchDate.equals(NO_OXYGEN_OS)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        securityPatchDate = Build.VERSION.SECURITY_PATCH;
-                    } else {
-                        securityPatchDate = readBuildPropItem(securityPatchDate, "ro.build.version.security_patch", inputLine, "Detected security patch level of %s ...");
-                    }
-                }
-            }
             getBuildPropProcess.destroy();
+
+            oxygenDeviceName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEY, properties, "Detected device: %s ...");
+            oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected Oxygen OS ROM with version: %s ...");
+            oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected Oxygen OS ROM with OTA version: %s ...");
+            oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s ...");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                securityPatchDate = Build.VERSION.SECURITY_PATCH;
+            } else {
+                securityPatchDate = readBuildPropItem("ro.build.version.security_patch", properties, "Detected security patch level: %s ...");
+            }
+
             Logger.logVerbose(TAG, "Finished fetching device properties using 'getprop' command...");
 
         } catch (Exception e) {
             Logger.logError(uploadLog, TAG, e.getLocalizedMessage());
         }
         this.oxygenDeviceName = oxygenDeviceName;
-        if(!oxygenOSVersion1.equals(NO_OXYGEN_OS)) {
-            this.oxygenOSVersion = oxygenOSVersion1;
-        } else {
-            this.oxygenOSVersion = oxygenOSVersion2;
-        }
+        this.oxygenOSVersion = oxygenOSVersion;
         this.oxygenOSOTAVersion = oxygenOSOTAVersion;
         this.oemFingerprint = oemFingerprint;
         this.securityPatchDate = securityPatchDate;
@@ -76,16 +71,28 @@ public class SystemVersionProperties {
         this.oemFingerprint = oemFingerprint;
     }
 
-    private String readBuildPropItem(@NonNull String result, String itemKey, String inputLine, String logText) {
-        if (inputLine == null) return result;
+    private String readBuildPropItem(String itemKeys, String buildProperties, String logText) throws IOException {
+        if (buildProperties == null || buildProperties.isEmpty()) return NO_OXYGEN_OS;
 
-        if (inputLine.contains(itemKey)) {
-            result = inputLine.replace("[" + itemKey + "]: ", "");
-            result = result.replace("[", "");
-            result = result.replace("]", "");
-            if(logText != null) Logger.logVerbose(TAG, String.format(logText, result));
+        String result = NO_OXYGEN_OS;
+
+        String[] items = itemKeys.trim().replace(" ", "").split(",");
+
+        for(String item : items) {
+
+            BufferedReader in = new BufferedReader(new StringReader(buildProperties));
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null) {
+                if (inputLine.contains(item)) {
+                    result = inputLine.replace("[" + item + "]: ", "");
+                    result = result.replace("[", "");
+                    result = result.replace("]", "");
+                    if(logText != null) Logger.logVerbose(TAG, String.format(logText, result));
+                    return result; // Return the first successfully detected item. This because some keys have multiple values which all exist in the same properties file.
+                }
+            }
         }
-
         return result;
     }
 

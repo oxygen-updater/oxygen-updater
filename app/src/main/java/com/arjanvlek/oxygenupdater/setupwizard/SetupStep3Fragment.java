@@ -51,7 +51,7 @@ public class SetupStep3Fragment extends AbstractFragment {
         long deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L);
 
         recommendedIndex = StreamSupport.stream(devices)
-                .filter(d -> d.getProductName() != null && d.getProductName().equals(systemVersionProperties.getOxygenDeviceName()))
+                .filter(d -> d.getProductNames() != null && d.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
                 .mapToInt(devices::indexOf)
                 .findAny()
                 .orElse(-1);

@@ -2,11 +2,16 @@ package com.arjanvlek.oxygenupdater.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Device {
 
     private long id;
     private String name;
-    private String productName;
+    private List<String> productNames;
 
     public long getId() {
         return id;
@@ -24,14 +29,13 @@ public class Device {
         this.name = name;
     }
 
-    @JsonProperty("product_name")
-    public String getProductName() {
-        return productName;
+    public List<String> getProductNames() {
+        return productNames;
     }
 
-    @JsonProperty("product_name")
+    @JsonProperty("product_names")
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productNames = getProductNames(productName);
     }
 
     public Device() {}
@@ -39,6 +43,17 @@ public class Device {
     public Device(long id, String name, String productName) {
         this.id = id;
         this.name = name;
-        this.productName = productName;
+        this.productNames = getProductNames(productName);
+    }
+
+    private List<String> getProductNames(String productNameTemplate) {
+        List<String> productNames = Arrays.asList(productNameTemplate.trim().split(","));
+        List<String> result = new ArrayList<>();
+
+        for(String productName : productNames) {
+            result.add(productName.trim()); // Remove spaces after comma separation.
+        }
+
+        return result;
     }
 }
