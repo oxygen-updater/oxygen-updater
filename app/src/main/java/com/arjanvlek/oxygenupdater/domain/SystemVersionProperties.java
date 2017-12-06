@@ -68,6 +68,14 @@ public class SystemVersionProperties {
         this.securityPatchDate = securityPatchDate;
     }
 
+    public SystemVersionProperties(String oxygenDeviceName, String oxygenOSVersion, String oxygenOSOTAVersion, String securityPatchDate, String oemFingerprint) {
+        this.oxygenDeviceName = oxygenDeviceName;
+        this.oxygenOSVersion = oxygenOSVersion;
+        this.oxygenOSOTAVersion = oxygenOSOTAVersion;
+        this.securityPatchDate = securityPatchDate;
+        this.oemFingerprint = oemFingerprint;
+    }
+
     private String readBuildPropItem(@NonNull String result, String itemKey, String inputLine, String logText) {
         if (inputLine == null) return result;
 

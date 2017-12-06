@@ -1,25 +1,11 @@
 apply plugin: 'com.android.application'
-import org.apache.tools.ant.taskdefs.condition.Os
-
 
 android {
     signingConfigs {
-        ubuntuReleaseConfig {
+        signingConfig {
             keyAlias 'androidappskey'
             keyPassword 'Stoomtrein1'
-            storeFile file('/home/arjan/keyStore.jks')
-            storePassword 'Stoomtrein1'
-        }
-        macReleaseConfig {
-            keyAlias 'androidappskey'
-            keyPassword 'Stoomtrein1'
-            storeFile file('/Users/arjan.vlek/development/personal/keyStore.jks')
-            storePassword 'Stoomtrein1'
-        }
-        windowsReleaseConfig {
-            keyAlias 'androidappskey'
-            keyPassword 'Stoomtrein1'
-            storeFile file('C\\Users\\Arjan\\development\\keyStore.jks')
+            storeFile file('keyStore.jks')
             storePassword 'Stoomtrein1'
         }
     }
@@ -38,13 +24,7 @@ android {
         targetSdkVersion 25
         versionCode 17
         versionName "2.3.1"
-        if (Os.isFamily(Os.FAMILY_MAC)) {
-            signingConfig signingConfigs.macReleaseConfig
-        } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            signingConfig signingConfigs.windowsReleaseConfig
-        } else {
-            signingConfig signingConfigs.ubuntuReleaseConfig
-        }
+        signingConfig signingConfigs.signingConfig
     }
     buildTypes {
         release { // Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
@@ -79,13 +59,7 @@ android {
             buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
             debuggable true
-            if (Os.isFamily(Os.FAMILY_MAC)) {
-                signingConfig signingConfigs.macReleaseConfig
-            } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                signingConfig signingConfigs.windowsReleaseConfig
-            } else {
-                signingConfig signingConfigs.ubuntuReleaseConfig
-            }
+            signingConfig signingConfigs.signingConfig
         }
         screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.1/\""
@@ -100,13 +74,8 @@ android {
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During taking screenshots, all devices are supported.
             buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "false" // On screenshots no ads!
             debuggable true
-            if (Os.isFamily(Os.FAMILY_MAC)) {
-                signingConfig signingConfigs.macReleaseConfig
-            } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                signingConfig signingConfigs.windowsReleaseConfig
-            } else {
-                signingConfig signingConfigs.ubuntuReleaseConfig
-            }
+            signingConfig signingConfigs.signingConfig
+
         }
         device { // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.1/\""
@@ -121,13 +90,8 @@ android {
             buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // On test device all build types are supported.
             buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // On test device use ads!
             debuggable true
-            if (Os.isFamily(Os.FAMILY_MAC)) {
-                signingConfig signingConfigs.macReleaseConfig
-            } else if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                signingConfig signingConfigs.windowsReleaseConfig
-            } else {
-                signingConfig signingConfigs.ubuntuReleaseConfig
-            }
+            signingConfig signingConfigs.signingConfig
+
         }
     }
     compileOptions {
@@ -161,6 +125,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
 
     //JSON libraries
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.7'

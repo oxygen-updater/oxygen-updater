@@ -33,4 +33,12 @@ public class Device {
     public void setProductName(String productName) {
         this.productName = productName;
     }
+
+    public Device() {}
+
+    public Device(long id, String name, String productName) {
+        this.id = id;
+        this.name = name;
+        this.productName = productName;
+    }
 }
