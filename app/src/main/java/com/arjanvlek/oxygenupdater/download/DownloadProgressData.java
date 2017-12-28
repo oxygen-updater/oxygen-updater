@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.download;
 
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.arjanvlek.oxygenupdater.R;
@@ -10,9 +9,9 @@ import static com.arjanvlek.oxygenupdater.download.UpdateDownloader.NOT_SET;
 
 public class DownloadProgressData {
 
-    private TimeRemaining timeRemaining;
+    private final TimeRemaining timeRemaining;
 
-    private int progress;
+    private final int progress;
 
 
     DownloadProgressData(long numberOfSecondsRemaining, int progress) {
@@ -40,9 +39,9 @@ public class DownloadProgressData {
     // Can't be private, because UpdateInformationFragment calls this.
     public class TimeRemaining {
 
-        private int hoursRemaining;
-        private int minutesRemaining;
-        private int secondsRemaining;
+        private final int hoursRemaining;
+        private final int minutesRemaining;
+        private final int secondsRemaining;
 
         TimeRemaining(int hoursRemaining, int minutesRemaining, int secondsRemaining) {
             this.hoursRemaining = hoursRemaining;

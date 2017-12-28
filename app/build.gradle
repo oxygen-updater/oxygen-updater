@@ -12,15 +12,16 @@ android {
 
     defaultConfig {
         applicationId "com.arjanvlek.oxygenupdater"
-        minSdkVersion 19
-        targetSdkVersion 25
-        versionCode 18
-        versionName "2.3.2"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 19
+        versionName "2.3.3"
         signingConfig signingConfigs.signingConfig
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
 
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -32,7 +33,7 @@ android {
     buildTypes {
         release { // Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.2/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\""
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series, ro.build.product\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.oxygen.version, ro.build.ota.versionname\""
@@ -48,7 +49,7 @@ android {
         }
         debug { // Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.2/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\""
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
@@ -62,7 +63,7 @@ android {
         }
         screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.2/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"";
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\""
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
@@ -76,7 +77,7 @@ android {
         }
         device { // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.2/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"";
+            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\""
             buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
             buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.cm.device\""
             buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
@@ -95,15 +96,13 @@ android {
     }
     productFlavors {
     }
+
+    testBuildType "debug"
 }
 
 buildscript {
     repositories {
         mavenCentral()
-    }
-
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.6.0'
     }
 }
 
@@ -117,39 +116,37 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     //General Android libraries
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'com.android.support:cardview-v7:27.0.2'
 
     //JSON libraries
-    compile 'com.fasterxml.jackson.core:jackson-core:2.8.7'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.7'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.3'
 
     //Date and time libraries
-    compile 'joda-time:joda-time:2.9.7'
-    compile 'org.joda:joda-convert:1.8.1'
+    implementation 'joda-time:joda-time:2.9.9'
+    implementation 'org.joda:joda-convert:1.9.2'
 
     //Firebase libraries
-    compile 'com.google.firebase:firebase-ads:10.2.0'
-    compile 'com.google.firebase:firebase-messaging:10.2.0'
+    implementation 'com.google.firebase:firebase-ads:11.8.0'
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation 'com.google.android.gms:play-services-base:11.8.0'
 
     // Update installation libraries
-    compile 'eu.chainfire:libsuperuser:1.0.0.201704021214'
-    compile 'andhradroid.dev:aFilechooser:1.0.1'
+    implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
+    implementation 'andhradroid.dev:aFilechooser:1.0.1'
 
     // Java 8 backports:
-    compile 'net.sourceforge.streamsupport:streamsupport:1.5.3'
-    compile 'net.sourceforge.streamsupport:streamsupport-cfuture:1.5.3'
-    compile 'net.sourceforge.streamsupport:streamsupport-atomic:1.5.3'
-    compile 'net.sourceforge.streamsupport:streamsupport-flow:1.5.3'
-    compile 'net.sourceforge.streamsupport:streamsupport-literal:1.5.3'
+    implementation 'net.sourceforge.streamsupport:streamsupport:1.6.0'
+
+    // Test libraries
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation 'com.android.support:support-annotations:27.0.2'
+
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'me.tatarka.retrolambda'
-
-retrolambda {
-    javaVersion JavaVersion.VERSION_1_7
-    defaultMethods true
-}

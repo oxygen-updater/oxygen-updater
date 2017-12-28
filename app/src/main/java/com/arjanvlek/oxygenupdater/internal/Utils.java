@@ -7,10 +7,9 @@ import android.net.NetworkInfo;
 import android.util.TypedValue;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import org.joda.time.LocalDateTime;
@@ -21,10 +20,7 @@ import java.util.List;
 import java8.util.Optional;
 import java8.util.stream.StreamSupport;
 
-import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
-import static com.arjanvlek.oxygenupdater.internal.i18n.Locale.EN;
-import static com.arjanvlek.oxygenupdater.internal.i18n.Locale.NL;
 
 public class Utils {
 
@@ -44,7 +40,10 @@ public class Utils {
     }
 
     public static boolean checkNetworkConnection(Context context) {
-        if(context == null) return false;
+        if (context == null) {
+            Logger.logWarning("Utils", "CheckNetworkConnection: check skipped due to empty / null context");
+            return false;
+        }
 
         ConnectivityManager connectivityManager = (ConnectivityManager) Utils.getSystemService(context, Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;

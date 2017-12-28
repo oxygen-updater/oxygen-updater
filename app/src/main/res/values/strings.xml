@@ -260,6 +260,8 @@
     <string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
     <string name="notification_version_title">System update available</string>
     <string name="notification_version">%1$s is now available for the %2$s!</string>
+    <string name="notification_channel_name">Oxygen Updater Notifications</string>
+    <string name="notification_channel_description">Displays all notifications of the Oxygen Updater app, including system update notifications and breaking news notifications.</string>
 
     <!-- Help strings -->
     <string name="help">Help</string>

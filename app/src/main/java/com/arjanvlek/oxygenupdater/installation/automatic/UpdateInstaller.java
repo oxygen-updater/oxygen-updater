@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import eu.chainfire.libsuperuser.Shell;
 public class UpdateInstaller {
 
     private static final String INSTALL_SCRIPT_DIRECTORY = "/cache/recovery";
-    private static final String INSTALL_SCRIPT_PATH =  INSTALL_SCRIPT_DIRECTORY + "/openrecoveryscript";
+    private static final String INSTALL_SCRIPT_PATH = INSTALL_SCRIPT_DIRECTORY + "/openrecoveryscript";
 
     // Open recovery script (http://wiki.rootzwiki.com/OpenRecoveryScript) commands
     private static final String BACKUP = "backup ";
@@ -57,7 +56,7 @@ public class UpdateInstaller {
         // Print the banner.
         addRecoveryText(recoveryCommands, " -------------------------");
         addRecoveryText(recoveryCommands, "| (↑) OXYGEN UPDATER      |");
-        addRecoveryText(recoveryCommands, "|     "+ context.getString(R.string.install_recovery_installer_title) +"  |");
+        addRecoveryText(recoveryCommands, "|     " + context.getString(R.string.install_recovery_installer_title) + "  |");
         addRecoveryText(recoveryCommands, " -------------------------");
 
         // Print the "Thank you" message.
@@ -65,7 +64,7 @@ public class UpdateInstaller {
         addRecoveryText(recoveryCommands, context.getString(R.string.install_recovery_thank_you));
 
         // Backup the device if requested.
-        if(backup) {
+        if (backup) {
             addRecoveryNewLine(recoveryCommands);
             addRecoveryText(recoveryCommands, context.getString(R.string.install_recovery_backing_up));
             addRecoveryCommand(recoveryCommands, BACKUP + SYSTEM_PARTITION + BOOT_PARTITION + DATA_PARTITION + CACHE_PARTITION + RECOVERY_PARTITION + ANDROID_SECURE_PARTITION);
@@ -77,21 +76,21 @@ public class UpdateInstaller {
         addRecoveryCommand(recoveryCommands, INSTALL + downloadPath);
 
         // Install the additional zip if it is selected.
-        if(additionalZipFilePath != null && !additionalZipFilePath.isEmpty()) {
+        if (additionalZipFilePath != null && !additionalZipFilePath.isEmpty()) {
             addRecoveryNewLine(recoveryCommands);
             addRecoveryText(recoveryCommands, context.getString(R.string.install_recovery_installing_additional_zip));
             addRecoveryCommand(recoveryCommands, INSTALL + additionalZipFilePath);
         }
 
         // Clear the cache partition if requested.
-        if(wipeCachePartition) {
+        if (wipeCachePartition) {
             addRecoveryNewLine(recoveryCommands);
             addRecoveryText(recoveryCommands, context.getString(R.string.install_recovery_clearing_cache));
             addRecoveryCommand(recoveryCommands, WIPE + CACHE);
         }
 
         // Reboot the device if requested.
-        if(rebootDevice) {
+        if (rebootDevice) {
             addRecoveryNewLine(recoveryCommands);
             addRecoveryText(recoveryCommands, context.getString(R.string.install_recovery_done));
             addRecoveryCommand(recoveryCommands, EXECUTE_COMMAND + REBOOT);
@@ -143,7 +142,7 @@ public class UpdateInstaller {
 
         commands.set(commands.size() - 1, lastCommand);
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             for (String command : commands) {
                 Logger.logVerbose(false, "UpdateInstaller", "Running SU command: " + command);
             }
@@ -151,15 +150,15 @@ public class UpdateInstaller {
 
         List<String> commandsOutput = Shell.SU.run(commands);
 
-        if(commandsOutput == null || commandsOutput.isEmpty() || !commandsOutput.get(0).equals(TEXT_SUCCESS)) {
-            if(context != null) {
+        if (commandsOutput == null || commandsOutput.isEmpty() || !commandsOutput.get(0).equals(TEXT_SUCCESS)) {
+            if (context != null) {
                 throw new UpdateInstallationException(context.getString(R.string.install_error_write_script_failed));
             } else {
                 throw new UpdateInstallationException("Internal error");
             }
         }
 
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             StringBuilder outputString = new StringBuilder();
             for (String output : commandsOutput) {
                 outputString.append(output);

@@ -2,7 +2,7 @@ package com.arjanvlek.oxygenupdater.installation.automatic;
 
 public class UpdateInstallationException extends Exception {
 
-    public UpdateInstallationException(String message) {
+    UpdateInstallationException(String message) {
         super(message);
     }
 }

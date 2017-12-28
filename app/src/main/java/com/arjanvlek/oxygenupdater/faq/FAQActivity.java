@@ -27,7 +27,7 @@ public class FAQActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
+        final SwipeRefreshLayout refreshLayout = findViewById(R.id.faq_webpage_layout);
         refreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
         refreshLayout.setOnRefreshListener(this::loadFaqPage);
 
@@ -62,11 +62,11 @@ public class FAQActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled") // JavaScript is required to toggle the FAQ Item boxes.
     private void loadFaqPage() {
         if (Utils.checkNetworkConnection(getApplicationContext())) {
-            SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
+            SwipeRefreshLayout refreshLayout = findViewById(R.id.faq_webpage_layout);
 
             refreshLayout.setRefreshing(true);
 
-            WebView FAQPageView = (WebView) findViewById(R.id.faqWebView);
+            WebView FAQPageView = findViewById(R.id.faqWebView);
 
             switchViews(true);
 
@@ -94,10 +94,10 @@ public class FAQActivity extends AppCompatActivity {
      * @param hasNetwork Whether the device has a network connection or not.
      */
     private void switchViews (boolean hasNetwork) {
-        RelativeLayout noNetworkLayout = (RelativeLayout) findViewById(R.id.faq_no_network_view);
+        RelativeLayout noNetworkLayout = findViewById(R.id.faq_no_network_view);
         noNetworkLayout.setVisibility(hasNetwork ? View.GONE : View.VISIBLE);
 
-        SwipeRefreshLayout webPageLayout = (SwipeRefreshLayout) findViewById(R.id.faq_webpage_layout);
+        SwipeRefreshLayout webPageLayout = findViewById(R.id.faq_webpage_layout);
         webPageLayout.setVisibility(hasNetwork ? View.VISIBLE : View.GONE);
     }
 }

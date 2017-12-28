@@ -17,13 +17,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLHandshakeException;
 
 public class Logger {
 
@@ -47,7 +47,7 @@ public class Logger {
                     stackTrace.append(System.getProperty("line.separator"));
                 }
 
-                uploadLog(LogLevel.CRASH, "ApplicationData", "The application has crashed:\n\n" + stackTrace.toString());
+                uploadLog(LogLevel.CRASH, "<main>", "The application has crashed:\n\n" + stackTrace.toString());
 
                 //noinspection ResultOfMethodCallIgnored
                 errorFile.delete();
@@ -66,7 +66,7 @@ public class Logger {
         if (isDebugBuild()) {
             Log.v(tag, message);
 
-            if(uploadLog) {
+            if (uploadLog) {
                 //uploadLog(LogLevel.VERBOSE, tag, message);
             }
         }
@@ -186,7 +186,7 @@ public class Logger {
         if (applicationData != null) {
             SettingsManager settingsManager = new SettingsManager(applicationData);
 
-            if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true) && Utils.checkNetworkConnection(applicationData)) {
+            if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true) && Utils.checkNetworkConnection(applicationData) && !isRecursiveCallToLogger()) {
                 Intent intent = new Intent(applicationData, LogUploadService.class);
                 intent.putExtra("event_type", logLevel.toString());
                 intent.putExtra("tag", tag);
@@ -204,6 +204,18 @@ public class Logger {
         VERBOSE, DEBUG, INFO, WARNING, ERROR, CRASH, NETWORK_ERROR
     }
 
+    private static boolean isRecursiveCallToLogger() {
+        StackTraceElement[] traceElements = Thread.currentThread().getStackTrace();
+        List<String> loggerTraces = new ArrayList<>();
+
+        for (StackTraceElement elem : traceElements) {
+            if (elem.getClassName().equals(Logger.class.getName())) {
+                loggerTraces.add(elem.toString());
+            }
+        }
+
+        return loggerTraces.size() > 5;
+    }
 
     private static boolean isDebugBuild() {
         return BuildConfig.DEBUG;

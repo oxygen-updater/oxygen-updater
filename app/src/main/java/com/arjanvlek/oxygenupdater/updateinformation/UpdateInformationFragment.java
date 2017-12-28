@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -47,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java8.util.Objects;
 import java8.util.function.Consumer;
 
 import static android.app.DownloadManager.ERROR_DEVICE_NOT_FOUND;
@@ -120,10 +122,10 @@ public class UpdateInformationFragment extends AbstractFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         this.rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_updateinformation, container, false);
-        this.adView = (AdView) rootView.findViewById(R.id.updateInformationAdView);
+        this.adView = rootView.findViewById(R.id.updateInformationAdView);
         return rootView;
     }
 
@@ -131,8 +133,8 @@ public class UpdateInformationFragment extends AbstractFragment {
     public void onStart() {
         super.onStart();
         if(isAdded() && settingsManager.checkIfSetupScreenHasBeenCompleted()) {
-            updateInformationRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationRefreshLayout);
-            systemIsUpToDateRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
+            updateInformationRefreshLayout = rootView.findViewById(R.id.updateInformationRefreshLayout);
+            systemIsUpToDateRefreshLayout = rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
 
             updateInformationRefreshLayout.setOnRefreshListener(() -> load(this.adsAreSupported));
             updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
@@ -277,7 +279,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     }
 
     private void deleteAllServerMessageBars() {
-        stream(this.serverMessageBars).filter(v -> v != null).forEach(v -> this.rootView.removeView(v));
+        stream(this.serverMessageBars).filter(Objects::nonNull).forEach(v -> this.rootView.removeView(v));
 
         this.serverMessageBars = new ArrayList<>();
     }
@@ -362,13 +364,17 @@ public class UpdateInformationFragment extends AbstractFragment {
     }
 
     private void displayUpdateInformationWhenUpToDate(final UpdateData updateData, boolean online) {
+        if (getActivity() == null || getActivity().getApplication() == null) {
+            return;
+        }
+
         // Show "System is up to date" view.
         rootView.findViewById(R.id.updateInformationRefreshLayout).setVisibility(GONE);
         rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout).setVisibility(VISIBLE);
 
         // Set the current Oxygen OS version if available.
         String oxygenOSVersion = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties().getOxygenOSVersion();
-        TextView versionNumberView = (TextView) rootView.findViewById(R.id.updateInformationSystemIsUpToDateVersionTextView);
+        TextView versionNumberView = rootView.findViewById(R.id.updateInformationSystemIsUpToDateVersionTextView);
         if(!oxygenOSVersion.equals(NO_OXYGEN_OS)) {
             versionNumberView.setVisibility(VISIBLE);
             versionNumberView.setText(String.format(getString(R.string.update_information_oxygen_os_version), oxygenOSVersion));
@@ -377,7 +383,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         }
 
         // Set "No Update Information Is Available" button if needed.
-        Button updateInformationButton = (Button) rootView.findViewById(R.id.updateInformationSystemIsUpToDateStatisticsButton);
+        Button updateInformationButton = rootView.findViewById(R.id.updateInformationSystemIsUpToDateStatisticsButton);
         if (!updateData.isUpdateInformationAvailable()) {
             updateInformationButton.setText(getString(R.string.update_information_no_update_data_available));
             updateInformationButton.setClickable(false);
@@ -393,7 +399,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         }
 
         // Show last time checked.
-        TextView dateCheckedView = (TextView) rootView.findViewById(R.id.updateInformationSystemIsUpToDateDateTextView);
+        TextView dateCheckedView = rootView.findViewById(R.id.updateInformationSystemIsUpToDateDateTextView);
         dateCheckedView.setText(String.format(getString(R.string.update_information_last_checked_on), Utils.formatDateTime(context, settingsManager.getPreference(PROPERTY_UPDATE_CHECKED_DATE, null))));
 
     }
@@ -404,7 +410,7 @@ public class UpdateInformationFragment extends AbstractFragment {
         rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout).setVisibility(GONE);
 
         // Display available update version number.
-        TextView buildNumberView = (TextView) rootView.findViewById(R.id.updateInformationBuildNumberView);
+        TextView buildNumberView = rootView.findViewById(R.id.updateInformationBuildNumberView);
         if (updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null")) {
             if(UpdateDescriptionParser.containsHeaderLine(updateData.getDescription())) {
                 buildNumberView.setText(UpdateDescriptionParser.getFormattedUpdateTitle(updateData.getDescription()));
@@ -416,23 +422,23 @@ public class UpdateInformationFragment extends AbstractFragment {
         }
 
         // Display download size.
-        TextView downloadSizeView = (TextView) rootView.findViewById(R.id.updateInformationDownloadSizeView);
+        TextView downloadSizeView = rootView.findViewById(R.id.updateInformationDownloadSizeView);
         downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), updateData.getDownloadSize()));
 
         // Display update description.
         String description = updateData.getDescription();
-        TextView descriptionView = (TextView) rootView.findViewById(R.id.updateDescriptionView);
+        TextView descriptionView = rootView.findViewById(R.id.updateDescriptionView);
         descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         descriptionView.setText(description != null && !description.isEmpty() && !description.equals("null") ? UpdateDescriptionParser.parse(description) : getString(R.string.update_information_description_not_available));
 
         // Display update file name.
-        TextView fileNameView = (TextView) rootView.findViewById(R.id.updateFileNameView);
+        TextView fileNameView = rootView.findViewById(R.id.updateFileNameView);
         fileNameView.setText(String.format(getString(R.string.update_information_file_name), updateData.getFilename()));
 
 
         // Format top title based on system version installed.
-        TextView headerLabel = (TextView) rootView.findViewById(R.id.headerLabel);
-        Button updateInstallationGuideButton = (Button) rootView.findViewById(R.id.updateInstallationInstructionsButton);
+        TextView headerLabel = rootView.findViewById(R.id.headerLabel);
+        Button updateInstallationGuideButton = rootView.findViewById(R.id.updateInstallationInstructionsButton);
         View downloadSizeTable = rootView.findViewById(R.id.buttonTable);
         View downloadSizeImage = rootView.findViewById(R.id.downloadSizeImage);
 
@@ -761,10 +767,14 @@ public class UpdateInformationFragment extends AbstractFragment {
     }
 
     private void initInstallButton(UpdateData updateData, DownloadStatus downloadStatus) {
-        Button installButton = (Button) rootView.findViewById(R.id.updateInstallationInstructionsButton);
+        Button installButton = rootView.findViewById(R.id.updateInstallationInstructionsButton);
         if(downloadStatus != DownloadStatus.DOWNLOADED) {
             installButton.setVisibility(GONE);
         } else {
+            if (getActivity() == null) {
+                return;
+            }
+
             installButton.setVisibility(VISIBLE);
             installButton.setOnClickListener(v -> {
                 boolean isDownloaded = false;
@@ -795,6 +805,10 @@ public class UpdateInformationFragment extends AbstractFragment {
         public void onClick(View v) {
             if (isAdded()) {
                 MainActivity mainActivity = (MainActivity) getActivity();
+                if (mainActivity == null) {
+                    return;
+                }
+
                 if (mainActivity.hasDownloadPermissions()) {
                     updateDownloader.downloadUpdate(updateData);
                 } else {

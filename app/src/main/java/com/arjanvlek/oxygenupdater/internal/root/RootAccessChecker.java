@@ -23,24 +23,33 @@ public class RootAccessChecker {
             return;
         }
 
-        new AsyncTask<Void, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Void... params) {
-                try {
-                    Thread.sleep(2000); // Give the user the time to read what's happening.
-                    return Shell.SU.available();
-                } catch (Exception e) {
-                    Logger.logError("ApplicationData", "Failed to check for root access: ", e);
-                    return false;
-                }
-            }
+        new RootCheckerImpl(callback).execute();
+    }
 
-            @Override
-            protected void onPostExecute(Boolean result) {
-                hasCheckedOnce = true;
-                isRooted = result;
-                callback.accept(isRooted);
+    private static class RootCheckerImpl extends AsyncTask<Void, Void, Boolean> {
+
+        private final Consumer<Boolean> callback;
+
+        RootCheckerImpl(Consumer<Boolean> callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                Thread.sleep(2000); // Give the user the time to read what's happening.
+                return Shell.SU.available();
+            } catch (Exception e) {
+                Logger.logError("ApplicationData", "Failed to check for root access: ", e);
+                return false;
             }
-        }.execute();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            hasCheckedOnce = true;
+            isRooted = result;
+            callback.accept(isRooted);
+        }
     }
 }

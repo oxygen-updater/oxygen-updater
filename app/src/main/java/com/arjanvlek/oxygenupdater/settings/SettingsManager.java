@@ -73,8 +73,7 @@ public class SettingsManager {
      * @return Returns if the given key is stored in the preferences.
      */
     public synchronized boolean containsPreference(String key) {
-        if(getSharedPreferences() == null) return false;
-        return getSharedPreferences().contains(key);
+        return getSharedPreferences() != null && getSharedPreferences().contains(key);
     }
 
     /**

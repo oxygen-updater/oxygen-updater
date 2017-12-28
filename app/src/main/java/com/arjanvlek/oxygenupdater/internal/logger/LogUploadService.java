@@ -7,8 +7,8 @@ import android.os.Build;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
 import org.joda.time.DateTimeZone;
@@ -21,7 +21,7 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDA
 
 public class LogUploadService extends IntentService {
 
-    public static String TAG = "LogUploadService";
+    private static final String TAG = "LogUploadService";
 
 
     /**

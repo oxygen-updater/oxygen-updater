@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.notifications;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -90,9 +89,7 @@ public class MessageDialog extends DialogFragment {
                 if (i == KeyEvent.KEYCODE_BACK) exit();
                 return true;
             });
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                builder.setOnDismissListener(dialogInterface -> exit());
-            }
+            builder.setOnDismissListener(dialogInterface -> exit());
         }
         return builder.create();
 

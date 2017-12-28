@@ -31,6 +31,7 @@ public class ApplicationData extends Application {
     public static final String NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR";
     public static final String SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR";
     public static final String APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR";
+    public static final String NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.notifications";
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 

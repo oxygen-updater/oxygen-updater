@@ -25,6 +25,7 @@ public class NewsActivity extends AppCompatActivity {
     public static final String INTENT_START_WITH_AD = "START_WITH_AD";
 
     @SuppressLint("SetJavaScriptEnabled")
+    // JS is required to load videos and other dynamic content.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class NewsActivity extends AppCompatActivity {
         loadNewsItem(0);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void loadNewsItem(int retryCount) {
         ApplicationData applicationData = (ApplicationData) getApplication();
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
@@ -59,7 +61,7 @@ public class NewsActivity extends AppCompatActivity {
                 } else {
                     String newsContents = getString(R.string.news_load_error);
 
-                    WebView contentView = (WebView) findViewById(R.id.newsContent);
+                    WebView contentView = findViewById(R.id.newsContent);
                     contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
 
                     // Hide the title, author name and last updated views.
@@ -67,7 +69,7 @@ public class NewsActivity extends AppCompatActivity {
                     findViewById(R.id.newsDatePublished).setVisibility(View.GONE);
                     findViewById(R.id.newsAuthor).setVisibility(View.GONE);
 
-                    Button retryButton = (Button) findViewById(R.id.newsRetryButton);
+                    Button retryButton = findViewById(R.id.newsRetryButton);
                     retryButton.setVisibility(View.VISIBLE);
                     retryButton.setOnClickListener((v) -> loadNewsItem(1));
                 }
@@ -84,12 +86,12 @@ public class NewsActivity extends AppCompatActivity {
             helper.close();
 
             // Display the title of the article.
-            TextView titleView = (TextView) findViewById(R.id.newsTitle);
+            TextView titleView = findViewById(R.id.newsTitle);
             titleView.setVisibility(View.VISIBLE);
             titleView.setText(newsItem.getTitle(locale));
 
             // Display the contents of the article.
-            WebView contentView = (WebView) findViewById(R.id.newsContent);
+            WebView contentView = findViewById(R.id.newsContent);
             contentView.setVisibility(View.VISIBLE);
             contentView.getSettings().setJavaScriptEnabled(true);
 
@@ -102,7 +104,7 @@ public class NewsActivity extends AppCompatActivity {
             contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
 
             // Display the name of the author of the article
-            TextView authorView = (TextView) findViewById(R.id.newsAuthor);
+            TextView authorView = findViewById(R.id.newsAuthor);
             if (newsItem.getAuthorName() != null && !newsItem.getAuthorName().isEmpty()) {
                 authorView.setVisibility(View.VISIBLE);
                 authorView.setText(getString(R.string.news_author, newsItem.getAuthorName()));
@@ -111,7 +113,7 @@ public class NewsActivity extends AppCompatActivity {
             }
 
             // Display the last update time of the article.
-            TextView datePublishedView = (TextView) findViewById(R.id.newsDatePublished);
+            TextView datePublishedView = findViewById(R.id.newsDatePublished);
 
             if (newsItem.getDateLastEdited() == null && newsItem.getDatePublished() != null) {
                 datePublishedView.setVisibility(View.VISIBLE);

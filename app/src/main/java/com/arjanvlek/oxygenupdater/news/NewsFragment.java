@@ -6,9 +6,9 @@ import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
@@ -46,19 +47,20 @@ import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
 public class NewsFragment extends AbstractFragment {
 
     private static final SparseArray<Bitmap> imageCache = new SparseArray<>();
+    private static final String TAG = "NewsFragment";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         refreshNews(view, null);
 
-        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.newsRefreshContainer);
+        SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
         refreshLayout.setOnRefreshListener(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)));
     }
 
@@ -78,9 +80,17 @@ public class NewsFragment extends AbstractFragment {
     }
 
     private void displayNewsItems(View view, List<NewsItem> newsItems, Consumer<Void> callback) {
-        ListView newsContainer = (ListView) view.findViewById(R.id.newsContainer);
+        ListView newsContainer = view.findViewById(R.id.newsContainer);
 
-        if(!isAdded() || getActivity() == null) return;
+        if (!isAdded()) {
+            Logger.logError(TAG, "isAdded() returned false (displayNewsItems)");
+            return;
+        }
+
+        if (getActivity() == null) {
+            Logger.logError(TAG, "getActivity() returned null (displayNewsItems)");
+            return;
+        }
 
         newsContainer.setAdapter(new ListAdapter() {
 
@@ -135,14 +145,18 @@ public class NewsFragment extends AbstractFragment {
                     newsItemView = new NewsItemView();
 
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    if (inflater == null) {
+                        Logger.logError(TAG, "layoutInflater not available (displayNewsItem)");
+                        return new View(getContext());
+                    }
 
                     convertView = inflater.inflate(R.layout.news_item, parent, false);
 
-                    newsItemView.container = (CardView) convertView.findViewById(R.id.newsItemContainer);
-                    newsItemView.image = (ImageView) convertView.findViewById(R.id.newsItemImage);
-                    newsItemView.imagePlaceholder = (ImageView) convertView.findViewById(R.id.newsItemImagePlaceholder);
-                    newsItemView.title = (TextView) convertView.findViewById(R.id.newsItemTitle);
-                    newsItemView.subtitle = (TextView) convertView.findViewById(R.id.newsItemSubTitle);
+                    newsItemView.container = convertView.findViewById(R.id.newsItemContainer);
+                    newsItemView.image = convertView.findViewById(R.id.newsItemImage);
+                    newsItemView.imagePlaceholder = convertView.findViewById(R.id.newsItemImagePlaceholder);
+                    newsItemView.title = convertView.findViewById(R.id.newsItemTitle);
+                    newsItemView.subtitle = convertView.findViewById(R.id.newsItemSubTitle);
 
                     convertView.setTag(newsItemView);
 
@@ -165,65 +179,62 @@ public class NewsFragment extends AbstractFragment {
                     newsItemView.subtitle.setAlpha(0.7f);
                 }
 
-                new AsyncTask<Void, Void, Bitmap>() {
-
-                    @Override
-                    public void onPreExecute() {
-                        newsItemView.image.setVisibility(View.INVISIBLE);
-                        newsItemView.imagePlaceholder.setVisibility(View.VISIBLE);
+                // Obtain the thumbnail image from the server.
+                new FunctionalAsyncTask<Void, Void, Bitmap>(() -> {
+                    newsItemView.image.setVisibility(View.INVISIBLE);
+                    newsItemView.imagePlaceholder.setVisibility(View.VISIBLE);
+                }, __ -> {
+                    if (newsItem.getId() == null) {
+                        return null;
                     }
 
-                    @Override
-                    public Bitmap doInBackground(Void...params) {
-                        if(newsItem.getId() == null) return null;
+                    Bitmap image = imageCache.get(newsItem.getId().intValue());
 
-                        Bitmap image = imageCache.get(newsItem.getId().intValue());
-
-                        if(image != null) return image;
-
-                        try {
-                            InputStream in = new URL(newsItem.getImageUrl()).openStream();
-                            image = BitmapFactory.decodeStream(in);
-                            imageCache.put(newsItem.getId().intValue(), image);
-                        } catch(Exception ignored) {
-                            try {
-                                // Retry 1 time before handling exception
-                                InputStream in = new URL(newsItem.getImageUrl()).openStream();
-                                image = BitmapFactory.decodeStream(in);
-                                imageCache.put(newsItem.getId().intValue(), image);
-                            } catch (Exception e) {
-                                image = null;
-                                imageCache.put(newsItem.getId().intValue(), null);
-                                Logger.logError("NewsFragment", "Error loading news image: ", e);
-                            }
-                        }
-
+                    if (image != null) {
                         return image;
                     }
 
-                    @Override
-                    public void onPostExecute(Bitmap result) {
-                        if(!isAdded() || getActivity() == null) return;
-
-                        // If a fragment is not attached, do not crash the entire application but return an empty view.
+                    try {
+                        InputStream in = new URL(newsItem.getImageUrl()).openStream();
+                        image = BitmapFactory.decodeStream(in);
+                        imageCache.put(newsItem.getId().intValue(), image);
+                    } catch (Exception ignored) {
                         try {
-                            getResources();
+                            // Retry 1 time before handling exception
+                            InputStream in = new URL(newsItem.getImageUrl()).openStream();
+                            image = BitmapFactory.decodeStream(in);
+                            imageCache.put(newsItem.getId().intValue(), image);
                         } catch (Exception e) {
-                            return;
+                            image = null;
+                            imageCache.put(newsItem.getId().intValue(), null);
+                            Logger.logError("NewsFragment", "Error loading news image: ", e);
                         }
-
-                        if(result == null) {
-                            Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
-                            newsItemView.image.setImageDrawable(errorImage);
-                        } else {
-                            newsItemView.image.setImageBitmap(result);
-                        }
-                        newsItemView.image.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-                        newsItemView.image.setVisibility(View.VISIBLE);
-
-                        newsItemView.imagePlaceholder.setVisibility(View.INVISIBLE);
                     }
-                }.execute();
+
+                    return image;
+                }, result -> {
+                    if (!isAdded() || getActivity() == null) {
+                        return;
+                    }
+
+                    // If a fragment is not attached, do not crash the entire application but return an empty view.
+                    try {
+                        getResources();
+                    } catch (Exception e) {
+                        return;
+                    }
+
+                    if (result == null) {
+                        Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
+                        newsItemView.image.setImageDrawable(errorImage);
+                    } else {
+                        newsItemView.image.setImageBitmap(result);
+                    }
+                    newsItemView.image.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+                    newsItemView.image.setVisibility(View.VISIBLE);
+
+                    newsItemView.imagePlaceholder.setVisibility(View.INVISIBLE);
+                }).execute();
 
                 return convertView;
             }
@@ -244,7 +255,7 @@ public class NewsFragment extends AbstractFragment {
             }
         });
 
-        if(callback != null) {
+        if (callback != null) {
             callback.accept(null);
         }
     }
@@ -285,10 +296,8 @@ public class NewsFragment extends AbstractFragment {
         intent.putExtra(INTENT_NEWS_ITEM_ID, newsItemId);
         startActivity(intent);
 
-        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.newsRefreshContainer);
+        SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
 
         new Handler().postDelayed(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)), 2000);
-
-
     }
 }

@@ -20,7 +20,8 @@ public class UpdateDescriptionParser {
     private static final String TAG = "UpdateDescriptionParser";
     private static final String EMPTY_STRING = "";
     private static final String NEWLINE = "\n";
-    private static final String OXYGEN_OS_BETA_IDENTIFIER = "O2_Open_";
+    private static final String OXYGEN_OS_BETA_IDENTIFIER_1 = "O2_Open_";
+    private static final String OXYGEN_OS_BETA_IDENTIFIER_2 = "O₂_Open_";
     private static final String OXYGEN_OS_BETA_DISPLAY_PREFIX = "OxygenOS open beta ";
     private static final String OXYGEN_OS_VERSION_PREFIX_UPPERCASE = "OS Version: ";
     private static final String OXYGEN_OS_VERSION_PREFIX_LOWERCASE = "OS version: ";
@@ -33,7 +34,7 @@ public class UpdateDescriptionParser {
         HEADING_3,              //      ###(char*)\n
         LINE_SEPARATORS,        //      \(\*)\n
         LIST_ITEM,              //      *(char*)\n
-        LINK,                   //      [(char*)](space*)((char*))\n
+        LINK,                   //      [(char*)](space*)((char*))|{(char*)}\n
         TEXT,                   //      (char*)
         EMPTY;                  //
 
@@ -60,7 +61,7 @@ public class UpdateDescriptionParser {
             } else if (inputLine.contains("\\")) {
                 Logger.logVerbose(TAG, "Matched type: LINE_SEPARATORS");
                 return LINE_SEPARATORS;
-            } else if (inputLine.contains("[") && inputLine.contains("]") && inputLine.contains("(") && inputLine.contains(")")) {
+            } else if (inputLine.contains("[") && inputLine.contains("]") && ((inputLine.contains("(") && inputLine.contains(")")) || (inputLine.contains("{") && inputLine.contains("}")))) {
                 Logger.logVerbose(TAG, "Matched type: LINK");
                 return LINK;
             } else {
@@ -104,13 +105,13 @@ public class UpdateDescriptionParser {
     }
 
     public static boolean isBeta(String updateTitle) {
-        return updateTitle != null && updateTitle.contains(OXYGEN_OS_BETA_IDENTIFIER);
+        return updateTitle != null && (updateTitle.contains(OXYGEN_OS_BETA_IDENTIFIER_1) || updateTitle.contains(OXYGEN_OS_BETA_IDENTIFIER_2));
     }
 
     public static String getFormattedUpdateTitle(String updateDescription) {
         try {
             if (isBeta(getFirstLine(updateDescription))) {
-                return OXYGEN_OS_BETA_DISPLAY_PREFIX + updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_BETA_IDENTIFIER) + OXYGEN_OS_BETA_IDENTIFIER.length(), updateDescription.indexOf(NEWLINE));
+                return OXYGEN_OS_BETA_DISPLAY_PREFIX + (updateDescription.contains(OXYGEN_OS_BETA_IDENTIFIER_1) ? updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_BETA_IDENTIFIER_1) + OXYGEN_OS_BETA_IDENTIFIER_1.length(), updateDescription.indexOf(NEWLINE)) : updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_BETA_IDENTIFIER_2) + OXYGEN_OS_BETA_IDENTIFIER_2.length(), updateDescription.indexOf(NEWLINE)));
             } else if (updateDescription.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE)) {
                 return updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_VERSION_PREFIX_UPPERCASE) + OXYGEN_OS_VERSION_PREFIX_UPPERCASE.length(), updateDescription.indexOf(NEWLINE));
             } else if (updateDescription.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE)) {
@@ -138,45 +139,51 @@ public class UpdateDescriptionParser {
             // This consists of removing heading symbols, making list items, adding line separators and displaying link texts.
             while ((currentLine = reader.readLine()) != null) {
                 UpdateDescriptionElement element = UpdateDescriptionElement.of(currentLine);
-                String modifiedLine = EMPTY_STRING;
+                StringBuilder modifiedLine = new StringBuilder(EMPTY_STRING);
 
                 // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
                 if(currentLine.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE) || currentLine.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE)) continue;
 
                 switch (element) {
                     case HEADING_3:
-                        modifiedLine = currentLine.replace("###", "");
+                        modifiedLine = new StringBuilder(currentLine.replace("###", ""));
                         break;
                     case HEADING_2:
-                        modifiedLine = currentLine.replace("##", "");
+                        modifiedLine = new StringBuilder(currentLine.replace("##", ""));
                         break;
                     case HEADING_1:
-                        modifiedLine = currentLine.replace("#", "");
+                        modifiedLine = new StringBuilder(currentLine.replace("#", ""));
                         break;
                     case LIST_ITEM:
-                        modifiedLine = currentLine.replace("*", "•");
+                        modifiedLine = new StringBuilder(currentLine.replace("*", "•"));
                     case LINE_SEPARATORS:
                         // There could also be multiple OnePlus line separators in this line.
                         // Replace each OnePlus line separator with an actual line separator.
                         char[] chars = currentLine.toCharArray();
                         for (char c : chars) {
                             if (c == '\\') {
-                                modifiedLine = modifiedLine + "\n";
+                                modifiedLine.append("\n");
                             }
                         }
                         break;
                     case LINK:
                         String linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine.lastIndexOf("]"));
-                        String linkAddress = currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"));
+                        String linkAddress = "";
+
+                        if (currentLine.contains("(") && currentLine.contains(")")) {
+                            linkAddress = currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"));
+                        } else if (currentLine.contains("{") && currentLine.contains("}")) {
+                            linkAddress = currentLine.substring(currentLine.indexOf("{") + 1, currentLine.lastIndexOf("}"));
+                        }
 
                         // We need to save the full URL somewhere, to point the browser to it when clicked...
                         links.put(linkTitle, linkAddress);
 
                         // The link title will be displayed. It will also be used to look up the full url when clicked.
-                        modifiedLine = linkTitle;
+                        modifiedLine = new StringBuilder(linkTitle);
                         break;
                     default:
-                        modifiedLine = currentLine;
+                        modifiedLine = new StringBuilder(currentLine);
                 }
 
                 modifiedUpdateDescription = modifiedUpdateDescription.concat(modifiedLine + (element.equals(UpdateDescriptionElement.LINE_SEPARATORS) ? "" : "\n"));

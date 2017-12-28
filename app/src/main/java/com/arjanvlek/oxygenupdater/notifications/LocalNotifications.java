@@ -11,11 +11,12 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
+import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.installation.InstallActivity;
+import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 
 import static com.arjanvlek.oxygenupdater.installation.InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE;
@@ -58,7 +59,7 @@ public class LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(android.R.drawable.stat_sys_download_done)
                     .setOngoing(false)
                     .setContentIntent(resultPendingIntent)
@@ -107,7 +108,7 @@ public class LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(android.R.drawable.stat_sys_download_done)
                     .setOngoing(false)
                     .setContentIntent(resultPendingIntent)
@@ -132,7 +133,7 @@ public class LocalNotifications {
      */
     public static void showVerifyingNotification(Context context, boolean ongoing, boolean error) {
         try {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.NOTIFICATION_CHANNEL_ID)
                     .setSmallIcon(ongoing ? android.R.drawable.stat_sys_download : android.R.drawable.stat_sys_download_done)
                     .setOngoing(ongoing);
 

@@ -10,9 +10,10 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.internal.Worker;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 
 import java8.util.function.Consumer;
 
@@ -128,7 +129,8 @@ public class Dialogs {
                     .setDialogListener(new MessageDialog.DialogListener() {
                         @Override
                         public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
-                            if(fragment.getActivity().getApplication() == null) return;
+                            if (fragment.getActivity() == null || fragment.getActivity().getApplication() == null)
+                                return;
 
                             ActivityLauncher activityLauncher = new ActivityLauncher(fragment.getActivity());
                             activityLauncher.UpdateInstallation(true, updateData);
@@ -146,9 +148,9 @@ public class Dialogs {
         });
     }
 
-    private static void checkPreconditions(Fragment fragment, Runnable callback) {
-        if (fragment != null && fragment.isAdded() && fragment.getActivity() != null && !fragment.getActivity().isFinishing())
-            callback.run();
+    private static void checkPreconditions(Fragment fragment, Worker callback) {
+        if (fragment != null && fragment.getFragmentManager() != null && fragment.isAdded() && fragment.getActivity() != null && !fragment.getActivity().isFinishing())
+            callback.start();
     }
 
 }

@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
@@ -21,7 +22,6 @@ import java.util.Map;
 
 import static android.app.Notification.DEFAULT_ALL;
 import static android.app.Notification.PRIORITY_HIGH;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
 import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_START_WITH_AD;
@@ -51,29 +51,32 @@ public class NotificationService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         try {
             NotificationManager notificationManager = (NotificationManager) Utils.getSystemService(this, NOTIFICATION_SERVICE);
-            if (notificationManager == null) return;
 
-            Map<String, String> messageContents = remoteMessage.getData();
+            if (notificationManager == null) {
+                Logger.applicationData = (ApplicationData) getApplication();
+                Logger.logError(TAG, "Failed to obtain notificationManager. Can not display push notification!");
+                return;
+            }
 
             SettingsManager settingsManager = new SettingsManager(getApplicationContext());
 
+            Map<String, String> messageContents = remoteMessage.getData();
 
             NotificationType notificationType = NotificationType.valueOf(messageContents.get(TYPE.toString()));
-
-            Notification.Builder builder = null;
+            NotificationCompat.Builder builder = null;
 
             switch (notificationType) {
                 case NEW_DEVICE:
                     if (!settingsManager.getPreference(PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true)) {
                         return;
                     }
-                    builder = displayNewDeviceNotification(messageContents.get(NEW_DEVICE_NAME.toString()));
+                    builder = getBuilderForNewDeviceNotification(messageContents.get(NEW_DEVICE_NAME.toString()));
                     break;
                 case NEW_VERSION:
                     if (!settingsManager.getPreference(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true)) {
                         return;
                     }
-                    builder = displayNewVersionNotification(messageContents.get(DEVICE_NAME.toString()), messageContents.get(NEW_VERSION_NUMBER.toString()));
+                    builder = getBuilderForNewVersionNotification(messageContents.get(DEVICE_NAME.toString()), messageContents.get(NEW_VERSION_NUMBER.toString()));
                     break;
                 case GENERAL_NOTIFICATION:
                     if (!settingsManager.getPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true)) {
@@ -89,7 +92,7 @@ public class NotificationService extends FirebaseMessagingService {
                             message = messageContents.get(ENGLISH_MESSAGE.toString());
                             break;
                     }
-                    builder = displayGeneralServerNotification(message);
+                    builder = getBuilderForGeneralServerNotificationOrNewsNotification(message);
                     break;
                 case NEWS:
                     if (!settingsManager.getPreference(PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true)) {
@@ -105,79 +108,65 @@ public class NotificationService extends FirebaseMessagingService {
                             newsMessage = messageContents.get(ENGLISH_MESSAGE.toString());
                             break;
                     }
-                    // Same as general server notification, so reuse method.
-                    builder = displayGeneralServerNotification(newsMessage);
+                    builder = getBuilderForGeneralServerNotificationOrNewsNotification(newsMessage);
                     break;
 
             }
             if (builder == null) {
+                Logger.applicationData = (ApplicationData) getApplication();
+                Logger.logError(TAG, "Failed to instantiate notificationBuilder. Can not display push notification!");
                 return;
             }
 
-            if (Build.VERSION.SDK_INT >= LOLLIPOP) {
-                builder.setVisibility(Notification.VISIBILITY_PUBLIC);
-                builder.setPriority(PRIORITY_HIGH);
-            }
-
-            if(notificationType != NotificationType.NEW_VERSION) {
-                builder.setContentTitle(getString(R.string.app_name));
-            }
-
-            PendingIntent contentIntent;
-
-            if (notificationType == NotificationType.NEWS) {
-                Intent newsIntent = new Intent(this, NewsActivity.class);
-                newsIntent.putExtra(INTENT_NEWS_ITEM_ID, Long.valueOf(messageContents.get(NEWS_ITEM_ID.toString())));
-                newsIntent.putExtra(INTENT_START_WITH_AD, true);
-                contentIntent = PendingIntent.getActivity(this, 0, newsIntent, 0);
-            } else {
-                contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
-            }
-
-            builder.setContentIntent(contentIntent);
+            builder.setContentIntent(getNotificationIntent(notificationType, messageContents));
+            builder.setVisibility(Notification.VISIBILITY_PUBLIC);
+            builder.setPriority(PRIORITY_HIGH);
             builder.setDefaults(DEFAULT_ALL);
             builder.setAutoCancel(true);
 
-            notificationManager.notify(getNotificationId(notificationType), builder.build());
+            int notificationId = getNotificationId(notificationType);
+
+            notificationManager.notify(notificationId, builder.build());
         } catch (Exception e) {
             Logger.applicationData = (ApplicationData) getApplication();
-            Logger.logError(TAG, "Error displaying push notification: "  + e);
+            Logger.logError(TAG, "Error displaying push notification: " + e);
         }
     }
 
-    private Notification.Builder displayGeneralServerNotification(String message) {
-       return new Notification.Builder(this)
-                        .setSmallIcon(R.drawable.ic_stat_notification_general)
-                        .setStyle(new Notification.BigTextStyle()
-                                .bigText(message))
-                        .setContentText(message);
+    private NotificationCompat.Builder getBuilderForGeneralServerNotificationOrNewsNotification(String message) {
+        return getNotificationBuilder()
+                .setSmallIcon(R.drawable.ic_stat_notification_general)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(message);
     }
 
-    private Notification.Builder displayNewDeviceNotification(String newDeviceName) {
+    private NotificationCompat.Builder getBuilderForNewDeviceNotification(String newDeviceName) {
         String message = getString(R.string.notification_new_device, newDeviceName);
 
-        return new Notification.Builder(this)
-                        .setSmallIcon(R.drawable.ic_stat_notification_new_device)
-                        .setStyle(new Notification.BigTextStyle()
-                                .bigText(message)
-                                .setSummaryText(getString(R.string.notification_new_device_short)))
-                        .setContentText(message);
+        return getNotificationBuilder()
+                .setSmallIcon(R.drawable.ic_stat_notification_new_device)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message)
+                        .setSummaryText(getString(R.string.notification_new_device_short)))
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(message);
     }
 
-    private Notification.Builder displayNewVersionNotification(String deviceName, String versionNumber) {
+    private NotificationCompat.Builder getBuilderForNewVersionNotification(String deviceName, String versionNumber) {
         String message = getString(R.string.notification_version, versionNumber, deviceName);
-        return new Notification.Builder(this)
-                        .setSmallIcon(R.drawable.ic_stat_notification_new_version)
-                        .setContentTitle(getString(R.string.notification_version_title))
-                        .setStyle(new Notification.BigTextStyle()
-                                .bigText(message))
-                        .setWhen(System.currentTimeMillis())
-                        .setContentText(message);
-
+        return getNotificationBuilder()
+                .setSmallIcon(R.drawable.ic_stat_notification_new_version)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(message))
+                .setWhen(System.currentTimeMillis())
+                .setContentTitle(getString(R.string.notification_version_title))
+                .setContentText(message);
     }
 
     private int getNotificationId(NotificationType type) {
-        switch(type) {
+        switch (type) {
             case NEW_DEVICE:
                 return NEW_DEVICE_NOTIFICATION_ID;
             case NEW_VERSION:
@@ -189,5 +178,29 @@ public class NotificationService extends FirebaseMessagingService {
             default:
                 return UNKNOWN_NOTIFICATION_ID;
         }
+    }
+
+    private NotificationCompat.Builder getNotificationBuilder() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            return new NotificationCompat.Builder(this, ApplicationData.NOTIFICATION_CHANNEL_ID);
+        } else {
+            //noinspection deprecation - Only runs on older Android versions.
+            return new NotificationCompat.Builder(this);
+        }
+    }
+
+    private PendingIntent getNotificationIntent(NotificationType notificationType, Map<String, String> messageContents) {
+        PendingIntent contentIntent;
+
+        if (notificationType == NotificationType.NEWS) {
+            Intent newsIntent = new Intent(this, NewsActivity.class);
+            newsIntent.putExtra(INTENT_NEWS_ITEM_ID, Long.valueOf(messageContents.get(NEWS_ITEM_ID.toString())));
+            newsIntent.putExtra(INTENT_START_WITH_AD, true);
+            contentIntent = PendingIntent.getActivity(this, 0, newsIntent, 0);
+        } else {
+            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+        }
+
+        return contentIntent;
     }
 }

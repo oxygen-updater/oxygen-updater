@@ -27,15 +27,15 @@ public class AboutActivity extends AppCompatActivity {
 
         // Set the version number of the app in the version number field.
         String versionNumber = BuildConfig.VERSION_NAME;
-        TextView versionNumberView = (TextView) findViewById(R.id.aboutVersionNumberView);
+        TextView versionNumberView = findViewById(R.id.aboutVersionNumberView);
         versionNumberView.setText(String.format(getString(R.string.about_version), versionNumber));
 
         //Make the links in the background story clickable.
-        TextView storyView = (TextView) findViewById(R.id.aboutBackgroundStoryView);
+        TextView storyView = findViewById(R.id.aboutBackgroundStoryView);
         storyView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Set onClick listener to Google Play rate button.
-        Button rateAppButton = (Button) findViewById(R.id.aboutRateButton);
+        Button rateAppButton = findViewById(R.id.aboutRateButton);
         rateAppButton.setOnClickListener(v -> {
             final String appPackageName = getPackageName();
             try {

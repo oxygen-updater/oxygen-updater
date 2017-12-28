@@ -265,6 +265,8 @@
     <string name="notification_no_notification_support">Installeer Google Play services of werk deze bij om pushnotificaties te kunnen ontvangen.</string>
     <string name="notification_version_title">Systeemupdate beschikbaar</string>
     <string name="notification_version">%1$s is nu beschikbaar voor de %2$s!</string>
+    <string name="notification_channel_name">Oxygen Updater-meldingen</string>
+    <string name="notification_channel_description">Toont alle meldingen van de Oxygen Updater-app. Dit zijn o.a. de systeemupdate-meldingen en de meldingen die verschijnen wanneer er belangrijk nieuws is.</string>
 
 
 

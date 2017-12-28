@@ -3,17 +3,18 @@ package com.arjanvlek.oxygenupdater.deviceinformation;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 
 import java.util.List;
@@ -23,11 +24,14 @@ import java8.util.stream.StreamSupport;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
 public class DeviceInformationFragment extends AbstractFragment {
+
     private RelativeLayout rootView;
+    private static final String TAG = "DeviceInformationFragment";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
         //Inflate the layout for this fragment
         rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_deviceinformation, container, false);
         return rootView;
@@ -35,95 +39,124 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        if(isAdded()) {
-            displayDeviceInformation();
-            getApplicationData().getServerConnector().getDevices(this::displayDeviceName);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        if (!isAdded()) {
+            Logger.logError(TAG, "Fragment not added. Can not create the view!");
+            return;
         }
+
+        displayDeviceInformation();
+        getApplicationData().getServerConnector().getDevices(this::displayFormattedDeviceName);
     }
 
-    private void displayDeviceName(List<Device> devices) {
+    private void displayFormattedDeviceName(List<Device> devices) {
+        if (!isAdded()) {
+            Logger.logError(TAG, "Fragment not added. Can not display formatted device name!");
+            return;
+        }
 
-        if(isAdded()) {
-            TextView deviceNameView = (TextView) rootView.findViewById(R.id.device_information_header);
-            SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
+        TextView deviceNameView = rootView.findViewById(R.id.device_information_header);
+        SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
-            if (devices != null) {
-                StreamSupport.stream(devices)
-                        .filter(device -> device.getProductNames() != null && device.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
-                        .forEach(device -> deviceNameView.setText(device.getName()));
-            }
+        if (devices != null) {
+            StreamSupport.stream(devices)
+                    .filter(device -> device.getProductNames() != null && device.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
+                    .findAny()
+                    .ifPresent(device -> deviceNameView.setText(device.getName()));
         }
     }
 
     private void displayDeviceInformation() {
-        if(isAdded()) {
-            DeviceInformationData deviceInformationData = new DeviceInformationData();
-            SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
+        if (!isAdded()) {
+            Logger.logError(TAG, "Fragment not added. Can not display device information!");
+            return;
+        }
 
-            TextView deviceNameView = (TextView) rootView.findViewById(R.id.device_information_header);
-            deviceNameView.setText(String.format(getString(R.string.device_information_device_name), deviceInformationData.getDeviceManufacturer(), deviceInformationData.getDeviceName()));
+        DeviceInformationData deviceInformationData = new DeviceInformationData();
+        SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
-            TextView socView = (TextView) rootView.findViewById(R.id.device_information_soc_field);
-            socView.setText(deviceInformationData.getSoc());
+        // Device name (in top)
+        TextView deviceNameView = rootView.findViewById(R.id.device_information_header);
+        deviceNameView.setText(String.format(getString(R.string.device_information_device_name), deviceInformationData.getDeviceManufacturer(), deviceInformationData.getDeviceName()));
 
-            String cpuFreqString = deviceInformationData.getCpuFrequency();
-            TextView cpuFreqView = (TextView) rootView.findViewById(R.id.device_information_cpu_freq_field);
-            if (!cpuFreqString.equals(DeviceInformationData.UNKNOWN)) {
-                cpuFreqView.setText(String.format(getString(R.string.device_information_gigahertz), deviceInformationData.getCpuFrequency()));
-            } else {
-                cpuFreqView.setText(getString(R.string.device_information_unknown));
-            }
+        // SoC
+        TextView socView = rootView.findViewById(R.id.device_information_soc_field);
+        socView.setText(deviceInformationData.getSoc());
 
-            long totalMemory;
-            try {
-                ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
-                ActivityManager activityManager = (ActivityManager) Utils.getSystemService(getApplicationData(), Context.ACTIVITY_SERVICE);
-                activityManager.getMemoryInfo(mi);
-                totalMemory = mi.totalMem / 1048576L;
-            } catch (Exception e) {
-                Logger.logWarning("DeviceInformationFragment", "Memory information is unavailable due to error: ", e);
-                totalMemory = 0;
-            }
+        // CPU Frequency (if available)
+        String cpuFreqString = deviceInformationData.getCpuFrequency();
+        TextView cpuFreqView = rootView.findViewById(R.id.device_information_cpu_freq_field);
 
-            TextView memoryView = (TextView) rootView.findViewById(R.id.device_information_memory_field);
-            if (totalMemory != 0) {
-                memoryView.setText(String.format(getString(R.string.download_size_megabyte), totalMemory));
-            } else {
-                View memoryLabel = rootView.findViewById(R.id.device_information_memory_label);
-                memoryLabel.setVisibility(View.GONE);
-                memoryView.setVisibility(View.GONE);
-            }
+        if (!cpuFreqString.equals(DeviceInformationData.UNKNOWN)) {
+            cpuFreqView.setText(String.format(getString(R.string.device_information_gigahertz), deviceInformationData.getCpuFrequency()));
+        } else {
+            cpuFreqView.setText(getString(R.string.device_information_unknown));
+        }
 
-            TextView oxygenOsVersionView = (TextView) rootView.findViewById(R.id.device_information_oxygen_os_ver_field);
+        long totalMemory;
+        try {
+            ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+            ActivityManager activityManager = (ActivityManager) Utils.getSystemService(getApplicationData(), Context.ACTIVITY_SERVICE);
+            activityManager.getMemoryInfo(mi);
+            totalMemory = mi.totalMem / 1048576L;
+        } catch (Exception e) {
+            Logger.logWarning("DeviceInformationFragment", "Memory information is unavailable due to error: ", e);
+            totalMemory = 0;
+        }
 
-            if (!systemVersionProperties.getOxygenOSVersion().equals(NO_OXYGEN_OS)) {
-                oxygenOsVersionView.setText(systemVersionProperties.getOxygenOSVersion());
+        // Total amount of RAM (if available)
+        TextView memoryView = rootView.findViewById(R.id.device_information_memory_field);
 
-            } else {
-                TextView oxygenOsVersionLabel = (TextView) rootView.findViewById(R.id.device_information_oxygen_os_ver_label);
-                oxygenOsVersionLabel.setVisibility(View.GONE);
-                oxygenOsVersionView.setVisibility(View.GONE);
-            }
+        if (totalMemory != 0) {
+            memoryView.setText(String.format(getString(R.string.download_size_megabyte), totalMemory));
+        } else {
+            View memoryLabel = rootView.findViewById(R.id.device_information_memory_label);
+            memoryLabel.setVisibility(View.GONE);
+            memoryView.setVisibility(View.GONE);
+        }
 
-            TextView osVerView = (TextView) rootView.findViewById(R.id.device_information_os_ver_field);
-            osVerView.setText(deviceInformationData.getOsVersion());
+        // Oxygen OS version (if available)
+        TextView oxygenOsVersionView = rootView.findViewById(R.id.device_information_oxygen_os_ver_field);
 
-            TextView osIncrementalView = (TextView) rootView.findViewById(R.id.device_information_incremental_os_ver_field);
-            osIncrementalView.setText(deviceInformationData.getIncrementalOsVersion());
+        if (!systemVersionProperties.getOxygenOSVersion().equals(NO_OXYGEN_OS)) {
+            oxygenOsVersionView.setText(systemVersionProperties.getOxygenOSVersion());
 
-            TextView osPatchDateView = (TextView) rootView.findViewById(R.id.device_information_os_patch_level_field);
+        } else {
+            TextView oxygenOsVersionLabel = rootView.findViewById(R.id.device_information_oxygen_os_ver_label);
+            oxygenOsVersionLabel.setVisibility(View.GONE);
+            oxygenOsVersionView.setVisibility(View.GONE);
+        }
 
-            if (!systemVersionProperties.getSecurityPatchDate().equals(NO_OXYGEN_OS)) {
-                osPatchDateView.setText(systemVersionProperties.getSecurityPatchDate());
-            } else {
-                TextView osPatchDateLabel = (TextView) rootView.findViewById(R.id.device_information_os_patch_level_label);
-                osPatchDateLabel.setVisibility(View.GONE);
-                osPatchDateView.setVisibility(View.GONE);
-            }
+        // Android version
+        TextView osVerView = rootView.findViewById(R.id.device_information_os_ver_field);
+        osVerView.setText(deviceInformationData.getOsVersion());
 
-            TextView serialNumberView = (TextView) rootView.findViewById(R.id.device_information_serial_number_field);
+        // Incremental OS version
+        TextView osIncrementalView = rootView.findViewById(R.id.device_information_incremental_os_ver_field);
+        osIncrementalView.setText(deviceInformationData.getIncrementalOsVersion());
+
+        // Security Patch Date (if available)
+        TextView osPatchDateView = rootView.findViewById(R.id.device_information_os_patch_level_field);
+        String securityPatchDate = systemVersionProperties.getSecurityPatchDate();
+
+        if (!securityPatchDate.equals(NO_OXYGEN_OS)) {
+            osPatchDateView.setText(securityPatchDate);
+        } else {
+            TextView osPatchDateLabel = rootView.findViewById(R.id.device_information_os_patch_level_label);
+            osPatchDateLabel.setVisibility(View.GONE);
+            osPatchDateView.setVisibility(View.GONE);
+        }
+
+        // Serial number (Android 7.1.2 and lower only)
+        TextView serialNumberView = rootView.findViewById(R.id.device_information_serial_number_field);
+        String serialNumber = deviceInformationData.getSerialNumber();
+
+        if (serialNumber != null && !serialNumber.equals(DeviceInformationData.UNKNOWN)) {
             serialNumberView.setText(deviceInformationData.getSerialNumber());
+        } else {
+            View serialNumberLabel = rootView.findViewById(R.id.device_information_serial_number_label);
+            serialNumberLabel.setVisibility(View.GONE);
+            serialNumberView.setVisibility(View.GONE);
         }
     }
 

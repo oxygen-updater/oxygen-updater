@@ -3,8 +3,8 @@ package com.arjanvlek.oxygenupdater.installation.manual;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
@@ -18,16 +18,16 @@ import android.widget.TextView;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.installation.InstallActivity;
+import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
+import com.arjanvlek.oxygenupdater.internal.Worker;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
@@ -56,6 +56,7 @@ public class InstallGuideFragment extends Fragment {
     private static final String IMAGE_VARIANT_XXHDPI = "xxhdpi";
     private static final String IMAGE_VARIANT_XXXHDPI = "xxxhdpi";
     private static final String IMAGE_VARIANT_DEFAULT = "default";
+    private static final String TAG = "InstallGuideFragment";
 
     /**
      * Returns a new instance of this fragment for the given page
@@ -71,24 +72,42 @@ public class InstallGuideFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View installGuideView = inflater.inflate(R.layout.fragment_install_guide, container, false);
 
-        int pageNumber = getArguments().getInt(ARG_PAGE_NUMBER, 1);
-        boolean isFirstPage = getArguments().getBoolean(ARG_IS_FIRST_PAGE, false);
+        int pageNumber;
+        boolean isFirstPage;
+
+        if (getArguments() != null) {
+            pageNumber = getArguments().getInt(ARG_PAGE_NUMBER, 1);
+            isFirstPage = getArguments().getBoolean(ARG_IS_FIRST_PAGE, false);
+        } else {
+            pageNumber = 1;
+            isFirstPage = false;
+        }
 
         SettingsManager settingsManager = new SettingsManager(getContext());
         long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
         long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
-        SparseArray<InstallGuidePage> cache = ((InstallActivity) getActivity()).getInstallGuideCache();
+        SparseArray<InstallGuidePage> cache;
+
+        if (getActivity() != null && getActivity() instanceof InstallActivity) {
+            cache = ((InstallActivity) getActivity()).getInstallGuideCache();
+        } else {
+            Logger.logWarning(TAG, "getActivity() returned null or was not an instance of InstallActivity (onCreateView, getInstallGuideCache)");
+            cache = new SparseArray<>();
+        }
 
         if(cache.get(pageNumber) == null) {
-            ServerConnector connector = ((ApplicationData) getActivity().getApplication()).getServerConnector();
-            connector.getInstallGuidePage(deviceId, updateMethodId, pageNumber, (page) -> {
-                cache.put(pageNumber, page);
-                displayInstallGuide(installGuideView, page, pageNumber, isFirstPage);
-            });
+            if (getActivity() != null && getActivity().getApplication() != null && getActivity().getApplication() instanceof ApplicationData) {
+                ServerConnector connector = ((ApplicationData) getActivity().getApplication()).getServerConnector();
+                connector.getInstallGuidePage(deviceId, updateMethodId, pageNumber, (page) -> {
+                    cache.put(pageNumber, page);
+                    displayInstallGuide(installGuideView, page, pageNumber, isFirstPage);
+                });
+            }
+
         } else {
             displayInstallGuide(installGuideView, cache.get(pageNumber), pageNumber, isFirstPage);
         }
@@ -96,55 +115,19 @@ public class InstallGuideFragment extends Fragment {
         return installGuideView;
     }
 
-    private class DownloadCustomImage extends AsyncTask<Object, Void, List<Object>> {
-
-        @Override
-        public List<Object> doInBackground(Object...params) {
-            ImageView imageView = (ImageView) params[0];
-            InstallGuidePage installGuidePage = (InstallGuidePage) params[1];
-
-            Bitmap image;
-
-            try {
-                SparseArray<Bitmap> cache = ((InstallActivity)getActivity()).getInstallGuideImageCache();
-
-                assert cache != null;
-                if (cache.get(installGuidePage.getPageNumber()) != null) {
-                    image = cache.get(installGuidePage.getPageNumber());
-                } else {
-                    InputStream in = completeImageUrl(installGuidePage.getImageUrl(), installGuidePage.getFileExtension()).openStream();
-                    image = BitmapFactory.decodeStream(in);
-                    cache.put(installGuidePage.getPageNumber(), image);
-                }
-            } catch(Exception e) {
-                image = null;
-                Logger.logError("InstallGuideFragment", "Error loading custom image: ", e);
-            }
-
-            List<Object> result = new ArrayList<>();
-            result.add(0, imageView);
-            result.add(1, image);
-
-            return result;
-        }
-
-        @Override
-        public void onPostExecute(List<Object> result) {
-            ImageView imageView = (ImageView) result.get(0);
-            Bitmap image = (Bitmap) result.get(1);
-            if(image == null) {
-                loadErrorImage(imageView);
-            } else {
-                loadCustomImage(imageView, image);
-            }
-        }
-    }
-
     private void displayInstallGuide(View installGuideView, InstallGuidePage installGuidePage, int pageNumber, boolean isFirstPage) {
-        if(!isAdded()) return;
+        if (!isAdded()) {
+            Logger.logError(TAG, "isAdded() returned false (displayInstallGuide)");
+            return;
+        }
+
+        if (getActivity() == null) {
+            Logger.logError(TAG, "getActivity() returned null (displayInstallGuide)");
+            return;
+        }
 
         // Display a reminder to write everything down on the first page.
-        if(isFirstPage) {
+        if (isFirstPage) {
             installGuideView.findViewById(R.id.installGuideHeader).setVisibility(View.VISIBLE);
             installGuideView.findViewById(R.id.installGuideTip).setVisibility(View.VISIBLE);
         }
@@ -158,14 +141,14 @@ public class InstallGuideFragment extends Fragment {
         // Hide the loading screen of the install guide page.
         installGuideView.findViewById(R.id.installGuideLoadingScreen).setVisibility(View.GONE);
 
-        final TextView titleTextView = (TextView) installGuideView.findViewById(R.id.installGuideTitle);
-        final TextView contentsTextView = (TextView) installGuideView.findViewById(R.id.installGuideText);
+        final TextView titleTextView = installGuideView.findViewById(R.id.installGuideTitle);
+        final TextView contentsTextView = installGuideView.findViewById(R.id.installGuideText);
         titleTextView.setVisibility(View.VISIBLE);
         contentsTextView.setVisibility(View.VISIBLE);
 
         // Display the "Close" button on the last page.
         if (pageNumber == NUMBER_OF_INSTALL_GUIDE_PAGES) {
-            Button closeButton = (Button) installGuideView.findViewById(R.id.installGuideCloseButton);
+            Button closeButton = installGuideView.findViewById(R.id.installGuideCloseButton);
             closeButton.setOnClickListener((__) -> getActivity().finish());
             closeButton.setVisibility(View.VISIBLE);
         }
@@ -173,8 +156,13 @@ public class InstallGuideFragment extends Fragment {
     }
 
     private void displayDefaultInstallGuide(View installGuideView, int pageNumber) {
-        final TextView titleTextView = (TextView) installGuideView.findViewById(R.id.installGuideTitle);
-        final TextView contentsTextView = (TextView) installGuideView.findViewById(R.id.installGuideText);
+        if (getActivity() == null) {
+            Logger.logError(TAG, "getActivity() is null (displayDefaultInstallGuide)");
+            return;
+        }
+
+        final TextView titleTextView = installGuideView.findViewById(R.id.installGuideTitle);
+        final TextView contentsTextView = installGuideView.findViewById(R.id.installGuideText);
 
         int titleResourceId = getResources().getIdentifier(RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TITLE, RESOURCE_ID_PACKAGE_STRING, getActivity().getPackageName());
         int contentsResourceId = getResources().getIdentifier(RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TEXT, RESOURCE_ID_PACKAGE_STRING, getActivity().getPackageName());
@@ -182,16 +170,16 @@ public class InstallGuideFragment extends Fragment {
         titleTextView.setText(getString(titleResourceId));
         contentsTextView.setText(getString(contentsResourceId));
 
-        loadDefaultImage((ImageView)installGuideView.findViewById(R.id.installGuideImage), pageNumber);
+        loadDefaultImage(installGuideView.findViewById(R.id.installGuideImage), pageNumber);
     }
 
-    private void displayCustomInstallGuide(View installGuideView, int pageNumber, InstallGuidePage installGuidePage) {
-        final TextView titleTextView = (TextView) installGuideView.findViewById(R.id.installGuideTitle);
-        final TextView contentsTextView = (TextView) installGuideView.findViewById(R.id.installGuideText);
+    private void displayCustomInstallGuide(View installGuideView, int pageNumber, final InstallGuidePage installGuidePage) {
+        final TextView titleTextView = installGuideView.findViewById(R.id.installGuideTitle);
+        final TextView contentsTextView = installGuideView.findViewById(R.id.installGuideText);
 
         final String appLocale = Locale.getDefault().getDisplayLanguage();
 
-        if(appLocale.equals(LOCALE_DUTCH)) {
+        if (appLocale.equals(LOCALE_DUTCH)) {
             titleTextView.setText(installGuidePage.getDutchTitle());
             contentsTextView.setText(installGuidePage.getDutchText());
         } else {
@@ -199,10 +187,45 @@ public class InstallGuideFragment extends Fragment {
             contentsTextView.setText(installGuidePage.getEnglishText());
         }
 
-        ImageView imageView = (ImageView)installGuideView.findViewById(R.id.installGuideImage);
+        final ImageView imageView = installGuideView.findViewById(R.id.installGuideImage);
 
         if (installGuidePage.getUseCustomImage()) {
-            new DownloadCustomImage().execute(imageView, installGuidePage);
+            // Fetch the custom image from the server.
+            new FunctionalAsyncTask<Void, Void, Bitmap>(Worker.NOOP, (args) -> {
+                Bitmap image;
+
+                try {
+                    SparseArray<Bitmap> cache;
+
+                    if (getActivity() != null) {
+                        cache = ((InstallActivity) getActivity()).getInstallGuideImageCache();
+                    } else {
+                        cache = new SparseArray<>();
+                    }
+
+                    // If the cache contains the image, return the image from the cache.
+                    if (cache.get(installGuidePage.getPageNumber()) != null) {
+                        image = cache.get(installGuidePage.getPageNumber());
+                    } else {
+                        // Otherwise, fetch the image from the server.
+                        InputStream in = completeImageUrl(installGuidePage.getImageUrl(), installGuidePage.getFileExtension()).openStream();
+                        image = BitmapFactory.decodeStream(in);
+                        cache.put(installGuidePage.getPageNumber(), image);
+                    }
+                } catch (Exception e) {
+                    image = null;
+                    Logger.logError(TAG, "Error loading custom image: ", e);
+                }
+
+                return image;
+            }, (result) -> {
+                // If there is no image, load a "no entry" sign to show that the image failed to load.
+                if (result == null) {
+                    loadErrorImage(imageView);
+                } else {
+                    loadCustomImage(imageView, result);
+                }
+            }).execute();
         } else {
             loadDefaultImage(imageView, pageNumber);
         }
@@ -251,6 +274,11 @@ public class InstallGuideFragment extends Fragment {
     }
 
     private void loadDefaultImage (ImageView view, int pageNumber) {
+        if (getActivity() == null) {
+            Logger.logError(TAG, "getActivity() is null (loadDefaultImage)");
+            return;
+        }
+
         int imageResourceId = getResources().getIdentifier(RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_IMAGE, RESOURCE_ID_PACKAGE_DRAWABLE, getActivity().getPackageName());
         Drawable image = ResourcesCompat.getDrawable(getResources(), imageResourceId, null);
         view.setImageDrawable(image);

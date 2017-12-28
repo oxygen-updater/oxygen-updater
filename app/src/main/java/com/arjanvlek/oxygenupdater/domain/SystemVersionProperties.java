@@ -2,14 +2,12 @@ package com.arjanvlek.oxygenupdater.domain;
 
 
 import android.os.Build;
-import android.support.annotation.NonNull;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.Scanner;
 

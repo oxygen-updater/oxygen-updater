@@ -1,8 +1,11 @@
 package com.arjanvlek.oxygenupdater.views;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +32,7 @@ import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import org.joda.time.LocalDateTime;
 
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.mainActivityPager);
+        mViewPager = findViewById(R.id.mainActivityPager);
 
         if (mViewPager != null) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -130,6 +134,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             this.newsAd = new InterstitialAd(this);
             this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
             this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
+        }
+
+        if (((ApplicationData) getApplication()).checkPlayServices(this, true)) {
+            MobileAds.initialize(this, "ca-app-pub-0760639008316468~7665206420");
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel();
         }
     }
 
@@ -213,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     public void displayUnsupportedDeviceMessage() {
         View checkBoxView = View.inflate(MainActivity.this, R.layout.message_dialog_checkbox, null);
-        final CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
+        final CheckBox checkBox = checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(checkBoxView);
@@ -353,5 +365,40 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     public ActivityLauncher getActivityLauncher() {
         return this.activityLauncher;
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT < 26) {
+            // Unsupported on older Android versions
+            return;
+        }
+
+        // The id of the channel.
+        String id = ApplicationData.NOTIFICATION_CHANNEL_ID;
+
+        // The user-visible name of the channel.
+        CharSequence name = getString(R.string.notification_channel_name);
+
+        // The user-visible description of the channel.
+        String description = getString(R.string.notification_channel_description);
+
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+
+        NotificationChannel channel = new NotificationChannel(id, name, importance);
+
+        // Configure the notification channel.
+        channel.setDescription(description);
+        channel.enableLights(true);
+        // Sets the notification light color for notifications posted to this
+        // channel, if the device supports this feature.
+        channel.setLightColor(Color.RED);
+        channel.enableVibration(true);
+        channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager != null) {
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

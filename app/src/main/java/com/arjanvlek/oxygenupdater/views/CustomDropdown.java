@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
-import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class CustomDropdown {
             convertView = inflater.inflate(layoutType, parent, false);
         }
 
-        TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
+        TextView textView = convertView.findViewById(android.R.id.text1);
         textView.setText(devices.get(currentPosition).getName());
 
         if(recommendedPosition != -1) {
@@ -53,7 +53,7 @@ public class CustomDropdown {
             convertView = inflater.inflate(layoutType, parent, false);
         }
 
-        TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
+        TextView textView = convertView.findViewById(android.R.id.text1);
 
         switch (Locale.getDefault().getDisplayLanguage()) {
             case LOCALE_DUTCH:

@@ -3,12 +3,10 @@ package com.arjanvlek.oxygenupdater.installation;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -26,23 +24,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstaller;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuideFragment;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
-import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
-import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
-import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.Worker;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 
 import java.io.File;
-import java.lang.reflect.Field;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
 
@@ -87,11 +86,11 @@ public class InstallActivity extends AppCompatActivity {
         RootAccessChecker.checkRootAccess((isRooted) -> {
             this.rooted = isRooted;
 
-            if(isRooted) {
+            if (isRooted) {
                 ApplicationData applicationData = (ApplicationData)getApplication();
                 ServerConnector serverConnector = applicationData.getServerConnector();
                 serverConnector.getServerStatus(Utils.checkNetworkConnection(getApplication()), (serverStatus -> {
-                    if(serverStatus.isAutomaticInstallationEnabled()) {
+                    if (serverStatus.isAutomaticInstallationEnabled()) {
                         openMethodSelectionPage();
                     } else {
                         Toast.makeText(getApplication(), getString(R.string.install_guide_automatic_install_disabled), Toast.LENGTH_LONG).show();
@@ -108,10 +107,10 @@ public class InstallActivity extends AppCompatActivity {
     private void openMethodSelectionPage() {
         switchView(R.layout.fragment_choose_install_method);
 
-        CardView automaticInstallCard = (CardView) findViewById(R.id.automaticInstallCard);
+        CardView automaticInstallCard = findViewById(R.id.automaticInstallCard);
         automaticInstallCard.setOnClickListener((__) -> openAutomaticInstallOptionsSelection());
 
-        CardView manualInstallCard = (CardView) findViewById(R.id.manualInstallCard);
+        CardView manualInstallCard = findViewById(R.id.manualInstallCard);
         manualInstallCard.setOnClickListener((__) -> openInstallGuide());
 
     }
@@ -123,7 +122,7 @@ public class InstallActivity extends AppCompatActivity {
 
         initSettingsSwitch(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false, (buttonView, isChecked) -> {
             View additionalZipFileContainer = findViewById(R.id.additionalZipContainer);
-            if(isChecked) {
+            if (isChecked) {
                 additionalZipFileContainer.setVisibility(View.VISIBLE);
             } else {
                 additionalZipFileContainer.setVisibility(View.GONE);
@@ -133,7 +132,7 @@ public class InstallActivity extends AppCompatActivity {
         });
 
         View additionalZipFileContainer = findViewById(R.id.additionalZipContainer);
-        if(settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)) {
+        if (settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)) {
             additionalZipFileContainer.setVisibility(View.VISIBLE);
         } else {
             additionalZipFileContainer.setVisibility(View.GONE);
@@ -142,7 +141,7 @@ public class InstallActivity extends AppCompatActivity {
         initSettingsSwitch(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true);
         initSettingsSwitch(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
 
-        ImageButton filePickerButton = (ImageButton) findViewById(R.id.additionalZipFilePickButton);
+        ImageButton filePickerButton = findViewById(R.id.additionalZipFilePickButton);
         filePickerButton.setOnClickListener((view) -> {
 
             // Implicitly allow the user to select a particular kind of data
@@ -157,7 +156,7 @@ public class InstallActivity extends AppCompatActivity {
 
         displayZipFilePath();
 
-        ImageButton clearFileButton = (ImageButton) findViewById(R.id.additionalZipFileClearButton);
+        ImageButton clearFileButton = findViewById(R.id.additionalZipFileClearButton);
         clearFileButton.setOnClickListener((view) -> {
             settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
             displayZipFilePath();
@@ -172,9 +171,9 @@ public class InstallActivity extends AppCompatActivity {
                 return;
             }
 
-            if(additionalZipFilePath != null) {
+            if (additionalZipFilePath != null) {
                 File file = new File(additionalZipFilePath);
-                if(!file.exists()) {
+                if (!file.exists()) {
                     Toast.makeText(getApplication(), R.string.install_guide_zip_file_deleted, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -182,41 +181,37 @@ public class InstallActivity extends AppCompatActivity {
 
             switchView(R.layout.fragment_installing_update);
 
-            new AsyncTask<Void, Void, String>() {
-                @Override
-                protected String doInBackground(Void... params) {
-                    try {
-                        boolean backup = settingsManager.getPreference(SettingsManager.PROPERTY_BACKUP_DEVICE, true);
-                        boolean wipeCachePartition = settingsManager.getPreference(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true);
-                        boolean rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
+            new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, (args) -> {
+                try {
+                    boolean backup = settingsManager.getPreference(SettingsManager.PROPERTY_BACKUP_DEVICE, true);
+                    boolean wipeCachePartition = settingsManager.getPreference(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true);
+                    boolean rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
 
-                        // Plan install verification on reboot.
-                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
-                        settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, new SystemVersionProperties(false).getOxygenOSOTAVersion());
-                        settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, updateData.getOtaVersionNumber());
+                    // Plan install verification on reboot.
+                    settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
+                    settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, new SystemVersionProperties(false).getOxygenOSOTAVersion());
+                    settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, updateData.getOtaVersionNumber());
 
-                        UpdateInstaller.installUpdate(getApplication(), UpdateDownloader.getFilePath(updateData), additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
-                        return null;
-                    } catch (UpdateInstallationException e) {
-                        return e.getMessage();
-                    } catch (InterruptedException e) {
-                        Logger.logWarning(TAG, "Error installing update: ", e);
-                        return getString(R.string.install_temporary_error);
-                    }
+                    UpdateInstaller.installUpdate(getApplication(), UpdateDownloader.getFilePath(updateData), additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
+                    return null;
+                } catch (UpdateInstallationException e) {
+                    return e.getMessage();
+                } catch (InterruptedException e) {
+                    Logger.logWarning(TAG, "Error installing update: ", e);
+                    return getString(R.string.install_temporary_error);
                 }
+            }, (errorMessage) -> {
+                if (errorMessage != null) {
+                    // Cancel the verification planned on reboot.
+                    settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
 
-                @Override
-                protected void onPostExecute(String errorMessage) {
-                    if(errorMessage != null) {
-                        // Cancel the verification planned on reboot.
-                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
-
-                        openAutomaticInstallOptionsSelection();
-                        Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                    // Otherwise, the device will reboot via SU.
+                    openAutomaticInstallOptionsSelection();
+                    Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show();
                 }
-            }.execute();
+                // Otherwise, the device will reboot via SU.
+            }
+
+            ).execute();
         });
     }
 
@@ -224,7 +219,7 @@ public class InstallActivity extends AppCompatActivity {
         setTitle(getString(R.string.install_guide_title, 1, showDownloadPage ? NUMBER_OF_INSTALL_GUIDE_PAGES : NUMBER_OF_INSTALL_GUIDE_PAGES - 1));
         switchView(R.layout.activity_install_guide);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.updateInstallationInstructionsPager);
+        ViewPager viewPager = findViewById(R.id.updateInstallationInstructionsPager);
         viewPager.setVisibility(View.VISIBLE);
         viewPager.setAdapter(new InstallGuideSectionsPagerAdapter(getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -248,8 +243,8 @@ public class InstallActivity extends AppCompatActivity {
 
     private void displayZipFilePath() {
 
-        ImageButton clearButton = (ImageButton) findViewById(R.id.additionalZipFileClearButton);
-        TextView zipFileField = (TextView) findViewById(R.id.additionalZipFilePath);
+        ImageButton clearButton = findViewById(R.id.additionalZipFileClearButton);
+        TextView zipFileField = findViewById(R.id.additionalZipFilePath);
 
         String text;
         String additionalZipFilePath = settingsManager.getPreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
@@ -272,7 +267,7 @@ public class InstallActivity extends AppCompatActivity {
     }
 
     private void initSettingsSwitch(String settingName, boolean defaultValue, CompoundButton.OnCheckedChangeListener listener) {
-        SwitchCompat switchCompat = (SwitchCompat) findViewById(getResources().getIdentifier(settingName + SETTINGS_SWITCH, PACKAGE_ID, getPackageName()));
+        SwitchCompat switchCompat = findViewById(getResources().getIdentifier(settingName + SETTINGS_SWITCH, PACKAGE_ID, getPackageName()));
         switchCompat.setChecked(settingsManager.getPreference(settingName, defaultValue));
         switchCompat.setOnCheckedChangeListener(listener);
     }
@@ -326,9 +321,12 @@ public class InstallActivity extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             if (position >= getCount()) {
                 FragmentManager manager = ((Fragment) object).getFragmentManager();
-                FragmentTransaction trans = manager.beginTransaction();
-                trans.remove((Fragment) object);
-                trans.commit();
+
+                if (manager != null) {
+                    FragmentTransaction trans = manager.beginTransaction();
+                    trans.remove((Fragment) object);
+                    trans.commit();
+                }
             }
         }
     }

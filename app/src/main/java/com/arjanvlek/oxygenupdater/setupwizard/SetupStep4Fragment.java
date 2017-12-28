@@ -12,10 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
+import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.CustomDropdown;
@@ -36,10 +36,15 @@ public class SetupStep4Fragment extends AbstractFragment {
     private boolean rootMessageShown = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_setup_4, container, false);
+
+        if (getActivity() == null) {
+            throw new RuntimeException("SetupStep4Fragment: Can not initialize: not called from Activity");
+        }
+
         settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        progressBar = (ProgressBar) rootView.findViewById(R.id.settingsUpdateMethodProgressBar);
+        progressBar = rootView.findViewById(R.id.settingsUpdateMethodProgressBar);
 
 
         return rootView;
@@ -76,7 +81,7 @@ public class SetupStep4Fragment extends AbstractFragment {
     }
 
     private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsUpdateMethodSpinner);
+        Spinner spinner = rootView.findViewById(R.id.settingsUpdateMethodSpinner);
 
         final int[] recommendedPositions = StreamSupport
                 .stream(updateMethods)

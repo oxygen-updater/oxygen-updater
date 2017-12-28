@@ -11,9 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.CustomDropdown;
@@ -29,10 +29,10 @@ public class SetupStep3Fragment extends AbstractFragment {
     private ProgressBar progressBar;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_setup_3, container, false);
         settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        progressBar = (ProgressBar) rootView.findViewById(R.id.settingsDeviceProgressBar);
+        progressBar = rootView.findViewById(R.id.settingsDeviceProgressBar);
         return rootView;
     }
 
@@ -42,7 +42,7 @@ public class SetupStep3Fragment extends AbstractFragment {
 
 
     private void fillDeviceSettings(final List<Device> devices) {
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.settingsDeviceSpinner);
+        Spinner spinner = rootView.findViewById(R.id.settingsDeviceSpinner);
 
         SystemVersionProperties systemVersionProperties = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties();
 

@@ -79,9 +79,9 @@ public class SettingsActivity extends AbstractActivity {
         setContentView(R.layout.activity_settings);
 
         settingsManager = new SettingsManager(getApplicationContext());
-        progressBar = (ProgressBar) findViewById(R.id.settingsProgressBar);
-        deviceProgressBar = (ProgressBar) findViewById(R.id.settingsDeviceProgressBar);
-        updateMethodsProgressBar = (ProgressBar) findViewById(R.id.settingsUpdateMethodProgressBar);
+        progressBar = findViewById(R.id.settingsProgressBar);
+        deviceProgressBar = findViewById(R.id.settingsDeviceProgressBar);
+        updateMethodsProgressBar = findViewById(R.id.settingsUpdateMethodProgressBar);
 
         progressBar.setVisibility(View.VISIBLE);
         deviceProgressBar.setVisibility(View.VISIBLE);
@@ -115,7 +115,7 @@ public class SettingsActivity extends AbstractActivity {
         );
 
         StreamSupport.stream(switchesAndSettingsItemsAndDefaultValues).forEach(tuple -> {
-            SwitchCompat switchView = (SwitchCompat) findViewById(tuple.getFirst());
+            SwitchCompat switchView = findViewById(tuple.getFirst());
             switchView.setOnCheckedChangeListener(((buttonView, isChecked) -> settingsManager.savePreference(tuple.getSecond(), isChecked)));
             switchView.setChecked(settingsManager.getPreference(tuple.getSecond(), tuple.getThird()));
         });
@@ -125,7 +125,7 @@ public class SettingsActivity extends AbstractActivity {
         if (devices != null && !devices.isEmpty()) {
             SystemVersionProperties systemVersionProperties = ((ApplicationData) getApplication()).getSystemVersionProperties();
 
-            Spinner spinner = (Spinner) findViewById(R.id.settingsDeviceSpinner);
+            Spinner spinner = findViewById(R.id.settingsDeviceSpinner);
 
             if (spinner == null) return;
 
@@ -189,7 +189,7 @@ public class SettingsActivity extends AbstractActivity {
 
     private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
         if (updateMethods != null && !updateMethods.isEmpty()) {
-            Spinner spinner = (Spinner) findViewById(R.id.settingsUpdateMethodSpinner);
+            Spinner spinner = findViewById(R.id.settingsUpdateMethodSpinner);
             if (spinner == null) return;
 
             long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
@@ -495,7 +495,7 @@ public class SettingsActivity extends AbstractActivity {
      * @param adFreePrice Price to display on the button if the product can be bought.
      */
     private void setupBuyAdFreeButton(PurchaseStatus status, @Nullable String adFreePrice) {
-        Button buyAdFreeButton = (Button) findViewById(R.id.settingsBuyAdFreeButton);
+        Button buyAdFreeButton = findViewById(R.id.settingsBuyAdFreeButton);
 
         switch (status) {
             case UNAVAILABLE:
