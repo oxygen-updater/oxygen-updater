@@ -44,7 +44,7 @@ public class SetupStep4Fragment extends AbstractFragment {
         }
 
         settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        progressBar = rootView.findViewById(R.id.settingsUpdateMethodProgressBar);
+        progressBar = rootView.findViewById(R.id.introduction_step_4_update_method_progress_bar);
 
 
         return rootView;
@@ -81,7 +81,7 @@ public class SetupStep4Fragment extends AbstractFragment {
     }
 
     private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
-        Spinner spinner = rootView.findViewById(R.id.settingsUpdateMethodSpinner);
+        Spinner spinner = rootView.findViewById(R.id.introduction_step_4_update_method_dropdown);
 
         final int[] recommendedPositions = StreamSupport
                 .stream(updateMethods)

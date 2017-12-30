@@ -13,11 +13,11 @@ android {
     defaultConfig {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 19
-        versionName "2.3.3"
+        targetSdkVersion 26
+        versionCode 20
+        versionName "2.3.4"
         signingConfig signingConfigs.signingConfig
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     compileSdkVersion 27
@@ -113,7 +113,7 @@ repositories {
 
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //General Android libraries
     implementation 'com.android.support:appcompat-v7:27.0.2'
@@ -145,6 +145,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.1'
     androidTestImplementation 'com.android.support:support-annotations:27.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
 }
