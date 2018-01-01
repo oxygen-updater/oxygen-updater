@@ -11,6 +11,7 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
+import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
@@ -24,6 +25,7 @@ import com.arjanvlek.oxygenupdater.updateinformation.Banner;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerStatus;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.joda.time.LocalDateTime;
@@ -223,6 +225,20 @@ public class ServerConnector implements Cloneable {
 
     public void log(@NonNull JSONObject logData, Consumer<ServerPostResult> callback) {
         new ObjectResponseExecutor<>(ServerRequest.LOG, logData, callback).execute();
+    }
+
+    public void logRootInstall(RootInstall rootInstall, Consumer<ServerPostResult> callback) {
+
+        try {
+            JSONObject installationData = new JSONObject(objectMapper.writeValueAsString(rootInstall));
+
+            new ObjectResponseExecutor<>(ServerRequest.LOG_UPDATE_INSTALLATION, installationData, callback).execute();
+        } catch (JSONException | JsonProcessingException e) {
+            ServerPostResult errorResult = new ServerPostResult();
+            errorResult.setSuccess(false);
+            errorResult.setErrorMessage("IN-APP ERROR (ServerConnector): Json parse error on input data " + rootInstall.toString());
+            callback.accept(errorResult);
+        }
     }
 
     public void verifyPurchase(@NonNull Purchase purchase, PurchaseType purchaseType, Consumer<ServerPostResult> callback) {

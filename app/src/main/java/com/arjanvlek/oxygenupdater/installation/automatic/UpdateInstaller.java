@@ -43,7 +43,7 @@ public class UpdateInstaller {
     private static final String ECHO = "echo ";
     private static final String REBOOT = "reboot";
     private static final String REBOOT_RECOVERY = REBOOT + " recovery";
-    private static final String MUTE_OUTPUT = "> /dev/null";
+    private static final String MUTE_OUTPUT = " > /dev/null";
     private static final String AND = " && ";
 
     private static final String CACHE = "cache";

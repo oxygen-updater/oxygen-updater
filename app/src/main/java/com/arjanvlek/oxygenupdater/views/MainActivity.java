@@ -141,7 +141,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel();
+            createPushNotificationChannel();
+            createProgressNotificationChannel();
         }
     }
 
@@ -367,20 +368,20 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         return this.activityLauncher;
     }
 
-    private void createNotificationChannel() {
+    private void createPushNotificationChannel() {
         if (Build.VERSION.SDK_INT < 26) {
             // Unsupported on older Android versions
             return;
         }
 
         // The id of the channel.
-        String id = ApplicationData.NOTIFICATION_CHANNEL_ID;
+        String id = ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID;
 
         // The user-visible name of the channel.
-        CharSequence name = getString(R.string.notification_channel_name);
+        CharSequence name = getString(R.string.push_notification_channel_name);
 
         // The user-visible description of the channel.
-        String description = getString(R.string.notification_channel_description);
+        String description = getString(R.string.push_notification_channel_description);
 
         int importance = NotificationManager.IMPORTANCE_HIGH;
 
@@ -394,6 +395,37 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         channel.setLightColor(Color.RED);
         channel.enableVibration(true);
         channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager != null) {
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void createProgressNotificationChannel() {
+        if (Build.VERSION.SDK_INT < 26) {
+            // Unsupported on older Android versions
+            return;
+        }
+
+        // The id of the channel.
+        String id = ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID;
+
+        // The user-visible name of the channel.
+        CharSequence name = getString(R.string.progress_notification_channel_name);
+
+        // The user-visible description of the channel.
+        String description = getString(R.string.progress_notification_channel_description);
+
+        int importance = NotificationManager.IMPORTANCE_LOW;
+
+        NotificationChannel channel = new NotificationChannel(id, name, importance);
+
+        // Configure the notification channel.
+        channel.setDescription(description);
+        channel.enableLights(false);
+        channel.enableVibration(false);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

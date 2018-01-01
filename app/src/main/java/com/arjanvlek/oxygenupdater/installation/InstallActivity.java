@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater.installation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -27,6 +28,8 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.installation.automatic.InstallationStatus;
+import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstaller;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuideFragment;
@@ -41,7 +44,11 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
+
 import java.io.File;
+import java.util.UUID;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
 
@@ -50,6 +57,7 @@ public class InstallActivity extends AppCompatActivity {
     private final SparseArray<InstallGuidePage> installGuideCache = new SparseArray<>();
     private final SparseArray<Bitmap> installGuideImageCache = new SparseArray<>();
     private SettingsManager settingsManager;
+    private ServerConnector serverConnector;
 
     public static final String INTENT_SHOW_DOWNLOAD_PAGE = "show_download_page";
     public static final String INTENT_UPDATE_DATA = "update_data";
@@ -69,10 +77,11 @@ public class InstallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         settingsManager = new SettingsManager(getApplication());
+        serverConnector = ((ApplicationData) getApplication()).getServerConnector();
 
         showDownloadPage = getIntent() == null || getIntent().getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true);
 
-        if(getIntent() != null) {
+        if (getIntent() != null) {
             updateData = getIntent().getParcelableExtra(INTENT_UPDATE_DATA);
         }
 
@@ -87,7 +96,7 @@ public class InstallActivity extends AppCompatActivity {
             this.rooted = isRooted;
 
             if (isRooted) {
-                ApplicationData applicationData = (ApplicationData)getApplication();
+                ApplicationData applicationData = (ApplicationData) getApplication();
                 ServerConnector serverConnector = applicationData.getServerConnector();
                 serverConnector.getServerStatus(Utils.checkNetworkConnection(getApplication()), (serverStatus -> {
                     if (serverStatus.isAutomaticInstallationEnabled()) {
@@ -166,7 +175,7 @@ public class InstallActivity extends AppCompatActivity {
 
             String additionalZipFilePath = settingsManager.getPreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
 
-            if(settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
+            if (settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
                 Toast.makeText(getApplication(), R.string.install_guide_zip_file_missing, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -181,37 +190,41 @@ public class InstallActivity extends AppCompatActivity {
 
             switchView(R.layout.fragment_installing_update);
 
-            new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, (args) -> {
-                try {
-                    boolean backup = settingsManager.getPreference(SettingsManager.PROPERTY_BACKUP_DEVICE, true);
-                    boolean wipeCachePartition = settingsManager.getPreference(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true);
-                    boolean rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
+            boolean backup = settingsManager.getPreference(SettingsManager.PROPERTY_BACKUP_DEVICE, true);
+            boolean wipeCachePartition = settingsManager.getPreference(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true);
+            boolean rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
 
-                    // Plan install verification on reboot.
-                    settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
-                    settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, new SystemVersionProperties(false).getOxygenOSOTAVersion());
-                    settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, updateData.getOtaVersionNumber());
+            // Plan install verification on reboot.
+            String currentOSVersion = new SystemVersionProperties(false).getOxygenOSOTAVersion();
+            String targetOSVersion = updateData.getOtaVersionNumber();
 
-                    UpdateInstaller.installUpdate(getApplication(), UpdateDownloader.getFilePath(updateData), additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
-                    return null;
-                } catch (UpdateInstallationException e) {
-                    return e.getMessage();
-                } catch (InterruptedException e) {
-                    Logger.logWarning(TAG, "Error installing update: ", e);
-                    return getString(R.string.install_temporary_error);
-                }
-            }, (errorMessage) -> {
-                if (errorMessage != null) {
-                    // Cancel the verification planned on reboot.
-                    settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
+            logInstallationStart(getApplication(), currentOSVersion, targetOSVersion, currentOSVersion, () -> {
 
-                    openAutomaticInstallOptionsSelection();
-                    Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show();
-                }
-                // Otherwise, the device will reboot via SU.
-            }
+                new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, (args) -> {
+                    try {
+                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
+                        settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
+                        settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
+                        UpdateInstaller.installUpdate(getApplication(), UpdateDownloader.getFilePath(updateData), additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
+                        return null;
+                    } catch (UpdateInstallationException e) {
+                        return e.getMessage();
+                    } catch (InterruptedException e) {
+                        Logger.logWarning(TAG, "Error installing update: ", e);
+                        return getString(R.string.install_temporary_error);
+                    }
+                }, (errorMessage) -> {
+                    if (errorMessage != null) {
+                        // Cancel the verification planned on reboot.
+                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
 
-            ).execute();
+                        openAutomaticInstallOptionsSelection();
+                        Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show();
+                    }
+                    // Otherwise, the device will reboot via SU.
+                }).execute();
+
+            });
         });
     }
 
@@ -249,11 +262,11 @@ public class InstallActivity extends AppCompatActivity {
         String text;
         String additionalZipFilePath = settingsManager.getPreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
 
-        if(additionalZipFilePath != null) {
+        if (additionalZipFilePath != null) {
             // Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
             text = additionalZipFilePath.replace(Environment.getExternalStoragePublicDirectory(UpdateDownloader.DIRECTORY_ROOT).getAbsolutePath() + File.separator, "");
             String extension = text.substring(text.length() - 4, text.length());
-            if(!extension.equals(EXTENSION_ZIP)) {
+            if (!extension.equals(EXTENSION_ZIP)) {
                 Toast.makeText(getApplication(), R.string.install_zip_file_wrong_file_type, Toast.LENGTH_LONG).show();
                 return;
             }
@@ -287,7 +300,7 @@ public class InstallActivity extends AppCompatActivity {
 
     private void handleBackAction() {
         // If at the install options screen or in the install guide when rooted, go back to the method selection page.
-        if(this.layoutId == R.layout.fragment_install_options || (this.rooted && settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false) && this.layoutId == R.layout.activity_install_guide)) {
+        if (this.layoutId == R.layout.fragment_install_options || (this.rooted && settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false) && this.layoutId == R.layout.activity_install_guide)) {
             openMethodSelectionPage();
         } else if (this.layoutId == R.layout.fragment_installing_update) {
             // Once the installation is being started, there is no way out.
@@ -382,7 +395,31 @@ public class InstallActivity extends AppCompatActivity {
         return this.installGuideCache;
     }
 
-    public SparseArray<Bitmap> getInstallGuideImageCache () {
+    public SparseArray<Bitmap> getInstallGuideImageCache() {
         return this.installGuideImageCache;
+    }
+
+    private void logInstallationStart(Context context, String startOs, String destinationOs, String currentOs, Worker successFunction) {
+        // Create installation ID.
+        String installationId = UUID.randomUUID().toString();
+        SettingsManager manager = new SettingsManager(context);
+        manager.savePreference(SettingsManager.PROPERTY_INSTALLATION_ID, installationId);
+
+        long deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L);
+        long updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
+        String timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString();
+        RootInstall installation = new RootInstall(deviceId, updateMethodId, InstallationStatus.STARTED, installationId, timestamp, startOs, destinationOs, currentOs, "");
+
+        serverConnector.logRootInstall(installation, (result) -> {
+            if (result == null) {
+                Logger.init((ApplicationData) getApplication());
+                Logger.logError(TAG, "Failed to log update installation action: No response from server");
+            } else if (!result.isSuccess()) {
+                Logger.init((ApplicationData) getApplication());
+                Logger.logError(TAG, "Failed to log update installation action: " + result.getErrorMessage());
+            }
+            // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
+            successFunction.start();
+        });
     }
 }

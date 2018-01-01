@@ -30,10 +30,10 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
             if (settingsManager.getPreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false) && intent.getAction() != null && intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
                 settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
 
-                SystemVersionProperties properties =  new SystemVersionProperties(false);
+                SystemVersionProperties properties = new SystemVersionProperties(false);
 
                 // Don't check on unsupported devices.
-                if(properties.getOxygenOSVersion().equals(NO_OXYGEN_OS) || properties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS)) {
+                if (properties.getOxygenOSVersion().equals(NO_OXYGEN_OS) || properties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS)) {
                     return;
                 }
 
@@ -43,12 +43,16 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 
                 if (oldOxygenOSVersion.isEmpty() || targetOxygenOSVersion.isEmpty() || currentOxygenOSVersion.isEmpty()) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_unable_to_verify));
-                } else if(currentOxygenOSVersion.equals(oldOxygenOSVersion)) {
+                    logFailure(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_CHECK_FAILED");
+                } else if (currentOxygenOSVersion.equals(oldOxygenOSVersion)) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_nothing_installed));
-                } else if(!currentOxygenOSVersion.equals(targetOxygenOSVersion)) {
+                    logFailure(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_INSTALL_FAILED");
+                } else if (!currentOxygenOSVersion.equals(targetOxygenOSVersion)) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_wrong_version_installed));
+                    logFailure(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_WRONG_OS_INSTALLED");
                 } else {
                     displaySuccessNotification(context, properties.getOxygenOSVersion());
+                    logSuccess(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion);
                 }
             }
 
@@ -60,7 +64,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
     private void displaySuccessNotification(Context context, String oxygenOSVersion) {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.NOTIFICATION_CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_done)
                 .setOngoing(false)
                 .setContentIntent(contentIntent)
@@ -80,7 +84,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
     private void displayFailureNotification(Context context, String errorMessage) {
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.NOTIFICATION_CHANNEL_ID)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_failed)
                 .setOngoing(false)
                 .setContentIntent(contentIntent)
@@ -95,5 +99,33 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 
         NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
         manager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    private void logSuccess(Context context, String startOs, String destinationOs, String currentOs) {
+        Intent logIntent = buildLogIntent(context, startOs, destinationOs, currentOs);
+        logIntent.putExtra(RootInstallLogger.INTENT_STATUS, InstallationStatus.FINISHED);
+
+        context.startService(logIntent);
+    }
+
+    private void logFailure(Context context, String startOs, String destinationOs, String currentOs, String reason) {
+        Intent logIntent = buildLogIntent(context, startOs, destinationOs, currentOs);
+        logIntent.putExtra(RootInstallLogger.INTENT_STATUS, InstallationStatus.FAILED);
+        logIntent.putExtra(RootInstallLogger.INTENT_FAILURE_REASON, reason);
+
+        context.startService(logIntent);
+    }
+
+    private Intent buildLogIntent(Context context, String startOs, String destinationOs, String currentOs) {
+        SettingsManager settingsManager = new SettingsManager(context);
+
+        Intent logIntent = new Intent(context, RootInstallLogger.class);
+
+        logIntent.putExtra(RootInstallLogger.INTENT_INSTALL_ID, settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"));
+        logIntent.putExtra(RootInstallLogger.INTENT_START_OS, startOs);
+        logIntent.putExtra(RootInstallLogger.INTENT_DESTINATION_OS, destinationOs);
+        logIntent.putExtra(RootInstallLogger.INTENT_CURR_OS, currentOs);
+
+        return logIntent;
     }
 }

@@ -40,6 +40,7 @@ enum ServerRequest {
     NEWS_READ(POST, "news-read", ServerPostResult.class),
 
     LOG(POST, "log", ServerPostResult.class),
+    LOG_UPDATE_INSTALLATION(POST, "log-update-installation", ServerPostResult.class),
 
     VERIFY_PURCHASE(POST, "verify-purchase", 120, ServerPostResult.class);
 

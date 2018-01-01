@@ -36,6 +36,7 @@ public class SettingsManager {
     public static final String PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT = "verifySystemVersion";
     public static final String PROPERTY_OLD_SYSTEM_VERSION = "oldSystemVersion";
     public static final String PROPERTY_TARGET_SYSTEM_VERSION = "targetSystemVersion";
+    public static final String PROPERTY_INSTALLATION_ID = "installationId";
     public static final String PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED = "isAutomaticInstallationEnabled";
     public static final String PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown";
 

@@ -182,7 +182,7 @@ public class NotificationService extends FirebaseMessagingService {
 
     private NotificationCompat.Builder getNotificationBuilder() {
         if (Build.VERSION.SDK_INT >= 26) {
-            return new NotificationCompat.Builder(this, ApplicationData.NOTIFICATION_CHANNEL_ID);
+            return new NotificationCompat.Builder(this, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID);
         } else {
             //noinspection deprecation - Only runs on older Android versions.
             return new NotificationCompat.Builder(this);

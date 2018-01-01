@@ -30,7 +30,7 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getIntent() == null || getIntent().getExtras() == null) {
+        if (getIntent() == null || getIntent().getExtras() == null) {
             finish();
             return;
         }
