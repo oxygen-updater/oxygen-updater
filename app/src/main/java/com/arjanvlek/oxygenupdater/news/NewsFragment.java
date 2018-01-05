@@ -37,6 +37,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import org.joda.time.LocalDateTime;
 
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class NewsFragment extends AbstractFragment {
         ListView newsContainer = view.findViewById(R.id.newsContainer);
 
         if (!isAdded()) {
-            Logger.logError(TAG, "isAdded() returned false (displayNewsItems)");
+            Logger.logError(false, TAG, "isAdded() returned false (displayNewsItems)");
             return;
         }
 
@@ -194,25 +195,11 @@ public class NewsFragment extends AbstractFragment {
                         return image;
                     }
 
-                    try {
-                        InputStream in = new URL(newsItem.getImageUrl()).openStream();
-                        image = BitmapFactory.decodeStream(in);
-                        imageCache.put(newsItem.getId().intValue(), image);
-                    } catch (Exception ignored) {
-                        try {
-                            // Retry 1 time before handling exception
-                            InputStream in = new URL(newsItem.getImageUrl()).openStream();
-                            image = BitmapFactory.decodeStream(in);
-                            imageCache.put(newsItem.getId().intValue(), image);
-                        } catch (Exception e) {
-                            image = null;
-                            imageCache.put(newsItem.getId().intValue(), null);
-                            Logger.logError("NewsFragment", "Error loading news image: ", e);
-                        }
-                    }
+                    image = doGetImage(newsItem.getImageUrl());
+                    imageCache.put(newsItem.getId().intValue(), image);
 
                     return image;
-                }, result -> {
+                }, image -> {
                     if (!isAdded() || getActivity() == null) {
                         return;
                     }
@@ -224,11 +211,11 @@ public class NewsFragment extends AbstractFragment {
                         return;
                     }
 
-                    if (result == null) {
+                    if (image == null) {
                         Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
                         newsItemView.image.setImageDrawable(errorImage);
                     } else {
-                        newsItemView.image.setImageBitmap(result);
+                        newsItemView.image.setImageBitmap(image);
                     }
                     newsItemView.image.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
                     newsItemView.image.setVisibility(View.VISIBLE);
@@ -288,6 +275,28 @@ public class NewsFragment extends AbstractFragment {
         } else {
             // If not attached to main activity or coming from other activity, open the news item.
             doOpenNewsItem(view, newsItemId);
+        }
+    }
+
+    private Bitmap doGetImage(String imageUrl) {
+        return doGetImage(imageUrl, 0);
+    }
+
+    private Bitmap doGetImage(String imageUrl, int retryCount) {
+        try {
+            InputStream in = new URL(imageUrl).openStream();
+            return BitmapFactory.decodeStream(in);
+        } catch (MalformedURLException e) {
+            // No retry, because malformed url will never work.
+            Logger.logError(TAG, String.format("Error displaying news image: Invalid image URL <%s>", imageUrl));
+            return null;
+        } catch (Exception e) {
+            if (retryCount < 5) {
+                return doGetImage(imageUrl, retryCount + 1);
+            } else {
+                Logger.logError(TAG, "Error loading news image: ", e);
+                return null;
+            }
         }
     }
 

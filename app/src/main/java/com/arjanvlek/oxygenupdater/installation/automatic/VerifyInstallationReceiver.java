@@ -3,9 +3,14 @@ package com.arjanvlek.oxygenupdater.installation.automatic;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.PersistableBundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
@@ -21,6 +26,7 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 public class VerifyInstallationReceiver extends BroadcastReceiver {
 
     private static final int NOTIFICATION_ID = 79243095;
+    private static final int TASK_ID = 395819383;
     private static final String TAG = "VerifyInstallReceiver";
 
     @Override
@@ -102,30 +108,51 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
     }
 
     private void logSuccess(Context context, String startOs, String destinationOs, String currentOs) {
-        Intent logIntent = buildLogIntent(context, startOs, destinationOs, currentOs);
-        logIntent.putExtra(RootInstallLogger.INTENT_STATUS, InstallationStatus.FINISHED);
+        PersistableBundle logData = buildLogData(context, startOs, destinationOs, currentOs);
+        logData.putString(RootInstallLogger.DATA_STATUS, InstallationStatus.FINISHED.toString());
 
-        context.startService(logIntent);
+        scheduleLogUploadTask(context, logData);
     }
 
     private void logFailure(Context context, String startOs, String destinationOs, String currentOs, String reason) {
-        Intent logIntent = buildLogIntent(context, startOs, destinationOs, currentOs);
-        logIntent.putExtra(RootInstallLogger.INTENT_STATUS, InstallationStatus.FAILED);
-        logIntent.putExtra(RootInstallLogger.INTENT_FAILURE_REASON, reason);
+        PersistableBundle logData = buildLogData(context, startOs, destinationOs, currentOs);
+        logData.putString(RootInstallLogger.DATA_STATUS, InstallationStatus.FAILED.toString());
+        logData.putString(RootInstallLogger.DATA_FAILURE_REASON, reason);
 
-        context.startService(logIntent);
+        scheduleLogUploadTask(context, logData);
     }
 
-    private Intent buildLogIntent(Context context, String startOs, String destinationOs, String currentOs) {
+    private PersistableBundle buildLogData(Context context, String startOs, String destinationOs, String currentOs) {
         SettingsManager settingsManager = new SettingsManager(context);
 
-        Intent logIntent = new Intent(context, RootInstallLogger.class);
+        PersistableBundle logData = new PersistableBundle();
 
-        logIntent.putExtra(RootInstallLogger.INTENT_INSTALL_ID, settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"));
-        logIntent.putExtra(RootInstallLogger.INTENT_START_OS, startOs);
-        logIntent.putExtra(RootInstallLogger.INTENT_DESTINATION_OS, destinationOs);
-        logIntent.putExtra(RootInstallLogger.INTENT_CURR_OS, currentOs);
+        logData.putString(RootInstallLogger.DATA_INSTALL_ID, settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"));
+        logData.putString(RootInstallLogger.DATA_START_OS, startOs);
+        logData.putString(RootInstallLogger.DATA_DESTINATION_OS, destinationOs);
+        logData.putString(RootInstallLogger.DATA_CURR_OS, currentOs);
 
-        return logIntent;
+        return logData;
+    }
+
+    private void scheduleLogUploadTask(Context context, PersistableBundle logData) {
+        JobInfo.Builder task = new JobInfo.Builder(TASK_ID, new ComponentName(context, RootInstallLogger.class))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setRequiresDeviceIdle(false)
+                .setRequiresCharging(false)
+                .setMinimumLatency(3000)
+                .setExtras(logData)
+                .setBackoffCriteria(3000, JobInfo.BACKOFF_POLICY_EXPONENTIAL);
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            task.setRequiresBatteryNotLow(false);
+            task.setRequiresStorageNotLow(false);
+        }
+
+        JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+        if (scheduler != null) {
+            scheduler.schedule(task.build());
+        }
     }
 }

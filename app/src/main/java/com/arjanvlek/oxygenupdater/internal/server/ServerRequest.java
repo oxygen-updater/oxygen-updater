@@ -48,7 +48,7 @@ enum ServerRequest {
     private final String url;
     private final int timeOutInSeconds;
     private final Class<?> returnClass;
-    private static final int DEFAULT_TIMEOUT = 20;
+    private static final int DEFAULT_TIMEOUT = 10;
 
     ServerRequest(String url, Class<?> returnClass) {
         this(GET, url, DEFAULT_TIMEOUT, returnClass);

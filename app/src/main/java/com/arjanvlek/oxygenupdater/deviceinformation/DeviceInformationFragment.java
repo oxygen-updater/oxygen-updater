@@ -41,7 +41,7 @@ public class DeviceInformationFragment extends AbstractFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         if (!isAdded()) {
-            Logger.logError(TAG, "Fragment not added. Can not create the view!");
+            Logger.logError(false, TAG, "Fragment not added. Can not create the view!");
             return;
         }
 
@@ -125,6 +125,18 @@ public class DeviceInformationFragment extends AbstractFragment {
             TextView oxygenOsVersionLabel = rootView.findViewById(R.id.device_information_oxygen_os_ver_label);
             oxygenOsVersionLabel.setVisibility(View.GONE);
             oxygenOsVersionView.setVisibility(View.GONE);
+        }
+
+        // Oxygen OS OTA version (if available)
+        TextView oxygenOsOtaVersionView = rootView.findViewById(R.id.device_information_oxygen_os_ota_ver_field);
+
+        if (!systemVersionProperties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS)) {
+            oxygenOsOtaVersionView.setText(systemVersionProperties.getOxygenOSOTAVersion());
+
+        } else {
+            TextView oxygenOsOtaVersionLabel = rootView.findViewById(R.id.device_information_oxygen_os_ota_ver_label);
+            oxygenOsOtaVersionLabel.setVisibility(View.GONE);
+            oxygenOsOtaVersionLabel.setVisibility(View.GONE);
         }
 
         // Android version

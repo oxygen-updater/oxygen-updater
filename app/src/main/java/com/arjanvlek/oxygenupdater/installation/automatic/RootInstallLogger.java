@@ -1,8 +1,7 @@
 package com.arjanvlek.oxygenupdater.installation.automatic;
 
-import android.app.IntentService;
-import android.content.Intent;
-import android.support.annotation.Nullable;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
@@ -13,28 +12,21 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 
 
-public class RootInstallLogger extends IntentService {
+public class RootInstallLogger extends JobService {
 
-    public static final String INTENT_STATUS = "STATUS";
-    public static final String INTENT_INSTALL_ID = "INSTALLATION_ID";
-    public static final String INTENT_START_OS = "START_OS";
-    public static final String INTENT_DESTINATION_OS = "DEST_OS";
-    public static final String INTENT_CURR_OS = "CURR_OS";
-    public static final String INTENT_FAILURE_REASON = "FAILURE_REASON";
+    public static final String DATA_STATUS = "STATUS";
+    public static final String DATA_INSTALL_ID = "INSTALLATION_ID";
+    public static final String DATA_START_OS = "START_OS";
+    public static final String DATA_DESTINATION_OS = "DEST_OS";
+    public static final String DATA_CURR_OS = "CURR_OS";
+    public static final String DATA_FAILURE_REASON = "FAILURE_REASON";
 
     private static final String TAG = "RootInstallLogger";
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     */
-    public RootInstallLogger() {
-        super(TAG);
-    }
-
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent == null || intent.getExtras() == null || !(getApplication() instanceof ApplicationData)) {
-            return;
+    public boolean onStartJob(JobParameters params) {
+        if (params == null || !(getApplication() instanceof ApplicationData)) {
+            return true; // Retrying wont fix this issue. This is a lost cause.
         }
 
         ApplicationData applicationData = (ApplicationData) getApplication();
@@ -47,16 +39,16 @@ public class RootInstallLogger extends IntentService {
 
         if (deviceId == -1L || updateMethodId == -1L) {
             Logger.logError(TAG, "Failed to log update installation action: Device and / or update method not selected.");
-            return;
+            return true; // Retrying wont fix this issue. This is a lost cause.
         }
 
-        InstallationStatus status = (InstallationStatus) intent.getExtras().getSerializable(INTENT_STATUS);
-        String installationId = intent.getExtras().getString(INTENT_INSTALL_ID, "<INVALID>");
-        String startOSVersion = intent.getExtras().getString(INTENT_START_OS, "<UNKNOWN>");
-        String destinationOSVersion = intent.getExtras().getString(INTENT_DESTINATION_OS, "<UNKNOWN>");
-        String currentOsVersion = intent.getExtras().getString(INTENT_CURR_OS, "<UNKNOWN>");
+        InstallationStatus status = InstallationStatus.valueOf(params.getExtras().getString(DATA_STATUS));
+        String installationId = params.getExtras().getString(DATA_INSTALL_ID, "<INVALID>");
+        String startOSVersion = params.getExtras().getString(DATA_START_OS, "<UNKNOWN>");
+        String destinationOSVersion = params.getExtras().getString(DATA_DESTINATION_OS, "<UNKNOWN>");
+        String currentOsVersion = params.getExtras().getString(DATA_CURR_OS, "<UNKNOWN>");
         String timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString();
-        String failureReason = intent.getExtras().getString(INTENT_FAILURE_REASON ,"");
+        String failureReason = params.getExtras().getString(DATA_FAILURE_REASON, "");
 
         RootInstall installation = new RootInstall(deviceId, updateMethodId, status, installationId, timestamp, startOSVersion, destinationOSVersion, currentOsVersion, failureReason);
 
@@ -64,14 +56,24 @@ public class RootInstallLogger extends IntentService {
             if (result == null) {
                 Logger.init(applicationData);
                 Logger.logError(TAG, "Failed to log update installation action: No response from server");
+                jobFinished(params, true);
             } else if (!result.isSuccess()) {
                 Logger.init(applicationData);
                 Logger.logError(TAG, "Failed to log update installation action: " + result.getErrorMessage());
+                jobFinished(params, true);
             } else if (result.isSuccess() && installation.getInstallationStatus().equals(InstallationStatus.FAILED) || installation.getInstallationStatus().equals(InstallationStatus.FINISHED)) {
                 settingsManager.deletePreference(SettingsManager.PROPERTY_INSTALLATION_ID);
+                jobFinished(params, false);
+            } else {
+                jobFinished(params, false);
             }
         });
 
+        return true;
+    }
 
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        return true;
     }
 }

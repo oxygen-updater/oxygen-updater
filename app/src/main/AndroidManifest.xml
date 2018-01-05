@@ -194,7 +194,9 @@
 
         <service
             android:name=".installation.automatic.RootInstallLogger"
-            android:exported="false" />
+            android:label="@string/root_install_logger_service_name"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            />
 
         <meta-data
             android:name="com.google.android.gms.version"

@@ -419,6 +419,10 @@ public class ServerConnector implements Cloneable {
     }
 
     private String performServerRequest(ServerRequest request, JSONObject body, Object... params) {
+        return performServerRequest(request, body, 0, params);
+    }
+
+    private String performServerRequest(ServerRequest request, JSONObject body, int retryCount, Object... params) {
 
         try {
             URL requestUrl = request.getUrl(params);
@@ -462,8 +466,12 @@ public class ServerConnector implements Cloneable {
             Logger.logVerbose(uploadLog, TAG, "Response: " + rawResponse);
             return rawResponse;
         } catch (Exception e) {
-            Logger.logError(uploadLog, TAG, "Error performing server request: ", e);
-            return null;
+            if (retryCount < 5) {
+                return performServerRequest(request, body, retryCount + 1, params);
+            } else {
+                Logger.logError(uploadLog, TAG, "Error performing server request: ", e);
+                return null;
+            }
         }
     }
 

@@ -99,7 +99,7 @@ public class InstallGuideFragment extends Fragment {
             cache = new SparseArray<>();
         }
 
-        if(cache.get(pageNumber) == null) {
+        if (cache.get(pageNumber) == null) {
             if (getActivity() != null && getActivity().getApplication() != null && getActivity().getApplication() instanceof ApplicationData) {
                 ServerConnector connector = ((ApplicationData) getActivity().getApplication()).getServerConnector();
                 connector.getInstallGuidePage(deviceId, updateMethodId, pageNumber, (page) -> {
@@ -117,11 +117,13 @@ public class InstallGuideFragment extends Fragment {
 
     private void displayInstallGuide(View installGuideView, InstallGuidePage installGuidePage, int pageNumber, boolean isFirstPage) {
         if (!isAdded()) {
-            Logger.logError(TAG, "isAdded() returned false (displayInstallGuide)");
+            // Happens when a page is scrolled too far outside the screen (2 or more rows) and content then gets resolved from the server.
+            Logger.logError(false, TAG, "isAdded() returned false (displayInstallGuide)");
             return;
         }
 
         if (getActivity() == null) {
+            // Should not happen, but can occur when the fragment gets content resolved after the user exited the install guide and returned to another activity.
             Logger.logError(TAG, "getActivity() returned null (displayInstallGuide)");
             return;
         }
@@ -157,6 +159,7 @@ public class InstallGuideFragment extends Fragment {
 
     private void displayDefaultInstallGuide(View installGuideView, int pageNumber) {
         if (getActivity() == null) {
+            // Should never happen.
             Logger.logError(TAG, "getActivity() is null (displayDefaultInstallGuide)");
             return;
         }
@@ -208,22 +211,21 @@ public class InstallGuideFragment extends Fragment {
                         image = cache.get(installGuidePage.getPageNumber());
                     } else {
                         // Otherwise, fetch the image from the server.
-                        InputStream in = completeImageUrl(installGuidePage.getImageUrl(), installGuidePage.getFileExtension()).openStream();
-                        image = BitmapFactory.decodeStream(in);
+                        image = doGetCustomImage(completeImageUrl(installGuidePage.getImageUrl(), installGuidePage.getFileExtension()));
                         cache.put(installGuidePage.getPageNumber(), image);
                     }
-                } catch (Exception e) {
+                } catch (MalformedURLException e) {
                     image = null;
-                    Logger.logError(TAG, "Error loading custom image: ", e);
+                    Logger.logError(TAG, String.format("Error loading custom image: Invalid image URL <%s>", installGuidePage.getImageUrl()));
                 }
 
                 return image;
-            }, (result) -> {
+            }, (image) -> {
                 // If there is no image, load a "no entry" sign to show that the image failed to load.
-                if (result == null) {
+                if (image == null) {
                     loadErrorImage(imageView);
                 } else {
-                    loadCustomImage(imageView, result);
+                    loadCustomImage(imageView, image);
                 }
             }).execute();
         } else {
@@ -268,12 +270,30 @@ public class InstallGuideFragment extends Fragment {
         return new URL(imageUrl + "_" + imageVariant + "." + fileExtension);
     }
 
-    private void loadCustomImage (ImageView view, Bitmap image) {
+    private void loadCustomImage(ImageView view, Bitmap image) {
         view.setImageBitmap(image);
         view.setVisibility(View.VISIBLE);
     }
 
-    private void loadDefaultImage (ImageView view, int pageNumber) {
+    private Bitmap doGetCustomImage(URL imageUrl) {
+        return doGetCustomImage(imageUrl, 0);
+    }
+
+    private Bitmap doGetCustomImage(URL imageUrl, int retryCount) {
+        try {
+            InputStream in = imageUrl.openStream();
+            return BitmapFactory.decodeStream(in);
+        } catch (Exception e) {
+            if (retryCount < 5) {
+                return doGetCustomImage(imageUrl, retryCount + 1);
+            } else {
+                Logger.logError(TAG, "Error loading custom image: ", e);
+                return null;
+            }
+        }
+    }
+
+    private void loadDefaultImage(ImageView view, int pageNumber) {
         if (getActivity() == null) {
             Logger.logError(TAG, "getActivity() is null (loadDefaultImage)");
             return;
@@ -285,7 +305,7 @@ public class InstallGuideFragment extends Fragment {
         view.setVisibility(View.VISIBLE);
     }
 
-    private void loadErrorImage (ImageView view) {
+    private void loadErrorImage(ImageView view) {
         Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.drawable.error_image, null);
         view.setImageDrawable(errorImage);
         view.setVisibility(View.VISIBLE);

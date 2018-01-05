@@ -98,8 +98,12 @@ public class SettingsActivity extends AbstractActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (iabHelper != null) iabHelper.disposeWhenFinished();
-        iabHelper = null;
+        try {
+            if (iabHelper != null) iabHelper.disposeWhenFinished();
+            iabHelper = null;
+        } catch (Throwable ignored) {
+
+        }
     }
 
     private void initSwitches() {
