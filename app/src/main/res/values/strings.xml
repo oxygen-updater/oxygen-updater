@@ -240,7 +240,7 @@
     <string name="device_information_incremental_os_version">Incremental OS version:</string>
     <string name="device_information_os_version">Android version:</string>
     <string name="device_information_oxygen_os_version">OxygenOS version:</string>
-    <string name="device_information_oxygen_os_ota_version">OTA version:</string>
+    <string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
     <string name="device_information_patch_level_version">Security patch date:</string>
     <string name="device_information_serial_number">Serial number:</string>
     <string name="device_information_system_on_a_chip">System on a Chip:</string>

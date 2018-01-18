@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.ExceptionUtils;
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
@@ -294,7 +295,11 @@ public class NewsFragment extends AbstractFragment {
             if (retryCount < 5) {
                 return doGetImage(imageUrl, retryCount + 1);
             } else {
-                Logger.logError(TAG, "Error loading news image: ", e);
+                if (ExceptionUtils.isNetworkError(e)) {
+                    Logger.logNetworkError(true, TAG, String.format("Error obtaining news image from <%s>.", imageUrl));
+                } else {
+                    Logger.logError(TAG, String.format("Error obtaining news image from <%s>: ", imageUrl), e);
+                }
                 return null;
             }
         }

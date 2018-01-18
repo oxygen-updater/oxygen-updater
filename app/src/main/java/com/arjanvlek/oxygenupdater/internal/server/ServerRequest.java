@@ -75,7 +75,7 @@ enum ServerRequest {
 
     URL getUrl(Object... params) {
         try {
-            return new URL(String.format(Locale.US, SERVER_BASE_URL + this.url, params).replace(" ", ""));
+            return new URL(getUrlString(params));
         } catch (MalformedURLException e) {
             Logger.logError("ServerRequest", "Malformed URL: " + this.url);
             return null;
@@ -95,6 +95,14 @@ enum ServerRequest {
 
     enum RequestMethod {
         GET, POST, PUT, DELETE, PATCH
+    }
+
+    private String getUrlString(Object... params) {
+        return String.format(Locale.US, SERVER_BASE_URL + this.url, params).replace(" ", "");
+    }
+
+    public String toString(Object... params) {
+        return requestMethod + " " + getUrl(params);
     }
 
 }

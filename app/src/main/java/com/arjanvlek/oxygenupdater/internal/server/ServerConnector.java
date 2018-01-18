@@ -13,6 +13,7 @@ import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
+import com.arjanvlek.oxygenupdater.internal.ExceptionUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
@@ -469,7 +470,11 @@ public class ServerConnector implements Cloneable {
             if (retryCount < 5) {
                 return performServerRequest(request, body, retryCount + 1, params);
             } else {
-                Logger.logError(uploadLog, TAG, "Error performing server request: ", e);
+                if (ExceptionUtils.isNetworkError(e)) {
+                    Logger.logNetworkError(uploadLog, TAG, "Error performing request <" + request.toString(params) +">.");
+                } else {
+                    Logger.logError(uploadLog, TAG, "Error performing request <" + request.toString(params)+ ">: ", e);
+                }
                 return null;
             }
         }

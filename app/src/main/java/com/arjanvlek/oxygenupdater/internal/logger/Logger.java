@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.internal.ExceptionUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
@@ -13,17 +14,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.SSLException;
 
 public class Logger {
 
@@ -152,6 +147,11 @@ public class Logger {
         logError(true, tag, message, cause);
     }
 
+    public static void logNetworkError(boolean upload, String tag, String message) {
+        Log.e(tag, message);
+        if (upload) uploadLog(LogLevel.NETWORK_ERROR, tag, message);
+    }
+
     public static void logApplicationCrash(Context context, Throwable cause) {
         try {
             File errorFile = new File(context.getFilesDir(), ERROR_FILE);
@@ -175,7 +175,7 @@ public class Logger {
 
     private static void uploadLog(LogLevel logLevel, String tag, String message, Throwable cause) {
         try {
-            uploadLog(isNetworkError(cause) ? LogLevel.NETWORK_ERROR : logLevel, tag, message + ":\n\n" + stacktraceToString(cause));
+            uploadLog(ExceptionUtils.isNetworkError(cause) ? LogLevel.NETWORK_ERROR : logLevel, tag, message + ":\n\n" + stacktraceToString(cause));
         } catch (Throwable throwable) {
             logError(false, TAG, "An error has occurred, but it can't be uploaded: \n\n", cause);
         }
@@ -194,10 +194,6 @@ public class Logger {
                 applicationData.startService(intent);
             }
         }
-    }
-
-    private static boolean isNetworkError(Throwable cause) {
-        return (cause instanceof SocketException || cause instanceof SocketTimeoutException || cause instanceof SSLException || cause instanceof UnknownHostException || (cause instanceof FileNotFoundException && cause.getMessage().contains("http")));
     }
 
     private enum LogLevel {

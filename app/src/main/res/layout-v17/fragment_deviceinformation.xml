@@ -111,14 +111,6 @@
                 android:gravity="end" />
 
             <TextView
-                android:id="@+id/device_information_oxygen_os_ota_ver_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/device_information_oxygen_os_ver_label"
-                android:layout_marginTop="5dp"
-                android:text="@string/device_information_oxygen_os_ota_version" />
-
-            <TextView
                 android:id="@+id/device_information_oxygen_os_ota_ver_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,7 +123,7 @@
                 android:id="@+id/device_information_os_ver_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/device_information_oxygen_os_ota_ver_label"
+                android:layout_below="@id/device_information_oxygen_os_ota_ver_field"
                 android:layout_marginTop="5dp"
                 android:text="@string/device_information_os_version" />
 

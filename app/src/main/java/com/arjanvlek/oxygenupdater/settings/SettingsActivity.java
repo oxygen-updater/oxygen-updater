@@ -25,6 +25,7 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
+import com.arjanvlek.oxygenupdater.internal.SetupUtils;
 import com.arjanvlek.oxygenupdater.internal.ThreeTuple;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
@@ -278,10 +279,9 @@ public class SettingsActivity extends AbstractActivity {
         Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
         if (deviceId == -1L || updateMethodId == -1L) {
-            Logger.logWarning(TAG, "Settings screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
+            Logger.logWarning(TAG, SetupUtils.getErrorText("Settings screen", deviceId, updateMethodId));
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
         } else {
-            Logger.logWarning(false, TAG, "Settings screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
             Toast.makeText(this, getString(R.string.settings_saving), Toast.LENGTH_LONG).show();
         }
     }

@@ -51,7 +51,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
     private void displayFormattedDeviceName(List<Device> devices) {
         if (!isAdded()) {
-            Logger.logError(TAG, "Fragment not added. Can not display formatted device name!");
+            Logger.logError(false, TAG, "Fragment not added. Can not display formatted device name!");
             return;
         }
 
@@ -131,12 +131,10 @@ public class DeviceInformationFragment extends AbstractFragment {
         TextView oxygenOsOtaVersionView = rootView.findViewById(R.id.device_information_oxygen_os_ota_ver_field);
 
         if (!systemVersionProperties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS)) {
-            oxygenOsOtaVersionView.setText(systemVersionProperties.getOxygenOSOTAVersion());
+            oxygenOsOtaVersionView.setText(getString(R.string.device_information_oxygen_os_ota_version, systemVersionProperties.getOxygenOSOTAVersion()));
 
         } else {
-            TextView oxygenOsOtaVersionLabel = rootView.findViewById(R.id.device_information_oxygen_os_ota_ver_label);
-            oxygenOsOtaVersionLabel.setVisibility(View.GONE);
-            oxygenOsOtaVersionLabel.setVisibility(View.GONE);
+            oxygenOsOtaVersionView.setVisibility(View.GONE);
         }
 
         // Android version

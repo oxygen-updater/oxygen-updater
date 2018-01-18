@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.SetupUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
@@ -30,6 +31,8 @@ public class SetupActivity extends AppCompatActivity {
     private Fragment step3Fragment;
     private Fragment step4Fragment;
     private SettingsManager settingsManager;
+
+    private static final String TAG = "SetupActivity";
 
 
     @Override
@@ -180,8 +183,10 @@ public class SetupActivity extends AppCompatActivity {
         } else {
             Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
             Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
-            Logger.logWarning("SetupActivity", "Setup screen did *NOT* save settings correctly. Selected device id: " + deviceId + ", selected update method id: " + updateMethodId);
+            Logger.logWarning(TAG, SetupUtils.getErrorText("Setup wizard", deviceId, updateMethodId));
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
         }
     }
+
+
 }
