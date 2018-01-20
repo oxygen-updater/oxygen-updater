@@ -538,7 +538,7 @@ public class SettingsActivity extends AbstractActivity {
             callback.accept(false);
         }
 
-        getApplicationData().getServerConnector().verifyPurchase(purchase, PurchaseType.AD_FREE, (validationResult) -> {
+        getApplicationData().getServerConnector().verifyPurchase(purchase, this.price, PurchaseType.AD_FREE, (validationResult) -> {
             if (validationResult == null) {
                 // server can't be reached. Keep trying until it can be reached...
                 new Handler().postDelayed(() -> validateAdFreePurchase(purchase, callback), 2000);

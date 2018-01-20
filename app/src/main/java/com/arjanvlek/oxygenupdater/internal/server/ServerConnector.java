@@ -242,7 +242,7 @@ public class ServerConnector implements Cloneable {
         }
     }
 
-    public void verifyPurchase(@NonNull Purchase purchase, PurchaseType purchaseType, Consumer<ServerPostResult> callback) {
+    public void verifyPurchase(@NonNull Purchase purchase, String amount, PurchaseType purchaseType, Consumer<ServerPostResult> callback) {
         JSONObject purchaseData;
 
         try {
@@ -250,6 +250,7 @@ public class ServerConnector implements Cloneable {
             purchaseData.put("purchaseType", purchaseType.toString());
             purchaseData.put("itemType", purchase.getItemType());
             purchaseData.put("signature", purchase.getSignature());
+            purchaseData.put("amount", amount);
         } catch (JSONException ignored) {
             ServerPostResult result = new ServerPostResult();
             result.setSuccess(false);
