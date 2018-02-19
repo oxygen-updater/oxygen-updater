@@ -316,7 +316,7 @@
     <string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
     <string name="root_check_title">Root-toegang</string>
-    <string name="root_check_message">Sommige update-methodes zijn niet geschikt voor apparaten met root-toegang. Oxygen Updater kan hierop controleren, en raadt vervolgens de juiste update-methode aan. \n\nAls je root-toegang hebt, wordt het aanbevolen om na het sluiten van deze melding toestemming voor het gebruik van root-toegang te geven.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
+    <string name="root_check_message">Oxygen Updater biedt eenvoudige, automatische update-installaties voor gebruikers met root-toegang. Maar: de incrementele updates werken niet als je root-toegang hebt. Oxygen Updater kan op root-toegang controleren om de juiste-update-methode(s) aan te bieden. \n\nAls je root-toegang hebt, geef dan na het sluiten van deze melding toestemming voor het gebruik van root-toegang.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
 
     <!-- Purchase strings -->
     <string name="purchase_error_before_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw.</string>

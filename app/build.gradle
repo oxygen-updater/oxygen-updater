@@ -14,8 +14,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 27
-        versionName "2.3.11"
+        versionCode 28
+        versionName "2.4.0"
         signingConfig signingConfigs.signingConfig
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
@@ -132,6 +132,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:15.0.0'
     implementation 'com.google.firebase:firebase-messaging:15.0.0'
     implementation 'com.google.android.gms:play-services-base:15.0.0'
+
+    // Update description library
+    implementation 'com.arjanvlek.oxygenupdater:update-data-version-formatter:1.0.0'
 
     // Update installation libraries
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'

@@ -134,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="45dp"
                 android:layout_alignTop="@+id/settingsAppUpdatesSwitch"
                 android:text="@string/settings_server_messages_new_app_version"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -152,7 +153,9 @@
                 android:id="@+id/settingsAppMessagesView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/settingsAppUpdatesView"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="45dp"
                 android:layout_alignTop="@+id/settingsAppMessagesSwitch"
                 android:text="@string/settings_server_messages_in_app"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -163,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 app:theme="@style/Theme.Oxygen.Switch"
-                android:layout_below="@id/settingsAppUpdatesSwitch"
+                android:layout_below="@id/settingsAppUpdatesView"
                 android:layout_marginTop="5dp" />
 
 
@@ -171,7 +174,7 @@
                 android:id="@+id/settingsPushNotificationsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsAppMessagesSwitch"
+                android:layout_below="@id/settingsAppMessagesView"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_push"
                 android:textColor="@color/oneplus_red"
@@ -190,6 +193,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="45dp"
                 android:layout_alignTop="@+id/settingsImportantPushNotificationsSwitch"
                 android:text="@string/settings_push_from_server"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -208,6 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="45dp"
                 android:layout_alignTop="@+id/settingsNewVersionPushNotificationsSwitch"
                 android:text="@string/settings_push_new_version"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -218,13 +223,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 app:theme="@style/Theme.Oxygen.Switch"
-                android:layout_below="@id/settingsImportantPushNotificationsSwitch"
+                android:layout_below="@id/settingsImportantPushNotificationsView"
                 android:layout_marginTop="5dp" />
 
             <TextView
                 android:id="@+id/settingsNewDevicePushNotificationsView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="45dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/settingsNewDevicePushNotificationsSwitch"
                 android:text="@string/settings_push_new_device"
@@ -236,7 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 app:theme="@style/Theme.Oxygen.Switch"
-                android:layout_below="@id/settingsNewVersionPushNotificationsSwitch"
+                android:layout_below="@id/settingsNewVersionPushNotificationsView"
                 android:layout_marginTop="5dp" />
 
             <TextView
@@ -244,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="45dp"
                 android:layout_alignTop="@+id/settingsNewsPushNotificationsSwitch"
                 android:text="@string/settings_push_news"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -254,7 +261,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 app:theme="@style/Theme.Oxygen.Switch"
-                android:layout_below="@id/settingsNewDevicePushNotificationsSwitch"
+                android:layout_below="@id/settingsNewDevicePushNotificationsView"
                 android:layout_marginTop="5dp" />
 
             <TextView
@@ -280,6 +287,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="45dp"
                 android:layout_alignTop="@+id/settingsSystemIsUpToDateSwitch"
                 android:text="@string/settings_system_hide_when_up_to_date"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -297,7 +305,7 @@
                 android:id="@+id/settingsOtherItemsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsSystemIsUpToDateSwitch"
+                android:layout_below="@id/settingsSystemIsUpToDateView"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_category_other"
                 android:textColor="@color/oneplus_red"
@@ -316,6 +324,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="45dp"
                 android:layout_alignTop="@+id/settingsUploadLogsSwitch"
                 android:text="@string/settings_upload_logs"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -334,6 +343,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginEnd="115dp"
                 android:layout_alignBaseline="@+id/settingsBuyAdFreeButton"
                 android:text="@string/settings_buy_ad_free_label"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -351,7 +361,7 @@
                 android:id="@+id/settingsDescriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsBuyAdFreeButton"
+                android:layout_below="@id/settingsBuyAdFreeLabel"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_explanation_update_methods"
                 android:textColor="@color/oneplus_red"

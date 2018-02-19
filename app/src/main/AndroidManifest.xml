@@ -40,6 +40,8 @@
             android:name=".views.MainActivity"
             android:label="@string/launcher_app_name"
             android:screenOrientation="portrait">
+            <tools:validation testUrl="https://oxygenupdater.com/inapp" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -130,7 +132,8 @@
                 android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
         </activity>
 
-        <activity android:name=".news.NewsActivity"
+        <activity
+            android:name=".news.NewsActivity"
             android:label="@string/news"
             android:parentActivityName=".views.MainActivity"
             android:screenOrientation="portrait"
@@ -182,7 +185,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".installation.automatic.VerifyInstallationReceiver" >
+        <receiver android:name=".installation.automatic.VerifyInstallationReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -195,8 +198,7 @@
         <service
             android:name=".installation.automatic.RootInstallLogger"
             android:label="@string/root_install_logger_service_name"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            />
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <meta-data
             android:name="com.google.android.gms.version"

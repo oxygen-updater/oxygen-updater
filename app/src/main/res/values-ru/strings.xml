@@ -5,53 +5,52 @@
     <string name="launcher_app_name">Oxygen Updater</string>
 
     <!-- Update information strings-->
-    <string name="update">Update</string>
-    <string name="update_information_close">Close</string>
-    <string name="update_information_description_not_available" translatable="false">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
-    <string name="update_information_file_name">File name: %1$s</string>
-    <string name="update_information_for">for</string>
-    <string name="update_information_header">Update information</string>
-    <string name="update_information_header_short">Update info</string>
-    <string name="update_information_installed_update">The latest system update is:</string>
-    <string name="update_information_last_checked_on">Last checked on: %1$s</string>
-    <string name="update_information_latest_available_update">A new system update is available:</string>
-    <string name="update_information_no_update_data_available">No update information is available.</string>
-    <string name="update_information_oxygen_os_version">Oxygen OS Version: %1$s</string>
-    <string name="update_information_system_is_up_to_date">Your system is up to date.</string>
-    <string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
-    <string name="update_information_version">&#160;version:</string>
-    <string name="update_information_view_update_information">View update information</string>
+    <string name="update">Обновить</string>
+    <string name="update_information_close">Закрыть</string>
+    <string name="update_information_file_name">Имя файла: %1$s</string>
+    <string name="update_information_for">для</string>
+    <string name="update_information_header">Обновить</string>
+    <string name="update_information_header_short">Обновить</string>
+    <string name="update_information_installed_update">Последний обновить:</string>
+    <string name="update_information_last_checked_on">Последняя проверка: %1$s</string>
+    <string name="update_information_latest_available_update">Новый обновить доступный:</string>
+    <string name="update_information_no_update_data_available">Hет обновить данные.</string>
+    <string name="update_information_oxygen_os_version">Версия Oxygen OS: %1$s</string>
+    <string name="update_information_system_is_up_to_date">система своевременно.</string>
+    <string name="update_information_unknown_update_name">Обновить для %1$s</string>
+    <string name="update_information_version">&#160;Версия:</string>
+    <string name="update_information_view_update_information">Посмотреть информацию об обновлении</string>
 
     <!-- Server status warning strings -->
-    <string name="server_status_error">Some features do not work.</string>
-    <string name="server_status_unreachable">The server can\'t be reached. Try refreshing the page.</string>
-    <string name="server_status_warning">Some features may not work properly.</string>
+    <string name="server_status_error">Hекоторые функции нарушены.</string>
+    <string name="server_status_unreachable">Oшибка сети. попробуйте перезагрузить страницу</string>
+    <string name="server_status_warning">Hекоторые функции могут не работать.</string>
 
     <!-- New app version message strings -->
-    <string name ="new_app_version">App update available! Version &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> has been released!</string>
+    <string name ="new_app_version">доступно обновление приложения: &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a></string>
 
     <!-- Date and time strings -->
-    <string name="time_at">at</string>
-    <string name="time_today">Today</string>
-    <string name="time_yesterday">Yesterday</string>
+    <string name="time_at">в</string>
+    <string name="time_today">Cегодня</string>
+    <string name="time_yesterday">Вчера</string>
 
     <!-- Downloader strings-->
-    <string name="download">Download</string>
-    <string name="downloaded">Downloaded</string>
-    <string name="downloading">Downloading…</string>
+    <string name="download">Скачать</string>
+    <string name="downloaded">Cкачанный</string>
+    <string name="downloading">Cкачивание…</string>
 
     <string name="download_already_downloaded">The update was already downloaded. It is ready to get installed.</string>
-    <string name="download_complete">Download complete</string>
-    <string name="download_complete_notification">Download complete. Tap to start the installation.</string>
+    <string name="download_complete">Скачать полный</string>
+    <string name="download_complete_notification">Скачать полный. Tap to start the installation.</string>
 
     <string name="download_description">Oxygen Updater</string>
 
-    <string name="download_error">Download Error</string>
-    <string name="download_error_close">CLOSE</string>
+    <string name="download_error">Ошибка загрузки</string>
+    <string name="download_error_close">Закрыть</string>
     <string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
     <string name="download_error_directory">It looks like there is no storage available on your device. If you have an SD card, please make sure your device is not connected to a PC and make sure the SD card is working.</string>
     <string name="download_error_network">A network error occurred while downloading the update. Please make sure your Internet connection works and try downloading it again.</string>
-    <string name="download_error_retry">RETRY</string>
+    <string name="download_error_retry">Cнова пробовать</string>
     <string name="download_error_sd_card">There is no SD card present in your device. Please insert an SD card into your device. After you have done so, try downloading the update again.</string>
     <string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
     
@@ -75,12 +74,12 @@
     <string name="download_progress_text_one_minute_remaining">%1$d%%, about a minute remaining</string>    
     <string name="download_progress_text_seconds_remaining">%1$d%%, a few seconds remaining</string>
     <string name="download_progress_text_unknown_time_remaining">%1$d%%, calculating time remaining…</string>
-    <string name="download_progress_text_verifying">100%, Verifying file…</string>
+    <string name="download_progress_text_verifying">100%, Проверка файла…</string>
 
     <string name="download_size_megabyte">%1$d MB</string>
-    <string name="download_unknown_update_name">Oxygen OS Update</string>
+    <string name="download_unknown_update_name">Обновить Oxygen OS</string>
 
-    <string name="download_verifying">Verifying…</string>
+    <string name="download_verifying">Проверка…</string>
     <string name="download_verifying_error">File is damaged</string>
     <string name="download_verifying_start">Your download will now be verified…</string>
 
@@ -89,61 +88,61 @@
     <string name="download_will_retry_soon">Your download will resume soon…</string>
 
     <!-- Settings strings-->
-    <string name="settings">Settings</string>
-    <string name="settings_buy_button_buy">Buy (%1$s)</string>
-    <string name="settings_buy_button_bought">Purchased</string>
-    <string name="settings_buy_button_not_possible">Unavailable</string>
-    <string name="settings_buy_ad_free_label">Upgrade to Ad-Free:</string>
-    <string name="settings_category_other">Other:</string>
-    <string name="settings_device">Device</string>
+    <string name="settings">Настройки</string>
+    <string name="settings_buy_button_buy">Купить (%1$s)</string>
+    <string name="settings_buy_button_bought">Купил</string>
+    <string name="settings_buy_button_not_possible">Hедоступен</string>
+    <string name="settings_buy_ad_free_label">Отключить рекламу в приложении:</string>
+    <string name="settings_category_other">Другое</string>
+    <string name="settings_device">Устройство</string>
     <string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
-    <string name="settings_explanation_incremental_full_update">An incremental update can only be installed if you were running the latest system software version before this update was released.\n\nA full update can be always be installed - regardless of the current system software version running on your device.\n\nA beta update of OxygenOS can only be installed if you are already using a beta version.</string>
-    <string name="settings_explanation_update_methods">Explanation of the update methods</string>]
-    <string name="settings_header">Choose your device and update method:</string>
+    <string name="settings_explanation_incremental_full_update">Частичное обновление системы возможно только в том случае, когда на момент выпуска апдейта у вас уже была установлена последняя версия прошивки.\n\nПолное обновление системы может быть установлено всегда, независимо от установленной на данной момент версии прошивки.\n\nБета обновление прошивки OxygenOs возможно только в том случае, когда вы уже используете Бета версии прошивки.</string>
+    <string name="settings_explanation_update_methods">Объяснение вариантов обновления</string>]
+    <string name="settings_header">Выберите ваще устройство и вариант обновления:</string>
 
-    <string name="settings_push">Send me a notification when a:</string>
-    <string name="settings_push_from_server">Critical message is available</string>
-    <string name="settings_push_new_version">System update is available</string>
-    <string name="settings_push_new_device">New device is supported</string>
-    <string name="settings_push_news">News story has been published</string>
+    <string name="settings_push">Присылать мне уведомления, когда:</string>
+    <string name="settings_push_from_server">Если какое-либо критическое предупреждение</string>
+    <string name="settings_push_new_version">Доступно обновление системы</string>
+    <string name="settings_push_new_device">Добавлена поддержка нового устройства</string>
+    <string name="settings_push_news">Была опубликована новая история ю</string>
 
-    <string name="settings_saved">Your settings are automatically saved.</string>
+    <string name="settings_saved">Ваши настройки автоматически сохраняются.</string>
     <string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
 
-    <string name="settings_server_messages">Show messages in the app when:</string>
-    <string name="settings_server_messages_in_app">There\'s news or a warning</string>
-    <string name="settings_server_messages_new_app_version">An app update is available</string>
+    <string name="settings_server_messages">Показывать сообщение в приложении, когда:</string>
+    <string name="settings_server_messages_in_app">Есть какое-либо предупреждение или новости</string>
+    <string name="settings_server_messages_new_app_version">Доступно обновление приложения</string>
 
-    <string name="settings_system_up_to_date">Hide the download button when:</string>
-    <string name="settings_system_hide_when_up_to_date">My system is up to date</string>
+    <string name="settings_system_up_to_date">Спрятать кнопку загрузки, когда:</string>
+    <string name="settings_system_hide_when_up_to_date">Система не нуждается в обновлении</string>
 
-    <string name="settings_update_method">Update method</string>
-    <string name="settings_upload_logs">Send crash logs to developer</string>
+    <string name="settings_update_method">Вариант обновления</string>
+    <string name="settings_upload_logs">Отправлять log-файлы разработчику</string>
 
     <!-- FAQ strings -->
     <string name="faq">FAQ</string>
     <string name="faq_menuitem">FAQ</string>
-    <string name="faq_no_network">No connection.</string>
+    <string name="faq_no_network">Hет соединения.</string>
     <string name="faq_no_network_text">You\'ll need a working connection to view the FAQ page.</string>
 
     <!-- First-time setup strings -->
-    <string name="setup">Welcome</string>
-    <string name="setup_close_button">start app</string>
+    <string name="setup">Добро пожаловать</string>
+    <string name="setup_close_button">начать приложение</string>
 
-    <string name="setup_page_1_title">Welcome to Oxygen Updater!</string>
-    <string name="setup_page_1_text">This app will allow you to:\n\n- Get faster access to the latest Android updates for your OxygenOS powered device\n\n- Easily update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
-    <string name="setup_page_2_title">Important notice:</string>
-    <string name="setup_page_2_text">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app. \n\nBy using this app, you agree to the terms and conditions as stated above.\n\nSwipe to the left to continue.</string>
-    <string name="setup_page_3_title">Choose your device:</string>
-    <string name="setup_page_3_text">Your device is usually already selected above. If not, select your device above.\n\nSwipe to the left to continue.</string>
-    <string name="setup_page_4_title">Choose your update method:</string>
-    <string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).\n\nSwipe to the left to continue.</string>
-    <string name="setup_page_5_title">You are ready to go!</string>
-    <string name="setup_page_5_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
+    <string name="setup_page_1_title">Добро пожаловать в Oxygen Updater!</string>
+    <string name="setup_page_1_text">Данное приложение позволит вам:\n\n- Получить мгновенный доступ к последним версиям Android для устройств под управлением OxygenOS\n\n- Легко обновить "Rooted" устройство \n\n- Просмотреть что нового в вашей установленной системе\n\n- Читать последние новости о OnePlus и OxygenOS\n\nПроведите влево, чтобы продолжить.</string>
+    <string name="setup_page_2_title">Важное замечание:</string>
+    <string name="setup_page_2_text">Данное приложение не является официальным приложением OnePlus. Вы используете данное приложение на свой страх и риск. OnePlus и разработчик данного приложения не несут ответственности за нанесение какого-либо вреда вашему устройству данным приложением. \n\nИспользуя данное приложение, вы соглашаетесь с условиями, которые указанными выше.\n\nПроведите влево, чтобы продолжить.</string>
+    <string name="setup_page_3_title">Выберите ваще устройство:</string>
+    <string name="setup_page_3_text">В большинстве случаев ваше устройство уже выбрано выше. Если нет, выберите ваще устройство выше.\n\nПроведите влево, чтобы продолжить.</string>
+    <string name="setup_page_4_title">Выберите метод обновления</string>
+    <string name="setup_page_4_text">Обычно, частичное обновление является оптимальным решением, так как оно характеризуется быстрой загрузкой меньших по объему файлов. \n\nК сожалению его нельзя использовать с "Rooted" устройствами. Если у вас "Rooted" устройство, используйте Полное обновление.\n\nЕсли вы используете бета версии прошивок, то выберите \"Community Edition\" обновления. \n\nПроведите влево, чтобы продолжить.</string>
+    <string name="setup_page_5_title">Вы готовы! </string>
+    <string name="setup_page_5_text">Наслаждайтесь использованием данного приложения!\n\nВы всегда можете изменить настройки приложения. Чтобы сделать это: Нажмите на три точки в правом верхнем углу, после нажмите на \"Настройки\".</string>
 
 
     <!-- Automatic install strings -->
-    <string name="install">Install</string>
+    <string name="install">Устанавливать</string>
     <string name="install_checking_root">Checking if your device is rooted…</string>
     <string name="install_grant_root_permissions">Please allow root access when asked.</string>
     <string name="install_going_back_not_possible">Unfortunately, you can\'t go back now</string>
@@ -230,44 +229,42 @@
     <string name="install_guide_zip_file_missing">"If you want to keep your device rooted, you'll have to specify a root package above."</string>
 
     <!-- Device information strings -->
-    <string name="device_information_amount_of_memory">Amount of RAM:</string>
-    <string name="device_information_cpu_frequency">Processor Frequency:</string>
-    <string name="device_information_device_name" translatable="false">%1$s %2$s</string>
-    <string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
-    <string name="device_information_header">Device information</string>
-    <string name="device_information_header_short">Device info</string>
-    <string name="device_information_image_description">Device image</string>
-    <string name="device_information_incremental_os_version">Incremental OS version:</string>
-    <string name="device_information_os_version">Android version:</string>
-    <string name="device_information_oxygen_os_version">OxygenOS version:</string>
+    <string name="device_information_amount_of_memory">Объем ОЗУ:</string>
+    <string name="device_information_cpu_frequency">Частота процессора:</string>
+    <string name="device_information_header">Yстройстве</string>
+    <string name="device_information_header_short">Yстройстве</string>
+    <string name="device_information_image_description">Oбраз yстройстве</string>
+    <string name="device_information_incremental_os_version">Версия Модификация OS:</string>
+    <string name="device_information_os_version">Версия Android:</string>
+    <string name="device_information_oxygen_os_version">Версия OxygenOS:</string>
     <string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
-    <string name="device_information_patch_level_version">Security patch date:</string>
-    <string name="device_information_serial_number">Serial number:</string>
-    <string name="device_information_system_on_a_chip">System on a Chip:</string>
-    <string name="device_information_unknown">unknown</string>
-    <string name="device_information_your_device">Your device: </string>
+    <string name="device_information_patch_level_version">Патч безопасности от:</string>
+    <string name="device_information_serial_number">серийный номер:</string>
+    <string name="device_information_system_on_a_chip">SoC:</string>
+    <string name="device_information_unknown">неизвестный</string>
+    <string name="device_information_your_device">вашему устройству: </string>
 
     <!-- About screen strings -->
-    <string name="about">About this app</string>
-    <string name="about_app_description">The ultimate tool for Oxygen OS updates.</string>
-    <string name="about_background_story">This app is written by Arjan Vlek.\n\nThis app is a follow-up on another app of me, called Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>). Cyanogen Update Tracker provides similar functionality for Cyanogen OS users.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and OPPO to show update information.\n\nIf you like my app, please rate it on Google play now:</string>
-    <string name="about_rate_app_button_text">Rate on Google Play</string>
-    <string name="about_version">Version: %1$s</string>
+    <string name="about">О приложении</string>
+    <string name="about_app_description">Предельно эффективный инструмент для обновления прошивок Oxygen OS.</string>
+    <string name="about_background_story">This app is written by Arjan Vlek.\n\nThis app is a follow-up on another app of me, called Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>). Cyanogen Update Tracker provides similar functionality for Cyanogen OS users.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and OPPO to show update information.\n\nIf you like my app, please rate it on Google play.\n\nRussian translation by: denisd/garry1999</string>
+    <string name="about_rate_app_button_text">Оценить в Google Play</string>
+    <string name="about_version">Версия: %1$s</string>
 
 
     <!-- LocalNotifications strings -->
     <string name="notification_new_device">New device released! The %1$s is now supported!</string>
     <string name="notification_new_device_short">Open the app to choose this device.</string>
     <string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
-    <string name="notification_version_title">System update available</string>
-    <string name="notification_version">%1$s is now available for the %2$s!</string>
+    <string name="notification_version_title">Доступно обновление</string>
+    <string name="notification_version">%1$s доступен для %2$s!</string>
     <string name="push_notification_channel_name">Push notifications</string>
     <string name="push_notification_channel_description">Displays all important notifications of the Oxygen Updater app. These include system update notifications and breaking news notifications.</string>
     <string name="progress_notification_channel_name">Progress notifications</string>
     <string name="progress_notification_channel_description">Displays all non-important notifications of the Oxygen Updater app. Contains the status indicators shown during downloading.</string>
 
     <!-- Help strings -->
-    <string name="help">Help</string>
+    <string name="help">Help (English)</string>
     <string name="help_text">Welcome to the help section of Oxygen Updater.\n\nHelp covers the following topics:\n\n• Updating your device\n• Reading the latest news\n• Viewing device information\n• Changing settings\n\nScroll down to browse through the topics.</string>
     <string name="help_updating_your_device_title">Updating your device</string>
     <string name="help_updating_your_device_text">When opening the app, you\'ll see if a system update is available. If an update is available, you can install it.\n\nTo start the installation, tap the \"Download\" button (below the update description) to start the download. When the download has finished, the installation screen pops up. If you left the app or the screen didn\'t pop up, tap the \"Install\" button, which is now shown next to the \"Download\" button.\n\nThe install screen will first check if you have a rooted device. If you have a rooted device, grant root permission when asked and choose how you want to install the update. Otherwise, follow the instructions for Manual install.\n\nAutomatic install:\nYou\'ll only have to choose your install options. The default settings are recommended, except that you have to specify the root package which needs to be (re)installed. Select a root package (zip file) using the blue folder button and tap on \"Start install\" to start the installation.\n\nManual install:\nYou\'ll see an installation guide on your screen. Write the instructions down and perform them as stated to install the update.</string>
@@ -279,53 +276,49 @@
     <string name="help_change_settings_text">You can change your settings by tapping the three dots in the top right, following a tap on Settings.\nYou can change the following settings:\n\n• Device and update method\n• Push notifications\n• In app notifications\n• Privacy settings (log uploading).\n\nUse the switches to turn notification / privacy settings on and off. Select a device and / or update method using the dropdown menus shown above the switches. Dropdown menus not visible? Check your Internet connection and open the Settings screen again.</string>
 
     <!-- News strings -->
-    <string name="news">News</string>
-    <string name="news_author">Author: %1$s</string>
-    <string name="news_date_published">Last update: %1$s</string>
-    <string name="news_empty">This article has no contents.</string>
-    <string name="news_load_error">Failed to open article. Check your connection and press the \'RETRY\' button to open the article.</string>
+    <string name="news">Новости</string>
+    <string name="news_author">автор: %1$s</string>
+    <string name="news_date_published">последнее обновление: %1$s</string>
+    <string name="news_empty">В этой статье нет содержания.</string>
+    <string name="news_load_error">Не удалось открыть статья. Нет сетевого подключения. Нажмите «Повторить» для загрузки</string>
 
     <!-- Error strings-->
-    <string name="error_app_outdated">Oh no!</string>
+    <string name="error_app_outdated">Yстаревшее приложение!</string>
     <string name="error_app_outdated_message">This version of the app is outdated. It\'s time to update it! Tap on \"Google Play\" below. Within Google Play, tap on \"Update\".</string>
-    <string name="error_app_requires_network_connection">No connection</string>
+    <string name="error_app_requires_network_connection">Нет сетевого подключени</string>
     <string name="error_app_requires_network_connection_message">Failed to connect to the server. Please make sure you have a working connection. The app will now close.</string>
-    <string name="error_button_retry">Retry</string>
-    <string name="error_exit_button_text">Exit</string>
-    <string name="error_google_play_button_text" translatable="false">Google Play</string>
-    <string name="error_no_internet_connection">No connection.</string>
-    <string name="error_maintenance">Server maintenance</string>
+    <string name="error_button_retry">Повторить попытку</string>
+    <string name="error_exit_button_text">Выход</string>
+    <string name="error_no_internet_connection">Нет сетевого подключения</string>
+    <string name="error_maintenance">Cервер находится под техническим обслуживанием</string>
     <string name="error_maintenance_message">Please wait. The server will be available very soon.</string>
     <string name="error_push_failure">Failed to enable notifications. Fully close the app, and start it again after waiting a few minutes.</string>
-    <string name="error_reload">Reload</string>
+    <string name="error_reload">Повторить попытку</string>
 
     <string name="error_unable_to_rate_app">You can\'t rate the app, because the Google Play Store is missing on your device.</string>
     
     <!-- Message strings -->
-    <string name="delete_message_title">Update already downloaded</string>
+    <string name="delete_message_title">уже загружен</string>
     <string name="delete_message_contents">You have already downloaded this update, but not yet installed it. Tap on \"Install Guide\" to view how to install this update. Tap on \"Delete\" to permanently delete the file. Press the Back button to close this message.</string>
-    <string name="delete_message_delete_button">Delete</string>
+    <string name="delete_message_delete_button">Удалить</string>
 
-    <string name="unsupported_device_warning_title">Unsupported device</string>
+    <string name="unsupported_device_warning_title">Hеподдерживаемое устройство</string>
     <string name="unsupported_device_warning_message">It looks like your device is not running Oxygen OS. Please note that you can only install system updates on devices running Oxygen OS. \n\nOther devices, including OnePlus devices running Custom ROMs, are not supported.</string>
     <string name="unsupported_device_warning_checkbox_title">Don\'t show this warning again</string>
 
-    <string name="root_check_title">Root access</string>
-    <string name="root_check_message">Oxygen Updater offers easy, automated update installations for users with a rooted devices. However, incremental updates are not available for rooted devices. Oxygen Updater can check if you have root access to only offer appropriate update methods. \n\nIf you have root access, allow Oxygen Updater to obtain root access after closing this message. \n\nNo root access? Press \"Close\" and continue using the app.</string>
+    <string name="root_check_title">доступ "Root"</string>
+    <string name="root_check_message">Некоторые варианты обновления не совместимы с "Rooted" устройствами. Oxygen Updater может проверить у вас наличие "Root" доступа и порекомендовать вам подходящий вариант обновления. \n\nЕсли у вас "Rooted" устройство, крайне желательно предоставить "Root" доступ приложению, после закрытие данного диалогового окна. \n\nНет "Root" доступа? Тогда нажмите \"Закрыть\" и продолжите пользоваться данным приложением.</string>
 
     <!-- Purchasing strings -->
     <string name="purchase_error_before_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes.</string>
     <string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
 
     <!-- Other strings-->
-    <string name="icon">Icon</string>
-    <string name="loading">Loading…</string>
-    <string name="processing">Processing…</string>
-    <string name="choose_file">Select a file</string>
-    <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
-    <string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
+    <string name="icon">значок</string>
+    <string name="loading">погрузка…</string>
+    <string name="processing">обработка…</string>
+    <string name="choose_file">выберите файл</string>
     <string name="root_install_logger_service_name">Update installation logger</string>
-    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
 
 

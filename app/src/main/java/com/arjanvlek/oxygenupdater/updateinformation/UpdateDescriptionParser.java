@@ -6,6 +6,8 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
+import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,10 +21,6 @@ public class UpdateDescriptionParser {
 
     private static final String TAG = "UpdateDescriptionParser";
     private static final String EMPTY_STRING = "";
-    private static final String NEWLINE = "\n";
-    private static final String OXYGEN_OS_BETA_IDENTIFIER_1 = "O2_Open_";
-    private static final String OXYGEN_OS_BETA_IDENTIFIER_2 = "O₂_Open_";
-    private static final String OXYGEN_OS_BETA_DISPLAY_PREFIX = "OxygenOS open beta ";
     private static final String OXYGEN_OS_VERSION_PREFIX_UPPERCASE = "OS Version: ";
     private static final String OXYGEN_OS_VERSION_PREFIX_LOWERCASE = "OS version: ";
 
@@ -86,45 +84,6 @@ public class UpdateDescriptionParser {
         }
     }
 
-    public static boolean containsHeaderLine(String updateDescription) {
-        String firstLine = getFirstLine(updateDescription);
-        return firstLine.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE) || firstLine.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE);
-    }
-
-    public static String getFirstLine(String updateDescription) {
-        if (updateDescription == null || updateDescription.isEmpty()) return EMPTY_STRING;
-
-        BufferedReader reader = new BufferedReader(new StringReader(updateDescription));
-
-        try {
-            String line = reader.readLine();
-            return line == null ? EMPTY_STRING : line;
-        } catch (IOException e) {
-            return EMPTY_STRING;
-        }
-    }
-
-    public static boolean isBeta(String updateTitle) {
-        return updateTitle != null && (updateTitle.contains(OXYGEN_OS_BETA_IDENTIFIER_1) || updateTitle.contains(OXYGEN_OS_BETA_IDENTIFIER_2));
-    }
-
-    public static String getFormattedUpdateTitle(String updateDescription) {
-        try {
-            if (isBeta(getFirstLine(updateDescription))) {
-                return OXYGEN_OS_BETA_DISPLAY_PREFIX + (updateDescription.contains(OXYGEN_OS_BETA_IDENTIFIER_1) ? updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_BETA_IDENTIFIER_1) + OXYGEN_OS_BETA_IDENTIFIER_1.length(), updateDescription.indexOf(NEWLINE)) : updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_BETA_IDENTIFIER_2) + OXYGEN_OS_BETA_IDENTIFIER_2.length(), updateDescription.indexOf(NEWLINE)));
-            } else if (updateDescription.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE)) {
-                return updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_VERSION_PREFIX_UPPERCASE) + OXYGEN_OS_VERSION_PREFIX_UPPERCASE.length(), updateDescription.indexOf(NEWLINE));
-            } else if (updateDescription.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE)) {
-                return updateDescription.substring(updateDescription.indexOf(OXYGEN_OS_VERSION_PREFIX_LOWERCASE) + OXYGEN_OS_VERSION_PREFIX_LOWERCASE.length(), updateDescription.indexOf(NEWLINE));
-            } else {
-                return updateDescription;
-            }
-        } catch (Exception e) {
-            Logger.logError(TAG, "Failed to format update title: ", e);
-            return updateDescription;
-        }
-    }
-
     public static Spanned parse(String updateDescription) {
         SpannableString result;
 
@@ -142,7 +101,9 @@ public class UpdateDescriptionParser {
                 StringBuilder modifiedLine = new StringBuilder(EMPTY_STRING);
 
                 // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
-                if(currentLine.contains(OXYGEN_OS_VERSION_PREFIX_LOWERCASE) || currentLine.contains(OXYGEN_OS_VERSION_PREFIX_UPPERCASE)) continue;
+                if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(new UpdateDataVersionInfo(null, currentLine))) {
+                    continue;
+                }
 
                 switch (element) {
                     case HEADING_3:
