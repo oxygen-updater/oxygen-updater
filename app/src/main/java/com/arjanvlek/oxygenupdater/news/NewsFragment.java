@@ -50,6 +50,7 @@ public class NewsFragment extends AbstractFragment {
 
     private static final SparseArray<Bitmap> imageCache = new SparseArray<>();
     private static final String TAG = "NewsFragment";
+    private boolean hasBeenLoadedOnce = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -60,7 +61,9 @@ public class NewsFragment extends AbstractFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        refreshNews(view, null);
+        // Load the news after up to 3 seconds to allow the update info screen to load first
+        // This way, the app feels a lot faster. Also, it doesn't affect users that much, as they will always see the update info screen first.
+        new Handler().postDelayed(() -> refreshNews(view, null), getLoadDelayMilliseconds());
 
         SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
         refreshLayout.setOnRefreshListener(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)));
@@ -313,5 +316,14 @@ public class NewsFragment extends AbstractFragment {
         SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
 
         new Handler().postDelayed(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)), 2000);
+    }
+
+    private int getLoadDelayMilliseconds() {
+        if (!hasBeenLoadedOnce) {
+            hasBeenLoadedOnce = true;
+            return 3000;
+        }
+
+        return 10;
     }
 }

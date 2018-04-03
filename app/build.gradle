@@ -14,8 +14,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 24
-        versionName "2.3.8"
+        versionCode 25
+        versionName "2.3.9"
         signingConfig signingConfigs.signingConfig
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
