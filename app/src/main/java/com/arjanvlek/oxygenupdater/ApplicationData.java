@@ -35,6 +35,7 @@ public class ApplicationData extends Application {
     public static final String PROGRESS_NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.progress";
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private Thread.UncaughtExceptionHandler defaultExceptionHandler;
 
     @Override
     public void onCreate() {
@@ -47,14 +48,21 @@ public class ApplicationData extends Application {
             SettingsManager settingsManager = new SettingsManager(this);
 
             if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true)) {
+                defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+
                 Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
                     Logger.logApplicationCrash(this, e);
-                    System.exit(2);
+                    // Pass exception through the chain, which will put up "Unfortunately, Oxygen Updater has stopped" message.
+                    if (defaultExceptionHandler != null) {
+                        defaultExceptionHandler.uncaughtException(t, e);
+                    } else {
+                        // If the default handler is unavailable, force-quit the app to prevent it getting stuck.
+                        System.exit(1);
+                    }
                 });
             }
         } catch (Exception e) {
             Logger.logError(false, TAG, "Failed to set up logger: ", e);
-            throw new RuntimeException(e);
         }
     }
 

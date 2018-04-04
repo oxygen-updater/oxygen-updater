@@ -34,18 +34,18 @@ public abstract class AbstractFragment extends Fragment {
     }
 
     public ServerConnector getServerConnector() {
-        if(applicationData == null) {
+        if (applicationData == null && getActivity() != null) {
             applicationData = (ApplicationData) getActivity().getApplication();
         }
-        return applicationData.getServerConnector();
+        return applicationData != null ? applicationData.getServerConnector() : new ServerConnector(new SettingsManager(null));
     }
 
     public SettingsManager getSettingsManager() {
-        if(applicationData == null) {
+        if (applicationData == null && getActivity() != null) {
             applicationData = (ApplicationData) getActivity().getApplication();
         }
 
-        if(settingsManager == null) {
+        if (settingsManager == null) {
             settingsManager = new SettingsManager(applicationData);
         }
 

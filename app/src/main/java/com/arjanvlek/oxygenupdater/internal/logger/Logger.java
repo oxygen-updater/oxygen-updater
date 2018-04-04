@@ -30,6 +30,7 @@ public class Logger {
         applicationData = data;
 
         try {
+            // If the application previously crashed, upload the crash log to the server.
             File errorFile = new File(data.getFilesDir(), ERROR_FILE);
             if (errorFile.exists()) {
                 StringBuilder stackTrace = new StringBuilder();
@@ -42,7 +43,7 @@ public class Logger {
                     stackTrace.append(System.getProperty("line.separator"));
                 }
 
-                uploadLog(LogLevel.CRASH, "<main>", "The application has crashed:\n\n" + stackTrace.toString());
+                uploadLog(LogLevel.CRASH, "Application", "The application has crashed:\n\n" + stackTrace.toString());
 
                 //noinspection ResultOfMethodCallIgnored
                 errorFile.delete();
@@ -60,10 +61,6 @@ public class Logger {
     public static void logVerbose(boolean uploadLog, String tag, String message) {
         if (isDebugBuild()) {
             Log.v(tag, message);
-
-            if (uploadLog) {
-                //uploadLog(LogLevel.VERBOSE, tag, message);
-            }
         }
     }
 
@@ -153,13 +150,14 @@ public class Logger {
     }
 
     public static void logApplicationCrash(Context context, Throwable cause) {
+        // Register an application crash. This will be uploaded when the app is started the next time.
         try {
             File errorFile = new File(context.getFilesDir(), ERROR_FILE);
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(errorFile));
             writer.write(stacktraceToString(cause));
             writer.flush();
-            Log.e("ApplicationData", "The application has crashed: ", cause);
+            Log.e("Application", "The application has crashed: ", cause);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -210,7 +208,7 @@ public class Logger {
             }
         }
 
-        return loggerTraces.size() > 5;
+        return loggerTraces.size() > 10;
     }
 
     private static boolean isDebugBuild() {

@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         if (mViewPager != null) {
             mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setOffscreenPageLimit(2); // Max is 2 when on Device Info or on News.
             mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {

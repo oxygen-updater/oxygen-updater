@@ -234,6 +234,7 @@ public class InstallActivity extends AppCompatActivity {
 
         ViewPager viewPager = findViewById(R.id.updateInstallationInstructionsPager);
         viewPager.setVisibility(View.VISIBLE);
+        viewPager.setOffscreenPageLimit(4); // Install guide is 5 pages max. So there can be only 4 off-screen.
         viewPager.setAdapter(new InstallGuideSectionsPagerAdapter(getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
