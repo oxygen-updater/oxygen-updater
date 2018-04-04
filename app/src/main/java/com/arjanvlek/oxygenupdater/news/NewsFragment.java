@@ -71,6 +71,10 @@ public class NewsFragment extends AbstractFragment {
 
 
     private void refreshNews(View view, Consumer<Void> callback) {
+        // If the view was suspended during the 3-second delay, stop performing any further actions.
+        if (!isAdded() || getActivity() == null) {
+            return;
+        }
         Long deviceId = getSettingsManager().getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L);
         Long updateMethodId = getSettingsManager().getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
         getServerConnector().getNews(getApplicationData(), deviceId, updateMethodId, (newsItems -> displayNewsItems(view, newsItems, callback)));
