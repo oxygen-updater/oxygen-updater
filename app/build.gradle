@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 27
         versionName "2.3.11"
         signingConfig signingConfigs.signingConfig
@@ -116,9 +116,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //General Android libraries
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support:support-v4:27.0.2'
-    implementation 'com.android.support:cardview-v7:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
 
     //JSON libraries
     implementation 'com.fasterxml.jackson.core:jackson-core:2.9.3'
@@ -129,9 +129,9 @@ dependencies {
     implementation 'org.joda:joda-convert:1.9.2'
 
     //Firebase libraries
-    implementation 'com.google.firebase:firebase-ads:11.8.0'
-    implementation 'com.google.firebase:firebase-messaging:11.8.0'
-    implementation 'com.google.android.gms:play-services-base:11.8.0'
+    implementation 'com.google.firebase:firebase-ads:15.0.0'
+    implementation 'com.google.firebase:firebase-messaging:15.0.0'
+    implementation 'com.google.android.gms:play-services-base:15.0.0'
 
     // Update installation libraries
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
@@ -144,7 +144,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.1'
-    androidTestImplementation 'com.android.support:support-annotations:27.0.2'
+    androidTestImplementation 'com.android.support:support-annotations:27.1.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.9.1'
