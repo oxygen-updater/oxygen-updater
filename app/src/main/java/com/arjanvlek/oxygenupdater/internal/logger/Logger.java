@@ -1,7 +1,12 @@
 package com.arjanvlek.oxygenupdater.internal.logger;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.PersistableBundle;
 import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
@@ -10,6 +15,9 @@ import com.arjanvlek.oxygenupdater.internal.ExceptionUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
@@ -17,14 +25,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class Logger {
 
     private static final String TAG = "Logger";
     private static final String ERROR_FILE = "error.txt";
     public static ApplicationData applicationData;
+    private static final int JOB_ID_MIN = 395819384;
+    private static final int JOB_ID_MAX = 395899384;
 
     public static void init(ApplicationData data) {
         applicationData = data;
@@ -184,13 +197,54 @@ public class Logger {
         if (applicationData != null) {
             SettingsManager settingsManager = new SettingsManager(applicationData);
 
-            if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true) && Utils.checkNetworkConnection(applicationData) && !isRecursiveCallToLogger()) {
-                Intent intent = new Intent(applicationData, LogUploadService.class);
-                intent.putExtra("event_type", logLevel.toString());
-                intent.putExtra("tag", tag);
-                intent.putExtra("message", message);
-                applicationData.startService(intent);
+            if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true) && !isRecursiveCallToLogger()) {
+                try {
+                    scheduleLogUploadTask(applicationData, buildLogUploadData(logLevel.toString(), tag, message));
+                } catch (Exception e) {
+                    // The logger should never be the cause of an application crash. Better no logging than users facing a crash!
+                    logError(false, TAG, "Failed to schedule log upload", e);
+                }
             }
+        }
+    }
+
+    private static PersistableBundle buildLogUploadData(String eventType, String tag, String message) {
+
+        PersistableBundle logData = new PersistableBundle();
+
+        logData.putString(LogUploadService.DATA_EVENT_TYPE, eventType);
+        logData.putString(LogUploadService.DATA_TAG, tag);
+        logData.putString(LogUploadService.DATA_MESSAGE, message);
+        logData.putString(LogUploadService.DATA_EVENT_DATE, LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString());
+
+        return logData;
+    }
+
+    private static void scheduleLogUploadTask(Context context, PersistableBundle logData) throws Exception {
+        Random rn = new SecureRandom();
+
+        int range = JOB_ID_MAX - JOB_ID_MIN + 1;
+        int jobId = rn.nextInt(range) + JOB_ID_MIN;
+
+        JobInfo.Builder task = new JobInfo.Builder(jobId, new ComponentName(context, LogUploadService.class))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setRequiresDeviceIdle(false)
+                .setRequiresCharging(false)
+                .setMinimumLatency(1000)
+                .setExtras(logData)
+                .setBackoffCriteria(3000, JobInfo.BACKOFF_POLICY_EXPONENTIAL);
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            task.setRequiresBatteryNotLow(false);
+            task.setRequiresStorageNotLow(false);
+        }
+
+        JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+        int resultCode = Objects.requireNonNull(scheduler).schedule(task.build());
+
+        if (resultCode != JobScheduler.RESULT_SUCCESS) {
+            logWarning(false, TAG, "Log upload not scheduled. Exit code of scheduler: " + resultCode);
         }
     }
 

@@ -193,7 +193,8 @@
 
         <service
             android:name=".internal.logger.LogUploadService"
-            android:exported="false" />
+            android:label="@string/log_uploader_service_name"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
             android:name=".installation.automatic.RootInstallLogger"

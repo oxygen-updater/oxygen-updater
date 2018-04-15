@@ -61,7 +61,6 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPLOAD_LOGS;
 
-@SuppressLint("HardwareIds")
 public class SettingsActivity extends AbstractActivity {
     private ProgressBar progressBar;
     private ProgressBar deviceProgressBar;
@@ -149,11 +148,13 @@ public class SettingsActivity extends AbstractActivity {
                 @NonNull
                 @Override
                 public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                    // Selected item
                     return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, recommendedPosition, this.getContext());
                 }
 
                 @Override
                 public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                    // Dropdown menu
                     return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, devices, recommendedPosition, this.getContext());
                 }
             };

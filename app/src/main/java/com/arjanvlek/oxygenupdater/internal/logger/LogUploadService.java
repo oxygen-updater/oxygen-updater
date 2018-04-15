@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.internal.logger;
 
-import android.app.IntentService;
-import android.content.Intent;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.os.Build;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
@@ -11,40 +11,36 @@ import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
-public class LogUploadService extends IntentService {
+public class LogUploadService extends JobService {
 
     private static final String TAG = "LogUploadService";
 
-
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     */
-    public LogUploadService() {
-        super(TAG);
-    }
+    public static final String DATA_EVENT_TYPE = "event_type";
+    public static final String DATA_TAG = "tag";
+    public static final String DATA_MESSAGE = "message";
+    public static final String DATA_EVENT_DATE = "event_date";
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        String logLevel = intent.getStringExtra("event_type");
-        String tag = intent.getStringExtra("tag");
-        String message = intent.getStringExtra("message");
+    public boolean onStartJob(JobParameters parameters) {
+        if (parameters == null || !(getApplication() instanceof ApplicationData)) {
+            return true; // Exit because the job cannot start.
+        }
 
-        ApplicationData applicationData = (ApplicationData) getApplication();
+        String logLevel = parameters.getExtras().getString(DATA_EVENT_TYPE);
+        String tag = parameters.getExtras().getString(DATA_TAG);
+        String message = parameters.getExtras().getString(DATA_MESSAGE);
+        String eventDate = parameters.getExtras().getString(DATA_EVENT_DATE);
 
-        SettingsManager settingsManager = new SettingsManager(applicationData);
-
-        ServerConnector serverConnector = applicationData.getServerConnector().clone();
-        serverConnector.setUploadLog(false);
-
-        SystemVersionProperties systemVersionProperties = applicationData.getSystemVersionProperties();
+        SettingsManager settingsManager = new SettingsManager(getApplication());
+        ServerConnector serverConnector = new ServerConnector(settingsManager, false);
+        SystemVersionProperties systemVersionProperties = new SystemVersionProperties(false);
 
         serverConnector.getDevices(false, devices -> {
             boolean deviceIsSupported = Utils.isSupportedDevice(systemVersionProperties, devices);
@@ -59,16 +55,36 @@ public class LogUploadService extends IntentService {
                 logData.put("operating_system_version", !systemVersionProperties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS) ? systemVersionProperties.getOxygenOSOTAVersion() : "Android " + Build.VERSION.RELEASE);
                 logData.put("error_message", tag + " : " + message);
                 logData.put("app_version", BuildConfig.VERSION_NAME);
-                logData.put("event_date", LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString());
+                logData.put("event_date", eventDate);
+
+
                 serverConnector.log(logData, (logResult) -> {
-                    if (logResult != null && !logResult.isSuccess()) {
+                    if (logResult == null) {
+                        Logger.logError(false, TAG, "Error uploading log to server: No response from server.");
+                        jobFinished(parameters, true); // No connection to the server. Try it again.
+                    } else if (!logResult.isSuccess()) {
                         Logger.logError(false, TAG, "Error uploading log to server:" + logResult.getErrorMessage());
+                        jobFinished(parameters, true); // Re-try to upload the log at a later time.
+                    } else {
+                        jobFinished(parameters, false); // Success
                     }
                 });
             } catch (Exception e) {
                 Logger.logError(false, TAG, "Error preparing log data for uploading to the server:", e);
+
+                if (e instanceof JSONException) {
+                    jobFinished(parameters, false); // Json-exception cannot be retried, because it will fail again.
+                } else {
+                    jobFinished(parameters, true);
+                }
             }
         });
 
+        return true;
+    }
+
+    @Override
+    public boolean onStopJob(JobParameters parameters) {
+        return true;
     }
 }

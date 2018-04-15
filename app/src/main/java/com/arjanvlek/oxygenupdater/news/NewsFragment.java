@@ -29,6 +29,7 @@ import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.RedirectingResourceStream;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
@@ -292,7 +293,7 @@ public class NewsFragment extends AbstractFragment {
 
     private Bitmap doGetImage(String imageUrl, int retryCount) {
         try {
-            InputStream in = new URL(imageUrl).openStream();
+            InputStream in = RedirectingResourceStream.getInputStream(imageUrl);
             return BitmapFactory.decodeStream(in);
         } catch (MalformedURLException e) {
             // No retry, because malformed url will never work.

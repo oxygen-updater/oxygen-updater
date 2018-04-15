@@ -80,7 +80,7 @@ public class ServerConnector implements Cloneable {
 
     private boolean uploadLog = false;
 
-    private ServerConnector(SettingsManager settingsManager, boolean uploadLog) {
+    public ServerConnector(SettingsManager settingsManager, boolean uploadLog) {
         this.uploadLog = uploadLog;
         this.settingsManager = settingsManager;
         this.objectMapper = new ObjectMapper();

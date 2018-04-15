@@ -268,7 +268,7 @@
                 android:id="@+id/settingsHideUpdateInformationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsNewsPushNotificationsSwitch"
+                android:layout_below="@id/settingsNewsPushNotificationsView"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_system_up_to_date"
                 android:textColor="@color/oneplus_red"
@@ -355,13 +355,13 @@
                 android:layout_alignParentEnd="true"
                 android:enabled="false"
                 android:text="@string/settings_buy_button_not_possible"
-                android:layout_below="@id/settingsUploadLogsSwitch" />
+                android:layout_below="@id/settingsUploadLogsTextView" />
 
             <TextView
                 android:id="@+id/settingsDescriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsBuyAdFreeLabel"
+                android:layout_below="@id/settingsBuyAdFreeButton"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_explanation_update_methods"
                 android:textColor="@color/oneplus_red"

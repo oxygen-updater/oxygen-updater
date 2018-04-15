@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         try {
             int startPage = PAGE_UPDATE_INFORMATION;
 
-            if(getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras().containsKey(INTENT_START_PAGE)) {
+            if (getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras().containsKey(INTENT_START_PAGE)) {
                 startPage = getIntent().getExtras().getInt(INTENT_START_PAGE);
             }
 
@@ -137,8 +138,10 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
         }
 
-        if (((ApplicationData) getApplication()).checkPlayServices(this, true)) {
+        if (((ApplicationData) getApplication()).checkPlayServices(this, false)) {
             MobileAds.initialize(this, "ca-app-pub-0760639008316468~7665206420");
+        } else {
+            Toast.makeText(getApplication(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
 
         // Show the welcome tutorial if the app needs to be set up.
-        if(!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)) {
+        if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)) {
             if (Utils.checkNetworkConnection(getApplicationContext())) {
                 activityLauncher.Tutorial();
             } else {
@@ -299,14 +302,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         @Override
         public CharSequence getPageTitle(int position) {
-            boolean MorHigher = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
             switch (position) {
                 case PAGE_NEWS:
                     return getString(R.string.news);
                 case PAGE_UPDATE_INFORMATION:
-                    return MorHigher ? getString(R.string.update_information_header_short) : getString(R.string.update_information_header);
+                    return getString(R.string.update_information_header_short) ;
                 case PAGE_DEVICE_INFORMATION:
-                    return MorHigher ? getString(R.string.device_information_header_short) : getString(R.string.device_information_header);
+                    return getString(R.string.device_information_header_short);
             }
             return null;
         }
@@ -322,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
          * number.
          */
         static Fragment newInstance(int sectionNumber) {
-            if(sectionNumber == PAGE_NEWS) {
+            if (sectionNumber == PAGE_NEWS) {
                 return new NewsFragment();
             }
             if (sectionNumber == PAGE_UPDATE_INFORMATION) {
@@ -339,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     // Android 6.0 Run-time permissions methods
 
     public void requestDownloadPermissions(@NonNull Consumer<Integer> callback) {
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
             this.callback = callback;
             requestPermissions(new String[]{DOWNLOAD_PERMISSION}, PERMISSION_REQUEST_CODE);
         }
@@ -349,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public void onRequestPermissionsResult(int  permsRequestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (permsRequestCode) {
             case PERMISSION_REQUEST_CODE:
-                if (this.callback != null) {
+                if (this.callback != null && grantResults.length > 0) {
                     this.callback.accept(grantResults[0]);
                 }
 
@@ -358,7 +360,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     public boolean hasDownloadPermissions() {
         //noinspection SimplifiableIfStatement Suggested fix results in code that requires API level of M or higher and is not checked against it.
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return (checkSelfPermission(DOWNLOAD_PERMISSION) == PackageManager.PERMISSION_GRANTED);
         } else {
             return true;
