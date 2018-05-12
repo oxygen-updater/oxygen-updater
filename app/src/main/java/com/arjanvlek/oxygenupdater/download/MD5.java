@@ -31,7 +31,7 @@ class MD5 {
             return false;
         }
 
-        String calculatedDigest = calculateMD5(updateFile);
+        String calculatedDigest = calculateMD5(updateFile, 0);
         if (calculatedDigest == null) {
             Logger.logError(TAG, "calculatedDigest null");
             return false;
@@ -43,7 +43,7 @@ class MD5 {
         return calculatedDigest.equalsIgnoreCase(md5);
     }
 
-    private static String calculateMD5(File updateFile) {
+    private static String calculateMD5(File updateFile, int retryCount) {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("MD5");
@@ -57,7 +57,18 @@ class MD5 {
             is = new FileInputStream(updateFile);
         } catch (FileNotFoundException e) {
             Logger.logError(TAG, "Exception while getting FileInputStream", e);
-            return null;
+
+            // If the downloaded file may not yet be accessed (because it's still being flushed or previously-existing files are being rotated, wait a bit and try verifying it again.
+            if (retryCount < 5) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException i) {
+                    Logger.logError(TAG, "Error while trying to re-verify file after 2 seconds", i);
+                }
+                return calculateMD5(updateFile, ++retryCount);
+            } else {
+                return null;
+            }
         }
 
         byte[] buffer = new byte[8192];

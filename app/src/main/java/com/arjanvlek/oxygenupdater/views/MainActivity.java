@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     private ViewPager mViewPager;
     private SettingsManager settingsManager;
     private ActivityLauncher activityLauncher;
-    private Consumer<Integer> callback;
+    private Consumer<Boolean> downloadPermissionCallback;
 
     public static final int PAGE_NEWS = 0;
     public static final int PAGE_UPDATE_INFORMATION = 1;
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
 
     // Permissions constants
-    public final static String DOWNLOAD_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
+    public final static String DOWNLOAD_FILE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
+    public final static String VERIFY_FILE_PERMISSION = "android.permission.READ_EXTERNAL_STORAGE";
     public final static int PERMISSION_REQUEST_CODE = 200;
 
     public static final String INTENT_START_PAGE = "start_page";
@@ -337,13 +339,16 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
     }
 
+    public ActivityLauncher getActivityLauncher() {
+        return this.activityLauncher;
+    }
 
-    // Android 6.0 Run-time permissions methods
+    // Android 6.0 Run-time permissions
 
-    public void requestDownloadPermissions(@NonNull Consumer<Integer> callback) {
+    public void requestDownloadPermissions(@NonNull Consumer<Boolean> callback) {
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M) {
-            this.callback = callback;
-            requestPermissions(new String[]{DOWNLOAD_PERMISSION}, PERMISSION_REQUEST_CODE);
+            this.downloadPermissionCallback = callback;
+            requestPermissions(new String[]{DOWNLOAD_FILE_PERMISSION, VERIFY_FILE_PERMISSION}, PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -351,25 +356,19 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     public void onRequestPermissionsResult(int  permsRequestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (permsRequestCode) {
             case PERMISSION_REQUEST_CODE:
-                if (this.callback != null && grantResults.length > 0) {
-                    this.callback.accept(grantResults[0]);
+                if (this.downloadPermissionCallback != null && grantResults.length > 0) {
+                    this.downloadPermissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
                 }
 
         }
     }
 
     public boolean hasDownloadPermissions() {
-        //noinspection SimplifiableIfStatement Suggested fix results in code that requires API level of M or higher and is not checked against it.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return (checkSelfPermission(DOWNLOAD_PERMISSION) == PackageManager.PERMISSION_GRANTED);
-        } else {
-            return true;
-        }
+        return ContextCompat.checkSelfPermission(getApplication(), VERIFY_FILE_PERMISSION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(getApplication(), DOWNLOAD_FILE_PERMISSION) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public ActivityLauncher getActivityLauncher() {
-        return this.activityLauncher;
-    }
+    // Android 8.0 Notification Channels
 
     private void createPushNotificationChannel() {
         if (Build.VERSION.SDK_INT < 26) {

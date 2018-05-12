@@ -816,8 +816,8 @@ public class UpdateInformationFragment extends AbstractFragment {
                 if (mainActivity.hasDownloadPermissions()) {
                     updateDownloader.downloadUpdate(updateData);
                 } else {
-                    mainActivity.requestDownloadPermissions(result -> {
-                        if (result == PackageManager.PERMISSION_GRANTED) {
+                    mainActivity.requestDownloadPermissions(granted -> {
+                        if (granted) {
                             updateDownloader.downloadUpdate(updateData);
                         }
                     });

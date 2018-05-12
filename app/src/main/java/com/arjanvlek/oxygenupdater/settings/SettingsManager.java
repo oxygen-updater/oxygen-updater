@@ -7,7 +7,10 @@ import android.preference.PreferenceManager;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class SettingsManager {
 
@@ -99,22 +102,33 @@ public class SettingsManager {
 
         try {
             SharedPreferences.Editor editor = getSharedPreferencesEditor();
-            if(editor == null) return;
 
-            // Obtain the private-access preference store from the SharedPreferences editor
-            // The preference store is placed in a private field called "mModified".
-            Field f = editor.getClass().getDeclaredField("mModified");
-            f.setAccessible(true);
+            if (editor == null) {
+                return;
+            }
 
-            //noinspection unchecked: Without unsafe operations, SharedPreferences will never have a clean-looking API to work with...
-            Map<String, Object> preferences = (Map<String, Object>) f.get(editor);
-
-            // Save the modified preference to the store
-            preferences.put(key, value);
-
-            // Place the modified preference store back in the editor
-            f.set(editor, preferences);
-
+            if (value == null) {
+                editor.putString(key, null);
+            } else if (value instanceof String) {
+                editor.putString(key, value.toString());
+            } else if (value instanceof Boolean) {
+                editor.putBoolean(key, (boolean)value);
+            } else if (value instanceof Long) {
+                editor.putLong(key, (long) value);
+            } else if (value instanceof Float) {
+                editor.putFloat(key, (float) value);
+            } else if (value instanceof Integer ) {
+                editor.putInt(key, (int) value);
+            } else if (value instanceof Collection) {
+                Collection values = (Collection) value;
+                Set<String> valuesSet = new HashSet<>();
+                for (Object item : values) {
+                    if (item != null) {
+                        valuesSet.add(item.toString());
+                    }
+                }
+                editor.putStringSet(key, valuesSet);
+            }
             // Let the editor apply the edited preferences as usual
             editor.apply();
         } catch (Exception e) {
