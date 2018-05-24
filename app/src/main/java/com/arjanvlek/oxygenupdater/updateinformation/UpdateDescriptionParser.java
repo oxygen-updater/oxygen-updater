@@ -101,7 +101,7 @@ public class UpdateDescriptionParser {
                 StringBuilder modifiedLine = new StringBuilder(EMPTY_STRING);
 
                 // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
-                if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(new UpdateDataVersionInfo(null, currentLine))) {
+                if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(new UpdateDataVersionInfo(null, currentLine)) && element == UpdateDescriptionElement.HEADING_1) {
                     continue;
                 }
 
