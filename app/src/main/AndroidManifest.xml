@@ -32,6 +32,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Oxygen">
 
+        <!-- Disable Firebase Analytics collection and Firebase Advertising ID collection as per https://firebase.google.com/support/guides/disable-analytics-->
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="true" />
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+
         <!-- All screens -->
         <meta-data
             android:name="asset_statements"
