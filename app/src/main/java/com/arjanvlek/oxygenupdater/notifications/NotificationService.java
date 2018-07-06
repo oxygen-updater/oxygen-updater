@@ -1,206 +1,76 @@
 package com.arjanvlek.oxygenupdater.notifications;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
+import android.os.PersistableBundle;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
-import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.news.NewsActivity;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
-import com.arjanvlek.oxygenupdater.views.MainActivity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.Locale;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
-import static android.app.Notification.DEFAULT_ALL;
-import static android.app.Notification.PRIORITY_HIGH;
-import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
-import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
-import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_START_WITH_AD;
-import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DEVICE_NAME;
-import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DUTCH_MESSAGE;
-import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.ENGLISH_MESSAGE;
-import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEWS_ITEM_ID;
-import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEW_DEVICE_NAME;
-import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.NEW_VERSION_NUMBER;
-import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.TYPE;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
+import java8.util.stream.StreamSupport;
+
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS;
 
 public class NotificationService extends FirebaseMessagingService {
 
-    public static final int NEW_DEVICE_NOTIFICATION_ID = 10010;
-    public static final int NEW_UPDATE_NOTIFICATION_ID = 20020;
-    public static final int GENERIC_NOTIFICATION_ID = 30030;
-    public static final int NEWS_NOTIFICATION_ID = 50050;
-    public static final int UNKNOWN_NOTIFICATION_ID = 40040;
 
+    private static final List<Integer> AVAILABLE_JOB_IDS = Arrays.asList(8326, 8327, 8328, 8329, 8330, 8331, 8332, 8333);
     public static final String TAG = "NotificationService";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         try {
-            NotificationManager notificationManager = (NotificationManager) Utils.getSystemService(this, NOTIFICATION_SERVICE);
-
-            if (notificationManager == null) {
-                Logger.applicationData = (ApplicationData) getApplication();
-                Logger.logError(TAG, "Failed to obtain notificationManager. Can not display push notification!");
-                return;
-            }
-
             SettingsManager settingsManager = new SettingsManager(getApplicationContext());
 
+            //  Receive the notification contents but build / show the actual notification with a small random delay to avoid overloading the server.
             Map<String, String> messageContents = remoteMessage.getData();
+            int displayDelayInSeconds = Utils.randomBetween(1, settingsManager.getPreference(PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800));
 
-            NotificationType notificationType = NotificationType.valueOf(messageContents.get(TYPE.toString()));
-            NotificationCompat.Builder builder = null;
+            Logger.logDebug(TAG, "Displaying push notification in " + displayDelayInSeconds + " second(s)");
 
-            switch (notificationType) {
-                case NEW_DEVICE:
-                    if (!settingsManager.getPreference(PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true)) {
-                        return;
-                    }
-                    builder = getBuilderForNewDeviceNotification(messageContents.get(NEW_DEVICE_NAME.toString()));
-                    break;
-                case NEW_VERSION:
-                    if (!settingsManager.getPreference(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true)) {
-                        return;
-                    }
-                    builder = getBuilderForNewVersionNotification(messageContents.get(DEVICE_NAME.toString()), messageContents.get(NEW_VERSION_NUMBER.toString()));
-                    break;
-                case GENERAL_NOTIFICATION:
-                    if (!settingsManager.getPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true)) {
-                        return;
-                    }
+            PersistableBundle taskData = new PersistableBundle();
 
-                    String message;
-                    switch (Locale.getDefault().getDisplayLanguage()) {
-                        case LOCALE_DUTCH:
-                            message = messageContents.get(DUTCH_MESSAGE.toString());
-                            break;
-                        default:
-                            message = messageContents.get(ENGLISH_MESSAGE.toString());
-                            break;
-                    }
-                    builder = getBuilderForGeneralServerNotificationOrNewsNotification(message);
-                    break;
-                case NEWS:
-                    if (!settingsManager.getPreference(PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true)) {
-                        return;
-                    }
+            JobScheduler scheduler = (JobScheduler) getApplication().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
-                    String newsMessage;
-                    switch (Locale.getDefault().getDisplayLanguage()) {
-                        case LOCALE_DUTCH:
-                            newsMessage = messageContents.get(DUTCH_MESSAGE.toString());
-                            break;
-                        default:
-                            newsMessage = messageContents.get(ENGLISH_MESSAGE.toString());
-                            break;
-                    }
-                    builder = getBuilderForGeneralServerNotificationOrNewsNotification(newsMessage);
-                    break;
-
-            }
-            if (builder == null) {
-                Logger.applicationData = (ApplicationData) getApplication();
-                Logger.logError(TAG, "Failed to instantiate notificationBuilder. Can not display push notification!");
+            if (scheduler == null) {
+                Logger.logError(TAG, "Job scheduler service is not available");
                 return;
             }
 
-            builder.setContentIntent(getNotificationIntent(notificationType, messageContents));
-            builder.setVisibility(Notification.VISIBILITY_PUBLIC);
-            builder.setPriority(PRIORITY_HIGH);
-            builder.setDefaults(DEFAULT_ALL);
-            builder.setAutoCancel(true);
+            Integer jobId = StreamSupport.stream(AVAILABLE_JOB_IDS)
+                    .filter(id -> StreamSupport.stream(scheduler.getAllPendingJobs()).noneMatch(ji -> ji.getId() == id))
+                    .findAny()
+                    .orElseThrow(() -> new RuntimeException("There are too many notifications scheduled. Cannot schedule a new notification!"));
 
-            int notificationId = getNotificationId(notificationType);
+            taskData.putString(DelayedPushNotificationDisplayer.KEY_NOTIFICATION_CONTENTS, new ObjectMapper().writeValueAsString(messageContents));
 
-            notificationManager.notify(notificationId, builder.build());
+            JobInfo.Builder task = new JobInfo.Builder(jobId, new ComponentName(getApplication(), DelayedPushNotificationDisplayer.class))
+                    .setRequiresDeviceIdle(false)
+                    .setRequiresCharging(false)
+                    .setMinimumLatency(displayDelayInSeconds * 1000)
+                    .setExtras(taskData);
+
+            if (Build.VERSION.SDK_INT >= 26) {
+                task.setRequiresBatteryNotLow(false);
+                task.setRequiresStorageNotLow(false);
+            }
+
+            scheduler.schedule(task.build());
         } catch (Exception e) {
             Logger.applicationData = (ApplicationData) getApplication();
-            Logger.logError(TAG, "Error displaying push notification: " + e);
+            Logger.logError(TAG, "Error dispatching push notification: " + e);
         }
-    }
-
-    private NotificationCompat.Builder getBuilderForGeneralServerNotificationOrNewsNotification(String message) {
-        return getNotificationBuilder()
-                .setSmallIcon(R.drawable.ic_stat_notification_general)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message))
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(message);
-    }
-
-    private NotificationCompat.Builder getBuilderForNewDeviceNotification(String newDeviceName) {
-        String message = getString(R.string.notification_new_device, newDeviceName);
-
-        return getNotificationBuilder()
-                .setSmallIcon(R.drawable.ic_stat_notification_new_device)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message)
-                        .setSummaryText(getString(R.string.notification_new_device_short)))
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(message);
-    }
-
-    private NotificationCompat.Builder getBuilderForNewVersionNotification(String deviceName, String versionNumber) {
-        String message = getString(R.string.notification_version, versionNumber, deviceName);
-        return getNotificationBuilder()
-                .setSmallIcon(R.drawable.ic_stat_notification_new_version)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message))
-                .setWhen(System.currentTimeMillis())
-                .setContentTitle(getString(R.string.notification_version_title))
-                .setContentText(message);
-    }
-
-    private int getNotificationId(NotificationType type) {
-        switch (type) {
-            case NEW_DEVICE:
-                return NEW_DEVICE_NOTIFICATION_ID;
-            case NEW_VERSION:
-                return NEW_UPDATE_NOTIFICATION_ID;
-            case GENERAL_NOTIFICATION:
-                return GENERIC_NOTIFICATION_ID;
-            case NEWS:
-                return NEWS_NOTIFICATION_ID;
-            default:
-                return UNKNOWN_NOTIFICATION_ID;
-        }
-    }
-
-    private NotificationCompat.Builder getNotificationBuilder() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            return new NotificationCompat.Builder(this, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID);
-        } else {
-            //noinspection deprecation - Only runs on older Android versions.
-            return new NotificationCompat.Builder(this);
-        }
-    }
-
-    private PendingIntent getNotificationIntent(NotificationType notificationType, Map<String, String> messageContents) {
-        PendingIntent contentIntent;
-
-        if (notificationType == NotificationType.NEWS) {
-            Intent newsIntent = new Intent(this, NewsActivity.class);
-            newsIntent.putExtra(INTENT_NEWS_ITEM_ID, Long.valueOf(messageContents.get(NEWS_ITEM_ID.toString())));
-            newsIntent.putExtra(INTENT_START_WITH_AD, true);
-            contentIntent = PendingIntent.getActivity(this, 0, newsIntent, 0);
-        } else {
-            contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
-        }
-
-        return contentIntent;
     }
 }

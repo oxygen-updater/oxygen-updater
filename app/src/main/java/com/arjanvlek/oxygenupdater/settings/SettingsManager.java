@@ -6,10 +6,8 @@ import android.preference.PreferenceManager;
 
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class SettingsManager {
@@ -55,6 +53,7 @@ public class SettingsManager {
 
     // Notifications properties
     public static final String PROPERTY_NOTIFICATION_TOPIC = "notification_topic";
+    public static final String PROPERTY_NOTIFICATION_DELAY_IN_SECONDS = "notification_delay_in_seconds";
 
     // IAB properties
     public static final String PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj";

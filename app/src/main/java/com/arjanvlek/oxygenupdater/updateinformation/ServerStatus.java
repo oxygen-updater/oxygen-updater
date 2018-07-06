@@ -5,20 +5,25 @@ import android.support.v4.content.ContextCompat;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.android.gms.common.util.NumberUtils;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ServerStatus implements Banner {
 
     private Status status;
     private String latestAppVersion;
     private boolean automaticInstallationEnabled;
+    private int pushNotificationDelaySeconds;
 
     public ServerStatus() {}
 
-    public ServerStatus(Status status, String latestAppVersion, boolean automaticInstallationEnabled) {
+    public ServerStatus(Status status, String latestAppVersion, boolean automaticInstallationEnabled, int pushNotificationDelaySeconds) {
         this.status = status;
         this.latestAppVersion = latestAppVersion;
         this.automaticInstallationEnabled = automaticInstallationEnabled;
+        this.pushNotificationDelaySeconds = pushNotificationDelaySeconds;
     }
 
     public Status getStatus() {
@@ -45,6 +50,17 @@ public class ServerStatus implements Banner {
     @JsonProperty("automatic_installation_enabled")
     public void setAutomaticInstallationEnabled(String automaticInstallationEnabled) {
         this.automaticInstallationEnabled = automaticInstallationEnabled != null && automaticInstallationEnabled.equals("1");
+    }
+
+    public int getPushNotificationDelaySeconds() {
+        return pushNotificationDelaySeconds;
+    }
+
+    @JsonProperty("push_notification_delay_seconds")
+    public void setPushNotificationDelaySeconds(String pushNotificationDelaySeconds) {
+        if (pushNotificationDelaySeconds != null && NumberUtils.isNumeric(pushNotificationDelaySeconds)) {
+            this.pushNotificationDelaySeconds = Integer.parseInt(pushNotificationDelaySeconds);
+        }
     }
 
     @Override

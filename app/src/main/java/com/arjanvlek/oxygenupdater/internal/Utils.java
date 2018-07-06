@@ -16,6 +16,7 @@ import org.joda.time.LocalDateTime;
 
 import java.text.DateFormat;
 import java.util.List;
+import java.util.Random;
 
 import java8.util.Optional;
 import java8.util.stream.StreamSupport;
@@ -23,6 +24,8 @@ import java8.util.stream.StreamSupport;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
 public class Utils {
+
+    private static Random random = new Random();
 
     /**
      * Converts DiP units to pixels
@@ -101,5 +104,12 @@ public class Utils {
 
     public static Object getSystemService(Context context, String serviceName) {
         return context != null ? context.getSystemService(serviceName) : null;
+    }
+
+    /**
+     * Min is inclusive and max is exclusive in this case
+     **/
+    public static int randomBetween(int min, int max) {
+        return random.nextInt(max - min) + min;
     }
 }

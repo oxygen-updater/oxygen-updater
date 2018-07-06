@@ -52,6 +52,7 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERR
 import static com.arjanvlek.oxygenupdater.ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_FILE_NAME;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_ID;
@@ -282,19 +283,22 @@ public class ServerConnector implements Cloneable {
         if(this.serverStatus == null) {
             new ObjectResponseExecutor<ServerStatus>(ServerRequest.SERVER_STATUS, (serverStatus) -> {
                 boolean automaticInstallationEnabled = false;
+                int pushNotificationsDelaySeconds = 1800;
 
                 if(settingsManager != null) {
                     automaticInstallationEnabled = settingsManager.getPreference(PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false);
+                    pushNotificationsDelaySeconds = settingsManager.getPreference(PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800);
                 }
 
                 if (serverStatus == null && online) {
-                    this.serverStatus = new ServerStatus(UNREACHABLE, BuildConfig.VERSION_NAME, automaticInstallationEnabled);
+                    this.serverStatus = new ServerStatus(UNREACHABLE, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds);
                 } else {
-                    this.serverStatus = serverStatus != null ? serverStatus : new ServerStatus(NORMAL, BuildConfig.VERSION_NAME, automaticInstallationEnabled);
+                    this.serverStatus = serverStatus != null ? serverStatus : new ServerStatus(NORMAL, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds);
                 }
 
                 if(settingsManager != null) {
                     settingsManager.savePreference(PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, this.serverStatus.isAutomaticInstallationEnabled());
+                    settingsManager.savePreference(PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, this.serverStatus.getPushNotificationDelaySeconds());
                 }
 
                 callback.accept(this.serverStatus);
