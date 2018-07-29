@@ -133,7 +133,6 @@ public class Logger {
         if (upload) uploadLog(LogLevel.WARNING, tag, message);
     }
 
-
     public static void logWarning(boolean upload, String tag, String message, Throwable cause) {
         Log.w(tag, message, cause);
         if (upload) uploadLog(LogLevel.WARNING, tag, message, cause);
@@ -159,7 +158,11 @@ public class Logger {
 
     public static void logNetworkError(boolean upload, String tag, String message) {
         Log.e(tag, message);
-        if (upload) uploadLog(LogLevel.NETWORK_ERROR, tag, message);
+
+        // Only upload network errors if there is a network connection, because otherwise we already know the cause of the error...
+        if (upload && applicationData != null && Utils.checkNetworkConnection(applicationData)) {
+            uploadLog(LogLevel.NETWORK_ERROR, tag, message);
+        }
     }
 
     public static void logApplicationCrash(Context context, Throwable cause) {
@@ -186,6 +189,11 @@ public class Logger {
 
     private static void uploadLog(LogLevel logLevel, String tag, String message, Throwable cause) {
         try {
+            // Don't upload network errors if there is no network, because then we know the cause of the error...
+            if (ExceptionUtils.isNetworkError(cause) && (applicationData == null || !Utils.checkNetworkConnection(applicationData))) {
+                return;
+            }
+
             uploadLog(ExceptionUtils.isNetworkError(cause) ? LogLevel.NETWORK_ERROR : logLevel, tag, message + ":\n\n" + stacktraceToString(cause));
         } catch (Throwable throwable) {
             logError(false, TAG, "An error has occurred, but it can't be uploaded: \n\n", cause);
@@ -252,6 +260,7 @@ public class Logger {
         VERBOSE, DEBUG, INFO, WARNING, ERROR, CRASH, NETWORK_ERROR
     }
 
+    // Breaks infinite recursion if the uploading of a log causes another log to get uploaded.
     private static boolean isRecursiveCallToLogger() {
         StackTraceElement[] traceElements = Thread.currentThread().getStackTrace();
         List<String> loggerTraces = new ArrayList<>();
