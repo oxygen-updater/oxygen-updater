@@ -135,7 +135,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:15.0.1'
 
     // Update description library
-    implementation 'com.arjanvlek.oxygenupdater:update-data-version-formatter:1.0.1'
+    implementation 'com.arjanvlek.oxygenupdater:update-data-version-formatter:1.0.3'
 
     // Update installation libraries
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'

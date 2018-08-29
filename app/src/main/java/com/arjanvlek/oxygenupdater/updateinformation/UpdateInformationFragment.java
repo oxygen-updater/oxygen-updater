@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.updateinformation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -39,7 +38,6 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2;
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
-import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionInfo;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.google.android.gms.ads.AdView;
@@ -414,10 +412,8 @@ public class UpdateInformationFragment extends AbstractFragment {
         // Display available update version number.
         TextView buildNumberView = rootView.findViewById(R.id.updateInformationBuildNumberView);
         if (updateData.getVersionNumber() != null && !updateData.getVersionNumber().equals("null")) {
-            UpdateDataVersionInfo versionInfo = new UpdateDataVersionInfo(updateData.getVersionNumber(), updateData.getDescription());
-
-            if(UpdateDataVersionFormatter.canVersionInfoBeFormatted(versionInfo)) {
-                buildNumberView.setText(UpdateDataVersionFormatter.getFormattedVersionNumber(versionInfo));
+            if(UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {
+                buildNumberView.setText(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData));
             } else {
                 buildNumberView.setText(updateData.getVersionNumber());
             }

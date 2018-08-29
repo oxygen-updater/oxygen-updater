@@ -6,8 +6,8 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.versionformatter.FormattableUpdateData;
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
-import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,8 +21,6 @@ public class UpdateDescriptionParser {
 
     private static final String TAG = "UpdateDescriptionParser";
     private static final String EMPTY_STRING = "";
-    private static final String OXYGEN_OS_VERSION_PREFIX_UPPERCASE = "OS Version: ";
-    private static final String OXYGEN_OS_VERSION_PREFIX_LOWERCASE = "OS version: ";
 
     private enum UpdateDescriptionElement {
 
@@ -101,7 +99,7 @@ public class UpdateDescriptionParser {
                 StringBuilder modifiedLine = new StringBuilder(EMPTY_STRING);
 
                 // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
-                if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(new UpdateDataVersionInfo(null, currentLine)) && element == UpdateDescriptionElement.HEADING_1) {
+                if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(new LineDetectingUpdateInfo(currentLine)) && element == UpdateDescriptionElement.HEADING_1) {
                     continue;
                 }
 
@@ -193,6 +191,26 @@ public class UpdateDescriptionParser {
         }
 
         return result;
+    }
+
+    // Special class which can be used by UpdateDataVersionFormatter lib to check if the current line contains the OS version number, since that must be excluded from the update description itself.
+    private static class LineDetectingUpdateInfo implements FormattableUpdateData {
+
+        private final String currentLine;
+
+        private LineDetectingUpdateInfo(String currentLine) {
+            this.currentLine = currentLine;
+        }
+
+        @Override
+        public String getInternalVersionNumber() {
+            return null; // not needed
+        }
+
+        @Override
+        public String getUpdateDescription() {
+            return currentLine;
+        }
     }
 
 }

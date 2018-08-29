@@ -5,11 +5,12 @@ import android.os.Parcelable;
 import android.util.SparseBooleanArray;
 
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.versionformatter.FormattableUpdateData;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UpdateData implements Parcelable {
+public class UpdateData implements Parcelable, FormattableUpdateData {
 
     private Long id;
     private String versionNumber;
@@ -190,5 +191,17 @@ public class UpdateData implements Parcelable {
         booleanValues.put(1, systemIsUpToDate);
 
         dest.writeSparseBooleanArray(booleanValues);
+    }
+
+    // Formatting library: interface FormattableUpdateData
+
+    @Override
+    public String getInternalVersionNumber() {
+        return versionNumber;
+    }
+
+    @Override
+    public String getUpdateDescription() {
+        return description;
     }
 }
