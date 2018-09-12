@@ -114,8 +114,10 @@
     <string name="settings_server_messages_in_app">There\'s news or a warning</string>
     <string name="settings_server_messages_new_app_version">An app update is available</string>
 
-    <string name="settings_system_up_to_date">Hide the download button when:</string>
-    <string name="settings_system_hide_when_up_to_date">My system is up to date</string>
+    <string name="settings_other_options">Other options:</string>
+    <string name="settings_advanced_mode">Advanced mode</string>
+    <string name="settings_advanced_mode_button_explanation">Tap this button to get more information about the advanced mode.</string>
+    <string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n- Updating from a regular version to a beta version\n- Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n- Reinstalling your current system version.</string>
 
     <string name="settings_update_method">Update method</string>
     <string name="settings_upload_logs">Send crash logs to developer</string>

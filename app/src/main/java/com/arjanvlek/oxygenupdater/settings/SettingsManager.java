@@ -24,7 +24,8 @@ public class SettingsManager {
     public static final String PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS = "receive_new_device_notifications";
     public static final String PROPERTY_SHOW_NEWS_MESSAGES = "show_news_messages";
     public static final String PROPERTY_SHOW_APP_UPDATE_MESSAGES = "show_app_update_messages";
-    public static final String PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE = "show_if_system_is_up_to_date";
+    public static final String PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE = "show_if_system_is_up_to_date"; // Used between 1.0.0 and 2.4.5. Replaced with ADVANCED_MODE but needed for migrations.
+    public static final String PROPERTY_ADVANCED_MODE = "advanced_mode";
     public static final String PROPERTY_SETUP_DONE = "setup_done";
     public static final String PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings";
     public static final String PROPERTY_DOWNLOAD_ID = "download_id";

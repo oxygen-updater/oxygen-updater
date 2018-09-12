@@ -113,8 +113,10 @@
     <string name="settings_server_messages_in_app">Есть какое-либо предупреждение или новости</string>
     <string name="settings_server_messages_new_app_version">Доступно обновление приложения</string>
 
-    <string name="settings_system_up_to_date">Спрятать кнопку загрузки, когда:</string>
-    <string name="settings_system_hide_when_up_to_date">Система не нуждается в обновлении</string>
+    <string name="settings_other_options">Other options:</string>
+    <string name="settings_advanced_mode">Advanced mode</string>
+    <string name="settings_advanced_mode_button_explanation">Tap this button to get more information about the advanced mode.</string>
+    <string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n- Updating from a regular version to a beta version\n- Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n- Reinstalling your current system version.</string>
 
     <string name="settings_update_method">Вариант обновления</string>
     <string name="settings_upload_logs">Отправлять log-файлы разработчику</string>

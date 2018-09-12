@@ -121,11 +121,11 @@ public class UpdateData implements Parcelable, FormattableUpdateData {
 
     public boolean isSystemIsUpToDateCheck(SettingsManager settingsManager) {
         //noinspection SimplifiableIfStatement
-        if(settingsManager != null && settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true)) {
-            return systemIsUpToDate;
-        } else {
+        if (settingsManager != null && settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)) {
             return false;
         }
+
+        return systemIsUpToDate;
     }
 
     public boolean isSystemIsUpToDate() {
@@ -173,8 +173,10 @@ public class UpdateData implements Parcelable, FormattableUpdateData {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if(id != null) {
+        if (id != null) {
             dest.writeLong(id);
+        } else {
+            dest.writeLong(-1L);
         }
 
         dest.writeString(versionNumber);

@@ -1,11 +1,13 @@
 package com.arjanvlek.oxygenupdater.notifications;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
@@ -146,6 +148,18 @@ public class Dialogs {
             transaction.add(dialog, "DeleteDownload");
             transaction.commitAllowingStateLoss();
         });
+    }
+
+    public static void showAdvancedModeExplanation(final Context ctx, final FragmentManager fm) {
+        if (fm == null) return;
+
+        MessageDialog dialog = new MessageDialog()
+                .setTitle(ctx.getString(R.string.settings_advanced_mode))
+                .setMessage(ctx.getString(R.string.settings_advanced_mode_explanation))
+                .setClosable(true)
+                .setPositiveButtonText(ctx.getString(R.string.update_information_close));
+
+        dialog.show(fm, "OU_AdvancedModeExplanation");
     }
 
     private static void checkPreconditions(Fragment fragment, Worker callback) {

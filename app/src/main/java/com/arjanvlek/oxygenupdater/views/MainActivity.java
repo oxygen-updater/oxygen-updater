@@ -40,10 +40,12 @@ import org.joda.time.LocalDateTime;
 
 import java8.util.function.Consumer;
 
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_ADVANCED_MODE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
 
@@ -75,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         Context context = getApplicationContext();
         settingsManager = new SettingsManager(context);
 
+        // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
+        if (settingsManager.containsPreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
+            settingsManager.savePreference(PROPERTY_ADVANCED_MODE, !settingsManager.getPreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true));
+            settingsManager.deletePreference(PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE);
+        }
+
+        // Supported device check
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             ApplicationData applicationData = ((ApplicationData) getApplication());
             applicationData.getServerConnector().getDevices(result -> {
@@ -122,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         this.activityLauncher = new ActivityLauncher(this);
 
+        // Set start page to Update Information Screen (middle page).
         try {
             int startPage = PAGE_UPDATE_INFORMATION;
 
@@ -134,18 +144,19 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
         }
 
-        if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
-            this.newsAd = new InterstitialAd(this);
-            this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-            this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
-        }
-
         if (((ApplicationData) getApplication()).checkPlayServices(this, false)) {
             MobileAds.initialize(this, "ca-app-pub-0760639008316468~7665206420");
         } else {
             Toast.makeText(getApplication(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
         }
 
+        if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
+            this.newsAd = new InterstitialAd(this);
+            this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+            this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
+        }
+
+        // Support functions for Android 8.0 "Oreo" and up.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createPushNotificationChannel();
             createProgressNotificationChannel();

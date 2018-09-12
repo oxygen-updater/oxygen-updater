@@ -28,6 +28,7 @@ import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.SetupUtils;
 import com.arjanvlek.oxygenupdater.internal.ThreeTuple;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType;
@@ -49,6 +50,7 @@ import java.util.List;
 import java8.util.function.Consumer;
 import java8.util.stream.StreamSupport;
 
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_ADVANCED_MODE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
@@ -56,7 +58,6 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECE
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPLOAD_LOGS;
@@ -114,7 +115,7 @@ public class SettingsActivity extends AbstractActivity {
                 ThreeTuple.create(R.id.settingsNewVersionPushNotificationsSwitch, PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true),
                 ThreeTuple.create(R.id.settingsNewDevicePushNotificationsSwitch, PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true),
                 ThreeTuple.create(R.id.settingsNewsPushNotificationsSwitch, PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true),
-                ThreeTuple.create(R.id.settingsSystemIsUpToDateSwitch, PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true),
+                ThreeTuple.create(R.id.settingsAdvancedModeSwitch, PROPERTY_ADVANCED_MODE, false),
                 ThreeTuple.create(R.id.settingsUploadLogsSwitch, PROPERTY_UPLOAD_LOGS, true)
         );
 
@@ -416,6 +417,14 @@ public class SettingsActivity extends AbstractActivity {
     }
 
     /**
+     * On-click handler which displays a dialog box with more info about Advanced Mode
+     * @param view Clicked view
+     */
+    public void onAdvancedModeInfoButtonClick(View view) {
+        Dialogs.showAdvancedModeExplanation(getApplication(), getSupportFragmentManager());
+    }
+
+    /**
      * Start the purchase process.
      */
     public void doPurchaseAdFree() {
@@ -551,5 +560,6 @@ public class SettingsActivity extends AbstractActivity {
             }
         });
     }
+
 
 }

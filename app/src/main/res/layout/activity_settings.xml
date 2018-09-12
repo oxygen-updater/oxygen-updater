@@ -265,12 +265,12 @@
                 android:layout_marginTop="5dp" />
 
             <TextView
-                android:id="@+id/settingsHideUpdateInformationTextView"
+                android:id="@+id/settingsOtherOptionsTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/settingsNewsPushNotificationsView"
                 android:layout_marginTop="10dp"
-                android:text="@string/settings_system_up_to_date"
+                android:text="@string/settings_other_options"
                 android:textColor="@color/oneplus_red"
                 android:textStyle="bold" />
 
@@ -278,46 +278,41 @@
                 android:id="@+id/settingsLowerDivisor"
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
-                android:layout_below="@id/settingsHideUpdateInformationTextView"
+                android:layout_below="@id/settingsOtherOptionsTextView"
 
                 android:background="@color/oneplus_red" />
 
             <TextView
-                android:id="@+id/settingsSystemIsUpToDateView"
+                android:id="@+id/settingsAdvancedModeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginEnd="45dp"
-                android:layout_alignTop="@+id/settingsSystemIsUpToDateSwitch"
-                android:text="@string/settings_system_hide_when_up_to_date"
+                android:layout_marginEnd="3dp"
+                android:layout_alignTop="@+id/settingsAdvancedModeSwitch"
+                android:text="@string/settings_advanced_mode"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
+            <ImageButton
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_info"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/settings_advanced_mode_button_explanation"
+                android:background="@android:color/transparent"
+                android:layout_toEndOf="@id/settingsAdvancedModeView"
+                android:layout_alignTop="@id/settingsAdvancedModeView"
+                android:onClick="onAdvancedModeInfoButtonClick"
+                android:padding="3dp"
+                android:layout_alignBottom="@id/settingsAdvancedModeView" />
+
             <android.support.v7.widget.SwitchCompat
-                android:id="@+id/settingsSystemIsUpToDateSwitch"
+                android:id="@+id/settingsAdvancedModeSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 app:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsLowerDivisor"
                 android:layout_marginTop="5dp" />
-
-            <TextView
-                android:id="@+id/settingsOtherItemsTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/settingsSystemIsUpToDateView"
-                android:layout_marginTop="10dp"
-                android:text="@string/settings_category_other"
-                android:textColor="@color/oneplus_red"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/settingsOtherDivisor"
-                android:layout_width="fill_parent"
-                android:layout_height="2dip"
-                android:layout_below="@id/settingsOtherItemsTextView"
-
-                android:background="@color/oneplus_red" />
 
             <TextView
                 android:id="@+id/settingsUploadLogsTextView"
@@ -335,7 +330,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 app:theme="@style/Theme.Oxygen.Switch"
-                android:layout_below="@id/settingsOtherDivisor"
+                android:layout_below="@id/settingsAdvancedModeSwitch"
                 android:layout_marginTop="5dp" />
 
             <TextView
