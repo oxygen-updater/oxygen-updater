@@ -7,7 +7,7 @@
     <!-- Update information strings-->
     <string name="update">Update</string>
     <string name="update_information_close">Close</string>
-    <string name="update_information_description_not_available" translatable="false">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
+    <string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
     <string name="update_information_file_name">File name: %1$s</string>
     <string name="update_information_for">for</string>
     <string name="update_information_header">Update information</string>
@@ -327,8 +327,8 @@
     <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
     <string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
     <string name="root_install_logger_service_name">Update installation logger</string>
-    <string name="delayed_push_notification_displayer_service_name" translatable="false">Push Notification Service</string>
-    <string name="log_uploader_service_name" translatable="false">Error reporting service</string>
+    <string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
+    <string name="log_uploader_service_name">Error reporting service</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
 

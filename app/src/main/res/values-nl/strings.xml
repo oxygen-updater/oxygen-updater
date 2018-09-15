@@ -7,7 +7,7 @@
     <!-- Update information strings-->
     <string name="update">Update</string>
     <string name="update_information_close">Sluiten</string>
-
+    <string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
     <string name="update_information_file_name">Bestandsnaam: %1$s</string>    
     <string name="update_information_for">voor</string>
     <string name="update_information_header">Update-informatie</string>
@@ -329,5 +329,7 @@
     <string name="loading">Laden…</string>
     <string name="processing">Verwerken…</string>
     <string name="choose_file">Kies een bestand</string>
+    <string name="delayed_push_notification_displayer_service_name">"Pushnotificatie-service"</string>
+    <string name="log_uploader_service_name">"Foutenrapportage-service"</string>
     <string name="root_install_logger_service_name">Logger voor update-installaties</string>
 </resources>
