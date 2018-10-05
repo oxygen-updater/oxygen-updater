@@ -47,7 +47,7 @@ public class Device {
     }
 
     private List<String> getProductNames(String productNameTemplate) {
-        List<String> productNames = Arrays.asList(productNameTemplate.trim().split(","));
+        String[] productNames = productNameTemplate.trim().split(",");
         List<String> result = new ArrayList<>();
 
         for(String productName : productNames) {
