@@ -300,6 +300,7 @@
     <string name="error_app_requires_network_connection">Geen verbinding</string>
     <string name="error_app_requires_network_connection_message">Kan geen verbinding met de server maken. Zorg ervoor dat je een werkende internetverbinding hebt. De app zal nu afsluiten.</string>
     <string name="error_button_retry">Opnieuw</string>
+    <string name="error_google_play_button_text">Google Play</string>
     <string name="error_exit_button_text">Afsluiten</string>
     <string name="error_no_internet_connection">Geen verbinding.</string>
     <string name="error_maintenance">Serveronderhoud</string>

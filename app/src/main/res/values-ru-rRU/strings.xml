@@ -362,6 +362,7 @@ Android, Google, Google Play и логотип Google Play являются за
     <string name="error_app_requires_network_connection">"Нет сетевого подключени"</string>
     <string name="error_app_requires_network_connection_message">"Не удалось подключиться к серверу. Убедитесь, что у вас работает интернет. Приложение будет закрыто."</string>
     <string name="error_button_retry">"Повторить попытку"</string>
+    <string name="error_google_play_button_text">Play Mаркет</string>
     <string name="error_exit_button_text">"Выход"</string>
     <string name="error_no_internet_connection">"Нет сетевого подключения"</string>
     <string name="error_maintenance">"Обслуживание сервера"</string>

@@ -303,7 +303,7 @@
     <string name="error_app_requires_network_connection_message">Failed to connect to the server. Please make sure you have a working connection. The app will now close.</string>
     <string name="error_button_retry">Retry</string>
     <string name="error_exit_button_text">Exit</string>
-    <string name="error_google_play_button_text" translatable="false">Google Play</string>
+    <string name="error_google_play_button_text">Google Play</string>
     <string name="error_no_internet_connection">No connection.</string>
     <string name="error_maintenance">Server maintenance</string>
     <string name="error_maintenance_message">Please wait. The server will be available very soon.</string>
