@@ -15,13 +15,13 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 36
-        versionName "2.5.0-TRANSLATION-R1"
+        versionName "2.5.0-TRANSLATION-R2"
         signingConfig signingConfigs.signingConfig
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/LICENSE.txt'
