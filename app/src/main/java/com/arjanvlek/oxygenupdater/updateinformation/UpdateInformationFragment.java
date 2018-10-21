@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.updateinformation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -30,6 +31,7 @@ import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
@@ -47,6 +49,7 @@ import org.joda.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import java8.util.Objects;
 import java8.util.function.Consumer;
@@ -108,6 +111,11 @@ public class UpdateInformationFragment extends AbstractFragment {
     private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
     private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
     private List<ServerMessageBar> serverMessageBars = new ArrayList<>();
+
+    // BEGIN: Block of code added about known download issue
+    private AtomicBoolean downloadFailurePopupShown = new AtomicBoolean(false);
+    // END: Block of code added about known download issue
+
 
     /*
       -------------- ANDROID ACTIVITY LIFECYCLE METHODS -------------------
@@ -607,8 +615,47 @@ public class UpdateInformationFragment extends AbstractFragment {
                                         break;
                                     case PAUSED_WAITING_TO_RETRY:
                                         getDownloadStatusText().setText(getString(R.string.download_will_retry_soon));
+                                        // BEGIN: Block of code added about known download issue
+                                        if (!downloadFailurePopupShown.get()) {
+                                            Logger.logWarning("UpdateInformationFragment", "Download of update failed with status PAUSED_WAITING_TO_RETRY");
+
+                                            Runnable onDownloadInBrowserClicked = () -> {
+                                                if (updateData == null || updateData.getDownloadUrl() == null || updateData.getDownloadUrl().isEmpty() || updateDownloader == null) {
+                                                    return;
+                                                }
+
+                                                updateDownloader.cancelDownload(updateData);
+
+                                                try {
+                                                    Intent i = new Intent();
+                                                    i.setAction(Intent.ACTION_VIEW);
+                                                    i.setData(Uri.parse(updateData.getDownloadUrl()));
+                                                    startActivity(i);
+                                                } catch (Exception e) {
+                                                    Logger.logError("UpdateInformationFragment", "Error retrying failed download using the browser", e);
+                                                    Toast.makeText(getApplicationData(), getApplicationData().getString(R.string.error_cannot_download_in_browser), Toast.LENGTH_LONG).show();
+                                                }
+
+                                                downloadFailurePopupShown.compareAndSet(true, false);
+                                            };
+
+                                            Runnable onDownloadInAppClicked = () -> {
+                                                if (updateData == null || updateData.getDownloadUrl() == null || updateData.getDownloadUrl().isEmpty() || updateDownloader == null) {
+                                                    return;
+                                                }
+
+                                                updateDownloader.cancelDownload(updateData);
+                                                updateDownloader.downloadUpdate(updateData);
+                                                downloadFailurePopupShown.compareAndSet(true, false);
+                                            };
+
+                                            downloadFailurePopupShown.compareAndSet(false, true);
+                                            Dialogs.showDownloadIssuesPopup(getApplicationData(), getFragmentManager(), onDownloadInBrowserClicked, onDownloadInAppClicked);
+                                        }
+                                        // END: Block of code added about known download issue
                                         break;
                                     case PAUSED_UNKNOWN:
+                                        Logger.logWarning("UpdateInformationFragment", "Download of update failed with status PAUSED_UNKNOWN");
                                         getDownloadStatusText().setText(getString(R.string.download_paused_unknown));
                                         break;
                                 }

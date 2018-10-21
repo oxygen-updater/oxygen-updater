@@ -162,6 +162,32 @@ public class Dialogs {
         dialog.show(fm, "OU_AdvancedModeExplanation");
     }
 
+    // BEGIN: Block of code added about known download issue
+    public static void showDownloadIssuesPopup(final Context ctx, final FragmentManager fm, Runnable onDownloadInBrowserClicked, Runnable onDownloadInAppClicked) {
+        if (fm == null) return;
+
+        MessageDialog dialog = new MessageDialog()
+                .setTitle(ctx.getString(R.string.error_download_issues_title))
+                .setMessage(ctx.getString(R.string.error_download_issues_explanation))
+                .setClosable(true)
+                .setPositiveButtonText(ctx.getString(R.string.download_in_browser))
+                .setNegativeButtonText(ctx.getString(R.string.download_in_app))
+                .setDialogListener(new MessageDialog.DialogListener() {
+                    @Override
+                    public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                        onDownloadInBrowserClicked.run();
+                    }
+
+                    @Override
+                    public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                        onDownloadInAppClicked.run();
+                    }
+                });
+
+        dialog.show(fm, "OU_DownloadIssuePopup");
+    }
+    // END: Block of code added about known download issue
+
     private static void checkPreconditions(Fragment fragment, Worker callback) {
         if (fragment != null && fragment.getFragmentManager() != null && fragment.isAdded() && fragment.getActivity() != null && !fragment.getActivity().isFinishing())
             callback.start();

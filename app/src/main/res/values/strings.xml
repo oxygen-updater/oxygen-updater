@@ -88,6 +88,15 @@
     <string name="download_waiting_for_wifi">Waiting for a Wi-Fi connection…</string>
     <string name="download_will_retry_soon">Your download will resume soon…</string>
 
+    <!-- 2.4.8 Temp downloading issues strings -->
+    <!-- BEGIN: Block of strings added about known download issue -->
+    <string name="error_download_issues_title" translatable="false">Download failed</string>
+    <string name="error_download_issues_explanation" translatable="false">The download has failed and needs to be restarted. Unfortunately, this seems to be an issue with the app, but the cause of it is currently not known.\n\nTherefore, it\'s recommended to download the update using your browser instead. Afterwards, use a File Manager app to move the update package file to the root of your storage location to install it.\n\nTap \"Download in browser\" to download the update via your browser, or tap \"Download via app\" to retry downloading within the app (this might fail again)</string>
+    <string name="download_in_browser" translatable="false">Download in browser</string>
+    <string name="download_in_app" translatable="false">Download in app</string>
+    <string name="error_cannot_download_in_browser" translatable="false">Cannot open your browser to download the update. Please make sure you have installed an up-to-date browser, such as Chrome or Firefox.</string>
+    <!-- END: Block of strings added about known download issue -->
+
     <!-- Settings strings-->
     <string name="settings">Settings</string>
     <string name="settings_buy_button_buy">Buy (%1$s)</string>

@@ -8,12 +8,12 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -385,6 +385,7 @@ public class UpdateDownloader {
                     LocalNotifications.showDownloadFailedNotification(context, R.string.download_error_sd_card, R.string.download_notification_error_sd_card_missing);
                     break;
                 case ERROR_CANNOT_RESUME:
+                    Logger.logWarning("UpdateDownloader", "Download of update failed with status ERROR_CANNOT_RESUME");
                     cancelDownload(updateData);
                     downloadUpdate(updateData);
                     break;
