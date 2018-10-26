@@ -28,8 +28,8 @@ allprojects {
                 password = "${nexus_password}"
             }
         }
-        jcenter()
         google()
+        jcenter()
     }
 }
 

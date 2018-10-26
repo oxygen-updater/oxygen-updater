@@ -10,8 +10,8 @@
     <string name="update_information_close">"Sulje"</string>
     <string name="update_information_file_name">"Tiedostonimi: %1$s"</string>
     <string name="update_information_for">"laitteelle"</string>
-    <string name="update_information_header">"Päivityksen informaatio"</string>
-    <string name="update_information_header_short">"Päivitys info"</string>
+    <string name="update_information_header">"Päivitys"</string>
+    <string name="update_information_header_short">"Päivitys"</string>
     <string name="update_information_installed_update">"Viimeisin päivitys on:"</string>
     <string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
     <string name="update_information_latest_available_update">"Uusi päivitys saatavilla:"</string>
@@ -264,8 +264,8 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
     <string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
-    <string name="device_information_header">"Laite informaatio"</string>
-    <string name="device_information_header_short">"Laite info"</string>
+    <string name="device_information_header">"Laitteelleni"</string>
+    <string name="device_information_header_short">"Laitteelleni"</string>
     <string name="device_information_image_description">"Laitteen kuva"</string>
     <string name="device_information_incremental_os_version">"Lisäävän päivityksen versio:"</string>
     <string name="device_information_os_version">"Android versio:"</string>

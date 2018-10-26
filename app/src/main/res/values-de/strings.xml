@@ -10,8 +10,8 @@
     <string name="update_information_close">"Schließen"</string>
     <string name="update_information_file_name">"Datei Name: %1$s"</string>
     <string name="update_information_for">"Für"</string>
-    <string name="update_information_header">"Update Information"</string>
-    <string name="update_information_header_short">"Update Info"</string>
+    <string name="update_information_header">"Aktualisieren"</string>
+    <string name="update_information_header_short">"Aktualisieren"</string>
     <string name="update_information_installed_update">"Das letzte System Update ist:"</string>
     <string name="update_information_last_checked_on">"Zuletzt aktualisiert: %1$s"</string>
     <string name="update_information_latest_available_update">"Ein neues System Update ist verfügbar:"</string>
@@ -267,8 +267,8 @@ Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrol
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">"Größe den RAM:"</string>
     <string name="device_information_cpu_frequency">"Prozessor Frequenz:"</string>
-    <string name="device_information_header">"Geräte information"</string>
-    <string name="device_information_header_short">"Geräte Info"</string>
+    <string name="device_information_header">"Mein Gerät"</string>
+    <string name="device_information_header_short">"Mein Gerät"</string>
     <string name="device_information_image_description">"Geräte Bild"</string>
     <string name="device_information_incremental_os_version">"Incremental OS version:"</string>
     <string name="device_information_os_version">"Android Version :"</string>

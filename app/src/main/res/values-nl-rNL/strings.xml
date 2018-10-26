@@ -10,8 +10,8 @@
     <string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
     <string name="update_information_file_name">Bestandsnaam: %1$s</string>    
     <string name="update_information_for">voor</string>
-    <string name="update_information_header">Update-informatie</string>
-    <string name="update_information_header_short">Update-info</string>
+    <string name="update_information_header">Updaten</string>
+    <string name="update_information_header_short">Updaten</string>
     <string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
     <string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
     <string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar:</string>
@@ -240,8 +240,8 @@
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
     <string name="device_information_cpu_frequency">Processorsnelheid:</string>
-    <string name="device_information_header">Apparaat-informatie</string>
-    <string name="device_information_header_short">Apparaat-info</string>
+    <string name="device_information_header">Mijn apparaat</string>
+    <string name="device_information_header_short">Mijn apparaat</string>
     <string name="device_information_image_description">Plaatje van jouw apparaat</string>
     <string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
     <string name="device_information_os_version">Android-versie:</string>
@@ -281,9 +281,9 @@
     <string name="help_updating_your_device_title">Je apparaat bijwerken</string>
     <string name="help_updating_your_device_text">Als je de app opent, kun je zien of er een systeemupdate beschikbaar is. Als deze beschikbaar is, kun je hem installeren.\nOm de update te installeren, tik je als eerste op de \"Download\"-knop (onder de update-omschrijving).\n\nAls het downloaden klaar is, opent het installatie-scherm. Heb je de app inmiddels verlaten of verschijnt het installatie-scherm niet? Tik dan op de \"Installatie\"-knop, die nu naast de Downloadknop staat.\n\nHet installatie-scherm zal als eerste op root-toegang controleren. Als je root-toegang hebt, moet je de app hiervoor toestemming geven. Heb je geen root-toegang of weet je niet wat dit is? Volg dan de instructies voor Handmatige Installatie.\n\nAutomatische installatie:\nJe hoeft alleen de installatie-opties te bekijken en waar nodig aan te passen. Selecteer eventueel een root-bestand om te (her)installeren en je bent er helemaal klaar voor. Tik op \"Start installatie\" om de installatie te starten.\n\nHandmatige installatie:\nEr verschijnt een installatiehandleiding op het scherm. Deze bevat de instructies voor het handmatig installeren van de update. Omdat je je apparaat tijdens het installeren moet uitschakelen, is het aanbevolen om alle instructies eerst op te schrijven, en ze vervolgens pas uit te voeren.</string>
     <string name="help_reading_news_title">Nieuwsberichten lezen</string>
-    <string name="help_reading_news_text">Nieuwsberichten worden aan de linkerkant van de update-informatie getoond. De meest recente berichten staan bovenaan de lijst. Tik op een item om het te bekijken, en tik op het pijltje naar links (of de terug-toets) om terug te keren naar het nieuwsoverzicht.</string>
+    <string name="help_reading_news_text">Nieuwsberichten worden aan de linkerkant van het update-scherm getoond. De meest recente berichten staan bovenaan de lijst. Tik op een item om het te bekijken, en tik op het pijltje naar links (of de terug-toets) om terug te keren naar het nieuwsoverzicht.</string>
     <string name="help_device_information_title">Specificaties apparaat bekijken</string>
-    <string name="help_device_information_text">Je kunt sommige specificaties van je apparaat bekijken, deze staan aan de rechterkant van de update-informatie. Dit is met name handig bij het doen van een support-aanvraag, omdat de ontwikkelaar deze gegevens meestal nodig heeft om je te helpen met het oplossen van je probleem.</string>
+    <string name="help_device_information_text">Je kunt sommige specificaties van je apparaat bekijken, deze staan aan de rechterkant van het update-scherm. Dit is met name handig bij het doen van een support-aanvraag, omdat de ontwikkelaar deze gegevens meestal nodig heeft om je te helpen met het oplossen van je probleem.</string>
     <string name="help_change_settings_title">Instellingen wijzigen</string>
     <string name="help_change_settings_text">Je kunt een aantal instellingen wijzigen door op de drie puntjes rechtsboven te tikken, en vervolgens voor Instellingen te kiezen.\nJe kunt de volgende instellingen wijzigen:\n\n• Apparaat en update-methode\n• Pushnotificaties\n• Notificaties in de app\n• Privacy-instellingen (delen van logbestanden).\n\nOm notificatie-voorkeuren en privacy-instellignen te wijzigen, zet je de schuifjes aan of uit. Om een apparaat of update-methode te kiezen, gebruik je de dropdown-menu\'s. Zijn deze velden niet zichtbaar? Controleer dan eerst je verbinding en open het Instellingen-scherm opnieuw.</string>
 

@@ -10,8 +10,8 @@
     <string name="update_information_close">"Fermer"</string>
     <string name="update_information_file_name">"Nom du fichier: %1$s"</string>
     <string name="update_information_for">"Pour"</string>
-    <string name="update_information_header">"Informations de mise à jour"</string>
-    <string name="update_information_header_short">"Informations de mise à jour"</string>
+    <string name="update_information_header">"Mise à jour"</string>
+    <string name="update_information_header_short">"Mise à jour"</string>
     <string name="update_information_installed_update">"La dernière version du système est"</string>
     <string name="update_information_last_checked_on">"Dernière vérification effectuée le: %1$s"</string>
     <string name="update_information_latest_available_update">"Une nouvelle mise à jour système est disponible"</string>
@@ -265,8 +265,8 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">"Quantité de RAM"</string>
     <string name="device_information_cpu_frequency">"Fréquence du processuer"</string>
-    <string name="device_information_header">"Information du périphérique"</string>
-    <string name="device_information_header_short">"Information du périphérique"</string>
+    <string name="device_information_header">"Mon périphérique"</string>
+    <string name="device_information_header_short">"Mon périphérique"</string>
     <string name="device_information_image_description">"Image du périphérique"</string>
     <string name="device_information_incremental_os_version">"Version incrémentale de l'OS :"</string>
     <string name="device_information_os_version">"Version d'Android :"</string>

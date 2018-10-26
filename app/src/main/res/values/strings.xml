@@ -10,8 +10,8 @@
     <string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
     <string name="update_information_file_name">File name: %1$s</string>
     <string name="update_information_for">for</string>
-    <string name="update_information_header">Update information</string>
-    <string name="update_information_header_short">Update info</string>
+    <string name="update_information_header">Update</string>
+    <string name="update_information_header_short">Update</string>
     <string name="update_information_installed_update">The latest system update is:</string>
     <string name="update_information_last_checked_on">Last checked on: %1$s</string>
     <string name="update_information_latest_available_update">A new system update is available:</string>
@@ -245,8 +245,8 @@
     <string name="device_information_cpu_frequency">Processor Frequency:</string>
     <string name="device_information_device_name" translatable="false">%1$s %2$s</string>
     <string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
-    <string name="device_information_header">Device information</string>
-    <string name="device_information_header_short">Device info</string>
+    <string name="device_information_header">My device</string>
+    <string name="device_information_header_short">My device</string>
     <string name="device_information_image_description">Device image</string>
     <string name="device_information_incremental_os_version">Incremental OS version:</string>
     <string name="device_information_os_version">Android version:</string>
@@ -261,7 +261,7 @@
     <!-- About screen strings -->
     <string name="about">About this app</string>
     <string name="about_app_description">The ultimate tool for Oxygen OS updates.</string>
-    <string name="about_background_story">This app is written by Arjan Vlek.\n\nThis app is a follow-up on another app of me, called Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>). Cyanogen Update Tracker provides similar functionality for Cyanogen OS users.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and OPPO to show update information.\n\nIf you like my app, please rate it on Google play now:</string>
+    <string name="about_background_story">This app is written by Arjan Vlek.\n\nThis app is a follow-up on another app of me, called <a href="https://cyanogenupdatetracker.com">Cyanogen Update Tracker</a>. Cyanogen Update Tracker provides similar functionality for Cyanogen OS users.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and OPPO to show update information.\n\nIf you like my app, please rate it on Google play now:</string>
     <string name="about_rate_app_button_text">Rate on Google Play</string>
     <string name="about_version">Version: %1$s</string>
 
@@ -283,9 +283,9 @@
     <string name="help_updating_your_device_title">Updating your device</string>
     <string name="help_updating_your_device_text">When opening the app, you\'ll see if a system update is available. If an update is available, you can install it.\n\nTo start the installation, tap the \"Download\" button (below the update description) to start the download. When the download has finished, the installation screen pops up. If you left the app or the screen didn\'t pop up, tap the \"Install\" button, which is now shown next to the \"Download\" button.\n\nThe install screen will first check if you have a rooted device. If you have a rooted device, grant root permission when asked and choose how you want to install the update. Otherwise, follow the instructions for Manual install.\n\nAutomatic install:\nYou\'ll only have to choose your install options. The default settings are recommended, except that you have to specify the root package which needs to be (re)installed. Select a root package (zip file) using the blue folder button and tap on \"Start install\" to start the installation.\n\nManual install:\nYou\'ll see an installation guide on your screen. Write the instructions down and perform them as stated to install the update.</string>
     <string name="help_reading_news_title">Reading the latest news</string>
-    <string name="help_reading_news_text">News is displayed to the left of the update information screen. The most recent items appear on top. Just tap on an item to read it.\nTap the back arrow or press your back key to return to the news items screen.</string>
+    <string name="help_reading_news_text">News is displayed to the left of the Update screen. The most recent items appear on top. Just tap on an item to read it.\nTap the back arrow or press your back key to return to the news items screen.</string>
     <string name="help_device_information_title">Viewing information about your device</string>
-    <string name="help_device_information_text">You may view some of the specifications of your device using the screen to the right of the update information. This comes in handy when making a support request, during which you might be asked for some of the specifications of your device.</string>
+    <string name="help_device_information_text">You may view some of the specifications of your device using the screen to the right of the Update screen. This comes in handy when making a support request, during which you might be asked for some of the specifications of your device.</string>
     <string name="help_change_settings_title">Changing settings</string>
     <string name="help_change_settings_text">You can change your settings by tapping the three dots in the top right, following a tap on Settings.\nYou can change the following settings:\n\n• Device and update method\n• Push notifications\n• In app notifications\n• Privacy settings (log uploading).\n\nUse the switches to turn notification / privacy settings on and off. Select a device and / or update method using the dropdown menus shown above the switches. Dropdown menus not visible? Check your Internet connection and open the Settings screen again.</string>
 
