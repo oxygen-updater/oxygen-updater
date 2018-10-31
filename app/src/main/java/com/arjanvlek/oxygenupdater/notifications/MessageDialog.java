@@ -3,11 +3,15 @@ package com.arjanvlek.oxygenupdater.notifications;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
+
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 /**
  * Usage: Title text, Message text, Positive button text, Negative button text.
@@ -23,8 +27,8 @@ public class MessageDialog extends DialogFragment {
 
 
     public interface DialogListener {
-        void onDialogPositiveButtonClick(DialogFragment dialogFragment);
-        void onDialogNegativeButtonClick(DialogFragment dialogFragment);
+        void onDialogPositiveButtonClick(DialogInterface dialogFragment);
+        void onDialogNegativeButtonClick(DialogInterface dialogFragment);
     }
 
     public MessageDialog setTitle(String title) {
@@ -69,7 +73,7 @@ public class MessageDialog extends DialogFragment {
         if(negativeButtonText != null) {
             builder.setNegativeButton(negativeButtonText, (dialog, which) -> {
                 if (dialogListener != null) {
-                    dialogListener.onDialogNegativeButtonClick(MessageDialog.this);
+                    dialogListener.onDialogNegativeButtonClick(dialog);
                 }
                 dismiss();
             });
@@ -77,7 +81,7 @@ public class MessageDialog extends DialogFragment {
         if(positiveButtonText != null) {
             builder.setPositiveButton(positiveButtonText, (dialog, which) -> {
                 if (dialogListener != null) {
-                    dialogListener.onDialogPositiveButtonClick(MessageDialog.this);
+                    dialogListener.onDialogPositiveButtonClick(dialog);
                 }
                 dismiss();
             });
@@ -93,6 +97,19 @@ public class MessageDialog extends DialogFragment {
         }
         return builder.create();
 
+    }
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        try {
+            super.show(manager, tag);
+        } catch (IllegalStateException e) {
+            if (e.getMessage() != null && e.getMessage().contains("onSaveInstanceState")) {
+                Logger.logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
+            } else {
+                Logger.logError("MessageDialog", "Error when displaying dialog '" + tag + "'", e);
+            }
+        }
     }
 
     @Override

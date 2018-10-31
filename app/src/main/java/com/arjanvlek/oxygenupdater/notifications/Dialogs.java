@@ -2,10 +2,10 @@ package com.arjanvlek.oxygenupdater.notifications;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.StringRes;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +15,7 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.internal.Worker;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 
 import java8.util.function.Consumer;
@@ -45,21 +46,30 @@ public class Dialogs {
                     .setClosable(true)
                     .setDialogListener(new MessageDialog.DialogListener() {
                         @Override
-                        public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                        public void onDialogPositiveButtonClick(DialogInterface dialogFragment) {
                             LocalNotifications.hideDownloadCompleteNotification(fragment.getActivity());
                         }
 
                         @Override
-                        public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                        public void onDialogNegativeButtonClick(DialogInterface dialogFragment) {
                             LocalNotifications.hideDownloadCompleteNotification(fragment.getActivity());
                             updateDownloader.cancelDownload(updateData);
                             updateDownloader.downloadUpdate(updateData);
                         }
                     });
-            errorDialog.setTargetFragment(fragment, 0);
-            FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.add(errorDialog, "DownloadError");
-            transaction.commitAllowingStateLoss();
+
+            try {
+                errorDialog.setTargetFragment(fragment, 0);
+                FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(errorDialog, "DownloadError");
+                transaction.commitAllowingStateLoss();
+            } catch (IllegalStateException e) {
+                if (e.getMessage() != null && e.getMessage().contains("onSaveInstanceState")) {
+                    Logger.logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
+                } else {
+                    Logger.logError("MessageDialog", "Error when displaying dialog 'DownloadError'", e);
+                }
+            }
         });
     }
 
@@ -97,7 +107,7 @@ public class Dialogs {
                     .setClosable(false)
                     .setDialogListener(new MessageDialog.DialogListener() {
                         @Override
-                        public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                        public void onDialogPositiveButtonClick(DialogInterface dialogFragment) {
                             try {
                                 final String appPackageName = BuildConfig.APPLICATION_ID;
                                 try {
@@ -111,7 +121,7 @@ public class Dialogs {
                         }
 
                         @Override
-                        public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                        public void onDialogNegativeButtonClick(DialogInterface dialogFragment) {
 
                         }
                     });
@@ -130,7 +140,7 @@ public class Dialogs {
                     .setNegativeButtonText(fragment.getString(R.string.delete_message_delete_button))
                     .setDialogListener(new MessageDialog.DialogListener() {
                         @Override
-                        public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                        public void onDialogPositiveButtonClick(DialogInterface dialogInterface) {
                             if (fragment.getActivity() == null || fragment.getActivity().getApplication() == null)
                                 return;
 
@@ -139,14 +149,23 @@ public class Dialogs {
                         }
 
                         @Override
-                        public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                        public void onDialogNegativeButtonClick(DialogInterface dialogFragment) {
                             actionPerformedCallback.accept(null);
                         }
                     });
-            dialog.setTargetFragment(fragment, 0);
-            FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.add(dialog, "DeleteDownload");
-            transaction.commitAllowingStateLoss();
+
+            try {
+                dialog.setTargetFragment(fragment, 0);
+                FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(dialog, "DeleteDownload");
+                transaction.commitAllowingStateLoss();
+            } catch (IllegalStateException e) {
+                if (e.getMessage() != null && e.getMessage().contains("onSaveInstanceState")) {
+                    Logger.logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
+                } else {
+                    Logger.logError("MessageDialog", "Error when displaying dialog 'DeleteDownload'", e);
+                }
+            }
         });
     }
 
@@ -174,12 +193,12 @@ public class Dialogs {
                 .setNegativeButtonText(ctx.getString(R.string.download_in_app))
                 .setDialogListener(new MessageDialog.DialogListener() {
                     @Override
-                    public void onDialogPositiveButtonClick(DialogFragment dialogFragment) {
+                    public void onDialogPositiveButtonClick(DialogInterface dialogFragment) {
                         onDownloadInBrowserClicked.run();
                     }
 
                     @Override
-                    public void onDialogNegativeButtonClick(DialogFragment dialogFragment) {
+                    public void onDialogNegativeButtonClick(DialogInterface dialogFragment) {
                         onDownloadInAppClicked.run();
                     }
                 });

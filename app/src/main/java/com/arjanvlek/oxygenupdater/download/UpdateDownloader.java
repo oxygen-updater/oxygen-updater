@@ -336,12 +336,22 @@ public class UpdateDownloader {
             if (updateData == null || updateData.getMD5Sum() == null) return true;
 
             File file = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename());
+
+            if (!file.exists()) return null;
+
             return MD5.checkMD5(updateData.getMD5Sum(), file);
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             isVerifying = false;
+
+            // When the file has been moved away outside the app don't show the install guide.
+            if (result == null) {
+                LocalNotifications.hideVerifyingNotification(context);
+                clearUp();
+                return;
+            }
 
             if (result) {
                 if(listener != null) listener.onVerifyComplete();

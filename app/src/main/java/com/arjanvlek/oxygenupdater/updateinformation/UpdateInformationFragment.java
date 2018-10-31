@@ -761,6 +761,10 @@ public class UpdateInformationFragment extends AbstractFragment {
     }
 
     private DownloadStatus getDownloadStatus(UpdateDownloader updateDownloader, UpdateData updateData) {
+        if (updateDownloader == null) {
+            return DownloadStatus.NOT_DOWNLOADING;
+        }
+
         if(updateDownloader.checkIfUpdateIsDownloaded(updateData)) {
             return DownloadStatus.DOWNLOADED;
         } else if(updateDownloader.checkIfAnUpdateIsBeingVerified()) {
