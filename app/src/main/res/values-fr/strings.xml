@@ -282,8 +282,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
     <string name="about">"A propos de l'app"</string>
     <string name="about_app_description">"L'outil ultime pour les mises à jour d'Oxygen OS"</string>
     <string name="about_background_story">"Cette application est écrite par Arjan Vlek.
-
-        Elle est à la suite d\'une autre de mes applications appelée Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>) qui donne des fonctionnalités similaires aux utilisateurs de Cyanogen OS.
+Elle est à la suite d\'une autre de mes applications appelée <a href="https://cyanogenupdatetracker.com">Cyanogen Update Tracker</a> qui donne des fonctionnalités similaires aux utilisateurs de Cyanogen OS.
 
 
 Veuillez noter que cette application n\'est pas une application officielle de OnePlus.

@@ -264,8 +264,8 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
     <string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
-    <string name="device_information_header">"Laitteelleni"</string>
-    <string name="device_information_header_short">"Laitteelleni"</string>
+    <string name="device_information_header">"Laitteeni"</string>
+    <string name="device_information_header_short">"Laitteeni"</string>
     <string name="device_information_image_description">"Laitteen kuva"</string>
     <string name="device_information_incremental_os_version">"Lisäävän päivityksen versio:"</string>
     <string name="device_information_os_version">"Android versio:"</string>
