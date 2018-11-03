@@ -32,6 +32,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Oxygen">
 
+        <!-- Fix Google Ads crashing when app targets API 28 or up as per https://developers.google.com/maps/documentation/android-sdk/config#specify_requirement_for_apache_http_legacy_library -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <!-- Disable Firebase Analytics collection and Firebase Advertising ID collection as per https://firebase.google.com/support/guides/disable-analytics-->
         <meta-data
             android:name="firebase_analytics_collection_deactivated"
@@ -40,11 +45,11 @@
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
 
-        <!-- All screens -->
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
 
+        <!-- All screens -->
         <activity
             android:name=".views.MainActivity"
             android:label="@string/launcher_app_name"
@@ -193,6 +198,8 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <!-- Receiver to check auto update installation status at device startup -->
 
         <receiver android:name=".installation.automatic.VerifyInstallationReceiver">
             <intent-filter>
