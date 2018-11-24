@@ -20,14 +20,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {
-            url "https://nexus.arjanvlek.nl/repository/maven-public/"
-            name "Private Nexus"
-            credentials {
-                username = "${nexus_username}"
-                password = "${nexus_password}"
-            }
-        }
         google()
         jcenter()
     }

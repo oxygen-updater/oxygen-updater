@@ -61,6 +61,20 @@ android {
             debuggable true
             signingConfig signingConfigs.signingConfig
         }
+        localDebug { // Config for use during debugging locally on an emulator. Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device / emulator.
+            buildConfigField "String", "SERVER_BASE_URL", "\"http://10.0.2.2:8000/api/v2.3/\""
+            buildConfigField "String", "FAQ_SERVER_URL", "\"http://10.0.2.2:8000/inappfaq\""
+            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
+            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
+            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
+            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
+            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During debugging, all devices are supported.
+            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
+
+            debuggable true
+            signingConfig signingConfigs.signingConfig
+        }
         screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
             buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.3/\""
             buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\""
@@ -133,9 +147,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-ads:15.0.1'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
     implementation 'com.google.android.gms:play-services-base:15.0.1'
-
-    // Update description library
-    implementation 'com.arjanvlek.oxygenupdater:update-data-version-formatter:1.0.3'
 
     // Update installation libraries
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
