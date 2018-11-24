@@ -13,3 +13,4 @@ See `CONTRIBUTING.md`.
 
 ## References to oxygenupdater.com/api (server side)
 The app communicates with server code, of which sources are available at https://github.com/arjanvlek/oxygen-updater-backend
+If you want to run the app with this backend locally hosted (e.g. via Docker), please use the `localDebug` build variant.
