@@ -8,3 +8,4 @@
 Release*
 *.apk
 app/keyStore.jks
+/keystore.properties
