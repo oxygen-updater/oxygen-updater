@@ -1,12 +1,16 @@
 apply plugin: 'com.android.application'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     signingConfigs {
         signingConfig {
-            keyAlias 'androidappskey'
-            keyPassword 'Stoomtrein1'
-            storeFile file('keyStore.jks')
-            storePassword 'Stoomtrein1'
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
         }
     }
 
@@ -14,8 +18,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 38
-        versionName "2.5.1"
+        versionCode 39
+        versionName "2.5.2"
         signingConfig signingConfigs.signingConfig
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
