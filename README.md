@@ -32,7 +32,7 @@ The app can be run within the emulator but is limited to no-root features only.
 To test automatic update installations and other root features, you'll need to run it on a rooted device.
 
 ## Contributing
-See `CONTRIBUTING.md`.
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 ## References to oxygenupdater.com/api (server side)
 The app communicates with server code, of which sources are available at https://github.com/arjanvlek/oxygen-updater-backend
