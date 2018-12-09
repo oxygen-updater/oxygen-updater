@@ -12,12 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.google.android.gms.ads.InterstitialAd;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewsActivity extends AppCompatActivity {
 
@@ -99,9 +103,13 @@ public class NewsActivity extends AppCompatActivity {
 
             if (newsContents.isEmpty()) {
                 newsContents = getString(R.string.news_empty);
+                contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
+            } else {
+                String newsLanguage = locale == Locale.NL ? "NL" : "EN";
+                String newsContentUrl = BuildConfig.SERVER_BASE_URL + "/news-content/" + newsItem.getId() + "/" + newsLanguage;
+                contentView.getSettings().setUserAgentString(ApplicationData.APP_USER_AGENT);
+                contentView.loadUrl(newsContentUrl);
             }
-
-            contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
 
             // Display the name of the author of the article
             TextView authorView = findViewById(R.id.newsAuthor);
