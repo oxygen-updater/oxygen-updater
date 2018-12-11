@@ -264,7 +264,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">"Quantité de RAM"</string>
-    <string name="device_information_cpu_frequency">"Fréquence du processuer"</string>
+    <string name="device_information_cpu_frequency">"Fréquence du processeur"</string>
     <string name="device_information_header">"Mon périphérique"</string>
     <string name="device_information_header_short">"Mon périphérique"</string>
     <string name="device_information_image_description">"Image du périphérique"</string>
