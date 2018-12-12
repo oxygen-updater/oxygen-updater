@@ -97,7 +97,7 @@ public class Utils {
                 return formattedDate + " " + context.getString(R.string.time_at) + " " + formattedTime;
             }
         } catch (Exception e) {
-            Logger.logError("DateTimeFormatter", "Unable to parse date: ", e);
+            Logger.logError("DateTimeFormatter", String.format("Unable to parse date from input '%s'", dateTimeString), e);
             return dateTimeString;
         }
     }

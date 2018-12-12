@@ -70,7 +70,7 @@ public class LocalNotifications {
             manager.cancel(VERIFYING_NOTIFICATION_ID);
             manager.notify(DOWNLOADING_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't display downloading notification: ", e);
+            Logger.logError(TAG, "Can't display 'downloading' notification", e);
         }
     }
 
@@ -109,7 +109,7 @@ public class LocalNotifications {
             NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.notify(DOWNLOADING_NOTIFICATION_ID, builder.build()); // Same as downloading so we can't have both a downloading and paused notification.
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't display downloading notification: ", e);
+            Logger.logError(TAG, "Can't display 'download paused' notification", e);
         }
     }
 
@@ -149,7 +149,7 @@ public class LocalNotifications {
             manager.cancel(VERIFYING_NOTIFICATION_ID);
             manager.notify(DOWNLOAD_COMPLETE_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't display download complete notification: ", e);
+            Logger.logError(TAG, "Can't display 'download complete' notification", e);
         }
     }
 
@@ -184,7 +184,7 @@ public class LocalNotifications {
             NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.notify(CONTRIBUTE_SUCCESFUL_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't display successful contribution notification: ", e);
+            Logger.logError(TAG, "Can't display 'successful contribution' notification", e);
         }
     }
 
@@ -198,7 +198,7 @@ public class LocalNotifications {
             manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
             manager.cancel(VERIFYING_NOTIFICATION_ID);
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't hide downloading notification: ", e);
+            Logger.logError(TAG, "Can't hide 'downloading' notification", e);
         }
     }
 
@@ -210,7 +210,7 @@ public class LocalNotifications {
             NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't hide download complete notification: ", e);
+            Logger.logError(TAG, "Can't hide 'download complete' notification", e);
         }
     }
 
@@ -284,7 +284,7 @@ public class LocalNotifications {
             manager.cancel(DOWNLOAD_FAILED_NOTIFICATION_ID);
             manager.notify(VERIFYING_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't display verifying (ongoing: " + ongoing + ", error: " + error + ") notification: ", e);
+            Logger.logError(TAG, "Can't display 'verifying' (still going: " + ongoing + ", verification failed: " + error + ") notification", e);
         }
     }
 
@@ -296,7 +296,7 @@ public class LocalNotifications {
             NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
             manager.cancel(VERIFYING_NOTIFICATION_ID);
         } catch(Exception e) {
-            Logger.logError(TAG, "Can't hide verifying notification: ", e);
+            Logger.logError(TAG, "Can't hide 'verifying' notification", e);
         }
     }
 }

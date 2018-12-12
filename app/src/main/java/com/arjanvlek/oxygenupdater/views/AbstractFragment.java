@@ -25,7 +25,7 @@ public abstract class AbstractFragment extends Fragment {
             try {
                 applicationData = (ApplicationData) getActivity().getApplication();
             } catch (Exception e) {
-                Logger.logError("AbstractFragment", "FAILED to get application data: ", e);
+                Logger.logError("AbstractFragment", "FAILED to get Application instance", e);
                 // Return empty application data which can still be used for SystemVersionProperties and to check for root access.
                 applicationData = new ApplicationData();
             }

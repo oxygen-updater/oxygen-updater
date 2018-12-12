@@ -36,7 +36,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
             if (settingsManager.getPreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false) && intent.getAction() != null && intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
                 settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
 
-                SystemVersionProperties properties = new SystemVersionProperties(false);
+                SystemVersionProperties properties = new SystemVersionProperties();
 
                 // Don't check on unsupported devices.
                 if (properties.getOxygenOSVersion().equals(NO_OXYGEN_OS) || properties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS)) {
@@ -63,7 +63,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
             }
 
         } catch (Throwable e) {
-            Logger.logError(false, TAG, "Failed to check if update was successfully installed: ", e);
+            Logger.logError(TAG, "Failed to check if update was successfully installed", e);
         }
     }
 

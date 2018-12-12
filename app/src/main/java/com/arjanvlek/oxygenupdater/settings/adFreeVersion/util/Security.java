@@ -20,6 +20,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -59,7 +60,7 @@ public class Security {
     public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) {
         if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey) ||
                 TextUtils.isEmpty(signature)) {
-            Log.e(TAG, "Purchase verification failed: missing data.");
+            Logger.logError(TAG, "Purchase verification failed: missing data.");
             return BuildConfig.DEBUG; // Line modified (https://stackoverflow.com/questions/14600664/android-in-app-purchase-signature-verification-failed). Was: return false.
         }
 
@@ -82,7 +83,7 @@ public class Security {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         } catch (InvalidKeySpecException e) {
-            Log.e(TAG, "Invalid key specification.");
+            Logger.logError(TAG, "Invalid key specification.");
             throw new IllegalArgumentException(e);
         }
     }
@@ -101,7 +102,7 @@ public class Security {
         try {
             signatureBytes = Base64.decode(signature, Base64.DEFAULT);
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Base64 decoding failed.");
+            Logger.logError(TAG, "Base64 decoding failed.");
             return false;
         }
         try {
@@ -109,16 +110,16 @@ public class Security {
             sig.initVerify(publicKey);
             sig.update(signedData.getBytes());
             if (!sig.verify(signatureBytes)) {
-                Log.e(TAG, "Signature verification failed.");
+                Logger.logError(TAG, "Signature verification failed.");
                 return false;
             }
             return true;
         } catch (NoSuchAlgorithmException e) {
-            Log.e(TAG, "NoSuchAlgorithmException.");
+            Logger.logError(TAG, "NoSuchAlgorithmException.");
         } catch (InvalidKeyException e) {
-            Log.e(TAG, "Invalid key specification.");
+            Logger.logError(TAG, "Invalid key specification.");
         } catch (SignatureException e) {
-            Log.e(TAG, "Signature exception.");
+            Logger.logError(TAG, "Signature exception.");
         }
         return false;
     }

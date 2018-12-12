@@ -41,6 +41,7 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.SkuDetails;
 import com.arjanvlek.oxygenupdater.views.AbstractActivity;
 import com.arjanvlek.oxygenupdater.views.CustomDropdown;
+import com.crashlytics.android.Crashlytics;
 
 import org.joda.time.LocalDateTime;
 
@@ -53,6 +54,7 @@ import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_ADVANCED_MODE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS;
@@ -60,8 +62,9 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECE
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPLOAD_LOGS;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS;
 
 public class SettingsActivity extends AbstractActivity {
     private ProgressBar progressBar;
@@ -117,7 +120,7 @@ public class SettingsActivity extends AbstractActivity {
                 ThreeTuple.create(R.id.settingsNewDevicePushNotificationsSwitch, PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true),
                 ThreeTuple.create(R.id.settingsNewsPushNotificationsSwitch, PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true),
                 ThreeTuple.create(R.id.settingsAdvancedModeSwitch, PROPERTY_ADVANCED_MODE, false),
-                ThreeTuple.create(R.id.settingsUploadLogsSwitch, PROPERTY_UPLOAD_LOGS, true)
+                ThreeTuple.create(R.id.settingsUploadLogsSwitch, PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
         );
 
         StreamSupport.stream(switchesAndSettingsItemsAndDefaultValues).forEach(tuple -> {
@@ -171,7 +174,7 @@ public class SettingsActivity extends AbstractActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     Device device = (Device) adapterView.getItemAtPosition(i);
-                    settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.getName());
+                    settingsManager.savePreference(PROPERTY_DEVICE, device.getName());
                     settingsManager.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.getId());
 
                     updateMethodsProgressBar.setVisibility(View.VISIBLE);
@@ -232,7 +235,10 @@ public class SettingsActivity extends AbstractActivity {
                     UpdateMethod updateMethod = (UpdateMethod) adapterView.getItemAtPosition(i);
 
                     settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
-                    settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
+                    settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
+
+                    Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"));
+
 
                     // Google Play services are not required if the user doesn't notifications
                     if (getApplicationData().checkPlayServices(getParent(), false)) {

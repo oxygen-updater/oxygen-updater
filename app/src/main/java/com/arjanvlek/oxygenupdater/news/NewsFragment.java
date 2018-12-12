@@ -93,7 +93,7 @@ public class NewsFragment extends AbstractFragment {
         ListView newsContainer = view.findViewById(R.id.newsContainer);
 
         if (!isAdded()) {
-            Logger.logError(false, TAG, "isAdded() returned false (displayNewsItems)");
+            Logger.logError(TAG, "isAdded() returned false (displayNewsItems)");
             return;
         }
 
@@ -304,9 +304,9 @@ public class NewsFragment extends AbstractFragment {
                 return doGetImage(imageUrl, retryCount + 1);
             } else {
                 if (ExceptionUtils.isNetworkError(e)) {
-                    Logger.logNetworkError(true, TAG, String.format("Error obtaining news image from <%s>.", imageUrl));
+                    Logger.logNetworkError(TAG, String.format("Error obtaining news image from <%s>.", imageUrl));
                 } else {
-                    Logger.logError(TAG, String.format("Error obtaining news image from <%s>: ", imageUrl), e);
+                    Logger.logError(TAG, String.format("Error obtaining news image from <%s>", imageUrl), e);
                 }
                 return null;
             }

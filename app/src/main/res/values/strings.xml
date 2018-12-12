@@ -128,7 +128,7 @@
     <string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n- Updating from a regular version to a beta version\n- Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n- Reinstalling your current system version.</string>
 
     <string name="settings_update_method">Update method</string>
-    <string name="settings_upload_logs">Send crash logs to developer</string>
+    <string name="settings_upload_logs">Share usage data and logs</string>
 
     <!-- FAQ strings -->
     <string name="faq">FAQ</string>

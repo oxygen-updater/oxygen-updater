@@ -72,7 +72,7 @@ public class DeviceInformationData {
             BigDecimal cpuFrequencyGhz = new BigDecimal(cpuFrequency).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_DOWN);
             return cpuFrequencyGhz.toString();
         } catch (Exception e) {
-            Logger.logVerbose("DeviceInformationData", "CPU Frequency information is not available: " ,e);
+            Logger.logVerbose("DeviceInformationData", "CPU Frequency information is not available", e);
             return UNKNOWN;
         }
     }

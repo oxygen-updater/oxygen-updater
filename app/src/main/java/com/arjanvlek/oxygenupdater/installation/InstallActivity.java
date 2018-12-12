@@ -195,7 +195,7 @@ public class InstallActivity extends AppCompatActivity {
             boolean rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
 
             // Plan install verification on reboot.
-            SystemVersionProperties systemVersionProperties = new SystemVersionProperties(false);
+            SystemVersionProperties systemVersionProperties = new SystemVersionProperties();
             String currentOSVersion = systemVersionProperties.getOxygenOSOTAVersion();
             boolean isAbPartitionLayout = systemVersionProperties.isABPartitionLayout();
             String targetOSVersion = updateData.getOtaVersionNumber();
@@ -213,7 +213,7 @@ public class InstallActivity extends AppCompatActivity {
                     } catch (UpdateInstallationException e) {
                         return e.getMessage();
                     } catch (InterruptedException e) {
-                        Logger.logWarning(TAG, "Error installing update: ", e);
+                        Logger.logWarning(TAG, "Error installing update", e);
                         return getString(R.string.install_temporary_error);
                     }
                 }, (errorMessage) -> {
@@ -364,7 +364,7 @@ public class InstallActivity extends AppCompatActivity {
                         settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, FileUtils.getPath(this, uri));
                         displayZipFilePath();
                     } catch (Throwable e) {
-                        Logger.logError(TAG, "Error handling ZIP selection: ", e);
+                        Logger.logError(TAG, "Error handling root package ZIP selection", e);
                         settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
                         displayZipFilePath();
                     }
@@ -416,10 +416,8 @@ public class InstallActivity extends AppCompatActivity {
 
         serverConnector.logRootInstall(installation, (result) -> {
             if (result == null) {
-                Logger.init((ApplicationData) getApplication());
                 Logger.logError(TAG, "Failed to log update installation action: No response from server");
             } else if (!result.isSuccess()) {
-                Logger.init((ApplicationData) getApplication());
                 Logger.logError(TAG, "Failed to log update installation action: " + result.getErrorMessage());
             }
             // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.

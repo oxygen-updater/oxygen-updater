@@ -39,7 +39,6 @@ enum ServerRequest {
     NEWS_ITEM("news-item/%1d", NewsItem.class),
     NEWS_READ(POST, "news-read", ServerPostResult.class),
 
-    LOG(POST, "log", ServerPostResult.class),
     SUBMIT_UPDATE_FILE(POST, "submit-update-file", ServerPostResult.class),
     LOG_UPDATE_INSTALLATION(POST, "log-update-installation", ServerPostResult.class),
 

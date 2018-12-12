@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.StatFs;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.util.Pair;
 
 import com.arjanvlek.oxygenupdater.R;
@@ -199,7 +198,6 @@ public class DownloadService extends IntentService {
         try {
             activity.startService(downloadIntent);
         } catch (Exception e) {
-            Logger.init(activity.getApplicationContext());
             Logger.logError(TAG, withAppendedStateHistory("Failed to start DownloadService"), e);
             isOperationPending.set(false);
         }
@@ -263,23 +261,23 @@ public class DownloadService extends IntentService {
         settingsManager.savePreference(PROPERTY_DOWNLOADER_STATE, state.toString());
 
         if (isRunning()) {
-            Log.d(TAG, "onDestroy() was called whilst running, saving state & pausing current activity");
+            Logger.logDebug(TAG, "onDestroy() was called whilst running, saving state & pausing current activity");
             serializeExecutedStateTransitions();
 
             // We briefly pause the download - it can be (and will be) resumed in the newly spawned service.
             if (state == DownloadStatus.DOWNLOAD_QUEUED || state == DownloadStatus.DOWNLOADING) {
-                Log.d(TAG, "Temporarily pausing download using PRDownloader.pause()");
+                Logger.logDebug(TAG, "Temporarily pausing download using PRDownloader.pause()");
                 PRDownloader.pause(settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET));
             }
 
             // If onDestroy() happens when checking the MD5, we'll have to start checking it over again (this process is not resumable)
             if (state == DownloadStatus.VERIFYING) {
-                Log.d(TAG, "Aborting in-progress MD5 verification");
+                Logger.logDebug(TAG, "Aborting in-progress MD5 verification");
                 this.verifier.cancel(true);
             }
 
             if (state == DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION && autoResumeOnConnectionErrorRunnable != null) {
-                Log.d(TAG, "Unregistering network connectivity listener");
+                Logger.logDebug(TAG, "Unregistering network connectivity listener");
                 new Handler().removeCallbacks(autoResumeOnConnectionErrorRunnable);
                 autoResumeOnConnectionErrorRunnable = null;
             }
@@ -302,7 +300,6 @@ public class DownloadService extends IntentService {
         }
 
         isOperationPending.set(false);
-        Logger.init(getApplication());
 
         PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
                 .setDatabaseEnabled(true)
@@ -329,16 +326,16 @@ public class DownloadService extends IntentService {
                 executedStateTransitions.addAll(deserializeExecutedStateTransitions());
 
                 if (state == DownloadStatus.DOWNLOADING || state == DownloadStatus.DOWNLOAD_QUEUED) {
-                    Log.d(TAG, "Resuming temporarily-paused download");
+                    Logger.logDebug(TAG, "Resuming temporarily-paused download");
                     state = DownloadStatus.DOWNLOAD_QUEUED; // We are queued after onDestroy() was called. Not Downloading!
                     resumeDownload(downloadId, updateData);
                     break;
                 } else if (state == DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION) {
-                    Log.d(TAG, "Resumed re-checking for network connection");
+                    Logger.logDebug(TAG, "Resumed re-checking for network connection");
                     resumeDownloadOnReconnectingToNetwork(downloadId, updateData);
                     break;
                 } else if (state == DownloadStatus.VERIFYING) {
-                    Log.d(TAG, "Restarted aborted MD5 verification");
+                    Logger.logDebug(TAG, "Restarted aborted MD5 verification");
                     verifyUpdate(updateData);
                     break;
                 }
@@ -379,7 +376,7 @@ public class DownloadService extends IntentService {
 
     private synchronized void downloadUpdate(UpdateData updateData) {
         if (!isStateTransitionAllowed(DownloadStatus.DOWNLOAD_QUEUED)) {
-            Log.w(TAG, "Not downloading update, is a download operation already in progress?");
+            Logger.logWarning(TAG, "Not downloading update, is a download operation already in progress?");
             return;
         }
 
@@ -420,7 +417,7 @@ public class DownloadService extends IntentService {
             return;
         }
 
-        Log.d(TAG, "Downloading " + updateData.getFilename());
+        Logger.logDebug(TAG, "Downloading " + updateData.getFilename());
 
         // Download the update
         performStateTransition(DownloadStatus.DOWNLOAD_QUEUED);
@@ -457,7 +454,7 @@ public class DownloadService extends IntentService {
                     // This method gets called *very* often. We only want to update the notification and send a broadcast once per second
                     // Otherwise, the UI & Notification Renderer would be overflowed by our requests
                     if (previousProgressTimeStamp == NOT_SET || currentTimestamp - previousProgressTimeStamp > 1000) {
-                        // Log.d(TAG, "Received download progress update: " + progress.currentBytes + " / " + progress.totalBytes);
+                        // Logger.logDebug(TAG, "Received download progress update: " + progress.currentBytes + " / " + progress.totalBytes);
                         DownloadProgressData progressData = calculateDownloadETA(progress.currentBytes, progress.totalBytes);
                         new SettingsManager(getApplicationContext()).savePreference(PROPERTY_DOWNLOAD_PROGRESS, progressData.getProgress());
 
@@ -471,7 +468,7 @@ public class DownloadService extends IntentService {
                 .start(new OnDownloadListener() {
                     @Override
                     public void onDownloadComplete() {
-                        Log.d(TAG, "Downloading of " + updateData.getFilename() + " complete, verification will begin soon...");
+                        Logger.logDebug(TAG, "Downloading of " + updateData.getFilename() + " complete, verification will begin soon...");
                         sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_COMPLETED);
                         // isVerifying must be set before isDownloading to ensure the condition 'isRunning()' remains true at all times.
                         verifyUpdate(updateData);
@@ -485,7 +482,7 @@ public class DownloadService extends IntentService {
 
                         // If the error is a connection error, we retry to resume downloading in 5 seconds (if there is a network connection then).
                         if (error.isConnectionError()) {
-                            Log.d(TAG, "Pausing download due to connection error");
+                            Logger.logDebug(TAG, "Pausing download due to connection error");
                             performStateTransition(DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION);
                             SettingsManager settingsManager = new SettingsManager(getApplicationContext());
                             int downloadId = settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET);
@@ -529,22 +526,22 @@ public class DownloadService extends IntentService {
     }
 
     private synchronized void pauseDownload(int downloadId) {
-        Log.d(TAG, "Pausing download #" + downloadId);
+        Logger.logDebug(TAG, "Pausing download #" + downloadId);
 
         if (downloadId != NOT_SET && isStateTransitionAllowed(DownloadStatus.DOWNLOAD_PAUSED)) {
             performStateTransition(DownloadStatus.DOWNLOAD_PAUSED);
-            Log.d(TAG, "Pausing using PRDownloader.pause()");
+            Logger.logDebug(TAG, "Pausing using PRDownloader.pause()");
             PRDownloader.pause(downloadId);
         } else {
-            Log.w(TAG, "Not pausing download, invalid download ID provided or not pause-able.");
+            Logger.logWarning(TAG, "Not pausing download, invalid download ID provided or not pause-able.");
         }
     }
 
     private synchronized void resumeDownload(int downloadId, UpdateData updateData) {
-        Log.d(TAG, "Resuming download #" + downloadId);
+        Logger.logDebug(TAG, "Resuming download #" + downloadId);
 
         if (!isStateTransitionAllowed(DownloadStatus.DOWNLOAD_QUEUED)) {
-            Log.w(TAG, "Not resuming download, is a download operation already in progress?");
+            Logger.logWarning(TAG, "Not resuming download, is a download operation already in progress?");
             return;
         }
 
@@ -552,30 +549,30 @@ public class DownloadService extends IntentService {
             // If the download is still in the PRDownloader request queue, resume it.
             // If not, start the download again (PRdownloader will still resume it using its own SQLite database)
             if (DownloadRequestQueue.getInstance().getStatus(downloadId) != Status.UNKNOWN) {
-                Log.d(TAG, "Resuming using PRDownloader.resume()");
+                Logger.logDebug(TAG, "Resuming using PRDownloader.resume()");
                 performStateTransition(DownloadStatus.DOWNLOAD_QUEUED);
                 PRDownloader.resume(downloadId);
             } else {
-                Log.d(TAG, "Resuming using PRDownloader.download()");
+                Logger.logDebug(TAG, "Resuming using PRDownloader.download()");
                 downloadUpdate(updateData);
             }
 
         } else {
-            Log.w(TAG, "Not resuming download, invalid download ID provided.");
+            Logger.logWarning(TAG, "Not resuming download, invalid download ID provided.");
         }
     }
 
     private synchronized void cancelDownload(int downloadId) {
-        Log.d(TAG, "Cancelling download #" + downloadId);
+        Logger.logDebug(TAG, "Cancelling download #" + downloadId);
 
         if (downloadId != NOT_SET) {
             performStateTransition(DownloadStatus.NOT_DOWNLOADING);
             PRDownloader.cancel(downloadId);
             LocalNotifications.hideDownloadingNotification(getApplicationContext());
             clearUp();
-            Log.d(TAG, "Cancelled download #" + downloadId);
+            Logger.logDebug(TAG, "Cancelled download #" + downloadId);
         } else {
-            Log.w(TAG, "Not cancelling download, no valid ID was provided...");
+            Logger.logWarning(TAG, "Not cancelling download, no valid ID was provided...");
         }
     }
 
@@ -585,7 +582,7 @@ public class DownloadService extends IntentService {
             return;
         }
 
-        Log.d(TAG, "Deleting downloaded update file " + updateData.getFilename());
+        Logger.logDebug(TAG, "Deleting downloaded update file " + updateData.getFilename());
 
         File downloadedFile = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getAbsolutePath(), updateData.getFilename());
         if (!downloadedFile.delete()) {
@@ -681,7 +678,7 @@ public class DownloadService extends IntentService {
     @SuppressLint("StaticFieldLeak")
     private void verifyUpdate(final UpdateData updateData) {
         if (!isStateTransitionAllowed(DownloadStatus.VERIFYING)) {
-            Log.w(TAG, "Not verifying update, is an update verification already in progress?");
+            Logger.logWarning(TAG, "Not verifying update, is an update verification already in progress?");
             return;
         }
 
@@ -689,7 +686,7 @@ public class DownloadService extends IntentService {
         verifier = new AsyncTask<UpdateData, Void, Boolean>() {
             @Override
             protected void onPreExecute() {
-                Log.d(TAG, "Preparing to verify downloaded update file " + updateData.getFilename());
+                Logger.logDebug(TAG, "Preparing to verify downloaded update file " + updateData.getFilename());
                 performStateTransition(DownloadStatus.VERIFYING);
 
                 LocalNotifications.showVerifyingNotification(getApplicationContext(), ONGOING, HAS_NO_ERROR);
@@ -698,7 +695,7 @@ public class DownloadService extends IntentService {
 
             @Override
             protected Boolean doInBackground(UpdateData... updateDatas) {
-                Log.d(TAG, "Verifying " + updateData.getFilename());
+                Logger.logDebug(TAG, "Verifying " + updateData.getFilename());
                 File downloadedFile = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getAbsolutePath(), updateData.getFilename());
 
                 return updateData.getMD5Sum() == null || MD5.checkMD5(updateData.getMD5Sum(), downloadedFile);
@@ -706,7 +703,7 @@ public class DownloadService extends IntentService {
 
             @Override
             protected void onPostExecute(Boolean valid) {
-                Log.d(TAG, "Verification result for " + updateData.getFilename() + ": " + valid);
+                Logger.logDebug(TAG, "Verification result for " + updateData.getFilename() + ": " + valid);
 
                 if (valid) {
                     LocalNotifications.hideVerifyingNotification(getApplicationContext());
@@ -726,7 +723,7 @@ public class DownloadService extends IntentService {
             @Override
             protected void onCancelled() {
                 if (updateData != null) {
-                    Log.d(TAG, "Cancelled verification of " + updateData.getFilename());
+                    Logger.logDebug(TAG, "Cancelled verification of " + updateData.getFilename());
                 }
             }
         }.execute();
@@ -823,12 +820,10 @@ public class DownloadService extends IntentService {
         previousNumberOfSecondsRemaining = NOT_SET;
         verifier = null;
         autoResumeOnConnectionErrorRunnable = null;
-        executedStateTransitions.clear();
         SettingsManager settingsManager = new SettingsManager(getApplicationContext());
         settingsManager.deletePreference(PROPERTY_DOWNLOAD_PROGRESS);
         settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
         settingsManager.deletePreference(PROPERTY_DOWNLOADER_STATE);
-        settingsManager.deletePreference(PROPERTY_DOWNLOADER_STATE_HISTORY);
     }
 
     private void sendBroadcastIntent(String intentType) {
@@ -867,7 +862,7 @@ public class DownloadService extends IntentService {
                 @Override
                 public void run() {
                     if (Utils.checkNetworkConnection(getApplicationContext())) {
-                        Log.d(TAG, "Network connectivity restored, resuming download...");
+                        Logger.logDebug(TAG, "Network connectivity restored, resuming download...");
                         resumeDownload(downloadId, updateData);
                     } else {
                         handler.postDelayed(this, NO_CONNECTION_REFRESH_RATE);

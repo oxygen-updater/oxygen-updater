@@ -60,10 +60,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
             return exit(params, false);
         }
 
-        ApplicationData applicationData = (ApplicationData) getApplication();
-        Logger.init(applicationData);
-
-        SettingsManager settingsManager = new SettingsManager(getApplicationContext());
+        SettingsManager settingsManager = new SettingsManager(getApplication());
 
         // Get notification contents of FCM.
         TypeReference<Map<String, String>> notificationContentsTypeRef = new TypeReference<Map<String, String>>() {

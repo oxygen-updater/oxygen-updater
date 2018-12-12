@@ -121,7 +121,7 @@
     <string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n- Je van een reguliere versie naar een bètaversie wilt updaten\n- Je van een bètaversie terug wilt naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n - Je dezelfde versie als die je nu hebt opnieuw wilt installeren.</string>
 
     <string name="settings_update_method">Update-methode</string>
-    <string name="settings_upload_logs">Verstuur logs naar ontwikkelaar</string>
+    <string name="settings_upload_logs">Deel gebruiksgegevens en crash-logs</string>
 
     <!-- FAQ strings -->
     <string name="faq">Veelgestelde vragen</string>

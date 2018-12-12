@@ -54,11 +54,9 @@ public class RootInstallLogger extends JobService {
 
         connector.logRootInstall(installation, (result) -> {
             if (result == null) {
-                Logger.init(applicationData);
                 Logger.logError(TAG, "Failed to log update installation action: No response from server");
                 jobFinished(params, true);
             } else if (!result.isSuccess()) {
-                Logger.init(applicationData);
                 Logger.logError(TAG, "Failed to log update installation action: " + result.getErrorMessage());
                 jobFinished(params, true);
             } else if (result.isSuccess() && installation.getInstallationStatus().equals(InstallationStatus.FAILED) || installation.getInstallationStatus().equals(InstallationStatus.FINISHED)) {

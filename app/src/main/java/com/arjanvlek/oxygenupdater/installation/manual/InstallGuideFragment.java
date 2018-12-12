@@ -118,7 +118,7 @@ public class InstallGuideFragment extends Fragment {
     private void displayInstallGuide(View installGuideView, InstallGuidePage installGuidePage, int pageNumber, boolean isFirstPage) {
         if (!isAdded()) {
             // Happens when a page is scrolled too far outside the screen (2 or more rows) and content then gets resolved from the server.
-            Logger.logError(false, TAG, "isAdded() returned false (displayInstallGuide)");
+            Logger.logError(TAG, "isAdded() returned false (displayInstallGuide)");
             return;
         }
 
@@ -287,7 +287,7 @@ public class InstallGuideFragment extends Fragment {
             if (retryCount < 5) {
                 return doGetCustomImage(imageUrl, retryCount + 1);
             } else {
-                Logger.logError(TAG, "Error loading custom image: ", e);
+                Logger.logError(TAG, "Error loading custom install guide image", e);
                 return null;
             }
         }

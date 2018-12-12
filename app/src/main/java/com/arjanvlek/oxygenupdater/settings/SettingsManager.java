@@ -32,7 +32,7 @@ public class SettingsManager {
     public static final String PROPERTY_DOWNLOADER_STATE = "downloader_state";
     public static final String PROPERTY_DOWNLOADER_STATE_HISTORY = "downloader_state_history";
     public static final String PROPERTY_DOWNLOAD_PROGRESS = "download_progress";
-    public static final String PROPERTY_UPLOAD_LOGS = "upload_logs";
+    public static final String PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs"; // Value cannot be changed - is from older version where it was called 'upload_logs'
     public static final String PROPERTY_ADDITIONAL_ZIP_FILE_PATH = "additional_zip_file_path";
     public static final String PROPERTY_BACKUP_DEVICE = "backupDevice";
     public static final String PROPERTY_KEEP_DEVICE_ROOTED = "keepDeviceRooted";

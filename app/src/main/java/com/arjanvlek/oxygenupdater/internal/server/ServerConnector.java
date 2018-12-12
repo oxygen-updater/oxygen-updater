@@ -79,35 +79,24 @@ public class ServerConnector implements Cloneable {
     private LocalDateTime deviceFetchDate;
     private ServerStatus serverStatus;
 
-    private boolean uploadLog = false;
-
-    public ServerConnector(SettingsManager settingsManager, boolean uploadLog) {
-        this.uploadLog = uploadLog;
+    public ServerConnector(SettingsManager settingsManager) {
         this.settingsManager = settingsManager;
         this.objectMapper = new ObjectMapper();
         this.devices = new ArrayList<>();
     }
 
-    public ServerConnector(SettingsManager settingsManager) {
-        this(settingsManager, true);
-    }
-
-    public void getDevices(boolean uploadLog, Consumer<List<Device>> callback) {
-        getDevices(uploadLog, false, callback);
-    }
-
     public void getDevices(Consumer<List<Device>> callback) {
-        getDevices(true, false, callback);
+        getDevices(false, callback);
     }
 
-    public void getDevices(boolean uploadLog, boolean alwaysFetch, Consumer<List<Device>> callback) {
+    public void getDevices(boolean alwaysFetch, Consumer<List<Device>> callback) {
         if (deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
-            Logger.logVerbose(uploadLog, TAG, "Used local cache to fetch devices...");
+            Logger.logVerbose(TAG, "Used local cache to fetch devices...");
             callback.accept(devices);
         }
 
         else {
-            Logger.logVerbose(uploadLog, TAG, "Used remote server to fetch devices...");
+            Logger.logVerbose(TAG, "Used remote server to fetch devices...");
             new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, (devices) -> {
                 this.devices.clear();
                 this.devices.addAll(devices);
@@ -223,10 +212,6 @@ public class ServerConnector implements Cloneable {
 
     public void getInstallGuidePage(@NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull Integer pageNumber, Consumer<InstallGuidePage> callback) {
         new ObjectResponseExecutor<>(ServerRequest.INSTALL_GUIDE_PAGE, callback, deviceId, updateMethodId, pageNumber).execute();
-    }
-
-    public void log(@NonNull JSONObject logData, Consumer<ServerPostResult> callback) {
-        new ObjectResponseExecutor<>(ServerRequest.LOG, logData, callback).execute();
     }
 
     public void submitUpdateFile(@NonNull String filename, Consumer<ServerPostResult> callback) {
@@ -421,7 +406,7 @@ public class ServerConnector implements Cloneable {
 
             return objectMapper.readValue(response, objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
         } catch (Exception e) {
-            Logger.logError("ServerConnector", "JSON parse error: ", e);
+            Logger.logError(TAG, "JSON parse error", e);
             return new ArrayList<>();
         }
     }
@@ -433,7 +418,7 @@ public class ServerConnector implements Cloneable {
 
             return objectMapper.readValue(response, objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
         } catch(Exception e) {
-            Logger.logError("ServerConnector", "JSON parse error: ", e);
+            Logger.logError(TAG, "JSON parse error", e);
             return null;
         }
     }
@@ -449,9 +434,9 @@ public class ServerConnector implements Cloneable {
 
             if (requestUrl == null) return null;
 
-            Logger.logVerbose(uploadLog, TAG, "");
-            Logger.logVerbose(uploadLog, TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
-            Logger.logVerbose(uploadLog, TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
+            Logger.logVerbose(TAG, "");
+            Logger.logVerbose(TAG, "Performing " + request.getRequestMethod().toString() + " request to URL " + requestUrl.toString());
+            Logger.logVerbose(TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
 
             HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
@@ -483,32 +468,28 @@ public class ServerConnector implements Cloneable {
 
             in.close();
             String rawResponse = response.toString();
-            Logger.logVerbose(uploadLog, TAG, "Response: " + rawResponse);
+            Logger.logVerbose(TAG, "Response: " + rawResponse);
             return rawResponse;
         } catch (Exception e) {
             if (retryCount < 5) {
                 return performServerRequest(request, body, retryCount + 1, params);
             } else {
                 if (ExceptionUtils.isNetworkError(e)) {
-                    Logger.logNetworkError(uploadLog, TAG, "Error performing request <" + request.toString(params) +">.");
+                    Logger.logNetworkError(TAG, "Error performing request <" + request.toString(params) +">.");
                 } else {
-                    Logger.logError(uploadLog, TAG, "Error performing request <" + request.toString(params)+ ">: ", e);
+                    Logger.logError(TAG, "Error performing request <" + request.toString(params)+ ">", e);
                 }
                 return null;
             }
         }
     }
 
-    public void setUploadLog(boolean uploadLog) {
-        this.uploadLog = uploadLog;
-    }
-
     public ServerConnector clone() {
         try {
             return (ServerConnector) super.clone();
         } catch (CloneNotSupportedException e) {
-            Logger.logError(false, TAG, "Internal error: ", e);
-            return new ServerConnector(settingsManager, uploadLog);
+            Logger.logError(TAG, "Internal error cloning ServerConnector", e);
+            return new ServerConnector(settingsManager);
         }
     }
 }

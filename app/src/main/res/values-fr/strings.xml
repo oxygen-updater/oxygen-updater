@@ -117,7 +117,8 @@ Cela peut être utile quand vous :
 - Choisissez de revenir sur une version stable depuis une version bêta (n'oubliez pas de réinitialiser votre périphérique)
 - Réinstallez la version actuelle du système"</string>
     <string name="settings_update_method">"Méthode de mise à jour"</string>
-    <string name="settings_upload_logs">"Envoyer les fichiers de crash au développeur"</string>
+    <!-- TODO translate -->
+    <string name="settings_upload_logs">Share usage data and logs</string>
 
     <!-- FAQ strings -->
     <string name="faq">"FAQ"</string>

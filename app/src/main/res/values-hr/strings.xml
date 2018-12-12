@@ -107,7 +107,8 @@ Beta verzija OxygenOS-a može se instalirati jedino ako ste već na beta verziji
 To može biti korisno:
 - Ažuriranje"</string>
     <string name="settings_update_method">"Metoda ažuriranja"</string>
-    <string name="settings_upload_logs">"Slanje podataka o grešci developeru"</string>
+    <!-- TODO translate -->
+    <string name="settings_upload_logs">Share usage data and logs</string>
 
     <!-- FAQ strings -->
     <string name="faq">"FAQ"</string>

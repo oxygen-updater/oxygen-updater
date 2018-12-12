@@ -16,7 +16,12 @@
 #   public *;
 #}
 
--keepattributes *Annotation*,EnclosingMethod,Signature
+-keepattributes *Annotation*,EnclosingMethod,Signature,SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+
+# Keep all Crashlytics classes, these are already obfuscated / minified
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
 
 # Keep all jackson and codehaus classes, and don't warn for conflicts within jackson-databind classes.
 -keepnames class com.fasterxml.jackson.** { *; }

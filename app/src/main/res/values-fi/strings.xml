@@ -115,7 +115,8 @@ Tämä voi olla hyödyllista kun:
 -Palautetaan beta versiosta tavalliseen versioon (älä unohda tehdä tehdastilan palautusta laitteelle)
 -Asennettaessa uudelleen nykyistä järjestelmäversiota"</string>
     <string name="settings_update_method">"Päivitystapa"</string>
-    <string name="settings_upload_logs">"Lähetä kaatumisilmoitukset kehittäjälle"</string>
+    <!-- TODO translate -->
+    <string name="settings_upload_logs">Share usage data and logs</string>
 
     <!-- FAQ strings -->
     <string name="faq">"UKK"</string>

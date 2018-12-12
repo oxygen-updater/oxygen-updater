@@ -44,6 +44,7 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2;
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdView;
 
 import org.joda.time.LocalDateTime;
@@ -78,6 +79,7 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFL
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 import static java8.util.stream.StreamSupport.stream;
 
@@ -228,6 +230,8 @@ public class UpdateInformationFragment extends AbstractFragment {
      * Fetches all server data. This includes update information, server messages and server status checks
      */
     private void load(boolean adsAreSupported) {
+        Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"));
+
         final AbstractFragment instance = this;
 
         long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);

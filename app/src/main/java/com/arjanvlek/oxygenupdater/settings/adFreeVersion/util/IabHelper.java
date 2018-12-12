@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
+import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import org.json.JSONException;
 
@@ -1095,14 +1096,14 @@ public class IabHelper {
     }
 
     void logDebug(String msg) {
-        if (mDebugLog) Log.d(mDebugTag, msg);
+        if (mDebugLog) Logger.logDebug(mDebugTag, msg);
     }
 
     void logError(String msg) {
-        Log.e(mDebugTag, "In-app billing error: " + msg);
+        Logger.logError(mDebugTag, "In-app billing error: " + msg);
     }
 
     void logWarn(String msg) {
-        Log.w(mDebugTag, "In-app billing warning: " + msg);
+        Logger.logWarning(mDebugTag, "In-app billing warning: " + msg);
     }
 }

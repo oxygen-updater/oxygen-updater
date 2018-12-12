@@ -148,7 +148,7 @@ public class UpdateInstaller {
 
         if (BuildConfig.DEBUG) {
             for (String command : commands) {
-                Logger.logVerbose(false, "UpdateInstaller", "Running SU command: " + command);
+                Logger.logVerbose("UpdateInstaller", "Running SU command: " + command);
             }
         }
 
@@ -169,7 +169,7 @@ public class UpdateInstaller {
                 outputString.append(System.getProperty("line.separator"));
             }
 
-            Logger.logVerbose(false, "UpdateInstaller", "Output of commands: " + outputString.toString());
+            Logger.logVerbose("UpdateInstaller", "Output of commands: " + outputString.toString());
         }
     }
 

@@ -40,7 +40,7 @@ public class RootAccessChecker {
                 Thread.sleep(2000); // Give the user the time to read what's happening.
                 return Shell.SU.available();
             } catch (Exception e) {
-                Logger.logError("ApplicationData", "Failed to check for root access: ", e);
+                Logger.logError("ApplicationData", "Failed to check for root access", e);
                 return false;
             }
         }

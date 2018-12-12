@@ -41,7 +41,7 @@ public class DeviceInformationFragment extends AbstractFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         if (!isAdded()) {
-            Logger.logError(false, TAG, "Fragment not added. Can not create the view!");
+            Logger.logError(TAG, "Fragment not added. Can not create the view!");
             return;
         }
 
@@ -51,7 +51,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
     private void displayFormattedDeviceName(List<Device> devices) {
         if (!isAdded()) {
-            Logger.logError(false, TAG, "Fragment not added. Can not display formatted device name!");
+            Logger.logError(TAG, "Fragment not added. Can not display formatted device name!");
             return;
         }
 
@@ -100,7 +100,7 @@ public class DeviceInformationFragment extends AbstractFragment {
             activityManager.getMemoryInfo(mi);
             totalMemory = mi.totalMem / 1048576L;
         } catch (Exception e) {
-            Logger.logWarning("DeviceInformationFragment", "Memory information is unavailable due to error: ", e);
+            Logger.logWarning("DeviceInformationFragment", "Memory information is unavailable due to error", e);
             totalMemory = 0;
         }
 

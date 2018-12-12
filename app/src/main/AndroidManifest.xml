@@ -215,11 +215,6 @@
         </receiver>
 
         <service
-            android:name=".internal.logger.LogUploadService"
-            android:label="@string/log_uploader_service_name"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service
             android:name=".contribution.UpdateFileChecker"
             android:label="@string/update_file_checker_service_name"
             android:permission="android.permission.BIND_JOB_SERVICE" />

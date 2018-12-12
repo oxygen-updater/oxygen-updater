@@ -19,11 +19,13 @@ import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.CustomDropdown;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.List;
 
 import java8.util.stream.StreamSupport;
 
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
@@ -67,7 +69,7 @@ public class SetupStep4Fragment extends AbstractFragment {
                 });
                 builder.show();
             } catch (Throwable e) {
-                Logger.logError("SetupStep4", "Failed to display root check dialog: " , e);
+                Logger.logError("SetupStep4", "Failed to display root check dialog" , e);
                 rootMessageShown = true;
                 fetchUpdateMethods();
             }
@@ -132,6 +134,7 @@ public class SetupStep4Fragment extends AbstractFragment {
                     //Set update method in preferences.
                     settingsManager.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
                     settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
+                    Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"));
 
                     if (getApplicationData().checkPlayServices(getActivity(), false)) {
                         // Subscribe to notifications

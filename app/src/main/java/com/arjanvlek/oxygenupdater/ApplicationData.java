@@ -7,12 +7,16 @@ import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
+import io.fabric.sdk.android.Fabric;
 import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.views.AbstractFragment.ADS_TEST_DEVICES;
@@ -37,50 +41,12 @@ public class ApplicationData extends Application {
     public static final String PROGRESS_NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.progress";
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private Thread.UncaughtExceptionHandler defaultExceptionHandler;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        try {
-            Logger.init(this);
-
-            // Set a global exception handler which logs all exceptions to the server, if possible.
-            // Afterwards, throw the exception to crash the application (these errors can't be prevented anyway).
-            SettingsManager settingsManager = new SettingsManager(this);
-
-            if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true)) {
-                defaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
-
-                Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-                    Logger.logApplicationCrash(this, e);
-                    // Pass exception through the chain, which will put up "Unfortunately, Oxygen Updater has stopped" message.
-                    if (defaultExceptionHandler != null) {
-                        defaultExceptionHandler.uncaughtException(t, e);
-                    } else {
-                        // If the default handler is unavailable, force-quit the app to prevent it getting stuck.
-                        System.exit(1);
-                    }
-                });
-            }
-        } catch (Exception e) {
-            Logger.logError(false, TAG, "Failed to set up logger: ", e);
-        }
-
-        PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
-                .setDatabaseEnabled(true)
-                .setUserAgent(APP_USER_AGENT)
-                .setConnectTimeout(30_000)
-                .setReadTimeout(120_000)
-                .build();
-
-        PRDownloader.initialize(getApplicationContext(), config);
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        Logger.context = null;
+        setupCrashReporting();
+        setupDownloader();
     }
 
     public ServerConnector getServerConnector() {
@@ -95,9 +61,9 @@ public class ApplicationData extends Application {
         // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
         if (systemVersionProperties == null) {
             Logger.logVerbose(TAG, "Creating new SystemVersionProperties instance...");
-            systemVersionProperties = new SystemVersionProperties(true);
+            systemVersionProperties = new SystemVersionProperties();
         } else {
-            Logger.logVerbose(false, TAG, "Using cached instance of SystemVersionProperties");
+            Logger.logVerbose(TAG, "Using cached instance of SystemVersionProperties");
         }
         return systemVersionProperties;
     }
@@ -134,5 +100,38 @@ public class ApplicationData extends Application {
             else Logger.logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
             return result;
         }
+    }
+
+
+    private void setupCrashReporting() {
+        SettingsManager settingsManager = new SettingsManager(this);
+
+        // Do not upload crash logs if we are on a debug build or if the user has turned off analytics in the Settings screen.
+        boolean shareAnalytics = settingsManager.getPreference(SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true);
+        boolean disableCrashCollection = BuildConfig.DEBUG || !shareAnalytics;
+
+        // Do not share analytics data if the user has turned it off in the Settings screen
+        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(shareAnalytics);
+
+        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+                .disabled(disableCrashCollection)
+                .build();
+
+        Crashlytics crashlytics = new Crashlytics.Builder()
+                .core(crashlyticsCore)
+                .build();
+
+        Fabric.with(this, crashlytics);
+    }
+
+    private void setupDownloader() {
+        PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
+                .setDatabaseEnabled(true)
+                .setUserAgent(APP_USER_AGENT)
+                .setConnectTimeout(30_000)
+                .setReadTimeout(120_000)
+                .build();
+
+        PRDownloader.initialize(getApplicationContext(), config);
     }
 }

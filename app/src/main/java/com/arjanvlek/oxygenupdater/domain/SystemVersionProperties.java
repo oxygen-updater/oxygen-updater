@@ -23,7 +23,7 @@ public class SystemVersionProperties {
     private final boolean ABPartitionLayout;
     private static final String TAG = "SystemVersionProperties";
 
-    public SystemVersionProperties(boolean uploadLog) {
+    public SystemVersionProperties() {
         String oxygenOSVersion = NO_OXYGEN_OS;
         String oxygenOSOTAVersion = NO_OXYGEN_OS;
         String oxygenDeviceName = NO_OXYGEN_OS;
@@ -55,7 +55,7 @@ public class SystemVersionProperties {
             Logger.logVerbose(TAG, "Finished fetching device properties using 'getprop' command...");
 
         } catch (Exception e) {
-            Logger.logError(uploadLog, TAG, e.getLocalizedMessage());
+            Logger.logError(TAG, e.getLocalizedMessage());
         }
         this.oxygenDeviceName = oxygenDeviceName;
         this.oxygenOSVersion = oxygenOSVersion;
