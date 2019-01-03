@@ -98,6 +98,19 @@
                             android:visibility="visible" />
 
                         <ImageButton
+                            android:id="@+id/updateInformationDownloadPauseButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="0"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@string/icon"
+                            android:src="@drawable/pause_download" />
+
+                        <ImageButton
                             android:id="@+id/updateInformationDownloadCancelButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

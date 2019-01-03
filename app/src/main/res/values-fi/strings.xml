@@ -39,6 +39,8 @@
     <string name="download">"Lataa"</string>
     <string name="downloaded">"Ladattu"</string>
     <string name="downloading">"Ladataan…"</string>
+    <string name="paused">"Keskeytetty…"</string>
+
     <string name="download_already_downloaded">"Päivitys on jo ladattu. Se on valmiina asennettavaksi."</string>
     <string name="download_complete">"Lataus on valmistunut"</string>
     <string name="download_complete_notification">"Lataus on valmistunut. Napsauta käynnistääksesi asennus."</string>
@@ -46,21 +48,19 @@
     <string name="download_error">"Virhe ladattaessa"</string>
     <string name="download_error_close">"Sulje"</string>
     <string name="download_error_corrupt">"Ladatattu päivitystiedosto on vahingoittunut! Ole hyvä ja yritä ladata se uudelleen."</string>
-    <string name="download_error_directory">"Näyttäisi ettei laitteessasi ole tallennustilaa vapaana. Jos sinulla on SD kortti, ole hyvä ja tarkista ettei laitteesi ole yhdistettynä PC:hen ja varmista että SD kortti on toimiva."</string>
-    <string name="download_error_network">"Tapahtui verkkovirhe ladattaessa päivitystä. Olen hyvä ja varmista, että internetyhteytesi toimii ja yritä ladata päivitys uudelleen."</string>
-    <string name="download_error_retry">"Uudelleen"</string>
-    <string name="download_error_sd_card">"Laitteessasi ei ole SD korttia paikallaan. Ole hyvä ja laita SD kortti paikalleen laitteeseesi. Tämän jälkeen yritä ladata päivitys uudelleen."</string>
+    <string name="download_error_network">Latauksen aikana tapahtui verkkovirhe. Lataus jatkuu automaattisesti.</string>
+    <string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
+    <string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>    <string name="download_error_retry">"Uudelleen"</string>
+    <string name="download_error_resume">"Jatkaa"</string>
     <string name="download_error_storage">"Laitteessasi ei ole tarpeeksi vapaata tallennustilaa päivityksen lataamiseksi. Vapauta tilaa laittteestasi poistamalla tiedostoja ja yritä ladata päivitys uudelleen."</string>
     <string name="download_failed">"Lataus epäonnistui"</string>
-    <string name="download_in_background">"Päivitystäsi ladataan taustalla…"</string>
+    <string name="download_in_background">Oxygen Updater on käynnissä taustalla</string>
     <string name="download_oxygen_os">"Oxygen OS Versio"</string>
-    <string name="download_paused_unknown">"Latauksesi saattaa olla jumiutunut. Yritä latada päivitys uudelleen…"</string>
     <string name="download_pending">"Latauksesi alkaa pian…"</string>
     <string name="download_permissions">"Napsauta uudelleen Lataa ladataksesi päivitys."</string>
-    <string name="download_notification_error_network">"Verkkovirhe. Tarkista yhteys ja yritä uudelleen."</string>
-    <string name="download_notification_error_storage_full">"Tallennustila ei riitä."</string>
-    <string name="download_notification_error_storage_not_found">"Irroita laite tietokoneesta ja yritä uudelleen."</string>
-    <string name="download_notification_error_sd_card_missing">"Liitä SD kortti ja yritä uudelleen"</string>
+    <string name="download_notification_error_network">Lataus keskeytetty yhteyden menettämisen vuoksi. Lataus jatkuu pian.</string>
+    <string name="download_notification_error_server">Palvelinvirhe tapahtui latauksen aikana. Käynnistä lataus uudelleen.</string>
+    <string name="download_notification_error_internal">Tekninen virhe tapahtui latauksen aikana. Käynnistä lataus uudelleen tai ota yhteyttä tukeen.</string>    <string name="download_notification_error_storage_full">"Tallennustila ei riitä."</string>
     <string name="download_notification_error_corrupt">"Tiedoston tarkistus epäonnistui. Tarkista yhteytesi ja yritä uudelleen."</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, noin %2$d tuntia jäljellä"</string>
     <string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, alle minuutti jäljellä"</string>
@@ -69,15 +69,15 @@
     <string name="download_progress_text_one_minute_remaining">"%1$d%%, noin minuutti jäljellä"</string>
     <string name="download_progress_text_seconds_remaining">"%1$d%%, muutama sekunti jäljellä"</string>
     <string name="download_progress_text_unknown_time_remaining">"%1$d%%, lasketaan jäljellä olevaa aikaa…"</string>
-    <string name="download_progress_text_verifying">"100%, Tarkistetaan tiedostoa…"</string>
+    <string name="download_progress_text_verifying">"100%, tarkistetaan tiedostoa…"</string>
+    <string name="download_progress_text_paused">"%1$d%%, keskeytetty…"</string>
+    <string name="download_waiting_for_network">"%1$d%%, odotetaan verkkoyhteyttä…"</string>
+
     <string name="download_size_megabyte">"%1$d MB"</string>
     <string name="download_unknown_update_name">"Oxygen OS päivitys"</string>
     <string name="download_verifying">"Tarkistetaan…"</string>
     <string name="download_verifying_error">"Tiedosto on vioittunut"</string>
     <string name="download_verifying_start">"Lataustasi tarkistetaan nyt…"</string>
-    <string name="download_waiting_for_network">"Odotetaan verkkoyhteyttä…"</string>
-    <string name="download_waiting_for_wifi">"Odotetaan Wi-Fi yhteyttä…"</string>
-    <string name="download_will_retry_soon">"Latauksesi jatkuu pian…"</string>
 
     <!-- Settings strings -->
     <string name="settings">"Asetukset"</string>

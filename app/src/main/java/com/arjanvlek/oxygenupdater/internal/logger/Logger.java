@@ -35,16 +35,16 @@ public class Logger {
 
     private static final String TAG = "Logger";
     private static final String ERROR_FILE = "error.txt";
-    public static ApplicationData applicationData;
+    public static Context context;
     private static final int JOB_ID_MIN = 395819384;
     private static final int JOB_ID_MAX = 395899384;
 
-    public static void init(ApplicationData data) {
-        applicationData = data;
+    public static void init(Context context) {
+        context = context;
 
         try {
             // If the application previously crashed, upload the crash log to the server.
-            File errorFile = new File(data.getFilesDir(), ERROR_FILE);
+            File errorFile = new File(context.getFilesDir(), ERROR_FILE);
             if (errorFile.exists()) {
                 StringBuilder stackTrace = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new FileReader(errorFile));
@@ -160,7 +160,7 @@ public class Logger {
         Log.e(tag, message);
 
         // Only upload network errors if there is a network connection, because otherwise we already know the cause of the error...
-        if (upload && applicationData != null && Utils.checkNetworkConnection(applicationData)) {
+        if (upload && context != null && Utils.checkNetworkConnection(context)) {
             uploadLog(LogLevel.NETWORK_ERROR, tag, message);
         }
     }
@@ -190,7 +190,7 @@ public class Logger {
     private static void uploadLog(LogLevel logLevel, String tag, String message, Throwable cause) {
         try {
             // Don't upload network errors if there is no network, because then we know the cause of the error...
-            if (ExceptionUtils.isNetworkError(cause) && (applicationData == null || !Utils.checkNetworkConnection(applicationData))) {
+            if (ExceptionUtils.isNetworkError(cause) && (context == null || !Utils.checkNetworkConnection(context))) {
                 return;
             }
 
@@ -202,12 +202,12 @@ public class Logger {
 
     private static void uploadLog(LogLevel logLevel, String tag, String message) {
 
-        if (applicationData != null) {
-            SettingsManager settingsManager = new SettingsManager(applicationData);
+        if (context != null) {
+            SettingsManager settingsManager = new SettingsManager(context);
 
             if (settingsManager.getPreference(SettingsManager.PROPERTY_UPLOAD_LOGS, true) && !isRecursiveCallToLogger()) {
                 try {
-                    scheduleLogUploadTask(applicationData, buildLogUploadData(logLevel.toString(), tag, message));
+                    scheduleLogUploadTask(context, buildLogUploadData(logLevel.toString(), tag, message));
                 } catch (Exception e) {
                     // The logger should never be the cause of an application crash. Better no logging than users facing a crash!
                     logError(false, TAG, "Failed to schedule log upload", e);

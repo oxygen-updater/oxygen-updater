@@ -9,6 +9,10 @@
     <!-- Download permissions -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <permission android:name="com.arjanvlek.oxygenupdater.permission.accessDownloadServiceRestarter"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.arjanvlek.oxygenupdater.permission.accessDownloadServiceRestarter"/>
 
     <!-- Push notification permissions -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -222,6 +226,18 @@
             android:name=".notifications.DelayedPushNotificationDisplayer"
             android:label="@string/delayed_push_notification_displayer_service_name"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- Background downloader service & receiver -->
+        <service android:name=".download.DownloadService"
+            android:label="@string/download_service_name"/>
+
+        <receiver
+            android:name=".download.DownloadServiceRestarter"
+            android:label="Restart downloader service when app gets stopped"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.arjanvlek.oxygenupdater.permission.accessDownloadServiceRestarter">
+        </receiver>
 
         <meta-data
             android:name="com.google.android.gms.version"

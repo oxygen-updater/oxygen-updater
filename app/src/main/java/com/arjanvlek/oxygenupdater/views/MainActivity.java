@@ -42,6 +42,7 @@ import java8.util.function.Consumer;
 
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_ADVANCED_MODE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOAD_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
@@ -160,6 +161,14 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createPushNotificationChannel();
             createProgressNotificationChannel();
+        }
+
+        // Remove "long" download ID in vavor of "int" id
+        try {
+            //noinspection unused var is needed to cast class
+            int downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1);
+        } catch (ClassCastException e) {
+            settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
         }
     }
 

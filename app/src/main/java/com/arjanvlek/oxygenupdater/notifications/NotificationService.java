@@ -69,7 +69,7 @@ public class NotificationService extends FirebaseMessagingService {
 
             scheduler.schedule(task.build());
         } catch (Exception e) {
-            Logger.applicationData = (ApplicationData) getApplication();
+            Logger.context = (ApplicationData) getApplication();
             Logger.logError(TAG, "Error dispatching push notification: " + e);
         }
     }

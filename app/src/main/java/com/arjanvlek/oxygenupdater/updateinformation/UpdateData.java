@@ -74,7 +74,11 @@ public class UpdateData implements Parcelable, FormattableUpdateData {
 
 
     public int getDownloadSize() {
-        return (downloadSize / 1048576 );
+        return downloadSize;
+    }
+
+    public int getDownloadSizeInMegabytes() {
+        return (downloadSize / 1048576);
     }
 
     @JsonProperty("download_size")

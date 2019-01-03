@@ -46,21 +46,16 @@
     <string name="download_error">"Ошибка загрузки"</string>
     <string name="download_error_close">"Закрыть"</string>
     <string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
-    <string name="download_error_directory">"Похоже, что на вашем устройстве недостаточно памяти. Если вы используете карту памяти, убедитесь, что ваше устройство не подключено к ПК, и карта памяти работает."</string>
     <string name="download_error_network">"Произошла ошибка сети во время загрузки. Проверьте подключение к интернету и попробуйте еще раз."</string>
     <string name="download_error_retry">"Попробовать снова"</string>
-    <string name="download_error_sd_card">"В вашем устройстве нет карты памяти. Пожалуйста, вставьте карту памяти в устройство и попробуйте загрузить обновление еще раз."</string>
     <string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
     <string name="download_failed">"Ошибка загрузки"</string>
     <string name="download_in_background">"Обновление будет загружаться в фоне…"</string>
     <string name="download_oxygen_os">"Версия Oxygen OS"</string>
-    <string name="download_paused_unknown">"Загрузка могла зависнуть. Попробуйте загрузить снова…"</string>
     <string name="download_pending">"Загрузка скоро начнется…"</string>
     <string name="download_permissions">"Нажмите Загрузить снова для загрузки обновления."</string>
     <string name="download_notification_error_network">"Ошибка сети. Проверьте подключение и попробуйте снова."</string>
     <string name="download_notification_error_storage_full">"Недостаточно места."</string>
-    <string name="download_notification_error_storage_not_found">"Отсоедините устройство от ПК и попробуйте снова."</string>
-    <string name="download_notification_error_sd_card_missing">"Вставьте карту памяти и попробуйте снова."</string>
     <string name="download_notification_error_corrupt">"Ошибка проверки файла. Проверьте подключение и попробуйте снова."</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, осталось около %2$d часов"</string>
     <string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, осталось меньше минуты"</string>
@@ -76,8 +71,6 @@
     <string name="download_verifying_error">"Файл поврежден"</string>
     <string name="download_verifying_start">"Проверка загруженного файла…"</string>
     <string name="download_waiting_for_network">"Ожидание подключения…"</string>
-    <string name="download_waiting_for_wifi">"Ожидание Wi-Fi подключения…"</string>
-    <string name="download_will_retry_soon">"Загрузка скоро продолжится…"</string>
 
     <!-- Settings strings -->
     <string name="settings">"Настройки"</string>
