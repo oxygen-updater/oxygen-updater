@@ -1,9 +1,10 @@
 package com.arjanvlek.oxygenupdater.updateinformation;
 
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -27,11 +28,12 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.download.DownloadHelper;
 import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
+import com.arjanvlek.oxygenupdater.download.DownloadReceiver;
+import com.arjanvlek.oxygenupdater.download.DownloadService;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener;
-import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
@@ -49,22 +51,9 @@ import org.joda.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import java8.util.Objects;
 import java8.util.function.Consumer;
-
-import static android.app.DownloadManager.ERROR_DEVICE_NOT_FOUND;
-import static android.app.DownloadManager.ERROR_FILE_ALREADY_EXISTS;
-import static android.app.DownloadManager.ERROR_FILE_ERROR;
-import static android.app.DownloadManager.ERROR_HTTP_DATA_ERROR;
-import static android.app.DownloadManager.ERROR_INSUFFICIENT_SPACE;
-import static android.app.DownloadManager.ERROR_TOO_MANY_REDIRECTS;
-import static android.app.DownloadManager.ERROR_UNHANDLED_HTTP_CODE;
-import static android.app.DownloadManager.PAUSED_QUEUED_FOR_WIFI;
-import static android.app.DownloadManager.PAUSED_UNKNOWN;
-import static android.app.DownloadManager.PAUSED_WAITING_FOR_NETWORK;
-import static android.app.DownloadManager.PAUSED_WAITING_TO_RETRY;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -101,21 +90,18 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     private Context context;
     private SettingsManager settingsManager;
-    private UpdateDownloader updateDownloader;
+    private UpdateDownloadListener downloadListener;
 
     private boolean isLoadedOnce;
     private boolean adsAreSupported = false;
 
     // In app message bar collections and identifiers.
-    private static final String KEY_HAS_DOWNLOAD_ERROR = "has_download_error";
-    private static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
-    private static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
+    public static final String KEY_HAS_DOWNLOAD_ERROR = "has_download_error";
+    public static final String KEY_DOWNLOAD_ERROR_TITLE = "download_error_title";
+    public static final String KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message";
+    public static final String KEY_DOWNLOAD_ERROR_RESUMABLE = "download_error_resumable";
     private List<ServerMessageBar> serverMessageBars = new ArrayList<>();
-
-    // BEGIN: Block of code added about known download issue
-    private AtomicBoolean downloadFailurePopupShown = new AtomicBoolean(false);
-    // END: Block of code added about known download issue
-
+    private DownloadReceiver downloadReceiver;
 
     /*
       -------------- ANDROID ACTIVITY LIFECYCLE METHODS -------------------
@@ -165,18 +151,22 @@ public class UpdateInformationFragment extends AbstractFragment {
     @Override
     public void onPause() {
         super.onPause();
+        if (downloadReceiver != null) unregisterDownloadReceiver();
         if (adView != null) adView.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if (isLoadedOnce) registerDownloadReceiver(this.downloadListener);
         if (adView != null) adView.resume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (downloadReceiver != null) unregisterDownloadReceiver();
+        if (getActivity() != null && isDownloadServiceRunning()) getActivity().stopService(new Intent(getContext(), DownloadService.class));
         if (adView != null) adView.destroy();
     }
 
@@ -235,12 +225,16 @@ public class UpdateInformationFragment extends AbstractFragment {
         SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
         serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion(), (updateData) -> {
-            if (!isLoadedOnce) updateDownloader = initDownloadManager(updateData);
+            if (!isLoadedOnce) {
+                downloadListener = buildDownloadListener(updateData);
+                registerDownloadReceiver(downloadListener);
+                DownloadService.performOperation(getActivity(), DownloadService.ACTION_GET_INITIAL_STATUS, updateData);
+            }
 
             // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
             if (!isLoadedOnce && getActivity() != null && getActivity().getIntent() != null && getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
                 Intent i = getActivity().getIntent();
-                Dialogs.showDownloadError(instance, updateDownloader, updateData, i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
+                Dialogs.showDownloadError(instance, updateData, i.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false), i.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
             }
 
             displayUpdateInformation(updateData, online, false);
@@ -358,7 +352,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             // Save update data for offline viewing
             settingsManager.savePreference(PROPERTY_OFFLINE_ID, updateData.getId());
             settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, updateData.getVersionNumber());
-            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.getDownloadSize());
+            settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.getDownloadSizeInMegabytes());
             settingsManager.savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.getDescription());
             settingsManager.savePreference(PROPERTY_OFFLINE_FILE_NAME, updateData.getFilename());
             settingsManager.savePreference(PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.getDownloadUrl());
@@ -431,7 +425,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         // Display download size.
         TextView downloadSizeView = rootView.findViewById(R.id.updateInformationDownloadSizeView);
-        downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), updateData.getDownloadSize()));
+        downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), updateData.getDownloadSizeInMegabytes()));
 
         // Display update description.
         String description = updateData.getDescription();
@@ -488,6 +482,10 @@ public class UpdateInformationFragment extends AbstractFragment {
         return (ImageButton) rootView.findViewById(R.id.updateInformationDownloadCancelButton);
     }
 
+    private ImageButton getDownloadPauseButton() {
+        return rootView.findViewById(R.id.updateInformationDownloadPauseButton);
+    }
+
 
     private TextView getDownloadStatusText() {
         return (TextView) rootView.findViewById(R.id.updateInformationDownloadDetailsView);
@@ -540,242 +538,185 @@ public class UpdateInformationFragment extends AbstractFragment {
      */
 
     /**
-     * Creates a {@link UpdateDownloader} and applies an {@link UpdateDownloadListener} to it to allow displaying update download progress and error messages.
+     * Creates an {@link UpdateDownloadListener}
      */
-    private UpdateDownloader initDownloadManager(final UpdateData updateData) {
-        return new UpdateDownloader(getActivity())
-                    .setUpdateDownloadListenerAndStartPolling(new UpdateDownloadListener() {
-                        @Override
-                        public void onDownloadManagerInit(UpdateDownloader caller) {
-                            if(isAdded()) {
-                                getDownloadCancelButton().setOnClickListener(v -> {
-                                    caller.cancelDownload(updateData);
-                                    DownloadStatus status = getDownloadStatus(caller, updateData);
-                                    initUpdateDownloadButton(updateData, status);
-                                    initInstallButton(updateData, status);
-                                });
-                            }
-                        }
+    private UpdateDownloadListener buildDownloadListener(final UpdateData updateData) {
+        return new UpdateDownloadListener() {
+            public void onInitialStatusUpdate() {
+                if (isAdded()) {
+                    getDownloadCancelButton().setOnClickListener(v -> {
+                        DownloadService.performOperation(getActivity(), DownloadService.ACTION_CANCEL_DOWNLOAD, updateData);
+                        initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                        initInstallButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                    });
 
-                        @Override
-                        public void onDownloadStarted(long downloadID) {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
+                    getDownloadPauseButton().setOnClickListener(v -> {
+                        getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
+                        DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
+                        initUpdateDownloadButton(updateData, DownloadStatus.PAUSED);
+                        initInstallButton(updateData, DownloadStatus.PAUSED);
+                    });
+                }
+            }
 
-                                showDownloadProgressBar();
-                                getDownloadProgressBar().setIndeterminate(true);
+            @Override
+            public void onDownloadStarted() {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
 
-                                getDownloadStatusText().setText(getString(R.string.download_pending));
-                            }
-                        }
+                    showDownloadProgressBar();
 
-                        @Override
-                        public void onDownloadPending() {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
+                    getDownloadPauseButton().setOnClickListener(v -> {
+                        getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
+                        DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
+                        initUpdateDownloadButton(updateData, DownloadStatus.PAUSED);
+                        initInstallButton(updateData, DownloadStatus.PAUSED);
+                    });
+                }
+            }
 
-                                showDownloadProgressBar();
-                                getDownloadProgressBar().setIndeterminate(true);
+            @Override
+            public void onDownloadProgressUpdate(DownloadProgressData downloadProgressData) {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
 
-                                getDownloadStatusText().setText(getString(R.string.download_pending));
-                            }
-                        }
+                    showDownloadProgressBar();
+                    getDownloadProgressBar().setIndeterminate(false);
+                    getDownloadProgressBar().setProgress(downloadProgressData.getProgress());
 
-                        @Override
-                        public void onDownloadProgressUpdate(DownloadProgressData downloadProgressData) {
-                            if(isAdded()) {
-                                getDownloadButton().setText(getString(R.string.downloading));
-                                getDownloadButton().setClickable(false);
+                    if (downloadProgressData.isWaitingForConnection()) {
+                        getDownloadPauseButton().setVisibility(GONE);
+                        getDownloadStatusText().setText(getString(R.string.download_waiting_for_network, downloadProgressData.getProgress()));
+                        return;
+                    }
 
-                                showDownloadProgressBar();
-                                getDownloadProgressBar().setIndeterminate(false);
-                                getDownloadProgressBar().setProgress(downloadProgressData.getProgress());
+                    getDownloadPauseButton().setVisibility(VISIBLE);
 
-                                if(downloadProgressData.getTimeRemaining() == null) {
-                                    getDownloadStatusText().setText(getString(R.string.download_progress_text_unknown_time_remaining, downloadProgressData.getProgress()));
-                                } else {
-                                    getDownloadStatusText().setText(downloadProgressData.getTimeRemaining().toString(getApplicationData()));
-                                }
-                            }
-                        }
+                    if (downloadProgressData.getTimeRemaining() == null) {
+                        getDownloadStatusText().setText(getString(R.string.download_progress_text_unknown_time_remaining, downloadProgressData.getProgress()));
+                    } else {
+                        getDownloadStatusText().setText(downloadProgressData.getTimeRemaining().toString(getApplicationData()));
+                    }
+                }
+            }
 
-                        @Override
-                        public void onDownloadPaused(int statusCode) {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
+            @Override
+            public void onDownloadPaused(boolean pausedByUser, DownloadProgressData progressData) {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.PAUSED);
 
-                                showDownloadProgressBar();
+                    showDownloadProgressBar();
 
-                                switch (statusCode) {
-                                    case PAUSED_QUEUED_FOR_WIFI:
-                                        getDownloadStatusText().setText(getString(R.string.download_waiting_for_wifi));
-                                        break;
-                                    case PAUSED_WAITING_FOR_NETWORK:
-                                        getDownloadStatusText().setText(getString(R.string.download_waiting_for_network));
-                                        break;
-                                    case PAUSED_WAITING_TO_RETRY:
-                                        getDownloadStatusText().setText(getString(R.string.download_will_retry_soon));
-                                        // BEGIN: Block of code added about known download issue
-                                        if (!downloadFailurePopupShown.get()) {
-                                            Logger.logWarning("UpdateInformationFragment", "Download of update failed with status PAUSED_WAITING_TO_RETRY");
+                    if (progressData.isWaitingForConnection()) {
+                        onDownloadProgressUpdate(progressData);
+                        return;
+                    }
 
-                                            Runnable onDownloadInBrowserClicked = () -> {
-                                                if (updateData == null || updateData.getDownloadUrl() == null || updateData.getDownloadUrl().isEmpty() || updateDownloader == null) {
-                                                    return;
-                                                }
+                    if (pausedByUser) {
+                        getDownloadProgressBar().setProgress(progressData.getProgress());
+                        getDownloadStatusText().setText(getString(R.string.download_progress_text_paused, progressData.getProgress()));
+                        getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
+                        getDownloadPauseButton().setOnClickListener(v -> {
+                            getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause_download, null));
+                            DownloadService.performOperation(getActivity(), DownloadService.ACTION_RESUME_DOWNLOAD, updateData);
+                            initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
+                            initInstallButton(updateData, DownloadStatus.DOWNLOADING);
+                        });
+                    } else {
+                        getDownloadStatusText().setText(getString(R.string.download_pending));
+                    }
+                }
+            }
 
-                                                updateDownloader.cancelDownload(updateData);
+            @Override
+            public void onDownloadComplete() {
+                if (isAdded()) {
+                    Toast.makeText(getApplicationData(), getString(R.string.download_verifying_start), Toast.LENGTH_LONG).show();
+                }
+            }
 
-                                                try {
-                                                    Intent i = new Intent();
-                                                    i.setAction(Intent.ACTION_VIEW);
-                                                    i.setData(Uri.parse(updateData.getDownloadUrl()));
-                                                    startActivity(i);
-                                                } catch (Exception e) {
-                                                    Logger.logError("UpdateInformationFragment", "Error retrying failed download using the browser", e);
-                                                    Toast.makeText(getApplicationData(), getApplicationData().getString(R.string.error_cannot_download_in_browser), Toast.LENGTH_LONG).show();
-                                                }
+            @Override
+            public void onDownloadCancelled() {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
-                                                downloadFailurePopupShown.compareAndSet(true, false);
-                                            };
+                    hideDownloadProgressBar();
+                }
+            }
 
-                                            Runnable onDownloadInAppClicked = () -> {
-                                                if (updateData == null || updateData.getDownloadUrl() == null || updateData.getDownloadUrl().isEmpty() || updateDownloader == null) {
-                                                    return;
-                                                }
+            @Override
+            public void onDownloadError(boolean isInternalError, boolean isStorageSpaceError, boolean isServerError) {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
-                                                updateDownloader.cancelDownload(updateData);
-                                                updateDownloader.downloadUpdate(updateData);
-                                                downloadFailurePopupShown.compareAndSet(true, false);
-                                            };
+                    hideDownloadProgressBar();
 
-                                            downloadFailurePopupShown.compareAndSet(false, true);
-                                            Dialogs.showDownloadIssuesPopup(getApplicationData(), getFragmentManager(), onDownloadInBrowserClicked, onDownloadInAppClicked);
-                                        }
-                                        // END: Block of code added about known download issue
-                                        break;
-                                    case PAUSED_UNKNOWN:
-                                        Logger.logWarning("UpdateInformationFragment", "Download of update failed with status PAUSED_UNKNOWN");
-                                        getDownloadStatusText().setText(getString(R.string.download_paused_unknown));
-                                        break;
-                                }
-                            }
-                        }
+                    if (isServerError) {
+                        showDownloadError(updateData, true, R.string.download_error_network);
+                    } else if (isStorageSpaceError) {
+                        showDownloadError(updateData, false, R.string.download_error_storage);
+                    } else {
+                        showDownloadError(updateData, false, R.string.download_error_internal);
+                    }
+                }
+            }
 
-                        @Override
-                        public void onDownloadComplete() {
-                            if(isAdded()) {
-                                Toast.makeText(getApplicationData(), getString(R.string.download_verifying_start), Toast.LENGTH_LONG).show();
-                            }
-                        }
+            @Override
+            public void onVerifyStarted() {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.VERIFYING);
 
-                        @Override
-                        public void onDownloadCancelled() {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                    showDownloadProgressBar();
+                    getDownloadProgressBar().setIndeterminate(true);
+                    getDownloadStatusText().setText(getString(R.string.download_progress_text_verifying));
+                }
+            }
 
-                                hideDownloadProgressBar();
-                            }
-                        }
+            @Override
+            public void onVerifyError() {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
-                        @Override
-                        public void onDownloadError(UpdateDownloader caller, int statusCode) {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                    hideDownloadProgressBar();
 
-                                hideDownloadProgressBar();
+                    showDownloadError(updateData, false, R.string.download_error_corrupt);
+                }
+            }
 
-                                // Treat any HTTP status code exception (lower than 1000) as a network error.
-                                // Handle any other errors according to the error message.
-                                if (statusCode < 1000) {
-                                    showDownloadError(updateData, caller, R.string.download_error_network);
-                                } else {
-                                    switch (statusCode) {
-                                        case ERROR_UNHANDLED_HTTP_CODE:
-                                        case ERROR_HTTP_DATA_ERROR:
-                                        case ERROR_TOO_MANY_REDIRECTS:
-                                            showDownloadError(updateData, caller, R.string.download_error_network);
-                                            break;
-                                        case ERROR_FILE_ERROR:
-                                            showDownloadError(updateData, caller, R.string.download_error_directory);
-                                            break;
-                                        case ERROR_INSUFFICIENT_SPACE:
-                                            showDownloadError(updateData, caller, R.string.download_error_storage);
-                                            break;
-                                        case ERROR_DEVICE_NOT_FOUND:
-                                            showDownloadError(updateData, caller, R.string.download_error_sd_card);
-                                            break;
-                                        case ERROR_FILE_ALREADY_EXISTS:
-                                            initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADED);
-                                    }
-                                }
-                            }
-                        }
+            @Override
+            public void onVerifyComplete() {
+                if (isAdded()) {
+                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADED);
+                    initInstallButton(updateData, DownloadStatus.DOWNLOADED);
 
-                        @Override
-                        public void onVerifyStarted() {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.VERIFYING);
+                    hideDownloadProgressBar();
 
-                                showDownloadProgressBar();
-                                getDownloadProgressBar().setIndeterminate(true);
-                                getDownloadStatusText().setText(getString(R.string.download_progress_text_verifying));
-                            }
-                        }
+                    Toast.makeText(getApplicationData(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
 
-                        @Override
-                        public void onVerifyError(UpdateDownloader caller) {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                    ActivityLauncher launcher = new ActivityLauncher(getActivity());
+                    launcher.UpdateInstallation(true, updateData);
+                }
+            }
+        };
+    }
 
-                                hideDownloadProgressBar();
-
-                                showDownloadError(updateData, caller, R.string.download_error_corrupt);
-                            }
-                        }
-
-                        @Override
-                        public void onVerifyComplete() {
-                            if(isAdded()) {
-                                initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADED);
-                                initInstallButton(updateData, DownloadStatus.DOWNLOADED);
-
-                                hideDownloadProgressBar();
-
-                                Toast.makeText(getApplicationData(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
-
-                                ActivityLauncher launcher = new ActivityLauncher(getActivity());
-                                launcher.UpdateInstallation(true, updateData);
-                            }
-                        }
-                    }, updateData);
-        }
-
-    private void showDownloadError(UpdateData updateData, UpdateDownloader updateDownloader, @StringRes int message) {
-        Dialogs.showDownloadError(this, updateDownloader, updateData, R.string.download_error, message);
+    private void showDownloadError(UpdateData updateData, boolean isResumeable, @StringRes int message) {
+        Dialogs.showDownloadError(this, updateData, isResumeable, R.string.download_error, message);
     }
 
 
     private enum DownloadStatus {
-        NOT_DOWNLOADING, DOWNLOADING, DOWNLOADED, VERIFYING
+        NOT_DOWNLOADING, DOWNLOADING, DOWNLOADED, VERIFYING, PAUSED
     }
 
-    private DownloadStatus getDownloadStatus(UpdateDownloader updateDownloader, UpdateData updateData) {
-        if (updateDownloader == null) {
-            return DownloadStatus.NOT_DOWNLOADING;
-        }
-
-        if(updateDownloader.checkIfUpdateIsDownloaded(updateData)) {
+    private DownloadStatus getDownloadStatus(UpdateData updateData) {
+        if (new DownloadHelper(getContext()).checkIfUpdateIsDownloaded(updateData)) {
             return DownloadStatus.DOWNLOADED;
-        } else if(updateDownloader.checkIfAnUpdateIsBeingVerified()) {
+        } else if(DownloadService.isVerifying.get()) {
             return DownloadStatus.VERIFYING;
         }
 
         return DownloadStatus.NOT_DOWNLOADING;
-    }
-
-    private DownloadStatus getDownloadStatus(UpdateData updateData) {
-        return getDownloadStatus(this.updateDownloader, updateData);
     }
 
     private void initUpdateDownloadButton(UpdateData updateData, DownloadStatus downloadStatus) {
@@ -802,6 +743,12 @@ public class UpdateInformationFragment extends AbstractFragment {
                 downloadButton.setClickable(false);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
                 break;
+            case PAUSED:
+                downloadButton.setText(getString(R.string.paused));
+                downloadButton.setEnabled(true);
+                downloadButton.setClickable(false);
+                downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+                break;
             case DOWNLOADED:
                 downloadButton.setText(getString(R.string.downloaded));
                 downloadButton.setEnabled(true);
@@ -819,7 +766,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     private void initInstallButton(UpdateData updateData, DownloadStatus downloadStatus) {
         Button installButton = rootView.findViewById(R.id.updateInstallationInstructionsButton);
-        if(downloadStatus != DownloadStatus.DOWNLOADED) {
+        if (downloadStatus != DownloadStatus.DOWNLOADED) {
             installButton.setVisibility(GONE);
         } else {
             if (getActivity() == null) {
@@ -828,15 +775,8 @@ public class UpdateInformationFragment extends AbstractFragment {
 
             installButton.setVisibility(VISIBLE);
             installButton.setOnClickListener(v -> {
-                boolean isDownloaded = false;
-
-                if (updateDownloader != null) {
-                    isDownloaded = updateDownloader.checkIfUpdateIsDownloaded(updateData);
-                }
-
-                ((MainActivity) getActivity()).getActivityLauncher().UpdateInstallation(isDownloaded, updateData);
+                ((MainActivity) getActivity()).getActivityLauncher().UpdateInstallation(true, updateData);
                 LocalNotifications.hideDownloadCompleteNotification(getActivity());
-
             });
         }
     }
@@ -861,11 +801,15 @@ public class UpdateInformationFragment extends AbstractFragment {
                 }
 
                 if (mainActivity.hasDownloadPermissions()) {
-                    updateDownloader.downloadUpdate(updateData);
+                    DownloadService.performOperation(getActivity(), DownloadService.ACTION_DOWNLOAD_UPDATE, updateData);
+                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
+                    showDownloadProgressBar();
+                    getDownloadProgressBar().setIndeterminate(true);
+                    getDownloadStatusText().setText(getString(R.string.download_pending));
                 } else {
                     mainActivity.requestDownloadPermissions(granted -> {
                         if (granted) {
-                            updateDownloader.downloadUpdate(updateData);
+                            DownloadService.performOperation(getActivity(), DownloadService.ACTION_DOWNLOAD_UPDATE, updateData);
                         }
                     });
                 }
@@ -889,11 +833,44 @@ public class UpdateInformationFragment extends AbstractFragment {
         public void onClick(View v) {
             Dialogs.showUpdateAlreadyDownloadedMessage(updateData, targetFragment, (ignored) -> {
                 if (updateData != null) {
-                    updateDownloader.deleteDownload(updateData);
+                    DownloadService.performOperation(getActivity(), DownloadService.ACTION_DELETE_DOWNLOADED_UPDATE, updateData);
                     initUpdateDownloadButton(updateData, UpdateInformationFragment.DownloadStatus.NOT_DOWNLOADING);
                     initInstallButton(updateData, DownloadStatus.NOT_DOWNLOADING);
                 }
             });
         }
+    }
+
+    private void registerDownloadReceiver(UpdateDownloadListener downloadListener) {
+        IntentFilter filter = new IntentFilter(DownloadReceiver.ACTION_DOWNLOAD_EVENT);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        this.downloadReceiver = new DownloadReceiver(downloadListener);
+
+        if (getActivity() !=  null) {
+            getActivity().registerReceiver(this.downloadReceiver, filter);
+        }
+    }
+
+    private void unregisterDownloadReceiver() {
+        if (getActivity() != null) {
+            getActivity().unregisterReceiver(this.downloadReceiver);
+            this.downloadReceiver = null;
+        }
+    }
+
+    private boolean isDownloadServiceRunning() {
+        if (getActivity() == null) {
+            return false;
+        }
+
+        ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (DownloadService.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

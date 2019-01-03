@@ -7,6 +7,8 @@ import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.downloader.PRDownloader;
+import com.downloader.PRDownloaderConfig;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -64,12 +66,21 @@ public class ApplicationData extends Application {
         } catch (Exception e) {
             Logger.logError(false, TAG, "Failed to set up logger: ", e);
         }
+
+        PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
+                .setDatabaseEnabled(true)
+                .setUserAgent(APP_USER_AGENT)
+                .setConnectTimeout(30_000)
+                .setReadTimeout(120_000)
+                .build();
+
+        PRDownloader.initialize(getApplicationContext(), config);
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        Logger.applicationData = null;
+        Logger.context = null;
     }
 
     public ServerConnector getServerConnector() {

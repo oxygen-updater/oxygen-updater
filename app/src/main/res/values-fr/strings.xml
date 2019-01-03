@@ -39,6 +39,8 @@
     <string name="download">"Téléchargement"</string>
     <string name="downloaded">"Téléchargé"</string>
     <string name="downloading">"Téléchargement en cours …"</string>
+    <string name="paused">"Téléchargement en pause …"</string>
+
     <string name="download_already_downloaded">"La mise à jour a déjà été téléchargée et est prête à être installée."</string>
     <string name="download_complete">"Téléchargement terminé"</string>
     <string name="download_complete_notification">"Téléchargement terminé. Appuyez pour commencer l'installation."</string>
@@ -46,21 +48,21 @@
     <string name="download_error">"Erreur de téléchargement"</string>
     <string name="download_error_close">"Fermer"</string>
     <string name="download_error_corrupt">"Le fichier de mise à jour est endommagé ! Essayez de le télécharger à nouveau."</string>
-    <string name="download_error_directory">"Il semblerait qu'il n'y ait pas de place disponible sur votre périphérique. Si vous avez une carte SD assurez-vous que votre périphérique ne soit pas connecté à un ordinateur et que la carte SD fonctionne."</string>
-    <string name="download_error_network">"Une erreur réseau s'est produite pendant le téléchargement de la mise à jour. Assurez vous que votre connexion Internet fonctionne et réessayez de télécharger la mise à jour."</string>
+    <string name="download_error_network">Une erreur réseau s\'est produite pendant le téléchargement de la mise à jour. Le téléchargement va reprendre. automatiquement.</string>
+    <string name="download_error_server">Une erreur serveur s\'est produite pendant le téléchargement de la mise à jour. Réessayez de la télécharger.</string>
+    <string name="download_error_internal">Malheureusement, une erreur critique s\'est produite pendant le téléchargement de la mise à jour. Réessayez de la télécharger. Si le problème persiste veuillez contacter le développeur pour obtenir de l\'assistance.</string>
     <string name="download_error_retry">"Réessayer"</string>
-    <string name="download_error_sd_card">"Il n'y a pas de carte SD présente dans votre périphérique. Veuillez en insérer une et essayez de télécharger la mise à jour à nouveau."</string>
+    <string name="download_error_resume">"Continuer"</string>
     <string name="download_error_storage">"Il n'y a pas assez d'espace disponible sur votre périphérique pour télécharger la mise à jour. Supprimez quelques fichiers et réessayez."</string>
     <string name="download_failed">"Le téléchargement a échoué"</string>
-    <string name="download_in_background">Le téléchargement a commencé</string>
+    <string name="download_in_background">Oxygen Updater fonctionne en arrière-plan</string>
     <string name="download_oxygen_os">"Version d'Oxygen OS"</string>
-    <string name="download_paused_unknown">"Le téléchargement est en pause pour une raison inconnue. Essayez de retélécharger la mise à jour."</string>
     <string name="download_pending">"Le téléchargement va bientôt commencer …"</string>
     <string name="download_permissions">"Cliquez sur Télécharger à nouveau pour télécharger la mise à jour."</string>
-    <string name="download_notification_error_network">"Erreur réseau. Vérifiez votre connexion et réessayez."</string>
+    <string name="download_notification_error_network">Le téléchargement est en pause suite à une perte de connection. Il reprendra dès que possible.</string>
+    <string name="download_notification_error_server">Erreur serveur pendant le téléchargement. Veuillez le relancer.</string>
+    <string name="download_notification_error_internal">Erreur critique pendant le téléchargement. Redémarrez-le ou contactez le développeur.</string>
     <string name="download_notification_error_storage_full">"Espace de stockage insuffisant."</string>
-    <string name="download_notification_error_storage_not_found">"Déconnectez votre périphérique de votre ordinateur et réessayez."</string>
-    <string name="download_notification_error_sd_card_missing">"Insérez une carte SD et réessayez."</string>
     <string name="download_notification_error_corrupt">"La vérification du fichier a échouée. Vérifiez votre connexion et réessayez."</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, environ %2$d heures restantes"</string>
     <string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, moins d'une minute restante"</string>
@@ -70,14 +72,13 @@
     <string name="download_progress_text_seconds_remaining">"%1$d%%, quelques secondes restantes"</string>
     <string name="download_progress_text_unknown_time_remaining">"%1$d%%, estimation du temps restant en cours …"</string>
     <string name="download_progress_text_verifying">"100%, vérification du fichier en cours …"</string>
+    <string name="download_progress_text_paused">%1$d%%, en pause</string>
     <string name="download_size_megabyte">"%1$d Mb"</string>
     <string name="download_unknown_update_name">"Mise à jour d'Oxygen OS"</string>
     <string name="download_verifying">"Vérification …"</string>
     <string name="download_verifying_error">"Le fichier est endommagé"</string>
     <string name="download_verifying_start">"Le téléchargement va maintenant être vérifié …"</string>
     <string name="download_waiting_for_network">"En attente d'une connexion réseau …"</string>
-    <string name="download_waiting_for_wifi">"En attente d'une connexion Wi-Fi"</string>
-    <string name="download_will_retry_soon">"Le téléchargement va bientôt reprendre …"</string>
 
     <!-- Settings strings -->
     <string name="settings">"Réglages"</string>
@@ -295,7 +296,7 @@ Si vous aimez mon application, évaluez-la sur le Play Store maintenant :"</stri
     <string name="about_version">"Version: %1$s"</string>
 
     <!-- LocalNotifications strings -->
-    <string name="notification_new_device">"Nouveau périphérique réalisé ! Le %1$s est maintenant supporté !"</string>
+    <string name="notification_new_device">"Nouveau périphérique ajouté  ! Le %1$s est maintenant supporté !"</string>
     <string name="notification_new_device_short">"Ouvrez l'application pour choisir ce périphérique."</string>
     <string name="notification_no_notification_support">"Installez ou mettez à jour les services Google Play pour activer les notifications push."</string>
     <string name="notification_version_title">"Mise à jour système disponible"</string>

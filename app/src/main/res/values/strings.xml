@@ -39,6 +39,7 @@
     <string name="download">Download</string>
     <string name="downloaded">Downloaded</string>
     <string name="downloading">Downloading…</string>
+    <string name="paused">Paused</string>
 
     <string name="download_already_downloaded">The update was already downloaded. It is ready to get installed.</string>
     <string name="download_complete">Download complete</string>
@@ -49,23 +50,23 @@
     <string name="download_error">Download Error</string>
     <string name="download_error_close">CLOSE</string>
     <string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
-    <string name="download_error_directory">It looks like there is no storage available on your device. If you have an SD card, please make sure your device is not connected to a PC and make sure the SD card is working.</string>
-    <string name="download_error_network">A network error occurred while downloading the update. Please make sure your Internet connection works and try downloading it again.</string>
+    <string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
+    <string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
+    <string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
     <string name="download_error_retry">RETRY</string>
-    <string name="download_error_sd_card">There is no SD card present in your device. Please insert an SD card into your device. After you have done so, try downloading the update again.</string>
+    <string name="download_error_resume">RESUME</string>
     <string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
     
     <string name="download_failed">Download failed</string>
-    <string name="download_in_background">Your update will be downloaded in the background…</string>
+    <string name="download_in_background">Oxygen Updater is running in the background</string>
     <string name="download_oxygen_os">Oxygen OS Version</string>
-    <string name="download_paused_unknown">Your download may be stuck. Try re-downloading the update…</string>
     <string name="download_pending">Your download will start soon…</string>
     <string name="download_permissions">Tap Download again to download the update.</string>
 
-    <string name="download_notification_error_network">Network error. Check your connection and try again.</string>
+    <string name="download_notification_error_network">Download paused due to lost connection. Will resume soon.</string>
+    <string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
+    <string name="download_notification_error_internal">Technical error while downloading. Restart the download or contact support.</string>
     <string name="download_notification_error_storage_full">Insufficient storage space.</string>
-    <string name="download_notification_error_storage_not_found">Disconnect the device from your computer and try again.</string>
-    <string name="download_notification_error_sd_card_missing">Insert an SD Card and try again.</string>
     <string name="download_notification_error_corrupt">File verification failed. Check your connection and try again.</string>
 
     <string name="download_progress_text_hours_remaining">%1$d%%, about %2$d hours remaining</string>
@@ -75,7 +76,9 @@
     <string name="download_progress_text_one_minute_remaining">%1$d%%, about a minute remaining</string>    
     <string name="download_progress_text_seconds_remaining">%1$d%%, a few seconds remaining</string>
     <string name="download_progress_text_unknown_time_remaining">%1$d%%, calculating time remaining…</string>
-    <string name="download_progress_text_verifying">100%, Verifying file…</string>
+    <string name="download_progress_text_verifying">100%, verifying file…</string>
+    <string name="download_progress_text_paused">%1$d%%, paused</string>
+    <string name="download_waiting_for_network">%1$d%%, waiting for a network connection…</string>
 
     <string name="download_size_megabyte">%1$d MB</string>
     <string name="download_unknown_update_name">Oxygen OS Update</string>
@@ -84,18 +87,6 @@
     <string name="download_verifying_error">File is damaged</string>
     <string name="download_verifying_start">Your download will now be verified…</string>
 
-    <string name="download_waiting_for_network">Waiting for a network connection…</string>
-    <string name="download_waiting_for_wifi">Waiting for a Wi-Fi connection…</string>
-    <string name="download_will_retry_soon">Your download will resume soon…</string>
-
-    <!-- 2.4.8 Temp downloading issues strings -->
-    <!-- BEGIN: Block of strings added about known download issue -->
-    <string name="error_download_issues_title" translatable="false">Download failed</string>
-    <string name="error_download_issues_explanation" translatable="false">The download has failed and needs to be restarted. Unfortunately, this seems to be an issue with the app, but the cause of it is currently not known.\n\nTherefore, it\'s recommended to download the update using your browser instead. Afterwards, use a File Manager app to move the update package file to the root of your storage location to install it.\n\nTap \"Download in browser\" to download the update via your browser, or tap \"Download via app\" to retry downloading within the app (this might fail again)</string>
-    <string name="download_in_browser" translatable="false">Download in browser</string>
-    <string name="download_in_app" translatable="false">Download in app</string>
-    <string name="error_cannot_download_in_browser" translatable="false">Cannot open your browser to download the update. Please make sure you have installed an up-to-date browser, such as Chrome or Firefox.</string>
-    <!-- END: Block of strings added about known download issue -->
 
     <!-- Settings strings-->
     <string name="settings">Settings</string>
@@ -337,6 +328,7 @@
     <string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
     <string name="root_install_logger_service_name">Update installation logger</string>
     <string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
+    <string name="download_service_name" translatable="false">Update downloader</string>
     <string name="log_uploader_service_name">Error reporting service</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>

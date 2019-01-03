@@ -39,6 +39,8 @@
     <string name="download">"Herunterladen"</string>
     <string name="downloaded">"Heruntergeladen"</string>
     <string name="downloading">"Herunterladen…"</string>
+    <string name="paused">"Pausiert"</string>
+
     <string name="download_already_downloaded">"Das Update wurde bereits heruntergeladen. Es kann nun installiert werden"</string>
     <string name="download_complete">"Download abgeschlossen"</string>
     <string name="download_complete_notification">"Download abgeschlossen. Tippe um die Installation zu starten."</string>
@@ -46,38 +48,38 @@
     <string name="download_error">"Download Fehler"</string>
     <string name="download_error_close">"SCHLIEẞEN"</string>
     <string name="download_error_corrupt">"Die heruntergeladene Update Datei ist beschädigt! Versuche sie erneut herunterzuladen."</string>
-    <string name="download_error_directory">"Es sieht so aus als wäre dein Speicherplatz voll. Wenn du eine SD Karte hast , dann versichere dich das dein Gerät nicht mit einem PC verbunden ist und die SD Karte funktioniert"</string>
-    <string name="download_error_network">"Ein Verbindungsfehler ist während dem herunterladen des Updates aufgetreten. Bitte versichere dich das deine Internet Verbindung einwandfrei funktioniert und Versuche es erneut herunterzuladen."</string>
+    <string name="download_error_network">"Ein Verbindungsfehler ist während dem herunterladen des Updates aufgetreten. Das heruntladen wird fortgesetzt."</string>
+    <string name="download_error_server">"Ein Serverfehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen."</string>
+    <string name="download_error_internal">"Ein App-fehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen, oder schicke ein Support-Mail wenn es wieder fehlschlagt."</string>
     <string name="download_error_retry">"ERNEUT VERSUCHEN"</string>
-    <string name="download_error_sd_card">"There is no SD card present in your device. Please insert an SD card into your device. After you have done so, try downloading the update again."</string>
+    <string name="download_error_resume">"FORTSETZENn"</string>
     <string name="download_error_storage">"Auf deinem Gerät ist nicht genügend Speicherplatz verfügbar um das Update herunterzuladen. Entferne ein paar Dateien und Versuche erneut es herunterzuladen."</string>
     <string name="download_failed">"Download fehlgeschlagen"</string>
-    <string name="download_in_background">"Das Update wird im Hintergrund weiter heruntergeladen…"</string>
+    <string name="download_in_background">"Oxygen Updater läuft im Hintergrund…"</string>
     <string name="download_oxygen_os">"Oxygen OS Version"</string>
-    <string name="download_paused_unknown">"Der Download scheint zu hängen. Versuche das Update erneut herunterzuladen…"</string>
     <string name="download_pending">"Der Download wird startet später…"</string>
     <string name="download_permissions">"Drücke auf erneut herunterzuladen und das Update herunterzuladen."</string>
-    <string name="download_notification_error_network">"Netzwerk Fehler. Überprüfe deine Verbindung und versuche es erneut."</string>
+    <string name="download_notification_error_network">"Netzwerk nicht Verfügbar. Herunterladen wird fortgesetzt."</string>
+    <string name="download_notification_error_server">"Netzwerk Fehler. Überprüfe deine Verbindung und versuche es erneut."</string>
+    <string name="download_notification_error_internal">"App-Fehler. Versuche es erneut oder schicke ein Support-Versuch."</string>
     <string name="download_notification_error_storage_full">"Nicht genügend Speicherplatz."</string>
-    <string name="download_notification_error_storage_not_found">"Trenne das Gerät vom Computer und Versuche es erneut."</string>
-    <string name="download_notification_error_sd_card_missing">"Lege eine SD Karte ein und Versuche es erneut."</string>
     <string name="download_notification_error_corrupt">"Datei Verifikation fehlgeschlagen. Überprüfe deine Verbindung und versuche es erneut."</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, noch %2$d Stunden"</string>
     <string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, weniger als eine Minute"</string>
     <string name="download_progress_text_minutes_remaining">"%1$d%%, noch %2$d Minuten"</string>
-    <string name="download_progress_text_one_hour_remaining">"%1$d%% noch eine Stunde "</string>
-    <string name="download_progress_text_one_minute_remaining">"%1$d%% noch eine Minute"</string>
-    <string name="download_progress_text_seconds_remaining">"%1$d%% noch ein paar Sekunden"</string>
-    <string name="download_progress_text_unknown_time_remaining">"%1$d%% Download Zeit wird berechnet…"</string>
+    <string name="download_progress_text_one_hour_remaining">"%1$d%%, noch eine Stunde "</string>
+    <string name="download_progress_text_one_minute_remaining">"%1$d%%, noch eine Minute"</string>
+    <string name="download_progress_text_seconds_remaining">"%1$d%%, noch ein paar Sekunden"</string>
+    <string name="download_progress_text_unknown_time_remaining">"%1$d%%, download Zeit wird berechnet…"</string>
     <string name="download_progress_text_verifying">"100%, Dateiverifizierung…"</string>
+    <string name="download_progress_text_paused">"100%, pausiert…"</string>
+    <string name="download_waiting_for_network">"%1$d%%, warten auf Netzwerk…"</string>
+
     <string name="download_size_megabyte">"%1$d MB"</string>
     <string name="download_unknown_update_name">"Oxygen OS Update"</string>
     <string name="download_verifying">"Verifizieren…"</string>
     <string name="download_verifying_error">"Datei ist beschädigt"</string>
     <string name="download_verifying_start">"Dein Download wird verifiziert…"</string>
-    <string name="download_waiting_for_network">"Warten auf Netzwerk Verbindung…"</string>
-    <string name="download_waiting_for_wifi">"Warten auf WLAN Verbindung…"</string>
-    <string name="download_will_retry_soon">"Dein Download wird später fortgesetzt…"</string>
 
     <!-- Settings strings -->
     <string name="settings">"Einstellungen"</string>
@@ -413,5 +415,6 @@ No root access? Press \"Close\" and continue using the app."</string>
     <string name="update_information_description_not_available">"Es gibt keine offiziellen Informationen über die Neuerungen in diesem Update. Normalerweise beinhaltet solch ein Update Bug fixes, Performance Verbesserungen, und / oder wichtige Sicherheitsupdates für dein Gerät."</string>
     <string name="error_google_play_button_text">"Google Play"</string>
     <string name="delayed_push_notification_displayer_service_name">"Push Benachrichtigungsdienst"</string>
+    <string name="download_service_name">"Update-Downloader"</string>
     <string name="log_uploader_service_name">"Fehlermeldungsdienst"</string>
 </resources>

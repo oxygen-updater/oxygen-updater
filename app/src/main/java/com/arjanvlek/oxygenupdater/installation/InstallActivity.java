@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.download.DownloadHelper;
 import com.arjanvlek.oxygenupdater.installation.automatic.InstallationStatus;
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException;
@@ -205,7 +205,7 @@ public class InstallActivity extends AppCompatActivity {
                         settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
                         settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
                         settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
-                        UpdateInstaller.installUpdate(getApplication(), UpdateDownloader.getFilePath(updateData), additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
+                        UpdateInstaller.installUpdate(getApplication(), DownloadHelper.getFilePath(updateData), additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
                         return null;
                     } catch (UpdateInstallationException e) {
                         return e.getMessage();
@@ -265,7 +265,7 @@ public class InstallActivity extends AppCompatActivity {
 
         if (additionalZipFilePath != null) {
             // Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
-            text = additionalZipFilePath.replace(Environment.getExternalStoragePublicDirectory(UpdateDownloader.DIRECTORY_ROOT).getAbsolutePath() + File.separator, "");
+            text = additionalZipFilePath.replace(Environment.getExternalStoragePublicDirectory(DownloadHelper.DIRECTORY_ROOT).getAbsolutePath() + File.separator, "");
             String extension = text.substring(text.length() - 4, text.length());
             if (!extension.equals(EXTENSION_ZIP)) {
                 Toast.makeText(getApplication(), R.string.install_zip_file_wrong_file_type, Toast.LENGTH_LONG).show();

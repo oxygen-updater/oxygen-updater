@@ -5,18 +5,24 @@ import android.content.Context;
 
 import com.arjanvlek.oxygenupdater.R;
 
-import static com.arjanvlek.oxygenupdater.download.UpdateDownloader.NOT_SET;
+import java.io.Serializable;
 
-public class DownloadProgressData {
+public class DownloadProgressData implements Serializable {
 
     private final TimeRemaining timeRemaining;
 
     private final int progress;
 
+    private final boolean waitingForConnection;
 
     DownloadProgressData(long numberOfSecondsRemaining, int progress) {
+        this(numberOfSecondsRemaining, progress, false);
+    }
+
+    DownloadProgressData(long numberOfSecondsRemaining, int progress, boolean waitingForConnection) {
         this.timeRemaining = calculateTimeRemaining((int)numberOfSecondsRemaining);
         this.progress = progress;
+        this.waitingForConnection = waitingForConnection;
     }
 
     public TimeRemaining getTimeRemaining() {
@@ -27,8 +33,12 @@ public class DownloadProgressData {
         return progress;
     }
 
+    public boolean isWaitingForConnection() {
+        return waitingForConnection;
+    }
+
     private TimeRemaining calculateTimeRemaining(int numberOfSecondsRemaining) {
-        if(numberOfSecondsRemaining == NOT_SET) {
+        if(numberOfSecondsRemaining == DownloadService.NOT_SET) {
             return null;
         }
 
@@ -37,7 +47,7 @@ public class DownloadProgressData {
 
     @SuppressWarnings("WeakerAccess")
     // Can't be private, because UpdateInformationFragment calls this.
-    public class TimeRemaining {
+    public class TimeRemaining implements Serializable {
 
         private final int hoursRemaining;
         private final int minutesRemaining;

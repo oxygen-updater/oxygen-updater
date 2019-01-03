@@ -39,6 +39,7 @@
     <string name="download">Downloaden</string>
     <string name="downloaded">Gedownload</string>
     <string name="downloading">Downloaden…</string>
+    <string name="paused">Gepauzeerd</string>
 
     <string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
     <string name="download_complete">Download voltooid</string>
@@ -49,23 +50,23 @@
     <string name="download_error">Fout tijdens downloaden</string>
     <string name="download_error_close">SLUITEN</string>
     <string name="download_error_corrupt">De gedownloade update is beschadigd! Probeer de update opnieuw te downloaden.</string>
-    <string name="download_error_directory">Het lijkt erop dat er geen opslagruimte op je apparaat beschikbaar is. Als je een SD-kaart hebt, zorg dan dat je apparaat niet is verbonden met een PC en dat de SD-kaart werkt.</string>
-    <string name="download_error_network">Er was een netwerkprobleem tijdens het downloaden van de update. Controleer of je internetverbinding werkt en probeer het opnieuw.</string>
+    <string name="download_error_network">Er deed zich tijdens het downloaden van de update een netwerkprobleem voor. Het downloaden wordt automatisch hervat.</string>
+    <string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
+    <string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
     <string name="download_error_retry">OPNIEUW</string>
-    <string name="download_error_sd_card">Er is geen SD-kaart aanwezig in je apparaat. Plaats een SD-kaart in je apparaat. Probeer hierna de update opnieuw te downloaden.</string>
+    <string name="download_error_resume">HERVATTEN</string>
     <string name="download_error_storage">Er is onvoldoende opslagruimte op je apparaat beschikbaar om de update te downloaden. Verwijder één of meer bestanden en probeer het opnieuw te downloaden.</string>
 
     <string name="download_failed">Downloaden mislukt</string>
-    <string name="download_in_background">De update zal op de achtergrond worden gedownload…</string>
+    <string name="download_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
     <string name="download_oxygen_os">Oxygen OS-versie</string>    
-    <string name="download_paused_unknown">Je download is mogelijk vastgelopen. Probeer opnieuw te downloaden…</string>
     <string name="download_pending">Je download begint zometeen…</string>
     <string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
 
-    <string name="download_notification_error_network">Netwerkfout. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="download_notification_error_network">Downloaden gepauzeerd omdat de verbinding is verbroken. Wordt zometeen hervat.</string>
+    <string name="download_notification_error_server">Serverfout bij downloaden. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="download_notification_error_internal">App-fout bij downloaden. Controleer je verbinding en probeer het opnieuw, of neem contact op met de ontwikkelaar.</string>
     <string name="download_notification_error_storage_full">Onvoldoende opslagruimte.</string>
-    <string name="download_notification_error_storage_not_found">Verbreek de verbinding met je computer en probeer het opnieuw.</string>
-    <string name="download_notification_error_sd_card_missing">Plaats een SD-kaart en probeer het opnieuw.</string>
     <string name="download_notification_error_corrupt">Bestandscontrole mislukt. Controleer je verbinding en probeer het opnieuw.</string>
 
     <string name="download_progress_text_hours_remaining">%1$d%%, ongeveer %2$d uur resterend</string>
@@ -74,8 +75,10 @@
     <string name="download_progress_text_one_hour_remaining">%1$d%%, ongeveer 1 uur resterend</string>
     <string name="download_progress_text_one_minute_remaining">%1$d%%, ongeveer een minuut resterend</string>
     <string name="download_progress_text_seconds_remaining">%1$d%%, enkele seconden resterend</string>
-    <string name="download_progress_text_unknown_time_remaining">%1$d%%, Resterende tijd berekenen…</string>
-    <string name="download_progress_text_verifying">100 %,Controleren op fouten…</string>
+    <string name="download_progress_text_unknown_time_remaining">%1$d%%, resterende tijd berekenen…</string>
+    <string name="download_progress_text_verifying">100 %, controleren op fouten…</string>
+    <string name="download_progress_text_paused">%1$d%%, gepauzeerd…</string>
+    <string name="download_waiting_for_network">%1$d%%, wachten op een netwerkverbinding…</string>
 
     <string name="download_size_megabyte">%1$d MB</string>
     <string name="download_unknown_update_name">Oxygen OS-update</string>
@@ -83,11 +86,6 @@
     <string name="download_verifying">Controleren…</string>
     <string name="download_verifying_error">Bestand is beschadigd</string>
     <string name="download_verifying_start">Je download wordt nu gecontroleerd op fouten…</string>
-    
-    <string name="download_waiting_for_network">Wachten op een netwerkverbinding…</string>
-    <string name="download_waiting_for_wifi">Wachten op een Wi-Fi-verbinding…</string>
-    <string name="download_will_retry_soon">Je download wordt zometeen hervat…</string>
-    
     
     <!-- Settings strings -->
     <string name="settings">Instellingen</string>

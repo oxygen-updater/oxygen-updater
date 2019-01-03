@@ -13,9 +13,11 @@ import android.support.v4.app.FragmentTransaction;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.download.UpdateDownloader;
+import com.arjanvlek.oxygenupdater.download.DownloadHelper;
+import com.arjanvlek.oxygenupdater.download.DownloadService;
 import com.arjanvlek.oxygenupdater.internal.Worker;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 
 import java8.util.function.Consumer;
@@ -27,8 +29,8 @@ public class Dialogs {
      * @param title Title of the error message
      * @param message Contents of the error message
      */
-    public static void showDownloadError(final Fragment fragment, final UpdateDownloader updateDownloader, final UpdateData updateData, @StringRes int title, @StringRes int message) {
-        showDownloadError(fragment, updateDownloader, updateData, fragment.getString(title), fragment.getString(message));
+    public static void showDownloadError(final Fragment fragment, final UpdateData updateData, boolean isResumable, @StringRes int title, @StringRes int message) {
+        showDownloadError(fragment, updateData, isResumable, fragment.getString(title), fragment.getString(message));
     }
 
     /**
@@ -36,13 +38,13 @@ public class Dialogs {
      * @param title Title of the error message
      * @param message Contents of the error message
      */
-    public static void showDownloadError(final Fragment fragment, final UpdateDownloader updateDownloader, final UpdateData updateData, String title, String message) {
+    public static void showDownloadError(final Fragment fragment, final UpdateData updateData, boolean isResumable, String title, String message) {
         checkPreconditions(fragment, () -> {
             MessageDialog errorDialog = new MessageDialog()
                     .setTitle(title)
                     .setMessage(message)
                     .setPositiveButtonText(fragment.getString(R.string.download_error_close))
-                    .setNegativeButtonText(fragment.getString(R.string.download_error_retry))
+                    .setNegativeButtonText(isResumable ? fragment.getString(R.string.download_error_resume) : fragment.getString(R.string.download_error_retry))
                     .setClosable(true)
                     .setDialogListener(new MessageDialog.DialogListener() {
                         @Override
@@ -53,8 +55,9 @@ public class Dialogs {
                         @Override
                         public void onDialogNegativeButtonClick(DialogInterface dialogFragment) {
                             LocalNotifications.hideDownloadCompleteNotification(fragment.getActivity());
-                            updateDownloader.cancelDownload(updateData);
-                            updateDownloader.downloadUpdate(updateData);
+
+                            DownloadService.performOperation(fragment.getActivity(), DownloadService.ACTION_CANCEL_DOWNLOAD, updateData);
+                            DownloadService.performOperation(fragment.getActivity(), isResumable ? DownloadService.ACTION_RESUME_DOWNLOAD : DownloadService.ACTION_DOWNLOAD_UPDATE, updateData);
                         }
                     });
 
@@ -180,32 +183,6 @@ public class Dialogs {
 
         dialog.show(fm, "OU_AdvancedModeExplanation");
     }
-
-    // BEGIN: Block of code added about known download issue
-    public static void showDownloadIssuesPopup(final Context ctx, final FragmentManager fm, Runnable onDownloadInBrowserClicked, Runnable onDownloadInAppClicked) {
-        if (fm == null) return;
-
-        MessageDialog dialog = new MessageDialog()
-                .setTitle(ctx.getString(R.string.error_download_issues_title))
-                .setMessage(ctx.getString(R.string.error_download_issues_explanation))
-                .setClosable(true)
-                .setPositiveButtonText(ctx.getString(R.string.download_in_browser))
-                .setNegativeButtonText(ctx.getString(R.string.download_in_app))
-                .setDialogListener(new MessageDialog.DialogListener() {
-                    @Override
-                    public void onDialogPositiveButtonClick(DialogInterface dialogFragment) {
-                        onDownloadInBrowserClicked.run();
-                    }
-
-                    @Override
-                    public void onDialogNegativeButtonClick(DialogInterface dialogFragment) {
-                        onDownloadInAppClicked.run();
-                    }
-                });
-
-        dialog.show(fm, "OU_DownloadIssuePopup");
-    }
-    // END: Block of code added about known download issue
 
     private static void checkPreconditions(Fragment fragment, Worker callback) {
         if (fragment != null && fragment.getFragmentManager() != null && fragment.isAdded() && fragment.getActivity() != null && !fragment.getActivity().isFinishing())

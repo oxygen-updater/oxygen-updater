@@ -46,21 +46,16 @@
     <string name="download_error">"Errore nel download"</string>
     <string name="download_error_close">"CHIUDI"</string>
     <string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova. "</string>
-    <string name="download_error_directory">"Sembra non ci sia spazio disponibile. Se possiedi una SD, assicurato del corretto funzionamento di codesta e assicurati di non essere connesso a un PC. "</string>
     <string name="download_error_network">"È stato riscontrato un errore di rete. Assicurati di essere connessione ad una rete con accesso ad internet. "</string>
     <string name="download_error_retry">"RIPROVA"</string>
-    <string name="download_error_sd_card">"Non è presente nessuna scheda SD. Inseriscine una e ritenta l'aggiornamento. "</string>
     <string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta. "</string>
     <string name="download_failed">"Download fallito"</string>
     <string name="download_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
     <string name="download_oxygen_os">"Oxygen OS V. "</string>
-    <string name="download_paused_unknown">"Il tuo download potrebbe essere bloccato. Riprova a scaricare. "</string>
     <string name="download_pending">"Il tuo download inizierà subito… "</string>
     <string name="download_permissions">"Premi download di nuovo per scaricare l'aggiornamento. "</string>
     <string name="download_notification_error_network">"Errore di rete. Assicurati di essere connesso ad internet. "</string>
     <string name="download_notification_error_storage_full">"Spazio insufficiente. "</string>
-    <string name="download_notification_error_storage_not_found">"Disconettiti dal tuo computer e ritenta. "</string>
-    <string name="download_notification_error_sd_card_missing">"Inserisci una scheda SD. "</string>
     <string name="download_notification_error_corrupt">"Verifica file fallita. Assicurati di essere connesso a internet e riprova. "</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, circa %2$d ore rimanenti"</string>
     <string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, meno di un minuto… "</string>
@@ -76,8 +71,6 @@
     <string name="download_verifying_error">"File danneggiato "</string>
     <string name="download_verifying_start">"Il tuo download verrà verificato… "</string>
     <string name="download_waiting_for_network">"In attesa di una connessione… "</string>
-    <string name="download_waiting_for_wifi">"In attesa di una connessione Wi-Fi… "</string>
-    <string name="download_will_retry_soon">"Il tuo download ripartirà subito… "</string>
 
     <!-- Settings strings -->
     <string name="settings">"Impostazioni"</string>
