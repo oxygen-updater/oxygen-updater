@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Application title, Main activity title -->
+    <string name="app_name">"Oxygen_Updater"</string>
+    <string name="launcher_app_name">"Oxygen Updater"</string>
+
+    <!-- Update information strings -->
+    <string name="update">"Ažuriraj"</string>
+    <string name="update_information_close">"Zatvori"</string>
+    <string name="update_information_file_name">"Ime datoteke: %1$s"</string>
+    <string name="update_information_for">"za"</string>
+    <string name="update_information_header">"Ažuriraj podatke"</string>
+    <string name="update_information_header_short">"Podatci o ažuriranju"</string>
+    <string name="update_information_installed_update">"Zadnje ažuriranje sistema:"</string>
+    <string name="update_information_last_checked_on">"Zadnja provjera: %1$s"</string>
+    <string name="update_information_latest_available_update">"Novo ažuriranje sistema je dostupno:"</string>
+    <string name="update_information_no_update_data_available">"Nema novosti o ažuriranju"</string>
+    <string name="update_information_oxygen_os_version">"Verzija Oxygen OS-a: %1$s"</string>
+    <string name="update_information_system_is_up_to_date">"Tvoj sistem koristi najnovija ažuriranja."</string>
+    <string name="update_information_unknown_update_name">"Neimenovano ažuriranje za %1$s"</string>
+    <string name="update_information_version">"Verzija:"</string>
+    <string name="update_information_view_update_information">"Pogledaj podatke o ažuriranju"</string>
+
+    <!-- Server status warning strings -->
+    <string name="server_status_error">"Neke funcije ne rade"</string>
+    <string name="server_status_unreachable">"Serveri ne mogu biti dohvaćeni. Pokušajte refrešati stranicu"</string>
+    <string name="server_status_warning">"Neke funkcije bi mogle imati poteškoća s radom"</string>
+
+    <!-- New app version message strings -->
+    <string name="new_app_version">"Ažuriranje je dostupno! Version &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt; "</string>
+
+    <!-- Date and time strings -->
+    <string name="time_at">"u"</string>
+    <string name="time_today">"Danas"</string>
+    <string name="time_yesterday">"Jučer"</string>
+
+    <!-- Downloader strings -->
+    <string name="download">"Preuzimanje"</string>
+    <string name="downloaded">"Preuzeto"</string>
+    <string name="downloading">"Preuzimanje…"</string>
+    <string name="download_already_downloaded">"Preuzimanje je već bilo gotovo. Spremno je za instalaciju."</string>
+    <string name="download_complete">"Preuzimanje je gotovo."</string>
+    <string name="download_complete_notification">"Preuzimanje je gotovo. Pritisnite kako bi počeli sa instalacijom."</string>
+    <string name="download_description">"Oxygen Updater"</string>
+    <string name="download_error">"Greška pri preuzimanju"</string>
+    <string name="download_error_close">"ZATVORI"</string>
+    <string name="download_error_corrupt">"Podatak koji je preuzet je oštećen. Molimo pokušajte preuzeti ponovo."</string>
+    <string name="download_error_network">"Problem s internet mrežom se pojavio tijekom skidanja. Molimo provjerite svoju internet mrežu i pokušajte ponovno."</string>
+    <string name="download_error_retry">"PONOVI"</string>
+    <string name="download_error_storage">"Na vašem uređaju nema dovoljno mjesta za preuzimanje ažuriranje. Molimo vas da uklonite neke podatke i pokušate preuzeti ponovo"</string>
+    <string name="download_failed">"Preuzimanje nije uspjelo"</string>
+    <string name="download_in_background">"Tvoje ažuriranje će se skidati u pozadini…"</string>
+    <string name="download_oxygen_os">"Oxygen OS Verzija"</string>
+    <string name="download_pending">"Tvoje ažuriranje će početi uskoro…"</string>
+    <string name="download_permissions">"Pritisni preuzimanje ponovno da preuzmeš ažuriranje."</string>
+    <string name="download_notification_error_network">"Problem s mrežom. Provjerite svoju internet konekciju i pokušajte ponovno."</string>
+    <string name="download_notification_error_storage_full">"Nedovoljno prostora."</string>
+    <string name="download_notification_error_corrupt">"Verifikacija podatka neuspjela. Provjerite svoju internet konekciju i pokušajte ponovno."</string>
+    <string name="download_progress_text_hours_remaining">"%1$d%% od %2$d sati preostalo"</string>
+    <string name="download_progress_text_less_than_a_minute_remaining">"%1$d%% minuta preostalo."</string>
+    <string name="download_progress_text_minutes_remaining">"%1$d%% od %2$d minuta preostalo."</string>
+    <string name="download_progress_text_one_hour_remaining">"%1$d%%, oko jedan sat preostao"</string>
+    <string name="download_progress_text_one_minute_remaining">"%1$d%%, oko minuta ostala"</string>
+    <string name="download_progress_text_seconds_remaining">"%1$d%%, oko par sekundi ostalo"</string>
+    <string name="download_progress_text_unknown_time_remaining">"%1$d%%, računanje preostalog vremena…"</string>
+    <string name="download_progress_text_verifying">"100%, verifikacija podatka…"</string>
+    <string name="download_waiting_for_network">"%1$d%%, Čekanje na internet konekciju…"</string>
+
+    <string name="download_size_megabyte">"%1$d MB"</string>
+    <string name="download_unknown_update_name">"Oxygen OS Update"</string>
+    <string name="download_verifying">"Verifikacija…"</string>
+    <string name="download_verifying_error">"Podatak je oštećen"</string>
+    <string name="download_verifying_start">"Tvoje skidanje će sada biti verifikanovan."</string>
+
+    <!-- Settings strings -->
+    <string name="settings">"Postavke"</string>
+    <string name="settings_buy_button_buy">"Kupi (%1$s)"</string>
+    <string name="settings_buy_button_bought">"Kupljeno"</string>
+    <string name="settings_buy_button_not_possible">"Nedostupno"</string>
+    <string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free:"</string>
+    <string name="settings_category_other">"Ostalo:"</string>
+    <string name="settings_device">"Uređaj"</string>
+    <string name="settings_entered_incorrectly">"Greška pri spremanju postavki. Molimo vas odite natrag i odaberite svoj uređaj / ažurirajte metodu ažuriranja."</string>
+    <string name="settings_explanation_incremental_full_update">"inkrementalno ažuriranje može se skinuti jedino ako ste koristili najnoviji software prije izlaska tog ažuriranja.
+
+Puno verzija uvijek može biti instaliranja. - Neovisno o verziji softwarea koju koristite trenutno.
+
+Beta verzija OxygenOS-a može se instalirati jedino ako ste već na beta verziji"</string>
+    <string name="settings_explanation_update_methods">"Objašnjenje metoda ažuriranja."</string>
+    <string name="settings_header">"Izaberite svoj uređaj i metodu ažuriranja."</string>
+    <string name="settings_push">"Pošalji mi notifikaciju kada:"</string>
+    <string name="settings_push_from_server">"Važna poruka je dostupna"</string>
+    <string name="settings_push_new_version">"Dostupno je ažuriranje sistema"</string>
+    <string name="settings_push_new_device">"Novi uređaj je dostupan"</string>
+    <string name="settings_push_news">"Vijesti su objavljene"</string>
+    <string name="settings_saved">"Vaše postavke su automatski pohranjene."</string>
+    <string name="settings_saving">"Vaše postavke se još uvijek spremaju. Ako ovo potraje predugo: Provjerite vašu internet vezu , izađite iz aplikacije i pokrenite je ponovno."</string>
+    <string name="settings_server_messages">"Pokaži poruke u aplikaciji kada:"</string>
+    <string name="settings_server_messages_in_app">"Dostupne su vijesti ili upozorenje"</string>
+    <string name="settings_server_messages_new_app_version">"Dostupno je ažuriranje aplikacije"</string>
+    <string name="settings_other_options">"Ostale opcije:"</string>
+    <string name="settings_advanced_mode">"Napredni način"</string>
+    <string name="settings_advanced_mode_button_explanation">"Pritisnite dugme za više informacija o naprednom načinu"</string>
+    <string name="settings_advanced_mode_explanation">"Napredni način skriva poruku \"Vaš uređaj je na najnovijim ažuriranjima\" , dopušta vam preuzimanje i instalaciju svih ažuriranja, iako oni možda nisu kompatibilni sa vašim uređajem.
+
+To može biti korisno:
+- Ažuriranje"</string>
+    <string name="settings_update_method">"Metoda ažuriranja"</string>
+    <string name="settings_upload_logs">"Slanje podataka o grešci developeru"</string>
+
+    <!-- FAQ strings -->
+    <string name="faq">"FAQ"</string>
+    <string name="faq_menuitem">"FAQ"</string>
+    <string name="faq_no_network">"Nema konekcije."</string>
+    <string name="faq_no_network_text">"Trebati će vam internet konekcija da pogledate FAQ."</string>
+
+    <!-- First-time setup strings -->
+    <string name="setup">"Dobrodošli"</string>
+    <string name="setup_close_button">"Pokretanje aplikacije"</string>
+    <string name="setup_page_1_title">"Dobrodošli u Oxygen Updater!"</string>
+    <string name="setup_page_1_text">"Ova aplikacija vam omogućava:
+
+- Dobivanje ažuriranje brže na vaše OxygenOS uređaje
+
+- Lakše ažuriranje root-anih uređaja
+
+- Pregled novih mogućnosti vašeg software-a
+
+- Najnovije vijesti o OnePlus-u i OxygenOs-u
+
+Povucite lijevo za nastavak."</string>
+    <string name="setup_page_2_title">"Važna obavijest"</string>
+    <string name="setup_page_2_text">"Ovo nije službena aplikacija OnePlus-a. Koristite ovu aplikaciju na svoj rizik. OnePlus i developer ove aplikacije nisu dogovorni za vaše postupke, uključujući ikakvu štetu koristeči ovu aplikaciju."</string>
+    <string name="setup_page_3_title">"Izaberi svoj uređaj:"</string>
+    <string name="setup_page_3_text">"Vaš uređaj je uobičajno već izabran. Ako nije izaberite svoj uređaj gore.
+
+Povuci lijevo da nastaviš."</string>
+    <string name="setup_page_4_title">"Izaberi svoju metodu ažuriranja:"</string>
+    <string name="setup_page_4_text">"Uobičajno inkrementalno ažuriranje je pravi odabir ovdje zato što pruža puno brže i manje skidanja.
+
+Iako ono nije kompatibilno sa rootanim uređajima. Ako je vaš uređaj rootan izaberite puno ažuriranje.
+
+Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranje/a.
+
+Povuci lijevo da nastaviš."</string>
+    <string name="setup_page_5_title">"Spreman si da kreneš!"</string>
+    <string name="setup_page_5_text">"Uživajte u korištenju aplikacije!"</string>
+
+    <!-- Automatic install strings -->
+    <string name="install">"Instaliraj"</string>
+    <string name="install_checking_root">"Provjeravanje dali je vaš uređaj rootan…"</string>
+    <string name="install_grant_root_permissions">"Molimo odobrite root pristup kada je zatražen."</string>
+    <string name="install_going_back_not_possible">"Nažalost ne možete ići natrag više"</string>
+    <string name="install_preparing_installation">"Pripremanje ažuriranja…"</string>
+    <string name="install_recovery_installer_title">"Ažurirajte installer"</string>
+
+    <!-- Add 2 spaces to the end -->
+    <string name="install_recovery_backing_up">"Radimo rezervu vašeg uređaja. Ovo bi moglo potrajati!"</string>
+    <string name="install_recovery_clearing_cache">"Čisćenje cache particije…"</string>
+    <string name="install_recovery_done">"Gotovo. Vaš uređaj će se resetirati."</string>
+    <string name="install_recovery_installing_additional_zip">"Instalacija dodatnih ZIP fajlova…"</string>
+    <string name="install_recovery_installing_update">"Instalacija ažuriranja…"</string>
+    <string name="install_recovery_thank_you">"Hvala na korištenju Oxygen Updater-a. Ako vam se aplikacija sviđa molim vas ostavite 5 zvjezdice na Google Play-u"</string>
+    <string name="install_error_write_script_failed">"Instalacija ažuriranja nije uspjela. Provjerite jeste li dopustili root."</string>
+    <string name="install_options_backup">"Napravi rezervu mog uređaja"</string>
+    <string name="install_options_header">"Možete prilagoditi način instalacije tako da promijenite opcije pokazana dolje. Pritisnite \"Počni instalaciju\" da počnete instalaciju ažuriranja."</string>
+    <string name="install_options_keep_root">"Ostavi moj uređaj  root-an"</string>
+    <string name="install_options_reboot_after_install">"Resetiraj nakon instalacije"</string>
+    <string name="install_options_select_root_package">"Odaberi root paket za instalaciju…"</string>
+    <string name="install_options_start_install">"Počni instalaciju"</string>
+    <string name="install_options_title">"Odaberi opcije instaliranja"</string>
+    <string name="install_options_wipe_cache_partition">"Obriši cache particiju"</string>
+    <string name="install_options_explanation_title">"Što ove opcije znače?"</string>
+    <string name="install_options_explanation_backup">"Napravi rezervu mog uređaja:
+Kada odaberete ovu opciju, napraviti će se rezerva vašeg sistema, aplikacija i opcija prije instalacije. Ovo je dobro u slučaju da nešto krene po zlu"</string>
+    <string name="install_options_explanation_keep_root">"Ostavi moj uređaj root-an:
+Kada odaberete ovu opciju možete odabrati specifični root paket koji će se instalirati nakon ažuriranja. Ova opcija osigurava da vaš uređaj ostaje rootan. Molimo zapamtite da root paket mora biti kompatibilan s NOVOM verzijom OxygenOS koju instalirate!"</string>
+    <string name="install_options_explanation_wipe_cache">"Obriši cache particiju:
+Kada odaberete ovu opciju cache particija će biti obrisana nakon što je ažuriranje instalirano. Ova opcija osigurava da vaš uređaj radi optimalno i da se smanje šanse od dobivanja bugova napravljenih instaliranjem ovog ažuriranja."</string>
+    <string name="install_options_explanation_reboot">"Resetiraj nakon instalacije:
+Kada odaberete ovu opciju vaš uređaj će se automatski resetirati u OxygenOS nakon što je ažuriranje instalirano. Ako opcija nije upaljena vaš uređaj će ostati u Recovery Modu gdje možete instalirati dodatne pakete. "</string>
+    <string name="install_select_method_title">"Kako želite instalirati ovo ažuriranje?"</string>
+    <string name="install_select_method_automatic_title">"Automatska instalacija*"</string>
+    <string name="install_select_method_automatic_image">"Automatsko instaliranje slike"</string>
+    <string name="install_select_method_automatic_description">"Najlakši način instaliranja ažuriranja.
+Vaš uređaj će se restartirati da bi instalirao ažuriranja.
+
+* Zahtjeva root i TWRP recovery."</string>
+    <string name="install_select_method_manual_title">"ručna instalacija"</string>
+    <string name="install_select_method_manual_image">"ručno instaliranje slike"</string>
+    <string name="install_select_method_manual_description">"Pročitaj priručnik o instalaciji da bi naučio kako instalirati ažuriranje. Instalirati  čete ažuriranje koristeći se Recovery modom na vašem uređaju."</string>
+    <string name="install_temporary_error">"Došlo je do pogreške prilikom instalacije ažuriranja. Molimo pokušajte ponovno."</string>
+    <string name="install_verify_error_title">"Instalacija nije uspjela"</string>
+    <string name="install_verify_error_nothing_installed">"Greška tijekom instalacije. Nikakve promjene nisu napravljene na uređaju. Pokušajte instalirati ažuriranja ponovno."</string>
+    <string name="install_verify_error_unable_to_verify">"Neuspjela provjera dali je ažuriranje instalirano uspješno. Molimo otvorite Oxygen Updater da bi ste provjerili jeli ažuriranje instalirano uspješno."</string>
+    <string name="install_verify_error_wrong_version_installed">"Druga verzija OxygenOS-a je instalirana. Nemojte odabrati OxygenOS datoteku dok birate root paket u \"Ostavi moj uređaj rootan\" opciji."</string>
+    <string name="install_verify_success_title">"Instalacija završena"</string>
+    <string name="install_verify_success_message">"OxygenOS verzija %1$s je instalirana uspješno"</string>
+    <string name="install_zip_file_clear">"Očisti root paket datoteku"</string>
+    <string name="install_zip_file_pick">"Odaberi root paket datoteku"</string>
+    <string name="install_zip_file_placeholder">"Odaberi root paket…"</string>
+    <string name="install_zip_file_wrong_file_type">"Možete jedino odabrati zip datoteku. Molimo vas odaberite točnu datoteku."</string>
+
+    <!-- Install guide strings -->
+    <string name="install_guide_no_root">"Instalirajte ažuriranje kao što je prikazano u instalacijskom priručniku."</string>
+    <string name="install_guide_automatic_install_disabled">"Automatsko instaliranje je trenutačno onemogučeno zbog tehničkih poteškoća. Instalirajte ažuriranje kao što je prikazano u instalacijskom priručniku."</string>
+    <string name="install_guide">"instalacijski priručnik"</string>
+    <string name="install_guide_loading">"Učitavanje instalacijskog priručnika"</string>
+    <string name="install_guide_title">"Instalacijski priručnik - %1$d od %2$d "</string>
+    <string name="install_guide_image_description">"kontekstualna slika. Molimo pritisnite donji dio ekrana da čujete instalacijski priručnik"</string>
+    <string name="install_guide_header"><![CDATA["Povuci <—> da navigirate među stranicama"]]></string>
+    <string name="install_guide_tip">"- Preporučeno je zapisati sve korake jer čete trebati isključiti uređaj tijekom instalacije ažuriranja"</string>
+    <string name="install_guide_page_1_title">"Preuzmi ažuriranje"</string>
+    <string name="install_guide_page_1_text">"- Pritisnite dugme za preuzimanje kako bi započeli preuzimanje ažuriranja.
+
+- Status preuzimanja biti će prikazan u aplikaciji i kao notifikacija.
+
+- Nakon završetka preuzimanja dobiti čete notifikaciju sa tekstom \"Preuzimanje završeno\" , ako se dogodi greška pri preuzimanju otvorite aplikaciju i pokušajte ponovno , ako ni to ne djeluje provjerite jeli imate stabilnu vezu. U suprotnom kontaktirajte stvaratelja aplikacije. To možete učiniti preko \"My apps\" sekcije u Google Play Store-u."</string>
+    <string name="install_guide_page_2_title">"Uđi u Recovery Mode"</string>
+    <string name="install_guide_page_2_text">"- Prvo ugasite uređaj
+
+- Pritisnite tipku za \"power\" i \"volume down\" tipku u isto vrijeme.
+
+- Vaš uređaj će se pokrenuti u Recovery Modu. Pričekajte dok ne vidite recovery menu na vašem ekranu"</string>
+    <string name="install_guide_page_3_title">"Instalirajte preuzeto ažuriranje"</string>
+    <string name="install_guide_page_3_text">"- U recovery meniju prvo odaberite jezik. Nakon toga pritisnite (ili navigirajte pomoću volume up/down tipki) \"Install from SD\".
+
+- Nakon toga pomoću volume down tipke dođite do "</string>
+    <string name="install_guide_page_4_title">"Resetirajte vaš uređaj."</string>
+    <string name="install_guide_page_4_text">"- Kada je instalacija ažuriranja gotova biti čete vraćeni na Recovery meni. U tom meniju pritisnite na \"Reboot\" opciju.
+
+- Vaš uređaj će prikazivati \"startup screen\" duže vrijeme tijekom paljenja
+
+- Nakon paljenja vidjeti čete poruku \"Android is upgrading\" dok se vaše aplikacije optimiziraju"</string>
+    <string name="install_guide_page_5_title">"Gotovo. Uživajte u novoj OxygenOS verziji!"</string>
+    <string name="install_guide_page_5_text">"- Nakon što je vaš uređaj završio optimizaciju aplikacija tada je proces instalacije uspješno gotov.
+
+- Možete provjeriti verziju pomoću \"O uređaju\" u vašim postavkama uređaja
+
+- Ako vam se aplikacija sviđa molimo vas ocijenite je s 5 zvjezdica na Google Play-u!"</string>
+    <string name="install_guide_close_button">"Zatvorite priručnik."</string>
+    <string name="install_guide_zip_file_deleted">"Root paket koji ste odabrali više ne postoji. Molimo odaberite novi root paket."</string>
+    <string name="install_guide_zip_file_picker_title">"Odaberite root paket."</string>
+    <string name="install_guide_zip_file_missing">"Ako želite ostaviti vaš uređaj root-an morate specificirati root paket."</string>
+
+    <!-- Device information strings -->
+    <string name="device_information_amount_of_memory">"Količina rama:"</string>
+    <string name="device_information_cpu_frequency">"Frekvencija procesora:"</string>
+    <string name="device_information_header">"Moj uređaj"</string>
+    <string name="device_information_header_short">"Moj uređaj"</string>
+    <string name="device_information_image_description">"Slika uređaja"</string>
+    <string name="device_information_incremental_os_version">"Inkrementalna OS verzija:"</string>
+    <string name="device_information_os_version">"Android verzija"</string>
+    <string name="device_information_oxygen_os_version">"OxygenOS verzija:"</string>
+    <string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+    <string name="device_information_patch_level_version">"Datum security patch-a:"</string>
+    <string name="device_information_serial_number">"Serial number:"</string>
+    <string name="device_information_system_on_a_chip">"Sistem na Chip-u:"</string>
+    <string name="device_information_unknown">"nepoznato"</string>
+    <string name="device_information_your_device">"Vaš uređaj"</string>
+
+    <!-- About screen strings -->
+    <string name="about">"O aplikaciji"</string>
+    <string name="about_app_description">"Najbolja aplikacija za OxygenOS ažuriranja."</string>
+    <string name="about_background_story">"Aplikacija je napravljena od strane Arjan Vlek.
+
+Ovo je drugi dio aplikacije <a href="https://cyanogenupdatetracker.com">Cyanogen Update Tracker</a>
+Cyanogen Update Tracker ima slične funkcije za CyanogenOS korisnike.
+
+Molimo zapamtite ovo nije oficijalna aplikacija OnePlus-a.
+Ime OnePlus, OnePlus logo i OxygenOS su u vlasništvu OnePlus-a.
+Android, Google, Google Play i Google play logo pripadaju Google Inc.
+Ova aplikacija koristi podatke OnePlus-a i Oppo-a da pokazuje informacije
+
+Ako vam se sviđa aplikacija molimo ocijenite je na Google play-u:
+"</string>
+    <string name="about_rate_app_button_text">"Ocjenite na Google Playu"</string>
+    <string name="about_version">"Verzija: %1$s"</string>
+
+    <!-- LocalNotifications strings -->
+    <string name="notification_new_device">"Novi uređaj izašao! %1$s je sada podržan!"</string>
+    <string name="notification_new_device_short">"Otvorite aplikaciju da izaberete ovaj uređaj."</string>
+    <string name="notification_no_notification_support">"Instalirajte ili ažurirajte Googe Play usluge da omogućite push notifikacije."</string>
+    <string name="notification_version_title">"Ažuriranje sistema dostupno"</string>
+    <string name="notification_version">"%1$s je sada dostupan za %2$s!"</string>
+    <string name="push_notification_channel_name">"Push notifikacije"</string>
+    <string name="push_notification_channel_description">"Prikaži sve važne notifikacije od Oxygen Updater aplikacije. To uključuje ažuriranje software-a i važne vijesti."</string>
+    <string name="progress_notification_channel_name">"notifikacije o progresu"</string>
+    <string name="progress_notification_channel_description">"Prikaži sve nevažne notifikacije o Oxygen Updater aplikaciji. To sadrži notifikacije o statusu preuzimanja ažuriranju i slično."</string>
+
+    <!-- Help strings -->
+    <string name="help">"Pomoć"</string>
+    <string name="help_text">"Dobrodošli u dio za pomoć o Oxygen Updater aplikaciji.
+
+Ovo obuhvaća sljedeće:
+
+• Ažuriranje vašeg uređaja
+• Čitanje najnovijih vijesti
+• Pregled informacija o uređaju
+• Promjenu postavki
+
+Povucite dolje da pregledate sve."</string>
+    <string name="help_updating_your_device_title">"Ažuriranje vašeg uređaja"</string>
+    <string name="help_updating_your_device_text">"Kada otvorite aplikaciju vidjeti čete ako je ažuriranje dostupno. Ako je ažuriranje dostupno možete ga preuzeti.
+
+Da započnete instalaciju pritisnite \"Preuzmi\" (ispod opisa ažuriranja). Kada je preuzimanje gotovo prozor za instalaciju će se pojaviti. Ako ste izašli iz aplikacije ili se prozor nije pojavio stisnite \"Instaliraj\" dugme pokraj \"Preuzmi\" dugmeta.
+
+Prozor za instalaciju će prvo provjeriti jeli vaš uređaj root-an. Ako imate root-an uređaj dajte root dopuštenja kada su zatražena i izaberite kako želite instalirati ažuriranje. U suprotnom samo slijedite upute za ručnu instalaciju.
+
+Automatska instalacija:
+Jedino što čete biti zatraženi je da odaberete način instalacije. Zadane postavke su preporučene osim ako imate specifičan root paket koji mora biti (re)instaliran. Odaberite root paket (zip fajl) koristeći se plavim folder dugmetom i pritisnite \"Počni instalaciju\" da započnete instalaciju.
+
+Ručna instalacija:
+Vidjeti čete priručnik za instalaciju na vašem ekranu. Zapišite instrukcije na papir i pratite ih tijekom instalaciju ažuriranja."</string>
+    <string name="help_reading_news_title">"Čitanje najnovijih vijesti"</string>
+    <string name="help_reading_news_text">"Vijesti su prikazanje na lijevoj strani stranice sa podacima o ažuriranju. Najnovije vijesti su prikazanje na vrhu. Pritiskom na njih možete ih pročitati.
+Pritiskom na strelicu ili pritiskom tipke na uređaju za unatrag možete se vratiti na početni zaslon"</string>
+    <string name="help_device_information_title">"Pregled informacija o vašem uređaju"</string>
+    <string name="help_device_information_text">"Možete vidjeti neke od specifikacija vašeg uređaja koristeći ekran s desne strane od informacija za ažuriranje. To vam može poslužiti tijekom pisanja molbe za pomoć tijekom koje bi mogli biti pitani neke od specifikacija vašeg uređaja."</string>
+    <string name="help_change_settings_title">"Promjena postavki"</string>
+    <string name="help_change_settings_text">"Možete promijeniti postavke pritiskom na tri točke u gornjem desnom kutu. Pritiskom na tipku za postavke možete promijeniti sljedeće:
+
+• Uređaj i metodu ažuriranja
+• \"Push\" Notifikacije
+• Notifikacije u aplikaciji
+• Postavke o privatnosti (log ažuriranja)
+
+Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatnosti. Odaberite svoj uređaj i metodu ažuriranja pomoću selektivnog menija. Ne vidite selektivni meni? Provjerite svoju internetsku vezu i otvorite postavke ponovno."</string>
+
+    <!-- News strings -->
+    <string name="news">"Vijesti"</string>
+    <string name="news_author">"Autor: %1$s"</string>
+    <string name="news_date_published">"Najnovije vijesti: %1$s"</string>
+    <string name="news_empty">"Ovaj članak nema komentara"</string>
+    <string name="news_load_error">"Došlo je do pogreške. Molimo provjerite vašu internet vezu i pritisnite \"Retry\" tipku da otvorite članak"</string>
+
+    <!-- Error strings -->
+    <string name="error_app_outdated">"O ne!"</string>
+    <string name="error_app_outdated_message">"Ova verzija aplikacije je zastarjela. Vrijeme je da je ažurirate! Pritisnite na \"Google Play\". U Google play-u pritisnite \"Ažuriraj\""</string>
+    <string name="error_app_requires_network_connection">"Nema internetske veze"</string>
+    <string name="error_app_requires_network_connection_message">"Neuspješno povezivanje na server. Molimo provjerite vašu vezu. Aplikacija će se sada zatvoriti."</string>
+    <string name="error_button_retry">"Pokušaj ponovno"</string>
+    <string name="error_exit_button_text">"Izlaz"</string>
+    <string name="error_no_internet_connection">"Nema internetske veze"</string>
+    <string name="error_maintenance">"Održavanje servera"</string>
+    <string name="error_maintenance_message">"Molimo pričekajte. Serveri će uskoro biti dostupni."</string>
+    <string name="error_push_failure">"Neuspjelo"</string>
+    <string name="error_reload">"Ponovno pokreni"</string>
+    <string name="error_unable_to_rate_app">"Nemožete ocijeniti ovu aplikaciju jer na vašem uređaju nema Google Play aplikacije"</string>
+
+    <!-- Message strings -->
+    <string name="delete_message_title">"Ažuriranje je već skinuto"</string>
+    <string name="delete_message_contents">"Već ste preuzeli ovo ažuriranje, ali ga niste još instalirali. Pritisnite na \"Priručnik o instalaciji\" da vidite kako instalirati ovo ažuriranje. Pritisnite \"Obriši\" da bi obrisali ovaj fajl. Pritisnite \"Nazad\" dugme da zatvorite ovu poruku."</string>
+    <string name="delete_message_delete_button">"Obriši"</string>
+    <string name="unsupported_device_warning_title">"Ovaj uređaj nije podržan"</string>
+    <string name="unsupported_device_warning_message">"Čini se da vaš uređaj ne koristi Oxygen OS. Molimo zapamtite da ažuriranja možete instalirati jedino na uređajima koji koriste Oxygen OS.
+
+Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."</string>
+    <string name="unsupported_device_warning_checkbox_title">"Nemoj više pokazivati ovo upozorenje"</string>
+    <string name="root_check_title">"Root pristup"</string>
+    <string name="root_check_message">"@"</string>
+
+    <!-- Purchasing strings -->
+    <string name="purchase_error_before_payment">"Kupnja verzije bez ad-ova nije uspjela jer nema internetske veze. Molimo pokušajte ponovno za nekoliko minuta"</string>
+    <string name="purchase_error_after_payment">"Kupnja verzije bez ad-ova nije uspjela jer nema internetske veze. Molimo pokušajte ponovno za nekoliko minuta. Ako ste već platili molimo kontaktirajte Google play podršku za pomoć"</string>
+
+    <!-- Other strings -->
+    <string name="icon">"Ikona"</string>
+    <string name="loading">"Učitavanje…"</string>
+    <string name="processing">"Procesiranje…"</string>
+    <string name="choose_file">"Odaberite fajl"</string>
+    <string name="root_install_logger_service_name">"Ažuriranje instalacijski logger"</string>
+    <string name="update_information_description_not_available">"Nema službenih informacija o tome što ovo ažuriranje donosi. Obično takva ažuriranja donose popravke za bugove, poboljšanje performanci i kritična ažuriranja za sigurnost vašeg uređaja."</string>
+    <string name="error_google_play_button_text">"Google Play"</string>
+    <string name="delayed_push_notification_displayer_service_name">"Push notifikacije"</string>
+    <string name="log_uploader_service_name">"Greška pri slanju servisa"</string>
+
+
+    <!-- Download is paused -->
+    <string name="paused">"Pauzirano"</string>
+
+    <!-- Server returned an error while downloading (not always a connection issue) -->
+    <string name="download_error_server">"Serverska pogreška se pojavila tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno."</string>
+
+    <!-- Internal error when downloading. Never a connection error! -->
+    <string name="download_error_internal">"Nažalost došlo je do tehničkih problema tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno. Ako se problem nastavi molimo kontaktirajte kreatora ove aplikacije za pomoć."</string>
+
+    <!-- Resume a paused download -->
+    <string name="download_error_resume">"Pokušaj ponovo"</string>
+
+    <!-- Server error when downloading (push notification shortened text) -->
+    <string name="download_notification_error_server">"Serverska pogreška tijekom preuzimanja. Molimo pokušajte ponovno."</string>
+
+    <!-- Internal error when downloading. Short push notification text -->
+    <string name="download_notification_error_internal">"Došlo je do tehničkih poteškoća tijekom preuzimanja. Molimo pokušajte ponovno ili kontaktirajte podršku."</string>
+
+    <!-- Shows download progress & that it is currently paused -->
+    <string name="download_progress_text_paused">"%1$d%% pauzirano"</string>
+
+    <!-- Internal name of background downloading service / process -->
+    <string name="download_service_name">"Ažurirajte servis za preuzimanje"</string>
+</resources>

@@ -39,6 +39,8 @@
     <string name="download">"Download"</string>
     <string name="downloaded">"Scaricato"</string>
     <string name="downloading">"Scaricando… "</string>
+    <string name="paused">"In pausa"</string>
+
     <string name="download_already_downloaded">"L'aggiornamento è già stato scaricato, è pronto per l'istallazione. "</string>
     <string name="download_complete">"Download completato"</string>
     <string name="download_complete_notification">"Download completato. Premi su start per iniziare l'istallazione. "</string>
@@ -46,15 +48,20 @@
     <string name="download_error">"Errore nel download"</string>
     <string name="download_error_close">"CHIUDI"</string>
     <string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova. "</string>
-    <string name="download_error_network">"È stato riscontrato un errore di rete. Assicurati di essere connessione ad una rete con accesso ad internet. "</string>
+
+    <!-- TODO add strings for download_error_network, download_error_server and download_error_internal -->
+
     <string name="download_error_retry">"RIPROVA"</string>
+    <string name="download_error_resume">"RIPRENDERE"</string>
     <string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta. "</string>
     <string name="download_failed">"Download fallito"</string>
     <string name="download_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
     <string name="download_oxygen_os">"Oxygen OS V. "</string>
     <string name="download_pending">"Il tuo download inizierà subito… "</string>
     <string name="download_permissions">"Premi download di nuovo per scaricare l'aggiornamento. "</string>
-    <string name="download_notification_error_network">"Errore di rete. Assicurati di essere connesso ad internet. "</string>
+
+    <!-- TODO add strings for download_notification_error_network, download_notification_error_server and download_notification_error_internal -->
+
     <string name="download_notification_error_storage_full">"Spazio insufficiente. "</string>
     <string name="download_notification_error_corrupt">"Verifica file fallita. Assicurati di essere connesso a internet e riprova. "</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, circa %2$d ore rimanenti"</string>
@@ -65,12 +72,14 @@
     <string name="download_progress_text_seconds_remaining">"%1$d%%, alcuni secondi… "</string>
     <string name="download_progress_text_unknown_time_remaining">"%1$d%%, calcolando…"</string>
     <string name="download_progress_text_verifying">"100%, verifica file… "</string>
+    <string name="download_progress_text_paused">"%1$d%%, in pausa"</string>
+    <string name="download_waiting_for_network">"%1$d%%, in attesa di una connessione… "</string>
+
     <string name="download_size_megabyte">"%1$d MB"</string>
     <string name="download_unknown_update_name">"Oxygen OS Update"</string>
     <string name="download_verifying">"Verificando… "</string>
     <string name="download_verifying_error">"File danneggiato "</string>
     <string name="download_verifying_start">"Il tuo download verrà verificato… "</string>
-    <string name="download_waiting_for_network">"In attesa di una connessione… "</string>
 
     <!-- Settings strings -->
     <string name="settings">"Impostazioni"</string>
@@ -385,4 +394,5 @@ Ritenta in alcuni minuti."</string>
     <string name="error_google_play_button_text">"Google Play"</string>
     <string name="delayed_push_notification_displayer_service_name">"Servizio notifiche Push"</string>
     <string name="log_uploader_service_name">"Error reporting service"</string>
+    <string name="download_service_name">"Servizio de scaricato"</string>
 </resources>

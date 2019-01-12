@@ -395,4 +395,5 @@ Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käytt
     <string name="error_google_play_button_text">"Play Kauppa"</string>
     <string name="delayed_push_notification_displayer_service_name">"Push ilmoitus palvelu"</string>
     <string name="log_uploader_service_name">"Virhe raportoidessa palvelua"</string>
+    <string name="download_service_name">"Päivitä-ladattavissa"</string>
 </resources>
