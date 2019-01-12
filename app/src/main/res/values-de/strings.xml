@@ -52,7 +52,7 @@
     <string name="download_error_server">"Ein Serverfehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen."</string>
     <string name="download_error_internal">"Ein App-fehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen, oder schicke ein Support-Mail wenn es wieder fehlschlagt."</string>
     <string name="download_error_retry">"ERNEUT VERSUCHEN"</string>
-    <string name="download_error_resume">"FORTSETZENn"</string>
+    <string name="download_error_resume">"FORTSETZEN"</string>
     <string name="download_error_storage">"Auf deinem Gerät ist nicht genügend Speicherplatz verfügbar um das Update herunterzuladen. Entferne ein paar Dateien und Versuche erneut es herunterzuladen."</string>
     <string name="download_failed">"Download fehlgeschlagen"</string>
     <string name="download_in_background">"Oxygen Updater läuft im Hintergrund…"</string>

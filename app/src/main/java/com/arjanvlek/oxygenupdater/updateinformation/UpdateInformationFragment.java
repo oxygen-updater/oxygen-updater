@@ -652,11 +652,11 @@ public class UpdateInformationFragment extends AbstractFragment {
                     hideDownloadProgressBar();
 
                     if (isServerError) {
-                        showDownloadError(updateData, true, R.string.download_error_network);
+                        showDownloadError(updateData, R.string.download_error_server);
                     } else if (isStorageSpaceError) {
-                        showDownloadError(updateData, false, R.string.download_error_storage);
+                        showDownloadError(updateData, R.string.download_error_storage);
                     } else {
-                        showDownloadError(updateData, false, R.string.download_error_internal);
+                        showDownloadError(updateData, R.string.download_error_internal);
                     }
                 }
             }
@@ -679,7 +679,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
                     hideDownloadProgressBar();
 
-                    showDownloadError(updateData, false, R.string.download_error_corrupt);
+                    showDownloadError(updateData, R.string.download_error_corrupt);
                 }
             }
 
@@ -700,8 +700,8 @@ public class UpdateInformationFragment extends AbstractFragment {
         };
     }
 
-    private void showDownloadError(UpdateData updateData, boolean isResumeable, @StringRes int message) {
-        Dialogs.showDownloadError(this, updateData, isResumeable, R.string.download_error, message);
+    private void showDownloadError(UpdateData updateData, @StringRes int message) {
+        Dialogs.showDownloadError(this, updateData, false, R.string.download_error, message);
     }
 
 

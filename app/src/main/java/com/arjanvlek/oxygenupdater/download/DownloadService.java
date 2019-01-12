@@ -358,6 +358,10 @@ public class DownloadService extends IntentService {
 
                     @Override
                     public void onError(Error error) {
+                        // PRDownloader's Error class distinguishes errors as connection errors and server errors.
+                        // A connection error is an error with the network connection of the user, such as bad / lost wifi or data connection.
+                        // A server error is an error which is deliberately returned by the server, such as a 404 / 500 / 503 status code.
+
                         // If the error is a connection error, we retry to resume downloading in 5 seconds (if there is a network connection then).
                         if (error.isConnectionError()) {
                             SettingsManager settingsManager = new SettingsManager(getApplicationContext());
@@ -377,7 +381,7 @@ public class DownloadService extends IntentService {
                             sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE, (i -> i.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData)));
                         } else if (error.isServerError()) {
                             // Otherwise, we inform the user that the server has refused the download & that it must be restarted at a later stage.
-                            LocalNotifications.showDownloadFailedNotification(getApplicationContext(), true, R.string.download_error_server, R.string.download_notification_error_server);
+                            LocalNotifications.showDownloadFailedNotification(getApplicationContext(), false, R.string.download_error_server, R.string.download_notification_error_server);
 
                             sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, (intent -> {
                                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_SERVER_ERROR, true);

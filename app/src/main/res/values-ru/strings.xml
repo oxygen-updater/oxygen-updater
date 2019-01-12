@@ -39,6 +39,8 @@
     <string name="download">"Загрузить"</string>
     <string name="downloaded">"Загружено"</string>
     <string name="downloading">"Cкачивание…"</string>
+    <string name="paused">"помолчала"</string>
+
     <string name="download_already_downloaded">"Это обновление уже загружено и готово к установке."</string>
     <string name="download_complete">"Успешная загрузка"</string>
     <string name="download_complete_notification">"Загрузка завершена. Нажмите для установки."</string>
@@ -46,15 +48,20 @@
     <string name="download_error">"Ошибка загрузки"</string>
     <string name="download_error_close">"Закрыть"</string>
     <string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
-    <string name="download_error_network">"Произошла ошибка сети во время загрузки. Проверьте подключение к интернету и попробуйте еще раз."</string>
+
+    <!-- TODO add strings for download_error_network, download_error_server and download_error_internal -->
+
     <string name="download_error_retry">"Попробовать снова"</string>
+    <string name="download_error_resume">"продолжить"</string>
     <string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
     <string name="download_failed">"Ошибка загрузки"</string>
     <string name="download_in_background">"Обновление будет загружаться в фоне…"</string>
     <string name="download_oxygen_os">"Версия Oxygen OS"</string>
     <string name="download_pending">"Загрузка скоро начнется…"</string>
     <string name="download_permissions">"Нажмите Загрузить снова для загрузки обновления."</string>
-    <string name="download_notification_error_network">"Ошибка сети. Проверьте подключение и попробуйте снова."</string>
+
+    <!-- TODO add strings for download_notification_error_network, download_notification_error_server and download_notification_error_internal -->
+
     <string name="download_notification_error_storage_full">"Недостаточно места."</string>
     <string name="download_notification_error_corrupt">"Ошибка проверки файла. Проверьте подключение и попробуйте снова."</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, осталось около %2$d часов"</string>
@@ -64,13 +71,15 @@
     <string name="download_progress_text_one_minute_remaining">"%1$d%%, еще около минуты"</string>
     <string name="download_progress_text_seconds_remaining">"%1$d%%, еще несколько секунд"</string>
     <string name="download_progress_text_unknown_time_remaining">"%1$d%%, вычисление времени…"</string>
-    <string name="download_progress_text_verifying">"100%, Проверка файла…"</string>
+    <string name="download_progress_text_verifying">"100%, проверка файла…"</string>
+    <string name="download_progress_text_paused">"%1$d%%, помолчала"</string>
+    <string name="download_waiting_for_network">"%1$d%%, oжидание подключения…"</string>
+
     <string name="download_size_megabyte">"%1$d МБ"</string>
     <string name="download_unknown_update_name">"Обновить Oxygen OS"</string>
     <string name="download_verifying">"Проверка…"</string>
     <string name="download_verifying_error">"Файл поврежден"</string>
     <string name="download_verifying_start">"Проверка загруженного файла…"</string>
-    <string name="download_waiting_for_network">"Ожидание подключения…"</string>
 
     <!-- Settings strings -->
     <string name="settings">"Настройки"</string>
@@ -393,4 +402,5 @@ Android, Google, Google Play и логотип Google Play являются за
     <string name="update_information_description_not_available">"Официальная информация об обновлении не предоставлена. Обычно такие обновления содержат исправления мелких ошибок, улучшения производительности и/или критические обновления безопасности."</string>
     <string name="delayed_push_notification_displayer_service_name">"Служба Push-уведомлений"</string>
     <string name="log_uploader_service_name">"Служба отчетов об ошибках"</string>
+    <string name="download_service_name">"Служба Загрузить"</string>
 </resources>

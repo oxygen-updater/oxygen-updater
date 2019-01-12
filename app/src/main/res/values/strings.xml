@@ -328,7 +328,7 @@
     <string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
     <string name="root_install_logger_service_name">Update installation logger</string>
     <string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
-    <string name="download_service_name" translatable="false">Update downloader</string>
+    <string name="download_service_name">Update downloader</string>
     <string name="log_uploader_service_name">Error reporting service</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>

@@ -73,12 +73,13 @@
     <string name="download_progress_text_unknown_time_remaining">"%1$d%%, estimation du temps restant en cours …"</string>
     <string name="download_progress_text_verifying">"100%, vérification du fichier en cours …"</string>
     <string name="download_progress_text_paused">%1$d%%, en pause</string>
+    <string name="download_waiting_for_network">"%1$d%%, en attente d'une connexion réseau …"</string>
+
     <string name="download_size_megabyte">"%1$d Mb"</string>
     <string name="download_unknown_update_name">"Mise à jour d'Oxygen OS"</string>
     <string name="download_verifying">"Vérification …"</string>
     <string name="download_verifying_error">"Le fichier est endommagé"</string>
     <string name="download_verifying_start">"Le téléchargement va maintenant être vérifié …"</string>
-    <string name="download_waiting_for_network">"En attente d'une connexion réseau …"</string>
 
     <!-- Settings strings -->
     <string name="settings">"Réglages"</string>
@@ -400,4 +401,5 @@ Si vous n'avez pas un accès root pressez \"Fermer\" et continuez à utiliser l'
     <string name="error_google_play_button_text">"Play Store"</string>
     <string name="delayed_push_notification_displayer_service_name">"Service de notifications Push"</string>
     <string name="log_uploader_service_name">"Service de rapports d'erreurs"</string>
+    <string name="download_service_name">"Service pour télécharger des mises de jour"</string>
 </resources>

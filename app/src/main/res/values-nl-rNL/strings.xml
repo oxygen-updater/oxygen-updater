@@ -331,4 +331,5 @@
     <string name="delayed_push_notification_displayer_service_name">"Pushnotificatie-service"</string>
     <string name="log_uploader_service_name">"Foutenrapportage-service"</string>
     <string name="root_install_logger_service_name">Logger voor update-installaties</string>
+    <string name="download_service_name">Update-downloadservice</string>
 </resources>
