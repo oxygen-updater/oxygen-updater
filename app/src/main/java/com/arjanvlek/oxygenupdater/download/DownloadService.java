@@ -41,7 +41,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java8.util.function.Function;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
-import static com.arjanvlek.oxygenupdater.download.DownloadHelper.DIRECTORY_ROOT;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING;
@@ -72,6 +71,7 @@ public class DownloadService extends IntentService {
     public static final String INTENT_SERVICE_RESTART = "com.arjanvlek.oxygenupdater.intent.restartDownloadService";
     private static final String NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.download.DownloadService";
 
+    public static final String DIRECTORY_ROOT = "";
     public static final int NOT_SET = -1;
 
     // We need to have class-level status fields, because we need to be able to check this in a blocking / synchronous way.
@@ -261,7 +261,7 @@ public class DownloadService extends IntentService {
                 deleteDownloadedFile(updateData);
                 break;
             case ACTION_GET_INITIAL_STATUS:
-                checkDownloadStatus(downloadId);
+                checkDownloadStatus(downloadId, updateData);
                 break;
         }
 
@@ -318,6 +318,8 @@ public class DownloadService extends IntentService {
             });
             return;
         }
+
+        Log.d(TAG, "Downloading " + updateData.getFilename());
 
         // Download the update
         int downloadId = PRDownloader
@@ -411,14 +413,20 @@ public class DownloadService extends IntentService {
     }
 
     private void pauseDownload(int downloadId) {
+        Log.d(TAG, "Pausing download #" + downloadId);
+
         if (downloadId != -1) {
             isDownloading.set(false);
             Log.d(TAG, "Pausing using PRDownloader.pause()");
             PRDownloader.pause(downloadId);
+        } else {
+            Log.w(TAG, "Not pausing download, invalid download ID provided.");
         }
     }
 
     private void resumeDownload(int downloadId, UpdateData updateData) {
+        Log.d(TAG, "Resuming download #" + downloadId);
+
         if (downloadId != -1) {
             // If the download is still in the PRDownloader request queue, resume it.
             // If not, start the download again (PRdownloader will still resume it using its own SQLite database)
@@ -431,25 +439,37 @@ public class DownloadService extends IntentService {
                 downloadUpdate(updateData);
             }
 
+        } else {
+            Log.w(TAG, "Not resuming download, invalid download ID provided.");
         }
     }
 
     private void cancelDownload(int downloadId) {
+        Log.d(TAG, "Cancelling download #" + downloadId);
+
         if (downloadId != -1) {
             PRDownloader.cancel(downloadId);
             LocalNotifications.hideDownloadingNotification(getApplicationContext());
             clearUp();
+            Log.d(TAG, "Cancelled download #" + downloadId);
+        } else {
+            Log.w(TAG, "Not cancelling download, no valid ID was provided...");
         }
     }
 
     private void deleteDownloadedFile(UpdateData updateData) {
+        Log.d(TAG, "Deleting downloaded update file " + updateData.getFilename());
+
         File downloadedFile = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getAbsolutePath(), updateData.getFilename());
         if (!downloadedFile.delete()) {
             Logger.logWarning(TAG, "Could not delete downloaded file " + updateData.getFilename());
         }
     }
 
-    private void checkDownloadStatus(int downloadId) {
+    private void checkDownloadStatus(int downloadId, UpdateData updateData) {
+        // If the downloader id got lost then it is either complete or never started.
+        // This will be handled below in the UNKNOWN branch.
+        Logger.logDebug(TAG, "Checking status for download #" + downloadId + " and updateData " + updateData.getVersionNumber());
         Status prDownloaderStatus = downloadId == -1 ? Status.UNKNOWN : PRDownloader.getStatus(downloadId);
         DownloadStatus downloadStatus = DownloadStatus.NOT_DOWNLOADING;
         DownloadProgressData progress = null;
@@ -457,29 +477,57 @@ public class DownloadService extends IntentService {
 
         switch (prDownloaderStatus) {
             case QUEUED:
+                Logger.logDebug(TAG, "Download #" + downloadId + " is queued");
+                // If queued, there is no progress and the download will start soon.
                 downloadStatus = DownloadStatus.DOWNLOAD_QUEUED;
                 progress = new DownloadProgressData(NOT_SET, 0);
                 break;
-            case UNKNOWN:
+            case RUNNING:
+                // If running, return the previously-stored progress percentage.
                 int storedProgressPercentage = new SettingsManager(getApplicationContext()).getPreference(PROPERTY_DOWNLOAD_PROGRESS, 0);
+                downloadStatus = DownloadStatus.DOWNLOADING;
+                progress = new DownloadProgressData(NOT_SET, storedProgressPercentage);
+                Logger.logDebug(TAG, "Download #" + downloadId + " is running @" + storedProgressPercentage);
+                break;
+            case UNKNOWN:
+                // If unknown, we have to check if it is unknown in our settings and handle according to that.
+                storedProgressPercentage = new SettingsManager(getApplicationContext()).getPreference(PROPERTY_DOWNLOAD_PROGRESS, 0);
+                progress = new DownloadProgressData(NOT_SET,  storedProgressPercentage, !hasNetwork);
 
                 if (storedProgressPercentage == 0) {
+                    // If unknown by PR downloader and unknown in our settings, manually check if the file exists
+                    // If the file exists, assume we've passed the download and verification.
+                    // If the file does not exist, the update has likely never been downloaded before.
+                    downloadStatus = checkDownloadCompletionByFile(updateData) ? DownloadStatus.DOWNLOAD_COMPLETED : DownloadStatus.NOT_DOWNLOADING;
+                    Logger.logDebug(TAG, "Download #" + downloadId + " is " + (downloadStatus == DownloadStatus.DOWNLOAD_COMPLETED ? "completed" : "not started"));
                     break;
                 }
 
+                // If unknown by PR downloader but known by our settings, the download is paused but lost from the PR downloader queu.
+                // In this case we can resume it using PRDownloader.download (instead of PRDOwnloader.resume).
+                Logger.logDebug(TAG, "Download #" + downloadId + " is paused (hard) @" + storedProgressPercentage);
                 downloadStatus = DownloadStatus.DOWNLOAD_PAUSED;
-                progress = new DownloadProgressData(NOT_SET,  storedProgressPercentage, !hasNetwork);
                 break;
             case PAUSED:
+                // If the download is paused, we return its current percentage and allow resuming of it.
+                storedProgressPercentage = new SettingsManager(getApplicationContext()).getPreference(PROPERTY_DOWNLOAD_PROGRESS, 0);
                 downloadStatus = DownloadStatus.DOWNLOAD_PAUSED;
-                progress = new DownloadProgressData(NOT_SET, this.progressPercentage, !hasNetwork);
+                progress = new DownloadProgressData(NOT_SET, storedProgressPercentage, !hasNetwork);
+                Logger.logDebug(TAG, "Download #" + downloadId + " is paused (soft) @" + storedProgressPercentage);
                 break;
 
         }
 
+        // If the download is completed, we have to check if the file is still being verified.
+        // If so, return that verification is ongoing.
+        // Otherwise, look at the file if it still exists and allow installing (exists) or redownloading (deleted by user).
         if (prDownloaderStatus == Status.COMPLETED) {
             if (isVerifying.get()) {
                 downloadStatus = DownloadStatus.VERIFYING;
+                Logger.logDebug(TAG, "Download #" + downloadId + " is verifying");
+            } else {
+                downloadStatus = checkDownloadCompletionByFile(updateData) ? DownloadStatus.DOWNLOAD_COMPLETED : DownloadStatus.NOT_DOWNLOADING;
+                Logger.logDebug(TAG, "Download #" + downloadId + " is " + (downloadStatus == DownloadStatus.DOWNLOAD_COMPLETED ? "completed" : "not started"));
             }
         }
 
@@ -644,5 +692,9 @@ public class DownloadService extends IntentService {
 
     private static boolean isRunning() {
         return isDownloading.get() || isVerifying.get();
+    }
+
+    private boolean checkDownloadCompletionByFile(UpdateData updateData) {
+        return new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.getFilename()).exists();
     }
 }

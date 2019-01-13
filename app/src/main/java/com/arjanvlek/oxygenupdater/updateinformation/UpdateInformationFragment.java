@@ -28,10 +28,10 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.download.DownloadHelper;
 import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.download.DownloadReceiver;
 import com.arjanvlek.oxygenupdater.download.DownloadService;
+import com.arjanvlek.oxygenupdater.download.DownloadStatus;
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
@@ -91,6 +91,7 @@ public class UpdateInformationFragment extends AbstractFragment {
     private Context context;
     private SettingsManager settingsManager;
     private UpdateDownloadListener downloadListener;
+    private UpdateData updateData;
 
     private boolean isLoadedOnce;
     private boolean adsAreSupported = false;
@@ -158,7 +159,14 @@ public class UpdateInformationFragment extends AbstractFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (isLoadedOnce) registerDownloadReceiver(this.downloadListener);
+        if (isLoadedOnce) {
+            registerDownloadReceiver(this.downloadListener);
+            // If service reports being inactive, check if download is finished or paused to update state.
+            // If download is running then it auto-updates the UI using the downloadListener.
+            if (!DownloadService.isDownloading.get() && !DownloadService.isVerifying.get()) {
+                DownloadService.performOperation(getActivity(), DownloadService.ACTION_GET_INITIAL_STATUS, updateData);
+            }
+        }
         if (adView != null) adView.resume();
     }
 
@@ -225,6 +233,8 @@ public class UpdateInformationFragment extends AbstractFragment {
         SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
         serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion(), (updateData) -> {
+            this.updateData = updateData;
+
             if (!isLoadedOnce) {
                 downloadListener = buildDownloadListener(updateData);
                 registerDownloadReceiver(downloadListener);
@@ -445,11 +455,8 @@ public class UpdateInformationFragment extends AbstractFragment {
         View downloadSizeImage = rootView.findViewById(R.id.downloadSizeImage);
 
         final Button downloadButton = getDownloadButton();
-        DownloadStatus status = getDownloadStatus(updateData);
-        initUpdateDownloadButton(updateData, status);
-        initInstallButton(updateData, status);
 
-        if(displayInfoWhenUpToDate) {
+        if (displayInfoWhenUpToDate) {
             headerLabel.setText(getString(R.string.update_information_installed_update));
             downloadButton.setVisibility(GONE);
             updateInstallationGuideButton.setVisibility(GONE);
@@ -553,8 +560,8 @@ public class UpdateInformationFragment extends AbstractFragment {
                     getDownloadPauseButton().setOnClickListener(v -> {
                         getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
                         DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
-                        initUpdateDownloadButton(updateData, DownloadStatus.PAUSED);
-                        initInstallButton(updateData, DownloadStatus.PAUSED);
+                        initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
+                        initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
                     });
                 }
             }
@@ -563,14 +570,15 @@ public class UpdateInformationFragment extends AbstractFragment {
             public void onDownloadStarted() {
                 if (isAdded()) {
                     initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
+                    initInstallButton(updateData, DownloadStatus.DOWNLOADING);
 
                     showDownloadProgressBar();
 
                     getDownloadPauseButton().setOnClickListener(v -> {
                         getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
                         DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
-                        initUpdateDownloadButton(updateData, DownloadStatus.PAUSED);
-                        initInstallButton(updateData, DownloadStatus.PAUSED);
+                        initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
+                        initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
                     });
                 }
             }
@@ -579,6 +587,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             public void onDownloadProgressUpdate(DownloadProgressData downloadProgressData) {
                 if (isAdded()) {
                     initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
+                    initInstallButton(updateData, DownloadStatus.DOWNLOADING);
 
                     showDownloadProgressBar();
                     getDownloadProgressBar().setIndeterminate(false);
@@ -603,7 +612,8 @@ public class UpdateInformationFragment extends AbstractFragment {
             @Override
             public void onDownloadPaused(boolean pausedByUser, DownloadProgressData progressData) {
                 if (isAdded()) {
-                    initUpdateDownloadButton(updateData, DownloadStatus.PAUSED);
+                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
+                    initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
 
                     showDownloadProgressBar();
 
@@ -639,6 +649,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             public void onDownloadCancelled() {
                 if (isAdded()) {
                     initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                    initInstallButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
                     hideDownloadProgressBar();
                 }
@@ -648,6 +659,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             public void onDownloadError(boolean isInternalError, boolean isStorageSpaceError, boolean isServerError) {
                 if (isAdded()) {
                     initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                    initInstallButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
                     hideDownloadProgressBar();
 
@@ -665,6 +677,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             public void onVerifyStarted() {
                 if (isAdded()) {
                     initUpdateDownloadButton(updateData, DownloadStatus.VERIFYING);
+                    initInstallButton(updateData, DownloadStatus.VERIFYING);
 
                     showDownloadProgressBar();
                     getDownloadProgressBar().setIndeterminate(true);
@@ -676,6 +689,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             public void onVerifyError() {
                 if (isAdded()) {
                     initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
+                    initInstallButton(updateData, DownloadStatus.NOT_DOWNLOADING);
 
                     hideDownloadProgressBar();
 
@@ -684,17 +698,18 @@ public class UpdateInformationFragment extends AbstractFragment {
             }
 
             @Override
-            public void onVerifyComplete() {
+            public void onVerifyComplete(boolean launchInstallation) {
                 if (isAdded()) {
-                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADED);
-                    initInstallButton(updateData, DownloadStatus.DOWNLOADED);
+                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_COMPLETED);
+                    initInstallButton(updateData, DownloadStatus.DOWNLOAD_COMPLETED);
 
                     hideDownloadProgressBar();
 
-                    Toast.makeText(getApplicationData(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
-
-                    ActivityLauncher launcher = new ActivityLauncher(getActivity());
-                    launcher.UpdateInstallation(true, updateData);
+                    if (launchInstallation) {
+                        Toast.makeText(getApplicationData(), getString(R.string.download_complete), Toast.LENGTH_LONG).show();
+                        ActivityLauncher launcher = new ActivityLauncher(getActivity());
+                        launcher.UpdateInstallation(true, updateData);
+                    }
                 }
             }
         };
@@ -702,21 +717,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     private void showDownloadError(UpdateData updateData, @StringRes int message) {
         Dialogs.showDownloadError(this, updateData, false, R.string.download_error, message);
-    }
-
-
-    private enum DownloadStatus {
-        NOT_DOWNLOADING, DOWNLOADING, DOWNLOADED, VERIFYING, PAUSED
-    }
-
-    private DownloadStatus getDownloadStatus(UpdateData updateData) {
-        if (new DownloadHelper(getContext()).checkIfUpdateIsDownloaded(updateData)) {
-            return DownloadStatus.DOWNLOADED;
-        } else if(DownloadService.isVerifying.get()) {
-            return DownloadStatus.VERIFYING;
-        }
-
-        return DownloadStatus.NOT_DOWNLOADING;
     }
 
     private void initUpdateDownloadButton(UpdateData updateData, DownloadStatus downloadStatus) {
@@ -737,19 +737,20 @@ public class UpdateInformationFragment extends AbstractFragment {
                     downloadButton.setTextColor(ContextCompat.getColor(context, R.color.dark_grey));
                 }
                 break;
+            case DOWNLOAD_QUEUED:
             case DOWNLOADING:
                 downloadButton.setText(getString(R.string.downloading));
                 downloadButton.setEnabled(true);
                 downloadButton.setClickable(false);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
                 break;
-            case PAUSED:
+            case DOWNLOAD_PAUSED:
                 downloadButton.setText(getString(R.string.paused));
                 downloadButton.setEnabled(true);
                 downloadButton.setClickable(false);
                 downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
                 break;
-            case DOWNLOADED:
+            case DOWNLOAD_COMPLETED:
                 downloadButton.setText(getString(R.string.downloaded));
                 downloadButton.setEnabled(true);
                 downloadButton.setClickable(true);
@@ -766,7 +767,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
     private void initInstallButton(UpdateData updateData, DownloadStatus downloadStatus) {
         Button installButton = rootView.findViewById(R.id.updateInstallationInstructionsButton);
-        if (downloadStatus != DownloadStatus.DOWNLOADED) {
+        if (downloadStatus != DownloadStatus.DOWNLOAD_COMPLETED) {
             installButton.setVisibility(GONE);
         } else {
             if (getActivity() == null) {
@@ -834,7 +835,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             Dialogs.showUpdateAlreadyDownloadedMessage(updateData, targetFragment, (ignored) -> {
                 if (updateData != null) {
                     DownloadService.performOperation(getActivity(), DownloadService.ACTION_DELETE_DOWNLOADED_UPDATE, updateData);
-                    initUpdateDownloadButton(updateData, UpdateInformationFragment.DownloadStatus.NOT_DOWNLOADING);
+                    initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);
                     initInstallButton(updateData, DownloadStatus.NOT_DOWNLOADING);
                 }
             });

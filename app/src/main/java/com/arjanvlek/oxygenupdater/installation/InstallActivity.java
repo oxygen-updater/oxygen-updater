@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.download.DownloadHelper;
 import com.arjanvlek.oxygenupdater.installation.automatic.InstallationStatus;
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException;
@@ -51,6 +50,7 @@ import java.io.File;
 import java.util.UUID;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
+import static com.arjanvlek.oxygenupdater.download.DownloadService.DIRECTORY_ROOT;
 
 public class InstallActivity extends AppCompatActivity {
 
@@ -205,7 +205,8 @@ public class InstallActivity extends AppCompatActivity {
                         settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
                         settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
                         settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
-                        UpdateInstaller.installUpdate(getApplication(), DownloadHelper.getFilePath(updateData), additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
+                        String downloadedUpdateFilePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename();
+                        UpdateInstaller.installUpdate(getApplication(), downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
                         return null;
                     } catch (UpdateInstallationException e) {
                         return e.getMessage();
@@ -265,7 +266,7 @@ public class InstallActivity extends AppCompatActivity {
 
         if (additionalZipFilePath != null) {
             // Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
-            text = additionalZipFilePath.replace(Environment.getExternalStoragePublicDirectory(DownloadHelper.DIRECTORY_ROOT).getAbsolutePath() + File.separator, "");
+            text = additionalZipFilePath.replace(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getAbsolutePath() + File.separator, "");
             String extension = text.substring(text.length() - 4, text.length());
             if (!extension.equals(EXTENSION_ZIP)) {
                 Toast.makeText(getApplication(), R.string.install_zip_file_wrong_file_type, Toast.LENGTH_LONG).show();
