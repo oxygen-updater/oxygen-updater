@@ -76,7 +76,7 @@ public class DownloadReceiver extends BroadcastReceiver {
                 UIDownloadListener.onVerifyError();
                 break;
             case TYPE_VERIFY_COMPLETE:
-                UIDownloadListener.onVerifyComplete();
+                UIDownloadListener.onVerifyComplete(true);
                 break;
             case TYPE_STATUS_REQUEST:
                 UIDownloadListener.onInitialStatusUpdate();
@@ -86,14 +86,23 @@ public class DownloadReceiver extends BroadcastReceiver {
                 DownloadStatus status = (DownloadStatus) intent.getSerializableExtra(PARAM_STATUS);
                 progress = (DownloadProgressData) intent.getSerializableExtra(PARAM_PROGRESS);
                 switch(status) {
+                    case NOT_DOWNLOADING:
+                        UIDownloadListener.onDownloadCancelled();
+                        break;
                     case DOWNLOAD_QUEUED:
                         UIDownloadListener.onDownloadPaused(false, progress);
+                        break;
+                    case DOWNLOADING:
+                        UIDownloadListener.onDownloadProgressUpdate(progress);
+                        break;
+                    case DOWNLOAD_PAUSED:
+                        UIDownloadListener.onDownloadPaused(true, progress);
                         break;
                     case VERIFYING:
                         UIDownloadListener.onVerifyStarted();
                         break;
-                    case DOWNLOAD_PAUSED:
-                        UIDownloadListener.onDownloadPaused(true, progress);
+                    case DOWNLOAD_COMPLETED:
+                        UIDownloadListener.onVerifyComplete(false);
                         break;
                 }
                 break;

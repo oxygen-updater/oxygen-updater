@@ -12,6 +12,6 @@ public interface UpdateDownloadListener {
 
     void onVerifyStarted();
     void onVerifyError();
-    void onVerifyComplete();
+    void onVerifyComplete(boolean launchInstallation);
 
 }

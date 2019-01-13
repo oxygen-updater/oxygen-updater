@@ -13,11 +13,9 @@ import android.support.v4.app.FragmentTransaction;
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.download.DownloadHelper;
 import com.arjanvlek.oxygenupdater.download.DownloadService;
 import com.arjanvlek.oxygenupdater.internal.Worker;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 
 import java8.util.function.Consumer;
