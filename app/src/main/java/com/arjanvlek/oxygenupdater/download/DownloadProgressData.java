@@ -7,6 +7,9 @@ import com.arjanvlek.oxygenupdater.R;
 
 import java.io.Serializable;
 
+/**
+ * Contains the progress & ETA of a download.
+ */
 public class DownloadProgressData implements Serializable {
 
     private final TimeRemaining timeRemaining;

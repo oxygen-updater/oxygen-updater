@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
+ * DownloadReceiver is capable of sending status updates from {@link DownloadService} to the UI
+ * A UpdateDownloadListener is saved when registering the receiver, that contains the actual code of the UI class.
+ *
  * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 03/01/2019.
  */
 public class DownloadReceiver extends BroadcastReceiver {

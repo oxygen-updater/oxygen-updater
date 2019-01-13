@@ -9,6 +9,9 @@ import android.os.Parcelable;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 
 /**
+ * This Receiver creates a new Intent to restart {@link DownloadService} after it was killed whilst in-progress.
+ * It receives a Download ID and UpdateData objects which it returns to the new instance of DownloadService.
+ *
  * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 05/01/2019.
  */
 public class DownloadServiceRestarter extends BroadcastReceiver {

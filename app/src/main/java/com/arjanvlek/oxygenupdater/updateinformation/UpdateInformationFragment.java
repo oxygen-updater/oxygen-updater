@@ -580,10 +580,11 @@ public class UpdateInformationFragment extends AbstractFragment {
                     showDownloadProgressBar();
 
                     getDownloadPauseButton().setOnClickListener(v -> {
-                        getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
+                        getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause_download, null));
                         DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
                         initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
                         initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
+                        getDownloadPauseButton().setOnClickListener((vw) -> {}); // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
                     });
                 }
             }
@@ -605,6 +606,13 @@ public class UpdateInformationFragment extends AbstractFragment {
                     }
 
                     getDownloadPauseButton().setVisibility(VISIBLE);
+                    getDownloadPauseButton().setOnClickListener(v -> {
+                        getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause_download, null));
+                        DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
+                        initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
+                        initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
+                        getDownloadPauseButton().setOnClickListener((vw) -> {}); // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
+                    });
 
                     if (downloadProgressData.getTimeRemaining() == null) {
                         getDownloadStatusText().setText(getString(R.string.download_progress_text_unknown_time_remaining, downloadProgressData.getProgress()));
@@ -636,6 +644,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                             DownloadService.performOperation(getActivity(), DownloadService.ACTION_RESUME_DOWNLOAD, updateData);
                             initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
                             initInstallButton(updateData, DownloadStatus.DOWNLOADING);
+                            getDownloadPauseButton().setOnClickListener((vw) -> {}); // No resuming twice allowed, will be updated in onDownloadProgressUpdate()
                         });
                     } else {
                         getDownloadStatusText().setText(getString(R.string.download_pending));
@@ -812,6 +821,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                     showDownloadProgressBar();
                     getDownloadProgressBar().setIndeterminate(true);
                     getDownloadStatusText().setText(getString(R.string.download_pending));
+                    getDownloadPauseButton().setOnClickListener(v1 -> {}); // Pause is possible on first progress update
                 } else {
                     mainActivity.requestDownloadPermissions(granted -> {
                         if (granted) {
@@ -871,7 +881,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
         ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
 
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(5)) {
             if (DownloadService.class.getName().equals(service.service.getClassName())) {
                 return true;
             }
