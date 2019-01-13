@@ -163,7 +163,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             registerDownloadReceiver(this.downloadListener);
             // If service reports being inactive, check if download is finished or paused to update state.
             // If download is running then it auto-updates the UI using the downloadListener.
-            if (!DownloadService.isDownloading.get() && !DownloadService.isVerifying.get()) {
+            if (!DownloadService.isDownloading.get() && !DownloadService.isVerifying.get() && updateData != null) {
                 DownloadService.performOperation(getActivity(), DownloadService.ACTION_GET_INITIAL_STATUS, updateData);
             }
         }
@@ -183,6 +183,11 @@ public class UpdateInformationFragment extends AbstractFragment {
      */
 
     private void checkAdSupportStatus(Consumer<Boolean> callback) {
+        if (getActivity() == null) {
+            callback.accept(false);
+            return;
+        }
+
         IabHelper helper = new IabHelper(getActivity(), PK1.A + "/" + PK2.B);
 
         helper.startSetup(setupResult -> {
