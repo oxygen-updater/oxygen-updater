@@ -695,6 +695,10 @@ public class DownloadService extends IntentService {
     }
 
     private boolean checkDownloadCompletionByFile(UpdateData updateData) {
+        if (updateData == null || updateData.getFilename() == null) {
+            Log.w(TAG, "Cannot check for download completion by file - null updatedata or filename provided!");
+            return false;
+        }
         return new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.getFilename()).exists();
     }
 }
