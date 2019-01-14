@@ -152,7 +152,12 @@ public class DownloadService extends IntentService {
         downloadIntent.putExtra(DownloadService.PARAM_UPDATE_DATA, updateData);
         downloadIntent.putExtra(DownloadService.PARAM_DOWNLOAD_ID, downloadId);
 
-        activity.startService(downloadIntent);
+        try {
+            activity.startService(downloadIntent);
+        } catch (Exception e) {
+            Logger.init(activity.getApplicationContext());
+            Logger.logError(TAG, "Failed to start DownloadService", e);
+        }
     }
 
     /*
@@ -520,6 +525,11 @@ public class DownloadService extends IntentService {
     }
 
     private synchronized void deleteDownloadedFile(UpdateData updateData) {
+        if (updateData == null || updateData.getFilename() == null) {
+            Logger.logWarning(TAG, "Could not delete downloaded file, null update data or update data without file name was provided");
+            return;
+        }
+
         Log.d(TAG, "Deleting downloaded update file " + updateData.getFilename());
 
         File downloadedFile = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getAbsolutePath(), updateData.getFilename());

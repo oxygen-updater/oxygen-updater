@@ -40,7 +40,7 @@ public class Logger {
     private static final int JOB_ID_MAX = 395899384;
 
     public static void init(Context context) {
-        context = context;
+        Logger.context = context;
 
         try {
             // If the application previously crashed, upload the crash log to the server.
