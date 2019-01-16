@@ -21,9 +21,14 @@ public enum DownloadStatus {
     DOWNLOADING,
 
     /**
-     * The download has been paused by the user or by the loss of network connectivity
+     * The download has been paused by the user
      */
     DOWNLOAD_PAUSED,
+
+    /**
+     * The download has been paused due to the loss of network connectivity
+     */
+    DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION,
 
     /**
      * The downloaded file is being verified (MD5 check)
@@ -31,7 +36,7 @@ public enum DownloadStatus {
     VERIFYING,
 
     /**
-     * The file has successfully been downloaded
+     * The file has been successfully downloaded
      */
     DOWNLOAD_COMPLETED
 }

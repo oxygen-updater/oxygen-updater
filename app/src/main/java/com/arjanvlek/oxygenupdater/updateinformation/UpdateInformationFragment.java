@@ -54,6 +54,7 @@ import java.util.List;
 
 import java8.util.Objects;
 import java8.util.function.Consumer;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -163,7 +164,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             registerDownloadReceiver(this.downloadListener);
             // If service reports being inactive, check if download is finished or paused to update state.
             // If download is running then it auto-updates the UI using the downloadListener.
-            if (!DownloadService.isDownloading.get() && !DownloadService.isVerifying.get() && updateData != null) {
+            if (!DownloadService.isRunning() && updateData != null) {
                 DownloadService.performOperation(getActivity(), DownloadService.ACTION_GET_INITIAL_STATUS, updateData);
             }
         }
@@ -623,7 +624,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             }
 
             @Override
-            public void onDownloadPaused(boolean pausedByUser, DownloadProgressData progressData) {
+            public void onDownloadPaused(boolean queued, DownloadProgressData progressData) {
                 if (isAdded()) {
                     initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
                     initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
@@ -635,7 +636,7 @@ public class UpdateInformationFragment extends AbstractFragment {
                         return;
                     }
 
-                    if (pausedByUser) {
+                    if (!queued) {
                         getDownloadProgressBar().setProgress(progressData.getProgress());
                         getDownloadStatusText().setText(getString(R.string.download_progress_text_paused, progressData.getProgress()));
                         getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));

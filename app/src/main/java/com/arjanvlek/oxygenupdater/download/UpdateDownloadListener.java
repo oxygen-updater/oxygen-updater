@@ -5,7 +5,8 @@ public interface UpdateDownloadListener {
     void onInitialStatusUpdate();
     void onDownloadStarted();
     void onDownloadProgressUpdate(DownloadProgressData downloadProgressData);
-    void onDownloadPaused(boolean pausedByUser, DownloadProgressData downloadProgressData);
+
+    void onDownloadPaused(boolean queued, DownloadProgressData downloadProgressData);
     void onDownloadComplete();
     void onDownloadCancelled();
     void onDownloadError(boolean isInternalError, boolean isStorageSpaceError, boolean isServerError);
