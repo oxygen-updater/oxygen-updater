@@ -146,7 +146,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/settingsMiddleDivisor"
                 android:layout_marginTop="5dp"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 app:showText="false" />
 
             <TextView
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsAppUpdatesView"
                 android:layout_marginTop="5dp" />
 
@@ -204,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@id/settingsMiddle2Divisor"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 android:layout_marginTop="5dp" />
 
             <TextView
@@ -222,7 +222,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsImportantPushNotificationsView"
                 android:layout_marginTop="5dp" />
 
@@ -241,7 +241,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsNewVersionPushNotificationsView"
                 android:layout_marginTop="5dp" />
 
@@ -260,7 +260,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsNewDevicePushNotificationsView"
                 android:layout_marginTop="5dp" />
 
@@ -310,7 +310,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsLowerDivisor"
                 android:layout_marginTop="5dp" />
 
@@ -329,7 +329,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:theme="@style/Theme.Oxygen.Switch"
+                android:theme="@style/Theme.Oxygen.Switch"
                 android:layout_below="@id/settingsAdvancedModeSwitch"
                 android:layout_marginTop="5dp" />
 
