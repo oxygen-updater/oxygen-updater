@@ -106,7 +106,7 @@ public class NewsActivity extends AppCompatActivity {
                 contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
             } else {
                 String newsLanguage = locale == Locale.NL ? "NL" : "EN";
-                String newsContentUrl = BuildConfig.SERVER_BASE_URL + "/news-content/" + newsItem.getId() + "/" + newsLanguage;
+                String newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.getId() + "/" + newsLanguage;
                 contentView.getSettings().setUserAgentString(ApplicationData.APP_USER_AGENT);
                 contentView.loadUrl(newsContentUrl);
             }
