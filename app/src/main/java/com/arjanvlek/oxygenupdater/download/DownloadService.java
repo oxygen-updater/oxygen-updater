@@ -17,6 +17,7 @@ import android.os.StatFs;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.util.Pair;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
@@ -32,13 +33,19 @@ import com.downloader.Priority;
 import com.downloader.Status;
 import com.downloader.internal.DownloadRequestQueue;
 
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import java8.util.function.Function;
+import java8.util.stream.Collectors;
+import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR;
@@ -137,6 +144,7 @@ public class DownloadService extends IntentService {
 
     // We need to have class-level status fields, because we need to be able to check this in a blocking / synchronous way.
     private static DownloadStatus state = DownloadStatus.NOT_DOWNLOADING;
+    private static final List<Pair<LocalDateTime, String>> executedStateTransitions = new LinkedList<>();
     public static final AtomicBoolean isOperationPending = new AtomicBoolean(false);
 
     private UpdateData updateData;
@@ -184,7 +192,7 @@ public class DownloadService extends IntentService {
             activity.startService(downloadIntent);
         } catch (Exception e) {
             Logger.init(activity.getApplicationContext());
-            Logger.logError(TAG, "Failed to start DownloadService", e);
+            Logger.logError(TAG, withAppendedStateHistory("Failed to start DownloadService"), e);
             isOperationPending.set(false);
         }
     }
@@ -370,7 +378,7 @@ public class DownloadService extends IntentService {
             LocalNotifications.showDownloadFailedNotification(getApplicationContext(), false, R.string.download_error_internal, R.string.download_notification_error_internal);
             sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, (intent) -> {
                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true);
-                Logger.logError(TAG, "Update data is null or has no Download URL");
+                Logger.logError(TAG, withAppendedStateHistory("Update data is null or has no Download URL"));
                 return intent;
             });
             return;
@@ -429,7 +437,7 @@ public class DownloadService extends IntentService {
                 })
                 .setOnProgressListener(progress -> {
                     if (progress.currentBytes > progress.totalBytes) {
-                        Logger.logError(TAG, "Download progress exceeded total file size, server returned incorrect data or app is in an invalid state!");
+                        Logger.logError(TAG, withAppendedStateHistory("Download progress exceeded total file size. Either the server returned incorrect data or the app is in an invalid state!"));
                         cancelDownload(new SettingsManager(getApplicationContext()).getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET));
                         downloadUpdate(updateData);
                         return;
@@ -805,6 +813,7 @@ public class DownloadService extends IntentService {
         previousNumberOfSecondsRemaining = NOT_SET;
         verifier = null;
         autoResumeOnConnectionErrorRunnable = null;
+        executedStateTransitions.clear();
         SettingsManager settingsManager = new SettingsManager(getApplicationContext());
         settingsManager.deletePreference(PROPERTY_DOWNLOAD_PROGRESS);
         settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
@@ -832,7 +841,7 @@ public class DownloadService extends IntentService {
 
     private boolean checkDownloadCompletionByFile(UpdateData updateData) {
         if (updateData == null || updateData.getFilename() == null) {
-            Logger.logWarning(TAG, "Cannot check for download completion by file - null update data or filename provided!");
+            Logger.logInfo(TAG, "Cannot check for download completion by file - null update data or filename provided!");
             return false;
         }
         return new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.getFilename()).exists();
@@ -866,6 +875,7 @@ public class DownloadService extends IntentService {
     private void performStateTransition(DownloadStatus newState) {
         if (isStateTransitionAllowed(newState) && newState != state) {
             //Log.v(TAG, state + " -> " + newState);
+            executedStateTransitions.add(Pair.create(LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")), state + " -> " + newState));
             state = newState;
             new SettingsManager(getApplicationContext()).savePreference(PROPERTY_DOWNLOADER_STATE, state.toString());
         }
@@ -909,5 +919,18 @@ public class DownloadService extends IntentService {
             default:
                 return false;
         }
+    }
+
+    private static String withAppendedStateHistory(String text) {
+        return text +
+                '\n' +
+                '\n' +
+                "History of actions performed by the downloader:" +
+                '\n' +
+                StreamSupport
+                        .stream(executedStateTransitions)
+                        .filter(est -> est.first != null && est.second != null)
+                        .map(est -> est.first.toString("yyyy-MM-dd HH:mm:ss.SSS") + ": " + est.second)
+                        .collect(Collectors.joining("\n"));
     }
 }
