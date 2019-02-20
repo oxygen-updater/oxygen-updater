@@ -35,9 +35,11 @@ import com.downloader.internal.DownloadRequestQueue;
 
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +55,7 @@ import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_N
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING;
 import static com.arjanvlek.oxygenupdater.notifications.LocalNotifications.ONGOING;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOADER_STATE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOADER_STATE_HISTORY;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOAD_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOAD_PROGRESS;
 
@@ -141,6 +144,11 @@ public class DownloadService extends IntentService {
      * How often to re-check for a network connection if no connection is currently available (in milliseconds)
      */
     private static final int NO_CONNECTION_REFRESH_RATE = 5000;
+
+    /**
+     * Date / time pattern for history of performed operations
+     */
+    private static final String HISTORY_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
 
     // We need to have class-level status fields, because we need to be able to check this in a blocking / synchronous way.
     private static DownloadStatus state = DownloadStatus.NOT_DOWNLOADING;
@@ -252,10 +260,11 @@ public class DownloadService extends IntentService {
     public void onDestroy() {
         super.onDestroy();
         SettingsManager settingsManager = new SettingsManager(getApplicationContext());
+        settingsManager.savePreference(PROPERTY_DOWNLOADER_STATE, state.toString());
 
         if (isRunning()) {
             Log.d(TAG, "onDestroy() was called whilst running, saving state & pausing current activity");
-            settingsManager.savePreference(PROPERTY_DOWNLOADER_STATE, state.toString());
+            serializeExecutedStateTransitions();
 
             // We briefly pause the download - it can be (and will be) resumed in the newly spawned service.
             if (state == DownloadStatus.DOWNLOAD_QUEUED || state == DownloadStatus.DOWNLOADING) {
@@ -283,8 +292,6 @@ public class DownloadService extends IntentService {
             broadcastIntent.putExtra(DownloadService.PARAM_DOWNLOAD_ID, settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET));
             broadcastIntent.setClass(this, DownloadServiceRestarter.class);
             this.sendBroadcast(broadcastIntent);
-        } else {
-            settingsManager.savePreference(PROPERTY_DOWNLOADER_STATE, state.toString());
         }
     }
 
@@ -318,6 +325,9 @@ public class DownloadService extends IntentService {
             case ACTION_SERVICE_RESTART:
                 // If restarting the service, we'll have to pick up the work we were doing.
                 // This is done by reading the restored state of the service. Only the three running-states require an action.
+                executedStateTransitions.clear();
+                executedStateTransitions.addAll(deserializeExecutedStateTransitions());
+
                 if (state == DownloadStatus.DOWNLOADING || state == DownloadStatus.DOWNLOAD_QUEUED) {
                     Log.d(TAG, "Resuming temporarily-paused download");
                     state = DownloadStatus.DOWNLOAD_QUEUED; // We are queued after onDestroy() was called. Not Downloading!
@@ -817,6 +827,8 @@ public class DownloadService extends IntentService {
         SettingsManager settingsManager = new SettingsManager(getApplicationContext());
         settingsManager.deletePreference(PROPERTY_DOWNLOAD_PROGRESS);
         settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
+        settingsManager.deletePreference(PROPERTY_DOWNLOADER_STATE);
+        settingsManager.deletePreference(PROPERTY_DOWNLOADER_STATE_HISTORY);
     }
 
     private void sendBroadcastIntent(String intentType) {
@@ -922,15 +934,39 @@ public class DownloadService extends IntentService {
     }
 
     private static String withAppendedStateHistory(String text) {
-        return text +
-                '\n' +
-                '\n' +
-                "History of actions performed by the downloader:" +
-                '\n' +
+        return String.format(
+                "%s\n\n%s\n%s",
+                text,
+                "History of actions performed by the downloader:",
                 StreamSupport
                         .stream(executedStateTransitions)
                         .filter(est -> est.first != null && est.second != null)
-                        .map(est -> est.first.toString("yyyy-MM-dd HH:mm:ss.SSS") + ": " + est.second)
-                        .collect(Collectors.joining("\n"));
+                        .map(est -> est.first.toString(HISTORY_DATETIME_PATTERN) + ": " + est.second)
+                        .collect(Collectors.joining("\n"))
+        );
+    }
+
+    // Convert state history to following format and save it to SharedPreferences:
+    // 2019-01-01 00:00:00.000|DOWNLOADING -> PAUSED,2019-01-01 00:00:01.000|PAUSED -> DOWNLOAD_QUEUED
+    private void serializeExecutedStateTransitions() {
+        String serializedStateHistory = StreamSupport.stream(executedStateTransitions)
+                .map(est -> String.format("%s|%s", est.first.toString(HISTORY_DATETIME_PATTERN), est.second))
+                .collect(Collectors.joining(","));
+
+        SettingsManager settingsManager = new SettingsManager(getApplicationContext());
+        settingsManager.savePreference(PROPERTY_DOWNLOADER_STATE_HISTORY, serializedStateHistory);
+    }
+
+    // Convert saved history from SharedPreferences back to format storable in this class.
+    private List<Pair<LocalDateTime,String>> deserializeExecutedStateTransitions() {
+        SettingsManager settingsManager = new SettingsManager(getApplicationContext());
+        String serializedStateHistory = settingsManager.getPreference(PROPERTY_DOWNLOADER_STATE_HISTORY, "");
+
+        return StreamSupport.stream(Arrays.asList(serializedStateHistory.split(",")))
+                .map(elem -> {
+                    String[] parts = elem.split("\\|");
+                    return Pair.create(LocalDateTime.parse(parts[0], DateTimeFormat.forPattern(HISTORY_DATETIME_PATTERN)), parts[1]);
+                })
+                .collect(Collectors.toList());
     }
 }

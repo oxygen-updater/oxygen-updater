@@ -30,6 +30,7 @@ public class SettingsManager {
     public static final String PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings";
     public static final String PROPERTY_DOWNLOAD_ID = "download_id";
     public static final String PROPERTY_DOWNLOADER_STATE = "downloader_state";
+    public static final String PROPERTY_DOWNLOADER_STATE_HISTORY = "downloader_state_history";
     public static final String PROPERTY_DOWNLOAD_PROGRESS = "download_progress";
     public static final String PROPERTY_UPLOAD_LOGS = "upload_logs";
     public static final String PROPERTY_ADDITIONAL_ZIP_FILE_PATH = "additional_zip_file_path";
