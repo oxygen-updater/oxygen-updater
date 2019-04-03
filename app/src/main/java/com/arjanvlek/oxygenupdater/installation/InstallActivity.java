@@ -195,7 +195,9 @@ public class InstallActivity extends AppCompatActivity {
             boolean rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
 
             // Plan install verification on reboot.
-            String currentOSVersion = new SystemVersionProperties(false).getOxygenOSOTAVersion();
+            SystemVersionProperties systemVersionProperties = new SystemVersionProperties(false);
+            String currentOSVersion = systemVersionProperties.getOxygenOSOTAVersion();
+            boolean isAbPartitionLayout = systemVersionProperties.isABPartitionLayout();
             String targetOSVersion = updateData.getOtaVersionNumber();
 
             logInstallationStart(getApplication(), currentOSVersion, targetOSVersion, currentOSVersion, () -> {
@@ -206,7 +208,7 @@ public class InstallActivity extends AppCompatActivity {
                         settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
                         settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
                         String downloadedUpdateFilePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename();
-                        UpdateInstaller.installUpdate(getApplication(), downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
+                        UpdateInstaller.installUpdate(getApplication(), isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
                         return null;
                     } catch (UpdateInstallationException e) {
                         return e.getMessage();

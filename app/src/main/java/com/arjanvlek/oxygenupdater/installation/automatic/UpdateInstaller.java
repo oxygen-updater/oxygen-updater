@@ -13,8 +13,9 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class UpdateInstaller {
 
-    private static final String INSTALL_SCRIPT_DIRECTORY = "/cache/recovery";
-    private static final String INSTALL_SCRIPT_PATH = INSTALL_SCRIPT_DIRECTORY + "/openrecoveryscript";
+    private static final String INSTALL_SCRIPT_NON_AB_DIRECTORY = "/cache/recovery";
+    private static final String INSTALL_SCRIPT_AB_DIRECTORY = "/data/cache/recovery";
+    private static final String INSTALL_SCRIPT_PATH_SUFFIX = "/openrecoveryscript";
 
     // Open recovery script (http://wiki.rootzwiki.com/OpenRecoveryScript) commands
     private static final String BACKUP = "backup ";
@@ -49,11 +50,11 @@ public class UpdateInstaller {
     private static final String CACHE = "cache";
     private static final String TEXT_SUCCESS = "success";
 
-    public static void installUpdate(Context context, String downloadPath, String additionalZipFilePath, boolean backup, boolean wipeCachePartition, boolean rebootDevice) throws UpdateInstallationException, InterruptedException {
+    public static void installUpdate(Context context, boolean isAbPartitionLayout, String downloadPath, String additionalZipFilePath, boolean backup, boolean wipeCachePartition, boolean rebootDevice) throws UpdateInstallationException, InterruptedException {
         // Build the installation script.
         StringBuilder recoveryCommands = new StringBuilder();
 
-        // Print the banner.
+        // Print the banner. Note: Current TWRP (2019-04-03) does not support ECHO command :(
         addRecoveryText(recoveryCommands, " -------------------------");
         addRecoveryText(recoveryCommands, "| (↑) OXYGEN UPDATER      |");
         addRecoveryText(recoveryCommands, "|     " + context.getString(R.string.install_recovery_installer_title) + "  |");
@@ -100,10 +101,13 @@ public class UpdateInstaller {
 
         List<String> suCommands = new ArrayList<>();
 
-        // Create the install script directory (if not exists) by calling "su mkdir -p /cache/recovery".
+        String INSTALL_SCRIPT_DIRECTORY = (isAbPartitionLayout ? INSTALL_SCRIPT_AB_DIRECTORY : INSTALL_SCRIPT_NON_AB_DIRECTORY);
+        String INSTALL_SCRIPT_PATH =  INSTALL_SCRIPT_DIRECTORY + INSTALL_SCRIPT_PATH_SUFFIX;
+
+        // Create the install script directory (if not exists) by calling "su mkdir -p (/data)/cache/recovery".
         addSUCommand(suCommands, "mkdir -p " + INSTALL_SCRIPT_DIRECTORY);
 
-        // Write the install script by calling "su echo '<commands>' > /cache/recovery/openrecoveryscript"
+        // Write the install script by calling "su echo '<commands>' > (/data)/cache/recovery/openrecoveryscript"
         addSUCommand(suCommands, ECHO + singleQuoted(recoveryCommands.toString()) + " > " + INSTALL_SCRIPT_PATH, false);
 
         // Reboot the device by calling "su reboot recovery".
