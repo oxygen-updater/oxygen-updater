@@ -20,6 +20,7 @@ public class SystemVersionProperties {
     private final String oxygenOSOTAVersion;
     private final String securityPatchDate;
     private final String oemFingerprint;
+    private final boolean ABPartitionLayout;
     private static final String TAG = "SystemVersionProperties";
 
     public SystemVersionProperties(boolean uploadLog) {
@@ -28,6 +29,7 @@ public class SystemVersionProperties {
         String oxygenDeviceName = NO_OXYGEN_OS;
         String oemFingerprint = NO_OXYGEN_OS;
         String securityPatchDate = NO_OXYGEN_OS;
+        boolean ABPartitionLayout = false;
         try {
             Process getBuildPropProcess = Runtime.getRuntime().exec("getprop");
 
@@ -42,6 +44,7 @@ public class SystemVersionProperties {
             oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected Oxygen OS ROM with version: %s ...");
             oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected Oxygen OS ROM with OTA version: %s ...");
             oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s ...");
+            ABPartitionLayout = Boolean.parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s ..."));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 securityPatchDate = Build.VERSION.SECURITY_PATCH;
@@ -59,14 +62,16 @@ public class SystemVersionProperties {
         this.oxygenOSOTAVersion = oxygenOSOTAVersion;
         this.oemFingerprint = oemFingerprint;
         this.securityPatchDate = securityPatchDate;
+        this.ABPartitionLayout = ABPartitionLayout;
     }
 
-    public SystemVersionProperties(String oxygenDeviceName, String oxygenOSVersion, String oxygenOSOTAVersion, String securityPatchDate, String oemFingerprint) {
+    public SystemVersionProperties(String oxygenDeviceName, String oxygenOSVersion, String oxygenOSOTAVersion, String securityPatchDate, String oemFingerprint, boolean ABPartitionLayout) {
         this.oxygenDeviceName = oxygenDeviceName;
         this.oxygenOSVersion = oxygenOSVersion;
         this.oxygenOSOTAVersion = oxygenOSOTAVersion;
         this.securityPatchDate = securityPatchDate;
         this.oemFingerprint = oemFingerprint;
+        this.ABPartitionLayout = ABPartitionLayout;
     }
 
     private String readBuildPropItem(String itemKeys, String buildProperties, String logText) throws IOException {
@@ -112,5 +117,9 @@ public class SystemVersionProperties {
 
     public String getOemFingerprint() {
         return oemFingerprint;
+    }
+
+    public boolean isABPartitionLayout() {
+        return ABPartitionLayout;
     }
 }
