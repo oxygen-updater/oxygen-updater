@@ -965,7 +965,14 @@ public class DownloadService extends IntentService {
         return StreamSupport.stream(Arrays.asList(serializedStateHistory.split(",")))
                 .map(elem -> {
                     String[] parts = elem.split("\\|");
-                    return Pair.create(LocalDateTime.parse(parts[0], DateTimeFormat.forPattern(HISTORY_DATETIME_PATTERN)), parts[1]);
+                    LocalDateTime timestamp;
+
+                    try {
+                        timestamp = LocalDateTime.parse(parts[0], DateTimeFormat.forPattern(HISTORY_DATETIME_PATTERN));
+                    } catch (Exception e) {
+                        timestamp = LocalDateTime.now();
+                    }
+                    return Pair.create(timestamp, parts[1]);
                 })
                 .collect(Collectors.toList());
     }

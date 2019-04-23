@@ -171,7 +171,6 @@
     <string name="install_preparing_installation">"Подготовка установки…"</string>
     <string name="install_recovery_installer_title">"Установщик обновления"</string>
 
-    <!-- Add 2 spaces to the end -->
     <string name="install_recovery_backing_up">"Резервное копирование устройства. Это займет некоторое время!"</string>
     <string name="install_recovery_clearing_cache">"Очистка кэша (cache partition)…"</string>
     <string name="install_recovery_done">"Готово. Устройство перезагрузится."</string>

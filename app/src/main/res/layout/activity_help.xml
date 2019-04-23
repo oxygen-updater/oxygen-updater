@@ -19,6 +19,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/help_text"
             android:textAppearance="?android:textAppearanceMedium"
+            android:layout_gravity="start"
             android:textColor="@color/material_blue_grey" />
 
         <!-- Updating your device -->

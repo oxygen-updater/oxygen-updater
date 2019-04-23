@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater.views;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -390,12 +391,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
     // Android 8.0 Notification Channels
 
+    @TargetApi(26)
     private void createPushNotificationChannel() {
-        if (Build.VERSION.SDK_INT < 26) {
-            // Unsupported on older Android versions
-            return;
-        }
-
         // The id of the channel.
         String id = ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID;
 
@@ -425,12 +422,8 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         }
     }
 
+    @TargetApi(26)
     private void createProgressNotificationChannel() {
-        if (Build.VERSION.SDK_INT < 26) {
-            // Unsupported on older Android versions
-            return;
-        }
-
         // The id of the channel.
         String id = ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID;
 
