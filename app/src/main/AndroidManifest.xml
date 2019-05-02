@@ -42,14 +42,6 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <!-- Disable Firebase Analytics collection and Firebase Advertising ID collection as per https://firebase.google.com/support/guides/disable-analytics-->
-        <meta-data
-            android:name="firebase_analytics_collection_deactivated"
-            android:value="true" />
-        <meta-data
-            android:name="google_analytics_adid_collection_enabled"
-            android:value="false" />
-
         <meta-data
             android:name="asset_statements"
             android:resource="@string/asset_statements" />
@@ -139,6 +131,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
         </activity>
+        <activity
+            android:name=".contribution.ContributorActivity"
+            android:label="@string/contribute"
+            android:parentActivityName=".views.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
+        </activity>
 
         <activity
             android:name=".faq.FAQActivity"
@@ -215,6 +217,11 @@
         <service
             android:name=".internal.logger.LogUploadService"
             android:label="@string/log_uploader_service_name"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
+            android:name=".contribution.UpdateFileChecker"
+            android:label="@string/update_file_checker_service_name"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service

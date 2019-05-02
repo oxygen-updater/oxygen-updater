@@ -44,6 +44,8 @@ public class SettingsManager {
     public static final String PROPERTY_INSTALLATION_ID = "installationId";
     public static final String PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED = "isAutomaticInstallationEnabled";
     public static final String PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown";
+    public static final String PROPERTY_CONTRIBUTE = "contribute";
+    public static final String PROPERTY_CONTRIBUTION_COUNT = "contribution_count";
 
     //Offline cache properties
     public static final String PROPERTY_OFFLINE_ID = "offlineId";

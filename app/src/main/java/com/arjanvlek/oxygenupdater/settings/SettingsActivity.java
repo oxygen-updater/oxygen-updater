@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
@@ -561,5 +562,11 @@ public class SettingsActivity extends AbstractActivity {
         });
     }
 
+
+    public void onContributeButtonClick(View button) {
+        ActivityLauncher launcher = new ActivityLauncher(this);
+        launcher.Contribute();
+        launcher.dispose();
+    }
 
 }

@@ -229,6 +229,20 @@ public class ServerConnector implements Cloneable {
         new ObjectResponseExecutor<>(ServerRequest.LOG, logData, callback).execute();
     }
 
+    public void submitUpdateFile(@NonNull String filename, Consumer<ServerPostResult> callback) {
+        JSONObject postBody = new JSONObject();
+        try {
+            postBody.put("filename", filename);
+        } catch (JSONException e) {
+            ServerPostResult errorResult = new ServerPostResult();
+            errorResult.setSuccess(false);
+            errorResult.setErrorMessage("IN-APP ERROR (ServerConnector): Json parse error on input data " + filename);
+            callback.accept(errorResult);
+        }
+
+        new ObjectResponseExecutor<>(ServerRequest.SUBMIT_UPDATE_FILE, postBody, callback).execute();
+    }
+
     public void logRootInstall(RootInstall rootInstall, Consumer<ServerPostResult> callback) {
 
         try {

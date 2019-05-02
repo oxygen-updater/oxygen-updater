@@ -43,6 +43,7 @@ import java8.util.function.Consumer;
 
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_ADVANCED_MODE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_CONTRIBUTE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOAD_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC;
@@ -164,12 +165,17 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             createProgressNotificationChannel();
         }
 
-        // Remove "long" download ID in vavor of "int" id
+        // Remove "long" download ID in favor of "int" id
         try {
             //noinspection unused var is needed to cast class
             int downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1);
         } catch (ClassCastException e) {
             settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
+        }
+
+        // Offer contribution to users from app versions below 2.4.0
+        if (!settingsManager.containsPreference(PROPERTY_CONTRIBUTE) && settingsManager.containsPreference(PROPERTY_SETUP_DONE)) {
+            activityLauncher.Contribute();
         }
     }
 

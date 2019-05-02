@@ -17,7 +17,6 @@ import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.installation.InstallActivity;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
@@ -36,6 +35,7 @@ public class LocalNotifications {
     private static final int DOWNLOAD_COMPLETE_NOTIFICATION_ID = 1000000000;
     private static final int DOWNLOADING_NOTIFICATION_ID = 1500000000;
     private static final int DOWNLOAD_FAILED_NOTIFICATION_ID = 200000000;
+    private static final int CONTRIBUTE_SUCCESFUL_NOTIFICATION_ID = 250000000;
 
     private static final String TAG = "LocalNotifications";
 
@@ -150,6 +150,41 @@ public class LocalNotifications {
             manager.notify(DOWNLOAD_COMPLETE_NOTIFICATION_ID, builder.build());
         } catch(Exception e) {
             Logger.logError(TAG, "Can't display download complete notification: ", e);
+        }
+    }
+
+    /**
+     * Contribute: shows a notification that a update file has been submitted successfully.
+     */
+    public static void showContributionSuccessfulNotification(Context context, String filename) {
+        try {
+            // If this notification is clicked, open the app.
+            Intent resultIntent = new Intent(context, MainActivity.class);
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            // Adds the back stack
+            stackBuilder.addParentStack(MainActivity.class);
+            // Adds the Intent to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
+            // Gets a PendingIntent containing the entire back stack
+            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(android.R.drawable.stat_sys_upload_done)
+                    .setOngoing(false)
+                    .setContentIntent(resultPendingIntent)
+                    .setAutoCancel(true)
+                    .setContentTitle(context.getString(R.string.contribute_successful_notification_title))
+                    .setContentText(context.getString(R.string.contribute_successful_notification_text, filename));
+
+            if (Build.VERSION.SDK_INT >= 21) {
+                builder.setCategory(Notification.CATEGORY_SYSTEM);
+            }
+
+            NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
+            manager.notify(CONTRIBUTE_SUCCESFUL_NOTIFICATION_ID, builder.build());
+        } catch(Exception e) {
+            Logger.logError(TAG, "Can't display successful contribution notification: ", e);
         }
     }
 

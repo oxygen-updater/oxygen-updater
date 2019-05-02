@@ -93,6 +93,8 @@
     <string name="settings_buy_button_bought">Gekocht</string>
     <string name="settings_buy_button_not_possible">Niet beschikb.</string>
     <string name="settings_buy_ad_free_label">Verwijder advertenties:</string>
+    <string name="settings_contribute_label">Verbeter de app voor anderen:</string>
+    <string name="settings_contribute_button">Draag bij</string>
     <string name="settings_category_other">Overig:</string>
     <string name="settings_device">Apparaat</string>
     <string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
@@ -291,6 +293,19 @@
     <string name="news_date_published">Laatste update: %1$s</string>
     <string name="news_empty">Dit artikel bevat geen inhoud.</string>
     <string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \'OPNIEUW\' om het artikel opnieuw te laden.</string>
+
+    <!-- Contribute strings -->
+    <string name="contribute">Draag bij</string>
+    <string name="contribute_title">Maak Oxygen Updater nóg beter</string>
+    <string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon. \n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend.</string>
+    <string name="contribute_image_description">Upload bestandsnamen naar de app-server</string>
+    <string name="contribute_agree">Ik help mee en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
+    <string name="contribute_agree_from_setup">Ik wil helpen om de app nog beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
+    <string name="contribute_save">Bewaar keuze</string>
+    <string name="contribute_more_info">Meer informatie …</string>
+    <string name="contribute_allow_storage">Geef de app toegang tot de opslagruimte om te helpen met verbeteren</string>
+    <string name="contribute_successful_notification_title">Bedankt voor je bijdrage</string>
+    <string name="contribute_successful_notification_text">Update-bestandsnaam %1$s is met onze beheerders gedeeld!</string>
 
     <!-- Error strings -->
     <string name="error_app_outdated">Oeps!</string>

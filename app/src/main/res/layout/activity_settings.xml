@@ -353,10 +353,29 @@
                 android:layout_below="@id/settingsUploadLogsTextView" />
 
             <TextView
+                android:id="@+id/settingsContributeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="115dp"
+                android:layout_alignBaseline="@+id/settingsContributeButton"
+                android:text="@string/settings_contribute_label"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/settingsContributeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:onClick="onContributeButtonClick"
+                android:text="@string/settings_contribute_button"
+                android:layout_below="@id/settingsBuyAdFreeButton" />
+
+            <TextView
                 android:id="@+id/settingsDescriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/settingsBuyAdFreeButton"
+                android:layout_below="@id/settingsContributeButton"
                 android:layout_marginTop="10dp"
                 android:text="@string/settings_explanation_update_methods"
                 android:textColor="@color/oneplus_red"

@@ -1,31 +1,42 @@
 package com.arjanvlek.oxygenupdater.setupwizard;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.util.Consumer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.contribution.ContributorUtils;
 import com.arjanvlek.oxygenupdater.internal.SetupUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_CONTRIBUTE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
+import static com.arjanvlek.oxygenupdater.views.MainActivity.PERMISSION_REQUEST_CODE;
+import static com.arjanvlek.oxygenupdater.views.MainActivity.VERIFY_FILE_PERMISSION;
 
 
+@SuppressWarnings("Convert2Lambda")
 public class SetupActivity extends AppCompatActivity {
 
     private Fragment step3Fragment;
@@ -33,6 +44,7 @@ public class SetupActivity extends AppCompatActivity {
     private SettingsManager settingsManager;
 
     private static final String TAG = "SetupActivity";
+    private Consumer<Boolean> permissionCallback;
 
 
     @Override
@@ -178,8 +190,28 @@ public class SetupActivity extends AppCompatActivity {
 
     public void closeInitialTutorial(View view) {
         if (settingsManager.checkIfSetupScreenIsFilledIn()) {
-            settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
-            NavUtils.navigateUpFromSameTask(this);
+            CheckBox contributorCheckbox = findViewById(R.id.introduction_step_5_contribute_checkbox);
+
+            if (contributorCheckbox.isChecked()) {
+                requestContributorStoragePermissions(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean granted) {
+                        if (granted) {
+                            ContributorUtils contributorUtils = new ContributorUtils(getApplicationContext());
+                            contributorUtils.flushSettings(true);
+                            settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
+                            settingsManager.savePreference(PROPERTY_CONTRIBUTE, false);
+                            NavUtils.navigateUpFromSameTask(SetupActivity.this);
+                        } else {
+                            Toast.makeText(getApplication(), R.string.contribute_allow_storage, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            } else {
+                settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
+                settingsManager.savePreference(PROPERTY_CONTRIBUTE, false);
+                NavUtils.navigateUpFromSameTask(this);
+            }
         } else {
             Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
             Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
@@ -188,5 +220,30 @@ public class SetupActivity extends AppCompatActivity {
         }
     }
 
+    public void onContributeMoreInfoClick(View textView) {
+        ActivityLauncher launcher = new ActivityLauncher(this);
+        launcher.Contribute_noenroll();
+        launcher.dispose();
+    }
 
+    private void requestContributorStoragePermissions(Consumer<Boolean> permissionCallback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.permissionCallback = permissionCallback;
+            requestPermissions(new String[]{VERIFY_FILE_PERMISSION}, PERMISSION_REQUEST_CODE);
+        } else {
+            permissionCallback.accept(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (this.permissionCallback != null && grantResults.length > 0) {
+                    this.permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
+                }
+
+        }
+    }
 }
