@@ -83,12 +83,15 @@ public class UpdateFileChecker extends JobService {
                                 Logger.logError(TAG, "Error submitting update file " + fileName + ": " + serverPostResult.getErrorMessage());
                             } else {
                                 Logger.logInfo(TAG, "Successfully submitted update file " + fileName);
-                                // Inform user of successful contribution
-                                LocalNotifications.showContributionSuccessfulNotification(getApplication(), fileName);
-                                // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
-                                SettingsManager settingsManager = new SettingsManager(getApplication());
-                                settingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTION_COUNT, settingsManager.getPreference(SettingsManager.PROPERTY_CONTRIBUTION_COUNT, 0) + 1);
-                                // Store the filename in a local database to prevent re-submission until it gets installed by the user.
+                                // Inform user of successful contribution (only if the file is not a "bogus" temporary file)
+                                if (fileName != null && fileName.contains(".zip")) {
+                                    LocalNotifications.showContributionSuccessfulNotification(getApplication(), fileName.replace(".tmp", ""));
+                                    // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
+                                    SettingsManager settingsManager = new SettingsManager(getApplication());
+                                    settingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTION_COUNT, settingsManager.getPreference(SettingsManager.PROPERTY_CONTRIBUTION_COUNT, 0) + 1);
+                                    // Store the filename in a local database to prevent re-submission until it gets installed by the user.
+                                }
+
                                 repository.store(fileName);
                             }
 
