@@ -2,6 +2,7 @@ package com.arjanvlek.oxygenupdater.contribution;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.os.Bundle;
 import android.os.Environment;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
@@ -12,6 +13,7 @@ import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.internal.server.ServerPostResult;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ public class UpdateFileChecker extends JobService {
 
     private static final String[] UPDATE_DIRECTORIES = new String[] {".Ota"};
     private static final String TAG = "UpdateFileChecker";
+    private static final String FILE_ALREADY_IN_DATABASE = "E_FILE_ALREADY_IN_DB";
+    private static final String FILENAME_INVALID = "E_FILE_INVALID";
     private SubmittedUpdateFileRepository repository;
 
     @Override
@@ -80,19 +84,37 @@ public class UpdateFileChecker extends JobService {
                                 // network error, try again later
                                 Logger.logWarning(TAG, new NetworkException("Error submitting update file " + fileName + ": No network connection or empty response"));
                             } else if (!serverPostResult.isSuccess()) {
-                                // server error, try again later
-                                Logger.logError(TAG, new NetworkException("Error submitting update file " + fileName + ": " + serverPostResult.getErrorMessage()));
+                                String errorMessage = serverPostResult.getErrorMessage();
+                                // If file is already in our database or if file is an invalid temporary file (server decides when this is the case),
+                                // mark this file as submitted but don't inform the user about it.
+                                if (errorMessage != null && (errorMessage.equals(FILE_ALREADY_IN_DATABASE) || errorMessage.equals(FILENAME_INVALID))) {
+                                    Logger.logInfo(TAG, "Ignoring submitted update file " + fileName + ", already in database or not relevant");
+                                    repository.store(fileName);
+
+                                    // Log failed contribution
+                                    Bundle analyticsBundle = new Bundle();
+                                    analyticsBundle.putString("CONTRIBUTION_FILENAME", fileName);
+                                    FirebaseAnalytics.getInstance(getApplication()).logEvent("CONTRIBUTION_NOT_NEEDED", analyticsBundle);
+                                } else {
+                                    // server error, try again later
+                                    Logger.logError(TAG, new NetworkException("Error submitting update file " + fileName + ": " + serverPostResult.getErrorMessage()));
+                                }
                             } else {
                                 Logger.logInfo(TAG, "Successfully submitted update file " + fileName);
                                 // Inform user of successful contribution (only if the file is not a "bogus" temporary file)
                                 if (fileName != null && fileName.contains(".zip")) {
-                                    LocalNotifications.showContributionSuccessfulNotification(getApplication(), fileName.replace(".tmp", ""));
+                                    LocalNotifications.showContributionSuccessfulNotification(getApplication(), fileName);
                                     // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
                                     SettingsManager settingsManager = new SettingsManager(getApplication());
                                     settingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTION_COUNT, settingsManager.getPreference(SettingsManager.PROPERTY_CONTRIBUTION_COUNT, 0) + 1);
-                                    // Store the filename in a local database to prevent re-submission until it gets installed by the user.
+
+                                    // Log successful contribution
+                                    Bundle analyticsBundle = new Bundle();
+                                    analyticsBundle.putString("CONTRIBUTION_FILENAME", fileName);
+                                    FirebaseAnalytics.getInstance(getApplication()).logEvent("CONTRIBUTION_SUCCESSFUL", analyticsBundle);
                                 }
 
+                                // Store the filename in a local database to prevent re-submission until it gets installed or removed by the user.
                                 repository.store(fileName);
                             }
 
