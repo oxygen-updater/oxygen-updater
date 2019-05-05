@@ -87,6 +87,10 @@
     <string name="settings_buy_button_bought">"Acheté"</string>
     <string name="settings_buy_button_not_possible">"Indisponible"</string>
     <string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>
+
+    <string name="settings_contribute_label">Aidez à améliorer l'application:</string>
+    <string name="settings_contribute_button">Contribuez</string>
+
     <string name="settings_category_other">"Autres"</string>
     <string name="settings_device">"Périphérique"</string>
     <string name="settings_entered_incorrectly">"Une erreur s'est produite lors de la sauvegarde de vos réglages. Retournez en arrière et sélectionnez à nouveau votre périphérique et méthode de mise à jour."</string>
@@ -117,8 +121,7 @@ Cela peut être utile quand vous :
 - Choisissez de revenir sur une version stable depuis une version bêta (n'oubliez pas de réinitialiser votre périphérique)
 - Réinstallez la version actuelle du système"</string>
     <string name="settings_update_method">"Méthode de mise à jour"</string>
-    <!-- TODO translate -->
-    <string name="settings_upload_logs">Share usage data and logs</string>
+    <string name="settings_upload_logs">Envoyer les données d'utilisation et de crash au développeur</string>
 
     <!-- FAQ strings -->
     <string name="faq">"FAQ"</string>
@@ -357,6 +360,19 @@ Sélectionnez un périphérique et/ou une méthode de mise à jour en utilisant 
     <string name="news_empty">"Cet article n'a pas de contenu."</string>
     <string name="news_load_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton \"Réessayer\" pour ouvrir l'article."</string>
 
+    <!-- Contribute strings -->
+    <string name="contribute">Devenez un contributeur</string>
+    <string name="contribute_title">Aidez à améliorer Oxygen Updater</string>
+    <string name="contribute_explanation">Oxygen Updater a besoin de vous! Afin de vous donner les dernières mises à jour disponibles, nous avons besoin de connaître les noms des fichiers de mise à jour. Ceux-ci sont présents sur votre téléphone quand une mise à jour arrive depuis le système FOTA de OnePlus. \n\nComment puis-je aider?\n\nOxygen Updater peut automatiquement soumettre les noms de fichiers de mise à jour aux administrateurs. Cela utilisera une petite quantité de données et un peu de batterie. Tout ce que vous avez à faire est attendre environ 15 minutes avant d'installer les mises à jour provenant du système FOTA de OnePlus jusqu'à ce que vous receviez une notification disant que le nom du fichier a bien été soumis.</string>
+    <string name="contribute_image_description">Upload files to the app server</string>
+    <string name="contribute_agree">J'aimerais aider et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d'Oxygen Updater</string>
+    <string name="contribute_agree_from_setup">J'aimerais contribuer à améliorer l'application et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d'Oxygen Updater</string>
+    <string name="contribute_save">Sauvegarder le réglage</string>
+    <string name="contribute_more_info">Plus d'informations …</string>
+    <string name="contribute_allow_storage">Veuillez accorder la permission d'accéder au stockage afin de contribuer à l'application</string>
+    <string name="contribute_successful_notification_title">Contribution effectuée</string>
+    <string name="contribute_successful_notification_text">Merci d'avoir partagé le fichier de mise à jour %1$s avec les administrateurs d'Oxygen Updater !</string>
+
     <!-- Error strings -->
     <string name="error_app_outdated">"Oh non !"</string>
     <string name="error_app_outdated_message">"Cette version de l'application est obsolète. Il est temps de la mettre à jour ! Cliquez sur le bouton \"Play Store\" en dessous. Une fois dedans, sélectionnez \"Mettre à jour\"."</string>
@@ -402,5 +418,6 @@ Si vous n'avez pas un accès root pressez \"Fermer\" et continuez à utiliser l'
     <string name="error_google_play_button_text">"Play Store"</string>
     <string name="delayed_push_notification_displayer_service_name">"Service de notifications Push"</string>
     <string name="log_uploader_service_name">"Service de rapports d'erreurs"</string>
-    <string name="download_service_name">"Service pour télécharger des mises de jour"</string>
+    <string name="update_file_checker_service_name">Service de vérification du nom de fichier de mise à jour</string>
+    <string name="download_service_name">"Service pour télécharger les mises à jour"</string>
 </resources>
