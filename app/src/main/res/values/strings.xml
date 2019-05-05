@@ -297,17 +297,17 @@
 
     <!-- Contribute strings -->
     <!-- TODO translate to all but Dutch / Belgian -->
-    <string name="contribute" translatable="false">Become a contributor</string>
-    <string name="contribute_title" translatable="false">Help improving Oxygen Updater</string>
-    <string name="contribute_explanation" translatable="false">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting with installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted.</string>
-    <string name="contribute_image_description" translatable="false">Upload files to the app server</string>
-    <string name="contribute_agree" translatable="false">I\'d like to help and agree to submit update file names to our admins</string>
-    <string name="contribute_agree_from_setup" translatable="false">I\'d like to help improving the app and agree to submit update file names to our admins</string>
-    <string name="contribute_save" translatable="false">Save settings</string>
-    <string name="contribute_more_info" translatable="false">More info …</string>
-    <string name="contribute_allow_storage" translatable="false">Please grant the storage permissions in order to help improving the app</string>
-    <string name="contribute_successful_notification_title" translatable="false">Contribution successful</string>
-    <string name="contribute_successful_notification_text" translatable="false">Thanks for sharing the update file %1$s with our admins!</string>
+    <string name="contribute">Become a contributor</string>
+    <string name="contribute_title">Help improving Oxygen Updater</string>
+    <string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted.</string>
+    <string name="contribute_image_description">Upload files to the app server</string>
+    <string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
+    <string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
+    <string name="contribute_save">Save settings</string>
+    <string name="contribute_more_info">More info …</string>
+    <string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
+    <string name="contribute_successful_notification_title">Contribution successful</string>
+    <string name="contribute_successful_notification_text">Thanks for sharing the update file %1$s with our admins!</string>
 
     <!-- Error strings-->
     <string name="error_app_outdated">Oh no!</string>
@@ -352,7 +352,7 @@
     <string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
     <string name="download_service_name">Update downloader</string>
     <string name="log_uploader_service_name">Error reporting service</string>
-    <string name="update_file_checker_service_name" translatable="false">Update file checking service</string>
+    <string name="update_file_checker_service_name">Update file checking service</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
 
