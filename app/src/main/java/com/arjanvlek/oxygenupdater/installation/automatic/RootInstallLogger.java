@@ -4,7 +4,9 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
@@ -38,7 +40,7 @@ public class RootInstallLogger extends JobService {
         long updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
 
         if (deviceId == -1L || updateMethodId == -1L) {
-            Logger.logError(TAG, "Failed to log update installation action: Device and / or update method not selected.");
+            Logger.logError(TAG, new OxygenUpdaterException("Failed to log update installation action: Device and / or update method not selected."));
             return true; // Retrying wont fix this issue. This is a lost cause.
         }
 
@@ -54,10 +56,10 @@ public class RootInstallLogger extends JobService {
 
         connector.logRootInstall(installation, (result) -> {
             if (result == null) {
-                Logger.logError(TAG, "Failed to log update installation action: No response from server");
+                Logger.logError(TAG, new NetworkException("Failed to log update installation action on server: No response from server"));
                 jobFinished(params, true);
             } else if (!result.isSuccess()) {
-                Logger.logError(TAG, "Failed to log update installation action: " + result.getErrorMessage());
+                Logger.logError(TAG, new OxygenUpdaterException("Failed to log update installation action on server: " + result.getErrorMessage()));
                 jobFinished(params, true);
             } else if (result.isSuccess() && installation.getInstallationStatus().equals(InstallationStatus.FAILED) || installation.getInstallationStatus().equals(InstallationStatus.FINISHED)) {
                 settingsManager.deletePreference(SettingsManager.PROPERTY_INSTALLATION_ID);

@@ -4,6 +4,7 @@ package com.arjanvlek.oxygenupdater.internal.server;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.news.NewsItem;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage;
@@ -77,7 +78,7 @@ enum ServerRequest {
         try {
             return new URL(getUrlString(params));
         } catch (MalformedURLException e) {
-            Logger.logError("ServerRequest", "Malformed URL: " + this.url);
+            Logger.logError("ServerRequest", new OxygenUpdaterException("Malformed URL: " + this.url));
             return null;
         } catch (Exception e) {
             Logger.logError("ServerRequest", "Exception when parsing URL " + this.url + "  with parameters " + Arrays.toString(params), e);

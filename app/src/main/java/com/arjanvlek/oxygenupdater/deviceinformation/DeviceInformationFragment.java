@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
@@ -41,7 +42,7 @@ public class DeviceInformationFragment extends AbstractFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         if (!isAdded()) {
-            Logger.logError(TAG, "Fragment not added. Can not create the view!");
+            Logger.logError(TAG, new OxygenUpdaterException("Fragment not added. Can not create the view!"));
             return;
         }
 
@@ -51,7 +52,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
     private void displayFormattedDeviceName(List<Device> devices) {
         if (!isAdded()) {
-            Logger.logError(TAG, "Fragment not added. Can not display formatted device name!");
+            Logger.logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display formatted device name!"));
             return;
         }
 
@@ -68,7 +69,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
     private void displayDeviceInformation() {
         if (!isAdded()) {
-            Logger.logError(TAG, "Fragment not added. Can not display device information!");
+            Logger.logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display device information!"));
             return;
         }
 

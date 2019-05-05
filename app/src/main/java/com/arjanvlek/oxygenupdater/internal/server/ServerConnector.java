@@ -475,7 +475,7 @@ public class ServerConnector implements Cloneable {
                 return performServerRequest(request, body, retryCount + 1, params);
             } else {
                 if (ExceptionUtils.isNetworkError(e)) {
-                    Logger.logNetworkError(TAG, "Error performing request <" + request.toString(params) +">.");
+                    Logger.logWarning(TAG, new NetworkException("Error performing request <" + request.toString(params) +">."));
                 } else {
                     Logger.logError(TAG, "Error performing request <" + request.toString(params)+ ">", e);
                 }

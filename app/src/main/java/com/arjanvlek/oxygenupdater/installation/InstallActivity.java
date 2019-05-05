@@ -29,6 +29,7 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.installation.automatic.InstallationStatus;
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
+import com.arjanvlek.oxygenupdater.installation.automatic.SubmitUpdateInstallationException;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstaller;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuideFragment;
@@ -416,9 +417,9 @@ public class InstallActivity extends AppCompatActivity {
 
         serverConnector.logRootInstall(installation, (result) -> {
             if (result == null) {
-                Logger.logError(TAG, "Failed to log update installation action: No response from server");
+                Logger.logError(TAG, new SubmitUpdateInstallationException("Failed to log update installation action: No response from server"));
             } else if (!result.isSuccess()) {
-                Logger.logError(TAG, "Failed to log update installation action: " + result.getErrorMessage());
+                Logger.logError(TAG, new SubmitUpdateInstallationException("Failed to log update installation action: " + result.getErrorMessage()));
             }
             // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
             successFunction.start();

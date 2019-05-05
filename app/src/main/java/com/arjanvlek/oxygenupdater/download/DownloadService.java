@@ -376,7 +376,7 @@ public class DownloadService extends IntentService {
 
     private synchronized void downloadUpdate(UpdateData updateData) {
         if (!isStateTransitionAllowed(DownloadStatus.DOWNLOAD_QUEUED)) {
-            Logger.logWarning(TAG, "Not downloading update, is a download operation already in progress?");
+            Logger.logWarning(TAG, new UpdateDownloadException("Not downloading update, is a download operation already in progress?"));
             return;
         }
 
@@ -385,7 +385,7 @@ public class DownloadService extends IntentService {
             LocalNotifications.showDownloadFailedNotification(getApplicationContext(), false, R.string.download_error_internal, R.string.download_notification_error_internal);
             sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, (intent) -> {
                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true);
-                Logger.logError(TAG, withAppendedStateHistory("Update data is null or has no Download URL"));
+                Logger.logError(TAG, new UpdateDownloadException(withAppendedStateHistory("Update data is null or has no Download URL")));
                 return intent;
             });
             return;
@@ -395,7 +395,7 @@ public class DownloadService extends IntentService {
             LocalNotifications.showDownloadFailedNotification(getApplicationContext(), false, R.string.download_error_internal, R.string.download_notification_error_internal);
             sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, (intent) -> {
                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true);
-                Logger.logError(TAG, "Update data has invalid Download URL (" + updateData.getDownloadUrl() + ")");
+                Logger.logError(TAG, new UpdateDownloadException("Update data has invalid Download URL (" + updateData.getDownloadUrl() + ")"));
                 return intent;
             });
             return;
@@ -444,7 +444,7 @@ public class DownloadService extends IntentService {
                 })
                 .setOnProgressListener(progress -> {
                     if (progress.currentBytes > progress.totalBytes) {
-                        Logger.logError(TAG, withAppendedStateHistory("Download progress exceeded total file size. Either the server returned incorrect data or the app is in an invalid state!"));
+                        Logger.logError(TAG, new UpdateDownloadException(withAppendedStateHistory("Download progress exceeded total file size. Either the server returned incorrect data or the app is in an invalid state!")));
                         cancelDownload(new SettingsManager(getApplicationContext()).getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET));
                         downloadUpdate(updateData);
                         return;
@@ -533,7 +533,7 @@ public class DownloadService extends IntentService {
             Logger.logDebug(TAG, "Pausing using PRDownloader.pause()");
             PRDownloader.pause(downloadId);
         } else {
-            Logger.logWarning(TAG, "Not pausing download, invalid download ID provided or not pause-able.");
+            Logger.logWarning(TAG, new UpdateDownloadException("Not pausing download, invalid download ID provided or not pause-able."));
         }
     }
 
@@ -541,7 +541,7 @@ public class DownloadService extends IntentService {
         Logger.logDebug(TAG, "Resuming download #" + downloadId);
 
         if (!isStateTransitionAllowed(DownloadStatus.DOWNLOAD_QUEUED)) {
-            Logger.logWarning(TAG, "Not resuming download, is a download operation already in progress?");
+            Logger.logWarning(TAG, new UpdateDownloadException("Not resuming download, is a download operation already in progress?"));
             return;
         }
 
@@ -558,7 +558,7 @@ public class DownloadService extends IntentService {
             }
 
         } else {
-            Logger.logWarning(TAG, "Not resuming download, invalid download ID provided.");
+            Logger.logWarning(TAG, new UpdateDownloadException("Not resuming download, invalid download ID provided."));
         }
     }
 
@@ -572,13 +572,13 @@ public class DownloadService extends IntentService {
             clearUp();
             Logger.logDebug(TAG, "Cancelled download #" + downloadId);
         } else {
-            Logger.logWarning(TAG, "Not cancelling download, no valid ID was provided...");
+            Logger.logWarning(TAG, new UpdateDownloadException("Not cancelling download, no valid ID was provided..."));
         }
     }
 
     private synchronized void deleteDownloadedFile(UpdateData updateData) {
         if (updateData == null || updateData.getFilename() == null) {
-            Logger.logWarning(TAG, "Could not delete downloaded file, null update data or update data without file name was provided");
+            Logger.logWarning(TAG, new UpdateDownloadException("Could not delete downloaded file, null update data or update data without file name was provided"));
             return;
         }
 
@@ -586,7 +586,7 @@ public class DownloadService extends IntentService {
 
         File downloadedFile = new File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getAbsolutePath(), updateData.getFilename());
         if (!downloadedFile.delete()) {
-            Logger.logWarning(TAG, "Could not delete downloaded file " + updateData.getFilename());
+            Logger.logWarning(TAG, new UpdateDownloadException("Could not delete downloaded file " + updateData.getFilename()));
         }
         performStateTransition(DownloadStatus.NOT_DOWNLOADING);
     }
@@ -678,7 +678,7 @@ public class DownloadService extends IntentService {
     @SuppressLint("StaticFieldLeak")
     private void verifyUpdate(final UpdateData updateData) {
         if (!isStateTransitionAllowed(DownloadStatus.VERIFYING)) {
-            Logger.logWarning(TAG, "Not verifying update, is an update verification already in progress?");
+            Logger.logWarning(TAG, new UpdateVerificationException("Not verifying update, is an update verification already in progress?"));
             return;
         }
 

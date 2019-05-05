@@ -44,7 +44,7 @@ public class Utils {
 
     public static boolean checkNetworkConnection(Context context) {
         if (context == null) {
-            Logger.logWarning("Utils", "CheckNetworkConnection: check skipped due to empty / null context");
+            Logger.logWarning("Utils", new OxygenUpdaterException("CheckNetworkConnection: check skipped due to empty / null context"));
             return false;
         }
 

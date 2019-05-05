@@ -7,6 +7,7 @@ import android.os.Environment;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.internal.server.ServerPostResult;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
@@ -77,10 +78,10 @@ public class UpdateFileChecker extends JobService {
                         public void accept(ServerPostResult serverPostResult) {
                             if (serverPostResult == null) {
                                 // network error, try again later
-                                Logger.logWarning(TAG, "Error submitting update file " + fileName + ": No network connection or empty response");
+                                Logger.logWarning(TAG, new NetworkException("Error submitting update file " + fileName + ": No network connection or empty response"));
                             } else if (!serverPostResult.isSuccess()) {
                                 // server error, try again later
-                                Logger.logError(TAG, "Error submitting update file " + fileName + ": " + serverPostResult.getErrorMessage());
+                                Logger.logError(TAG, new NetworkException("Error submitting update file " + fileName + ": " + serverPostResult.getErrorMessage()));
                             } else {
                                 Logger.logInfo(TAG, "Successfully submitted update file " + fileName);
                                 // Inform user of successful contribution (only if the file is not a "bogus" temporary file)
@@ -130,7 +131,14 @@ public class UpdateFileChecker extends JobService {
 
 
     private void getAllFileNames(final File folder, List<String> result) {
-        for (final File f : folder.listFiles()) {
+        File[] files = folder.listFiles();
+
+        // Happens when the user has revoked the "read xternal storage" permission of the app
+        if (files == null) {
+            return;
+        }
+
+        for (final File f : files) {
 
             if (f.isDirectory()) {
                 getAllFileNames(f, result);

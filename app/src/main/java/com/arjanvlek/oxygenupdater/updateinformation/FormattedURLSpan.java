@@ -29,7 +29,7 @@ public class FormattedURLSpan extends ClickableSpan {
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Logger.logError("FormattedURLSpan", "Activity was not found for intent, " + intent.toString());
+            Logger.logError("FormattedURLSpan", "Activity was not found for intent", e);
         }
     }
 }

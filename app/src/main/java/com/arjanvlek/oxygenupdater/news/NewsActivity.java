@@ -17,6 +17,7 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -138,7 +139,7 @@ public class NewsActivity extends AppCompatActivity {
             if (getApplication() != null && getApplication() instanceof ApplicationData && Utils.checkNetworkConnection(getApplication())) {
                 ((ApplicationData) getApplication()).getServerConnector().markNewsItemAsRead(newsItem.getId(), (result) -> {
                     if (result != null && !result.isSuccess()) {
-                        Logger.logError("NewsActivity", "Error marking news item as read on the server:" + result.getErrorMessage());
+                        Logger.logError("NewsActivity", new NetworkException("Error marking news item as read on the server:" + result.getErrorMessage()));
                     }
 
                     // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.

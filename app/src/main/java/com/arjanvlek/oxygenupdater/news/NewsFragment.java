@@ -26,9 +26,11 @@ import android.widget.TextView;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils;
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.internal.server.RedirectingResourceStream;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
@@ -40,7 +42,6 @@ import org.joda.time.LocalDateTime;
 
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import java8.util.function.Consumer;
@@ -93,12 +94,12 @@ public class NewsFragment extends AbstractFragment {
         ListView newsContainer = view.findViewById(R.id.newsContainer);
 
         if (!isAdded()) {
-            Logger.logError(TAG, "isAdded() returned false (displayNewsItems)");
+            Logger.logError(TAG, new OxygenUpdaterException("isAdded() returned false (displayNewsItems)"));
             return;
         }
 
         if (getActivity() == null) {
-            Logger.logError(TAG, "getActivity() returned null (displayNewsItems)");
+            Logger.logError(TAG, new OxygenUpdaterException("getActivity() returned null (displayNewsItems)"));
             return;
         }
 
@@ -156,7 +157,7 @@ public class NewsFragment extends AbstractFragment {
 
                     LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     if (inflater == null) {
-                        Logger.logError(TAG, "layoutInflater not available (displayNewsItem)");
+                        Logger.logError(TAG, new OxygenUpdaterException("layoutInflater not available (displayNewsItem)"));
                         return new View(getContext());
                     }
 
@@ -297,14 +298,14 @@ public class NewsFragment extends AbstractFragment {
             return BitmapFactory.decodeStream(in);
         } catch (MalformedURLException e) {
             // No retry, because malformed url will never work.
-            Logger.logError(TAG, String.format("Error displaying news image: Invalid image URL <%s>", imageUrl));
+            Logger.logError(TAG, new NetworkException(String.format("Error displaying news image: Invalid image URL <%s>", imageUrl)));
             return null;
         } catch (Exception e) {
             if (retryCount < 5) {
                 return doGetImage(imageUrl, retryCount + 1);
             } else {
                 if (ExceptionUtils.isNetworkError(e)) {
-                    Logger.logNetworkError(TAG, String.format("Error obtaining news image from <%s>.", imageUrl));
+                    Logger.logWarning(TAG, new NetworkException(String.format("Error obtaining news image from <%s>.", imageUrl)));
                 } else {
                     Logger.logError(TAG, String.format("Error obtaining news image from <%s>", imageUrl), e);
                 }

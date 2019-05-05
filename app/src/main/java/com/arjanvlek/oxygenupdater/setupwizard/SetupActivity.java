@@ -215,7 +215,7 @@ public class SetupActivity extends AppCompatActivity {
         } else {
             Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
             Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
-            Logger.logWarning(TAG, SetupUtils.getErrorText("Setup wizard", deviceId, updateMethodId));
+            Logger.logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId));
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
         }
     }

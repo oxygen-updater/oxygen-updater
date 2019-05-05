@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.crashlytics.android.Crashlytics;
 
 public class Logger {
@@ -47,29 +48,34 @@ public class Logger {
         }
     }
 
-    public static void logWarning(String tag, String message) {
-        Crashlytics.log(Log.WARN, tag, message);
-    }
-
-    public static void logWarning(String tag, String message, Throwable cause) {
+    // Log a warning message. Must be wrapped in OxygenUpdaterException before so Firebase reads the correct line number.
+    public static void logWarning(String tag, OxygenUpdaterException cause) {
+        Log.w(tag, cause.getMessage());
         Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.WARNING.name());
-        Crashlytics.setString(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, tag + ": " + message);
         logException(cause);
     }
 
-    public static void logError(String tag, String message) {
-        Crashlytics.log(Log.ERROR, tag, message);
+    // Log a recoverable exception at warning level
+    public static void logWarning(String tag, String message, Throwable cause) {
+        Log.w(tag, cause.getMessage(), cause);
+        Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.WARNING.name());
+        Crashlytics.setString(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, tag + ": " + message); // Human readable error description
+        logException(cause);
     }
 
-    public static void logError(String tag, String message, Throwable cause) {
+    // Log an error message. Must be wrapped in OxygenUpdaterException before so Firebase reads the correct line number.
+    public static void logError(String tag, OxygenUpdaterException cause) {
+        Log.e(tag, cause.getMessage());
         Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.ERROR.name());
-        Crashlytics.setString(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, tag + ": " + message);
         logException(cause);
     }
 
-    public static void logNetworkError(String tag, String message) {
-        Crashlytics.setBool("IS_NETWORK_ERROR", true);
-        Crashlytics.log(Log.WARN, tag, message);
+    // Log a recoverable exception at error level
+    public static void logError(String tag, String message, Throwable cause) {
+        Log.e(tag, cause.getMessage(), cause);
+        Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.ERROR.name());
+        Crashlytics.setString(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, tag + ": " + message); // Human readable error description
+        logException(cause);
     }
 
     private static void logException(Throwable cause) {

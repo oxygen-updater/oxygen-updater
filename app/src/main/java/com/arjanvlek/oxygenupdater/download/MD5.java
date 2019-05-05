@@ -27,13 +27,13 @@ class MD5 {
 
     static boolean checkMD5(String md5, File updateFile) {
         if (TextUtils.isEmpty(md5) || updateFile == null) {
-            Logger.logError(TAG, "MD5 string empty or updateFile null");
+            Logger.logError(TAG, new UpdateVerificationException("MD5 string empty or updateFile null"));
             return false;
         }
 
         String calculatedDigest = calculateMD5(updateFile, 0);
         if (calculatedDigest == null) {
-            Logger.logError(TAG, "calculatedDigest null");
+            Logger.logError(TAG, new UpdateVerificationException("calculatedDigest null"));
             return false;
         }
 

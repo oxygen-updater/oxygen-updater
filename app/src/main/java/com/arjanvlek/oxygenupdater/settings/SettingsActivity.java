@@ -33,6 +33,7 @@ import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.GooglePlayBillingException;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabResult;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1;
@@ -288,7 +289,7 @@ public class SettingsActivity extends AbstractActivity {
         Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
         if (deviceId == -1L || updateMethodId == -1L) {
-            Logger.logWarning(TAG, SetupUtils.getErrorText("Settings screen", deviceId, updateMethodId));
+            Logger.logWarning(TAG, SetupUtils.getAsError("Settings screen", deviceId, updateMethodId));
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, getString(R.string.settings_saving), Toast.LENGTH_LONG).show();
@@ -496,7 +497,7 @@ public class SettingsActivity extends AbstractActivity {
     }
 
     private void logIABError(String errorMessage, IabResult result) {
-        Logger.logError(TAG, errorMessage + ". IAB State: {" + result.toString() + "}");
+        Logger.logError(TAG, new GooglePlayBillingException("IAB Error: {" + errorMessage + "}. IAB State: {" + result.toString() + "}"));
         setupBuyAdFreeButton(PurchaseStatus.UNAVAILABLE);
     }
 
@@ -551,7 +552,7 @@ public class SettingsActivity extends AbstractActivity {
         String expectedPayload = "OxygenUpdater-AdFree-" + (!Build.SERIAL.equals("unknown") ? Build.SERIAL + "-" : "");
 
         if (!purchase.getDeveloperPayload().startsWith(expectedPayload)) {
-            Logger.logError(TAG, "Purchase of the ad-free version failed. The returned developer payload was incorrect (" + purchase.getDeveloperPayload() + ")");
+            Logger.logError(TAG, new GooglePlayBillingException("Purchase of the ad-free version failed. The returned developer payload was incorrect (" + purchase.getDeveloperPayload() + ")"));
             callback.accept(false);
         }
 
@@ -562,7 +563,7 @@ public class SettingsActivity extends AbstractActivity {
             } else if (validationResult.isSuccess()) {
                 callback.accept(true);
             } else {
-                Logger.logError(TAG, "Purchase of the ad-free version failed. Failed to verify purchase on the server. Error message: " + validationResult.getErrorMessage());
+                Logger.logError(TAG, new GooglePlayBillingException("Purchase of the ad-free version failed. Failed to verify purchase on the server. Error message: " + validationResult.getErrorMessage()));
                 callback.accept(false);
             }
         });

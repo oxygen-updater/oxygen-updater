@@ -73,7 +73,7 @@ public class ContributorUtils {
         int resultCode = scheduler.schedule(task.build());
 
         if (resultCode != JobScheduler.RESULT_SUCCESS) {
-            Logger.logWarning("ContributorActivity", "File check could not be scheduled. Exit code of scheduler: " + resultCode);
+            Logger.logWarning("ContributorActivity", new ContributorException("File check could not be scheduled. Exit code of scheduler: " + resultCode));
         }
     }
 

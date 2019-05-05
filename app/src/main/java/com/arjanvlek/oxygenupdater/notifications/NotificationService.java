@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.PersistableBundle;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
@@ -45,7 +46,7 @@ public class NotificationService extends FirebaseMessagingService {
             JobScheduler scheduler = (JobScheduler) getApplication().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
             if (scheduler == null) {
-                Logger.logError(TAG, "Job scheduler service is not available");
+                Logger.logError(TAG, new OxygenUpdaterException("Job scheduler service is not available"));
                 return;
             }
 

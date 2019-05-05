@@ -28,7 +28,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.vending.billing.IInAppBillingService;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
@@ -1100,10 +1099,10 @@ public class IabHelper {
     }
 
     void logError(String msg) {
-        Logger.logError(mDebugTag, "In-app billing error: " + msg);
+        Logger.logError(mDebugTag, new GooglePlayBillingException("In-app billing error: " + msg));
     }
 
     void logWarn(String msg) {
-        Logger.logWarning(mDebugTag, "In-app billing warning: " + msg);
+        Logger.logWarning(mDebugTag, new GooglePlayBillingException("In-app billing warning: " + msg));
     }
 }

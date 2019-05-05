@@ -20,8 +20,10 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.installation.InstallActivity;
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Worker;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
@@ -95,7 +97,7 @@ public class InstallGuideFragment extends Fragment {
         if (getActivity() != null && getActivity() instanceof InstallActivity) {
             cache = ((InstallActivity) getActivity()).getInstallGuideCache();
         } else {
-            Logger.logWarning(TAG, "getActivity() returned null or was not an instance of InstallActivity (onCreateView, getInstallGuideCache)");
+            Logger.logWarning(TAG, new OxygenUpdaterException("getActivity() returned null or was not an instance of InstallActivity (onCreateView, getInstallGuideCache)"));
             cache = new SparseArray<>();
         }
 
@@ -118,13 +120,13 @@ public class InstallGuideFragment extends Fragment {
     private void displayInstallGuide(View installGuideView, InstallGuidePage installGuidePage, int pageNumber, boolean isFirstPage) {
         if (!isAdded()) {
             // Happens when a page is scrolled too far outside the screen (2 or more rows) and content then gets resolved from the server.
-            Logger.logError(TAG, "isAdded() returned false (displayInstallGuide)");
+            Logger.logError(TAG, new OxygenUpdaterException("isAdded() returned false (displayInstallGuide)"));
             return;
         }
 
         if (getActivity() == null) {
             // Should not happen, but can occur when the fragment gets content resolved after the user exited the install guide and returned to another activity.
-            Logger.logError(TAG, "getActivity() returned null (displayInstallGuide)");
+            Logger.logError(TAG, new OxygenUpdaterException("getActivity() returned null (displayInstallGuide)"));
             return;
         }
 
@@ -160,7 +162,7 @@ public class InstallGuideFragment extends Fragment {
     private void displayDefaultInstallGuide(View installGuideView, int pageNumber) {
         if (getActivity() == null) {
             // Should never happen.
-            Logger.logError(TAG, "getActivity() is null (displayDefaultInstallGuide)");
+            Logger.logError(TAG, new OxygenUpdaterException("getActivity() is null (displayDefaultInstallGuide)"));
             return;
         }
 
@@ -216,7 +218,7 @@ public class InstallGuideFragment extends Fragment {
                     }
                 } catch (MalformedURLException e) {
                     image = null;
-                    Logger.logError(TAG, String.format("Error loading custom image: Invalid image URL <%s>", installGuidePage.getImageUrl()));
+                    Logger.logError(TAG, new NetworkException(String.format("Error loading custom image: Invalid image URL <%s>", installGuidePage.getImageUrl())));
                 }
 
                 return image;
@@ -295,7 +297,7 @@ public class InstallGuideFragment extends Fragment {
 
     private void loadDefaultImage(ImageView view, int pageNumber) {
         if (getActivity() == null) {
-            Logger.logError(TAG, "getActivity() is null (loadDefaultImage)");
+            Logger.logError(TAG, new OxygenUpdaterException("getActivity() is null (loadDefaultImage)"));
             return;
         }
 

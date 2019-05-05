@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.news.NewsActivity;
@@ -71,7 +72,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
         try {
             messageContents = new ObjectMapper().readValue(notificationContentsJson, notificationContentsTypeRef);
         } catch (IOException e) {
-            Logger.logError(TAG, "Failed to read notification contents from JSON string (" + notificationContentsJson + ")");
+            Logger.logError(TAG, new OxygenUpdaterException("Failed to read notification contents from JSON string (" + notificationContentsJson + ")"));
             return exit(params, false);
         }
         NotificationType notificationType = NotificationType.valueOf(messageContents.get(TYPE.toString()));
@@ -125,7 +126,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 
         }
         if (builder == null) {
-            Logger.logError(TAG, "Failed to instantiate notificationBuilder. Can not display push notification!");
+            Logger.logError(TAG, new OxygenUpdaterException("Failed to instantiate notificationBuilder. Can not display push notification!"));
             return exit(params, false);
         }
 
@@ -141,7 +142,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
         NotificationManager notificationManager = (NotificationManager) Utils.getSystemService(this, NOTIFICATION_SERVICE);
 
         if (notificationManager == null) {
-            Logger.logError(TAG, "Notification Manager service is not available");
+            Logger.logError(TAG, new OxygenUpdaterException("Notification Manager service is not available"));
             return exit(params, false);
         }
 

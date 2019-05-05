@@ -55,7 +55,7 @@ public class SystemVersionProperties {
             Logger.logVerbose(TAG, "Finished fetching device properties using 'getprop' command...");
 
         } catch (Exception e) {
-            Logger.logError(TAG, e.getLocalizedMessage());
+            Logger.logError(TAG, e.getLocalizedMessage(), e);
         }
         this.oxygenDeviceName = oxygenDeviceName;
         this.oxygenOSVersion = oxygenOSVersion;
