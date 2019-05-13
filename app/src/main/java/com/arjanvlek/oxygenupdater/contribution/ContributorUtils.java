@@ -36,9 +36,10 @@ public class ContributorUtils {
     public void flushSettings(boolean isContributing) {
         SettingsManager settingsManager = new SettingsManager(context);
 
+        boolean isFirstTime = !settingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE);
         boolean wasContributing = settingsManager.getPreference(SettingsManager.PROPERTY_CONTRIBUTE, false);
 
-        if (wasContributing != isContributing) {
+        if (isFirstTime || (wasContributing != isContributing)) {
             settingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTE, isContributing);
 
             FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(context);

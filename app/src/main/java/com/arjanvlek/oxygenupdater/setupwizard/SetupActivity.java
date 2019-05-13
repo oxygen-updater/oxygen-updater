@@ -198,9 +198,8 @@ public class SetupActivity extends AppCompatActivity {
                     public void accept(Boolean granted) {
                         if (granted) {
                             ContributorUtils contributorUtils = new ContributorUtils(getApplicationContext());
-                            contributorUtils.flushSettings(true);
+                            contributorUtils.flushSettings(true); // 1st time, will save setting to true.
                             settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
-                            settingsManager.savePreference(PROPERTY_CONTRIBUTE, false);
                             NavUtils.navigateUpFromSameTask(SetupActivity.this);
                         } else {
                             Toast.makeText(getApplication(), R.string.contribute_allow_storage, Toast.LENGTH_LONG).show();
@@ -209,7 +208,7 @@ public class SetupActivity extends AppCompatActivity {
                 });
             } else {
                 settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
-                settingsManager.savePreference(PROPERTY_CONTRIBUTE, false);
+                settingsManager.savePreference(PROPERTY_CONTRIBUTE, false); // not signed up, saving this setting will prevent contribute popups which belong to app updates.
                 NavUtils.navigateUpFromSameTask(this);
             }
         } else {
