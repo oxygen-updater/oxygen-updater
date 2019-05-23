@@ -72,7 +72,7 @@
     <string name="download_progress_text_seconds_remaining">"%1$d%%, noch ein paar Sekunden"</string>
     <string name="download_progress_text_unknown_time_remaining">"%1$d%%, download Zeit wird berechnet…"</string>
     <string name="download_progress_text_verifying">"100%, Dateiverifizierung…"</string>
-    <string name="download_progress_text_paused">"100%, pausiert…"</string>
+    <string name="download_progress_text_paused">"%1$d%%, pausiert…"</string>
     <string name="download_waiting_for_network">"%1$d%%, warten auf Netzwerk…"</string>
 
     <string name="download_size_megabyte">"%1$d MB"</string>

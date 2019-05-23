@@ -19,6 +19,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Pair;
 
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
@@ -271,7 +272,7 @@ public class DownloadService extends IntentService {
             }
 
             // If onDestroy() happens when checking the MD5, we'll have to start checking it over again (this process is not resumable)
-            if (state == DownloadStatus.VERIFYING) {
+            if (state == DownloadStatus.VERIFYING && this.verifier != null) {
                 Logger.logDebug(TAG, "Aborting in-progress MD5 verification");
                 this.verifier.cancel(true);
             }
@@ -957,10 +958,16 @@ public class DownloadService extends IntentService {
         SettingsManager settingsManager = new SettingsManager(getApplicationContext());
         String serializedStateHistory = settingsManager.getPreference(PROPERTY_DOWNLOADER_STATE_HISTORY, "");
 
+        //noinspection Convert2MethodRef -> e !- null cannot convert to Objects::nonNull, requires too high Android version...
         return StreamSupport.stream(Arrays.asList(serializedStateHistory.split(",")))
                 .map(elem -> {
                     String[] parts = elem.split("\\|");
                     LocalDateTime timestamp;
+
+                    if (parts.length < 2) {
+                        Logger.logError(TAG, new OxygenUpdaterException("Cannot parse downloader state. Contents of line: " + elem + ", total contents: " + serializedStateHistory));
+                        return null;
+                    }
 
                     try {
                         timestamp = LocalDateTime.parse(parts[0], DateTimeFormat.forPattern(HISTORY_DATETIME_PATTERN));
@@ -969,6 +976,7 @@ public class DownloadService extends IntentService {
                     }
                     return Pair.create(timestamp, parts[1]);
                 })
+                .filter(e -> e != null)
                 .collect(Collectors.toList());
     }
 }

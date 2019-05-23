@@ -105,6 +105,11 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     public void displayUnsupportedDeviceMessage() {
+        // Do not show dialog if app was already exited upon receiving of devices from the server.
+        if (isFinishing()) {
+            return;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
         builder.setTitle(getString(R.string.unsupported_device_warning_title));
         builder.setMessage(getString(R.string.unsupported_device_warning_message));

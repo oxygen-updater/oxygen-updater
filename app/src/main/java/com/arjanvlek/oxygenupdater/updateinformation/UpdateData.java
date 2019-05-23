@@ -17,7 +17,7 @@ public class UpdateData implements Parcelable, FormattableUpdateData {
     private String otaVersionNumber;
     private String description;
     private String downloadUrl;
-    private int downloadSize;
+    private long downloadSize;
     private String filename;
     private String MD5Sum;
     private String information;
@@ -73,16 +73,16 @@ public class UpdateData implements Parcelable, FormattableUpdateData {
     }
 
 
-    public int getDownloadSize() {
+    public long getDownloadSize() {
         return downloadSize;
     }
 
-    public int getDownloadSizeInMegabytes() {
-        return (downloadSize / 1048576);
+    public long getDownloadSizeInMegabytes() {
+        return (downloadSize / 1048576L);
     }
 
     @JsonProperty("download_size")
-    public void setDownloadSize(int downloadSize) {
+    public void setDownloadSize(long downloadSize) {
         this.downloadSize = downloadSize;
     }
 
@@ -158,7 +158,7 @@ public class UpdateData implements Parcelable, FormattableUpdateData {
             data.setOtaVersionNumber(in.readString());
             data.setDescription(in.readString());
             data.setDownloadUrl(in.readString());
-            data.setDownloadSize(in.readInt());
+            data.setDownloadSize(in.readLong());
             data.setFilename(in.readString());
             data.setMD5Sum(in.readString());
             data.setInformation(in.readString());
@@ -187,7 +187,7 @@ public class UpdateData implements Parcelable, FormattableUpdateData {
         dest.writeString(otaVersionNumber);
         dest.writeString(description);
         dest.writeString(downloadUrl);
-        dest.writeInt(downloadSize);
+        dest.writeLong(downloadSize);
         dest.writeString(filename);
         dest.writeString(MD5Sum);
         dest.writeString(information);

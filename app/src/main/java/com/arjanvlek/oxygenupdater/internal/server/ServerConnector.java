@@ -135,7 +135,7 @@ public class ServerConnector implements Cloneable {
                     updateData = new UpdateData();
                     updateData.setId(settingsManager.getPreference(PROPERTY_OFFLINE_ID, null));
                     updateData.setVersionNumber(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME, null));
-                    updateData.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0));
+                    updateData.setDownloadSize(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L));
                     updateData.setDescription(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null));
                     updateData.setDownloadUrl(settingsManager.getPreference(PROPERTY_OFFLINE_DOWNLOAD_URL, null));
                     updateData.setUpdateInformationAvailable(settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false));

@@ -745,7 +745,7 @@ public class UpdateInformationFragment extends AbstractFragment {
             case NOT_DOWNLOADING:
                 downloadButton.setText(getString(R.string.download));
 
-                if (Utils.checkNetworkConnection(getApplicationData()) && updateData.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
+                if (Utils.checkNetworkConnection(getApplicationData()) && updateData != null && updateData.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
                     downloadButton.setEnabled(true);
                     downloadButton.setClickable(true);
                     downloadButton.setOnClickListener(new DownloadButtonOnClickListener(updateData));
@@ -754,6 +754,10 @@ public class UpdateInformationFragment extends AbstractFragment {
                     downloadButton.setEnabled(false);
                     downloadButton.setClickable(false);
                     downloadButton.setTextColor(ContextCompat.getColor(context, R.color.dark_grey));
+                }
+
+                if (updateData == null) {
+                    load(adsAreSupported);
                 }
                 break;
             case DOWNLOAD_QUEUED:

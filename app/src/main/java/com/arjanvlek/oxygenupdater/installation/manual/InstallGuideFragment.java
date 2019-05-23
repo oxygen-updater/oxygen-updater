@@ -213,8 +213,12 @@ public class InstallGuideFragment extends Fragment {
                         image = cache.get(installGuidePage.getPageNumber());
                     } else {
                         // Otherwise, fetch the image from the server.
-                        image = doGetCustomImage(completeImageUrl(installGuidePage.getImageUrl(), installGuidePage.getFileExtension()));
-                        cache.put(installGuidePage.getPageNumber(), image);
+                        if (isAdded()) {
+                            image = doGetCustomImage(completeImageUrl(installGuidePage.getImageUrl(), installGuidePage.getFileExtension()));
+                            cache.put(installGuidePage.getPageNumber(), image);
+                        } else {
+                            image = null;
+                        }
                     }
                 } catch (MalformedURLException e) {
                     image = null;
@@ -224,7 +228,7 @@ public class InstallGuideFragment extends Fragment {
                 return image;
             }, (image) -> {
                 // If there is no image, load a "no entry" sign to show that the image failed to load.
-                if (image == null) {
+                if (image == null && isAdded()) {
                     loadErrorImage(imageView);
                 } else {
                     loadCustomImage(imageView, image);

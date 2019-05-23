@@ -31,7 +31,7 @@ public class SetupStep3Fragment extends AbstractFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_setup_3, container, false);
-        settingsManager = new SettingsManager(getActivity().getApplicationContext());
+        settingsManager = new SettingsManager(getApplicationData());
         progressBar = rootView.findViewById(R.id.introduction_step_3_device_loading_bar);
         return rootView;
     }
@@ -42,6 +42,9 @@ public class SetupStep3Fragment extends AbstractFragment {
 
 
     private void fillDeviceSettings(final List<Device> devices) {
+        if (getActivity() == null || !isAdded()) {
+            return; // Do not load if app is in process of being exited when data arrives from server.
+        }
         Spinner spinner = rootView.findViewById(R.id.introduction_step_3_device_dropdown);
 
         SystemVersionProperties systemVersionProperties = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties();
