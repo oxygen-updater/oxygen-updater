@@ -55,7 +55,13 @@ public class SystemVersionProperties {
     // Bypass: if the key is 'ro.display.series' and the value is one of the devices listed below, then read 'ro.product.name' instead to detect the correct device
     private static final String RO_DISPLAY_SERIES_LOOKUP_KEY = "ro.display.series";
     private static final String RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name";
-    private static final List<String> RO_PRODUCT_NAME_LOOKUP_DEVICES = Arrays.asList("OnePlus 7 Pro", "OnePlus 7 Pro 5G"); // @GitHub contributors, add ro.display.series values of new OP devices *HERE*
+
+    // @GitHub contributors, add ro.display.series values of new OP devices *HERE*
+    private static final List<String> RO_PRODUCT_NAME_LOOKUP_DEVICES = Arrays.asList(
+            "OnePlus 7",
+            "OnePlus 7 Pro",
+            "OnePlus 7 Pro 5G"
+    );
 
     public SystemVersionProperties() {
         String oxygenOSVersion = NO_OXYGEN_OS;
