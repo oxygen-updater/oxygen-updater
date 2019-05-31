@@ -191,8 +191,9 @@ abstract class SystemVersionPropertiesTest {
         Device OnePlus6TGlobal = new Device(10, "OnePlus 6T (Global)", "OnePlus 6T");
         Device OnePlus7ProEU = new Device(11, "OnePlus 7 Pro (EU)", "OnePlus7Pro_EEA");
         Device OnePlus7ProINTL = new Device(12, "OnePlus 7 Pro (INTL)", "OnePlus7Pro");
+        Device OnePlus7Pro5GEU = new Device(13, "OnePlus 7 Pro 5G (EU)", "OnePlus7ProNR_EEA");
 
-        return Arrays.asList(OnePlus2, OnePlus3, OnePlusX, OnePlusOne, OnePlus3T, OnePlus5, OnePlus5T, OnePlus6, OnePlus6TGlobal, OnePlus7ProEU, OnePlus7ProINTL);
+        return Arrays.asList(OnePlus2, OnePlus3, OnePlusX, OnePlusOne, OnePlus3T, OnePlus5, OnePlus5T, OnePlus6, OnePlus6TGlobal, OnePlus7ProEU, OnePlus7ProINTL, OnePlus7Pro5GEU);
     }
 
     private enum TestDataType {

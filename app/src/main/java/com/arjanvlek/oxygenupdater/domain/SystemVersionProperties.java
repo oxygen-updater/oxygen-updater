@@ -9,6 +9,8 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
@@ -37,6 +39,23 @@ public class SystemVersionProperties {
 
     private static final String TAG = "SystemVersionProperties";
     private static final String SECURITY_PATCH_LOOKUP_KEY = "ro.build.version.security_patch";
+
+    private static final String RO_ROM_VERSION_LOOKUP_KEY = "ro.rom.version";
+
+    // @hack #1 (OS_VERSION_NUMBER_LOOKUP_KEY): OxygenOS 2.0.0 - 3.x sometimes contain an incorrect "H2OS 1.x" value for ro.rom.version
+    // if this is the case, discard the value and try with the next item in "items" array
+    private static final String RO_ROM_VERSION_H2OS = "H2OS"; // @GitHub contributors, this should never have to change, as it only applies to very old devices.
+
+    // @hack #2 (OS_VERSION_NUMBER_LOOKUP_KEY): OnePlus 7 and later store hardcoded "Oxygen OS " in their version number of the firmware.
+    // As the app only shows the number or ads custom formatting, remove this prefix
+    private static final String RO_ROM_VERSION_OXYGENOS_PREFIX = "Oxygen OS "; // @GitHub contributors, change this value if ro.oxygen.version contains another prefix than "Oxygen OS ".
+
+    // @hack #3 (DEVICE_NAME_LOOKUP_KEY / OnePlus 7 Pro Support): OnePlus 7 Pro and newer come in regional variants which cannot be detected by ro.display.series.
+    // However, its alternative (ro.product.name) does not play nice with values present on older devices.
+    // Bypass: if the key is 'ro.display.series' and the value is one of the devices listed below, then read 'ro.product.name' instead to detect the correct device
+    private static final String RO_DISPLAY_SERIES_LOOKUP_KEY = "ro.display.series";
+    private static final String RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name";
+    private static final List<String> RO_PRODUCT_NAME_LOOKUP_DEVICES = Arrays.asList("OnePlus 7 Pro", "OnePlus 7 Pro 5G"); // @GitHub contributors, add ro.display.series values of new OP devices *HERE*
 
     public SystemVersionProperties() {
         String oxygenOSVersion = NO_OXYGEN_OS;
@@ -121,24 +140,24 @@ public class SystemVersionProperties {
 
                     // @hack #1 (OS_VERSION_NUMBER_LOOKUP_KEY): OxygenOS 2.0.0 - 3.x sometimes contain incorrect H2OS values for ro.rom.version
                     // if this is the case, discard the value and try with the next item in "items" array
-                    if (item.equals("ro.rom.version") && result.contains("H2OS")) {
+                    if (item.equals(RO_ROM_VERSION_LOOKUP_KEY) && result.contains(RO_ROM_VERSION_H2OS)) {
                         result = NO_OXYGEN_OS;
                         continue;
                     }
 
                     // @hack #2 (OS_VERSION_NUMBER_LOOKUP_KEY): OnePlus 7 and later store hardcoded "Oxygen OS " in their version number of the firmware.
                     // As the app only shows the number or ads custom formatting, remove this prefix
-                    if (item.equals("ro.rom.version") && result.contains("Oxygen OS ")) {
-                        result = result.replace("Oxygen OS ", "");
+                    if (item.equals(RO_ROM_VERSION_LOOKUP_KEY) && result.contains(RO_ROM_VERSION_OXYGENOS_PREFIX)) {
+                        result = result.replace(RO_ROM_VERSION_OXYGENOS_PREFIX, "");
                     }
 
-                    // @hack #3 (DEVICE_NAME_LOOKUP_KEY / OnePlus 7 Pro Support): OnePlus 7 Pro comes in regional variants which cannot be detected by ro.display.series.
-                    // However, its alternative (ro.product.name) does not play nice with values present on older devices.
-                    // Bypass: if the key is 'ro.display.series' and the value is 'OnePlus 7 Pro', then read 'ro.product.name' instead to detect the correct device
-                    if (item.equals("ro.display.series") && result.equals("OnePlus 7 Pro")) {
+                    // @hack #3 (DEVICE_NAME_LOOKUP_KEY / support for regional device variants): OnePlus 7 Pro and newer devices come in regional variants which cannot be detected by ro.display.series.
+                    // However, the property that *does* contain it (ro.product.name) does not play nice with values present on older devices.
+                    // Bypass: if the key is 'ro.display.series' and the value is one of these devices, then read 'ro.product.name' instead to detect the correct device
+                    if (item.equals(RO_DISPLAY_SERIES_LOOKUP_KEY) && RO_PRODUCT_NAME_LOOKUP_DEVICES.contains(result)) {
                         // Android Logger class is not loaded during unit tests, so omit logging if called from test.
-                        String logMessage = logText != null ? "Detected OnePlus 7 Pro variant: %s" : null;
-                        result = readBuildPropItem("ro.product.name", buildProperties, logMessage);
+                        String logMessage = logText != null ? "Detected " + result + " variant: %s" : null;
+                        result = readBuildPropItem(RO_PRODUCT_NAME_LOOKUP_KEY, buildProperties, logMessage);
                     }
 
                     if (logText != null) {

@@ -23,7 +23,7 @@ public class SystemVersionPropertiesTestOnePlus7Pro extends SystemVersionPropert
                 testDataDir,
                 testDataOfVersion,
                 "OnePlus7Pro_EEA",
-                "OnePlus7Pro_EEA", // Gets replaced with value of ro.product.name by @hack #3 in SystemVersionProperties.java.
+                "OnePlus7Pro_EEA", // Gets replaced with value of ro.product.name by @hack #3 in SystemVersionProperties.java. But should be: "OnePlus 7 Pro"
                 "OnePlus7Pro",
                 "9.5.1.GM21BA",
                 "OnePlus7ProOxygen_21.E.05_GLO_005_1904250312",
@@ -47,7 +47,7 @@ public class SystemVersionPropertiesTestOnePlus7Pro extends SystemVersionPropert
                 testDataDir,
                 testDataOfVersion,
                 "OnePlus7Pro",
-                "OnePlus7Pro", // Gets replaced with value of ro.product.name by @hack #3 in SystemVersionProperties.java.
+                "OnePlus7Pro", // Gets replaced with value of ro.product.name by @hack #3 in SystemVersionProperties.java. But should be: "OnePlus 7 Pro"
                 "OnePlus7Pro",
                 "9.5.3.GM21AA",
                 "OnePlus7ProOxygen_21.O.07_GLO_007_1905120542",
@@ -55,5 +55,24 @@ public class SystemVersionPropertiesTestOnePlus7Pro extends SystemVersionPropert
         );
 
         Assert.assertEquals("OnePlus 7 Pro (INTL)", getSupportedDevice(testDataDir, testDataOfVersion).getName());
+    }
+
+    @Test
+    public void testSupportedDevice_5GEUVersion_OxygenOS951GM27BA() {
+        String testDataDir = "op7pro-5g-eea";
+        String testDataOfVersion = "9.5.1.GM27BA";
+
+        Assert.assertTrue(isSupportedDevice(
+                testDataDir,
+                testDataOfVersion,
+                "OnePlus7ProNR_EEA",
+                "OnePlus7ProNR_EEA", // Gets replaced with value of ro.product.name by @hack #3 in SystemVersionProperties.java. But should be: "OnePlus 7 Pro 5G"
+                "OnePlus7ProNR",
+                "9.5.1.GM27BA",
+                "OnePlus7ProNROxygen_21.E.02_GLO_002_1905122259",
+                true)
+        );
+
+        Assert.assertEquals("OnePlus 7 Pro 5G (EU)", getSupportedDevice(testDataDir, testDataOfVersion).getName());
     }
 }
