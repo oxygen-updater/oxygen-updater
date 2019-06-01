@@ -958,6 +958,10 @@ public class DownloadService extends IntentService {
         SettingsManager settingsManager = new SettingsManager(getApplicationContext());
         String serializedStateHistory = settingsManager.getPreference(PROPERTY_DOWNLOADER_STATE_HISTORY, "");
 
+        if (serializedStateHistory == null || serializedStateHistory.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         //noinspection Convert2MethodRef -> e !- null cannot convert to Objects::nonNull, requires too high Android version...
         return StreamSupport.stream(Arrays.asList(serializedStateHistory.split(",")))
                 .map(elem -> {
