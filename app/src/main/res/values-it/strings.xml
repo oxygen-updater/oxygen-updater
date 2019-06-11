@@ -165,7 +165,7 @@ Trascina verso sinistra per continuare."</string>
 Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i tre puntini in alto a destra e selezionando \"Impostazioni\"."</string>
 
     <!-- Automatic install strings -->
-    <string name="install">"Istalla"</string>
+    <string name="install">"Installa"</string>
     <string name="install_checking_root">"Verificando il root… "</string>
     <string name="install_grant_root_permissions">"Per favore consenti l'accesso root quando richiesto. "</string>
     <string name="install_going_back_not_possible">"Sfortunatamente, non puoi tornare indietro. "</string>
