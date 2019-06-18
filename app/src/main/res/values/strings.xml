@@ -105,7 +105,7 @@
     <string name="settings_category_other">Other:</string>
     <string name="settings_device">Device</string>
     <string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
-    <string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method), as long as we have the incremental. \n\nA full update can be always be installed - regardless of the current system software version running on your device.\n\nA beta update of OxygenOS can always be installed, as well when you're on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. The update method is the same as when you're on stable.</string>
+    <string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method).\n\nA full update can be always be installed - regardless of the current system software version running on your device.\n\nA beta update of OxygenOS can always be installed, as well when you're on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. The full and incremental beta methods work the same way as the stable versions.</string>
     <string name="settings_explanation_update_methods">Explanation of the update methods</string>]
     <string name="settings_header">Choose your device and update method:</string>
 
