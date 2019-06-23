@@ -48,11 +48,12 @@
     <string name="download_error">"Errore nel download"</string>
     <string name="download_error_close">"CHIUDI"</string>
     <string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova. "</string>
-
-    <!-- TODO add strings for download_error_network, download_error_server and download_error_internal -->
-
+    
+    <string name="download_error_internal">"Errore interno."</string>
+    <string name="download_error_server">"Errore nel server."</string>
+    <string name="download_error_network">"Errore di rete."</string>
     <string name="download_error_retry">"RIPROVA"</string>
-    <string name="download_error_resume">"RIPRENDERE"</string>
+    <string name="download_error_resume">"RIPRENDI"</string>
     <string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta. "</string>
     <string name="download_failed">"Download fallito"</string>
     <string name="download_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
@@ -60,8 +61,9 @@
     <string name="download_pending">"Il tuo download inizierà subito… "</string>
     <string name="download_permissions">"Premi download di nuovo per scaricare l'aggiornamento. "</string>
 
-    <!-- TODO add strings for download_notification_error_network, download_notification_error_server and download_notification_error_internal -->
-
+    <string name="download_notification_error_internal">"Errore interno".</string>
+    <string name="download_notification_error_server">"Errore nel server."</string>
+    <string name="download_notification_error_network">"Errore di rete."</string>
     <string name="download_notification_error_storage_full">"Spazio insufficiente. "</string>
     <string name="download_notification_error_corrupt">"Verifica file fallita. Assicurati di essere connesso a internet e riprova. "</string>
     <string name="download_progress_text_hours_remaining">"%1$d%%, circa %2$d ore rimanenti"</string>
@@ -90,7 +92,7 @@
     <string name="settings_category_other">"Altro:"</string>
     <string name="settings_device">"Dispositivo"</string>
     <string name="settings_entered_incorrectly">"Errore nel salvare le impostazioni. Seleziona il tuo dispositivo / il modo d'aggiornamento e ritenta. "</string>
-    <string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale puo' essere istallato soltanto se sei sull'ultima versione prima del suddetto aggiornamento.
+    <string name="settings_explanation_incremental_full_update">"Un aggionramento incrementale puo' essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalita' avanzata nelle impostazioni."</string>
 
 Un aggiornamento completo puo' essere istallato sempre - indipendentemente dalla versione attuale presente sul tuo dispositivo.
 
@@ -115,7 +117,7 @@ Un aggiornamento beta puo' essere istallato solo se ti trovi gia' sul branch del
 Questo puo' essere utile quando:
 - Aggiorni da un branch regolare a una beta;
 - Ritorni a un branch regolare da una beta (Non ti dimenticare di effetuare il factory reset)
-- Reistallare la versione attuale del tuo sistema."</string>
+- Reinstallare la versione attuale del tuo sistema."</string>
     <string name="settings_update_method">"Metodo d'aggiornamento"</string>
     <!-- TODO translate -->
     <string name="settings_upload_logs">Share usage data and logs</string>
@@ -184,7 +186,7 @@ Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i t
     <string name="install_options_header">"Puoi personalizzare il processo d'istallazione cambiando le impostazioni riportate di seguito. Premi \"Avvia Istallazione\" per avviare l'istallazione. "</string>
     <string name="install_options_keep_root">"Mantieni root"</string>
     <string name="install_options_reboot_after_install">"Riavvia dopo istallazione"</string>
-    <string name="install_options_select_root_package">"Selezione il pacchetto root da istallare… "</string>
+    <string name="install_options_select_root_package">"Selezione il pacchetto root da installare… "</string>
     <string name="install_options_start_install">"Avvia istallazione"</string>
     <string name="install_options_title">"Seleziona le tue impostazioni d'istallazione"</string>
     <string name="install_options_wipe_cache_partition">"Cancella cache"</string>
@@ -193,15 +195,15 @@ Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i t
 Selezionando questa opzione verrà creato un backup del tuo sistema, le app e le impostazioni automaticamente prima di un'istallazione. Utile nel caso qualcosa dovesse andare storto."</string>
     <string name="install_options_explanation_keep_root">"Mantieni il root:
 Selezionando questa opzione, puoi specificare il pacchetto root che verrà istallato dopo l'aggiornamento. Questo assicura la permanenza del root.
-N.B. Il pacchetto dev'essere compatibile con la nuova versione di OOS che stai per istallare. "</string>
+N.B. Il pacchetto dev'essere compatibile con la nuova versione di OOS che stai per installare. "</string>
     <string name="install_options_explanation_wipe_cache">"Cancella partizione cache:
 Selezionando questa opzione, verrà eliminata la partizione cache dopo l'aggiornamento. Questo puo' tornare utile per assicurarti dell'ottimo andamento del tuo dispositivo. "</string>
     <string name="install_options_explanation_reboot">"Riavvia dopo istallazione:
 Selezionando questa opzione, il tuo dispositivo si riavvierà in automatico al termine dell'istallazione. Altrimenti, il dispositivo rimarrà in modalità recovery."</string>
-    <string name="install_select_method_title">"Come vuoi istallare l'aggiornamento? "</string>
+    <string name="install_select_method_title">"Come vuoi installare l'aggiornamento? "</string>
     <string name="install_select_method_automatic_title">"Istallazione automatica*"</string>
     <string name="install_select_method_automatic_image">"Seleziona istallazione automatica"</string>
-    <string name="install_select_method_automatic_description">"Il modo più semplice per istallare l'aggiornamento.
+    <string name="install_select_method_automatic_description">"Il modo più semplice per installare l'aggiornamento.
 Il tuo dispositivo si riavvierà.
 
 * Obbligatorio accesso root e recovery TWRP."</string>
@@ -319,14 +321,14 @@ Continua giu' per sfogliare."</string>
 
 Per avviare l'istallazione, premi \"Download\". Al completamento del download, la schermata d'istallazione si aprira'. Se hai chiuso l'app, premi su \"Istalla\" che e' ora visibile accanto al bottone \"Download\".
 
-La schermata d'istallazione verifichera' prima se hai un dispositivo con root. Se si', autorizza l'app quando richiesto e scegli come istallare l'aggiornamento. Altrimenti, segui le istruzioni per l'istallazione manuale.
+La schermata d'istallazione verifichera' prima se hai un dispositivo con root. Se si', autorizza l'app quando richiesto e scegli come installare l'aggiornamento. Altrimenti, segui le istruzioni per l'istallazione manuale.
 
 Istallazione Automatica:
 Devi soltanto scegliere le opzioni d'istallazione. Quelle predefinite sono consigliate, eccetto l'impostazione per il pacchetto root nel caso volessi mantenerlo, che va selezionato. Seleziona il paccheto (file zip) usando il bottone blu e premendo su \"Avvia Istallazione\" per avviare la istallazione.
 
 
 Istallazione Manuale:
-Ti verra' mostrata una guida sul tuo schermo. E' consigliato scriversi i passi necessari ed effettuarli come scritti per istallare l'aggiornamento."</string>
+Ti verra' mostrata una guida sul tuo schermo. E' consigliato scriversi i passi necessari ed effettuarli come scritti per installare l'aggiornamento."</string>
     <string name="help_reading_news_title">"Leggendo le ultime novità"</string>
     <string name="help_reading_news_text">"Le novità sono a sinistra della schermata info aggiornamenti. Il più recente e' mostrato in alto. Premi su uno di questi per leggerlo. "</string>
     <string name="help_device_information_title">"Visualizzando info dispositivo"</string>
