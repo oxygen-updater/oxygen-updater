@@ -8,7 +8,7 @@
     <string name="update">Update</string>
     <string name="update_information_close">Sluiten</string>
     <string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
-    <string name="update_information_file_name">Bestandsnaam: %1$s</string>
+    <string name="update_information_file_name">Bestandsnaam: %1$s</string>    
     <string name="update_information_for">voor</string>
     <string name="update_information_header">Updaten</string>
     <string name="update_information_header_short">Updaten</string>
@@ -59,7 +59,7 @@
 
     <string name="download_failed">Downloaden mislukt</string>
     <string name="download_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
-    <string name="download_oxygen_os">Oxygen OS-versie</string>
+    <string name="download_oxygen_os">Oxygen OS-versie</string>    
     <string name="download_pending">Je download begint zometeen…</string>
     <string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
 
@@ -82,11 +82,11 @@
 
     <string name="download_size_megabyte">%1$d MB</string>
     <string name="download_unknown_update_name">Oxygen OS-update</string>
-
+    
     <string name="download_verifying">Controleren…</string>
     <string name="download_verifying_error">Bestand is beschadigd</string>
     <string name="download_verifying_start">Je download wordt nu gecontroleerd op fouten…</string>
-
+    
     <!-- Settings strings -->
     <string name="settings">Instellingen</string>
     <string name="settings_buy_button_buy">Koop (%1$s)</string>
@@ -98,7 +98,7 @@
     <string name="settings_category_other">Overig:</string>
     <string name="settings_device">Apparaat</string>
     <string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
-    <string name="settings_explanation_incremental_full_update">Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode 'volledige update' kiezen).\n\nEen volledige update kan altijd worden geïnstalleerd - ongeacht de huidge systeemversie van je apparaat.\n\nEen bèta-versie kan ten alle tijden geïnstalleerd worden. Ook als je een stabiele versie draait. Om bèta's te kunnen draaien, moet je 'geavanceerde modus' aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie.</string>
+    <string name="settings_explanation_incremental_full_update">Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode 'volledige update' kiezen).\n\nEen bèta-versie kan ten alle tijden geïnstalleerd worden. Ook als je een stabiele versie draait. Om te wisselen van de stabiele versies naar bèta's, moet je 'geavanceerde modus' aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie.</string>
     <string name="settings_explanation_update_methods">Toelichting op de update-methodes</string>
     <string name="settings_header">Kies je apparaat en update-methode</string>
 
@@ -121,12 +121,12 @@
     <string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n- Je van een reguliere versie naar een bètaversie wilt updaten\n- Je van een bètaversie terug wilt naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n - Je dezelfde versie als die je nu hebt opnieuw wilt installeren.</string>
 
     <string name="settings_update_method">Update-methode</string>
-    <string name="settings_upload_logs">Deel gebruiksgegevens en crash-logs</string>
+    <string name="settings_upload_logs">Deel gebruiksgegevens en -logs</string>
 
     <!-- FAQ strings -->
     <string name="faq">Veelgestelde vragen</string>
     <string name="faq_menuitem">Veelgest. vragen</string>
-
+    
     <string name="faq_no_network">Geen verbinding.</string>
     <string name="faq_no_network_text">Je hebt een internetverbinding nodig om de pagina met veelgestelde vragen te bekijken.</string>
 
@@ -321,7 +321,7 @@
     <string name="error_push_failure">Notificaties konden niet worden aangezet. Sluit de app volledig af en start hem over enkele minuten opnieuw op.</string>
     <string name="error_reload">Opnieuw laden</string>
     <string name="error_unable_to_rate_app">Je kunt de app niet beoordelen, omdat je de Google Play Store niet hebt geïnstalleerd.</string>
-
+    
     <!-- Message box strings -->
     <string name="delete_message_title">Update is al gedownload</string>
     <string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installatie\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
