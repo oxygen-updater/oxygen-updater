@@ -61,7 +61,7 @@
     <string name="download_pending">"Il tuo download inizierà subito… "</string>
     <string name="download_permissions">"Premi download di nuovo per scaricare l'aggiornamento. "</string>
 
-    <string name="download_notification_error_internal">"Errore interno".</string>
+    <string name="download_notification_error_internal">"Errore interno."</string>
     <string name="download_notification_error_server">"Errore nel server."</string>
     <string name="download_notification_error_network">"Errore di rete."</string>
     <string name="download_notification_error_storage_full">"Spazio insufficiente. "</string>
@@ -92,7 +92,7 @@
     <string name="settings_category_other">"Altro:"</string>
     <string name="settings_device">"Dispositivo"</string>
     <string name="settings_entered_incorrectly">"Errore nel salvare le impostazioni. Seleziona il tuo dispositivo / il modo d'aggiornamento e ritenta. "</string>
-    <string name="settings_explanation_incremental_full_update">"Un aggionramento incrementale puo' essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalita' avanzata nelle impostazioni."</string>
+    <string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale puo' essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalita' avanzata nelle impostazioni."</string>
 
 Un aggiornamento completo puo' essere istallato sempre - indipendentemente dalla versione attuale presente sul tuo dispositivo.
 
