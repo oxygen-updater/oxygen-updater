@@ -98,7 +98,7 @@
     <string name="settings_category_other">Overig:</string>
     <string name="settings_device">Apparaat</string>
     <string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
-    <string name="settings_explanation_incremental_full_update">Een incrementele update kan alleen worden geïnstalleerd als je over de laatste systeemsoftware beschikte, voordat de nieuwe update verscheen.\n\nEen volledige update kan altijd worden geïnstalleerd - ongeacht de huidge systeemversie van je apparaat.\n\nEen beta-versie kan je alleen updaten als je momenteel ook al een beta-versie gebruikt.</string>
+    <string name="settings_explanation_incremental_full_update">Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode 'volledige update' kiezen).\n\nEen bèta-versie kan ten alle tijden geïnstalleerd worden. Ook als je een stabiele versie draait. Om bèta's te kunnen draaien, moet je 'geavanceerde modus' aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie.</string>
     <string name="settings_explanation_update_methods">Toelichting op de update-methodes</string>
     <string name="settings_header">Kies je apparaat en update-methode</string>
 
