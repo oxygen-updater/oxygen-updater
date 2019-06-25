@@ -94,11 +94,7 @@
     <string name="settings_category_other">"Autres"</string>
     <string name="settings_device">"Périphérique"</string>
     <string name="settings_entered_incorrectly">"Une erreur s'est produite lors de la sauvegarde de vos réglages. Retournez en arrière et sélectionnez à nouveau votre périphérique et méthode de mise à jour."</string>
-    <string name="settings_explanation_incremental_full_update">"Une mise à jour incrémentale ne peut être installée que si vous exécutiez la dernière version du système avant que cette mise à jour ne soit réalisée.
-
-Une mise à jour entière peut toujours être installée - quelle que soit la version actuelle du système fonctionnant sur votre périphérique.
-
-Une mise à jour bêta d'Oxygen OS ne peut être installée que si vous utilisez actuellement une version bêta."</string>
+    <string name="settings_explanation_incremental_full_update">"Une mise à jour incrémentale peut être installée depuis n'importe quelle version (sauf si votre bootloader est déverouillé, auquel cas vous devriez toujours choisir la mise à jour entière en tant que méthode de mise à jour).\n\nLes versions bêta d'OxygenOS peuvent toujours être installées, même si vous exécutez actuellement une version stable. Pour passer de la version stable à la version bêta, vous devez activer le mode avancé dans les réglages. Les méthodes de mises à jour incrémentale et entières marchent de la même façon pour les versions bêta et stables."</string>
     <string name="settings_explanation_update_methods">"Explication des méthodes de mise à jour"</string>
     <string name="settings_header">"Choisissez votre périphérique et méthode de mise à jour:"</string>
     <string name="settings_push">"Envoyez-moi une notification quand :"</string>
