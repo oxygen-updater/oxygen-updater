@@ -81,14 +81,10 @@
     <string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free:"</string>
     <string name="settings_category_other">"Ostalo:"</string>
     <string name="settings_device">"Uređaj"</string>
-    <string name="settings_entered_incorrectly">"Greška pri spremanju postavki. Molimo vas odite natrag i odaberite svoj uređaj / ažurirajte metodu ažuriranja."</string>
-    <string name="settings_explanation_incremental_full_update">"inkrementalno ažuriranje može se skinuti jedino ako ste koristili najnoviji software prije izlaska tog ažuriranja.
-
-Puno verzija uvijek može biti instaliranja. - Neovisno o verziji softwarea koju koristite trenutno.
-
-Beta verzija OxygenOS-a može se instalirati jedino ako ste već na beta verziji"</string>
-    <string name="settings_explanation_update_methods">"Objašnjenje metoda ažuriranja."</string>
-    <string name="settings_header">"Izaberite svoj uređaj i metodu ažuriranja."</string>
+    <string name="settings_entered_incorrectly">"Greška pri spremanju postavki. Molimo vas ponovno odaberite vaš uređaj / metodu ažuriranja."</string>
+    <string name="settings_explanation_incremental_full_update">"Djelomično ažurianje može biti insalirano s bilo koje verzije (ako nemate bootloader otključan; onda biste uvjek trebali izabrati metodu punog ažuriranja), dok god mi imamo to djelomično ažuriranje. \n\nA Cjeli ažuriranje će uvjek biti instalirano - nevezano sa sadašnjom verzijom softwera korištenog na uređaju \n\nA Beta verzije OxygenOSa može uvjek biti instalirano kao i stabilna verzija. Da napravite to morate uključiti "napredni mod" u postavkama. Naćin ažuriranja je isti kao i kad ste na stabilnoj verziji."</string>
+    <string name="settings_explanation_update_methods">"Obješnjenje naćina rada metoda ažuriranja."</string>
+    <string name="settings_header">"Odaberite vaš uređaj i metodu ažuriranja:"</string>
     <string name="settings_push">"Pošalji mi notifikaciju kada:"</string>
     <string name="settings_push_from_server">"Važna poruka je dostupna"</string>
     <string name="settings_push_new_version">"Dostupno je ažuriranje sistema"</string>
