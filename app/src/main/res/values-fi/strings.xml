@@ -87,8 +87,8 @@
     <string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen:"</string>
 
     <!-- TODO translate the 2 below -->
-    <string name="settings_contribute_label">Help improving the app:</string>
-    <string name="settings_contribute_button">Contribute</string>
+    <string name="settings_contribute_label">Auta parantamaan sovellusta:</string>
+    <string name="settings_contribute_button">Tule tukijaksi</string>
 
     <string name="settings_category_other">"Muut:"</string>
     <string name="settings_device">"Laite"</string>
@@ -121,7 +121,7 @@ Tämä voi olla hyödyllista kun:
 -Asennettaessa uudelleen nykyistä järjestelmäversiota"</string>
     <string name="settings_update_method">"Päivitystapa"</string>
     <!-- TODO translate -->
-    <string name="settings_upload_logs">Share usage data and logs</string>
+    <string name="settings_upload_logs">Jaa käyttötiedot ja lokit</string>
 
     <!-- FAQ strings -->
     <string name="faq">"UKK"</string>
@@ -358,17 +358,17 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
     <string name="news_load_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
 
     <!-- TODO translate this block -->
-    <string name="contribute">Become a contributor</string>
-    <string name="contribute_title">Help improving Oxygen Updater</string>
-    <string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
-    <string name="contribute_image_description">Upload files to the app server</string>
-    <string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
-    <string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
-    <string name="contribute_save">Save settings</string>
-    <string name="contribute_more_info">More info …</string>
-    <string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
-    <string name="contribute_successful_notification_title">Contribution successful</string>
-    <string name="contribute_successful_notification_text">Thanks for sharing the update file %1$s with our admins!</string>
+    <string name="contribute">Tule tukijaksi</string>
+    <string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
+    <string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu. \n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi vie vähän akkuvirtaa. Kaikki mitä sinun tulee tehdä on vain odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>
+    <string name="contribute_image_description">Lähetä tiedostot sovelluksen palvelimelle</string>
+    <string name="contribute_agree">Haluan auttaa ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
+    <string name="contribute_agree_from_setup">Haluan auttaa parantamaan sovellusta ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
+    <string name="contribute_save">Tallenna asetukset</string>
+    <string name="contribute_more_info">Lisätietoja...</string>
+    <string name="contribute_allow_storage">Ole hyvä ja anna tallennustilan käyttöoikeus auttaaksesi parantamaan sovellusta</string>
+    <string name="contribute_successful_notification_title">Osallistuminen onnistui</string>
+    <string name="contribute_successful_notification_text">Kiitos että jaoit päivitystiedoston %1$s ylläpitäjiemme!</string>
 
     <!-- Error strings -->
     <string name="error_app_outdated">"Voi ei!"</string>
