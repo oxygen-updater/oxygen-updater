@@ -50,10 +50,10 @@
     <string name="download_error">Download Error</string>
     <string name="download_error_close">CLOSE</string>
     <string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
-    <!-- TODO translate to Russian / Italian -->
-    <string name="download_error_network" translatable="false">A network error occurred while downloading the update. The download will resume automatically.</string>
-    <string name="download_error_server" translatable="false">A server error occurred while downloading the update. Please try downloading the update again.</string>
-    <string name="download_error_internal" translatable="false">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
+    <!-- TODO translate the 3 below to Russian -->
+    <string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
+    <string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
+    <string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
 
     <string name="download_error_retry">RETRY</string>
     <string name="download_error_resume">RESUME</string>
@@ -65,10 +65,10 @@
     <string name="download_pending">Your download will start soon…</string>
     <string name="download_permissions">Tap Download again to download the update.</string>
 
-    <!-- TODO translate to Russian / Italian -->
-    <string name="download_notification_error_network" translatable="false">Download paused due to lost connection. Will resume soon.</string>
-    <string name="download_notification_error_server" translatable="false">Server error while downloading. Please restart the download.</string>
-    <string name="download_notification_error_internal" translatable="false">Technical error while downloading. Restart the download or contact support.</string>
+    <!-- TODO translate the 3 below to Russian -->
+    <string name="download_notification_error_network">Download paused due to lost connection. Will resume soon.</string>
+    <string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
+    <string name="download_notification_error_internal">Technical error while downloading. Restart the download or contact support.</string>
     <string name="download_notification_error_storage_full">Insufficient storage space.</string>
     <string name="download_notification_error_corrupt">File verification failed. Check your connection and try again.</string>
 
@@ -98,14 +98,14 @@
     <string name="settings_buy_button_not_possible">Unavailable</string>
     <string name="settings_buy_ad_free_label">Upgrade to Ad-Free:</string>
 
-    <!-- TODO translate to all but Dutch / Belgian -->
-    <string name="settings_contribute_label" translatable="false">Help improving the app:</string>
-    <string name="settings_contribute_button" translatable="false">Contribute</string>
+    <!-- TODO translate these 2 to all but Dutch / Belgian / French -->
+    <string name="settings_contribute_label">Help improving the app:</string>
+    <string name="settings_contribute_button">Contribute</string>
 
     <string name="settings_category_other">Other:</string>
     <string name="settings_device">Device</string>
     <string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
-    <string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method).\n\nA beta update of OxygenOS can always be installed, as well when you're on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. For the betas, the full and incremental update methods work the same way as on the stable versions.</string>
+    <string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method).\n\nA beta update of OxygenOS can always be installed, as well when you\'re on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. For the betas, the full and incremental update methods work the same way as on the stable versions.</string>
     <string name="settings_explanation_update_methods">Explanation of the update methods</string>]
     <string name="settings_header">Choose your device and update method:</string>
 
@@ -296,7 +296,7 @@
     <string name="news_load_error">Failed to open article. Check your connection and press the \'RETRY\' button to open the article.</string>
 
     <!-- Contribute strings -->
-    <!-- TODO translate to all but Dutch / Belgian -->
+    <!-- TODO translate this block to all but Dutch / Belgian / French -->
     <string name="contribute">Become a contributor</string>
     <string name="contribute_title">Help improving Oxygen Updater</string>
     <string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
@@ -352,7 +352,7 @@
     <string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
     <string name="download_service_name">Update downloader</string>
     <string name="log_uploader_service_name">Error reporting service</string>
-    <string name="update_file_checker_service_name">Update file checking service</string>
+    <string name="update_file_checker_service_name" translatable="false">Update file checking service</string>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
 

@@ -89,10 +89,15 @@
     <string name="settings_buy_button_bought">"Acquistato"</string>
     <string name="settings_buy_button_not_possible">"Non disponibile"</string>
     <string name="settings_buy_ad_free_label">"Passa a senza annunci:"</string>
+
+    <!-- TODO translate the 2 below -->
+    <string name="settings_contribute_label">Help improving the app:</string>
+    <string name="settings_contribute_button">Contribute</string>
+
     <string name="settings_category_other">"Altro:"</string>
     <string name="settings_device">"Dispositivo"</string>
     <string name="settings_entered_incorrectly">"Errore nel salvare le impostazioni. Seleziona il tuo dispositivo / il modo d'aggiornamento e ritenta. "</string>
-    <string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale puo' essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalita' avanzata nelle impostazioni."</string>
+    <string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale puo' essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalita' avanzata nelle impostazioni.
 
 Un aggiornamento completo puo' essere istallato sempre - indipendentemente dalla versione attuale presente sul tuo dispositivo.
 
@@ -350,6 +355,19 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
     <string name="news_date_published">"Ultimo aggiornamento: %1$s"</string>
     <string name="news_empty">"Questo articolo non ha commenti."</string>
     <string name="news_load_error">"Errore nell'aprire l'articolo. Controlla la tua connesisone e ritenta."</string>
+
+    <!-- TODO translate this block -->
+    <string name="contribute">Become a contributor</string>
+    <string name="contribute_title">Help improving Oxygen Updater</string>
+    <string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
+    <string name="contribute_image_description">Upload files to the app server</string>
+    <string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
+    <string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
+    <string name="contribute_save">Save settings</string>
+    <string name="contribute_more_info">More info …</string>
+    <string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
+    <string name="contribute_successful_notification_title">Contribution successful</string>
+    <string name="contribute_successful_notification_text">Thanks for sharing the update file %1$s with our admins!</string>
 
     <!-- Error strings -->
     <string name="error_app_outdated">"Oh no!"</string>
