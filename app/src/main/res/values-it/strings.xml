@@ -90,8 +90,8 @@
     <string name="settings_buy_button_not_possible">"Non disponibile"</string>
     <string name="settings_buy_ad_free_label">"Passa a senza annunci:"</string>
 
-    <string name="settings_contribute_label">Aiuta a migliorare l'app:</string>
-    <string name="settings_contribute_button">Contribuisci</string>
+    <string name="settings_contribute_label">"Aiuta a migliorare l'app:"</string>
+    <string name="settings_contribute_button">"Contribuisci"</string>
 
     <string name="settings_category_other">"Altro:"</string>
     <string name="settings_device">"Dispositivo"</string>
@@ -356,10 +356,10 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 
     <string name="contribute">Diventa un contributor</string>
     <string name="contribute_title">Migliora Oxygen Updater</string>
-    <string name="contribute_explanation">Oxygen Updater ha bisogno di te! Per avere gli aggiornamenti piu' recenti, abbiamo bisogno del nome dei file d'aggiornamento. Questi sono presenti sul tuo telefono nel momento in cui appare un aggiornamento. \n\nCome posso aiutare?\n\nOxygen Updater puo automaticamente mandare i nomi dei file agli admin to our admins. Questo processo richiedera' il trasferimento di alcuni kb e un pizzico della tua batteria!. L'unico prerequisito e' aspettare circa 15 min prima di istallare un aggiornamento finche' non appare una notifica di conferma da parte nostra. (approximataly 15 minutes) Solo la .ota-directory viene controllata una volta ogni 15 minuti.</string>
+    <string name="contribute_explanation">"Oxygen Updater ha bisogno di te! Per avere gli aggiornamenti piu' recenti, abbiamo bisogno del nome dei file d\'aggiornamento. Questi sono presenti sul tuo telefono nel momento in cui appare un aggiornamento. \n\nCome posso aiutare?\n\nOxygen Updater puo automaticamente mandare i nomi dei file agli admin to our admins. Questo processo richiedera' il trasferimento di alcuni kb e un pizzico della tua batteria!. L'unico prerequisito e' aspettare circa 15 min prima di istallare un aggiornamento finche' non appare una notifica di conferma da parte nostra. (approximataly 15 minutes) Solo la .ota-directory viene controllata una volta ogni 15 minuti."</string>
     <string name="contribute_image_description">Carica file sul server</string>
-    <string name="contribute_agree">Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento.</string>
-    <string name="contribute_agree_from_setup">Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento agli admin.</string>
+    <string name="contribute_agree">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento."</string>
+    <string name="contribute_agree_from_setup">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento agli admin."</string>
     <string name="contribute_save">Salva</string>
     <string name="contribute_more_info">Ulteriori info …</string>
     <string name="contribute_allow_storage">Abbiamo bisogno dei permessi storage per continuare</string>
