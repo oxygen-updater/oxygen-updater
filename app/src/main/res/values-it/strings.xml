@@ -90,9 +90,8 @@
     <string name="settings_buy_button_not_possible">"Non disponibile"</string>
     <string name="settings_buy_ad_free_label">"Passa a senza annunci:"</string>
 
-    <!-- TODO translate the 2 below -->
-    <string name="settings_contribute_label">Help improving the app:</string>
-    <string name="settings_contribute_button">Contribute</string>
+    <string name="settings_contribute_label">Aiuta a migliorare l'app:</string>
+    <string name="settings_contribute_button">Contribuisci</string>
 
     <string name="settings_category_other">"Altro:"</string>
     <string name="settings_device">"Dispositivo"</string>
@@ -124,8 +123,7 @@ Questo puo' essere utile quando:
 - Ritorni a un branch regolare da una beta (Non ti dimenticare di effetuare il factory reset)
 - Reinstallare la versione attuale del tuo sistema."</string>
     <string name="settings_update_method">"Metodo d'aggiornamento"</string>
-    <!-- TODO translate -->
-    <string name="settings_upload_logs">Share usage data and logs</string>
+    <string name="settings_upload_logs">Condividi uso e logs.</string>
 
     <!-- FAQ strings -->
     <string name="faq">"FAQ"</string>
@@ -356,18 +354,17 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
     <string name="news_empty">"Questo articolo non ha commenti."</string>
     <string name="news_load_error">"Errore nell'aprire l'articolo. Controlla la tua connesisone e ritenta."</string>
 
-    <!-- TODO translate this block -->
-    <string name="contribute">Become a contributor</string>
-    <string name="contribute_title">Help improving Oxygen Updater</string>
-    <string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
-    <string name="contribute_image_description">Upload files to the app server</string>
-    <string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
-    <string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
-    <string name="contribute_save">Save settings</string>
-    <string name="contribute_more_info">More info …</string>
-    <string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
-    <string name="contribute_successful_notification_title">Contribution successful</string>
-    <string name="contribute_successful_notification_text">Thanks for sharing the update file %1$s with our admins!</string>
+    <string name="contribute">Diventa un contributor</string>
+    <string name="contribute_title">Migliora Oxygen Updater</string>
+    <string name="contribute_explanation">Oxygen Updater ha bisogno di te! Per avere gli aggiornamenti piu' recenti, abbiamo bisogno del nome dei file d'aggiornamento. Questi sono presenti sul tuo telefono nel momento in cui appare un aggiornamento. \n\nCome posso aiutare?\n\nOxygen Updater puo automaticamente mandare i nomi dei file agli admin to our admins. Questo processo richiedera' il trasferimento di alcuni kb e un pizzico della tua batteria!. L'unico prerequisito e' aspettare circa 15 min prima di istallare un aggiornamento finche' non appare una notifica di conferma da parte nostra. (approximataly 15 minutes) Solo la .ota-directory viene controllata una volta ogni 15 minuti.</string>
+    <string name="contribute_image_description">Carica file sul server</string>
+    <string name="contribute_agree">Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento.</string>
+    <string name="contribute_agree_from_setup">Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento agli admin.</string>
+    <string name="contribute_save">Salva</string>
+    <string name="contribute_more_info">Ulteriori info …</string>
+    <string name="contribute_allow_storage">Abbiamo bisogno dei permessi storage per continuare</string>
+    <string name="contribute_successful_notification_title">Contribuzione avvenuta con successo!</string>
+    <string name="contribute_successful_notification_text">Grazie per aver condiviso %1$s con i nostri admin!</string>
 
     <!-- Error strings -->
     <string name="error_app_outdated">"Oh no!"</string>
