@@ -5,9 +5,9 @@
     <string name="launcher_app_name">Oxygen Updater</string>
 
     <!-- Update information strings-->
-    <string name="update">Update</string>
+    <string name="update">更新</string>
     <string name="update_information_close">关闭</string>
-    <string name="update_information_description_not_available">0x7f0c014f	update_information_description_not_available	没有关于此更新的新功能亮点的官方信息。通常，此类更新会为您的设备提供错误修复，性能增强或关键安全更新。															Es gibt keine offiziellen Informationen über die Neuerungen in diesem Update. Normalerweise beinhaltet solch ein Update Bug fixes, Performance Verbesserungen, und / oder wichtige Sicherheitsupdates für dein Gerät.												Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugi korjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi.	Aucune information officielle à propos de nouvelles fonctionnalités apportées par cette mise à jour n'est disponible. Habituellement les mises à jour amènent des corrections de bugs, des améliorations de performance et/ou des correctifs critiques de sécurité pour votre périphérique.						Nema službenih informacija o tome što ovo ažuriranje donosi. Obično takva ažuriranja donose popravke za bugove, poboljšanje performanci i kritična ažuriranja za sigurnost vašeg uređaja.					Non esiste alcuna informazione ufficiale del changelog di questo aggiornamento. Di solito, questo include dei fix per i bug, miglioramenti di performance e / o aggiornamenti critici di sicurezza per il tuo dispositivo.																					There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.	There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.								Официальная информация об обновлении не предоставлена. Обычно такие обновления содержат исправления мелких ошибок, улучшения производительности и/или критические обновления безопасности.						Det finns ingen officiell information om de nya funktionerna denna uppdatering innehåller. Vanligtvis innehåller en sådan uppdatering buggfixar, prestandaförbättringar och / eller viktiga säkerhetsuppdateringar för din enhet.													</string>
+    <string name="update_information_description_not_available">没有关于此更新的新功能亮点的官方信息。通常，此类更新会为您的设备提供错误修复，性能增强或关键安全更新。</string>
     <string name="update_information_file_name">文件名称： %1$s</string>
     <string name="update_information_for">适用于</string>
     <string name="update_information_header">更新</string>
@@ -42,7 +42,7 @@
     <string name="paused">已暂停</string>
 
     <string name="download_already_downloaded">此更新已下载，安装准备就绪！</string>
-    <string name="download_complete"下载完成！</string>
+    <string name="download_complete">下载完成！</string>
     <string name="download_complete_notification">下载已完成，只需轻触即可安装</string>
 
     <string name="download_description">Oxygen 安装器</string>
@@ -50,7 +50,6 @@
     <string name="download_error">下载出错</string>
     <string name="download_error_close">关闭</string>
     <string name="download_error_corrupt">下载的文件已损坏！请尝试重新下载</string>
-    <!-- TODO translate the 3 below to Russian -->
     <string name="download_error_network">下载更新时发生网络错误，下载将自动恢复。</string>
     <string name="download_error_server">下载更新时服务器发生错误，请尝试重新下载更新。</string>
     <string name="download_error_internal">抱歉，下载更新时发生了技术故障，请尝试再次下载。如果这种情况不断发生，请联系此应用开发者以获取帮助。</string>
@@ -186,7 +185,7 @@
     <string name="install_select_method_title">您想用哪种方式安装？</string>
     <string name="install_select_method_automatic_title">自动安装</string>
     <string name="install_select_method_automatic_image">自动安装图片</string>
-    <string name="install_select_method_automatic_description">最简单的更新方式，安装，重启，一气呵成。\n\n* 需要 Root 权限与 TWRP</string>
+    <string name="install_select_method_automatic_description">最简单的更新方式，下载，安装，重启，一气呵成。\n\n* 需要 Root 权限与 TWRP</string>
 
     <string name="install_select_method_manual_title">手动安装</string>
     <string name="install_select_method_manual_image">手动安装图片</string>
@@ -209,7 +208,7 @@
 
     <!-- Install guide strings -->
     <string name="install_guide_no_root">请根据安装指南中显示的说明安装更新。</string>
-    <string name="install_guide_automatic_install_disabled">由于收到技术问题的反馈，自动安装已暂时停用。请根据安装指南中显示的说明安装更新。</string>
+    <string name="install_guide_automatic_install_disabled">由于收到的反馈，自动安装已暂时停用。请根据安装指南中显示的说明安装更新。</string>
     <string name="install_guide">安装指南</string>
     <string name="install_guide_loading">正在加载安装指南…</string>
     <string name="install_guide_title">安装指南 - 第 %1$d 页，共 %2$d 页</string>
@@ -259,9 +258,9 @@
     <!-- About screen strings -->
     <string name="about">关于</string>
     <string name="about_app_description">获取 Oxygen OS 更新的终极神器！</string>
-    <string name="about_background_story">本应用程序由 Arjan Vlek 制作\n\n这个应用程序是我另一款作品的续作，叫做 Cyanogen 更新追踪器（Cyanogen Update Tracker）， 为 Cyanogen OS 用户提供与本应用程序类似的功能。\n\n\n请注意，这并不是一个官方的 OnePlus 应用程序。\n\nOnePlus 的名称，商标，以及 OxygenOS 归 OnePlus 所有。 \n\nAndroid, Google, Google Play 以及 Google Play 的图案与商标由 Google Inc 注册并持有。\n\n本应用程序使用 OnePlus 与 OPPO 的数据，为用户展示更新信息。\n\n如果您喜欢我的应用，请在 Google Play 上赞助我吧！\n\n中文翻译由 Mastiff 提供。</string>
+    <string name="about_background_story">本应用程序由 Arjan Vlek 制作\n\n这个应用程序是我另一款作品的续作，叫做 Cyanogen 更新追踪器（Cyanogen Update Tracker）， 为 Cyanogen OS 用户提供与本应用程序类似的功能。\n\n\n请注意，这并不是一个官方的 OnePlus 应用程序。\n\nOnePlus 的名称，商标，以及 OxygenOS 归 OnePlus 所有。 \n\nAndroid, Google, Google Play 以及 Google Play 的图案与商标由 Google Inc. 注册并持有。\n\n本应用程序使用 OnePlus 与 OPPO 的数据，为用户展示更新信息。\n\n如果您喜欢我的应用，请在 Google Play 上赞助我吧！\n\n中文翻译由 Mastiff 提供。</string>
     <string name="about_rate_app_button_text">在 Google Play 上评价</string>
-    <string name="about_version">版本：%1$s</string>
+    <string name="about_version">更新器版本：%1$s</string>
 
 
     <!-- LocalNotifications strings -->
@@ -276,8 +275,8 @@
     <string name="progress_notification_channel_description">显示 Oxygen 更新器应用程序的所有非重要通知。 包含下载期间显示的状态指示器。</string>
 
     <!-- Help strings -->
-    <string name="help">Help</string>
-    <string name="help_text">欢迎来到 Oxygen 更新器的帮助部分！\n\n“帮助”包含以下部分：\n\n• 升级您的设备\n• 阅览最新新闻\n• 查看设备信息\n• 更改设置\n\n向上轻滑获取您需要的帮助吧！</string>
+    <string name="help">帮助</string>
+    <string name="help_text">欢迎来到 Oxygen 更新器的帮助部分！\n\n“帮助”包含以下内容：\n\n• 升级您的设备\n• 阅览最新新闻\n• 查看设备信息\n• 更改设置\n\n向上轻滑获取您需要的帮助吧！</string>
     <string name="help_updating_your_device_title">更新您的设备</string>
     <string name="help_updating_your_device_text">您打开应用时，即可看到是否有可用的软件更新，如果有的话，您就可以方便地安装了。\n\n要开始安装，请点击“下载”按钮（就在更新信息下方）以开始下载。 下载完成后，将会出现安装屏幕。 如果您退出了应用或安装屏幕没有弹出，请手动点击“安装”按钮，该按钮显示在“下载”按钮旁边。\n\n安装屏幕会先检查您是否有 Root 权限。 如果您的设备有 Root 权限，请在询问时授予 Root 权限，并选择安装更新的方式。 否则，请按照手动安装的说明进行操作。\n\n自动安装：\n您只需选择安装选项即可。 建议使用默认设置，但您必须指定需要安装的 Root 包。 使用蓝色文件夹按钮选择 Root 包（支持 Zip 文件），然后点击“开始安装”来开始安装。\n\n手动安装：\n您将在屏幕上看到安装指南。 写下说明并按照说明执行它们以安装更新。</string>
     <string name="help_reading_news_title">阅览最新消息</string>
@@ -296,22 +295,23 @@
 
     <!-- Contribute strings -->
     <!-- TODO translate this block to all but Dutch / Belgian / French -->
-    <string name="contribute">Become a contributor</string>
-    <string name="contribute_title">Help improving Oxygen Updater</string>Oxygen 更新器需要您的帮助！为了提供最新的更新，我们需要获取更新文件的名称。 在推送常规更新时，这些信息会出现在手机上。\n\n我该如何帮助呢？\nOxygen 更新器可以自动向我们的管理员提交最新更新包的文件名。 这将使用微量的数据流量，也可能会使用微量的电池。 您需要做的，就是在安装官方系统更新之前稍微等候，直到您看到Oxygen 更新器确认文件已成功提交为止。</string>
+    <string name="contribute">成为共研者</string>
+    <string name="contribute_title">参与 Oxygen 更新器共研行动</string>
+    <string name="contribute_explanation">Oxygen 更新器需要您的帮助！为了提供最新的更新包，我们需要获取更新文件的名称。 在系统推送常规更新时，这些信息会出现在手机上。\n\n我该如何帮助呢？\nOxygen 更新器可以自动向我们的管理员提交最新更新包的文件名。 这将使用微量的数据流量，也可能会使用微量的电池。 您需要做的，就是在安装官方系统更新之前稍微等候，直到您看到 Oxygen 更新器确认文件已成功提交为止。</string>
     <string name="contribute_image_description">上传更新包给更新器的服务器</string>
     <string name="contribute_agree">我同意将更新文件名提交给应用的管理员</string>
-    <string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用程序的管理员提交更新文件名</string>
+    <string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用程序的管理员提交更新包文件名</string>
     <string name="contribute_save">保存设置</string>
     <string name="contribute_more_info">了解更多…</string>
-    <string name="contribute_allow_storage">请给予内部存储文件读写权限，以开启共研帮助我们</string>
+    <string name="contribute_allow_storage">请给予内部存储文件读取权限，以开启共研帮助我们</string>
     <string name="contribute_successful_notification_title">共研完成</string>
-    <string name="contribute_successful_notification_text">感谢您愿意分享最新的更新包 %1$s 给我们的管理员！您或许将造福数以千计的 OnePlus 用户！</string>
+    <string name="contribute_successful_notification_text">感谢您愿意分享最新的更新包 %1$s 给我们的管理员！您的举手之劳将造福数以千计的 OnePlus 用户！</string>
 
     <!-- Error strings-->
-    <string name="error_app_outdated">Oh no!</string>
+    <string name="error_app_outdated">糟糕！</string>
     <string name="error_app_outdated_message">该版本 App 不是最新版本，请前往 Google Play 商店进行更新。</string>
     <string name="error_app_requires_network_connection">无互联网连接</string>
-    <string name="error_app_requires_network_connection_message">法连接服务器，请您确保您已经连接到了互联网！ 应用即将关闭。</string>
+    <string name="error_app_requires_network_connection_message">无法连接服务器，请您确保您已经连接到了互联网！应用即将关闭。</string>
     <string name="error_button_retry">重试</string>
     <string name="error_exit_button_text">退出</string>
     <string name="error_google_play_button_text">Google Play</string>
@@ -321,7 +321,7 @@
     <string name="error_push_failure">开启消息推送失败，请完全关闭应用，待会儿再来试试吧</string>
     <string name="error_reload">重新加载</string>
 
-    <string name="error_unable_to_rate_app">感谢您的好意，但是非常抱歉，您的设备缺少 Google Play 组件，无法评论</string>
+    <string name="error_unable_to_rate_app">非常感谢您的好意，但是非常抱歉，您的设备缺少 Google Play 组件，无法为本应用做出评价。</string>
     
     <!-- Message strings -->
     <string name="delete_message_title">更新包已下载</string>
