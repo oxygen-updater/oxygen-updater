@@ -64,7 +64,6 @@
     <string name="download_pending">您的下载即将开始…</string>
     <string name="download_permissions">请再次点击“下载”，以开始您的下载任务</string>
 
-    <!-- TODO translate the 3 below to Russian -->
     <string name="download_notification_error_network">由于连接丢失，下载暂停。即将恢复下载</string>
     <string name="download_notification_error_server">下载时服务器错误。请重新开始下载。</string>
     <string name="download_notification_error_internal">下载时出现技术错误。请尝试重新下载，或联系开发者获取支持。</string>
@@ -96,8 +95,6 @@
     <string name="settings_buy_button_bought">已购买</string>
     <string name="settings_buy_button_not_possible">暂不提供</string>
     <string name="settings_buy_ad_free_label">移除广告服务：</string>
-
-    <!-- TODO translate these 2 to all but Dutch / Belgian / French -->
     <string name="settings_contribute_label">帮助改进 App</string>
     <string name="settings_contribute_button">参与共研</string>
 
@@ -294,7 +291,6 @@
     <string name="news_load_error">无法打开文章。 请检查您的互联网连接并点击“重试”按钮重新打开。</string>
 
     <!-- Contribute strings -->
-    <!-- TODO translate this block to all but Dutch / Belgian / French -->
     <string name="contribute">成为共研者</string>
     <string name="contribute_title">参与 Oxygen 更新器共研行动</string>
     <string name="contribute_explanation">Oxygen 更新器需要您的帮助！为了提供最新的更新包，我们需要获取更新文件的名称。 在系统推送常规更新时，这些信息会出现在手机上。\n\n我该如何帮助呢？\nOxygen 更新器可以自动向我们的管理员提交最新更新包的文件名。 这将使用微量的数据流量，也可能会使用微量的电池。 您需要做的，就是在安装官方系统更新之前稍微等候，直到您看到 Oxygen 更新器确认文件已成功提交为止。</string>
