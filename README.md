@@ -4,7 +4,7 @@ This repository contains all the code of the Oxygen Updater Android application.
 
 ## Building and running
 ### Required tools
-The application should be buildable with Android Studio 3.4.1 and later.
+The application should be buildable with Android Studio 3.4.2 and later.
 The app targets Android Pie (api 28) and the minimum is Android Lollipop (API 21). Make sure you've got both platforms installed!
 
 ### Key store / signing
