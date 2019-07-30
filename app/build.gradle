@@ -20,8 +20,8 @@ android {
         applicationId "com.arjanvlek.oxygenupdater"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 50
-        versionName "2.7.5"
+        versionCode 51
+        versionName "2.7.6"
         signingConfig signingConfigs.signingConfig
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }

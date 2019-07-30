@@ -237,8 +237,6 @@
     <!-- Device information strings -->
     <string name="device_information_amount_of_memory">内存大小：</string>
     <string name="device_information_cpu_frequency">处理器频率：</string>
-    <string name="device_information_device_name" translatable="false">%1$s %2$s</string>
-    <string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
     <string name="device_information_header">我的设备</string>
     <string name="device_information_header_short">我的设备</string>
     <string name="device_information_image_description">设备图片</string>
@@ -321,7 +319,7 @@
     
     <!-- Message strings -->
     <string name="delete_message_title">更新包已下载</string>
-    <string name="delete_message_contents">0x7f0c0050	delete_message_contents	您已经下载了此更新，但尚未安装它。 点击“安装指南”以查看如何安装此更新。 点击“删除”以永久删除文件。 点击“返回”按钮关闭此消息。</string>
+    <string name="delete_message_contents">您已经下载了此更新，但尚未安装它。 点击“安装指南”以查看如何安装此更新。 点击“删除”以永久删除文件。 点击“返回”按钮关闭此消息。</string>
     <string name="delete_message_delete_button">删除</string>
 
     <string name="unsupported_device_warning_title">不支持此设备</string>
@@ -340,14 +338,10 @@
     <string name="loading">加载中…</string>
     <string name="processing">正在处理…</string>
     <string name="choose_file">选择一个文件</string>
-    <string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
-    <string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
     <string name="root_install_logger_service_name">更新安装日志记录器</string>
     <string name="delayed_push_notification_displayer_service_name">消息推送服务</string>
     <string name="download_service_name">更新下载器</string>
     <string name="log_uploader_service_name">错误报告服务</string>
-    <string name="update_file_checker_service_name" translatable="false">更新文件检查服务</string>
-    <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
 
 
