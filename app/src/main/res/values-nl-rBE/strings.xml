@@ -7,7 +7,7 @@
 	<!-- Update information strings-->
 	<string name="update">Update</string>
 	<string name="update_information_close">Sluiten</string>
-	<string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
+	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
 	<string name="update_information_file_name">Bestandsnaam: %1$s</string>
 	<string name="update_information_for">voor</string>
 	<string name="update_information_header">Updaten</string>
