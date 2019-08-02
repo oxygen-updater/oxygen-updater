@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_refresh"
-        android:orderInCategory="0"
-        android:title="@string/error_reload"
-        android:icon="@drawable/ic_action_navigation_refresh"
-        app:showAsAction="always" />
+	<item
+		android:id="@+id/action_refresh"
+		android:icon="@drawable/ic_action_navigation_refresh"
+		android:orderInCategory="0"
+		android:title="@string/error_reload"
+		app:showAsAction="always" />
 </menu>

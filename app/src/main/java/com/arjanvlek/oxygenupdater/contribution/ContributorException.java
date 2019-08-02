@@ -7,7 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class ContributorException extends OxygenUpdaterException {
 
-    public ContributorException(String message) {
-        super(message);
-    }
+	public ContributorException(String message) {
+		super(message);
+	}
 }

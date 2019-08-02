@@ -7,7 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class NetworkException extends OxygenUpdaterException {
 
-    public NetworkException(String formattedMessage) {
-        super(formattedMessage);
-    }
+	public NetworkException(String formattedMessage) {
+		super(formattedMessage);
+	}
 }

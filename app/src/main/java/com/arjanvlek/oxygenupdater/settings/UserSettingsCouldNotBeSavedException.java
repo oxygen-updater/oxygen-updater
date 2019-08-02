@@ -7,7 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class UserSettingsCouldNotBeSavedException extends OxygenUpdaterException {
 
-    public UserSettingsCouldNotBeSavedException(String reason) {
-        super(reason);
-    }
+	public UserSettingsCouldNotBeSavedException(String reason) {
+		super(reason);
+	}
 }

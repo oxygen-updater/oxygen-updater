@@ -8,23 +8,24 @@ import com.arjanvlek.oxygenupdater.settings.UserSettingsCouldNotBeSavedException
 
 public class SetupUtils {
 
-    public static UserSettingsCouldNotBeSavedException getAsError(String screenName, Long deviceId, Long updateMethodId) {
-        StringBuilder errors = new StringBuilder();
+	public static UserSettingsCouldNotBeSavedException getAsError(String screenName, Long deviceId, Long updateMethodId) {
+		StringBuilder errors = new StringBuilder();
 
-        if (!isValid(deviceId)) {
-            errors.append(System.lineSeparator());
-            errors.append("  - Device");
-        }
+		if (!isValid(deviceId)) {
+			errors.append(System.lineSeparator());
+			errors.append("  - Device");
+		}
 
-        if (!isValid(updateMethodId)) {
-            errors.append(System.lineSeparator());
-            errors.append("  - Update method");
-        }
+		if (!isValid(updateMethodId)) {
+			errors.append(System.lineSeparator());
+			errors.append("  - Update method");
+		}
 
-        return new UserSettingsCouldNotBeSavedException(String.format("User tried to leave the %s before all settings were saved. Missing item(s):%s", screenName, errors.toString()));
-    }
+		return new UserSettingsCouldNotBeSavedException(String.format("User tried to leave the %s before all settings were saved. Missing item(s):%s", screenName, errors
+				.toString()));
+	}
 
-    private static boolean isValid (Long id) {
-        return id != null && id != -1L;
-    }
+	private static boolean isValid(Long id) {
+		return id != null && id != -1L;
+	}
 }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<?xml version="1.0" encoding="utf-8"?><!-- File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -19,72 +18,72 @@
 
 <resources>
 
-    <style name="Theme.Oxygen" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="actionBarItemBackground">@drawable/selectable_background_oxygen</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Oxygen</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Oxygen</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Oxygen</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Oxygen</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Oxygen</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_oxygen</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_oxygen</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Oxygen</item>
+	<style name="Theme.Oxygen" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+		<item name="actionBarItemBackground">@drawable/selectable_background_oxygen</item>
+		<item name="popupMenuStyle">@style/PopupMenu.Oxygen</item>
+		<item name="dropDownListViewStyle">@style/DropDownListView.Oxygen</item>
+		<item name="actionBarTabStyle">@style/ActionBarTabStyle.Oxygen</item>
+		<item name="actionDropDownStyle">@style/DropDownNav.Oxygen</item>
+		<item name="actionBarStyle">@style/ActionBar.Solid.Oxygen</item>
+		<item name="actionModeBackground">@drawable/cab_background_top_oxygen</item>
+		<item name="actionModeSplitBackground">@drawable/cab_background_bottom_oxygen</item>
+		<item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Oxygen</item>
 
-        <item name="colorPrimary">@color/oneplus_red</item>
-        <!--   darker variant for the status bar and contextual app bars -->
-        <item name="colorPrimaryDark">@color/oneplus_red</item>
-        <!--&lt;!&ndash;   theme UI controls like checkboxes and text fields &ndash;&gt;-->
-        <item name="colorAccent">@android:color/white</item>
+		<item name="colorPrimary">@color/oneplus_red</item>
+		<!--   darker variant for the status bar and contextual app bars -->
+		<item name="colorPrimaryDark">@color/oneplus_red</item>
+		<!--&lt;!&ndash;   theme UI controls like checkboxes and text fields &ndash;&gt;-->
+		<item name="colorAccent">@android:color/white</item>
 
-        
-    </style>
 
-    <style name="Theme.Oxygen.Switch" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorAccent">@color/oneplus_red</item>
-    </style>
+	</style>
 
-    <style name="ActionBar.Solid.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/ab_solid_oxygen</item>
-        <item name="backgroundStacked">@drawable/ab_stacked_solid_oxygen</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_oxygen</item>
-        <item name="progressBarStyle">@style/ProgressBar.Oxygen</item>
-    </style>
+	<style name="Theme.Oxygen.Switch" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorAccent">@color/oneplus_red</item>
+	</style>
 
-    <style name="ActionBar.Transparent.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar">
-        <item name="background">@drawable/ab_transparent_oxygen</item>
-        <item name="progressBarStyle">@style/ProgressBar.Oxygen</item>
-    </style>
-	
-    <style name="PopupMenu.Oxygen" parent="@style/Widget.AppCompat.Light.PopupMenu">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_oxygen</item>	
-    </style>
-	
-    <style name="DropDownListView.Oxygen" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_oxygen</item>
-    </style>
+	<style name="ActionBar.Solid.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+		<item name="background">@drawable/ab_solid_oxygen</item>
+		<item name="backgroundStacked">@drawable/ab_stacked_solid_oxygen</item>
+		<item name="backgroundSplit">@drawable/ab_bottom_solid_oxygen</item>
+		<item name="progressBarStyle">@style/ProgressBar.Oxygen</item>
+	</style>
 
-    <style name="ActionBarTabStyle.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
-        <item name="android:background">@drawable/tab_indicator_ab_oxygen</item>
-    </style>
-	
-    <style name="DropDownNav.Oxygen" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
-        <item name="android:background">@drawable/spinner_background_ab_oxygen</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_oxygen</item>
-        <item name="android:dropDownSelector">@drawable/selectable_background_oxygen</item>
-    </style>
-    
-    <style name="ProgressBar.Oxygen" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_oxygen</item>
-    </style>
-    
-    <style name="ActionButton.CloseMode.Oxygen" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_oxygen</item>
-    </style>
-    
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Oxygen.Widget" parent="@style/Theme.AppCompat">
-        <item name="popupMenuStyle">@style/PopupMenu.Oxygen</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Oxygen</item>
-    </style>
+	<style name="ActionBar.Transparent.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar">
+		<item name="background">@drawable/ab_transparent_oxygen</item>
+		<item name="progressBarStyle">@style/ProgressBar.Oxygen</item>
+	</style>
+
+	<style name="PopupMenu.Oxygen" parent="@style/Widget.AppCompat.Light.PopupMenu">
+		<item name="android:popupBackground">@drawable/menu_dropdown_panel_oxygen</item>
+	</style>
+
+	<style name="DropDownListView.Oxygen" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+		<item name="android:listSelector">@drawable/selectable_background_oxygen</item>
+	</style>
+
+	<style name="ActionBarTabStyle.Oxygen" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+		<item name="android:background">@drawable/tab_indicator_ab_oxygen</item>
+	</style>
+
+	<style name="DropDownNav.Oxygen" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+		<item name="android:background">@drawable/spinner_background_ab_oxygen</item>
+		<item name="android:popupBackground">@drawable/menu_dropdown_panel_oxygen</item>
+		<item name="android:dropDownSelector">@drawable/selectable_background_oxygen</item>
+	</style>
+
+	<style name="ProgressBar.Oxygen" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+		<item name="android:progressDrawable">@drawable/progress_horizontal_oxygen</item>
+	</style>
+
+	<style name="ActionButton.CloseMode.Oxygen" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+		<item name="android:background">@drawable/btn_cab_done_oxygen</item>
+	</style>
+
+	<!-- this style is only referenced in a Light.DarkActionBar based theme -->
+	<style name="Theme.Oxygen.Widget" parent="@style/Theme.AppCompat">
+		<item name="popupMenuStyle">@style/PopupMenu.Oxygen</item>
+		<item name="dropDownListViewStyle">@style/DropDownListView.Oxygen</item>
+	</style>
 
 </resources>

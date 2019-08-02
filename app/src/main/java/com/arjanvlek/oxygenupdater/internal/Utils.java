@@ -25,91 +25,111 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
 public class Utils {
 
-    private static Random random = new Random();
+	private static Random random = new Random();
 
-    /**
-     * Converts DiP units to pixels
-     */
-    public static int diPToPixels(Activity activity, int numberOfPixels) {
-        if (activity != null && activity.getResources() != null) {
-            return (int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    numberOfPixels,
-                    activity.getResources().getDisplayMetrics()
-            );
-        } else {
-            return 0;
-        }
-    }
+	/**
+	 * Originally part of {@link com.google.android.gms.common.util.NumberUtils}, removed in later
+	 * versions
+	 *
+	 * @param string the string to test
+	 *
+	 * @return true if string is a number, false otherwise
+	 */
+	public static boolean isNumeric(String string) {
+		try {
+			Long.parseLong(string);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
 
-    public static boolean checkNetworkConnection(Context context) {
-        if (context == null) {
-            Logger.logWarning("Utils", new OxygenUpdaterException("CheckNetworkConnection: check skipped due to empty / null context"));
-            return false;
-        }
+	/**
+	 * Converts DiP units to pixels
+	 */
+	public static int diPToPixels(Activity activity, int numberOfPixels) {
+		if (activity != null && activity.getResources() != null) {
+			return (int) TypedValue.applyDimension(
+					TypedValue.COMPLEX_UNIT_DIP,
+					numberOfPixels,
+					activity.getResources().getDisplayMetrics()
+			);
+		} else {
+			return 0;
+		}
+	}
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) Utils.getSystemService(context, Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-    }
+	public static boolean checkNetworkConnection(Context context) {
+		if (context == null) {
+			Logger.logWarning("Utils", new OxygenUpdaterException("CheckNetworkConnection: check skipped due to empty / null context"));
+			return false;
+		}
 
-    public static synchronized boolean isSupportedDevice(SystemVersionProperties systemVersionProperties, List<Device> devices) {
-        String oemFingerPrint = systemVersionProperties.getOemFingerprint();
-        String oxygenOsVersion = systemVersionProperties.getOxygenOSVersion();
+		ConnectivityManager connectivityManager = (ConnectivityManager) Utils.getSystemService(context, Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetwork = connectivityManager != null ? connectivityManager.getActiveNetworkInfo() : null;
+		return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+	}
 
-        boolean firmwareIsSupported =
-                oemFingerPrint != null
-                        && !oemFingerPrint.equals(NO_OXYGEN_OS)
-                        && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
-                        && oxygenOsVersion != null
-                        && !oxygenOsVersion.equals(NO_OXYGEN_OS);
+	public static synchronized boolean isSupportedDevice(SystemVersionProperties systemVersionProperties, List<Device> devices) {
+		String oemFingerPrint = systemVersionProperties.getOemFingerprint();
+		String oxygenOsVersion = systemVersionProperties.getOxygenOSVersion();
 
-        if (devices == null || devices.isEmpty()) {
-            // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
-            return firmwareIsSupported;
-        }
+		boolean firmwareIsSupported =
+				oemFingerPrint != null
+						&& !oemFingerPrint.equals(NO_OXYGEN_OS)
+						&& oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
+						&& oxygenOsVersion != null
+						&& !oxygenOsVersion.equals(NO_OXYGEN_OS);
 
-        Optional<Device> supportedDevice = StreamSupport.stream(devices)
-                .filter(d -> d.getProductNames() != null && d.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
-                .findAny();
+		if (devices == null || devices.isEmpty()) {
+			// To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
+			return firmwareIsSupported;
+		}
 
-        return supportedDevice.isPresent() && firmwareIsSupported;
-    }
+		Optional<Device> supportedDevice = StreamSupport.stream(devices)
+				.filter(d -> d.getProductNames() != null && d.getProductNames()
+						.contains(systemVersionProperties.getOxygenDeviceName()))
+				.findAny();
 
-    public static String formatDateTime(Context context, String dateTimeString) {
-        try {
-            if (dateTimeString == null || dateTimeString.isEmpty()) {
-                return context.getString(R.string.device_information_unknown);
-            }
-            dateTimeString = dateTimeString.replace(" ", "T");
-            LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
-            DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-            String formattedTime = timeFormat.format(dateTime.toDate());
+		return supportedDevice.isPresent() && firmwareIsSupported;
+	}
 
-            LocalDateTime today = LocalDateTime.now();
-            if ((dateTime.getDayOfMonth() == today.getDayOfMonth()) && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
-                return formattedTime;
-            } else if ((dateTime.getDayOfMonth() + 1) == today.getDayOfMonth() && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
-                return context.getString(R.string.time_yesterday) + " " + context.getString(R.string.time_at) + " " + formattedTime;
-            } else {
-                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-                String formattedDate = dateFormat.format(dateTime.toDate());
-                return formattedDate + " " + context.getString(R.string.time_at) + " " + formattedTime;
-            }
-        } catch (Exception e) {
-            Logger.logError("DateTimeFormatter", String.format("Unable to parse date from input '%s'", dateTimeString), e);
-            return dateTimeString;
-        }
-    }
+	public static String formatDateTime(Context context, String dateTimeString) {
+		try {
+			if (dateTimeString == null || dateTimeString.isEmpty()) {
+				return context.getString(R.string.device_information_unknown);
+			}
+			dateTimeString = dateTimeString.replace(" ", "T");
+			LocalDateTime dateTime = LocalDateTime.parse(dateTimeString);
+			DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+			String formattedTime = timeFormat.format(dateTime.toDate());
 
-    public static Object getSystemService(Context context, String serviceName) {
-        return context != null ? context.getSystemService(serviceName) : null;
-    }
+			LocalDateTime today = LocalDateTime.now();
+			if ((dateTime.getDayOfMonth() == today.getDayOfMonth()) && dateTime.getMonthOfYear() == today
+					.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
+				return formattedTime;
+			} else if ((dateTime.getDayOfMonth() + 1) == today.getDayOfMonth() && dateTime.getMonthOfYear() == today
+					.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
+				return context.getString(R.string.time_yesterday) + " " + context.getString(R.string.time_at) + " " + formattedTime;
+			} else {
+				DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+				String formattedDate = dateFormat.format(dateTime.toDate());
+				return formattedDate + " " + context.getString(R.string.time_at) + " " + formattedTime;
+			}
+		} catch (Exception e) {
+			Logger.logError("DateTimeFormatter", String.format("Unable to parse date from input '%s'", dateTimeString), e);
+			return dateTimeString;
+		}
+	}
 
-    /**
-     * Min is inclusive and max is exclusive in this case
-     **/
-    public static int randomBetween(int min, int max) {
-        return random.nextInt(max - min) + min;
-    }
+	public static Object getSystemService(Context context, String serviceName) {
+		return context != null ? context.getSystemService(serviceName) : null;
+	}
+
+	/**
+	 * Min is inclusive and max is exclusive in this case
+	 **/
+	public static int randomBetween(int min, int max) {
+		return random.nextInt(max - min) + min;
+	}
 }

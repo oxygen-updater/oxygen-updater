@@ -1,278 +1,281 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/updateInformationFragmentTop"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".views.MainActivity">
+	xmlns:ads="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/updateInformationFragmentTop"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	tools:context=".views.MainActivity">
 
-    <!-- Loading screen -->
-    <ProgressBar
-        android:id="@+id/updateInformationLoadingScreen"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+	<!-- Loading screen -->
+	<ProgressBar
+		android:id="@+id/updateInformationLoadingScreen"
+		style="?android:attr/progressBarStyleLarge"
+		android:layout_width="70dp"
+		android:layout_height="70dp"
+		android:layout_centerHorizontal="true"
+		android:layout_centerVertical="true" />
 
-    <!-- Main screen -->
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/updateInformationRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/updateInformationAdView"
-        android:visibility="gone">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+	<!-- Main screen -->
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/updateInformationRefreshLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/updateInformationAdView"
+		android:visibility="gone">
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/relativeLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context=".views.MainActivity$PlaceholderFragment">
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/headerLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/update_information_latest_available_update" />
+			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:tools="http://schemas.android.com/tools"
+				android:id="@+id/relativeLayout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/activity_horizontal_margin"
+				android:paddingTop="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_horizontal_margin"
+				tools:context=".views.MainActivity$PlaceholderFragment">
 
-                <TextView
-                    android:id="@+id/updateInformationBuildNumberView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/headerLabel"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginTop="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
+				<TextView
+					android:id="@+id/headerLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:text="@string/update_information_latest_available_update" />
 
-
-                <TextView
-                    android:id="@+id/updateDescriptionView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/updateInformationBuildNumberView"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="@dimen/activity_vertical_margin" />
-
-                <TextView
-                    android:id="@+id/updateFileNameView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/updateDescriptionView"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="@dimen/activity_vertical_margin" />
-
-                <TableLayout
-                    android:id="@+id/downloadProgressTable"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/updateFileNameView"
-                    android:visibility="gone">
-
-                    <TableRow>
-
-                        <ProgressBar
-                            android:id="@+id/updateInformationDownloadProgressBar"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="70"
-                            android:visibility="visible" />
-
-                        <ImageButton
-                            android:id="@+id/updateInformationDownloadPauseButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="0"
-                            android:background="@android:color/transparent"
-                            android:contentDescription="@string/icon"
-                            android:src="@drawable/pause_download" />
-
-                        <ImageButton
-                            android:id="@+id/updateInformationDownloadCancelButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="0"
-                            android:background="@android:color/transparent"
-                            android:contentDescription="@string/icon"
-                            android:src="@drawable/cancel_download" />
-                    </TableRow>
-                    <TableRow>
-                        <TextView
-                            android:id="@+id/updateInformationDownloadDetailsView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginStart="10dp"
-                        />
-                    </TableRow>
-
-                </TableLayout>
+				<TextView
+					android:id="@+id/updateInformationBuildNumberView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/headerLabel"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="16dp"
+					android:layout_marginBottom="0dp"
+					android:ellipsize="end"
+					android:maxLines="1"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:textColor="@android:color/black"
+					android:textStyle="bold" />
 
 
-                <TableLayout
-                    android:id="@+id/buttonTable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/downloadProgressTable"
-                    android:layout_centerHorizontal="true">
+				<TextView
+					android:id="@+id/updateDescriptionView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/updateInformationBuildNumberView"
+					android:layout_marginStart="30dp"
+					android:layout_marginTop="@dimen/activity_vertical_margin"
+					android:layout_marginEnd="30dp"
+					android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
-                    <TableRow>
+				<TextView
+					android:id="@+id/updateFileNameView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/updateDescriptionView"
+					android:layout_marginStart="30dp"
+					android:layout_marginTop="@dimen/activity_vertical_margin"
+					android:layout_marginEnd="30dp"
+					android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
-                        <Button
-                            android:id="@+id/updateInformationDownloadButton"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:enabled="false"
-                            android:text="@string/download"
-                            android:textColor="@color/oneplus_red" />
+				<TableLayout
+					android:id="@+id/downloadProgressTable"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/updateFileNameView"
+					android:visibility="gone">
 
-                        <Button
-                            android:id="@+id/updateInstallationInstructionsButton"
-                            style="?android:attr/buttonBarButtonStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:enabled="true"
-                            android:text="@string/install"
-                            android:textAppearance="?android:textAppearanceSmall"
-                            android:textColor="@color/oneplus_red" />
+					<TableRow>
 
-                    </TableRow>
-                </TableLayout>
+						<ProgressBar
+							android:id="@+id/updateInformationDownloadProgressBar"
+							style="?android:attr/progressBarStyleHorizontal"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center_vertical"
+							android:layout_marginStart="10dp"
+							android:layout_weight="70"
+							android:visibility="visible" />
 
-                <RelativeLayout
-                    android:id="@+id/tableHost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/buttonTable"
-                    android:layout_centerHorizontal="true">
+						<ImageButton
+							android:id="@+id/updateInformationDownloadPauseButton"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="10dp"
+							android:layout_marginLeft="10dp"
+							android:layout_marginEnd="10dp"
+							android:layout_marginRight="10dp"
+							android:layout_weight="0"
+							android:background="@android:color/transparent"
+							android:contentDescription="@string/icon"
+							android:src="@drawable/pause_download" />
 
-                    <ImageView
-                        android:id="@+id/downloadSizeImage"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:contentDescription="@string/icon"
-                        android:src="@drawable/ic_download_size" />
+						<ImageButton
+							android:id="@+id/updateInformationDownloadCancelButton"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="10dp"
+							android:layout_marginLeft="10dp"
+							android:layout_marginEnd="10dp"
+							android:layout_marginRight="10dp"
+							android:layout_weight="0"
+							android:background="@android:color/transparent"
+							android:contentDescription="@string/icon"
+							android:src="@drawable/cancel_download" />
+					</TableRow>
 
-                    <TextView
-                        android:id="@+id/updateInformationDownloadSizeView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@id/downloadSizeImage"
-                        android:gravity="center" />
+					<TableRow>
 
-                </RelativeLayout>
+						<TextView
+							android:id="@+id/updateInformationDownloadDetailsView"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center_horizontal"
+							android:layout_marginStart="10dp" />
+					</TableRow>
 
-            </RelativeLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/updateInformationSystemIsUpToDateRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/updateInformationAdView"
-        android:visibility="gone">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/relativeLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                tools:context=".views.MainActivity$PlaceholderFragment">
+				</TableLayout>
 
 
-                <TextView
-                    android:id="@+id/updateInformationSystemIsUpToDateHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:text="@string/update_information_system_is_up_to_date"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold" />
+				<TableLayout
+					android:id="@+id/buttonTable"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/downloadProgressTable"
+					android:layout_centerHorizontal="true">
 
-                <ImageView
-                    android:id="@+id/updateInformationSystemIsUpToDateImage"
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
-                    android:layout_below="@id/updateInformationSystemIsUpToDateHeader"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="15dp"
-                    android:contentDescription="@string/icon"
+					<TableRow>
 
-                    android:src="@drawable/ic_uptodate" />
+						<Button
+							android:id="@+id/updateInformationDownloadButton"
+							style="?android:attr/buttonBarButtonStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:enabled="false"
+							android:text="@string/download"
+							android:textColor="@color/oneplus_red" />
 
-                <TextView
-                    android:id="@+id/updateInformationSystemIsUpToDateVersionTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/updateInformationSystemIsUpToDateImage"
-                    android:layout_centerHorizontal="true" />
+						<Button
+							android:id="@+id/updateInstallationInstructionsButton"
+							style="?android:attr/buttonBarButtonStyle"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="10dp"
+							android:enabled="true"
+							android:text="@string/install"
+							android:textAppearance="?android:textAppearanceSmall"
+							android:textColor="@color/oneplus_red" />
 
-                <TextView
-                    android:id="@+id/updateInformationSystemIsUpToDateDateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/updateInformationSystemIsUpToDateVersionTextView"
-                    android:layout_centerHorizontal="true" />
+					</TableRow>
+				</TableLayout>
 
-                <Button
-                    android:id="@+id/updateInformationSystemIsUpToDateStatisticsButton"
-                    style="?attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/updateInformationSystemIsUpToDateDateTextView"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/update_information_view_update_information" />
+				<RelativeLayout
+					android:id="@+id/tableHost"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/buttonTable"
+					android:layout_centerHorizontal="true">
 
-            </RelativeLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+					<ImageView
+						android:id="@+id/downloadSizeImage"
+						android:layout_width="50dp"
+						android:layout_height="50dp"
+						android:contentDescription="@string/icon"
+						android:src="@drawable/ic_download_size" />
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/updateInformationAdView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/advertising_id" />
+					<TextView
+						android:id="@+id/updateInformationDownloadSizeView"
+						android:layout_width="wrap_content"
+						android:layout_height="50dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginStart="10dp"
+						android:layout_toEndOf="@id/downloadSizeImage"
+						android:gravity="center" />
+
+				</RelativeLayout>
+
+			</RelativeLayout>
+		</ScrollView>
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/updateInformationSystemIsUpToDateRefreshLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/updateInformationAdView"
+		android:visibility="gone">
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:tools="http://schemas.android.com/tools"
+				android:id="@+id/relativeLayout2"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/activity_horizontal_margin"
+				android:paddingRight="@dimen/activity_horizontal_margin"
+				tools:context=".views.MainActivity$PlaceholderFragment">
+
+
+				<TextView
+					android:id="@+id/updateInformationSystemIsUpToDateHeader"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="@dimen/activity_vertical_margin"
+					android:text="@string/update_information_system_is_up_to_date"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:textColor="@android:color/black"
+					android:textStyle="bold" />
+
+				<ImageView
+					android:id="@+id/updateInformationSystemIsUpToDateImage"
+					android:layout_width="170dp"
+					android:layout_height="170dp"
+					android:layout_below="@id/updateInformationSystemIsUpToDateHeader"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="15dp"
+					android:layout_marginBottom="15dp"
+					android:contentDescription="@string/icon"
+
+					android:src="@drawable/ic_uptodate" />
+
+				<TextView
+					android:id="@+id/updateInformationSystemIsUpToDateVersionTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_below="@id/updateInformationSystemIsUpToDateImage"
+					android:layout_centerHorizontal="true" />
+
+				<TextView
+					android:id="@+id/updateInformationSystemIsUpToDateDateTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_below="@id/updateInformationSystemIsUpToDateVersionTextView"
+					android:layout_centerHorizontal="true" />
+
+				<Button
+					android:id="@+id/updateInformationSystemIsUpToDateStatisticsButton"
+					style="?attr/buttonBarButtonStyle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/updateInformationSystemIsUpToDateDateTextView"
+					android:layout_centerHorizontal="true"
+					android:text="@string/update_information_view_update_information" />
+
+			</RelativeLayout>
+		</ScrollView>
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+	<com.google.android.gms.ads.AdView
+		android:id="@+id/updateInformationAdView"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		ads:adSize="BANNER"
+		ads:adUnitId="@string/advertising_id" />
 </RelativeLayout>

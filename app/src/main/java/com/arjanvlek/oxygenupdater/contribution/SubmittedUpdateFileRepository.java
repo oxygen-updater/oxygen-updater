@@ -17,85 +17,82 @@ import org.joda.time.format.ISODateTimeFormat;
 @SuppressWarnings("WeakerAccess")
 public class SubmittedUpdateFileRepository extends SQLiteOpenHelper {
 
-    private SQLiteDatabase readableSqLiteDatabase;
-    private SQLiteDatabase writableSqLiteDatabase;
-
-    // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "SubmittedUpdateFiles.db";
-
-    // Table name
-    private static final String TABLE_NAME = "news_item";
-
-    // Table columns (id, name, date_submitted)
-    private static final String COLUMN_ID = "id";
-    private static final String COLUMN_NAME = "name";
-    private static final String COLUMN_DATE_SUBMITTED = "date_submitted";
-
-    // Create database
-    private static final String SQL_CREATE_TABLE =
-            "CREATE TABLE " + TABLE_NAME + " (" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY," +
-                    COLUMN_NAME + " TEXT," +
-                    COLUMN_DATE_SUBMITTED + " TEXT" + // ISO8601 date
-                    ")";
+	// If you change the database schema, you must increment the database version.
+	private static final int DATABASE_VERSION = 1;
+	private static final String DATABASE_NAME = "SubmittedUpdateFiles.db";
+	// Table name
+	private static final String TABLE_NAME = "news_item";
+	// Table columns (id, name, date_submitted)
+	private static final String COLUMN_ID = "id";
+	private static final String COLUMN_NAME = "name";
+	private static final String COLUMN_DATE_SUBMITTED = "date_submitted";
+	// Create database
+	private static final String SQL_CREATE_TABLE =
+			"CREATE TABLE " + TABLE_NAME + " (" +
+					COLUMN_ID + " INTEGER PRIMARY KEY," +
+					COLUMN_NAME + " TEXT," +
+					COLUMN_DATE_SUBMITTED + " TEXT" + // ISO8601 date
+					")";
+	private SQLiteDatabase readableSqLiteDatabase;
+	private SQLiteDatabase writableSqLiteDatabase;
 
 
-    public SubmittedUpdateFileRepository(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+	public SubmittedUpdateFileRepository(Context context) {
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	}
 
-    public void onCreate(SQLiteDatabase db) {
-        // create DATABASE
-        db.execSQL(SQL_CREATE_TABLE);
-    }
+	@Override
+	public SQLiteDatabase getWritableDatabase() {
+		if (this.writableSqLiteDatabase == null) {
+			this.writableSqLiteDatabase = super.getWritableDatabase();
+		}
 
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Add code if the database needs to be upgraded.
-    }
+		return this.writableSqLiteDatabase;
+	}
 
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Add code if the database needs to be downgraded.
-    }
+	@Override
+	public SQLiteDatabase getReadableDatabase() {
+		if (this.readableSqLiteDatabase == null) {
+			this.readableSqLiteDatabase = super.getReadableDatabase();
+		}
 
-    @Override
-    public SQLiteDatabase getReadableDatabase() {
-        if (this.readableSqLiteDatabase == null) {
-            this.readableSqLiteDatabase = super.getReadableDatabase();
-        }
+		return this.readableSqLiteDatabase;
+	}
 
-        return this.readableSqLiteDatabase;
-    }
+	public void onCreate(SQLiteDatabase db) {
+		// create DATABASE
+		db.execSQL(SQL_CREATE_TABLE);
+	}
 
-    @Override
-    public SQLiteDatabase getWritableDatabase() {
-        if (this.writableSqLiteDatabase == null) {
-            this.writableSqLiteDatabase = super.getWritableDatabase();
-        }
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// Add code if the database needs to be upgraded.
+	}
 
-        return this.writableSqLiteDatabase;
-    }
+	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// Add code if the database needs to be downgraded.
+	}
 
-    public boolean isFileAlreadySubmitted(String filename) {
-        if (filename == null || filename.isEmpty()) {
-            return false;
-        }
+	public boolean isFileAlreadySubmitted(String filename) {
+		if (filename == null || filename.isEmpty()) {
+			return false;
+		}
 
-        return DatabaseUtils.queryNumEntries(
-                getReadableDatabase(),
-                TABLE_NAME,
-                COLUMN_NAME + "= ?",
-                new String[]{filename}
-        ) > 0;
-    }
+		return DatabaseUtils.queryNumEntries(
+				getReadableDatabase(),
+				TABLE_NAME,
+				COLUMN_NAME + "= ?",
+				new String[]{filename}
+		) > 0;
+	}
 
-    public void store(String filename) {
-        if (filename != null && !filename.isEmpty()) {
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_NAME, filename);
-            values.put(COLUMN_DATE_SUBMITTED, LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString(ISODateTimeFormat.basicDateTime()));
+	public void store(String filename) {
+		if (filename != null && !filename.isEmpty()) {
+			ContentValues values = new ContentValues();
+			values.put(COLUMN_NAME, filename);
+			values.put(COLUMN_DATE_SUBMITTED, LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam"))
+					.toString(ISODateTimeFormat.basicDateTime()));
 
-            getWritableDatabase().insert(TABLE_NAME, null, values);
-        }
-    }
+			getWritableDatabase().insert(TABLE_NAME, null, values);
+		}
+	}
 }

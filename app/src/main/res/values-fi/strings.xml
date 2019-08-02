@@ -1,139 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Application title, Main activity title -->
-    <string name="app_name">"Oxygen Updater"</string>
-    <string name="launcher_app_name">"Oxygen Updater"</string>
+	<!-- Application title, Main activity title -->
+	<string name="app_name">"Oxygen Updater"</string>
+	<string name="launcher_app_name">"Oxygen Updater"</string>
 
-    <!-- Update information strings -->
-    <string name="update">"Päivitä"</string>
-    <string name="update_information_close">"Sulje"</string>
-    <string name="update_information_file_name">"Tiedostonimi: %1$s"</string>
-    <string name="update_information_for">"laitteelle"</string>
-    <string name="update_information_header">"Päivitys"</string>
-    <string name="update_information_header_short">"Päivitys"</string>
-    <string name="update_information_installed_update">"Viimeisin päivitys on:"</string>
-    <string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
-    <string name="update_information_latest_available_update">"Uusi päivitys saatavilla:"</string>
-    <string name="update_information_no_update_data_available">"Päivitystietoja ei saatavilla"</string>
-    <string name="update_information_oxygen_os_version">"Oxygen OS Versio: %1$s"</string>
-    <string name="update_information_system_is_up_to_date">"Järjestelmäsi on ajantasalla."</string>
-    <string name="update_information_unknown_update_name">"Versionumeroton päivitys laitteelle %1$s"</string>
-    <string name="update_information_version">"versio:"</string>
-    <string name="update_information_view_update_information">"Katso päivityksen tiedot"</string>
+	<!-- Update information strings -->
+	<string name="update">"Päivitä"</string>
+	<string name="update_information_close">"Sulje"</string>
+	<string name="update_information_file_name">"Tiedostonimi: %1$s"</string>
+	<string name="update_information_for">"laitteelle"</string>
+	<string name="update_information_header">"Päivitys"</string>
+	<string name="update_information_header_short">"Päivitys"</string>
+	<string name="update_information_installed_update">"Viimeisin päivitys on:"</string>
+	<string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
+	<string name="update_information_latest_available_update">"Uusi päivitys saatavilla:"</string>
+	<string name="update_information_no_update_data_available">"Päivitystietoja ei saatavilla"</string>
+	<string name="update_information_oxygen_os_version">"Oxygen OS Versio: %1$s"</string>
+	<string name="update_information_system_is_up_to_date">"Järjestelmäsi on ajantasalla."</string>
+	<string name="update_information_unknown_update_name">"Versionumeroton päivitys laitteelle %1$s"</string>
+	<string name="update_information_version">"versio:"</string>
+	<string name="update_information_view_update_information">"Katso päivityksen tiedot"</string>
 
-    <!-- Server status warning strings -->
-    <string name="server_status_error">"Jotkin toiminnallisuudet eivät toimi"</string>
-    <string name="server_status_unreachable">"Palvelimeen ei saada yhteyttä. Yritä päivittää sivu."</string>
-    <string name="server_status_warning">"Jotkin toiminnallisuudet eivät ehkä toimi oikein"</string>
+	<!-- Server status warning strings -->
+	<string name="server_status_error">"Jotkin toiminnallisuudet eivät toimi"</string>
+	<string name="server_status_unreachable">"Palvelimeen ei saada yhteyttä. Yritä päivittää sivu."</string>
+	<string name="server_status_warning">"Jotkin toiminnallisuudet eivät ehkä toimi oikein"</string>
 
-    <!-- New app version message strings -->
-    <string name="new_app_version">"Sovelluspäivitys saatavilla! Versio &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt; on julkaistu!"</string>
+	<!-- New app version message strings -->
+	<string name="new_app_version">"Sovelluspäivitys saatavilla! Versio &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt; on julkaistu!"</string>
 
-    <!-- Date and time strings -->
-    <string name="time_at">"kello"</string>
-    <string name="time_today">"Tänään"</string>
-    <string name="time_yesterday">"Eilen"</string>
+	<!-- Date and time strings -->
+	<string name="time_at">"kello"</string>
+	<string name="time_today">"Tänään"</string>
+	<string name="time_yesterday">"Eilen"</string>
 
-    <!-- Downloader strings -->
-    <string name="download">"Lataa"</string>
-    <string name="downloaded">"Ladattu"</string>
-    <string name="downloading">"Ladataan…"</string>
-    <string name="paused">"Keskeytetty…"</string>
+	<!-- Downloader strings -->
+	<string name="download">"Lataa"</string>
+	<string name="downloaded">"Ladattu"</string>
+	<string name="downloading">"Ladataan…"</string>
+	<string name="paused">"Keskeytetty…"</string>
 
-    <string name="download_already_downloaded">"Päivitys on jo ladattu. Se on valmiina asennettavaksi."</string>
-    <string name="download_complete">"Lataus on valmistunut"</string>
-    <string name="download_complete_notification">"Lataus on valmistunut. Napsauta käynnistääksesi asennus."</string>
-    <string name="download_description">"Oxygen Updater"</string>
-    <string name="download_error">"Virhe ladattaessa"</string>
-    <string name="download_error_close">"Sulje"</string>
-    <string name="download_error_corrupt">"Ladatattu päivitystiedosto on vahingoittunut! Ole hyvä ja yritä ladata se uudelleen."</string>
-    <string name="download_error_network">Latauksen aikana tapahtui verkkovirhe. Lataus jatkuu automaattisesti.</string>
-    <string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
-    <string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>    <string name="download_error_retry">"Uudelleen"</string>
-    <string name="download_error_resume">"Jatkaa"</string>
-    <string name="download_error_storage">"Laitteessasi ei ole tarpeeksi vapaata tallennustilaa päivityksen lataamiseksi. Vapauta tilaa laittteestasi poistamalla tiedostoja ja yritä ladata päivitys uudelleen."</string>
-    <string name="download_failed">"Lataus epäonnistui"</string>
-    <string name="download_in_background">Oxygen Updater on käynnissä taustalla</string>
-    <string name="download_oxygen_os">"Oxygen OS Versio"</string>
-    <string name="download_pending">"Latauksesi alkaa pian…"</string>
-    <string name="download_permissions">"Napsauta uudelleen Lataa ladataksesi päivitys."</string>
-    <string name="download_notification_error_network">Lataus keskeytetty yhteyden menettämisen vuoksi. Lataus jatkuu pian.</string>
-    <string name="download_notification_error_server">Palvelinvirhe tapahtui latauksen aikana. Käynnistä lataus uudelleen.</string>
-    <string name="download_notification_error_internal">Tekninen virhe tapahtui latauksen aikana. Käynnistä lataus uudelleen tai ota yhteyttä tukeen.</string>    <string name="download_notification_error_storage_full">"Tallennustila ei riitä."</string>
-    <string name="download_notification_error_corrupt">"Tiedoston tarkistus epäonnistui. Tarkista yhteytesi ja yritä uudelleen."</string>
-    <string name="download_progress_text_hours_remaining">"%1$d%%, noin %2$d tuntia jäljellä"</string>
-    <string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, alle minuutti jäljellä"</string>
-    <string name="download_progress_text_minutes_remaining">"%1$d%%, noin %2$d minuuttia jäljellä"</string>
-    <string name="download_progress_text_one_hour_remaining">"%1$d%%, noin 1 tunti jäljellä"</string>
-    <string name="download_progress_text_one_minute_remaining">"%1$d%%, noin minuutti jäljellä"</string>
-    <string name="download_progress_text_seconds_remaining">"%1$d%%, muutama sekunti jäljellä"</string>
-    <string name="download_progress_text_unknown_time_remaining">"%1$d%%, lasketaan jäljellä olevaa aikaa…"</string>
-    <string name="download_progress_text_verifying">"100%, tarkistetaan tiedostoa…"</string>
-    <string name="download_progress_text_paused">"%1$d%%, keskeytetty…"</string>
-    <string name="download_waiting_for_network">"%1$d%%, odotetaan verkkoyhteyttä…"</string>
+	<string name="download_already_downloaded">"Päivitys on jo ladattu. Se on valmiina asennettavaksi."</string>
+	<string name="download_complete">"Lataus on valmistunut"</string>
+	<string name="download_complete_notification">"Lataus on valmistunut. Napsauta käynnistääksesi asennus."</string>
+	<string name="download_description">"Oxygen Updater"</string>
+	<string name="download_error">"Virhe ladattaessa"</string>
+	<string name="download_error_close">"Sulje"</string>
+	<string name="download_error_corrupt">"Ladatattu päivitystiedosto on vahingoittunut! Ole hyvä ja yritä ladata se uudelleen."</string>
+	<string name="download_error_network">Latauksen aikana tapahtui verkkovirhe. Lataus jatkuu automaattisesti.</string>
+	<string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
+	<string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>
+	<string name="download_error_retry">"Uudelleen"</string>
+	<string name="download_error_resume">"Jatkaa"</string>
+	<string name="download_error_storage">"Laitteessasi ei ole tarpeeksi vapaata tallennustilaa päivityksen lataamiseksi. Vapauta tilaa laittteestasi poistamalla tiedostoja ja yritä ladata päivitys uudelleen."</string>
+	<string name="download_failed">"Lataus epäonnistui"</string>
+	<string name="download_in_background">Oxygen Updater on käynnissä taustalla</string>
+	<string name="download_oxygen_os">"Oxygen OS Versio"</string>
+	<string name="download_pending">"Latauksesi alkaa pian…"</string>
+	<string name="download_permissions">"Napsauta uudelleen Lataa ladataksesi päivitys."</string>
+	<string name="download_notification_error_network">Lataus keskeytetty yhteyden menettämisen vuoksi. Lataus jatkuu pian.</string>
+	<string name="download_notification_error_server">Palvelinvirhe tapahtui latauksen aikana. Käynnistä lataus uudelleen.</string>
+	<string name="download_notification_error_internal">Tekninen virhe tapahtui latauksen aikana. Käynnistä lataus uudelleen tai ota yhteyttä tukeen.</string>
+	<string name="download_notification_error_storage_full">"Tallennustila ei riitä."</string>
+	<string name="download_notification_error_corrupt">"Tiedoston tarkistus epäonnistui. Tarkista yhteytesi ja yritä uudelleen."</string>
+	<string name="download_progress_text_hours_remaining">"%1$d%%, noin %2$d tuntia jäljellä"</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, alle minuutti jäljellä"</string>
+	<string name="download_progress_text_minutes_remaining">"%1$d%%, noin %2$d minuuttia jäljellä"</string>
+	<string name="download_progress_text_one_hour_remaining">"%1$d%%, noin 1 tunti jäljellä"</string>
+	<string name="download_progress_text_one_minute_remaining">"%1$d%%, noin minuutti jäljellä"</string>
+	<string name="download_progress_text_seconds_remaining">"%1$d%%, muutama sekunti jäljellä"</string>
+	<string name="download_progress_text_unknown_time_remaining">"%1$d%%, lasketaan jäljellä olevaa aikaa…"</string>
+	<string name="download_progress_text_verifying">"100%, tarkistetaan tiedostoa…"</string>
+	<string name="download_progress_text_paused">"%1$d%%, keskeytetty…"</string>
+	<string name="download_waiting_for_network">"%1$d%%, odotetaan verkkoyhteyttä…"</string>
 
-    <string name="download_size_megabyte">"%1$d MB"</string>
-    <string name="download_unknown_update_name">"Oxygen OS päivitys"</string>
-    <string name="download_verifying">"Tarkistetaan…"</string>
-    <string name="download_verifying_error">"Tiedosto on vioittunut"</string>
-    <string name="download_verifying_start">"Lataustasi tarkistetaan nyt…"</string>
+	<string name="download_size_megabyte">"%1$d MB"</string>
+	<string name="download_unknown_update_name">"Oxygen OS päivitys"</string>
+	<string name="download_verifying">"Tarkistetaan…"</string>
+	<string name="download_verifying_error">"Tiedosto on vioittunut"</string>
+	<string name="download_verifying_start">"Lataustasi tarkistetaan nyt…"</string>
 
-    <!-- Settings strings -->
-    <string name="settings">"Asetukset"</string>
-    <string name="settings_buy_button_buy">"Osta (%1$s)"</string>
-    <string name="settings_buy_button_bought">"Ostettu"</string>
-    <string name="settings_buy_button_not_possible">"Ei saatavilla"</string>
-    <string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen:"</string>
+	<!-- Settings strings -->
+	<string name="settings">"Asetukset"</string>
+	<string name="settings_buy_button_buy">"Osta (%1$s)"</string>
+	<string name="settings_buy_button_bought">"Ostettu"</string>
+	<string name="settings_buy_button_not_possible">"Ei saatavilla"</string>
+	<string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen:"</string>
 
-    <!-- TODO translate the 2 below -->
-    <string name="settings_contribute_label">Auta parantamaan sovellusta:</string>
-    <string name="settings_contribute_button">Tule tukijaksi</string>
+	<!-- TODO translate the 2 below -->
+	<string name="settings_contribute_label">Auta parantamaan sovellusta:</string>
+	<string name="settings_contribute_button">Tule tukijaksi</string>
 
-    <string name="settings_category_other">"Muut:"</string>
-    <string name="settings_device">"Laite"</string>
-    <string name="settings_entered_incorrectly">"Virhe tallennettaessa asetuksia. Ole hyvä mene takaisin ja valitse laite / päivitystapa uudelleen."</string>
-    <string name="settings_explanation_incremental_full_update">"Lisäävä päivitys voidaan asentaa vain jos käytössäsi on viimeisin järjestelmäversio ennen kuin tämä päivitys julkaistiin.
+	<string name="settings_category_other">"Muut:"</string>
+	<string name="settings_device">"Laite"</string>
+	<string name="settings_entered_incorrectly">"Virhe tallennettaessa asetuksia. Ole hyvä mene takaisin ja valitse laite / päivitystapa uudelleen."</string>
+	<string name="settings_explanation_incremental_full_update">"Lisäävä päivitys voidaan asentaa vain jos käytössäsi on viimeisin järjestelmäversio ennen kuin tämä päivitys julkaistiin.
 
 Täydellinen päivitys voidaan asentaa aina - huolimatta nykyisestä järjestelmäversiosta joka on asennettuna.
 
 Beta päivitys voidaan asentaa vain jos sinulla on jo käytössäsi OxygenOS beta versio."</string>
-    <string name="settings_explanation_update_methods">"Päivitystapojen selitys"</string>
-    <string name="settings_header">"Valitse laitteesi ja päivitystapa:"</string>
-    <string name="settings_push">"Lähetä minulle ilmoitus kun:"</string>
-    <string name="settings_push_from_server">"Kriittinen viesti on saatavilla"</string>
-    <string name="settings_push_new_version">"Järjestelmäpäivitys on saatavilla"</string>
-    <string name="settings_push_new_device">"Tuki uudelle laitteelle lisätty"</string>
-    <string name="settings_push_news">"Uutinen on julkaistu"</string>
-    <string name="settings_saved">"Asetuksesi tallennetaan automaattisesti."</string>
-    <string name="settings_saving">"Asetuksiasi tallennetaan edelleen. Jos tämä tuntuu vievän liian pitkään varmista verkkoyhteytesi, sulje sovellus ja käynnistä se uudelleen."</string>
-    <string name="settings_server_messages">"Näytä viesti sovelluksessa kun:"</string>
-    <string name="settings_server_messages_in_app">"Uusi uutinen tai varoitus"</string>
-    <string name="settings_server_messages_new_app_version">"Sovelluspäivitys on saatavilla"</string>
-    <string name="settings_other_options">"Muut asetukset:"</string>
-    <string name="settings_advanced_mode">"Kehittynyt tila"</string>
-    <string name="settings_advanced_mode_button_explanation">"Napsauta tätä painiketta saadaksesi lisätietoa kehittyneestä tilasta"</string>
-    <string name="settings_advanced_mode_explanation">"Kehittynyt tila piilottaa viestin \"Järjestelmäsi on ajantasalla\", antaa sinun ladata ja asentaa kaikki päivitykset, vaikka ne eivät olisikaan yhteensopiva laitteesi kanssa.
+	<string name="settings_explanation_update_methods">"Päivitystapojen selitys"</string>
+	<string name="settings_header">"Valitse laitteesi ja päivitystapa:"</string>
+	<string name="settings_push">"Lähetä minulle ilmoitus kun:"</string>
+	<string name="settings_push_from_server">"Kriittinen viesti on saatavilla"</string>
+	<string name="settings_push_new_version">"Järjestelmäpäivitys on saatavilla"</string>
+	<string name="settings_push_new_device">"Tuki uudelle laitteelle lisätty"</string>
+	<string name="settings_push_news">"Uutinen on julkaistu"</string>
+	<string name="settings_saved">"Asetuksesi tallennetaan automaattisesti."</string>
+	<string name="settings_saving">"Asetuksiasi tallennetaan edelleen. Jos tämä tuntuu vievän liian pitkään varmista verkkoyhteytesi, sulje sovellus ja käynnistä se uudelleen."</string>
+	<string name="settings_server_messages">"Näytä viesti sovelluksessa kun:"</string>
+	<string name="settings_server_messages_in_app">"Uusi uutinen tai varoitus"</string>
+	<string name="settings_server_messages_new_app_version">"Sovelluspäivitys on saatavilla"</string>
+	<string name="settings_other_options">"Muut asetukset:"</string>
+	<string name="settings_advanced_mode">"Kehittynyt tila"</string>
+	<string name="settings_advanced_mode_button_explanation">"Napsauta tätä painiketta saadaksesi lisätietoa kehittyneestä tilasta"</string>
+	<string name="settings_advanced_mode_explanation">"Kehittynyt tila piilottaa viestin \"Järjestelmäsi on ajantasalla\", antaa sinun ladata ja asentaa kaikki päivitykset, vaikka ne eivät olisikaan yhteensopiva laitteesi kanssa.
 
 Tämä voi olla hyödyllista kun:
 -Päivitetään tavallisesta versiosta beta versioon
 -Palautetaan beta versiosta tavalliseen versioon (älä unohda tehdä tehdastilan palautusta laitteelle)
 -Asennettaessa uudelleen nykyistä järjestelmäversiota"</string>
-    <string name="settings_update_method">"Päivitystapa"</string>
-    <!-- TODO translate -->
-    <string name="settings_upload_logs">Jaa käyttötiedot ja lokit</string>
+	<string name="settings_update_method">"Päivitystapa"</string>
+	<!-- TODO translate -->
+	<string name="settings_upload_logs">Jaa käyttötiedot ja lokit</string>
 
-    <!-- FAQ strings -->
-    <string name="faq">"UKK"</string>
-    <string name="faq_menuitem">"UKK"</string>
-    <string name="faq_no_network">"Ei verkkoyhteyttä"</string>
-    <string name="faq_no_network_text">"Toimiva yhteys tarvitaan, jotta voidaan katsella UKK sivua"</string>
+	<!-- FAQ strings -->
+	<string name="faq">"UKK"</string>
+	<string name="faq_menuitem">"UKK"</string>
+	<string name="faq_no_network">"Ei verkkoyhteyttä"</string>
+	<string name="faq_no_network_text">"Toimiva yhteys tarvitaan, jotta voidaan katsella UKK sivua"</string>
 
-    <!-- First-time setup strings -->
-    <string name="setup">"Tervetuloa"</string>
-    <string name="setup_close_button">"käynnistä sovellus"</string>
-    <string name="setup_page_1_title">"Tervetuloa Oxygen Updateriin!"</string>
-    <string name="setup_page_1_text">"Tämä sovellus mahdollistaa sinulle:
+	<!-- First-time setup strings -->
+	<string name="setup">"Tervetuloa"</string>
+	<string name="setup_close_button">"käynnistä sovellus"</string>
+	<string name="setup_page_1_title">"Tervetuloa Oxygen Updateriin!"</string>
+	<string name="setup_page_1_text">"Tämä sovellus mahdollistaa sinulle:
 
 -Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS laitteellesi
 
@@ -144,149 +146,149 @@ Tämä voi olla hyödyllista kun:
 -Lukea viimeisimpiä uutisia koskien OnePlussaa ja OxygeOS:ää
 
 Pyyhkäise vasemmalle jatkaaksesi"</string>
-    <string name="setup_page_2_title">"Tärkeä huomautus:"</string>
-    <string name="setup_page_2_text">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu.
+	<string name="setup_page_2_title">"Tärkeä huomautus:"</string>
+	<string name="setup_page_2_text">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu.
 
 Käyttämällä sovellusta hyväksyt yllä olevat käyttöehdot.
 
 Pyyhkäise vasemmalle jatkaaksesi"</string>
-    <string name="setup_page_3_title">"Valitse laitteesi:"</string>
-    <string name="setup_page_3_text">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta.
+	<string name="setup_page_3_title">"Valitse laitteesi:"</string>
+	<string name="setup_page_3_text">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta.
 
 Pyyhkäise vasemmalle jatkaaksesi."</string>
-    <string name="setup_page_4_title">"Valitse päivitystapasi"</string>
-    <string name="setup_page_4_text">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot
+	<string name="setup_page_4_title">"Valitse päivitystapasi"</string>
+	<string name="setup_page_4_text">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot
 
 Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys.
 
 Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoista.
 
 Pyyhkäise vasemmalle jatkaaksesi."</string>
-    <string name="setup_page_5_title">"Olet valmis!"</string>
-    <string name="setup_page_5_text">"Nauti sovelluksesta!
+	<string name="setup_page_5_title">"Olet valmis!"</string>
+	<string name="setup_page_5_text">"Nauti sovelluksesta!
 
 Voit aina muuttaa asetuksiasi myöhemmin napsauttamalla oikealta yläkulmasta kolmea pistettä ja napsauttamalla \"Asetukset\"."</string>
 
-    <!-- Automatic install strings -->
-    <string name="install">"Asenna"</string>
-    <string name="install_checking_root">"Tarkistetaan onko laitteesi rootattu…"</string>
-    <string name="install_grant_root_permissions">"Ole hyvä ja anna root oikeus kun sitä pyydetään."</string>
-    <string name="install_going_back_not_possible">"Ikävä kyllä et voi enää palata takaisin tässä kohtaa"</string>
-    <string name="install_preparing_installation">"Valmistellaan asennusta…"</string>
-    <string name="install_recovery_installer_title">"Päivityksen asennus"</string>
-    <string name="install_recovery_backing_up">"Varmuuskopioidaan laitettasi. Tässä saattaa mennä hetki!"</string>
-    <string name="install_recovery_clearing_cache">"Siivotaan välimuisti osiota…"</string>
-    <string name="install_recovery_done">"Valmis. Laitteesi käynnistyy nyt uudelleen."</string>
-    <string name="install_recovery_installing_additional_zip">"Asennetaan ylimääräinen ZIP tiedosto…"</string>
-    <string name="install_recovery_installing_update">"Asennetaan päivitystä…"</string>
-    <string name="install_recovery_thank_you">"Kiitos että käytät Oxygen Updateria. Jos pidät tästä sovelluksesta, olisi kiva jos voisit antaa sille 5 tähteä Play Kaupassa :-)"</string>
-    <string name="install_error_write_script_failed">"Päivityksen asennuksen valmistelu epäonnistui. Olethan antanut root oikeuden?"</string>
-    <string name="install_options_backup">"Varmuuskopio laitteeni"</string>
-    <string name="install_options_header">"Voit kustomoida asennusprosessia muuttamalla alla olevia valintoja. Napsauta 'Aloita asennus' kun olet valmis aloittamaan päivityksen asennuksen."</string>
-    <string name="install_options_keep_root">"Pidä laitteeni rootattuna"</string>
-    <string name="install_options_reboot_after_install">"Käynnistä uudelleen asennuksen jälkeen"</string>
-    <string name="install_options_select_root_package">"Valitse asennettava root paketti"</string>
-    <string name="install_options_start_install">"Aloita asennus"</string>
-    <string name="install_options_title">"Valise asennuksen vaihtoehdot"</string>
-    <string name="install_options_wipe_cache_partition">"Pyyhi välimuisti osio"</string>
-    <string name="install_options_explanation_title">"Mitä nämä vaihtoehdot tarkoittavat?"</string>
-    <string name="install_options_explanation_backup">"Varmuuskopio laitteeni:
+	<!-- Automatic install strings -->
+	<string name="install">"Asenna"</string>
+	<string name="install_checking_root">"Tarkistetaan onko laitteesi rootattu…"</string>
+	<string name="install_grant_root_permissions">"Ole hyvä ja anna root oikeus kun sitä pyydetään."</string>
+	<string name="install_going_back_not_possible">"Ikävä kyllä et voi enää palata takaisin tässä kohtaa"</string>
+	<string name="install_preparing_installation">"Valmistellaan asennusta…"</string>
+	<string name="install_recovery_installer_title">"Päivityksen asennus"</string>
+	<string name="install_recovery_backing_up">"Varmuuskopioidaan laitettasi. Tässä saattaa mennä hetki!"</string>
+	<string name="install_recovery_clearing_cache">"Siivotaan välimuisti osiota…"</string>
+	<string name="install_recovery_done">"Valmis. Laitteesi käynnistyy nyt uudelleen."</string>
+	<string name="install_recovery_installing_additional_zip">"Asennetaan ylimääräinen ZIP tiedosto…"</string>
+	<string name="install_recovery_installing_update">"Asennetaan päivitystä…"</string>
+	<string name="install_recovery_thank_you">"Kiitos että käytät Oxygen Updateria. Jos pidät tästä sovelluksesta, olisi kiva jos voisit antaa sille 5 tähteä Play Kaupassa :-)"</string>
+	<string name="install_error_write_script_failed">"Päivityksen asennuksen valmistelu epäonnistui. Olethan antanut root oikeuden?"</string>
+	<string name="install_options_backup">"Varmuuskopio laitteeni"</string>
+	<string name="install_options_header">"Voit kustomoida asennusprosessia muuttamalla alla olevia valintoja. Napsauta 'Aloita asennus' kun olet valmis aloittamaan päivityksen asennuksen."</string>
+	<string name="install_options_keep_root">"Pidä laitteeni rootattuna"</string>
+	<string name="install_options_reboot_after_install">"Käynnistä uudelleen asennuksen jälkeen"</string>
+	<string name="install_options_select_root_package">"Valitse asennettava root paketti"</string>
+	<string name="install_options_start_install">"Aloita asennus"</string>
+	<string name="install_options_title">"Valise asennuksen vaihtoehdot"</string>
+	<string name="install_options_wipe_cache_partition">"Pyyhi välimuisti osio"</string>
+	<string name="install_options_explanation_title">"Mitä nämä vaihtoehdot tarkoittavat?"</string>
+	<string name="install_options_explanation_backup">"Varmuuskopio laitteeni:
 Kun valitset tämän vaihtoehdon otetaan varmuuskopio ennen asennusta järjestelmästäsi, sovelluksista ja asetuksista. Aina hyvä olla olemassa, jos jotain menee pahasti pieleen."</string>
-    <string name="install_options_explanation_keep_root">"Pidä laitteeni rootattuna:
+	<string name="install_options_explanation_keep_root">"Pidä laitteeni rootattuna:
 Kun valitset tämän vaihtoehdon voit valita root paketin joka asennetaan päivityksen jälkeen. Tämä varmistaa, että laitteesi pysyy rootattuna. Ota huomioon, että root paketin tulee olla yhteensopiva UUDEN OxygenOS version kanssa jota olet asentamassa."</string>
-    <string name="install_options_explanation_wipe_cache">"Pyyhi välimuisti osio:
+	<string name="install_options_explanation_wipe_cache">"Pyyhi välimuisti osio:
 Kun valitset tämän vaihtoehdon välimuistiosio pyyhitään automaattisesti kun asennus on suoritettu. Tämä varmistaa, että laitteesi suorityskyky on optimaalinen ja vähentää samalla myös bugien mahdollisuutta päivityksestä johtuen."</string>
-    <string name="install_options_explanation_reboot">"Käynnistä uudelleen asennuksen jälkeen:
+	<string name="install_options_explanation_reboot">"Käynnistä uudelleen asennuksen jälkeen:
 Kun valitset tämän vaihtoehdon laitteesi käynnistätään uudelleen automaattisesti OxygenOS:sään kun päivitys on asennettu. Muussa tapauksessa laitteesi pysyy palautustilassa, jossa voit asentaa ylimääräisiä lisäpaketteja."</string>
-    <string name="install_select_method_title">"Kuinka haluat asentaa tämän päivityksen?"</string>
-    <string name="install_select_method_automatic_title">"Automaattinen asennus*"</string>
-    <string name="install_select_method_automatic_image">"Automaattisen asennuksen levykuva"</string>
-    <string name="install_select_method_automatic_description">"Helpoin tapa asentaa päivitys.
+	<string name="install_select_method_title">"Kuinka haluat asentaa tämän päivityksen?"</string>
+	<string name="install_select_method_automatic_title">"Automaattinen asennus*"</string>
+	<string name="install_select_method_automatic_image">"Automaattisen asennuksen levykuva"</string>
+	<string name="install_select_method_automatic_description">"Helpoin tapa asentaa päivitys.
 Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
 
 * vaatii root oikeuden ja TWRP recoveryn."</string>
-    <string name="install_select_method_manual_title">"Manuaalinen asennus"</string>
-    <string name="install_select_method_manual_image">"Manuaalisen asennuksen levykuva"</string>
-    <string name="install_select_method_manual_description">"Lue asennusohje oppiaksesi kuinka päivitys asennetaan. Asennat päivityksen käyttäen laitteesi palautustilaa."</string>
-    <string name="install_temporary_error">"Tilapäinen virhe ilmeni kun valmisteltiin päivityksen asennusta. Ole hyvä ja yritä uudelleen."</string>
-    <string name="install_verify_error_title">"Asennus epäonnistui"</string>
-    <string name="install_verify_error_nothing_installed">"Virhe päivitystä asennettaessa. Mitään muutoksia ei tehty laitteen ohjelmistoon. Yritä asentaa päivitys uudelleen."</string>
-    <string name="install_verify_error_unable_to_verify">"Päivityksen asennuksen varmistus epäonnistui. Ole hyvä ja avaa Oxygen Updater nähdäksesi onko päivitys asennettu onnistuneesti."</string>
-    <string name="install_verify_error_wrong_version_installed">"Eri version OxygenOS:stä asennettiin. Älä valitse OxygenOS päivitystiedostoa, kun valitset root pakettia Pidä laitteeni rootattuna vaihtoehdon alta."</string>
-    <string name="install_verify_success_title">"Asennus valmis"</string>
-    <string name="install_verify_success_message">"OxygenOS versio %1$s on asennettu onnistuneesti."</string>
-    <string name="install_zip_file_clear">"Pyyhi root paketti tiedosto"</string>
-    <string name="install_zip_file_pick">"Valitse root paketti tiedosto"</string>
-    <string name="install_zip_file_placeholder">"Valitse root paketti…"</string>
-    <string name="install_zip_file_wrong_file_type">"Voit valita vain zip tiedoston. Ole hyvä ja valitse oikea tiedosto."</string>
+	<string name="install_select_method_manual_title">"Manuaalinen asennus"</string>
+	<string name="install_select_method_manual_image">"Manuaalisen asennuksen levykuva"</string>
+	<string name="install_select_method_manual_description">"Lue asennusohje oppiaksesi kuinka päivitys asennetaan. Asennat päivityksen käyttäen laitteesi palautustilaa."</string>
+	<string name="install_temporary_error">"Tilapäinen virhe ilmeni kun valmisteltiin päivityksen asennusta. Ole hyvä ja yritä uudelleen."</string>
+	<string name="install_verify_error_title">"Asennus epäonnistui"</string>
+	<string name="install_verify_error_nothing_installed">"Virhe päivitystä asennettaessa. Mitään muutoksia ei tehty laitteen ohjelmistoon. Yritä asentaa päivitys uudelleen."</string>
+	<string name="install_verify_error_unable_to_verify">"Päivityksen asennuksen varmistus epäonnistui. Ole hyvä ja avaa Oxygen Updater nähdäksesi onko päivitys asennettu onnistuneesti."</string>
+	<string name="install_verify_error_wrong_version_installed">"Eri version OxygenOS:stä asennettiin. Älä valitse OxygenOS päivitystiedostoa, kun valitset root pakettia Pidä laitteeni rootattuna vaihtoehdon alta."</string>
+	<string name="install_verify_success_title">"Asennus valmis"</string>
+	<string name="install_verify_success_message">"OxygenOS versio %1$s on asennettu onnistuneesti."</string>
+	<string name="install_zip_file_clear">"Pyyhi root paketti tiedosto"</string>
+	<string name="install_zip_file_pick">"Valitse root paketti tiedosto"</string>
+	<string name="install_zip_file_placeholder">"Valitse root paketti…"</string>
+	<string name="install_zip_file_wrong_file_type">"Voit valita vain zip tiedoston. Ole hyvä ja valitse oikea tiedosto."</string>
 
-    <!-- Install guide strings -->
-    <string name="install_guide_no_root">"Asenna päivitys asennusohjeen mukaisesti"</string>
-    <string name="install_guide_automatic_install_disabled">"Automaattiset asennukset on tilapäisesti poissa käytöstä raportoitujen teknisten ongelmien vuoksi. Asenna päivitys asennusohjeen mukaisesti."</string>
-    <string name="install_guide">"Asennusohje"</string>
-    <string name="install_guide_loading">"Etsitään asennusohjetta...."</string>
-    <string name="install_guide_title">"Install guide - %1$d / %2$d"</string>
-    <string name="install_guide_image_description">"Sisältökuva. Ole hyvä ja napsauta alapuolelta kuullaksesi asennusohjeet."</string>
-    <string name="install_guide_header">"Pyyhkäise &lt;- -&gt; navigoidaksesi sivujen välillä."</string>
-    <string name="install_guide_tip">"- On suositeltavaa kirjoittaa kaikki vaiheet ylös, koska laitteen virta tulee katkaista päivitystä asennettaessa."</string>
-    <string name="install_guide_page_1_title">"Lataa päivitys"</string>
-    <string name="install_guide_page_1_text">"- Paina lataa painiketta käynnistääksesi päivityksen lataamisen.
+	<!-- Install guide strings -->
+	<string name="install_guide_no_root">"Asenna päivitys asennusohjeen mukaisesti"</string>
+	<string name="install_guide_automatic_install_disabled">"Automaattiset asennukset on tilapäisesti poissa käytöstä raportoitujen teknisten ongelmien vuoksi. Asenna päivitys asennusohjeen mukaisesti."</string>
+	<string name="install_guide">"Asennusohje"</string>
+	<string name="install_guide_loading">"Etsitään asennusohjetta...."</string>
+	<string name="install_guide_title">"Install guide - %1$d / %2$d"</string>
+	<string name="install_guide_image_description">"Sisältökuva. Ole hyvä ja napsauta alapuolelta kuullaksesi asennusohjeet."</string>
+	<string name="install_guide_header">"Pyyhkäise &lt;- -&gt; navigoidaksesi sivujen välillä."</string>
+	<string name="install_guide_tip">"- On suositeltavaa kirjoittaa kaikki vaiheet ylös, koska laitteen virta tulee katkaista päivitystä asennettaessa."</string>
+	<string name="install_guide_page_1_title">"Lataa päivitys"</string>
+	<string name="install_guide_page_1_text">"- Paina lataa painiketta käynnistääksesi päivityksen lataamisen.
 
 - Latauksen edistyminen tulee näkyviin sovelluksessa ja ilmoituksena ilmoituskeskuksessa.
 
 - Kun lataus on valmistunut näet ilmoituksen \"Lataus valmis\".
 Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudelleen. Jos tämä ei toimi varmista, että sinulla on toimiva yhteys. Muutoin olen yhteydessä sovelluksen kehittäjään. Voit tehdä tämän myös vierailemalla \"Omat sovellukset\" osiossa  Play Kaupassa."</string>
-    <string name="install_guide_page_2_title">"Siirry palautustilaan (Recovery Mode)"</string>
-    <string name="install_guide_page_2_text">"- Ensin katkaise laitttesta virta.
+	<string name="install_guide_page_2_title">"Siirry palautustilaan (Recovery Mode)"</string>
+	<string name="install_guide_page_2_text">"- Ensin katkaise laitttesta virta.
 
 - Paina virta- ja äänenvoimakkuus alas painikkkeita yhtäaikaa
 
 - Laitteesi käynnistyy nyt palautustilassa. Odota että palautustilan valikon näytölläsi."</string>
-    <string name="install_guide_page_3_title">"Asenna ladattu päivitys."</string>
-    <string name="install_guide_page_3_text">"- Palautustilassa valitse ensin haluamasi kieli
+	<string name="install_guide_page_3_title">"Asenna ladattu päivitys."</string>
+	<string name="install_guide_page_3_text">"- Palautustilassa valitse ensin haluamasi kieli
 Seuraavaksi napsauta (tai käytä äänenvoimakkuus näppäimiä navigoimiseen ja virtanäppäintä valitsemiseen) \"Install from SD\".
 
 - Seuraavaksi rullaa alas äänenvoimakkuus alas näppäimellä kunnes löydät .\"zip\" tiedoston jonka nimi on sama sovelluksessa näytetyn kanssa. (Yleensä tiedoston nimi alkaa \"OnePlusOxygen-\").
 
 - Päivityksen asennus alkaa automaattisesti."</string>
-    <string name="install_guide_page_4_title">"Käynnistä laitteesi uudelleen."</string>
-    <string name="install_guide_page_4_text">"- Kun päivityksen asennus on valmistunut, palaat takaisin palautustilan valikon alkuun. Valikosta valitse \"Reboot\".
+	<string name="install_guide_page_4_title">"Käynnistä laitteesi uudelleen."</string>
+	<string name="install_guide_page_4_text">"- Kun päivityksen asennus on valmistunut, palaat takaisin palautustilan valikon alkuun. Valikosta valitse \"Reboot\".
 
 - Laitteesi näyttää käynnistyksen kuvaa pitkään käynnistyksen yhteydessä.
 
 - Tämän jälkeen näet valkoisen viestit otsikolla \"Android is upgrading\", kun sovelluksiasi optimoidaan."</string>
-    <string name="install_guide_page_5_title">"Valmis. Nauti uudesta Oxygen OS versiosta!"</string>
-    <string name="install_guide_page_5_text">"- Kun laitteesi on viimeistellyt sovellusten optimoinnin, asennus on onnistuneesti suoritettu.
+	<string name="install_guide_page_5_title">"Valmis. Nauti uudesta Oxygen OS versiosta!"</string>
+	<string name="install_guide_page_5_text">"- Kun laitteesi on viimeistellyt sovellusten optimoinnin, asennus on onnistuneesti suoritettu.
 Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavasti:
 
 - Mene asetuksiin, napsauta \"Tietoja puhelimesta\" ja tarkista Oxygen OS versio.
 
 - Jos pidät tästä sovelluksesta, annathan sille 5 tähteä Play Kaupassa!"</string>
-    <string name="install_guide_close_button">"Sulje asennusohje"</string>
-    <string name="install_guide_zip_file_deleted">"Valitsemasi root paketti ei ole enää käytettävissä. Ole hyvä ja valitse uusi root paketti yläpuolelta."</string>
-    <string name="install_guide_zip_file_picker_title">"Valitse root paketti"</string>
-    <string name="install_guide_zip_file_missing">"Jos haluat pitää laitteesi rootattuna sinun tulee valita asennettava root paketti yläpuolelta."</string>
+	<string name="install_guide_close_button">"Sulje asennusohje"</string>
+	<string name="install_guide_zip_file_deleted">"Valitsemasi root paketti ei ole enää käytettävissä. Ole hyvä ja valitse uusi root paketti yläpuolelta."</string>
+	<string name="install_guide_zip_file_picker_title">"Valitse root paketti"</string>
+	<string name="install_guide_zip_file_missing">"Jos haluat pitää laitteesi rootattuna sinun tulee valita asennettava root paketti yläpuolelta."</string>
 
-    <!-- Device information strings -->
-    <string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
-    <string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
-    <string name="device_information_header">"Laitteeni"</string>
-    <string name="device_information_header_short">"Laitteeni"</string>
-    <string name="device_information_image_description">"Laitteen kuva"</string>
-    <string name="device_information_incremental_os_version">"Lisäävän päivityksen versio:"</string>
-    <string name="device_information_os_version">"Android versio:"</string>
-    <string name="device_information_oxygen_os_version">"OxygenOS versio:"</string>
-    <string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
-    <string name="device_information_patch_level_version">"Tietoturvapäivitysten päiväys:"</string>
-    <string name="device_information_serial_number">"Sarjanumero:"</string>
-    <string name="device_information_system_on_a_chip">"Piirisarjan järjestelmä:"</string>
-    <string name="device_information_unknown">"tuntematon"</string>
-    <string name="device_information_your_device">"Sinun laitteesi: "</string>
+	<!-- Device information strings -->
+	<string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
+	<string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
+	<string name="device_information_header">"Laitteeni"</string>
+	<string name="device_information_header_short">"Laitteeni"</string>
+	<string name="device_information_image_description">"Laitteen kuva"</string>
+	<string name="device_information_incremental_os_version">"Lisäävän päivityksen versio:"</string>
+	<string name="device_information_os_version">"Android versio:"</string>
+	<string name="device_information_oxygen_os_version">"OxygenOS versio:"</string>
+	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_patch_level_version">"Tietoturvapäivitysten päiväys:"</string>
+	<string name="device_information_serial_number">"Sarjanumero:"</string>
+	<string name="device_information_system_on_a_chip">"Piirisarjan järjestelmä:"</string>
+	<string name="device_information_unknown">"tuntematon"</string>
+	<string name="device_information_your_device">"Sinun laitteesi: "</string>
 
-    <!-- About screen strings -->
-    <string name="about">"Tietoja sovelluksesta"</string>
-    <string name="about_app_description">"Ylivoimaisesti paras työkalu Oxygen OS päivityksille."</string>
-    <string name="about_background_story">"Tämän sovelluksen on kehittänyt Arjan Vlek
+	<!-- About screen strings -->
+	<string name="about">"Tietoja sovelluksesta"</string>
+	<string name="about_app_description">"Ylivoimaisesti paras työkalu Oxygen OS päivityksille."</string>
+	<string name="about_background_story">"Tämän sovelluksen on kehittänyt Arjan Vlek
 
 Tämä sovellus on jatkoa toiselle sovellukselle nimeltä Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">verkkosivu</a>). Cyanogen Update Tracker tarjosi samankaltaisia ominaisuuksia Cyanogen OS käyttäjille.
 
@@ -297,23 +299,23 @@ Android, Google, Google Play ja Google Play logo ovat Google Inc. rekisteröityj
 Tämä sovellus käyttää tietoa OnePlussalta ja OPPO:lta näyttääkseen päivitysinformaatiota.
 
 Jos pidät tästä sovelluksesta, annathan sille arvostelun Play Kaupassa nyt:"</string>
-    <string name="about_rate_app_button_text">"Arvostele Play Kaupassa"</string>
-    <string name="about_version">"Versio: %1$s"</string>
+	<string name="about_rate_app_button_text">"Arvostele Play Kaupassa"</string>
+	<string name="about_version">"Versio: %1$s"</string>
 
-    <!-- LocalNotifications strings -->
-    <string name="notification_new_device">"Uusi laite on julkaistu! %1$s on nyt tuettu!"</string>
-    <string name="notification_new_device_short">"Avaa sovellus valitaksesi tämä laite."</string>
-    <string name="notification_no_notification_support">"Asenna tai päivitä Google Play palvelut mahdollistaaksesi push ilmoitukset"</string>
-    <string name="notification_version_title">"Järjestelmäpäivitys saatavilla"</string>
-    <string name="notification_version">"%1$s on nyt saatavissa laitteelle %2$s!"</string>
-    <string name="push_notification_channel_name">"Push ilmoitukset"</string>
-    <string name="push_notification_channel_description">"Näyttää kaikki sovelluksen Oxygen Updater tärkeät päivitykset. Tämä sisältää järjestelmäpäivitysten sekä viimeisimpien uutisten ilmoitukset."</string>
-    <string name="progress_notification_channel_name">"Edistyneet ilmoitukset"</string>
-    <string name="progress_notification_channel_description">"Näyttää kaikki sovelluksen Oxygen Updater ei tärkeät päivitykset. Sisältää tilaindikaattorin kun ladataan päivitystä."</string>
+	<!-- LocalNotifications strings -->
+	<string name="notification_new_device">"Uusi laite on julkaistu! %1$s on nyt tuettu!"</string>
+	<string name="notification_new_device_short">"Avaa sovellus valitaksesi tämä laite."</string>
+	<string name="notification_no_notification_support">"Asenna tai päivitä Google Play palvelut mahdollistaaksesi push ilmoitukset"</string>
+	<string name="notification_version_title">"Järjestelmäpäivitys saatavilla"</string>
+	<string name="notification_version">"%1$s on nyt saatavissa laitteelle %2$s!"</string>
+	<string name="push_notification_channel_name">"Push ilmoitukset"</string>
+	<string name="push_notification_channel_description">"Näyttää kaikki sovelluksen Oxygen Updater tärkeät päivitykset. Tämä sisältää järjestelmäpäivitysten sekä viimeisimpien uutisten ilmoitukset."</string>
+	<string name="progress_notification_channel_name">"Edistyneet ilmoitukset"</string>
+	<string name="progress_notification_channel_description">"Näyttää kaikki sovelluksen Oxygen Updater ei tärkeät päivitykset. Sisältää tilaindikaattorin kun ladataan päivitystä."</string>
 
-    <!-- Help strings -->
-    <string name="help">"Apua"</string>
-    <string name="help_text">"Tervetuloa Oxygen Updaterin apu osioon
+	<!-- Help strings -->
+	<string name="help">"Apua"</string>
+	<string name="help_text">"Tervetuloa Oxygen Updaterin apu osioon
 
 Apu sisältää seuraavat osiot
 
@@ -323,8 +325,8 @@ Apu sisältää seuraavat osiot
 • Asetusten muuttaminen
 
 Selaa alaspäin käydäksesi läpi nämä osiot"</string>
-    <string name="help_updating_your_device_title">"Laitteesi päivittäminen"</string>
-    <string name="help_updating_your_device_text">"Avatessasi sovelluksen näet onko järjestelmään saatavilla päivityksiä. Jos uusi päivitys on saatavilla voit asentaa sen.
+	<string name="help_updating_your_device_title">"Laitteesi päivittäminen"</string>
+	<string name="help_updating_your_device_text">"Avatessasi sovelluksen näet onko järjestelmään saatavilla päivityksiä. Jos uusi päivitys on saatavilla voit asentaa sen.
 
 Aloittaaksesi asennuksen napsauta \"Lataa\" painiketta (päivityksen kuvauksen alla) jotta päivityksen lataus käynnistyy. Kun lataus on valmistunut, asennusikkuna ponnahtaa näkyviin. Jos siirryit pois sovelluksesta tai ikkuna ei ponnahtanut auki, napsauta \"Asenna\" painiketta, joka on nyt tullut \"Lataa\" painikkeen viereen.
 
@@ -335,12 +337,12 @@ Sinun tarvitsee vain valita asennuksen vaihtoehdot. Oletusasetuksia suositellaan
 
 Manuaalinen asennus:
 Näet asennusohjeen ruudullasi. Kirjoita ohjeet ylös ja suorita ne asentaaksesi päivitys."</string>
-    <string name="help_reading_news_title">"Viimeisimpien uutisten lukeminen"</string>
-    <string name="help_reading_news_text">"Uutiset löydät päivitysikkunasta vasemmalle yläpalkissa. Viimeisimmät uutiset näkyvät ylimpänä. Napsauta vain uutista lukeaksesi se. Napsauta takaisin nuolta tai painiketta palataksesi uutislistaan."</string>
-    <string name="help_device_information_title">"Laitteen tietojen katsominen"</string>
-    <string name="help_device_information_text">"Voit nähdä joitakin määrittelyjä laitteestasi käyttämällä oikealla puolella olevaa Laite info näkymää. Tämä on kätevä kun olet tekemässä tukipyyntöä, jonka aikana sinulta voidaan kysyä joitakin laitteen tarkempia tietoja."</string>
-    <string name="help_change_settings_title">"Asetusten muuttaminen"</string>
-    <string name="help_change_settings_text">"Voit muuttaa asetuksia napsauttamalla kolmea pistettä näytön oikeassa yläkulmassa ja valitsemalla asetukset.
+	<string name="help_reading_news_title">"Viimeisimpien uutisten lukeminen"</string>
+	<string name="help_reading_news_text">"Uutiset löydät päivitysikkunasta vasemmalle yläpalkissa. Viimeisimmät uutiset näkyvät ylimpänä. Napsauta vain uutista lukeaksesi se. Napsauta takaisin nuolta tai painiketta palataksesi uutislistaan."</string>
+	<string name="help_device_information_title">"Laitteen tietojen katsominen"</string>
+	<string name="help_device_information_text">"Voit nähdä joitakin määrittelyjä laitteestasi käyttämällä oikealla puolella olevaa Laite info näkymää. Tämä on kätevä kun olet tekemässä tukipyyntöä, jonka aikana sinulta voidaan kysyä joitakin laitteen tarkempia tietoja."</string>
+	<string name="help_change_settings_title">"Asetusten muuttaminen"</string>
+	<string name="help_change_settings_text">"Voit muuttaa asetuksia napsauttamalla kolmea pistettä näytön oikeassa yläkulmassa ja valitsemalla asetukset.
 Voit muuttaa seuraavia asetuksia
 
 • Laite ja päivitystapa
@@ -350,69 +352,69 @@ Voit muuttaa seuraavia asetuksia
 
 Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja pois. Valitse laite ja/tai päivitystapa käyttämällä pudotusvalikkoja kytkinten yläpuolella. Eikö pudotusvalikot ole näkyvissä? Tarkista internetyhteystesi ja avaa Asetukset ikkuna uudelleen."</string>
 
-    <!-- News strings -->
-    <string name="news">"Uutiset"</string>
-    <string name="news_author">"Julkaisija: %1$s"</string>
-    <string name="news_date_published">"Viimeisin päivitys: %1$s"</string>
-    <string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
-    <string name="news_load_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
+	<!-- News strings -->
+	<string name="news">"Uutiset"</string>
+	<string name="news_author">"Julkaisija: %1$s"</string>
+	<string name="news_date_published">"Viimeisin päivitys: %1$s"</string>
+	<string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
+	<string name="news_load_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
 
-    <!-- TODO translate this block -->
-    <string name="contribute">Tule tukijaksi</string>
-    <string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
-    <string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu. \n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi vie vähän akkuvirtaa. Kaikki mitä sinun tulee tehdä on vain odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>
-    <string name="contribute_image_description">Lähetä tiedostot sovelluksen palvelimelle</string>
-    <string name="contribute_agree">Haluan auttaa ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
-    <string name="contribute_agree_from_setup">Haluan auttaa parantamaan sovellusta ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
-    <string name="contribute_save">Tallenna asetukset</string>
-    <string name="contribute_more_info">Lisätietoja...</string>
-    <string name="contribute_allow_storage">Ole hyvä ja anna tallennustilan käyttöoikeus auttaaksesi parantamaan sovellusta</string>
-    <string name="contribute_successful_notification_title">Osallistuminen onnistui</string>
-    <string name="contribute_successful_notification_text">Kiitos että jaoit päivitystiedoston %1$s ylläpitäjiemme!</string>
+	<!-- TODO translate this block -->
+	<string name="contribute">Tule tukijaksi</string>
+	<string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
+	<string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu. \n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi vie vähän akkuvirtaa. Kaikki mitä sinun tulee tehdä on vain odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>
+	<string name="contribute_image_description">Lähetä tiedostot sovelluksen palvelimelle</string>
+	<string name="contribute_agree">Haluan auttaa ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
+	<string name="contribute_agree_from_setup">Haluan auttaa parantamaan sovellusta ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
+	<string name="contribute_save">Tallenna asetukset</string>
+	<string name="contribute_more_info">Lisätietoja...</string>
+	<string name="contribute_allow_storage">Ole hyvä ja anna tallennustilan käyttöoikeus auttaaksesi parantamaan sovellusta</string>
+	<string name="contribute_successful_notification_title">Osallistuminen onnistui</string>
+	<string name="contribute_successful_notification_text">Kiitos että jaoit päivitystiedoston %1$s ylläpitäjiemme!</string>
 
-    <!-- Error strings -->
-    <string name="error_app_outdated">"Voi ei!"</string>
-    <string name="error_app_outdated_message">"Tämä versio sovelluksesta on vanhentunut. On aika päivittää se! Napsauta alhaalta \"Play Kauppa\". Play Kaupassa, napsauta \"Päivitä\"."</string>
-    <string name="error_app_requires_network_connection">"Ei yhteyttä"</string>
-    <string name="error_app_requires_network_connection_message">"Palvelimeeen yhdistäminen ei onnistunut. Ole hyvä ja varmista että sinulla on toimiva yhteys. Sovellus sulkeutuu nyt."</string>
-    <string name="error_button_retry">"Yritä uudelleen"</string>
-    <string name="error_exit_button_text">"Poistu"</string>
-    <string name="error_no_internet_connection">"Ei yhteyttä"</string>
-    <string name="error_maintenance">"Palvelimella huoltokatko"</string>
-    <string name="error_maintenance_message">"Ole hyvä ja odota. Palvelin on hyvin pian taas käytettävissä."</string>
-    <string name="error_push_failure">"Ilmoitusten päälle kytkeminen ei onnistunut. Sulje sovellus kokonaan ja käynnistä se uudelleen muutaman minuutin jälkeen-."</string>
-    <string name="error_reload">"Lataa uudelleen"</string>
-    <string name="error_unable_to_rate_app">"Ei voi arvostella sovellusta, sillä Play Kauppa puuttuu laitteeltasi."</string>
+	<!-- Error strings -->
+	<string name="error_app_outdated">"Voi ei!"</string>
+	<string name="error_app_outdated_message">"Tämä versio sovelluksesta on vanhentunut. On aika päivittää se! Napsauta alhaalta \"Play Kauppa\". Play Kaupassa, napsauta \"Päivitä\"."</string>
+	<string name="error_app_requires_network_connection">"Ei yhteyttä"</string>
+	<string name="error_app_requires_network_connection_message">"Palvelimeeen yhdistäminen ei onnistunut. Ole hyvä ja varmista että sinulla on toimiva yhteys. Sovellus sulkeutuu nyt."</string>
+	<string name="error_button_retry">"Yritä uudelleen"</string>
+	<string name="error_exit_button_text">"Poistu"</string>
+	<string name="error_no_internet_connection">"Ei yhteyttä"</string>
+	<string name="error_maintenance">"Palvelimella huoltokatko"</string>
+	<string name="error_maintenance_message">"Ole hyvä ja odota. Palvelin on hyvin pian taas käytettävissä."</string>
+	<string name="error_push_failure">"Ilmoitusten päälle kytkeminen ei onnistunut. Sulje sovellus kokonaan ja käynnistä se uudelleen muutaman minuutin jälkeen-."</string>
+	<string name="error_reload">"Lataa uudelleen"</string>
+	<string name="error_unable_to_rate_app">"Ei voi arvostella sovellusta, sillä Play Kauppa puuttuu laitteeltasi."</string>
 
-    <!-- Message strings -->
-    <string name="delete_message_title">"Päivitys on jo ladattuna"</string>
-    <string name="delete_message_contents">"Olet jo ladannut tämän päivityksen, mutta et vielä asentanut sitä. Napsauta \"Asennusohje\" nähdäksesi kuinka päivitys asennetaan. Napsauta \"Poista\" painiketta poistaaksesi tiedosto. Paina takaisin painiketta sulkeaksi tämä viesti."</string>
-    <string name="delete_message_delete_button">"Poista"</string>
-    <string name="unsupported_device_warning_title">"Laitetta ei tueta"</string>
-    <string name="unsupported_device_warning_message">"Näyttäisi siltä että laiteellasi ei ole asennettuna Oxygen OS. Huomioithan, että voit asentaa päivityksiä vain laitteille joilla on asennettuna Oxygen OS.
+	<!-- Message strings -->
+	<string name="delete_message_title">"Päivitys on jo ladattuna"</string>
+	<string name="delete_message_contents">"Olet jo ladannut tämän päivityksen, mutta et vielä asentanut sitä. Napsauta \"Asennusohje\" nähdäksesi kuinka päivitys asennetaan. Napsauta \"Poista\" painiketta poistaaksesi tiedosto. Paina takaisin painiketta sulkeaksi tämä viesti."</string>
+	<string name="delete_message_delete_button">"Poista"</string>
+	<string name="unsupported_device_warning_title">"Laitetta ei tueta"</string>
+	<string name="unsupported_device_warning_message">"Näyttäisi siltä että laiteellasi ei ole asennettuna Oxygen OS. Huomioithan, että voit asentaa päivityksiä vain laitteille joilla on asennettuna Oxygen OS.
 
 Muut laitteet, mukaan lukien OnePlus laitteet joille on asennettu kustomoitu käyttöjärjestelmä, eivät ole tuettuja"</string>
-    <string name="unsupported_device_warning_checkbox_title">"Älä näitä tätä varoitusta uudelleen"</string>
-    <string name="root_check_title">"Root oikeus"</string>
-    <string name="root_check_message">"Oxygen Updater tarjoaa helpon automoidun tavan root käyttäjille päivitysten asentamiseen rootatuille laitteille. Kuitenkaan lisäävät päivitykset eivät ole saatavilla rootatuille laitteille. Oxygen Updater voi tarkistaa onko sinulla root oikeus, jotta se se voi tarjota oikean päivitystavan
+	<string name="unsupported_device_warning_checkbox_title">"Älä näitä tätä varoitusta uudelleen"</string>
+	<string name="root_check_title">"Root oikeus"</string>
+	<string name="root_check_message">"Oxygen Updater tarjoaa helpon automoidun tavan root käyttäjille päivitysten asentamiseen rootatuille laitteille. Kuitenkaan lisäävät päivitykset eivät ole saatavilla rootatuille laitteille. Oxygen Updater voi tarkistaa onko sinulla root oikeus, jotta se se voi tarjota oikean päivitystavan
 
 Jos sinulla on root oikeus asennettuna, annan Oxygen Updaterinlle root oikeus suljettuasi tämän viestin.
 
 Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käyttöä."</string>
 
-    <!-- Purchasing strings -->
-    <string name="purchase_error_before_payment">"Mainosvapaan version ostaminen epäonnistui koska sattui sisäinen virhe. Ole hyvä ja yritä uudelleen muutaman minuutin kuluttua."</string>
-    <string name="purchase_error_after_payment">"Mainosvapaan version ostaminen epäonnistui koska sattui sisäinen virhe. Ole hyvä ja yritä uudelleen muutaman minuutin kuluttua. Jos olet jo maksanut, ole hyvä ja ota yhteyttä Play Kaupan tukeen saadaksesi apua."</string>
+	<!-- Purchasing strings -->
+	<string name="purchase_error_before_payment">"Mainosvapaan version ostaminen epäonnistui koska sattui sisäinen virhe. Ole hyvä ja yritä uudelleen muutaman minuutin kuluttua."</string>
+	<string name="purchase_error_after_payment">"Mainosvapaan version ostaminen epäonnistui koska sattui sisäinen virhe. Ole hyvä ja yritä uudelleen muutaman minuutin kuluttua. Jos olet jo maksanut, ole hyvä ja ota yhteyttä Play Kaupan tukeen saadaksesi apua."</string>
 
-    <!-- Other strings -->
-    <string name="icon">"Ikoni"</string>
-    <string name="loading">"Ladataan…"</string>
-    <string name="processing">"Prosessoidaan…"</string>
-    <string name="choose_file">"Valitse tiedosto"</string>
-    <string name="root_install_logger_service_name">"Päivitysten asentajan lokittaja"</string>
-    <string name="update_information_description_not_available">"Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugi korjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi."</string>
-    <string name="error_google_play_button_text">"Play Kauppa"</string>
-    <string name="delayed_push_notification_displayer_service_name">"Push ilmoitus palvelu"</string>
-    <string name="log_uploader_service_name">"Virhe raportoidessa palvelua"</string>
-    <string name="download_service_name">"Päivitä-ladattavissa"</string>
+	<!-- Other strings -->
+	<string name="icon">"Ikoni"</string>
+	<string name="loading">"Ladataan…"</string>
+	<string name="processing">"Prosessoidaan…"</string>
+	<string name="choose_file">"Valitse tiedosto"</string>
+	<string name="root_install_logger_service_name">"Päivitysten asentajan lokittaja"</string>
+	<string name="update_information_description_not_available">"Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugi korjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi."</string>
+	<string name="error_google_play_button_text">"Play Kauppa"</string>
+	<string name="delayed_push_notification_displayer_service_name">"Push ilmoitus palvelu"</string>
+	<string name="log_uploader_service_name">"Virhe raportoidessa palvelua"</string>
+	<string name="download_service_name">"Päivitä-ladattavissa"</string>
 </resources>

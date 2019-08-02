@@ -1,347 +1,347 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Application title, Main activity title-->
-    <string name="app_name">Oxygen Updater</string>
-    <string name="launcher_app_name">Oxygen Updater</string>
+	<!-- Application title, Main activity title-->
+	<string name="app_name">Oxygen Updater</string>
+	<string name="launcher_app_name">Oxygen Updater</string>
 
-    <!-- Update information strings-->
-    <string name="update">更新</string>
-    <string name="update_information_close">关闭</string>
-    <string name="update_information_description_not_available">没有关于此更新的新功能亮点的官方信息。通常，此类更新会为您的设备提供错误修复，性能增强或关键安全更新。</string>
-    <string name="update_information_file_name">文件名称： %1$s</string>
-    <string name="update_information_for">适用于</string>
-    <string name="update_information_header">更新</string>
-    <string name="update_information_header_short">更新</string>
-    <string name="update_information_installed_update">最近的一次更新在：</string>
-    <string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
-    <string name="update_information_latest_available_update">检测到新的系统更新：</string>
-    <string name="update_information_no_update_data_available">没有可用的更新亮点</string>
-    <string name="update_information_oxygen_os_version">Oxygen OS 版本： %1$s</string>
-    <string name="update_information_system_is_up_to_date">您的系统已是最新版本</string>
-    <string name="update_information_unknown_update_name">适用于 %1$s 的未知更新</string>
-    <string name="update_information_version">&#160;版本:</string>
-    <string name="update_information_view_update_information">查看更新亮点</string>
+	<!-- Update information strings-->
+	<string name="update">更新</string>
+	<string name="update_information_close">关闭</string>
+	<string name="update_information_description_not_available">没有关于此更新的新功能亮点的官方信息。通常，此类更新会为您的设备提供错误修复，性能增强或关键安全更新。</string>
+	<string name="update_information_file_name">文件名称： %1$s</string>
+	<string name="update_information_for">适用于</string>
+	<string name="update_information_header">更新</string>
+	<string name="update_information_header_short">更新</string>
+	<string name="update_information_installed_update">最近的一次更新在：</string>
+	<string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
+	<string name="update_information_latest_available_update">检测到新的系统更新：</string>
+	<string name="update_information_no_update_data_available">没有可用的更新亮点</string>
+	<string name="update_information_oxygen_os_version">Oxygen OS 版本： %1$s</string>
+	<string name="update_information_system_is_up_to_date">您的系统已是最新版本</string>
+	<string name="update_information_unknown_update_name">适用于 %1$s 的未知更新</string>
+	<string name="update_information_version">&#160;版本:</string>
+	<string name="update_information_view_update_information">查看更新亮点</string>
 
-    <!-- Server status warning strings -->
-    <string name="server_status_error">部分功能无法正常工作</string>
-    <string name="server_status_unreachable">无法连接至服务器，请尝试刷新</string>
-    <string name="server_status_warning">部分功能可能无法正常工作</string>
+	<!-- Server status warning strings -->
+	<string name="server_status_error">部分功能无法正常工作</string>
+	<string name="server_status_unreachable">无法连接至服务器，请尝试刷新</string>
+	<string name="server_status_warning">部分功能可能无法正常工作</string>
 
-    <!-- New app version message strings -->
-    <string name ="new_app_version">该 App 有新版本了! 版本 &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> 现已隆重推出！</string>
+	<!-- New app version message strings -->
+	<string name="new_app_version">该 App 有新版本了! 版本 &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> 现已隆重推出！</string>
 
-    <!-- Date and time strings -->
-    <string name="time_at">在</string>
-    <string name="time_today">今天</string>
-    <string name="time_yesterday">昨天</string>
+	<!-- Date and time strings -->
+	<string name="time_at">在</string>
+	<string name="time_today">今天</string>
+	<string name="time_yesterday">昨天</string>
 
-    <!-- Downloader strings-->
-    <string name="download">下载</string>
-    <string name="downloaded">已下载</string>
-    <string name="downloading">正在下载…</string>
-    <string name="paused">已暂停</string>
+	<!-- Downloader strings-->
+	<string name="download">下载</string>
+	<string name="downloaded">已下载</string>
+	<string name="downloading">正在下载…</string>
+	<string name="paused">已暂停</string>
 
-    <string name="download_already_downloaded">此更新已下载，安装准备就绪！</string>
-    <string name="download_complete">下载完成！</string>
-    <string name="download_complete_notification">下载已完成，只需轻触即可安装</string>
+	<string name="download_already_downloaded">此更新已下载，安装准备就绪！</string>
+	<string name="download_complete">下载完成！</string>
+	<string name="download_complete_notification">下载已完成，只需轻触即可安装</string>
 
-    <string name="download_description">Oxygen 安装器</string>
+	<string name="download_description">Oxygen 安装器</string>
 
-    <string name="download_error">下载出错</string>
-    <string name="download_error_close">关闭</string>
-    <string name="download_error_corrupt">下载的文件已损坏！请尝试重新下载</string>
-    <string name="download_error_network">下载更新时发生网络错误，下载将自动恢复。</string>
-    <string name="download_error_server">下载更新时服务器发生错误，请尝试重新下载更新。</string>
-    <string name="download_error_internal">抱歉，下载更新时发生了技术故障，请尝试再次下载。如果这种情况不断发生，请联系此应用开发者以获取帮助。</string>
+	<string name="download_error">下载出错</string>
+	<string name="download_error_close">关闭</string>
+	<string name="download_error_corrupt">下载的文件已损坏！请尝试重新下载</string>
+	<string name="download_error_network">下载更新时发生网络错误，下载将自动恢复。</string>
+	<string name="download_error_server">下载更新时服务器发生错误，请尝试重新下载更新。</string>
+	<string name="download_error_internal">抱歉，下载更新时发生了技术故障，请尝试再次下载。如果这种情况不断发生，请联系此应用开发者以获取帮助。</string>
 
-    <string name="download_error_retry">重试</string>
-    <string name="download_error_resume">继续</string>
-    <string name="download_error_storage">您的设备上没有足够的存储空间来下载更新。请删除一些文件，然后再次尝试下载。</string>
-    
-    <string name="download_failed">下载失败</string>
-    <string name="download_in_background">Oxygen 更新器正在后台运行</string>
-    <string name="download_oxygen_os">Oxygen OS 版本</string>
-    <string name="download_pending">您的下载即将开始…</string>
-    <string name="download_permissions">请再次点击“下载”，以开始您的下载任务</string>
+	<string name="download_error_retry">重试</string>
+	<string name="download_error_resume">继续</string>
+	<string name="download_error_storage">您的设备上没有足够的存储空间来下载更新。请删除一些文件，然后再次尝试下载。</string>
 
-    <string name="download_notification_error_network">由于连接丢失，下载暂停。即将恢复下载</string>
-    <string name="download_notification_error_server">下载时服务器错误。请重新开始下载。</string>
-    <string name="download_notification_error_internal">下载时出现技术错误。请尝试重新下载，或联系开发者获取支持。</string>
-    <string name="download_notification_error_storage_full">储存空间不足</string>
-    <string name="download_notification_error_corrupt">文件校验失败。检查您的互联网连接，然后重试。</string>
+	<string name="download_failed">下载失败</string>
+	<string name="download_in_background">Oxygen 更新器正在后台运行</string>
+	<string name="download_oxygen_os">Oxygen OS 版本</string>
+	<string name="download_pending">您的下载即将开始…</string>
+	<string name="download_permissions">请再次点击“下载”，以开始您的下载任务</string>
 
-    <string name="download_progress_text_hours_remaining">%1$d%%, 大约还剩 %2$d 小时</string>
-    <string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 1 分钟之内就能完成了</string>
-    <string name="download_progress_text_minutes_remaining">%1$d%%, 大约还有 %2$d 分钟</string>
-    <string name="download_progress_text_one_hour_remaining">%1$d%%, 大约还有 1 个小时</string>
-    <string name="download_progress_text_one_minute_remaining">%1$d%%, 大约只剩 1 分钟就好了</string>    
-    <string name="download_progress_text_seconds_remaining">%1$d%%, 马上就好</string>
-    <string name="download_progress_text_unknown_time_remaining">%1$d%%, 正在计算剩余时间…</string>
-    <string name="download_progress_text_verifying">100%, 正在校验文件完整性…</string>
-    <string name="download_progress_text_paused">%1$d%%, 已暂停</string>
-    <string name="download_waiting_for_network">%1$d%%, 正在等待互联网连接…</string>
+	<string name="download_notification_error_network">由于连接丢失，下载暂停。即将恢复下载</string>
+	<string name="download_notification_error_server">下载时服务器错误。请重新开始下载。</string>
+	<string name="download_notification_error_internal">下载时出现技术错误。请尝试重新下载，或联系开发者获取支持。</string>
+	<string name="download_notification_error_storage_full">储存空间不足</string>
+	<string name="download_notification_error_corrupt">文件校验失败。检查您的互联网连接，然后重试。</string>
 
-    <string name="download_size_megabyte">%1$d MB</string>
-    <string name="download_unknown_update_name">Oxygen OS 更新</string>
+	<string name="download_progress_text_hours_remaining">%1$d%%, 大约还剩 %2$d 小时</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 1 分钟之内就能完成了</string>
+	<string name="download_progress_text_minutes_remaining">%1$d%%, 大约还有 %2$d 分钟</string>
+	<string name="download_progress_text_one_hour_remaining">%1$d%%, 大约还有 1 个小时</string>
+	<string name="download_progress_text_one_minute_remaining">%1$d%%, 大约只剩 1 分钟就好了</string>
+	<string name="download_progress_text_seconds_remaining">%1$d%%, 马上就好</string>
+	<string name="download_progress_text_unknown_time_remaining">%1$d%%, 正在计算剩余时间…</string>
+	<string name="download_progress_text_verifying">100%, 正在校验文件完整性…</string>
+	<string name="download_progress_text_paused">%1$d%%, 已暂停</string>
+	<string name="download_waiting_for_network">%1$d%%, 正在等待互联网连接…</string>
 
-    <string name="download_verifying">正在校验中…</string>
-    <string name="download_verifying_error">文件损坏！</string>
-    <string name="download_verifying_start">即将开始校验您下载的文件…</string>
+	<string name="download_size_megabyte">%1$d MB</string>
+	<string name="download_unknown_update_name">Oxygen OS 更新</string>
 
-
-    <!-- Settings strings-->
-    <string name="settings">设置</string>
-    <string name="settings_buy_button_buy">购买 (%1$s)</string>
-    <string name="settings_buy_button_bought">已购买</string>
-    <string name="settings_buy_button_not_possible">暂不提供</string>
-    <string name="settings_buy_ad_free_label">移除广告服务：</string>
-    <string name="settings_contribute_label">帮助改进 App</string>
-    <string name="settings_contribute_button">参与共研</string>
-
-    <string name="settings_category_other">其它：</string>
-    <string name="settings_device">设备</string>
-    <string name="settings_entered_incorrectly">保存设置时出错。请返回并重新选择您的设备 / 更新方法。</string>
-    <string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安装（除非你解锁了 BootLoader，这样的话，那你只能选择安装完整包）。\n\nOxygen OS 的公开测试版可以在任何版本中（包括正式版）安装。如果您想从正式版转到测试版，请在设置中打开高级模式。测试版和正式版一样，都会要求您在解锁了 BootLoader 的情况下下载全量包。</string>
-    <string name="settings_explanation_update_methods">对不同更新方式的解释</string>]
-    <string name="settings_header">您的设备 / 更新方式是？</string>
-
-    <string name="settings_push">何时为您推送消息？</string>
-    <string name="settings_push_from_server">有关键消息时</string>
-    <string name="settings_push_new_version">有新的系统版本可更新时</string>
-    <string name="settings_push_new_device">有新的设备受到支持时</string>
-    <string name="settings_push_news">有新闻 / 故事发布时</string>
-
-    <string name="settings_saved">您对设置的更改已自动保存</string>
-    <string name="settings_saving">您的设置仍在保存中。如果时间过长，：请检查您的网络连接，或退出应用程序并再次启动它。</string>
-
-    <string name="settings_server_messages">何时在 App 中显示提示？</string>
-    <string name="settings_server_messages_in_app">有新闻 / 警告时</string>
-    <string name="settings_server_messages_new_app_version">该 App 可更新时</string>
-
-    <string name="settings_other_options">其它选项</string>
-    <string name="settings_advanced_mode">高级模式</string>
-    <string name="settings_advanced_mode_button_explanation">轻点此按钮，获取更多关于高级模式的信息</string>
-    <string name="settings_advanced_mode_explanation">开启高级模式后，将隐藏“您的设备已是最新版本”的消息，使得您可以下载与安装任何版本的系统，哪怕该版本与您的设备并不兼容。\n\n在这些情况下，该功能会很有用：\n- 您想从正式版更新为测试版系统\n- 从测试版恢复成正式版（需要您进行双清！）\n- 重新安装当前版本的系统</string>
-    <string name="settings_update_method">更新方式</string>
-    <string name="settings_upload_logs">分享使用数据与日志</string>
-
-    <!-- FAQ strings -->
-    <string name="faq">常见问题</string>
-    <string name="faq_menuitem">常见问题</string>
-    <string name="faq_no_network">无互联网连接</string>
-    <string name="faq_no_network_text">您需要连接至互联网来查看常见的问题</string>
-
-    <!-- First-time setup strings -->
-    <string name="setup">欢迎</string>
-    <string name="setup_close_button">开始吧！</string>
-
-    <string name="setup_page_1_title">欢迎使用 Oxygen 更新器！</string>
-    <string name="setup_page_1_text">这款 App 可以帮助您：\n\nv- 更快地接收 Oxygen OS 的最新Android 更新\n- 轻松升级 Root 过的设备\n- 查看当前系统版本的更新亮点\n- 了解关于 OnePlus 与 Oxygen OS 的最新消息\n向左轻扫以继续</string>
-    <string name="setup_page_2_title">重要提示：</string>
-    <string name="setup_page_2_text">并不是官方的 OnePlus 应用程序，使用此应用程序完全由您自己承担风险。OnePlus和应用开发者都不对您的行为负责，包括使用此应用程序造成的任何损害。\n\n使用此应用程序即表示您同意上述条款。\n\n向左轻扫以继续</string>
-    <string name="setup_page_3_title">选择您的设备：</string>
-    <string name="setup_page_3_text">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。\n\n向左滑动即可继续</string>
-    <string name="setup_page_4_title">选择您的更新方式：</string>
-    <string name="setup_page_4_text">通常，更加推荐增量更新，因为它提供了更快，更小的下载体验。\n但是，它与 Root 过的设备不兼容。 如果您的设备已经 Root，请选择完全更新。\n如果您运行的是 Oxygen OS 的测试版, 请选择开放测试版系统\n\n向左轻扫以继续。</string>
-    <string name="setup_page_5_title">一切就绪！</string>
-    <string name="setup_page_5_text">敬请使用吧！\n\n您可以随时在设置中更改您的设定。</string>
+	<string name="download_verifying">正在校验中…</string>
+	<string name="download_verifying_error">文件损坏！</string>
+	<string name="download_verifying_start">即将开始校验您下载的文件…</string>
 
 
-    <!-- Automatic install strings -->
-    <string name="install">安装</string>
-    <string name="install_checking_root">正在检验您的设备是否拥有 Root 权限…</string>
-    <string name="install_grant_root_permissions">请在您的 Root 权限管理应用询问时，选择允许</string>
-    <string name="install_going_back_not_possible">抱歉，本步骤无法返回</string>
-    <string name="install_preparing_installation">正在准备安装…</string>
+	<!-- Settings strings-->
+	<string name="settings">设置</string>
+	<string name="settings_buy_button_buy">购买 (%1$s)</string>
+	<string name="settings_buy_button_bought">已购买</string>
+	<string name="settings_buy_button_not_possible">暂不提供</string>
+	<string name="settings_buy_ad_free_label">移除广告服务：</string>
+	<string name="settings_contribute_label">帮助改进 App</string>
+	<string name="settings_contribute_button">参与共研</string>
 
-    <string name="install_recovery_installer_title">更新安装器 &#160;&#160;</string> <!-- Add 2 spaces to the end -->
-    <string name="install_recovery_backing_up">正在备份您的数据。您可以干自己的事了，因为本步骤十分消耗时间</string>
-    <string name="install_recovery_clearing_cache">正在清理缓存分区…</string>
-    <string name="install_recovery_done">大功告成，您的设备即将重启。</string>
-    <string name="install_recovery_installing_additional_zip">正在安装额外的 Zip 文件…</string>
-    <string name="install_recovery_installing_update">正在安装更新…</string>
-    <string name="install_recovery_thank_you">感谢您使用 Oxygen 更新器，能在 Google Play 打个 5 星好评吗？</string>
+	<string name="settings_category_other">其它：</string>
+	<string name="settings_device">设备</string>
+	<string name="settings_entered_incorrectly">保存设置时出错。请返回并重新选择您的设备 / 更新方法。</string>
+	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安装（除非你解锁了 BootLoader，这样的话，那你只能选择安装完整包）。\n\nOxygen OS 的公开测试版可以在任何版本中（包括正式版）安装。如果您想从正式版转到测试版，请在设置中打开高级模式。测试版和正式版一样，都会要求您在解锁了 BootLoader 的情况下下载全量包。</string>
+	<string name="settings_explanation_update_methods">对不同更新方式的解释</string>]
+	<string name="settings_header">您的设备 / 更新方式是？</string>
 
-    <string name="install_error_write_script_failed">准备安装时发生错误，请确保是否给予了 Root 权限给本 App</string>
+	<string name="settings_push">何时为您推送消息？</string>
+	<string name="settings_push_from_server">有关键消息时</string>
+	<string name="settings_push_new_version">有新的系统版本可更新时</string>
+	<string name="settings_push_new_device">有新的设备受到支持时</string>
+	<string name="settings_push_news">有新闻 / 故事发布时</string>
 
-    <string name="install_options_backup">备份我的设备</string>
-    <string name="install_options_header">您可以通过更改下面的选项来自定义安装过程。 点击“开始安装”以开始安装更新。</string>
-    <string name="install_options_keep_root">保持设备 Root 状态</string>
-    <string name="install_options_reboot_after_install">安装后重启</string>
-    <string name="install_options_select_root_package">选择您需要的 Root 包…</string>
-    <string name="install_options_start_install">开始安装</string>
-    <string name="install_options_title">选择您的安装选项</string>
-    <string name="install_options_wipe_cache_partition">清理缓存分区</string>
+	<string name="settings_saved">您对设置的更改已自动保存</string>
+	<string name="settings_saving">您的设置仍在保存中。如果时间过长，：请检查您的网络连接，或退出应用程序并再次启动它。</string>
 
-    <string name="install_options_explanation_title">这些选项什么意思呢？</string>
-    <string name="install_options_explanation_backup">备份我的设备：\n选择此选项后，应用将在安装之前备份系统，应用程序和设置。 万一出现意料之外的错误，留一手总是没错的，大不了安装完删掉就好。</string>
-    <string name="install_options_explanation_keep_root">保持设备 Root 状态：\n选择此选项后，您可以指定在安装更新后安装的 Root 包。 这可确保您的设备保持 Root 权限。 请注意，此 Root 包必须与您将要安装的新 OxygenOS 版本兼容！</string>
-    <string name="install_options_explanation_wipe_cache">清理缓存分区：\n选择此选项后，将在安装更新后清除缓存分区。这可以确保您的设备以最佳状态运行，并降低因安装更新而导致错误的可能性。</string>
-    <string name="install_options_explanation_reboot">安装后重启：\n选择此选项后，将在安装更新后，自动重新启动回 OxygenOS。如果不勾选的话，您的设备将保持在恢复模式中，这样您就可以在其中安装其他软件包了。</string>
+	<string name="settings_server_messages">何时在 App 中显示提示？</string>
+	<string name="settings_server_messages_in_app">有新闻 / 警告时</string>
+	<string name="settings_server_messages_new_app_version">该 App 可更新时</string>
 
-    <string name="install_select_method_title">您想用哪种方式安装？</string>
-    <string name="install_select_method_automatic_title">自动安装</string>
-    <string name="install_select_method_automatic_image">自动安装图片</string>
-    <string name="install_select_method_automatic_description">最简单的更新方式，下载，安装，重启，一气呵成。\n\n* 需要 Root 权限与 TWRP</string>
+	<string name="settings_other_options">其它选项</string>
+	<string name="settings_advanced_mode">高级模式</string>
+	<string name="settings_advanced_mode_button_explanation">轻点此按钮，获取更多关于高级模式的信息</string>
+	<string name="settings_advanced_mode_explanation">开启高级模式后，将隐藏“您的设备已是最新版本”的消息，使得您可以下载与安装任何版本的系统，哪怕该版本与您的设备并不兼容。\n\n在这些情况下，该功能会很有用：\n- 您想从正式版更新为测试版系统\n- 从测试版恢复成正式版（需要您进行双清！）\n- 重新安装当前版本的系统</string>
+	<string name="settings_update_method">更新方式</string>
+	<string name="settings_upload_logs">分享使用数据与日志</string>
 
-    <string name="install_select_method_manual_title">手动安装</string>
-    <string name="install_select_method_manual_image">手动安装图片</string>
-    <string name="install_select_method_manual_description">阅读安装指南以了解如何安装更新。 您将使用设备的恢复模式安装更新。</string>
+	<!-- FAQ strings -->
+	<string name="faq">常见问题</string>
+	<string name="faq_menuitem">常见问题</string>
+	<string name="faq_no_network">无互联网连接</string>
+	<string name="faq_no_network_text">您需要连接至互联网来查看常见的问题</string>
 
-    <string name="install_temporary_error">准备安装时发生了临时性的错误，请稍候重试。</string>
+	<!-- First-time setup strings -->
+	<string name="setup">欢迎</string>
+	<string name="setup_close_button">开始吧！</string>
 
-    <string name="install_verify_error_title">安装失败</string>
-    <string name="install_verify_error_nothing_installed">安装更新时出错。并未对您设备的软件进行任何更改。请尝试再次安装更新。</string>
-    <string name="install_verify_error_unable_to_verify">无法检查更新是否已成功安装。\n请打开 Oxygen 更新器以查看更新是否已成功安装。</string>
-    <string name="install_verify_error_wrong_version_installed">您似乎安装了一个其他版本的 Oxygen OS。请不要在选择 Root 包时，选择另外一个 Oxygen OS 的更新包。</string>
-
-    <string name="install_verify_success_title">安装完成</string>
-    <string name="install_verify_success_message">Oxygen OS 版本 %1$s 安装成功！</string>
-
-    <string name="install_zip_file_clear">清除 Root 包</string>
-    <string name="install_zip_file_pick">选择一个 Root 包文件</string>
-    <string name="install_zip_file_placeholder">选择一个 Root 包…</string>
-    <string name="install_zip_file_wrong_file_type">您可能只能选择一个 Zip 格式的文件，请选择正确。</string>
-
-    <!-- Install guide strings -->
-    <string name="install_guide_no_root">请根据安装指南中显示的说明安装更新。</string>
-    <string name="install_guide_automatic_install_disabled">由于收到的反馈，自动安装已暂时停用。请根据安装指南中显示的说明安装更新。</string>
-    <string name="install_guide">安装指南</string>
-    <string name="install_guide_loading">正在加载安装指南…</string>
-    <string name="install_guide_title">安装指南 - 第 %1$d 页，共 %2$d 页</string>
-    <string name="install_guide_image_description">请轻点屏幕下方以获取安装指南</string>
-    <string name="install_guide_header">左右轻扫 &lt;- -&gt; 在页面间切换</string>
-    <string name="install_guide_tip">- 推荐您把全部步骤都用纸笔写下来，因为在安装过程中，您的设备会关机。</string>
-
-    <string name="install_guide_page_1_title">下载更新包</string>
-    <string name="install_guide_page_1_text">- 轻触“下载”按钮以开始下载。\n\n- 下载进度会在 App 中显示，同时，它也会在通知中心里实时显示。\n\n- 当下载结束时，您将会看到“下载完成”的通知。\n如果下载中出现错误，请尝试前往 App 中重试一遍。如果仍出现错误，请您检查您的互联网连接。或者您也可以尝试通过 Google Play 中该应用留下的联系方式联系该应用的开发者。</string>
-
-    <string name="install_guide_page_2_title">进入恢复模式</string>
-    <string name="install_guide_page_2_text">- 首先，将您的设备关机\n\n- 然后，同时长按 *音量减* 以及 *电源键*\n\n- 接着，您的设备便会进入恢复模式。 请等待您的屏幕上显示恢复模式的菜单。</string>
-
-    <string name="install_guide_page_3_title">安装下载好的更新包</string>
-    <string name="install_guide_page_3_text">- 在恢复模式中，请先选择您的语言， 然后点击"从 SD 卡安装"。\n\n- 接下来，使用 *音量减小键* 向下滚动，直到找到包含应用程序中显示的文件后缀名为“.zip”文件（一般情况下，它以“OnePlusOxygen-”开头）。\n\n- 然后安装将会自动进行。</string>
-
-    <string name="install_guide_page_4_title">重启您的设备</string>
-    <string name="install_guide_page_4_text">- 更新安装完成后，您将返回恢复模式菜单。在恢复模式菜单中，点击“重新启动”。\n\n- 然后，您就能看到熟悉的开机动画了！通常更新后的第一次开机会花费很长的时间。\n\n- 开机之后，您会看到一条标题为“正在完成系统更新”的通知，它的意思是指您的应用正在进行优化。</string>
-
-    <string name="install_guide_page_5_title">大功告成！在全新的 Oxygen OS 中尽情探索吧！</string>
-    <string name="install_guide_page_5_text">- 等您的设备优化完应用程序，那么这次更新就算是大功告成了！\n为了验证是否完成，您可以参见以下步骤来查看当前系统版本：\n\n- 打开设置，轻触“关于手机”，这里您就可以看到您的 Oxygen OS 版本。\n\n- 如果您喜欢这个 App，别忘了去 Google Play 给个 5 星好评哦~</string>
-
-    <string name="install_guide_close_button">关闭安装指南</string>
-
-    <string name="install_guide_zip_file_deleted">您指定的 Root 包文件不再存在，请在上方选择一个新的 Root 包。</string>
-    <string name="install_guide_zip_file_picker_title">选择一个 Root 包</string>
-    <string name="install_guide_zip_file_missing">如果您想设备保持 Root 状态，请在上方指定一个 Root 包。</string>
-
-    <!-- Device information strings -->
-    <string name="device_information_amount_of_memory">内存大小：</string>
-    <string name="device_information_cpu_frequency">处理器频率：</string>
-    <string name="device_information_header">我的设备</string>
-    <string name="device_information_header_short">我的设备</string>
-    <string name="device_information_image_description">设备图片</string>
-    <string name="device_information_incremental_os_version">增量更新版本：</string>
-    <string name="device_information_os_version">Android 版本：</string>
-    <string name="device_information_oxygen_os_version">OxygenOS 版本：</string>
-    <string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
-    <string name="device_information_patch_level_version">安全更新：</string>
-    <string name="device_information_serial_number">序列号：</string>
-    <string name="device_information_system_on_a_chip">SoC：</string>
-    <string name="device_information_unknown">未知</string>
-    <string name="device_information_your_device">您的设备：</string>
-
-    <!-- About screen strings -->
-    <string name="about">关于</string>
-    <string name="about_app_description">获取 Oxygen OS 更新的终极神器！</string>
-    <string name="about_background_story">本应用程序由 Arjan Vlek 制作\n\n这个应用程序是我另一款作品的续作，叫做 Cyanogen 更新追踪器（Cyanogen Update Tracker）， 为 Cyanogen OS 用户提供与本应用程序类似的功能。\n\n\n请注意，这并不是一个官方的 OnePlus 应用程序。\n\nOnePlus 的名称，商标，以及 OxygenOS 归 OnePlus 所有。 \n\nAndroid, Google, Google Play 以及 Google Play 的图案与商标由 Google Inc. 注册并持有。\n\n本应用程序使用 OnePlus 与 OPPO 的数据，为用户展示更新信息。\n\n如果您喜欢我的应用，请在 Google Play 上赞助我吧！\n\n中文翻译由 Mastiff 提供。</string>
-    <string name="about_rate_app_button_text">在 Google Play 上评价</string>
-    <string name="about_version">更新器版本：%1$s</string>
+	<string name="setup_page_1_title">欢迎使用 Oxygen 更新器！</string>
+	<string name="setup_page_1_text">这款 App 可以帮助您：\n\nv- 更快地接收 Oxygen OS 的最新Android 更新\n- 轻松升级 Root 过的设备\n- 查看当前系统版本的更新亮点\n- 了解关于 OnePlus 与 Oxygen OS 的最新消息\n向左轻扫以继续</string>
+	<string name="setup_page_2_title">重要提示：</string>
+	<string name="setup_page_2_text">并不是官方的 OnePlus 应用程序，使用此应用程序完全由您自己承担风险。OnePlus和应用开发者都不对您的行为负责，包括使用此应用程序造成的任何损害。\n\n使用此应用程序即表示您同意上述条款。\n\n向左轻扫以继续</string>
+	<string name="setup_page_3_title">选择您的设备：</string>
+	<string name="setup_page_3_text">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。\n\n向左滑动即可继续</string>
+	<string name="setup_page_4_title">选择您的更新方式：</string>
+	<string name="setup_page_4_text">通常，更加推荐增量更新，因为它提供了更快，更小的下载体验。\n但是，它与 Root 过的设备不兼容。 如果您的设备已经 Root，请选择完全更新。\n如果您运行的是 Oxygen OS 的测试版, 请选择开放测试版系统\n\n向左轻扫以继续。</string>
+	<string name="setup_page_5_title">一切就绪！</string>
+	<string name="setup_page_5_text">敬请使用吧！\n\n您可以随时在设置中更改您的设定。</string>
 
 
-    <!-- LocalNotifications strings -->
-    <string name="notification_new_device">新设备发布！现已支持 %1$s ！</string>
-    <string name="notification_new_device_short">打开 App 来选择您的设备</string>
-    <string name="notification_no_notification_support">安装或升级您的 Google Play 服务来开启推送服务</string>
-    <string name="notification_version_title">系统可更新！</string>
-    <string name="notification_version">恭喜 %2$s! 喜提 %1$s ！</string>
-    <string name="push_notification_channel_name">推送通知</string>
-    <string name="push_notification_channel_description">显示 Oxygen 更新器应用程序的所有重要通知。其中包括系统更新通知和突发新闻通知。</string>
-    <string name="progress_notification_channel_name">进度通知</string>
-    <string name="progress_notification_channel_description">显示 Oxygen 更新器应用程序的所有非重要通知。 包含下载期间显示的状态指示器。</string>
+	<!-- Automatic install strings -->
+	<string name="install">安装</string>
+	<string name="install_checking_root">正在检验您的设备是否拥有 Root 权限…</string>
+	<string name="install_grant_root_permissions">请在您的 Root 权限管理应用询问时，选择允许</string>
+	<string name="install_going_back_not_possible">抱歉，本步骤无法返回</string>
+	<string name="install_preparing_installation">正在准备安装…</string>
 
-    <!-- Help strings -->
-    <string name="help">帮助</string>
-    <string name="help_text">欢迎来到 Oxygen 更新器的帮助部分！\n\n“帮助”包含以下内容：\n\n• 升级您的设备\n• 阅览最新新闻\n• 查看设备信息\n• 更改设置\n\n向上轻滑获取您需要的帮助吧！</string>
-    <string name="help_updating_your_device_title">更新您的设备</string>
-    <string name="help_updating_your_device_text">您打开应用时，即可看到是否有可用的软件更新，如果有的话，您就可以方便地安装了。\n\n要开始安装，请点击“下载”按钮（就在更新信息下方）以开始下载。 下载完成后，将会出现安装屏幕。 如果您退出了应用或安装屏幕没有弹出，请手动点击“安装”按钮，该按钮显示在“下载”按钮旁边。\n\n安装屏幕会先检查您是否有 Root 权限。 如果您的设备有 Root 权限，请在询问时授予 Root 权限，并选择安装更新的方式。 否则，请按照手动安装的说明进行操作。\n\n自动安装：\n您只需选择安装选项即可。 建议使用默认设置，但您必须指定需要安装的 Root 包。 使用蓝色文件夹按钮选择 Root 包（支持 Zip 文件），然后点击“开始安装”来开始安装。\n\n手动安装：\n您将在屏幕上看到安装指南。 写下说明并按照说明执行它们以安装更新。</string>
-    <string name="help_reading_news_title">阅览最新消息</string>
-    <string name="help_reading_news_text">新闻显示在“更新”界面的左侧。 最新的消息显示在最顶部，只需点击一条新闻即可阅读。</string>
-    <string name="help_device_information_title">查看您设备的基本信息</string>
-    <string name="help_device_information_text">您可以使用“更新”栏右侧的界面来查看设备的属性。这在提出帮助请求时非常有用且方便，因为在寻求帮助时，可能会要求您提供设备的某些规格。</string>
-    <string name="help_change_settings_title">更改设置</string>
-    <string name="help_change_settings_text">您可以轻点右上角的三个点后，点击设置来更改设置选项。\n\n您可以更改以下设置：\n\n• 您的设备的更新方式\n• 何时为您推送通知\n• 何时在 App 中显示提示\n• 隐私设置与日志上传\n\n使用里面的开关来更改隐私与消息设置，选择您的设备与更新方式。选择窗中没有东西？ 请检查您的互联网连接，再次进入设置。</string>
+	<string name="install_recovery_installer_title">更新安装器 &#160;&#160;</string> <!-- Add 2 spaces to the end -->
+	<string name="install_recovery_backing_up">正在备份您的数据。您可以干自己的事了，因为本步骤十分消耗时间</string>
+	<string name="install_recovery_clearing_cache">正在清理缓存分区…</string>
+	<string name="install_recovery_done">大功告成，您的设备即将重启。</string>
+	<string name="install_recovery_installing_additional_zip">正在安装额外的 Zip 文件…</string>
+	<string name="install_recovery_installing_update">正在安装更新…</string>
+	<string name="install_recovery_thank_you">感谢您使用 Oxygen 更新器，能在 Google Play 打个 5 星好评吗？</string>
 
-    <!-- News strings -->
-    <string name="news">新闻</string>
-    <string name="news_author">作者：%1$s</string>
-    <string name="news_date_published">上次更新：%1$s</string>
-    <string name="news_empty">此文章还没有评论</string>
-    <string name="news_load_error">无法打开文章。 请检查您的互联网连接并点击“重试”按钮重新打开。</string>
+	<string name="install_error_write_script_failed">准备安装时发生错误，请确保是否给予了 Root 权限给本 App</string>
 
-    <!-- Contribute strings -->
-    <string name="contribute">成为共研者</string>
-    <string name="contribute_title">参与 Oxygen 更新器共研行动</string>
-    <string name="contribute_explanation">Oxygen 更新器需要您的帮助！为了提供最新的更新包，我们需要获取更新文件的名称。 在系统推送常规更新时，这些信息会出现在手机上。\n\n我该如何帮助呢？\nOxygen 更新器可以自动向我们的管理员提交最新更新包的文件名。 这将使用微量的数据流量，也可能会使用微量的电池。 您需要做的，就是在安装官方系统更新之前稍微等候，直到您看到 Oxygen 更新器确认文件已成功提交为止。</string>
-    <string name="contribute_image_description">上传更新包给更新器的服务器</string>
-    <string name="contribute_agree">我同意将更新文件名提交给应用的管理员</string>
-    <string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用程序的管理员提交更新包文件名</string>
-    <string name="contribute_save">保存设置</string>
-    <string name="contribute_more_info">了解更多…</string>
-    <string name="contribute_allow_storage">请给予内部存储文件读取权限，以开启共研帮助我们</string>
-    <string name="contribute_successful_notification_title">共研完成</string>
-    <string name="contribute_successful_notification_text">感谢您愿意分享最新的更新包 %1$s 给我们的管理员！您的举手之劳将造福数以千计的 OnePlus 用户！</string>
+	<string name="install_options_backup">备份我的设备</string>
+	<string name="install_options_header">您可以通过更改下面的选项来自定义安装过程。 点击“开始安装”以开始安装更新。</string>
+	<string name="install_options_keep_root">保持设备 Root 状态</string>
+	<string name="install_options_reboot_after_install">安装后重启</string>
+	<string name="install_options_select_root_package">选择您需要的 Root 包…</string>
+	<string name="install_options_start_install">开始安装</string>
+	<string name="install_options_title">选择您的安装选项</string>
+	<string name="install_options_wipe_cache_partition">清理缓存分区</string>
 
-    <!-- Error strings-->
-    <string name="error_app_outdated">糟糕！</string>
-    <string name="error_app_outdated_message">该版本 App 不是最新版本，请前往 Google Play 商店进行更新。</string>
-    <string name="error_app_requires_network_connection">无互联网连接</string>
-    <string name="error_app_requires_network_connection_message">无法连接服务器，请您确保您已经连接到了互联网！应用即将关闭。</string>
-    <string name="error_button_retry">重试</string>
-    <string name="error_exit_button_text">退出</string>
-    <string name="error_google_play_button_text">Google Play</string>
-    <string name="error_no_internet_connection">无互联网连接</string>
-    <string name="error_maintenance">服务器维护中…</string>
-    <string name="error_maintenance_message">服务器马上就好，请待会儿再来吧~</string>
-    <string name="error_push_failure">开启消息推送失败，请完全关闭应用，待会儿再来试试吧</string>
-    <string name="error_reload">重新加载</string>
+	<string name="install_options_explanation_title">这些选项什么意思呢？</string>
+	<string name="install_options_explanation_backup">备份我的设备：\n选择此选项后，应用将在安装之前备份系统，应用程序和设置。 万一出现意料之外的错误，留一手总是没错的，大不了安装完删掉就好。</string>
+	<string name="install_options_explanation_keep_root">保持设备 Root 状态：\n选择此选项后，您可以指定在安装更新后安装的 Root 包。 这可确保您的设备保持 Root 权限。 请注意，此 Root 包必须与您将要安装的新 OxygenOS 版本兼容！</string>
+	<string name="install_options_explanation_wipe_cache">清理缓存分区：\n选择此选项后，将在安装更新后清除缓存分区。这可以确保您的设备以最佳状态运行，并降低因安装更新而导致错误的可能性。</string>
+	<string name="install_options_explanation_reboot">安装后重启：\n选择此选项后，将在安装更新后，自动重新启动回 OxygenOS。如果不勾选的话，您的设备将保持在恢复模式中，这样您就可以在其中安装其他软件包了。</string>
 
-    <string name="error_unable_to_rate_app">非常感谢您的好意，但是非常抱歉，您的设备缺少 Google Play 组件，无法为本应用做出评价。</string>
-    
-    <!-- Message strings -->
-    <string name="delete_message_title">更新包已下载</string>
-    <string name="delete_message_contents">您已经下载了此更新，但尚未安装它。 点击“安装指南”以查看如何安装此更新。 点击“删除”以永久删除文件。 点击“返回”按钮关闭此消息。</string>
-    <string name="delete_message_delete_button">删除</string>
+	<string name="install_select_method_title">您想用哪种方式安装？</string>
+	<string name="install_select_method_automatic_title">自动安装</string>
+	<string name="install_select_method_automatic_image">自动安装图片</string>
+	<string name="install_select_method_automatic_description">最简单的更新方式，下载，安装，重启，一气呵成。\n\n* 需要 Root 权限与 TWRP</string>
 
-    <string name="unsupported_device_warning_title">不支持此设备</string>
-    <string name="unsupported_device_warning_message">您的设备好像并没有不是 Oxygen  OS。请注意，您只能在运行 Oxygen  OS 的设备上安装系统更新。\n不支持其他设备，以及运行自定义 ROM 的 OnePlus 设备。</string>
-    <string name="unsupported_device_warning_checkbox_title">不再显示此警告</string>
+	<string name="install_select_method_manual_title">手动安装</string>
+	<string name="install_select_method_manual_image">手动安装图片</string>
+	<string name="install_select_method_manual_description">阅读安装指南以了解如何安装更新。 您将使用设备的恢复模式安装更新。</string>
 
-    <string name="root_check_title">Root 权限</string>
-    <string name="root_check_message">Oxygen 更新器为具有 Root 权限的用户提供简单，自动的更新安装方式。\n但是，增量更新不适用于有 Root 的设备。Oxygen 更新器可以检查您是否具有 Root 权限，以提供适当的更新方法。\n如果您的设备拥有 Root 权限，请在关闭此消息后允许 Oxygen 更新器获取 Root 权限。\n没有 Root 权限？那么请直接点击关闭继续安装。</string>
+	<string name="install_temporary_error">准备安装时发生了临时性的错误，请稍候重试。</string>
 
-    <!-- Purchasing strings -->
-    <string name="purchase_error_before_payment">由于内部错误，购买移除广告服务失败。请稍后重试。</string>
-    <string name="purchase_error_after_payment">由于内部错误，购买移除广告服务失败。请稍候重试。 如果您已付款，请与 Google Play 支持小组联系以获取帮助。</string>
+	<string name="install_verify_error_title">安装失败</string>
+	<string name="install_verify_error_nothing_installed">安装更新时出错。并未对您设备的软件进行任何更改。请尝试再次安装更新。</string>
+	<string name="install_verify_error_unable_to_verify">无法检查更新是否已成功安装。\n请打开 Oxygen 更新器以查看更新是否已成功安装。</string>
+	<string name="install_verify_error_wrong_version_installed">您似乎安装了一个其他版本的 Oxygen OS。请不要在选择 Root 包时，选择另外一个 Oxygen OS 的更新包。</string>
 
-    <!-- Other strings-->
-    <string name="icon">图标</string>
-    <string name="loading">加载中…</string>
-    <string name="processing">正在处理…</string>
-    <string name="choose_file">选择一个文件</string>
-    <string name="root_install_logger_service_name">更新安装日志记录器</string>
-    <string name="delayed_push_notification_displayer_service_name">消息推送服务</string>
-    <string name="download_service_name">更新下载器</string>
-    <string name="log_uploader_service_name">错误报告服务</string>
+	<string name="install_verify_success_title">安装完成</string>
+	<string name="install_verify_success_message">Oxygen OS 版本 %1$s 安装成功！</string>
+
+	<string name="install_zip_file_clear">清除 Root 包</string>
+	<string name="install_zip_file_pick">选择一个 Root 包文件</string>
+	<string name="install_zip_file_placeholder">选择一个 Root 包…</string>
+	<string name="install_zip_file_wrong_file_type">您可能只能选择一个 Zip 格式的文件，请选择正确。</string>
+
+	<!-- Install guide strings -->
+	<string name="install_guide_no_root">请根据安装指南中显示的说明安装更新。</string>
+	<string name="install_guide_automatic_install_disabled">由于收到的反馈，自动安装已暂时停用。请根据安装指南中显示的说明安装更新。</string>
+	<string name="install_guide">安装指南</string>
+	<string name="install_guide_loading">正在加载安装指南…</string>
+	<string name="install_guide_title">安装指南 - 第 %1$d 页，共 %2$d 页</string>
+	<string name="install_guide_image_description">请轻点屏幕下方以获取安装指南</string>
+	<string name="install_guide_header">左右轻扫 &lt;- -&gt; 在页面间切换</string>
+	<string name="install_guide_tip">- 推荐您把全部步骤都用纸笔写下来，因为在安装过程中，您的设备会关机。</string>
+
+	<string name="install_guide_page_1_title">下载更新包</string>
+	<string name="install_guide_page_1_text">- 轻触“下载”按钮以开始下载。\n\n- 下载进度会在 App 中显示，同时，它也会在通知中心里实时显示。\n\n- 当下载结束时，您将会看到“下载完成”的通知。\n如果下载中出现错误，请尝试前往 App 中重试一遍。如果仍出现错误，请您检查您的互联网连接。或者您也可以尝试通过 Google Play 中该应用留下的联系方式联系该应用的开发者。</string>
+
+	<string name="install_guide_page_2_title">进入恢复模式</string>
+	<string name="install_guide_page_2_text">- 首先，将您的设备关机\n\n- 然后，同时长按 *音量减* 以及 *电源键*\n\n- 接着，您的设备便会进入恢复模式。 请等待您的屏幕上显示恢复模式的菜单。</string>
+
+	<string name="install_guide_page_3_title">安装下载好的更新包</string>
+	<string name="install_guide_page_3_text">- 在恢复模式中，请先选择您的语言， 然后点击"从 SD 卡安装"。\n\n- 接下来，使用 *音量减小键* 向下滚动，直到找到包含应用程序中显示的文件后缀名为“.zip”文件（一般情况下，它以“OnePlusOxygen-”开头）。\n\n- 然后安装将会自动进行。</string>
+
+	<string name="install_guide_page_4_title">重启您的设备</string>
+	<string name="install_guide_page_4_text">- 更新安装完成后，您将返回恢复模式菜单。在恢复模式菜单中，点击“重新启动”。\n\n- 然后，您就能看到熟悉的开机动画了！通常更新后的第一次开机会花费很长的时间。\n\n- 开机之后，您会看到一条标题为“正在完成系统更新”的通知，它的意思是指您的应用正在进行优化。</string>
+
+	<string name="install_guide_page_5_title">大功告成！在全新的 Oxygen OS 中尽情探索吧！</string>
+	<string name="install_guide_page_5_text">- 等您的设备优化完应用程序，那么这次更新就算是大功告成了！\n为了验证是否完成，您可以参见以下步骤来查看当前系统版本：\n\n- 打开设置，轻触“关于手机”，这里您就可以看到您的 Oxygen OS 版本。\n\n- 如果您喜欢这个 App，别忘了去 Google Play 给个 5 星好评哦~</string>
+
+	<string name="install_guide_close_button">关闭安装指南</string>
+
+	<string name="install_guide_zip_file_deleted">您指定的 Root 包文件不再存在，请在上方选择一个新的 Root 包。</string>
+	<string name="install_guide_zip_file_picker_title">选择一个 Root 包</string>
+	<string name="install_guide_zip_file_missing">如果您想设备保持 Root 状态，请在上方指定一个 Root 包。</string>
+
+	<!-- Device information strings -->
+	<string name="device_information_amount_of_memory">内存大小：</string>
+	<string name="device_information_cpu_frequency">处理器频率：</string>
+	<string name="device_information_header">我的设备</string>
+	<string name="device_information_header_short">我的设备</string>
+	<string name="device_information_image_description">设备图片</string>
+	<string name="device_information_incremental_os_version">增量更新版本：</string>
+	<string name="device_information_os_version">Android 版本：</string>
+	<string name="device_information_oxygen_os_version">OxygenOS 版本：</string>
+	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_patch_level_version">安全更新：</string>
+	<string name="device_information_serial_number">序列号：</string>
+	<string name="device_information_system_on_a_chip">SoC：</string>
+	<string name="device_information_unknown">未知</string>
+	<string name="device_information_your_device">您的设备：</string>
+
+	<!-- About screen strings -->
+	<string name="about">关于</string>
+	<string name="about_app_description">获取 Oxygen OS 更新的终极神器！</string>
+	<string name="about_background_story">本应用程序由 Arjan Vlek 制作\n\n这个应用程序是我另一款作品的续作，叫做 Cyanogen 更新追踪器（Cyanogen Update Tracker）， 为 Cyanogen OS 用户提供与本应用程序类似的功能。\n\n\n请注意，这并不是一个官方的 OnePlus 应用程序。\n\nOnePlus 的名称，商标，以及 OxygenOS 归 OnePlus 所有。 \n\nAndroid, Google, Google Play 以及 Google Play 的图案与商标由 Google Inc. 注册并持有。\n\n本应用程序使用 OnePlus 与 OPPO 的数据，为用户展示更新信息。\n\n如果您喜欢我的应用，请在 Google Play 上赞助我吧！\n\n中文翻译由 Mastiff 提供。</string>
+	<string name="about_rate_app_button_text">在 Google Play 上评价</string>
+	<string name="about_version">更新器版本：%1$s</string>
+
+
+	<!-- LocalNotifications strings -->
+	<string name="notification_new_device">新设备发布！现已支持 %1$s ！</string>
+	<string name="notification_new_device_short">打开 App 来选择您的设备</string>
+	<string name="notification_no_notification_support">安装或升级您的 Google Play 服务来开启推送服务</string>
+	<string name="notification_version_title">系统可更新！</string>
+	<string name="notification_version">恭喜 %2$s! 喜提 %1$s ！</string>
+	<string name="push_notification_channel_name">推送通知</string>
+	<string name="push_notification_channel_description">显示 Oxygen 更新器应用程序的所有重要通知。其中包括系统更新通知和突发新闻通知。</string>
+	<string name="progress_notification_channel_name">进度通知</string>
+	<string name="progress_notification_channel_description">显示 Oxygen 更新器应用程序的所有非重要通知。 包含下载期间显示的状态指示器。</string>
+
+	<!-- Help strings -->
+	<string name="help">帮助</string>
+	<string name="help_text">欢迎来到 Oxygen 更新器的帮助部分！\n\n“帮助”包含以下内容：\n\n• 升级您的设备\n• 阅览最新新闻\n• 查看设备信息\n• 更改设置\n\n向上轻滑获取您需要的帮助吧！</string>
+	<string name="help_updating_your_device_title">更新您的设备</string>
+	<string name="help_updating_your_device_text">您打开应用时，即可看到是否有可用的软件更新，如果有的话，您就可以方便地安装了。\n\n要开始安装，请点击“下载”按钮（就在更新信息下方）以开始下载。 下载完成后，将会出现安装屏幕。 如果您退出了应用或安装屏幕没有弹出，请手动点击“安装”按钮，该按钮显示在“下载”按钮旁边。\n\n安装屏幕会先检查您是否有 Root 权限。 如果您的设备有 Root 权限，请在询问时授予 Root 权限，并选择安装更新的方式。 否则，请按照手动安装的说明进行操作。\n\n自动安装：\n您只需选择安装选项即可。 建议使用默认设置，但您必须指定需要安装的 Root 包。 使用蓝色文件夹按钮选择 Root 包（支持 Zip 文件），然后点击“开始安装”来开始安装。\n\n手动安装：\n您将在屏幕上看到安装指南。 写下说明并按照说明执行它们以安装更新。</string>
+	<string name="help_reading_news_title">阅览最新消息</string>
+	<string name="help_reading_news_text">新闻显示在“更新”界面的左侧。 最新的消息显示在最顶部，只需点击一条新闻即可阅读。</string>
+	<string name="help_device_information_title">查看您设备的基本信息</string>
+	<string name="help_device_information_text">您可以使用“更新”栏右侧的界面来查看设备的属性。这在提出帮助请求时非常有用且方便，因为在寻求帮助时，可能会要求您提供设备的某些规格。</string>
+	<string name="help_change_settings_title">更改设置</string>
+	<string name="help_change_settings_text">您可以轻点右上角的三个点后，点击设置来更改设置选项。\n\n您可以更改以下设置：\n\n• 您的设备的更新方式\n• 何时为您推送通知\n• 何时在 App 中显示提示\n• 隐私设置与日志上传\n\n使用里面的开关来更改隐私与消息设置，选择您的设备与更新方式。选择窗中没有东西？ 请检查您的互联网连接，再次进入设置。</string>
+
+	<!-- News strings -->
+	<string name="news">新闻</string>
+	<string name="news_author">作者：%1$s</string>
+	<string name="news_date_published">上次更新：%1$s</string>
+	<string name="news_empty">此文章还没有评论</string>
+	<string name="news_load_error">无法打开文章。 请检查您的互联网连接并点击“重试”按钮重新打开。</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">成为共研者</string>
+	<string name="contribute_title">参与 Oxygen 更新器共研行动</string>
+	<string name="contribute_explanation">Oxygen 更新器需要您的帮助！为了提供最新的更新包，我们需要获取更新文件的名称。 在系统推送常规更新时，这些信息会出现在手机上。\n\n我该如何帮助呢？\nOxygen 更新器可以自动向我们的管理员提交最新更新包的文件名。 这将使用微量的数据流量，也可能会使用微量的电池。 您需要做的，就是在安装官方系统更新之前稍微等候，直到您看到 Oxygen 更新器确认文件已成功提交为止。</string>
+	<string name="contribute_image_description">上传更新包给更新器的服务器</string>
+	<string name="contribute_agree">我同意将更新文件名提交给应用的管理员</string>
+	<string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用程序的管理员提交更新包文件名</string>
+	<string name="contribute_save">保存设置</string>
+	<string name="contribute_more_info">了解更多…</string>
+	<string name="contribute_allow_storage">请给予内部存储文件读取权限，以开启共研帮助我们</string>
+	<string name="contribute_successful_notification_title">共研完成</string>
+	<string name="contribute_successful_notification_text">感谢您愿意分享最新的更新包 %1$s 给我们的管理员！您的举手之劳将造福数以千计的 OnePlus 用户！</string>
+
+	<!-- Error strings-->
+	<string name="error_app_outdated">糟糕！</string>
+	<string name="error_app_outdated_message">该版本 App 不是最新版本，请前往 Google Play 商店进行更新。</string>
+	<string name="error_app_requires_network_connection">无互联网连接</string>
+	<string name="error_app_requires_network_connection_message">无法连接服务器，请您确保您已经连接到了互联网！应用即将关闭。</string>
+	<string name="error_button_retry">重试</string>
+	<string name="error_exit_button_text">退出</string>
+	<string name="error_google_play_button_text">Google Play</string>
+	<string name="error_no_internet_connection">无互联网连接</string>
+	<string name="error_maintenance">服务器维护中…</string>
+	<string name="error_maintenance_message">服务器马上就好，请待会儿再来吧~</string>
+	<string name="error_push_failure">开启消息推送失败，请完全关闭应用，待会儿再来试试吧</string>
+	<string name="error_reload">重新加载</string>
+
+	<string name="error_unable_to_rate_app">非常感谢您的好意，但是非常抱歉，您的设备缺少 Google Play 组件，无法为本应用做出评价。</string>
+
+	<!-- Message strings -->
+	<string name="delete_message_title">更新包已下载</string>
+	<string name="delete_message_contents">您已经下载了此更新，但尚未安装它。 点击“安装指南”以查看如何安装此更新。 点击“删除”以永久删除文件。 点击“返回”按钮关闭此消息。</string>
+	<string name="delete_message_delete_button">删除</string>
+
+	<string name="unsupported_device_warning_title">不支持此设备</string>
+	<string name="unsupported_device_warning_message">您的设备好像并没有不是 Oxygen  OS。请注意，您只能在运行 Oxygen  OS 的设备上安装系统更新。\n不支持其他设备，以及运行自定义 ROM 的 OnePlus 设备。</string>
+	<string name="unsupported_device_warning_checkbox_title">不再显示此警告</string>
+
+	<string name="root_check_title">Root 权限</string>
+	<string name="root_check_message">Oxygen 更新器为具有 Root 权限的用户提供简单，自动的更新安装方式。\n但是，增量更新不适用于有 Root 的设备。Oxygen 更新器可以检查您是否具有 Root 权限，以提供适当的更新方法。\n如果您的设备拥有 Root 权限，请在关闭此消息后允许 Oxygen 更新器获取 Root 权限。\n没有 Root 权限？那么请直接点击关闭继续安装。</string>
+
+	<!-- Purchasing strings -->
+	<string name="purchase_error_before_payment">由于内部错误，购买移除广告服务失败。请稍后重试。</string>
+	<string name="purchase_error_after_payment">由于内部错误，购买移除广告服务失败。请稍候重试。 如果您已付款，请与 Google Play 支持小组联系以获取帮助。</string>
+
+	<!-- Other strings-->
+	<string name="icon">图标</string>
+	<string name="loading">加载中…</string>
+	<string name="processing">正在处理…</string>
+	<string name="choose_file">选择一个文件</string>
+	<string name="root_install_logger_service_name">更新安装日志记录器</string>
+	<string name="delayed_push_notification_displayer_service_name">消息推送服务</string>
+	<string name="download_service_name">更新下载器</string>
+	<string name="log_uploader_service_name">错误报告服务</string>
 </resources>
 
 

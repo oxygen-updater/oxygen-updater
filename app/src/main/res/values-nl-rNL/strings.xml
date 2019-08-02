@@ -1,350 +1,349 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Application title, Main activity title -->
-    <string name="app_name">Oxygen Updater</string>
-    <string name="launcher_app_name">Oxygen Updater</string>
+	<!-- Application title, Main activity title -->
+	<string name="app_name">Oxygen Updater</string>
+	<string name="launcher_app_name">Oxygen Updater</string>
 
-    <!-- Update information strings-->
-    <string name="update">Update</string>
-    <string name="update_information_close">Sluiten</string>
-    <string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
-    <string name="update_information_file_name">Bestandsnaam: %1$s</string>    
-    <string name="update_information_for">voor</string>
-    <string name="update_information_header">Updaten</string>
-    <string name="update_information_header_short">Updaten</string>
-    <string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
-    <string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
-    <string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar:</string>
-    <string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
-    <string name="update_information_oxygen_os_version">Oxygen OS-versie: %1$s</string>
-    <string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
-    <string name="update_information_unknown_update_name">Naamloze update voor %1$s</string>
-    <string name="update_information_version">-versie:</string>
-    <string name="update_information_view_update_information">Bekijk update-informatie</string>
+	<!-- Update information strings-->
+	<string name="update">Update</string>
+	<string name="update_information_close">Sluiten</string>
+	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
+	<string name="update_information_file_name">Bestandsnaam: %1$s</string>
+	<string name="update_information_for">voor</string>
+	<string name="update_information_header">Updaten</string>
+	<string name="update_information_header_short">Updaten</string>
+	<string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
+	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
+	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar:</string>
+	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
+	<string name="update_information_oxygen_os_version">Oxygen OS-versie: %1$s</string>
+	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
+	<string name="update_information_unknown_update_name">Naamloze update voor %1$s</string>
+	<string name="update_information_version">-versie:</string>
+	<string name="update_information_view_update_information">Bekijk update-informatie</string>
 
-    <!-- Server status warning strings -->
-    <string name="server_status_error">Sommige functies werken niet.</string>
-    <string name="server_status_unreachable">Kan geen verbinding met de server maken…</string>
-    <string name="server_status_warning">Sommige functies werken mogelijk niet goed.</string>
+	<!-- Server status warning strings -->
+	<string name="server_status_error">Sommige functies werken niet.</string>
+	<string name="server_status_unreachable">Kan geen verbinding met de server maken…</string>
+	<string name="server_status_warning">Sommige functies werken mogelijk niet goed.</string>
 
-    <!-- New app version message strings -->
-    <string name="new_app_version">App-update beschikbaar! Versie &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> is uitgebracht!</string>
+	<!-- New app version message strings -->
+	<string name="new_app_version">App-update beschikbaar! Versie &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> is uitgebracht!</string>
 
-    <!-- Date and time strings -->
-    <string name="time_at">om</string>
-    <string name="time_today">Vandaag</string>
-    <string name="time_yesterday">Gisteren</string>
+	<!-- Date and time strings -->
+	<string name="time_at">om</string>
+	<string name="time_today">Vandaag</string>
+	<string name="time_yesterday">Gisteren</string>
 
-    <!-- Downloader strings -->
-    <string name="download">Downloaden</string>
-    <string name="downloaded">Gedownload</string>
-    <string name="downloading">Downloaden…</string>
-    <string name="paused">Gepauzeerd</string>
+	<!-- Downloader strings -->
+	<string name="download">Downloaden</string>
+	<string name="downloaded">Gedownload</string>
+	<string name="downloading">Downloaden…</string>
+	<string name="paused">Gepauzeerd</string>
 
-    <string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
-    <string name="download_complete">Download voltooid</string>
-    <string name="download_complete_notification">Download voltooid. Tik om te beginnen met de installatie.</string>
+	<string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
+	<string name="download_complete">Download voltooid</string>
+	<string name="download_complete_notification">Download voltooid. Tik om te beginnen met de installatie.</string>
 
-    <string name="download_description">Oxygen Updater</string>
+	<string name="download_description">Oxygen Updater</string>
 
-    <string name="download_error">Fout tijdens downloaden</string>
-    <string name="download_error_close">SLUITEN</string>
-    <string name="download_error_corrupt">De gedownloade update is beschadigd! Probeer de update opnieuw te downloaden.</string>
-    <string name="download_error_network">Er deed zich tijdens het downloaden van de update een netwerkprobleem voor. Het downloaden wordt automatisch hervat.</string>
-    <string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
-    <string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
-    <string name="download_error_retry">OPNIEUW</string>
-    <string name="download_error_resume">HERVATTEN</string>
-    <string name="download_error_storage">Er is onvoldoende opslagruimte op je apparaat beschikbaar om de update te downloaden. Verwijder één of meer bestanden en probeer het opnieuw te downloaden.</string>
+	<string name="download_error">Fout tijdens downloaden</string>
+	<string name="download_error_close">SLUITEN</string>
+	<string name="download_error_corrupt">De gedownloade update is beschadigd! Probeer de update opnieuw te downloaden.</string>
+	<string name="download_error_network">Er deed zich tijdens het downloaden van de update een netwerkprobleem voor. Het downloaden wordt automatisch hervat.</string>
+	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
+	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
+	<string name="download_error_retry">OPNIEUW</string>
+	<string name="download_error_resume">HERVATTEN</string>
+	<string name="download_error_storage">Er is onvoldoende opslagruimte op je apparaat beschikbaar om de update te downloaden. Verwijder één of meer bestanden en probeer het opnieuw te downloaden.</string>
 
-    <string name="download_failed">Downloaden mislukt</string>
-    <string name="download_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
-    <string name="download_oxygen_os">Oxygen OS-versie</string>    
-    <string name="download_pending">Je download begint zometeen…</string>
-    <string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
+	<string name="download_failed">Downloaden mislukt</string>
+	<string name="download_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
+	<string name="download_oxygen_os">Oxygen OS-versie</string>
+	<string name="download_pending">Je download begint zometeen…</string>
+	<string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
 
-    <string name="download_notification_error_network">Downloaden gepauzeerd omdat de verbinding is verbroken. Wordt zometeen hervat.</string>
-    <string name="download_notification_error_server">Serverfout bij downloaden. Controleer je verbinding en probeer het opnieuw.</string>
-    <string name="download_notification_error_internal">App-fout bij downloaden. Controleer je verbinding en probeer het opnieuw, of neem contact op met de ontwikkelaar.</string>
-    <string name="download_notification_error_storage_full">Onvoldoende opslagruimte.</string>
-    <string name="download_notification_error_corrupt">Bestandscontrole mislukt. Controleer je verbinding en probeer het opnieuw.</string>
+	<string name="download_notification_error_network">Downloaden gepauzeerd omdat de verbinding is verbroken. Wordt zometeen hervat.</string>
+	<string name="download_notification_error_server">Serverfout bij downloaden. Controleer je verbinding en probeer het opnieuw.</string>
+	<string name="download_notification_error_internal">App-fout bij downloaden. Controleer je verbinding en probeer het opnieuw, of neem contact op met de ontwikkelaar.</string>
+	<string name="download_notification_error_storage_full">Onvoldoende opslagruimte.</string>
+	<string name="download_notification_error_corrupt">Bestandscontrole mislukt. Controleer je verbinding en probeer het opnieuw.</string>
 
-    <string name="download_progress_text_hours_remaining">%1$d%%, ongeveer %2$d uur resterend</string>
-    <string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, minder dan een minuut resterend</string>
-    <string name="download_progress_text_minutes_remaining">%1$d%%, ongeveer %2$d minuten resterend</string>
-    <string name="download_progress_text_one_hour_remaining">%1$d%%, ongeveer 1 uur resterend</string>
-    <string name="download_progress_text_one_minute_remaining">%1$d%%, ongeveer een minuut resterend</string>
-    <string name="download_progress_text_seconds_remaining">%1$d%%, enkele seconden resterend</string>
-    <string name="download_progress_text_unknown_time_remaining">%1$d%%, resterende tijd berekenen…</string>
-    <string name="download_progress_text_verifying">100 %, controleren op fouten…</string>
-    <string name="download_progress_text_paused">%1$d%%, gepauzeerd…</string>
-    <string name="download_waiting_for_network">%1$d%%, wachten op een netwerkverbinding…</string>
+	<string name="download_progress_text_hours_remaining">%1$d%%, ongeveer %2$d uur resterend</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, minder dan een minuut resterend</string>
+	<string name="download_progress_text_minutes_remaining">%1$d%%, ongeveer %2$d minuten resterend</string>
+	<string name="download_progress_text_one_hour_remaining">%1$d%%, ongeveer 1 uur resterend</string>
+	<string name="download_progress_text_one_minute_remaining">%1$d%%, ongeveer een minuut resterend</string>
+	<string name="download_progress_text_seconds_remaining">%1$d%%, enkele seconden resterend</string>
+	<string name="download_progress_text_unknown_time_remaining">%1$d%%, resterende tijd berekenen…</string>
+	<string name="download_progress_text_verifying">100 %, controleren op fouten…</string>
+	<string name="download_progress_text_paused">%1$d%%, gepauzeerd…</string>
+	<string name="download_waiting_for_network">%1$d%%, wachten op een netwerkverbinding…</string>
 
-    <string name="download_size_megabyte">%1$d MB</string>
-    <string name="download_unknown_update_name">Oxygen OS-update</string>
-    
-    <string name="download_verifying">Controleren…</string>
-    <string name="download_verifying_error">Bestand is beschadigd</string>
-    <string name="download_verifying_start">Je download wordt nu gecontroleerd op fouten…</string>
-    
-    <!-- Settings strings -->
-    <string name="settings">Instellingen</string>
-    <string name="settings_buy_button_buy">Koop (%1$s)</string>
-    <string name="settings_buy_button_bought">Gekocht</string>
-    <string name="settings_buy_button_not_possible">Niet beschikb.</string>
-    <string name="settings_buy_ad_free_label">Verwijder advertenties:</string>
-    <string name="settings_contribute_label">Verbeter de app voor anderen:</string>
-    <string name="settings_contribute_button">Draag bij</string>
-    <string name="settings_category_other">Overig:</string>
-    <string name="settings_device">Apparaat</string>
-    <string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
-    <string name="settings_explanation_incremental_full_update">"Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode \'volledige update\' kiezen).\n\nEen bèta-versie kan ten alle tijden geïnstalleerd worden. Ook als je een stabiele versie draait. Om te wisselen van de stabiele versies naar bèta's, moet je \'geavanceerde modus\' aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie."</string>
-    <string name="settings_explanation_update_methods">Toelichting op de update-methodes</string>
-    <string name="settings_header">Kies je apparaat en update-methode</string>
+	<string name="download_size_megabyte">%1$d MB</string>
+	<string name="download_unknown_update_name">Oxygen OS-update</string>
 
-    <string name="settings_push">Stuur mij meldingen wanneer een:</string>
-    <string name="settings_push_from_server">Waarschuwing nodig is</string>
-    <string name="settings_push_new_version">Systeemupdate is verschenen</string>
-    <string name="settings_push_new_device">Nieuw apparaat wordt ondersteund</string>
-    <string name="settings_push_news">Nieuwsbericht is gepubliceerd</string>
+	<string name="download_verifying">Controleren…</string>
+	<string name="download_verifying_error">Bestand is beschadigd</string>
+	<string name="download_verifying_start">Je download wordt nu gecontroleerd op fouten…</string>
 
-    <string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
-    <string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een internetverbinding hebt en open je de app opnieuw.</string>
+	<!-- Settings strings -->
+	<string name="settings">Instellingen</string>
+	<string name="settings_buy_button_buy">Koop (%1$s)</string>
+	<string name="settings_buy_button_bought">Gekocht</string>
+	<string name="settings_buy_button_not_possible">Niet beschikb.</string>
+	<string name="settings_buy_ad_free_label">Verwijder advertenties:</string>
+	<string name="settings_contribute_label">Verbeter de app voor anderen:</string>
+	<string name="settings_contribute_button">Draag bij</string>
+	<string name="settings_category_other">Overig:</string>
+	<string name="settings_device">Apparaat</string>
+	<string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
+	<string name="settings_explanation_incremental_full_update">"Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode \'volledige update\' kiezen).\n\nEen bèta-versie kan ten alle tijden geïnstalleerd worden. Ook als je een stabiele versie draait. Om te wisselen van de stabiele versies naar bèta's, moet je \'geavanceerde modus\' aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie."</string>
+	<string name="settings_explanation_update_methods">Toelichting op de update-methodes</string>
+	<string name="settings_header">Kies je apparaat en update-methode</string>
 
-    <string name="settings_server_messages">Toon meldingen in de app wanneer er:</string>
-    <string name="settings_server_messages_in_app">Algemene mededelingen zijn</string>
-    <string name="settings_server_messages_new_app_version">Een app-update beschikbaar is</string>
+	<string name="settings_push">Stuur mij meldingen wanneer een:</string>
+	<string name="settings_push_from_server">Waarschuwing nodig is</string>
+	<string name="settings_push_new_version">Systeemupdate is verschenen</string>
+	<string name="settings_push_new_device">Nieuw apparaat wordt ondersteund</string>
+	<string name="settings_push_news">Nieuwsbericht is gepubliceerd</string>
 
-    <string name="settings_other_options">Overige opties:</string>
-    <string name="settings_advanced_mode">Geavanceerde modus</string>
-    <string name="settings_advanced_mode_button_explanation">Tik op deze knop om meer informatie over de geavanceerde modus te krijgen.</string>
-    <string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n- Je van een reguliere versie naar een bètaversie wilt updaten\n- Je van een bètaversie terug wilt naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n - Je dezelfde versie als die je nu hebt opnieuw wilt installeren.</string>
+	<string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
+	<string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een internetverbinding hebt en open je de app opnieuw.</string>
 
-    <string name="settings_update_method">Update-methode</string>
-    <string name="settings_upload_logs">Deel gebruiksgegevens en -logs</string>
+	<string name="settings_server_messages">Toon meldingen in de app wanneer er:</string>
+	<string name="settings_server_messages_in_app">Algemene mededelingen zijn</string>
+	<string name="settings_server_messages_new_app_version">Een app-update beschikbaar is</string>
 
-    <!-- FAQ strings -->
-    <string name="faq">Veelgestelde vragen</string>
-    <string name="faq_menuitem">Veelgest. vragen</string>
-    
-    <string name="faq_no_network">Geen verbinding.</string>
-    <string name="faq_no_network_text">Je hebt een internetverbinding nodig om de pagina met veelgestelde vragen te bekijken.</string>
+	<string name="settings_other_options">Overige opties:</string>
+	<string name="settings_advanced_mode">Geavanceerde modus</string>
+	<string name="settings_advanced_mode_button_explanation">Tik op deze knop om meer informatie over de geavanceerde modus te krijgen.</string>
+	<string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n- Je van een reguliere versie naar een bètaversie wilt updaten\n- Je van een bètaversie terug wilt naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n - Je dezelfde versie als die je nu hebt opnieuw wilt installeren.</string>
 
-    <!-- First-time setup screen strings -->
-    <string name="setup">Welkom</string>
-    <string name="setup_close_button">start de app</string>
+	<string name="settings_update_method">Update-methode</string>
+	<string name="settings_upload_logs">Deel gebruiksgegevens en -logs</string>
 
-    <string name="setup_page_1_title">Welkom bij Oxygen updater!</string>
-    <string name="setup_page_1_text">Met deze app kun je:\n\n- De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n\n- Een \"rooted\" apparaat eenvoudig bijwerken\n\n- Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n\n- Nieuwsberichten over OxygenOS en OnePlus lezen\n\nVeeg naar links om verder te gaan.</string>
+	<!-- FAQ strings -->
+	<string name="faq">Veelgestelde vragen</string>
+	<string name="faq_menuitem">Veelgest. vragen</string>
 
-    <string name="setup_page_2_title">Belangrijke mededeling:</string>
-    <string name="setup_page_2_text">Dit is geen officiële app van OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app. \n\nDoor deze app te gebruiken, ga je hiermee akkoord.\n\nVeeg naar links om verder te gaan.</string>
+	<string name="faq_no_network">Geen verbinding.</string>
+	<string name="faq_no_network_text">Je hebt een internetverbinding nodig om de pagina met veelgestelde vragen te bekijken.</string>
 
-    <string name="setup_page_3_title">Kies je apparaat:</string>
-    <string name="setup_page_3_text">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? kies het dan hierboven.\n\nVeeg naar links om verder te gaan.</string>
+	<!-- First-time setup screen strings -->
+	<string name="setup">Welkom</string>
+	<string name="setup_close_button">start de app</string>
 
-    <string name="setup_page_4_title">Kies je update-methode:</string>
-    <string name="setup_page_4_text">De Incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een beta-versie van OxygenOS? Kies dan voor de Community-Editie.\n\nVeeg naar links om door te gaan.</string>
+	<string name="setup_page_1_title">Welkom bij Oxygen updater!</string>
+	<string name="setup_page_1_text">Met deze app kun je:\n\n- De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n\n- Een \"rooted\" apparaat eenvoudig bijwerken\n\n- Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n\n- Nieuwsberichten over OxygenOS en OnePlus lezen\n\nVeeg naar links om verder te gaan.</string>
 
-    <string name="setup_page_5_title">Klaar!</string>
-    <string name="setup_page_5_text">Veel plezier met het gebruik van Oxygen Updater!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\". </string>
+	<string name="setup_page_2_title">Belangrijke mededeling:</string>
+	<string name="setup_page_2_text">Dit is geen officiële app van OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app. \n\nDoor deze app te gebruiken, ga je hiermee akkoord.\n\nVeeg naar links om verder te gaan.</string>
 
-    <!-- Automatic install strings -->
-    <string name="install">Installeren</string>
-    <string name="install_checking_root">Controleren of je root-toegang hebt…</string>
-    <string name="install_grant_root_permissions">Geef toestemming voor root-toegang indien dit wordt gevraagd.</string>
-    <string name="install_going_back_not_possible">Helaas, je kunt nu niet teruggaan.</string>
-    <string name="install_preparing_installation">Installatie voorbereiden…</string>
+	<string name="setup_page_3_title">Kies je apparaat:</string>
+	<string name="setup_page_3_text">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? kies het dan hierboven.\n\nVeeg naar links om verder te gaan.</string>
 
-    <string name="install_error_write_script_failed">"Kan het installeren van de update niet voorbereiden. Heb je wel toestemming voor root-toegang gegeven?"</string>
+	<string name="setup_page_4_title">Kies je update-methode:</string>
+	<string name="setup_page_4_text">De Incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een beta-versie van OxygenOS? Kies dan voor de Community-Editie.\n\nVeeg naar links om door te gaan.</string>
 
-    <string name="install_options_backup">Maak een back-up</string>
-    <string name="install_options_header">Je kan het installatieproces aanpassen door onderstaande instellingen te veranderen. Tik op \'Start de installatie\' om de installatie te starten.</string>
-    <string name="install_options_keep_root">Behoud root-toegang</string>
-    <string name="install_options_reboot_after_install">Opnieuw opstarten na installatie</string>
-    <string name="install_options_select_root_package">Selecteer het root-bestand om te installeren…</string>
-    <string name="install_options_start_install">Start de installatie</string>
-    <string name="install_options_title">Kies je installatie-opties</string>
-    <string name="install_options_wipe_cache_partition">Wis de cache-partitie</string>
+	<string name="setup_page_5_title">Klaar!</string>
+	<string name="setup_page_5_text">Veel plezier met het gebruik van Oxygen Updater!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\". </string>
 
-    <string name="install_options_explanation_title">Wat doen de bovenstaande opties?</string>
-    <string name="install_options_explanation_backup">Maak een back-up:\nWanneer je deze optie kiest, wordt er voordat de installatie begint een back-up van je systeem en al je opgelagen apps / gegevens gemaakt. Altijd handig om te hebben, mocht er bij het installeren toch iets fout gaan.</string>
-    <string name="install_options_explanation_keep_root">Behoud root-toegang:\nWanneer je deze optie kiest, kun je een root-bestand selecteren wat na de installatie (opnieuw) wordt geïnstalleerd. Op deze manier behoud je root-toegang op je apparaat. Let wel op dat het root-bestand geschikt is voor de NIEUWE OxygenOS-versie die je installeert!</string>
-    <string name="install_options_explanation_wipe_cache">Wis de cache-partitie:\nWanneer je deze optie kiest, wordt de cache-partitie na de installatie gewist. Hierdoor blijft je apparaat snel en is de kans op bugs, veroorzaakt door de update, kleiner.</string>
-    <string name="install_options_explanation_reboot">Opnieuw opstarten na installatie:\nWanneer je deze optie kiest, start je apparaat na de installatie vanzelf op naar OxygenOS. Anders blijft het in de herstelmodus staan, waar je eventueel nog andere bestanden kunt installeren.</string>
+	<!-- Automatic install strings -->
+	<string name="install">Installeren</string>
+	<string name="install_checking_root">Controleren of je root-toegang hebt…</string>
+	<string name="install_grant_root_permissions">Geef toestemming voor root-toegang indien dit wordt gevraagd.</string>
+	<string name="install_going_back_not_possible">Helaas, je kunt nu niet teruggaan.</string>
+	<string name="install_preparing_installation">Installatie voorbereiden…</string>
 
-    <string name="install_recovery_installer_title">Update-installatie</string>
-    <string name="install_recovery_backing_up">Back-up aan het maken. Dit duurt een poosje!</string>
-    <string name="install_recovery_clearing_cache">Cache-partitie wissen…</string>
-    <string name="install_recovery_done">Klaar. Je apparaat zal herstarten.</string>
-    <string name="install_recovery_installing_additional_zip">Root-bestand installeren…</string>
-    <string name="install_recovery_installing_update">Update installeren…</string>
-    <string name="install_recovery_thank_you">Bedankt voor het gebruiken van Oxygen Updater. Als je deze app leuk vindt, geef hem dan 5 sterren op Google Play :-)</string>
+	<string name="install_error_write_script_failed">"Kan het installeren van de update niet voorbereiden. Heb je wel toestemming voor root-toegang gegeven?"</string>
 
-    <string name="install_select_method_title">Hoe wil je deze update installeren?</string>
-    <string name="install_select_method_automatic_title">Automatische installatie*</string>
-    <string name="install_select_method_automatic_image">Plaatje van de automatische installatie</string>
-    <string name="install_select_method_automatic_description">De eenvoudigste manier om de update te installeren.\nJe apparaat start opnieuw op en installeert de update vervolgens vanzelf.\n\n* Vereist root-toegang en TWRP-recovery.</string>
+	<string name="install_options_backup">Maak een back-up</string>
+	<string name="install_options_header">Je kan het installatieproces aanpassen door onderstaande instellingen te veranderen. Tik op \'Start de installatie\' om de installatie te starten.</string>
+	<string name="install_options_keep_root">Behoud root-toegang</string>
+	<string name="install_options_reboot_after_install">Opnieuw opstarten na installatie</string>
+	<string name="install_options_select_root_package">Selecteer het root-bestand om te installeren…</string>
+	<string name="install_options_start_install">Start de installatie</string>
+	<string name="install_options_title">Kies je installatie-opties</string>
+	<string name="install_options_wipe_cache_partition">Wis de cache-partitie</string>
 
-    <string name="install_select_method_manual_title">Handmatige installatie</string>
-    <string name="install_select_method_manual_image">Plaatje van de handmatige installatie</string>
-    <string name="install_select_method_manual_description">Lees de installatie-handleiding om te leren hoe je de update zelf kunt installeren. Je installeert de update via de herstelmodus van je apparaat.</string>
+	<string name="install_options_explanation_title">Wat doen de bovenstaande opties?</string>
+	<string name="install_options_explanation_backup">Maak een back-up:\nWanneer je deze optie kiest, wordt er voordat de installatie begint een back-up van je systeem en al je opgelagen apps / gegevens gemaakt. Altijd handig om te hebben, mocht er bij het installeren toch iets fout gaan.</string>
+	<string name="install_options_explanation_keep_root">Behoud root-toegang:\nWanneer je deze optie kiest, kun je een root-bestand selecteren wat na de installatie (opnieuw) wordt geïnstalleerd. Op deze manier behoud je root-toegang op je apparaat. Let wel op dat het root-bestand geschikt is voor de NIEUWE OxygenOS-versie die je installeert!</string>
+	<string name="install_options_explanation_wipe_cache">Wis de cache-partitie:\nWanneer je deze optie kiest, wordt de cache-partitie na de installatie gewist. Hierdoor blijft je apparaat snel en is de kans op bugs, veroorzaakt door de update, kleiner.</string>
+	<string name="install_options_explanation_reboot">Opnieuw opstarten na installatie:\nWanneer je deze optie kiest, start je apparaat na de installatie vanzelf op naar OxygenOS. Anders blijft het in de herstelmodus staan, waar je eventueel nog andere bestanden kunt installeren.</string>
 
-    <string name="install_temporary_error">Er heeft zich een tijdelijke fout voorgedaan bij het voorbereiden van de installatie van de update. Probeer het opnieuw.</string>
+	<string name="install_recovery_installer_title">Update-installatie</string>
+	<string name="install_recovery_backing_up">Back-up aan het maken. Dit duurt een poosje!</string>
+	<string name="install_recovery_clearing_cache">Cache-partitie wissen…</string>
+	<string name="install_recovery_done">Klaar. Je apparaat zal herstarten.</string>
+	<string name="install_recovery_installing_additional_zip">Root-bestand installeren…</string>
+	<string name="install_recovery_installing_update">Update installeren…</string>
+	<string name="install_recovery_thank_you">Bedankt voor het gebruiken van Oxygen Updater. Als je deze app leuk vindt, geef hem dan 5 sterren op Google Play :-)</string>
 
-    <string name="install_verify_error_title">Installatie mislukt</string>
-    <string name="install_verify_error_nothing_installed">Fout bij het installeren van de update. Er zijn geen wijzigingen in de software van je apparaat aangebracht. Probeer de update opnieuw te installeren.</string>
-    <string name="install_verify_error_unable_to_verify">Kan niet controleren of de update succesvol is geïnstalleerd. Open Oxygen Updater om te kijken of de update succesvol is geïnstalleerd.</string>
-    <string name="install_verify_error_wrong_version_installed">Er is een andere versie van OxygenOS geïnstalleerd. Kies bij het selecteren van een root-bestand geen OxygenOS-updatebestand.</string>
+	<string name="install_select_method_title">Hoe wil je deze update installeren?</string>
+	<string name="install_select_method_automatic_title">Automatische installatie*</string>
+	<string name="install_select_method_automatic_image">Plaatje van de automatische installatie</string>
+	<string name="install_select_method_automatic_description">De eenvoudigste manier om de update te installeren.\nJe apparaat start opnieuw op en installeert de update vervolgens vanzelf.\n\n* Vereist root-toegang en TWRP-recovery.</string>
 
-    <string name="install_verify_success_title">Installatie voltooid</string>
-    <string name="install_verify_success_message">OxygenOS-versie %1$s is succesvol geïnstalleerd.</string>
+	<string name="install_select_method_manual_title">Handmatige installatie</string>
+	<string name="install_select_method_manual_image">Plaatje van de handmatige installatie</string>
+	<string name="install_select_method_manual_description">Lees de installatie-handleiding om te leren hoe je de update zelf kunt installeren. Je installeert de update via de herstelmodus van je apparaat.</string>
 
-    <string name="install_zip_file_clear">Wis root-bestand</string>
-    <string name="install_zip_file_pick">Kies root-bestand</string>
-    <string name="install_zip_file_placeholder">Selecteer een root-bestand…</string>
-    <string name="install_zip_file_wrong_file_type">Je kunt alleen een zipbestand selecteren. Selecteer het juiste bestand.</string>
+	<string name="install_temporary_error">Er heeft zich een tijdelijke fout voorgedaan bij het voorbereiden van de installatie van de update. Probeer het opnieuw.</string>
 
+	<string name="install_verify_error_title">Installatie mislukt</string>
+	<string name="install_verify_error_nothing_installed">Fout bij het installeren van de update. Er zijn geen wijzigingen in de software van je apparaat aangebracht. Probeer de update opnieuw te installeren.</string>
+	<string name="install_verify_error_unable_to_verify">Kan niet controleren of de update succesvol is geïnstalleerd. Open Oxygen Updater om te kijken of de update succesvol is geïnstalleerd.</string>
+	<string name="install_verify_error_wrong_version_installed">Er is een andere versie van OxygenOS geïnstalleerd. Kies bij het selecteren van een root-bestand geen OxygenOS-updatebestand.</string>
 
-    <!-- Install guide strings -->
-    <string name="install_guide_no_root">Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
-    <string name="install_guide_automatic_install_disabled">Automatiche installaties zijn vanwege technische mankementen tijdelijk uitgeschakeld. Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
-    <string name="install_guide">Installatiehandleiding</string>
-    <string name="install_guide_loading">Installatiehandleiding laden …</string>
-    <string name="install_guide_title">Installatie - %1$d van %2$d</string>
-    <string name="install_guide_close_button">Sluit de installatiehandleiding</string>
-    <string name="install_guide_header">Veeg &lt;- -&gt; om tussen pagina\'s te wisselen.</string>
-    <string name="install_guide_tip">- Het is aanbevolen om alle stappen op te schrijven, omdat je apparaat tijdens de installatie van de update opnieuw moet worden opgestart.</string>
+	<string name="install_verify_success_title">Installatie voltooid</string>
+	<string name="install_verify_success_message">OxygenOS-versie %1$s is succesvol geïnstalleerd.</string>
 
-    <string name="install_guide_image_description">Extra afbeelding voor de duidelijkheid. Tik lager op het scherm voor de installatiehandleiding.</string>
-
-    <string name="install_guide_page_1_title">Download de update.</string>
-    <string name="install_guide_page_1_text">-Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n- Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play-store doen, onder het tabblad \"Mijn apps\".</string>
-
-    <string name="install_guide_page_2_title">Ga naar de Recovery Modus.</string>
-    <string name="install_guide_page_2_text">- Schakel je apparaat eerst volledig uit.\n\n- Houd hierna zowel de aan-uit knop als de volume-omlaag knop tegelijkertijd ingedrukt.\n\n- Je apparaat start nu op in Recovery Modus. Wacht totdat je het Recovery Modus-menu op het scherm ziet.</string>
-
-    <string name="install_guide_page_3_title">Installeer de gedownloade update.</string>
-    <string name="install_guide_page_3_text">- In het recovery-menu kies je eerst je taal. Vervolgens tik je op (of gebruik je de volumeknoppen om te scrollen en de aan-uit knop voor het selecteren van) \"Install from SD\".\n\n- Gebruik de volume-omlaag-toets om omlaag te scrollen naar een rij met dezelfde bestandsnaam als in de app getoond. Dit is meestal een bestand beginnend met \"OnePlusOxygen-\".\n\n- De installatie van de update begint vanzelf.</string>
-
-    <string name="install_guide_page_4_title">Start je apparaat opnieuw op.</string>
-    <string name="install_guide_page_4_text">- Als de installatie van de update is voltooid, keert je apparaat vanzelf terug naar het Recovery-menu. In het Recovery-menu, tik je op \"Reboot\".\n\n- Je apparaat zal het opstartscherm een lange tijd laten zien terwijl het opstart.\n\n- Hierna verschijnt er een wit venster met de titel \"Android wordt bijgewerkt\" , terwijl je apps worden geoptimaliseerd.</string>
-
-    <string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe Oxygen OS-versie!</string>
-    <string name="install_guide_page_5_text">- Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de Oxygen OS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
-
-    <string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
-    <string name="install_guide_zip_file_missing">"Als je root-toegang wilt behouden, moet je hierboven een root-bestand selecteren."</string>
-    <string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
-
-    <!-- Device information strings -->
-    <string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
-    <string name="device_information_cpu_frequency">Processorsnelheid:</string>
-    <string name="device_information_header">Mijn apparaat</string>
-    <string name="device_information_header_short">Mijn apparaat</string>
-    <string name="device_information_image_description">Plaatje van jouw apparaat</string>
-    <string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
-    <string name="device_information_os_version">Android-versie:</string>
-    <string name="device_information_oxygen_os_version">OxygenOS-versie:</string>
-    <string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
-    <string name="device_information_patch_level_version">Datum beveiligingspatch:</string>
-    <string name="device_information_serial_number">Serienummer:</string>
-    <string name="device_information_system_on_a_chip">Chipset:</string>
-    <string name="device_information_unknown">onbekend</string>
-    <string name="device_information_your_device">Jouw apparaat:</string>
+	<string name="install_zip_file_clear">Wis root-bestand</string>
+	<string name="install_zip_file_pick">Kies root-bestand</string>
+	<string name="install_zip_file_placeholder">Selecteer een root-bestand…</string>
+	<string name="install_zip_file_wrong_file_type">Je kunt alleen een zipbestand selecteren. Selecteer het juiste bestand.</string>
 
 
-    <!-- About screen strings -->
-    <string name="about">Over deze app</string>
-    <string name="about_app_description">De ultieme app voor alles over Oxygen OS-updates.</string>
-    <string name="about_background_story">Deze app is gemaakt door Arjan Vlek.\n\nDeze app is gebaseerd op mijn andere app, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>).\n\n\nOpmerking: Dit is géén officiële app van OnePlus.\nDe naam OxygenOS is eigendom van OnePlus. \nAndroid, Google, Google Play en het Google Play-logo zijn geregistreerde handelsmerken van Google Inc. \nDeze app gebruikt gegevens van OnePlus en OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel hem dan nu op Google Play!</string>
-    <string name="about_rate_app_button_text">Beoordeel op Google Play</string>
-    <string name="about_version">Versie: %1$s</string>
+	<!-- Install guide strings -->
+	<string name="install_guide_no_root">Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
+	<string name="install_guide_automatic_install_disabled">Automatiche installaties zijn vanwege technische mankementen tijdelijk uitgeschakeld. Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
+	<string name="install_guide">Installatiehandleiding</string>
+	<string name="install_guide_loading">Installatiehandleiding laden …</string>
+	<string name="install_guide_title">Installatie - %1$d van %2$d</string>
+	<string name="install_guide_close_button">Sluit de installatiehandleiding</string>
+	<string name="install_guide_header">Veeg &lt;- -&gt; om tussen pagina\'s te wisselen.</string>
+	<string name="install_guide_tip">- Het is aanbevolen om alle stappen op te schrijven, omdat je apparaat tijdens de installatie van de update opnieuw moet worden opgestart.</string>
+
+	<string name="install_guide_image_description">Extra afbeelding voor de duidelijkheid. Tik lager op het scherm voor de installatiehandleiding.</string>
+
+	<string name="install_guide_page_1_title">Download de update.</string>
+	<string name="install_guide_page_1_text">-Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n- Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play-store doen, onder het tabblad \"Mijn apps\".</string>
+
+	<string name="install_guide_page_2_title">Ga naar de Recovery Modus.</string>
+	<string name="install_guide_page_2_text">- Schakel je apparaat eerst volledig uit.\n\n- Houd hierna zowel de aan-uit knop als de volume-omlaag knop tegelijkertijd ingedrukt.\n\n- Je apparaat start nu op in Recovery Modus. Wacht totdat je het Recovery Modus-menu op het scherm ziet.</string>
+
+	<string name="install_guide_page_3_title">Installeer de gedownloade update.</string>
+	<string name="install_guide_page_3_text">- In het recovery-menu kies je eerst je taal. Vervolgens tik je op (of gebruik je de volumeknoppen om te scrollen en de aan-uit knop voor het selecteren van) \"Install from SD\".\n\n- Gebruik de volume-omlaag-toets om omlaag te scrollen naar een rij met dezelfde bestandsnaam als in de app getoond. Dit is meestal een bestand beginnend met \"OnePlusOxygen-\".\n\n- De installatie van de update begint vanzelf.</string>
+
+	<string name="install_guide_page_4_title">Start je apparaat opnieuw op.</string>
+	<string name="install_guide_page_4_text">- Als de installatie van de update is voltooid, keert je apparaat vanzelf terug naar het Recovery-menu. In het Recovery-menu, tik je op \"Reboot\".\n\n- Je apparaat zal het opstartscherm een lange tijd laten zien terwijl het opstart.\n\n- Hierna verschijnt er een wit venster met de titel \"Android wordt bijgewerkt\" , terwijl je apps worden geoptimaliseerd.</string>
+
+	<string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe Oxygen OS-versie!</string>
+	<string name="install_guide_page_5_text">- Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de Oxygen OS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
+
+	<string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
+	<string name="install_guide_zip_file_missing">"Als je root-toegang wilt behouden, moet je hierboven een root-bestand selecteren."</string>
+	<string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
+
+	<!-- Device information strings -->
+	<string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
+	<string name="device_information_cpu_frequency">Processorsnelheid:</string>
+	<string name="device_information_header">Mijn apparaat</string>
+	<string name="device_information_header_short">Mijn apparaat</string>
+	<string name="device_information_image_description">Plaatje van jouw apparaat</string>
+	<string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
+	<string name="device_information_os_version">Android-versie:</string>
+	<string name="device_information_oxygen_os_version">OxygenOS-versie:</string>
+	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_patch_level_version">Datum beveiligingspatch:</string>
+	<string name="device_information_serial_number">Serienummer:</string>
+	<string name="device_information_system_on_a_chip">Chipset:</string>
+	<string name="device_information_unknown">onbekend</string>
+	<string name="device_information_your_device">Jouw apparaat:</string>
 
 
-    <!-- LocalNotifications strings -->
-    <string name="notification_new_device">Nieuw apparaat toegevoegd! De %1$s wordt nu ondersteund!</string>
-    <string name="notification_new_device_short">Open de app om dit apparaat te kiezen.</string>
-    <string name="notification_no_notification_support">Installeer Google Play services of werk deze bij om pushnotificaties te kunnen ontvangen.</string>
-    <string name="notification_version_title">Systeemupdate beschikbaar</string>
-    <string name="notification_version">%1$s is nu beschikbaar voor de %2$s!</string>
-    <string name="push_notification_channel_name">Pushberichten</string>
-    <string name="push_notification_channel_description">Toont alle pushberichten van de Oxygen Updater-app. Dit zijn o.a. de systeemupdate-meldingen en de meldingen die verschijnen wanneer er belangrijk nieuws is.</string>
-    <string name="progress_notification_channel_name">Voortgangsindicatoren</string>
-    <string name="progress_notification_channel_description">Toont alle voortgangsindicatoren van de Oxygen Updater-app. Dit zijn o.a. de meldingen die tijdens het downloaden van updates verschijnen.</string>
+	<!-- About screen strings -->
+	<string name="about">Over deze app</string>
+	<string name="about_app_description">De ultieme app voor alles over Oxygen OS-updates.</string>
+	<string name="about_background_story">Deze app is gemaakt door Arjan Vlek.\n\nDeze app is gebaseerd op mijn andere app, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>).\n\n\nOpmerking: Dit is géén officiële app van OnePlus.\nDe naam OxygenOS is eigendom van OnePlus. \nAndroid, Google, Google Play en het Google Play-logo zijn geregistreerde handelsmerken van Google Inc. \nDeze app gebruikt gegevens van OnePlus en OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel hem dan nu op Google Play!</string>
+	<string name="about_rate_app_button_text">Beoordeel op Google Play</string>
+	<string name="about_version">Versie: %1$s</string>
 
 
+	<!-- LocalNotifications strings -->
+	<string name="notification_new_device">Nieuw apparaat toegevoegd! De %1$s wordt nu ondersteund!</string>
+	<string name="notification_new_device_short">Open de app om dit apparaat te kiezen.</string>
+	<string name="notification_no_notification_support">Installeer Google Play services of werk deze bij om pushnotificaties te kunnen ontvangen.</string>
+	<string name="notification_version_title">Systeemupdate beschikbaar</string>
+	<string name="notification_version">%1$s is nu beschikbaar voor de %2$s!</string>
+	<string name="push_notification_channel_name">Pushberichten</string>
+	<string name="push_notification_channel_description">Toont alle pushberichten van de Oxygen Updater-app. Dit zijn o.a. de systeemupdate-meldingen en de meldingen die verschijnen wanneer er belangrijk nieuws is.</string>
+	<string name="progress_notification_channel_name">Voortgangsindicatoren</string>
+	<string name="progress_notification_channel_description">Toont alle voortgangsindicatoren van de Oxygen Updater-app. Dit zijn o.a. de meldingen die tijdens het downloaden van updates verschijnen.</string>
 
-    <!-- Help strings -->
-    <string name="help">Help</string>
-    <string name="help_text">Welkom bij de helpfunctie van Oxygen Updater.\n\nHelp bevat informatie over de volgende onderwerpen:\n\n• Je apparaat bijwerken\n• Nieuwsberichten lezen\n• Specificaties apparaat bekijken\n• Instellingen wijzigen\n\nScrol omlaag om door de inhoud te bladeren.</string>
-    <string name="help_updating_your_device_title">Je apparaat bijwerken</string>
-    <string name="help_updating_your_device_text">Als je de app opent, kun je zien of er een systeemupdate beschikbaar is. Als deze beschikbaar is, kun je hem installeren.\nOm de update te installeren, tik je als eerste op de \"Download\"-knop (onder de update-omschrijving).\n\nAls het downloaden klaar is, opent het installatie-scherm. Heb je de app inmiddels verlaten of verschijnt het installatie-scherm niet? Tik dan op de \"Installatie\"-knop, die nu naast de Downloadknop staat.\n\nHet installatie-scherm zal als eerste op root-toegang controleren. Als je root-toegang hebt, moet je de app hiervoor toestemming geven. Heb je geen root-toegang of weet je niet wat dit is? Volg dan de instructies voor Handmatige Installatie.\n\nAutomatische installatie:\nJe hoeft alleen de installatie-opties te bekijken en waar nodig aan te passen. Selecteer eventueel een root-bestand om te (her)installeren en je bent er helemaal klaar voor. Tik op \"Start installatie\" om de installatie te starten.\n\nHandmatige installatie:\nEr verschijnt een installatiehandleiding op het scherm. Deze bevat de instructies voor het handmatig installeren van de update. Omdat je je apparaat tijdens het installeren moet uitschakelen, is het aanbevolen om alle instructies eerst op te schrijven, en ze vervolgens pas uit te voeren.</string>
-    <string name="help_reading_news_title">Nieuwsberichten lezen</string>
-    <string name="help_reading_news_text">Nieuwsberichten worden aan de linkerkant van het update-scherm getoond. De meest recente berichten staan bovenaan de lijst. Tik op een item om het te bekijken, en tik op het pijltje naar links (of de terug-toets) om terug te keren naar het nieuwsoverzicht.</string>
-    <string name="help_device_information_title">Specificaties apparaat bekijken</string>
-    <string name="help_device_information_text">Je kunt sommige specificaties van je apparaat bekijken, deze staan aan de rechterkant van het update-scherm. Dit is met name handig bij het doen van een support-aanvraag, omdat de ontwikkelaar deze gegevens meestal nodig heeft om je te helpen met het oplossen van je probleem.</string>
-    <string name="help_change_settings_title">Instellingen wijzigen</string>
-    <string name="help_change_settings_text">Je kunt een aantal instellingen wijzigen door op de drie puntjes rechtsboven te tikken, en vervolgens voor Instellingen te kiezen.\nJe kunt de volgende instellingen wijzigen:\n\n• Apparaat en update-methode\n• Pushnotificaties\n• Notificaties in de app\n• Privacy-instellingen (delen van logbestanden).\n\nOm notificatie-voorkeuren en privacy-instellignen te wijzigen, zet je de schuifjes aan of uit. Om een apparaat of update-methode te kiezen, gebruik je de dropdown-menu\'s. Zijn deze velden niet zichtbaar? Controleer dan eerst je verbinding en open het Instellingen-scherm opnieuw.</string>
 
-    <!-- News strings -->
-    <string name="news">Nieuws</string>
-    <string name="news_author">Geschreven door: %1$s</string>
-    <string name="news_date_published">Laatste update: %1$s</string>
-    <string name="news_empty">Dit artikel bevat geen inhoud.</string>
-    <string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \'OPNIEUW\' om het artikel opnieuw te laden.</string>
+	<!-- Help strings -->
+	<string name="help">Help</string>
+	<string name="help_text">Welkom bij de helpfunctie van Oxygen Updater.\n\nHelp bevat informatie over de volgende onderwerpen:\n\n• Je apparaat bijwerken\n• Nieuwsberichten lezen\n• Specificaties apparaat bekijken\n• Instellingen wijzigen\n\nScrol omlaag om door de inhoud te bladeren.</string>
+	<string name="help_updating_your_device_title">Je apparaat bijwerken</string>
+	<string name="help_updating_your_device_text">Als je de app opent, kun je zien of er een systeemupdate beschikbaar is. Als deze beschikbaar is, kun je hem installeren.\nOm de update te installeren, tik je als eerste op de \"Download\"-knop (onder de update-omschrijving).\n\nAls het downloaden klaar is, opent het installatie-scherm. Heb je de app inmiddels verlaten of verschijnt het installatie-scherm niet? Tik dan op de \"Installatie\"-knop, die nu naast de Downloadknop staat.\n\nHet installatie-scherm zal als eerste op root-toegang controleren. Als je root-toegang hebt, moet je de app hiervoor toestemming geven. Heb je geen root-toegang of weet je niet wat dit is? Volg dan de instructies voor Handmatige Installatie.\n\nAutomatische installatie:\nJe hoeft alleen de installatie-opties te bekijken en waar nodig aan te passen. Selecteer eventueel een root-bestand om te (her)installeren en je bent er helemaal klaar voor. Tik op \"Start installatie\" om de installatie te starten.\n\nHandmatige installatie:\nEr verschijnt een installatiehandleiding op het scherm. Deze bevat de instructies voor het handmatig installeren van de update. Omdat je je apparaat tijdens het installeren moet uitschakelen, is het aanbevolen om alle instructies eerst op te schrijven, en ze vervolgens pas uit te voeren.</string>
+	<string name="help_reading_news_title">Nieuwsberichten lezen</string>
+	<string name="help_reading_news_text">Nieuwsberichten worden aan de linkerkant van het update-scherm getoond. De meest recente berichten staan bovenaan de lijst. Tik op een item om het te bekijken, en tik op het pijltje naar links (of de terug-toets) om terug te keren naar het nieuwsoverzicht.</string>
+	<string name="help_device_information_title">Specificaties apparaat bekijken</string>
+	<string name="help_device_information_text">Je kunt sommige specificaties van je apparaat bekijken, deze staan aan de rechterkant van het update-scherm. Dit is met name handig bij het doen van een support-aanvraag, omdat de ontwikkelaar deze gegevens meestal nodig heeft om je te helpen met het oplossen van je probleem.</string>
+	<string name="help_change_settings_title">Instellingen wijzigen</string>
+	<string name="help_change_settings_text">Je kunt een aantal instellingen wijzigen door op de drie puntjes rechtsboven te tikken, en vervolgens voor Instellingen te kiezen.\nJe kunt de volgende instellingen wijzigen:\n\n• Apparaat en update-methode\n• Pushnotificaties\n• Notificaties in de app\n• Privacy-instellingen (delen van logbestanden).\n\nOm notificatie-voorkeuren en privacy-instellignen te wijzigen, zet je de schuifjes aan of uit. Om een apparaat of update-methode te kiezen, gebruik je de dropdown-menu\'s. Zijn deze velden niet zichtbaar? Controleer dan eerst je verbinding en open het Instellingen-scherm opnieuw.</string>
 
-    <!-- Contribute strings -->
-    <string name="contribute">Draag bij</string>
-    <string name="contribute_title">Maak Oxygen Updater nóg beter</string>
-    <string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon. \n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend. Alleen de .ota-map op uw telefoon wordt eenmaal per 15 minuten gescand. Het controleert alleen voor een specifieke naam in die bepaalde map.</string>
-    <string name="contribute_image_description">Upload bestandsnamen naar de app-server</string>
-    <string name="contribute_agree">Ik help mee en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
-    <string name="contribute_agree_from_setup">Ik wil helpen om de app nog beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
-    <string name="contribute_save">Bewaar keuze</string>
-    <string name="contribute_more_info">Meer informatie …</string>
-    <string name="contribute_allow_storage">Geef de app toegang tot de opslagruimte om te helpen met verbeteren</string>
-    <string name="contribute_successful_notification_title">Bedankt voor je bijdrage</string>
-    <string name="contribute_successful_notification_text">Update-bestandsnaam %1$s is met onze beheerders gedeeld!</string>
+	<!-- News strings -->
+	<string name="news">Nieuws</string>
+	<string name="news_author">Geschreven door: %1$s</string>
+	<string name="news_date_published">Laatste update: %1$s</string>
+	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
+	<string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \'OPNIEUW\' om het artikel opnieuw te laden.</string>
 
-    <!-- Error strings -->
-    <string name="error_app_outdated">Oeps!</string>
-    <string name="error_app_outdated_message">Deze versie van de app is wel erg oud. Het is tijd om hem bij te werken! Dit kan door hieronder op \"Play Store\" te tikken. Tik vervolgens in Google Play op \"Bijwerken\".</string>
-    <string name="error_app_requires_network_connection">Geen verbinding</string>
-    <string name="error_app_requires_network_connection_message">Kan geen verbinding met de server maken. Zorg ervoor dat je een werkende internetverbinding hebt. De app zal nu afsluiten.</string>
-    <string name="error_button_retry">Opnieuw</string>
-    <string name="error_google_play_button_text">Google Play</string>
-    <string name="error_exit_button_text">Afsluiten</string>
-    <string name="error_no_internet_connection">Geen verbinding.</string>
-    <string name="error_maintenance">Serveronderhoud</string>
-    <string name="error_maintenance_message">Een ogenblik geduld. De server zal zeer snel weer beschikbaar zijn.</string>
-    <string name="error_push_failure">Notificaties konden niet worden aangezet. Sluit de app volledig af en start hem over enkele minuten opnieuw op.</string>
-    <string name="error_reload">Opnieuw laden</string>
-    <string name="error_unable_to_rate_app">Je kunt de app niet beoordelen, omdat je de Google Play Store niet hebt geïnstalleerd.</string>
-    
-    <!-- Message box strings -->
-    <string name="delete_message_title">Update is al gedownload</string>
-    <string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installatie\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
-    <string name="delete_message_delete_button">Verwijder</string>
+	<!-- Contribute strings -->
+	<string name="contribute">Draag bij</string>
+	<string name="contribute_title">Maak Oxygen Updater nóg beter</string>
+	<string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon. \n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend. Alleen de .ota-map op uw telefoon wordt eenmaal per 15 minuten gescand. Het controleert alleen voor een specifieke naam in die bepaalde map.</string>
+	<string name="contribute_image_description">Upload bestandsnamen naar de app-server</string>
+	<string name="contribute_agree">Ik help mee en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
+	<string name="contribute_agree_from_setup">Ik wil helpen om de app nog beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
+	<string name="contribute_save">Bewaar keuze</string>
+	<string name="contribute_more_info">Meer informatie …</string>
+	<string name="contribute_allow_storage">Geef de app toegang tot de opslagruimte om te helpen met verbeteren</string>
+	<string name="contribute_successful_notification_title">Bedankt voor je bijdrage</string>
+	<string name="contribute_successful_notification_text">Update-bestandsnaam %1$s is met onze beheerders gedeeld!</string>
 
-    <string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
-    <string name="unsupported_device_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan. \n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
-    <string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
+	<!-- Error strings -->
+	<string name="error_app_outdated">Oeps!</string>
+	<string name="error_app_outdated_message">Deze versie van de app is wel erg oud. Het is tijd om hem bij te werken! Dit kan door hieronder op \"Play Store\" te tikken. Tik vervolgens in Google Play op \"Bijwerken\".</string>
+	<string name="error_app_requires_network_connection">Geen verbinding</string>
+	<string name="error_app_requires_network_connection_message">Kan geen verbinding met de server maken. Zorg ervoor dat je een werkende internetverbinding hebt. De app zal nu afsluiten.</string>
+	<string name="error_button_retry">Opnieuw</string>
+	<string name="error_google_play_button_text">Google Play</string>
+	<string name="error_exit_button_text">Afsluiten</string>
+	<string name="error_no_internet_connection">Geen verbinding.</string>
+	<string name="error_maintenance">Serveronderhoud</string>
+	<string name="error_maintenance_message">Een ogenblik geduld. De server zal zeer snel weer beschikbaar zijn.</string>
+	<string name="error_push_failure">Notificaties konden niet worden aangezet. Sluit de app volledig af en start hem over enkele minuten opnieuw op.</string>
+	<string name="error_reload">Opnieuw laden</string>
+	<string name="error_unable_to_rate_app">Je kunt de app niet beoordelen, omdat je de Google Play Store niet hebt geïnstalleerd.</string>
 
-    <string name="root_check_title">Root-toegang</string>
-    <string name="root_check_message">Oxygen Updater biedt eenvoudige, automatische update-installaties voor gebruikers met root-toegang. Maar: de incrementele updates werken niet als je root-toegang hebt. Oxygen Updater kan op root-toegang controleren om de juiste-update-methode(s) aan te bieden. \n\nAls je root-toegang hebt, geef dan na het sluiten van deze melding toestemming voor het gebruik van root-toegang.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
+	<!-- Message box strings -->
+	<string name="delete_message_title">Update is al gedownload</string>
+	<string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installatie\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
+	<string name="delete_message_delete_button">Verwijder</string>
 
-    <!-- Purchase strings -->
-    <string name="purchase_error_before_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw.</string>
-    <string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
+	<string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
+	<string name="unsupported_device_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan. \n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
+	<string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
-    <!-- Other strings -->
-    <string name="icon">Icoon</string>
-    <string name="loading">Laden…</string>
-    <string name="processing">Verwerken…</string>
-    <string name="choose_file">Kies een bestand</string>
-    <string name="delayed_push_notification_displayer_service_name">"Pushnotificatie-service"</string>
-    <string name="log_uploader_service_name">"Foutenrapportage-service"</string>
-    <string name="root_install_logger_service_name">Logger voor update-installaties</string>
-    <string name="download_service_name">Update-downloadservice</string>
+	<string name="root_check_title">Root-toegang</string>
+	<string name="root_check_message">Oxygen Updater biedt eenvoudige, automatische update-installaties voor gebruikers met root-toegang. Maar: de incrementele updates werken niet als je root-toegang hebt. Oxygen Updater kan op root-toegang controleren om de juiste-update-methode(s) aan te bieden. \n\nAls je root-toegang hebt, geef dan na het sluiten van deze melding toestemming voor het gebruik van root-toegang.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
+
+	<!-- Purchase strings -->
+	<string name="purchase_error_before_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw.</string>
+	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
+
+	<!-- Other strings -->
+	<string name="icon">Icoon</string>
+	<string name="loading">Laden…</string>
+	<string name="processing">Verwerken…</string>
+	<string name="choose_file">Kies een bestand</string>
+	<string name="delayed_push_notification_displayer_service_name">"Pushnotificatie-service"</string>
+	<string name="log_uploader_service_name">"Foutenrapportage-service"</string>
+	<string name="root_install_logger_service_name">Logger voor update-installaties</string>
+	<string name="download_service_name">Update-downloadservice</string>
 </resources>

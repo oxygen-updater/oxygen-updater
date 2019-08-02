@@ -1,73 +1,73 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".setupwizard.SetupActivity">
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+	android:paddingTop="@dimen/activity_vertical_margin"
+	android:paddingRight="@dimen/activity_horizontal_margin"
+	android:paddingBottom="@dimen/activity_vertical_margin"
+	tools:context=".setupwizard.SetupActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/introduction_step_3_image"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:contentDescription="@string/install_guide_image_description"
-            android:src="@drawable/ic_phone" />
+		<ImageView
+			android:id="@+id/introduction_step_3_image"
+			android:layout_width="300dp"
+			android:layout_height="100dp"
+			android:layout_centerHorizontal="true"
+			android:contentDescription="@string/install_guide_image_description"
+			android:src="@drawable/ic_phone" />
 
-        <TextView
-            android:id="@+id/introduction_step_3_header_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/introduction_step_3_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/setup_page_3_title"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+		<TextView
+			android:id="@+id/introduction_step_3_header_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/introduction_step_3_image"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="10dp"
+			android:text="@string/setup_page_3_title"
+			android:textAppearance="?android:textAppearanceLarge"
+			android:textSize="18sp"
+			android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/introduction_step_3_device_dropdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/introduction_step_3_header_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp" />
+		<Spinner
+			android:id="@+id/introduction_step_3_device_dropdown"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/introduction_step_3_header_text"
+			android:layout_centerHorizontal="true"
+			android:layout_marginStart="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="20dp"
+			android:layout_marginRight="20dp" />
 
-        <ProgressBar
-            android:id="@+id/introduction_step_3_device_loading_bar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignTop="@id/introduction_step_3_device_dropdown"
-            style="?android:attr/progressBarStyleSmall"
-            android:visibility="gone"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/introduction_step_3_device_dropdown" />
+		<ProgressBar
+			android:id="@+id/introduction_step_3_device_loading_bar"
+			style="?android:attr/progressBarStyleSmall"
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:layout_alignTop="@id/introduction_step_3_device_dropdown"
+			android:layout_marginTop="5dp"
+			android:layout_toEndOf="@id/introduction_step_3_device_dropdown"
+			android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/introduction_step_3_text_block_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/introduction_step_3_device_dropdown"
-            android:layout_marginEnd="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@string/setup_page_3_text"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@color/material_blue_grey" />
+		<TextView
+			android:id="@+id/introduction_step_3_text_block_1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/introduction_step_3_device_dropdown"
+			android:layout_marginStart="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="20dp"
+			android:layout_marginRight="20dp"
+			android:text="@string/setup_page_3_text"
+			android:textAppearance="?android:textAppearanceMedium"
+			android:textColor="@color/material_blue_grey" />
 
 
-    </RelativeLayout>
+	</RelativeLayout>
 </ScrollView>

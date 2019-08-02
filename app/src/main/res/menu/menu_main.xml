@@ -1,29 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.MainActivity">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="0"
-        android:title="@string/settings"
-        app:showAsAction="never" />
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".views.MainActivity">
+	<item
+		android:id="@+id/action_settings"
+		android:orderInCategory="0"
+		android:title="@string/settings"
+		app:showAsAction="never" />
 
-    <item
-        android:id="@+id/action_faq"
-        android:orderInCategory="30"
-        android:title="@string/faq_menuitem"
-        android:icon="@drawable/ic_action_faq"
-        app:showAsAction="ifRoom" />
+	<item
+		android:id="@+id/action_faq"
+		android:icon="@drawable/ic_action_faq"
+		android:orderInCategory="30"
+		android:title="@string/faq_menuitem"
+		app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_help"
-        android:orderInCategory="50"
-        android:icon="@drawable/ic_action_help"
-        app:showAsAction="ifRoom"
-        android:title="@string/help" />
+	<item
+		android:id="@+id/action_help"
+		android:icon="@drawable/ic_action_help"
+		android:orderInCategory="50"
+		android:title="@string/help"
+		app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_about"
-        android:orderInCategory="100"
-        android:title="@string/about" />
+	<item
+		android:id="@+id/action_about"
+		android:orderInCategory="100"
+		android:title="@string/about" />
 </menu>
