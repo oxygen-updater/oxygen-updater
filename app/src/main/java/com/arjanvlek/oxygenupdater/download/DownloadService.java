@@ -14,9 +14,10 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StatFs;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
 import android.util.Pair;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;

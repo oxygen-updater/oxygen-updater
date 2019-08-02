@@ -1,22 +1,17 @@
 package com.arjanvlek.oxygenupdater.contribution;
 
-import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Objects;
-
-import static com.arjanvlek.oxygenupdater.views.MainActivity.PERMISSION_REQUEST_CODE;
-import static com.arjanvlek.oxygenupdater.views.MainActivity.VERIFY_FILE_PERMISSION;
 
 /**
  * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 02/05/2019.

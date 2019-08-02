@@ -139,7 +139,7 @@
                 android:text="@string/settings_server_messages_new_app_version"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsAppUpdatesSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                 android:text="@string/settings_server_messages_in_app"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsAppMessagesSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
                 android:text="@string/settings_push_from_server"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsImportantPushNotificationsSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -217,7 +217,7 @@
                 android:text="@string/settings_push_new_version"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsNewVersionPushNotificationsSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                 android:text="@string/settings_push_new_device"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsNewDevicePushNotificationsSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -255,7 +255,7 @@
                 android:text="@string/settings_push_news"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsNewsPushNotificationsSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
                 android:padding="3dp"
                 android:layout_alignBottom="@id/settingsAdvancedModeView" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsAdvancedModeSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -324,7 +324,7 @@
                 android:text="@string/settings_upload_logs"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <android.support.v7.widget.SwitchCompat
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/settingsUploadLogsSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -3,13 +3,14 @@ package com.arjanvlek.oxygenupdater.news;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
@@ -20,9 +21,6 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.google.android.gms.ads.InterstitialAd;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class NewsActivity extends AppCompatActivity {
 

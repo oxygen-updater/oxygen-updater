@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"/>
 
     <!-- Main screen -->
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/updateInformationRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -195,9 +195,9 @@
 
             </RelativeLayout>
         </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/updateInformationSystemIsUpToDateRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -265,7 +265,7 @@
 
             </RelativeLayout>
         </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/updateInformationAdView"

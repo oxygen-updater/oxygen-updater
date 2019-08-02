@@ -1,14 +1,13 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 

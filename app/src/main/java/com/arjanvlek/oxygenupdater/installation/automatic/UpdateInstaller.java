@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
+import eu.chainfire.libsuperuser.Shell.Pool;
 
 public class UpdateInstaller {
 

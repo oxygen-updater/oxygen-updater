@@ -19,7 +19,7 @@
             android:textAlignment="center"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/customizeSettingsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                         android:layout_weight="1"
                         android:text="@string/install_options_backup" />
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/backupDeviceSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -76,7 +76,7 @@
                         android:layout_weight="1"
                         android:text="@string/install_options_keep_root" />
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/keepDeviceRootedSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -136,7 +136,7 @@
                         android:layout_weight="1"
                         android:text="@string/install_options_wipe_cache_partition" />
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/wipeCachePartitionSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -157,7 +157,7 @@
                         android:layout_weight="1"
                         android:text="@string/install_options_reboot_after_install" />
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/rebootAfterInstallSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -175,7 +175,7 @@
                     android:text="@string/install_options_start_install" />
 
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/settingsExplanationContainer"

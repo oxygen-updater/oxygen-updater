@@ -28,6 +28,23 @@ public class Utils {
     private static Random random = new Random();
 
     /**
+     * Originally part of {@link com.google.android.gms.common.util.NumberUtils},
+     * removed in later versions
+     *
+     * @param string the string to test
+     *
+     * @return true if string is a number, false otherwise
+     */
+    public static boolean isNumeric(String string) {
+        try {
+            Long.parseLong(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
      * Converts DiP units to pixels
      */
     public static int diPToPixels(Activity activity, int numberOfPixels) {

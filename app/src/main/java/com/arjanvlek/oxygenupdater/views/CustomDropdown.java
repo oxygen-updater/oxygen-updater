@@ -2,12 +2,13 @@ package com.arjanvlek.oxygenupdater.views;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.LayoutRes;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.LayoutRes;
+import androidx.core.content.ContextCompat;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;

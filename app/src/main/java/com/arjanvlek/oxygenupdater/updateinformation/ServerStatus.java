@@ -1,13 +1,14 @@
 package com.arjanvlek.oxygenupdater.updateinformation;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.android.gms.common.util.NumberUtils;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServerStatus implements Banner {
@@ -58,7 +59,7 @@ public class ServerStatus implements Banner {
 
     @JsonProperty("push_notification_delay_seconds")
     public void setPushNotificationDelaySeconds(String pushNotificationDelaySeconds) {
-        if (pushNotificationDelaySeconds != null && NumberUtils.isNumeric(pushNotificationDelaySeconds)) {
+        if (pushNotificationDelaySeconds != null && Utils.isNumeric(pushNotificationDelaySeconds)) {
             this.pushNotificationDelaySeconds = Integer.parseInt(pushNotificationDelaySeconds);
         }
     }

@@ -1,6 +1,6 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 
