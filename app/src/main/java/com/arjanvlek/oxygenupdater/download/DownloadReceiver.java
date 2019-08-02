@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * DownloadReceiver is capable of sending status updates from {@link DownloadService} to the UI A
- * UpdateDownloadListener is saved when registering the receiver, that contains the actual code of
+ * DownloadReceiver is capable of sending status updates from {@link DownloadService} to the UI
+ * <p>
+ * A UpdateDownloadListener is saved when registering the receiver, that contains the actual code of
  * the UI class.
  * <p>
  * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 03/01/2019.
@@ -31,6 +32,7 @@ public class DownloadReceiver extends BroadcastReceiver {
 	public static final String PARAM_ERROR_IS_STORAGE_SPACE_ERROR = "IS_STORAGE_SPACE_ERROR";
 	public static final String PARAM_ERROR_IS_SERVER_ERROR = "IS_SERVER_ERROR";
 	private final UpdateDownloadListener UIDownloadListener;
+
 	public DownloadReceiver(UpdateDownloadListener UIDownloadListener) {
 		if (UIDownloadListener == null) {
 			throw new IllegalArgumentException("UIDownloadListener cannot be null");

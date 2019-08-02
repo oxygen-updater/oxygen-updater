@@ -61,54 +61,40 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWN
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DOWNLOAD_PROGRESS;
 
 /**
- * DownloadService handles the downloading and MD5 verification of OxygenOS updates. It does so by
- * using the PRDownloader library, which offers Pause and Resume support as well as automatic
- * recovery after network loss. The service also sends status updates to {@link DownloadReceiver},
- * which can pass the status of the download to the UI.
- * <p>
+ * DownloadService handles the downloading and MD5 verification of OxygenOS updates.
+ * It does so by using the PRDownloader library, which offers Pause and Resume support as well as automatic recovery after network loss.
+ * The service also sends status updates to {@link DownloadReceiver}, which can pass the status of the download to the UI.
+ *
  * This is a *very* complex service, because it is responsible for all state transitions that take
- * place when downloading or verifying an update. See {@link DownloadStatus} for all possible
- * states.
- * <p>
- * To make clear how this service can be used, see the following state table. Its rows contain all
- * possible transitions (initiated by actions() or events) given a state S and an updateData UD Its
- * columns describe the state S' the service is in (for this UD) *after* having performed the
- * transition.
- * <p>
- * State S \ S'                           NOT_DOWNLOADING      DOWNLOAD_QUEUED     DOWNLOADING
- * DOWNLOAD_PAUSED   DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION   VERIFYING         DOWNLOAD_COMPLETED
- * NOT_DOWNLOADING                        null / noDownloadUrl downloadUpdate()        (-)
- *       (-)                         (-)                         (-)
- * updateAlreadyDownloaded DOWNLOAD_QUEUED                        insufficientStorage        (-)
- *      downloadStarted    serviceSuspended                  (-)                         (-)
- *            (-) DOWNLOADING                            cancelDownload(),          (-)
- *  (-)           pauseDownload(),             connectionError             downloadComplete
- *   (-) serverError                (-)               (-)           serviceSuspended
- *  (-)                         (-)                    (-) DOWNLOAD_PAUSED
- * cancelDownload()      resumeDownload()       (-)                 (-)                         (-)
- *                        (-)                    (-) DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION
- * cancelDownload()     connectionRestored      (-)                 (-)                         (-)
- *                        (-)                    (-) VERIFYING
- * verificationError          (-)               (-)                 (-)                         (-)
- *                        (-)            verificationComplete DOWNLOAD_COMPLETED
- * deleteDownload(),          (-)               (-)                 (-)                         (-)
- * (-)                    (-) updateManuallyDeleted
- * <p>
- * Background running of this service When the app gets killed, the service gets killed as well, but
- * when this happens and it was still running (that is: in the state DOWNLOADING or VERIFYING), it
- * will get auto-restarted via an ACTION_SERVICE_RESTART intent (through {@link
- * DownloadServiceRestarter}) A restart then calls resumeDownload() when the state was DOWNLOADING
- * or verifyUpdate() when the state was VERIFYING. The state is saved in
- * SettingsManager.PROPERTY_DOWNLOADER_STATE.
- * <p>
- * Thread loop (in onHandleIntent()) To prevent the service from continuously restarting when
- * downloading / verifying (as those have own threads, so the main thread is completed very
- * quickly), the service executes a while-true loop in which it listens every 50ms if a new command
- * has been ordered or if the download has finished. If a new command has been ordered, it exits the
- * current loop (causing a restart), executes the new Intent (because Intents are sequential) and
- * then executes the restart intent The after-executed restart intent *should* do nothing, because
- * the action usually cancelled or paused the download.
- * <p>
+ * place when downloading or verifying an update. See {@link DownloadStatus} for all possible states.
+ *
+ * To make clear how this service can be used, see the following state table.
+ * Its rows contain all possible transitions (initiated by actions() or events) given a state S and an updateData UD
+ * Its columns describe the state S' the service is in (for this UD) *after* having performed the transition.
+ *
+ * State S \ S'                           NOT_DOWNLOADING      DOWNLOAD_QUEUED     DOWNLOADING       DOWNLOAD_PAUSED   DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION   VERIFYING         DOWNLOAD_COMPLETED
+ * NOT_DOWNLOADING                        null / noDownloadUrl downloadUpdate()        (-)                 (-)                         (-)                         (-)          updateAlreadyDownloaded
+ * DOWNLOAD_QUEUED                        insufficientStorage        (-)          downloadStarted    serviceSuspended                  (-)                         (-)                    (-)
+ * DOWNLOADING                            cancelDownload(),          (-)               (-)           pauseDownload(),             connectionError             downloadComplete            (-)
+ *                                        serverError                (-)               (-)           serviceSuspended                  (-)                         (-)                    (-)
+ * DOWNLOAD_PAUSED                        cancelDownload()      resumeDownload()       (-)                 (-)                         (-)                         (-)                    (-)
+ * DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION cancelDownload()     connectionRestored      (-)                 (-)                         (-)                         (-)                    (-)
+ * VERIFYING                              verificationError          (-)               (-)                 (-)                         (-)                         (-)            verificationComplete
+ * DOWNLOAD_COMPLETED                     deleteDownload(),          (-)               (-)                 (-)                         (-)                         (-)                    (-)
+ *                                        updateManuallyDeleted
+ *
+ * Background running of this service
+ * When the app gets killed, the service gets killed as well, but when this happens and it was still running
+ * (that is: in the state DOWNLOADING or VERIFYING), it will get auto-restarted via an ACTION_SERVICE_RESTART intent (through {@link DownloadServiceRestarter})
+ * A restart then calls resumeDownload() when the state was DOWNLOADING or verifyUpdate() when the state was VERIFYING.
+ * The state is saved in SettingsManager.PROPERTY_DOWNLOADER_STATE.
+ *
+ * Thread loop (in onHandleIntent())
+ * To prevent the service from continuously restarting when downloading / verifying (as those have own threads, so the main thread is completed very quickly),
+ * the service executes a while-true loop in which it listens every 50ms if a new command has been ordered or if the download has finished.
+ * If a new command has been ordered, it exits the current loop (causing a restart), executes the new Intent (because Intents are sequential) and then executes the restart intent
+ * The after-executed restart intent *should* do nothing, because the action usually cancelled or paused the download.
+ *
  * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 03/01/2019.
  */
 public class DownloadService extends IntentService {

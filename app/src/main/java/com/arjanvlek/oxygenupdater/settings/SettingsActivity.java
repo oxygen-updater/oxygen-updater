@@ -104,9 +104,9 @@ public class SettingsActivity extends AbstractActivity {
 	public void onDestroy() {
 		super.onDestroy();
 		try {
-            if (iabHelper != null) {
-                iabHelper.disposeWhenFinished();
-            }
+			if (iabHelper != null) {
+				iabHelper.disposeWhenFinished();
+			}
 			iabHelper = null;
 		} catch (Throwable ignored) {
 
@@ -140,9 +140,9 @@ public class SettingsActivity extends AbstractActivity {
 
 			Spinner spinner = findViewById(R.id.settingsDeviceSpinner);
 
-            if (spinner == null) {
-                return;
-            }
+			if (spinner == null) {
+				return;
+			}
 
 			// Set the spinner to the previously selected device.
 			final int recommendedPosition = StreamSupport.stream(devices)
@@ -211,9 +211,9 @@ public class SettingsActivity extends AbstractActivity {
 	private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
 		if (updateMethods != null && !updateMethods.isEmpty()) {
 			Spinner spinner = findViewById(R.id.settingsUpdateMethodSpinner);
-            if (spinner == null) {
-                return;
-            }
+			if (spinner == null) {
+				return;
+			}
 
 			long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
 
@@ -368,9 +368,9 @@ public class SettingsActivity extends AbstractActivity {
 			Logger.logDebug(TAG, "IAB: Setup complete");
 
 			// Have we been disposed of in the meantime? If so, quit.
-            if (iabHelper == null) {
-                return;
-            }
+			if (iabHelper == null) {
+				return;
+			}
 
 			Logger.logDebug(TAG, "IAB: Start querying inventory");
 
@@ -424,8 +424,10 @@ public class SettingsActivity extends AbstractActivity {
 	}
 
 	/**
-	 * Handler which is called when the Buy button is clicked. Starts the purchase process or
-	 * initializes a new IabHelper if the current one was disposed early.
+	 * Handler which is called when the Buy button is clicked.
+	 * <p>
+	 * Starts the purchase process or initializes a new IabHelper if the current one was disposed
+	 * early.
 	 *
 	 * @param v Button which was clicked.
 	 */

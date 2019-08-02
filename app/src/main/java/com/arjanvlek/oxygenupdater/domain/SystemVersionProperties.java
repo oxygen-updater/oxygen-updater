@@ -16,8 +16,9 @@ import java.util.Scanner;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 
 /**
- * Contains some properties of the OS / ROM installed on the device. Used to read / extract
- * OnePlus-specific properties from the ROM.
+ * Contains some properties of the OS / ROM installed on the device.
+ * <p>
+ * Used to read / extract  OnePlus-specific properties from the ROM.
  */
 public class SystemVersionProperties {
 
