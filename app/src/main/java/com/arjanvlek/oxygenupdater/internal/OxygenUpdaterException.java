@@ -5,11 +5,13 @@ package com.arjanvlek.oxygenupdater.internal;
  */
 public class OxygenUpdaterException extends RuntimeException {
 
-    /**
-     * Errors / warnings which must be logged to Firebase but will *not* cause the app to crash for the user.
-     * @param message Warning / Error message to log
-     */
-    public OxygenUpdaterException(String message) {
-        super(message);
-    }
+	/**
+	 * Errors / warnings which must be logged to Firebase but will *not* cause the app to crash for
+	 * the user.
+	 *
+	 * @param message Warning / Error message to log
+	 */
+	public OxygenUpdaterException(String message) {
+		super(message);
+	}
 }

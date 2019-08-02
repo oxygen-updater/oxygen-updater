@@ -7,7 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class UpdateDownloadException extends OxygenUpdaterException {
 
-    public UpdateDownloadException(String failureReason) {
-        super(failureReason);
-    }
+	public UpdateDownloadException(String failureReason) {
+		super(failureReason);
+	}
 }

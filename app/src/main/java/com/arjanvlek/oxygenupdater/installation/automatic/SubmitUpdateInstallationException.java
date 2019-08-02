@@ -7,7 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class SubmitUpdateInstallationException extends OxygenUpdaterException {
 
-    public SubmitUpdateInstallationException(String message) {
-        super(message);
-    }
+	public SubmitUpdateInstallationException(String message) {
+		super(message);
+	}
 }

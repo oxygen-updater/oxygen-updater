@@ -51,286 +51,291 @@ import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
 
 public class NewsFragment extends AbstractFragment {
 
-    private static final SparseArray<Bitmap> imageCache = new SparseArray<>();
-    private static final String TAG = "NewsFragment";
-    private boolean hasBeenLoadedOnce = false;
+	private static final SparseArray<Bitmap> imageCache = new SparseArray<>();
+	private static final String TAG = "NewsFragment";
+	private boolean hasBeenLoadedOnce = false;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_news, container, false);
-    }
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+	                         @Nullable Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
+		return inflater.inflate(R.layout.fragment_news, container, false);
+	}
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        // Load the news after up to 3 seconds to allow the update info screen to load first
-        // This way, the app feels a lot faster. Also, it doesn't affect users that much, as they will always see the update info screen first.
-        new Handler().postDelayed(() -> refreshNews(view, null), getLoadDelayMilliseconds());
+	@Override
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+		// Load the news after up to 3 seconds to allow the update info screen to load first
+		// This way, the app feels a lot faster. Also, it doesn't affect users that much, as they will always see the update info screen first.
+		new Handler().postDelayed(() -> refreshNews(view, null), getLoadDelayMilliseconds());
 
-        SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
-        refreshLayout.setOnRefreshListener(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)));
-    }
+		SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
+		refreshLayout.setOnRefreshListener(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)));
+	}
 
 
-    private void refreshNews(View view, Consumer<Void> callback) {
-        // If the view was suspended during the 3-second delay, stop performing any further actions.
-        if (!isAdded() || getActivity() == null) {
-            return;
-        }
-        Long deviceId = getSettingsManager().getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L);
-        Long updateMethodId = getSettingsManager().getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
-        getServerConnector().getNews(getApplicationData(), deviceId, updateMethodId, (newsItems -> displayNewsItems(view, newsItems, callback)));
-    }
+	private void refreshNews(View view, Consumer<Void> callback) {
+		// If the view was suspended during the 3-second delay, stop performing any further actions.
+		if (!isAdded() || getActivity() == null) {
+			return;
+		}
+		Long deviceId = getSettingsManager().getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L);
+		Long updateMethodId = getSettingsManager().getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
+		getServerConnector().getNews(getApplicationData(), deviceId, updateMethodId, (newsItems -> displayNewsItems(view, newsItems, callback)));
+	}
 
-    private static class NewsItemView {
-        private CardView container;
-        private ImageView image;
-        private ImageView imagePlaceholder;
-        private TextView title;
-        private TextView subtitle;
-    }
+	private void displayNewsItems(View view, List<NewsItem> newsItems, Consumer<Void> callback) {
+		ListView newsContainer = view.findViewById(R.id.newsContainer);
 
-    private void displayNewsItems(View view, List<NewsItem> newsItems, Consumer<Void> callback) {
-        ListView newsContainer = view.findViewById(R.id.newsContainer);
+		if (!isAdded()) {
+			Logger.logError(TAG, new OxygenUpdaterException("isAdded() returned false (displayNewsItems)"));
+			return;
+		}
 
-        if (!isAdded()) {
-            Logger.logError(TAG, new OxygenUpdaterException("isAdded() returned false (displayNewsItems)"));
-            return;
-        }
+		if (getActivity() == null) {
+			Logger.logError(TAG, new OxygenUpdaterException("getActivity() returned null (displayNewsItems)"));
+			return;
+		}
 
-        if (getActivity() == null) {
-            Logger.logError(TAG, new OxygenUpdaterException("getActivity() returned null (displayNewsItems)"));
-            return;
-        }
+		newsContainer.setAdapter(new ListAdapter() {
 
-        newsContainer.setAdapter(new ListAdapter() {
+			@Override
+			public boolean areAllItemsEnabled() {
+				return true;
+			}
 
-            @Override
-            public boolean areAllItemsEnabled() {
-                return true;
-            }
+			@Override
+			public boolean isEnabled(int position) {
+				return true;
+			}
 
-            @Override
-            public boolean isEnabled(int position) {
-                return true;
-            }
+			@Override
+			public void registerDataSetObserver(DataSetObserver observer) {
 
-            @Override
-            public void registerDataSetObserver(DataSetObserver observer) {
+			}
 
-            }
+			@Override
+			public void unregisterDataSetObserver(DataSetObserver observer) {
 
-            @Override
-            public void unregisterDataSetObserver(DataSetObserver observer) {
+			}
 
-            }
+			@Override
+			public int getCount() {
+				return newsItems.size();
+			}
 
-            @Override
-            public int getCount() {
-                return newsItems.size();
-            }
+			@Override
+			public Object getItem(int position) {
+				return newsItems.get(position);
+			}
 
-            @Override
-            public Object getItem(int position) {
-                return newsItems.get(position);
-            }
+			@Override
+			public long getItemId(int position) {
+				return newsItems.get(position).getId();
+			}
 
-            @Override
-            public long getItemId(int position) {
-                return newsItems.get(position).getId();
-            }
+			@Override
+			public boolean hasStableIds() {
+				return true;
+			}
 
-            @Override
-            public boolean hasStableIds() {
-                return true;
-            }
+			@Override
+			public View getView(int position, View convertView, ViewGroup parent) {
 
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+				NewsItemView newsItemView;
 
-                NewsItemView newsItemView;
+				// Shared logic for all news items to prevent unnecessary view creation.
+				if (convertView == null) {
 
-                // Shared logic for all news items to prevent unnecessary view creation.
-                if (convertView == null) {
+					newsItemView = new NewsItemView();
 
-                    newsItemView = new NewsItemView();
+					LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					if (inflater == null) {
+						Logger.logError(TAG, new OxygenUpdaterException("layoutInflater not available (displayNewsItem)"));
+						return new View(getContext());
+					}
 
-                    LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if (inflater == null) {
-                        Logger.logError(TAG, new OxygenUpdaterException("layoutInflater not available (displayNewsItem)"));
-                        return new View(getContext());
-                    }
+					convertView = inflater.inflate(R.layout.news_item, parent, false);
 
-                    convertView = inflater.inflate(R.layout.news_item, parent, false);
+					newsItemView.container = convertView.findViewById(R.id.newsItemContainer);
+					newsItemView.image = convertView.findViewById(R.id.newsItemImage);
+					newsItemView.imagePlaceholder = convertView.findViewById(R.id.newsItemImagePlaceholder);
+					newsItemView.title = convertView.findViewById(R.id.newsItemTitle);
+					newsItemView.subtitle = convertView.findViewById(R.id.newsItemSubTitle);
 
-                    newsItemView.container = convertView.findViewById(R.id.newsItemContainer);
-                    newsItemView.image = convertView.findViewById(R.id.newsItemImage);
-                    newsItemView.imagePlaceholder = convertView.findViewById(R.id.newsItemImagePlaceholder);
-                    newsItemView.title = convertView.findViewById(R.id.newsItemTitle);
-                    newsItemView.subtitle = convertView.findViewById(R.id.newsItemSubTitle);
+					convertView.setTag(newsItemView);
 
-                    convertView.setTag(newsItemView);
+				} else {
+					newsItemView = (NewsItemView) convertView.getTag();
+				}
 
-                } else {
-                    newsItemView = (NewsItemView) convertView.getTag();
+				// Logic to set the title, subtitle and image of each individual news item.
+				Locale locale = Locale.getLocale();
+
+				NewsItem newsItem = newsItems.get(position);
+                if (newsItem == null) {
+                    return convertView;
                 }
 
-                // Logic to set the title, subtitle and image of each individual news item.
-                Locale locale = Locale.getLocale();
+				newsItemView.title.setText(newsItem.getTitle(locale));
+				newsItemView.subtitle.setText(newsItem.getSubtitle(locale));
+				newsItemView.container.setOnClickListener(v -> openNewsItem(view, getApplicationData(), newsItem
+						.getId()));
 
-                NewsItem newsItem = newsItems.get(position);
-                if(newsItem == null) return convertView;
+				if (newsItem.isRead()) {
+					newsItemView.title.setAlpha(0.5f);
+					newsItemView.subtitle.setAlpha(0.7f);
+				}
 
-                newsItemView.title.setText(newsItem.getTitle(locale));
-                newsItemView.subtitle.setText(newsItem.getSubtitle(locale));
-                newsItemView.container.setOnClickListener(v -> openNewsItem(view, getApplicationData(), newsItem.getId()));
+				// Obtain the thumbnail image from the server.
+				new FunctionalAsyncTask<Void, Void, Bitmap>(() -> {
+					newsItemView.image.setVisibility(View.INVISIBLE);
+					newsItemView.imagePlaceholder.setVisibility(View.VISIBLE);
+				}, __ -> {
+					if (newsItem.getId() == null) {
+						return null;
+					}
 
-                if(newsItem.isRead()) {
-                    newsItemView.title.setAlpha(0.5f);
-                    newsItemView.subtitle.setAlpha(0.7f);
-                }
+					Bitmap image = imageCache.get(newsItem.getId().intValue());
 
-                // Obtain the thumbnail image from the server.
-                new FunctionalAsyncTask<Void, Void, Bitmap>(() -> {
-                    newsItemView.image.setVisibility(View.INVISIBLE);
-                    newsItemView.imagePlaceholder.setVisibility(View.VISIBLE);
-                }, __ -> {
-                    if (newsItem.getId() == null) {
-                        return null;
-                    }
+					if (image != null) {
+						return image;
+					}
 
-                    Bitmap image = imageCache.get(newsItem.getId().intValue());
+					image = doGetImage(newsItem.getImageUrl());
+					imageCache.put(newsItem.getId().intValue(), image);
 
-                    if (image != null) {
-                        return image;
-                    }
+					return image;
+				}, image -> {
+					if (!isAdded() || getActivity() == null) {
+						return;
+					}
 
-                    image = doGetImage(newsItem.getImageUrl());
-                    imageCache.put(newsItem.getId().intValue(), image);
+					// If a fragment is not attached, do not crash the entire application but return an empty view.
+					try {
+						getResources();
+					} catch (Exception e) {
+						return;
+					}
 
-                    return image;
-                }, image -> {
-                    if (!isAdded() || getActivity() == null) {
-                        return;
-                    }
+					if (image == null) {
+						Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
+						newsItemView.image.setImageDrawable(errorImage);
+					} else {
+						newsItemView.image.setImageBitmap(image);
+					}
+					newsItemView.image.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+					newsItemView.image.setVisibility(View.VISIBLE);
 
-                    // If a fragment is not attached, do not crash the entire application but return an empty view.
-                    try {
-                        getResources();
-                    } catch (Exception e) {
-                        return;
-                    }
+					newsItemView.imagePlaceholder.setVisibility(View.INVISIBLE);
+				}).execute();
 
-                    if (image == null) {
-                        Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
-                        newsItemView.image.setImageDrawable(errorImage);
-                    } else {
-                        newsItemView.image.setImageBitmap(image);
-                    }
-                    newsItemView.image.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-                    newsItemView.image.setVisibility(View.VISIBLE);
+				return convertView;
+			}
 
-                    newsItemView.imagePlaceholder.setVisibility(View.INVISIBLE);
-                }).execute();
+			@Override
+			public int getItemViewType(int position) {
+				return 0;
+			}
 
-                return convertView;
-            }
+			@Override
+			public int getViewTypeCount() {
+				return 1;
+			}
 
-            @Override
-            public int getItemViewType(int position) {
-                return 0;
-            }
+			@Override
+			public boolean isEmpty() {
+				return newsItems.isEmpty();
+			}
+		});
 
-            @Override
-            public int getViewTypeCount() {
-                return 1;
-            }
+		if (callback != null) {
+			callback.accept(null);
+		}
+	}
 
-            @Override
-            public boolean isEmpty() {
-                return newsItems.isEmpty();
-            }
-        });
+	private void openNewsItem(View view, Context context, Long newsItemId) {
+		if (getActivity() instanceof MainActivity) {
+			MainActivity activity = (MainActivity) getActivity();
+			if (activity.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
+				try {
+					InterstitialAd ad = activity.getNewsAd();
+					ad.setAdListener(new AdListener() {
+						@Override
+						public void onAdClosed() {
+							super.onAdClosed();
+							doOpenNewsItem(view, newsItemId);
+							ad.loadAd(getApplicationData().buildAdRequest());
+						}
+					});
+					ad.show();
 
-        if (callback != null) {
-            callback.accept(null);
-        }
-    }
+					// Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
+					getSettingsManager().savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime
+							.now()
+							.toString());
+				} catch (NullPointerException e) {
+					// Ad is not loaded, because the user bought the ad-free upgrade. Nothing to do here...
+				}
+			} else {
+				// If offline, too many ads are shown or the user has bought the ad-free upgrade, open the news item directly.
+				doOpenNewsItem(view, newsItemId);
+			}
+		} else {
+			// If not attached to main activity or coming from other activity, open the news item.
+			doOpenNewsItem(view, newsItemId);
+		}
+	}
 
-    private void openNewsItem(View view, Context context, Long newsItemId) {
-        if (getActivity() instanceof MainActivity) {
-            MainActivity activity = (MainActivity) getActivity();
-            if (activity.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
-                try {
-                    InterstitialAd ad = activity.getNewsAd();
-                    ad.setAdListener(new AdListener() {
-                        @Override
-                        public void onAdClosed() {
-                            super.onAdClosed();
-                            doOpenNewsItem(view, newsItemId);
-                            ad.loadAd(getApplicationData().buildAdRequest());
-                        }
-                    });
-                    ad.show();
+	private Bitmap doGetImage(String imageUrl) {
+		return doGetImage(imageUrl, 0);
+	}
 
-                    // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                    getSettingsManager().savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime.now().toString());
-                } catch (NullPointerException e) {
-                    // Ad is not loaded, because the user bought the ad-free upgrade. Nothing to do here...
-                }
-            } else {
-                // If offline, too many ads are shown or the user has bought the ad-free upgrade, open the news item directly.
-                doOpenNewsItem(view, newsItemId);
-            }
-        } else {
-            // If not attached to main activity or coming from other activity, open the news item.
-            doOpenNewsItem(view, newsItemId);
-        }
-    }
+	private Bitmap doGetImage(String imageUrl, int retryCount) {
+		try {
+			InputStream in = RedirectingResourceStream.getInputStream(imageUrl);
+			return BitmapFactory.decodeStream(in);
+		} catch (MalformedURLException e) {
+			// No retry, because malformed url will never work.
+			Logger.logError(TAG, new NetworkException(String.format("Error displaying news image: Invalid image URL <%s>", imageUrl)));
+			return null;
+		} catch (Exception e) {
+			if (retryCount < 5) {
+				return doGetImage(imageUrl, retryCount + 1);
+			} else {
+				if (ExceptionUtils.isNetworkError(e)) {
+					Logger.logWarning(TAG, new NetworkException(String.format("Error obtaining news image from <%s>.", imageUrl)));
+				} else {
+					Logger.logError(TAG, String.format("Error obtaining news image from <%s>", imageUrl), e);
+				}
+				return null;
+			}
+		}
+	}
 
-    private Bitmap doGetImage(String imageUrl) {
-        return doGetImage(imageUrl, 0);
-    }
+	private void doOpenNewsItem(View view, Long newsItemId) {
+		Intent intent = new Intent(getActivity(), NewsActivity.class);
+		intent.putExtra(INTENT_NEWS_ITEM_ID, newsItemId);
+		startActivity(intent);
 
-    private Bitmap doGetImage(String imageUrl, int retryCount) {
-        try {
-            InputStream in = RedirectingResourceStream.getInputStream(imageUrl);
-            return BitmapFactory.decodeStream(in);
-        } catch (MalformedURLException e) {
-            // No retry, because malformed url will never work.
-            Logger.logError(TAG, new NetworkException(String.format("Error displaying news image: Invalid image URL <%s>", imageUrl)));
-            return null;
-        } catch (Exception e) {
-            if (retryCount < 5) {
-                return doGetImage(imageUrl, retryCount + 1);
-            } else {
-                if (ExceptionUtils.isNetworkError(e)) {
-                    Logger.logWarning(TAG, new NetworkException(String.format("Error obtaining news image from <%s>.", imageUrl)));
-                } else {
-                    Logger.logError(TAG, String.format("Error obtaining news image from <%s>", imageUrl), e);
-                }
-                return null;
-            }
-        }
-    }
+		SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
 
-    private void doOpenNewsItem(View view, Long newsItemId) {
-        Intent intent = new Intent(getActivity(), NewsActivity.class);
-        intent.putExtra(INTENT_NEWS_ITEM_ID, newsItemId);
-        startActivity(intent);
+		new Handler().postDelayed(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)), 2000);
+	}
 
-        SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
+	private int getLoadDelayMilliseconds() {
+		if (!hasBeenLoadedOnce) {
+			hasBeenLoadedOnce = true;
+			return 3000;
+		}
 
-        new Handler().postDelayed(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)), 2000);
-    }
+		return 10;
+	}
 
-    private int getLoadDelayMilliseconds() {
-        if (!hasBeenLoadedOnce) {
-            hasBeenLoadedOnce = true;
-            return 3000;
-        }
-
-        return 10;
-    }
+	private static class NewsItemView {
+		private CardView container;
+		private ImageView image;
+		private ImageView imagePlaceholder;
+		private TextView title;
+		private TextView subtitle;
+	}
 }

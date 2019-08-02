@@ -7,7 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class GooglePlayBillingException extends OxygenUpdaterException {
 
-    public GooglePlayBillingException(String message) {
-        super(message);
-    }
+	public GooglePlayBillingException(String message) {
+		super(message);
+	}
 }

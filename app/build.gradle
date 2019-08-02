@@ -7,177 +7,187 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    signingConfigs {
-        signingConfig {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-    }
+	signingConfigs {
+		signingConfig {
+			keyAlias keystoreProperties['keyAlias']
+			keyPassword keystoreProperties['keyPassword']
+			storeFile file(keystoreProperties['storeFile'])
+			storePassword keystoreProperties['storePassword']
+		}
+	}
 
-    defaultConfig {
-        applicationId "com.arjanvlek.oxygenupdater"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 51
-        versionName "2.7.6"
-        signingConfig signingConfigs.signingConfig
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-    }
+	defaultConfig {
+		applicationId "com.arjanvlek.oxygenupdater"
+		minSdkVersion 21
+		targetSdkVersion 28
+		versionCode 51
+		versionName "2.7.6"
+		signingConfig signingConfigs.signingConfig
+		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+	}
 
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
-    packagingOptions {
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-        return true
-    }
+	compileSdkVersion 28
+	buildToolsVersion '28.0.3'
+	packagingOptions {
+		exclude 'META-INF/NOTICE.txt'
+		exclude 'META-INF/LICENSE.txt'
+		exclude 'META-INF/LICENSE'
+		exclude 'META-INF/NOTICE'
+		return true
+	}
 
-    buildTypes {
-        release { // Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.3/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\""
-            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
-            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series, ro.build.product\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.rom.version, ro.oxygen.version, ro.build.ota.versionname\""
-            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\""
-            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint, ro.build.fingerprint\"" // Latter one is only used on very old OOS versions.
-            buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
-            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"" // Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported.
-            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true"
+	buildTypes {
+		release {
+			// Config for releases and testing on a real device. Uses the production server, and reads system properties using the OnePlus / OxygenOS specific build.prop values.
+			buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.3/\""
+			buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\""
+			buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
+			buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series, ro.build.product\""
+			buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.rom.version, ro.oxygen.version, ro.build.ota.versionname\""
+			buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\""
+			buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint, ro.build.fingerprint\""
+			// Latter one is only used on very old OOS versions.
+			buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
+			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\""
+			// Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported.
+			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true"
 
-            minifyEnabled true
-            shrinkResources false
-            debuggable false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug { // Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.3/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\""
-            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
-            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
-            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
-            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
-            buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
-            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During debugging, all devices are supported.
-            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
+			minifyEnabled true
+			shrinkResources false
+			debuggable false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+		debug {
+			// Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
+			buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.3/\""
+			buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\""
+			buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
+			buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
+			buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
+			buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
+			buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+			buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
+			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
+			// During debugging, all devices are supported.
+			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
-            debuggable true
-            signingConfig signingConfigs.signingConfig
-        }
-        localDebug { // Config for use during debugging locally on an emulator. Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"http://10.0.2.2:8000/api/v2.3/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"http://10.0.2.2:8000/inappfaq\""
-            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
-            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
-            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
-            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
-            buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
-            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During debugging, all devices are supported.
-            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
+			debuggable true
+			signingConfig signingConfigs.signingConfig
+		}
+		localDebug {
+			// Config for use during debugging locally on an emulator. Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device / emulator.
+			buildConfigField "String", "SERVER_BASE_URL", "\"http://10.0.2.2:8000/api/v2.3/\""
+			buildConfigField "String", "FAQ_SERVER_URL", "\"http://10.0.2.2:8000/inappfaq\""
+			buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
+			buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
+			buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
+			buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
+			buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+			buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
+			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
+			// During debugging, all devices are supported.
+			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
-            debuggable true
-            signingConfig signingConfigs.signingConfig
-        }
-        screenshot { // Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.3/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\""
-            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
-            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
-            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
-            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
-            buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
-            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // During taking screenshots, all devices are supported.
-            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "false" // On screenshots no ads!
-            debuggable true
-            signingConfig signingConfigs.signingConfig
+			debuggable true
+			signingConfig signingConfigs.signingConfig
+		}
+		screenshot {
+			// Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
+			buildConfigField "String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.3/\""
+			buildConfigField "String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\""
+			buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"\""
+			buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\""
+			buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\""
+			buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\""
+			buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+			buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
+			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
+			// During taking screenshots, all devices are supported.
+			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "false" // On screenshots no ads!
+			debuggable true
+			signingConfig signingConfigs.signingConfig
 
-        }
-        device { // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop.
-            buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.3/\""
-            buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\""
-            buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
-            buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.cm.device\""
-            buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
-            buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
-            buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
-            buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
-            buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"" // On test device all build types are supported.
-            buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // On test device use ads!
-            debuggable true
-            signingConfig signingConfigs.signingConfig
+		}
+		device {
+			// Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop.
+			buildConfigField "String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.3/\""
+			buildConfigField "String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\""
+			buildConfigField "String", "NOTIFICATIONS_PREFIX", "\"test_\""
+			buildConfigField "String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.cm.device\""
+			buildConfigField "String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
+			buildConfigField "String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\""
+			buildConfigField "String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\""
+			buildConfigField "String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\""
+			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
+			// On test device all build types are supported.
+			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // On test device use ads!
+			debuggable true
+			signingConfig signingConfigs.signingConfig
 
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    productFlavors {
-    }
+		}
+	}
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_1_8
+		targetCompatibility JavaVersion.VERSION_1_8
+	}
+	productFlavors {
+	}
 
-    testBuildType "debug"
+	testBuildType "debug"
 }
 
 buildscript {
-    repositories {
-        mavenCentral()
-    }
+	repositories {
+		mavenCentral()
+	}
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 
-
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+	implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    //General Android libraries
-    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.browser:browser:1.0.0'
+	//General Android libraries
+	implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+	implementation 'androidx.cardview:cardview:1.0.0'
+	implementation 'androidx.browser:browser:1.0.0'
 
-    //JSON libraries
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9.2'
+	//JSON libraries
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9.2'
 
-    //Date and time libraries
-    implementation 'joda-time:joda-time:2.10.3'
-    implementation 'org.joda:joda-convert:2.2.1'
+	//Date and time libraries
+	implementation 'joda-time:joda-time:2.10.3'
+	implementation 'org.joda:joda-convert:2.2.1'
 
-    //Firebase libraries
-    implementation 'com.google.firebase:firebase-ads:18.1.1'
-    implementation 'com.google.firebase:firebase-messaging:19.0.1'
-    implementation 'com.google.android.gms:play-services-base:17.0.0'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+	//Firebase libraries
+	implementation 'com.google.firebase:firebase-ads:18.1.1'
+	implementation 'com.google.firebase:firebase-messaging:19.0.1'
+	implementation 'com.google.android.gms:play-services-base:17.0.0'
+	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
-    // Update downloader library
-    implementation 'com.mindorks.android:prdownloader:0.6.0'
+	// Update downloader library
+	implementation 'com.mindorks.android:prdownloader:0.6.0'
 
-    // Update installation libraries
-    implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
-    implementation 'andhradroid.dev:aFilechooser:1.0.1'
+	// Update installation libraries
+	implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
+	implementation 'andhradroid.dev:aFilechooser:1.0.1'
 
-    // Java 8 backports:
-    implementation 'net.sourceforge.streamsupport:streamsupport:1.7.1'
+	// Java 8 backports:
+	implementation 'net.sourceforge.streamsupport:streamsupport:1.7.1'
 
-    // Test libraries
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
-    androidTestImplementation 'androidx.test:rules:1.3.0-alpha02'
-    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
+	// Test libraries
+	testImplementation 'junit:junit:4.12'
+	androidTestImplementation 'androidx.test:runner:1.3.0-alpha02'
+	androidTestImplementation 'androidx.test:rules:1.3.0-alpha02'
+	androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+	androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
 
-    testImplementation 'com.squareup.okhttp3:mockwebserver:4.0.1'
+	testImplementation 'com.squareup.okhttp3:mockwebserver:4.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

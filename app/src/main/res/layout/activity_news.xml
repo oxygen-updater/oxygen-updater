@@ -1,68 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:background="@color/cardview_light_background"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/cardview_light_background">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="WebViewLayout">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		tools:ignore="WebViewLayout">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/newsTitle"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
+		<TextView
+			android:id="@+id/newsTitle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="20dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="20dp"
+			android:textColor="@android:color/black"
+			android:textSize="20sp"
+			android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/newsDatePublished"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/news_date_published"/>
+		<TextView
+			android:id="@+id/newsDatePublished"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="20dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="20dp"
+			android:text="@string/news_date_published"
+			android:textStyle="italic" />
 
 
-        <WebView
-            android:id="@+id/newsContent"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="@dimen/news_horizontal_margin"
-            android:layout_marginEnd="@dimen/news_horizontal_margin"
-            android:layout_height="wrap_content"/>
+		<WebView
+			android:id="@+id/newsContent"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/news_horizontal_margin"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="@dimen/news_horizontal_margin" />
 
-        <Button
-            android:id="@+id/newsRetryButton"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:text="@string/download_error_retry"
-            android:visibility="gone" />
+		<Button
+			android:id="@+id/newsRetryButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="@string/download_error_retry"
+			android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/newsAuthor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/news_author" />
+		<TextView
+			android:id="@+id/newsAuthor"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="20dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginEnd="20dp"
+			android:layout_marginBottom="10dp"
+			android:text="@string/news_author"
+			android:textStyle="italic" />
 
-    </LinearLayout>
+	</LinearLayout>
 </ScrollView>
 
 

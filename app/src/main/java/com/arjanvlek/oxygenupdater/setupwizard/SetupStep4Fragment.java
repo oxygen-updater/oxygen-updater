@@ -2,7 +2,6 @@ package com.arjanvlek.oxygenupdater.setupwizard;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
@@ -32,126 +33,131 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDA
 
 public class SetupStep4Fragment extends AbstractFragment {
 
-    private View rootView;
-    private SettingsManager settingsManager;
-    private ProgressBar progressBar;
-    private boolean rootMessageShown = false;
+	private View rootView;
+	private SettingsManager settingsManager;
+	private ProgressBar progressBar;
+	private boolean rootMessageShown = false;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_setup_4, container, false);
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		rootView = inflater.inflate(R.layout.fragment_setup_4, container, false);
 
-        if (getActivity() == null) {
-            throw new RuntimeException("SetupStep4Fragment: Can not initialize: not called from Activity");
-        }
+		if (getActivity() == null) {
+			throw new RuntimeException("SetupStep4Fragment: Can not initialize: not called from Activity");
+		}
 
-        settingsManager = new SettingsManager(getActivity().getApplicationContext());
-        progressBar = rootView.findViewById(R.id.introduction_step_4_update_method_progress_bar);
-
-
-        return rootView;
-    }
+		settingsManager = new SettingsManager(getActivity().getApplicationContext());
+		progressBar = rootView.findViewById(R.id.introduction_step_4_update_method_progress_bar);
 
 
-    public void fetchUpdateMethods() {
-        if(!rootMessageShown) {
-            try {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getString(R.string.root_check_title));
-                builder.setMessage(getString(R.string.root_check_message));
-                builder.setOnDismissListener(dialog -> {
-                    rootMessageShown = true;
-                    fetchUpdateMethods();
-                });
-                builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> {
-                    rootMessageShown = true;
-                    fetchUpdateMethods();
-                });
-                builder.show();
-            } catch (Throwable e) {
-                Logger.logError("SetupStep4", "Failed to display root check dialog" , e);
-                rootMessageShown = true;
-                fetchUpdateMethods();
-            }
-        } else {
-            if (settingsManager.containsPreference(PROPERTY_DEVICE_ID)) {
-                progressBar.setVisibility(View.VISIBLE);
+		return rootView;
+	}
 
-                getApplicationData().getServerConnector().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID, 1L), this::fillUpdateMethodSettings);
-            }
-        }
-    }
 
-    private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
-        Spinner spinner = rootView.findViewById(R.id.introduction_step_4_update_method_dropdown);
+	public void fetchUpdateMethods() {
+		if (!rootMessageShown) {
+			try {
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle(getString(R.string.root_check_title));
+				builder.setMessage(getString(R.string.root_check_message));
+				builder.setOnDismissListener(dialog -> {
+					rootMessageShown = true;
+					fetchUpdateMethods();
+				});
+				builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> {
+					rootMessageShown = true;
+					fetchUpdateMethods();
+				});
+				builder.show();
+			} catch (Throwable e) {
+				Logger.logError("SetupStep4", "Failed to display root check dialog", e);
+				rootMessageShown = true;
+				fetchUpdateMethods();
+			}
+		} else {
+			if (settingsManager.containsPreference(PROPERTY_DEVICE_ID)) {
+				progressBar.setVisibility(View.VISIBLE);
 
-        final int[] recommendedPositions = StreamSupport
-                .stream(updateMethods)
-                .filter(UpdateMethod::isRecommended)
-                .mapToInt(updateMethods::indexOf)
-                .toArray();
+				getApplicationData().getServerConnector()
+						.getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID, 1L), this::fillUpdateMethodSettings);
+			}
+		}
+	}
 
-        int selectedPosition = -1;
-        long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
+	private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
+		Spinner spinner = rootView.findViewById(R.id.introduction_step_4_update_method_dropdown);
 
-        if(updateMethodId != -1L) {
-            selectedPosition = StreamSupport
-                    .stream(updateMethods)
-                    .filter(updateMethod -> updateMethod.getId() == updateMethodId)
-                    .mapToInt(updateMethods::indexOf)
-                    .findAny()
-                    .orElse(-1);
-        } else if(recommendedPositions.length > 0) {
-            selectedPosition = recommendedPositions[recommendedPositions.length - 1];
-        }
+		final int[] recommendedPositions = StreamSupport
+				.stream(updateMethods)
+				.filter(UpdateMethod::isRecommended)
+				.mapToInt(updateMethods::indexOf)
+				.toArray();
 
-        if(getActivity() != null) {
-            ArrayAdapter<UpdateMethod> adapter = new ArrayAdapter<UpdateMethod>(getActivity(), android.R.layout.simple_spinner_item, updateMethods) {
+		int selectedPosition = -1;
+		long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 
-                @NonNull
-                @Override
-                public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                    return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, this.getContext());
-                }
+		if (updateMethodId != -1L) {
+			selectedPosition = StreamSupport
+					.stream(updateMethods)
+					.filter(updateMethod -> updateMethod.getId() == updateMethodId)
+					.mapToInt(updateMethods::indexOf)
+					.findAny()
+					.orElse(-1);
+		} else if (recommendedPositions.length > 0) {
+			selectedPosition = recommendedPositions[recommendedPositions.length - 1];
+		}
 
-                @Override
-                public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-                    return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, this.getContext());
-                }
-            };
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
+		if (getActivity() != null) {
+			ArrayAdapter<UpdateMethod> adapter = new ArrayAdapter<UpdateMethod>(getActivity(), android.R.layout.simple_spinner_item, updateMethods) {
 
-            if (selectedPosition != -1) {
-                spinner.setSelection(selectedPosition);
-            }
+				@NonNull
+				@Override
+				public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, this
+							.getContext());
+				}
 
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    UpdateMethod updateMethod = (UpdateMethod) adapterView.getItemAtPosition(i);
+				@Override
+				public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, this
+							.getContext());
+				}
+			};
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinner.setAdapter(adapter);
 
-                    //Set update method in preferences.
-                    settingsManager.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
-                    settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
-                    Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"));
+			if (selectedPosition != -1) {
+				spinner.setSelection(selectedPosition);
+			}
 
-                    if (getApplicationData().checkPlayServices(getActivity(), false)) {
-                        // Subscribe to notifications
-                        // Subscribe to notifications for the newly selected device and update method
-                        NotificationTopicSubscriber.subscribe(getApplicationData());
-                    } else {
-                        Toast.makeText(getApplicationData(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
-                    }
-                }
+			spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+				@Override
+				public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+					UpdateMethod updateMethod = (UpdateMethod) adapterView.getItemAtPosition(i);
 
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
+					//Set update method in preferences.
+					settingsManager.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.getId());
+					settingsManager.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.getEnglishName());
+					Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager
+							.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"));
 
-                }
-            });
+					if (getApplicationData().checkPlayServices(getActivity(), false)) {
+						// Subscribe to notifications
+						// Subscribe to notifications for the newly selected device and update method
+						NotificationTopicSubscriber.subscribe(getApplicationData());
+					} else {
+						Toast.makeText(getApplicationData(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG)
+								.show();
+					}
+				}
 
-            progressBar.setVisibility(View.GONE);
-        }
-    }
+				@Override
+				public void onNothingSelected(AdapterView<?> adapterView) {
+
+				}
+			});
+
+			progressBar.setVisibility(View.GONE);
+		}
+	}
 }

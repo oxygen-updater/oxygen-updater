@@ -6,13 +6,13 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 
 public class AbstractActivity extends AppCompatActivity {
 
-    private ApplicationData applicationData;
+	private ApplicationData applicationData;
 
 
-    protected ApplicationData getApplicationData() {
-        if (applicationData == null) {
-            applicationData = (ApplicationData) getApplication();
-        }
-        return applicationData;
-    }
+	protected ApplicationData getApplicationData() {
+		if (applicationData == null) {
+			applicationData = (ApplicationData) getApplication();
+		}
+		return applicationData;
+	}
 }

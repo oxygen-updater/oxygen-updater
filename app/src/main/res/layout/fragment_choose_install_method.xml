@@ -1,113 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:orientation="vertical">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="20dp"
+		android:layout_marginEnd="20dp"
+		android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/install_select_method_title"
-            android:textAlignment="center"
-            android:textStyle="bold" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:text="@string/install_select_method_title"
+			android:textAlignment="center"
+			android:textStyle="bold" />
 
-        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/automaticInstallCard"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            card_view:cardCornerRadius="4dp">
+		<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+			android:id="@+id/automaticInstallCard"
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:layout_gravity="center"
+			android:layout_marginTop="20dp"
+			card_view:cardCornerRadius="4dp">
 
-            <TextView
-                android:id="@+id/automaticInstallTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/install_select_method_automatic_title"
-                android:textAlignment="center"
-                android:textStyle="bold" />
+			<TextView
+				android:id="@+id/automaticInstallTitle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:text="@string/install_select_method_automatic_title"
+				android:textAlignment="center"
+				android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/automaticInstallImage"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="65dp"
-                    android:contentDescription="@string/install_select_method_automatic_image"
-                    android:src="@drawable/ic_auto_install" />
+				<ImageView
+					android:id="@+id/automaticInstallImage"
+					android:layout_width="70dp"
+					android:layout_height="70dp"
+					android:layout_marginStart="20dp"
+					android:layout_marginTop="65dp"
+					android:contentDescription="@string/install_select_method_automatic_image"
+					android:src="@drawable/ic_auto_install" />
 
-                <TextView
-                    android:id="@+id/automaticInstallExplanation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_toEndOf="@id/automaticInstallImage"
-                    android:gravity="center_vertical"
-                    android:text="@string/install_select_method_automatic_description" />
+				<TextView
+					android:id="@+id/automaticInstallExplanation"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:layout_marginStart="10dp"
+					android:layout_marginTop="30dp"
+					android:layout_marginEnd="10dp"
+					android:layout_marginBottom="30dp"
+					android:layout_toEndOf="@id/automaticInstallImage"
+					android:gravity="center_vertical"
+					android:text="@string/install_select_method_automatic_description" />
 
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+			</RelativeLayout>
+		</androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/manualInstallCard"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            card_view:cardCornerRadius="4dp">
+		<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+			android:id="@+id/manualInstallCard"
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:layout_gravity="center"
+			android:layout_marginTop="20dp"
+			card_view:cardCornerRadius="4dp">
 
-            <TextView
-                android:id="@+id/manualInstallTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/install_select_method_manual_title"
-                android:textAlignment="center"
-                android:textStyle="bold" />
+			<TextView
+				android:id="@+id/manualInstallTitle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:text="@string/install_select_method_manual_title"
+				android:textAlignment="center"
+				android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/manualInstallImage"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="65dp"
-                    android:contentDescription="@string/install_select_method_manual_image"
-                    android:src="@drawable/ic_manual_install" />
+				<ImageView
+					android:id="@+id/manualInstallImage"
+					android:layout_width="70dp"
+					android:layout_height="70dp"
+					android:layout_marginStart="20dp"
+					android:layout_marginTop="65dp"
+					android:contentDescription="@string/install_select_method_manual_image"
+					android:src="@drawable/ic_manual_install" />
 
-                <TextView
-                    android:id="@+id/manualInstallExplanation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_toEndOf="@id/manualInstallImage"
-                    android:gravity="center_vertical"
-                    android:text="@string/install_select_method_manual_description" />
+				<TextView
+					android:id="@+id/manualInstallExplanation"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:layout_marginStart="10dp"
+					android:layout_marginTop="30dp"
+					android:layout_marginEnd="10dp"
+					android:layout_marginBottom="30dp"
+					android:layout_toEndOf="@id/manualInstallImage"
+					android:gravity="center_vertical"
+					android:text="@string/install_select_method_manual_description" />
 
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+			</RelativeLayout>
+		</androidx.cardview.widget.CardView>
 
-    </LinearLayout>
+	</LinearLayout>
 </ScrollView>

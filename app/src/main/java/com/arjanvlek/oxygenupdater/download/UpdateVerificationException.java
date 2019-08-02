@@ -7,7 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class UpdateVerificationException extends OxygenUpdaterException {
 
-    public UpdateVerificationException(String failureReason) {
-        super(failureReason);
-    }
+	public UpdateVerificationException(String failureReason) {
+		super(failureReason);
+	}
 }

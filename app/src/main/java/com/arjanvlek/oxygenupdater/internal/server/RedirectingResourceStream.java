@@ -13,40 +13,38 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
  */
 public class RedirectingResourceStream {
 
-    private final static String USER_AGENT_TAG = "User-Agent";
+	private final static String USER_AGENT_TAG = "User-Agent";
 
-    public static InputStream getInputStream(String url) throws IOException {
-        URL resourceUrl;
-        HttpURLConnection conn;
-        String location;
-        URL base;
-        URL next;
+	public static InputStream getInputStream(String url) throws IOException {
+		URL resourceUrl;
+		HttpURLConnection conn;
+		String location;
+		URL base;
+		URL next;
 
-        while (true)
-        {
-            resourceUrl = new URL(url);
-            conn        = (HttpURLConnection) resourceUrl.openConnection();
+		while (true) {
+			resourceUrl = new URL(url);
+			conn = (HttpURLConnection) resourceUrl.openConnection();
 
-            conn.setConnectTimeout(15000);
-            conn.setReadTimeout(15000);
-            conn.setInstanceFollowRedirects(false);   // Make the logic below easier to detect redirections
-            conn.setRequestProperty(USER_AGENT_TAG, APP_USER_AGENT);
+			conn.setConnectTimeout(15000);
+			conn.setReadTimeout(15000);
+			conn.setInstanceFollowRedirects(false);   // Make the logic below easier to detect redirections
+			conn.setRequestProperty(USER_AGENT_TAG, APP_USER_AGENT);
 
-            switch (conn.getResponseCode())
-            {
-                case HttpURLConnection.HTTP_MOVED_PERM:
-                case HttpURLConnection.HTTP_MOVED_TEMP:
-                    location = conn.getHeaderField("Location");
-                    location = URLDecoder.decode(location, "UTF-8");
-                    base     = new URL(url);
-                    next     = new URL(base, location);  // Deal with relative URLs
-                    url      = next.toExternalForm();
-                    continue;
-            }
+			switch (conn.getResponseCode()) {
+				case HttpURLConnection.HTTP_MOVED_PERM:
+				case HttpURLConnection.HTTP_MOVED_TEMP:
+					location = conn.getHeaderField("Location");
+					location = URLDecoder.decode(location, "UTF-8");
+					base = new URL(url);
+					next = new URL(base, location);  // Deal with relative URLs
+					url = next.toExternalForm();
+					continue;
+			}
 
-            break;
-        }
+			break;
+		}
 
-        return conn.getInputStream();
-    }
+		return conn.getInputStream();
+	}
 }

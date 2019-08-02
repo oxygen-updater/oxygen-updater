@@ -9,8 +9,8 @@ import java8.lang.FunctionalInterface;
 @FunctionalInterface
 public interface Worker {
 
-    void start();
+	static Worker NOOP = () -> {
+	};
 
-    static Worker NOOP = () -> {
-    };
+	void start();
 }
