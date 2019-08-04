@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -43,6 +42,7 @@ import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
+import com.google.android.material.card.MaterialCardView;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 
 import org.joda.time.DateTimeZone;
@@ -124,10 +124,10 @@ public class InstallActivity extends AppCompatActivity {
 	private void openMethodSelectionPage() {
 		switchView(R.layout.fragment_choose_install_method);
 
-		CardView automaticInstallCard = findViewById(R.id.automaticInstallCard);
+		MaterialCardView automaticInstallCard = findViewById(R.id.automaticInstallCard);
 		automaticInstallCard.setOnClickListener((__) -> openAutomaticInstallOptionsSelection());
 
-		CardView manualInstallCard = findViewById(R.id.manualInstallCard);
+		MaterialCardView manualInstallCard = findViewById(R.id.manualInstallCard);
 		manualInstallCard.setOnClickListener((__) -> openInstallGuide());
 
 	}

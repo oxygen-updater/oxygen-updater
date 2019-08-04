@@ -16,7 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
@@ -27,6 +30,7 @@ import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.SetupUtils;
+import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
 import com.arjanvlek.oxygenupdater.internal.ThreeTuple;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
@@ -64,6 +68,11 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_RECE
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_AUTO;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_DARK;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_LIGHT;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_SYSTEM;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
 
@@ -83,6 +92,15 @@ public class SettingsActivity extends AbstractActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
+		Toolbar toolbar = findViewById(R.id.toolbar);
+
+		setSupportActionBar(toolbar);
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+
 		settingsManager = new SettingsManager(getApplicationContext());
 		progressBar = findViewById(R.id.settingsProgressBar);
 		deviceProgressBar = findViewById(R.id.settingsDeviceProgressBar);
@@ -92,6 +110,8 @@ public class SettingsActivity extends AbstractActivity {
 		deviceProgressBar.setVisibility(View.VISIBLE);
 
 		getApplicationData().getServerConnector().getDevices(true, this::fillDeviceSettings);
+
+		fillThemeSettings();
 
 		initSwitches();
 
@@ -134,7 +154,60 @@ public class SettingsActivity extends AbstractActivity {
 		});
 	}
 
-	private void fillDeviceSettings(final List<Device> devices) {
+	private void fillThemeSettings() {
+		List<String> themes = Arrays.asList(PROPERTY_THEME_LIGHT, PROPERTY_THEME_DARK, PROPERTY_THEME_SYSTEM, PROPERTY_THEME_AUTO);
+
+		Spinner spinner = findViewById(R.id.settingsThemeSpinner);
+
+		if (spinner == null) {
+			return;
+		}
+
+		// Set the spinner to the previously selected device.
+		int recommendedPosition = -1;
+
+		int selectedPosition = StreamSupport.stream(themes)
+				.filter(d -> d.equals(settingsManager.getPreference(PROPERTY_THEME, PROPERTY_THEME_SYSTEM)))
+				.mapToInt(themes::indexOf).findAny().orElse(-1);
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, themes) {
+
+			@NonNull
+			@Override
+			public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+				// Selected item
+				return CustomDropdown.initCustomThemeDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, themes, recommendedPosition, getContext());
+			}
+
+			@Override
+			public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+				// Dropdown menu
+				return CustomDropdown.initCustomThemeDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, themes, recommendedPosition, getContext());
+			}
+		};
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		spinner.setAdapter(adapter);
+		if (selectedPosition != -1) {
+			spinner.setSelection(selectedPosition);
+		}
+
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				String theme = (String) adapterView.getItemAtPosition(i);
+				settingsManager.savePreference(PROPERTY_THEME, theme);
+
+				AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(SettingsActivity.this));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> adapterView) {
+			}
+		});
+	}
+
+	private void fillDeviceSettings(List<Device> devices) {
 		if (devices != null && !devices.isEmpty()) {
 			SystemVersionProperties systemVersionProperties = ((ApplicationData) getApplication()).getSystemVersionProperties();
 
@@ -145,12 +218,12 @@ public class SettingsActivity extends AbstractActivity {
 			}
 
 			// Set the spinner to the previously selected device.
-			final int recommendedPosition = StreamSupport.stream(devices)
+			int recommendedPosition = StreamSupport.stream(devices)
 					.filter(d -> d.getProductNames() != null && d.getProductNames()
 							.contains(systemVersionProperties.getOxygenDeviceName()))
 					.mapToInt(devices::indexOf).findAny().orElse(-1);
 
-			final int selectedPosition = StreamSupport.stream(devices)
+			int selectedPosition = StreamSupport.stream(devices)
 					.filter(d -> d.getId() == settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L))
 					.mapToInt(devices::indexOf).findAny().orElse(-1);
 
@@ -161,15 +234,13 @@ public class SettingsActivity extends AbstractActivity {
 				@Override
 				public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 					// Selected item
-					return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, recommendedPosition, this
-							.getContext());
+					return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, recommendedPosition, getContext());
 				}
 
 				@Override
 				public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
 					// Dropdown menu
-					return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, devices, recommendedPosition, this
-							.getContext());
+					return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, devices, recommendedPosition, getContext());
 				}
 			};
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -208,7 +279,7 @@ public class SettingsActivity extends AbstractActivity {
 		}
 	}
 
-	private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
+	private void fillUpdateMethodSettings(List<UpdateMethod> updateMethods) {
 		if (updateMethods != null && !updateMethods.isEmpty()) {
 			Spinner spinner = findViewById(R.id.settingsUpdateMethodSpinner);
 			if (spinner == null) {
@@ -217,11 +288,11 @@ public class SettingsActivity extends AbstractActivity {
 
 			long currentUpdateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L);
 
-			final int[] recommendedPositions = StreamSupport.stream(updateMethods)
+			int[] recommendedPositions = StreamSupport.stream(updateMethods)
 					.filter(UpdateMethod::isRecommended)
 					.mapToInt(updateMethods::indexOf)
 					.toArray();
-			final int selectedPosition = StreamSupport.stream(updateMethods)
+			int selectedPosition = StreamSupport.stream(updateMethods)
 					.filter(um -> um.getId() == currentUpdateMethodId)
 					.mapToInt(updateMethods::indexOf)
 					.findAny()
@@ -232,14 +303,12 @@ public class SettingsActivity extends AbstractActivity {
 				@NonNull
 				@Override
 				public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, this
-							.getContext());
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, getContext());
 				}
 
 				@Override
 				public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, this
-							.getContext());
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, getContext());
 				}
 			};
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -402,7 +471,7 @@ public class SettingsActivity extends AbstractActivity {
 				} else {
 					Logger.logDebug(TAG, "IAB: Product has not yet been purchased");
 					settingsManager.savePreference(PROPERTY_AD_FREE, false); // Safe, because we can guarantee that the device is online and that the purchase check has succeeded.
-					this.price = productDetails.getPrice();
+					price = productDetails.getPrice();
 					setupBuyAdFreeButton(PurchaseStatus.AVAILABLE, productDetails.getPrice());
 				}
 			});
@@ -492,7 +561,7 @@ public class SettingsActivity extends AbstractActivity {
 								.show();
 					} else {
 						Logger.logDebug(TAG, "Purchase of ad-free version was cancelled by the user.");
-						setupBuyAdFreeButton(PurchaseStatus.AVAILABLE, this.price);
+						setupBuyAdFreeButton(PurchaseStatus.AVAILABLE, price);
 					}
 					return;
 				}
@@ -505,7 +574,7 @@ public class SettingsActivity extends AbstractActivity {
 								setupBuyAdFreeButton(PurchaseStatus.ALREADY_BOUGHT);
 								settingsManager.savePreference(PROPERTY_AD_FREE, true);
 							} else {
-								setupBuyAdFreeButton(PurchaseStatus.AVAILABLE, this.price);
+								setupBuyAdFreeButton(PurchaseStatus.AVAILABLE, price);
 							}
 						});
 					} else {
@@ -599,7 +668,7 @@ public class SettingsActivity extends AbstractActivity {
 		}
 
 		getApplicationData().getServerConnector()
-				.verifyPurchase(purchase, this.price, PurchaseType.AD_FREE, (validationResult) -> {
+				.verifyPurchase(purchase, price, PurchaseType.AD_FREE, (validationResult) -> {
 					if (validationResult == null) {
 						// server can't be reached. Keep trying until it can be reached...
 						new Handler().postDelayed(() -> validateAdFreePurchase(purchase, callback), 2000);

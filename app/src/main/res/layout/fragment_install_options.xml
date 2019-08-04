@@ -19,7 +19,7 @@
 			android:textAlignment="center"
 			android:textStyle="bold" />
 
-		<androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+		<com.google.android.material.card.MaterialCardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
 			android:id="@+id/customizeSettingsContainer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -164,9 +164,9 @@
 
 				</LinearLayout>
 
-				<Button
+				<com.google.android.material.button.MaterialButton
 					android:id="@+id/startInstallButton"
-					style="?android:attr/buttonBarButtonStyle"
+					style="@style/Widget.MaterialComponents.Button.TextButton"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/rebootAfterInstallContainer"
@@ -175,7 +175,7 @@
 					android:text="@string/install_options_start_install" />
 
 			</RelativeLayout>
-		</androidx.cardview.widget.CardView>
+		</com.google.android.material.card.MaterialCardView>
 
 		<LinearLayout
 			android:id="@+id/settingsExplanationContainer"

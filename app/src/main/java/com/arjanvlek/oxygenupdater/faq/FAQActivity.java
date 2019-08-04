@@ -7,7 +7,9 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
@@ -23,13 +25,23 @@ public class FAQActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_faq);
+
+		Toolbar toolbar = findViewById(R.id.toolbar);
+
+		setSupportActionBar(toolbar);
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		final SwipeRefreshLayout refreshLayout = findViewById(R.id.faq_webpage_layout);
-		refreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+
+		SwipeRefreshLayout refreshLayout = findViewById(R.id.faq_webpage_layout);
+		refreshLayout.setColorSchemeResources(R.color.colorPrimary);
 		refreshLayout.setOnRefreshListener(this::loadFaqPage);
 
 		loadFaqPage();
@@ -37,10 +49,10 @@ public class FAQActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handles action bar item clicks.
+		// Handles action bar item clicks
 		int id = item.getItemId();
 
-		// Respond to the action bar's Up/Home button, exit the activity gracefully to prevent downloads getting stuck.
+		// Respond to the action bar's Up/Home button, exit the activity gracefully to prevent downloads getting stuck
 		if (id == android.R.id.home) {
 			finish();
 			return true;
@@ -50,7 +62,7 @@ public class FAQActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Gracefully quit the activity if the Back button is pressed to speed the app up.
+	 * Gracefully quit the activity if the Back button is pressed to speed the app up
 	 */
 	@Override
 	public void onBackPressed() {
@@ -58,8 +70,7 @@ public class FAQActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Loads the FAQ page, or displays a No Network connection screen if there is no network
-	 * connection.
+	 * Loads the FAQ page, or displays a No Network connection screen if there is no network connection
 	 */
 	@SuppressLint("SetJavaScriptEnabled") // JavaScript is required to toggle the FAQ Item boxes.
 	private void loadFaqPage() {
@@ -68,14 +79,14 @@ public class FAQActivity extends AppCompatActivity {
 
 			refreshLayout.setRefreshing(true);
 
-			WebView FAQPageView = findViewById(R.id.faqWebView);
+			WebView faqPageView = findViewById(R.id.faqWebView);
 
 			switchViews(true);
 
-			FAQPageView.getSettings().setJavaScriptEnabled(true);
-			FAQPageView.getSettings().setUserAgentString(APP_USER_AGENT);
-			FAQPageView.clearCache(true);
-			FAQPageView.loadUrl(BuildConfig.FAQ_SERVER_URL);
+			faqPageView.getSettings().setJavaScriptEnabled(true);
+			faqPageView.getSettings().setUserAgentString(APP_USER_AGENT);
+			faqPageView.clearCache(true);
+			faqPageView.loadUrl(BuildConfig.FAQ_SERVER_URL);
 
 			refreshLayout.setRefreshing(false);
 		} else {

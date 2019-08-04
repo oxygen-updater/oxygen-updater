@@ -127,8 +127,8 @@ android {
 		}
 	}
 	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
+		sourceCompatibility '1.8'
+		targetCompatibility '1.8'
 	}
 	productFlavors {
 	}
@@ -153,8 +153,8 @@ dependencies {
 	//General Android libraries
 	implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
 	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-	implementation 'androidx.cardview:cardview:1.0.0'
 	implementation 'androidx.browser:browser:1.0.0'
+	implementation 'com.google.android.material:material:1.1.0-alpha09'
 
 	//JSON libraries
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'

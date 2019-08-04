@@ -1,7 +1,36 @@
 <resources>
+	<!-- Default screen paddings/margins, per the Android Design guidelines. -->
+	<dimen name="padding_half">8dp</dimen>
+	<dimen name="padding_default">16dp</dimen>
+	<dimen name="padding_2x">32dp</dimen>
+	<dimen name="padding_3x">48dp</dimen>
+	<dimen name="padding_4x">64dp</dimen>
+
+	<dimen name="size_collapsing_toolbar">256dp</dimen>
+	<dimen name="size_status_bar">24dp</dimen>
+
+	<!-- Default font sizes for English and English-like languages -->
+	<dimen name="typography_headline">24sp</dimen>
+	<dimen name="typography_title">20sp</dimen>
+	<dimen name="typography_subheading">16sp</dimen>
+	<dimen name="typography_body">14sp</dimen>
+	<dimen name="typography_caption">12sp</dimen>
+	<dimen name="typography_button">14sp</dimen>
+
+	<!--
+	Refer to App Widget Documentation for margin information
+	http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+	<dimen name="widget_margin">8dp</dimen>
+
 	<!-- Default screen margins, per the Android Design guidelines. -->
 	<dimen name="activity_horizontal_margin">16dp</dimen>
 	<dimen name="activity_vertical_margin">16dp</dimen>
+
+	<dimen name="top_sheet_modal_elevation">16dp</dimen>
+	<dimen name="top_sheet_modal_peek_height">256dp</dimen>
+	<dimen name="fab_margin">16dp</dimen>
+	<dimen name="appbar_padding_top">8dp</dimen>
 
 	<!-- Custom screen margins -->
 	<dimen name="news_horizontal_margin">10dp</dimen>

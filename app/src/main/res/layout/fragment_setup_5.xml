@@ -35,7 +35,7 @@
 			android:layout_toEndOf="@id/introduction_step_5_contribute_checkbox"
 			android:onClick="onContributeMoreInfoClick"
 			android:text="@string/contribute_more_info"
-			android:textColor="@color/holo_blue_dark"
+			android:textColor="@color/blue_500"
 			android:textSize="14sp" />
 	</RelativeLayout>
 
@@ -49,7 +49,7 @@
 		android:layout_marginTop="5dp"
 		android:onClick="closeInitialTutorial"
 		android:text="@string/setup_close_button"
-		android:textColor="@color/oneplus_red" />
+		android:textColor="@color/colorPrimary" />
 
 	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:tools="http://schemas.android.com/tools"

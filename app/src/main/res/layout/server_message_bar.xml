@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/server_message_background_bar"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:padding="@dimen/padding_default"
 	tools:context=".views.MainActivity">
-
-	<View
-		android:id="@+id/server_message_background_bar"
-		android:layout_width="match_parent"
-		android:layout_height="20dp" />
 
 	<TextView
 		android:id="@+id/server_message_text_view"
-		android:layout_width="wrap_content"
-		android:layout_height="20dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
 		android:layout_centerHorizontal="true"
+		android:layout_gravity="center"
 		android:gravity="center"
 		android:linksClickable="true"
-		android:textColor="@android:color/white"
+		android:textColor="?android:textColorTertiaryInverse"
 		android:textStyle="bold" />
-</RelativeLayout>
+</LinearLayout>

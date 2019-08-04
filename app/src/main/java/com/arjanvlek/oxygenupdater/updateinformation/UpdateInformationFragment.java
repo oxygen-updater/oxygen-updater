@@ -113,15 +113,15 @@ public class UpdateInformationFragment extends AbstractFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.context = getApplicationData();
-		this.settingsManager = new SettingsManager(getApplicationData());
+		context = getApplicationData();
+		settingsManager = new SettingsManager(getApplicationData());
 	}
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		this.rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_updateinformation, container, false);
-		this.adView = rootView.findViewById(R.id.updateInformationAdView);
+		rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_update_information, container, false);
+		adView = rootView.findViewById(R.id.updateInformationAdView);
 		return rootView;
 	}
 
@@ -132,11 +132,11 @@ public class UpdateInformationFragment extends AbstractFragment {
 			updateInformationRefreshLayout = rootView.findViewById(R.id.updateInformationRefreshLayout);
 			systemIsUpToDateRefreshLayout = rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
 
-			updateInformationRefreshLayout.setOnRefreshListener(() -> load(this.adsAreSupported));
-			updateInformationRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+			updateInformationRefreshLayout.setOnRefreshListener(() -> load(adsAreSupported));
+			updateInformationRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
-			systemIsUpToDateRefreshLayout.setOnRefreshListener(() -> load(this.adsAreSupported));
-			systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.oneplus_red, R.color.holo_orange_light, R.color.holo_red_light);
+			systemIsUpToDateRefreshLayout.setOnRefreshListener(() -> load(adsAreSupported));
+			systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
 			checkAdSupportStatus((adsAreSupported) -> {
 				this.adsAreSupported = adsAreSupported;
@@ -154,7 +154,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 	public void onResume() {
 		super.onResume();
 		if (isLoadedOnce) {
-			registerDownloadReceiver(this.downloadListener);
+			registerDownloadReceiver(downloadListener);
 			// If service reports being inactive, check if download is finished or paused to update state.
 			// If download is running then it auto-updates the UI using the downloadListener.
 			if (!DownloadService.isRunning() && updateData != null) {
@@ -244,7 +244,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 		Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager
 				.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"));
 
-		final AbstractFragment instance = this;
+		AbstractFragment instance = this;
 
 		long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
 		long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
@@ -282,7 +282,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 			}
 		});
 
-		serverConnector.getInAppMessages(online, (banners -> this.displayServerMessageBars(banners, adsAreSupported)), (error) -> {
+		serverConnector.getInAppMessages(online, (banners -> displayServerMessageBars(banners, adsAreSupported)), (error) -> {
 			switch (error) {
 				case SERVER_MAINTENANCE_ERROR:
 					Dialogs.showServerMaintenanceError(instance);
@@ -307,19 +307,19 @@ public class UpdateInformationFragment extends AbstractFragment {
 		// Consecutive views should go below their parent / previous view.
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
 
-		int numberOfBars = this.serverMessageBars.size();
+		int numberOfBars = serverMessageBars.size();
 
 		params.topMargin = numberOfBars * Utils.diPToPixels(getActivity(), 20);
 		view.setId((numberOfBars * 20000 + 1));
-		this.rootView.addView(view, params);
-		this.serverMessageBars.add(view);
+		rootView.addView(view, params);
+		serverMessageBars.add(view);
 	}
 
 	private void deleteAllServerMessageBars() {
-		stream(this.serverMessageBars).filter(Objects::nonNull)
-				.forEach(v -> this.rootView.removeView(v));
+		stream(serverMessageBars).filter(Objects::nonNull)
+				.forEach(v -> rootView.removeView(v));
 
-		this.serverMessageBars = new ArrayList<>();
+		serverMessageBars = new ArrayList<>();
 	}
 
 	private void displayServerMessageBars(List<Banner> banners, boolean adsAreSupported) {
@@ -360,7 +360,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 			updateInformationRefreshLayout.setLayoutParams(params);
 
 		}
-		this.serverMessageBars = createdServerMessageBars;
+		serverMessageBars = createdServerMessageBars;
 	}
 
 	/**
@@ -371,7 +371,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 	 * @param displayInfoWhenUpToDate Flag set to show update information anyway, even if the system
 	 *                                is up to date.
 	 */
-	private void displayUpdateInformation(final UpdateData updateData, final boolean online, boolean displayInfoWhenUpToDate) {
+	private void displayUpdateInformation(UpdateData updateData, boolean online, boolean displayInfoWhenUpToDate) {
 		// Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
 		if (!isAdded() || updateData == null) {
 			return;
@@ -410,7 +410,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 		hideRefreshIcons();
 	}
 
-	private void displayUpdateInformationWhenUpToDate(final UpdateData updateData, boolean online) {
+	private void displayUpdateInformationWhenUpToDate(UpdateData updateData, boolean online) {
 		if (getActivity() == null || getActivity().getApplication() == null) {
 			return;
 		}
@@ -455,7 +455,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 	}
 
-	private void displayUpdateInformationWhenNotUpToDate(final UpdateData updateData, boolean displayInfoWhenUpToDate) {
+	private void displayUpdateInformationWhenNotUpToDate(UpdateData updateData, boolean displayInfoWhenUpToDate) {
 		// Show "System update available" view.
 		rootView.findViewById(R.id.updateInformationRefreshLayout).setVisibility(VISIBLE);
 		rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout)
@@ -499,7 +499,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 		View downloadSizeTable = rootView.findViewById(R.id.buttonTable);
 		View downloadSizeImage = rootView.findViewById(R.id.downloadSizeImage);
 
-		final Button downloadButton = getDownloadButton();
+		Button downloadButton = getDownloadButton();
 
 		if (displayInfoWhenUpToDate) {
 			headerLabel.setText(getString(R.string.update_information_installed_update));
@@ -592,8 +592,9 @@ public class UpdateInformationFragment extends AbstractFragment {
 	/**
 	 * Creates an {@link UpdateDownloadListener}
 	 */
-	private UpdateDownloadListener buildDownloadListener(final UpdateData updateData) {
+	private UpdateDownloadListener buildDownloadListener(UpdateData updateData) {
 		return new UpdateDownloadListener() {
+			@Override
 			public void onInitialStatusUpdate() {
 				if (isAdded()) {
 					getDownloadCancelButton().setOnClickListener(v -> {
@@ -783,18 +784,18 @@ public class UpdateInformationFragment extends AbstractFragment {
 	}
 
 	private void initUpdateDownloadButton(UpdateData updateData, DownloadStatus downloadStatus) {
-		final Button downloadButton = getDownloadButton();
+		Button downloadButton = getDownloadButton();
 
 		switch (downloadStatus) {
 			case NOT_DOWNLOADING:
 				downloadButton.setText(getString(R.string.download));
 
-				if (Utils.checkNetworkConnection(getApplicationData()) && updateData != null && updateData
-						.getDownloadUrl() != null && updateData.getDownloadUrl().contains("http")) {
+				if (Utils.checkNetworkConnection(getApplicationData()) && updateData != null && updateData.getDownloadUrl() != null
+						&& updateData.getDownloadUrl().contains("http")) {
 					downloadButton.setEnabled(true);
 					downloadButton.setClickable(true);
 					downloadButton.setOnClickListener(new DownloadButtonOnClickListener(updateData));
-					downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+					downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
 				} else {
 					downloadButton.setEnabled(false);
 					downloadButton.setClickable(false);
@@ -810,26 +811,26 @@ public class UpdateInformationFragment extends AbstractFragment {
 				downloadButton.setText(getString(R.string.downloading));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(false);
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
 				break;
 			case DOWNLOAD_PAUSED:
 				downloadButton.setText(getString(R.string.paused));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(false);
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
 				break;
 			case DOWNLOAD_COMPLETED:
 				downloadButton.setText(getString(R.string.downloaded));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(true);
 				downloadButton.setOnClickListener(new AlreadyDownloadedOnClickListener(this, updateData));
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
 				break;
 			case VERIFYING:
 				downloadButton.setText(getString(R.string.download_verifying));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(false);
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
 		}
 	}
 
@@ -854,17 +855,17 @@ public class UpdateInformationFragment extends AbstractFragment {
 	private void registerDownloadReceiver(UpdateDownloadListener downloadListener) {
 		IntentFilter filter = new IntentFilter(DownloadReceiver.ACTION_DOWNLOAD_EVENT);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
-		this.downloadReceiver = new DownloadReceiver(downloadListener);
+		downloadReceiver = new DownloadReceiver(downloadListener);
 
 		if (getActivity() != null) {
-			getActivity().registerReceiver(this.downloadReceiver, filter);
+			getActivity().registerReceiver(downloadReceiver, filter);
 		}
 	}
 
 	private void unregisterDownloadReceiver() {
 		if (getActivity() != null) {
-			getActivity().unregisterReceiver(this.downloadReceiver);
-			this.downloadReceiver = null;
+			getActivity().unregisterReceiver(downloadReceiver);
+			downloadReceiver = null;
 		}
 	}
 

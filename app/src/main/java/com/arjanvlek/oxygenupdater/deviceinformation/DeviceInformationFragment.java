@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
@@ -28,14 +28,14 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 public class DeviceInformationFragment extends AbstractFragment {
 
 	private static final String TAG = "DeviceInformationFragment";
-	private RelativeLayout rootView;
+	private NestedScrollView rootView;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		//Inflate the layout for this fragment
-		rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_deviceinformation, container, false);
+		rootView = (NestedScrollView) inflater.inflate(R.layout.fragment_device_information, container, false);
 		return rootView;
 	}
 

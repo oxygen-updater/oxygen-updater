@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
@@ -26,6 +28,15 @@ public class AboutActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceSate);
 		setContentView(R.layout.activity_about);
 
+		Toolbar toolbar = findViewById(R.id.toolbar);
+
+		setSupportActionBar(toolbar);
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+
 		// Set the version number of the app in the version number field.
 		String versionNumber = BuildConfig.VERSION_NAME;
 		TextView versionNumberView = findViewById(R.id.aboutVersionNumberView);
@@ -38,7 +49,7 @@ public class AboutActivity extends AppCompatActivity {
 		// Set onClick listener to Google Play rate button.
 		Button rateAppButton = findViewById(R.id.aboutRateButton);
 		rateAppButton.setOnClickListener(v -> {
-			final String appPackageName = getPackageName();
+			String appPackageName = getPackageName();
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BASE_URL + appPackageName)));
 			} catch (ActivityNotFoundException e) {

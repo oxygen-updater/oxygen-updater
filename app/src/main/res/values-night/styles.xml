@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+		<item name="android:background">@color/appBarBackground</item>
+	</style>
+
+</resources>

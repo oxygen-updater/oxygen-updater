@@ -16,11 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -172,14 +172,13 @@ public class NewsFragment extends AbstractFragment {
 				Locale locale = Locale.getLocale();
 
 				NewsItem newsItem = newsItems.get(position);
-                if (newsItem == null) {
-                    return convertView;
-                }
+				if (newsItem == null) {
+					return convertView;
+				}
 
 				newsItemView.title.setText(newsItem.getTitle(locale));
 				newsItemView.subtitle.setText(newsItem.getSubtitle(locale));
-				newsItemView.container.setOnClickListener(v -> openNewsItem(view, getApplicationData(), newsItem
-						.getId()));
+				newsItemView.container.setOnClickListener(v -> openNewsItem(view, getApplicationData(), newsItem.getId()));
 
 				if (newsItem.isRead()) {
 					newsItemView.title.setAlpha(0.5f);
@@ -270,9 +269,7 @@ public class NewsFragment extends AbstractFragment {
 					ad.show();
 
 					// Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-					getSettingsManager().savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime
-							.now()
-							.toString());
+					getSettingsManager().savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime.now().toString());
 				} catch (NullPointerException e) {
 					// Ad is not loaded, because the user bought the ad-free upgrade. Nothing to do here...
 				}
@@ -332,7 +329,7 @@ public class NewsFragment extends AbstractFragment {
 	}
 
 	private static class NewsItemView {
-		private CardView container;
+		private RelativeLayout container;
 		private ImageView image;
 		private ImageView imagePlaceholder;
 		private TextView title;

@@ -1,424 +1,453 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".settings.SettingsActivity">
+	android:layout_height="match_parent">
 
-	<View
-		android:id="@+id/settingsNoConnectionBar"
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="20dp"
-		android:background="@color/holo_red_dark"
-		android:visibility="gone" />
+		android:layout_height="wrap_content">
 
-	<TextView
-		android:id="@+id/settingsNoConnectionView"
-		android:layout_width="wrap_content"
-		android:layout_height="20dp"
-		android:layout_centerHorizontal="true"
-		android:gravity="center"
-		android:text="@string/error_no_internet_connection"
-		android:textColor="@android:color/white"
-		android:textStyle="bold"
-		android:visibility="gone" />
-
-	<ScrollView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_below="@id/settingsNoConnectionView"
-		android:padding="@dimen/activity_horizontal_margin"
-		android:paddingLeft="@dimen/activity_horizontal_margin"
-		android:paddingTop="@dimen/activity_vertical_margin"
-		android:paddingRight="@dimen/activity_horizontal_margin"
-		android:paddingBottom="@dimen/activity_vertical_margin"
-		tools:context="com.arjanvlek.oxygenupdater.settings.SettingsActivity">
-
-		<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			app:popupTheme="@style/ToolbarPopupStyle"
+			app:title="@string/settings" />
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		tools:context=".settings.SettingsActivity">
+
+		<View
+			android:id="@+id/settingsNoConnectionBar"
+			android:layout_width="match_parent"
+			android:layout_height="20dp"
+			android:background="@color/holo_red_dark"
+			android:visibility="gone" />
+
+		<TextView
+			android:id="@+id/settingsNoConnectionView"
+			android:layout_width="wrap_content"
+			android:layout_height="20dp"
+			android:layout_centerHorizontal="true"
+			android:gravity="center"
+			android:text="@string/error_no_internet_connection"
+			android:textColor="?android:textColorTertiaryInverse"
+			android:textStyle="bold"
+			android:visibility="gone" />
+
+		<androidx.core.widget.NestedScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_below="@id/settingsNoConnectionView"
+			android:padding="@dimen/activity_horizontal_margin"
+			android:paddingLeft="@dimen/activity_horizontal_margin"
+			android:paddingTop="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_horizontal_margin"
+			android:paddingBottom="@dimen/activity_vertical_margin"
 			tools:context="com.arjanvlek.oxygenupdater.settings.SettingsActivity">
 
-
-			<TextView
-				android:id="@+id/settingsDescriptionView"
+			<RelativeLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="10dp"
-				android:text="@string/settings_header"
-				android:textColor="@color/oneplus_red"
-				android:textStyle="bold" />
+				tools:context="com.arjanvlek.oxygenupdater.settings.SettingsActivity">
 
-			<View
-				android:id="@+id/settingsUpperDivisor"
-				android:layout_width="fill_parent"
-				android:layout_height="2dip"
-				android:layout_below="@id/settingsDescriptionView"
-				android:background="@color/oneplus_red" />
+				<TextView
+					android:id="@+id/settingsThemeView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@id/settingsThemeSpinner"
+					android:layout_alignParentTop="true"
+					android:text="@string/settings_theme"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<TextView
-				android:id="@+id/settingsDeviceView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsUpperDivisor"
-				android:layout_marginTop="5dp"
-				android:text="@string/settings_device"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<Spinner
+					android:id="@+id/settingsThemeSpinner"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="10dp"
+					android:layout_marginTop="5dp"
+					android:layout_toEndOf="@id/settingsThemeView" />
 
-			<TextView
-				android:id="@+id/settingsUpdateMethodView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				<TextView
+					android:id="@+id/settingsDescriptionView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsThemeView"
+					android:layout_marginTop="10dp"
+					android:text="@string/settings_header"
+					android:textColor="@color/colorPrimary"
+					android:textStyle="bold" />
 
-				android:layout_alignTop="@+id/settingsUpdateMethodSpinner"
-				android:text="@string/settings_update_method"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<View
+					android:id="@+id/settingsUpperDivisor"
+					android:layout_width="fill_parent"
+					android:layout_height="2dip"
+					android:layout_below="@id/settingsDescriptionView"
+					android:background="@color/colorPrimary" />
 
+				<TextView
+					android:id="@+id/settingsDeviceView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsUpperDivisor"
+					android:layout_marginTop="5dp"
+					android:text="@string/settings_device"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<Spinner
-				android:id="@+id/settingsDeviceSpinner"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/settingsUpperDivisor"
-				android:layout_marginStart="10dp"
-				android:layout_marginTop="5dp"
-				android:layout_toEndOf="@id/settingsUpdateMethodView" />
+				<TextView
+					android:id="@+id/settingsUpdateMethodView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsUpdateMethodSpinner"
+					android:text="@string/settings_update_method"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<Spinner
-				android:id="@+id/settingsUpdateMethodSpinner"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsDeviceSpinner"
-				android:layout_marginStart="10dp"
-				android:layout_toEndOf="@id/settingsUpdateMethodView" />
+				<Spinner
+					android:id="@+id/settingsDeviceSpinner"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/settingsUpperDivisor"
+					android:layout_marginStart="10dp"
+					android:layout_marginTop="5dp"
+					android:layout_toEndOf="@id/settingsUpdateMethodView" />
 
-			<ProgressBar
-				android:id="@+id/settingsDeviceProgressBar"
-				style="?android:attr/progressBarStyleSmall"
-				android:layout_width="20dp"
-				android:layout_height="20dp"
-				android:layout_below="@id/settingsUpperDivisor"
-				android:layout_marginTop="8dp"
-				android:layout_toEndOf="@id/settingsDeviceSpinner"
-				android:visibility="gone" />
+				<Spinner
+					android:id="@+id/settingsUpdateMethodSpinner"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsDeviceSpinner"
+					android:layout_marginStart="10dp"
+					android:layout_toEndOf="@id/settingsUpdateMethodView" />
 
-			<ProgressBar
-				android:id="@+id/settingsUpdateMethodProgressBar"
-				style="?android:attr/progressBarStyleSmall"
-				android:layout_width="20dp"
-				android:layout_height="20dp"
-				android:layout_alignTop="@+id/settingsUpdateMethodSpinner"
-				android:layout_marginTop="5dp"
-				android:layout_toEndOf="@id/settingsUpdateMethodSpinner"
-				android:visibility="gone" />
+				<ProgressBar
+					android:id="@+id/settingsDeviceProgressBar"
+					style="?android:attr/progressBarStyleSmall"
+					android:layout_width="20dp"
+					android:layout_height="20dp"
+					android:layout_below="@id/settingsUpperDivisor"
+					android:layout_marginTop="8dp"
+					android:layout_toEndOf="@id/settingsDeviceSpinner"
+					android:visibility="gone" />
 
-			<TextView
-				android:id="@+id/settingsServerMessagesLabel"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsUpdateMethodSpinner"
-				android:layout_marginTop="10dp"
-				android:text="@string/settings_server_messages"
-				android:textColor="@color/oneplus_red"
-				android:textStyle="bold" />
+				<ProgressBar
+					android:id="@+id/settingsUpdateMethodProgressBar"
+					style="?android:attr/progressBarStyleSmall"
+					android:layout_width="20dp"
+					android:layout_height="20dp"
+					android:layout_alignTop="@+id/settingsUpdateMethodSpinner"
+					android:layout_marginTop="5dp"
+					android:layout_toEndOf="@id/settingsUpdateMethodSpinner"
+					android:visibility="gone" />
 
-			<View
-				android:id="@+id/settingsMiddleDivisor"
-				android:layout_width="fill_parent"
-				android:layout_height="2dip"
-				android:layout_below="@id/settingsServerMessagesLabel"
-				android:background="@color/oneplus_red" />
+				<TextView
+					android:id="@+id/settingsServerMessagesLabel"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsUpdateMethodSpinner"
+					android:layout_marginTop="10dp"
+					android:text="@string/settings_server_messages"
+					android:textColor="@color/colorPrimary"
+					android:textStyle="bold" />
 
-			<TextView
-				android:id="@+id/settingsAppUpdatesView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignTop="@+id/settingsAppUpdatesSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="45dp"
-				android:text="@string/settings_server_messages_new_app_version"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<View
+					android:id="@+id/settingsMiddleDivisor"
+					android:layout_width="fill_parent"
+					android:layout_height="2dip"
+					android:layout_below="@id/settingsServerMessagesLabel"
+					android:background="@color/colorPrimary" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsAppUpdatesSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsMiddleDivisor"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch"
-				app:showText="false" />
+				<TextView
+					android:id="@+id/settingsAppUpdatesView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsAppUpdatesSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="45dp"
+					android:text="@string/settings_server_messages_new_app_version"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<TextView
-				android:id="@+id/settingsAppMessagesView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsAppUpdatesView"
-				android:layout_alignTop="@+id/settingsAppMessagesSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="45dp"
-				android:text="@string/settings_server_messages_in_app"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsAppUpdatesSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsMiddleDivisor"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch"
+					app:showText="false" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsAppMessagesSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsAppUpdatesView"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch" />
+				<TextView
+					android:id="@+id/settingsAppMessagesView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsAppUpdatesView"
+					android:layout_alignTop="@+id/settingsAppMessagesSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="45dp"
+					android:text="@string/settings_server_messages_in_app"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsAppMessagesSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsAppUpdatesView"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch" />
 
-			<TextView
-				android:id="@+id/settingsPushNotificationsLabel"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsAppMessagesView"
-				android:layout_marginTop="10dp"
-				android:text="@string/settings_push"
-				android:textColor="@color/oneplus_red"
-				android:textStyle="bold" />
+				<TextView
+					android:id="@+id/settingsPushNotificationsLabel"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsAppMessagesView"
+					android:layout_marginTop="10dp"
+					android:text="@string/settings_push"
+					android:textColor="@color/colorPrimary"
+					android:textStyle="bold" />
 
-			<View
-				android:id="@+id/settingsMiddle2Divisor"
-				android:layout_width="fill_parent"
-				android:layout_height="2dip"
-				android:layout_below="@id/settingsPushNotificationsLabel"
+				<View
+					android:id="@+id/settingsMiddle2Divisor"
+					android:layout_width="fill_parent"
+					android:layout_height="2dip"
+					android:layout_below="@id/settingsPushNotificationsLabel"
 
-				android:background="@color/oneplus_red" />
+					android:background="@color/colorPrimary" />
 
-			<TextView
-				android:id="@+id/settingsImportantPushNotificationsView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignTop="@+id/settingsImportantPushNotificationsSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="45dp"
-				android:text="@string/settings_push_from_server"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<TextView
+					android:id="@+id/settingsImportantPushNotificationsView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsImportantPushNotificationsSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="45dp"
+					android:text="@string/settings_push_from_server"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsImportantPushNotificationsSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsMiddle2Divisor"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch" />
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsImportantPushNotificationsSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsMiddle2Divisor"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch" />
 
-			<TextView
-				android:id="@+id/settingsNewVersionPushNotificationsView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignTop="@+id/settingsNewVersionPushNotificationsSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="45dp"
-				android:text="@string/settings_push_new_version"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<TextView
+					android:id="@+id/settingsNewVersionPushNotificationsView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsNewVersionPushNotificationsSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="45dp"
+					android:text="@string/settings_push_new_version"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsNewVersionPushNotificationsSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsImportantPushNotificationsView"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch" />
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsNewVersionPushNotificationsSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsImportantPushNotificationsView"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch" />
 
-			<TextView
-				android:id="@+id/settingsNewDevicePushNotificationsView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignTop="@+id/settingsNewDevicePushNotificationsSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="45dp"
-				android:text="@string/settings_push_new_device"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<TextView
+					android:id="@+id/settingsNewDevicePushNotificationsView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsNewDevicePushNotificationsSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="45dp"
+					android:text="@string/settings_push_new_device"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsNewDevicePushNotificationsSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsNewVersionPushNotificationsView"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch" />
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsNewDevicePushNotificationsSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsNewVersionPushNotificationsView"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch" />
 
-			<TextView
-				android:id="@+id/settingsNewsPushNotificationsView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignTop="@+id/settingsNewsPushNotificationsSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="45dp"
-				android:text="@string/settings_push_news"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<TextView
+					android:id="@+id/settingsNewsPushNotificationsView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsNewsPushNotificationsSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="45dp"
+					android:text="@string/settings_push_news"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsNewsPushNotificationsSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsNewDevicePushNotificationsView"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch" />
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsNewsPushNotificationsSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsNewDevicePushNotificationsView"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch" />
 
-			<TextView
-				android:id="@+id/settingsOtherOptionsTextView"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsNewsPushNotificationsView"
-				android:layout_marginTop="10dp"
-				android:text="@string/settings_other_options"
-				android:textColor="@color/oneplus_red"
-				android:textStyle="bold" />
+				<TextView
+					android:id="@+id/settingsOtherOptionsTextView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsNewsPushNotificationsView"
+					android:layout_marginTop="10dp"
+					android:text="@string/settings_other_options"
+					android:textColor="@color/colorPrimary"
+					android:textStyle="bold" />
 
-			<View
-				android:id="@+id/settingsLowerDivisor"
-				android:layout_width="fill_parent"
-				android:layout_height="2dip"
-				android:layout_below="@id/settingsOtherOptionsTextView"
+				<View
+					android:id="@+id/settingsLowerDivisor"
+					android:layout_width="fill_parent"
+					android:layout_height="2dip"
+					android:layout_below="@id/settingsOtherOptionsTextView"
+					android:background="@color/colorPrimary" />
 
-				android:background="@color/oneplus_red" />
+				<TextView
+					android:id="@+id/settingsAdvancedModeView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsAdvancedModeSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="3dp"
+					android:text="@string/settings_advanced_mode"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<TextView
-				android:id="@+id/settingsAdvancedModeView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignTop="@+id/settingsAdvancedModeSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="3dp"
-				android:text="@string/settings_advanced_mode"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_alignTop="@id/settingsAdvancedModeView"
+					android:layout_alignBottom="@id/settingsAdvancedModeView"
+					android:layout_toEndOf="@id/settingsAdvancedModeView"
+					android:background="@android:color/transparent"
+					android:contentDescription="@string/settings_advanced_mode_button_explanation"
+					android:onClick="onAdvancedModeInfoButtonClick"
+					android:padding="3dp"
+					android:scaleType="fitCenter"
+					android:src="@drawable/ic_info" />
 
-			<ImageButton
-				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
-				android:layout_alignTop="@id/settingsAdvancedModeView"
-				android:layout_alignBottom="@id/settingsAdvancedModeView"
-				android:layout_toEndOf="@id/settingsAdvancedModeView"
-				android:background="@android:color/transparent"
-				android:contentDescription="@string/settings_advanced_mode_button_explanation"
-				android:onClick="onAdvancedModeInfoButtonClick"
-				android:padding="3dp"
-				android:scaleType="fitCenter"
-				android:src="@drawable/ic_info" />
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsAdvancedModeSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsLowerDivisor"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsAdvancedModeSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsLowerDivisor"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch" />
+				<TextView
+					android:id="@+id/settingsUploadLogsTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignTop="@+id/settingsUploadLogsSwitch"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="45dp"
+					android:text="@string/settings_upload_logs"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<TextView
-				android:id="@+id/settingsUploadLogsTextView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignTop="@+id/settingsUploadLogsSwitch"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="45dp"
-				android:text="@string/settings_upload_logs"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<androidx.appcompat.widget.SwitchCompat
+					android:id="@+id/settingsUploadLogsSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsAdvancedModeSwitch"
+					android:layout_alignParentEnd="true"
+					android:layout_marginTop="5dp"
+					android:theme="@style/Theme.Oxygen.Switch" />
 
-			<androidx.appcompat.widget.SwitchCompat
-				android:id="@+id/settingsUploadLogsSwitch"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsAdvancedModeSwitch"
-				android:layout_alignParentEnd="true"
-				android:layout_marginTop="5dp"
-				android:theme="@style/Theme.Oxygen.Switch" />
+				<TextView
+					android:id="@+id/settingsBuyAdFreeLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBaseline="@+id/settingsBuyAdFreeButton"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="115dp"
+					android:text="@string/settings_buy_ad_free_label"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<TextView
-				android:id="@+id/settingsBuyAdFreeLabel"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignBaseline="@+id/settingsBuyAdFreeButton"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="115dp"
-				android:text="@string/settings_buy_ad_free_label"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<Button
+					android:id="@+id/settingsBuyAdFreeButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsUploadLogsTextView"
+					android:layout_alignParentEnd="true"
+					android:enabled="false"
+					android:text="@string/settings_buy_button_not_possible" />
 
-			<Button
-				android:id="@+id/settingsBuyAdFreeButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsUploadLogsTextView"
-				android:layout_alignParentEnd="true"
-				android:enabled="false"
-				android:text="@string/settings_buy_button_not_possible" />
+				<TextView
+					android:id="@+id/settingsContributeLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignBaseline="@+id/settingsContributeButton"
+					android:layout_alignParentStart="true"
+					android:layout_marginEnd="115dp"
+					android:text="@string/settings_contribute_label"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<TextView
-				android:id="@+id/settingsContributeLabel"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignBaseline="@+id/settingsContributeButton"
-				android:layout_alignParentStart="true"
-				android:layout_marginEnd="115dp"
-				android:text="@string/settings_contribute_label"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+				<Button
+					android:id="@+id/settingsContributeButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsBuyAdFreeButton"
+					android:layout_alignParentEnd="true"
+					android:onClick="onContributeButtonClick"
+					android:text="@string/settings_contribute_button" />
 
-			<Button
-				android:id="@+id/settingsContributeButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsBuyAdFreeButton"
-				android:layout_alignParentEnd="true"
-				android:onClick="onContributeButtonClick"
-				android:text="@string/settings_contribute_button" />
+				<TextView
+					android:id="@+id/settingsDescriptionTextView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsContributeButton"
+					android:layout_marginTop="10dp"
+					android:text="@string/settings_explanation_update_methods"
+					android:textColor="@color/colorPrimary"
+					android:textStyle="bold" />
 
-			<TextView
-				android:id="@+id/settingsDescriptionTextView"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsContributeButton"
-				android:layout_marginTop="10dp"
-				android:text="@string/settings_explanation_update_methods"
-				android:textColor="@color/oneplus_red"
-				android:textStyle="bold" />
+				<View
+					android:id="@+id/settingsLower2Divisor"
+					android:layout_width="fill_parent"
+					android:layout_height="2dip"
+					android:layout_below="@id/settingsDescriptionTextView"
+					android:background="@color/colorPrimary" />
 
-			<View
-				android:id="@+id/settingsLower2Divisor"
-				android:layout_width="fill_parent"
-				android:layout_height="2dip"
-				android:layout_below="@id/settingsDescriptionTextView"
+				<TextView
+					android:id="@+id/settingsUpdateMethodDescriptionView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsLower2Divisor"
+					android:layout_marginTop="5dp"
+					android:layout_marginBottom="10dp"
+					android:text="@string/settings_explanation_incremental_full_update"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
 
-				android:background="@color/oneplus_red" />
+				<ProgressBar
+					android:id="@+id/settingsProgressBar"
+					style="?android:attr/progressBarStyleLarge"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@+id/settingsUpdateMethodDescriptionView"
+					android:layout_centerHorizontal="true" />
 
-
-			<TextView
-				android:id="@+id/settingsUpdateMethodDescriptionView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsLower2Divisor"
-				android:layout_marginTop="5dp"
-				android:layout_marginBottom="10dp"
-				android:text="@string/settings_explanation_incremental_full_update"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
-
-			<ProgressBar
-				android:id="@+id/settingsProgressBar"
-				style="?android:attr/progressBarStyleLarge"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/settingsUpdateMethodDescriptionView"
-				android:layout_centerHorizontal="true" />
-
-			<TextView
-				android:id="@+id/settingsSavedView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/settingsProgressBar"
-				android:layout_centerHorizontal="true"
-
-				android:text="@string/settings_saved"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-		</RelativeLayout>
-	</ScrollView>
-</RelativeLayout>
+				<TextView
+					android:id="@+id/settingsSavedView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/settingsProgressBar"
+					android:layout_centerHorizontal="true"
+					android:text="@string/settings_saved"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
+			</RelativeLayout>
+		</androidx.core.widget.NestedScrollView>
+	</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

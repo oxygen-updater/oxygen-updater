@@ -1,41 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- Color used in the status bar and the Action Bar-->
-	<color name="oneplus_red">#EB0028</color>
-	<color name="oneplus_lighter_red">#eb4460</color>
+	<color name="background">@color/white</color>
+	<color name="backgroundVariant">@color/grey_100</color>
+	<color name="colorPrimary">@color/oneplus_red_600</color>
+	<color name="colorSecondary">@color/colorPrimary</color>
+	<color name="colorError">@color/red_500</color>
+	<color name="colorWarn">@color/orange_500</color>
+	<color name="colorPositive">@color/green_500</color>
+	<color name="foreground">#212121</color>
+	<color name="divider">#1f000000</color>
+	<color name="overlay">#deffffff</color>
+	<color name="appBarBackground">@color/colorPrimary</color>
+	<color name="statusBarColor">@color/appBarBackground</color>
+
+	<color name="dark_theme_divider">#1fffffff</color>
+	<color name="dark_theme_overlay">#de121212</color>
+	<color name="grey_900_transparent">#33212121</color>
+	<color name="indicator_unselected">#4dffffff</color>
+	<color name="light_theme_divider">#1f000000</color>
+	<color name="light_theme_overlay">#deffffff</color>
+	<color name="white_transparent">#33ffffff</color>
+	<color name="white_secondary">#b3ffffff</color>
+
+	<!-- Backgrounds for the dark theme. Numbers correspond to elevation levels -->
+	<color name="background_dark">#121212</color>
+	<color name="background_dark_1">#1d1d1d</color>
+
+	<color name="blue_200_light">#c3fdff</color>
+	<color name="blue_200">#90caf9</color>
+	<color name="blue_200_dark">#5d99c6</color>
+
+	<color name="blue_300_light">#9be7ff</color>
+	<color name="blue_300">#64b5f6</color>
+	<color name="blue_300_dark">#2286c3</color>
+
+	<color name="blue_500_light">#6ec6ff</color>
+	<color name="blue_500">#2196f3</color>
+	<color name="blue_500_dark">#0069c0</color>
+
+	<color name="blue_700_light">#63a4ff</color>
+	<color name="blue_700">#1976d2</color>
+	<color name="blue_700_dark">#004ba0</color>
+
+	<color name="red_400">#ef5350</color>
+	<color name="red_500">#f44336</color>
+
+	<color name="black">#000000</color>
+	<color name="white">#ffffff</color>
+
+	<!-- Google Material Design colours -->
+	<color name="amber_500">#ffc107</color>
+	<color name="green_300">#81c784</color>
+	<color name="green_500">#4caf50</color>
+	<color name="green_700">#388e3c</color>
+	<color name="grey_100">#f5f5f5</color>
+	<color name="grey_300">#e0e0e0</color>
+	<color name="grey_500">#9e9e9e</color>
+	<color name="grey_800">#424242</color>
+	<color name="grey_900">#212121</color>
+	<color name="grey_1000">#171717</color>
+	<color name="orange_300">#ffb74d</color>
+	<color name="orange_500">#ff9800</color>
+	<color name="orange_700">#f57c00</color>
+	<color name="yellow_500">#ffeb3b</color>
+
+	<!-- Calculated palette from https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
+	<color name="oneplus_red_600">#ea0029</color>
+	<color name="oneplus_red_300">#ea656c</color>
 
 	<!-- Color used on disabled buttons -->
 	<color name="dark_grey">#ee999999</color>
 	<color name="darker_grey">#6b6969</color>
 
-
-	<!-- HOLO theme colors -->
-
-	<!-- A light Holo shade of blue -->
-	<color name="holo_blue_light">#ff33b5e5</color>
-	<!-- A light Holo shade of gray -->
-	<color name="holo_gray_light">#33999999</color>
 	<!-- A light Holo shade of green -->
 	<color name="holo_green_light">#ff99cc00</color>
 	<!-- A light Holo shade of red -->
 	<color name="holo_red_light">#ffff4444</color>
-	<color name="holo_red_lighter">#ff5252</color>
-	<!-- A dark Holo shade of blue -->
-	<color name="holo_blue_dark">#ff0099cc</color>
 	<!-- A dark Holo shade of green -->
 	<color name="holo_green_dark">#ff669900</color>
 	<!-- A dark Holo shade of red -->
 	<color name="holo_red_dark">#ffcc0000</color>
-	<!-- A Holo shade of purple -->
-	<color name="holo_purple">#ffaa66cc</color>
 	<!-- A light Holo shade of orange -->
 	<color name="holo_orange_light">#ffffbb33</color>
-	<!-- A dark Holo shade of orange -->
-	<color name="holo_orange_dark">#ffff8800</color>
-	<!-- A really bright Holo shade of blue -->
-	<color name="holo_blue_bright">#ff00ddff</color>
-	<!-- A really bright Holo shade of gray -->
-	<color name="holo_gray_bright">#33CCCCCC</color>
 
 	<color name="material_blue_grey">#ff37474f</color>
 </resources>

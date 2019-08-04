@@ -23,12 +23,11 @@
 		android:layout_above="@+id/updateInformationAdView"
 		android:visibility="gone">
 
-		<ScrollView
+		<androidx.core.widget.NestedScrollView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				xmlns:tools="http://schemas.android.com/tools"
+			<RelativeLayout
 				android:id="@+id/relativeLayout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -55,7 +54,6 @@
 					android:ellipsize="end"
 					android:maxLines="1"
 					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:textColor="@android:color/black"
 					android:textStyle="bold" />
 
 
@@ -147,25 +145,25 @@
 
 					<TableRow>
 
-						<Button
+						<com.google.android.material.button.MaterialButton
 							android:id="@+id/updateInformationDownloadButton"
-							style="?android:attr/buttonBarButtonStyle"
+							style="@style/Widget.MaterialComponents.Button.TextButton"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:enabled="false"
 							android:text="@string/download"
-							android:textColor="@color/oneplus_red" />
+							android:textColor="@color/colorPrimary" />
 
-						<Button
+						<com.google.android.material.button.MaterialButton
 							android:id="@+id/updateInstallationInstructionsButton"
-							style="?android:attr/buttonBarButtonStyle"
+							style="@style/Widget.MaterialComponents.Button.TextButton"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginStart="10dp"
 							android:enabled="true"
 							android:text="@string/install"
 							android:textAppearance="?android:textAppearanceSmall"
-							android:textColor="@color/oneplus_red" />
+							android:textColor="@color/colorPrimary" />
 
 					</TableRow>
 				</TableLayout>
@@ -196,7 +194,7 @@
 				</RelativeLayout>
 
 			</RelativeLayout>
-		</ScrollView>
+		</androidx.core.widget.NestedScrollView>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -206,7 +204,7 @@
 		android:layout_above="@+id/updateInformationAdView"
 		android:visibility="gone">
 
-		<ScrollView
+		<androidx.core.widget.NestedScrollView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
@@ -228,7 +226,6 @@
 					android:layout_marginTop="@dimen/activity_vertical_margin"
 					android:text="@string/update_information_system_is_up_to_date"
 					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:textColor="@android:color/black"
 					android:textStyle="bold" />
 
 				<ImageView
@@ -257,9 +254,9 @@
 					android:layout_below="@id/updateInformationSystemIsUpToDateVersionTextView"
 					android:layout_centerHorizontal="true" />
 
-				<Button
+				<com.google.android.material.button.MaterialButton
 					android:id="@+id/updateInformationSystemIsUpToDateStatisticsButton"
-					style="?attr/buttonBarButtonStyle"
+					style="@style/Widget.MaterialComponents.Button.TextButton"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/updateInformationSystemIsUpToDateDateTextView"
@@ -267,7 +264,7 @@
 					android:text="@string/update_information_view_update_information" />
 
 			</RelativeLayout>
-		</ScrollView>
+		</androidx.core.widget.NestedScrollView>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 	<com.google.android.gms.ads.AdView

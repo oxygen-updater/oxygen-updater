@@ -5,24 +5,24 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar.OnMenuItemClickListener;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
@@ -37,6 +37,7 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.tabs.TabLayout;
 
 import org.joda.time.LocalDateTime;
 
@@ -52,28 +53,30 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETU
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
 
-
-@SuppressWarnings("deprecation")
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener {
 
 	public static final int PAGE_NEWS = 0;
 	public static final int PAGE_UPDATE_INFORMATION = 1;
 	public static final int PAGE_DEVICE_INFORMATION = 2;
 	// Permissions constants
+	public final static int PERMISSION_REQUEST_CODE = 200;
+
 	public final static String DOWNLOAD_FILE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
 	public final static String VERIFY_FILE_PERMISSION = "android.permission.READ_EXTERNAL_STORAGE";
-	public final static int PERMISSION_REQUEST_CODE = 200;
 	public static final String INTENT_START_PAGE = "start_page";
-	private ViewPager mViewPager;
+
+	private ViewPager viewPager;
 	private SettingsManager settingsManager;
 	private ActivityLauncher activityLauncher;
-	private Consumer<Boolean> downloadPermissionCallback;
 	private InterstitialAd newsAd;
+
+	private Consumer<Boolean> downloadPermissionCallback;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main_activity);
+		setContentView(R.layout.activity_main);
+
 		Context context = getApplicationContext();
 		settingsManager = new SettingsManager(context);
 
@@ -85,78 +88,37 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
 		// Supported device check
 		if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-			ApplicationData applicationData = ((ApplicationData) getApplication());
-			applicationData.getServerConnector().getDevices(result -> {
-				if (!Utils.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
+			ApplicationData application = ((ApplicationData) getApplication());
+			application.getServerConnector().getDevices(result -> {
+				if (!Utils.isSupportedDevice(application.getSystemVersionProperties(), result)) {
 					displayUnsupportedDeviceMessage();
 				}
 			});
 		}
 
-		// Set up the action bar.
-		final ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		}
-		setTitle(getString(R.string.app_name));
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		toolbar.setOnMenuItemClickListener(this);
 
-		SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		setupViewPager();
 
-		mViewPager = findViewById(R.id.mainActivityPager);
+		activityLauncher = new ActivityLauncher(this);
 
-		if (mViewPager != null) {
-			mViewPager.setAdapter(mSectionsPagerAdapter);
-			mViewPager.setOffscreenPageLimit(2); // Max is 2 when on Device Info or on News.
-			mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-				@Override
-				public void onPageSelected(int position) {
-					if (actionBar != null) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				}
-			});
-		}
-
-
-		// For each of the sections in the app, add a tab to the action bar.
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			// Creates a tab with text corresponding to the page title defined by
-			// the adapter.
-			//noinspection ConstantConditions
-			actionBar.addTab(
-					actionBar.newTab()
-							.setText(mSectionsPagerAdapter.getPageTitle(i))
-							.setTabListener(this));
-		}
-
-		this.activityLauncher = new ActivityLauncher(this);
-
-		// Set start page to Update Information Screen (middle page).
+		// Set start page to Update Information Screen (middle page)
 		try {
 			int startPage = PAGE_UPDATE_INFORMATION;
 
-			if (getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras()
-					.containsKey(INTENT_START_PAGE)) {
-				startPage = getIntent().getExtras().getInt(INTENT_START_PAGE);
+			Intent intent = getIntent();
+
+			if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey(INTENT_START_PAGE)) {
+				startPage = intent.getExtras().getInt(INTENT_START_PAGE);
 			}
 
-			mViewPager.setCurrentItem(startPage);
+			viewPager.setCurrentItem(startPage);
 		} catch (IndexOutOfBoundsException ignored) {
-
+			// no-op
 		}
 
-		if (((ApplicationData) getApplication()).checkPlayServices(this, false)) {
-			MobileAds.initialize(this, "ca-app-pub-0760639008316468~7665206420");
-		} else {
-			Toast.makeText(getApplication(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG)
-					.show();
-		}
-
-		if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
-			this.newsAd = new InterstitialAd(this);
-			this.newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-			this.newsAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
-		}
+		setupAds();
 
 		// Support functions for Android 8.0 "Oreo" and up.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -166,8 +128,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
 		// Remove "long" download ID in favor of "int" id
 		try {
-			//noinspection unused var is needed to cast class
-			int downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1);
+			settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1);
 		} catch (ClassCastException e) {
 			settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
 		}
@@ -178,17 +139,77 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 		}
 	}
 
+	/**
+	 * Handles toolbar menu clicks
+	 *
+	 * @param item the menu item
+	 *
+	 * @return true if clicked
+	 */
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		int id = item.getItemId();
+
+		switch (id) {
+			case R.id.action_settings:
+				activityLauncher.Settings();
+				return true;
+			case R.id.action_about:
+				activityLauncher.About();
+				return true;
+			case R.id.action_help:
+				activityLauncher.Help();
+				return true;
+			case R.id.action_faq:
+				activityLauncher.FAQ();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void setupViewPager() {
+		TabLayout tabLayout = findViewById(R.id.tabs);
+		viewPager = findViewById(R.id.viewpager);
+
+		viewPager.setOffscreenPageLimit(2);
+		viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+
+		tabLayout.setupWithViewPager(viewPager);
+	}
+
+	/**
+	 * Checks for Play Services and initialises {@link MobileAds} if found
+	 */
+	private void setupAds() {
+		ApplicationData application = (ApplicationData) getApplication();
+
+		if (application.checkPlayServices(this, false)) {
+			MobileAds.initialize(this, "ca-app-pub-0760639008316468~7665206420");
+		} else {
+			Toast.makeText(application, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
+		}
+
+		if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
+			newsAd = new InterstitialAd(this);
+			newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+			newsAd.loadAd(application.buildAdRequest());
+		}
+	}
+
 	@Override
 	public void onStart() {
 		super.onStart();
 
-		// Mark the welcome tutorial as finished if the user is moving from older app version. This is checked by either having stored update information for offline viewing, or if the last update checked date is set (if user always had up to date system and never viewed update information before).
-		if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false) && (settingsManager.checkIfOfflineUpdateDataIsAvailable() || settingsManager
-				.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
+		// Mark the welcome tutorial as finished if the user is moving from older app version.
+		// This is checked by either having stored update information for offline viewing,
+		// or if the last update checked date is set (if user always had up to date system and never viewed update information before)
+		if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)
+				&& (settingsManager.checkIfOfflineUpdateDataIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
 			settingsManager.savePreference(PROPERTY_SETUP_DONE, true);
 		}
 
-		// Show the welcome tutorial if the app needs to be set up.
+		// Show the welcome tutorial if the app needs to be set up
 		if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)) {
 			if (Utils.checkNetworkConnection(getApplicationContext())) {
 				activityLauncher.Tutorial();
@@ -200,67 +221,11 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 				NotificationTopicSubscriber.subscribe((ApplicationData) getApplication());
 			}
 		}
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar.
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handles action bar item clicks.
-		int id = item.getItemId();
-
-		if (id == R.id.action_settings) {
-			activityLauncher.Settings();
-			return true;
-		}
-		if (id == R.id.action_about) {
-			activityLauncher.About();
-			return true;
-		}
-
-		if (id == R.id.action_help) {
-			activityLauncher.Help();
-			return true;
-		}
-
-		if (id == R.id.action_faq) {
-			activityLauncher.FAQ();
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * Action when clicked on a tab.
-	 *
-	 * @param tab                 Tab which is selected
-	 * @param fragmentTransaction Android Fragment Transaction, unused here.
-	 */
-	@Override
-	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, switch to the corresponding page in
-		// the ViewPager.
-		mViewPager.setCurrentItem(tab.getPosition());
-	}
-
-	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-	}
-
-	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 	}
 
 	public void displayUnsupportedDeviceMessage() {
 		View checkBoxView = View.inflate(MainActivity.this, R.layout.message_dialog_checkbox, null);
-		final CheckBox checkBox = checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
+		CheckBox checkBox = checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setView(checkBoxView);
@@ -288,13 +253,13 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 
 	public InterstitialAd getNewsAd() {
 		if (newsAd != null) {
-			return this.newsAd;
+			return newsAd;
 		} else if (mayShowNewsAd()) {
 			InterstitialAd interstitialAd = new InterstitialAd(this);
 			interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
 			interstitialAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
-			this.newsAd = interstitialAd;
-			return this.newsAd;
+			newsAd = interstitialAd;
+			return newsAd;
 		} else {
 			return null;
 		}
@@ -308,24 +273,22 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 	}
 
 	public ActivityLauncher getActivityLauncher() {
-		return this.activityLauncher;
+		return activityLauncher;
 	}
 
 	public void requestDownloadPermissions(@NonNull Consumer<Boolean> callback) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			this.downloadPermissionCallback = callback;
+			downloadPermissionCallback = callback;
 			requestPermissions(new String[]{DOWNLOAD_FILE_PERMISSION, VERIFY_FILE_PERMISSION}, PERMISSION_REQUEST_CODE);
 		}
 	}
 
 	@Override
 	public void onRequestPermissionsResult(int permsRequestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		switch (permsRequestCode) {
-			case PERMISSION_REQUEST_CODE:
-				if (this.downloadPermissionCallback != null && grantResults.length > 0) {
-					this.downloadPermissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
-				}
-
+		if (permsRequestCode == PERMISSION_REQUEST_CODE) {
+			if (downloadPermissionCallback != null && grantResults.length > 0) {
+				downloadPermissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
+			}
 		}
 	}
 
@@ -397,42 +360,29 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
 	// Android 8.0 Notification Channels
 
 	/**
-	 * An inner class that constructs the fragments used in this application.
-	 */
-	public static class FragmentBuilder {
-
-		/**
-		 * Returns a new instance of this fragment for the given section number.
-		 */
-		static Fragment newInstance(int sectionNumber) {
-			if (sectionNumber == PAGE_NEWS) {
-				return new NewsFragment();
-			}
-			if (sectionNumber == PAGE_UPDATE_INFORMATION) {
-				return new UpdateInformationFragment();
-			}
-			if (sectionNumber == PAGE_DEVICE_INFORMATION) {
-				return new DeviceInformationFragment();
-			}
-			return null;
-		}
-	}
-
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the
-	 * sections/tabs/pages.
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the sections/tabs/pages.
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-		SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
+		SectionsPagerAdapter(FragmentManager fragmentManager) {
+			super(fragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 		}
 
+		@NonNull
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
-			// Return a FragmentBuilder (defined as a static inner class below).
-			return FragmentBuilder.newInstance(position);
+			switch (position) {
+				case PAGE_NEWS:
+					return new NewsFragment();
+				case PAGE_UPDATE_INFORMATION:
+					return new UpdateInformationFragment();
+				case PAGE_DEVICE_INFORMATION:
+					return new DeviceInformationFragment();
+				default:
+					//noinspection ConstantConditions
+					return null;
+			}
 		}
 
 		@Override

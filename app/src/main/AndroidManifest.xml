@@ -75,8 +75,7 @@
 			android:name=".installation.InstallActivity"
 			android:label="@string/install_guide"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
@@ -91,8 +90,7 @@
 			android:name=".about.AboutActivity"
 			android:label="@string/about"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
@@ -107,8 +105,7 @@
 			android:name=".settings.SettingsActivity"
 			android:label="@string/settings"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
@@ -117,8 +114,7 @@
 			android:name=".setupwizard.SetupActivity"
 			android:label="@string/setup"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
@@ -127,8 +123,7 @@
 			android:name=".help.HelpActivity"
 			android:label="@string/help"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
@@ -137,8 +132,7 @@
 			android:name=".contribution.ContributorActivity"
 			android:label="@string/contribute"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
@@ -148,8 +142,7 @@
 			android:name=".faq.FAQActivity"
 			android:label="@string/faq"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
@@ -159,8 +152,7 @@
 			android:name=".news.NewsActivity"
 			android:label="@string/news"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait"
-			tools:ignore="UnusedAttribute">
+			android:screenOrientation="portrait">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />

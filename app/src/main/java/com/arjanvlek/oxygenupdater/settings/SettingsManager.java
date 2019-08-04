@@ -63,6 +63,14 @@ public class SettingsManager {
 
 	// IAB properties
 	public static final String PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj";
+
+	// Theme properties
+	public static final String PROPERTY_THEME = "theme";
+	public static final String PROPERTY_THEME_LIGHT = "Light";
+	public static final String PROPERTY_THEME_DARK = "Dark";
+	public static final String PROPERTY_THEME_SYSTEM = "System";
+	public static final String PROPERTY_THEME_AUTO = "Auto";
+
 	private static final String TAG = "SettingsManager";
 	private final Context context;
 
@@ -72,8 +80,7 @@ public class SettingsManager {
 
 	public synchronized <T> T getPreference(String key, T defaultValue) {
 		SharedPreferences preferences = getSharedPreferences();
-		return preferences == null ? defaultValue : preferences.contains(key) ? (T) preferences.getAll()
-				.get(key) : defaultValue;
+		return preferences == null ? defaultValue : preferences.contains(key) ? (T) preferences.getAll().get(key) : defaultValue;
 	}
 
 	/**

@@ -98,7 +98,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
 			android:text="@string/install_guide_close_button"
-			android:textColor="@color/oneplus_red"
+			android:textColor="@color/colorPrimary"
 			android:visibility="gone" />
 
 

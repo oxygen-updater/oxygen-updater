@@ -3,7 +3,10 @@ package com.arjanvlek.oxygenupdater;
 import android.app.Activity;
 import android.app.Application;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
+import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
@@ -42,6 +45,8 @@ public class ApplicationData extends Application {
 
 	@Override
 	public void onCreate() {
+		AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this));
+
 		super.onCreate();
 		setupCrashReporting();
 		setupDownloader();
