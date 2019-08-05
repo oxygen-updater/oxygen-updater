@@ -110,7 +110,8 @@
 						android:layout_height="35dp"
 						android:background="@android:color/transparent"
 						android:contentDescription="@string/install_zip_file_clear"
-						android:src="@drawable/cancel_download" />
+						android:src="@drawable/cancel"
+						android:tint="?colorPrimary" />
 
 					<ImageButton
 						android:id="@+id/additionalZipFilePickButton"
@@ -119,7 +120,8 @@
 						android:layout_marginEnd="10dp"
 						android:background="@android:color/transparent"
 						android:contentDescription="@string/install_zip_file_pick"
-						android:src="@drawable/ic_pick_file" />
+						android:src="@drawable/folder"
+						android:tint="@color/colorPositive" />
 				</LinearLayout>
 
 				<LinearLayout

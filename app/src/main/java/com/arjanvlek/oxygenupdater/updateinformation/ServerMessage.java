@@ -29,13 +29,13 @@ public class ServerMessage implements Banner {
 	public int getColor(Context context) {
 		switch (getPriority()) {
 			case LOW:
-				return ContextCompat.getColor(context, R.color.holo_green_light);
+				return ContextCompat.getColor(context, R.color.colorPositive);
 			case MEDIUM:
-				return ContextCompat.getColor(context, R.color.holo_orange_light);
+				return ContextCompat.getColor(context, R.color.colorWarn);
 			case HIGH:
-				return ContextCompat.getColor(context, R.color.holo_red_light);
+				return ContextCompat.getColor(context, R.color.colorPrimary);
 			default:
-				return ContextCompat.getColor(context, R.color.holo_green_light);
+				return ContextCompat.getColor(context, R.color.colorPositive);
 		}
 	}
 

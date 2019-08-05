@@ -47,7 +47,8 @@
 					android:layout_marginStart="20dp"
 					android:layout_marginTop="65dp"
 					android:contentDescription="@string/install_select_method_automatic_image"
-					android:src="@drawable/ic_auto_install" />
+					android:src="@drawable/auto"
+					android:tint="?colorPrimary" />
 
 				<TextView
 					android:id="@+id/automaticInstallExplanation"
@@ -92,7 +93,8 @@
 					android:layout_marginStart="20dp"
 					android:layout_marginTop="65dp"
 					android:contentDescription="@string/install_select_method_manual_image"
-					android:src="@drawable/ic_manual_install" />
+					android:src="@drawable/list"
+					android:tint="?colorPrimary" />
 
 				<TextView
 					android:id="@+id/manualInstallExplanation"

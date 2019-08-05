@@ -77,7 +77,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
-				.setSmallIcon(R.drawable.ic_stat_done)
+				.setSmallIcon(R.drawable.done_circle)
 				.setOngoing(false)
 				.setContentIntent(contentIntent)
 				.setAutoCancel(true)
@@ -97,7 +97,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
-				.setSmallIcon(R.drawable.ic_stat_failed)
+				.setSmallIcon(R.drawable.error)
 				.setOngoing(false)
 				.setContentIntent(contentIntent)
 				.setAutoCancel(true)

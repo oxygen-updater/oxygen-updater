@@ -70,18 +70,4 @@
 
 	<!-- Color used on disabled buttons -->
 	<color name="dark_grey">#ee999999</color>
-	<color name="darker_grey">#6b6969</color>
-
-	<!-- A light Holo shade of green -->
-	<color name="holo_green_light">#ff99cc00</color>
-	<!-- A light Holo shade of red -->
-	<color name="holo_red_light">#ffff4444</color>
-	<!-- A dark Holo shade of green -->
-	<color name="holo_green_dark">#ff669900</color>
-	<!-- A dark Holo shade of red -->
-	<color name="holo_red_dark">#ffcc0000</color>
-	<!-- A light Holo shade of orange -->
-	<color name="holo_orange_light">#ffffbb33</color>
-
-	<color name="material_blue_grey">#ff37474f</color>
 </resources>

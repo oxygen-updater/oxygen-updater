@@ -216,7 +216,7 @@ public class NewsFragment extends AbstractFragment {
 					}
 
 					if (image == null) {
-						Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.mipmap.image_error, null);
+						Drawable errorImage = ResourcesCompat.getDrawable(getResources(), R.drawable.image, null);
 						newsItemView.image.setImageDrawable(errorImage);
 					} else {
 						newsItemView.image.setImageBitmap(image);

@@ -88,6 +88,36 @@
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
 
 	<!-- Settings strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="preference_header_support">Support us</string>
+	<string name="preference_header_device">Device</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notifications</string>
+	<string name="preference_header_advanced">Advanced</string>
+	<string name="preference_header_about">About</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="summary_on">Enabled</string>
+	<string name="summary_off">Disabled</string>
+	<string name="summary_device">Please wait…</string>
+	<string name="summary_update_method">Select a device first</string>
+	<string name="summary_theme">Set theme</string>
+	<string name="summary_privacy_policy">View online</string>
+	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="label_buy_ad_free">Remove ads</string>
+	<string name="label_theme">Theme</string>
+	<string name="label_privacy_policy">Privacy policy</string>
+	<string name="label_rate_app">Rate this app</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light">Light</string>
+	<string name="theme_dark">Dark</string>
+	<string name="theme_system">System</string>
+	<string name="theme_auto">Auto</string>
+
 	<string name="settings">"Настройки"</string>
 	<string name="settings_buy_button_buy">"Купить (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Куплено"</string>

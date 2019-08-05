@@ -604,7 +604,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 					});
 
 					getDownloadPauseButton().setOnClickListener(v -> {
-						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
+						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.play, null));
 						DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
 						initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
 						initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
@@ -621,7 +621,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 					showDownloadProgressBar();
 
 					getDownloadPauseButton().setOnClickListener(v -> {
-						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause_download, null));
+						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause, null));
 						DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
 						initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
 						initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
@@ -650,7 +650,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 					getDownloadPauseButton().setVisibility(VISIBLE);
 					getDownloadPauseButton().setOnClickListener(v -> {
-						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause_download, null));
+						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause, null));
 						DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
 						initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
 						initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
@@ -685,9 +685,9 @@ public class UpdateInformationFragment extends AbstractFragment {
 						getDownloadProgressBar().setProgress(progressData.getProgress());
 						getDownloadStatusText().setText(getString(R.string.download_progress_text_paused, progressData
 								.getProgress()));
-						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.resume_download, null));
+						getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.play, null));
 						getDownloadPauseButton().setOnClickListener(v -> {
-							getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause_download, null));
+							getDownloadPauseButton().setImageDrawable(getResources().getDrawable(R.drawable.pause, null));
 							DownloadService.performOperation(getActivity(), DownloadService.ACTION_RESUME_DOWNLOAD, updateData);
 							initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
 							initInstallButton(updateData, DownloadStatus.DOWNLOADING);

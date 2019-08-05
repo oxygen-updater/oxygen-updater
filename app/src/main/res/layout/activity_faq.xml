@@ -41,11 +41,11 @@
 			android:id="@+id/faq_no_network_view"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout_marginStart="@dimen/activity_horizontal_margin"
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			android:layout_marginTop="@dimen/activity_vertical_margin"
-			android:layout_marginEnd="@dimen/activity_horizontal_margin"
-			android:layout_marginRight="@dimen/activity_horizontal_margin">
+			android:layout_marginStart="@dimen/padding_default"
+			android:layout_marginLeft="@dimen/padding_default"
+			android:layout_marginTop="@dimen/padding_default"
+			android:layout_marginEnd="@dimen/padding_default"
+			android:layout_marginRight="@dimen/padding_default">
 
 			<TextView
 				android:id="@+id/faq_no_network_title"
@@ -62,7 +62,7 @@
 				android:layout_below="@id/faq_no_network_title"
 				android:layout_centerHorizontal="true"
 				android:contentDescription="@string/icon"
-				android:src="@drawable/ic_faq_no_network" />
+				android:src="@drawable/wifi_off" />
 
 			<TextView
 				android:id="@+id/faq_no_network_text"
@@ -70,11 +70,11 @@
 				android:layout_height="wrap_content"
 				android:layout_below="@id/faq_no_network_image"
 				android:layout_centerHorizontal="true"
-				android:layout_marginStart="@dimen/activity_horizontal_margin"
-				android:layout_marginLeft="@dimen/activity_horizontal_margin"
-				android:layout_marginTop="@dimen/activity_vertical_margin"
-				android:layout_marginEnd="@dimen/activity_horizontal_margin"
-				android:layout_marginRight="@dimen/activity_horizontal_margin"
+				android:layout_marginStart="@dimen/padding_default"
+				android:layout_marginLeft="@dimen/padding_default"
+				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginEnd="@dimen/padding_default"
+				android:layout_marginRight="@dimen/padding_default"
 				android:text="@string/faq_no_network_text" />
 
 			<com.google.android.material.button.MaterialButton

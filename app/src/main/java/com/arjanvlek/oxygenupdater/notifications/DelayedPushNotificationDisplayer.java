@@ -186,7 +186,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 		String message = getString(R.string.notification_new_device, newDeviceName);
 
 		return getNotificationBuilder()
-				.setSmallIcon(R.drawable.ic_stat_notification_new_device)
+				.setSmallIcon(R.drawable.new_text)
 				.setStyle(new NotificationCompat.BigTextStyle()
 						.bigText(message)
 						.setSummaryText(getString(R.string.notification_new_device_short)))
@@ -197,7 +197,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 	private NotificationCompat.Builder getBuilderForNewVersionNotification(String deviceName, String versionNumber) {
 		String message = getString(R.string.notification_version, versionNumber, deviceName);
 		return getNotificationBuilder()
-				.setSmallIcon(R.drawable.ic_stat_notification_new_version)
+				.setSmallIcon(R.drawable.new_text)
 				.setStyle(new NotificationCompat.BigTextStyle()
 						.bigText(message))
 				.setWhen(System.currentTimeMillis())

@@ -378,7 +378,7 @@ public class DownloadService extends IntentService {
 
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
 		Notification notification = notificationBuilder.setOngoing(true)
-				.setSmallIcon(R.drawable.ic_stat_settings)
+				.setSmallIcon(R.drawable.settings)
 				.setContentTitle(getString(R.string.download_in_background))
 				.setPriority(NotificationManager.IMPORTANCE_NONE)
 				.setCategory(Notification.CATEGORY_SERVICE)

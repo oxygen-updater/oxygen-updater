@@ -53,7 +53,7 @@ android {
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true"
 
 			minifyEnabled true
-			shrinkResources false
+			shrinkResources true
 			debuggable false
 			manifestPlaceholders = [appName: 'Oxygen Updater', fullPackageName: defaultConfig.applicationId]
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -72,6 +72,8 @@ android {
 			// During debugging, all devices are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
+			minifyEnabled true
+			shrinkResources true
 			debuggable true
 			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
 			manifestPlaceholders = [appName: 'Oxygen Updater (debug)', fullPackageName: defaultConfig.applicationId + '.debug']
@@ -92,6 +94,8 @@ android {
 			// During debugging, all devices are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
+			minifyEnabled true
+			shrinkResources true
 			debuggable true
 			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
 			manifestPlaceholders = [appName: 'Oxygen Updater (localDebug)', fullPackageName: defaultConfig.applicationId + '.localDebug']
@@ -111,6 +115,9 @@ android {
 			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
 			// During taking screenshots, all devices are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "false" // On screenshots no ads!
+
+			minifyEnabled true
+			shrinkResources true
 			debuggable true
 			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
 			applicationIdSuffix '.screenshot'
@@ -131,6 +138,9 @@ android {
 			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
 			// On test device all build types are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // On test device use ads!
+
+			minifyEnabled true
+			shrinkResources true
 			debuggable true
 			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
 			manifestPlaceholders = [appName: 'Oxygen Updater (device)', fullPackageName: defaultConfig.applicationId + '.device']

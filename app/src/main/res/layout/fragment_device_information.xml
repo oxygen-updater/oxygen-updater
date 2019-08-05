@@ -24,14 +24,15 @@
 
 		<ImageView
 			android:id="@+id/device_information_device_image"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="160dp"
 			android:layout_below="@+id/device_information_header"
 			android:layout_alignParentTop="true"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="45dp"
 			android:contentDescription="@string/device_information_image_description"
-			android:src="@drawable/ic_phone" />
+			android:src="@drawable/smartphone"
+			android:tint="?colorPrimary" />
 
 		<TextView
 			android:id="@+id/device_information_soc_label"
