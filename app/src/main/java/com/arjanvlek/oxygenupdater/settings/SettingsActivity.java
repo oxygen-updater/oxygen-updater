@@ -72,7 +72,8 @@ public class SettingsActivity extends AbstractActivity implements InAppPurchaseD
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		settingsFragment = new SettingsFragment(this);
+		settingsFragment = new SettingsFragment();
+		settingsFragment.setInAppPurchaseDelegate(this);
 
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.settings_container, settingsFragment, "Settings")
@@ -286,14 +287,14 @@ public class SettingsActivity extends AbstractActivity implements InAppPurchaseD
 		try {
 			logDebug(TAG, "IAB: Start purchase flow");
 
-			String developerPayload = "OxygenUpdater-AdFree-" + (!Build.SERIAL.equals("unknown") ? Build.SERIAL + "-" : "") + LocalDateTime
-					.now()
-					.toString("yyyy-MM-dd HH:mm:ss");
+			@SuppressLint("HardwareIds")
+			String developerPayload = "OxygenUpdater-AdFree-"
+					+ (!Build.SERIAL.equals("unknown") ? Build.SERIAL + "-" : "")
+					+ LocalDateTime.now().toString("yyyy-MM-dd HH:mm:ss");
 
 			// Open the purchase window.
 			iabHelper.launchPurchaseFlow(this, SKU_AD_FREE, IAB_REQUEST_CODE, (result, purchase) -> {
-				logDebug(TAG, "IAB: Purchase dialog closed. Result: " + result.toString() + (purchase != null ? ", purchase: " + purchase
-						.toString() : ""));
+				logDebug(TAG, "IAB: Purchase dialog closed. Result: " + result.toString() + (purchase != null ? ", purchase: " + purchase.toString() : ""));
 
 				// If the purchase failed, but the user did not cancel it, notify the user and log an error. Otherwise, do nothing.
 				if (result.isFailure()) {

@@ -49,7 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	private ListPreference devicePreference;
 	private ListPreference updateMethodPreference;
 
-	SettingsFragment(InAppPurchaseDelegate delegate) {
+	void setInAppPurchaseDelegate(InAppPurchaseDelegate delegate) {
 		this.delegate = delegate;
 	}
 
@@ -132,7 +132,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 
 			return true;
 		});
-
 	}
 
 	/**
@@ -286,7 +285,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 					// Subscribe to notifications for the newly selected device and update method
 					NotificationTopicSubscriber.subscribe(application);
 				} else {
-					Toast.makeText(context, getString(R.string.notification_no_notification_support), LENGTH_LONG).show();
+					Toast.makeText(context, getString(R.string.notification_no_notification_support), LENGTH_LONG)
+							.show();
 				}
 
 				return true;

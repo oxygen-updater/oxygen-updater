@@ -3,21 +3,25 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
+	<!--
+		'Featured' variants of the custom preference layouts use backgroundVariant
+		to distinguish from regular preferences
+	-->
 	<PreferenceCategory
-		android:layout="@layout/custom_preference_header"
+		android:layout="@layout/custom_preference_header_featured"
 		android:title="@string/preference_header_support">
 
 		<Preference
 			android:icon="@drawable/monetization"
 			android:key="@string/key_ad_free"
-			android:layout="@layout/custom_preference"
+			android:layout="@layout/custom_preference_featured"
 			android:summary="@string/settings_buy_ad_free_label"
 			android:title="@string/label_buy_ad_free" />
 
 		<Preference
 			android:icon="@drawable/group_add"
 			android:key="@string/key_contributor"
-			android:layout="@layout/custom_preference"
+			android:layout="@layout/custom_preference_featured"
 			android:summary="@string/settings_contribute_label"
 			android:title="@string/contribute" />
 	</PreferenceCategory>
