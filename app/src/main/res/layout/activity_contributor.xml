@@ -27,76 +27,57 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="20dp"
-			android:layout_marginEnd="20dp"
-			android:orientation="vertical">
+			android:layout_marginTop="@dimen/padding_default"
+			android:orientation="vertical"
+			android:padding="@dimen/padding_default">
 
-			<com.google.android.material.card.MaterialCardView
-				android:id="@+id/contributeCard"
+			<TextView
+				android:id="@+id/contributeTitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginTop="20dp">
+				android:layout_marginTop="15dp"
+				android:text="@string/contribute_title"
+				android:textAlignment="center"
+				android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+				android:textStyle="bold" />
 
-				<LinearLayout
-					android:layout_width="match_parent"
+			<TextView
+				android:id="@+id/contributeExplanation"
+				android:layout_marginTop="@dimen/padding_half"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/contribute_explanation" />
+
+			<RelativeLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+
+				<CheckBox
+					android:id="@+id/contributeCheckbox"
+					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:orientation="vertical">
+					android:layout_centerVertical="true"
+					android:layout_marginTop="@dimen/padding_default" />
 
-					<TextView
-						android:id="@+id/contributeTitle"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="15dp"
-						android:text="@string/contribute_title"
-						android:textAlignment="center"
-						android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-						android:textStyle="bold" />
+				<TextView
+					android:id="@+id/contributeAgreeText"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:layout_toEndOf="@id/contributeCheckbox"
+					android:text="@string/contribute_agree" />
+			</RelativeLayout>
 
-					<RelativeLayout
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginStart="15dp"
-						android:layout_marginTop="15dp"
-						android:layout_marginEnd="15dp"
-						android:layout_marginBottom="15dp">
-
-						<TextView
-							android:id="@+id/contributeExplanation"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginStart="10dp"
-							android:text="@string/contribute_explanation" />
-
-						<CheckBox
-							android:id="@+id/contributeCheckbox"
-							android:layout_width="wrap_content"
-							android:layout_height="match_parent"
-							android:layout_below="@id/contributeExplanation"
-							android:layout_marginTop="15dp"
-							android:gravity="center_vertical" />
-
-						<TextView
-							android:id="@+id/contributeAgreeText"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_alignTop="@id/contributeCheckbox"
-							android:layout_toEndOf="@id/contributeCheckbox"
-							android:gravity="center_vertical"
-							android:text="@string/contribute_agree" />
-					</RelativeLayout>
-
-					<Button
-						android:id="@+id/contributeSaveButton"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_gravity="center_horizontal"
-						android:layout_marginTop="15dp"
-						android:layout_marginBottom="15dp"
-						android:onClick="onSaveButtonClick"
-						android:text="@string/contribute_save" />
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/contributeSaveButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginBottom="@dimen/padding_default"
+				android:onClick="onSaveButtonClick"
+				android:text="@string/contribute_save" />
 		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

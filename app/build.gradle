@@ -150,21 +150,34 @@ repositories {
 dependencies {
 	implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-	//General Android libraries
+	// AndroidX: https://developer.android.com/jetpack/androidx/releases
+	// https://developer.android.com/jetpack/androidx/releases/appcompat
 	implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
-	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+	// https://developer.android.com/jetpack/androidx/releases/browser
 	implementation 'androidx.browser:browser:1.0.0'
+	// https://developer.android.com/jetpack/androidx/releases/constraintlayout
+	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+	// https://developer.android.com/jetpack/androidx/releases/fragment
+	implementation 'androidx.fragment:fragment:1.2.0-alpha01'
+	// https://developer.android.com/jetpack/androidx/releases/preference
+	implementation 'androidx.preference:preference:1.1.0-rc01'
+	// https://developer.android.com/jetpack/androidx/releases/recyclerview
+	implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
+
+	// Google Material Components for Android
+	// https://github.com/material-components/material-components-android/releases
 	implementation 'com.google.android.material:material:1.1.0-alpha09'
 
-	//JSON libraries
+	// JSON libraries
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9.2'
 
-	//Date and time libraries
+	// Date and time libraries
 	implementation 'joda-time:joda-time:2.10.3'
 	implementation 'org.joda:joda-convert:2.2.1'
 
-	//Firebase libraries
+	// Google Firebase
+	// https://firebase.google.com/support/release-notes/android
 	implementation 'com.google.firebase:firebase-ads:18.1.1'
 	implementation 'com.google.firebase:firebase-messaging:19.0.1'
 	implementation 'com.google.android.gms:play-services-base:17.0.0'
@@ -180,8 +193,9 @@ dependencies {
 	// Java 8 backports:
 	implementation 'net.sourceforge.streamsupport:streamsupport:1.7.1'
 
-	// Test libraries
 	testImplementation 'junit:junit:4.12'
+
+	// https://developer.android.com/jetpack/androidx/releases/test
 	androidTestImplementation 'androidx.test:runner:1.2.0'
 	androidTestImplementation 'androidx.test:rules:1.2.0'
 	androidTestImplementation 'androidx.annotation:annotation:1.1.0'

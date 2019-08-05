@@ -10,7 +10,9 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.util.Consumer;
 
 import com.arjanvlek.oxygenupdater.R;
@@ -34,6 +36,15 @@ public class ContributorActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceSate) {
 		super.onCreate(savedInstanceSate);
 		setContentView(R.layout.activity_contributor);
+
+		Toolbar toolbar = findViewById(R.id.toolbar);
+
+		setSupportActionBar(toolbar);
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
 
 		if (getIntent().getBooleanExtra(INTENT_HIDE_ENROLLMENT, false)) {
 			findViewById(R.id.contributeCheckbox).setVisibility(View.GONE);
@@ -60,8 +71,8 @@ public class ContributorActivity extends AppCompatActivity {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		switch (requestCode) {
 			case PERMISSION_REQUEST_CODE:
-				if (this.permissionCallback != null && grantResults.length > 0) {
-					this.permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
+				if (permissionCallback != null && grantResults.length > 0) {
+					permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
 				}
 
 		}

@@ -86,7 +86,7 @@
 	<string name="settings_buy_button_buy">"Osta (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Ostettu"</string>
 	<string name="settings_buy_button_not_possible">"Ei saatavilla"</string>
-	<string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen:"</string>
+	<string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen"</string>
 
 	<!-- TODO translate the 2 below -->
 	<string name="settings_contribute_label">Auta parantamaan sovellusta:</string>

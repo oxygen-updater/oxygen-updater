@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="themeList">
+		<item>@string/theme_light</item>
+		<item>@string/theme_dark</item>
+		<item>@string/theme_system</item>
+		<item>@string/theme_auto</item>
+	</string-array>
+</resources>

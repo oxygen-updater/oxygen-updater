@@ -92,7 +92,7 @@
 	<string name="settings_buy_button_buy">Koop (%1$s)</string>
 	<string name="settings_buy_button_bought">Gekocht</string>
 	<string name="settings_buy_button_not_possible">Niet beschikb.</string>
-	<string name="settings_buy_ad_free_label">Verwijder advertenties:</string>
+	<string name="settings_buy_ad_free_label">Verwijder advertenties</string>
 	<string name="settings_contribute_label">Verbeter de app voor anderen:</string>
 	<string name="settings_contribute_button">Draag bij</string>
 	<string name="settings_category_other">Overig:</string>

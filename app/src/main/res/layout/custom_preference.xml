@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="@dimen/padding_half">
+
+	<ImageView
+		android:id="@android:id/icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/padding_default"
+		android:tint="?colorPrimary"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:src="@drawable/ic_action_faq" />
+
+	<TextView
+		android:id="@android:id/title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/padding_half"
+		android:textAppearance="?android:textAppearanceListItem"
+		android:textSize="@dimen/typography_subheading"
+		app:layout_constraintBottom_toTopOf="@android:id/summary"
+		app:layout_constraintStart_toEndOf="@android:id/icon"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_chainStyle="packed"
+		tools:text="Title" />
+
+	<TextView
+		android:id="@android:id/summary"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@android:id/title"
+		android:layout_marginStart="@dimen/padding_half"
+		android:textColor="?android:textColorSecondary"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toEndOf="@android:id/icon"
+		app:layout_constraintTop_toBottomOf="@android:id/title"
+		app:layout_constraintVertical_chainStyle="packed"
+		tools:text="Summary" />
+
+	<!-- Preference places its actual preference widget here -->
+	<LinearLayout
+		android:id="@android:id/widget_frame"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/padding_default"
+		android:layout_marginEnd="@dimen/padding_default"
+		android:gravity="center_vertical"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

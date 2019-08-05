@@ -16,11 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -69,9 +69,8 @@ public class NewsFragment extends AbstractFragment {
 		new Handler().postDelayed(() -> refreshNews(view, null), getLoadDelayMilliseconds());
 
 		SwipeRefreshLayout refreshLayout = view.findViewById(R.id.newsRefreshContainer);
-		refreshLayout.setOnRefreshListener(() -> refreshNews(view, (__) -> refreshLayout.setRefreshing(false)));
+		refreshLayout.setOnRefreshListener(() -> refreshNews(view, __ -> refreshLayout.setRefreshing(false)));
 	}
-
 
 	private void refreshNews(View view, Consumer<Void> callback) {
 		// If the view was suspended during the 3-second delay, stop performing any further actions.
@@ -329,7 +328,7 @@ public class NewsFragment extends AbstractFragment {
 	}
 
 	private static class NewsItemView {
-		private RelativeLayout container;
+		private ConstraintLayout container;
 		private ImageView image;
 		private ImageView imagePlaceholder;
 		private TextView title;

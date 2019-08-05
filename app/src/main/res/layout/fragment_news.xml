@@ -3,14 +3,11 @@
 	android:id="@+id/newsRefreshContainer"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:layout_marginStart="10dp"
-	android:layout_marginEnd="10dp"
 	android:orientation="vertical">
 
 	<ListView
 		android:id="@+id/newsContainer"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
-
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

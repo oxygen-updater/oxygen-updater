@@ -78,7 +78,7 @@
 	<string name="settings_buy_button_buy">"Kupi (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Kupljeno"</string>
 	<string name="settings_buy_button_not_possible">"Nedostupno"</string>
-	<string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free:"</string>
+	<string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free"</string>
 
 	<!-- TODO translate the 2 below -->
 	<string name="settings_contribute_label">Help improving the app:</string>

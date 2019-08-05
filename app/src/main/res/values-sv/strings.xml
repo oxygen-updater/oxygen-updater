@@ -87,7 +87,7 @@
 	<string name="settings_buy_button_buy">"(%1$s)"</string>
 	<string name="settings_buy_button_bought">"Köpt"</string>
 	<string name="settings_buy_button_not_possible">"Otillgänglig"</string>
-	<string name="settings_buy_ad_free_label">"Uppgradera till reklamfritt:"</string>
+	<string name="settings_buy_ad_free_label">"Uppgradera till reklamfritt"</string>
 
 	<!-- TODO translate the 2 below -->
 	<string name="settings_contribute_label">Help improving the app:</string>

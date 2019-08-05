@@ -8,9 +8,10 @@ import android.os.Build.VERSION_CODES;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate.NightMode;
 
-import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.R;
 
 import java.util.Calendar;
 
@@ -18,10 +19,6 @@ import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_AUTO;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_DARK;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_LIGHT;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_THEME_SYSTEM;
 
 public class ThemeUtils {
 
@@ -43,20 +40,25 @@ public class ThemeUtils {
 	@NightMode
 	public static int translateThemeToNightMode(Context context) {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-		String theme = sharedPreferences.getString(SettingsManager.PROPERTY_THEME, PROPERTY_THEME_SYSTEM);
+		String theme = sharedPreferences.getString(context.getString(R.string.key_theme), context.getString(R.string.theme_system));
 
-		switch (theme) {
-			case PROPERTY_THEME_LIGHT:
+		//noinspection ConstantConditions
+		return translateThemeToNightMode(context, theme);
+	}
+
+	private static int translateThemeToNightMode(Context context, @NonNull String theme) {
+		switch (theme.toLowerCase()) {
+			case "light":
 				return MODE_NIGHT_NO;
-			case PROPERTY_THEME_DARK:
+			case "dark":
 				return MODE_NIGHT_YES;
-			case PROPERTY_THEME_AUTO:
+			case "auto":
 				int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
 				return (hour >= 19 && hour <= 23) || (hour >= 0 && hour <= 6)
 						? MODE_NIGHT_YES
 						: MODE_NIGHT_AUTO_BATTERY;
-			case PROPERTY_THEME_SYSTEM:
+			case "system":
 			default:
 				int onePlusTheme = getOnePlusTheme(context);
 

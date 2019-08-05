@@ -92,7 +92,7 @@
 	<string name="settings_buy_button_buy">"Купить (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Куплено"</string>
 	<string name="settings_buy_button_not_possible">"Недоступно"</string>
-	<string name="settings_buy_ad_free_label">"Отключить рекламу:"</string>
+	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
 
 	<!-- TODO translate the 2 below -->
 	<string name="settings_contribute_label">Help improving the app:</string>

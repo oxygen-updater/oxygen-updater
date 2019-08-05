@@ -88,7 +88,7 @@
 	<string name="settings_buy_button_buy">"Acquista(%1$s)"</string>
 	<string name="settings_buy_button_bought">"Acquistato"</string>
 	<string name="settings_buy_button_not_possible">"Non disponibile"</string>
-	<string name="settings_buy_ad_free_label">"Passa a senza annunci:"</string>
+	<string name="settings_buy_ad_free_label">"Passa a senza annunci"</string>
 
 	<string name="settings_contribute_label">"Aiuta a migliorare l'app:"</string>
 	<string name="settings_contribute_button">"Contribuisci"</string>

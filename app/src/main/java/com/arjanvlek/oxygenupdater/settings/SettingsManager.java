@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class SettingsManager {
 
-	//Settings properties
+	// Settings properties
 	public static final String PROPERTY_DEVICE = "device";
 	public static final String PROPERTY_DEVICE_ID = "device_id";
 	public static final String PROPERTY_UPDATE_METHOD = "update_method";
@@ -47,7 +47,7 @@ public class SettingsManager {
 	public static final String PROPERTY_CONTRIBUTE = "contribute";
 	public static final String PROPERTY_CONTRIBUTION_COUNT = "contribution_count";
 
-	//Offline cache properties
+	// Offline cache properties
 	public static final String PROPERTY_OFFLINE_ID = "offlineId";
 	public static final String PROPERTY_OFFLINE_UPDATE_NAME = "offlineUpdateName";
 	public static final String PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE = "offlineUpdateDownloadSize";
@@ -63,13 +63,6 @@ public class SettingsManager {
 
 	// IAB properties
 	public static final String PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj";
-
-	// Theme properties
-	public static final String PROPERTY_THEME = "theme";
-	public static final String PROPERTY_THEME_LIGHT = "Light";
-	public static final String PROPERTY_THEME_DARK = "Dark";
-	public static final String PROPERTY_THEME_SYSTEM = "System";
-	public static final String PROPERTY_THEME_AUTO = "Auto";
 
 	private static final String TAG = "SettingsManager";
 	private final Context context;
