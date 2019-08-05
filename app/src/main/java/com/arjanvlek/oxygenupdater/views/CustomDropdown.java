@@ -22,6 +22,7 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 
 public class CustomDropdown {
 
+	static int TEXT_COLOR = Color.WHITE;
 	public static View initCustomDeviceDropdown(int currentPosition, View convertView, ViewGroup parent, @LayoutRes int layoutType, List<Device> devices, int recommendedPosition, Context context) {
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) Utils.getSystemService(context, Context.LAYOUT_INFLATER_SERVICE);
@@ -42,10 +43,10 @@ public class CustomDropdown {
 			if (currentPosition == recommendedPosition) {
 				textView.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
 			} else {
-				textView.setTextColor(Color.BLACK);
+				textView.setTextColor(TEXT_COLOR);
 			}
 		} else {
-			textView.setTextColor(Color.BLACK);
+			textView.setTextColor(TEXT_COLOR);
 		}
 
 		return convertView;
@@ -72,7 +73,7 @@ public class CustomDropdown {
 				textView.setText(updateMethods.get(currentPosition).getEnglishName());
 		}
 
-		textView.setTextColor(Color.BLACK);
+		textView.setTextColor(TEXT_COLOR);
 
 		// If this is a recommended update method, make the text green. Otherwise, leave it black.
 		if (recommendedPositions != null) {
