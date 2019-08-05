@@ -12,9 +12,9 @@
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 	<permission
-		android:name="com.arjanvlek.oxygenupdater.permission.accessDownloadServiceRestarter"
+		android:name="${fullPackageName}.permission.accessDownloadServiceRestarter"
 		android:protectionLevel="signature" />
-	<uses-permission android:name="com.arjanvlek.oxygenupdater.permission.accessDownloadServiceRestarter" />
+	<uses-permission android:name="${fullPackageName}.permission.accessDownloadServiceRestarter" />
 
 	<!-- Push notification permissions -->
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -34,7 +34,7 @@
 		android:allowBackup="true"
 		android:fullBackupContent="true"
 		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
+		android:label="${appName}"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.Oxygen"
 		android:usesCleartextTraffic="true">
@@ -225,7 +225,7 @@
 			android:enabled="true"
 			android:exported="true"
 			android:label="Restart downloader service when app gets stopped"
-			android:permission="com.arjanvlek.oxygenupdater.permission.accessDownloadServiceRestarter" />
+			android:permission="${fullPackageName}.permission.accessDownloadServiceRestarter" />
 
 		<meta-data
 			android:name="com.google.android.gms.version"

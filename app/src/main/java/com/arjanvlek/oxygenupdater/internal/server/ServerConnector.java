@@ -82,8 +82,8 @@ public class ServerConnector implements Cloneable {
 
 	public ServerConnector(SettingsManager settingsManager) {
 		this.settingsManager = settingsManager;
-		this.objectMapper = new ObjectMapper();
-		this.devices = new ArrayList<>();
+		objectMapper = new ObjectMapper();
+		devices = new ArrayList<>();
 	}
 
 	public void getDevices(Consumer<List<Device>> callback) {
@@ -91,8 +91,7 @@ public class ServerConnector implements Cloneable {
 	}
 
 	public void getDevices(boolean alwaysFetch, Consumer<List<Device>> callback) {
-		if (deviceFetchDate != null && deviceFetchDate.plusMinutes(5)
-				.isAfter(LocalDateTime.now()) && !alwaysFetch) {
+		if (deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
 			Logger.logVerbose(TAG, "Used local cache to fetch devices...");
 			callback.accept(devices);
 		} else {
@@ -100,7 +99,7 @@ public class ServerConnector implements Cloneable {
 			new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, (devices) -> {
 				this.devices.clear();
 				this.devices.addAll(devices);
-				this.deviceFetchDate = LocalDateTime.now();
+				deviceFetchDate = LocalDateTime.now();
 				callback.accept(devices);
 			}).execute();
 		}
@@ -129,9 +128,11 @@ public class ServerConnector implements Cloneable {
 	public void getUpdateData(boolean online, @NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull String incrementalSystemVersion, Consumer<UpdateData> callback, Consumer<String> errorFunction) {
 
 		new ObjectResponseExecutor<>(ServerRequest.UPDATE_DATA, (Consumer<UpdateData>) updateData -> {
-			if (updateData != null && updateData.getInformation() != null && updateData.getInformation()
-					.equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD) && updateData.isUpdateInformationAvailable() && updateData
-					.isSystemIsUpToDate()) {
+			if (updateData != null
+					&& updateData.getInformation() != null
+					&& updateData.getInformation().equals(UNABLE_TO_FIND_A_MORE_RECENT_BUILD)
+					&& updateData.isUpdateInformationAvailable()
+					&& updateData.isSystemIsUpToDate()) {
 				getMostRecentOxygenOTAUpdate(deviceId, updateMethodId, callback);
 			} else if (!online) {
 				if (settingsManager.checkIfOfflineUpdateDataIsAvailable()) {
@@ -195,8 +196,7 @@ public class ServerConnector implements Cloneable {
 				}
 			}
 
-			if (settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus
-					.checkIfAppIsUpToDate()) {
+			if (settingsManager.getPreference(PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
 				inAppBars.add(new Banner() {
 
 					@Override
@@ -263,8 +263,7 @@ public class ServerConnector implements Cloneable {
 		} catch (JSONException ignored) {
 			ServerPostResult result = new ServerPostResult();
 			result.setSuccess(false);
-			result.setErrorMessage("IN-APP ERROR (ServerConnector): JSON parse error on input data " + purchase
-					.getOriginalJson());
+			result.setErrorMessage("IN-APP ERROR (ServerConnector): JSON parse error on input data " + purchase.getOriginalJson());
 			callback.accept(result);
 			return;
 		}
@@ -285,12 +284,11 @@ public class ServerConnector implements Cloneable {
 	}
 
 	private void getMostRecentOxygenOTAUpdate(@NonNull Long deviceId, @NonNull Long updateMethodId, Consumer<UpdateData> callback) {
-		new ObjectResponseExecutor<>(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId, updateMethodId)
-				.execute();
+		new ObjectResponseExecutor<>(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId, updateMethodId).execute();
 	}
 
 	public void getServerStatus(boolean online, Consumer<ServerStatus> callback) {
-		if (this.serverStatus == null) {
+		if (serverStatus == null) {
 			new ObjectResponseExecutor<ServerStatus>(ServerRequest.SERVER_STATUS, (serverStatus) -> {
 				boolean automaticInstallationEnabled = false;
 				int pushNotificationsDelaySeconds = 1800;
@@ -307,16 +305,14 @@ public class ServerConnector implements Cloneable {
 				}
 
 				if (settingsManager != null) {
-					settingsManager.savePreference(PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, this.serverStatus
-							.isAutomaticInstallationEnabled());
-					settingsManager.savePreference(PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, this.serverStatus
-							.getPushNotificationDelaySeconds());
+					settingsManager.savePreference(PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, this.serverStatus.isAutomaticInstallationEnabled());
+					settingsManager.savePreference(PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, this.serverStatus.getPushNotificationDelaySeconds());
 				}
 
 				callback.accept(this.serverStatus);
 			}).execute();
 		} else {
-			callback.accept(this.serverStatus);
+			callback.accept(serverStatus);
 		}
 	}
 
@@ -360,8 +356,7 @@ public class ServerConnector implements Cloneable {
 				return new ArrayList<>();
 			}
 
-			return objectMapper.readValue(response, objectMapper.getTypeFactory()
-					.constructCollectionType(List.class, serverRequest.getReturnClass()));
+			return objectMapper.readValue(response, objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
 		} catch (Exception e) {
 			Logger.logError(TAG, "JSON parse error", e);
 			return new ArrayList<>();
@@ -375,8 +370,7 @@ public class ServerConnector implements Cloneable {
 				return null;
 			}
 
-			return objectMapper.readValue(response, objectMapper.getTypeFactory()
-					.constructType(serverRequest.getReturnClass()));
+			return objectMapper.readValue(response, objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
 		} catch (Exception e) {
 			Logger.logError(TAG, "JSON parse error", e);
 			return null;
@@ -448,6 +442,7 @@ public class ServerConnector implements Cloneable {
 		}
 	}
 
+	@Override
 	public ServerConnector clone() {
 		try {
 			return (ServerConnector) super.clone();

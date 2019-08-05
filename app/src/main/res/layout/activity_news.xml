@@ -39,8 +39,9 @@
 			android:layout_marginTop="10dp"
 			android:layout_marginEnd="@dimen/news_horizontal_margin" />
 
-		<Button
+		<com.google.android.material.button.MaterialButton
 			android:id="@+id/newsRetryButton"
+			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"

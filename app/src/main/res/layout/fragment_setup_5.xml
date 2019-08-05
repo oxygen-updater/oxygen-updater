@@ -39,9 +39,9 @@
 			android:textSize="14sp" />
 	</RelativeLayout>
 
-	<Button
+	<com.google.android.material.button.MaterialButton
 		android:id="@+id/introduction_step_5_close_button"
-		style="?android:buttonBarButtonStyle"
+		style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"

@@ -20,7 +20,6 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 
 public class FAQActivity extends AppCompatActivity {
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/newsItemContainer"
@@ -26,26 +26,29 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
-	<TextView
-		android:id="@+id/newsItemTitle"
+	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/padding_half"
-		android:text="@string/loading"
-		android:textAppearance="?android:textAppearanceListItem"
-		android:textSize="@dimen/typography_subheading"
-		app:layout_constraintStart_toEndOf="@id/newsItemImage"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:text="Title" />
+		android:layout_toEndOf="@id/newsItemImage"
+		android:orientation="vertical">
 
-	<TextView
-		android:id="@+id/newsItemSubTitle"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/padding_half"
-		android:text="@string/loading"
-		android:textColor="?android:textColorSecondary"
-		app:layout_constraintStart_toEndOf="@id/newsItemImage"
-		app:layout_constraintTop_toBottomOf="@id/newsItemTitle"
-		tools:text="Summary" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+		<TextView
+			android:id="@+id/newsItemTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/loading"
+			android:textAppearance="?android:textAppearanceListItem"
+			android:textSize="@dimen/typography_subheading"
+			tools:text="Title" />
+
+		<TextView
+			android:id="@+id/newsItemSubTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="6dp"
+			android:text="@string/loading"
+			android:textColor="?android:textColorSecondary"
+			tools:text="@string/help_change_settings_text" />
+	</LinearLayout>
+</RelativeLayout>

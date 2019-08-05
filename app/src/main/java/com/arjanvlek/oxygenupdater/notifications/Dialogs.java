@@ -1,10 +1,8 @@
 package com.arjanvlek.oxygenupdater.notifications;
 
-import android.content.ActivityNotFoundException;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -12,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
-import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.download.DownloadService;
 import com.arjanvlek.oxygenupdater.internal.Worker;
@@ -29,7 +26,7 @@ public class Dialogs {
 	 * @param title   Title of the error message
 	 * @param message Contents of the error message
 	 */
-	public static void showDownloadError(final Fragment fragment, final UpdateData updateData, boolean isResumable, @StringRes int title, @StringRes int message) {
+	public static void showDownloadError(Fragment fragment, UpdateData updateData, boolean isResumable, @StringRes int title, @StringRes int message) {
 		showDownloadError(fragment, updateData, isResumable, fragment.getString(title), fragment.getString(message));
 	}
 
@@ -39,7 +36,7 @@ public class Dialogs {
 	 * @param title   Title of the error message
 	 * @param message Contents of the error message
 	 */
-	public static void showDownloadError(final Fragment fragment, final UpdateData updateData, boolean isResumable, String title, String message) {
+	public static void showDownloadError(Fragment fragment, UpdateData updateData, boolean isResumable, String title, String message) {
 		checkPreconditions(fragment, () -> {
 			MessageDialog errorDialog = new MessageDialog()
 					.setTitle(title)
@@ -104,7 +101,9 @@ public class Dialogs {
 		});
 	}
 
-	public static void showAppOutdatedError(Fragment fragment) {
+	public static void showAppOutdatedError(Fragment fragment, Activity activity) {
+		ActivityLauncher activityLauncher = new ActivityLauncher(activity);
+
 		checkPreconditions(fragment, () -> {
 			MessageDialog appOutdatedErrorFragment = new MessageDialog()
 					.setTitle(fragment.getString(R.string.error_app_outdated))
@@ -115,16 +114,7 @@ public class Dialogs {
 					.setDialogListener(new MessageDialog.DialogListener() {
 						@Override
 						public void onDialogPositiveButtonClick(DialogInterface dialogFragment) {
-							try {
-								final String appPackageName = BuildConfig.APPLICATION_ID;
-								try {
-									fragment.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-								} catch (ActivityNotFoundException e) {
-									fragment.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-								}
-							} catch (Exception ignored) {
-
-							}
+							activityLauncher.launchPlayStorePage(activity);
 						}
 
 						@Override
@@ -137,7 +127,7 @@ public class Dialogs {
 		});
 	}
 
-	public static void showUpdateAlreadyDownloadedMessage(final UpdateData updateData, final Fragment fragment, final Consumer<Void> actionPerformedCallback) {
+	public static void showUpdateAlreadyDownloadedMessage(UpdateData updateData, Fragment fragment, Consumer<Void> actionPerformedCallback) {
 		checkPreconditions(fragment, () -> {
 			MessageDialog dialog = new MessageDialog()
 					.setTitle(fragment.getString(R.string.delete_message_title))
@@ -180,7 +170,7 @@ public class Dialogs {
 		});
 	}
 
-	public static void showAdvancedModeExplanation(final Context ctx, final FragmentManager fm) {
+	public static void showAdvancedModeExplanation(Context ctx, FragmentManager fm) {
 		if (fm == null) {
 			return;
 		}

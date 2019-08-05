@@ -128,7 +128,11 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
 		// Remove "long" download ID in favor of "int" id
 		try {
-			settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1);
+			// Do not remove this int assignment, even though the IDE warns it's unused.
+			// getPreference method has a generic signature, we need to force its return type to be an int,
+			// otherwise it triggers a ClassCastException (which occurs when coming from older app versions)
+			// whilst not assigning it converts it to a long
+			int downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1);
 		} catch (ClassCastException e) {
 			settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
 		}

@@ -288,7 +288,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 					Dialogs.showServerMaintenanceError(instance);
 					break;
 				case APP_OUTDATED_ERROR:
-					Dialogs.showAppOutdatedError(instance);
+					Dialogs.showAppOutdatedError(instance, getActivity());
 					break;
 			}
 		});

@@ -16,11 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -328,7 +328,7 @@ public class NewsFragment extends AbstractFragment {
 	}
 
 	private static class NewsItemView {
-		private ConstraintLayout container;
+		private RelativeLayout container;
 		private ImageView image;
 		private ImageView imagePlaceholder;
 		private TextView title;

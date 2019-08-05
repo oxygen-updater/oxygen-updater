@@ -89,9 +89,9 @@
 
 		</RelativeLayout>
 
-		<Button
+		<com.google.android.material.button.MaterialButton
 			android:id="@+id/installGuideCloseButton"
-			style="?android:attr/buttonBarButtonStyle"
+			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/installGuideText"

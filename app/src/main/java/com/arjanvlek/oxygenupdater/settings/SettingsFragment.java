@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.settings;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -157,8 +156,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 		// Open the app's Play Store page
 		//noinspection ConstantConditions
 		rateApp.setOnPreferenceClickListener(preference -> {
-			String url = "market://details?id=com.arjanvlek.oxygenupdater";
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+			activityLauncher.launchPlayStorePage(context);
 			return true;
 		});
 

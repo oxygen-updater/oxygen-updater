@@ -1,32 +1,27 @@
 package com.arjanvlek.oxygenupdater.about;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 public class AboutActivity extends AppCompatActivity {
-
-	private static final String GOOGLE_PLAY_BASE_URL = "market://details?id=";
-	private static final String GOOGLE_PLAY_BROWSER__BASE_URL = "https://play.google.com/store/apps/details?id=";
 
 	@Override
 	public void onCreate(Bundle savedInstanceSate) {
 		super.onCreate(savedInstanceSate);
 		setContentView(R.layout.activity_about);
+
+		ActivityLauncher activityLauncher = new ActivityLauncher(this);
 
 		Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -48,20 +43,7 @@ public class AboutActivity extends AppCompatActivity {
 
 		// Set onClick listener to Google Play rate button.
 		Button rateAppButton = findViewById(R.id.aboutRateButton);
-		rateAppButton.setOnClickListener(v -> {
-			String appPackageName = getPackageName();
-			try {
-				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BASE_URL + appPackageName)));
-			} catch (ActivityNotFoundException e) {
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(GOOGLE_PLAY_BROWSER__BASE_URL + appPackageName)));
-				} catch (ActivityNotFoundException e1) {
-					Toast.makeText(getApplicationContext(), getString(R.string.error_unable_to_rate_app), Toast.LENGTH_LONG)
-							.show();
-					Logger.logWarning("AboutActivity", "App rating without google play store support", e1);
-				}
-			}
-		});
+		rateAppButton.setOnClickListener(v -> activityLauncher.launchPlayStorePage(this));
 
 	}
 

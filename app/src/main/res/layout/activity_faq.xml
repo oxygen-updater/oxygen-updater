@@ -77,8 +77,8 @@
 				android:layout_marginRight="@dimen/activity_horizontal_margin"
 				android:text="@string/faq_no_network_text" />
 
-			<Button
-				style="?android:attr/buttonBarButtonStyle"
+			<com.google.android.material.button.MaterialButton
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_below="@id/faq_no_network_text"
