@@ -7,32 +7,21 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 
-public class FAQActivity extends AppCompatActivity {
+public class FAQActivity extends SupportActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_faq);
-
-		Toolbar toolbar = findViewById(R.id.toolbar);
-
-		setSupportActionBar(toolbar);
-
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class ThemeUtils {
 
 				// if the user has chosen Dark theme for their OnePlus device, honor it.
 				// otherwise resort to Android-provided modes
-				if (onePlusTheme == 1) {
+				if (onePlusTheme == OnePlusTheme.DARK.ordinal()) {
 					return MODE_NIGHT_YES;
 				} else {
 					// Android Pie (9.0) introduced a night mode system flag that could be set in developer options

@@ -6,15 +6,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends SupportActionBarActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceSate) {
@@ -22,15 +19,6 @@ public class AboutActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_about);
 
 		ActivityLauncher activityLauncher = new ActivityLauncher(this);
-
-		Toolbar toolbar = findViewById(R.id.toolbar);
-
-		setSupportActionBar(toolbar);
-
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
 
 		// Set the version number of the app in the version number field.
 		String versionNumber = BuildConfig.VERSION_NAME;

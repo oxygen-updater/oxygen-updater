@@ -3,27 +3,15 @@ package com.arjanvlek.oxygenupdater.help;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
-public class HelpActivity extends AppCompatActivity {
+public class HelpActivity extends SupportActionBarActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceSate) {
 		super.onCreate(savedInstanceSate);
 		setContentView(R.layout.activity_help);
-
-		Toolbar toolbar = findViewById(R.id.toolbar);
-
-		setSupportActionBar(toolbar);
-
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
 	}
 
 	@Override

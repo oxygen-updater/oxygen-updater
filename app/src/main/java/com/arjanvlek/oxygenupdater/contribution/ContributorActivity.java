@@ -10,13 +10,11 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.util.Consumer;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -24,7 +22,7 @@ import static com.arjanvlek.oxygenupdater.views.MainActivity.PERMISSION_REQUEST_
 import static com.arjanvlek.oxygenupdater.views.MainActivity.VERIFY_FILE_PERMISSION;
 
 @SuppressWarnings("Convert2Lambda")
-public class ContributorActivity extends AppCompatActivity {
+public class ContributorActivity extends SupportActionBarActivity {
 
 	public static final String INTENT_HIDE_ENROLLMENT = "hide_enrollment";
 
@@ -36,15 +34,6 @@ public class ContributorActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceSate) {
 		super.onCreate(savedInstanceSate);
 		setContentView(R.layout.activity_contributor);
-
-		Toolbar toolbar = findViewById(R.id.toolbar);
-
-		setSupportActionBar(toolbar);
-
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
 
 		if (getIntent().getBooleanExtra(INTENT_HIDE_ENROLLMENT, false)) {
 			findViewById(R.id.contributeCheckbox).setVisibility(View.GONE);

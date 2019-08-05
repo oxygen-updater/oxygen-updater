@@ -27,6 +27,7 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory
+		android:key="@string/key_category_device"
 		android:layout="@layout/custom_preference_header"
 		android:title="@string/preference_header_device">
 

@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 import androidx.preference.PreferenceManager;
 
@@ -27,7 +25,7 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.SkuDetails;
-import com.arjanvlek.oxygenupdater.views.AbstractActivity;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
 import org.joda.time.LocalDateTime;
 
@@ -47,7 +45,7 @@ import static com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.
 import static com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.AVAILABLE;
 import static com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.UNAVAILABLE;
 
-public class SettingsActivity extends AbstractActivity implements InAppPurchaseDelegate {
+public class SettingsActivity extends SupportActionBarActivity implements InAppPurchaseDelegate {
 	public static final String SKU_AD_FREE = "oxygen_updater_ad_free";
 	private static final int IAB_REQUEST_CODE = 1995;
 	private static final String TAG = "SettingsActivity";
@@ -62,15 +60,6 @@ public class SettingsActivity extends AbstractActivity implements InAppPurchaseD
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-
-		Toolbar toolbar = findViewById(R.id.toolbar);
-
-		setSupportActionBar(toolbar);
-
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
 
 		settingsFragment = new SettingsFragment();
 		settingsFragment.setInAppPurchaseDelegate(this);

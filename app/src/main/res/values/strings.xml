@@ -120,6 +120,7 @@
 
 	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
 	<string name="key_contributor" translatable="false">become_contributor</string>
+	<string name="key_category_device" translatable="false">key_category_device</string>
 	<string name="key_device" translatable="false">device</string>
 	<string name="key_device_id" translatable="false">device_id</string>
 	<string name="key_update_method" translatable="false">update_method</string>

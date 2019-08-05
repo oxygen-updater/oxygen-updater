@@ -13,6 +13,7 @@
 
 		<item name="appBarLayoutStyle">@style/AppBarLayoutStyle</item>
 		<item name="tabStyle">@style/TabLayoutStyle</item>
+		<item name="android:buttonBarButtonStyle">@style/Widget.MaterialComponents.Button.TextButton</item>
 
 		<item name="colorOnBackground">?colorOnSurface</item>
 
@@ -29,8 +30,6 @@
 		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
 		<item name="android:windowActivityTransitions">true</item>
 		<item name="android:windowContentTransitions">true</item>
-
-		<!--<item name="preferenceTheme">@style/PreferenceThemeOverlay</item>-->
 	</style>
 
 	<style name="AppBarLayoutStyle" parent="Widget.MaterialComponents.AppBarLayout.Surface">

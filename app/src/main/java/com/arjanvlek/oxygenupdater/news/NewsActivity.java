@@ -38,7 +38,6 @@ public class NewsActivity extends AppCompatActivity {
 			return;
 		}
 
-		setTitle(getString(R.string.app_name));
 		setContentView(R.layout.loading);
 
 		loadNewsItem();

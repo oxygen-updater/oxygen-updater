@@ -78,16 +78,15 @@ public class SetupStep4Fragment extends AbstractFragment {
 			if (settingsManager.containsPreference(PROPERTY_DEVICE_ID)) {
 				progressBar.setVisibility(View.VISIBLE);
 
-				getApplicationData().getServerConnector()
-						.getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID, 1L), this::fillUpdateMethodSettings);
+				getApplicationData().getServerConnector().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID, 1L), this::fillUpdateMethodSettings);
 			}
 		}
 	}
 
-	private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
+	private void fillUpdateMethodSettings(List<UpdateMethod> updateMethods) {
 		Spinner spinner = rootView.findViewById(R.id.introduction_step_4_update_method_dropdown);
 
-		final int[] recommendedPositions = StreamSupport
+		int[] recommendedPositions = StreamSupport
 				.stream(updateMethods)
 				.filter(UpdateMethod::isRecommended)
 				.mapToInt(updateMethods::indexOf)
@@ -113,17 +112,14 @@ public class SetupStep4Fragment extends AbstractFragment {
 				@NonNull
 				@Override
 				public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, this
-							.getContext());
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, getContext());
 				}
 
 				@Override
 				public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, this
-							.getContext());
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, getContext());
 				}
 			};
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinner.setAdapter(adapter);
 
 			if (selectedPosition != -1) {

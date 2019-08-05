@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +39,12 @@ public class CustomDropdown {
 		// If this device is the recommended device, change the text color to green. Otherwise, leave it black.
 		if (recommendedPosition != -1) {
 			if (currentPosition == recommendedPosition) {
-				textView.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
+				textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 			} else {
-				textView.setTextColor(Color.BLACK);
+				textView.setTextColor(ContextCompat.getColor(context, R.color.foreground));
 			}
 		} else {
-			textView.setTextColor(Color.BLACK);
+			textView.setTextColor(ContextCompat.getColor(context, R.color.foreground));
 		}
 
 		return convertView;
@@ -72,13 +71,13 @@ public class CustomDropdown {
 				textView.setText(updateMethods.get(currentPosition).getEnglishName());
 		}
 
-		textView.setTextColor(Color.BLACK);
+		textView.setTextColor(ContextCompat.getColor(context, R.color.foreground));
 
 		// If this is a recommended update method, make the text green. Otherwise, leave it black.
 		if (recommendedPositions != null) {
 			for (Integer recommendedPosition : recommendedPositions) {
 				if (currentPosition == recommendedPosition) {
-					textView.setTextColor(ContextCompat.getColor(context, R.color.holo_green_dark));
+					textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 				}
 			}
 		}

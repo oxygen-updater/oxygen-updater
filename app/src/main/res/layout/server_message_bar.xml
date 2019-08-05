@@ -4,7 +4,7 @@
 	android:id="@+id/server_message_background_bar"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:padding="@dimen/padding_default"
+	android:padding="@dimen/padding_half"
 	tools:context=".views.MainActivity">
 
 	<TextView
@@ -15,6 +15,5 @@
 		android:layout_gravity="center"
 		android:gravity="center"
 		android:linksClickable="true"
-		android:textColor="?android:textColorTertiaryInverse"
-		android:textStyle="bold" />
+		android:textColor="@color/white" />
 </LinearLayout>

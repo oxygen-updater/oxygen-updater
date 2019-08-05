@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.setupwizard;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -45,7 +44,6 @@ public class SetupActivity extends AppCompatActivity {
 	private SettingsManager settingsManager;
 	private Consumer<Boolean> permissionCallback;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,7 +53,7 @@ public class SetupActivity extends AppCompatActivity {
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
 
-		this.settingsManager = new SettingsManager(getApplicationContext());
+		settingsManager = new SettingsManager(getApplicationContext());
 
 		if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
 			ApplicationData applicationData = ((ApplicationData) getApplication());
@@ -187,8 +185,8 @@ public class SetupActivity extends AppCompatActivity {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		switch (requestCode) {
 			case PERMISSION_REQUEST_CODE:
-				if (this.permissionCallback != null && grantResults.length > 0) {
-					this.permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
+				if (permissionCallback != null && grantResults.length > 0) {
+					permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
 				}
 
 		}
@@ -197,7 +195,6 @@ public class SetupActivity extends AppCompatActivity {
 	/**
 	 * Contains the basic / non interactive tutorial fragments.
 	 */
-	@SuppressLint("ValidFragment")
 	public static class SimpleTutorialFragment extends Fragment {
 		/**
 		 * The fragment argument representing the section number for this fragment.
@@ -229,7 +226,7 @@ public class SetupActivity extends AppCompatActivity {
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
+			super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 		}
 
 		@Override

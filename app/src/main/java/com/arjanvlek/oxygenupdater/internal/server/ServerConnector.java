@@ -170,7 +170,8 @@ public class ServerConnector implements Cloneable {
 
 					@Override
 					public int getColor(Context context) {
-						return ContextCompat.getColor(context, R.color.holo_red_light);
+						// since the primary color is red, use that to match the app bar
+						return ContextCompat.getColor(context, R.color.colorPrimary);
 					}
 				});
 			}
@@ -201,14 +202,12 @@ public class ServerConnector implements Cloneable {
 
 					@Override
 					public CharSequence getBannerText(Context context) {
-						//noinspection deprecation Suggested fix requires API level 24, which is too new for this app, or an ugly if-else statement.
-						return Html.fromHtml(String.format(context.getString(R.string.new_app_version), serverStatus
-								.getLatestAppVersion()));
+						return Html.fromHtml(String.format(context.getString(R.string.new_app_version), serverStatus.getLatestAppVersion()));
 					}
 
 					@Override
 					public int getColor(Context context) {
-						return ContextCompat.getColor(context, R.color.holo_green_light);
+						return ContextCompat.getColor(context, R.color.colorPositive);
 					}
 				});
 			}

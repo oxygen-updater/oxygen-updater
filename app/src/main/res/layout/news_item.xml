@@ -6,12 +6,17 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:background="?selectableItemBackground"
-	android:padding="@dimen/padding_default">
+	android:clickable="true"
+	android:focusable="true"
+	android:paddingStart="@dimen/padding_half"
+	android:paddingTop="@dimen/padding_default"
+	android:paddingEnd="@dimen/padding_half"
+	android:paddingBottom="@dimen/padding_default">
 
 	<ImageView
 		android:id="@+id/newsItemImage"
-		android:layout_width="60dp"
-		android:layout_height="60dp"
+		android:layout_width="64dp"
+		android:layout_height="64dp"
 		android:contentDescription="@string/icon"
 		android:visibility="invisible"
 		app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +35,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/padding_half"
+		android:layout_marginTop="2dp"
 		android:layout_toEndOf="@id/newsItemImage"
 		android:orientation="vertical">
 
@@ -46,7 +52,7 @@
 			android:id="@+id/newsItemSubTitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="6dp"
+			android:layout_marginTop="4dp"
 			android:text="@string/loading"
 			android:textColor="?android:textColorSecondary"
 			tools:text="@string/help_change_settings_text" />

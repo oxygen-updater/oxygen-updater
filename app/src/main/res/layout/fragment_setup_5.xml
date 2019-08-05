@@ -2,6 +2,10 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:paddingStart="@dimen/padding_2x"
+	android:paddingTop="@dimen/padding_default"
+	android:paddingEnd="@dimen/padding_2x"
+	android:paddingBottom="@dimen/padding_default"
 	tools:context=".setupwizard.SetupActivity">
 
 	<RelativeLayout
@@ -9,24 +13,22 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_above="@id/introduction_step_5_close_button"
-		android:layout_marginStart="36dp"
-		android:layout_marginEnd="36dp">
+		android:layout_marginStart="@dimen/padding_4x"
+		android:layout_marginTop="@dimen/padding_default"
+		android:layout_marginEnd="@dimen/padding_4x">
 
 		<CheckBox
 			android:id="@+id/introduction_step_5_contribute_checkbox"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
-			android:layout_marginTop="15dp" />
+			android:layout_centerVertical="true" />
 
 		<TextView
 			android:id="@+id/introduction_step_5_contribute_agree_text"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_toEndOf="@id/introduction_step_5_contribute_checkbox"
-
-			android:text="@string/contribute_agree_from_setup"
-			android:textSize="14sp" />
+			android:text="@string/contribute_agree_from_setup" />
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -36,7 +38,7 @@
 			android:onClick="onContributeMoreInfoClick"
 			android:text="@string/contribute_more_info"
 			android:textColor="@color/blue_500"
-			android:textSize="14sp" />
+			android:textSize="@dimen/typography_caption" />
 	</RelativeLayout>
 
 	<com.google.android.material.button.MaterialButton
@@ -46,20 +48,14 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="5dp"
 		android:onClick="closeInitialTutorial"
 		android:text="@string/setup_close_button"
 		android:textColor="@color/colorPrimary" />
 
-	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
+	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_above="@id/introduction_step_5_contribute_row"
-		android:paddingLeft="@dimen/activity_horizontal_margin"
-		android:paddingTop="@dimen/activity_vertical_margin"
-		android:paddingRight="@dimen/activity_horizontal_margin"
-		android:paddingBottom="@dimen/activity_vertical_margin"
 		tools:context="com.arjanvlek.oxygenupdater.views.UpdateInstallationGuideActivity.TutorialFragment">
 
 		<RelativeLayout
@@ -68,11 +64,12 @@
 
 			<ImageView
 				android:id="@+id/introduction_step_5_image"
-				android:layout_width="280dp"
+				android:layout_width="match_parent"
 				android:layout_height="150dp"
 				android:layout_centerHorizontal="true"
 				android:contentDescription="@string/install_guide_image_description"
-				android:src="@drawable/ic_done" />
+				android:src="@drawable/done_all"
+				android:tint="?colorPrimary" />
 
 			<TextView
 				android:id="@+id/introduction_step_5_header_text"
@@ -80,11 +77,9 @@
 				android:layout_height="wrap_content"
 				android:layout_below="@+id/introduction_step_5_image"
 				android:layout_centerHorizontal="true"
-				android:layout_marginTop="10dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/setup_page_5_title"
-				android:textAppearance="?android:textAppearanceLarge"
-				android:textSize="18sp"
-				android:textStyle="bold" />
+				android:textSize="@dimen/typography_title" />
 
 			<TextView
 				android:id="@+id/introduction_step_5_text_block_1"
@@ -92,16 +87,9 @@
 				android:layout_height="wrap_content"
 				android:layout_below="@+id/introduction_step_5_header_text"
 				android:layout_centerHorizontal="true"
-				android:layout_marginStart="20dp"
-				android:layout_marginLeft="20dp"
-				android:layout_marginTop="20dp"
-				android:layout_marginEnd="20dp"
-				android:layout_marginRight="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/setup_page_5_text"
-				android:textAppearance="?android:textAppearanceMedium"
-				android:textColor="@color/material_blue_grey" />
-
-
+				android:textColor="?android:textColorSecondary" />
 		</RelativeLayout>
 	</ScrollView>
 </RelativeLayout>

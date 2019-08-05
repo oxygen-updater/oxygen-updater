@@ -13,6 +13,7 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
@@ -228,8 +229,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 				return true;
 			});
 		} else {
-			devicePreference.setVisible(false);
-			updateMethodPreference.setVisible(false);
+			PreferenceCategory deviceCategory = findPreference(getString(R.string.key_category_device));
+			deviceCategory.setVisible(false);
+			// devicePreference.setVisible(false);
+			// updateMethodPreference.setVisible(false);
 		}
 	}
 

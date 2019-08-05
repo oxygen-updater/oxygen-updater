@@ -13,10 +13,12 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.download.DownloadService;
 import com.arjanvlek.oxygenupdater.internal.Worker;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 
 import java8.util.function.Consumer;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 public class Dialogs {
 
@@ -69,9 +71,9 @@ public class Dialogs {
 				transaction.commitAllowingStateLoss();
 			} catch (IllegalStateException e) {
 				if (e.getMessage() != null && e.getMessage().contains("onSaveInstanceState")) {
-					Logger.logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
+					logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
 				} else {
-					Logger.logError("MessageDialog", "Error when displaying dialog 'DownloadError'", e);
+					logError("MessageDialog", "Error when displaying dialog 'DownloadError'", e);
 				}
 			}
 		});
@@ -162,9 +164,9 @@ public class Dialogs {
 				transaction.commitAllowingStateLoss();
 			} catch (IllegalStateException e) {
 				if (e.getMessage() != null && e.getMessage().contains("onSaveInstanceState")) {
-					Logger.logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
+					logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
 				} else {
-					Logger.logError("MessageDialog", "Error when displaying dialog 'DeleteDownload'", e);
+					logError("MessageDialog", "Error when displaying dialog 'DeleteDownload'", e);
 				}
 			}
 		});
