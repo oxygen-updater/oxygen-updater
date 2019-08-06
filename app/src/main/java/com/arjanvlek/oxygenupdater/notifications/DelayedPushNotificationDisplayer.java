@@ -175,7 +175,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 
 	private NotificationCompat.Builder getBuilderForGeneralServerNotificationOrNewsNotification(String message) {
 		return getNotificationBuilder()
-				.setSmallIcon(R.drawable.ic_stat_notification_general)
+				.setSmallIcon(R.drawable.oxygen_updater)
 				.setStyle(new NotificationCompat.BigTextStyle()
 						.bigText(message))
 				.setContentTitle(getString(R.string.app_name))

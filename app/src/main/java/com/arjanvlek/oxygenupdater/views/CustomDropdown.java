@@ -36,10 +36,11 @@ public class CustomDropdown {
 		TextView textView = convertView.findViewById(android.R.id.text1);
 		textView.setText(devices.get(currentPosition).getName());
 
-		// If this device is the recommended device, change the text color to green. Otherwise, leave it black.
+		// If this device is the recommended device, change the text color to green
+		// Otherwise, set it to the default foreground
 		if (recommendedPosition != -1) {
 			if (currentPosition == recommendedPosition) {
-				textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+				textView.setTextColor(ContextCompat.getColor(context, R.color.colorPositive));
 			} else {
 				textView.setTextColor(ContextCompat.getColor(context, R.color.foreground));
 			}
@@ -73,11 +74,11 @@ public class CustomDropdown {
 
 		textView.setTextColor(ContextCompat.getColor(context, R.color.foreground));
 
-		// If this is a recommended update method, make the text green. Otherwise, leave it black.
+		// If this is a recommended update method, make the text green
 		if (recommendedPositions != null) {
 			for (Integer recommendedPosition : recommendedPositions) {
 				if (currentPosition == recommendedPosition) {
-					textView.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+					textView.setTextColor(ContextCompat.getColor(context, R.color.colorPositive));
 				}
 			}
 		}

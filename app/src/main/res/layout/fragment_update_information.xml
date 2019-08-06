@@ -182,8 +182,7 @@
 						android:layout_width="48dp"
 						android:layout_height="48dp"
 						android:contentDescription="@string/icon"
-						android:rotation="180"
-						android:src="@drawable/publish"
+						android:src="@drawable/download"
 						android:tint="?colorPrimary" />
 
 					<TextView
