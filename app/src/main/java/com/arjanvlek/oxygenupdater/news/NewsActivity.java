@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
@@ -20,9 +19,10 @@ import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 import com.google.android.gms.ads.InterstitialAd;
 
-public class NewsActivity extends AppCompatActivity {
+public class NewsActivity extends SupportActionBarActivity {
 
 	public static final String INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID";
 	public static final String INTENT_START_WITH_AD = "START_WITH_AD";

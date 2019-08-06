@@ -309,15 +309,18 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 		int numberOfBars = serverMessageBars.size();
 
-		params.topMargin = numberOfBars * Utils.diPToPixels(getActivity(), 20);
-		view.setId((numberOfBars * 20000 + 1));
+		// position each bar below the previous one
+		if (!serverMessageBars.isEmpty()) {
+			params.addRule(BELOW, serverMessageBars.get(serverMessageBars.size() - 1).getId());
+		}
+
+		view.setId(numberOfBars * 20000 + 1);
 		rootView.addView(view, params);
 		serverMessageBars.add(view);
 	}
 
 	private void deleteAllServerMessageBars() {
-		stream(serverMessageBars).filter(Objects::nonNull)
-				.forEach(v -> rootView.removeView(v));
+		stream(serverMessageBars).filter(Objects::nonNull).forEach(v -> rootView.removeView(v));
 
 		serverMessageBars = new ArrayList<>();
 	}
@@ -347,7 +350,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 			createdServerMessageBars.add(bar);
 		}
 
-		// Set the margins of the app ui to be below the last added server message bar.
+		// Position the app UI  to be below the last added server message bar
 		if (!createdServerMessageBars.isEmpty()) {
 			View lastServerMessageView = createdServerMessageBars.get(createdServerMessageBars.size() - 1);
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
