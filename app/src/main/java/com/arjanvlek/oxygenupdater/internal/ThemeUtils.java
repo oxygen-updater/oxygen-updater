@@ -2,16 +2,15 @@ package com.arjanvlek.oxygenupdater.internal;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate.NightMode;
 
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
 import java.util.Calendar;
 
@@ -42,10 +41,8 @@ public class ThemeUtils {
 	 */
 	@NightMode
 	public static int translateThemeToNightMode(Context context) {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-		String theme = sharedPreferences.getString(context.getString(R.string.key_theme), context.getString(R.string.theme_system));
+		String theme = new SettingsManager(context).getPreference(context.getString(R.string.key_theme), context.getString(R.string.theme_system));
 
-		//noinspection ConstantConditions
 		return translateThemeToNightMode(context, theme);
 	}
 

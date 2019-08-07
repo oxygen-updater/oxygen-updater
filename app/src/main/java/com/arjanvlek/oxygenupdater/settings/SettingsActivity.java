@@ -181,18 +181,14 @@ public class SettingsActivity extends SupportActionBarActivity implements InAppP
 				// Check if the user has purchased the item. If so, grant ad-free and set the button to "Purchased". If not, remove ad-free and set the button to the right price.
 				if (inventory.hasPurchase(SKU_AD_FREE)) {
 					logDebug(TAG, "IAB: Product has already been purchased");
-					sharedPreferences.edit()
-							.putBoolean(PROPERTY_AD_FREE, true)
-							.apply();
+					settingsManager.savePreference(PROPERTY_AD_FREE, true);
 
 					settingsFragment.setupBuyAdFreePreference(ALREADY_BOUGHT);
 				} else {
 					logDebug(TAG, "IAB: Product has not yet been purchased");
 
 					// Save, because we can guarantee that the device is online and that the purchase check has succeeded.
-					sharedPreferences.edit()
-							.putBoolean(PROPERTY_AD_FREE, false)
-							.apply();
+					settingsManager.savePreference(PROPERTY_AD_FREE, false);
 
 					price = productDetails.getPrice();
 					settingsFragment.setupBuyAdFreePreference(AVAILABLE, productDetails.getPrice());
