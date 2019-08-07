@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 public class SettingsManager {
 
@@ -145,7 +145,7 @@ public class SettingsManager {
 			getSharedPreferencesEditor()
 					.putString(key, value.toString())
 					.apply();
-			Logger.logError(TAG, "Failed to save preference with key " + key + " and value " + value + " . Defaulting to String value! " + e
+			logError(TAG, "Failed to save preference with key " + key + " and value " + value + " . Defaulting to String value! " + e
 					.getMessage(), e);
 		}
 	}

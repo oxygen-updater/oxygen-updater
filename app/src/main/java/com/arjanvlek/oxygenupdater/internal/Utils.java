@@ -1,16 +1,17 @@
 package com.arjanvlek.oxygenupdater.internal;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.TypedValue;
 
+import androidx.annotation.Dimension;
+import androidx.annotation.NonNull;
+
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import org.joda.time.LocalDateTime;
 
@@ -22,6 +23,8 @@ import java8.util.Optional;
 import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 
 public class Utils {
 
@@ -44,24 +47,19 @@ public class Utils {
 		}
 	}
 
-	/**
-	 * Converts DiP units to pixels
-	 */
-	public static int diPToPixels(Activity activity, int numberOfPixels) {
-		if (activity != null && activity.getResources() != null) {
-			return (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP,
-					numberOfPixels,
-					activity.getResources().getDisplayMetrics()
-			);
-		} else {
-			return 0;
-		}
+	@SuppressWarnings("unused")
+	public static float dpToPx(@NonNull Context context, @Dimension(unit = Dimension.DP) float dp) {
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+	}
+
+	@SuppressWarnings("unused")
+	public static float spToPx(@NonNull Context context, @Dimension(unit = Dimension.SP) float sp) {
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
 	}
 
 	public static boolean checkNetworkConnection(Context context) {
 		if (context == null) {
-			Logger.logWarning("Utils", new OxygenUpdaterException("CheckNetworkConnection: check skipped due to empty / null context"));
+			logWarning("Utils", new OxygenUpdaterException("CheckNetworkConnection: check skipped due to empty / null context"));
 			return false;
 		}
 
@@ -74,12 +72,11 @@ public class Utils {
 		String oemFingerPrint = systemVersionProperties.getOemFingerprint();
 		String oxygenOsVersion = systemVersionProperties.getOxygenOSVersion();
 
-		boolean firmwareIsSupported =
-				oemFingerPrint != null
-						&& !oemFingerPrint.equals(NO_OXYGEN_OS)
-						&& oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
-						&& oxygenOsVersion != null
-						&& !oxygenOsVersion.equals(NO_OXYGEN_OS);
+		boolean firmwareIsSupported = oemFingerPrint != null
+				&& !oemFingerPrint.equals(NO_OXYGEN_OS)
+				&& oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
+				&& oxygenOsVersion != null
+				&& !oxygenOsVersion.equals(NO_OXYGEN_OS);
 
 		if (devices == null || devices.isEmpty()) {
 			// To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
@@ -87,8 +84,7 @@ public class Utils {
 		}
 
 		Optional<Device> supportedDevice = StreamSupport.stream(devices)
-				.filter(d -> d.getProductNames() != null && d.getProductNames()
-						.contains(systemVersionProperties.getOxygenDeviceName()))
+				.filter(d -> d.getProductNames() != null && d.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
 				.findAny();
 
 		return supportedDevice.isPresent() && firmwareIsSupported;
@@ -105,11 +101,9 @@ public class Utils {
 			String formattedTime = timeFormat.format(dateTime.toDate());
 
 			LocalDateTime today = LocalDateTime.now();
-			if ((dateTime.getDayOfMonth() == today.getDayOfMonth()) && dateTime.getMonthOfYear() == today
-					.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
+			if ((dateTime.getDayOfMonth() == today.getDayOfMonth()) && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
 				return formattedTime;
-			} else if ((dateTime.getDayOfMonth() + 1) == today.getDayOfMonth() && dateTime.getMonthOfYear() == today
-					.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
+			} else if ((dateTime.getDayOfMonth() + 1) == today.getDayOfMonth() && dateTime.getMonthOfYear() == today.getMonthOfYear() && dateTime.getYear() == today.getYear()) {
 				return context.getString(R.string.time_yesterday) + " " + context.getString(R.string.time_at) + " " + formattedTime;
 			} else {
 				DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
@@ -117,7 +111,7 @@ public class Utils {
 				return formattedDate + " " + context.getString(R.string.time_at) + " " + formattedTime;
 			}
 		} catch (Exception e) {
-			Logger.logError("DateTimeFormatter", String.format("Unable to parse date from input '%s'", dateTimeString), e);
+			logError("DateTimeFormatter", String.format("Unable to parse date from input '%s'", dateTimeString), e);
 			return dateTimeString;
 		}
 	}

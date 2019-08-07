@@ -3,11 +3,12 @@ package com.arjanvlek.oxygenupdater.deviceinformation;
 import android.annotation.SuppressLint;
 import android.os.Build;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
+
+@SuppressWarnings("WeakerAccess")
 public class DeviceInformationData {
 	public static final String UNKNOWN = "-";
 	private static final String CPU_FREQUENCY_FILE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq";
@@ -21,13 +22,13 @@ public class DeviceInformationData {
 
 	@SuppressLint("HardwareIds") // Only used on older Android versions.
 	public DeviceInformationData() {
-		this.deviceManufacturer = Build.MANUFACTURER;
-		this.deviceName = Build.DEVICE;
-		this.soc = Build.BOARD;
-		this.osVersion = Build.VERSION.RELEASE;
-		this.incrementalOsVersion = Build.VERSION.INCREMENTAL;
-		this.serialNumber = Build.VERSION.SDK_INT >= 26 ? UNKNOWN : Build.SERIAL; // Serial number is only used on older Android versions as it requires too much permissions on O and higher.
-		this.cpuFrequency = calculateCpuFrequency();
+		deviceManufacturer = Build.MANUFACTURER;
+		deviceName = Build.DEVICE;
+		soc = Build.BOARD;
+		osVersion = Build.VERSION.RELEASE;
+		incrementalOsVersion = Build.VERSION.INCREMENTAL;
+		serialNumber = Build.VERSION.SDK_INT >= 26 ? UNKNOWN : Build.SERIAL; // Serial number is only used on older Android versions as it requires too much permissions on O and higher.
+		cpuFrequency = calculateCpuFrequency();
 	}
 
 	public String getDeviceManufacturer() {
@@ -71,7 +72,7 @@ public class DeviceInformationData {
 			BigDecimal cpuFrequencyGhz = new BigDecimal(cpuFrequency).divide(new BigDecimal(1000), 3, BigDecimal.ROUND_DOWN);
 			return cpuFrequencyGhz.toString();
 		} catch (Exception e) {
-			Logger.logVerbose("DeviceInformationData", "CPU Frequency information is not available", e);
+			logVerbose("DeviceInformationData", "CPU Frequency information is not available", e);
 			return UNKNOWN;
 		}
 	}

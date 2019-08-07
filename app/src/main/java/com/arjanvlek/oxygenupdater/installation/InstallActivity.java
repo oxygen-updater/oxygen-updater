@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,13 +30,11 @@ import com.arjanvlek.oxygenupdater.installation.automatic.InstallationStatus;
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.automatic.SubmitUpdateInstallationException;
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException;
-import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstaller;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuideFragment;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.Worker;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
@@ -51,8 +48,14 @@ import org.joda.time.LocalDateTime;
 import java.io.File;
 import java.util.UUID;
 
+import static android.os.Environment.getExternalStoragePublicDirectory;
+import static android.widget.Toast.LENGTH_LONG;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
 import static com.arjanvlek.oxygenupdater.download.DownloadService.DIRECTORY_ROOT;
+import static com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstaller.installUpdate;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
+import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED;
 
 public class InstallActivity extends AppCompatActivity {
 
@@ -90,7 +93,7 @@ public class InstallActivity extends AppCompatActivity {
 
 	@Override
 	public void setContentView(int layoutResID) {
-		this.layoutId = layoutResID;
+		layoutId = layoutResID;
 		super.setContentView(layoutResID);
 	}
 
@@ -98,8 +101,8 @@ public class InstallActivity extends AppCompatActivity {
 		setTitle(getString(R.string.install));
 		setContentView(R.layout.fragment_checking_root_access);
 
-		RootAccessChecker.checkRootAccess((isRooted) -> {
-			this.rooted = isRooted;
+		RootAccessChecker.checkRootAccess(isRooted -> {
+			rooted = isRooted;
 
 			if (isRooted) {
 				ApplicationData applicationData = (ApplicationData) getApplication();
@@ -108,14 +111,12 @@ public class InstallActivity extends AppCompatActivity {
 					if (serverStatus.isAutomaticInstallationEnabled()) {
 						openMethodSelectionPage();
 					} else {
-						Toast.makeText(getApplication(), getString(R.string.install_guide_automatic_install_disabled), Toast.LENGTH_LONG)
-								.show();
+						Toast.makeText(getApplication(), getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show();
 						openInstallGuide();
 					}
 				}));
 			} else {
-				Toast.makeText(getApplication(), getString(R.string.install_guide_no_root), Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(getApplication(), getString(R.string.install_guide_no_root), LENGTH_LONG).show();
 				openInstallGuide();
 			}
 		});
@@ -125,10 +126,10 @@ public class InstallActivity extends AppCompatActivity {
 		switchView(R.layout.fragment_choose_install_method);
 
 		MaterialCardView automaticInstallCard = findViewById(R.id.automaticInstallCard);
-		automaticInstallCard.setOnClickListener((__) -> openAutomaticInstallOptionsSelection());
+		automaticInstallCard.setOnClickListener(__ -> openAutomaticInstallOptionsSelection());
 
 		MaterialCardView manualInstallCard = findViewById(R.id.manualInstallCard);
-		manualInstallCard.setOnClickListener((__) -> openInstallGuide());
+		manualInstallCard.setOnClickListener(__ -> openInstallGuide());
 
 	}
 
@@ -159,10 +160,10 @@ public class InstallActivity extends AppCompatActivity {
 		initSettingsSwitch(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
 
 		ImageButton filePickerButton = findViewById(R.id.additionalZipFilePickButton);
-		filePickerButton.setOnClickListener((view) -> {
+		filePickerButton.setOnClickListener(view -> {
 
 			// Implicitly allow the user to select a particular kind of data
-			final Intent intent = new Intent(getApplicationContext(), com.ipaulpro.afilechooser.FileChooserActivity.class);
+			Intent intent = new Intent(getApplicationContext(), com.ipaulpro.afilechooser.FileChooserActivity.class);
 			// The MIME data type filter
 			intent.setType("application/zip");
 			// Only return URIs that can be opened with ContentResolver
@@ -174,26 +175,24 @@ public class InstallActivity extends AppCompatActivity {
 		displayZipFilePath();
 
 		ImageButton clearFileButton = findViewById(R.id.additionalZipFileClearButton);
-		clearFileButton.setOnClickListener((view) -> {
+		clearFileButton.setOnClickListener(view -> {
 			settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
 			displayZipFilePath();
 		});
 
-		findViewById(R.id.startInstallButton).setOnClickListener((view) -> {
+		findViewById(R.id.startInstallButton).setOnClickListener(view -> {
 
 			String additionalZipFilePath = settingsManager.getPreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
 
 			if (settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
-				Toast.makeText(getApplication(), R.string.install_guide_zip_file_missing, Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(getApplication(), R.string.install_guide_zip_file_missing, LENGTH_LONG).show();
 				return;
 			}
 
 			if (additionalZipFilePath != null) {
 				File file = new File(additionalZipFilePath);
 				if (!file.exists()) {
-					Toast.makeText(getApplication(), R.string.install_guide_zip_file_deleted, Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(getApplication(), R.string.install_guide_zip_file_deleted, LENGTH_LONG).show();
 					return;
 				}
 			}
@@ -212,28 +211,27 @@ public class InstallActivity extends AppCompatActivity {
 
 			logInstallationStart(getApplication(), currentOSVersion, targetOSVersion, currentOSVersion, () -> {
 
-				new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, (args) -> {
+				new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, args -> {
 					try {
 						settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
 						settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
 						settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
-						String downloadedUpdateFilePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT)
-								.getPath() + File.separator + updateData.getFilename();
-						UpdateInstaller.installUpdate(getApplication(), isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
+						String downloadedUpdateFilePath = getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath() + File.separator + updateData.getFilename();
+						installUpdate(getApplication(), isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
 						return null;
 					} catch (UpdateInstallationException e) {
 						return e.getMessage();
 					} catch (InterruptedException e) {
-						Logger.logWarning(TAG, "Error installing update", e);
+						logWarning(TAG, "Error installing update", e);
 						return getString(R.string.install_temporary_error);
 					}
-				}, (errorMessage) -> {
+				}, errorMessage -> {
 					if (errorMessage != null) {
 						// Cancel the verification planned on reboot.
 						settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
 
 						openAutomaticInstallOptionsSelection();
-						Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplication(), errorMessage, LENGTH_LONG).show();
 					}
 					// Otherwise, the device will reboot via SU.
 				}).execute();
@@ -279,12 +277,10 @@ public class InstallActivity extends AppCompatActivity {
 
 		if (additionalZipFilePath != null) {
 			// Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
-			text = additionalZipFilePath.replace(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT)
-					.getAbsolutePath() + File.separator, "");
-			String extension = text.substring(text.length() - 4, text.length());
+			text = additionalZipFilePath.replace(getExternalStoragePublicDirectory(DIRECTORY_ROOT).getAbsolutePath() + File.separator, "");
+			String extension = text.substring(text.length() - 4);
 			if (!extension.equals(EXTENSION_ZIP)) {
-				Toast.makeText(getApplication(), R.string.install_zip_file_wrong_file_type, Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(getApplication(), R.string.install_zip_file_wrong_file_type, LENGTH_LONG).show();
 				return;
 			}
 			zipFileField.setText(text);
@@ -307,7 +303,7 @@ public class InstallActivity extends AppCompatActivity {
 	}
 
 	private void switchView(int newViewId) {
-		this.layoutId = newViewId;
+		layoutId = newViewId;
 
 		View newView = getLayoutInflater().inflate(newViewId, null, false);
 		newView.startAnimation(AnimationUtils.loadAnimation(getApplication(), android.R.anim.fade_in));
@@ -317,12 +313,12 @@ public class InstallActivity extends AppCompatActivity {
 
 	private void handleBackAction() {
 		// If at the install options screen or in the install guide when rooted, go back to the method selection page.
-		if (this.layoutId == R.layout.fragment_install_options || (this.rooted && settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false) && this.layoutId == R.layout.activity_install_guide)) {
+		if (layoutId == R.layout.fragment_install_options
+				|| (rooted && settingsManager.getPreference(PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false) && layoutId == R.layout.activity_install_guide)) {
 			openMethodSelectionPage();
-		} else if (this.layoutId == R.layout.fragment_installing_update) {
+		} else if (layoutId == R.layout.fragment_installing_update) {
 			// Once the installation is being started, there is no way out.
-			Toast.makeText(getApplication(), R.string.install_going_back_not_possible, Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getApplication(), R.string.install_going_back_not_possible, LENGTH_LONG).show();
 		} else {
 			finish();
 		}
@@ -333,25 +329,21 @@ public class InstallActivity extends AppCompatActivity {
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-			case REQUEST_FILE_PICKER:
-				if (resultCode == RESULT_OK) {
+		if (requestCode == REQUEST_FILE_PICKER && resultCode == RESULT_OK) {
+			try {
+				Uri uri = data.getData();
 
-					try {
-						final Uri uri = data.getData();
-
-						// Get the zip file path from the Uri
-						settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, FileUtils
-								.getPath(this, uri));
-						displayZipFilePath();
-					} catch (Throwable e) {
-						Logger.logError(TAG, "Error handling root package ZIP selection", e);
-						settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
-						displayZipFilePath();
-					}
-				}
-				break;
+				// Get the zip file path from the Uri
+				settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, FileUtils.getPath(this, uri));
+				displayZipFilePath();
+			} catch (Throwable e) {
+				logError(TAG, "Error handling root package ZIP selection", e);
+				settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null);
+				displayZipFilePath();
+			}
 		}
+
+		super.onActivityResult(resultCode, resultCode, data);
 	}
 
 	@Override
@@ -361,21 +353,20 @@ public class InstallActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			// Respond to the action bar's Up/Home button
-			case android.R.id.home:
-				handleBackAction();
-				return true;
+		// Respond to the action bar's Up/Home button
+		if (item.getItemId() == android.R.id.home) {
+			handleBackAction();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	public SparseArray<InstallGuidePage> getInstallGuideCache() {
-		return this.installGuideCache;
+		return installGuideCache;
 	}
 
 	public SparseArray<Bitmap> getInstallGuideImageCache() {
-		return this.installGuideImageCache;
+		return installGuideImageCache;
 	}
 
 	private void logInstallationStart(Context context, String startOs, String destinationOs, String currentOs, Worker successFunction) {
@@ -389,12 +380,11 @@ public class InstallActivity extends AppCompatActivity {
 		String timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString();
 		RootInstall installation = new RootInstall(deviceId, updateMethodId, InstallationStatus.STARTED, installationId, timestamp, startOs, destinationOs, currentOs, "");
 
-		serverConnector.logRootInstall(installation, (result) -> {
+		serverConnector.logRootInstall(installation, result -> {
 			if (result == null) {
-				Logger.logError(TAG, new SubmitUpdateInstallationException("Failed to log update installation action: No response from server"));
+				logError(TAG, new SubmitUpdateInstallationException("Failed to log update installation action: No response from server"));
 			} else if (!result.isSuccess()) {
-				Logger.logError(TAG, new SubmitUpdateInstallationException("Failed to log update installation action: " + result
-						.getErrorMessage()));
+				logError(TAG, new SubmitUpdateInstallationException("Failed to log update installation action: " + result.getErrorMessage()));
 			}
 			// Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
 			successFunction.start();

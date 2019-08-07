@@ -2,10 +2,11 @@ package com.arjanvlek.oxygenupdater.internal;
 
 import com.arjanvlek.oxygenupdater.settings.UserSettingsCouldNotBeSavedException;
 
+import static java.lang.String.format;
+
 /**
  * Oxygen Updater, copyright 2018 Arjan Vlek. File created by arjan.vlek on 18-01-18.
  */
-
 public class SetupUtils {
 
 	public static UserSettingsCouldNotBeSavedException getAsError(String screenName, Long deviceId, Long updateMethodId) {
@@ -21,8 +22,9 @@ public class SetupUtils {
 			errors.append("  - Update method");
 		}
 
-		return new UserSettingsCouldNotBeSavedException(String.format("User tried to leave the %s before all settings were saved. Missing item(s):%s", screenName, errors
-				.toString()));
+		return new UserSettingsCouldNotBeSavedException(
+				format("User tried to leave the %s before all settings were saved. Missing item(s):%s", screenName, errors.toString())
+		);
 	}
 
 	private static boolean isValid(Long id) {

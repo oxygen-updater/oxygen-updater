@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
@@ -31,15 +32,17 @@
 		android:layout="@layout/custom_preference_header"
 		android:title="@string/preference_header_device">
 
-		<ListPreference
+		<!--suppress AndroidElementNotAllowed -->
+		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
 			android:icon="@drawable/smartphone"
 			android:key="@string/key_device"
 			android:layout="@layout/custom_preference"
 			android:summary="@string/summary_device"
 			android:title="@string/settings_device" />
 
-		<ListPreference
-			android:icon="@drawable/cloud_download"
+		<!--suppress AndroidElementNotAllowed -->
+		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
+			android:icon="@drawable/smartphone"
 			android:key="@string/key_update_method"
 			android:layout="@layout/custom_preference"
 			android:summary="@string/summary_update_method"
@@ -50,14 +53,18 @@
 		android:layout="@layout/custom_preference_header"
 		android:title="@string/preference_header_ui">
 
-		<ListPreference
+		<!--suppress AndroidElementNotAllowed -->
+		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
 			android:entries="@array/themeList"
 			android:entryValues="@array/themeList"
 			android:icon="@drawable/theme"
 			android:key="@string/key_theme"
 			android:layout="@layout/custom_preference"
 			android:summary="@string/summary_theme"
-			android:title="@string/label_theme" />
+			android:title="@string/label_theme"
+			app:caption="@string/theme_additional_note"
+			app:subtitleEntries="@array/themeSubtitles"
+			app:title="@string/label_theme" />
 
 		<SwitchPreference
 			android:defaultValue="true"

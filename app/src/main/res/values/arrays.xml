@@ -6,4 +6,11 @@
 		<item>@string/theme_system</item>
 		<item>@string/theme_auto</item>
 	</string-array>
+
+	<string-array name="themeSubtitles">
+		<item>@string/theme_light_subtitle</item>
+		<item>@string/theme_dark_subtitle</item>
+		<item>@string/theme_system_subtitle</item>
+		<item>@string/theme_auto_subtitle</item>
+	</string-array>
 </resources>

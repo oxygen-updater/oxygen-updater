@@ -8,7 +8,9 @@ import android.provider.Browser;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import androidx.annotation.NonNull;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 
 public class FormattedURLSpan extends ClickableSpan {
@@ -20,8 +22,8 @@ public class FormattedURLSpan extends ClickableSpan {
 	}
 
 	@Override
-	public void onClick(View widget) {
-		Uri uri = Uri.parse(this.url);
+	public void onClick(@NonNull View widget) {
+		Uri uri = Uri.parse(url);
 		Context context = widget.getContext();
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -29,7 +31,7 @@ public class FormattedURLSpan extends ClickableSpan {
 		try {
 			context.startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			Logger.logError("FormattedURLSpan", "Activity was not found for intent", e);
+			logError("FormattedURLSpan", "Activity was not found for intent", e);
 		}
 	}
 }

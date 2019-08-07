@@ -28,14 +28,9 @@
 			app:tabMode="fixed" />
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<FrameLayout
+	<androidx.viewpager.widget.ViewPager
+		android:id="@+id/viewpager"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-		<androidx.viewpager.widget.ViewPager
-			android:id="@+id/viewpager"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
-	</FrameLayout>
+		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

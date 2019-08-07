@@ -5,7 +5,6 @@ import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.news.NewsItem;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage;
 import com.arjanvlek.oxygenupdater.updateinformation.ServerStatus;
@@ -17,6 +16,7 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import static com.arjanvlek.oxygenupdater.BuildConfig.SERVER_BASE_URL;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.internal.server.ServerRequest.RequestMethod.GET;
 import static com.arjanvlek.oxygenupdater.internal.server.ServerRequest.RequestMethod.POST;
 
@@ -71,32 +71,32 @@ enum ServerRequest {
 	}
 
 	RequestMethod getRequestMethod() {
-		return this.requestMethod;
+		return requestMethod;
 	}
 
 	URL getUrl(Object... params) {
 		try {
 			return new URL(getUrlString(params));
 		} catch (MalformedURLException e) {
-			Logger.logError("ServerRequest", new OxygenUpdaterException("Malformed URL: " + this.url));
+			logError("ServerRequest", new OxygenUpdaterException("Malformed URL: " + url));
 			return null;
 		} catch (Exception e) {
-			Logger.logError("ServerRequest", "Exception when parsing URL " + this.url + "  with parameters " + Arrays
+			logError("ServerRequest", "Exception when parsing URL " + url + "  with parameters " + Arrays
 					.toString(params), e);
 			return null;
 		}
 	}
 
 	int getTimeOutInSeconds() {
-		return this.timeOutInSeconds;
+		return timeOutInSeconds;
 	}
 
 	Class<?> getReturnClass() {
-		return this.returnClass;
+		return returnClass;
 	}
 
 	private String getUrlString(Object... params) {
-		return String.format(Locale.US, SERVER_BASE_URL + this.url, params).replace(" ", "");
+		return String.format(Locale.US, SERVER_BASE_URL + url, params).replace(" ", "");
 	}
 
 	public String toString(Object... params) {

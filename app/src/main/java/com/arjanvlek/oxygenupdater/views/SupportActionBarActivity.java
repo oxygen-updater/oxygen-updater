@@ -1,7 +1,5 @@
 package com.arjanvlek.oxygenupdater.views;
 
-import android.annotation.SuppressLint;
-
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +9,11 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 
 /**
- * Sets
+ * Sets support action bar and enables home up button on the toolbar
  *
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
-@SuppressLint("Registered")
-public class SupportActionBarActivity extends AppCompatActivity {
+public abstract class SupportActionBarActivity extends AppCompatActivity {
 
 	private ApplicationData applicationData;
 

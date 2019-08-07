@@ -6,8 +6,7 @@
 	android:paddingLeft="@dimen/padding_default"
 	android:paddingTop="@dimen/padding_default"
 	android:paddingRight="@dimen/padding_default"
-	android:paddingBottom="@dimen/padding_default"
-	tools:context=".installation.InstallActivity">
+	android:paddingBottom="@dimen/padding_default">
 
 	<RelativeLayout
 		android:layout_width="match_parent"

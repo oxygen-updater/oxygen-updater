@@ -16,11 +16,12 @@ import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 import com.google.android.gms.ads.InterstitialAd;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 public class NewsActivity extends SupportActionBarActivity {
 
@@ -52,14 +53,14 @@ public class NewsActivity extends SupportActionBarActivity {
 		ApplicationData applicationData = (ApplicationData) getApplication();
 		// Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
 		applicationData.getServerConnector()
-				.getNewsItem(getApplication(), getIntent().getLongExtra(INTENT_NEWS_ITEM_ID, -1L), (newsItem -> {
+				.getNewsItem(applicationData, getIntent().getLongExtra(INTENT_NEWS_ITEM_ID, -1L), (newsItem -> {
 
 					if (retryCount == 0) {
 						setContentView(R.layout.activity_news);
 					}
 
 					if (newsItem == null || !newsItem.isFullyLoaded()) {
-						if (Utils.checkNetworkConnection(getApplication()) && retryCount < 5) {
+						if (Utils.checkNetworkConnection(applicationData) && retryCount < 5) {
 							loadNewsItem(retryCount + 1);
 						} else {
 							String newsContents = getString(R.string.news_load_error);
@@ -74,7 +75,7 @@ public class NewsActivity extends SupportActionBarActivity {
 
 							Button retryButton = findViewById(R.id.newsRetryButton);
 							retryButton.setVisibility(View.VISIBLE);
-							retryButton.setOnClickListener((v) -> loadNewsItem(1));
+							retryButton.setOnClickListener(v -> loadNewsItem(1));
 						}
 						return;
 					}
@@ -105,10 +106,8 @@ public class NewsActivity extends SupportActionBarActivity {
 						contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
 					} else {
 						String newsLanguage = locale == Locale.NL ? "NL" : "EN";
-						String newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem
-								.getId() + "/" + newsLanguage;
-						contentView.getSettings()
-								.setUserAgentString(ApplicationData.APP_USER_AGENT);
+						String newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.getId() + "/" + newsLanguage;
+						contentView.getSettings().setUserAgentString(ApplicationData.APP_USER_AGENT);
 						contentView.loadUrl(newsContentUrl);
 					}
 
@@ -141,18 +140,17 @@ public class NewsActivity extends SupportActionBarActivity {
 					if (getApplication() != null && getApplication() instanceof ApplicationData && Utils
 							.checkNetworkConnection(getApplication())) {
 						((ApplicationData) getApplication()).getServerConnector()
-								.markNewsItemAsRead(newsItem.getId(), (result) -> {
+								.markNewsItemAsRead(newsItem.getId(), result -> {
 									if (result != null && !result.isSuccess()) {
-										Logger.logError("NewsActivity", new NetworkException("Error marking news item as read on the server:" + result
-												.getErrorMessage()));
+										logError("NewsActivity", new NetworkException("Error marking news item as read on the server:" + result.getErrorMessage()));
 									}
 
 									// Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
-									if (getIntent().getBooleanExtra(INTENT_START_WITH_AD, false) && !new SettingsManager(getApplication())
-											.getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
+									if (getIntent().getBooleanExtra(INTENT_START_WITH_AD, false)
+											&& !new SettingsManager(getApplication()).getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
 										InterstitialAd interstitialAd = new InterstitialAd(getApplication());
 										interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-										interstitialAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
+										interstitialAd.loadAd(ApplicationData.buildAdRequest());
 
 										// The ad will be shown after 10 seconds.
 										new Handler().postDelayed(interstitialAd::show, 10000);
@@ -169,11 +167,10 @@ public class NewsActivity extends SupportActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			// Respond to the action bar's Up/Home button
-			case android.R.id.home:
-				finish();
-				return true;
+		// Respond to the action bar's Up/Home button
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

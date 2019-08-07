@@ -20,6 +20,9 @@ import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 
+/**
+ * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ */
 public class ThemeUtils {
 
 	/**
@@ -68,7 +71,7 @@ public class ThemeUtils {
 					return MODE_NIGHT_YES;
 				} else {
 					// Android Pie (9.0) introduced a night mode system flag that could be set in developer options
-					return VERSION.SDK_INT >= VERSION_CODES.P
+					return VERSION.SDK_INT >= VERSION_CODES.P && onePlusTheme != -1
 							? MODE_NIGHT_FOLLOW_SYSTEM
 							: MODE_NIGHT_AUTO_BATTERY;
 				}

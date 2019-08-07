@@ -173,6 +173,9 @@ repositories {
 dependencies {
 	implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+	compileOnly 'org.projectlombok:lombok:1.18.8'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
 	// AndroidX: https://developer.android.com/jetpack/androidx/releases
 	// https://developer.android.com/jetpack/androidx/releases/appcompat
 	implementation 'androidx.appcompat:appcompat:1.1.0-beta01'

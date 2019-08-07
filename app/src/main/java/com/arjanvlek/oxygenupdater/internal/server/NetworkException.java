@@ -7,6 +7,8 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class NetworkException extends OxygenUpdaterException {
 
+	private static final long serialVersionUID = 4758362378351778010L;
+
 	public NetworkException(String formattedMessage) {
 		super(formattedMessage);
 	}

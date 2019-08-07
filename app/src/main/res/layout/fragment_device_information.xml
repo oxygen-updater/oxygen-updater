@@ -3,19 +3,20 @@
 	android:id="@+id/device_information_scrollview"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fillViewport="false"
-	android:padding="@dimen/padding_default">
+	android:paddingStart="@dimen/padding_default"
+	android:paddingEnd="@dimen/padding_default"
+	android:paddingBottom="@dimen/padding_default">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical">
+		android:layout_height="wrap_content">
 
 		<TextView
 			android:id="@+id/device_information_header"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
+			android:layout_marginTop="@dimen/padding_default"
 			android:ellipsize="end"
 			android:maxLines="1"
 			android:text="@string/device_information_your_device"

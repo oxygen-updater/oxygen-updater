@@ -7,6 +7,8 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class SubmitUpdateInstallationException extends OxygenUpdaterException {
 
+	private static final long serialVersionUID = -629237813420662801L;
+
 	public SubmitUpdateInstallationException(String message) {
 		super(message);
 	}

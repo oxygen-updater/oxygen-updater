@@ -5,8 +5,7 @@
 	android:paddingStart="@dimen/padding_2x"
 	android:paddingTop="@dimen/padding_default"
 	android:paddingEnd="@dimen/padding_2x"
-	android:paddingBottom="@dimen/padding_default"
-	tools:context=".setupwizard.SetupActivity">
+	android:paddingBottom="@dimen/padding_default">
 
 	<RelativeLayout
 		android:layout_width="match_parent"

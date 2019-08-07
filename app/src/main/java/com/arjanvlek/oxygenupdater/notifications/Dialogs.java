@@ -64,9 +64,7 @@ public class Dialogs {
 
 			try {
 				errorDialog.setTargetFragment(fragment, 0);
-				FragmentTransaction transaction = fragment.getActivity()
-						.getSupportFragmentManager()
-						.beginTransaction();
+				FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
 				transaction.add(errorDialog, "DownloadError");
 				transaction.commitAllowingStateLoss();
 			} catch (IllegalStateException e) {
@@ -140,8 +138,7 @@ public class Dialogs {
 					.setDialogListener(new MessageDialog.DialogListener() {
 						@Override
 						public void onDialogPositiveButtonClick(DialogInterface dialogInterface) {
-							if (fragment.getActivity() == null || fragment.getActivity()
-									.getApplication() == null) {
+							if (fragment.getActivity() == null || fragment.getActivity().getApplication() == null) {
 								return;
 							}
 
@@ -157,9 +154,7 @@ public class Dialogs {
 
 			try {
 				dialog.setTargetFragment(fragment, 0);
-				FragmentTransaction transaction = fragment.getActivity()
-						.getSupportFragmentManager()
-						.beginTransaction();
+				FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
 				transaction.add(dialog, "DeleteDownload");
 				transaction.commitAllowingStateLoss();
 			} catch (IllegalStateException e) {
@@ -187,8 +182,7 @@ public class Dialogs {
 	}
 
 	private static void checkPreconditions(Fragment fragment, Worker callback) {
-		if (fragment != null && fragment.getFragmentManager() != null && fragment.isAdded() && fragment
-				.getActivity() != null && !fragment.getActivity().isFinishing()) {
+		if (fragment != null && fragment.getFragmentManager() != null && fragment.isAdded() && fragment.getActivity() != null && !fragment.getActivity().isFinishing()) {
 			callback.start();
 		}
 	}

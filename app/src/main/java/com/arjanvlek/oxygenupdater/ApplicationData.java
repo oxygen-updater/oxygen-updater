@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.crashlytics.android.Crashlytics;
@@ -22,6 +21,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import io.fabric.sdk.android.Fabric;
 import java8.util.stream.StreamSupport;
 
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
 import static com.arjanvlek.oxygenupdater.views.AbstractFragment.ADS_TEST_DEVICES;
 
 public class ApplicationData extends Application {
@@ -54,7 +54,7 @@ public class ApplicationData extends Application {
 
 	public ServerConnector getServerConnector() {
 		if (serverConnector == null) {
-			Logger.logVerbose(TAG, "Created ServerConnector for use within the application...");
+			logVerbose(TAG, "Created ServerConnector for use within the application...");
 			serverConnector = new ServerConnector(new SettingsManager(this));
 		}
 		return serverConnector;
@@ -63,15 +63,15 @@ public class ApplicationData extends Application {
 	public SystemVersionProperties getSystemVersionProperties() {
 		// Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
 		if (systemVersionProperties == null) {
-			Logger.logVerbose(TAG, "Creating new SystemVersionProperties instance...");
+			logVerbose(TAG, "Creating new SystemVersionProperties instance...");
 			systemVersionProperties = new SystemVersionProperties();
 		} else {
-			Logger.logVerbose(TAG, "Using cached instance of SystemVersionProperties");
+			logVerbose(TAG, "Using cached instance of SystemVersionProperties");
 		}
 		return systemVersionProperties;
 	}
 
-	public AdRequest buildAdRequest() {
+	public static AdRequest buildAdRequest() {
 		AdRequest.Builder adRequest = new AdRequest.Builder();
 
 		StreamSupport.stream(ADS_TEST_DEVICES).forEach(adRequest::addTestDevice);
@@ -85,7 +85,7 @@ public class ApplicationData extends Application {
 	 * @return Returns if the Google Play Services are installed.
 	 */
 	public boolean checkPlayServices(Activity activity, boolean showErrorIfMissing) {
-		Logger.logVerbose(TAG, "Executing Google Play Services check...");
+		logVerbose(TAG, "Executing Google Play Services check...");
 		GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
 		int resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this);
 		if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
@@ -95,14 +95,14 @@ public class ApplicationData extends Application {
 			} else {
 				System.exit(0);
 			}
-			Logger.logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
+			logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
 			return false;
 		} else {
 			boolean result = resultCode == ConnectionResult.SUCCESS;
 			if (result) {
-				Logger.logVerbose(TAG, "Google Play Services are available.");
+				logVerbose(TAG, "Google Play Services are available.");
 			} else {
-				Logger.logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
+				logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!");
 			}
 			return result;
 		}

@@ -2,6 +2,7 @@ package com.arjanvlek.oxygenupdater.internal.server;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@SuppressWarnings("WeakerAccess")
 public class ServerPostResult {
 
 	private boolean success;

@@ -4,12 +4,13 @@ import android.content.Context;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
 
 public class UpdateInstaller {
 
@@ -148,7 +149,7 @@ public class UpdateInstaller {
 
 		if (BuildConfig.DEBUG) {
 			for (String command : commands) {
-				Logger.logVerbose("UpdateInstaller", "Running SU command: " + command);
+				logVerbose("UpdateInstaller", "Running SU command: " + command);
 			}
 		}
 
@@ -170,7 +171,7 @@ public class UpdateInstaller {
 				outputString.append(System.getProperty("line.separator"));
 			}
 
-			Logger.logVerbose("UpdateInstaller", "Output of commands: " + outputString.toString());
+			logVerbose("UpdateInstaller", "Output of commands: " + outputString.toString());
 		}
 	}
 

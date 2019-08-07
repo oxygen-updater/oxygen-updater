@@ -16,7 +16,6 @@ import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
 import com.arjanvlek.oxygenupdater.news.NewsDatabaseHelper;
 import com.arjanvlek.oxygenupdater.news.NewsItem;
@@ -51,6 +50,9 @@ import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NETWORK_CONNECTION_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS;
@@ -92,11 +94,11 @@ public class ServerConnector implements Cloneable {
 
 	public void getDevices(boolean alwaysFetch, Consumer<List<Device>> callback) {
 		if (deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
-			Logger.logVerbose(TAG, "Used local cache to fetch devices...");
+			logVerbose(TAG, "Used local cache to fetch devices...");
 			callback.accept(devices);
 		} else {
-			Logger.logVerbose(TAG, "Used remote server to fetch devices...");
-			new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, (devices) -> {
+			logVerbose(TAG, "Used remote server to fetch devices...");
+			new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, devices -> {
 				this.devices.clear();
 				this.devices.addAll(devices);
 				deviceFetchDate = LocalDateTime.now();
@@ -107,7 +109,7 @@ public class ServerConnector implements Cloneable {
 
 	public void getUpdateMethods(@NonNull Long deviceId, Consumer<List<UpdateMethod>> callback) {
 		new CollectionResponseExecutor<UpdateMethod>(ServerRequest.UPDATE_METHODS, (updateMethods -> RootAccessChecker
-				.checkRootAccess((hasRootAccess) -> {
+				.checkRootAccess(hasRootAccess -> {
 					if (hasRootAccess) {
 						callback.accept(StreamSupport.stream(updateMethods)
 								.filter(UpdateMethod::isForRootedDevice)
@@ -158,8 +160,7 @@ public class ServerConnector implements Cloneable {
 	public void getInAppMessages(boolean online, Consumer<List<Banner>> callback, Consumer<String> errorCallback) {
 		List<Banner> inAppBars = new ArrayList<>();
 
-		getServerStatus(online, (serverStatus) -> getServerMessages(settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L), settingsManager
-				.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L), (serverMessages) -> {
+		getServerStatus(online, serverStatus -> getServerMessages(settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L), settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L), serverMessages -> {
 			// Add the "No connection" bar depending on the network status of the device.
 			if (!online) {
 				inAppBars.add(new Banner() {
@@ -216,8 +217,7 @@ public class ServerConnector implements Cloneable {
 	}
 
 	public void getInstallGuidePage(@NonNull Long deviceId, @NonNull Long updateMethodId, @NonNull Integer pageNumber, Consumer<InstallGuidePage> callback) {
-		new ObjectResponseExecutor<>(ServerRequest.INSTALL_GUIDE_PAGE, callback, deviceId, updateMethodId, pageNumber)
-				.execute();
+		new ObjectResponseExecutor<>(ServerRequest.INSTALL_GUIDE_PAGE, callback, deviceId, updateMethodId, pageNumber).execute();
 	}
 
 	public void submitUpdateFile(@NonNull String filename, Consumer<ServerPostResult> callback) {
@@ -239,8 +239,7 @@ public class ServerConnector implements Cloneable {
 		try {
 			JSONObject installationData = new JSONObject(objectMapper.writeValueAsString(rootInstall));
 
-			new ObjectResponseExecutor<>(ServerRequest.LOG_UPDATE_INSTALLATION, installationData, callback)
-					.execute();
+			new ObjectResponseExecutor<>(ServerRequest.LOG_UPDATE_INSTALLATION, installationData, callback).execute();
 		} catch (JSONException | JsonProcessingException e) {
 			ServerPostResult errorResult = new ServerPostResult();
 			errorResult.setSuccess(false);
@@ -288,7 +287,7 @@ public class ServerConnector implements Cloneable {
 
 	public void getServerStatus(boolean online, Consumer<ServerStatus> callback) {
 		if (serverStatus == null) {
-			new ObjectResponseExecutor<ServerStatus>(ServerRequest.SERVER_STATUS, (serverStatus) -> {
+			new ObjectResponseExecutor<ServerStatus>(ServerRequest.SERVER_STATUS, serverStatus -> {
 				boolean automaticInstallationEnabled = false;
 				int pushNotificationsDelaySeconds = 1800;
 
@@ -300,7 +299,9 @@ public class ServerConnector implements Cloneable {
 				if (serverStatus == null && online) {
 					this.serverStatus = new ServerStatus(UNREACHABLE, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds);
 				} else {
-					this.serverStatus = serverStatus != null ? serverStatus : new ServerStatus(NORMAL, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds);
+					this.serverStatus = serverStatus != null
+							? serverStatus
+							: new ServerStatus(NORMAL, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds);
 				}
 
 				if (settingsManager != null) {
@@ -357,7 +358,7 @@ public class ServerConnector implements Cloneable {
 
 			return objectMapper.readValue(response, objectMapper.getTypeFactory().constructCollectionType(List.class, serverRequest.getReturnClass()));
 		} catch (Exception e) {
-			Logger.logError(TAG, "JSON parse error", e);
+			logError(TAG, "JSON parse error", e);
 			return new ArrayList<>();
 		}
 	}
@@ -371,7 +372,7 @@ public class ServerConnector implements Cloneable {
 
 			return objectMapper.readValue(response, objectMapper.getTypeFactory().constructType(serverRequest.getReturnClass()));
 		} catch (Exception e) {
-			Logger.logError(TAG, "JSON parse error", e);
+			logError(TAG, "JSON parse error", e);
 			return null;
 		}
 	}
@@ -389,10 +390,10 @@ public class ServerConnector implements Cloneable {
 				return null;
 			}
 
-			Logger.logVerbose(TAG, "");
-			Logger.logVerbose(TAG, "Performing " + request.getRequestMethod()
+			logVerbose(TAG, "");
+			logVerbose(TAG, "Performing " + request.getRequestMethod()
 					.toString() + " request to URL " + requestUrl.toString());
-			Logger.logVerbose(TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
+			logVerbose(TAG, "Timeout is set to " + request.getTimeOutInSeconds() + " seconds.");
 
 			HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
 
@@ -424,17 +425,16 @@ public class ServerConnector implements Cloneable {
 
 			in.close();
 			String rawResponse = response.toString();
-			Logger.logVerbose(TAG, "Response: " + rawResponse);
+			logVerbose(TAG, "Response: " + rawResponse);
 			return rawResponse;
 		} catch (Exception e) {
 			if (retryCount < 5) {
 				return performServerRequest(request, body, retryCount + 1, params);
 			} else {
 				if (ExceptionUtils.isNetworkError(e)) {
-					Logger.logWarning(TAG, new NetworkException("Error performing request <" + request
-							.toString(params) + ">."));
+					logWarning(TAG, new NetworkException("Error performing request <" + request.toString(params) + ">."));
 				} else {
-					Logger.logError(TAG, "Error performing request <" + request.toString(params) + ">", e);
+					logError(TAG, "Error performing request <" + request.toString(params) + ">", e);
 				}
 				return null;
 			}
@@ -446,7 +446,7 @@ public class ServerConnector implements Cloneable {
 		try {
 			return (ServerConnector) super.clone();
 		} catch (CloneNotSupportedException e) {
-			Logger.logError(TAG, "Internal error cloning ServerConnector", e);
+			logError(TAG, "Internal error cloning ServerConnector", e);
 			return new ServerConnector(settingsManager);
 		}
 	}

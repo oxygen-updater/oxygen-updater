@@ -45,6 +45,10 @@ import static com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.
 import static com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.AVAILABLE;
 import static com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.UNAVAILABLE;
 
+/**
+ * @author Adhiraj Singh Chauhan (gjthub.com/adhirajsinghchauhan)
+ * @author Arjan Vlek (github.com/arjanvlek)
+ */
 public class SettingsActivity extends SupportActionBarActivity implements InAppPurchaseDelegate {
 	public static final String SKU_AD_FREE = "oxygen_updater_ad_free";
 	private static final int IAB_REQUEST_CODE = 1995;
@@ -200,8 +204,7 @@ public class SettingsActivity extends SupportActionBarActivity implements InAppP
 	/**
 	 * Queries the IAB inventory and retries if an operation is already in progress.
 	 *
-	 * @param queryInventoryFinishedListener Listener to execute once the query operation has
-	 *                                       finished.
+	 * @param queryInventoryFinishedListener Listener to execute once the query operation has finished.
 	 */
 	private void queryInAppBillingInventory(IabHelper.QueryInventoryFinishedListener queryInventoryFinishedListener) {
 		try {
@@ -233,7 +236,7 @@ public class SettingsActivity extends SupportActionBarActivity implements InAppP
 		}
 
 		getApplicationData().getServerConnector()
-				.verifyPurchase(purchase, price, PurchaseType.AD_FREE, (validationResult) -> {
+				.verifyPurchase(purchase, price, PurchaseType.AD_FREE, validationResult -> {
 					if (validationResult == null) {
 						// server can't be reached. Keep trying until it can be reached...
 						new Handler().postDelayed(() -> validateAdFreePurchase(purchase, callback), 2000);
@@ -258,7 +261,7 @@ public class SettingsActivity extends SupportActionBarActivity implements InAppP
 			iabHelper.startSetup(setupResult -> {
 				if (!setupResult.isSuccess()) {
 					logIABError("Purchase of the ad-free version failed due to an unknown error BEFORE the purchase screen was opened", setupResult);
-					Toast.makeText(this, getString(R.string.purchase_error_before_payment), Toast.LENGTH_LONG).show();
+					Toast.makeText(this, getString(R.string.purchase_error_before_payment), LENGTH_LONG).show();
 					return;
 				}
 

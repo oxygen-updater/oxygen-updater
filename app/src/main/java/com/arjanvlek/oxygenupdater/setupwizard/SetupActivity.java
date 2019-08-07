@@ -25,9 +25,10 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.contribution.ContributorUtils;
 import com.arjanvlek.oxygenupdater.internal.SetupUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
+import static android.widget.Toast.LENGTH_LONG;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_CONTRIBUTE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
@@ -146,7 +147,7 @@ public class SetupActivity extends AppCompatActivity {
 							settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
 							NavUtils.navigateUpFromSameTask(SetupActivity.this);
 						} else {
-							Toast.makeText(getApplication(), R.string.contribute_allow_storage, Toast.LENGTH_LONG)
+							Toast.makeText(getApplication(), R.string.contribute_allow_storage, LENGTH_LONG)
 									.show();
 						}
 					}
@@ -159,8 +160,8 @@ public class SetupActivity extends AppCompatActivity {
 		} else {
 			Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
 			Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
-			Logger.logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId));
-			Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG)
+			logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId));
+			Toast.makeText(this, getString(R.string.settings_entered_incorrectly), LENGTH_LONG)
 					.show();
 		}
 	}

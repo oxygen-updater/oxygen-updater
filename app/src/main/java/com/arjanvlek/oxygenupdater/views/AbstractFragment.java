@@ -3,12 +3,13 @@ package com.arjanvlek.oxygenupdater.views;
 import androidx.fragment.app.Fragment;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 
 public abstract class AbstractFragment extends Fragment {
@@ -23,7 +24,7 @@ public abstract class AbstractFragment extends Fragment {
 			try {
 				applicationData = (ApplicationData) getActivity().getApplication();
 			} catch (Exception e) {
-				Logger.logError("AbstractFragment", "FAILED to get Application instance", e);
+				logError("AbstractFragment", "FAILED to get Application instance", e);
 				// Return empty application data which can still be used for SystemVersionProperties and to check for root access.
 				applicationData = new ApplicationData();
 			}

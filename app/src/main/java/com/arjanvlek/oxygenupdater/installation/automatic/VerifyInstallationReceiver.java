@@ -18,11 +18,11 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 public class VerifyInstallationReceiver extends BroadcastReceiver {
 
@@ -69,7 +69,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 			}
 
 		} catch (Throwable e) {
-			Logger.logError(TAG, "Failed to check if update was successfully installed", e);
+			logError(TAG, "Failed to check if update was successfully installed", e);
 		}
 	}
 

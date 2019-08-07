@@ -9,6 +9,7 @@ import java8.util.function.Function;
  * Oxygen Updater - © 2017 Arjan Vlek
  */
 
+@SuppressWarnings("WeakerAccess")
 public class FunctionalAsyncTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 
 	private final Worker preExecuteFunction;
@@ -17,10 +18,7 @@ public class FunctionalAsyncTask<Params, Progress, Result> extends AsyncTask<Par
 	private final Consumer<Result> postExecuteFunction;
 
 	public FunctionalAsyncTask(Worker preExecuteFunction, Function<Params[], Result> backgroundFunction, Consumer<Result> postExecuteFunction) {
-		this.postExecuteFunction = postExecuteFunction;
-		this.preExecuteFunction = preExecuteFunction;
-		this.backgroundFunction = backgroundFunction;
-		this.progressUpdateFunction = null;
+		this(preExecuteFunction, backgroundFunction, postExecuteFunction, null);
 	}
 
 	public FunctionalAsyncTask(Worker preExecuteFunction, Function<Params[], Result> backgroundFunction, Consumer<Result> postExecuteFunction, Consumer<Progress[]> progressUpdateFunction) {
@@ -45,8 +43,9 @@ public class FunctionalAsyncTask<Params, Progress, Result> extends AsyncTask<Par
 		postExecuteFunction.accept(result);
 	}
 
+	@SafeVarargs
 	@Override
-	protected void onProgressUpdate(Progress... progress) {
+	protected final void onProgressUpdate(Progress... progress) {
 		if (progressUpdateFunction != null) {
 			progressUpdateFunction.accept(progress);
 		}

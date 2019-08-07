@@ -63,6 +63,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.BELOW;
+import static android.widget.Toast.LENGTH_LONG;
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_OUTDATED_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NETWORK_CONNECTION_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
@@ -138,7 +139,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 			systemIsUpToDateRefreshLayout.setOnRefreshListener(() -> load(adsAreSupported));
 			systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
-			checkAdSupportStatus((adsAreSupported) -> {
+			checkAdSupportStatus(adsAreSupported -> {
 				this.adsAreSupported = adsAreSupported;
 
 				load(adsAreSupported);
@@ -241,8 +242,11 @@ public class UpdateInformationFragment extends AbstractFragment {
 	 * checks
 	 */
 	private void load(boolean adsAreSupported) {
-		Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager
-				.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"));
+		Crashlytics.setUserIdentifier("Device: "
+				+ settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>")
+				+ ", Update Method: "
+				+ settingsManager.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+		);
 
 		AbstractFragment instance = this;
 
@@ -254,7 +258,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 		ServerConnector serverConnector = getApplicationData().getServerConnector();
 		SystemVersionProperties systemVersionProperties = getApplicationData().getSystemVersionProperties();
 
-		serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion(), (updateData) -> {
+		serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.getOxygenOSOTAVersion(), updateData -> {
 			this.updateData = updateData;
 
 			if (!isLoadedOnce) {
@@ -264,9 +268,9 @@ public class UpdateInformationFragment extends AbstractFragment {
 			}
 
 			// If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
-			if (!isLoadedOnce && getActivity() != null && getActivity().getIntent() != null && getActivity()
-					.getIntent()
-					.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
+			if (!isLoadedOnce && getActivity() != null
+					&& getActivity().getIntent() != null
+					&& getActivity().getIntent().getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false)) {
 				Intent i = getActivity().getIntent();
 				Dialogs.showDownloadError(instance, updateData, i.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false), i
 						.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE), i.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE));
@@ -276,13 +280,13 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 			isLoadedOnce = true;
 
-		}, (error) -> {
+		}, error -> {
 			if (error.equals(NETWORK_CONNECTION_ERROR)) {
 				Dialogs.showNoNetworkConnectionError(instance);
 			}
 		});
 
-		serverConnector.getInAppMessages(online, (banners -> displayServerMessageBars(banners, adsAreSupported)), (error) -> {
+		serverConnector.getInAppMessages(online, (banners -> displayServerMessageBars(banners, adsAreSupported)), error -> {
 			switch (error) {
 				case SERVER_MAINTENANCE_ERROR:
 					Dialogs.showServerMaintenanceError(instance);
@@ -420,8 +424,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 		// Show "System is up to date" view.
 		rootView.findViewById(R.id.updateInformationRefreshLayout).setVisibility(GONE);
-		rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout)
-				.setVisibility(VISIBLE);
+		rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout).setVisibility(VISIBLE);
 
 		// Set the current Oxygen OS version if available.
 		String oxygenOSVersion = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties()
@@ -447,8 +450,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 		// Save last time checked if online.
 		if (online) {
-			settingsManager.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now()
-					.toString());
+			settingsManager.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString());
 		}
 
 		// Show last time checked.
@@ -461,8 +463,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 	private void displayUpdateInformationWhenNotUpToDate(UpdateData updateData, boolean displayInfoWhenUpToDate) {
 		// Show "System update available" view.
 		rootView.findViewById(R.id.updateInformationRefreshLayout).setVisibility(VISIBLE);
-		rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout)
-				.setVisibility(GONE);
+		rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout).setVisibility(GONE);
 
 		// Display available update version number.
 		TextView buildNumberView = rootView.findViewById(R.id.updateInformationBuildNumberView);
@@ -474,14 +475,12 @@ public class UpdateInformationFragment extends AbstractFragment {
 				buildNumberView.setText(updateData.getVersionNumber());
 			}
 		} else {
-			buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager
-					.getPreference(PROPERTY_DEVICE, context.getString(R.string.device_information_unknown))));
+			buildNumberView.setText(String.format(getString(R.string.update_information_unknown_update_name), settingsManager.getPreference(PROPERTY_DEVICE, context.getString(R.string.device_information_unknown))));
 		}
 
 		// Display download size.
 		TextView downloadSizeView = rootView.findViewById(R.id.updateInformationDownloadSizeView);
-		downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), updateData
-				.getDownloadSizeInMegabytes()));
+		downloadSizeView.setText(String.format(getString(R.string.download_size_megabyte), updateData.getDownloadSizeInMegabytes()));
 
 		// Display update description.
 		String description = updateData.getDescription();
@@ -492,9 +491,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 		// Display update file name.
 		TextView fileNameView = rootView.findViewById(R.id.updateFileNameView);
-		fileNameView.setText(String.format(getString(R.string.update_information_file_name), updateData
-				.getFilename()));
-
+		fileNameView.setText(String.format(getString(R.string.update_information_file_name), updateData.getFilename()));
 
 		// Format top title based on system version installed.
 		TextView headerLabel = rootView.findViewById(R.id.headerLabel);
@@ -583,9 +580,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 
 	private void showAds() {
-		if (getApplicationData() != null) {
-			adView.loadAd(getApplicationData().buildAdRequest());
-		}
+		adView.loadAd(ApplicationData.buildAdRequest());
 	}
 
     /*
@@ -628,7 +623,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 						DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
 						initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
 						initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
-						getDownloadPauseButton().setOnClickListener((vw) -> {
+						getDownloadPauseButton().setOnClickListener(vw -> {
 						}); // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
 					});
 				}
@@ -657,7 +652,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 						DownloadService.performOperation(getActivity(), DownloadService.ACTION_PAUSE_DOWNLOAD, updateData);
 						initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
 						initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED);
-						getDownloadPauseButton().setOnClickListener((vw) -> {
+						getDownloadPauseButton().setOnClickListener(vw -> {
 						}); // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
 					});
 
@@ -694,7 +689,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 							DownloadService.performOperation(getActivity(), DownloadService.ACTION_RESUME_DOWNLOAD, updateData);
 							initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOADING);
 							initInstallButton(updateData, DownloadStatus.DOWNLOADING);
-							getDownloadPauseButton().setOnClickListener((vw) -> {
+							getDownloadPauseButton().setOnClickListener(vw -> {
 							}); // No resuming twice allowed, will be updated in onDownloadProgressUpdate()
 						});
 					} else {
@@ -706,7 +701,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 			@Override
 			public void onDownloadComplete() {
 				if (isAdded()) {
-					Toast.makeText(getApplicationData(), getString(R.string.download_verifying_start), Toast.LENGTH_LONG)
+					Toast.makeText(getApplicationData(), getString(R.string.download_verifying_start), LENGTH_LONG)
 							.show();
 				}
 			}
@@ -772,7 +767,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 					hideDownloadProgressBar();
 
 					if (launchInstallation) {
-						Toast.makeText(getApplicationData(), getString(R.string.download_complete), Toast.LENGTH_LONG)
+						Toast.makeText(getApplicationData(), getString(R.string.download_complete), LENGTH_LONG)
 								.show();
 						ActivityLauncher launcher = new ActivityLauncher(getActivity());
 						launcher.UpdateInstallation(true, updateData);
@@ -941,7 +936,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 
 		@Override
 		public void onClick(View v) {
-			Dialogs.showUpdateAlreadyDownloadedMessage(updateData, targetFragment, (ignored) -> {
+			Dialogs.showUpdateAlreadyDownloadedMessage(updateData, targetFragment, ignored -> {
 				if (updateData != null) {
 					DownloadService.performOperation(getActivity(), DownloadService.ACTION_DELETE_DOWNLOADED_UPDATE, updateData);
 					initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING);

@@ -18,6 +18,7 @@ import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static com.arjanvlek.oxygenupdater.views.MainActivity.PERMISSION_REQUEST_CODE;
 import static com.arjanvlek.oxygenupdater.views.MainActivity.VERIFY_FILE_PERMISSION;
 
@@ -58,12 +59,8 @@ public class ContributorActivity extends SupportActionBarActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		switch (requestCode) {
-			case PERMISSION_REQUEST_CODE:
-				if (permissionCallback != null && grantResults.length > 0) {
-					permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
-				}
-
+		if (requestCode == PERMISSION_REQUEST_CODE && permissionCallback != null && grantResults.length > 0) {
+			permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
 		}
 	}
 
@@ -75,15 +72,14 @@ public class ContributorActivity extends SupportActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			// Respond to the action bar's Back arrow button
-			case android.R.id.home:
-				if (!saveOptionsHidden.get()) {
-					onSaveButtonClick(null);
-				} else {
-					finish();
-				}
-				return true;
+		// Respond to the action bar's Back arrow button
+		if (item.getItemId() == android.R.id.home) {
+			if (!saveOptionsHidden.get()) {
+				onSaveButtonClick(null);
+			} else {
+				finish();
+			}
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -120,8 +116,7 @@ public class ContributorActivity extends SupportActionBarActivity {
 						contributorUtils.flushSettings(true);
 						finish();
 					} else {
-						Toast.makeText(getApplication(), R.string.contribute_allow_storage, Toast.LENGTH_LONG)
-								.show();
+						Toast.makeText(ContributorActivity.this, R.string.contribute_allow_storage, LENGTH_LONG).show();
 					}
 
 				}

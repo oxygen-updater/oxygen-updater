@@ -19,7 +19,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -29,6 +28,8 @@ import java.security.Signature;
 import java.security.SignatureException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 /**
  * Security-related methods. For a secure implementation, all of this code should be implemented on
@@ -56,7 +57,7 @@ public class Security {
 	public static boolean verifyPurchase(String base64PublicKey, String signedData, String signature) {
 		if (TextUtils.isEmpty(signedData) || TextUtils.isEmpty(base64PublicKey) ||
 				TextUtils.isEmpty(signature)) {
-			Logger.logError(TAG, new GooglePlayBillingException("Purchase verification failed: missing data."));
+			logError(TAG, new GooglePlayBillingException("Purchase verification failed: missing data."));
 			return BuildConfig.DEBUG; // Line modified (https://stackoverflow.com/questions/14600664/android-in-app-purchase-signature-verification-failed). Was: return false.
 		}
 
@@ -79,7 +80,7 @@ public class Security {
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		} catch (InvalidKeySpecException e) {
-			Logger.logError(TAG, new GooglePlayBillingException("Invalid key specification."));
+			logError(TAG, new GooglePlayBillingException("Invalid key specification."));
 			throw new IllegalArgumentException(e);
 		}
 	}
@@ -99,7 +100,7 @@ public class Security {
 		try {
 			signatureBytes = Base64.decode(signature, Base64.DEFAULT);
 		} catch (IllegalArgumentException e) {
-			Logger.logError(TAG, "Base64 decoding failed", e);
+			logError(TAG, "Base64 decoding failed", e);
 			return false;
 		}
 		try {
@@ -107,16 +108,16 @@ public class Security {
 			sig.initVerify(publicKey);
 			sig.update(signedData.getBytes());
 			if (!sig.verify(signatureBytes)) {
-				Logger.logError(TAG, new GooglePlayBillingException("Signature verification failed."));
+				logError(TAG, new GooglePlayBillingException("Signature verification failed."));
 				return false;
 			}
 			return true;
 		} catch (NoSuchAlgorithmException e) {
-			Logger.logError(TAG, "No Base64 algorithm loaded", e);
+			logError(TAG, "No Base64 algorithm loaded", e);
 		} catch (InvalidKeyException e) {
-			Logger.logError(TAG, "Invalid key", e);
+			logError(TAG, "Invalid key", e);
 		} catch (SignatureException e) {
-			Logger.logError(TAG, "Invalid key signature type", e);
+			logError(TAG, "Invalid key signature type", e);
 		}
 		return false;
 	}

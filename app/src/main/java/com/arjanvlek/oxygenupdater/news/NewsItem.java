@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
+@SuppressWarnings("WeakerAccess")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewsItem implements Serializable {
 
+	private static final long serialVersionUID = 6270363342908901533L;
 	private Long id;
 
 	private String dutchTitle;

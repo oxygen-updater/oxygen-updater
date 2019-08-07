@@ -1,8 +1,7 @@
-package com.arjanvlek.oxygenupdater.views;
+package com.arjanvlek.oxygenupdater.settings;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.TypedArrayUtils;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceManager;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -28,28 +26,30 @@ import java.util.List;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static java.lang.Math.min;
 
 /**
  * Overridden class to add custom functionality (setting title/message, custom on click listeners for dismissing).
  *
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
+@SuppressWarnings("WeakerAccess")
 public class BottomSheetPreference extends Preference {
 
 	private Context context;
-	private SharedPreferences sharedPreferences;
 	private OnPreferenceChangeListener mOnChangeListener;
 
 	private LinearLayout dialogLayout;
 	private BottomSheetDialog dialog;
 
+	private String secondaryKey;
 	private String title;
 	private String caption;
 	private List<BottomSheetItem> itemList = new ArrayList<>();
 	private boolean valueSet;
 	private String value;
-	private Integer intValue;
-	private int previousSelectedIndex;
+	private Object secondaryValue;
+	private SettingsManager settingsManager;
 
 	public BottomSheetPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 		super(context, attrs, defStyleAttr, defStyleRes);
@@ -86,7 +86,8 @@ public class BottomSheetPreference extends Preference {
 	private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
 		this.context = context;
 
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		secondaryKey = getKey() + "_id";
+		settingsManager = new SettingsManager(context);
 
 		readAttrs(attrs, defStyleAttr, defStyleRes);
 
@@ -103,7 +104,7 @@ public class BottomSheetPreference extends Preference {
 
 		dialogLayout = (LinearLayout) inflater.inflate(R.layout.bottom_sheet, null, false);
 
-		setText(dialogLayout.findViewById(R.id.dialog_header), title);
+		setText(dialogLayout.findViewById(R.id.dialog_title), title);
 		setText(dialogLayout.findViewById(R.id.dialog_caption), caption);
 
 		for (int i = 0; i < itemList.size(); i++) {
@@ -134,15 +135,21 @@ public class BottomSheetPreference extends Preference {
 		setText(titleView, item.getTitle());
 		setText(subtitleView, item.getSubtitle());
 
-		dialogItemLayout.setOnClickListener(view -> setValue(index));
+		dialogItemLayout.setOnClickListener(view -> setValueIndex(index));
 
-		String currentValue = sharedPreferences.getString(getKey(), null);
+		String currentValue = settingsManager.getPreference(getKey(), null);
 
 		if (item.getValue().equals(currentValue)) {
 			markItemSelected(index);
 		} else {
 			markItemUnselected(index);
 		}
+	}
+
+	private void redrawItemView(int index) {
+		LinearLayout dialogItemLayout = (LinearLayout) dialogLayout.getChildAt(index + 1);
+
+		setupItemView(dialogItemLayout, index);
 	}
 
 	/**
@@ -163,7 +170,7 @@ public class BottomSheetPreference extends Preference {
 
 		CharSequence[] titleEntries = a.getTextArray(R.styleable.BottomSheetPreference_titleEntries);
 		CharSequence[] subtitleEntries = a.getTextArray(R.styleable.BottomSheetPreference_subtitleEntries);
-		int resourceId = a.getResourceId(R.styleable.BottomSheetPreference_intEntryValues, 0);
+		int resourceId = a.getResourceId(R.styleable.BottomSheetPreference_secondaryEntryValues, 0);
 
 		itemList = new ArrayList<>();
 
@@ -184,7 +191,7 @@ public class BottomSheetPreference extends Preference {
 
 			CharSequence title = entries != null ? entries[i] : titleEntries[i];
 			CharSequence subtitle = subtitleEntries != null ? subtitleEntries[i] : null;
-			Integer intValue = intEntryValues != null ? intEntryValues[i] : null;
+			Object secondaryValue = intEntryValues != null ? ((long) intEntryValues[i]) : null;
 
 			if (title != null) {
 				item.setTitle(title.toString());
@@ -194,8 +201,8 @@ public class BottomSheetPreference extends Preference {
 				item.setSubtitle(subtitle.toString());
 			}
 
-			if (intValue != null) {
-				item.setIntValue(intValue);
+			if (secondaryValue != null) {
+				item.setSecondaryValue(secondaryValue);
 			}
 
 			itemList.add(item);
@@ -220,80 +227,177 @@ public class BottomSheetPreference extends Preference {
 	}
 
 	/**
-	 * Finds index of item with newValue or newIntValue and calls {@link #setValue(int)}
+	 * Finds index of item with newValue or newSecondaryValue and calls {@link #setValueIndex(int)}
 	 *
-	 * @param newValue    the new value
-	 * @param newIntValue the new integer value
+	 * @param newValue          the new value
+	 * @param newSecondaryValue the new integer value
 	 */
-	private void setValues(String newValue, Integer newIntValue) {
+	private void setValues(String newValue, Object newSecondaryValue) {
 		int selectedIndex = -1;
 
 		for (int i = 0; i < itemList.size(); i++) {
 			BottomSheetItem item = itemList.get(i);
 			String value = item.getValue();
-			Integer intValue = item.getIntValue();
+			Object secondaryValue = item.getSecondaryValue();
 
-			if ((value != null && value.equals(newValue)) || (intValue != null && intValue.equals(newIntValue))) {
+			if ((value != null && value.equals(newValue)) || (secondaryValue != null && secondaryValue.equals(newSecondaryValue))) {
 				selectedIndex = i;
 				break;
 			}
 		}
 
 		if (selectedIndex != -1) {
-			setValue(selectedIndex);
+			setValueIndex(selectedIndex);
 		}
 	}
 
 	/**
-	 * Sets the value of the key. intValue is optional.
+	 * Sets the value of the key. secondaryValue is optional.
 	 * <p>
 	 * Also marks previous item as unselected and new item as selected
 	 *
 	 * @param selectedIndex the selected index
 	 */
-	private void setValue(int selectedIndex) {
+	public void setValueIndex(int selectedIndex) {
 		BottomSheetItem item = itemList.get(selectedIndex);
 
 		String newValue = item.getValue();
-		Integer newIntValue = item.getIntValue();
+		Object newSecondaryValue = item.getSecondaryValue();
 
 		// Always persist/notify the first time.
 		boolean changed = !TextUtils.equals(value, newValue);
 
-		if (changed && valueSet) {
-			// redraw previous selected and new selected layouts
-			markItemUnselected(previousSelectedIndex);
-			markItemSelected(selectedIndex);
-		}
-
 		if (changed || !valueSet) {
 			value = newValue;
-			intValue = newIntValue;
+			secondaryValue = newSecondaryValue;
 			valueSet = true;
 
 			persistString(newValue);
 
-			if (newIntValue != null) {
-				// by default int values will be mapped to a key = getKey() + "_id"
-				sharedPreferences.edit()
-						.putInt(getKey() + "_id", newIntValue)
-						.apply();
+			if (newSecondaryValue != null) {
+				settingsManager.savePreference(secondaryKey, newSecondaryValue);
 			}
 
 			if (changed) {
+				// redraw previous selected and new selected layouts
+				remarkItems(newValue);
 				onChange();
 			}
 		}
+	}
 
-		previousSelectedIndex = selectedIndex;
+	public void setSecondaryKey(String secondaryKey) {
+		this.secondaryKey = secondaryKey;
+	}
+
+	@Override
+	public void setTitle(CharSequence title) {
+		this.title = title.toString();
+
+		setText(dialogLayout.findViewById(R.id.dialog_title), title.toString());
+
+		super.setTitle(title);
 	}
 
 	public void setCaption(String caption) {
 		this.caption = caption;
+
+		setText(dialogLayout.findViewById(R.id.dialog_caption), caption);
 	}
 
-	public void setItemList(List<BottomSheetItem> itemList) {
-		this.itemList = itemList;
+	public void setEntries(CharSequence[] entries) {
+		// don't care if items and entries aren't equal in length
+		// replace title for all indices that are common
+		int length = min(itemList.size(), entries.length);
+
+		for (int i = 0; i < length; i++) {
+			itemList.get(i).setTitle(entries[i].toString());
+
+			redrawItemView(i);
+		}
+
+		onSetInitialValue(null);
+	}
+
+	public void setTitleEntries(CharSequence[] titles) {
+		// don't care if items and titles aren't equal in length
+		// replace title for all indices that are common
+		int length = min(itemList.size(), titles.length);
+
+		for (int i = 0; i < length; i++) {
+			itemList.get(i).setTitle(titles[i].toString());
+
+			redrawItemView(i);
+		}
+
+		onSetInitialValue(null);
+	}
+
+	public void setSubtitleEntries(CharSequence[] subtitles) {
+		// don't care if items and subtitles aren't equal in length
+		// replace subtitle for all indices that are common
+		int length = min(itemList.size(), subtitles.length);
+
+		for (int i = 0; i < length; i++) {
+			itemList.get(i).setSubtitle(subtitles[i].toString());
+
+			redrawItemView(i);
+		}
+	}
+
+	public void setEntryValues(CharSequence[] entryValues) {
+		// don't care if items and entryValues aren't equal in length
+		// replace value for all indices that are common
+		int length = min(itemList.size(), entryValues.length);
+
+		for (int i = 0; i < length; i++) {
+			itemList.get(i).setValue(entryValues[i].toString());
+		}
+	}
+
+	public void setSecondaryEntryValues(Object[] objectEntryValues) {
+		// don't care if items and objectEntryValues aren't equal in length
+		// replace secondaryValue for all indices that are common
+		int length = min(itemList.size(), objectEntryValues.length);
+
+		for (int i = 0; i < length; i++) {
+			itemList.get(i).setSecondaryValue(objectEntryValues[i]);
+		}
+	}
+
+	public void setItemList(@NonNull List<BottomSheetItem> itemList) {
+		this.itemList = new ArrayList<>();
+		// copy list instead of shallow-referencing it
+		this.itemList.addAll(itemList);
+
+		setupDialog();
+
+		onSetInitialValue(null);
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public Object getSecondaryValue() {
+		return secondaryValue;
+	}
+
+	/**
+	 * Iterates over {@link #itemList} to remark items as selected/unselected
+	 *
+	 * @param value the new value
+	 */
+	private void remarkItems(String value) {
+		for (int i = 0; i < itemList.size(); i++) {
+			BottomSheetItem item = itemList.get(i);
+
+			if (item.getValue().equals(value)) {
+				markItemSelected(i);
+			} else {
+				markItemUnselected(i);
+			}
+		}
 	}
 
 	/**
@@ -363,9 +467,9 @@ public class BottomSheetPreference extends Preference {
 	@Override
 	protected void onSetInitialValue(Object defaultValue) {
 		String newValue = getPersistedString((String) defaultValue);
-		int newIntValue = sharedPreferences.getInt(getKey() + "_id", -1);
+		Object newSecondaryValue = settingsManager.getPreference(secondaryKey, null);
 
-		setValues(newValue, newIntValue != -1 ? newIntValue : null);
+		setValues(newValue, newSecondaryValue);
 	}
 
 	@Override
@@ -378,7 +482,7 @@ public class BottomSheetPreference extends Preference {
 
 		SavedState myState = new SavedState(superState);
 		myState.value = value;
-		myState.intValue = intValue;
+		myState.secondaryValue = secondaryValue;
 		return myState;
 	}
 
@@ -393,7 +497,7 @@ public class BottomSheetPreference extends Preference {
 		SavedState myState = (SavedState) state;
 		super.onRestoreInstanceState(myState.getSuperState());
 
-		setValues(myState.value, myState.intValue);
+		setValues(myState.value, myState.secondaryValue);
 	}
 
 	private static class SavedState extends BaseSavedState {
@@ -411,12 +515,12 @@ public class BottomSheetPreference extends Preference {
 				};
 
 		String value;
-		Integer intValue;
+		Object secondaryValue;
 
 		SavedState(Parcel source) {
 			super(source);
 			value = source.readString();
-			intValue = source.readInt();
+			secondaryValue = source.readLong();
 		}
 
 		SavedState(Parcelable superState) {
@@ -427,7 +531,6 @@ public class BottomSheetPreference extends Preference {
 		public void writeToParcel(@NonNull Parcel dest, int flags) {
 			super.writeToParcel(dest, flags);
 			dest.writeString(value);
-			dest.writeInt(intValue);
 		}
 	}
 }

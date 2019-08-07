@@ -11,8 +11,6 @@ package com.arjanvlek.oxygenupdater.download;
 
 import android.text.TextUtils;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,23 +20,26 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
+
 class MD5 {
 	private static final String TAG = "MD5";
 
 	static boolean checkMD5(String md5, File updateFile) {
 		if (TextUtils.isEmpty(md5) || updateFile == null) {
-			Logger.logError(TAG, new UpdateVerificationException("MD5 string empty or updateFile null"));
+			logError(TAG, new UpdateVerificationException("MD5 string empty or updateFile null"));
 			return false;
 		}
 
 		String calculatedDigest = calculateMD5(updateFile, 0);
 		if (calculatedDigest == null) {
-			Logger.logError(TAG, new UpdateVerificationException("calculatedDigest null"));
+			logError(TAG, new UpdateVerificationException("calculatedDigest null"));
 			return false;
 		}
 
-		Logger.logVerbose(TAG, "Calculated digest: " + calculatedDigest);
-		Logger.logVerbose(TAG, "Provided digest: " + md5);
+		logVerbose(TAG, "Calculated digest: " + calculatedDigest);
+		logVerbose(TAG, "Provided digest: " + md5);
 
 		return calculatedDigest.equalsIgnoreCase(md5);
 	}
@@ -48,7 +49,7 @@ class MD5 {
 		try {
 			digest = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
-			Logger.logError(TAG, "Exception while getting digest", e);
+			logError(TAG, "Exception while getting digest", e);
 			return null;
 		}
 
@@ -56,14 +57,14 @@ class MD5 {
 		try {
 			is = new FileInputStream(updateFile);
 		} catch (FileNotFoundException e) {
-			Logger.logError(TAG, "Exception while getting FileInputStream", e);
+			logError(TAG, "Exception while getting FileInputStream", e);
 
 			// If the downloaded file may not yet be accessed (because it's still being flushed or previously-existing files are being rotated, wait a bit and try verifying it again.
 			if (retryCount < 5) {
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException i) {
-					Logger.logError(TAG, "Error while trying to re-verify file after 2 seconds", i);
+					logError(TAG, "Error while trying to re-verify file after 2 seconds", i);
 				}
 				return calculateMD5(updateFile, ++retryCount);
 			} else {
@@ -89,7 +90,7 @@ class MD5 {
 			try {
 				is.close();
 			} catch (IOException e) {
-				Logger.logError(TAG, "Exception on closing MD5 input stream", e);
+				logError(TAG, "Exception on closing MD5 input stream", e);
 			}
 		}
 	}

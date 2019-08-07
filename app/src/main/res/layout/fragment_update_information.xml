@@ -3,15 +3,14 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/updateInformationFragmentTop"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	tools:context=".views.MainActivity">
+	android:layout_height="wrap_content">
 
 	<!-- Loading screen -->
 	<ProgressBar
 		android:id="@+id/updateInformationLoadingScreen"
 		style="?android:attr/progressBarStyleLarge"
-		android:layout_width="70dp"
-		android:layout_height="70dp"
+		android:layout_width="@dimen/padding_4x"
+		android:layout_height="@dimen/padding_4x"
 		android:layout_centerHorizontal="true"
 		android:layout_centerVertical="true" />
 
@@ -34,8 +33,7 @@
 				android:layout_height="wrap_content"
 				android:paddingLeft="@dimen/padding_default"
 				android:paddingTop="@dimen/padding_default"
-				android:paddingRight="@dimen/padding_default"
-				tools:context=".views.MainActivity$PlaceholderFragment">
+				android:paddingRight="@dimen/padding_default">
 
 				<TextView
 					android:id="@+id/headerLabel"
@@ -211,15 +209,12 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				xmlns:tools="http://schemas.android.com/tools"
+			<RelativeLayout
 				android:id="@+id/relativeLayout2"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:paddingLeft="@dimen/padding_default"
-				android:paddingRight="@dimen/padding_default"
-				tools:context=".views.MainActivity$PlaceholderFragment">
-
+				android:paddingRight="@dimen/padding_default">
 
 				<TextView
 					android:id="@+id/updateInformationSystemIsUpToDateHeader"

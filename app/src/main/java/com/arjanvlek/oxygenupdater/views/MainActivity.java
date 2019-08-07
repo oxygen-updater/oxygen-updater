@@ -43,6 +43,7 @@ import org.joda.time.LocalDateTime;
 
 import java8.util.function.Consumer;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_ADVANCED_MODE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_CONTRIBUTE;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 	private InterstitialAd newsAd;
 
 	private Consumer<Boolean> downloadPermissionCallback;
+	private int activeFragmentPosition;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -191,13 +193,13 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 		if (application.checkPlayServices(this, false)) {
 			MobileAds.initialize(this, "ca-app-pub-0760639008316468~7665206420");
 		} else {
-			Toast.makeText(application, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show();
+			Toast.makeText(application, getString(R.string.notification_no_notification_support), LENGTH_LONG).show();
 		}
 
 		if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
 			newsAd = new InterstitialAd(this);
 			newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-			newsAd.loadAd(application.buildAdRequest());
+			newsAd.loadAd(ApplicationData.buildAdRequest());
 		}
 	}
 
@@ -261,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 		} else if (mayShowNewsAd()) {
 			InterstitialAd interstitialAd = new InterstitialAd(this);
 			interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
-			interstitialAd.loadAd(((ApplicationData) getApplication()).buildAdRequest());
+			interstitialAd.loadAd(ApplicationData.buildAdRequest());
 			newsAd = interstitialAd;
 			return newsAd;
 		} else {

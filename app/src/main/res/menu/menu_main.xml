@@ -1,7 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	tools:context=".views.MainActivity">
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
 		android:id="@+id/action_settings"
@@ -11,14 +9,14 @@
 
 	<item
 		android:id="@+id/action_faq"
-		android:icon="@drawable/ic_action_faq"
+		android:icon="@drawable/faq"
 		android:orderInCategory="30"
 		android:title="@string/faq_menuitem"
 		app:showAsAction="ifRoom" />
 
 	<item
 		android:id="@+id/action_help"
-		android:icon="@drawable/ic_action_help"
+		android:icon="@drawable/help"
 		android:orderInCategory="50"
 		android:title="@string/help"
 		app:showAsAction="ifRoom" />

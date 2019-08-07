@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.settings;
 
 
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -10,18 +9,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
@@ -29,6 +27,7 @@ import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus;
 import com.crashlytics.android.Crashlytics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,10 +43,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	private ActivityLauncher activityLauncher;
 	private InAppPurchaseDelegate delegate;
 
-	private SharedPreferences sharedPreferences;
+	private SettingsManager settingsManager;
 
-	private ListPreference devicePreference;
-	private ListPreference updateMethodPreference;
+	private BottomSheetPreference devicePreference;
+	private BottomSheetPreference updateMethodPreference;
 
 	void setInAppPurchaseDelegate(InAppPurchaseDelegate delegate) {
 		this.delegate = delegate;
@@ -60,7 +59,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 		application = (ApplicationData) context.getApplication();
 		activityLauncher = new ActivityLauncher(context);
 
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		settingsManager = new SettingsManager(context);
 
 		addPreferencesFromResource(R.xml.preferences);
 
@@ -75,7 +74,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	 * Sets up buy ad-free and contribute preferences
 	 */
 	private void setupSupportPreferences() {
-		Preference contribute = findPreference(getString(R.string.key_contributor));
+		Preference contribute = findPreference(context.getString(R.string.key_contributor));
 
 		//noinspection ConstantConditions
 		contribute.setOnPreferenceClickListener(preference -> {
@@ -90,8 +89,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	 * Entries are retrieved from the server, which calls for dynamically setting <code>entries</code> and <code>entryValues</code>
 	 */
 	private void setupDevicePreferences() {
-		devicePreference = findPreference(getString(R.string.key_device));
-		updateMethodPreference = findPreference(getString(R.string.key_update_method));
+		String updateModeCaption = "settings_explanation_incremental_full_update";
+
+		devicePreference = findPreference(context.getString(R.string.key_device));
+		updateMethodPreference = findPreference(context.getString(R.string.key_update_method));
 
 		devicePreference.setEnabled(false);
 		updateMethodPreference.setEnabled(false);
@@ -100,20 +101,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	}
 
 	private void setupThemePreference() {
-		String key = getString(R.string.key_theme);
-
-		Preference themePreference = findPreference(key);
-
-		onPreferenceChange(themePreference, sharedPreferences.getString(key, getString(R.string.theme_system)));
-
 		//noinspection ConstantConditions
-		themePreference.setOnPreferenceChangeListener((preference, value) -> {
-			onPreferenceChange(preference, value);
-
-			sharedPreferences.edit()
-					.putString(key, value.toString())
-					.apply();
-
+		findPreference(context.getString(R.string.key_theme)).setOnPreferenceChangeListener((preference, value) -> {
 			AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(context));
 
 			return true;
@@ -125,7 +114,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 
 		//noinspection ConstantConditions
 		advancedMode.setOnPreferenceClickListener(preference -> {
-			boolean isAdvancedMode = sharedPreferences.getBoolean(SettingsManager.PROPERTY_ADVANCED_MODE, false);
+			boolean isAdvancedMode = settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false);
 			if (isAdvancedMode) {
 				Dialogs.showAdvancedModeExplanation(application, context.getSupportFragmentManager());
 			}
@@ -138,9 +127,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	 * Sets up privacy policy, rating, and version preferences in the 'About' category
 	 */
 	private void setupAboutPreferences() {
-		Preference privacyPolicy = findPreference(getString(R.string.key_privacy_policy));
-		Preference rateApp = findPreference(getString(R.string.key_rate_app));
-		Preference oxygenUpdater = findPreference(getString(R.string.key_oxygen));
+		Preference privacyPolicy = findPreference(context.getString(R.string.key_privacy_policy));
+		Preference rateApp = findPreference(context.getString(R.string.key_rate_app));
+		Preference oxygenUpdater = findPreference(context.getString(R.string.key_oxygen));
 
 		// Use Chrome Custom Tabs to open the privacy policy link
 		Uri privacyPolicyUri = Uri.parse("https://oxygenupdater.com/legal");
@@ -178,61 +167,67 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	private void populateDeviceSettings(List<Device> devices) {
 		if (devices != null && !devices.isEmpty()) {
 			devicePreference.setEnabled(true);
+			SystemVersionProperties systemVersionProperties = application.getSystemVersionProperties();
 
+			// Set the spinner to the previously selected device.
+			int recommendedPosition = -1;
+
+			int selectedPosition = -1;
+
+			Long deviceId = settingsManager.getPreference(context.getString(R.string.key_device_id), -1L);
+
+			List<BottomSheetItem> itemList = new ArrayList<>();
 			HashMap<CharSequence, Long> deviceMap = new HashMap<>();
-			CharSequence[] deviceNames = new CharSequence[devices.size()];
 			for (int i = 0; i < devices.size(); i++) {
 				Device device = devices.get(i);
 
-				deviceNames[i] = device.getName();
+				deviceMap.put(device.getName(), device.getId());
 
-				deviceMap.put(deviceNames[i], device.getId());
+				List<String> productNames = device.getProductNames();
+
+				if (productNames != null && productNames.contains(systemVersionProperties.getOxygenDeviceName())) {
+					recommendedPosition = i;
+				}
+
+				if (device.getId() == deviceId) {
+					selectedPosition = i;
+				}
+
+				itemList.add(BottomSheetItem.builder()
+						.title(device.getName())
+						.value(device.getName())
+						.secondaryValue(device.getId())
+						.build()
+				);
 			}
 
-			// Populate device names
-			devicePreference.setEntries(deviceNames);
-			devicePreference.setEntryValues(deviceNames);
+			devicePreference.setItemList(itemList);
 
-			// update summary
-			onPreferenceChange(devicePreference, devicePreference.getValue());
+			// If there's there no device saved in preferences, auto select the recommended device
+			if (selectedPosition == -1 && recommendedPosition != -1) {
+				devicePreference.setValueIndex(recommendedPosition);
+				// settingsManager.savePreference(context.getString(R.string.key_device_id), deviceMap.get(deviceNames[recommendedPosition]));
+			}
 
 			// Retrieve update methods for the selected device
-			//noinspection ConstantConditions
-			long longValue = deviceMap.get(devicePreference.getValue());
-			application.getServerConnector().getUpdateMethods(longValue, this::populateUpdateMethods);
+			application.getServerConnector().getUpdateMethods(deviceId, this::populateUpdateMethods);
 
 			// listen for preference change so that we can save the corresponding device ID,
 			// and populate update methods
 			devicePreference.setOnPreferenceChangeListener((preference, value) -> {
-				// update summary
-				onPreferenceChange(preference, value);
-
-				//noinspection ConstantConditions
-				long deviceId = deviceMap.get(value.toString());
-
-				// Save device to shared preferences
-				sharedPreferences.edit()
-						.putString(getString(R.string.key_device), value.toString())
-						.apply();
-
-				// Save device ID to shared preferences
-				sharedPreferences.edit()
-						.putLong(getString(R.string.key_device_id), deviceId)
-						.apply();
-
 				// disable the update method preference since device has changed
 				updateMethodPreference.setEnabled(false);
 
 				// Retrieve update methods for the selected device
-				application.getServerConnector().getUpdateMethods(deviceId, this::populateUpdateMethods);
+				//noinspection ConstantConditions
+				application.getServerConnector().getUpdateMethods(deviceMap.get(value.toString()), this::populateUpdateMethods);
 
 				return true;
 			});
 		} else {
-			PreferenceCategory deviceCategory = findPreference(getString(R.string.key_category_device));
+			PreferenceCategory deviceCategory = findPreference(context.getString(R.string.key_category_device));
+			//noinspection ConstantConditions
 			deviceCategory.setVisible(false);
-			// devicePreference.setVisible(false);
-			// updateMethodPreference.setVisible(false);
 		}
 	}
 
@@ -245,55 +240,58 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 		if (updateMethods != null && !updateMethods.isEmpty()) {
 			updateMethodPreference.setEnabled(true);
 
-			HashMap<CharSequence, Long> updateMethodMap = new HashMap<>();
-			CharSequence[] updateMethodNames = new CharSequence[updateMethods.size()];
+			long currentUpdateMethodId = settingsManager.getPreference(context.getString(R.string.key_update_method_id), -1L);
+
+			List<Integer> recommendedPositions = new ArrayList<>();
+			int selectedPosition = -1;
+
+			List<BottomSheetItem> itemList = new ArrayList<>();
 			for (int i = 0; i < updateMethods.size(); i++) {
 				UpdateMethod updateMethod = updateMethods.get(i);
 
-				updateMethodNames[i] = updateMethod.getEnglishName();
+				if (updateMethod.isRecommended()) {
+					recommendedPositions.add(i);
+				}
 
-				updateMethodMap.put(updateMethodNames[i], updateMethod.getId());
+				if (updateMethod.getId() == currentUpdateMethodId) {
+					selectedPosition = i;
+				}
+
+				itemList.add(BottomSheetItem.builder()
+						.title(updateMethod.getEnglishName())
+						.value(updateMethod.getEnglishName())
+						.secondaryValue(updateMethod.getId())
+						.build()
+				);
 			}
 
-			// Populate device names
-			updateMethodPreference.setEntries(updateMethodNames);
-			updateMethodPreference.setEntryValues(updateMethodNames);
+			updateMethodPreference.setCaption(context.getString(R.string.settings_explanation_incremental_full_update));
+			updateMethodPreference.setItemList(itemList);
 
-			// update summary
-			onPreferenceChange(updateMethodPreference, updateMethodPreference.getValue());
+			// If there's there no update method saved in preferences, auto select the last recommended method
+			if (selectedPosition == -1) {
+				if (!recommendedPositions.isEmpty()) {
+					updateMethodPreference.setValueIndex(recommendedPositions.get(recommendedPositions.size() - 1));
+				} else {
+					updateMethodPreference.setValueIndex(updateMethods.size() - 1);
+				}
+			}
 
 			updateMethodPreference.setOnPreferenceChangeListener((preference, value) -> {
-				// update summary
-				onPreferenceChange(preference, value);
-
-				//noinspection ConstantConditions
-				long updateMethodId = updateMethodMap.get(value.toString());
-
-				// Save update method to shared preferences
-				sharedPreferences.edit()
-						.putString(getString(R.string.key_update_method), value.toString())
-						.apply();
-
-				// Save update method ID to shared preferences
-				sharedPreferences.edit()
-						.putLong(getString(R.string.key_update_method_id), updateMethodId)
-						.apply();
-
-				Crashlytics.setUserIdentifier("Device: " + devicePreference.getValue() + ", Update Method: " + updateMethodPreference.getValue());
+				Crashlytics.setUserIdentifier("Device: " + settingsManager.getPreference(context.getString(R.string.key_device), "<UNKNOWN>")
+						+ ", Update Method: " + settingsManager.getPreference(context.getString(R.string.key_update_method), "<UNKNOWN>"));
 
 				// Google Play services are not required if the user doesn't use notifications
 				if (application.checkPlayServices(context.getParent(), false)) {
 					// Subscribe to notifications for the newly selected device and update method
 					NotificationTopicSubscriber.subscribe(application);
 				} else {
-					Toast.makeText(context, getString(R.string.notification_no_notification_support), LENGTH_LONG)
-							.show();
+					Toast.makeText(context, getString(R.string.notification_no_notification_support), LENGTH_LONG).show();
 				}
 
 				return true;
 			});
 		} else {
-			devicePreference.setVisible(false);
 			updateMethodPreference.setVisible(false);
 		}
 	}
@@ -317,7 +315,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	private void onBuyAdFreePreferenceClicked(Preference preference) {
 		// Disable the Purchase button and set its text to "Processing...".
 		preference.setEnabled(false);
-		preference.setSummary(getString(R.string.processing));
+		preference.setSummary(context.getString(R.string.processing));
 
 		delegate.performInAppPurchase();
 	}
@@ -338,19 +336,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	 * @param adFreePrice price to display if the product can be bought
 	 */
 	void setupBuyAdFreePreference(PurchaseStatus status, @Nullable String adFreePrice) {
-		Preference buyAdFree = findPreference(getString(R.string.key_ad_free));
+		Preference buyAdFree = findPreference(context.getString(R.string.key_ad_free));
 
 		switch (status) {
 			case UNAVAILABLE:
 				//noinspection ConstantConditions
 				buyAdFree.setEnabled(false);
-				buyAdFree.setSummary(getString(R.string.settings_buy_button_not_possible));
+				buyAdFree.setSummary(context.getString(R.string.settings_buy_button_not_possible));
 				buyAdFree.setOnPreferenceClickListener(null);
 				break;
 			case AVAILABLE:
 				//noinspection ConstantConditions
 				buyAdFree.setEnabled(true);
-				buyAdFree.setSummary(getString(R.string.settings_buy_button_buy, adFreePrice));
+				buyAdFree.setSummary(context.getString(R.string.settings_buy_button_buy, adFreePrice));
 				buyAdFree.setOnPreferenceClickListener(preference -> {
 					onBuyAdFreePreferenceClicked(preference);
 					return true;
@@ -359,7 +357,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 			case ALREADY_BOUGHT:
 				//noinspection ConstantConditions
 				buyAdFree.setEnabled(false);
-				buyAdFree.setSummary(getString(R.string.settings_buy_button_bought));
+				buyAdFree.setSummary(context.getString(R.string.settings_buy_button_bought));
 				buyAdFree.setOnPreferenceClickListener(null);
 				break;
 			default:

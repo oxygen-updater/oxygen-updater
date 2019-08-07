@@ -14,7 +14,6 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.news.NewsActivity;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
@@ -28,6 +27,7 @@ import java.util.Map;
 import static android.app.Notification.DEFAULT_ALL;
 import static android.app.Notification.PRIORITY_HIGH;
 import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
 import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_START_WITH_AD;
 import static com.arjanvlek.oxygenupdater.notifications.NotificationElement.DEVICE_NAME;
@@ -58,8 +58,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 
 	@Override
 	public boolean onStartJob(JobParameters params) {
-		if (params == null || !params.getExtras()
-				.containsKey(KEY_NOTIFICATION_CONTENTS) || !(getApplication() instanceof ApplicationData)) {
+		if (params == null || !params.getExtras().containsKey(KEY_NOTIFICATION_CONTENTS) || !(getApplication() instanceof ApplicationData)) {
 			return exit(params, false);
 		}
 
@@ -74,7 +73,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 		try {
 			messageContents = new ObjectMapper().readValue(notificationContentsJson, notificationContentsTypeRef);
 		} catch (IOException e) {
-			Logger.logError(TAG, new OxygenUpdaterException("Failed to read notification contents from JSON string (" + notificationContentsJson + ")"));
+			logError(TAG, new OxygenUpdaterException("Failed to read notification contents from JSON string (" + notificationContentsJson + ")"));
 			return exit(params, false);
 		}
 		NotificationType notificationType = NotificationType.valueOf(messageContents.get(TYPE.toString()));
@@ -91,8 +90,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 				if (!settingsManager.getPreference(PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true)) {
 					return exit(params, true);
 				}
-				builder = getBuilderForNewVersionNotification(messageContents.get(DEVICE_NAME.toString()), messageContents
-						.get(NEW_VERSION_NUMBER.toString()));
+				builder = getBuilderForNewVersionNotification(messageContents.get(DEVICE_NAME.toString()), messageContents.get(NEW_VERSION_NUMBER.toString()));
 				break;
 			case GENERAL_NOTIFICATION:
 				if (!settingsManager.getPreference(PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true)) {
@@ -129,7 +127,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 
 		}
 		if (builder == null) {
-			Logger.logError(TAG, new OxygenUpdaterException("Failed to instantiate notificationBuilder. Can not display push notification!"));
+			logError(TAG, new OxygenUpdaterException("Failed to instantiate notificationBuilder. Can not display push notification!"));
 			return exit(params, false);
 		}
 
@@ -145,7 +143,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 		NotificationManager notificationManager = (NotificationManager) Utils.getSystemService(this, NOTIFICATION_SERVICE);
 
 		if (notificationManager == null) {
-			Logger.logError(TAG, new OxygenUpdaterException("Notification Manager service is not available"));
+			logError(TAG, new OxygenUpdaterException("Notification Manager service is not available"));
 			return exit(params, false);
 		}
 
@@ -176,8 +174,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 	private NotificationCompat.Builder getBuilderForGeneralServerNotificationOrNewsNotification(String message) {
 		return getNotificationBuilder()
 				.setSmallIcon(R.drawable.oxygen_updater)
-				.setStyle(new NotificationCompat.BigTextStyle()
-						.bigText(message))
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(message))
 				.setContentTitle(getString(R.string.app_name))
 				.setContentText(message);
 	}
@@ -187,9 +184,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 
 		return getNotificationBuilder()
 				.setSmallIcon(R.drawable.new_text)
-				.setStyle(new NotificationCompat.BigTextStyle()
-						.bigText(message)
-						.setSummaryText(getString(R.string.notification_new_device_short)))
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(message).setSummaryText(getString(R.string.notification_new_device_short)))
 				.setContentTitle(getString(R.string.app_name))
 				.setContentText(message);
 	}
@@ -198,8 +193,7 @@ public class DelayedPushNotificationDisplayer extends JobService {
 		String message = getString(R.string.notification_version, versionNumber, deviceName);
 		return getNotificationBuilder()
 				.setSmallIcon(R.drawable.new_text)
-				.setStyle(new NotificationCompat.BigTextStyle()
-						.bigText(message))
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(message))
 				.setWhen(System.currentTimeMillis())
 				.setContentTitle(getString(R.string.notification_version_title))
 				.setContentText(message);

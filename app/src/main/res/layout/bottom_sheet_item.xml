@@ -7,7 +7,7 @@
 	android:clickable="true"
 	android:focusable="true"
 	android:orientation="horizontal"
-	android:paddingStart="@dimen/padding_2x"
+	android:paddingStart="@dimen/padding_default"
 	android:paddingTop="@dimen/padding_default"
 	android:paddingEnd="@dimen/padding_2x"
 	android:paddingBottom="@dimen/padding_default">
@@ -16,26 +16,26 @@
 		android:id="@+id/dialog_item_checkmark"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:background="@color/overlay"
+		android:layout_gravity="center"
 		android:contentDescription="@string/icon"
-		android:padding="2dp"
 		android:src="@drawable/checkmark"
 		android:tint="?colorPrimary"
 		android:visibility="invisible"
 		tools:visibility="visible" />
 
 	<LinearLayout
+		android:id="@+id/dialog_item_text_container"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_gravity="center"
 		android:layout_marginStart="@dimen/padding_half"
+		android:layout_marginEnd="@dimen/padding_default"
 		android:orientation="vertical">
 
 		<TextView
 			android:id="@+id/dialog_item_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
 			android:textColor="?android:textColorTertiary"
 			tools:text="Title" />
 
@@ -43,8 +43,6 @@
 			android:id="@+id/dialog_item_subtitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
 			android:textColor="?android:textColorSecondary"
 			tools:text="Subtitle" />
 	</LinearLayout>
