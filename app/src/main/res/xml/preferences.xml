@@ -42,7 +42,7 @@
 
 		<!--suppress AndroidElementNotAllowed -->
 		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
-			android:icon="@drawable/smartphone"
+			android:icon="@drawable/cloud_download"
 			android:key="@string/key_update_method"
 			android:layout="@layout/custom_preference"
 			android:summary="@string/summary_update_method"
@@ -73,7 +73,7 @@
 			android:layout="@layout/custom_preference"
 			android:summaryOff="@string/summary_off"
 			android:summaryOn="@string/summary_on"
-			android:title="@string/settings_server_messages_new_app_version" />
+			android:title="@string/label_app_update_banner" />
 
 		<SwitchPreference
 			android:defaultValue="true"
@@ -82,7 +82,7 @@
 			android:layout="@layout/custom_preference"
 			android:summaryOff="@string/summary_off"
 			android:summaryOn="@string/summary_on"
-			android:title="@string/settings_server_messages_in_app" />
+			android:title="@string/label_news_warning_banner" />
 	</PreferenceCategory>
 
 	<PreferenceCategory

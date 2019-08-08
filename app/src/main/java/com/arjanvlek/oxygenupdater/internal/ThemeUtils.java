@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate.NightMode;
@@ -22,7 +23,9 @@ import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
+@SuppressWarnings("WeakerAccess")
 public class ThemeUtils {
+	public final static String OEM_BLACK_MODE = "oem_black_mode";
 
 	/**
 	 * Translates the theme chosen by the user to the corresponding {@link NightMode}.
@@ -64,7 +67,7 @@ public class ThemeUtils {
 
 				// if the user has chosen Dark theme for their OnePlus device, honor it.
 				// otherwise resort to Android-provided modes
-				if (onePlusTheme == OnePlusTheme.DARK.ordinal()) {
+				if (onePlusTheme == OnePlusTheme.DARK) {
 					return MODE_NIGHT_YES;
 				} else {
 					// Android Pie (9.0) introduced a night mode system flag that could be set in developer options
@@ -88,8 +91,8 @@ public class ThemeUtils {
 		ContentResolver resolver = context.getContentResolver();
 
 		try {
-			return Settings.System.getInt(resolver, "oem_black_mode");
-		} catch (Settings.SettingNotFoundException e) {
+			return Settings.System.getInt(resolver, OEM_BLACK_MODE);
+		} catch (SettingNotFoundException e) {
 			// no-op
 		}
 

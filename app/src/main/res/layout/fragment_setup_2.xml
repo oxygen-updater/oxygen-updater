@@ -1,10 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:paddingStart="@dimen/padding_2x"
+	android:paddingStart="@dimen/padding_default"
 	android:paddingTop="@dimen/padding_default"
-	android:paddingEnd="@dimen/padding_2x"
+	android:paddingEnd="@dimen/padding_default"
 	android:paddingBottom="@dimen/padding_default">
 
 	<LinearLayout
@@ -16,7 +15,6 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/padding_default"
 			android:text="@string/setup_page_2_title"
 			android:textSize="@dimen/typography_title" />
 
@@ -27,6 +25,5 @@
 			android:layout_marginTop="@dimen/padding_default"
 			android:text="@string/setup_page_2_text"
 			android:textColor="?android:textColorSecondary" />
-
 	</LinearLayout>
 </ScrollView>

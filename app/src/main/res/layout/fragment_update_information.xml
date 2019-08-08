@@ -91,7 +91,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_gravity="center_vertical"
-							android:layout_marginStart="10dp"
+							android:layout_marginStart="@dimen/padding_half"
 							android:layout_weight="70"
 							android:visibility="visible" />
 
@@ -99,10 +99,8 @@
 							android:id="@+id/updateInformationDownloadPauseButton"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:layout_marginStart="10dp"
-							android:layout_marginLeft="10dp"
-							android:layout_marginEnd="10dp"
-							android:layout_marginRight="10dp"
+							android:layout_marginStart="@dimen/padding_half"
+							android:layout_marginEnd="@dimen/padding_half"
 							android:layout_weight="0"
 							android:background="@android:color/transparent"
 							android:contentDescription="@string/icon"
@@ -112,10 +110,8 @@
 							android:id="@+id/updateInformationDownloadCancelButton"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:layout_marginStart="10dp"
-							android:layout_marginLeft="10dp"
-							android:layout_marginEnd="10dp"
-							android:layout_marginRight="10dp"
+							android:layout_marginStart="@dimen/padding_half"
+							android:layout_marginEnd="@dimen/padding_half"
 							android:layout_weight="0"
 							android:background="@android:color/transparent"
 							android:contentDescription="@string/icon"
@@ -130,7 +126,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_gravity="center_horizontal"
-							android:layout_marginStart="10dp" />
+							android:layout_marginStart="@dimen/padding_half" />
 					</TableRow>
 
 				</TableLayout>
@@ -159,7 +155,7 @@
 							style="@style/Widget.MaterialComponents.Button.TextButton"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:layout_marginStart="10dp"
+							android:layout_marginStart="@dimen/padding_half"
 							android:enabled="true"
 							android:text="@string/install"
 							android:textAppearance="?android:textAppearanceSmall"
@@ -188,7 +184,7 @@
 						android:layout_width="wrap_content"
 						android:layout_height="50dp"
 						android:layout_gravity="center_vertical"
-						android:layout_marginStart="10dp"
+						android:layout_marginStart="@dimen/padding_half"
 						android:layout_toEndOf="@id/downloadSizeImage"
 						android:gravity="center" />
 
@@ -232,8 +228,8 @@
 					android:layout_height="170dp"
 					android:layout_below="@id/updateInformationSystemIsUpToDateHeader"
 					android:layout_centerHorizontal="true"
-					android:layout_marginTop="15dp"
-					android:layout_marginBottom="15dp"
+					android:layout_marginTop="@dimen/padding_default"
+					android:layout_marginBottom="@dimen/padding_default"
 					android:contentDescription="@string/icon"
 					android:src="@drawable/done_circle"
 					android:tint="@color/colorPositive" />

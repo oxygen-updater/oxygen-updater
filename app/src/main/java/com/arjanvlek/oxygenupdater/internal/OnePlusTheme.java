@@ -1,14 +1,13 @@
 package com.arjanvlek.oxygenupdater.internal;
 
 /**
- * 0: LIGHT
- * 1: DARK
- * 2: COLORFUL
+ * Integer values for OnePlus' system themes
  *
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @see ThemeUtils#OEM_BLACK_MODE
  */
-public enum OnePlusTheme {
-	LIGHT,
-	DARK,
-	COLORFUL
+public interface OnePlusTheme {
+	int LIGHT = 0;
+	int DARK = 1;
+	int COLORFUL = 2;
 }

@@ -34,21 +34,20 @@
 				android:layout_height="match_parent" />
 		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-		<RelativeLayout
+		<LinearLayout
 			android:id="@+id/faq_no_network_view"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginLeft="@dimen/padding_default"
 			android:layout_marginTop="@dimen/padding_default"
 			android:layout_marginEnd="@dimen/padding_default"
-			android:layout_marginRight="@dimen/padding_default">
+			android:gravity="center"
+			android:orientation="vertical">
 
 			<TextView
 				android:id="@+id/faq_no_network_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_centerHorizontal="true"
 				android:text="@string/faq_no_network"
 				android:textStyle="bold" />
 
@@ -56,8 +55,6 @@
 				android:id="@+id/faq_no_network_image"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/faq_no_network_title"
-				android:layout_centerHorizontal="true"
 				android:contentDescription="@string/icon"
 				android:src="@drawable/wifi_off" />
 
@@ -65,24 +62,18 @@
 				android:id="@+id/faq_no_network_text"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/faq_no_network_image"
-				android:layout_centerHorizontal="true"
 				android:layout_marginStart="@dimen/padding_default"
-				android:layout_marginLeft="@dimen/padding_default"
 				android:layout_marginTop="@dimen/padding_default"
 				android:layout_marginEnd="@dimen/padding_default"
-				android:layout_marginRight="@dimen/padding_default"
 				android:text="@string/faq_no_network_text" />
 
 			<com.google.android.material.button.MaterialButton
 				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/faq_no_network_text"
-				android:layout_centerHorizontal="true"
 				android:onClick="onRetryButtonClick"
 				android:text="@string/download_error_retry" />
-		</RelativeLayout>
+		</LinearLayout>
 	</RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

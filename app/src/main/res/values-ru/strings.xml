@@ -109,6 +109,8 @@
 	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Rate this app</string>
 
@@ -122,7 +124,7 @@
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night.\nApplication restart required</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
 	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
 
@@ -154,8 +156,6 @@
 	<string name="settings_saved">"Ваши настройки автоматически сохраняются."</string>
 	<string name="settings_saving">"Ваши настройки сохраняются. Если сохранение будет долгим, проверьте подключение и перезапустите приложение."</string>
 	<string name="settings_server_messages">"Показывать сообщение в приложении, когда:"</string>
-	<string name="settings_server_messages_in_app">"Есть какое-либо предупреждение или новости"</string>
-	<string name="settings_server_messages_new_app_version">"Доступно обновление приложения"</string>
 	<string name="settings_other_options">"Другие настройки:"</string>
 	<string name="settings_advanced_mode">"Расширенный режим"</string>
 	<string name="settings_advanced_mode_button_explanation">"Нажмите на кнопку для получения информации о расширенном режиме."</string>

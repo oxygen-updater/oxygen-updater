@@ -121,11 +121,11 @@ public class ServerStatus implements Banner {
 		UNREACHABLE;
 
 		public boolean isUserRecoverableError() {
-			return this.equals(WARNING) || this.equals(ERROR) || this.equals(UNREACHABLE);
+			return equals(WARNING) || equals(ERROR) || equals(UNREACHABLE);
 		}
 
 		public boolean isNonRecoverableError() {
-			return !isUserRecoverableError() && !this.equals(NORMAL);
+			return !isUserRecoverableError() && !equals(NORMAL);
 		}
 	}
 }

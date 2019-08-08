@@ -26,6 +26,7 @@ import java.util.List;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
+import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED;
 import static java.lang.Math.min;
 
 /**
@@ -40,6 +41,7 @@ public class BottomSheetPreference extends Preference {
 	private OnPreferenceChangeListener mOnChangeListener;
 
 	private LinearLayout dialogLayout;
+	private LinearLayout itemListContainer;
 	private BottomSheetDialog dialog;
 
 	private String secondaryKey;
@@ -49,6 +51,7 @@ public class BottomSheetPreference extends Preference {
 	private boolean valueSet;
 	private String value;
 	private Object secondaryValue;
+
 	private SettingsManager settingsManager;
 
 	public BottomSheetPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -103,21 +106,24 @@ public class BottomSheetPreference extends Preference {
 		LayoutInflater inflater = LayoutInflater.from(context);
 
 		dialogLayout = (LinearLayout) inflater.inflate(R.layout.bottom_sheet, null, false);
+		itemListContainer = dialogLayout.findViewById(R.id.dialog_item_list_container);
 
 		setText(dialogLayout.findViewById(R.id.dialog_title), title);
 		setText(dialogLayout.findViewById(R.id.dialog_caption), caption);
 
 		for (int i = 0; i < itemList.size(); i++) {
-			LinearLayout dialogItemLayout = (LinearLayout) inflater.inflate(R.layout.bottom_sheet_item, dialogLayout, false);
+			LinearLayout dialogItemLayout = (LinearLayout) inflater.inflate(R.layout.bottom_sheet_item, itemListContainer, false);
 
 			// add the item's view at the specified index
-			// start at 1 because there's a TextView at index 0 (title)
-			dialogLayout.addView(dialogItemLayout, i + 1);
+			itemListContainer.addView(dialogItemLayout, i);
 
 			setupItemView(dialogItemLayout, i);
 		}
 
 		dialog.setContentView(dialogLayout);
+
+		// Open up the dialog fully by default
+		dialog.getBehavior().setState(STATE_EXPANDED);
 	}
 
 	/**
@@ -147,7 +153,7 @@ public class BottomSheetPreference extends Preference {
 	}
 
 	private void redrawItemView(int index) {
-		LinearLayout dialogItemLayout = (LinearLayout) dialogLayout.getChildAt(index + 1);
+		LinearLayout dialogItemLayout = (LinearLayout) itemListContainer.getChildAt(index);
 
 		setupItemView(dialogItemLayout, index);
 	}
@@ -407,7 +413,7 @@ public class BottomSheetPreference extends Preference {
 	 */
 	private void markItemUnselected(int selectedIndex) {
 		if (selectedIndex != -1) {
-			LinearLayout dialogItemLayout = (LinearLayout) dialogLayout.getChildAt(selectedIndex + 1);
+			LinearLayout dialogItemLayout = (LinearLayout) itemListContainer.getChildAt(selectedIndex);
 			ImageView checkmarkView = dialogItemLayout.findViewById(R.id.dialog_item_checkmark);
 
 			checkmarkView.setVisibility(INVISIBLE);
@@ -424,7 +430,7 @@ public class BottomSheetPreference extends Preference {
 	 */
 	private void markItemSelected(int selectedIndex) {
 		if (selectedIndex != -1) {
-			LinearLayout dialogItemLayout = (LinearLayout) dialogLayout.getChildAt(selectedIndex + 1);
+			LinearLayout dialogItemLayout = (LinearLayout) itemListContainer.getChildAt(selectedIndex);
 			ImageView checkmarkView = dialogItemLayout.findViewById(R.id.dialog_item_checkmark);
 
 			checkmarkView.setVisibility(VISIBLE);

@@ -2,9 +2,9 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:paddingStart="@dimen/padding_2x"
+	android:paddingStart="@dimen/padding_default"
 	android:paddingTop="@dimen/padding_default"
-	android:paddingEnd="@dimen/padding_2x"
+	android:paddingEnd="@dimen/padding_default"
 	android:paddingBottom="@dimen/padding_default">
 
 	<RelativeLayout
@@ -14,7 +14,7 @@
 		<ImageView
 			android:id="@+id/introduction_step_4_image"
 			android:layout_width="match_parent"
-			android:layout_height="100dp"
+			android:layout_height="150dp"
 			android:layout_centerHorizontal="true"
 			android:contentDescription="@string/install_guide_image_description"
 			android:src="@drawable/cloud_download"

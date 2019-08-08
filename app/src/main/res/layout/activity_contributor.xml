@@ -27,53 +27,38 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/padding_default"
+			android:gravity="center"
 			android:orientation="vertical"
 			android:padding="@dimen/padding_default">
 
 			<TextView
 				android:id="@+id/contributeTitle"
-				android:layout_width="match_parent"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="15dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/contribute_title"
-				android:textAlignment="center"
 				android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 				android:textStyle="bold" />
 
 			<TextView
 				android:id="@+id/contributeExplanation"
-				android:layout_marginTop="@dimen/padding_half"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/padding_half"
 				android:text="@string/contribute_explanation" />
 
-			<RelativeLayout
+			<CheckBox
+				android:id="@+id/contributeCheckbox"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content">
-
-				<CheckBox
-					android:id="@+id/contributeCheckbox"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_centerVertical="true"
-					android:layout_marginTop="@dimen/padding_default" />
-
-				<TextView
-					android:id="@+id/contributeAgreeText"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_centerVertical="true"
-					android:layout_toEndOf="@id/contributeCheckbox"
-					android:text="@string/contribute_agree" />
-			</RelativeLayout>
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/padding_default"
+				android:text="@string/contribute_agree" />
 
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/contributeSaveButton"
 				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center_horizontal"
 				android:layout_marginTop="@dimen/padding_default"
 				android:layout_marginBottom="@dimen/padding_default"
 				android:onClick="onSaveButtonClick"

@@ -35,7 +35,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="start"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -43,7 +43,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_updating_your_device_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -53,7 +53,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_updating_your_device_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -61,7 +61,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_reading_news_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -71,7 +71,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_reading_news_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -79,7 +79,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_device_information_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -89,7 +89,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_device_information_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -97,7 +97,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
+				android:layout_marginTop="@dimen/padding_default"
 				android:text="@string/help_change_settings_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -107,8 +107,8 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="20dp"
-				android:layout_marginBottom="10dp"
+				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginBottom="@dimen/padding_half"
 				android:text="@string/help_change_settings_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 		</LinearLayout>

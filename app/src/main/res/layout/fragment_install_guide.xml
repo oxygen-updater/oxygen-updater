@@ -1,5 +1,4 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/installGuideMainView"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -17,7 +16,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
-			android:layout_marginBottom="10dp"
+			android:layout_marginBottom="@dimen/padding_half"
 			android:text="@string/install_guide_header"
 			android:visibility="gone" />
 
@@ -46,7 +45,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/installGuideTitle"
 			android:layout_centerHorizontal="true"
-			android:layout_marginTop="20dp"
+			android:layout_marginTop="@dimen/padding_default"
 			android:text="@string/install_guide_tip"
 			android:textColor="?android:textColorSecondary"
 			android:visibility="gone" />
@@ -56,35 +55,34 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/installGuideTip"
-			android:layout_marginTop="20dp"
+			android:layout_marginTop="@dimen/padding_default"
 			android:textColor="?android:textColorSecondary"
 			android:visibility="invisible" />
 
-		<RelativeLayout
+		<LinearLayout
 			android:id="@+id/installGuideLoadingScreen"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true">
+			android:layout_centerVertical="true"
+			android:gravity="center"
+			android:orientation="vertical">
 
 			<ProgressBar
 				android:id="@+id/installGuideLoadingIcon"
 				style="?android:attr/progressBarStyleLarge"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_centerHorizontal="true" />
+				android:layout_height="wrap_content" />
 
 			<TextView
 				android:id="@+id/installGuideLoadingText"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/installGuideLoadingIcon"
-				android:layout_marginTop="10dp"
+				android:layout_marginTop="@dimen/padding_half"
 				android:text="@string/install_guide_loading"
 				android:textAlignment="center"
-				android:textSize="20sp" />
-
-		</RelativeLayout>
+				android:textSize="@dimen/typography_title" />
+		</LinearLayout>
 
 		<com.google.android.material.button.MaterialButton
 			android:id="@+id/installGuideCloseButton"
@@ -97,8 +95,5 @@
 			android:text="@string/install_guide_close_button"
 			android:textColor="@color/colorPrimary"
 			android:visibility="gone" />
-
-
 	</RelativeLayout>
-
 </ScrollView>

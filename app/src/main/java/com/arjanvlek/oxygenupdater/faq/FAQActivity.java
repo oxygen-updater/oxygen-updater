@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -98,7 +98,7 @@ public class FAQActivity extends SupportActionBarActivity {
 	 * @param hasNetwork Whether the device has a network connection or not.
 	 */
 	private void switchViews(boolean hasNetwork) {
-		RelativeLayout noNetworkLayout = findViewById(R.id.faq_no_network_view);
+		LinearLayout noNetworkLayout = findViewById(R.id.faq_no_network_view);
 		noNetworkLayout.setVisibility(hasNetwork ? View.GONE : View.VISIBLE);
 
 		SwipeRefreshLayout webPageLayout = findViewById(R.id.faq_webpage_layout);

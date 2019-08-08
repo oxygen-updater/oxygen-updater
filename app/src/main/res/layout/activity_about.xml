@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
@@ -34,10 +33,8 @@
 			android:layout_centerHorizontal="true"
 			android:layout_gravity="center_horizontal"
 			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginLeft="@dimen/padding_default"
 			android:layout_marginTop="@dimen/padding_default"
 			android:layout_marginEnd="@dimen/padding_default"
-			android:layout_marginRight="@dimen/padding_default"
 			android:text="@string/app_name"
 			android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -48,10 +45,8 @@
 			android:layout_below="@+id/aboutAppNameView"
 			android:layout_centerHorizontal="true"
 			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginLeft="@dimen/padding_default"
-			android:layout_marginTop="15dp"
+			android:layout_marginTop="@dimen/padding_default"
 			android:layout_marginEnd="@dimen/padding_default"
-			android:layout_marginRight="@dimen/padding_default"
 			android:contentDescription="@string/icon"
 			android:src="@mipmap/ic_launcher" />
 
@@ -62,10 +57,8 @@
 			android:layout_below="@+id/aboutAppIconView"
 			android:layout_centerHorizontal="true"
 			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginLeft="@dimen/padding_default"
-			android:layout_marginTop="15dp"
+			android:layout_marginTop="@dimen/padding_default"
 			android:layout_marginEnd="@dimen/padding_default"
-			android:layout_marginRight="@dimen/padding_default"
 			android:text="@string/about_version"
 			android:textStyle="bold" />
 
@@ -76,10 +69,8 @@
 			android:layout_below="@+id/aboutVersionNumberView"
 			android:layout_centerHorizontal="true"
 			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginLeft="@dimen/padding_default"
-			android:layout_marginTop="15dp"
+			android:layout_marginTop="@dimen/padding_default"
 			android:layout_marginEnd="@dimen/padding_default"
-			android:layout_marginRight="@dimen/padding_default"
 			android:text="@string/about_app_description"
 			android:textAppearance="?android:textAppearanceSmall"
 			android:textStyle="italic" />
@@ -89,10 +80,8 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/aboutSlogan"
 			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginLeft="@dimen/padding_default"
-			android:layout_marginTop="15dp"
+			android:layout_marginTop="@dimen/padding_default"
 			android:layout_marginEnd="@dimen/padding_default"
-			android:layout_marginRight="@dimen/padding_default"
 			android:background="@android:color/transparent">
 
 			<LinearLayout
@@ -117,9 +106,7 @@
 					android:layout_height="wrap_content"
 					android:layout_gravity="center"
 					android:layout_marginStart="@dimen/padding_default"
-					android:layout_marginLeft="@dimen/padding_default"
 					android:layout_marginEnd="@dimen/padding_default"
-					android:layout_marginRight="@dimen/padding_default"
 					android:text="@string/about_rate_app_button_text"
 					android:textColor="@color/colorPrimary" />
 			</LinearLayout>

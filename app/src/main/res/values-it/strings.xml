@@ -105,6 +105,8 @@
 	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Rate this app</string>
 
@@ -118,7 +120,7 @@
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night.\nApplication restart required</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
 	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
 
@@ -149,8 +151,6 @@ Un aggiornamento beta puo' essere istallato solo se ti trovi gia' sul branch del
 	<string name="settings_saved">"Le tue impostazioni sono salvate in automatico. "</string>
 	<string name="settings_saving">"Le tue impostazioni si stanno ancora salvando. Se questo impiega troppo tempo controlla la tua connessione, riavvia l'applicazione e ritenta. "</string>
 	<string name="settings_server_messages">"Mostra messaggi in-app quando:"</string>
-	<string name="settings_server_messages_in_app">"Ci sono novità o avvertimenti"</string>
-	<string name="settings_server_messages_new_app_version">"Un aggiornamento app è disponibile"</string>
 	<string name="settings_other_options">"Altre opzioni"</string>
 	<string name="settings_advanced_mode">"Modalità avanzata"</string>
 	<string name="settings_advanced_mode_button_explanation">"Premi qui per ulteriori informazioni. "</string>

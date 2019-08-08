@@ -138,18 +138,14 @@ public class SetupActivity extends AppCompatActivity {
 			CheckBox contributorCheckbox = findViewById(R.id.introduction_step_5_contribute_checkbox);
 
 			if (contributorCheckbox.isChecked()) {
-				requestContributorStoragePermissions(new Consumer<Boolean>() {
-					@Override
-					public void accept(Boolean granted) {
-						if (granted) {
-							ContributorUtils contributorUtils = new ContributorUtils(getApplicationContext());
-							contributorUtils.flushSettings(true); // 1st time, will save setting to true.
-							settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
-							NavUtils.navigateUpFromSameTask(SetupActivity.this);
-						} else {
-							Toast.makeText(getApplication(), R.string.contribute_allow_storage, LENGTH_LONG)
-									.show();
-						}
+				requestContributorStoragePermissions(granted -> {
+					if (granted) {
+						ContributorUtils contributorUtils = new ContributorUtils(getApplicationContext());
+						contributorUtils.flushSettings(true); // 1st time, will save setting to true.
+						settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
+						NavUtils.navigateUpFromSameTask(SetupActivity.this);
+					} else {
+						Toast.makeText(getApplication(), R.string.contribute_allow_storage, LENGTH_LONG).show();
 					}
 				});
 			} else {
@@ -161,8 +157,7 @@ public class SetupActivity extends AppCompatActivity {
 			Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
 			Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
 			logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId));
-			Toast.makeText(this, getString(R.string.settings_entered_incorrectly), LENGTH_LONG)
-					.show();
+			Toast.makeText(this, getString(R.string.settings_entered_incorrectly), LENGTH_LONG).show();
 		}
 	}
 

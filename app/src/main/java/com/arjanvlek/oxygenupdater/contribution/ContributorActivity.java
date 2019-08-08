@@ -38,7 +38,6 @@ public class ContributorActivity extends SupportActionBarActivity {
 
 		if (getIntent().getBooleanExtra(INTENT_HIDE_ENROLLMENT, false)) {
 			findViewById(R.id.contributeCheckbox).setVisibility(View.GONE);
-			findViewById(R.id.contributeAgreeText).setVisibility(View.GONE);
 			findViewById(R.id.contributeSaveButton).setVisibility(View.GONE);
 			saveOptionsHidden.compareAndSet(false, true);
 		}

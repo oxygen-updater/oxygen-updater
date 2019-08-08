@@ -111,6 +111,8 @@
 	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Rate this app</string>
 
@@ -124,7 +126,7 @@
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night.\nApplication restart required</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
 	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
 
@@ -153,8 +155,6 @@
 	<string name="settings_saving">您的设置仍在保存中。如果时间过长，：请检查您的网络连接，或退出应用程序并再次启动它。</string>
 
 	<string name="settings_server_messages">何时在 App 中显示提示？</string>
-	<string name="settings_server_messages_in_app">有新闻 / 警告时</string>
-	<string name="settings_server_messages_new_app_version">该 App 可更新时</string>
 
 	<string name="settings_other_options">其它选项</string>
 	<string name="settings_advanced_mode">高级模式</string>

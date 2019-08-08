@@ -1,21 +1,21 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:paddingStart="@dimen/padding_2x"
+	android:paddingStart="@dimen/padding_default"
 	android:paddingTop="@dimen/padding_default"
-	android:paddingEnd="@dimen/padding_2x"
+	android:paddingEnd="@dimen/padding_default"
 	android:paddingBottom="@dimen/padding_default">
 
-	<RelativeLayout
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
 
 		<ImageView
 			android:id="@+id/introduction_step_1_image"
 			android:layout_width="match_parent"
 			android:layout_height="150dp"
-			android:layout_centerHorizontal="true"
+			android:layout_gravity="center"
 			android:contentDescription="@string/install_guide_image_description"
 			android:src="@mipmap/ic_launcher" />
 
@@ -23,8 +23,7 @@
 			android:id="@+id/introduction_step_1_header_text"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/introduction_step_1_image"
-			android:layout_centerHorizontal="true"
+			android:layout_gravity="center"
 			android:layout_marginTop="@dimen/padding_default"
 			android:text="@string/setup_page_1_title"
 			android:textSize="@dimen/typography_title" />
@@ -33,9 +32,9 @@
 			android:id="@+id/introduction_step_1_text_block_1"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/introduction_step_1_header_text"
+			android:layout_gravity="center"
 			android:layout_marginTop="@dimen/padding_default"
 			android:text="@string/setup_page_1_text"
 			android:textColor="?android:textColorSecondary" />
-	</RelativeLayout>
+	</LinearLayout>
 </ScrollView>

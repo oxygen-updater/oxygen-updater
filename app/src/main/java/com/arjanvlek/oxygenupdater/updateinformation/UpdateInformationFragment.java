@@ -793,7 +793,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 					downloadButton.setEnabled(true);
 					downloadButton.setClickable(true);
 					downloadButton.setOnClickListener(new DownloadButtonOnClickListener(updateData));
-					downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
+					downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 				} else {
 					downloadButton.setEnabled(false);
 					downloadButton.setClickable(false);
@@ -809,26 +809,26 @@ public class UpdateInformationFragment extends AbstractFragment {
 				downloadButton.setText(getString(R.string.downloading));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(false);
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 				break;
 			case DOWNLOAD_PAUSED:
 				downloadButton.setText(getString(R.string.paused));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(false);
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 				break;
 			case DOWNLOAD_COMPLETED:
 				downloadButton.setText(getString(R.string.downloaded));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(true);
 				downloadButton.setOnClickListener(new AlreadyDownloadedOnClickListener(this, updateData));
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 				break;
 			case VERIFYING:
 				downloadButton.setText(getString(R.string.download_verifying));
 				downloadButton.setEnabled(true);
 				downloadButton.setClickable(false);
-				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.oneplus_red_600));
+				downloadButton.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
 		}
 	}
 

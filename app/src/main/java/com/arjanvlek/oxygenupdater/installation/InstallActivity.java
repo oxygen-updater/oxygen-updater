@@ -15,8 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -39,7 +37,9 @@ import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.ipaulpro.afilechooser.utils.FileUtils;
 
 import org.joda.time.DateTimeZone;
@@ -57,7 +57,7 @@ import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED;
 
-public class InstallActivity extends AppCompatActivity {
+public class InstallActivity extends SupportActionBarActivity {
 
 	public static final String INTENT_SHOW_DOWNLOAD_PAGE = "show_download_page";
 	public static final String INTENT_UPDATE_DATA = "update_data";
@@ -98,7 +98,6 @@ public class InstallActivity extends AppCompatActivity {
 	}
 
 	private void initialize() {
-		setTitle(getString(R.string.install));
 		setContentView(R.layout.fragment_checking_root_access);
 
 		RootAccessChecker.checkRootAccess(isRooted -> {
@@ -293,7 +292,7 @@ public class InstallActivity extends AppCompatActivity {
 	}
 
 	private void initSettingsSwitch(String settingName, boolean defaultValue, CompoundButton.OnCheckedChangeListener listener) {
-		SwitchCompat switchCompat = findViewById(getResources().getIdentifier(settingName + SETTINGS_SWITCH, PACKAGE_ID, getPackageName()));
+		SwitchMaterial switchCompat = findViewById(getResources().getIdentifier(settingName + SETTINGS_SWITCH, PACKAGE_ID, getPackageName()));
 		switchCompat.setChecked(settingsManager.getPreference(settingName, defaultValue));
 		switchCompat.setOnCheckedChangeListener(listener);
 	}
