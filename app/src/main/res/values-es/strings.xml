@@ -51,7 +51,7 @@
 	<string name="download_error_close">CERRAR</string>
 	<string name="download_error_corrupt">¡El archivo de la actualización está dañado! Por favor, intenta descargarlo de nuevo.</string>
 	<!-- TODO translate the 3 below to Russian -->
-	<string name="download_error_network">Ha ocurrido un error de conexión mientras se descargaba la actualización. La descarga se reanudará automáticamentete.</string>
+	<string name="download_error_network">Ha ocurrido un error de conexión mientras se descargaba la actualización. La descarga se reanudará automáticamente.</string>
 	<string name="download_error_server">Ha ocurrido un error en el servidor mientras se descargaba la actualización. Por favor, intenta descargar la actualización de nuevo.</string>
 	<string name="download_error_internal">Desafortunadamente, un error técnico ha ocurrido mientras se descargaba la actualización. Intenta descargarla de nuevo. Si el error no desaparece, por favor contacta con el desarrollador de esta app para obtener asistencia.</string>
 
@@ -182,27 +182,27 @@
 
 	<string name="install_options_explanation_title">¿Qué significan estas opciones?</string>
 	<string name="install_options_explanation_backup">Hacer una copia de seguridad de mi dispositivo:\nCuando selecionas esta opción, una copia de seguridad del sistema, aplicaciónes y ajustes se harán antes de la instalación. Siempre tenerlo a mano en caso de que algo vaya horriblemente mal.</string>
-	<string name="install_options_explanation_keep_root">Keep my device rooted:\nWhen you select this option, you may specify a root package which will be installed after the update is installed. This ensures that your device stays rooted. Please note that this root package must be compatible with the NEW OxygenOS version you are going to install!</string>
-	<string name="install_options_explanation_wipe_cache">Wipe the cache partition:\nWhen you select this option, the cache partition will be wiped after the update has been installed. This ensures your device performs optimally and also reduces the likelihood of experiencing bugs caused by the installation of the update.</string>
-	<string name="install_options_explanation_reboot">Reboot after installation:\nWhen you select this option, your device will automatically reboot back to OxygenOS after the update is installed. Otherwise, your device will stay in Recovery Mode, where you can install additional packages.</string>
+	<string name="install_options_explanation_keep_root">Mantener mi dispositivo rooteado:\nAl selecionas esta opción, que paquete root se instalará al terminar la actualización. Esto asegura que tu dispositivo se mantenga rooteado. ¡Ten en cuenta que el paquete root deberá ser compatible con la NUEVA versión de OxygenOS que vas a instalar!</string>
+	<string name="install_options_explanation_wipe_cache">Borrar la partición cache:\nAl selecionas esta opción, la partición cache será borrada después de que la actualización se haya completado. Esto aseguro que tu dispositivo rinda perféctamente y además reduce la probabilidad de experimentar errores causados por la instalación de la actualización.</string>
+	<string name="install_options_explanation_reboot">Reiniciar después de la instalación:\nAl selecionas esta opción, se reiniciará automáticamente a OxygenOS después de que la instalación se haya completado. De otra manera, tu dispositivo se mantendrá en el Modo Recovery, donde podrás instalar paquetes adicionales.</string>
 
-	<string name="install_select_method_title">How do you want to install this update?</string>
-	<string name="install_select_method_automatic_title">Automatic installation*</string>
-	<string name="install_select_method_automatic_image">Automatic installation image</string>
-	<string name="install_select_method_automatic_description">The easiest way to install the update.\nYour device will restart to install the update.\n\n* Requires root access and TWRP recovery.</string>
+	<string name="install_select_method_title">¿Cómo instalar esta actualización?</string>
+	<string name="install_select_method_automatic_title">Instalación automática*</string>
+	<string name="install_select_method_automatic_image">Imagen de la instalación automática</string>
+	<string name="install_select_method_automatic_description">La manera más fácil de instalar la actualización.\nTu dispositivo se reiniciará para instalar la actualización.\n\n* Requiere acceso root y el recovery TWRP.</string>
 
 	<string name="install_select_method_manual_title">instalación manual</string>
-	<string name="install_select_method_manual_image">Manual installation image</string>
-	<string name="install_select_method_manual_description">Read the install guide to learn how to install the update. You will install the update using the Recovery Mode of your device.</string>
+	<string name="install_select_method_manual_image">Imagen de la instalación manual</string>
+	<string name="install_select_method_manual_description">Lee la guía de instalación para aprender como instalar la actualización. Deberás instalar la actualización usando el Modo Recovery de tu dispositivo.</string>
 
-	<string name="install_temporary_error">A temporary error occurred while preparing the installation of the update. Please try it again.</string>
+	<string name="install_temporary_error">Un error temporal ocurrió mientras se preparaba la actualización. Por favor, inténtalo de nuevo.</string>
 
-	<string name="install_verify_error_title">Installation failed</string>
-	<string name="install_verify_error_nothing_installed">Error when installing the update. No changes were made to the software of your device. Try installing the update again.</string>
+	<string name="install_verify_error_title">Instalación fallida</string>
+	<string name="install_verify_error_nothing_installed">Error al instalar la actualización. No han habido cambios en el software de tu dispositivo. Intenta instalar la actualización de nuevo.</string>
 	<string name="install_verify_error_unable_to_verify">Failed to check if the update was installed successfully. Please open Oxygen Updater to see if the update was installed successfully.</string>
 	<string name="install_verify_error_wrong_version_installed">A different version of OxygenOS was installed. Don\'t select an OxygenOS update file when choosing a root package under the "Keep my device rooted" option.</string>
 
-	<string name="install_verify_success_title">Installation complete</string>
+	<string name="install_verify_success_title">Instalación completa</string>
 	<string name="install_verify_success_message">OxygenOS version %1$s has been installed successfully.</string>
 
 	<string name="install_zip_file_clear">Clear root package file</string>
