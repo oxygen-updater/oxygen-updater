@@ -120,6 +120,14 @@
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
+	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
+	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night.\nApplication restart required</string>
+	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+		conserve battery</string>
+
 	<string name="settings">设置</string>
 	<string name="settings_buy_button_buy">购买 (%1$s)</string>
 	<string name="settings_buy_button_bought">已购买</string>
