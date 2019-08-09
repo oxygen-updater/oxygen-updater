@@ -2,6 +2,7 @@ package com.arjanvlek.oxygenupdater.internal;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.provider.Settings;
@@ -75,6 +76,25 @@ public class ThemeUtils {
 							? MODE_NIGHT_FOLLOW_SYSTEM
 							: MODE_NIGHT_AUTO_BATTERY;
 				}
+		}
+	}
+
+	/**
+	 * Checks night mode flags and returns true if night mode is active
+	 *
+	 * @param context the context
+	 *
+	 * @return true if night mode is active, else false
+	 */
+	public static boolean isNightModeActive(Context context) {
+		int nightModeFlags = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+		switch (nightModeFlags) {
+			case Configuration.UI_MODE_NIGHT_YES:
+				return true;
+			case Configuration.UI_MODE_NIGHT_NO:
+			case Configuration.UI_MODE_NIGHT_UNDEFINED:
+			default:
+				return false;
 		}
 	}
 

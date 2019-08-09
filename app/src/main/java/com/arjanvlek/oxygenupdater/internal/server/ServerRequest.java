@@ -52,7 +52,7 @@ enum ServerRequest {
 	private final Class<?> returnClass;
 
 	ServerRequest(String url, Class<?> returnClass) {
-		this(GET, url, DEFAULT_TIMEOUT, returnClass);
+		this(url, DEFAULT_TIMEOUT, returnClass);
 	}
 
 	ServerRequest(String url, int timeOutInSeconds, Class<?> returnClass) {

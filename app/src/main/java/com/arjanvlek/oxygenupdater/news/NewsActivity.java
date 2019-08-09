@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
@@ -106,7 +107,15 @@ public class NewsActivity extends SupportActionBarActivity {
 						contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
 					} else {
 						String newsLanguage = locale == Locale.NL ? "NL" : "EN";
-						String newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.getId() + "/" + newsLanguage;
+						String newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.getId() + "/" + newsLanguage + "/";
+
+						// since we can't edit CSS in WebViews,
+						// append 'Light' or 'Dark' to newContentUrl to get the corresponding themed version
+						// backend handles CSS according to material spec
+						newsContentUrl += ThemeUtils.isNightModeActive(this)
+								? "Dark"
+								: "Light";
+
 						contentView.getSettings().setUserAgentString(ApplicationData.APP_USER_AGENT);
 						contentView.loadUrl(newsContentUrl);
 					}

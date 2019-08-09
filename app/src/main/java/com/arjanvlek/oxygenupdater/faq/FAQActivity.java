@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
@@ -74,7 +75,17 @@ public class FAQActivity extends SupportActionBarActivity {
 			faqPageView.getSettings().setJavaScriptEnabled(true);
 			faqPageView.getSettings().setUserAgentString(APP_USER_AGENT);
 			faqPageView.clearCache(true);
-			faqPageView.loadUrl(BuildConfig.FAQ_SERVER_URL);
+
+			String faqServerUrl = BuildConfig.FAQ_SERVER_URL + "/";
+
+			// since we can't edit CSS in WebViews,
+			// append 'Light' or 'Dark' to faqServerUrl to get the corresponding themed version
+			// backend handles CSS according to material spec
+			faqServerUrl += ThemeUtils.isNightModeActive(this)
+					? "Dark"
+					: "Light";
+
+			faqPageView.loadUrl(faqServerUrl);
 
 			refreshLayout.setRefreshing(false);
 		} else {
