@@ -14,10 +14,10 @@
 	<string name="update_information_header_short">Update</string>
 	<string name="update_information_installed_update">The latest system update is:</string>
 	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
-	<string name="update_information_latest_available_update">A new system update is available:</string>
-	<string name="update_information_no_update_data_available">No update information is available.</string>
+	<string name="update_information_latest_available_update">New system update available</string>
+	<string name="update_information_no_update_data_available">No update information is available</string>
 	<string name="update_information_oxygen_os_version">Oxygen OS Version: %1$s</string>
-	<string name="update_information_system_is_up_to_date">Your system is up to date.</string>
+	<string name="update_information_system_is_up_to_date">Your system is up to date</string>
 	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
 	<string name="update_information_version">&#160;version:</string>
 	<string name="update_information_view_update_information">View update information</string>
@@ -295,6 +295,9 @@
 	<string name="install_guide_zip_file_missing">"If you want to keep your device rooted, you'll have to specify a root package above."</string>
 
 	<!-- Device information strings -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">Amount of RAM:</string>
 	<string name="device_information_cpu_frequency">Processor Frequency:</string>
 	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
@@ -305,7 +308,7 @@
 	<string name="device_information_incremental_os_version">Incremental OS version:</string>
 	<string name="device_information_os_version">Android version:</string>
 	<string name="device_information_oxygen_os_version">OxygenOS version:</string>
-	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_oxygen_os_ota_version">OTA version:</string>
 	<string name="device_information_patch_level_version">Security patch date:</string>
 	<string name="device_information_serial_number">Serial number:</string>
 	<string name="device_information_system_on_a_chip">System on a Chip:</string>

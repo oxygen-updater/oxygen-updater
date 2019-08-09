@@ -1,5 +1,8 @@
 package com.arjanvlek.oxygenupdater.views;
 
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,24 @@ public abstract class SupportActionBarActivity extends AppCompatActivity {
 	public void setContentView(@LayoutRes int layoutResId) {
 		super.setContentView(layoutResId);
 
+		setupToolbar();
+	}
+
+	@Override
+	public void setContentView(View view) {
+		super.setContentView(view);
+
+		setupToolbar();
+	}
+
+	@Override
+	public void setContentView(View view, ViewGroup.LayoutParams params) {
+		super.setContentView(view, params);
+
+		setupToolbar();
+	}
+
+	private void setupToolbar() {
 		Toolbar toolbar = findViewById(R.id.toolbar);
 
 		setSupportActionBar(toolbar);

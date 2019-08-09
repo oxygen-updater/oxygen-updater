@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">Updaten</string>
 	<string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
 	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
-	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar:</string>
+	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
 	<string name="update_information_oxygen_os_version">Oxygen OS-versie: %1$s</string>
 	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
@@ -276,6 +276,10 @@
 	<string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
 	<string name="device_information_cpu_frequency">Processorsnelheid:</string>
 	<string name="device_information_header">Mijn apparaat</string>

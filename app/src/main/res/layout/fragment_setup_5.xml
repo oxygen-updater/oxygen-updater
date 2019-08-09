@@ -78,5 +78,5 @@
 		android:layout_gravity="center"
 		android:onClick="closeInitialTutorial"
 		android:text="@string/setup_close_button"
-		android:textColor="@color/colorPrimary" />
+		android:textColor="?colorPrimary" />
 </LinearLayout>

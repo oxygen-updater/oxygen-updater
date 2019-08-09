@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">"Обновить"</string>
 	<string name="update_information_installed_update">"Последняя версия:"</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
-	<string name="update_information_latest_available_update">"Доступно новое обновление:"</string>
+	<string name="update_information_latest_available_update">"Доступно новое обновление"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
 	<string name="update_information_oxygen_os_version">"Версия Oxygen OS: %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Система обновлена."</string>
@@ -315,6 +315,10 @@
 	<string name="install_guide_zip_file_missing">"Если вы хотите сохранить рут-права на устройстве, выберите архив для установки выше."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"Объем ОЗУ:"</string>
 	<string name="device_information_cpu_frequency">"Частота процессора:"</string>
 	<string name="device_information_header">"Устройство"</string>
@@ -323,7 +327,7 @@
 	<string name="device_information_incremental_os_version">"Номер сборки ПО:"</string>
 	<string name="device_information_os_version">"Версия Android:"</string>
 	<string name="device_information_oxygen_os_version">"Версия Oxygen OS:"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"Версия OTA:"</string>
 	<string name="device_information_patch_level_version">"Патч безопасности от:"</string>
 	<string name="device_information_serial_number">"Серийный номер:"</string>
 	<string name="device_information_system_on_a_chip">"SoC:"</string>

@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">"Aggiorna"</string>
 	<string name="update_information_installed_update">"Versione attuale:"</string>
 	<string name="update_information_last_checked_on">"Ultima verifica: %1$s"</string>
-	<string name="update_information_latest_available_update">"È disponibile un nuovo aggiornamento di sistema:"</string>
+	<string name="update_information_latest_available_update">"È disponibile un nuovo aggiornamento di sistema"</string>
 	<string name="update_information_no_update_data_available">"Non è disponibile alcuna informazione sull'aggiornamento. "</string>
 	<string name="update_information_oxygen_os_version">"Oxygen OS: %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Il tuo sistema è aggiornato. "</string>
@@ -308,6 +308,10 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="install_guide_zip_file_missing">"Se vuoi mantenere il root, seleziona il pacchetto root da usare."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"RAM:"</string>
 	<string name="device_information_cpu_frequency">"Frequenza processore:"</string>
 	<string name="device_information_header">"Dispositivo"</string>
@@ -316,7 +320,7 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="device_information_incremental_os_version">"Versone di sistema incrementale:"</string>
 	<string name="device_information_os_version">"Versione Android"</string>
 	<string name="device_information_oxygen_os_version">"Versione OxygenOS:"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"Versione OTA:"</string>
 	<string name="device_information_patch_level_version">"Data security patch:"</string>
 	<string name="device_information_serial_number">"Numero seriale:"</string>
 	<string name="device_information_system_on_a_chip">"Chip:"</string>

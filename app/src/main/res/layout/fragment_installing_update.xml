@@ -14,8 +14,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle"
-			app:title="@string/install" />
+			app:popupTheme="@style/ToolbarPopupStyle" />
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<LinearLayout

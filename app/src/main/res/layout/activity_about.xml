@@ -96,7 +96,7 @@
 					android:linksClickable="true"
 					android:text="@string/about_background_story"
 					android:textAppearance="?android:textAppearanceSmall"
-					android:textColorLink="@color/colorPrimary"
+					android:textColorLink="?colorPrimary"
 					android:textSize="13sp" />
 
 				<com.google.android.material.button.MaterialButton
@@ -108,7 +108,7 @@
 					android:layout_marginStart="@dimen/padding_default"
 					android:layout_marginEnd="@dimen/padding_default"
 					android:text="@string/about_rate_app_button_text"
-					android:textColor="@color/colorPrimary" />
+					android:textColor="?colorPrimary" />
 			</LinearLayout>
 		</androidx.core.widget.NestedScrollView>
 	</RelativeLayout>

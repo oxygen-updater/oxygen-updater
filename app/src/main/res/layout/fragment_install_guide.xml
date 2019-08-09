@@ -93,7 +93,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
 			android:text="@string/install_guide_close_button"
-			android:textColor="@color/colorPrimary"
+			android:textColor="?colorPrimary"
 			android:visibility="gone" />
 	</RelativeLayout>
 </ScrollView>

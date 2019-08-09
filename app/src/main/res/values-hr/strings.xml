@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">"Podatci o ažuriranju"</string>
 	<string name="update_information_installed_update">"Zadnje ažuriranje sistema:"</string>
 	<string name="update_information_last_checked_on">"Zadnja provjera: %1$s"</string>
-	<string name="update_information_latest_available_update">"Novo ažuriranje sistema je dostupno:"</string>
+	<string name="update_information_latest_available_update">"Novo ažuriranje sistema je dostupno"</string>
 	<string name="update_information_no_update_data_available">"Nema novosti o ažuriranju"</string>
 	<string name="update_information_oxygen_os_version">"Verzija Oxygen OS-a: %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Tvoj sistem koristi najnovija ažuriranja."</string>
@@ -285,6 +285,10 @@ Vaš uređaj će se restartirati da bi instalirao ažuriranja.
 	<string name="install_guide_zip_file_missing">"Ako želite ostaviti vaš uređaj root-an morate specificirati root paket."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"Količina rama:"</string>
 	<string name="device_information_cpu_frequency">"Frekvencija procesora:"</string>
 	<string name="device_information_header">"Moj uređaj"</string>
@@ -293,7 +297,7 @@ Vaš uređaj će se restartirati da bi instalirao ažuriranja.
 	<string name="device_information_incremental_os_version">"Inkrementalna OS verzija:"</string>
 	<string name="device_information_os_version">"Android verzija"</string>
 	<string name="device_information_oxygen_os_version">"OxygenOS verzija:"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"OTA verzija:"</string>
 	<string name="device_information_patch_level_version">"Datum security patch-a:"</string>
 	<string name="device_information_serial_number">"Serial number:"</string>
 	<string name="device_information_system_on_a_chip">"Sistem na Chip-u:"</string>

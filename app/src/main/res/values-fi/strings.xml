@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">"Päivitys"</string>
 	<string name="update_information_installed_update">"Viimeisin päivitys on:"</string>
 	<string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
-	<string name="update_information_latest_available_update">"Uusi päivitys saatavilla:"</string>
+	<string name="update_information_latest_available_update">"Uusi päivitys saatavilla"</string>
 	<string name="update_information_no_update_data_available">"Päivitystietoja ei saatavilla"</string>
 	<string name="update_information_oxygen_os_version">"Oxygen OS Versio: %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Järjestelmäsi on ajantasalla."</string>
@@ -308,6 +308,10 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="install_guide_zip_file_missing">"Jos haluat pitää laitteesi rootattuna sinun tulee valita asennettava root paketti yläpuolelta."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
 	<string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
 	<string name="device_information_header">"Laitteeni"</string>
@@ -316,7 +320,7 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="device_information_incremental_os_version">"Lisäävän päivityksen versio:"</string>
 	<string name="device_information_os_version">"Android versio:"</string>
 	<string name="device_information_oxygen_os_version">"OxygenOS versio:"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"OTA versio:"</string>
 	<string name="device_information_patch_level_version">"Tietoturvapäivitysten päiväys:"</string>
 	<string name="device_information_serial_number">"Sarjanumero:"</string>
 	<string name="device_information_system_on_a_chip">"Piirisarjan järjestelmä:"</string>

@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">更新</string>
 	<string name="update_information_installed_update">最近的一次更新在：</string>
 	<string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
-	<string name="update_information_latest_available_update">检测到新的系统更新：</string>
+	<string name="update_information_latest_available_update">检测到新的系统更新</string>
 	<string name="update_information_no_update_data_available">没有可用的更新亮点</string>
 	<string name="update_information_oxygen_os_version">Oxygen OS 版本： %1$s</string>
 	<string name="update_information_system_is_up_to_date">您的系统已是最新版本</string>
@@ -273,6 +273,10 @@
 	<string name="install_guide_zip_file_missing">如果您想设备保持 Root 状态，请在上方指定一个 Root 包。</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">内存大小：</string>
 	<string name="device_information_cpu_frequency">处理器频率：</string>
 	<string name="device_information_header">我的设备</string>
@@ -281,7 +285,7 @@
 	<string name="device_information_incremental_os_version">增量更新版本：</string>
 	<string name="device_information_os_version">Android 版本：</string>
 	<string name="device_information_oxygen_os_version">OxygenOS 版本：</string>
-	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_oxygen_os_ota_version">OTA 版本:</string>
 	<string name="device_information_patch_level_version">安全更新：</string>
 	<string name="device_information_serial_number">序列号：</string>
 	<string name="device_information_system_on_a_chip">SoC：</string>

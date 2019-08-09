@@ -28,7 +28,6 @@
 			android:layout_height="match_parent">
 
 			<RelativeLayout
-				android:id="@+id/relativeLayout"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:paddingLeft="@dimen/padding_default"
@@ -40,7 +39,8 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_centerHorizontal="true"
-					android:text="@string/update_information_latest_available_update" />
+					android:text="@string/update_information_latest_available_update"
+					android:textSize="@dimen/typography_title" />
 
 				<TextView
 					android:id="@+id/updateInformationBuildNumberView"
@@ -48,22 +48,21 @@
 					android:layout_height="wrap_content"
 					android:layout_below="@+id/headerLabel"
 					android:layout_centerHorizontal="true"
-					android:layout_marginTop="16dp"
+					android:layout_marginTop="@dimen/padding_default"
 					android:layout_marginBottom="0dp"
 					android:ellipsize="end"
 					android:maxLines="1"
 					android:textAppearance="?android:attr/textAppearanceMedium"
 					android:textStyle="bold" />
 
-
 				<TextView
 					android:id="@+id/updateDescriptionView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/updateInformationBuildNumberView"
-					android:layout_marginStart="30dp"
+					android:layout_marginStart="@dimen/padding_2x"
 					android:layout_marginTop="@dimen/padding_default"
-					android:layout_marginEnd="30dp"
+					android:layout_marginEnd="@dimen/padding_2x"
 					android:layout_marginBottom="@dimen/padding_default" />
 
 				<TextView
@@ -71,9 +70,9 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/updateDescriptionView"
-					android:layout_marginStart="30dp"
+					android:layout_marginStart="@dimen/padding_2x"
 					android:layout_marginTop="@dimen/padding_default"
-					android:layout_marginEnd="30dp"
+					android:layout_marginEnd="@dimen/padding_2x"
 					android:layout_marginBottom="@dimen/padding_default" />
 
 				<TableLayout
@@ -81,7 +80,8 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_below="@id/updateFileNameView"
-					android:visibility="gone">
+					android:visibility="gone"
+					tools:visibility="visible">
 
 					<TableRow>
 
@@ -92,7 +92,7 @@
 							android:layout_height="wrap_content"
 							android:layout_gravity="center_vertical"
 							android:layout_marginStart="@dimen/padding_half"
-							android:layout_weight="70"
+							android:layout_weight="1"
 							android:visibility="visible" />
 
 						<ImageButton
@@ -101,10 +101,10 @@
 							android:layout_height="wrap_content"
 							android:layout_marginStart="@dimen/padding_half"
 							android:layout_marginEnd="@dimen/padding_half"
-							android:layout_weight="0"
 							android:background="@android:color/transparent"
 							android:contentDescription="@string/icon"
-							android:src="@drawable/pause" />
+							android:src="@drawable/pause"
+							android:tint="?android:textColorSecondary" />
 
 						<ImageButton
 							android:id="@+id/updateInformationDownloadCancelButton"
@@ -112,10 +112,9 @@
 							android:layout_height="wrap_content"
 							android:layout_marginStart="@dimen/padding_half"
 							android:layout_marginEnd="@dimen/padding_half"
-							android:layout_weight="0"
 							android:background="@android:color/transparent"
 							android:contentDescription="@string/icon"
-							android:src="@drawable/cancel"
+							android:src="@drawable/close"
 							android:tint="?colorPrimary" />
 					</TableRow>
 
@@ -131,40 +130,35 @@
 
 				</TableLayout>
 
-
-				<TableLayout
+				<LinearLayout
 					android:id="@+id/buttonTable"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_below="@+id/downloadProgressTable"
 					android:layout_centerHorizontal="true">
 
-					<TableRow>
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/updateInformationDownloadButton"
+						style="@style/Widget.MaterialComponents.Button.TextButton"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:enabled="false"
+						android:text="@string/download"
+						android:textColor="?colorPrimary" />
 
-						<com.google.android.material.button.MaterialButton
-							android:id="@+id/updateInformationDownloadButton"
-							style="@style/Widget.MaterialComponents.Button.TextButton"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:enabled="false"
-							android:text="@string/download"
-							android:textColor="@color/colorPrimary" />
+					<com.google.android.material.button.MaterialButton
+						android:id="@+id/updateInstallationInstructionsButton"
+						style="@style/Widget.MaterialComponents.Button.TextButton"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/padding_half"
+						android:enabled="true"
+						android:text="@string/install"
+						android:textColor="?colorPrimary" />
 
-						<com.google.android.material.button.MaterialButton
-							android:id="@+id/updateInstallationInstructionsButton"
-							style="@style/Widget.MaterialComponents.Button.TextButton"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginStart="@dimen/padding_half"
-							android:enabled="true"
-							android:text="@string/install"
-							android:textAppearance="?android:textAppearanceSmall"
-							android:textColor="@color/colorPrimary" />
+				</LinearLayout>
 
-					</TableRow>
-				</TableLayout>
-
-				<RelativeLayout
+				<LinearLayout
 					android:id="@+id/tableHost"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -176,20 +170,16 @@
 						android:layout_width="48dp"
 						android:layout_height="48dp"
 						android:contentDescription="@string/icon"
-						android:src="@drawable/download"
+						android:src="@drawable/donut"
 						android:tint="?colorPrimary" />
 
 					<TextView
 						android:id="@+id/updateInformationDownloadSizeView"
 						android:layout_width="wrap_content"
-						android:layout_height="50dp"
+						android:layout_height="wrap_content"
 						android:layout_gravity="center_vertical"
-						android:layout_marginStart="@dimen/padding_half"
-						android:layout_toEndOf="@id/downloadSizeImage"
-						android:gravity="center" />
-
-				</RelativeLayout>
-
+						android:layout_marginStart="@dimen/padding_half" />
+				</LinearLayout>
 			</RelativeLayout>
 		</androidx.core.widget.NestedScrollView>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -205,59 +195,51 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<RelativeLayout
-				android:id="@+id/relativeLayout2"
+			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:paddingLeft="@dimen/padding_default"
-				android:paddingRight="@dimen/padding_default">
+				android:orientation="vertical"
+				android:padding="@dimen/padding_default">
 
 				<TextView
 					android:id="@+id/updateInformationSystemIsUpToDateHeader"
 					android:layout_width="wrap_content"
 					android:layout_height="match_parent"
-					android:layout_centerHorizontal="true"
-					android:layout_marginTop="@dimen/padding_default"
+					android:layout_gravity="center_horizontal"
 					android:text="@string/update_information_system_is_up_to_date"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:textStyle="bold" />
-
-				<ImageView
-					android:id="@+id/updateInformationSystemIsUpToDateImage"
-					android:layout_width="170dp"
-					android:layout_height="170dp"
-					android:layout_below="@id/updateInformationSystemIsUpToDateHeader"
-					android:layout_centerHorizontal="true"
-					android:layout_marginTop="@dimen/padding_default"
-					android:layout_marginBottom="@dimen/padding_default"
-					android:contentDescription="@string/icon"
-					android:src="@drawable/done_circle"
-					android:tint="@color/colorPositive" />
-
-				<TextView
-					android:id="@+id/updateInformationSystemIsUpToDateVersionTextView"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_below="@id/updateInformationSystemIsUpToDateImage"
-					android:layout_centerHorizontal="true" />
+					android:textSize="@dimen/typography_title" />
 
 				<TextView
 					android:id="@+id/updateInformationSystemIsUpToDateDateTextView"
 					android:layout_width="wrap_content"
 					android:layout_height="match_parent"
-					android:layout_below="@id/updateInformationSystemIsUpToDateVersionTextView"
-					android:layout_centerHorizontal="true" />
+					android:layout_gravity="center_horizontal"
+					android:textColor="?android:textColorSecondary" />
+
+				<TextView
+					android:id="@+id/updateInformationSystemIsUpToDateVersionTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_gravity="center_horizontal"
+					android:textColor="?android:textColorSecondary" />
+
+				<ImageView
+					android:id="@+id/updateInformationSystemIsUpToDateImage"
+					android:layout_width="192dp"
+					android:layout_height="192dp"
+					android:layout_gravity="center_horizontal"
+					android:contentDescription="@string/icon"
+					android:src="@drawable/done_circle"
+					android:tint="@color/colorPositive" />
 
 				<com.google.android.material.button.MaterialButton
 					android:id="@+id/updateInformationSystemIsUpToDateStatisticsButton"
 					style="@style/Widget.MaterialComponents.Button.TextButton"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_below="@id/updateInformationSystemIsUpToDateDateTextView"
-					android:layout_centerHorizontal="true"
+					android:layout_gravity="center_horizontal"
 					android:text="@string/update_information_view_update_information" />
-
-			</RelativeLayout>
+			</LinearLayout>
 		</androidx.core.widget.NestedScrollView>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

@@ -308,6 +308,10 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="install_guide_zip_file_missing">"Si vous voulez conserver votre périphérique rooté vous devez spécifier au-dessus un package root"</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"Quantité de RAM"</string>
 	<string name="device_information_cpu_frequency">"Fréquence du processeur"</string>
 	<string name="device_information_header">"Mon périphérique"</string>
@@ -316,7 +320,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="device_information_incremental_os_version">"Version incrémentale de l'OS :"</string>
 	<string name="device_information_os_version">"Version d'Android :"</string>
 	<string name="device_information_oxygen_os_version">"Version d'Oxygen OS :"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"Version d'OTA:"</string>
 	<string name="device_information_patch_level_version">"Date du patch de sécurité :"</string>
 	<string name="device_information_serial_number">"Numéro de série :"</string>
 	<string name="device_information_system_on_a_chip">"Chipset du système :"</string>

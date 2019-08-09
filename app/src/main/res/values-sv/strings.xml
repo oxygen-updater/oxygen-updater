@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">"Uppdatering"</string>
 	<string name="update_information_installed_update">"Den sensate systemuppdateringen är:"</string>
 	<string name="update_information_last_checked_on">"Kollade senast den: %1$s"</string>
-	<string name="update_information_latest_available_update">"En ny systemuppdatering är tillgänglig:"</string>
+	<string name="update_information_latest_available_update">"En ny systemuppdatering är tillgänglig"</string>
 	<string name="update_information_no_update_data_available">"Ingen uppdateringsinformation är tillgänglig."</string>
 	<string name="update_information_oxygen_os_version">"Oxygen OS Version: %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Din enhet är uppdaterad"</string>
@@ -309,6 +309,10 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="install_guide_zip_file_missing">"Om du vill behålla root så måste du välja ett rootpaket ovan."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"Mängd av RAM:"</string>
 	<string name="device_information_cpu_frequency">"Processorfrekvens:"</string>
 	<string name="device_information_header">"Min enhet"</string>
@@ -317,7 +321,7 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="device_information_incremental_os_version">"Inkrementell OS version:"</string>
 	<string name="device_information_os_version">"Android version:"</string>
 	<string name="device_information_oxygen_os_version">"OxygenOS version:"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"OTA version:"</string>
 	<string name="device_information_patch_level_version">"Version av säkerhetsuppdatering:"</string>
 	<string name="device_information_serial_number">"Serienummer:"</string>
 	<string name="device_information_system_on_a_chip">"System on a Chip:"</string>
