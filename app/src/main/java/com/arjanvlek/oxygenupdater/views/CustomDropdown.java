@@ -13,11 +13,9 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 
 import java.util.List;
-import java.util.Locale;
-
-import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 
 public class CustomDropdown {
 
@@ -64,13 +62,11 @@ public class CustomDropdown {
 		TextView textView = convertView.findViewById(android.R.id.text1);
 
 		// Set the view to the update method's name, according to the app language.
-		switch (Locale.getDefault().getDisplayLanguage()) {
-			case LOCALE_DUTCH:
-				textView.setText(updateMethods.get(currentPosition).getDutchName());
-				break;
-			default:
-				textView.setText(updateMethods.get(currentPosition).getEnglishName());
-		}
+		String updateMethodName = Locale.getLocale() == Locale.NL
+				? updateMethods.get(currentPosition).getDutchName()
+				: updateMethods.get(currentPosition).getEnglishName();
+
+		textView.setText(updateMethodName);
 
 		textView.setTextColor(ContextCompat.getColor(context, R.color.foreground));
 

@@ -23,6 +23,7 @@ import com.arjanvlek.oxygenupdater.installation.InstallActivity;
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask;
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Worker;
+import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
@@ -30,9 +31,7 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Locale;
 
-import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
@@ -182,9 +181,9 @@ public class InstallGuideFragment extends Fragment {
 		TextView titleTextView = installGuideView.findViewById(R.id.installGuideTitle);
 		TextView contentsTextView = installGuideView.findViewById(R.id.installGuideText);
 
-		String appLocale = Locale.getDefault().getDisplayLanguage();
+		Locale appLocale = Locale.getLocale();
 
-		if (appLocale.equals(LOCALE_DUTCH)) {
+		if (appLocale == Locale.NL) {
 			titleTextView.setText(installGuidePage.getDutchTitle());
 			contentsTextView.setText(installGuidePage.getDutchText());
 		} else {

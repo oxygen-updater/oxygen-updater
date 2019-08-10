@@ -23,6 +23,7 @@ import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
+import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus;
@@ -262,9 +263,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 					selectedPosition = i;
 				}
 
+				String updateMethodName = Locale.getLocale() == Locale.NL
+						? updateMethod.getDutchName()
+						: updateMethod.getEnglishName();
+
 				itemList.add(BottomSheetItem.builder()
-						.title(updateMethod.getEnglishName())
-						.value(updateMethod.getEnglishName())
+						.title(updateMethodName)
+						.value(updateMethodName)
 						.secondaryValue(updateMethod.getId())
 						.build()
 				);

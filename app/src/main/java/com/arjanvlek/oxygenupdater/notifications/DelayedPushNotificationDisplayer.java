@@ -14,6 +14,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
+import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.news.NewsActivity;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
@@ -21,12 +22,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Map;
 
 import static android.app.Notification.DEFAULT_ALL;
 import static android.app.Notification.PRIORITY_HIGH;
-import static com.arjanvlek.oxygenupdater.ApplicationData.LOCALE_DUTCH;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
 import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_START_WITH_AD;
@@ -97,15 +96,10 @@ public class DelayedPushNotificationDisplayer extends JobService {
 					return exit(params, true);
 				}
 
-				String message;
-				switch (Locale.getDefault().getDisplayLanguage()) {
-					case LOCALE_DUTCH:
-						message = messageContents.get(DUTCH_MESSAGE.toString());
-						break;
-					default:
-						message = messageContents.get(ENGLISH_MESSAGE.toString());
-						break;
-				}
+				String message = Locale.getLocale() == Locale.NL
+						? messageContents.get(DUTCH_MESSAGE.toString())
+						: messageContents.get(ENGLISH_MESSAGE.toString());
+
 				builder = getBuilderForGeneralServerNotificationOrNewsNotification(message);
 				break;
 			case NEWS:
@@ -113,15 +107,10 @@ public class DelayedPushNotificationDisplayer extends JobService {
 					return exit(params, true);
 				}
 
-				String newsMessage;
-				switch (Locale.getDefault().getDisplayLanguage()) {
-					case LOCALE_DUTCH:
-						newsMessage = messageContents.get(DUTCH_MESSAGE.toString());
-						break;
-					default:
-						newsMessage = messageContents.get(ENGLISH_MESSAGE.toString());
-						break;
-				}
+				String newsMessage = Locale.getLocale() == Locale.NL
+						? messageContents.get(DUTCH_MESSAGE.toString())
+						: messageContents.get(ENGLISH_MESSAGE.toString());
+
 				builder = getBuilderForGeneralServerNotificationOrNewsNotification(newsMessage);
 				break;
 
