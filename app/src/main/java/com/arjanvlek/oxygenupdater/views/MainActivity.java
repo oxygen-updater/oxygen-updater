@@ -145,6 +145,32 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 		}
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		// Mark the welcome tutorial as finished if the user is moving from older app version.
+		// This is checked by either having stored update information for offline viewing,
+		// or if the last update checked date is set (if user always had up to date system and never viewed update information before)
+		if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)
+				&& (settingsManager.checkIfOfflineUpdateDataIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
+			settingsManager.savePreference(PROPERTY_SETUP_DONE, true);
+		}
+
+		// Show the welcome tutorial if the app needs to be set up
+		if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)) {
+			if (Utils.checkNetworkConnection(getApplicationContext())) {
+				activityLauncher.Tutorial();
+			} else {
+				showNetworkError();
+			}
+		} else {
+			if (!settingsManager.containsPreference(PROPERTY_NOTIFICATION_TOPIC)) {
+				NotificationTopicSubscriber.subscribe((ApplicationData) getApplication());
+			}
+		}
+	}
+
 	/**
 	 * Handles toolbar menu clicks
 	 *
@@ -200,32 +226,6 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 			newsAd = new InterstitialAd(this);
 			newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
 			newsAd.loadAd(ApplicationData.buildAdRequest());
-		}
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-
-		// Mark the welcome tutorial as finished if the user is moving from older app version.
-		// This is checked by either having stored update information for offline viewing,
-		// or if the last update checked date is set (if user always had up to date system and never viewed update information before)
-		if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)
-				&& (settingsManager.checkIfOfflineUpdateDataIsAvailable() || settingsManager.containsPreference(PROPERTY_UPDATE_CHECKED_DATE))) {
-			settingsManager.savePreference(PROPERTY_SETUP_DONE, true);
-		}
-
-		// Show the welcome tutorial if the app needs to be set up
-		if (!settingsManager.getPreference(PROPERTY_SETUP_DONE, false)) {
-			if (Utils.checkNetworkConnection(getApplicationContext())) {
-				activityLauncher.Tutorial();
-			} else {
-				showNetworkError();
-			}
-		} else {
-			if (!settingsManager.containsPreference(PROPERTY_NOTIFICATION_TOPIC)) {
-				NotificationTopicSubscriber.subscribe((ApplicationData) getApplication());
-			}
 		}
 	}
 

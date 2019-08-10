@@ -17,6 +17,7 @@
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
 			android:layout_marginBottom="@dimen/padding_half"
+			android:gravity="center_horizontal"
 			android:text="@string/install_guide_header"
 			android:visibility="gone" />
 
@@ -35,6 +36,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/installGuideImage"
 			android:layout_centerHorizontal="true"
+			android:gravity="center_horizontal"
 			android:textAppearance="?android:textAppearanceLarge"
 			android:textStyle="bold"
 			android:visibility="invisible" />
@@ -46,6 +48,7 @@
 			android:layout_below="@id/installGuideTitle"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="@dimen/padding_default"
+			android:gravity="center_horizontal"
 			android:text="@string/install_guide_tip"
 			android:textColor="?android:textColorSecondary"
 			android:visibility="gone" />

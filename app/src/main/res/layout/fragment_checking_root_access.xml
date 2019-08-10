@@ -38,6 +38,7 @@
 			android:layout_below="@id/checkingRootAccessProgressBar"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="@dimen/padding_default"
+			android:gravity="center_horizontal"
 			android:text="@string/install_checking_root"
 			android:textSize="@dimen/typography_title" />
 
@@ -47,6 +48,7 @@
 			android:layout_below="@id/checkingRootAccessText"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="@dimen/padding_default"
+			android:gravity="center_horizontal"
 			android:text="@string/install_grant_root_permissions"
 			android:textAlignment="center" />
 	</RelativeLayout>

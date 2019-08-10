@@ -43,6 +43,13 @@ public class ApplicationData extends Application {
 	private ServerConnector serverConnector;
 	private SystemVersionProperties systemVersionProperties;
 
+	public static AdRequest buildAdRequest() {
+		AdRequest.Builder adRequest = new AdRequest.Builder();
+
+		StreamSupport.stream(ADS_TEST_DEVICES).forEach(adRequest::addTestDevice);
+		return adRequest.build();
+	}
+
 	@Override
 	public void onCreate() {
 		AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this));
@@ -70,14 +77,6 @@ public class ApplicationData extends Application {
 		}
 		return systemVersionProperties;
 	}
-
-	public static AdRequest buildAdRequest() {
-		AdRequest.Builder adRequest = new AdRequest.Builder();
-
-		StreamSupport.stream(ADS_TEST_DEVICES).forEach(adRequest::addTestDevice);
-		return adRequest.build();
-	}
-
 
 	/**
 	 * Checks if the Google Play Services are installed on the device.

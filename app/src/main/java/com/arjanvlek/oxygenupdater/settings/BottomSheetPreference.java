@@ -305,6 +305,61 @@ public class BottomSheetPreference extends Preference {
 		super.setTitle(title);
 	}
 
+	@Override
+	public void onClick() {
+		if (dialog != null) {
+			dialog.show();
+		}
+	}
+
+	/**
+	 * Sets the callback to be invoked when this preference is changed by the user (but before
+	 * the internal state has been updated).
+	 *
+	 * @param onPreferenceChangeListener The callback to be invoked
+	 */
+	@Override
+	public void setOnPreferenceChangeListener(OnPreferenceChangeListener onPreferenceChangeListener) {
+		mOnChangeListener = onPreferenceChangeListener;
+		super.setOnPreferenceChangeListener(onPreferenceChangeListener);
+	}
+
+	@Override
+	protected void onSetInitialValue(Object defaultValue) {
+		String newValue = getPersistedString((String) defaultValue);
+		Object newSecondaryValue = settingsManager.getPreference(secondaryKey, null);
+
+		setValues(newValue, newSecondaryValue);
+	}
+
+	@Override
+	protected Parcelable onSaveInstanceState() {
+		Parcelable superState = super.onSaveInstanceState();
+		if (isPersistent()) {
+			// No need to save instance state since it's persistent
+			return superState;
+		}
+
+		SavedState myState = new SavedState(superState);
+		myState.value = value;
+		myState.secondaryValue = secondaryValue;
+		return myState;
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Parcelable state) {
+		if (state == null || !state.getClass().equals(SavedState.class)) {
+			// Didn't save state for us in onSaveInstanceState
+			super.onRestoreInstanceState(state);
+			return;
+		}
+
+		SavedState myState = (SavedState) state;
+		super.onRestoreInstanceState(myState.getSuperState());
+
+		setValues(myState.value, myState.secondaryValue);
+	}
+
 	public void setCaption(String caption) {
 		this.caption = caption;
 
@@ -449,61 +504,6 @@ public class BottomSheetPreference extends Preference {
 		if (mOnChangeListener != null) {
 			mOnChangeListener.onPreferenceChange(this, value);
 		}
-	}
-
-	/**
-	 * Sets the callback to be invoked when this preference is changed by the user (but before
-	 * the internal state has been updated).
-	 *
-	 * @param onPreferenceChangeListener The callback to be invoked
-	 */
-	@Override
-	public void setOnPreferenceChangeListener(OnPreferenceChangeListener onPreferenceChangeListener) {
-		mOnChangeListener = onPreferenceChangeListener;
-		super.setOnPreferenceChangeListener(onPreferenceChangeListener);
-	}
-
-	@Override
-	public void onClick() {
-		if (dialog != null) {
-			dialog.show();
-		}
-	}
-
-	@Override
-	protected void onSetInitialValue(Object defaultValue) {
-		String newValue = getPersistedString((String) defaultValue);
-		Object newSecondaryValue = settingsManager.getPreference(secondaryKey, null);
-
-		setValues(newValue, newSecondaryValue);
-	}
-
-	@Override
-	protected Parcelable onSaveInstanceState() {
-		Parcelable superState = super.onSaveInstanceState();
-		if (isPersistent()) {
-			// No need to save instance state since it's persistent
-			return superState;
-		}
-
-		SavedState myState = new SavedState(superState);
-		myState.value = value;
-		myState.secondaryValue = secondaryValue;
-		return myState;
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Parcelable state) {
-		if (state == null || !state.getClass().equals(SavedState.class)) {
-			// Didn't save state for us in onSaveInstanceState
-			super.onRestoreInstanceState(state);
-			return;
-		}
-
-		SavedState myState = (SavedState) state;
-		super.onRestoreInstanceState(myState.getSuperState());
-
-		setValues(myState.value, myState.secondaryValue);
 	}
 
 	private static class SavedState extends BaseSavedState {
