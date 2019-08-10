@@ -127,7 +127,7 @@
 	<string name="settings_buy_button_not_possible">"Indisponible"</string>
 	<string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>
 
-	<string name="settings_contribute_label">Aidez à améliorer l\'application:</string>
+	<string name="settings_contribute_label">Aidez à améliorer l\'application</string>
 	<string name="settings_contribute_button">Contribuez</string>
 
 	<string name="settings_category_other">"Autres"</string>
