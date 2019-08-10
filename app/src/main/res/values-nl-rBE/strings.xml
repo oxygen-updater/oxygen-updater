@@ -88,45 +88,40 @@
 	<string name="download_verifying_start">Je download wordt nu gecontroleerd op fouten…</string>
 
 	<!-- Settings strings -->
-	<!-- TODO: Translate these lines -->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
-	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
-	<string name="preference_header_advanced">Advanced</string>
-	<string name="preference_header_about">About</string>
+	<string name="preference_header_support">Steun ons</string>
+	<string name="preference_header_device">Apparaat</string>
+	<string name="preference_header_ui">Gebruikersinterface</string>
+	<string name="preference_header_notifications">Pushberichten</string>
+	<string name="preference_header_advanced">Geavanceerd</string>
+	<string name="preference_header_about">Over</string>
 
-	<!-- TODO: Translate these lines -->
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_device">Please wait…</string>
-	<string name="summary_update_method">Select a device first</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">View online</string>
-	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_on">Ingeschakeld</string>
+	<string name="summary_off">Uitgeschakeld</string>
+	<string name="summary_device">Even geduld…</string>
+	<string name="summary_update_method">Selecteer eerst een apparaaat</string>
+	<string name="summary_theme">Selecteer een thema</string>
+	<string name="summary_privacy_policy">Bekijk online</string>
+	<string name="summary_rate_app">Geef een 5-sterren-review</string>
 	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
-	<!-- TODO: Translate these lines -->
-	<string name="label_buy_ad_free">Remove ads</string>
-	<string name="label_theme">Theme</string>
-	<string name="label_app_update_banner">App update banners</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_buy_ad_free">Verwijder advertenties</string>
+	<string name="label_theme">Thema</string>
+	<string name="label_app_update_banner">App-update balk</string>
+	<string name="label_news_warning_banner">Nieuws- en waarschuwingsbalken</string>
+	<string name="label_privacy_policy">Privacybeleid</string>
+	<string name="label_rate_app">Beoordeel deze app</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
-	<string name="theme_system">System</string>
-	<string name="theme_auto">Auto</string>
+	<string name="theme_light">Licht</string>
+	<string name="theme_dark">Donker</string>
+	<string name="theme_system">Systeeminstelling</string>
+	<string name="theme_auto">Automatisch</string>
 
-	<!-- TODO: Translate these lines -->
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_light_subtitle">Thema met heldere achtergronden en een helderrode bovenbalk. Dit is het standaard thema.</string>
+	<string name="theme_dark_subtitle">Thema met bijna-zwarte achtergronden en een vleugje donkerrrood. Gebruik dit thema om de batterij te sparen (dat laatste werkt alleen op AMOLED-schermen)</string>
+	<string name="theme_system_subtitle">Licht of donker thema op bassis van de systeeminstellingen (instelbaar in de weergave- of ontwikkelaarsopties van het apparaat). Beshikbaarheid varieërt per apparaat</string>
+	<string name="theme_auto_subtitle">Wissel tussen het lichte en donkere thema op basis van de huidige tijd. Dit werkt rustgevend voor de ogen.</string>
+	<string name="theme_additional_note">Opmerking: Als het automatische thema actief is en de modus "Energiebesparing" actief is, zal automatisch het donkere thema worden getoond om de batterij te sparen</string>
 
 	<string name="settings">Instellingen</string>
 	<string name="settings_buy_button_buy">Koop (%1$s)</string>
@@ -276,7 +271,6 @@
 	<string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these lines -->
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
@@ -288,7 +282,7 @@
 	<string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
 	<string name="device_information_os_version">Android-versie:</string>
 	<string name="device_information_oxygen_os_version">OxygenOS-versie:</string>
-	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_oxygen_os_ota_version">OTA-versie:</string>
 	<string name="device_information_patch_level_version">Datum beveiligingspatch:</string>
 	<string name="device_information_serial_number">Serienummer:</string>
 	<string name="device_information_system_on_a_chip">Chipset:</string>
