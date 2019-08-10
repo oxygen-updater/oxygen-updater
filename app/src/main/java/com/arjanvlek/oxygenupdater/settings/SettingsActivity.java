@@ -2,7 +2,6 @@ package com.arjanvlek.oxygenupdater.settings;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.core.app.NavUtils;
-import androidx.preference.PreferenceManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
@@ -69,6 +68,7 @@ public class SettingsActivity extends SupportActionBarActivity implements InAppP
 		settingsFragment.setInAppPurchaseDelegate(this);
 
 		getSupportFragmentManager().beginTransaction()
+				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 				.replace(R.id.settings_container, settingsFragment, "Settings")
 				.commit();
 
@@ -138,8 +138,6 @@ public class SettingsActivity extends SupportActionBarActivity implements InAppP
 	 */
 	private void setupIabHelper(IabHelper iabHelper) {
 		logDebug(TAG, "IAB: start setup of IAB");
-
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		// Set up the helper. Once it is done, it will call the embedded listener with its setupResult.
 		iabHelper.startSetup(setupResult -> {

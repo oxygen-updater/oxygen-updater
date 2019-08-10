@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.core.content.ContextCompat;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceCategory;
@@ -32,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static android.widget.Toast.LENGTH_LONG;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK;
+import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -134,7 +137,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 		// Use Chrome Custom Tabs to open the privacy policy link
 		Uri privacyPolicyUri = Uri.parse("https://oxygenupdater.com/legal");
 		CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-				.setToolbarColor(getResources().getColor(R.color.appBarBackground))
+				.setColorScheme(ThemeUtils.isNightModeActive(context) ? COLOR_SCHEME_DARK : COLOR_SCHEME_LIGHT)
+				.setToolbarColor(ContextCompat.getColor(context, R.color.appBarBackground))
+				.setNavigationBarColor(ContextCompat.getColor(context, R.color.background))
 				.build();
 
 		//noinspection ConstantConditions

@@ -243,7 +243,10 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 					.isChecked());
 			dialog.dismiss();
 		});
-		builder.show();
+
+		if (!isFinishing()) {
+			builder.show();
+		}
 	}
 
 	private void showNetworkError() {
