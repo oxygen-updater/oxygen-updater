@@ -6,8 +6,11 @@ import android.os.Build;
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
+import lombok.Getter;
+
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
 
+@Getter
 @SuppressWarnings("WeakerAccess")
 public class DeviceInformationData {
 	public static final String UNKNOWN = "-";
@@ -29,34 +32,6 @@ public class DeviceInformationData {
 		incrementalOsVersion = Build.VERSION.INCREMENTAL;
 		serialNumber = Build.VERSION.SDK_INT >= 26 ? UNKNOWN : Build.SERIAL; // Serial number is only used on older Android versions as it requires too much permissions on O and higher.
 		cpuFrequency = calculateCpuFrequency();
-	}
-
-	public String getDeviceManufacturer() {
-		return deviceManufacturer;
-	}
-
-	public String getDeviceName() {
-		return deviceName;
-	}
-
-	public String getSoc() {
-		return soc;
-	}
-
-	public String getCpuFrequency() {
-		return cpuFrequency;
-	}
-
-	public String getOsVersion() {
-		return osVersion;
-	}
-
-	public String getIncrementalOsVersion() {
-		return incrementalOsVersion;
-	}
-
-	public String getSerialNumber() {
-		return serialNumber;
 	}
 
 	public String calculateCpuFrequency() {
