@@ -117,9 +117,9 @@
 
 	<string name="theme_light_subtitle">Thème avec un fond blanc et un filet de rouge</string>
 	<string name="theme_dark_subtitle">Thème avec un fond noir et un filet de rouge. Utilisez ce thème si vous voulez économiser de la batterie, plus précisément sur les périphériques avec un écran AMOLED</string>
-	<string name="theme_system_subtitle">Utilise le thème système (vous pouvez le modifier dans les paramètres d'affichage ou les options de développement). Dépends du périphérique</string>
-	<string name="theme_auto_subtitle">Bascule entre les thèmes lumineux et sombres en fonction de l'heure afin d'empêcher la fatigue des yeux pendant la nuit</string>
-	<string name="theme_additional_note">Note: si le thème choisi est \'Automatique\' et l'économiseur de batterie activé, le thème sombre sera automatiquement utilisé quelle que soit l'heure afin d'économiser de la batterie</string>
+	<string name="theme_system_subtitle">Utilise le thème système (vous pouvez le modifier dans les paramètres d\'affichage ou les options de développement). Dépends du périphérique</string>
+	<string name="theme_auto_subtitle">Bascule entre les thèmes lumineux et sombres en fonction de l\'heure afin d\'empêcher la fatigue des yeux pendant la nuit</string>
+	<string name="theme_additional_note">Note: si le thème choisi est \'Automatique\' et l\'économiseur de batterie activé, le thème sombre sera automatiquement utilisé quelle que soit l\'heure afin d\'économiser de la batterie</string>
 
 	<string name="settings">"Réglages"</string>
 	<string name="settings_buy_button_buy">"%1$s"</string>
