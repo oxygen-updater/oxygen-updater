@@ -135,7 +135,6 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 		if (!systemVersionProperties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS)) {
 			oxygenOsOtaVersionView.setText(systemVersionProperties.getOxygenOSOTAVersion());
-
 		} else {
 			oxygenOsOtaVersionView.setVisibility(View.GONE);
 		}

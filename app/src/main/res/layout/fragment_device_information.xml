@@ -243,9 +243,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginStart="4dp"
 					android:layout_weight="1"
-					android:ellipsize="marquee"
 					android:gravity="end"
-					android:singleLine="true"
 					android:textColor="?android:textColorSecondary"
 					android:textIsSelectable="true"
 					tools:text="OnePlus7ProOxygen_21.O.14_GLO_014_1907281611" />

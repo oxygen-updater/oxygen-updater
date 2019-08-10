@@ -23,7 +23,7 @@ android {
 		versionName "2.7.6"
 		signingConfig signingConfigs.signingConfig
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-		proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 	}
 
 	compileSdkVersion 28
