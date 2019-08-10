@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
-
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
@@ -24,6 +23,7 @@ android {
 		versionName "2.7.6"
 		signingConfig signingConfigs.signingConfig
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+		proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 	}
 
 	compileSdkVersion 28
@@ -56,7 +56,6 @@ android {
 			shrinkResources true
 			debuggable false
 			manifestPlaceholders = [appName: 'Oxygen Updater', fullPackageName: defaultConfig.applicationId]
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
 		debug {
 			// Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
@@ -94,8 +93,6 @@ android {
 			// During debugging, all devices are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
-			minifyEnabled true
-			shrinkResources true
 			debuggable true
 			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
 			manifestPlaceholders = [appName: 'Oxygen Updater (localDebug)', fullPackageName: defaultConfig.applicationId + '.localDebug']
