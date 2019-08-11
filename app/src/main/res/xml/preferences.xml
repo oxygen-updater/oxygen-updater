@@ -63,6 +63,7 @@
 			android:summary="@string/summary_theme"
 			android:title="@string/label_theme"
 			app:caption="@string/theme_additional_note"
+			app:secondaryEntryValues="@array/themeValues"
 			app:subtitleEntries="@array/themeSubtitles"
 			app:title="@string/label_theme" />
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!--
+		These integers are duplicated in `Theme.java`,
+		but are specified here to allow easy configuration for `BottomSheetPreference` in `preferences.xml`
+		Why: only XML values can be loaded via XML - otherwise, we would need to add Java code to configure `BottomSheetPreference`
+		e.g. we can use `@android:entryValues="@array/themeValues"`
+		instead of `themePreference.setEntryValues(Arrays.asList(Theme.LIGHT, Theme.DARK, Theme.SYSTEM, Theme.AUTO))`
+	-->
+	<integer name="theme_light_id">0</integer>
+	<integer name="theme_dark_id">1</integer>
+	<integer name="theme_system_id">2</integer>
+	<integer name="theme_auto_id">3</integer>
+</resources>

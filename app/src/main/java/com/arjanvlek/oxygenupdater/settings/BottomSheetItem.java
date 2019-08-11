@@ -17,7 +17,7 @@ public class BottomSheetItem {
 
 	private String subtitle;
 
-	private String value;
+	private Object value;
 
 	private Object secondaryValue;
 }

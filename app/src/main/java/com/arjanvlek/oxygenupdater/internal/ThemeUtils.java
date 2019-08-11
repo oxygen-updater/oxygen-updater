@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.provider.Settings.System;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate.NightMode;
@@ -20,6 +20,8 @@ import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
+import static com.arjanvlek.oxygenupdater.internal.Theme.DARK;
+import static com.arjanvlek.oxygenupdater.internal.Theme.LIGHT;
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -33,11 +35,11 @@ public class ThemeUtils {
 	 * <p>Since {@link androidx.appcompat.app.AppCompatDelegate#MODE_NIGHT_AUTO_TIME} is deprecated, we're considering night to last from 19:00 to 06:00</p>
 	 * <br>
 	 * Cases:
-	 * <ol>
+	 * <ul>
 	 * <li>Light/Dark: <code>MODE_NIGHT_NO/MODE_NIGHT_YES</code></li>
 	 * <li>Auto: <code>MODE_NIGHT_YES</code> if it's night-time. Otherwise, <code>MODE_NIGHT_AUTO_BATTERY</code></li>
 	 * <li>System: <code>MODE_NIGHT_FOLLOW_SYSTEM</code> above Android Pie (9.0). Otherwise, MODE_NIGHT_AUTO_BATTERY</code></li>
-	 * </ol>
+	 * </ul>
 	 *
 	 * @param context the context
 	 *
@@ -45,34 +47,34 @@ public class ThemeUtils {
 	 */
 	@NightMode
 	public static int translateThemeToNightMode(Context context) {
-		String theme = new SettingsManager(context).getPreference(context.getString(R.string.key_theme), context.getString(R.string.theme_system));
+		Integer theme = new SettingsManager(context).getPreference(context.getString(R.string.key_theme_id), context.getResources().getInteger(R.integer.theme_system_id));
 
-		return translateThemeToNightMode(context, theme);
+		return translateThemeToNightMode(context, Theme.get(theme));
 	}
 
-	private static int translateThemeToNightMode(Context context, @NonNull String theme) {
-		switch (theme.toLowerCase()) {
-			case "light":
+	private static int translateThemeToNightMode(Context context, @NonNull Theme theme) {
+		switch (theme) {
+			case LIGHT:
 				return MODE_NIGHT_NO;
-			case "dark":
+			case DARK:
 				return MODE_NIGHT_YES;
-			case "auto":
+			case AUTO:
 				int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
 				return (hour >= 19 && hour <= 23) || (hour >= 0 && hour <= 6)
 						? MODE_NIGHT_YES
 						: MODE_NIGHT_AUTO_BATTERY;
-			case "system":
+			case SYSTEM:
 			default:
-				int onePlusTheme = getOnePlusTheme(context);
+				Theme translatedTheme = translateOnePlusTheme(context);
 
 				// if the user has chosen Dark theme for their OnePlus device, honor it.
 				// otherwise resort to Android-provided modes
-				if (onePlusTheme == OnePlusTheme.DARK) {
+				if (translatedTheme == DARK) {
 					return MODE_NIGHT_YES;
 				} else {
 					// Android Pie (9.0) introduced a night mode system flag that could be set in developer options
-					return VERSION.SDK_INT >= VERSION_CODES.P && onePlusTheme != -1
+					return VERSION.SDK_INT >= VERSION_CODES.P && translatedTheme != null
 							? MODE_NIGHT_FOLLOW_SYSTEM
 							: MODE_NIGHT_AUTO_BATTERY;
 				}
@@ -101,21 +103,42 @@ public class ThemeUtils {
 	/**
 	 * OxygenOS stores the system theme at <code>content://settings/system/oem_black_mode</code>.
 	 * <p>
-	 * If the device has an option to change the theme (Settings -> Display -> Theme), this method will return the corresponding int
+	 * If the device has an option to change the theme (Settings -> Display -> Theme), this method will return the corresponding {@link Theme}.
+	 * <p>
+	 * This is how I've mapped OnePlus themes to {@link Theme}:
+	 * <ul>
+	 * <li>OnePlusLight(0) and OnePlusColorful(2) are both {@link Theme#LIGHT} themes</li>
+	 * <li>OnePlusDark is a {@link Theme#DARK} theme</li>
+	 * <li>(haha ezpz)</li>
+	 * </ul>
 	 *
 	 * @param context the context
 	 *
 	 * @return 0 for light, 1 for dark, 2 for colorful/default theme
 	 */
-	private static int getOnePlusTheme(Context context) {
+	private static Theme translateOnePlusTheme(Context context) {
 		ContentResolver resolver = context.getContentResolver();
 
 		try {
-			return Settings.System.getInt(resolver, OEM_BLACK_MODE);
+			int onePlusTheme = System.getInt(resolver, OEM_BLACK_MODE);
+
+			switch (onePlusTheme) {
+				case 0:
+					// OnePlusLight is a light theme
+					return LIGHT;
+				case 1:
+					// OnePlusDark is a dark theme
+					return DARK;
+				case 2:
+					// OnePlusColorful is a light theme
+					return LIGHT;
+			}
 		} catch (SettingNotFoundException e) {
 			// no-op
 		}
 
-		return -1;
+		// system doesn't support OnePlus themes yet (it was introduced in later OxygenOS versions),
+		// so old devices will probably not have this setting
+		return null;
 	}
 }

@@ -128,6 +128,7 @@
 	<string name="key_update_method" translatable="false">update_method</string>
 	<string name="key_update_method_id" translatable="false">update_method_id</string>
 	<string name="key_theme" translatable="false">theme</string>
+	<string name="key_theme_id" translatable="false">theme_id</string>
 	<string name="key_ui_app_update" translatable="false">show_app_update_messages</string>
 	<string name="key_ui_news" translatable="false">show_news_messages</string>
 	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
@@ -411,9 +412,6 @@
 	<string name="log_uploader_service_name">Error reporting service</string>
 	<string name="update_file_checker_service_name" translatable="false">Update file checking service</string>
 	<string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
-
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
 
