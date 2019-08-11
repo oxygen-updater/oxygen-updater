@@ -332,17 +332,7 @@ Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrol
 	<!-- About screen strings -->
 	<string name="about">"Über diese App"</string>
 	<string name="about_app_description">"das Ultimative Werkzeug für OxygenOS Updates."</string>
-	<string name="about_background_story">"Diese App wurde bei Arjan Vlek geschrieben.
-
-        Diese App ist der Nachfolger einer anderen App von mir, Namens Cynogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>).
-Cynogen update Tracker hatte eine ähnliche Aufgabe für Cynogen OS Benutzer.
-
-
-Bitte denk dran, das ist keine offizielle OnePlus Applikation. Der OnePlus Name, das OnePlus Logo und OxygenOS sind Eigentum von OnePlus.
-Android, Google, Google Play und das Google Play Logo sind registrierte Handelsmarken von Google Inc.
-Diese App benutzt Daten von OnePlus und OPPO für Update informationen.
-
-Wenn dir meine App gefällt dann bewerte sie im Play Store:"</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\nAugust 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">"Bewerte im Google Play Store"</string>
 	<string name="about_version">"Version: %1$s"</string>
 
