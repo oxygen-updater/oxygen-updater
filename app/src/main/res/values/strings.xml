@@ -167,10 +167,10 @@
 	<string name="settings_header">Choose your device and update method:</string>
 
 	<string name="settings_push">Send me a notification when a:</string>
-	<string name="settings_push_from_server">Critical message is available</string>
-	<string name="settings_push_new_version">System update is available</string>
+	<string name="settings_push_from_server">Informational and warning messages</string>
+	<string name="settings_push_new_version">System update messages</string>
 	<string name="settings_push_new_device">New device is supported</string>
-	<string name="settings_push_news">News story has been published</string>
+	<string name="settings_push_news">News messages</string>
 
 	<string name="settings_saved">Your settings are automatically saved.</string>
 	<string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
@@ -205,7 +205,6 @@
 	<string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).\n\nSwipe to the left to continue.</string>
 	<string name="setup_page_5_title">You are ready to go!</string>
 	<string name="setup_page_5_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
-
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>
