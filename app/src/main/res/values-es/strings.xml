@@ -92,6 +92,75 @@
 
 
 	<!-- Settings strings-->
+    <string name="preference_header_support">Apoyanos</string>
+	<string name="preference_header_device">Dispositivo</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notificaciones</string>
+	<string name="preference_header_advanced">Avanzado</string>
+	<string name="preference_header_about">Sobre</string>
+
+	<string name="summary_on">Habilitado</string>
+	<string name="summary_off">Deshabilitado</string>
+	<string name="summary_device">Por favor, espera…</string>
+	<string name="summary_update_method">Selecciona un dispositivo primero</string>
+	<string name="summary_theme">Establecer tema</string>
+	<string name="summary_privacy_policy">Ver online</string>
+	<string name="summary_rate_app">Deja un comentario de 5 estrellas</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<string name="label_buy_ad_free">Eliminar anuncios</string>
+	<string name="label_theme">Tema</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">Noticias &amp; banner de advertencia</string>
+	<string name="label_privacy_policy">Política de privacidad</string>
+	<string name="label_rate_app">Califica esta aplicación</string>
+
+	<string name="theme_light">Claro</string>
+	<string name="theme_dark">Oscuro</string>
+	<string name="theme_system">Sistema</string>
+	<string name="theme_auto">Auto</string>
+
+	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
+	<string name="key_contributor" translatable="false">become_contributor</string>
+	<string name="key_category_device" translatable="false">key_category_device</string>
+	<string name="key_device" translatable="false">device</string>
+	<string name="key_device_id" translatable="false">device_id</string>
+	<string name="key_update_method" translatable="false">update_method</string>
+	<string name="key_update_method_id" translatable="false">update_method_id</string>
+	<string name="key_theme" translatable="false">theme</string>
+	<string name="key_theme_id" translatable="false">theme_id</string>
+	<string name="key_ui_app_update" translatable="false">show_app_update_messages</string>
+	<string name="key_ui_news" translatable="false">show_news_messages</string>
+	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
+	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
+	<string name="key_share_usage_data" translatable="false">upload_logs</string>
+	<!-- Typo can't be fixed due to older versions of the app being released with it -->
+	<string name="key_notification_critical_message" translatable="false">recive_general_notifications</string>
+	<string name="key_notification_system_update" translatable="false">receive_system_update_notifications</string>
+	<string name="key_notification_new_device_supported" translatable="false">receive_new_device_notifications</string>
+	<string name="key_notification_news_story_published" translatable="false">receive_news_notifications</string>
+	<string name="key_rate_app" translatable="false">rate</string>
+	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
+	<string name="key_oxygen" translatable="false">oxygen_updater</string>
+
+	<string name="theme_light_subtitle">Tema con fondo blanco y como color principal rojo de OnePlus </string>
+	<string name="theme_dark_subtitle">Elimina el color rojo de OnePlus como color principal, con un fondo casi negro. Usa este tema para ahorrar batería, especialmente en las pantallas AMOLED</string>
+	<string name="theme_system_subtitle">Usa el modo noche del dispositivo (puedes configurarlo en configuración de pantalla o en las opciones de desarrollador). Varía con cada dispositivo</string>
+	<string name="theme_auto_subtitle">Cambia entre el tema claro y oscuro según la hora del día para prevenir la fatiga visual por la noche</string>
+	<string name="theme_additional_note">Nota: si el tema \'Auto\' está activo y el ahorro de batería está activado, el tema oscuro se usará automáticamente independientemente de la hora del día para
+conservar la batería</string>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	<string name="settings">Ajustes</string>
 	<string name="settings_buy_button_buy">Comprar (%1$s)</string>
 	<string name="settings_buy_button_bought">Comprado</string>
@@ -121,8 +190,7 @@
 	<string name="settings_saving">Tus preferencias todavía se están guardando. Si tarda mucho tiempo: Comprueba tu conexión a Internet, sal de la app e iníciala de nuevo.</string>
 
 	<string name="settings_server_messages">Mostrar mensajes en la aplicación cuando:</string>
-	<string name="settings_server_messages_in_app">Hay noticias o avisos</string>
-	<string name="settings_server_messages_new_app_version">Una nueva versión de la app está disponible</string>
+
 
 	<string name="settings_other_options">Otros ajustes:</string>
 	<string name="settings_advanced_mode">Modo avanzado</string>
@@ -239,6 +307,9 @@
 	<string name="install_guide_zip_file_missing">"Si quieres mantener tu dispositivo rooteado, tendrás que seleccionar un paquete root."</string>
 
 	<!-- Device information strings -->
+    <string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+    
 	<string name="device_information_amount_of_memory">Cantidad de RAM:</string>
 	<string name="device_information_cpu_frequency">Frecuencia del procesador:</string>
 	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
