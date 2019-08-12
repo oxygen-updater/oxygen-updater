@@ -92,7 +92,7 @@
 
 
 	<!-- Settings strings-->
-    <string name="preference_header_support">Apoyanos</string>
+    <string name="preference_header_support">Apóyanos</string>
 	<string name="preference_header_device">Dispositivo</string>
 	<string name="preference_header_ui">UI</string>
 	<string name="preference_header_notifications">Notificaciones</string>
