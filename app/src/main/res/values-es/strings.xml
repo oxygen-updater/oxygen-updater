@@ -31,7 +31,7 @@
 	<string name="new_app_version">¡Hay una nueva actualización disponible! ¡La versión &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> ha sido publicada!</string>
 
 	<!-- Date and time strings -->
-	<string name="time_at">at</string>
+	<string name="time_at">a las</string>
 	<string name="time_today">Hoy</string>
 	<string name="time_yesterday">Ayer</string>
 
@@ -51,7 +51,7 @@
 	<string name="download_error_close">CERRAR</string>
 	<string name="download_error_corrupt">¡El archivo de la actualización está dañado! Por favor, intenta descargarlo de nuevo.</string>
 	<!-- TODO translate the 3 below to Russian -->
-	<string name="download_error_network">Ha ocurrido un error de conexión mientras se descargaba la actualización. La descarga se reanudará automáticamentete.</string>
+	<string name="download_error_network">Ha ocurrido un error de conexión mientras se descargaba la actualización. La descarga se reanudará automáticamente.</string>
 	<string name="download_error_server">Ha ocurrido un error en el servidor mientras se descargaba la actualización. Por favor, intenta descargar la actualización de nuevo.</string>
 	<string name="download_error_internal">Desafortunadamente, un error técnico ha ocurrido mientras se descargaba la actualización. Intenta descargarla de nuevo. Si el error no desaparece, por favor contacta con el desarrollador de esta app para obtener asistencia.</string>
 
@@ -73,12 +73,12 @@
 	<string name="download_notification_error_corrupt">Verificación del archivo fallida. Comprueba tu conexión a Internet e inténtalo de nuevo.</string>
 
 	<string name="download_progress_text_hours_remaining">%1$d%%, cerca de %2$d horas restantes</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, menos de un minuto resantte</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, menos de un minuto restante</string>
 	<string name="download_progress_text_minutes_remaining">%1$d%%, cerca de %2$d minutos restanes</string>
 	<string name="download_progress_text_one_hour_remaining">%1$d%%, cerca de 1 hora restante</string>
 	<string name="download_progress_text_one_minute_remaining">%1$d%%, cerca de un minuto restante</string>
 	<string name="download_progress_text_seconds_remaining">%1$d%%, unos pocos segundos restantes</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, calculando el timepo resante…</string>
+	<string name="download_progress_text_unknown_time_remaining">%1$d%%, calculando el timepo restante…</string>
 	<string name="download_progress_text_verifying">100%, verificando archivo…</string>
 	<string name="download_progress_text_paused">%1$d%%, pausado</string>
 	<string name="download_waiting_for_network">%1$d%%, esperando a una conexión a Internet…</string>
@@ -127,7 +127,7 @@
 	<string name="settings_other_options">Otros ajustes:</string>
 	<string name="settings_advanced_mode">Modo avanzado</string>
 	<string name="settings_advanced_mode_button_explanation">Presiona este botón para obtener más información sobre el modo avanzado.</string>
-	<string name="settings_advanced_mode_explanation">El modo avanzado oculta el mensaje \"Tu sisema está actualizado\", permitiendote descargar e instalar todas las actualizaciones, Incluso cuando estas no sean compatibles con tu dispositivo.\n\nESto puede resultar útil cuando:\n- Actualices a una versión beta desde la versión estable\n- Vuelvas de la versión beta a la estable (no olvides hacer un reseteo de fábrica)\n- Reinstales tu versión del sistema actual.</string>
+	<string name="settings_advanced_mode_explanation">El modo avanzado oculta el mensaje \"Tu sisema está actualizado\", permitiéndote descargar e instalar todas las actualizaciones, Incluso cuando estas no sean compatibles con tu dispositivo.\n\nESto puede resultar útil cuando:\n- Actualices a una versión beta desde la versión estable\n- Vuelvas de la versión beta a la estable (no olvides hacer un reseteo de fábrica)\n- Reinstales tu versión del sistema actual.</string>
 
 	<string name="settings_update_method">Método de actualización</string>
 	<string name="settings_upload_logs">Comparte con nosotros datos de uso y registros</string>
