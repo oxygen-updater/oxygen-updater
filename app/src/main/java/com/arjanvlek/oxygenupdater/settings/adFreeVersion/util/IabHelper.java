@@ -37,6 +37,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
+
 
 /**
  * Provides convenience methods for in-app billing. You can create one instance of this class for
@@ -1045,7 +1047,7 @@ public class IabHelper {
 	}
 
 	void logWarn(String msg) {
-		Logger.logWarning(mDebugTag, new GooglePlayBillingException("In-app billing warning: " + msg));
+		logWarning(mDebugTag, new GooglePlayBillingException("In-app billing warning: " + msg));
 	}
 
 	/**

@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">Updaten</string>
 	<string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
 	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
-	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar:</string>
+	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
 	<string name="update_information_oxygen_os_version">Oxygen OS-versie: %1$s</string>
 	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
@@ -88,12 +88,46 @@
 	<string name="download_verifying_start">Je download wordt nu gecontroleerd op fouten…</string>
 
 	<!-- Settings strings -->
+	<string name="preference_header_support">Steun ons</string>
+	<string name="preference_header_device">Apparaat</string>
+	<string name="preference_header_ui">Gebruikersinterface</string>
+	<string name="preference_header_notifications">Pushberichten</string>
+	<string name="preference_header_advanced">Geavanceerd</string>
+	<string name="preference_header_about">Over</string>
+
+	<string name="summary_on">Ingeschakeld</string>
+	<string name="summary_off">Uitgeschakeld</string>
+	<string name="summary_device">Even geduld…</string>
+	<string name="summary_update_method">Selecteer eerst een apparaaat</string>
+	<string name="summary_theme">Selecteer een thema</string>
+	<string name="summary_privacy_policy">Bekijk online</string>
+	<string name="summary_rate_app">Geef een 5-sterren-review</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<string name="label_buy_ad_free">Verwijder advertenties</string>
+	<string name="label_theme">Thema</string>
+	<string name="label_app_update_banner">App-update balk</string>
+	<string name="label_news_warning_banner">Nieuws- en waarschuwingsbalken</string>
+	<string name="label_privacy_policy">Privacybeleid</string>
+	<string name="label_rate_app">Beoordeel deze app</string>
+
+	<string name="theme_light">Licht</string>
+	<string name="theme_dark">Donker</string>
+	<string name="theme_system">Systeeminstelling</string>
+	<string name="theme_auto">Automatisch</string>
+
+	<string name="theme_light_subtitle">Thema met lichte achtergronden en een helderrode bovenbalk. Dit is het standaard thema.</string>
+	<string name="theme_dark_subtitle">Thema met bijna-zwarte achtergronden en een vleugje donkerrrood. Je kunt dit thema ook gebruiken om de batterij te sparen (alleen op AMOLED-schermen)</string>
+	<string name="theme_system_subtitle">Licht of donker thema op bassis van de systeeminstellingen (instelbaar in de weergave- of ontwikkelaarsopties van het apparaat). Beshikbaarheid varieert per apparaat</string>
+	<string name="theme_auto_subtitle">Wisselt automatisch tussen het lichte en donkere thema op basis van de huidige tijd.</string>
+	<string name="theme_additional_note">Opmerking: Als het automatische thema actief is en de modus "Energiebesparing" actief is, zal het donkere thema worden getoond om de batterij te sparen</string>
+
 	<string name="settings">Instellingen</string>
 	<string name="settings_buy_button_buy">Koop (%1$s)</string>
 	<string name="settings_buy_button_bought">Gekocht</string>
 	<string name="settings_buy_button_not_possible">Niet beschikb.</string>
-	<string name="settings_buy_ad_free_label">Verwijder advertenties:</string>
-	<string name="settings_contribute_label">Verbeter de app voor anderen:</string>
+	<string name="settings_buy_ad_free_label">Verwijder advertenties</string>
+	<string name="settings_contribute_label">Verbeter de app voor anderen</string>
 	<string name="settings_contribute_button">Draag bij</string>
 	<string name="settings_category_other">Overig:</string>
 	<string name="settings_device">Apparaat</string>
@@ -103,17 +137,15 @@
 	<string name="settings_header">Kies je apparaat en update-methode</string>
 
 	<string name="settings_push">Stuur mij meldingen wanneer een:</string>
-	<string name="settings_push_from_server">Waarschuwing nodig is</string>
-	<string name="settings_push_new_version">Systeemupdate is verschenen</string>
-	<string name="settings_push_new_device">Nieuw apparaat wordt ondersteund</string>
-	<string name="settings_push_news">Nieuwsbericht is gepubliceerd</string>
+	<string name="settings_push_from_server">Informatie- en waarschuwingsberichten</string>
+	<string name="settings_push_new_version">Systeemupdate-meldingen</string>
+	<string name="settings_push_new_device">Ondersteuning voor een nieuw apparaat</string>
+	<string name="settings_push_news">Nieuwsberichten</string>
 
 	<string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
 	<string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een internetverbinding hebt en open je de app opnieuw.</string>
 
 	<string name="settings_server_messages">Toon meldingen in de app wanneer er:</string>
-	<string name="settings_server_messages_in_app">Algemene mededelingen zijn</string>
-	<string name="settings_server_messages_new_app_version">Een app-update beschikbaar is</string>
 
 	<string name="settings_other_options">Overige opties:</string>
 	<string name="settings_advanced_mode">Geavanceerde modus</string>
@@ -238,6 +270,9 @@
 	<string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
 
 	<!-- Device information strings -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
 	<string name="device_information_cpu_frequency">Processorsnelheid:</string>
 	<string name="device_information_header">Mijn apparaat</string>
@@ -246,7 +281,7 @@
 	<string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
 	<string name="device_information_os_version">Android-versie:</string>
 	<string name="device_information_oxygen_os_version">OxygenOS-versie:</string>
-	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_oxygen_os_ota_version">OTA-versie:</string>
 	<string name="device_information_patch_level_version">Datum beveiligingspatch:</string>
 	<string name="device_information_serial_number">Serienummer:</string>
 	<string name="device_information_system_on_a_chip">Chipset:</string>
@@ -257,7 +292,7 @@
 	<!-- About screen strings -->
 	<string name="about">Over deze app</string>
 	<string name="about_app_description">De ultieme app voor alles over Oxygen OS-updates.</string>
-	<string name="about_background_story">Deze app is gemaakt door Arjan Vlek.\n\nDeze app is gebaseerd op mijn andere app, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>).\n\n\nOpmerking: Dit is géén officiële app van OnePlus.\nDe naam OxygenOS is eigendom van OnePlus. \nAndroid, Google, Google Play en het Google Play-logo zijn geregistreerde handelsmerken van Google Inc. \nDeze app gebruikt gegevens van OnePlus en OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel hem dan nu op Google Play!</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\nAugust 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">Beoordeel op Google Play</string>
 	<string name="about_version">Versie: %1$s</string>
 

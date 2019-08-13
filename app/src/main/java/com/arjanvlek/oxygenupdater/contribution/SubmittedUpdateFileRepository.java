@@ -36,38 +36,40 @@ public class SubmittedUpdateFileRepository extends SQLiteOpenHelper {
 	private SQLiteDatabase readableSqLiteDatabase;
 	private SQLiteDatabase writableSqLiteDatabase;
 
-
 	public SubmittedUpdateFileRepository(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	@Override
 	public SQLiteDatabase getWritableDatabase() {
-		if (this.writableSqLiteDatabase == null) {
-			this.writableSqLiteDatabase = super.getWritableDatabase();
+		if (writableSqLiteDatabase == null) {
+			writableSqLiteDatabase = super.getWritableDatabase();
 		}
 
-		return this.writableSqLiteDatabase;
+		return writableSqLiteDatabase;
 	}
 
 	@Override
 	public SQLiteDatabase getReadableDatabase() {
-		if (this.readableSqLiteDatabase == null) {
-			this.readableSqLiteDatabase = super.getReadableDatabase();
+		if (readableSqLiteDatabase == null) {
+			readableSqLiteDatabase = super.getReadableDatabase();
 		}
 
-		return this.readableSqLiteDatabase;
+		return readableSqLiteDatabase;
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// create DATABASE
 		db.execSQL(SQL_CREATE_TABLE);
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Add code if the database needs to be upgraded.
 	}
 
+	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Add code if the database needs to be downgraded.
 	}
@@ -89,8 +91,7 @@ public class SubmittedUpdateFileRepository extends SQLiteOpenHelper {
 		if (filename != null && !filename.isEmpty()) {
 			ContentValues values = new ContentValues();
 			values.put(COLUMN_NAME, filename);
-			values.put(COLUMN_DATE_SUBMITTED, LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam"))
-					.toString(ISODateTimeFormat.basicDateTime()));
+			values.put(COLUMN_DATE_SUBMITTED, LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString(ISODateTimeFormat.basicDateTime()));
 
 			getWritableDatabase().insert(TABLE_NAME, null, values);
 		}

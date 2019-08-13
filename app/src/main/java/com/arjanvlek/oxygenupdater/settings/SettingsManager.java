@@ -4,15 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+
 public class SettingsManager {
 
-	//Settings properties
+	// Settings properties
 	public static final String PROPERTY_DEVICE = "device";
 	public static final String PROPERTY_DEVICE_ID = "device_id";
 	public static final String PROPERTY_UPDATE_METHOD = "update_method";
@@ -47,7 +47,7 @@ public class SettingsManager {
 	public static final String PROPERTY_CONTRIBUTE = "contribute";
 	public static final String PROPERTY_CONTRIBUTION_COUNT = "contribution_count";
 
-	//Offline cache properties
+	// Offline cache properties
 	public static final String PROPERTY_OFFLINE_ID = "offlineId";
 	public static final String PROPERTY_OFFLINE_UPDATE_NAME = "offlineUpdateName";
 	public static final String PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE = "offlineUpdateDownloadSize";
@@ -63,6 +63,7 @@ public class SettingsManager {
 
 	// IAB properties
 	public static final String PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj";
+
 	private static final String TAG = "SettingsManager";
 	private final Context context;
 
@@ -72,8 +73,7 @@ public class SettingsManager {
 
 	public synchronized <T> T getPreference(String key, T defaultValue) {
 		SharedPreferences preferences = getSharedPreferences();
-		return preferences == null ? defaultValue : preferences.contains(key) ? (T) preferences.getAll()
-				.get(key) : defaultValue;
+		return preferences == null ? defaultValue : preferences.contains(key) ? (T) preferences.getAll().get(key) : defaultValue;
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class SettingsManager {
 			getSharedPreferencesEditor()
 					.putString(key, value.toString())
 					.apply();
-			Logger.logError(TAG, "Failed to save preference with key " + key + " and value " + value + " . Defaulting to String value! " + e
+			logError(TAG, "Failed to save preference with key " + key + " and value " + value + " . Defaulting to String value! " + e
 					.getMessage(), e);
 		}
 	}

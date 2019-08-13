@@ -1,70 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".faq.FAQActivity">
+	android:layout_height="match_parent">
 
-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/faq_webpage_layout"
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		tools:context="com.arjanvlek.oxygenupdater.faq.FAQActivity">
+		android:layout_height="wrap_content">
 
-		<WebView
-			android:id="@+id/faqWebView"
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+			android:layout_height="wrap_content"
+			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			app:popupTheme="@style/ToolbarPopupStyle"
+			app:title="@string/faq" />
+	</com.google.android.material.appbar.AppBarLayout>
 
 	<RelativeLayout
-		android:id="@+id/faq_no_network_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_marginStart="@dimen/activity_horizontal_margin"
-		android:layout_marginLeft="@dimen/activity_horizontal_margin"
-		android:layout_marginTop="@dimen/activity_vertical_margin"
-		android:layout_marginEnd="@dimen/activity_horizontal_margin"
-		android:layout_marginRight="@dimen/activity_horizontal_margin">
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<TextView
-			android:id="@+id/faq_no_network_title"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:text="@string/faq_no_network"
-			android:textStyle="bold" />
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+			android:id="@+id/faq_webpage_layout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-		<ImageView
-			android:id="@+id/faq_no_network_image"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/faq_no_network_title"
-			android:layout_centerHorizontal="true"
-			android:contentDescription="@string/icon"
-			android:src="@drawable/ic_faq_no_network" />
+			<WebView
+				android:id="@+id/faqWebView"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" />
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-		<TextView
-			android:id="@+id/faq_no_network_text"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/faq_no_network_image"
-			android:layout_centerHorizontal="true"
-			android:layout_marginStart="@dimen/activity_horizontal_margin"
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			android:layout_marginTop="@dimen/activity_vertical_margin"
-			android:layout_marginEnd="@dimen/activity_horizontal_margin"
-			android:layout_marginRight="@dimen/activity_horizontal_margin"
-			android:text="@string/faq_no_network_text" />
+		<LinearLayout
+			android:id="@+id/faq_no_network_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginStart="@dimen/padding_default"
+			android:layout_marginTop="@dimen/padding_default"
+			android:layout_marginEnd="@dimen/padding_default"
+			android:gravity="center_horizontal"
+			android:orientation="vertical">
 
-		<Button
-			style="?android:attr/buttonBarButtonStyle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/faq_no_network_text"
-			android:layout_centerHorizontal="true"
-			android:onClick="onRetryButtonClick"
-			android:text="@string/download_error_retry" />
+			<TextView
+				android:id="@+id/faq_no_network_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/faq_no_network"
+				android:textStyle="bold" />
+
+			<ImageView
+				android:id="@+id/faq_no_network_image"
+				android:layout_width="match_parent"
+				android:layout_height="150dp"
+				android:contentDescription="@string/icon"
+				android:src="@drawable/wifi_off"
+				android:tint="?colorPrimary" />
+
+			<TextView
+				android:id="@+id/faq_no_network_text"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/padding_default"
+				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginEnd="@dimen/padding_default"
+				android:text="@string/faq_no_network_text" />
+
+			<com.google.android.material.button.MaterialButton
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="onRetryButtonClick"
+				android:text="@string/download_error_retry" />
+		</LinearLayout>
 	</RelativeLayout>
-</RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

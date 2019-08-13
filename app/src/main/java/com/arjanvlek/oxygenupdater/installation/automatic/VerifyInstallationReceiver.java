@@ -18,11 +18,11 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 public class VerifyInstallationReceiver extends BroadcastReceiver {
 
@@ -69,7 +69,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 			}
 
 		} catch (Throwable e) {
-			Logger.logError(TAG, "Failed to check if update was successfully installed", e);
+			logError(TAG, "Failed to check if update was successfully installed", e);
 		}
 	}
 
@@ -77,7 +77,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
-				.setSmallIcon(R.drawable.ic_stat_done)
+				.setSmallIcon(R.drawable.done_circle)
 				.setOngoing(false)
 				.setContentIntent(contentIntent)
 				.setAutoCancel(true)
@@ -97,7 +97,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
-				.setSmallIcon(R.drawable.ic_stat_failed)
+				.setSmallIcon(R.drawable.error)
 				.setOngoing(false)
 				.setContentIntent(contentIntent)
 				.setAutoCancel(true)

@@ -1,9 +1,13 @@
 package com.arjanvlek.oxygenupdater.installation.automatic;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
+@SuppressWarnings("WeakerAccess")
 public class RootInstall implements Serializable {
 
+	private static final long serialVersionUID = -3101644612957861502L;
 	private long deviceId;
 	private long updateMethodId;
 	private InstallationStatus installationStatus;
@@ -98,6 +102,7 @@ public class RootInstall implements Serializable {
 		this.failureReason = failureReason;
 	}
 
+	@NonNull
 	@Override
 	public String toString() {
 		return "RootInstall{" +

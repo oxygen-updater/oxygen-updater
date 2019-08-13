@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="BottomSheetPreference">
+		<attr name="secondaryKey" format="string" />
+
+		<attr name="title" />
+		<attr name="android:title" />
+
+		<attr name="caption" format="reference" />
+
+		<!-- The human-readable array to present as a list. Each entry must have a corresponding index in entryValues. -->
+		<attr name="entries" />
+		<attr name="android:entries" />
+		<attr name="titleEntries" format="reference" />
+		<attr name="subtitleEntries" format="reference" />
+		<!--
+			The array to find the value to save for a preference when an entry from entries is selected.
+			e.g. if a user clicks on the 2nd item in entries, the 2nd item in this array will be saved to the preference.
+		-->
+		<attr name="entryValues" />
+		<attr name="android:entryValues" />
+		<attr name="secondaryEntryValues" format="reference" />
+	</declare-styleable>
+</resources>

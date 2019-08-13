@@ -5,6 +5,8 @@ package com.arjanvlek.oxygenupdater.internal;
  */
 public class OxygenUpdaterException extends RuntimeException {
 
+	private static final long serialVersionUID = -5629187151074427120L;
+
 	/**
 	 * Errors / warnings which must be logged to Firebase but will *not* cause the app to crash for
 	 * the user.

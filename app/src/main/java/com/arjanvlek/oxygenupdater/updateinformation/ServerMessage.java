@@ -4,11 +4,9 @@ import android.content.Context;
 
 import androidx.core.content.ContextCompat;
 
-import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
+import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Locale;
 
 public class ServerMessage implements Banner {
 	private long id;
@@ -20,22 +18,20 @@ public class ServerMessage implements Banner {
 
 	@Override
 	public String getBannerText(Context ignored) {
-		return Locale.getDefault()
-				.getDisplayLanguage()
-				.equals(ApplicationData.LOCALE_DUTCH) ? getDutchMessage() : getEnglishMessage();
+		return Locale.getLocale() == Locale.NL ? getDutchMessage() : getEnglishMessage();
 	}
 
 	@Override
 	public int getColor(Context context) {
 		switch (getPriority()) {
 			case LOW:
-				return ContextCompat.getColor(context, R.color.holo_green_light);
+				return ContextCompat.getColor(context, R.color.colorPositive);
 			case MEDIUM:
-				return ContextCompat.getColor(context, R.color.holo_orange_light);
+				return ContextCompat.getColor(context, R.color.colorWarn);
 			case HIGH:
-				return ContextCompat.getColor(context, R.color.holo_red_light);
+				return ContextCompat.getColor(context, R.color.colorPrimary);
 			default:
-				return ContextCompat.getColor(context, R.color.holo_green_light);
+				return ContextCompat.getColor(context, R.color.colorPositive);
 		}
 	}
 

@@ -2,10 +2,10 @@ package com.arjanvlek.oxygenupdater.internal.root;
 
 import android.os.AsyncTask;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
-
 import eu.chainfire.libsuperuser.Shell;
 import java8.util.function.Consumer;
+
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 public class RootAccessChecker {
 
@@ -41,7 +41,7 @@ public class RootAccessChecker {
 				Thread.sleep(2000); // Give the user the time to read what's happening.
 				return Shell.SU.available();
 			} catch (Exception e) {
-				Logger.logError("ApplicationData", "Failed to check for root access", e);
+				logError("ApplicationData", "Failed to check for root access", e);
 				return false;
 			}
 		}

@@ -58,30 +58,33 @@ public class NewsDatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
 	public SQLiteDatabase getWritableDatabase() {
-		if (this.writableSqLiteDatabase == null) {
-			this.writableSqLiteDatabase = super.getWritableDatabase();
+		if (writableSqLiteDatabase == null) {
+			writableSqLiteDatabase = super.getWritableDatabase();
 		}
 
-		return this.writableSqLiteDatabase;
+		return writableSqLiteDatabase;
 	}
 
 	@Override
 	public SQLiteDatabase getReadableDatabase() {
-		if (this.readableSqLiteDatabase == null) {
-			this.readableSqLiteDatabase = super.getReadableDatabase();
+		if (readableSqLiteDatabase == null) {
+			readableSqLiteDatabase = super.getReadableDatabase();
 		}
 
-		return this.readableSqLiteDatabase;
+		return readableSqLiteDatabase;
 	}
 
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_ENTRIES);
 	}
 
+	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Add code if the database needs to be upgraded.
 	}
 
+	@Override
 	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Add code if the database needs to be downgraded.
 	}
@@ -111,13 +114,13 @@ public class NewsDatabaseHelper extends SQLiteOpenHelper {
 		String sortOrder = COLUMN_ID + " ASC";
 
 		Cursor cursor = getReadableDatabase().query(
-				TABLE_NAME,                                 // The table to query
-				null,                                       // Return all columns
-				selection,                                // The columns for the WHERE clause
-				selectionArgs,                            // The values for the WHERE clause
-				null,                                     // don't group the rows
-				null,                                     // don't filter by row groups
-				sortOrder                                 // The sort order
+				TABLE_NAME,         // The table to query
+				null,       // Return all columns
+				selection,          // The columns for the WHERE clause
+				selectionArgs,      // The values for the WHERE clause
+				null,       // don't group the rows
+				null,        // don't filter by row groups
+				sortOrder           // The sort order
 		);
 
 		NewsItem item = null;
@@ -165,8 +168,7 @@ public class NewsDatabaseHelper extends SQLiteOpenHelper {
 	public void markNewsItemAsRead(NewsItem newsItem) {
 		ContentValues values = toDatabaseContents(newsItem);
 		values.put(COLUMN_READ, true);
-		getWritableDatabase().update(TABLE_NAME, values, COLUMN_ID + "  LIKE ?", new String[]{String.valueOf(newsItem
-				.getId())});
+		getWritableDatabase().update(TABLE_NAME, values, COLUMN_ID + "  LIKE ?", new String[]{String.valueOf(newsItem.getId())});
 	}
 
 	private void insertNewsItem(NewsItem newsItem) {

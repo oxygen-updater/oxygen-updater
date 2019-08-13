@@ -88,15 +88,15 @@ public class ServerStatus implements Banner {
 	public int getColor(Context context) {
 		switch (getStatus()) {
 			case WARNING:
-				return ContextCompat.getColor(context, R.color.holo_orange_light);
+				return ContextCompat.getColor(context, R.color.colorWarn);
 			case ERROR:
-				return ContextCompat.getColor(context, R.color.holo_red_light);
+				return ContextCompat.getColor(context, R.color.colorPrimary);
 			case MAINTENANCE:
 				return 0;
 			case OUTDATED:
 				return 0;
 			case UNREACHABLE:
-				return ContextCompat.getColor(context, R.color.holo_red_light);
+				return ContextCompat.getColor(context, R.color.colorPrimary);
 			default:
 				return 0;
 		}
@@ -121,11 +121,11 @@ public class ServerStatus implements Banner {
 		UNREACHABLE;
 
 		public boolean isUserRecoverableError() {
-			return this.equals(WARNING) || this.equals(ERROR) || this.equals(UNREACHABLE);
+			return equals(WARNING) || equals(ERROR) || equals(UNREACHABLE);
 		}
 
 		public boolean isNonRecoverableError() {
-			return !isUserRecoverableError() && !this.equals(NORMAL);
+			return !isUserRecoverableError() && !equals(NORMAL);
 		}
 	}
 }

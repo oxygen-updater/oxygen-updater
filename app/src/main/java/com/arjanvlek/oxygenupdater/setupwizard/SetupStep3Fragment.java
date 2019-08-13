@@ -42,22 +42,20 @@ public class SetupStep3Fragment extends AbstractFragment {
 	}
 
 
-	private void fillDeviceSettings(final List<Device> devices) {
+	private void fillDeviceSettings(List<Device> devices) {
 		if (getActivity() == null || !isAdded()) {
 			return; // Do not load if app is in process of being exited when data arrives from server.
 		}
 		Spinner spinner = rootView.findViewById(R.id.introduction_step_3_device_dropdown);
 
-		SystemVersionProperties systemVersionProperties = ((ApplicationData) getActivity().getApplication())
-				.getSystemVersionProperties();
+		SystemVersionProperties systemVersionProperties = ((ApplicationData) getActivity().getApplication()).getSystemVersionProperties();
 
 		int selectedIndex;
 		int recommendedIndex;
 		long deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L);
 
 		recommendedIndex = StreamSupport.stream(devices)
-				.filter(d -> d.getProductNames() != null && d.getProductNames()
-						.contains(systemVersionProperties.getOxygenDeviceName()))
+				.filter(d -> d.getProductNames() != null && d.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
 				.mapToInt(devices::indexOf)
 				.findAny()
 				.orElse(-1);
@@ -77,17 +75,14 @@ public class SetupStep3Fragment extends AbstractFragment {
 			@NonNull
 			@Override
 			public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-				return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, recommendedIndex, this
-						.getContext());
+				return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, recommendedIndex, getContext());
 			}
 
 			@Override
 			public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-				return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, devices, recommendedIndex, this
-						.getContext());
+				return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, devices, recommendedIndex, getContext());
 			}
 		};
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
 
 		if (selectedIndex != -1) {

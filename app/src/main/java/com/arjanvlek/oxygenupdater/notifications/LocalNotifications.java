@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
 import androidx.annotation.StringRes;
 import androidx.core.app.NotificationCompat;
@@ -17,13 +16,13 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.download.DownloadProgressData;
 import com.arjanvlek.oxygenupdater.installation.InstallActivity;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 
 import static com.arjanvlek.oxygenupdater.installation.InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE;
 import static com.arjanvlek.oxygenupdater.installation.InstallActivity.INTENT_UPDATE_DATA;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment.KEY_DOWNLOAD_ERROR_MESSAGE;
 import static com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment.KEY_DOWNLOAD_ERROR_RESUMABLE;
 import static com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment.KEY_DOWNLOAD_ERROR_TITLE;
@@ -40,7 +39,7 @@ public class LocalNotifications {
 	private static final int DOWNLOAD_COMPLETE_NOTIFICATION_ID = 1000000000;
 	private static final int DOWNLOADING_NOTIFICATION_ID = 1500000000;
 	private static final int DOWNLOAD_FAILED_NOTIFICATION_ID = 200000000;
-	private static final int CONTRIBUTE_SUCCESFUL_NOTIFICATION_ID = 250000000;
+	private static final int CONTRIBUTE_SUCCESSFUL_NOTIFICATION_ID = 250000000;
 	private static final String TAG = "LocalNotifications";
 
 	/**
@@ -54,15 +53,11 @@ public class LocalNotifications {
 					.setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
 					.setStyle(new NotificationCompat.BigTextStyle()
 							.setBigContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
-							.bigText(downloadProgressData.getTimeRemaining() != null ? downloadProgressData
-									.getTimeRemaining()
-									.toString(context) : "")
+							.bigText(downloadProgressData.getTimeRemaining() != null ? downloadProgressData.getTimeRemaining().toString(context) : "")
 					)
 					.setProgress(100, downloadProgressData.getProgress(), false);
 
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.setCategory(Notification.CATEGORY_PROGRESS);
-			}
+			builder.setCategory(Notification.CATEGORY_PROGRESS);
 
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
 			manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
@@ -70,7 +65,7 @@ public class LocalNotifications {
 			manager.cancel(VERIFYING_NOTIFICATION_ID);
 			manager.notify(DOWNLOADING_NOTIFICATION_ID, builder.build());
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't display 'downloading' notification", e);
+			logError(TAG, "Can't display 'downloading' notification", e);
 		}
 	}
 
@@ -99,19 +94,19 @@ public class LocalNotifications {
 					.setProgress(100, downloadProgressData.getProgress(), false)
 					.setStyle(new NotificationCompat.BigTextStyle()
 							.setBigContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
-							.bigText(downloadProgressData.getProgress() + "%, " + (downloadProgressData
-									.isWaitingForConnection() ? context.getString(R.string.download_waiting_for_network) : context
-									.getString(R.string.paused)))
+							.bigText(downloadProgressData.getProgress() + "%, "
+									+ (downloadProgressData.isWaitingForConnection()
+									? context.getString(R.string.download_waiting_for_network)
+									: context.getString(R.string.paused))
+							)
 					);
 
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.setCategory(Notification.CATEGORY_PROGRESS);
-			}
+			builder.setCategory(Notification.CATEGORY_PROGRESS);
 
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
 			manager.notify(DOWNLOADING_NOTIFICATION_ID, builder.build()); // Same as downloading so we can't have both a downloading and paused notification.
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't display 'download paused' notification", e);
+			logError(TAG, "Can't display 'download paused' notification", e);
 		}
 	}
 
@@ -141,9 +136,7 @@ public class LocalNotifications {
 					.setContentTitle(context.getString(R.string.app_name))
 					.setContentText(context.getString(R.string.download_complete_notification));
 
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.setCategory(Notification.CATEGORY_SYSTEM);
-			}
+			builder.setCategory(Notification.CATEGORY_SYSTEM);
 
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
 			manager.cancel(DOWNLOADING_NOTIFICATION_ID);
@@ -151,7 +144,7 @@ public class LocalNotifications {
 			manager.cancel(VERIFYING_NOTIFICATION_ID);
 			manager.notify(DOWNLOAD_COMPLETE_NOTIFICATION_ID, builder.build());
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't display 'download complete' notification", e);
+			logError(TAG, "Can't display 'download complete' notification", e);
 		}
 	}
 
@@ -179,14 +172,12 @@ public class LocalNotifications {
 					.setContentTitle(context.getString(R.string.contribute_successful_notification_title))
 					.setContentText(context.getString(R.string.contribute_successful_notification_text, filename));
 
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.setCategory(Notification.CATEGORY_SYSTEM);
-			}
+			builder.setCategory(Notification.CATEGORY_SYSTEM);
 
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
-			manager.notify(CONTRIBUTE_SUCCESFUL_NOTIFICATION_ID, builder.build());
+			manager.notify(CONTRIBUTE_SUCCESSFUL_NOTIFICATION_ID, builder.build());
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't display 'successful contribution' notification", e);
+			logError(TAG, "Can't display 'successful contribution' notification", e);
 		}
 	}
 
@@ -200,7 +191,7 @@ public class LocalNotifications {
 			manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
 			manager.cancel(VERIFYING_NOTIFICATION_ID);
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't hide 'downloading' notification", e);
+			logError(TAG, "Can't hide 'downloading' notification", e);
 		}
 	}
 
@@ -213,7 +204,7 @@ public class LocalNotifications {
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
 			manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't hide 'download complete' notification", e);
+			logError(TAG, "Can't hide 'download complete' notification", e);
 		}
 	}
 
@@ -243,9 +234,7 @@ public class LocalNotifications {
 					.setContentTitle(context.getString(R.string.download_failed))
 					.setContentText(context.getString(notificationMessage));
 
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.setCategory(Notification.CATEGORY_SYSTEM);
-			}
+			builder.setCategory(Notification.CATEGORY_SYSTEM);
 
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
 			manager.cancel(DOWNLOADING_NOTIFICATION_ID);
@@ -253,7 +242,7 @@ public class LocalNotifications {
 			manager.cancel(VERIFYING_NOTIFICATION_ID);
 			manager.notify(DOWNLOAD_FAILED_NOTIFICATION_ID, builder.build());
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't display download failed notification: ", e);
+			logError(TAG, "Can't display download failed notification: ", e);
 		}
 	}
 
@@ -280,16 +269,14 @@ public class LocalNotifications {
 				builder.setContentTitle(context.getString(R.string.download_verifying));
 			}
 
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.setCategory(Notification.CATEGORY_PROGRESS);
-			}
+			builder.setCategory(Notification.CATEGORY_PROGRESS);
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
 			manager.cancel(DOWNLOADING_NOTIFICATION_ID);
 			manager.cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID);
 			manager.cancel(DOWNLOAD_FAILED_NOTIFICATION_ID);
 			manager.notify(VERIFYING_NOTIFICATION_ID, builder.build());
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't display 'verifying' (still going: " + ongoing + ", verification failed: " + error + ") notification", e);
+			logError(TAG, "Can't display 'verifying' (still going: " + ongoing + ", verification failed: " + error + ") notification", e);
 		}
 	}
 
@@ -301,7 +288,7 @@ public class LocalNotifications {
 			NotificationManager manager = (NotificationManager) Utils.getSystemService(context, Context.NOTIFICATION_SERVICE);
 			manager.cancel(VERIFYING_NOTIFICATION_ID);
 		} catch (Exception e) {
-			Logger.logError(TAG, "Can't hide 'verifying' notification", e);
+			logError(TAG, "Can't hide 'verifying' notification", e);
 		}
 	}
 }

@@ -14,10 +14,10 @@
 	<string name="update_information_header_short">Update</string>
 	<string name="update_information_installed_update">The latest system update is:</string>
 	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
-	<string name="update_information_latest_available_update">A new system update is available:</string>
-	<string name="update_information_no_update_data_available">No update information is available.</string>
+	<string name="update_information_latest_available_update">New system update available</string>
+	<string name="update_information_no_update_data_available">No update information is available</string>
 	<string name="update_information_oxygen_os_version">Oxygen OS Version: %1$s</string>
-	<string name="update_information_system_is_up_to_date">Your system is up to date.</string>
+	<string name="update_information_system_is_up_to_date">Your system is up to date</string>
 	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
 	<string name="update_information_version">&#160;version:</string>
 	<string name="update_information_view_update_information">View update information</string>
@@ -92,14 +92,72 @@
 
 
 	<!-- Settings strings-->
+	<string name="preference_header_support">Support us</string>
+	<string name="preference_header_device">Device</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notifications</string>
+	<string name="preference_header_advanced">Advanced</string>
+	<string name="preference_header_about">About</string>
+
+	<string name="summary_on">Enabled</string>
+	<string name="summary_off">Disabled</string>
+	<string name="summary_device">Please wait…</string>
+	<string name="summary_update_method">Select a device first</string>
+	<string name="summary_theme">Set theme</string>
+	<string name="summary_privacy_policy">View online</string>
+	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<string name="label_buy_ad_free">Remove ads</string>
+	<string name="label_theme">Theme</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
+	<string name="label_privacy_policy">Privacy policy</string>
+	<string name="label_rate_app">Rate this app</string>
+
+	<string name="theme_light">Light</string>
+	<string name="theme_dark">Dark</string>
+	<string name="theme_system">System</string>
+	<string name="theme_auto">Auto</string>
+
+	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
+	<string name="key_contributor" translatable="false">become_contributor</string>
+	<string name="key_category_device" translatable="false">key_category_device</string>
+	<string name="key_device" translatable="false">device</string>
+	<string name="key_device_id" translatable="false">device_id</string>
+	<string name="key_update_method" translatable="false">update_method</string>
+	<string name="key_update_method_id" translatable="false">update_method_id</string>
+	<string name="key_theme" translatable="false">theme</string>
+	<string name="key_theme_id" translatable="false">theme_id</string>
+	<string name="key_ui_app_update" translatable="false">show_app_update_messages</string>
+	<string name="key_ui_news" translatable="false">show_news_messages</string>
+	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
+	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
+	<string name="key_share_usage_data" translatable="false">upload_logs</string>
+	<!-- Typo can't be fixed due to older versions of the app being released with it -->
+	<string name="key_notification_critical_message" translatable="false">recive_general_notifications</string>
+	<string name="key_notification_system_update" translatable="false">receive_system_update_notifications</string>
+	<string name="key_notification_new_device_supported" translatable="false">receive_new_device_notifications</string>
+	<string name="key_notification_news_story_published" translatable="false">receive_news_notifications</string>
+	<string name="key_rate_app" translatable="false">rate</string>
+	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
+	<string name="key_oxygen" translatable="false">oxygen_updater</string>
+
+	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
+	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
+	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
+	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+		conserve battery</string>
+
 	<string name="settings">Settings</string>
 	<string name="settings_buy_button_buy">Buy (%1$s)</string>
 	<string name="settings_buy_button_bought">Purchased</string>
 	<string name="settings_buy_button_not_possible">Unavailable</string>
-	<string name="settings_buy_ad_free_label">Upgrade to Ad-Free:</string>
+	<string name="settings_buy_ad_free_label">Upgrade to Ad-Free</string>
 
 	<!-- TODO translate these 2 to all but Dutch / Belgian / French -->
-	<string name="settings_contribute_label">Help improving the app:</string>
+	<string name="settings_contribute_label">Help improve the app</string>
 	<string name="settings_contribute_button">Contribute</string>
 
 	<string name="settings_category_other">Other:</string>
@@ -110,17 +168,15 @@
 	<string name="settings_header">Choose your device and update method:</string>
 
 	<string name="settings_push">Send me a notification when a:</string>
-	<string name="settings_push_from_server">Critical message is available</string>
-	<string name="settings_push_new_version">System update is available</string>
+	<string name="settings_push_from_server">Informational and warning messages</string>
+	<string name="settings_push_new_version">System update messages</string>
 	<string name="settings_push_new_device">New device is supported</string>
-	<string name="settings_push_news">News story has been published</string>
+	<string name="settings_push_news">News messages</string>
 
 	<string name="settings_saved">Your settings are automatically saved.</string>
 	<string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
 
 	<string name="settings_server_messages">Show messages in the app when:</string>
-	<string name="settings_server_messages_in_app">There\'s news or a warning</string>
-	<string name="settings_server_messages_new_app_version">An app update is available</string>
 
 	<string name="settings_other_options">Other options:</string>
 	<string name="settings_advanced_mode">Advanced mode</string>
@@ -150,7 +206,6 @@
 	<string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).\n\nSwipe to the left to continue.</string>
 	<string name="setup_page_5_title">You are ready to go!</string>
 	<string name="setup_page_5_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
-
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>
@@ -240,6 +295,9 @@
 	<string name="install_guide_zip_file_missing">"If you want to keep your device rooted, you'll have to specify a root package above."</string>
 
 	<!-- Device information strings -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">Amount of RAM:</string>
 	<string name="device_information_cpu_frequency">Processor Frequency:</string>
 	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
@@ -250,7 +308,7 @@
 	<string name="device_information_incremental_os_version">Incremental OS version:</string>
 	<string name="device_information_os_version">Android version:</string>
 	<string name="device_information_oxygen_os_version">OxygenOS version:</string>
-	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_oxygen_os_ota_version">OTA version:</string>
 	<string name="device_information_patch_level_version">Security patch date:</string>
 	<string name="device_information_serial_number">Serial number:</string>
 	<string name="device_information_system_on_a_chip">System on a Chip:</string>
@@ -260,7 +318,7 @@
 	<!-- About screen strings -->
 	<string name="about">About this app</string>
 	<string name="about_app_description">The ultimate tool for Oxygen OS updates.</string>
-	<string name="about_background_story">This app is written by Arjan Vlek.\n\nThis app is a follow-up on another app of me, called <a href="https://cyanogenupdatetracker.com">Cyanogen Update Tracker</a>. Cyanogen Update Tracker provides similar functionality for Cyanogen OS users.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and OPPO to show update information.\n\nIf you like my app, please rate it on Google play now:</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\nAugust 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">Rate on Google Play</string>
 	<string name="about_version">Version: %1$s</string>
 

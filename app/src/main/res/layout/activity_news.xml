@@ -1,67 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="@color/cardview_light_background">
+	android:layout_height="match_parent">
 
-	<LinearLayout
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		tools:ignore="WebViewLayout">
+		android:layout_height="wrap_content">
 
-		<TextView
-			android:id="@+id/newsTitle"
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="20dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="20dp"
-			android:textColor="@android:color/black"
-			android:textSize="20sp"
-			android:textStyle="bold" />
+			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			app:popupTheme="@style/ToolbarPopupStyle"
+			app:title="@string/app_name" />
+	</com.google.android.material.appbar.AppBarLayout>
 
-		<TextView
-			android:id="@+id/newsDatePublished"
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="20dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="20dp"
-			android:text="@string/news_date_published"
-			android:textStyle="italic" />
+			android:orientation="vertical"
+			tools:ignore="WebViewLayout">
 
+			<TextView
+				android:id="@+id/newsTitle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/padding_default"
+				android:layout_marginTop="@dimen/padding_half"
+				android:layout_marginEnd="@dimen/padding_default"
+				android:textSize="@dimen/typography_title"
+				android:textStyle="bold" />
 
-		<WebView
-			android:id="@+id/newsContent"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/news_horizontal_margin"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="@dimen/news_horizontal_margin" />
+			<TextView
+				android:id="@+id/newsDatePublished"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/padding_default"
+				android:layout_marginTop="@dimen/padding_half"
+				android:layout_marginEnd="@dimen/padding_default"
+				android:text="@string/news_date_published"
+				android:textStyle="italic" />
 
-		<Button
-			android:id="@+id/newsRetryButton"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:text="@string/download_error_retry"
-			android:visibility="gone" />
+			<WebView
+				android:id="@+id/newsContent"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/news_horizontal_margin"
+				android:layout_marginTop="@dimen/padding_half"
+				android:layout_marginEnd="@dimen/news_horizontal_margin" />
 
-		<TextView
-			android:id="@+id/newsAuthor"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="20dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="20dp"
-			android:layout_marginBottom="10dp"
-			android:text="@string/news_author"
-			android:textStyle="italic" />
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/newsRetryButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="@string/download_error_retry"
+				android:visibility="gone" />
 
-	</LinearLayout>
-</ScrollView>
+			<TextView
+				android:id="@+id/newsAuthor"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/padding_default"
+				android:layout_marginTop="@dimen/padding_half"
+				android:layout_marginEnd="@dimen/padding_default"
+				android:layout_marginBottom="@dimen/padding_half"
+				android:text="@string/news_author"
+				android:textStyle="italic" />
 
-
+		</LinearLayout>
+	</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

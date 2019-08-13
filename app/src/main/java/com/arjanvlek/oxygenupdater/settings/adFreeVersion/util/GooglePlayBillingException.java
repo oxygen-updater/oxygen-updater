@@ -7,6 +7,8 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
  */
 public class GooglePlayBillingException extends OxygenUpdaterException {
 
+	private static final long serialVersionUID = 387133325499415924L;
+
 	public GooglePlayBillingException(String message) {
 		super(message);
 	}

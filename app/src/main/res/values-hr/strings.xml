@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">"Podatci o ažuriranju"</string>
 	<string name="update_information_installed_update">"Zadnje ažuriranje sistema:"</string>
 	<string name="update_information_last_checked_on">"Zadnja provjera: %1$s"</string>
-	<string name="update_information_latest_available_update">"Novo ažuriranje sistema je dostupno:"</string>
+	<string name="update_information_latest_available_update">"Novo ažuriranje sistema je dostupno"</string>
 	<string name="update_information_no_update_data_available">"Nema novosti o ažuriranju"</string>
 	<string name="update_information_oxygen_os_version">"Verzija Oxygen OS-a: %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Tvoj sistem koristi najnovija ažuriranja."</string>
@@ -74,11 +74,51 @@
 	<string name="download_verifying_start">"Tvoje skidanje će sada biti verifikanovan."</string>
 
 	<!-- Settings strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="preference_header_support">Support us</string>
+	<string name="preference_header_device">Device</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notifications</string>
+	<string name="preference_header_advanced">Advanced</string>
+	<string name="preference_header_about">About</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="summary_on">Enabled</string>
+	<string name="summary_off">Disabled</string>
+	<string name="summary_device">Please wait…</string>
+	<string name="summary_update_method">Select a device first</string>
+	<string name="summary_theme">Set theme</string>
+	<string name="summary_privacy_policy">View online</string>
+	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="label_buy_ad_free">Remove ads</string>
+	<string name="label_theme">Theme</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
+	<string name="label_privacy_policy">Privacy policy</string>
+	<string name="label_rate_app">Rate this app</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light">Light</string>
+	<string name="theme_dark">Dark</string>
+	<string name="theme_system">System</string>
+	<string name="theme_auto">Auto</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
+	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
+	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
+	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+		conserve battery</string>
+
 	<string name="settings">"Postavke"</string>
 	<string name="settings_buy_button_buy">"Kupi (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Kupljeno"</string>
 	<string name="settings_buy_button_not_possible">"Nedostupno"</string>
-	<string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free:"</string>
+	<string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free"</string>
 
 	<!-- TODO translate the 2 below -->
 	<string name="settings_contribute_label">Help improving the app:</string>
@@ -98,8 +138,6 @@
 	<string name="settings_saved">"Vaše postavke su automatski pohranjene."</string>
 	<string name="settings_saving">"Vaše postavke se još uvijek spremaju. Ako ovo potraje predugo: Provjerite vašu internet vezu , izađite iz aplikacije i pokrenite je ponovno."</string>
 	<string name="settings_server_messages">"Pokaži poruke u aplikaciji kada:"</string>
-	<string name="settings_server_messages_in_app">"Dostupne su vijesti ili upozorenje"</string>
-	<string name="settings_server_messages_new_app_version">"Dostupno je ažuriranje aplikacije"</string>
 	<string name="settings_other_options">"Ostale opcije:"</string>
 	<string name="settings_advanced_mode">"Napredni način"</string>
 	<string name="settings_advanced_mode_button_explanation">"Pritisnite dugme za više informacija o naprednom načinu"</string>
@@ -247,6 +285,10 @@ Vaš uređaj će se restartirati da bi instalirao ažuriranja.
 	<string name="install_guide_zip_file_missing">"Ako želite ostaviti vaš uređaj root-an morate specificirati root paket."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"Količina rama:"</string>
 	<string name="device_information_cpu_frequency">"Frekvencija procesora:"</string>
 	<string name="device_information_header">"Moj uređaj"</string>
@@ -255,7 +297,7 @@ Vaš uređaj će se restartirati da bi instalirao ažuriranja.
 	<string name="device_information_incremental_os_version">"Inkrementalna OS verzija:"</string>
 	<string name="device_information_os_version">"Android verzija"</string>
 	<string name="device_information_oxygen_os_version">"OxygenOS verzija:"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"OTA verzija:"</string>
 	<string name="device_information_patch_level_version">"Datum security patch-a:"</string>
 	<string name="device_information_serial_number">"Serial number:"</string>
 	<string name="device_information_system_on_a_chip">"Sistem na Chip-u:"</string>
@@ -265,18 +307,7 @@ Vaš uređaj će se restartirati da bi instalirao ažuriranja.
 	<!-- About screen strings -->
 	<string name="about">"O aplikaciji"</string>
 	<string name="about_app_description">"Najbolja aplikacija za OxygenOS ažuriranja."</string>
-	<string name="about_background_story">"Aplikacija je napravljena od strane Arjan Vlek.
-
-Ovo je drugi dio aplikacije <a href="https://cyanogenupdatetracker.com">Cyanogen Update Tracker</a>
-Cyanogen Update Tracker ima slične funkcije za CyanogenOS korisnike.
-
-Molimo zapamtite ovo nije oficijalna aplikacija OnePlus-a.
-Ime OnePlus, OnePlus logo i OxygenOS su u vlasništvu OnePlus-a.
-Android, Google, Google Play i Google play logo pripadaju Google Inc.
-Ova aplikacija koristi podatke OnePlus-a i Oppo-a da pokazuje informacije
-
-Ako vam se sviđa aplikacija molimo ocijenite je na Google play-u:
-"</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\nAugust 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">"Ocjenite na Google Playu"</string>
 	<string name="about_version">"Verzija: %1$s"</string>
 

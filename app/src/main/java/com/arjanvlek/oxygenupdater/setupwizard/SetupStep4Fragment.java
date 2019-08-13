@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
@@ -26,6 +25,8 @@ import java.util.List;
 
 import java8.util.stream.StreamSupport;
 
+import static android.widget.Toast.LENGTH_LONG;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD;
@@ -70,7 +71,7 @@ public class SetupStep4Fragment extends AbstractFragment {
 				});
 				builder.show();
 			} catch (Throwable e) {
-				Logger.logError("SetupStep4", "Failed to display root check dialog", e);
+				logError("SetupStep4", "Failed to display root check dialog", e);
 				rootMessageShown = true;
 				fetchUpdateMethods();
 			}
@@ -78,16 +79,15 @@ public class SetupStep4Fragment extends AbstractFragment {
 			if (settingsManager.containsPreference(PROPERTY_DEVICE_ID)) {
 				progressBar.setVisibility(View.VISIBLE);
 
-				getApplicationData().getServerConnector()
-						.getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID, 1L), this::fillUpdateMethodSettings);
+				getApplicationData().getServerConnector().getUpdateMethods(settingsManager.getPreference(PROPERTY_DEVICE_ID, 1L), this::fillUpdateMethodSettings);
 			}
 		}
 	}
 
-	private void fillUpdateMethodSettings(final List<UpdateMethod> updateMethods) {
+	private void fillUpdateMethodSettings(List<UpdateMethod> updateMethods) {
 		Spinner spinner = rootView.findViewById(R.id.introduction_step_4_update_method_dropdown);
 
-		final int[] recommendedPositions = StreamSupport
+		int[] recommendedPositions = StreamSupport
 				.stream(updateMethods)
 				.filter(UpdateMethod::isRecommended)
 				.mapToInt(updateMethods::indexOf)
@@ -113,17 +113,14 @@ public class SetupStep4Fragment extends AbstractFragment {
 				@NonNull
 				@Override
 				public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, this
-							.getContext());
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, updateMethods, recommendedPositions, getContext());
 				}
 
 				@Override
 				public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
-					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, this
-							.getContext());
+					return CustomDropdown.initCustomUpdateMethodDropdown(position, convertView, parent, android.R.layout.simple_spinner_dropdown_item, updateMethods, recommendedPositions, getContext());
 				}
 			};
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spinner.setAdapter(adapter);
 
 			if (selectedPosition != -1) {
@@ -146,7 +143,7 @@ public class SetupStep4Fragment extends AbstractFragment {
 						// Subscribe to notifications for the newly selected device and update method
 						NotificationTopicSubscriber.subscribe(getApplicationData());
 					} else {
-						Toast.makeText(getApplicationData(), getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG)
+						Toast.makeText(getApplicationData(), getString(R.string.notification_no_notification_support), LENGTH_LONG)
 								.show();
 					}
 				}

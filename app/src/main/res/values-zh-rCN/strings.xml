@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">更新</string>
 	<string name="update_information_installed_update">最近的一次更新在：</string>
 	<string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
-	<string name="update_information_latest_available_update">检测到新的系统更新：</string>
+	<string name="update_information_latest_available_update">检测到新的系统更新</string>
 	<string name="update_information_no_update_data_available">没有可用的更新亮点</string>
 	<string name="update_information_oxygen_os_version">Oxygen OS 版本： %1$s</string>
 	<string name="update_information_system_is_up_to_date">您的系统已是最新版本</string>
@@ -90,11 +90,51 @@
 
 
 	<!-- Settings strings-->
+	<!-- TODO: Translate these lines -->
+	<string name="preference_header_support">Support us</string>
+	<string name="preference_header_device">Device</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notifications</string>
+	<string name="preference_header_advanced">Advanced</string>
+	<string name="preference_header_about">About</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="summary_on">Enabled</string>
+	<string name="summary_off">Disabled</string>
+	<string name="summary_device">Please wait…</string>
+	<string name="summary_update_method">Select a device first</string>
+	<string name="summary_theme">Set theme</string>
+	<string name="summary_privacy_policy">View online</string>
+	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="label_buy_ad_free">Remove ads</string>
+	<string name="label_theme">Theme</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
+	<string name="label_privacy_policy">Privacy policy</string>
+	<string name="label_rate_app">Rate this app</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light">Light</string>
+	<string name="theme_dark">Dark</string>
+	<string name="theme_system">System</string>
+	<string name="theme_auto">Auto</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
+	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
+	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
+	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+		conserve battery</string>
+
 	<string name="settings">设置</string>
 	<string name="settings_buy_button_buy">购买 (%1$s)</string>
 	<string name="settings_buy_button_bought">已购买</string>
 	<string name="settings_buy_button_not_possible">暂不提供</string>
-	<string name="settings_buy_ad_free_label">移除广告服务：</string>
+	<string name="settings_buy_ad_free_label">移除广告服务</string>
 	<string name="settings_contribute_label">帮助改进 App</string>
 	<string name="settings_contribute_button">参与共研</string>
 
@@ -115,8 +155,6 @@
 	<string name="settings_saving">您的设置仍在保存中。如果时间过长，：请检查您的网络连接，或退出应用程序并再次启动它。</string>
 
 	<string name="settings_server_messages">何时在 App 中显示提示？</string>
-	<string name="settings_server_messages_in_app">有新闻 / 警告时</string>
-	<string name="settings_server_messages_new_app_version">该 App 可更新时</string>
 
 	<string name="settings_other_options">其它选项</string>
 	<string name="settings_advanced_mode">高级模式</string>
@@ -235,6 +273,10 @@
 	<string name="install_guide_zip_file_missing">如果您想设备保持 Root 状态，请在上方指定一个 Root 包。</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">内存大小：</string>
 	<string name="device_information_cpu_frequency">处理器频率：</string>
 	<string name="device_information_header">我的设备</string>
@@ -243,7 +285,7 @@
 	<string name="device_information_incremental_os_version">增量更新版本：</string>
 	<string name="device_information_os_version">Android 版本：</string>
 	<string name="device_information_oxygen_os_version">OxygenOS 版本：</string>
-	<string name="device_information_oxygen_os_ota_version">(OTA: %s)</string>
+	<string name="device_information_oxygen_os_ota_version">OTA 版本:</string>
 	<string name="device_information_patch_level_version">安全更新：</string>
 	<string name="device_information_serial_number">序列号：</string>
 	<string name="device_information_system_on_a_chip">SoC：</string>
@@ -253,7 +295,7 @@
 	<!-- About screen strings -->
 	<string name="about">关于</string>
 	<string name="about_app_description">获取 Oxygen OS 更新的终极神器！</string>
-	<string name="about_background_story">本应用程序由 Arjan Vlek 制作\n\n这个应用程序是我另一款作品的续作，叫做 Cyanogen 更新追踪器（Cyanogen Update Tracker）， 为 Cyanogen OS 用户提供与本应用程序类似的功能。\n\n\n请注意，这并不是一个官方的 OnePlus 应用程序。\n\nOnePlus 的名称，商标，以及 OxygenOS 归 OnePlus 所有。 \n\nAndroid, Google, Google Play 以及 Google Play 的图案与商标由 Google Inc. 注册并持有。\n\n本应用程序使用 OnePlus 与 OPPO 的数据，为用户展示更新信息。\n\n如果您喜欢我的应用，请在 Google Play 上赞助我吧！\n\n中文翻译由 Mastiff 提供。</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\nAugust 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">在 Google Play 上评价</string>
 	<string name="about_version">更新器版本：%1$s</string>
 

@@ -20,7 +20,9 @@ package com.arjanvlek.oxygenupdater.settings.adFreeVersion.util;
  * IabResult (an error). To get the IAB result that caused this exception to be thrown, call {@link
  * #getResult()}.
  */
+@SuppressWarnings("WeakerAccess")
 public class IabException extends Exception {
+	private static final long serialVersionUID = -4041593689710170567L;
 	IabResult mResult;
 
 	public IabException(IabResult r) {

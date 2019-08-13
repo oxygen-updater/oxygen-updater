@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<!--
+		'Featured' variants of the custom preference layouts use backgroundVariant
+		to distinguish from regular preferences
+	-->
+	<PreferenceCategory
+		android:layout="@layout/custom_preference_header_featured"
+		android:title="@string/preference_header_support">
+
+		<Preference
+			android:icon="@drawable/monetization"
+			android:key="@string/key_ad_free"
+			android:layout="@layout/custom_preference_featured"
+			android:summary="@string/settings_buy_ad_free_label"
+			android:title="@string/label_buy_ad_free" />
+
+		<Preference
+			android:icon="@drawable/group_add"
+			android:key="@string/key_contributor"
+			android:layout="@layout/custom_preference_featured"
+			android:summary="@string/settings_contribute_label"
+			android:title="@string/contribute" />
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="@string/key_category_device"
+		android:layout="@layout/custom_preference_header"
+		android:title="@string/preference_header_device">
+
+		<!--suppress AndroidElementNotAllowed -->
+		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
+			android:icon="@drawable/smartphone"
+			android:key="@string/key_device"
+			android:layout="@layout/custom_preference"
+			android:summary="@string/summary_device"
+			android:title="@string/settings_device" />
+
+		<!--suppress AndroidElementNotAllowed -->
+		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
+			android:icon="@drawable/cloud_download"
+			android:key="@string/key_update_method"
+			android:layout="@layout/custom_preference"
+			android:summary="@string/summary_update_method"
+			android:title="@string/settings_update_method" />
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:layout="@layout/custom_preference_header"
+		android:title="@string/preference_header_ui">
+
+		<!--suppress AndroidElementNotAllowed -->
+		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
+			android:entries="@array/themeList"
+			android:entryValues="@array/themeList"
+			android:icon="@drawable/theme"
+			android:key="@string/key_theme"
+			android:layout="@layout/custom_preference"
+			android:summary="@string/summary_theme"
+			android:title="@string/label_theme"
+			app:caption="@string/theme_additional_note"
+			app:secondaryEntryValues="@array/themeValues"
+			app:subtitleEntries="@array/themeSubtitles"
+			app:title="@string/label_theme" />
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:icon="@drawable/system_update"
+			android:key="@string/key_ui_app_update"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/label_app_update_banner" />
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:icon="@drawable/subject"
+			android:key="@string/key_ui_news"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/label_news_warning_banner" />
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:layout="@layout/custom_preference_header"
+		android:title="@string/preference_header_notifications">
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:icon="@drawable/announcement"
+			android:key="@string/key_notification_critical_message"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/settings_push_from_server" />
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:icon="@drawable/system_update"
+			android:key="@string/key_notification_system_update"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/settings_push_new_version" />
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:icon="@drawable/android"
+			android:key="@string/key_notification_new_device_supported"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/settings_push_new_device" />
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:icon="@drawable/art_track"
+			android:key="@string/key_notification_news_story_published"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/settings_push_news" />
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:layout="@layout/custom_preference_header"
+		android:title="@string/preference_header_advanced">
+
+		<SwitchPreference
+			android:defaultValue="false"
+			android:icon="@drawable/lock_open"
+			android:key="@string/key_advanced_mode"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/settings_advanced_mode" />
+
+		<SwitchPreference
+			android:defaultValue="true"
+			android:icon="@drawable/assignment"
+			android:key="@string/key_share_usage_data"
+			android:layout="@layout/custom_preference"
+			android:summaryOff="@string/summary_off"
+			android:summaryOn="@string/summary_on"
+			android:title="@string/settings_upload_logs" />
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:layout="@layout/custom_preference_header"
+		android:title="@string/preference_header_about">
+
+		<Preference
+			android:icon="@drawable/policy"
+			android:key="@string/key_privacy_policy"
+			android:layout="@layout/custom_preference"
+			android:summary="@string/summary_privacy_policy"
+			android:title="@string/label_privacy_policy" />
+
+		<Preference
+			android:icon="@drawable/rate"
+			android:key="@string/key_rate_app"
+			android:layout="@layout/custom_preference"
+			android:summary="@string/summary_rate_app"
+			android:title="@string/label_rate_app" />
+
+		<Preference
+			android:icon="@drawable/oxygen_updater"
+			android:key="@string/key_oxygen"
+			android:layout="@layout/custom_preference"
+			android:summary="@string/summary_oxygen"
+			android:title="@string/app_name" />
+	</PreferenceCategory>
+</PreferenceScreen>

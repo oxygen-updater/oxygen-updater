@@ -13,8 +13,10 @@ import javax.net.ssl.SSLException;
 public class ExceptionUtils {
 
 	public static boolean isNetworkError(Throwable t) {
-		return (t instanceof SocketException || t instanceof SocketTimeoutException || t instanceof SSLException || t instanceof UnknownHostException || (t instanceof FileNotFoundException && t
-				.getMessage()
-				.contains("http")));
+		return t instanceof SocketException
+				|| t instanceof SocketTimeoutException
+				|| t instanceof SSLException
+				|| t instanceof UnknownHostException
+				|| (t instanceof FileNotFoundException && t.getMessage().contains("http"));
 	}
 }
