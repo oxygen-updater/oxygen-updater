@@ -72,6 +72,8 @@ public class ThemeUtils {
 				// otherwise resort to Android-provided modes
 				if (translatedTheme == DARK) {
 					return MODE_NIGHT_YES;
+				} else if (translatedTheme == LIGHT) {
+					return MODE_NIGHT_NO;
 				} else {
 					// Android Pie (9.0) introduced a night mode system flag that could be set in developer options
 					return VERSION.SDK_INT >= VERSION_CODES.P && translatedTheme != null
