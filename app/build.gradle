@@ -184,7 +184,9 @@ dependencies {
 	// https://developer.android.com/jetpack/androidx/releases/preference
 	implementation 'androidx.preference:preference:1.1.0-rc01'
 	// https://developer.android.com/jetpack/androidx/releases/recyclerview
-	implementation 'androidx.recyclerview:recyclerview:1.1.0-beta02'
+	// need to use this version, instead of beta02 to avoid a rare bug
+	// see https://stackoverflow.com/a/57508194/6319730
+	implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
 
 	// Google Material Components for Android
 	// https://github.com/material-components/material-components-android/releases

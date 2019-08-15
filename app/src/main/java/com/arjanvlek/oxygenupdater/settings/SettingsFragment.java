@@ -1,6 +1,7 @@
 package com.arjanvlek.oxygenupdater.settings;
 
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -42,7 +43,8 @@ import static androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_LIGHT;
  */
 public class SettingsFragment extends PreferenceFragmentCompat implements OnPreferenceChangeListener {
 
-	private AppCompatActivity context;
+	private Context context;
+	private AppCompatActivity activity;
 	private ApplicationData application;
 	private ActivityLauncher activityLauncher;
 	private InAppPurchaseDelegate delegate;
@@ -58,12 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-		context = (AppCompatActivity) getActivity();
-		//noinspection ConstantConditions
-		application = (ApplicationData) context.getApplication();
-		activityLauncher = new ActivityLauncher(context);
-
-		settingsManager = new SettingsManager(context);
+		init();
 
 		addPreferencesFromResource(R.xml.preferences);
 
@@ -72,6 +69,26 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 		setupThemePreference();
 		setupAdvancedModePreference();
 		setupAboutPreferences();
+	}
+
+	/**
+	 * Initialises context, activity, application, and their relevant references
+	 */
+	private void init() {
+		context = getContext();
+		activity = (AppCompatActivity) getActivity();
+		//noinspection ConstantConditions
+		application = (ApplicationData) activity.getApplication();
+		activityLauncher = new ActivityLauncher(activity);
+
+		settingsManager = new SettingsManager(context);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		init();
 	}
 
 	/**
@@ -120,7 +137,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 		advancedMode.setOnPreferenceClickListener(preference -> {
 			boolean isAdvancedMode = settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false);
 			if (isAdvancedMode) {
-				Dialogs.showAdvancedModeExplanation(application, context.getSupportFragmentManager());
+				Dialogs.showAdvancedModeExplanation(context, activity.getSupportFragmentManager());
 			}
 
 			return true;
@@ -292,7 +309,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 						+ ", Update Method: " + settingsManager.getPreference(context.getString(R.string.key_update_method), "<UNKNOWN>"));
 
 				// Google Play services are not required if the user doesn't use notifications
-				if (application.checkPlayServices(context.getParent(), false)) {
+				if (application.checkPlayServices(activity.getParent(), false)) {
 					// Subscribe to notifications for the newly selected device and update method
 					NotificationTopicSubscriber.subscribe(application);
 				} else {
