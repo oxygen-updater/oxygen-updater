@@ -2,11 +2,10 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:paddingLeft="@dimen/activity_horizontal_margin"
-	android:paddingTop="@dimen/activity_vertical_margin"
-	android:paddingRight="@dimen/activity_horizontal_margin"
-	android:paddingBottom="@dimen/activity_vertical_margin"
-	tools:context=".setupwizard.SetupActivity">
+	android:paddingStart="@dimen/padding_default"
+	android:paddingTop="@dimen/padding_default"
+	android:paddingEnd="@dimen/padding_default"
+	android:paddingBottom="@dimen/padding_default">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -14,11 +13,12 @@
 
 		<ImageView
 			android:id="@+id/introduction_step_3_image"
-			android:layout_width="300dp"
-			android:layout_height="100dp"
+			android:layout_width="match_parent"
+			android:layout_height="150dp"
 			android:layout_centerHorizontal="true"
 			android:contentDescription="@string/install_guide_image_description"
-			android:src="@drawable/ic_phone" />
+			android:src="@drawable/smartphone"
+			android:tint="?colorPrimary" />
 
 		<TextView
 			android:id="@+id/introduction_step_3_header_text"
@@ -26,11 +26,10 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/introduction_step_3_image"
 			android:layout_centerHorizontal="true"
-			android:layout_marginTop="10dp"
+			android:layout_marginTop="@dimen/padding_default"
+			android:gravity="center_horizontal"
 			android:text="@string/setup_page_3_title"
-			android:textAppearance="?android:textAppearanceLarge"
-			android:textSize="18sp"
-			android:textStyle="bold" />
+			android:textSize="@dimen/typography_title" />
 
 		<Spinner
 			android:id="@+id/introduction_step_3_device_dropdown"
@@ -38,36 +37,26 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/introduction_step_3_header_text"
 			android:layout_centerHorizontal="true"
-			android:layout_marginStart="20dp"
-			android:layout_marginLeft="20dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="20dp"
-			android:layout_marginRight="20dp" />
+			android:layout_marginTop="@dimen/padding_default" />
 
 		<ProgressBar
 			android:id="@+id/introduction_step_3_device_loading_bar"
 			style="?android:attr/progressBarStyleSmall"
-			android:layout_width="20dp"
-			android:layout_height="20dp"
-			android:layout_alignTop="@id/introduction_step_3_device_dropdown"
-			android:layout_marginTop="5dp"
+			android:layout_width="24dp"
+			android:layout_height="24dp"
+			android:layout_below="@id/introduction_step_3_header_text"
+			android:layout_marginTop="@dimen/padding_default"
 			android:layout_toEndOf="@id/introduction_step_3_device_dropdown"
-			android:visibility="gone" />
+			android:visibility="gone"
+			tools:visibility="visible" />
 
 		<TextView
 			android:id="@+id/introduction_step_3_text_block_1"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/introduction_step_3_device_dropdown"
-			android:layout_marginStart="20dp"
-			android:layout_marginLeft="20dp"
-			android:layout_marginTop="10dp"
-			android:layout_marginEnd="20dp"
-			android:layout_marginRight="20dp"
+			android:layout_marginTop="@dimen/padding_default"
 			android:text="@string/setup_page_3_text"
-			android:textAppearance="?android:textAppearanceMedium"
-			android:textColor="@color/material_blue_grey" />
-
-
+			android:textColor="?android:textColorSecondary" />
 	</RelativeLayout>
 </ScrollView>

@@ -14,7 +14,7 @@
 	<string name="update_information_header_short">"Обновить"</string>
 	<string name="update_information_installed_update">"Последняя версия:"</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
-	<string name="update_information_latest_available_update">"Доступно новое обновление:"</string>
+	<string name="update_information_latest_available_update">"Доступно новое обновление"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
 	<string name="update_information_oxygen_os_version">"Версия Oxygen OS: %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Система обновлена."</string>
@@ -88,11 +88,51 @@
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
 
 	<!-- Settings strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="preference_header_support">Support us</string>
+	<string name="preference_header_device">Device</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notifications</string>
+	<string name="preference_header_advanced">Advanced</string>
+	<string name="preference_header_about">About</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="summary_on">Enabled</string>
+	<string name="summary_off">Disabled</string>
+	<string name="summary_device">Please wait…</string>
+	<string name="summary_update_method">Select a device first</string>
+	<string name="summary_theme">Set theme</string>
+	<string name="summary_privacy_policy">View online</string>
+	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="label_buy_ad_free">Remove ads</string>
+	<string name="label_theme">Theme</string>
+	<string name="label_app_update_banner">App update banners</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
+	<string name="label_privacy_policy">Privacy policy</string>
+	<string name="label_rate_app">Rate this app</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light">Light</string>
+	<string name="theme_dark">Dark</string>
+	<string name="theme_system">System</string>
+	<string name="theme_auto">Auto</string>
+
+	<!-- TODO: Translate these lines -->
+	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
+	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
+	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
+	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
+	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+		conserve battery</string>
+
 	<string name="settings">"Настройки"</string>
 	<string name="settings_buy_button_buy">"Купить (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Куплено"</string>
 	<string name="settings_buy_button_not_possible">"Недоступно"</string>
-	<string name="settings_buy_ad_free_label">"Отключить рекламу:"</string>
+	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
 
 	<!-- TODO translate the 2 below -->
 	<string name="settings_contribute_label">Help improving the app:</string>
@@ -116,8 +156,6 @@
 	<string name="settings_saved">"Ваши настройки автоматически сохраняются."</string>
 	<string name="settings_saving">"Ваши настройки сохраняются. Если сохранение будет долгим, проверьте подключение и перезапустите приложение."</string>
 	<string name="settings_server_messages">"Показывать сообщение в приложении, когда:"</string>
-	<string name="settings_server_messages_in_app">"Есть какое-либо предупреждение или новости"</string>
-	<string name="settings_server_messages_new_app_version">"Доступно обновление приложения"</string>
 	<string name="settings_other_options">"Другие настройки:"</string>
 	<string name="settings_advanced_mode">"Расширенный режим"</string>
 	<string name="settings_advanced_mode_button_explanation">"Нажмите на кнопку для получения информации о расширенном режиме."</string>
@@ -277,6 +315,10 @@
 	<string name="install_guide_zip_file_missing">"Если вы хотите сохранить рут-права на устройстве, выберите архив для установки выше."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these lines -->
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
 	<string name="device_information_amount_of_memory">"Объем ОЗУ:"</string>
 	<string name="device_information_cpu_frequency">"Частота процессора:"</string>
 	<string name="device_information_header">"Устройство"</string>
@@ -285,7 +327,7 @@
 	<string name="device_information_incremental_os_version">"Номер сборки ПО:"</string>
 	<string name="device_information_os_version">"Версия Android:"</string>
 	<string name="device_information_oxygen_os_version">"Версия Oxygen OS:"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"Версия OTA:"</string>
 	<string name="device_information_patch_level_version">"Патч безопасности от:"</string>
 	<string name="device_information_serial_number">"Серийный номер:"</string>
 	<string name="device_information_system_on_a_chip">"SoC:"</string>
@@ -295,19 +337,8 @@
 	<!-- About screen strings -->
 	<string name="about">"О приложении"</string>
 	<string name="about_app_description">"Эффективный инструмент для обновления Oxygen OS."</string>
-	<string name="about_background_story">"Автор Arjan Vlek.
-
-Это приложение является дополнением к моему другому приложению, Cyanogen Update Tracker (<a href="https://cyanogenupdatetracker.com">website</a>). Cyanogen Update Tracker предлагает аналогичный функционал пользователям Cyanogen OS.
-
-
-Обратите внимание, что это не официальное приложение OnePlus.
-Имя OnePlus, логотип OnePlus и OxygenOS являются собственностью OnePlus.
-Android, Google, Google Play и логотип Google Play являются зарегистрированными товарными знаками Google Inc.
-Это приложение использует данные OnePlus и OPPO для отображения информации об обновлении.
-
-Если вам нравится мое приложение, оцените его в Google Play.
-
-Русский перевод:  И. Михал"</string>
+	<!-- TODO translate this string -->
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">"Оценить в Google Play"</string>
 	<string name="about_version">"Версия: %1$s"</string>
 

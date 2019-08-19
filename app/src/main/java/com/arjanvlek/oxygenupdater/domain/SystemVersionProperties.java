@@ -4,7 +4,6 @@ package com.arjanvlek.oxygenupdater.domain;
 import android.os.Build;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +13,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
 
 /**
  * Contains some properties of the OS / ROM installed on the device.
@@ -79,7 +80,7 @@ public class SystemVersionProperties {
 		try {
 			Process getBuildPropProcess = Runtime.getRuntime().exec("getprop");
 
-			Logger.logVerbose(TAG, "Started fetching device properties using 'getprop' command...");
+			logVerbose(TAG, "Started fetching device properties using 'getprop' command...");
 
 			Scanner scanner = new Scanner(getBuildPropProcess.getInputStream()).useDelimiter("\\A");
 			String properties = scanner.hasNext() ? scanner.next() : "";
@@ -98,10 +99,10 @@ public class SystemVersionProperties {
 				securityPatchDate = readBuildPropItem(SECURITY_PATCH_LOOKUP_KEY, properties, "Detected security patch level: %s ...");
 			}
 
-			Logger.logVerbose(TAG, "Finished fetching device properties using 'getprop' command...");
+			logVerbose(TAG, "Finished fetching device properties using 'getprop' command...");
 
 		} catch (Exception e) {
-			Logger.logError(TAG, e.getLocalizedMessage(), e);
+			logError(TAG, e.getLocalizedMessage(), e);
 		}
 
 		this.oxygenDeviceName = oxygenDeviceName;
@@ -172,7 +173,7 @@ public class SystemVersionProperties {
 					}
 
 					if (logText != null) {
-						Logger.logVerbose(TAG, String.format(logText, result));
+						logVerbose(TAG, String.format(logText, result));
 					}
 
 					return result; // Return the first successfully detected item. This because some keys have multiple values which all exist in the same properties file.

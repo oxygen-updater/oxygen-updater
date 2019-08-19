@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 public class DownloadProgressData implements Serializable {
 
+	private static final long serialVersionUID = 5271414164650145215L;
 	private final TimeRemaining timeRemaining;
 
 	private final int progress;
@@ -23,7 +24,7 @@ public class DownloadProgressData implements Serializable {
 	}
 
 	DownloadProgressData(long numberOfSecondsRemaining, int progress, boolean waitingForConnection) {
-		this.timeRemaining = calculateTimeRemaining((int) numberOfSecondsRemaining);
+		timeRemaining = calculateTimeRemaining((int) numberOfSecondsRemaining);
 		this.progress = progress;
 		this.waitingForConnection = waitingForConnection;
 	}
@@ -48,10 +49,10 @@ public class DownloadProgressData implements Serializable {
 		return new TimeRemaining(numberOfSecondsRemaining / 3600, numberOfSecondsRemaining / 60, numberOfSecondsRemaining % 60);
 	}
 
-	@SuppressWarnings("WeakerAccess")
 	// Can't be private, because UpdateInformationFragment calls this.
 	public class TimeRemaining implements Serializable {
 
+		private static final long serialVersionUID = 3296442028952124904L;
 		private final int hoursRemaining;
 		private final int minutesRemaining;
 		private final int secondsRemaining;

@@ -9,7 +9,7 @@ import java8.lang.FunctionalInterface;
 @FunctionalInterface
 public interface Worker {
 
-	static Worker NOOP = () -> {
+	Worker NOOP = () -> {
 	};
 
 	void start();

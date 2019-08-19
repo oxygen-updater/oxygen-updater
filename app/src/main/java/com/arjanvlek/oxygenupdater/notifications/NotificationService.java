@@ -9,7 +9,6 @@ import android.os.PersistableBundle;
 
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -21,6 +20,8 @@ import java.util.Map;
 
 import java8.util.stream.StreamSupport;
 
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS;
 
 public class NotificationService extends FirebaseMessagingService {
@@ -38,14 +39,14 @@ public class NotificationService extends FirebaseMessagingService {
 			Map<String, String> messageContents = remoteMessage.getData();
 			int displayDelayInSeconds = Utils.randomBetween(1, settingsManager.getPreference(PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800));
 
-			Logger.logDebug(TAG, "Displaying push notification in " + displayDelayInSeconds + " second(s)");
+			logDebug(TAG, "Displaying push notification in " + displayDelayInSeconds + " second(s)");
 
 			PersistableBundle taskData = new PersistableBundle();
 
 			JobScheduler scheduler = (JobScheduler) getApplication().getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
 			if (scheduler == null) {
-				Logger.logError(TAG, new OxygenUpdaterException("Job scheduler service is not available"));
+				logError(TAG, new OxygenUpdaterException("Job scheduler service is not available"));
 				return;
 			}
 
@@ -71,7 +72,7 @@ public class NotificationService extends FirebaseMessagingService {
 
 			scheduler.schedule(task.build());
 		} catch (Exception e) {
-			Logger.logError(TAG, "Error dispatching push notification", e);
+			logError(TAG, "Error dispatching push notification", e);
 		}
 	}
 }

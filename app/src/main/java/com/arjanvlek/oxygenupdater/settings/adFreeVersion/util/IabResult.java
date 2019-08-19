@@ -15,6 +15,8 @@
 
 package com.arjanvlek.oxygenupdater.settings.adFreeVersion.util;
 
+import androidx.annotation.NonNull;
+
 /**
  * Represents the result of an in-app billing operation. A result is composed of a response code (an
  * integer) and possibly a message (String). You can get those by calling {@link #getResponse} and
@@ -50,6 +52,8 @@ public class IabResult {
 		return !isSuccess();
 	}
 
+	@NonNull
+	@Override
 	public String toString() {
 		return "IabResult: " + getMessage();
 	}

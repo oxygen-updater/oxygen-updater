@@ -5,7 +5,6 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.versionformatter.FormattableUpdateData;
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
 
@@ -16,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static android.graphics.Typeface.BOLD;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose;
 
 public class UpdateDescriptionParser {
 
@@ -25,7 +26,7 @@ public class UpdateDescriptionParser {
 	public static Spanned parse(String updateDescription) {
 		SpannableString result;
 
-		final Map<String, String> links = new HashMap<>();
+		Map<String, String> links = new HashMap<>();
 
 		String currentLine;
 		try {
@@ -132,7 +133,7 @@ public class UpdateDescriptionParser {
 
 		} catch (Exception e) {
 			// If an error occurred, log it and return the original / unmodified update description
-			Logger.logError(TAG, "Error parsing update description", e);
+			logError(TAG, "Error parsing update description", e);
 			return new SpannableString(updateDescription);
 		}
 
@@ -154,32 +155,32 @@ public class UpdateDescriptionParser {
 		// Finds the element type for a given line of OnePlus formatted text.
 		private static UpdateDescriptionElement of(String inputLine) {
 			// The empty string gets parsed as EMPTY
-			Logger.logVerbose(TAG, "Input line: " + inputLine);
+			logVerbose(TAG, "Input line: " + inputLine);
 
 			if (inputLine == null || inputLine.isEmpty()) {
-				Logger.logVerbose(TAG, "Matched type: EMPTY");
+				logVerbose(TAG, "Matched type: EMPTY");
 				return EMPTY;
 			} else if (inputLine.contains("###")) {
-				Logger.logVerbose(TAG, "Matched type: HEADING_3");
+				logVerbose(TAG, "Matched type: HEADING_3");
 				return HEADING_3;
 			} else if (inputLine.contains("##")) {
-				Logger.logVerbose(TAG, "Matched type: HEADING_2");
+				logVerbose(TAG, "Matched type: HEADING_2");
 				return HEADING_2;
 			} else if (inputLine.contains("#")) {
-				Logger.logVerbose(TAG, "Matched type: HEADING_1");
+				logVerbose(TAG, "Matched type: HEADING_1");
 				return HEADING_1;
 			} else if (inputLine.contains("*")) {
-				Logger.logVerbose(TAG, "Matched type: LIST_ITEM");
+				logVerbose(TAG, "Matched type: LIST_ITEM");
 				return LIST_ITEM;
 			} else if (inputLine.contains("\\")) {
-				Logger.logVerbose(TAG, "Matched type: LINE_SEPARATORS");
+				logVerbose(TAG, "Matched type: LINE_SEPARATORS");
 				return LINE_SEPARATORS;
 			} else if (inputLine.contains("[") && inputLine.contains("]") && ((inputLine.contains("(") && inputLine
 					.contains(")")) || (inputLine.contains("{") && inputLine.contains("}")))) {
-				Logger.logVerbose(TAG, "Matched type: LINK");
+				logVerbose(TAG, "Matched type: LINK");
 				return LINK;
 			} else {
-				Logger.logVerbose(TAG, "Matched type: TEXT");
+				logVerbose(TAG, "Matched type: TEXT");
 				return TEXT;
 			}
 		}

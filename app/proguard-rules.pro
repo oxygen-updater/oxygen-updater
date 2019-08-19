@@ -16,35 +16,26 @@
 #   public *;
 #}
 
+# Crashlytics suggestion: to allow for meaningful crash reports
 -keepattributes *Annotation*,EnclosingMethod,Signature,SourceFile,LineNumberTable
+# Crashlytics suggestion: custom exceptions should be be skipped during obfuscation
 -keep public class * extends java.lang.Exception
 
-# Keep all Crashlytics classes, these are already obfuscated / minified
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
-
-# Keep all jackson and codehaus classes, and don't warn for conflicts within jackson-databind classes.
--keepnames class com.fasterxml.jackson.** { *; }
--dontwarn com.fasterxml.jackson.databind.**
--keep class org.codehaus.** { *; }
-
-# The class JsonAutoDetect may not be obfuscated as well.
--keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility {
-   public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *;
+# Proguard configuration for Jackson 2.x, taken from https://github.com/FasterXML/jackson-docs/wiki/JacksonOnAndroid
+-keep class com.fasterxml.jackson.databind.ObjectMapper {
+    public <methods>;
+    protected <methods>;
+}
+-keep class com.fasterxml.jackson.databind.ObjectWriter {
+    public ** writeValueAsString(**);
+}
+# Removing this results in a Cannot deserialize value of type `boolean` from String "0": only "true" or "false" recognized error
+-keepclassmembers class * {
+     @com.fasterxml.jackson.annotation.* *;
 }
 
-#We need to keep the method names of all getters and setters to allow Jackson to find them.
+# We need to keep the method names of all getters and setters to allow Jackson to find them.
 -keep public class com.arjanvlek.oxygenupdater.** {
   public void set*(***);
   public *** get*();
 }
-
--dontwarn javax.xml.**
-#Due to removal of Apache http components in Android 6.0 these lines have to be added here.
--dontwarn org.apache.http.**
--dontwarn android.net.http.AndroidHttpClient
--dontwarn com.google.android.gms.internal.**
--dontwarn org.joda.convert.**
--dontwarn java.lang.invoke.*
--dontwarn sun.misc.Unsafe
--dontwarn build.IgnoreJava8API

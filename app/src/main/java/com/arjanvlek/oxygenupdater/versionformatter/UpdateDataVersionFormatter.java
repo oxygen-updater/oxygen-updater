@@ -6,7 +6,6 @@ import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("WeakerAccess")
 public class UpdateDataVersionFormatter {
 
 	/**
@@ -64,9 +63,9 @@ public class UpdateDataVersionFormatter {
 	 */
 	public static String getFormattedVersionNumber(FormattableUpdateData versionInfo) {
 		if (!canVersionInfoBeFormatted(versionInfo)) {
-			return versionInfo != null && versionInfo.getInternalVersionNumber() != null && !versionInfo
-					.getInternalVersionNumber()
-					.equals("") ? "V. " + versionInfo.getInternalVersionNumber() : "Oxygen OS System Update";
+			return versionInfo != null
+					&& versionInfo.getInternalVersionNumber() != null
+					&& !versionInfo.getInternalVersionNumber().equals("") ? "V. " + versionInfo.getInternalVersionNumber() : "Oxygen OS System Update";
 		}
 
 		String firstLine = getFirstLine(versionInfo); // Can never be null due to check canVersionInfoBeFormatted
@@ -93,8 +92,7 @@ public class UpdateDataVersionFormatter {
 	 * string if the update description is null or empty.
 	 */
 	private static String getFirstLine(FormattableUpdateData versionInfo) {
-		if (versionInfo == null || versionInfo.getUpdateDescription() == null || versionInfo.getUpdateDescription()
-				.equals("")) {
+		if (versionInfo == null || versionInfo.getUpdateDescription() == null || versionInfo.getUpdateDescription().equals("")) {
 			return "";
 		}
 

@@ -7,11 +7,11 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.Objects;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 02/05/2019.
@@ -24,7 +24,7 @@ public class ContributorUtils {
 	private final Context context;
 
 	public ContributorUtils(Context context) {
-		Objects.requireNonNull(context, "Context cannot be null");
+		requireNonNull(context, "Context cannot be null");
 		this.context = context;
 	}
 
@@ -69,7 +69,7 @@ public class ContributorUtils {
 		int resultCode = scheduler.schedule(task.build());
 
 		if (resultCode != JobScheduler.RESULT_SUCCESS) {
-			Logger.logWarning("ContributorActivity", new ContributorException("File check could not be scheduled. Exit code of scheduler: " + resultCode));
+			logWarning("ContributorActivity", new ContributorException("File check could not be scheduled. Exit code of scheduler: " + resultCode));
 		}
 	}
 

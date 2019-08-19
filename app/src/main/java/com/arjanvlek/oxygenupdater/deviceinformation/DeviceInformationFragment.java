@@ -6,17 +6,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 
 import java.util.List;
@@ -24,18 +23,20 @@ import java.util.List;
 import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 
 public class DeviceInformationFragment extends AbstractFragment {
 
 	private static final String TAG = "DeviceInformationFragment";
-	private RelativeLayout rootView;
+	private NestedScrollView rootView;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		//Inflate the layout for this fragment
-		rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_deviceinformation, container, false);
+		rootView = (NestedScrollView) inflater.inflate(R.layout.fragment_device_information, container, false);
 		return rootView;
 	}
 
@@ -43,7 +44,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		if (!isAdded()) {
-			Logger.logError(TAG, new OxygenUpdaterException("Fragment not added. Can not create the view!"));
+			logError(TAG, new OxygenUpdaterException("Fragment not added. Can not create the view!"));
 			return;
 		}
 
@@ -53,7 +54,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 	private void displayFormattedDeviceName(List<Device> devices) {
 		if (!isAdded()) {
-			Logger.logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display formatted device name!"));
+			logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display formatted device name!"));
 			return;
 		}
 
@@ -62,8 +63,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 		if (devices != null) {
 			StreamSupport.stream(devices)
-					.filter(device -> device.getProductNames() != null && device.getProductNames()
-							.contains(systemVersionProperties.getOxygenDeviceName()))
+					.filter(device -> device.getProductNames() != null && device.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
 					.findAny()
 					.ifPresent(device -> deviceNameView.setText(device.getName()));
 		}
@@ -71,7 +71,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 	private void displayDeviceInformation() {
 		if (!isAdded()) {
-			Logger.logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display device information!"));
+			logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display device information!"));
 			return;
 		}
 
@@ -80,8 +80,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 		// Device name (in top)
 		TextView deviceNameView = rootView.findViewById(R.id.device_information_header);
-		deviceNameView.setText(String.format(getString(R.string.device_information_device_name), deviceInformationData
-				.getDeviceManufacturer(), deviceInformationData.getDeviceName()));
+		deviceNameView.setText(String.format(getString(R.string.device_information_device_name), deviceInformationData.getDeviceManufacturer(), deviceInformationData.getDeviceName()));
 
 		// SoC
 		TextView socView = rootView.findViewById(R.id.device_information_soc_field);
@@ -92,8 +91,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 		TextView cpuFreqView = rootView.findViewById(R.id.device_information_cpu_freq_field);
 
 		if (!cpuFreqString.equals(DeviceInformationData.UNKNOWN)) {
-			cpuFreqView.setText(String.format(getString(R.string.device_information_gigahertz), deviceInformationData
-					.getCpuFrequency()));
+			cpuFreqView.setText(String.format(getString(R.string.device_information_gigahertz), deviceInformationData.getCpuFrequency()));
 		} else {
 			cpuFreqView.setText(getString(R.string.device_information_unknown));
 		}
@@ -105,7 +103,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 			activityManager.getMemoryInfo(mi);
 			totalMemory = mi.totalMem / 1048576L;
 		} catch (Exception e) {
-			Logger.logWarning("DeviceInformationFragment", "Memory information is unavailable due to error", e);
+			logWarning("DeviceInformationFragment", "Memory information is unavailable due to error", e);
 			totalMemory = 0;
 		}
 
@@ -136,9 +134,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 		TextView oxygenOsOtaVersionView = rootView.findViewById(R.id.device_information_oxygen_os_ota_ver_field);
 
 		if (!systemVersionProperties.getOxygenOSOTAVersion().equals(NO_OXYGEN_OS)) {
-			oxygenOsOtaVersionView.setText(getString(R.string.device_information_oxygen_os_ota_version, systemVersionProperties
-					.getOxygenOSOTAVersion()));
-
+			oxygenOsOtaVersionView.setText(systemVersionProperties.getOxygenOSOTAVersion());
 		} else {
 			oxygenOsOtaVersionView.setVisibility(View.GONE);
 		}

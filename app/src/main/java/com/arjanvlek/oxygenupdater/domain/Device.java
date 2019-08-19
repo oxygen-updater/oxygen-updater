@@ -5,44 +5,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class Device {
 
 	private long id;
 	private String name;
 	private List<String> productNames;
 
-	public Device() {
-	}
-
 	public Device(long id, String name, String productName) {
 		this.id = id;
 		this.name = name;
-		this.productNames = getProductNames(productName);
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<String> getProductNames() {
-		return productNames;
+		productNames = getProductNames(productName);
 	}
 
 	@JsonProperty("product_names")
 	public void setProductName(String productName) {
-		this.productNames = getProductNames(productName);
+		productNames = getProductNames(productName);
 	}
 
 	private List<String> getProductNames(String productNameTemplate) {

@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
-
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
@@ -20,10 +19,11 @@ android {
 		applicationId "com.arjanvlek.oxygenupdater"
 		minSdkVersion 21
 		targetSdkVersion 28
-		versionCode 51
-		versionName "2.7.6"
+		versionCode 53
+		versionName "3.0.1"
 		signingConfig signingConfigs.signingConfig
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+		proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 	}
 
 	compileSdkVersion 28
@@ -53,9 +53,9 @@ android {
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true"
 
 			minifyEnabled true
-			shrinkResources false
+			shrinkResources true
 			debuggable false
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			manifestPlaceholders = [appName: 'Oxygen Updater', fullPackageName: defaultConfig.applicationId]
 		}
 		debug {
 			// Config for use during debugging and testing on an emulator. Uses the test server, and reads system properties using the default build.prop values present on any Android device / emulator.
@@ -71,8 +71,13 @@ android {
 			// During debugging, all devices are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
+			minifyEnabled true
+			shrinkResources true
 			debuggable true
-			signingConfig signingConfigs.signingConfig
+			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
+			manifestPlaceholders = [appName: 'Oxygen Updater (debug)', fullPackageName: defaultConfig.applicationId + '.debug']
+			versionNameSuffix '-debug'
+			applicationIdSuffix '.debug'
 		}
 		localDebug {
 			// Config for use during debugging locally on an emulator. Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device / emulator.
@@ -89,7 +94,10 @@ android {
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // Ads also need to be tested.
 
 			debuggable true
-			signingConfig signingConfigs.signingConfig
+			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
+			manifestPlaceholders = [appName: 'Oxygen Updater (localDebug)', fullPackageName: defaultConfig.applicationId + '.localDebug']
+			versionNameSuffix '-localDebug'
+			applicationIdSuffix '.localDebug'
 		}
 		screenshot {
 			// Config for use during screenshot taking. Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device / emulator.
@@ -104,8 +112,14 @@ android {
 			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
 			// During taking screenshots, all devices are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "false" // On screenshots no ads!
+
+			minifyEnabled true
+			shrinkResources true
 			debuggable true
-			signingConfig signingConfigs.signingConfig
+			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
+			manifestPlaceholders = [appName: 'Oxygen Updater (screenshot)', fullPackageName: defaultConfig.applicationId + '.screenshot']
+			applicationIdSuffix '.screenshot'
+			versionNameSuffix '-screenshot'
 
 		}
 		device {
@@ -121,8 +135,14 @@ android {
 			buildConfigField "String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\""
 			// On test device all build types are supported.
 			buildConfigField "Boolean", "ADS_ARE_SUPPORTED", "true" // On test device use ads!
+
+			minifyEnabled true
+			shrinkResources true
 			debuggable true
-			signingConfig signingConfigs.signingConfig
+			// to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
+			manifestPlaceholders = [appName: 'Oxygen Updater (device)', fullPackageName: defaultConfig.applicationId + '.device']
+			versionNameSuffix '-device'
+			applicationIdSuffix '.device'
 
 		}
 	}
@@ -146,28 +166,45 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-	//General Android libraries
-	implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
-	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-	implementation 'androidx.cardview:cardview:1.0.0'
-	implementation 'androidx.browser:browser:1.0.0'
+	compileOnly 'org.projectlombok:lombok:1.18.8'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
-	//JSON libraries
+	// AndroidX: https://developer.android.com/jetpack/androidx/releases
+	// https://developer.android.com/jetpack/androidx/releases/appcompat
+	implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+	// https://developer.android.com/jetpack/androidx/releases/browser
+	implementation 'androidx.browser:browser:1.2.0-alpha07'
+	// https://developer.android.com/jetpack/androidx/releases/constraintlayout
+	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+	// https://developer.android.com/jetpack/androidx/releases/fragment
+	implementation 'androidx.fragment:fragment:1.2.0-alpha02'
+	// https://developer.android.com/jetpack/androidx/releases/preference
+	implementation 'androidx.preference:preference:1.1.0-rc01'
+	// https://developer.android.com/jetpack/androidx/releases/recyclerview
+	// need to use this version, instead of beta02 to avoid a rare bug
+	// see https://stackoverflow.com/a/57508194/6319730
+	implementation 'androidx.recyclerview:recyclerview:1.1.0-beta01'
+
+	// Google Material Components for Android
+	// https://github.com/material-components/material-components-android/releases
+	implementation 'com.google.android.material:material:1.1.0-alpha09'
+
+	// JSON libraries
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9.2'
 
-	//Date and time libraries
+	// Date and time libraries
 	implementation 'joda-time:joda-time:2.10.3'
 	implementation 'org.joda:joda-convert:2.2.1'
 
-	//Firebase libraries
+	// Google Firebase
+	// https://firebase.google.com/support/release-notes/android
 	implementation 'com.google.firebase:firebase-ads:18.1.1'
 	implementation 'com.google.firebase:firebase-messaging:19.0.1'
-	implementation 'com.google.android.gms:play-services-base:17.0.0'
+	implementation 'com.google.android.gms:play-services-base:17.1.0'
 	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
 	// Update downloader library
@@ -180,8 +217,9 @@ dependencies {
 	// Java 8 backports:
 	implementation 'net.sourceforge.streamsupport:streamsupport:1.7.1'
 
-	// Test libraries
 	testImplementation 'junit:junit:4.12'
+
+	// https://developer.android.com/jetpack/androidx/releases/test
 	androidTestImplementation 'androidx.test:runner:1.2.0'
 	androidTestImplementation 'androidx.test:rules:1.2.0'
 	androidTestImplementation 'androidx.annotation:annotation:1.1.0'

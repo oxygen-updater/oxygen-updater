@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/dialog_layout"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<ImageView
+		android:layout_width="@dimen/padding_2x"
+		android:layout_height="4dp"
+		android:layout_gravity="center"
+		android:layout_marginTop="@dimen/padding_half"
+		android:src="@drawable/rounded"
+		android:tint="@color/backgroundVariant" />
+
+	<TextView
+		android:id="@+id/dialog_title"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingStart="@dimen/padding_default"
+		android:paddingEnd="@dimen/padding_default"
+		android:paddingBottom="@dimen/padding_half"
+		android:textColor="?colorPrimary"
+		android:textSize="@dimen/typography_subheading"
+		tools:text="Header" />
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:fadingEdge="vertical"
+		android:fadingEdgeLength="@dimen/padding_4x"
+		android:requiresFadingEdge="vertical">
+
+		<LinearLayout
+			android:id="@+id/dialog_item_list_container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			<!--
+				Items will be inflated from `bottom_sheet_item.xml` and inserted here.
+				Logic is in `BottomSheetPreference.java`
+			-->
+		</LinearLayout>
+
+	</androidx.core.widget.NestedScrollView>
+
+	<TextView
+		android:id="@+id/dialog_caption"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/padding_default"
+		android:textSize="@dimen/typography_caption"
+		tools:text="Additional explanation" />
+</LinearLayout>

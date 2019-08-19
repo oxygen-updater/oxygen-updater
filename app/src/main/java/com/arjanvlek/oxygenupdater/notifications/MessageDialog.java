@@ -12,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 /**
  * Usage: Title text, Message text, Positive button text, Negative button text.
@@ -62,9 +63,9 @@ public class MessageDialog extends DialogFragment {
 			super.show(manager, tag);
 		} catch (IllegalStateException e) {
 			if (e.getMessage() != null && e.getMessage().contains("onSaveInstanceState")) {
-				Logger.logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
+				logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e);
 			} else {
-				Logger.logError("MessageDialog", "Error when displaying dialog '" + tag + "'", e);
+				logError("MessageDialog", "Error when displaying dialog '" + tag + "'", e);
 			}
 		}
 	}
@@ -97,9 +98,9 @@ public class MessageDialog extends DialogFragment {
 		if (!closable) {
 			builder.setCancelable(false);
 			builder.setOnKeyListener((dialogInterface, i, keyEvent) -> {
-                if (i == KeyEvent.KEYCODE_BACK) {
-                    exit();
-                }
+				if (i == KeyEvent.KEYCODE_BACK) {
+					exit();
+				}
 				return true;
 			});
 			builder.setOnDismissListener(dialogInterface -> exit());

@@ -87,13 +87,47 @@
 	<string name="download_verifying_start">"Le téléchargement va maintenant être vérifié …"</string>
 
 	<!-- Settings strings -->
+	<string name="preference_header_support">Supportez-nous</string>
+	<string name="preference_header_device">Périphérique</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notifications</string>
+	<string name="preference_header_advanced">Avancé</string>
+	<string name="preference_header_about">À propos</string>
+
+	<string name="summary_on">Activé</string>
+	<string name="summary_off">Désactivé</string>
+	<string name="summary_device">Veuillez patienter…</string>
+	<string name="summary_update_method">Veuillez sélectionner un périphérique</string>
+	<string name="summary_theme">Choisissez un thème</string>
+	<string name="summary_privacy_policy">Voir en ligne</string>
+	<string name="summary_rate_app">Laissez 5 étoiles</string>
+	<string name="summary_oxygen" translatable="false">v%1$s</string>
+
+	<string name="label_buy_ad_free">Enlever les publicités</string>
+	<string name="label_theme">Thème</string>
+	<string name="label_app_update_banner">Bannière relative à une nouvelle version de l\'application étant disponible</string>
+	<string name="label_news_warning_banner">Bannières d\'articles et avertissements</string>
+	<string name="label_privacy_policy">Politique de confidentialité</string>
+	<string name="label_rate_app">Évaluez cette application</string>
+
+	<string name="theme_light">Lumineux</string>
+	<string name="theme_dark">Sombre</string>
+	<string name="theme_system">Système</string>
+	<string name="theme_auto">Automatique</string>
+
+	<string name="theme_light_subtitle">Thème avec un fond blanc et un filet de rouge</string>
+	<string name="theme_dark_subtitle">Thème avec un fond noir et un filet de rouge. Utilisez ce thème si vous voulez économiser de la batterie, plus précisément sur les périphériques avec un écran AMOLED</string>
+	<string name="theme_system_subtitle">Utilise le thème système (vous pouvez le modifier dans les paramètres d\'affichage ou les options de développement). Dépends du périphérique</string>
+	<string name="theme_auto_subtitle">Bascule entre les thèmes lumineux et sombres en fonction de l\'heure afin d\'empêcher la fatigue des yeux pendant la nuit</string>
+	<string name="theme_additional_note">Note: si le thème choisi est \'Automatique\' et l\'économiseur de batterie activé, le thème sombre sera automatiquement utilisé quelle que soit l\'heure afin d\'économiser de la batterie</string>
+
 	<string name="settings">"Réglages"</string>
 	<string name="settings_buy_button_buy">"%1$s"</string>
 	<string name="settings_buy_button_bought">"Acheté"</string>
 	<string name="settings_buy_button_not_possible">"Indisponible"</string>
 	<string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>
 
-	<string name="settings_contribute_label">Aidez à améliorer l\'application:</string>
+	<string name="settings_contribute_label">Aidez à améliorer l\'application</string>
 	<string name="settings_contribute_button">Contribuez</string>
 
 	<string name="settings_category_other">"Autres"</string>
@@ -110,8 +144,6 @@
 	<string name="settings_saved">"Vos réglages sont automatiquement sauvegardés."</string>
 	<string name="settings_saving">"Vos réglages sont en cours d'enregistrement. Si cela prend trop de temps vérifiez votre connexion à Internet, quittez l'application et réessayez."</string>
 	<string name="settings_server_messages">"Montrer des messages dans l'application quand :"</string>
-	<string name="settings_server_messages_in_app">"Des articles ou avertissements sont disponibles"</string>
-	<string name="settings_server_messages_new_app_version">"Une mise à jour de l'application est disponible"</string>
 	<string name="settings_other_options">"Autres options"</string>
 	<string name="settings_advanced_mode">"Mode avancé"</string>
 	<string name="settings_advanced_mode_button_explanation">"Appuyez sur ce bouton pour avoir plus d'explications sur le mode avancé."</string>
@@ -270,6 +302,9 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="install_guide_zip_file_missing">"Si vous voulez conserver votre périphérique rooté vous devez spécifier au-dessus un package root"</string>
 
 	<!-- Device information strings -->
+	<string name="device_information_hardware_header">Matériel</string>
+	<string name="device_information_software_header">Logiciel</string>
+
 	<string name="device_information_amount_of_memory">"Quantité de RAM"</string>
 	<string name="device_information_cpu_frequency">"Fréquence du processeur"</string>
 	<string name="device_information_header">"Mon périphérique"</string>
@@ -278,7 +313,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="device_information_incremental_os_version">"Version incrémentale de l'OS :"</string>
 	<string name="device_information_os_version">"Version d'Android :"</string>
 	<string name="device_information_oxygen_os_version">"Version d'Oxygen OS :"</string>
-	<string name="device_information_oxygen_os_ota_version">"(OTA: %s)"</string>
+	<string name="device_information_oxygen_os_ota_version">"Version d'OTA:"</string>
 	<string name="device_information_patch_level_version">"Date du patch de sécurité :"</string>
 	<string name="device_information_serial_number">"Numéro de série :"</string>
 	<string name="device_information_system_on_a_chip">"Chipset du système :"</string>
@@ -288,16 +323,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<!-- About screen strings -->
 	<string name="about">"A propos de l'app"</string>
 	<string name="about_app_description">"L'outil ultime pour les mises à jour d'Oxygen OS"</string>
-	<string name="about_background_story">"Cette application est écrite par Arjan Vlek.
-Elle est à la suite d\'une autre de mes applications appelée <a href="https://cyanogenupdatetracker.com">Cyanogen Update Tracker</a> qui donne des fonctionnalités similaires aux utilisateurs de Cyanogen OS.
-
-
-Veuillez noter que cette application n\'est pas une application officielle de OnePlus.
-Le nom OnePlus, le logo OnePlus et Oxygen OS sont propriétés de OnePlus.
-Android, Google, Google Play et le logo Google Play sont des marques déposées de Google Inc.
-Cette application utilise des données de OnePlus et d\'OPPO pour montrer les informations de mise à jour.
-
-Si vous aimez mon application, évaluez-la sur le Play Store maintenant :"</string>
+	<string name="about_background_story">Cette application a été initialement développée par Arjan Vlek à la suite d\'une autre de ses applications appelée <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (qui fournit des fonctionnalités similaires pour les utilisateurs de Cyanogen OS).\n\nAprès 4 ans, en Juillet 2019, Arjan a décidé de se retirer des deux projets et a transféré les applications à une équipe de développeurs venant chacun de différents pays. Ils ont pris la responsabilité de continuer à rendre à la communauté le service d\'obtenir les mises à jour réalisées par OnePlus plus rapidement.\nVous pouvez trouver plus d\'informations à propos de l\'annonce <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">ici</a>.\n\nLe 14 Août 2019 a marqué la première publication d\'une nouvelle version de l\'application par la nouvelle équipe, qui a introduit de nouvelles fonctionnalités (thème sombre et redesign).\n\nPour plus d\'information à propos de l\'équipe, consultez <a href="https://oxygenupdater.com/team/">le site</a>.\n\n\nVeuillez noter que cette application n\'est pas une application officielle de OnePlus. \nLe nom OnePlus, le logo OnePlus et Oxygen OS sont propriétés de OnePlus. \nAndroid, Google, Google Play et le logo Google Play sont des marques déposées de Google Inc. \nCette application utilise des données de OnePlus et d\'OPPO pour montrer les informations de mise à jour.\n\nSi vous aimez cette application, n\'hésitez pas à l\'évaluer sur le Play Store:</string>
 	<string name="about_rate_app_button_text">"Evaluer sur le Play Store"</string>
 	<string name="about_version">"Version: %1$s"</string>
 

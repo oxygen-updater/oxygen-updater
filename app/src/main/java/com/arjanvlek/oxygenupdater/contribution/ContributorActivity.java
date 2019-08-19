@@ -10,19 +10,20 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static com.arjanvlek.oxygenupdater.views.MainActivity.PERMISSION_REQUEST_CODE;
 import static com.arjanvlek.oxygenupdater.views.MainActivity.VERIFY_FILE_PERMISSION;
 
 @SuppressWarnings("Convert2Lambda")
-public class ContributorActivity extends AppCompatActivity {
+public class ContributorActivity extends SupportActionBarActivity {
 
 	public static final String INTENT_HIDE_ENROLLMENT = "hide_enrollment";
 
@@ -37,7 +38,6 @@ public class ContributorActivity extends AppCompatActivity {
 
 		if (getIntent().getBooleanExtra(INTENT_HIDE_ENROLLMENT, false)) {
 			findViewById(R.id.contributeCheckbox).setVisibility(View.GONE);
-			findViewById(R.id.contributeAgreeText).setVisibility(View.GONE);
 			findViewById(R.id.contributeSaveButton).setVisibility(View.GONE);
 			saveOptionsHidden.compareAndSet(false, true);
 		}
@@ -58,12 +58,8 @@ public class ContributorActivity extends AppCompatActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		switch (requestCode) {
-			case PERMISSION_REQUEST_CODE:
-				if (this.permissionCallback != null && grantResults.length > 0) {
-					this.permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
-				}
-
+		if (requestCode == PERMISSION_REQUEST_CODE && permissionCallback != null && grantResults.length > 0) {
+			permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
 		}
 	}
 
@@ -75,15 +71,14 @@ public class ContributorActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			// Respond to the action bar's Back arrow button
-			case android.R.id.home:
-				if (!saveOptionsHidden.get()) {
-					onSaveButtonClick(null);
-				} else {
-					finish();
-				}
-				return true;
+		// Respond to the action bar's Back arrow button
+		if (item.getItemId() == android.R.id.home) {
+			if (!saveOptionsHidden.get()) {
+				onSaveButtonClick(null);
+			} else {
+				finish();
+			}
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -120,8 +115,7 @@ public class ContributorActivity extends AppCompatActivity {
 						contributorUtils.flushSettings(true);
 						finish();
 					} else {
-						Toast.makeText(getApplication(), R.string.contribute_allow_storage, Toast.LENGTH_LONG)
-								.show();
+						Toast.makeText(ContributorActivity.this, R.string.contribute_allow_storage, LENGTH_LONG).show();
 					}
 
 				}

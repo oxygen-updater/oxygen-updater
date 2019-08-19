@@ -5,7 +5,7 @@
 	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<!-- Update information strings-->
-	<string name="update">Update</string>
+	<string name="update">Actualizar</string>
 	<string name="update_information_close">Cerrar</string>
 	<string name="update_information_description_not_available">No hay ninguna información oficial sobre las nuevas caracterísicas que esta actualización ofrece. Normalmente, tal actualización proporciona correcciones de errores, mejoras de rendimiento, y / o actualizaciones de seguridad para tu dispositivo.</string>
 	<string name="update_information_file_name">Nombre del archivo: %1$s</string>
@@ -150,18 +150,7 @@
 	<string name="theme_additional_note">Nota: si el tema \'Auto\' está activo y el ahorro de batería está activado, el tema oscuro se usará automáticamente independientemente de la hora del día para
 conservar la batería</string>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	<string name="settings">Ajustes</string>
+    <string name="settings">Ajustes</string>
 	<string name="settings_buy_button_buy">Comprar (%1$s)</string>
 	<string name="settings_buy_button_bought">Comprado</string>
 	<string name="settings_buy_button_not_possible">No disponible</string>
@@ -191,8 +180,7 @@ conservar la batería</string>
 
 	<string name="settings_server_messages">Mostrar mensajes en la aplicación cuando:</string>
 
-
-	<string name="settings_other_options">Otros ajustes:</string>
+    <string name="settings_other_options">Otros ajustes:</string>
 	<string name="settings_advanced_mode">Modo avanzado</string>
 	<string name="settings_advanced_mode_button_explanation">Presiona este botón para obtener más información sobre el modo avanzado.</string>
 	<string name="settings_advanced_mode_explanation">El modo avanzado oculta el mensaje \"Tu sisema está actualizado\", permitiéndote descargar e instalar todas las actualizaciones, Incluso cuando estas no sean compatibles con tu dispositivo.\n\nESto puede resultar útil cuando:\n- Actualices a una versión beta desde la versión estable\n- Vuelvas de la versión beta a la estable (no olvides hacer un reseteo de fábrica)\n- Reinstales tu versión del sistema actual.</string>
@@ -240,13 +228,15 @@ conservar la batería</string>
 	<string name="install_error_write_script_failed">"Preparación de la instalación fallida. ¿Le diste a la app permisos root?"</string>
 
 	<string name="install_options_backup">Hacer una copia de seguridad de mi dispositivo</string>
- 	<string name="install_options_header">Puedes personalizar el proceso de instalación cambiándo los ajustes en la parte inferior. Pulsa en \'Comenzar instalación\' para empezar con la instalación de la actualización.</string>	<string name="install_options_keep_root">Mantener mi dispositivo rooteado</string>
+ 	<string name="install_options_header">Puedes personalizar el proceso de instalación cambiándo los ajustes en la parte inferior. Pulsa en \'Comenzar instalación\' para empezar con la instalación de la actualización.</string>	
+    <string name="install_options_keep_root">Mantener mi dispositivo rooteado</string>
 	<string name="install_options_reboot_after_install">Reiniciar al finalizar la instalación</string>
 	<string name="install_options_select_root_package">Selecciona el paquete root para instalar…</string>
 	<string name="install_options_start_install">Iniciar instalación</string>
 	<string name="install_options_title">Elige las opciones para la actualización</string>
 	<string name="install_options_wipe_cache_partition">Borrar la partición Cache</string>
 
+    <string name="install_options_explanation_title">¿Qué hacen estas opciones?</string>
     <string name="install_options_explanation_backup">Hacer una copia de seguridad de mi dispositivo:\nAl selecionar esta opción, una copia de seguridad del sistema, aplicaciónes y ajustes se harán antes de la instalación. Siempre tenerlo a mano en caso de que algo vaya horriblemente mal.</string>
 	<string name="install_options_explanation_keep_root">Mantener mi dispositivo rooteado:\nAl selecionar esta opción, que paquete root se instalará al terminar la actualización. Esto asegura que tu dispositivo se mantenga rooteado. ¡Ten en cuenta que el paquete root deberá ser compatible con la NUEVA versión de OxygenOS que vas a instalar!</string>
 	<string name="install_options_explanation_wipe_cache">Borrar la partición cache:\nAl selecionar esta opción, la partición cache será borrada después de que la actualización se haya completado. Esto aseguro que tu dispositivo rinda perféctamente y además reduce la probabilidad de experimentar errores causados por la instalación de la actualización.</string>
@@ -272,10 +262,11 @@ conservar la batería</string>
 	<string name="install_verify_success_message">La versión de OxygenOS %1$s ha sido instalada correctamente.</string>
 
 	<string name="install_zip_file_clear">Limpiar paquete root</string>
-<string name="install_zip_file_pick">Elegir paquete root</string>
+    <string name="install_zip_file_pick">Elegir paquete root</string>
 	<string name="install_zip_file_placeholder">Seleccionar paquete root…</string>
 	<string name="install_zip_file_wrong_file_type">Debes seleccionar sólo un archivo Zip. Por favor, escoge el archivo correcto.</string>
-	<!-- Install guide strings -->
+	
+    <!-- Install guide strings -->
 	<string name="install_guide_no_root">Instalar la actualización basándose en las instrucciones de la guía de instalación.</string>
 	<string name="install_guide_automatic_install_disabled">Las actualizaciones automáticas has sido temporalmente inhabilitadas a causa de problemas técnicos. Instala la actualización basándote en las instrucciones de la guía de instalación.</string>
 	<string name="install_guide">Guía de instalación</string>

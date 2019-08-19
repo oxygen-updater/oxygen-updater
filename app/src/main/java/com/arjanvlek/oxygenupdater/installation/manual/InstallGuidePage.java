@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.installation.manual;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@SuppressWarnings("WeakerAccess")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InstallGuidePage {
 

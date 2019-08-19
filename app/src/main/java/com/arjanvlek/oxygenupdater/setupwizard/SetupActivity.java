@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.setupwizard;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -26,9 +25,10 @@ import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.contribution.ContributorUtils;
 import com.arjanvlek.oxygenupdater.internal.SetupUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
-import com.arjanvlek.oxygenupdater.internal.logger.Logger;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
+import static android.widget.Toast.LENGTH_LONG;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_CONTRIBUTE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID;
@@ -45,7 +45,6 @@ public class SetupActivity extends AppCompatActivity {
 	private SettingsManager settingsManager;
 	private Consumer<Boolean> permissionCallback;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class SetupActivity extends AppCompatActivity {
 			getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		}
 
-		this.settingsManager = new SettingsManager(getApplicationContext());
+		settingsManager = new SettingsManager(getApplicationContext());
 
 		if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
 			ApplicationData applicationData = ((ApplicationData) getApplication());
@@ -139,18 +138,14 @@ public class SetupActivity extends AppCompatActivity {
 			CheckBox contributorCheckbox = findViewById(R.id.introduction_step_5_contribute_checkbox);
 
 			if (contributorCheckbox.isChecked()) {
-				requestContributorStoragePermissions(new Consumer<Boolean>() {
-					@Override
-					public void accept(Boolean granted) {
-						if (granted) {
-							ContributorUtils contributorUtils = new ContributorUtils(getApplicationContext());
-							contributorUtils.flushSettings(true); // 1st time, will save setting to true.
-							settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
-							NavUtils.navigateUpFromSameTask(SetupActivity.this);
-						} else {
-							Toast.makeText(getApplication(), R.string.contribute_allow_storage, Toast.LENGTH_LONG)
-									.show();
-						}
+				requestContributorStoragePermissions(granted -> {
+					if (granted) {
+						ContributorUtils contributorUtils = new ContributorUtils(getApplicationContext());
+						contributorUtils.flushSettings(true); // 1st time, will save setting to true.
+						settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true);
+						NavUtils.navigateUpFromSameTask(SetupActivity.this);
+					} else {
+						Toast.makeText(getApplication(), R.string.contribute_allow_storage, LENGTH_LONG).show();
 					}
 				});
 			} else {
@@ -161,9 +156,8 @@ public class SetupActivity extends AppCompatActivity {
 		} else {
 			Long deviceId = settingsManager.getPreference(PROPERTY_DEVICE_ID, -1L);
 			Long updateMethodId = settingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L);
-			Logger.logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId));
-			Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG)
-					.show();
+			logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId));
+			Toast.makeText(this, getString(R.string.settings_entered_incorrectly), LENGTH_LONG).show();
 		}
 	}
 
@@ -187,8 +181,8 @@ public class SetupActivity extends AppCompatActivity {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		switch (requestCode) {
 			case PERMISSION_REQUEST_CODE:
-				if (this.permissionCallback != null && grantResults.length > 0) {
-					this.permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
+				if (permissionCallback != null && grantResults.length > 0) {
+					permissionCallback.accept(grantResults[0] == PackageManager.PERMISSION_GRANTED);
 				}
 
 		}
@@ -197,7 +191,6 @@ public class SetupActivity extends AppCompatActivity {
 	/**
 	 * Contains the basic / non interactive tutorial fragments.
 	 */
-	@SuppressLint("ValidFragment")
 	public static class SimpleTutorialFragment extends Fragment {
 		/**
 		 * The fragment argument representing the section number for this fragment.
@@ -229,7 +222,7 @@ public class SetupActivity extends AppCompatActivity {
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
+			super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 		}
 
 		@Override
