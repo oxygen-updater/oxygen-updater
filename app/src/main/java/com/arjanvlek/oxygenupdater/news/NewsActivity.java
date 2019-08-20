@@ -158,7 +158,7 @@ public class NewsActivity extends SupportActionBarActivity {
 									if (getIntent().getBooleanExtra(INTENT_START_WITH_AD, false)
 											&& !new SettingsManager(getApplication()).getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
 										InterstitialAd interstitialAd = new InterstitialAd(getApplication());
-										interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+										interstitialAd.setAdUnitId(getString(R.string.advertising_interstitial_unit_id));
 										interstitialAd.loadAd(ApplicationData.buildAdRequest());
 
 										// The ad will be shown after 10 seconds.

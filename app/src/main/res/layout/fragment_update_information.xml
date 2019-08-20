@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/updateInformationFragmentTop"
 	android:layout_width="match_parent"
@@ -19,7 +18,6 @@
 		android:id="@+id/updateInformationRefreshLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_above="@+id/updateInformationAdView"
 		android:visibility="gone"
 		tools:visibility="visible">
 
@@ -190,8 +188,8 @@
 		android:id="@+id/updateInformationSystemIsUpToDateRefreshLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_above="@+id/updateInformationAdView"
-		android:visibility="gone">
+		android:visibility="gone"
+		tools:visibility="visible">
 
 		<androidx.core.widget.NestedScrollView
 			android:layout_width="match_parent"
@@ -244,13 +242,4 @@
 			</LinearLayout>
 		</androidx.core.widget.NestedScrollView>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-	<com.google.android.gms.ads.AdView
-		android:id="@+id/updateInformationAdView"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_centerHorizontal="true"
-		ads:adSize="BANNER"
-		ads:adUnitId="@string/advertising_id" />
 </RelativeLayout>
