@@ -98,7 +98,6 @@
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
@@ -128,7 +127,7 @@
 	<string name="settings_buy_button_not_possible">"Ei saatavilla"</string>
 	<string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen"</string>
 
-	<!-- TODO translate the 2 below -->
+	<!-- TODO translate these lines -->
 	<string name="settings_contribute_label">Auta parantamaan sovellusta:</string>
 	<string name="settings_contribute_button">Tule tukijaksi</string>
 
@@ -392,7 +391,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
 	<string name="news_load_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
 
-	<!-- TODO translate this block -->
+	<!-- TODO translate these lines -->
 	<string name="contribute">Tule tukijaksi</string>
 	<string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
 	<string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu. \n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi vie vähän akkuvirtaa. Kaikki mitä sinun tulee tehdä on vain odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>

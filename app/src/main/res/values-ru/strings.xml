@@ -49,7 +49,7 @@
 	<string name="download_error_close">"Закрыть"</string>
 	<string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
 
-	<!-- TODO translate the 3 below -->
+	<!-- TODO translate these lines -->
 	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
@@ -63,7 +63,7 @@
 	<string name="download_pending">"Загрузка скоро начнется…"</string>
 	<string name="download_permissions">"Нажмите Загрузить снова для загрузки обновления."</string>
 
-	<!-- TODO translate the 3 below -->
+	<!-- TODO translate these lines -->
 	<string name="download_notification_error_network">Download paused due to lost connection. Will resume soon.</string>
 	<string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
 	<string name="download_notification_error_internal">Technical error while downloading. Restart the download or contact support.</string>
@@ -104,7 +104,6 @@
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
@@ -134,7 +133,7 @@
 	<string name="settings_buy_button_not_possible">"Недоступно"</string>
 	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
 
-	<!-- TODO translate the 2 below -->
+	<!-- TODO translate these lines -->
 	<string name="settings_contribute_label">Help improving the app:</string>
 	<string name="settings_contribute_button">Contribute</string>
 
@@ -400,7 +399,7 @@
 	<string name="news_empty">"В этой статье нет содержания."</string>
 	<string name="news_load_error">"Не удалось открыть статью. Нет сетевого подключения. Нажмите «Повторить» для загрузки"</string>
 
-	<!-- TODO translate this block -->
+	<!-- TODO translate these lines -->
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>

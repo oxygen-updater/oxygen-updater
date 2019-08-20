@@ -102,7 +102,6 @@
 	<string name="summary_theme">Selecteer een thema</string>
 	<string name="summary_privacy_policy">Bekijk online</string>
 	<string name="summary_rate_app">Geef een 5-sterren-review</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">Verwijder advertenties</string>
 	<string name="label_theme">Thema</string>

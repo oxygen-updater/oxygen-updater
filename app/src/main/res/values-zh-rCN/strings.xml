@@ -106,7 +106,6 @@
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>

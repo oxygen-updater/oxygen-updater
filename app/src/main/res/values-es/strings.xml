@@ -50,7 +50,6 @@
 	<string name="download_error">Error de Descarga</string>
 	<string name="download_error_close">CERRAR</string>
 	<string name="download_error_corrupt">¡El archivo de la actualización descargado está dañado! Por favor, intenta descargarlo de nuevo.</string>
-	<!-- TODO translate the 3 below to Russian -->
 	<string name="download_error_network">Ha ocurrido un error de conexión mientras se descargaba la actualización. La descarga se reanudará automáticamente.</string>
 	<string name="download_error_server">Ha ocurrido un error en el servidor mientras se descargaba la actualización. Por favor, intenta descargar la actualización de nuevo.</string>
 	<string name="download_error_internal">Desafortunadamente, un error técnico ha ocurrido mientras se descargaba la actualización. Intenta descargarla de nuevo. Si el error no desaparece, por favor contacta con el desarrollador de esta app para obtener asistencia.</string>
@@ -92,7 +91,7 @@
 
 
 	<!-- Settings strings-->
-    <string name="preference_header_support">Apóyanos</string>
+	<string name="preference_header_support">Apóyanos</string>
 	<string name="preference_header_device">Dispositivo</string>
 	<string name="preference_header_ui">IU</string>
 	<string name="preference_header_notifications">Notificaciones</string>
@@ -106,7 +105,6 @@
 	<string name="summary_theme">Establecer tema</string>
 	<string name="summary_privacy_policy">Ver online</string>
 	<string name="summary_rate_app">Deja un comentario de 5 estrellas</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">Eliminar anuncios</string>
 	<string name="label_theme">Tema</string>
@@ -120,36 +118,13 @@
 	<string name="theme_system">Sistema</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
-	<string name="key_contributor" translatable="false">become_contributor</string>
-	<string name="key_category_device" translatable="false">key_category_device</string>
-	<string name="key_device" translatable="false">device</string>
-	<string name="key_device_id" translatable="false">device_id</string>
-	<string name="key_update_method" translatable="false">update_method</string>
-	<string name="key_update_method_id" translatable="false">update_method_id</string>
-	<string name="key_theme" translatable="false">theme</string>
-	<string name="key_theme_id" translatable="false">theme_id</string>
-	<string name="key_ui_app_update" translatable="false">show_app_update_messages</string>
-	<string name="key_ui_news" translatable="false">show_news_messages</string>
-	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
-	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
-	<string name="key_share_usage_data" translatable="false">upload_logs</string>
-	<!-- Typo can't be fixed due to older versions of the app being released with it -->
-	<string name="key_notification_critical_message" translatable="false">recive_general_notifications</string>
-	<string name="key_notification_system_update" translatable="false">receive_system_update_notifications</string>
-	<string name="key_notification_new_device_supported" translatable="false">receive_new_device_notifications</string>
-	<string name="key_notification_news_story_published" translatable="false">receive_news_notifications</string>
-	<string name="key_rate_app" translatable="false">rate</string>
-	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
-	<string name="key_oxygen" translatable="false">oxygen_updater</string>
-
 	<string name="theme_light_subtitle">Tema con fondo blanco y como color principal Rojo OnePlus </string>
 	<string name="theme_dark_subtitle">Elimina el color Rojo OnePlus como color principal, con un fondo casi negro. Usa este tema para ahorrar batería, especialmente en las pantallas AMOLED</string>
 	<string name="theme_system_subtitle">Usa el modo noche del dispositivo (puedes configurarlo en configuración de pantalla o en las opciones de desarrollador). Varía con cada dispositivo</string>
 	<string name="theme_auto_subtitle">Cambia entre el tema claro y oscuro según la hora del día para prevenir la fatiga visual por la noche</string>
 	<string name="theme_additional_note">Nota: si el tema \'Auto\' está activo y el ahorro de batería está activado, el tema oscuro se usará automáticamente independientemente de la hora del día para conservar la batería</string>
-    
-    <string name="settings">Ajustes</string>
+
+	<string name="settings">Ajustes</string>
 	<string name="settings_buy_button_buy">Comprar (%1$s)</string>
 	<string name="settings_buy_button_bought">Comprado</string>
 	<string name="settings_buy_button_not_possible">No disponible</string>
@@ -162,9 +137,8 @@
 	<string name="settings_category_other">Otro:</string>
 	<string name="settings_device">Dispositivo</string>
 	<string name="settings_entered_incorrectly">Error al guardar tus preferencias. Por favor, regresa y selecciona tu dispositivo de nuevo / método de actualización de nuevo.</string>
-    	<!-- TODO translate these to Spanish -->
 	<string name="settings_explanation_incremental_full_update">Una actualización incremental puede instalarse desde cualquier versión (excepto si tienes el bootloader desbloqueado ya que tendras que usar el paquete completo para actualizar tu dispositivo).\n\nUna actualización beta de OxygenOS siempre podrá ser instalada, incluso cuando estás en la versión estable. Para cambiar de la estable a la beta, activa el modo avanzado en los ajustes. Para las betas, los métodos de actualización incremental y completo funcionan de las misma manera que en la versión estable.</string>
-    
+
 	<string name="settings_explanation_update_methods">Explicación de los métodos de actualización</string>]
 	<string name="settings_header">Escoge tu dispositivo y el método para actualizarlo:</string>
 
@@ -179,7 +153,7 @@
 
 	<string name="settings_server_messages">Mostrar mensajes en la aplicación cuando:</string>
 
-    <string name="settings_other_options">Otros ajustes:</string>
+	<string name="settings_other_options">Otros ajustes:</string>
 	<string name="settings_advanced_mode">Modo avanzado</string>
 	<string name="settings_advanced_mode_button_explanation">Presiona este botón para obtener más información sobre el modo avanzado.</string>
 	<string name="settings_advanced_mode_explanation">El modo avanzado oculta el mensaje \"Tu sisema está actualizado\", permitiéndote descargar e instalar todas las actualizaciones, Incluso cuando estas no sean compatibles con tu dispositivo.\n\nEsto puede resultar útil cuando:\n- Actualices a una versión beta desde la versión estable\n- Vuelvas de la versión beta a la estable (no olvides hacer un reseteo de fábrica)\n- Reinstales tu versión del sistema actual.</string>
@@ -204,8 +178,8 @@
 	<string name="setup_page_3_title">Elige tu dispositivo:</string>
 	<string name="setup_page_3_text">Tu dispositivo suele seleccionarse automáticamente. Si no es así, selecciona tu dispositivo arriba.\n\nDesliza a la izquierda pata continuar.</string>
 	<string name="setup_page_4_title">Elige el método para actualizar:</string>
- 	<string name="setup_page_4_text">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas.\n\Sin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa.\n\nSi tienes una versión beta de OxygenOS, elige (uno de los) método(s) de actualización de la beta abierta.\n\nDesliza a la izquierda pata continuar.</string>
-    <string name="setup_page_5_title">¡Ya estás listo para comenzar!</string>
+	<string name="setup_page_4_text">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas.\n\Sin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa.\n\nSi tienes una versión beta de OxygenOS, elige (uno de los) método(s) de actualización de la beta abierta.\n\nDesliza a la izquierda pata continuar.</string>
+	<string name="setup_page_5_title">¡Ya estás listo para comenzar!</string>
 	<string name="setup_page_5_text">¡Disfruta esta app!\n\nSiempre podrás cambiar las preferencias más tarde. Para hacerlo: Haz click en los tres puntos en la esquina derecha, y selecciona \"Ajustes\".</string>
 
 
@@ -227,16 +201,16 @@
 	<string name="install_error_write_script_failed">"Preparación de la instalación fallida. ¿Le diste a la app permisos root?"</string>
 
 	<string name="install_options_backup">Hacer una copia de seguridad de mi dispositivo</string>
- 	<string name="install_options_header">Puedes personalizar el proceso de instalación cambiándo los ajustes en la parte inferior. Pulsa en \'Comenzar instalación\' para empezar con la instalación de la actualización.</string>	
-    <string name="install_options_keep_root">Mantener mi dispositivo rooteado</string>
+	<string name="install_options_header">Puedes personalizar el proceso de instalación cambiándo los ajustes en la parte inferior. Pulsa en \'Comenzar instalación\' para empezar con la instalación de la actualización.</string>
+	<string name="install_options_keep_root">Mantener mi dispositivo rooteado</string>
 	<string name="install_options_reboot_after_install">Reiniciar al finalizar la instalación</string>
 	<string name="install_options_select_root_package">Selecciona el paquete root para instalar…</string>
 	<string name="install_options_start_install">Iniciar instalación</string>
 	<string name="install_options_title">Elige las opciones para la actualización</string>
 	<string name="install_options_wipe_cache_partition">Borrar la partición Cache</string>
 
-    <string name="install_options_explanation_title">¿Qué significan estas opciones?</string>
-    <string name="install_options_explanation_backup">Hacer una copia de seguridad de mi dispositivo:\nAl selecionar esta opción, una copia de seguridad del sistema, aplicaciónes y ajustes se harán antes de la instalación. Siempre tenerlo a mano en caso de que algo vaya horriblemente mal.</string>
+	<string name="install_options_explanation_title">¿Qué significan estas opciones?</string>
+	<string name="install_options_explanation_backup">Hacer una copia de seguridad de mi dispositivo:\nAl selecionar esta opción, una copia de seguridad del sistema, aplicaciónes y ajustes se harán antes de la instalación. Siempre tenerlo a mano en caso de que algo vaya horriblemente mal.</string>
 	<string name="install_options_explanation_keep_root">Mantener mi dispositivo rooteado:\nAl selecionar esta opción, deberás especificar qué paquete root se instalará al terminar la actualización. Esto asegura que tu dispositivo se mantenga rooteado. ¡Ten en cuenta que el paquete root deberá ser compatible con la NUEVA versión de OxygenOS que vas a instalar!</string>
 	<string name="install_options_explanation_wipe_cache">Borrar la partición cache:\nAl selecionar esta opción, la partición cache será borrada después de que la actualización se haya completado. Esto aseguro que tu dispositivo rinda perféctamente y además reduce la probabilidad de experimentar errores causados por la instalación de la actualización.</string>
 	<string name="install_options_explanation_reboot">Reiniciar después de la actualización:\nAl selecionar esta opción, tu dispositivo se reiniciará automáticamente a OxygenOS al completar la actualización. De otra manera, tu dispositivo se mantendrá en el Modo Recovery, donde podrás instalar paquetes adicionales.</string>
@@ -247,25 +221,25 @@
 	<string name="install_select_method_automatic_description">La manera más fácil de instalar la actualización.\nTu dispositivo se reiniciará para instalar la actualización.\n\n* Requiere acceso root y el recovery TWRP.</string>
 
 	<string name="install_select_method_manual_title">Instalación manual</string>
-    <string name="install_select_method_manual_image">Imagen de la instalación manual</string>
+	<string name="install_select_method_manual_image">Imagen de la instalación manual</string>
 	<string name="install_select_method_manual_description">Lee la guía de instalación para aprender como instalar la actualización. Deberás instalar la actualización usando el Modo Recovery de tu dispositivo.</string>
 
- 	<string name="install_temporary_error">Un error temporal ocurrió mientras se preparaba la actualización. Por favor, inténtalo de nuevo.</string>
-    
+	<string name="install_temporary_error">Un error temporal ocurrió mientras se preparaba la actualización. Por favor, inténtalo de nuevo.</string>
+
 	<string name="install_verify_error_title">Instalación fallida</string>
- 	<string name="install_verify_error_nothing_installed">Error al instalar la actualización. No han habido cambios en el software de tu dispositivo. Intenta instalar la actualización de nuevo.</string>
-    <string name="install_verify_error_unable_to_verify">Error al comprobar si la actualización se instaló correctamente. Por favor, abre Oxygen Updater para ver si se instaló correctamente.</string>
+	<string name="install_verify_error_nothing_installed">Error al instalar la actualización. No han habido cambios en el software de tu dispositivo. Intenta instalar la actualización de nuevo.</string>
+	<string name="install_verify_error_unable_to_verify">Error al comprobar si la actualización se instaló correctamente. Por favor, abre Oxygen Updater para ver si se instaló correctamente.</string>
 	<string name="install_verify_error_wrong_version_installed">Una versión de OxygenOS ha sido instalada. No selecciones un archivo de actualización de OxygenOS al elegir un paquete root con la opción "Mantener mi dispositivo rooteado" activa.</string>
 
 	<string name="install_verify_success_title">Instalación completa</string>
 	<string name="install_verify_success_message">La versión de OxygenOS %1$s ha sido instalada correctamente.</string>
 
 	<string name="install_zip_file_clear">Limpiar paquete root</string>
-    <string name="install_zip_file_pick">Elegir paquete root</string>
+	<string name="install_zip_file_pick">Elegir paquete root</string>
 	<string name="install_zip_file_placeholder">Seleccionar paquete root…</string>
 	<string name="install_zip_file_wrong_file_type">Debes seleccionar sólo un archivo Zip. Por favor, escoge el archivo correcto.</string>
-	
-    <!-- Install guide strings -->
+
+	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Instalar la actualización basándose en las instrucciones de la guía de instalación.</string>
 	<string name="install_guide_automatic_install_disabled">Las actualizaciones automáticas has sido temporalmente inhabilitadas a causa de problemas técnicos. Instala la actualización basándote en las instrucciones de la guía de instalación.</string>
 	<string name="install_guide">Guía de instalación</string>
@@ -297,13 +271,11 @@
 	<string name="install_guide_zip_file_missing">"Si quieres mantener tu dispositivo rooteado, tendrás que seleccionar un paquete root."</string>
 
 	<!-- Device information strings -->
-    <string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
-    
+
 	<string name="device_information_amount_of_memory">Cantidad de RAM:</string>
 	<string name="device_information_cpu_frequency">Frecuencia del procesador:</string>
-	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
-	<string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
 	<string name="device_information_header">Mi dispositivo</string>
 	<string name="device_information_header_short">Mi dispositivo</string>
 	<string name="device_information_image_description">Imagen de dispositivo</string>
@@ -356,7 +328,6 @@
 	<string name="news_load_error">Error al abrir el artículo. Comprueba tu conexión y pulsa el botón \'REINTENTAR\' para abrir el artículo.</string>
 
 	<!-- Contribute strings -->
-	<!-- TODO translate this block to all but Dutch / Belgian / French -->
 	<string name="contribute">Hazte colaborador</string>
 	<string name="contribute_title">Ayuda a mejorar Oxygen Updater</string>
 	<string name="contribute_explanation">¡Oxygen Updater necesita tu ayuda! Para proporcionar las últimas actualizaciones, necesitamos obtener los nombres de los paquetes de actualización. Estos están presentes cuando una actualización aparece. \n\¿Cómo puedo ayudar?\n\nOxygen Updater puede enviar automáticamente los nombres de los paquetes de actualización a nuestros administradores. Esto usará una pequeña cantidad de datos y sólo un poco de batería. Lo único que tienes que hacer es esperar (aproximadamente 15 minutos) antes de instalar las actualizaciones de sistema oficiales hasta que veas una confirmación de Oxygen Updater  diciendo que el archivo se ha enviado correctamente. Únicamente el directorio .ota-directory de tu teléfono se escanea cada 15 minutos. Solo busca un nombre específico en una carpeta concreta.</string>
@@ -406,14 +377,10 @@
 	<string name="loading">Cargando…</string>
 	<string name="processing">Procesando…</string>
 	<string name="choose_file">Selecciona un archivo</string>
-	<string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
-	<string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
 	<string name="root_install_logger_service_name">Actualizar el logger de instalación</string>
 	<string name="delayed_push_notification_displayer_service_name">Servicio de Notificaciones Push</string>
 	<string name="download_service_name">Descargador de actualizaciones</string>
 	<string name="log_uploader_service_name">Error al informar el servicio</string>
-	<string name="update_file_checker_service_name" translatable="false">Update file checking service</string>
-	<string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
 
 

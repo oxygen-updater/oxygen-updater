@@ -99,7 +99,6 @@
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
@@ -129,7 +128,7 @@
 	<string name="settings_buy_button_not_possible">"Otillgänglig"</string>
 	<string name="settings_buy_ad_free_label">"Uppgradera till reklamfritt"</string>
 
-	<!-- TODO translate the 2 below -->
+	<!-- TODO translate these lines -->
 	<string name="settings_contribute_label">Help improving the app:</string>
 	<string name="settings_contribute_button">Contribute</string>
 
@@ -394,7 +393,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_empty">"Denna artikel har inget innehåll."</string>
 	<string name="news_load_error">"Misslyckades att öppna artikeln. Kontrollera din anslutning och tryck sedan på 'FÖRSÖK IGEN' knappen för att öppna artikeln."</string>
 
-	<!-- TODO translate this block -->
+	<!-- TODO translate these lines -->
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>

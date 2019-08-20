@@ -101,7 +101,6 @@
 	<string name="summary_theme">Choisissez un thème</string>
 	<string name="summary_privacy_policy">Voir en ligne</string>
 	<string name="summary_rate_app">Laissez 5 étoiles</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">Enlever les publicités</string>
 	<string name="label_theme">Thème</string>
