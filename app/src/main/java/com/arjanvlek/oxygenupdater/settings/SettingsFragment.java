@@ -110,8 +110,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 	 * Entries are retrieved from the server, which calls for dynamically setting <code>entries</code> and <code>entryValues</code>
 	 */
 	private void setupDevicePreferences() {
-		String updateModeCaption = "settings_explanation_incremental_full_update";
-
 		devicePreference = findPreference(context.getString(R.string.key_device));
 		updateMethodPreference = findPreference(context.getString(R.string.key_update_method));
 
@@ -229,7 +227,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 			// If there's there no device saved in preferences, auto select the recommended device
 			if (selectedPosition == -1 && recommendedPosition != -1) {
 				devicePreference.setValueIndex(recommendedPosition);
-				// settingsManager.savePreference(context.getString(R.string.key_device_id), deviceMap.get(deviceNames[recommendedPosition]));
 			}
 
 			// Retrieve update methods for the selected device
