@@ -37,7 +37,6 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/padding_half"
-		android:layout_marginTop="@dimen/padding_half"
 		android:layout_toEndOf="@id/newsItemImage"
 		android:text="@string/loading"
 		android:textAppearance="?android:textAppearanceListItem"
