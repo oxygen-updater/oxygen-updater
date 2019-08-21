@@ -10,9 +10,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,16 +36,24 @@ import com.arjanvlek.oxygenupdater.news.NewsFragment;
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog;
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1;
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import org.joda.time.LocalDateTime;
 
+import java.util.Collections;
+
 import java8.util.function.Consumer;
 
 import static android.widget.Toast.LENGTH_LONG;
+import static com.arjanvlek.oxygenupdater.settings.SettingsActivity.SKU_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_ADVANCED_MODE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_CONTRIBUTE;
@@ -53,6 +63,7 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTI
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
+import static java.lang.Math.abs;
 
 public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener {
 
@@ -73,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
 	private Consumer<Boolean> downloadPermissionCallback;
 	private int activeFragmentPosition;
+	private AdView adView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -134,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 			// getPreference method has a generic signature, we need to force its return type to be an int,
 			// otherwise it triggers a ClassCastException (which occurs when coming from older app versions)
 			// whilst not assigning it converts it to a long
+			//noinspection unused
 			int downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, -1);
 		} catch (ClassCastException e) {
 			settingsManager.deletePreference(PROPERTY_DOWNLOAD_ID);
@@ -217,16 +230,109 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 		ApplicationData application = (ApplicationData) getApplication();
 
 		if (application.checkPlayServices(this, false)) {
-			MobileAds.initialize(this, "ca-app-pub-0760639008316468~7665206420");
+			MobileAds.initialize(this, getString(R.string.advertising_app_id));
 		} else {
 			Toast.makeText(application, getString(R.string.notification_no_notification_support), LENGTH_LONG).show();
 		}
 
 		if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
 			newsAd = new InterstitialAd(this);
-			newsAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+			newsAd.setAdUnitId(getString(R.string.advertising_interstitial_unit_id));
 			newsAd.loadAd(ApplicationData.buildAdRequest());
 		}
+
+		adView = findViewById(R.id.updateInformationAdView);
+
+		AppBarLayout appBar = findViewById(R.id.app_bar);
+		// Since we're using an AppBarLayout with scrollFlags set,
+		// we need to ensure AdView stays at the bottom of the screen
+		// instead of staying hidden until the user scrolls the ViewPager
+		// which hides the AppBar and shows AdView
+		appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+			LayoutParams layoutParams = (LayoutParams) adView.getLayoutParams();
+			layoutParams.bottomMargin = appBarLayout.getTotalScrollRange() - abs(verticalOffset);
+
+			// keep AdView at the bottom
+			adView.setLayoutParams(layoutParams);
+		});
+
+		checkAdSupportStatus(adsAreSupported -> {
+			if (adsAreSupported) {
+				showAds();
+			}
+		});
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (adView != null) {
+			adView.resume();
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (adView != null) {
+			adView.pause();
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (adView != null) {
+			adView.destroy();
+		}
+	}
+
+	/**
+	 * Checks if ads should be shown
+	 *
+	 * @param callback the callback that receives the result: false if user has purchased ad-free, true otherwise
+	 */
+	private void checkAdSupportStatus(Consumer<Boolean> callback) {
+		IabHelper helper = new IabHelper(this, PK1.A + "/" + PK2.B);
+
+		helper.startSetup(setupResult -> {
+			if (!setupResult.isSuccess()) {
+				// Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
+				callback.accept(!settingsManager.getPreference(PROPERTY_AD_FREE, false));
+				return;
+			}
+
+			try {
+				helper.queryInventoryAsync(true, Collections.singletonList(SKU_AD_FREE), null, (queryResult, inventory) -> {
+					if (!queryResult.isSuccess()) {
+						// Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
+						callback.accept(!settingsManager.getPreference(PROPERTY_AD_FREE, false));
+						return;
+					}
+
+					if (queryResult.isSuccess()) {
+						if (inventory.hasPurchase(SKU_AD_FREE)) {
+							// User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
+							settingsManager.savePreference(PROPERTY_AD_FREE, true);
+							callback.accept(false);
+						} else {
+							// User has not bought the item and we're online, so ads are definitely supported
+							callback.accept(true);
+						}
+					}
+				});
+			} catch (IabHelper.IabAsyncInProgressException e) {
+				// A check is already in progress, so wait 3 secs and try to check again.
+				new Handler().postDelayed(() -> checkAdSupportStatus(callback), 3000);
+			}
+		});
+	}
+
+	/**
+	 * Loads an ad
+	 */
+	private void showAds() {
+		adView.loadAd(ApplicationData.buildAdRequest());
 	}
 
 	public void displayUnsupportedDeviceMessage() {
@@ -265,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 			return newsAd;
 		} else if (mayShowNewsAd()) {
 			InterstitialAd interstitialAd = new InterstitialAd(this);
-			interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+			interstitialAd.setAdUnitId(getString(R.string.advertising_interstitial_unit_id));
 			interstitialAd.loadAd(ApplicationData.buildAdRequest());
 			newsAd = interstitialAd;
 			return newsAd;
@@ -275,10 +381,9 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 	}
 
 	public boolean mayShowNewsAd() {
-		return !settingsManager.getPreference(PROPERTY_AD_FREE, false) &&
-				LocalDateTime.parse(settingsManager.getPreference(PROPERTY_LAST_NEWS_AD_SHOWN, "1970-01-01T00:00:00.000"))
-						.isBefore(LocalDateTime.now().minusMinutes(5));
-
+		return !settingsManager.getPreference(PROPERTY_AD_FREE, false)
+				&& LocalDateTime.parse(settingsManager.getPreference(PROPERTY_LAST_NEWS_AD_SHOWN, "1970-01-01T00:00:00.000"))
+				.isBefore(LocalDateTime.now().minusMinutes(5));
 	}
 
 	public ActivityLauncher getActivityLauncher() {

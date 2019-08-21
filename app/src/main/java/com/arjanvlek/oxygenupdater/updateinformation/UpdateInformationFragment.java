@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -39,37 +38,28 @@ import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.notifications.Dialogs;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper;
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1;
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2;
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.ads.AdView;
 
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import java8.util.Objects;
-import java8.util.function.Consumer;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.RelativeLayout.ABOVE;
 import static android.widget.RelativeLayout.BELOW;
 import static android.widget.Toast.LENGTH_LONG;
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_OUTDATED_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NETWORK_CONNECTION_ERROR;
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.ApplicationData.SERVER_MAINTENANCE_ERROR;
-import static com.arjanvlek.oxygenupdater.settings.SettingsActivity.SKU_AD_FREE;
-import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_AD_FREE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL;
@@ -96,13 +86,11 @@ public class UpdateInformationFragment extends AbstractFragment {
 	private SwipeRefreshLayout updateInformationRefreshLayout;
 	private SwipeRefreshLayout systemIsUpToDateRefreshLayout;
 	private RelativeLayout rootView;
-	private AdView adView;
 	private Context context;
 	private SettingsManager settingsManager;
 	private UpdateDownloadListener downloadListener;
 	private UpdateData updateData;
 	private boolean isLoadedOnce;
-	private boolean adsAreSupported = false;
 	private List<ServerMessageBar> serverMessageBars = new ArrayList<>();
 	private DownloadReceiver downloadReceiver;
 
@@ -122,7 +110,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		rootView = (RelativeLayout) inflater.inflate(R.layout.fragment_update_information, container, false);
-		adView = rootView.findViewById(R.id.updateInformationAdView);
 		return rootView;
 	}
 
@@ -133,21 +120,13 @@ public class UpdateInformationFragment extends AbstractFragment {
 			updateInformationRefreshLayout = rootView.findViewById(R.id.updateInformationRefreshLayout);
 			systemIsUpToDateRefreshLayout = rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout);
 
-			updateInformationRefreshLayout.setOnRefreshListener(() -> load(adsAreSupported));
+			updateInformationRefreshLayout.setOnRefreshListener(this::load);
 			updateInformationRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
-			systemIsUpToDateRefreshLayout.setOnRefreshListener(() -> load(adsAreSupported));
+			systemIsUpToDateRefreshLayout.setOnRefreshListener(this::load);
 			systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
 
-			checkAdSupportStatus(adsAreSupported -> {
-				this.adsAreSupported = adsAreSupported;
-
-				load(adsAreSupported);
-
-				if (adsAreSupported) {
-					showAds();
-				}
-			});
+			load();
 		}
 	}
 
@@ -162,9 +141,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 				DownloadService.performOperation(getActivity(), DownloadService.ACTION_GET_INITIAL_STATUS, updateData);
 			}
 		}
-		if (adView != null) {
-			adView.resume();
-		}
 	}
 
 	@Override
@@ -172,9 +148,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 		super.onPause();
 		if (downloadReceiver != null) {
 			unregisterDownloadReceiver();
-		}
-		if (adView != null) {
-			adView.pause();
 		}
 	}
 
@@ -187,61 +160,13 @@ public class UpdateInformationFragment extends AbstractFragment {
 		if (getActivity() != null && isDownloadServiceRunning()) {
 			getActivity().stopService(new Intent(getContext(), DownloadService.class));
 		}
-		if (adView != null) {
-			adView.destroy();
-		}
-	}
-
-    /*
-      -------------- INITIALIZATION / DATA FETCHING METHODS -------------------
-     */
-
-	private void checkAdSupportStatus(Consumer<Boolean> callback) {
-		if (getActivity() == null) {
-			callback.accept(false);
-			return;
-		}
-
-		IabHelper helper = new IabHelper(getActivity(), PK1.A + "/" + PK2.B);
-
-		helper.startSetup(setupResult -> {
-			if (!setupResult.isSuccess()) {
-				// Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
-				callback.accept(!settingsManager.getPreference(PROPERTY_AD_FREE, false));
-				return;
-			}
-
-			try {
-				helper.queryInventoryAsync(true, Collections.singletonList(SKU_AD_FREE), null, (queryResult, inventory) -> {
-					if (!queryResult.isSuccess()) {
-						// Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
-						callback.accept(!settingsManager.getPreference(PROPERTY_AD_FREE, false));
-						return;
-					}
-
-					if (queryResult.isSuccess()) {
-						if (inventory.hasPurchase(SKU_AD_FREE)) {
-							// User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
-							settingsManager.savePreference(PROPERTY_AD_FREE, true);
-							callback.accept(false);
-						} else {
-							// User has not bought the item and we're online, so ads are definitely supported
-							callback.accept(true);
-						}
-					}
-				});
-			} catch (IabHelper.IabAsyncInProgressException e) {
-				// A check is already in progress, so wait 3 secs and try to check again.
-				new Handler().postDelayed(() -> checkAdSupportStatus(callback), 3000);
-			}
-		});
 	}
 
 	/**
 	 * Fetches all server data. This includes update information, server messages and server status
 	 * checks
 	 */
-	private void load(boolean adsAreSupported) {
+	private void load() {
 		Crashlytics.setUserIdentifier("Device: "
 				+ settingsManager.getPreference(PROPERTY_DEVICE, "<UNKNOWN>")
 				+ ", Update Method: "
@@ -286,7 +211,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 			}
 		});
 
-		serverConnector.getInAppMessages(online, (banners -> displayServerMessageBars(banners, adsAreSupported)), error -> {
+		serverConnector.getInAppMessages(online, this::displayServerMessageBars, error -> {
 			switch (error) {
 				case SERVER_MAINTENANCE_ERROR:
 					Dialogs.showServerMaintenanceError(instance);
@@ -329,7 +254,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 		serverMessageBars = new ArrayList<>();
 	}
 
-	private void displayServerMessageBars(List<Banner> banners, boolean adsAreSupported) {
+	private void displayServerMessageBars(List<Banner> banners) {
 
 		if (!isAdded()) {
 			return;
@@ -359,9 +284,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 			View lastServerMessageView = createdServerMessageBars.get(createdServerMessageBars.size() - 1);
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
 			params.addRule(BELOW, lastServerMessageView.getId());
-			if (adsAreSupported) {
-				params.addRule(ABOVE, adView.getId());
-			}
 
 			systemIsUpToDateRefreshLayout.setLayoutParams(params);
 			updateInformationRefreshLayout.setLayoutParams(params);
@@ -571,16 +493,6 @@ public class UpdateInformationFragment extends AbstractFragment {
 				systemIsUpToDateRefreshLayout.setRefreshing(false);
 			}
 		}
-	}
-
-
-    /*
-      -------------- GOOGLE ADS METHODS -------------------
-     */
-
-
-	private void showAds() {
-		adView.loadAd(ApplicationData.buildAdRequest());
 	}
 
     /*
@@ -801,7 +713,7 @@ public class UpdateInformationFragment extends AbstractFragment {
 				}
 
 				if (updateData == null) {
-					load(adsAreSupported);
+					load();
 				}
 				break;
 			case DOWNLOAD_QUEUED:

@@ -404,8 +404,9 @@
 	<string name="loading">Loading…</string>
 	<string name="processing">Processing…</string>
 	<string name="choose_file">Select a file</string>
-	<string name="advertising_id" translatable="false">ca-app-pub-0760639008316468/9141939623</string>
-	<string name="news_ad_unit_id" translatable="false">ca-app-pub-0760639008316468/3566614035</string>
+	<string name="advertising_app_id" translatable="false">ca-app-pub-1816831161514116~4275332954</string>
+	<string name="advertising_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/9792024147</string>
+	<string name="advertising_interstitial_unit_id" translatable="false">ca-app-pub-1816831161514116/8641953374</string>
 	<string name="root_install_logger_service_name">Update installation logger</string>
 	<string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
 	<string name="download_service_name">Update downloader</string>

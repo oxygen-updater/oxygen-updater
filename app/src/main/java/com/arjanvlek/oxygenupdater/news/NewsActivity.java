@@ -29,6 +29,8 @@ public class NewsActivity extends SupportActionBarActivity {
 	public static final String INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID";
 	public static final String INTENT_START_WITH_AD = "START_WITH_AD";
 
+	private WebView webView;
+
 	@SuppressLint("SetJavaScriptEnabled")
 	// JS is required to load videos and other dynamic content.
 	@Override
@@ -43,6 +45,37 @@ public class NewsActivity extends SupportActionBarActivity {
 		setContentView(R.layout.loading);
 
 		loadNewsItem();
+	}
+
+	@Override
+	protected void onResume() {
+		if (webView != null) {
+			webView.onResume();
+		}
+
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		if (webView != null) {
+			webView.onPause();
+		}
+
+		super.onPause();
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (webView != null) {
+			webView.loadUrl("");
+			webView.stopLoading();
+			webView.destroy();
+		}
+
+		webView = null;
+
+		super.onDestroy();
 	}
 
 	private void loadNewsItem() {
@@ -66,8 +99,8 @@ public class NewsActivity extends SupportActionBarActivity {
 						} else {
 							String newsContents = getString(R.string.news_load_error);
 
-							WebView contentView = findViewById(R.id.newsContent);
-							contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
+							webView = findViewById(R.id.newsContent);
+							webView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
 
 							// Hide the title, author name and last updated views.
 							findViewById(R.id.newsTitle).setVisibility(View.GONE);
@@ -96,15 +129,15 @@ public class NewsActivity extends SupportActionBarActivity {
 					titleView.setText(newsItem.getTitle(locale));
 
 					// Display the contents of the article.
-					WebView contentView = findViewById(R.id.newsContent);
-					contentView.setVisibility(View.VISIBLE);
-					contentView.getSettings().setJavaScriptEnabled(true);
+					webView = findViewById(R.id.newsContent);
+					webView.setVisibility(View.VISIBLE);
+					webView.getSettings().setJavaScriptEnabled(true);
 
 					String newsContents = newsItem.getText(locale);
 
 					if (newsContents.isEmpty()) {
 						newsContents = getString(R.string.news_empty);
-						contentView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
+						webView.loadDataWithBaseURL("", newsContents, "text/html", "UTF-8", "");
 					} else {
 						String newsLanguage = locale == Locale.NL ? "NL" : "EN";
 						String newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.getId() + "/" + newsLanguage + "/";
@@ -116,8 +149,8 @@ public class NewsActivity extends SupportActionBarActivity {
 								? "Dark"
 								: "Light";
 
-						contentView.getSettings().setUserAgentString(ApplicationData.APP_USER_AGENT);
-						contentView.loadUrl(newsContentUrl);
+						webView.getSettings().setUserAgentString(ApplicationData.APP_USER_AGENT);
+						webView.loadUrl(newsContentUrl);
 					}
 
 					// Display the name of the author of the article
@@ -158,7 +191,7 @@ public class NewsActivity extends SupportActionBarActivity {
 									if (getIntent().getBooleanExtra(INTENT_START_WITH_AD, false)
 											&& !new SettingsManager(getApplication()).getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
 										InterstitialAd interstitialAd = new InterstitialAd(getApplication());
-										interstitialAd.setAdUnitId(getString(R.string.news_ad_unit_id));
+										interstitialAd.setAdUnitId(getString(R.string.advertising_interstitial_unit_id));
 										interstitialAd.loadAd(ApplicationData.buildAdRequest());
 
 										// The ad will be shown after 10 seconds.
