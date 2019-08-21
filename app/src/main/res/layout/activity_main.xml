@@ -44,6 +44,6 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="bottom|center_horizontal"
 			app:adSize="BANNER"
-			app:adUnitId="@string/advertising_app_id" />
+			app:adUnitId="@string/advertising_banner_unit_id" />
 	</FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

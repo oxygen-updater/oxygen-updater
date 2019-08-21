@@ -15,7 +15,7 @@ import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 public abstract class AbstractFragment extends Fragment {
 
 	//Test devices for ads.
-	public static final List<String> ADS_TEST_DEVICES = Arrays.asList("BE7E0AF85E0332807B1EA3FE4236F93C", "0FD2DE005EB9DD19BD02FB2CD4D87902");
+	public static final List<String> ADS_TEST_DEVICES = Arrays.asList("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843");
 	private ApplicationData applicationData;
 	private SettingsManager settingsManager;
 

@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.Toast;
 
@@ -250,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 		// instead of staying hidden until the user scrolls the ViewPager
 		// which hides the AppBar and shows AdView
 		appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-			FrameLayout.LayoutParams layoutParams = (LayoutParams) adView.getLayoutParams();
+			LayoutParams layoutParams = (LayoutParams) adView.getLayoutParams();
 			layoutParams.bottomMargin = appBarLayout.getTotalScrollRange() - abs(verticalOffset);
 
 			// keep AdView at the bottom
