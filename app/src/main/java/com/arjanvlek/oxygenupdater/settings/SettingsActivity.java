@@ -70,7 +70,7 @@ public class SettingsActivity extends SupportActionBarActivity implements InAppP
 		getSupportFragmentManager().beginTransaction()
 				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 				.replace(R.id.settings_container, settingsFragment, "Settings")
-				.commit();
+				.commitNow();
 
 		settingsManager = new SettingsManager(getApplicationContext());
 
