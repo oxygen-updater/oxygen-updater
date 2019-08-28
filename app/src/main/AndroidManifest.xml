@@ -11,11 +11,6 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-	<permission
-		android:name="${fullPackageName}.permission.accessDownloadServiceRestarter"
-		android:protectionLevel="signature" />
-	<uses-permission android:name="${fullPackageName}.permission.accessDownloadServiceRestarter" />
-
 	<!-- Push notification permissions -->
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -28,6 +23,10 @@
 	<!-- In-App Billing permission -->
 	<uses-permission android:name="com.android.vending.BILLING" />
 
+	<permission
+		android:name="${fullPackageName}.permission.accessDownloadServiceRestarter"
+		android:protectionLevel="signature" />
+	<uses-permission android:name="${fullPackageName}.permission.accessDownloadServiceRestarter" />
 
 	<application
 		android:name=".ApplicationData"
@@ -59,6 +58,7 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
+
 			<intent-filter android:autoVerify="true">
 				<action android:name="android.intent.action.VIEW" />
 
@@ -71,6 +71,7 @@
 					android:scheme="https" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".installation.InstallActivity"
 			android:label="@string/install_guide"
@@ -86,6 +87,7 @@
 				<category android:name="android.intent.category.default" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".about.AboutActivity"
 			android:label="@string/about"
@@ -101,6 +103,7 @@
 				<category android:name="android.intent.category.default" />
 			</intent-filter>
 		</activity>
+
 		<activity
 			android:name=".settings.SettingsActivity"
 			android:label="@string/settings"
@@ -110,6 +113,7 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
+
 		<activity
 			android:name=".setupwizard.SetupActivity"
 			android:label="@string/setup"
@@ -119,6 +123,7 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
+
 		<activity
 			android:name=".help.HelpActivity"
 			android:label="@string/help"
@@ -128,6 +133,7 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
+
 		<activity
 			android:name=".contribution.ContributorActivity"
 			android:label="@string/contribute"
@@ -158,7 +164,6 @@
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
-
 		<!-- File picker -->
 		<activity
 			android:name="com.ipaulpro.afilechooser.FileChooserActivity"
@@ -183,7 +188,6 @@
 			android:theme="@android:style/Theme.Translucent" />
 
 		<!-- Push notifications services and receiver, Package updated receiver -->
-
 		<service
 			android:name=".notifications.NotificationService"
 			android:exported="false">
@@ -193,7 +197,6 @@
 		</service>
 
 		<!-- Receiver to check auto update installation status at device startup -->
-
 		<receiver android:name=".installation.automatic.VerifyInstallationReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -234,6 +237,5 @@
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="@string/advertising_app_id" />
-
 	</application>
 </manifest>
