@@ -48,7 +48,6 @@
 			android:layout_below="@id/installGuideTitle"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="@dimen/padding_default"
-			android:gravity="center_horizontal"
 			android:text="@string/install_guide_tip"
 			android:textColor="?android:textColorSecondary"
 			android:visibility="gone" />
