@@ -3,62 +3,27 @@
 	package="com.arjanvlek.oxygenupdater">
 
 	<!-- Networking permissions for fetching update data -->
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-	<!-- Download permissions -->
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-	<permission
-		android:name="${fullPackageName}.permission.accessDownloadServiceRestarter"
-		android:protectionLevel="signature" />
-	<uses-permission android:name="${fullPackageName}.permission.accessDownloadServiceRestarter" />
-
-	<!-- Push notification permissions -->
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-
-	<!-- Update installation permissions -->
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
-
-	<!-- In-App Billing permission -->
-	<uses-permission android:name="com.android.vending.BILLING" />
-
-
 	<application
 		android:name=".ApplicationData"
 		android:allowBackup="true"
 		android:fullBackupContent="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="${appName}"
+		android:roundIcon="@mipmap/ic_launcher"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.Oxygen"
 		android:usesCleartextTraffic="true">
 		<!-- Cleartext traffic is required to fix download errors after targeting API 28 because the Download URLs of OnePlus are not HTTPS.  -->
 		<!-- Fix Google Ads crashing when app targets API 28 or up as per https://developers.google.com/maps/documentation/android-sdk/config#specify_requirement_for_apache_http_legacy_library -->
-		<uses-library
-			android:name="org.apache.http.legacy"
-			android:required="false" />
-
-		<meta-data
-			android:name="asset_statements"
-			android:resource="@string/asset_statements" />
-
-		<!-- All screens -->
 		<activity
 			android:name=".views.MainActivity"
 			android:label="${appName}"
 			android:screenOrientation="portrait">
-			<tools:validation testUrl="https://oxygenupdater.com/inapp" />
-
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
+
 			<intent-filter android:autoVerify="true">
 				<action android:name="android.intent.action.VIEW" />
 
@@ -70,36 +35,41 @@
 					android:path="/inapp"
 					android:scheme="https" />
 			</intent-filter>
+
+			<tools:validation testUrl="https://oxygenupdater.com/inapp" />
 		</activity>
+
 		<activity
 			android:name=".installation.InstallActivity"
 			android:label="@string/install_guide"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
-
 			<intent-filter>
 				<action android:name="updateInstallationInformationActivity" />
 
 				<category android:name="android.intent.category.default" />
 			</intent-filter>
+
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
+
+		<!-- All screens -->
 		<activity
 			android:name=".about.AboutActivity"
 			android:label="@string/about"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
-
 			<intent-filter>
 				<action android:name="aboutActivity" />
 
 				<category android:name="android.intent.category.default" />
 			</intent-filter>
+
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 		<activity
 			android:name=".settings.SettingsActivity"
@@ -137,7 +107,6 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
-
 		<activity
 			android:name=".faq.FAQActivity"
 			android:label="@string/faq"
@@ -147,7 +116,6 @@
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
-
 		<activity
 			android:name=".news.NewsActivity"
 			android:label="@string/news"
@@ -158,8 +126,6 @@
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
-
-		<!-- File picker -->
 		<activity
 			android:name="com.ipaulpro.afilechooser.FileChooserActivity"
 			android:enabled="true"
@@ -176,21 +142,27 @@
 			</intent-filter>
 		</activity>
 
-		<!-- Advertisements -->
 		<activity
 			android:name="com.google.android.gms.ads.AdActivity"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
 			android:theme="@android:style/Theme.Translucent" />
 
+
+		<!-- File picker -->
+		<meta-data
+			android:name="asset_statements"
+			android:resource="@string/asset_statements" />
+
+		<!-- Advertisements -->
+		<meta-data
+			android:name="com.google.android.gms.version"
+			android:value="@integer/google_play_services_version" />
+
 		<!-- Push notifications services and receiver, Package updated receiver -->
 
-		<service
-			android:name=".notifications.NotificationService"
-			android:exported="false">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT" />
-			</intent-filter>
-		</service>
+		<meta-data
+			android:name="com.google.android.gms.ads.APPLICATION_ID"
+			android:value="@string/advertising_app_id" />
 
 		<!-- Receiver to check auto update installation status at device startup -->
 
@@ -200,11 +172,27 @@
 			</intent-filter>
 		</receiver>
 
+		<receiver
+			android:name=".download.DownloadServiceRestarter"
+			android:enabled="true"
+			android:exported="true"
+			android:label="Restart downloader service when app gets stopped"
+			android:permission="${fullPackageName}.permission.accessDownloadServiceRestarter" />
+
+		<service
+			android:name=".notifications.NotificationService"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.firebase.MESSAGING_EVENT" />
+			</intent-filter>
+		</service>
+
 		<service
 			android:name=".contribution.UpdateFileChecker"
 			android:label="@string/update_file_checker_service_name"
 			android:permission="android.permission.BIND_JOB_SERVICE" />
 
+		<!-- Background downloader service & receiver -->
 		<service
 			android:name=".installation.automatic.RootInstallLogger"
 			android:label="@string/root_install_logger_service_name"
@@ -215,25 +203,39 @@
 			android:label="@string/delayed_push_notification_displayer_service_name"
 			android:permission="android.permission.BIND_JOB_SERVICE" />
 
-		<!-- Background downloader service & receiver -->
 		<service
 			android:name=".download.DownloadService"
 			android:label="@string/download_service_name" />
 
-		<receiver
-			android:name=".download.DownloadServiceRestarter"
-			android:enabled="true"
-			android:exported="true"
-			android:label="Restart downloader service when app gets stopped"
-			android:permission="${fullPackageName}.permission.accessDownloadServiceRestarter" />
-
-		<meta-data
-			android:name="com.google.android.gms.version"
-			android:value="@integer/google_play_services_version" />
-
-		<meta-data
-			android:name="com.google.android.gms.ads.APPLICATION_ID"
-			android:value="@string/advertising_app_id" />
+		<uses-library
+			android:name="org.apache.http.legacy"
+			android:required="false" />
 
 	</application>
+	<permission
+		android:name="${fullPackageName}.permission.accessDownloadServiceRestarter"
+		android:protectionLevel="signature" />
+
+	<!-- Download permissions -->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+	<!-- Push notification permissions -->
+	<uses-permission android:name="${fullPackageName}.permission.accessDownloadServiceRestarter" />
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+	<!-- Update installation permissions -->
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+	<!-- In-App Billing permission -->
+	<uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+
+
+	<uses-permission android:name="com.android.vending.BILLING" />
 </manifest>
