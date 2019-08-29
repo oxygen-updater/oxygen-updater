@@ -90,7 +90,6 @@
 
 
 	<!-- Settings strings-->
-	<!-- TODO: Translate these lines -->
 	<string name="preference_header_support">支持开发</string>
 	<string name="preference_header_device">设备</string>
 	<string name="preference_header_ui">UI</string>
@@ -98,7 +97,6 @@
 	<string name="preference_header_advanced">高级</string>
 	<string name="preference_header_about">关于</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="summary_on">已启用</string>
 	<string name="summary_off">已禁用</string>
 	<string name="summary_device">请稍等…</string>
@@ -107,7 +105,6 @@
 	<string name="summary_privacy_policy">在线查看</string>
 	<string name="summary_rate_app">留个 5 星好评</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">移除广告</string>
 	<string name="label_theme">主题</string>
 	<string name="label_app_update_banner">应用更新栏</string>
@@ -115,13 +112,11 @@
 	<string name="label_privacy_policy">隐私政策</string>
 	<string name="label_rate_app">评分</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="theme_light">亮色</string>
 	<string name="theme_dark">暗色</string>
 	<string name="theme_system">跟随系统</string>
 	<string name="theme_auto">自动</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="theme_light_subtitle">轻快的白色背景，配以 OnePlus 经典红色作为强调色</string>
 	<string name="theme_dark_subtitle">近乎纯黑的深邃背景，配以更加柔和的 OnePlus 红色。如果您的设备拥有一块 AMOLED 屏幕，应用此主题更能帮您节约您手机的电量</string>
 	<string name="theme_system_subtitle">使用系统提供的夜间模式（您可以在显示设置，或者开发者选项开启）可能因您的设备而产生不同的效果</string>
@@ -271,7 +266,6 @@
 	<string name="install_guide_zip_file_missing">如果您想设备保持 Root 状态，请在上方指定一个 Root 包。</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these lines -->
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
@@ -293,7 +287,6 @@
 	<!-- About screen strings -->
 	<string name="about">关于</string>
 	<string name="about_app_description">获取 Oxygen OS 更新的终极神器！</string>
-	<!-- TODO translate this string -->
 	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">在 Google Play 上评价</string>
 	<string name="about_version">更新器版本：%1$s</string>
