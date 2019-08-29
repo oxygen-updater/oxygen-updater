@@ -24,6 +24,7 @@ import java.util.List;
 
 import java8.util.function.Consumer;
 
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
 public class NewsFragment extends AbstractFragment {
@@ -67,7 +68,7 @@ public class NewsFragment extends AbstractFragment {
 		newsContainer.setLayoutManager(new LinearLayoutManager(getContext()));
 
 		if (!isAdded()) {
-			logError(TAG, new OxygenUpdaterException("isAdded() returned false (displayNewsItems)"));
+			logDebug(TAG, "isAdded() returned false (displayNewsItems)");
 			return;
 		}
 

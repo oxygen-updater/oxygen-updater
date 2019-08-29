@@ -23,6 +23,7 @@ import java.util.List;
 import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 
@@ -44,7 +45,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		if (!isAdded()) {
-			logError(TAG, new OxygenUpdaterException("Fragment not added. Can not create the view!"));
+			logDebug(TAG, "Fragment not added. Can not create the view!");
 			return;
 		}
 
@@ -54,7 +55,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 	private void displayFormattedDeviceName(List<Device> devices) {
 		if (!isAdded()) {
-			logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display formatted device name!"));
+			logDebug(TAG, "Fragment not added. Can not display formatted device name!");
 			return;
 		}
 
@@ -71,7 +72,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 
 	private void displayDeviceInformation() {
 		if (!isAdded()) {
-			logError(TAG, new OxygenUpdaterException("Fragment not added. Can not display device information!"));
+			logDebug(TAG, "Fragment not added. Can not display device information!");
 			return;
 		}
 

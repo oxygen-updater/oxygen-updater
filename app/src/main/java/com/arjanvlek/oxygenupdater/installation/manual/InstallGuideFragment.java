@@ -33,6 +33,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES;
+import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_DEVICE_ID;
@@ -119,7 +120,7 @@ public class InstallGuideFragment extends Fragment {
 	private void displayInstallGuide(View installGuideView, InstallGuidePage installGuidePage, int pageNumber, boolean isFirstPage) {
 		if (!isAdded()) {
 			// Happens when a page is scrolled too far outside the screen (2 or more rows) and content then gets resolved from the server.
-			logError(TAG, new OxygenUpdaterException("isAdded() returned false (displayInstallGuide)"));
+			logDebug(TAG, "isAdded() returned false (displayInstallGuide)");
 			return;
 		}
 
