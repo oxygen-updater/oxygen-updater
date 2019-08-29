@@ -95,7 +95,7 @@
 	<string name="preference_header_device">设备</string>
 	<string name="preference_header_ui">UI</string>
 	<string name="preference_header_notifications">通知</string>
-	<string name="preference_header_advanced">高级d</string>
+	<string name="preference_header_advanced">高级</string>
 	<string name="preference_header_about">关于</string>
 
 	<!-- TODO: Translate these lines -->
