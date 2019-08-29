@@ -71,17 +71,17 @@
 	<string name="download_notification_error_corrupt">文件校验失败。检查您的互联网连接，然后重试。</string>
 
 	<string name="download_progress_text_hours_remaining">%1$d%%, 大约还剩 %2$d 小时</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 1 分钟之内就能完成了</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 1 分钟之内即可完成</string>
 	<string name="download_progress_text_minutes_remaining">%1$d%%, 大约还有 %2$d 分钟</string>
 	<string name="download_progress_text_one_hour_remaining">%1$d%%, 大约还有 1 个小时</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, 大约只剩 1 分钟就好了</string>
+	<string name="download_progress_text_one_minute_remaining">%1$d%%, 大约只剩 1 分钟了</string>
 	<string name="download_progress_text_seconds_remaining">%1$d%%, 马上就好</string>
 	<string name="download_progress_text_unknown_time_remaining">%1$d%%, 正在计算剩余时间…</string>
-	<string name="download_progress_text_verifying">100%, 正在校验文件完整性…</string>
+	<string name="download_progress_text_verifying">100%, 正在校验文件是否完整…</string>
 	<string name="download_progress_text_paused">%1$d%%, 已暂停</string>
 	<string name="download_waiting_for_network">%1$d%%, 正在等待互联网连接…</string>
 
-	<string name="download_size_megabyte">%1$d MB</string>
+	<string name="download_size_megabyte">%1$d 兆字节</string>
 	<string name="download_unknown_update_name">Oxygen OS 更新</string>
 
 	<string name="download_verifying">正在校验中…</string>
@@ -91,43 +91,42 @@
 
 	<!-- Settings strings-->
 	<!-- TODO: Translate these lines -->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
+	<string name="preference_header_support">支持开发</string>
+	<string name="preference_header_device">设备</string>
 	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
-	<string name="preference_header_advanced">Advanced</string>
-	<string name="preference_header_about">About</string>
+	<string name="preference_header_notifications">通知</string>
+	<string name="preference_header_advanced">高级d</string>
+	<string name="preference_header_about">关于</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_device">Please wait…</string>
-	<string name="summary_update_method">Select a device first</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">View online</string>
-	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_on">已启用</string>
+	<string name="summary_off">已禁用</string>
+	<string name="summary_device">请稍等…</string>
+	<string name="summary_update_method">请先选择一个设备</string>
+	<string name="summary_theme">设定主题</string>
+	<string name="summary_privacy_policy">在线查看</string>
+	<string name="summary_rate_app">留个 5 星好评</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="label_buy_ad_free">Remove ads</string>
-	<string name="label_theme">Theme</string>
-	<string name="label_app_update_banner">App update banners</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_buy_ad_free">移除广告</string>
+	<string name="label_theme">主题</string>
+	<string name="label_app_update_banner">应用更新栏</string>
+	<string name="label_news_warning_banner">新闻与警告栏</string>
+	<string name="label_privacy_policy">隐私政策</string>
+	<string name="label_rate_app">评分</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
-	<string name="theme_system">System</string>
-	<string name="theme_auto">Auto</string>
+	<string name="theme_light">亮色</string>
+	<string name="theme_dark">暗色</string>
+	<string name="theme_system">跟随系统</string>
+	<string name="theme_auto">自动</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_light_subtitle">轻快的白色背景，配以 OnePlus 经典红色作为强调色</string>
+	<string name="theme_dark_subtitle">近乎纯黑的深邃背景，配以更加柔和的 OnePlus 红色。如果您的设备拥有一块 AMOLED 屏幕，应用此主题更能帮您节约您手机的电量</string>
+	<string name="theme_system_subtitle">使用系统提供的夜间模式（您可以在显示设置，或者开发者选项开启）可能因您的设备而产生不同的效果</string>
+	<string name="theme_auto_subtitle">根据您所在地区的时间，自动切换深色或者亮色主题。这样可以保护您的眼睛在夜间不被强光伤害</string>
+	<string name="theme_additional_note">注意：如果您在使用“自动”主题的时候，同时启用了省电模式，那么将会无视当前时间，强制调至暗色模式，以达到节省电量的目的</string>
 
 	<string name="settings">设置</string>
 	<string name="settings_buy_button_buy">购买 (%1$s)</string>
@@ -140,15 +139,15 @@
 	<string name="settings_category_other">其它：</string>
 	<string name="settings_device">设备</string>
 	<string name="settings_entered_incorrectly">保存设置时出错。请返回并重新选择您的设备 / 更新方法。</string>
-	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安装（除非你解锁了 BootLoader，这样的话，那你只能选择安装完整包）。\n\nOxygen OS 的公开测试版可以在任何版本中（包括正式版）安装。如果您想从正式版转到测试版，请在设置中打开高级模式。测试版和正式版一样，都会要求您在解锁了 BootLoader 的情况下下载全量包。</string>
+	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安装（如果您解锁了 BootLoader，这样的话，则只能选择安装完整包）。\n\nOxygen OS 的公开测试版可以在任何版本中（包括正式版）安装。如果您想从正式版转到测试版，请在设置中打开高级模式。测试版和正式版一样，都会要求您在解锁了 BootLoader 的情况下下载全量包。</string>
 	<string name="settings_explanation_update_methods">对不同更新方式的解释</string>]
 	<string name="settings_header">您的设备 / 更新方式是？</string>
 
 	<string name="settings_push">何时为您推送消息？</string>
-	<string name="settings_push_from_server">有关键消息时</string>
-	<string name="settings_push_new_version">有新的系统版本可更新时</string>
-	<string name="settings_push_new_device">有新的设备受到支持时</string>
-	<string name="settings_push_news">有新闻 / 故事发布时</string>
+	<string name="settings_push_from_server">重要消息</string>
+	<string name="settings_push_new_version">系统更新</string>
+	<string name="settings_push_new_device">新设备支持</string>
+	<string name="settings_push_news">新闻 / 故事发布</string>
 
 	<string name="settings_saved">您对设置的更改已自动保存</string>
 	<string name="settings_saving">您的设置仍在保存中。如果时间过长，：请检查您的网络连接，或退出应用程序并再次启动它。</string>
@@ -384,6 +383,7 @@
 	<string name="delayed_push_notification_displayer_service_name">消息推送服务</string>
 	<string name="download_service_name">更新下载器</string>
 	<string name="log_uploader_service_name">错误报告服务</string>
+	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用，<a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (它可以为 Cyanogen OS 用户提供与本应用类似的功能).\n\n在这四年之后，2019 年 6 月，Arjan 决定放手这两款应用，并将它的所有权转让给其它团队去做。他们负责为整个 OnePlus 社区提供优质的服务支持，以便更快地获得 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">这里</a>了解更多关于此的信息。\n\n2019 年 8 月 14 日，新主人所负责的第一个版本，为用户们带来了深色模式，全新界面设计，以及其它的新功能。\n\n如果您想了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。\n\n\n在您使用的过程中，请注意，这并不是 OnePlus 出品的官方应用！\nOnePlus 的名称，Logo，以及 Oxygen OS 都属于 OnePlus 所有！\nAndroid，Google，Google Play 以及 Google Play Logo，均为 Google Ink. 所持有的商标。\n本应用使用来自 OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。\n\n本应用的中文翻译，由 Mastiff 提供。\n\n如果您喜欢本应用，请前往 Google Play 商店给个好评吧：</string>
 </resources>
 
 
