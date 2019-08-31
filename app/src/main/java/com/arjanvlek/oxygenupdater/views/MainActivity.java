@@ -307,11 +307,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 					if (!queryResult.isSuccess()) {
 						// Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
 						callback.accept(!settingsManager.getPreference(PROPERTY_AD_FREE, false));
-						return;
-					}
-
-					if (queryResult.isSuccess()) {
-						if (inventory.hasPurchase(SKU_AD_FREE)) {
+					} else {
+						if (inventory != null && inventory.hasPurchase(SKU_AD_FREE)) {
 							// User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
 							settingsManager.savePreference(PROPERTY_AD_FREE, true);
 							callback.accept(false);
