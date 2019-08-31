@@ -394,6 +394,8 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 	<string name="error_push_failure">"Neuspjelo"</string>
 	<string name="error_reload">"Ponovno pokreni"</string>
 	<string name="error_unable_to_rate_app">"Nemožete ocijeniti ovu aplikaciju jer na vašem uređaju nema Google Play aplikacije"</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Ažuriranje je već skinuto"</string>

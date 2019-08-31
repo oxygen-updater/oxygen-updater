@@ -382,6 +382,8 @@
 	<string name="error_reload">Reload</string>
 
 	<string name="error_unable_to_rate_app">You can\'t rate the app, because the Google Play Store is missing on your device.</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Update already downloaded</string>

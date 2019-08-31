@@ -8,16 +8,20 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.StatFs;
 import android.util.Pair;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
@@ -25,6 +29,7 @@ import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData;
+import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.downloader.Error;
 import com.downloader.OnDownloadListener;
 import com.downloader.PRDownloader;
@@ -49,6 +54,7 @@ import java8.util.function.Function;
 import java8.util.stream.Collectors;
 import java8.util.stream.StreamSupport;
 
+import static android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS;
 import static com.arjanvlek.oxygenupdater.ApplicationData.APP_USER_AGENT;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
@@ -420,8 +426,23 @@ public class DownloadService extends IntentService {
 		}
 
 		// Check if there is enough free storage space before downloading
-		long availableSizeInBytes = new StatFs(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath()).getAvailableBytes();
 		long requiredFreeBytes = updateData.getDownloadSize();
+		long availableSizeInBytes = requiredFreeBytes + SAFE_MARGIN;
+		try {
+			availableSizeInBytes = new StatFs(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).getPath()).getAvailableBytes();
+		} catch (IllegalArgumentException e) {
+			int permission = ContextCompat.checkSelfPermission(context, MainActivity.VERIFY_FILE_PERMISSION);
+
+			if (permission != PackageManager.PERMISSION_GRANTED) {
+				Toast.makeText(context, R.string.error_download_permissions_required, Toast.LENGTH_LONG).show();
+
+				// Open application-specific settings in the Android Settings application
+				// to allow the user to manually assign the storage permission
+				new Handler().postDelayed(() ->
+						startActivity(new Intent(ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.fromParts("package", getPackageName(), null))), 3500
+				);
+			}
+		}
 
 		// Download size in bytes is approximately as it is entered in Megabytes by the contributors.
 		// Also, we don't want this app to fill up ALL storage of the phone.

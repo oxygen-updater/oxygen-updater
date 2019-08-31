@@ -420,6 +420,8 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="error_push_failure">"Misslyckades att aktivera notifikationer. Stäng av appen helt och starta den efter några minuter."</string>
 	<string name="error_reload">"Ladda om"</string>
 	<string name="error_unable_to_rate_app">"Du kan inte rösta på appen eftersom Google Play Butik saknas på din enhet"</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Uppdateringen är redan nerladdad"</string>

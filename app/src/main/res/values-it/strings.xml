@@ -417,6 +417,8 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="error_push_failure">"Abilitazione delle notifiche fallita. Chiudi l'app e rirpova. "</string>
 	<string name="error_reload">"Ricarica"</string>
 	<string name="error_unable_to_rate_app">"Non puoi valutare l'app perche' Google Play Store non e' presente sul dispositivo."</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Aggiornamento già scaricato"</string>

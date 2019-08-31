@@ -355,6 +355,8 @@
 	<string name="error_push_failure">Notificaties konden niet worden aangezet. Sluit de app volledig af en start hem over enkele minuten opnieuw op.</string>
 	<string name="error_reload">Opnieuw laden</string>
 	<string name="error_unable_to_rate_app">Je kunt de app niet beoordelen, omdat je de Google Play Store niet hebt geïnstalleerd.</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message box strings -->
 	<string name="delete_message_title">Update is al gedownload</string>

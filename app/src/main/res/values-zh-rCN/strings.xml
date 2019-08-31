@@ -350,6 +350,8 @@
 	<string name="error_reload">重新加载</string>
 
 	<string name="error_unable_to_rate_app">非常感谢您的好意，但是非常抱歉，您的设备缺少 Google Play 组件，无法为本应用做出评价。</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">更新包已下载</string>

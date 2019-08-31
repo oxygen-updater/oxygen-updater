@@ -428,6 +428,8 @@ Benutzen sie den Schälter zum eins-oder ausschalten des Mitteilung- und Privacy
 	<string name="error_push_failure">"Fehler beim Aktiveren von Benachrichtigen. Schliebe die app und öffnet sie wieder mal über ein Paar minuten."</string>
 	<string name="error_reload">"Neu laden"</string>
 	<string name="error_unable_to_rate_app">"Du kannst die App nicht bewerten weil es auf deinem Gerät keinen Google Play Store gibt."</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Update bereits gedownloadet"</string>

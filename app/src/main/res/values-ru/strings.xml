@@ -426,6 +426,8 @@
 	<string name="error_push_failure">"Не удалось включить уведомления. Полностью закройте приложение и запустите его снова через несколько минут."</string>
 	<string name="error_reload">"Повторить попытку"</string>
 	<string name="error_unable_to_rate_app">"Невозможно оценить приложение, так как на устройстве отсутствует Google Play Mаркет."</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Обновление уже загружено"</string>

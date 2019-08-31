@@ -355,6 +355,8 @@
 	<string name="error_reload">Recargar</string>
 
 	<string name="error_unable_to_rate_app">No puedes valorar la app ya que Google Play Store no está instalado en tu dispositivo.</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Actualizaciones ya descargadas</string>

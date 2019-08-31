@@ -351,6 +351,8 @@
 	<string name="error_reload">โหลดใหม่</string>
 
 	<string name="error_unable_to_rate_app">คุณไม่สามารถให้คะแนนแอพพลิเคชั่นได้ เนื่องจาก Google Play Store ไม่มีอยู่ในอุปกรณ์ของคุณ</string>
+	<!-- TODO: translate this string -->
+	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">อัปเดตพร้อมดาวน์โหลดแล้ว</string>
