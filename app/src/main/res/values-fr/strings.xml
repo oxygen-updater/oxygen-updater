@@ -412,8 +412,7 @@ Sélectionnez un périphérique et/ou une méthode de mise à jour en utilisant 
 	<string name="error_push_failure">"Échec d'activation des notifications. Fermez entièrement l'application, attendez quelques minutes et relancez-la.  "</string>
 	<string name="error_reload">"Recharger"</string>
 	<string name="error_unable_to_rate_app">"Vous ne pouvez pas évaluer cette application car le Play Store n'est pas installé sur votre périphérique."</string>
-	<!-- TODO: translate this string -->
-	<string name="error_download_permissions_required">Please allow storage permissions before starting the download</string>
+	<string name="error_download_permissions_required">Veuillez accorder la permission d\'accéder au stockage avant de commencer le téléchargement.</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"La mise à jour a déjà été téléchargée."</string>
