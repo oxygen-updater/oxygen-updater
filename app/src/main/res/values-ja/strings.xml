@@ -50,7 +50,6 @@
 	<string name="download_error">ダウンロードエラー</string>
 	<string name="download_error_close">閉じる</string>
 	<string name="download_error_corrupt">ダウンロード済アップデートファイルは損傷しています。再度ダウンロードして下さい。</string>
-	<!-- TODO translate the 3 below to Russian -->
 	<string name="download_error_network">アップデートのダウンロード中にネットワークエラーが発生しました。ダウンロードは自動的に再開します。</string>
 	<string name="download_error_server">アップデートのダウンロード中にサーバエラーが発生しました。再度ダウンロードを試行して下さい。</string>
 	<string name="download_error_internal">アップロードのダウンロード中に技術的なエラーが発生しました。このエラーが継続している場合、アプリの開発者に連絡してサポートを受けて下さい。</string>
@@ -65,7 +64,6 @@
 	<string name="download_pending">ダウンロードは間もなく開始されます…</string>
 	<string name="download_permissions">「再ダウンロード」をタップしアップデートをダウンロード</string>
 
-	<!-- TODO translate the 3 below to Russian -->
 	<string name="download_notification_error_network">接続断のためダウンロードが中断されました。間もなく再開されます。</string>
 	<string name="download_notification_error_server">ダウンロード中にサーバーエラーが発生しました。再ダウンロードして下さい。</string>
 	<string name="download_notification_error_internal">ダウンロード中に技術的なエラーが発生しました。再ダウンロードするかサポートに連絡して下さい。</string>
@@ -155,7 +153,6 @@
 	<string name="settings_buy_button_not_possible">無効</string>
 	<string name="settings_buy_ad_free_label">広告消去のためアップグレード</string>
 
-	<!-- TODO translate these 2 to all but Dutch / Belgian / French -->
 	<string name="settings_contribute_label">アプリの改善にご協力ください</string>
 	<string name="settings_contribute_button">協力</string>
 
@@ -330,7 +327,7 @@
 	<string name="notification_version"> %2$s 向けの %1$s が利用可能です!</string>
 	<string name="push_notification_channel_name">通知のブッシュ</string>
 	<string name="push_notification_channel_description">Oxygen Updater アプリに重要な通知を表示します。システムアップデート通知やニュース速報を含みます。</string>
-	<string name="progress_notification_channel_name"></string>進捗通知
+	<string name="progress_notification_channel_name">進捗通知</string>
 	<string name="progress_notification_channel_description">Oxygen Updaterアプリの重要でない通知をすべて表示します。 ダウンロード中に表示されるステータスインジケータが含まれます。</string>
 
 	<!-- Help strings -->
@@ -353,7 +350,6 @@
 	<string name="news_load_error">記事を開けませんでした。 接続を確認し、\'再試行\'ボタンを押して記事を開きます。</string>
 
 	<!-- Contribute strings -->
-	<!-- TODO translate this block to all but Dutch / Belgian / French -->
 	<string name="contribute">貢献者になる</string>
 	<string name="contribute_title">Oxygen Updaterの改善に協力する</string>
 	<string name="contribute_explanation">Oxygen Updaterはあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。 \n\nどうすればよいですか？\n\nOxygen Updaterは、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたというOxygen Updaterの確認が表示されるまで、公式のシステムアップデートをインストールする前に（約15分）待つことです。 電話機の.ota-directoryのみが15分ごとに1回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
