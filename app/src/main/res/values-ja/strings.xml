@@ -104,7 +104,6 @@
 	<string name="summary_theme">テーマの設定</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
 	<string name="summary_rate_app">レビューに５つ星を残す</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">広告の除去</string>
 	<string name="label_theme">テーマ</string>
@@ -117,29 +116,6 @@
 	<string name="theme_dark">ダーク</string>
 	<string name="theme_system">システム</string>
 	<string name="theme_auto">自動</string>
-
-	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
-	<string name="key_contributor" translatable="false">become_contributor</string>
-	<string name="key_category_device" translatable="false">key_category_device</string>
-	<string name="key_device" translatable="false">device</string>
-	<string name="key_device_id" translatable="false">device_id</string>
-	<string name="key_update_method" translatable="false">update_method</string>
-	<string name="key_update_method_id" translatable="false">update_method_id</string>
-	<string name="key_theme" translatable="false">theme</string>
-	<string name="key_theme_id" translatable="false">theme_id</string>
-	<string name="key_ui_app_update" translatable="false">show_app_update_messages</string>
-	<string name="key_ui_news" translatable="false">show_news_messages</string>
-	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
-	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
-	<string name="key_share_usage_data" translatable="false">upload_logs</string>
-	<!-- Typo can't be fixed due to older versions of the app being released with it -->
-	<string name="key_notification_critical_message" translatable="false">recive_general_notifications</string>
-	<string name="key_notification_system_update" translatable="false">receive_system_update_notifications</string>
-	<string name="key_notification_new_device_supported" translatable="false">receive_new_device_notifications</string>
-	<string name="key_notification_news_story_published" translatable="false">receive_news_notifications</string>
-	<string name="key_rate_app" translatable="false">rate</string>
-	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
-	<string name="key_oxygen" translatable="false">oxygen_updater</string>
 
 	<string name="theme_light_subtitle">白い背景、OnePlus Red のテーマ</string>
 	<string name="theme_dark_subtitle">黒い背景、OnePlus Red のテーマ。バッテリー使用量を低減するのに最適（特に AMOLED スクリーン機種で）</string>
@@ -296,8 +272,6 @@
 
 	<string name="device_information_amount_of_memory">RAMの合計量:</string>
 	<string name="device_information_cpu_frequency">プロセッサ周波数:</string>
-	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
-	<string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
 	<string name="device_information_header">マイデバイス</string>
 	<string name="device_information_header_short">マイデバイス</string>
 	<string name="device_information_image_description">デバイスイメージ</string>
@@ -399,13 +373,8 @@
 	<string name="loading">読み込中…</string>
 	<string name="processing">処理中…</string>
 	<string name="choose_file">ファイルを選択</string>
-	<string name="advertising_app_id" translatable="false">ca-app-pub-1816831161514116~4275332954</string>
-	<string name="advertising_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/9792024147</string>
-	<string name="advertising_interstitial_unit_id" translatable="false">ca-app-pub-1816831161514116/8641953374</string>
 	<string name="root_install_logger_service_name">インストールロガーを更新する</string>
 	<string name="delayed_push_notification_displayer_service_name">プッシュ通知サービス</string>
 	<string name="download_service_name">アップデートダウンローダー</string>
 	<string name="log_uploader_service_name">エラー報告サービス</string>
-	<string name="update_file_checker_service_name" translatable="false">Update file checking service</string>
-	<string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
