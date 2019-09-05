@@ -19,8 +19,8 @@ android {
 		applicationId 'com.arjanvlek.oxygenupdater'
 		minSdkVersion 21
 		targetSdkVersion 28
-		versionCode 56
-		versionName '3.2.0'
+		versionCode 57
+		versionName '3.3.0'
 		signingConfig signingConfigs.signingConfig
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 		proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
