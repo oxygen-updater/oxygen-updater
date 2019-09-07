@@ -103,8 +103,7 @@
 	<string name="label_news_warning_banner">Uutis &amp; varoitus bannerit</string>
 	<string name="label_privacy_policy">Yksityisyyskäytäntö</string>
 	<string name="label_rate_app">Arvioi tämä sovellus</string>
-
-	<!-- TODO: Translate these lines -->
+	
 	<string name="theme_light">Vaalea</string>
 	<string name="theme_dark">Tumma</string>
 	<string name="theme_system">Järjestelmä</string>
