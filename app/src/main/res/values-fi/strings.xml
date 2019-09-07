@@ -82,44 +82,38 @@
 	<string name="download_verifying_start">"Lataustasi tarkistetaan nyt…"</string>
 
 	<!-- Settings strings -->
-	<!-- TODO: Translate these lines -->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
-	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
-	<string name="preference_header_advanced">Advanced</string>
-	<string name="preference_header_about">About</string>
+	<string name="preference_header_support">Tue meitä</string>
+	<string name="preference_header_device">Laite</string>
+	<string name="preference_header_ui">Käyttöliittymä</string>
+	<string name="preference_header_notifications">Ilmoitukset</string>
+	<string name="preference_header_advanced">Edistyneet</string>
+	<string name="preference_header_about">Tietoja</string>
 
-	<!-- TODO: Translate these lines -->
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_device">Please wait…</string>
-	<string name="summary_update_method">Select a device first</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">View online</string>
-	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_on">Käytössä</string>
+	<string name="summary_off">Pois käytöstä</string>
+	<string name="summary_device">Ole hyvä ja odota…</string>
+	<string name="summary_update_method">Valitse laite ensin</string>
+	<string name="summary_theme">Aseta teema</string>
+	<string name="summary_privacy_policy">Katso verkkosivuilta</string>
+	<string name="summary_rate_app">Anna 5 tähden arvostelu</string>
 
-	<!-- TODO: Translate these lines -->
-	<string name="label_buy_ad_free">Remove ads</string>
-	<string name="label_theme">Theme</string>
-	<string name="label_app_update_banner">App update banners</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_buy_ad_free">Poista mainokset</string>
+	<string name="label_theme">Teema</string>
+	<string name="label_app_update_banner">Sovelluspäivityksen bannerit</string>
+	<string name="label_news_warning_banner">Uutis &amp; varoitus bannerit</string>
+	<string name="label_privacy_policy">Yksityisyyskäytäntö</string>
+	<string name="label_rate_app">Arvioi tämä sovellus</string>
+	
+	<string name="theme_light">Vaalea</string>
+	<string name="theme_dark">Tumma</string>
+	<string name="theme_system">Järjestelmä</string>
+	<string name="theme_auto">Automaattinen</string>
 
-	<!-- TODO: Translate these lines -->
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
-	<string name="theme_system">System</string>
-	<string name="theme_auto">Auto</string>
-
-	<!-- TODO: Translate these lines -->
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_light_subtitle">Teema valkoisella taustalla ja OnePlus punainen päävärinä</string>
+	<string name="theme_dark_subtitle">Hillitysti OnePlus punaista päävärinä, melkein musta taustaväri. Käytä tätä säästääksesi akkua, erityisesti AMOLED näytöillä</string>
+	<string name="theme_system_subtitle">Käytä järjestelmän yötilaa (Voit asettaa tämän joko näytön asetuksissa tai kehittäjä välikosta). Vaihtelee laitteittain</string>
+	<string name="theme_auto_subtitle">Vaihda vaalean ja tumman teeman välillä kellonajan perusteella estääksesi silmien rasitusta öisin</string>
+	<string name="theme_additional_note">Huomaa: Jos \'Automaattinen\' teema on aktiivinen ja akun säästö on käytössä, tummaa teemaa käytetään automaattisesti akun säästämiseen vuorokaudenajasta riippumatta.</string>
 
 	<string name="settings">"Asetukset"</string>
 	<string name="settings_buy_button_buy">"Osta (%1$s)"</string>
@@ -127,7 +121,6 @@
 	<string name="settings_buy_button_not_possible">"Ei saatavilla"</string>
 	<string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen"</string>
 
-	<!-- TODO translate these lines -->
 	<string name="settings_contribute_label">Auta parantamaan sovellusta:</string>
 	<string name="settings_contribute_button">Tule tukijaksi</string>
 
@@ -307,9 +300,8 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="install_guide_zip_file_missing">"Jos haluat pitää laitteesi rootattuna sinun tulee valita asennettava root paketti yläpuolelta."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these lines -->
-	<string name="device_information_hardware_header">Hardware</string>
-	<string name="device_information_software_header">Software</string>
+	<string name="device_information_hardware_header">Laitteisto</string>
+	<string name="device_information_software_header">Ohjelmisto</string>
 
 	<string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
 	<string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
@@ -322,15 +314,14 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="device_information_oxygen_os_ota_version">"OTA versio:"</string>
 	<string name="device_information_patch_level_version">"Tietoturvapäivitysten päiväys:"</string>
 	<string name="device_information_serial_number">"Sarjanumero:"</string>
-	<string name="device_information_system_on_a_chip">"Piirisarjan järjestelmä:"</string>
+	<string name="device_information_system_on_a_chip">"Piirisarja:"</string>
 	<string name="device_information_unknown">"tuntematon"</string>
 	<string name="device_information_your_device">"Sinun laitteesi: "</string>
 
 	<!-- About screen strings -->
 	<string name="about">"Tietoja sovelluksesta"</string>
 	<string name="about_app_description">"Ylivoimaisesti paras työkalu Oxygen OS päivityksille."</string>
-	<!-- TODO translate this string -->
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
+	<string name="about_background_story">Tämän sovellun on alunperin kehittänyt Arjan Vlek hänen toisen sovelluksensa jatkona nilemtä <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (se tarjoaa vastaavia toimintoja Cyanoges OS käyttäjille).\n\nNeljän vuoden jälkeen, hienäkuussa 2019, Arjan päätti luopua molemmista projekteista ja siirsi sovellusten omistajuuden kehitystiimille jonka jäsenet ovat kotoisin eri maista. He ottivat vastuun tarjota yhteisölle erinomaisen palvelun &amp; tuen saadakseen OnePlus päivitykset nopeammin.\nLöydät lisätietoja ilmoituksesta <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">täältä</a> (englanniksi).\n\n14 elokuuta 2019 merkitsi ensimmäistä julkaisua uuden omistajuuden alla ja tämä päivitys sisälsi uusia ominaisuuksia, kuten tumman tilan ja täydellisen uudelleensuunnitelun.\n\nLisätietoja uudesta tiimistä löydät <a href="https://oxygenupdater.com/team/">verkkosivuilta</a>.\n\n\nHuomaathan, että tämä ei ole virallinen OnePlus sovellus \nOnePlus -nimi, OnePlus -logo ja OxygenOS ovat OnePlussan omaisuutta. \nAndroid, Google, Google Play ja Google Play -logo ovat Google Inc: n rekisteröityjä tavaramerkkejä. \nTämä sovellus käyttää OnePlussa ja sen emoyhtiön Oppon tietoja päivitystietojen näyttämiseen \n\nJos pidät tästä sovelluksesta, arvioi se nyt Play Kaupassa:</string>
 	<string name="about_rate_app_button_text">"Arvostele Play Kaupassa"</string>
 	<string name="about_version">"Versio: %1$s"</string>
 
@@ -391,7 +382,6 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
 	<string name="news_load_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
 
-	<!-- TODO translate these lines -->
 	<string name="contribute">Tule tukijaksi</string>
 	<string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
 	<string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu. \n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi vie vähän akkuvirtaa. Kaikki mitä sinun tulee tehdä on vain odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>
