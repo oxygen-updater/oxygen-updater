@@ -185,7 +185,7 @@
 	<string name="install_going_back_not_possible">Ne yazık ki, artık geri dönemezsiniz...</string>
 	<string name="install_preparing_installation">Yükleme hazırlanıyor…</string>
 
-	<string name="install_recovery_installer_title">Güncelleme yükleyicisi  &#160;&#160;</string> <!-- Add 2 spaces to the end -->
+	<string name="install_recovery_installer_title">Güncelleme yükleyicisi  &#160;&#160;  </string> <!-- Add 2 spaces to the end -->
 	<string name="install_recovery_backing_up">Cihazınızın yedeği alınıyor. Biraz zaman alacaktır!</string>
 	<string name="install_recovery_clearing_cache">Önbellek temizleniyor…</string>
 	<string name="install_recovery_done">Tamamlandı. Cihazınız tekrar başlatılacak.</string>
