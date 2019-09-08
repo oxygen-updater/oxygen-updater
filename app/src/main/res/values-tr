@@ -104,8 +104,6 @@
 	<string name="summary_theme">Temayı seçiniz</string>
 	<string name="summary_privacy_policy">Online görüntüleyiniz.</string>
 	<string name="summary_rate_app">5 yıldızlı yorum bırakınız.</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
-
 	<string name="label_buy_ad_free">Reklamları kaldırın</string>
 	<string name="label_theme">Tema</string>
 	<string name="label_app_update_banner">Uygulama güncelleme bannerları</string>
@@ -381,3 +379,5 @@
 	<string name="download_service_name">Güncelleme yükleyicisi</string>
 	<string name="log_uploader_service_name">Hatayı bildirirken sorun oluştu.</string>
 </resources>
+
+
