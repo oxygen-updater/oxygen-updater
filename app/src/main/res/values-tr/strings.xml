@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Application title, Main activity title-->
+	<string name="app_name">Oxygen Updater</string>
+	<string name="launcher_app_name">Oxygen Updater</string>
+
+	<!-- Update information strings-->
+	<string name="update">Güncelle</string>
+	<string name="update_information_close">Kapat</string>
+	<string name="update_information_description_not_available">Bu güncelleme ile gelen yeni özellikler ile ilgili herhangi orjinal bir bilgi bulunmamakta. Genellikle, bu tür güncellemeler cihazınız için sorun düzeltmeleri,performans geliştirmeleri ve/veya kritik güvenlik güncellemelerini içermektedir.</string>
+	<string name="update_information_file_name">Dosya adı: %1$s</string>
+	<string name="update_information_for">için</string>
+	<string name="update_information_header">Güncelle</string>
+	<string name="update_information_header_short">Güncelle</string>
+	<string name="update_information_installed_update">En son sistem güncellemesi:</string>
+	<string name="update_information_last_checked_on">Son kontrol: %1$s</string>
+	<string name="update_information_latest_available_update">Yeni sistem güncellemesi mevcut</string>
+	<string name="update_information_no_update_data_available">Herhangi bir güncelleme bilgisi bulunmamaktadır.</string>
+	<string name="update_information_oxygen_os_version">Oxygen OS Versiyonu: %1$s</string>
+	<string name="update_information_system_is_up_to_date">Sisteminiz güncel.</string>
+	<string name="update_information_unknown_update_name">İsimsiz güncelleme: %1$s</string>
+	<string name="update_information_version">&#160;versiyon:</string>
+	<string name="update_information_view_update_information">Güncelleme bilgilerini görüntüle</string>
+
+	<!-- Server status warning strings -->
+	<string name="server_status_error">Bazı özellikler çalışmayacaktır.</string>
+	<string name="server_status_unreachable">Sunucuya bağlanılamadı. Tekrar deneyiniz.</string>
+	<string name="server_status_warning">Bazı özellikler tam olarak çalışmayabilir.</string>
+
+	<!-- New app version message strings -->
+	<string name="new_app_version">Uygulama için yeni güncelleme mevcut! Versiyon &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> yayınlandı!</string>
+
+	<!-- Date and time strings -->
+	<string name="time_at">zamanında</string>
+	<string name="time_today">Bugün</string>
+	<string name="time_yesterday">Dün</string>
+
+	<!-- Downloader strings-->
+	<string name="download">İndir</string>
+	<string name="downloaded">İndirildi</string>
+	<string name="downloading">İndiriliyor…</string>
+	<string name="paused">Durduruldu</string>
+
+	<string name="download_already_downloaded">Güncelleme zaten indirildi. Yüklenmek için hazır.</string>
+	<string name="download_complete">İndirme tamamlandı.</string>
+	<string name="download_complete_notification">İndirme tamamlandı. Yüklemeyi başlatmak için dokunun.</string>
+
+	<string name="download_description">Oxygen Updater</string>
+
+	<string name="download_error">İndirilemedi</string>
+	<string name="download_error_close">KAPAT</string>
+	<string name="download_error_corrupt">Güncelleme dosyası zarar görmüş! Lütfen tekrar indirmeyi deneyin.</string>
+	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
+	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
+	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
+
+	<string name="download_error_retry">RETRY</string>
+	<string name="download_error_resume">RESUME</string>
+	<string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
+
+	<string name="download_failed">Download failed</string>
+	<string name="download_in_background">Oxygen Updater is running in the background</string>
+	<string name="download_oxygen_os">Oxygen OS Version</string>
+	<string name="download_pending">Your download will start soon…</string>
+	<string name="download_permissions">Tap Download again to download the update.</string>
+
+	<string name="download_notification_error_network">Bağlantı koptuğundan dolayı indirme durduruldu. Tekrar bağlanıldığında devam edecek.</string>
+	<string name="download_notification_error_server">İndirme sırasında sunucu sorunu. Lütfen indirmeyi tekrar başlatın.</string>
+	<string name="download_notification_error_internal">İndirme sırasında teknik sorun oldu. Lütfen tekrar indirin veya destek ile iletişime geçin.</string>
+	<string name="download_notification_error_storage_full">Yeterli alan yok.</string>
+	<string name="download_notification_error_corrupt">Dosya doğrulaması başarısız oldu. Lütfen bağlantınızı kontrol edin ve tekrar deneyin.</string>
+
+	<string name="download_progress_text_hours_remaining">%1$d%%, yaklaşık %2$d kaldı</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 1 dakikadan az kaldı</string>
+	<string name="download_progress_text_minutes_remaining">%1$d%%, yaklaşık %2$d dakika kaldı</string>
+	<string name="download_progress_text_one_hour_remaining">%1$d%%, Yaklaşık 1 saat kaldı.</string>
+	<string name="download_progress_text_one_minute_remaining">%1$d%%, yaklaşık olarak 1 dakika kaldı</string>
+	<string name="download_progress_text_seconds_remaining">%1$d%%, birkaç saniye kaldı</string>
+	<string name="download_progress_text_unknown_time_remaining">%1$d%%, kalan zaman hesaplanıyor…</string>
+	<string name="download_progress_text_verifying">100%, dosya doğrulanıyor…</string>
+	<string name="download_progress_text_paused">%1$d%%, durduruldu</string>
+	<string name="download_waiting_for_network">%1$d%%, internet bağlantısı için bekleniyor…</string>
+
+	<string name="download_size_megabyte">%1$d MB</string>
+	<string name="download_unknown_update_name">Oxygen OS Güncellemesi</string>
+
+	<string name="download_verifying">Doğrulanıyor…</string>
+	<string name="download_verifying_error">Dosya zarar görmüş.</string>
+	<string name="download_verifying_start">İndirmeniz şimdi doğrulanacak…</string>
+
+
+	<!-- Settings strings-->
+	<string name="preference_header_support">Bize yardım edin</string>
+	<string name="preference_header_device">Cihaz</string>
+	<string name="preference_header_ui">Görünüm</string>
+        <string name="preference_header_notifications">Bildirimler</string>
+	<string name="preference_header_advanced">Gelişmiş</string>
+	<string name="preference_header_about">Hakkında</string>
+
+	<string name="summary_on">Açık</string>
+	<string name="summary_off">Kapalı</string>
+	<string name="summary_device">Lütfen bekleyin…</string>
+	<string name="summary_update_method">Lütfen öncelikle cihazınızı belirtin.</string>
+	<string name="summary_theme">Temayı seçiniz</string>
+	<string name="summary_privacy_policy">Online görüntüleyiniz.</string>
+	<string name="summary_rate_app">5 yıldızlı yorum bırakınız.</string>
+	<string name="label_buy_ad_free">Reklamları kaldırın</string>
+	<string name="label_theme">Tema</string>
+	<string name="label_app_update_banner">Uygulama güncelleme bannerları</string>
+	<string name="label_news_warning_banner">Yeni &amp; uyarı bannerları</string>
+	<string name="label_privacy_policy">Gizlilik Politesi</string>
+	<string name="label_rate_app">Uygulamayı değerlendirin</string>
+
+	<string name="theme_light">Açık</string>
+	<string name="theme_dark">Koyu</string>
+	<string name="theme_system">Sistem rengi</string>
+	<string name="theme_auto">Otomatik</string>
+
+	<string name="theme_light_subtitle">Beyaz bir tema.</string>
+	<string name="theme_dark_subtitle">Koyu tema, pili daha da az kullanmak için işinize yarayabilir.(Özellikle AMOLED ekranlarda) </string>
+	<string name="theme_system_subtitle">Sisteminizin karanlık modu. (Telefonunuzun ayarlarındaki tema rengi)</string>
+	<string name="theme_auto_subtitle">Saate göre koyu ve açık tema arasında geçiş yapar.</string>
+	<string name="theme_additional_note">Not: Eğer "otomatik" geçiş seçiliyse ve pil tasarrufu açıksa, otomatik olarak koyu temaya geçilir.</string>
+
+	<string name="settings">Ayarlar</string>
+	<string name="settings_buy_button_buy">Satın al (%1$s)</string>
+	<string name="settings_buy_button_bought">Satın alınmmış.</string>
+	<string name="settings_buy_button_not_possible">Uygun değil.</string>
+	<string name="settings_buy_ad_free_label">Reklamsız versiyona güncelleyin.</string>
+
+	<string name="settings_contribute_label">Uygulamayı geliştirmemize yardımcı olun.</string>
+	<string name="settings_contribute_button">Katkıda bulun.</string>
+
+	<string name="settings_category_other">Diğer:</string>
+	<string name="settings_device">Aygıt</string>
+	<string name="settings_entered_incorrectly">Ayarlar kaydedilirken hata oluştu. Lütfen geri gidin ve güncelleme metodunuzu değiştirin, veya tekrar seçin.</string>
+	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygen OSun herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
+	<string name="settings_explanation_update_methods">Güncelleme metodlarının açıklamaları</string>]
+	<string name="settings_header">Cihazınızı ve güncelleme metodunuzu seçiniz:</string>
+
+	<string name="settings_push">Eğer bu olursa bana bildirim gönder:</string>
+	<string name="settings_push_from_server">Bilgilendirme ve uyarı mesajları.</string>
+	<string name="settings_push_new_version">Sistem güncellemerli mesajları.</string>
+	<string name="settings_push_new_device">Desteklenen yeni cihaz eklendiğinde.</string>
+	<string name="settings_push_news">Yeni haber mesajları.</string>
+
+	<string name="settings_saved">Ayarlarınız otomatik olarak kaydedilecektir.</string>
+	<string name="settings_saving">Ayarlarınız hala kaydedilmektedir. Eğer çok uzun sürerse: Bağlantınızı kontrol ediniz, uygulamayı kapatıp tekrar açınız.</string>
+
+	<string name="settings_server_messages">Uygulama içi mesajları şu zaman göster:</string>
+
+	<string name="settings_other_options">Diğer seçenekler:</string>
+	<string name="settings_advanced_mode">Gelişmiş mod</string>
+	<string name="settings_advanced_mode_button_explanation">Gelişmiş mod hakkında daha detaylı bilgi almak için buraya tıklayınız.</string>
+	<string name="settings_advanced_mode_explanation">Gelişmiş mod sayesinde yeni gelen güncellemelere cihazınız uyumlu olmasa bile indirebilir ve kurabilmenizi sağlar.</string>
+
+	<string name="settings_update_method">Güncelleme metodu</string>
+	<string name="settings_upload_logs">Data kullanım verilerini paylaş.</string>
+
+	<!-- FAQ strings -->
+	<string name="faq">SSS</string>
+	<string name="faq_menuitem">SSS</string>
+	<string name="faq_no_network">Bağlantı yok.</string>
+	<string name="faq_no_network_text">SSS sayfasını görüntülemek için bağlantıya ihtiyacınız olacak.</string>
+
+	<!-- First-time setup strings -->
+	<string name="setup">Hoşgelidiniz</string>
+	<string name="setup_close_button">Uygulamayı başlat</string>
+
+	<string name="setup_page_1_title">Oxygen Updatera hoşgeldiniz!</string>
+	<string name="setup_page_1_text">Bu uygulama size:\n\n- En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n\n- Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n\n- Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n\n- OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.\n\n Devam etmek için sola kaydırın.</string>
+	<string name="setup_page_2_title">Önemli hatırlatma:</string>
+	<string name="setup_page_2_text">Orjinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir.\n\n Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.\n\nDevam etmek için sola kaydırın.</string>
+	<string name="setup_page_3_title">Cihazınızı seçin:</string>
+	<string name="setup_page_3_text">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.\n\nDevam etmek için sola kaydırın.</string>
+	<string name="setup_page_4_title">Güncelleme metodunuzu seçiniz:</string>
+	<string name="setup_page_4_text">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır.\n\nAncak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz.\n\nEğer OxygenOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.\n\nDevam etmek için sola kaydırın.</string>
+	<string name="setup_page_5_title">Başlamak için hazırsınız!</string>
+	<string name="setup_page_5_text">Uygulamayı güle güle kullanın!\n\nHer zaman ayarlarınızı daha sonra değiştirebilirsiniz. Yapmak için: Sol üst köşedeki üç noktadan \"Ayarlar\" ı seçiniz.</string>
+
+	<!-- Automatic install strings -->
+	<string name="install">Yükle</string>
+	<string name="install_checking_root">Cihazınızın root durumu kontrol ediliyor…</string>
+	<string name="install_grant_root_permissions">Lütfen root iznini sorulduğunda izin veriniz.</string>
+	<string name="install_going_back_not_possible">Ne yazık ki, artık geri dönemezsiniz...</string>
+	<string name="install_preparing_installation">Yükleme hazırlanıyor…</string>
+
+	<string name="install_recovery_installer_title">Güncelleme yükleyicisi  &#160;&#160;  </string> <!-- Add 2 spaces to the end -->
+	<string name="install_recovery_backing_up">Cihazınızın yedeği alınıyor. Biraz zaman alacaktır!</string>
+	<string name="install_recovery_clearing_cache">Önbellek temizleniyor…</string>
+	<string name="install_recovery_done">Tamamlandı. Cihazınız tekrar başlatılacak.</string>
+	<string name="install_recovery_installing_additional_zip">Gerekli olan ZIP dosyası yükleniyor…</string>
+	<string name="install_recovery_installing_update">Güncelleme yükleniyor…</string>
+	<string name="install_recovery_thank_you">Oxygen Updaterı kullandığınız için teşekkürler. Eğer beğendiyseniz lütfen Googe Play Store da 5 yıldız oy verin :-)</string>
+
+	<string name="install_error_write_script_failed">"Güncelleme hazırlığı yapılırken hata oluştu. Root izni verdiniz mi?"</string>
+
+	<string name="install_options_backup">Cihazımı yedekle</string>
+	<string name="install_options_header">Alttaki bölümden yükleme seçeneklerini değiştirebilirsiniz. \'Yüklemeyi Başlat\' a tıklayarak güncellemeyi yüklemeyi başlatabilirsiniz.</string>
+	<string name="install_options_keep_root">Cihazımı rootlu tut.</string>
+	<string name="install_options_reboot_after_install">Güncelledikten sonra cihazımı yeniden başlat</string>
+	<string name="install_options_select_root_package">indirmek istediğiniz root paketini seçiniz…</string>
+	<string name="install_options_start_install">Yüklemeyi başlat</string>
+	<string name="install_options_title">İndirme yönteminizi seçiniz</string>
+	<string name="install_options_wipe_cache_partition">Önbelleği temizleyiniz.</string>
+
+	<string name="install_options_explanation_title">Bu ayarlar ne anlama geliyor?</string>
+	<string name="install_options_explanation_backup">Cihazımı yedekle:\nBunu seçtiğinizde cihazınızın tamamen bir yedeği alınır, her türlü duruma karşı önlem olarak.</string>
+	<string name="install_options_explanation_keep_root">Cihazımı rootlu tut:\nBu opsiyonu seçtiğinizde, güncelleme yüklendikten sonra kurulması gereken bir root paketi seçmeniz gerekebilir. Bu sayede cihazınız rootlu olduğundan emin oluruz. Lütfen seçeceğiniz rootun yeni OxygenOS ile uyumlu olduğundan emin olun!</string>
+	<string name="install_options_explanation_wipe_cache">Önbelleği sıfırlama:\nBu opsiyonu seçtiğinizde, Güncelleme sonrası önbellek temizlenecek ve sıfırlanacak. Bu sayede sorunsuz bir güncelleme olacaktır.</string>
+	<string name="install_options_explanation_reboot">Yüklemeden sonra yeniden başlat:\nBu opsiyonu seçtiğinizde, Cihazınız güncelleme sonrası otomatik olarak yeniden başlatılacak. Diğer türlü, cihazınız kurtarma modunda kalacaktır, bu sayede istediğiniz paketleri indirebilirsiniz.</string>
+
+	<string name="install_select_method_title">Güncellemeyi nasıl yüklemek istersiniz?</string>
+	<string name="install_select_method_automatic_title">Otomatik yükleme*</string>
+	<string name="install_select_method_automatic_image">Otomatik yükleme imajı</string>
+	<string name="install_select_method_automatic_description">Güncellemeyi yüklemenin en kolay yolu.\nCihazınız güncellemeyi yüklemek için yeniden başlatılacak.\n\n* Root izni ve TWRP yedeklemesi gerektirir.</string>
+
+	<string name="install_select_method_manual_title">Manuel yükleme</string>
+	<string name="install_select_method_manual_image">Manuel yükleme imajı</string>
+	<string name="install_select_method_manual_description">Nasıl yüklendiğini öğrenmek için rehberi okuyun. Cihazınızın kurtarma modunu kullanarak güncellemeyi yükleyeceksiniz.</string>
+
+	<string name="install_temporary_error">Güncellemeyi yüklemeyi denerken bir sorun oluştu. Lütfen tekrar deneyin.</string>
+
+	<string name="install_verify_error_title">Yükleme başarısız</string>
+	<string name="install_verify_error_nothing_installed">Güncelleme yüklenirken sorun oluştu. Cihazınızda herhangi bir değişiklik yapılmadı. Güncellemeyi tekrar indirmeyi deneyiniz.</string>
+	<string name="install_verify_error_unable_to_verify">Güncelleme indirilme doğrulaması yapılamadı. Lütfen Oxygen Updater\'ı açın, ve güncelleme indirilmişmi diye kontrol edin.</string>
+	<string name="install_verify_error_wrong_version_installed">Farklı bir OxygenOS versiyonu yüklendi. "Cihazımı rootlu tut" seçeneğini seçtiyseniz, herhangi bir Oxygen OS versiyonunu seçmeyiniz.</string>
+
+	<string name="install_verify_success_title">Yükleme tamamlandı</string>
+	<string name="install_verify_success_message">OxygenOS versiyon %1$s başarılı bir şekilde yüklendi.</string>
+
+	<string name="install_zip_file_clear">Root paketi dosyasını sil</string>
+	<string name="install_zip_file_pick">Root paketi dosyasını seçiniz</string>
+	<string name="install_zip_file_placeholder">Root paketi seçiniz…</string>
+	<string name="install_zip_file_wrong_file_type">Sadece ZIP paketi seçmeniz gerekebilir. Lütfen doğru dosyası seçiniz.</string>
+
+	<!-- Install guide strings -->
+	<string name="install_guide_no_root">Güncellemeyi rehberde gösterildiği sekilde uygulayınız.</string>
+	<string name="install_guide_automatic_install_disabled">Otomatik yükleme geçici olarak devredışı, teknik bir sorun bulunmakta. Güncelleme yüklemeyi rehbere göre kendiniz yapınız.</string>
+	<string name="install_guide">Yükleme rehberi</string>
+	<string name="install_guide_loading">Yükleme rehberi yükleniyor…</string>
+	<string name="install_guide_title">Yükleme rehberi - %1$d of %2$d</string>
+	<string name="install_guide_image_description">Bağlamsal imaj. Lütfen ekranın alt bölümünde bir yere tıklayın, rehberi sesli olarak dinleyebilirsiniz.</string>
+	<string name="install_guide_header">Kaydır &lt;- -&gt; sayfalar arasında geçiş yapabilmek için.</string>
+	<string name="install_guide_tip">- Bütün adımları not etmeniz önerilir, güncelleme sırasında cihazınız kapalı olacaktır.</string>
+
+	<string name="install_guide_page_1_title">Güncellemeyi indirmek.</string>
+	<string name="install_guide_page_1_text">- Güncellemeyi indirmeyi başlatmak için butona basınız.\n\n- İndirme işlemi uygulama içinde gözükecektir, ayrıca bildirim olarakta gösterilecektir.\n\n- İndirme bittiğinde, Bu bildirimi göreceksiniz \"İndirme tamamlandı\".\nEğer indirmede sorun oluşutuysa, Uygulamayı tekrar açın ve indirmeyi birdaha başlatın. Eğer çalışmazsa, internet bağlantınız olduğundan emin olun. Aksi takdirde, uygulama geliştiricileriyle iletişime geçiniz. Google Play\'de \"Uygulamalarım\" bölümünden bakabilirsiniz.</string>
+
+	<string name="install_guide_page_2_title">Kurtarma moduna geçiş yapın.</string>
+	<string name="install_guide_page_2_text">- Cihazınızı kapatın.\n\n- Sonra, ses kısma ve güç tuşuna aynı anda basılı tutun.\n\n- Cihazınız kurtarma moduna başlatılacak. Kurtarma menüsünü görene kadar bekleyiniz.</string>
+
+	<string name="install_guide_page_3_title">İndirilmiş güncellemeyi yüklemek.</string>
+	<string name="install_guide_page_3_text">- Kurtarma modu bölümünde, öncelikle İngilizce dilini seçiniz. Sonra, \"Install from SD\" yi seçiniz.\n\n- Sonra, indirililen \".zip\" dosyasını uygulamada belirtilen versiyonunu seçiniz. (Genellikle, bu dosya \"OnePlusOxygen-\" ismiyle başlar).\n\n- Güncelleme yüklemesi otomatik olarak başlayacktır.</string>
+
+	<string name="install_guide_page_4_title">Cihazınızı yeniden başlatın.</string>
+	<string name="install_guide_page_4_text">- Güncelleme yüklemesi bittiğinde, Kurtarma modu\'na geri gideceksiniz. Kurtarma modu bölümünde,\"Reboot\" bölümüne basınız.\n\n-Cihazınız uzun süre başlatılma ekranını gösterecektir.\n\n- Daha sonra, beyaz bir yazıyla \"Android is upgrading\" yazısını göreceksiniz, bu sırada uygulamalarınız optimize edilecektir.</string>
+
+	<string name="install_guide_page_5_title">Bitti. OxygenOS un yeni sürümünün tadını çıkarın!</string>
+	<string name="install_guide_page_5_text">- Optimize edilme bittiğinde, güncelleme de başarılı şekilde olmuş demektir.\n Sistem ayarlarınızdan bunu görüntüleyebilirsiniz.\n\n- Uygulamayı beğendiyseniz, lütfen Google Play\'de 5 yıldız vermeyi unutmayınız!</string>
+
+	<string name="install_guide_close_button">Yükleme Rehberini Kapat</string>
+
+	<string name="install_guide_zip_file_deleted">Seçtiğiniz root paketi artık bulunmamakta. Lütfen yeni bir root paketi seçiniz.</string>
+	<string name="install_guide_zip_file_picker_title">Root paketi seçiniz</string>
+	<string name="install_guide_zip_file_missing">"Cihazınızı rootlu tutmak istiyorsanız, root paketi belirtmeniz gerekmektedir."</string>
+
+	<!-- Device information strings -->
+	<string name="device_information_hardware_header">Donanım</string>
+	<string name="device_information_software_header">Yazılım</string>
+
+	<string name="device_information_amount_of_memory">RAM miktarı:</string>
+	<string name="device_information_cpu_frequency">İşlemci frekansı:</string>
+	<string name="device_information_header">Cihazım</string>
+	<string name="device_information_header_short">Benim cihazım</string>
+	<string name="device_information_image_description">Cihaz imajı</string>
+	<string name="device_information_incremental_os_version">OS versiyonu:</string>
+	<string name="device_information_os_version">Android versiyonu:</string>
+	<string name="device_information_oxygen_os_version">OxygenOS versiyonu:</string>
+	<string name="device_information_oxygen_os_ota_version">OTA versiyonu:</string>
+	<string name="device_information_patch_level_version">Güvenlik duvarı versiyonu:</string>
+	<string name="device_information_serial_number">Seri numarası:</string>
+	<string name="device_information_system_on_a_chip">Çipteki sistem:</string>
+	<string name="device_information_unknown">bilinmiyor</string>
+	<string name="device_information_your_device">Cihazınız: </string>
+
+	<!-- About screen strings -->
+	<string name="about">Uygulama hakkında</string>
+	<string name="about_app_description">Oxygen güncellemeleri için en iyi uygulama.</string>
+	<string name="about_background_story">Bu uygulama ilk olarak Arjan Vlek tarafından <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (Cyanogen OS kullanıcıları için benzer bir işlevsellik sağlar) adlı diğer bir uygulamasının devamı olarak geliştirilmiştir.\n\n4 yıl sonra, Temmuz 2019'da Arjan, her iki projeden de vazgeçmeye ve uygulamanın sahipliğini farklı ülkelerden gelen bir geliştiriciler ekibine aktarmaya karar verdi. Topluma mükemmel hizmet sağlama sorumluluğunu üstlendiler &amp; OnePlus güncellemelerini daha hızlı alma desteği.\nDuyuru ile ilgili daha fazla bilgiyi <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">burada</a> bulabilirsiniz.\n\n14 Ağustos 2019, karanlık mod ve tam bir yeniden tasarım gibi yeni özelliklerle gelen yeni mülkiyet altındaki ilk sürümü işaretledi.\n\nTakım hakkında daha fazla bilgi için <a href="https://oxygenupdater.com/team/">web sitesini</a> kontrol edin.\n\n\nLütfen dikkat edin, bu resmi bir OnePlus uygulaması değildir.\n OnePlus adı, OnePlus Logosu ve OxygenOS, OnePlusa aittir.\n Android, Google, Google Play ve Google Play logosunun mülkiyetindedir Google Inc. in tescilli ticari markalarıdır. \nBu uygulama güncelleme bilgilerini göstermek için "OnePlus" ve ana şirketi "Oppo" 'ya ait verileri kullanır. \n\nBu uygulamayı beğendiyseniz, lütfen Google Play Store’da hemen oy verin:</string>
+	<string name="about_rate_app_button_text">Google Play\'de oylayın</string>
+	<string name="about_version">Versiyon: %1$s</string>
+
+
+	<!-- LocalNotifications strings -->
+	<string name="notification_new_device">Yeni cihaz yayınlandı! Artık bu cihazda destekleniyor %1$s </string>
+	<string name="notification_new_device_short">Cihazı seçmek için uygulamayı açın.</string>
+	<string name="notification_no_notification_support">Bildirimler için uygulamayı güncel tutmayı unutmayın.</string>
+	<string name="notification_version_title">Sistem güncellemesi mevcut.</string>
+	<string name="notification_version">%1$s artık mevcut %2$s bu cihazlar için!</string>
+	<string name="push_notification_channel_name">Bildirimler</string>
+	<string name="push_notification_channel_description">Bütün önemli bildirimleri size gösterir. Sistem güncellemeleri ve OnePlus hakkında bildirimlerde dahil.</string>
+	<string name="progress_notification_channel_name">İşlem bildirimleri</string>
+	<string name="progress_notification_channel_description">Önemli olmayan bildirimleri de gösterir.</string>
+
+	<!-- Help strings -->
+	<string name="help">Yardım</string>
+	<string name="help_text">Yardım bölümüne hoşgeldiniz.\n\nBu bölüm:\n\n• Cihaz güncellemeyi\n• Güncel haberleri okumayı\n• Cihaz bilgisi göstermeyi\n• Ayar değiştirmeyi içerir.\n\nKonuları incelemek için aşşağı kaydırın.</string>
+	<string name="help_updating_your_device_title">Cihazı güncellemek</string>
+	<string name="help_updating_your_device_text">Uygulamayı açtığınızda, eğer güncelleme varsa bunu göreceksinizdir. Varsa, güncellemeyi indiredebilirsiniz.\n\n İndirmeyi başlatmak için, \"İndir\" butonuna basınız. (Güncelleme detayları altında). İndirme bittiğinde, yükleme ekranı karşınıza çıkacaktır. Herhangi bir şey olmadıysa(indirme sonrası), \"Yükle\" butonuna tıklayınız, Normalde \"İndir\" butonunun yanında bulunmakta.\n\nYükleme ekranı öncelikle cihazınız rootlu mu diye kontrol edecektir. Rootlu cihazınız varsa, sizden root erişimi istendiğinde izin vermeniz gerekecektir. Aksi takdirde, Manuel yükleme rehberini inceleyiniz.\n\nOtomatik yükleme:\n Sadece yükleme ayarlarını seçeceksiniz. Varsayılan ayarlar önerilmektedir, root paketinizi tekrar kurmak için seçmeniz gerekecek bölüm dışında. Root paketi içeren bir ZIP dosyasını "mavi dosya" simgesinden seçiniz ve daha sonra \"Yüklemeyi Başlat\" a tıklayıp başlatınız.\n\nManuel yükleme:\nEkranınızda yükleme rehberini göreceksiniz. Rehberde gözüken adımları not etmeniz önerilir.</string>
+	<string name="help_reading_news_title">Güncel haberleri okumak.</string>
+	<string name="help_reading_news_text">Haberler, güncelleme bölümünün solunda bulunmaktadır. En sonki haberler en üsttedir. Okumak için sadece tıklayın.\n Geri dönmek için ok simgesine tıklayın veya cihazınızdaki geri tuşuna dokunun.</string>
+	<string name="help_device_information_title">Cihaz hakkında bilgileri inceleme</string>
+	<string name="help_device_information_text">Güncelleme bölümünün sağ tarafında bulunmaktadır. Bu bölümden bilgi alabilirsiniz ve bu sayede yardım alırken bu bilgileri kullanabilirsiniz.</string>
+	<string name="help_change_settings_title">Ayarları değiştirme</string>
+	<string name="help_change_settings_text">Sağ üstten ayarlara girerek onları istediğiniz şekilde değiştirebilirsiniz.\nBelirtilen ayarları değiştirebilirsiniz:\n\n• Aygıt ve güncelleme bilgileri\n• Bildirimler\n• Uygulama içi bildirimler\n• Gizlilik ayarları.</string>
+
+	<!-- News strings -->
+	<string name="news">Haberler</string>
+	<string name="news_author">Yazar: %1$s</string>
+	<string name="news_date_published">Son güncelleme: %1$s</string>
+	<string name="news_empty">Bu içerikte birşey bulunmamakta.</string>
+	<string name="news_load_error">İçerik açılamadı. İnternet bağlantınızı kontrol edin ve \"Tekrar\" tuşuna basınız.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Katkıda bulunan biri olun</string>
+	<string name="contribute_title">Oxygen Updater\'ı geliştirmemizde yardımcı olun.</string>
+	<string name="contribute_explanation">Oxygen Updater\'ın yardımınıza ihtiyacı var! En sonki yenilikleri sunmak için, güncelleme dosyalarının ismine ihtiyacımız var. \n\nNasıl yardım edebilirim?\n\nOxygen Updater otomatik olarak yeni güncelleme isimlerini yetkililere iletir. Sadece bir miktar veri(internet) ve pil kaybı yaşatır. Tek yapmanız gereken beklemek (yaklaşık olarak 15 dakika) bu sırada dosyalar yüklenir, Oxygen Updater tarafından doğrulanır. Sadece .ota-directory bölümü telefonunuzda 15 dakikada bir taranır.</string>
+	<string name="contribute_image_description">Dosyaları uygulama sunucusuna yüklemek</string>
+	<string name="contribute_agree">Dosyaları yükleyerek yöneticilere yardım etmek isterim.</string>
+	<string name="contribute_agree_from_setup">Uygulamanın dosyaları doğrulayıp yöneticilere gönermesine yardım etmek isterim.</string>
+	<string name="contribute_save">Ayarları Kaydet</string>
+	<string name="contribute_more_info">Daha fazla bilgi…</string>
+	<string name="contribute_allow_storage">Uygulamayı geliştirmek için depolama iznini kabul edin.</string>
+	<string name="contribute_successful_notification_title">Katkıda bulunma işi başarılı!</string>
+	<string name="contribute_successful_notification_text">Güncelleme dosyası %1$s \'yı yöneticilerle paylaştığınız için teşekkürler!</string>
+
+	<!-- Error strings-->
+	<string name="error_app_outdated">Oh olamaz!</string>
+	<string name="error_app_outdated_message">Uygulamanızın sürümü eski. Güncelleme vakti gelmiş!</string>
+	<string name="error_app_requires_network_connection">Bağlantı bulunamadı</string>
+	<string name="error_app_requires_network_connection_message">Sunucuya bağlanılamadı. Çalışan bir bağlantınızın olduğundan emin olun. Uygulama kapatılacak.</string>
+	<string name="error_button_retry">Tekrar Dene</string>
+	<string name="error_exit_button_text">Çıkış</string>
+	<string name="error_google_play_button_text">Google Play</string>
+	<string name="error_no_internet_connection">Bağlantı yok.</string>
+	<string name="error_maintenance">Sunucu bakımı</string>
+	<string name="error_maintenance_message">Lütfen bekleyiniz. Sunucu en kısa zamanda tekrar aktif olacak.</string>
+	<string name="error_push_failure">Bildirimleri açmak başarısız oldu. Uygulamayı tamamen kapatın, birkaç dakika sonra tekrar açın.</string>
+	<string name="error_reload">Yeniden yükle</string>
+
+	<string name="error_unable_to_rate_app">Uygulamayı değerlendiremezsiniz, çünkü Google Play Store cihazınızda bulunmamakta.</string>
+
+	<!-- Message strings -->
+	<string name="delete_message_title">Günelleme zaten indirildi.</string>
+	<string name="delete_message_contents">Bu güncellemeyi zaten indirdiniz, fakat hala yüklemediniz. \"Yükleme Rehberi\" ne tıklayın ve yükleme işlemi nasıl yapılırı görüntüleyin. \"Sil\" e basarak dosyayı kalıcı olarak silin. Mesajı kapatmak için geri butonuna basınız.</string>
+	<string name="delete_message_delete_button">Sil</string>
+
+	<string name="unsupported_device_warning_title">Desteklenmeyen Cihaz</string>
+	<string name="unsupported_device_warning_message">Cihazınız OxygenOS kullanmıyor gibi gözüküyor. Bu güncellemeler sadece OxygenOS kullanan cihazlarda çalışır. \n\nDiğer cihazlarda, farklı ROM kullanan OnePlus da dahil olmak üzere, güncellemeler desteklenmemektedir.</string>
+	<string name="unsupported_device_warning_checkbox_title">Bu uyarıyı birdaha gösterme.</string>
+
+	<string name="root_check_title">Root İzni</string>
+	<string name="root_check_message">Oxygen Updater, rootlu cihazlarda bile size kolay, otomatik güncelleme yükleme imkanı sunar. Ancak, artımlı güncellemeler rootlu cihazlar için kullanılamaz. Oxygen Updater root izni ister, bu sayede size seçebileceğiniz güncelleme yöntemlerini gösterir. \n\nEğer root izniniz varsa, Oxygen Updater\'a izin verin, bu uyarıdan sonra sizden izin istenecektir. \n\nRoot iznin yokmu? \"Kapat\" butonuna tıklayın ve uygulamayı kullanmaya devam edin.</string>
+
+	<!-- Purchasing strings -->
+	<string name="purchase_error_before_payment">Reklamsız versiyon için satın alma başarısız oldu, bir hata ile karşılaşıldı. Birkaç dakika sonra tekrar deneyiniz.</string>
+	<string name="purchase_error_after_payment">Reklamsız versiyon için satın alma başarısız oldu, bir hata ile karşılaşıldı. Birkaç dakika sonra tekrar deneyiniz. Zaten satın aldıysanız ve Google Play size içeriği sunamadıysa onlarla iletişime geçiniz.</string>
+
+	<!-- Other strings-->
+	<string name="icon">İkon</string>
+	<string name="loading">Yükleniyor…</string>
+	<string name="processing">İşleniyor…</string>
+	<string name="choose_file">Dosya seçiniz</string>
+	<string name="root_install_logger_service_name">Güncelleme yükleme kayıtları</string>
+	<string name="delayed_push_notification_displayer_service_name">Bildirim servisi</string>
+	<string name="download_service_name">Güncelleme yükleyicisi</string>
+	<string name="log_uploader_service_name">Hatayı bildirirken sorun oluştu.</string>
+</resources>
+
+
