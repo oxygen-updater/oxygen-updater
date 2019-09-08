@@ -134,7 +134,7 @@
 	<string name="settings_category_other">Diğer:</string>
 	<string name="settings_device">Aygıt</string>
 	<string name="settings_entered_incorrectly">Ayarlar kaydedilirken hata oluştu. Lütfen geri gidin ve güncelleme metodunuzu değiştirin, veya tekrar seçin.</string>
-	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygen OS'un herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
+	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygen OS\'un herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
 	<string name="settings_explanation_update_methods">Güncelleme metodlarının açıklamaları</string>]
 	<string name="settings_header">Cihazınızı ve güncelleme metodunuzu seçiniz:</string>
 
