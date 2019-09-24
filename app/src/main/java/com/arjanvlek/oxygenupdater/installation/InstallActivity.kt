@@ -46,6 +46,8 @@ import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ipaulpro.afilechooser.utils.FileUtils
+import java8.util.function.Consumer
+import java8.util.function.Function
 import kotlinx.android.synthetic.main.fragment_install_options.*
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
@@ -85,35 +87,39 @@ class InstallActivity : SupportActionBarActivity() {
     private fun initialize() {
         setContentView(R.layout.fragment_checking_root_access)
 
-        RootAccessChecker.checkRootAccess { isRooted ->
+        RootAccessChecker.checkRootAccess(Consumer { isRooted ->
             rooted = isRooted!!
 
             if (isRooted) {
                 val applicationData = application as ApplicationData
                 val serverConnector = applicationData.getServerConnector()
-                serverConnector.getServerStatus(Utils.checkNetworkConnection(application)) { serverStatus ->
-                    if (serverStatus.isAutomaticInstallationEnabled) {
-                        openMethodSelectionPage()
-                    } else {
-                        Toast.makeText(application, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()
-                        openInstallGuide()
-                    }
-                }
+                serverConnector.getServerStatus(Utils.checkNetworkConnection(application),
+                        Consumer { serverStatus ->
+                            if (serverStatus.isAutomaticInstallationEnabled) {
+                                openMethodSelectionPage()
+                            } else {
+                                Toast.makeText(application,
+                                        getString(R.string.install_guide_automatic_install_disabled),
+                                        LENGTH_LONG).show()
+                                openInstallGuide()
+                            }
+                        })
             } else {
                 Toast.makeText(application, getString(R.string.install_guide_no_root), LENGTH_LONG).show()
                 openInstallGuide()
             }
-        }
+        })
+
     }
 
     private fun openMethodSelectionPage() {
         switchView(R.layout.fragment_choose_install_method)
 
         val automaticInstallCard = findViewById<MaterialCardView>(R.id.automaticInstallCard)
-        automaticInstallCard.setOnClickListener { __ -> openAutomaticInstallOptionsSelection() }
+        automaticInstallCard.setOnCheckedChangeListener { _, _ -> openAutomaticInstallOptionsSelection() }
 
         val manualInstallCard = findViewById<MaterialCardView>(R.id.manualInstallCard)
-        manualInstallCard.setOnClickListener { __ -> openInstallGuide() }
+        manualInstallCard.setOnCheckedChangeListener { _, _ -> openInstallGuide() }
 
     }
 
@@ -122,16 +128,18 @@ class InstallActivity : SupportActionBarActivity() {
 
         initSettingsSwitch(SettingsManager.PROPERTY_BACKUP_DEVICE, true)
 
-        initSettingsSwitch(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false, { buttonView, isChecked ->
-            val additionalZipFileContainer = findViewById<View>(R.id.additionalZipContainer)
-            if (isChecked) {
-                additionalZipFileContainer.visibility = View.VISIBLE
-            } else {
-                additionalZipFileContainer.visibility = View.GONE
-            }
+        initSettingsSwitch(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false,
+                CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    val additionalZipFileContainer = findViewById<View>(R.id.additionalZipContainer)
+                    if (isChecked) {
+                        additionalZipFileContainer.visibility = View.VISIBLE
+                    } else {
+                        additionalZipFileContainer.visibility = View.GONE
+                    }
 
-            settingsManager!!.savePreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, isChecked)
-        })
+                    settingsManager!!.savePreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, isChecked)
+                }
+        )
 
         val additionalZipFileContainer = findViewById<View>(R.id.additionalZipContainer)
         if (settingsManager!!.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)) {
@@ -166,18 +174,18 @@ class InstallActivity : SupportActionBarActivity() {
 
         startInstallButton.setOnClickListener {
 
-            val additionalZipFilePath = settingsManager!!.getPreference<String>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+            val additionalZipFilePath = settingsManager!!.getPreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, "")
 
             if (settingsManager!!.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
                 Toast.makeText(application, R.string.install_guide_zip_file_missing, LENGTH_LONG).show()
-                return@findViewById R.id.startInstallButton.setOnClickListener
+                return@setOnClickListener
             }
 
             if (additionalZipFilePath != null) {
                 val file = File(additionalZipFilePath)
                 if (!file.exists()) {
                     Toast.makeText(application, R.string.install_guide_zip_file_deleted, LENGTH_LONG).show()
-                    return@findViewById R.id.startInstallButton.setOnClickListener
+                    return@setOnClickListener
                 }
             }
 
@@ -193,103 +201,45 @@ class InstallActivity : SupportActionBarActivity() {
             val isAbPartitionLayout = systemVersionProperties.isABPartitionLayout
             val targetOSVersion = updateData!!.otaVersionNumber
 
-            logInstallationStart(application, currentOSVersion, targetOSVersion, currentOSVersion, {
+            logInstallationStart(application, currentOSVersion, targetOSVersion, currentOSVersion,
+                    object : Worker {
+                        override fun start() {
+                            FunctionalAsyncTask<Void, Void, String>(object : Worker {
+                                override fun start() {}
+                            }, Function {
+                                return@Function try {
+                                    settingsManager!!.savePreference(SettingsManager
+                                            .PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
+                                    settingsManager!!.savePreference(SettingsManager
+                                            .PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
+                                    settingsManager!!.savePreference(SettingsManager
+                                            .PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
+                                    val downloadedUpdateFilePath =
+                                            getExternalStoragePublicDirectory(DIRECTORY_ROOT).path +
+                                                    File.separator + updateData!!.filename
+                                    installUpdate(application, isAbPartitionLayout,
+                                            downloadedUpdateFilePath, additionalZipFilePath,
+                                            backup, wipeCachePartition, rebootDevice)
+                                    null
+                                } catch (e: UpdateInstallationException) {
+                                    e.message
+                                } catch (e: InterruptedException) {
+                                    logWarning(TAG, "Error installing update", e);
+                                    getString(R.string.install_temporary_error);
+                                }
+                            }, Consumer { errorMessage ->
+                                if (errorMessage != null) {
+                                    // Cancel the verification planned on reboot.
+                                    settingsManager!!.savePreference(SettingsManager
+                                            .PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
 
-                FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, { args ->
-                    try {
-                        settingsManager!!.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
-                        settingsManager!!.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
-                        settingsManager!!.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
-                        val downloadedUpdateFilePath = getExternalStoragePublicDirectory(DIRECTORY_ROOT).path + File.separator + updateData!!.filename
-                        installUpdate(application, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice)
-                        return@new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, args -> {
-                            try {
-                                settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
-                                settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
-                                settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
-                                String downloadedUpdateFilePath = getExternalStoragePublicDirectory DIRECTORY_ROOT.getPath() + File.separator + updateData.getFilename();
-                                installUpdate(application, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
-                                return null;
-                            } catch (UpdateInstallationException e) {
-                                return e.getMessage();
-                            } catch (InterruptedException e) {
-                                logWarning(TAG, "Error installing update", e);
-                                return getString(R.string.install_temporary_error);
-                            }
-                        }, errorMessage -> {
-                            if (errorMessage != null) {
-                                // Cancel the verification planned on reboot.
-                                settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
-
-                                openAutomaticInstallOptionsSelection();
-                                Toast.makeText(application, errorMessage, LENGTH_LONG).show();
-                            }
-                            // Otherwise, the device will reboot via SU.
-                        }).execute null
-                    } catch (e: UpdateInstallationException) {
-                        return@new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, args -> {
-                            try {
-                                settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
-                                settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
-                                settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
-                                String downloadedUpdateFilePath = getExternalStoragePublicDirectory DIRECTORY_ROOT.getPath() + File.separator + updateData.getFilename();
-                                installUpdate(application, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
-                                return null;
-                            } catch (UpdateInstallationException e) {
-                                return e.getMessage();
-                            } catch (InterruptedException e) {
-                                logWarning(TAG, "Error installing update", e);
-                                return getString(R.string.install_temporary_error);
-                            }
-                        }, errorMessage -> {
-                            if (errorMessage != null) {
-                                // Cancel the verification planned on reboot.
-                                settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
-
-                                openAutomaticInstallOptionsSelection();
-                                Toast.makeText(application, errorMessage, LENGTH_LONG).show();
-                            }
-                            // Otherwise, the device will reboot via SU.
-                        }).execute e.message
-                    } catch (e: InterruptedException) {
-                        logWarning(TAG, "Error installing update", e)
-                        return@new FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, args -> {
-                            try {
-                                settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true);
-                                settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion);
-                                settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion);
-                                String downloadedUpdateFilePath = getExternalStoragePublicDirectory DIRECTORY_ROOT.getPath() + File.separator + updateData.getFilename();
-                                installUpdate(application, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice);
-                                return null;
-                            } catch (UpdateInstallationException e) {
-                                return e.getMessage();
-                            } catch (InterruptedException e) {
-                                logWarning(TAG, "Error installing update", e);
-                                return getString(R.string.install_temporary_error);
-                            }
-                        }, errorMessage -> {
-                            if (errorMessage != null) {
-                                // Cancel the verification planned on reboot.
-                                settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
-
-                                openAutomaticInstallOptionsSelection();
-                                Toast.makeText(application, errorMessage, LENGTH_LONG).show();
-                            }
-                            // Otherwise, the device will reboot via SU.
-                        }).execute getString(R.string.install_temporary_error)
-                    }
-                }, { errorMessage ->
-                    if (errorMessage != null) {
-                        // Cancel the verification planned on reboot.
-                        settingsManager!!.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
-
-                        openAutomaticInstallOptionsSelection()
-                        Toast.makeText(application, errorMessage, LENGTH_LONG).show()
-                    }
-                    // Otherwise, the device will reboot via SU.
-                }).execute()
-
-            })
+                                    openAutomaticInstallOptionsSelection()
+                                    Toast.makeText(application, errorMessage, LENGTH_LONG).show()
+                                }
+                                // Otherwise, the device will reboot via SU.
+                            }).execute()
+                        }
+                    })
         }
     }
 
@@ -323,14 +273,16 @@ class InstallActivity : SupportActionBarActivity() {
         val zipFileField = findViewById<TextView>(R.id.additionalZipFilePath)
 
         val text: String
-        val additionalZipFilePath = settingsManager!!.getPreference<String>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+        val additionalZipFilePath = settingsManager?.getPreference(SettingsManager
+                .PROPERTY_ADDITIONAL_ZIP_FILE_PATH, "")
 
         if (additionalZipFilePath != null) {
             // Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
             text = additionalZipFilePath.replace(getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath + File.separator, "")
             val extension = text.substring(text.length - 4)
             if (extension != EXTENSION_ZIP) {
-                Toast.makeText(application, R.string.install_zip_file_wrong_file_type, LENGTH_LONG).show()
+                Toast.makeText(application, R.string.install_zip_file_wrong_file_type,
+                        LENGTH_LONG).show()
                 return
             }
             zipFileField.text = text
@@ -342,10 +294,20 @@ class InstallActivity : SupportActionBarActivity() {
 
     }
 
-    private fun initSettingsSwitch(settingName: String, defaultValue: Boolean, listener: CompoundButton.OnCheckedChangeListener = { buttonView, isChecked -> settingsManager!!.savePreference(settingName, isChecked) }) {
-        val switchCompat = findViewById<SwitchMaterial>(resources.getIdentifier(settingName + SETTINGS_SWITCH, PACKAGE_ID, packageName))
+    private fun initSettingsSwitch(settingName: String, defaultValue: Boolean,
+                                   listener: CompoundButton.OnCheckedChangeListener) {
+        val switchCompat = findViewById<SwitchMaterial>(resources.getIdentifier(settingName +
+                SETTINGS_SWITCH, PACKAGE_ID, packageName))
         switchCompat.isChecked = settingsManager!!.getPreference(settingName, defaultValue)
         switchCompat.setOnCheckedChangeListener(listener)
+    }
+
+    private fun initSettingsSwitch(settingName: String, defaultValue: Boolean) {
+        initSettingsSwitch(settingName, defaultValue,
+                CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                    settingsManager?.savePreference(settingName, isChecked)
+                }
+        )
     }
 
     private fun switchView(newViewId: Int) {
@@ -358,8 +320,11 @@ class InstallActivity : SupportActionBarActivity() {
     }
 
     private fun handleBackAction() {
-        // If at the install options screen or in the install guide when rooted, go back to the method selection page.
-        if (layoutId == R.layout.fragment_install_options || rooted && settingsManager!!.getPreference(PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false) && layoutId == R.layout.activity_install_guide) {
+        // If at the install options screen or in the install guide when rooted, go back to
+        // the method selection page.
+        if (layoutId == R.layout.fragment_install_options || rooted &&
+                settingsManager!!.getPreference(PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED,
+                        false) && layoutId == R.layout.activity_install_guide) {
             openMethodSelectionPage()
         } else if (layoutId == R.layout.fragment_installing_update) {
             // Once the installation is being started, there is no way out.
@@ -415,7 +380,7 @@ class InstallActivity : SupportActionBarActivity() {
         val timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString()
         val installation = RootInstall(deviceId, updateMethodId, InstallationStatus.STARTED, installationId, timestamp, startOs, destinationOs, currentOs, "")
 
-        serverConnector!!.logRootInstall(installation) { result ->
+        serverConnector?.logRootInstall(installation, Consumer { result ->
             if (result == null) {
                 logError(TAG, SubmitUpdateInstallationException("Failed to log update installation action: No response from server"))
             } else if (!result.isSuccess) {
@@ -423,7 +388,7 @@ class InstallActivity : SupportActionBarActivity() {
             }
             // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
             successFunction.start()
-        }
+        })
     }
 
     private inner class InstallGuideSectionsPagerAdapter internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {

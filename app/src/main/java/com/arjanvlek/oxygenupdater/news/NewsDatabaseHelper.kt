@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import java8.util.function.Consumer
 import java8.util.stream.Collectors
 import java8.util.stream.StreamSupport
 import java.util.*
@@ -19,7 +20,7 @@ class NewsDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             val items = ArrayList<NewsItem>()
 
             val sortOrder = "$COLUMN_ID DESC"
-            val cursor = readableDatabase.query(TABLE_NAME, null, null, null, null, null, sortOrder)
+            val cursor = readableDatabase!!.query(TABLE_NAME, null, null, null, null, null, sortOrder)
 
             while (cursor.moveToNext()) {
                 items.add(fromDatabaseCursor(cursor))
@@ -66,7 +67,7 @@ class NewsDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         val selectionArgs = arrayOf(id.toString())
         val sortOrder = "$COLUMN_ID ASC"
 
-        val cursor = readableDatabase.query(
+        val cursor = readableDatabase!!.query(
                 TABLE_NAME, null, // Return all columns
                 selection, // The columns for the WHERE clause
                 selectionArgs, null, null, // don't filter by row groups
@@ -87,17 +88,17 @@ class NewsDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     fun saveNewsItems(newsItems: List<NewsItem>?) {
-        if (newsItems != null && !newsItems.isEmpty()) {
+        if (newsItems != null && newsItems.isNotEmpty()) {
             val newsItemsIds = StreamSupport
                     .stream(newsItems)
-                    .map<Long>(Function<NewsItem, Long> { it.getId() })
-                    .collect<List<Long>, Any>(Collectors.toList())
+                    .map<Long> { it.id }
+                    .collect(Collectors.toList())
 
             // All IDs that are in the database but are not in the result should be deleted from the database.
             StreamSupport.stream(allNewsItems)
-                    .map<Long>(Function<NewsItem, Long> { it.getId() })
+                    .map<Long> { it.id }
                     .filter { id -> !newsItemsIds.contains(id) }
-                    .forEach(Consumer<Long> { this.deleteNewsItem(it) })
+                    .forEach { this.deleteNewsItem(it) }
 
             for (item in newsItems) {
                 saveNewsItem(item)
@@ -120,7 +121,8 @@ class NewsDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     fun markNewsItemAsRead(newsItem: NewsItem) {
         val values = toDatabaseContents(newsItem)
         values.put(COLUMN_READ, true)
-        writableDatabase?.update(TABLE_NAME, values, "$COLUMN_ID  LIKE ?", arrayOf(newsItem.id.toString()))
+        writableDatabase?.update(TABLE_NAME, values, "$COLUMN_ID  LIKE ?",
+                arrayOf(newsItem.id.toString()))
     }
 
     private fun insertNewsItem(newsItem: NewsItem) {

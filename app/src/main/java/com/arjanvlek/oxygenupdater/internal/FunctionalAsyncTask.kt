@@ -9,7 +9,10 @@ import java8.util.function.Function
  * Oxygen Updater - © 2017 Arjan Vlek
  */
 
-class FunctionalAsyncTask<Params, Progress, Result> @JvmOverloads constructor(private val preExecuteFunction: Worker, private val backgroundFunction: Function<Array<Params>, Result>, private val postExecuteFunction: Consumer<Result>, private val progressUpdateFunction: Consumer<Array<Progress>>? = null) : AsyncTask<Params, Progress, Result>() {
+class FunctionalAsyncTask<Params, Progress, Result> @JvmOverloads constructor(private val preExecuteFunction: Worker,
+                                                                              private val backgroundFunction: Function<Array<Params>, Result>,
+                                                                              private val postExecuteFunction: Consumer<Result>,
+                                                                              private val progressUpdateFunction: Consumer<Array<Progress>>? = null) : AsyncTask<Params, Progress, Result>() {
 
     override fun doInBackground(params: Array<Params>): Result {
         return backgroundFunction.apply(params)

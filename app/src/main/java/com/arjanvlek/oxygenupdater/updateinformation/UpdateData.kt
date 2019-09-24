@@ -76,16 +76,14 @@ class UpdateData : Parcelable, FormattableUpdateData {
 
     // Formatting library: interface FormattableUpdateData
 
-    override fun getInternalVersionNumber(): String? {
-        return versionNumber
-    }
+    override val internalVersionNumber: String
+        get() = versionNumber!!
 
-    override fun getUpdateDescription(): String? {
-        return description
-    }
+    override val updateDescription: String
+        get() = description!!
 
     companion object {
-        val CREATOR: Parcelable.Creator<UpdateData> = object : Parcelable.Creator<UpdateData> {
+        @JvmField val CREATOR: Parcelable.Creator<UpdateData> = object : Parcelable.Creator<UpdateData> {
 
             override fun createFromParcel(`in`: Parcel): UpdateData {
                 val data = UpdateData()
@@ -106,7 +104,7 @@ class UpdateData : Parcelable, FormattableUpdateData {
                 return data
             }
 
-            override fun newArray(size: Int): Array<UpdateData> {
+            override fun newArray(size: Int): Array<UpdateData?> {
                 return arrayOfNulls(size)
             }
         }

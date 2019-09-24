@@ -29,7 +29,7 @@ import java.util.*
  */
 class BottomSheetPreference : Preference {
 
-    private var context: Context? = null
+    private var contextRef: Context? = null
     private var mOnChangeListener: OnPreferenceChangeListener? = null
 
     private var dialogLayout: LinearLayout? = null
@@ -71,13 +71,13 @@ class BottomSheetPreference : Preference {
     /**
      * Initialise the preference
      *
-     * @param context      the context
+     * @param context      the contextRef
      * @param attrs        the attributes
      * @param defStyleAttr default style attributes
      * @param defStyleRes  default style resource
      */
     private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
-        this.context = context
+        this.contextRef = context
 
         secondaryKey = key + "_id"
         settingsManager = SettingsManager(context)
@@ -92,8 +92,8 @@ class BottomSheetPreference : Preference {
      */
     @SuppressLint("InflateParams")
     private fun setupDialog() {
-        dialog = BottomSheetDialog(context!!)
-        val inflater = LayoutInflater.from(context)
+        dialog = BottomSheetDialog(contextRef!!)
+        val inflater = LayoutInflater.from(contextRef)
 
         dialogLayout = inflater.inflate(R.layout.bottom_sheet, null, false) as LinearLayout
         itemListContainer = dialogLayout!!.findViewById(R.id.dialog_item_list_container)
@@ -131,9 +131,9 @@ class BottomSheetPreference : Preference {
         setText(titleView, item.title)
         setText(subtitleView, item.subtitle)
 
-        dialogItemLayout.setOnClickListener { view -> setValueIndex(index) }
+        dialogItemLayout.setOnClickListener { setValueIndex(index) }
 
-        val currentValue = settingsManager!!.getPreference<String>(key, null)
+        val currentValue = settingsManager!!.getPreference(key, "")
 
         if (item.value == currentValue) {
             markItemSelected(index)
@@ -156,9 +156,11 @@ class BottomSheetPreference : Preference {
      * @param defStyleRes  default style resource
      */
     private fun readAttrs(attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
-        val a = context!!.obtainStyledAttributes(attrs, R.styleable.BottomSheetPreference, defStyleAttr, defStyleRes)
+        val a = contextRef!!.obtainStyledAttributes(attrs, R.styleable.BottomSheetPreference,
+                defStyleAttr, defStyleRes)
 
-        title = TypedArrayUtils.getString(a, R.styleable.BottomSheetPreference_title, R.styleable.BottomSheetPreference_android_title)
+        title = TypedArrayUtils.getString(a, R.styleable.BottomSheetPreference_title,
+                R.styleable.BottomSheetPreference_android_title)
         caption = a.getString(R.styleable.BottomSheetPreference_caption)
 
         val entries = a.getTextArray(R.styleable.BottomSheetPreference_android_entries)
@@ -171,16 +173,14 @@ class BottomSheetPreference : Preference {
         itemList = ArrayList()
 
         val intEntryValues = if (resourceId != 0)
-            context!!.resources.getIntArray(resourceId)
+            contextRef!!.resources.getIntArray(resourceId)
         else
             null
 
         val numberOfItems = entries?.size ?: (titleEntries?.size ?: 0)
 
         for (i in 0 until numberOfItems) {
-            val item = BottomSheetItem.builder()
-                    .value(entryValues[i].toString())
-                    .build()
+            val item = BottomSheetItem(value = entryValues[i].toString())
 
             val title = if (entries != null) entries[i] else titleEntries!![i]
             val subtitle = if (subtitleEntries != null) subtitleEntries[i] else null
@@ -269,7 +269,7 @@ class BottomSheetPreference : Preference {
             persistString(newValue)
 
             if (newSecondaryValue != null) {
-                settingsManager!!.savePreference(secondaryKey, newSecondaryValue)
+                settingsManager!!.savePreference(secondaryKey!!, newSecondaryValue)
             }
 
             if (changed) {
@@ -311,7 +311,7 @@ class BottomSheetPreference : Preference {
 
     override fun onSetInitialValue(defaultValue: Any?) {
         val newValue = getPersistedString(defaultValue as String?)
-        val newSecondaryValue = settingsManager!!.getPreference<Any>(secondaryKey, null)
+        val newSecondaryValue = settingsManager!!.getPreference<Any>(secondaryKey!!, "")
 
         setValues(newValue, newSecondaryValue)
     }
@@ -447,7 +447,7 @@ class BottomSheetPreference : Preference {
 
             checkmarkView.visibility = INVISIBLE
             val outValue = TypedValue()
-            context!!.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+            contextRef!!.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
             dialogItemLayout.setBackgroundResource(outValue.resourceId)
         }
     }
@@ -498,12 +498,13 @@ class BottomSheetPreference : Preference {
         }
 
         companion object {
+            @JvmField
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
                 override fun createFromParcel(`in`: Parcel): SavedState {
                     return SavedState(`in`)
                 }
 
-                override fun newArray(size: Int): Array<SavedState> {
+                override fun newArray(size: Int): Array<SavedState?> {
                     return arrayOfNulls(size)
                 }
             }

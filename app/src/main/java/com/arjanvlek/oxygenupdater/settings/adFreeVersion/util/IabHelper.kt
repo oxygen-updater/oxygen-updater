@@ -107,9 +107,9 @@ class IabHelper
     // The request code used to launch purchase flow
     private var mRequestCode: Int = 0
     // The item type of the current purchase flow
-    private var mPurchasingItemType: String
+    private lateinit var mPurchasingItemType: String
     // Public key for verifying signature, in base64 encoding
-    private var mSignatureBase64: String? = null
+    private var mSignatureBase64: String
     // The listener registered on launchPurchaseFlow, which we have to call back when
     // the purchase finishes
     private var mPurchaseListener: OnIabPurchaseFinishedListener? = null

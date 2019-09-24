@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.domain
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 
-class Device(private val id: Long, val name: String, productName: String) {
+class Device(val id: Long, val name: String, productName: String) {
 
     @JsonProperty("product_names")
     var productNames: List<String>? = getProductNames(productName)

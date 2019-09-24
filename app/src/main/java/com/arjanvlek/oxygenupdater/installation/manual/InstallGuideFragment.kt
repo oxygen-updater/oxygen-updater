@@ -27,6 +27,8 @@ import com.arjanvlek.oxygenupdater.internal.server.NetworkException
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DEVICE_ID
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD_ID
+import java8.util.function.Consumer
+import java8.util.function.Function
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -60,10 +62,10 @@ class InstallGuideFragment : Fragment() {
         if (cache.get(pageNumber) == null) {
             if (activity != null && activity!!.application != null && activity!!.application is ApplicationData) {
                 val connector = (activity!!.application as ApplicationData).getServerConnector()
-                connector.getInstallGuidePage(deviceId, updateMethodId, pageNumber) { page ->
+                connector.getInstallGuidePage(deviceId, updateMethodId, pageNumber, Consumer { page ->
                     cache.put(pageNumber, page)
                     displayInstallGuide(installGuideView, page, pageNumber, isFirstPage)
-                }
+                })
             }
 
         } else {
@@ -109,7 +111,7 @@ class InstallGuideFragment : Fragment() {
         // Display the "Close" button on the last page.
         if (pageNumber == NUMBER_OF_INSTALL_GUIDE_PAGES) {
             val closeButton = installGuideView.findViewById<Button>(R.id.installGuideCloseButton)
-            closeButton.setOnClickListener { __ -> activity!!.finish() }
+            closeButton.setOnClickListener { activity!!.finish() }
             closeButton.visibility = View.VISIBLE
         }
 
@@ -152,16 +154,16 @@ class InstallGuideFragment : Fragment() {
 
         if (installGuidePage.useCustomImage!!) {
             // Fetch the custom image from the server.
-            FunctionalAsyncTask<Void, Void, Bitmap>(Worker.NOOP, { args ->
+            FunctionalAsyncTask<Void, Void, Bitmap>(object : Worker {
+                override fun start() { }
+            }, Function { args ->
                 var image: Bitmap?
 
                 try {
-                    val cache: SparseArray<Bitmap>
-
-                    if (activity != null) {
-                        cache = (activity as InstallActivity).installGuideImageCache
+                    val cache: SparseArray<Bitmap> = if (activity != null) {
+                        (activity as InstallActivity).installGuideImageCache
                     } else {
-                        cache = SparseArray()
+                        SparseArray()
                     }
 
                     // If the cache contains the image, return the image from the cache.
@@ -182,7 +184,7 @@ class InstallGuideFragment : Fragment() {
                 }
 
                 image
-            }, { image ->
+            }, Consumer { image ->
                 // If there is no image, load a "no entry" sign to show that the image failed to load.
                 if (image == null && isAdded) {
                     loadErrorImage(imageView)

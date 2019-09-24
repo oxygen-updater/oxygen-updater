@@ -8,20 +8,20 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager
 
 
 abstract class AbstractFragment : Fragment() {
-    private var applicationData: ApplicationData? = null
+    var appData: ApplicationData? = null
     private var settingsManager: SettingsManager? = null
 
     val serverConnector: ServerConnector
         get() {
-            if (applicationData == null && activity != null) {
-                applicationData = activity!!.application as ApplicationData
+            if (appData == null && activity != null) {
+                appData = activity!!.application as ApplicationData
             }
-            return if (applicationData != null) applicationData!!.getServerConnector() else ServerConnector(SettingsManager(null))
+            return if (appData != null) appData!!.getServerConnector() else ServerConnector(SettingsManager(null))
         }
 
     fun getApplicationData(): ApplicationData {
-        if (applicationData == null) {
-            applicationData = try {
+        if (appData == null) {
+            appData = try {
                 activity!!.application as ApplicationData
             } catch (e: Exception) {
                 logError("AbstractFragment", "FAILED to get Application instance", e)
@@ -30,16 +30,16 @@ abstract class AbstractFragment : Fragment() {
             }
 
         }
-        return applicationData as ApplicationData
+        return appData as ApplicationData
     }
 
     fun getSettingsManager(): SettingsManager {
-        if (applicationData == null && activity != null) {
-            applicationData = activity!!.application as ApplicationData
+        if (appData == null && activity != null) {
+            appData = activity!!.application as ApplicationData
         }
 
         if (settingsManager == null) {
-            settingsManager = SettingsManager(applicationData)
+            settingsManager = SettingsManager(appData)
         }
 
         return settingsManager as SettingsManager

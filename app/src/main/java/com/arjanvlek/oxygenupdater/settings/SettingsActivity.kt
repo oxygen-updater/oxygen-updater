@@ -26,12 +26,7 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.ALREADY
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.AVAILABLE
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.UNAVAILABLE
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.GooglePlayBillingException
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabResult
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.*
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import java8.util.function.Consumer
 import org.joda.time.LocalDateTime
@@ -126,59 +121,66 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
         logDebug(TAG, "IAB: start setup of IAB")
 
         // Set up the helper. Once it is done, it will call the embedded listener with its setupResult.
-        iabHelper.startSetup { setupResult ->
-            // Setup error? we can't do anything else but stop here. Purchasing ad-free will be unavailable.
-            if (!setupResult.isSuccess) {
-                logIABError("Failed to set up in-app billing", setupResult)
-                return@iabHelper.startSetup
+        iabHelper.startSetup(object : IabHelper.OnIabSetupFinishedListener {
+            override fun onIabSetupFinished(result: IabResult) {
+                // Setup error? we can't do anything else but stop here. Purchasing ad-free will be unavailable.
+                if (!result.isSuccess) {
+                    logIABError("Failed to set up in-app billing", result)
+                    return
+                }
+
+                logDebug(TAG, "IAB: Setup complete")
+
+                // Have we been disposed of in the meantime? If so, quit.
+                if (iabHelper == null) {
+                    return
+                }
+
+                logDebug(TAG, "IAB: Start querying inventory")
+
+                // Query the billing inventory to get details about the in-app-billing item (such as the price in the right currency).
+                queryInAppBillingInventory(object : IabHelper.QueryInventoryFinishedListener {
+                    override fun onQueryInventoryFinished(result: IabResult, inv: Inventory?) {
+                        logDebug(TAG, "IAB: Queried inventory")
+                        // Querying failed? Then the user can't buy anything as we can't determine whether or not the user already bought the item.
+                        if (result.isFailure) {
+                            logIABError("Failed to obtain in-app billing product list", result)
+                            return
+                        }
+
+                        val productDetails = inv?.getSkuDetails(SKU_AD_FREE)
+
+                        // If the product details are not found (unlikely to happen, but possible), stop.
+                        if (productDetails == null || productDetails.sku != SKU_AD_FREE) {
+                            logIABError("In-app billing product $SKU_AD_FREE is not available", result)
+                            return
+                        }
+
+                        logDebug(TAG, "IAB: Found product. Checking purchased state...")
+
+                        // Check if the user has purchased the item. If so, grant ad-free and set the button to "Purchased". If not, remove ad-free and set the button to the right price.
+                        if (inv.hasPurchase(SKU_AD_FREE)) {
+                            logDebug(TAG, "IAB: Product has already been purchased")
+                            settingsManager!!.savePreference(PROPERTY_AD_FREE, true)
+
+                            settingsFragment!!.setupBuyAdFreePreference(ALREADY_BOUGHT)
+                        } else {
+                            logDebug(TAG, "IAB: Product has not yet been purchased")
+
+                            // Save, because we can guarantee that the device is online and that the purchase check has succeeded.
+                            settingsManager!!.savePreference(PROPERTY_AD_FREE, false)
+
+                            price = productDetails.price
+                            settingsFragment!!.setupBuyAdFreePreference(AVAILABLE, productDetails.price)
+                        }
+                    }
+
+                })
+
             }
 
-            logDebug(TAG, "IAB: Setup complete")
+        })
 
-            // Have we been disposed of in the meantime? If so, quit.
-            if (iabHelper == null) {
-                return@iabHelper.startSetup
-            }
-
-            logDebug(TAG, "IAB: Start querying inventory")
-
-            // Query the billing inventory to get details about the in-app-billing item (such as the price in the right currency).
-            queryInAppBillingInventory({ queryResult, inventory ->
-                logDebug(TAG, "IAB: Queried inventory")
-
-                // Querying failed? Then the user can't buy anything as we can't determine whether or not the user already bought the item.
-                if (queryResult.isFailure) {
-                    logIABError("Failed to obtain in-app billing product list", queryResult)
-                    return@queryInAppBillingInventory
-                }
-
-                val productDetails = inventory.getSkuDetails(SKU_AD_FREE)
-
-                // If the product details are not found (unlikely to happen, but possible), stop.
-                if (productDetails == null || productDetails!!.sku != SKU_AD_FREE) {
-                    logIABError("In-app billing product $SKU_AD_FREE is not available", queryResult)
-                    return@queryInAppBillingInventory
-                }
-
-                logDebug(TAG, "IAB: Found product. Checking purchased state...")
-
-                // Check if the user has purchased the item. If so, grant ad-free and set the button to "Purchased". If not, remove ad-free and set the button to the right price.
-                if (inventory.hasPurchase(SKU_AD_FREE)) {
-                    logDebug(TAG, "IAB: Product has already been purchased")
-                    settingsManager!!.savePreference(PROPERTY_AD_FREE, true)
-
-                    settingsFragment!!.setupBuyAdFreePreference(ALREADY_BOUGHT)
-                } else {
-                    logDebug(TAG, "IAB: Product has not yet been purchased")
-
-                    // Save, because we can guarantee that the device is online and that the purchase check has succeeded.
-                    settingsManager!!.savePreference(PROPERTY_AD_FREE, false)
-
-                    price = productDetails!!.price
-                    settingsFragment!!.setupBuyAdFreePreference(AVAILABLE, productDetails!!.price)
-                }
-            })
-        }
     }
 
     /**
@@ -217,17 +219,17 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
         }
 
         getApplicationData().getServerConnector()
-                .verifyPurchase(purchase, price, PurchaseType.AD_FREE) { validationResult ->
-                    if (validationResult == null) {
-                        // server can't be reached. Keep trying until it can be reached...
-                        Handler().postDelayed({ validateAdFreePurchase(purchase, callback) }, 2000)
-                    } else if (validationResult.isSuccess) {
-                        callback.accept(true)
-                    } else {
-                        logError(TAG, GooglePlayBillingException("Purchase of the ad-free version failed. Failed to verify purchase on the server. Error message: " + validationResult.errorMessage!!))
-                        callback.accept(false)
+                .verifyPurchase(purchase, price, PurchaseType.AD_FREE, Consumer { validationResult ->
+                    when {
+                        validationResult == null -> // server can't be reached. Keep trying until it can be reached...
+                            Handler().postDelayed({ validateAdFreePurchase(purchase, callback) }, 2000)
+                        validationResult.isSuccess -> callback.accept(true)
+                        else -> {
+                            logError(TAG, GooglePlayBillingException("Purchase of the ad-free version failed. Failed to verify purchase on the server. Error message: " + validationResult.errorMessage!!))
+                            callback.accept(false)
+                        }
                     }
-                }
+                })
     }
 
     override fun performInAppPurchase() {
@@ -237,15 +239,19 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             logInfo(TAG, "IAB purchase helper was disposed early. Initiating new instance...")
             iabHelper = IabHelper(this, PK1.A + "/" + PK2.B)
             iabHelper!!.enableDebugLogging(BuildConfig.DEBUG)
-            iabHelper!!.startSetup { setupResult ->
-                if (!setupResult.isSuccess) {
-                    logIABError("Purchase of the ad-free version failed due to an unknown error BEFORE the purchase screen was opened", setupResult)
-                    Toast.makeText(this, getString(R.string.purchase_error_before_payment), LENGTH_LONG).show()
-                    return@iabHelper.startSetup
+            iabHelper!!.startSetup(object : IabHelper.OnIabSetupFinishedListener {
+                override fun onIabSetupFinished(result: IabResult) {
+                    if (!result.isSuccess) {
+                        logIABError("Purchase of the ad-free version failed due to an unknown error BEFORE the purchase screen was opened", result)
+                        Toast.makeText(this@SettingsActivity,
+                                getString(R.string.purchase_error_before_payment), LENGTH_LONG).show()
+                        return
+                    }
+
+                    doPurchaseAdFree()
                 }
 
-                doPurchaseAdFree()
-            }
+            })
         }
     }
 
@@ -264,36 +270,39 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
                     + LocalDateTime.now().toString("yyyy-MM-dd HH:mm:ss"))
 
             // Open the purchase window.
-            iabHelper!!.launchPurchaseFlow(this, SKU_AD_FREE, IAB_REQUEST_CODE, { result, purchase ->
-                logDebug(TAG, "IAB: Purchase dialog closed. Result: " + result.toString() + if (purchase != null) ", purchase: $purchase" else "")
+            iabHelper!!.launchPurchaseFlow(this, SKU_AD_FREE, IAB_REQUEST_CODE, object : IabHelper.OnIabPurchaseFinishedListener {
+                override fun onIabPurchaseFinished(result: IabResult, info: Purchase?) {
+                    logDebug(TAG, "IAB: Purchase dialog closed. Result: " + result.toString() + if (info != null) ", purchase: $info" else "")
 
-                // If the purchase failed, but the user did not cancel it, notify the user and log an error. Otherwise, do nothing.
-                if (result.isFailure) {
-                    if (result.response != IabHelper.IABHELPER_USER_CANCELLED) {
-                        logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow", result)
-                        Toast.makeText(application, getString(R.string.purchase_error_after_payment), LENGTH_LONG).show()
-                    } else {
-                        logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
-                        settingsFragment!!.setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, price)
+                    // If the purchase failed, but the user did not cancel it, notify the user and log an error. Otherwise, do nothing.
+                    if (result.isFailure) {
+                        if (result.response != IabHelper.IABHELPER_USER_CANCELLED) {
+                            logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow", result)
+                            Toast.makeText(application, getString(R.string.purchase_error_after_payment), LENGTH_LONG).show()
+                        } else {
+                            logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
+                            settingsFragment!!.setupBuyAdFreePreference(AVAILABLE, price)
+                        }
+                        return
                     }
-                    return@iabHelper.launchPurchaseFlow
+
+                    // if the result is successful and contains purchase data, verify the purchase details on the server and grant the ad-free package to the user.
+                    if (result.isSuccess && info != null) {
+                        if (info.sku == SKU_AD_FREE) {
+                            validateAdFreePurchase(info, Consumer { valid ->
+                                if (valid!!) {
+                                    settingsFragment!!.setupBuyAdFreePreference(ALREADY_BOUGHT)
+                                    settingsManager!!.savePreference(PROPERTY_AD_FREE, true)
+                                } else {
+                                    settingsFragment!!.setupBuyAdFreePreference(AVAILABLE, price)
+                                }
+                            })
+                        } else {
+                            logIABError("Another product than expected was bought. ($info)", result)
+                        }
+                    }
                 }
 
-                // if the result is successful and contains purchase data, verify the purchase details on the server and grant the ad-free package to the user.
-                if (result.isSuccess && purchase != null) {
-                    if (purchase.sku == SKU_AD_FREE) {
-                        validateAdFreePurchase(purchase, { valid ->
-                            if (valid!!) {
-                                settingsFragment!!.setupBuyAdFreePreference(PurchaseStatus.ALREADY_BOUGHT)
-                                settingsManager!!.savePreference(PROPERTY_AD_FREE, true)
-                            } else {
-                                settingsFragment!!.setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, price)
-                            }
-                        })
-                    } else {
-                        logIABError("Another product than expected was bought. ($purchase)", result)
-                    }
-                }
             }, developerPayload)
         } catch (e: IabHelper.IabAsyncInProgressException) {
             // If the purchase window can't be opened because an operation is in progress, try opening it again in a second (repeated until it can be opened).

@@ -27,6 +27,7 @@ import com.arjanvlek.oxygenupdater.notifications.Dialogs
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus
 import com.crashlytics.android.Crashlytics
+import java8.util.function.Consumer
 import java.util.*
 
 /**
@@ -52,7 +53,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
         context = activity as AppCompatActivity?
 
         application = context!!.application as ApplicationData
-        activityLauncher = ActivityLauncher(context)
+        activityLauncher = ActivityLauncher(context!!)
 
         settingsManager = SettingsManager(context)
 
@@ -93,13 +94,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
         devicePreference!!.isEnabled = false
         updateMethodPreference!!.isEnabled = false
 
-        application!!.serverConnector.getDevices(true, Consumer<List<Device>> { this.populateDeviceSettings(it) })
+        application!!.mServerConnector?.getDevices(true,
+                Consumer { this.populateDeviceSettings(it) })
     }
 
     private fun setupThemePreference() {
 
-        findPreference<Preference>(context!!.getString(R.string.key_theme))!!.setOnPreferenceChangeListener { preference, value ->
-            AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(context))
+        findPreference<Preference>(context!!.getString(R.string.key_theme))!!.setOnPreferenceChangeListener { _, _ ->
+            AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(context!!))
 
             true
         }
@@ -109,10 +111,11 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
         val advancedMode = findPreference<Preference>(SettingsManager.PROPERTY_ADVANCED_MODE)
 
 
-        advancedMode!!.setOnPreferenceClickListener { preference ->
-            val isAdvancedMode = settingsManager!!.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
+        advancedMode!!.setOnPreferenceClickListener {
+            val isAdvancedMode = settingsManager!!.getPreference(SettingsManager
+                    .PROPERTY_ADVANCED_MODE, false)
             if (isAdvancedMode) {
-                Dialogs.showAdvancedModeExplanation(application, context!!.supportFragmentManager)
+                Dialogs.showAdvancedModeExplanation(application!!, context!!.supportFragmentManager)
             }
 
             true
@@ -136,22 +139,22 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
                 .build()
 
 
-        privacyPolicy!!.setOnPreferenceClickListener { preference ->
+        privacyPolicy!!.setOnPreferenceClickListener {
             customTabsIntent.launchUrl(context!!, privacyPolicyUri)
             true
         }
 
         // Open the app's Play Store page
 
-        rateApp!!.setOnPreferenceClickListener { preference ->
-            activityLauncher!!.launchPlayStorePage(context)
+        rateApp!!.setOnPreferenceClickListener {
+            activityLauncher!!.launchPlayStorePage(context!!)
             true
         }
 
 
         oxygenUpdater!!.summary = resources.getString(R.string.summary_oxygen, BuildConfig.VERSION_NAME)
 
-        oxygenUpdater.setOnPreferenceClickListener { preference ->
+        oxygenUpdater.setOnPreferenceClickListener {
             activityLauncher!!.About()
             true
         }
@@ -163,9 +166,9 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
      * @param devices retrieved from the server
      */
     private fun populateDeviceSettings(devices: List<Device>?) {
-        if (devices != null && !devices.isEmpty()) {
+        if (devices != null && devices.isNotEmpty()) {
             devicePreference!!.isEnabled = true
-            val systemVersionProperties = application!!.systemVersionProperties
+            val systemVersionProperties = application!!.mSystemVersionProperties
 
             // Set the spinner to the previously selected device.
             var recommendedPosition = -1
@@ -183,7 +186,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
 
                 val productNames = device.productNames
 
-                if (productNames != null && productNames.contains(systemVersionProperties.oxygenDeviceName)) {
+                if (productNames != null && productNames.contains(systemVersionProperties?.oxygenDeviceName)) {
                     recommendedPosition = i
                 }
 
@@ -191,12 +194,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
                     selectedPosition = i
                 }
 
-                itemList.add(BottomSheetItem.builder()
-                        .title(device.name)
-                        .value(device.name)
-                        .secondaryValue(device.id)
-                        .build()
-                )
+                itemList.add(BottomSheetItem(title = device.name, value = device.name,
+                        secondaryValue = device.id))
             }
 
             devicePreference!!.setItemList(itemList)
@@ -208,17 +207,19 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
             }
 
             // Retrieve update methods for the selected device
-            application!!.serverConnector.getUpdateMethods(deviceId!!, Consumer<List<UpdateMethod>> { this.populateUpdateMethods(it) })
+            application!!.mServerConnector?.getUpdateMethods(deviceId,
+                    Consumer { this.populateUpdateMethods(it) })
 
             // listen for preference change so that we can save the corresponding device ID,
             // and populate update methods
-            devicePreference!!.setOnPreferenceChangeListener { preference, value ->
+            devicePreference!!.setOnPreferenceChangeListener { _, value ->
                 // disable the update method preference since device has changed
                 updateMethodPreference!!.isEnabled = false
 
                 // Retrieve update methods for the selected device
 
-                application!!.serverConnector.getUpdateMethods(deviceMap[value.toString()]!!, Consumer<List<UpdateMethod>> { this.populateUpdateMethods(it) })
+                application!!.mServerConnector?.getUpdateMethods(deviceMap[value.toString()]!!,
+                        Consumer { this.populateUpdateMethods(it) })
 
                 true
             }
@@ -260,12 +261,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
                 else
                     updateMethod.englishName
 
-                itemList.add(BottomSheetItem.builder()
-                        .title(updateMethodName)
-                        .value(updateMethodName)
-                        .secondaryValue(updateMethod.id)
-                        .build()
-                )
+                itemList.add(BottomSheetItem(title = updateMethodName!!, value = updateMethodName,
+                        secondaryValue = updateMethod.id))
             }
 
             updateMethodPreference!!.setCaption(context!!.getString(R.string.settings_explanation_incremental_full_update))
@@ -273,14 +270,14 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
 
             // If there's there no update method saved in preferences, auto select the last recommended method
             if (selectedPosition == -1) {
-                if (!recommendedPositions.isEmpty()) {
+                if (recommendedPositions.isNotEmpty()) {
                     updateMethodPreference!!.setValueIndex(recommendedPositions[recommendedPositions.size - 1])
                 } else {
                     updateMethodPreference!!.setValueIndex(updateMethods.size - 1)
                 }
             }
 
-            updateMethodPreference!!.setOnPreferenceChangeListener { preference, value ->
+            updateMethodPreference!!.setOnPreferenceChangeListener { _, _ ->
                 Crashlytics.setUserIdentifier("Device: " + settingsManager!!.getPreference(context!!.getString(R.string.key_device), "<UNKNOWN>")
                         + ", Update Method: " + settingsManager!!.getPreference(context!!.getString(R.string.key_update_method), "<UNKNOWN>"))
 
@@ -289,7 +286,8 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
                     // Subscribe to notifications for the newly selected device and update method
                     NotificationTopicSubscriber.subscribe(application!!)
                 } else {
-                    Toast.makeText(context, getString(R.string.notification_no_notification_support), LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.notification_no_notification_support),
+                            LENGTH_LONG).show()
                 }
 
                 true

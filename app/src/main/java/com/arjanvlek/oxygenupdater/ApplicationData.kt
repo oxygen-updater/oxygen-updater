@@ -22,8 +22,8 @@ import java8.util.stream.StreamSupport
 import kotlin.system.exitProcess
 
 class ApplicationData : Application() {
-    private var serverConnector: ServerConnector? = null
-    private var systemVersionProperties: SystemVersionProperties? = null
+    var mServerConnector: ServerConnector? = null
+    var mSystemVersionProperties: SystemVersionProperties? = null
 
     override fun onCreate() {
         AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this))
@@ -34,22 +34,22 @@ class ApplicationData : Application() {
     }
 
     fun getServerConnector(): ServerConnector {
-        if (serverConnector == null) {
+        if (mServerConnector == null) {
             logVerbose(TAG, "Created ServerConnector for use within the application...")
-            serverConnector = ServerConnector(SettingsManager(this))
+            mServerConnector = ServerConnector(SettingsManager(this))
         }
-        return serverConnector as ServerConnector
+        return mServerConnector as ServerConnector
     }
 
     fun getSystemVersionProperties(): SystemVersionProperties {
         // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
-        if (systemVersionProperties == null) {
+        if (mSystemVersionProperties == null) {
             logVerbose(TAG, "Creating new SystemVersionProperties instance...")
-            systemVersionProperties = SystemVersionProperties()
+            mSystemVersionProperties = SystemVersionProperties()
         } else {
             logVerbose(TAG, "Using cached instance of SystemVersionProperties")
         }
-        return systemVersionProperties as SystemVersionProperties
+        return mSystemVersionProperties as SystemVersionProperties
     }
 
     /**

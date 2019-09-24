@@ -24,27 +24,29 @@ object UpdateDescriptionParser {
 
         val links = HashMap<String, String>()
 
-        var currentLine: String
         try {
             var reader = BufferedReader(StringReader(updateDescription))
+            var currentLine = reader.readLine()
             var modifiedUpdateDescription = EMPTY_STRING
 
             // First, loop through all lines and modify them were needed.
             // This consists of removing heading symbols, making list items, adding line separators and displaying link texts.
-            while ((currentLine = reader.readLine()) != null) {
+            do {
                 val element = UpdateDescriptionElement.of(currentLine)
                 var modifiedLine = StringBuilder(EMPTY_STRING)
 
                 // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
-                if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(LineDetectingUpdateInfo(currentLine)) && element == UpdateDescriptionElement.HEADING_1) {
+                if (UpdateDataVersionFormatter
+                                .canVersionInfoBeFormatted(LineDetectingUpdateInfo(currentLine)) &&
+                        element == UpdateDescriptionElement.HEADING_1) {
                     continue
                 }
 
                 when (element) {
-                    UpdateDescriptionParser.UpdateDescriptionElement.HEADING_3 -> modifiedLine = StringBuilder(currentLine.replace("###", ""))
-                    UpdateDescriptionParser.UpdateDescriptionElement.HEADING_2 -> modifiedLine = StringBuilder(currentLine.replace("##", ""))
-                    UpdateDescriptionParser.UpdateDescriptionElement.HEADING_1 -> modifiedLine = StringBuilder(currentLine.replace("#", ""))
-                    UpdateDescriptionParser.UpdateDescriptionElement.LIST_ITEM -> {
+                    UpdateDescriptionElement.HEADING_3 -> modifiedLine = StringBuilder(currentLine.replace("###", ""))
+                    UpdateDescriptionElement.HEADING_2 -> modifiedLine = StringBuilder(currentLine.replace("##", ""))
+                    UpdateDescriptionElement.HEADING_1 -> modifiedLine = StringBuilder(currentLine.replace("#", ""))
+                    UpdateDescriptionElement.LIST_ITEM -> {
                         modifiedLine = StringBuilder(currentLine.replace("*", "•"))
                         // There could also be multiple OnePlus line separators in this line.
                         // Replace each OnePlus line separator with an actual line separator.
@@ -55,7 +57,7 @@ object UpdateDescriptionParser {
                             }
                         }
                     }
-                    UpdateDescriptionParser.UpdateDescriptionElement.LINE_SEPARATORS -> {
+                    UpdateDescriptionElement.LINE_SEPARATORS -> {
                         val chars = currentLine.toCharArray()
                         for (c in chars) {
                             if (c == '\\') {
@@ -63,7 +65,7 @@ object UpdateDescriptionParser {
                             }
                         }
                     }
-                    UpdateDescriptionParser.UpdateDescriptionElement.LINK -> {
+                    UpdateDescriptionElement.LINK -> {
                         val linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine
                                 .lastIndexOf("]"))
                         var linkAddress = ""
@@ -89,14 +91,14 @@ object UpdateDescriptionParser {
                     ""
                 else
                     "\n")
-            }
+            } while (currentLine != null)
 
             // Finally, loop through the modified update description and set formatting attributes for the headers and links.
             reader = BufferedReader(StringReader(modifiedUpdateDescription))
             result = SpannableString(modifiedUpdateDescription)
+            currentLine = reader.readLine()
 
-
-            while ((currentLine = reader.readLine()) != null) {
+            do {
                 if (currentLine.isEmpty()) {
                     continue
                 }
@@ -107,25 +109,24 @@ object UpdateDescriptionParser {
                 val endPosition = startPosition + currentLine.length
 
                 when (element) {
-                    UpdateDescriptionParser.UpdateDescriptionElement.HEADING_1 -> {
+                    UpdateDescriptionElement.HEADING_1 -> {
                         // Heading 1 should be made bold and pretty large.
                         result.setSpan(RelativeSizeSpan(1.3f), startPosition, endPosition, 0)
                         result.setSpan(StyleSpan(BOLD), startPosition, endPosition, 0)
                     }
-                    UpdateDescriptionParser.UpdateDescriptionElement.HEADING_2 -> {
+                    UpdateDescriptionElement.HEADING_2 -> {
                         // Heading 2 should be made bold and a bit larger than normal, but smaller than heading 1.
                         result.setSpan(RelativeSizeSpan(1.1f), startPosition, endPosition, 0)
                         result.setSpan(StyleSpan(BOLD), startPosition, endPosition, 0)
                     }
-                    UpdateDescriptionParser.UpdateDescriptionElement.HEADING_3 ->
+                    UpdateDescriptionElement.HEADING_3 ->
                         // Heading 3 is the same size as normal text but will be displayed in bold.
                         result.setSpan(StyleSpan(BOLD), startPosition, endPosition, 0)
-                    UpdateDescriptionParser.UpdateDescriptionElement.LINK ->
+                    UpdateDescriptionElement.LINK ->
                         // A link should be made clickable and must be displayed as a hyperlink.
-                        result.setSpan(FormattedURLSpan(links[currentLine]), startPosition, endPosition, 0)
+                        result.setSpan(FormattedURLSpan(links[currentLine]!!), startPosition, endPosition, 0)
                 }
-            }
-
+            } while (currentLine != null)
 
         } catch (e: Exception) {
             // If an error occurred, log it and return the original / unmodified update description
@@ -148,12 +149,11 @@ object UpdateDescriptionParser {
         TEXT, //      (char*)
         EMPTY;
 
-
         companion object {
             //
 
             // Finds the element type for a given line of OnePlus formatted text.
-            private fun of(inputLine: String?): UpdateDescriptionElement {
+            fun of(inputLine: String?): UpdateDescriptionElement {
                 // The empty string gets parsed as EMPTY
                 logVerbose(TAG, "Input line: " + inputLine!!)
 
@@ -188,17 +188,16 @@ object UpdateDescriptionParser {
             // Finds the type of element of a modified line by looking it back up in the original text.
             @Throws(IOException::class)
             fun find(modifiedLine: String, originalText: String): UpdateDescriptionElement {
-                val reader = BufferedReader(StringReader(originalText))
-                var currentLine: String
+                val currentLine = BufferedReader(StringReader(originalText)).readLine()
 
                 // As almost all the modifications that are made are substrings, this means the original text should always contain the modified line.
                 // Then, the "of" function can be used with the belonging line to lookup the element type of the modified line.
                 // The only exception is the empty line, but it's no problem that one is returned as TEXT, because the empty line is not needed for SpannableString.
-                while ((currentLine = reader.readLine()) != null) {
+                do {
                     if (currentLine.contains(modifiedLine)) {
                         return of(currentLine)
                     }
-                }
+                } while (currentLine != null)
 
                 return TEXT
             }
@@ -206,10 +205,10 @@ object UpdateDescriptionParser {
     }
 
     // Special class which can be used by UpdateDataVersionFormatter lib to check if the current line contains the OS version number, since that must be excluded from the update description itself.
-    private class LineDetectingUpdateInfo private constructor(override val updateDescription: String) : FormattableUpdateData {
+    private class LineDetectingUpdateInfo constructor(override val updateDescription: String) : FormattableUpdateData {
 
-        override // not needed
-        val internalVersionNumber: String?
+        // not needed
+        override val internalVersionNumber: String?
             get() = null
     }
 

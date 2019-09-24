@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
-class AlphaInAnimationAdapter private constructor(adapter: Adapter<RecyclerView.ViewHolder>, private val mFrom: Float) : AnimationAdapter(adapter) {
+class AlphaInAnimationAdapter private constructor(adapter: Adapter<RecyclerView.ViewHolder>,
+                                                  private val mFrom: Float) : AnimationAdapter(adapter) {
 
     constructor(adapter: Adapter<RecyclerView.ViewHolder>) : this(adapter, DEFAULT_ALPHA_FROM)
 

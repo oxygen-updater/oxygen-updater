@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.SparseArray
 import android.view.LayoutInflater
@@ -23,6 +22,7 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.internal.Worker
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
@@ -34,13 +34,15 @@ import com.arjanvlek.oxygenupdater.news.NewsItem
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsViewHolder
 import com.google.android.gms.ads.AdListener
+import java8.util.function.Function
 import org.joda.time.LocalDateTime
 import java.net.MalformedURLException
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
-class NewsAdapter(private val context: Context?, private val activity: AppCompatActivity?, private val newsItemList: List<NewsItem>) : Adapter<NewsViewHolder>() {
+class NewsAdapter(private val context: Context?, private val activity: AppCompatActivity?,
+                  private val newsItemList: List<NewsItem>) : Adapter<NewsViewHolder>() {
     private val settingsManager: SettingsManager = SettingsManager(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
@@ -51,221 +53,72 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         // Logic to set the title, subtitle and image of each individual news item.
-        val locale = Locale.locale
+		val locale = Locale.locale
 
         val newsItem = newsItemList[position]
 
-        holder.title.text = newsItem.getTitle(locale)
-        holder.subtitle.text = newsItem.getSubtitle(locale)
-        holder.container.setOnClickListener { v -> openNewsItem(newsItem) }
+        holder.apply {
+            title.text = newsItem.getTitle(locale)
+            subtitle.text = newsItem.getSubtitle(locale)
+            container.setOnClickListener { openNewsItem(newsItem) }
+        }
 
         if (newsItem.isRead) {
-            holder.title.alpha = 0.5f
-            holder.subtitle.alpha = 0.7f
+            holder.apply {
+                title.alpha = 0.5f
+                subtitle.alpha = 0.7f
+            }
         }
 
         // Obtain the thumbnail image from the server.
-        FunctionalAsyncTask<Void, Void, Bitmap>({
-            holder.image.visibility = View.INVISIBLE
-            holder.imagePlaceholder.visibility = View.VISIBLE
-        }, { __ ->
+        FunctionalAsyncTask<Void, Void, Bitmap>(object : Worker {
+            override fun start() {
+                holder.apply {
+                    image.visibility = View.INVISIBLE
+                    imagePlaceholder.visibility = View.VISIBLE
+                }
+            }
+        }, Function {
             if (newsItem.id == null) {
-                return@new FunctionalAsyncTask<Void, Void, Bitmap>(() -> {
-                    holder.image.visibility = View.INVISIBLE;
-                    holder.imagePlaceholder.visibility = View.VISIBLE;
-                }, __ -> {
-                    if (newsItem.id == null) {
-                        return null;
-                    }
+				return@Function null
+			}
 
-                    Bitmap image = imageCache . get newsItem.id.intValue();
+			var image = imageCache.get(newsItem.id!!.toInt())
 
-                    if (image != null) {
-                        return image;
-                    }
+			if (image != null) {
+				return@Function image
+			}
 
-                    image = doGetImage(newsItem.imageUrl);
-                    imageCache.put(newsItem.id.intValue(), image);
+			image = doGetImage(newsItem.imageUrl)
+			imageCache.put(newsItem.id!!.toInt(), image)
 
-                    return image;
-                }, image -> {
-                    if (context == null || activity == null) {
-                        return;
-                    }
-
-                    // If a fragment is not attached, do not crash the entire application but return an empty view.
-                    try {
-                        context.getResources();
-                    } catch (Exception e) {
-                        return;
-                    }
-
-                    if (image == null) {
-                        Drawable errorImage = ResourcesCompat . getDrawable context.getResources(), R.drawable.image, null);
-                        holder.image.setImageDrawable(errorImage);
-                    } else {
-                        holder.image.setImageBitmap(image);
-                    }
-                    holder.image.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
-                    holder.image.visibility = View.VISIBLE;
-
-                    holder.imagePlaceholder.visibility = View.INVISIBLE;
-                }).execute null
-            }
-
-            var image: Bitmap? = imageCache.get(newsItem.id!!.toInt())
-
-            if (image != null) {
-                return@new FunctionalAsyncTask<Void, Void, Bitmap>(() -> {
-                    holder.image.visibility = View.INVISIBLE;
-                    holder.imagePlaceholder.visibility = View.VISIBLE;
-                }, __ -> {
-                    if (newsItem.id == null) {
-                        return null;
-                    }
-
-                    Bitmap image = imageCache . get newsItem.id.intValue();
-
-                    if (image != null) {
-                        return image;
-                    }
-
-                    image = doGetImage(newsItem.imageUrl);
-                    imageCache.put(newsItem.id.intValue(), image);
-
-                    return image;
-                }, image -> {
-                    if (context == null || activity == null) {
-                        return;
-                    }
-
-                    // If a fragment is not attached, do not crash the entire application but return an empty view.
-                    try {
-                        context.getResources();
-                    } catch (Exception e) {
-                        return;
-                    }
-
-                    if (image == null) {
-                        Drawable errorImage = ResourcesCompat . getDrawable context.getResources(), R.drawable.image, null);
-                        holder.image.setImageDrawable(errorImage);
-                    } else {
-                        holder.image.setImageBitmap(image);
-                    }
-                    holder.image.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
-                    holder.image.visibility = View.VISIBLE;
-
-                    holder.imagePlaceholder.visibility = View.INVISIBLE;
-                }).execute image
-            }
-
-            image = doGetImage(newsItem.imageUrl)
-            imageCache.put(newsItem.id!!.toInt(), image)
-
-            image
-        }, { image ->
-            if (context == null || activity == null) {
-                return@new FunctionalAsyncTask<Void, Void, Bitmap>(() -> {
-                    holder.image.visibility = View.INVISIBLE;
-                    holder.imagePlaceholder.visibility = View.VISIBLE;
-                }, __ -> {
-                    if (newsItem.id == null) {
-                        return null;
-                    }
-
-                    Bitmap image = imageCache . get newsItem.id.intValue();
-
-                    if (image != null) {
-                        return image;
-                    }
-
-                    image = doGetImage(newsItem.imageUrl);
-                    imageCache.put(newsItem.id.intValue(), image);
-
-                    return image;
-                }, image -> {
-                    if (context == null || activity == null) {
-                        return;
-                    }
-
-                    // If a fragment is not attached, do not crash the entire application but return an empty view.
-                    try {
-                        context.getResources();
-                    } catch (Exception e) {
-                        return;
-                    }
-
-                    if (image == null) {
-                        Drawable errorImage = ResourcesCompat . getDrawable context.getResources(), R.drawable.image, null);
-                        holder.image.setImageDrawable(errorImage);
-                    } else {
-                        holder.image.setImageBitmap(image);
-                    }
-                    holder.image.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
-                    holder.image.visibility = View.VISIBLE;
-
-                    holder.imagePlaceholder.visibility = View.INVISIBLE;
-                }).execute
+			return@Function image
+        }, java8.util.function.Consumer { image ->
+            if ((context == null) or (activity == null)) {
+                return@Consumer
             }
 
             // If a fragment is not attached, do not crash the entire application but return an empty view.
-            try {
-                context!!.resources
-            } catch (e: Exception) {
-                return@new FunctionalAsyncTask<Void, Void, Bitmap>(() -> {
-                    holder.image.visibility = View.INVISIBLE;
-                    holder.imagePlaceholder.visibility = View.VISIBLE;
-                }, __ -> {
-                    if (newsItem.id == null) {
-                        return null;
-                    }
-
-                    Bitmap image = imageCache . get newsItem.id.intValue();
-
-                    if (image != null) {
-                        return image;
-                    }
-
-                    image = doGetImage(newsItem.imageUrl);
-                    imageCache.put(newsItem.id.intValue(), image);
-
-                    return image;
-                }, image -> {
-                    if (context == null || activity == null) {
-                        return;
-                    }
-
-                    // If a fragment is not attached, do not crash the entire application but return an empty view.
-                    try {
-                        context.getResources();
-                    } catch (Exception e) {
-                        return;
-                    }
-
-                    if (image == null) {
-                        Drawable errorImage = ResourcesCompat . getDrawable context.getResources(), R.drawable.image, null);
-                        holder.image.setImageDrawable(errorImage);
-                    } else {
-                        holder.image.setImageBitmap(image);
-                    }
-                    holder.image.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in));
-                    holder.image.visibility = View.VISIBLE;
-
-                    holder.imagePlaceholder.visibility = View.INVISIBLE;
-                }).execute
-            }
+			try {
+				context?.resources
+			} catch (e: Exception) {
+				return@Consumer
+			}
 
             if (image == null) {
-                val errorImage = ResourcesCompat.getDrawable(context!!.resources, R.drawable.image, null)
-                holder.image.setImageDrawable(errorImage)
-            } else {
-                holder.image.setImageBitmap(image)
-            }
+				val errorImage = ResourcesCompat.getDrawable(context!!.resources, R.drawable.image,
+                        null)
+				holder.image.setImageDrawable(errorImage)
+			} else {
+				holder.image.setImageBitmap(image)
+			}
+
             holder.image.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
             holder.image.visibility = View.VISIBLE
 
             holder.imagePlaceholder.visibility = View.INVISIBLE
         }).execute()
+
     }
 
     override fun getItemCount(): Int {
@@ -277,7 +130,7 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
             val mainActivity = activity as MainActivity?
             if (mainActivity!!.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
                 try {
-                    val ad = mainActivity.newsAd
+                    val ad = mainActivity.newsInterstitialAd
                     ad!!.adListener = object : AdListener() {
                         override fun onAdClosed() {
                             super.onAdClosed()
@@ -305,22 +158,22 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
 
     private fun doGetImage(imageUrl: String?, retryCount: Int = 0): Bitmap? {
         try {
-            val `in` = RedirectingResourceStream.getInputStream(imageUrl)
+            val `in` = imageUrl?.let { RedirectingResourceStream.getInputStream(it) }
             return BitmapFactory.decodeStream(`in`)
         } catch (e: MalformedURLException) {
             // No retry, because malformed url will never work.
             logError(TAG, NetworkException(String.format("Error displaying news image: Invalid image URL <%s>", imageUrl)))
             return null
         } catch (e: Exception) {
-            if (retryCount < 5) {
-                return doGetImage(imageUrl, retryCount + 1)
+            return if (retryCount < 5) {
+                doGetImage(imageUrl, retryCount + 1)
             } else {
                 if (ExceptionUtils.isNetworkError(e)) {
                     logWarning(TAG, NetworkException(String.format("Error obtaining news image from <%s>.", imageUrl)))
                 } else {
                     logError(TAG, String.format("Error obtaining news image from <%s>", imageUrl), e)
                 }
-                return null
+                null
             }
         }
 
@@ -334,13 +187,12 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
         Handler().postDelayed({ newsItem.isRead = true }, 2000)
     }
 
-    internal inner class NewsViewHolder(itemView: View) : ViewHolder(itemView) {
+    inner class NewsViewHolder(itemView: View) : ViewHolder(itemView) {
         val container: RelativeLayout = itemView.findViewById(R.id.newsItemContainer)
         val image: ImageView = itemView.findViewById(R.id.newsItemImage)
         val imagePlaceholder: ImageView = itemView.findViewById(R.id.newsItemImagePlaceholder)
         val title: TextView = itemView.findViewById(R.id.newsItemTitle)
         val subtitle: TextView = itemView.findViewById(R.id.newsItemSubTitle)
-
     }
 
     companion object {

@@ -23,12 +23,13 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_U
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.CustomDropdown
 import com.crashlytics.android.Crashlytics
+import java8.util.function.Consumer
 import java8.util.stream.StreamSupport
 
 class SetupStep4Fragment : AbstractFragment() {
 
     private var rootView: View? = null
-    private var settingsManager: SettingsManager? = null
+    private var mSettingsManager: SettingsManager? = null
     private var progressBar: ProgressBar? = null
     private var rootMessageShown = false
 
@@ -39,7 +40,7 @@ class SetupStep4Fragment : AbstractFragment() {
             throw RuntimeException("SetupStep4Fragment: Can not initialize: not called from Activity")
         }
 
-        settingsManager = SettingsManager(activity!!.applicationContext)
+        mSettingsManager = SettingsManager(activity!!.applicationContext)
         progressBar = rootView!!.findViewById(R.id.introduction_step_4_update_method_progress_bar)
 
 
@@ -69,11 +70,12 @@ class SetupStep4Fragment : AbstractFragment() {
             }
 
         } else {
-            if (settingsManager!!.containsPreference(PROPERTY_DEVICE_ID)) {
+            if (mSettingsManager!!.containsPreference(PROPERTY_DEVICE_ID)) {
                 progressBar!!.visibility = View.VISIBLE
 
                 getApplicationData().getServerConnector()
-                        .getUpdateMethods(settingsManager!!.getPreference(PROPERTY_DEVICE_ID, 1L), Consumer<List<UpdateMethod>> { this.fillUpdateMethodSettings(it) })
+                        .getUpdateMethods(mSettingsManager!!.getPreference(PROPERTY_DEVICE_ID,
+                                1L), Consumer { this.fillUpdateMethodSettings(it) })
             }
         }
     }
@@ -83,18 +85,18 @@ class SetupStep4Fragment : AbstractFragment() {
 
         val recommendedPositions = StreamSupport
                 .stream(updateMethods)
-                .filter(Predicate<UpdateMethod> { it.isRecommended() })
-                .mapToInt(ToIntFunction<UpdateMethod> { updateMethods.indexOf(it) })
+                .filter { it.isRecommended }
+                .mapToInt { updateMethods.indexOf(it) }
                 .toArray()
 
         var selectedPosition = -1
-        val updateMethodId = settingsManager!!.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L)
+        val updateMethodId = mSettingsManager!!.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L)
 
         if (updateMethodId != -1L) {
             selectedPosition = StreamSupport
                     .stream(updateMethods)
                     .filter { updateMethod -> updateMethod.id == updateMethodId }
-                    .mapToInt(ToIntFunction<UpdateMethod> { updateMethods.indexOf(it) })
+                    .mapToInt({ updateMethods.indexOf(it) })
                     .findAny()
                     .orElse(-1)
         } else if (recommendedPositions.isNotEmpty()) {
@@ -123,12 +125,12 @@ class SetupStep4Fragment : AbstractFragment() {
                     val updateMethod = adapterView.getItemAtPosition(i) as UpdateMethod
 
                     //Set update method in preferences.
-                    settingsManager!!.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.id)
-                    settingsManager!!.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.englishName)
-                    Crashlytics.setUserIdentifier("Device: " + settingsManager!!.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + settingsManager!!
+                    mSettingsManager!!.savePreference(PROPERTY_UPDATE_METHOD_ID, updateMethod.id)
+                    mSettingsManager!!.savePreference(PROPERTY_UPDATE_METHOD, updateMethod.englishName)
+                    Crashlytics.setUserIdentifier("Device: " + mSettingsManager!!.getPreference(PROPERTY_DEVICE, "<UNKNOWN>") + ", Update Method: " + mSettingsManager!!
                             .getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>"))
 
-                    if (getApplicationData().checkPlayServices(activity, false)) {
+                    if (getApplicationData().checkPlayServices(activity!!, false)) {
                         // Subscribe to notifications
                         // Subscribe to notifications for the newly selected device and update method
                         NotificationTopicSubscriber.subscribe(getApplicationData())

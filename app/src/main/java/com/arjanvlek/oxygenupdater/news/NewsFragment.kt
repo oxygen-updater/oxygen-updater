@@ -31,7 +31,8 @@ class NewsFragment : AbstractFragment() {
             return 10
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_news, container, false)
     }
@@ -42,7 +43,7 @@ class NewsFragment : AbstractFragment() {
         Handler().postDelayed({ refreshNews(view, null) }, loadDelayMilliseconds.toLong())
 
         val refreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.newsRefreshContainer)
-        refreshLayout.setOnRefreshListener { refreshNews(view, { __ -> refreshLayout.isRefreshing = false }) }
+        refreshLayout.setOnRefreshListener { refreshNews(view, Consumer { refreshLayout.isRefreshing = false }) }
     }
 
     private fun refreshNews(view: View, callback: Consumer<Void>?) {
@@ -52,16 +53,19 @@ class NewsFragment : AbstractFragment() {
         }
         val deviceId = getSettingsManager().getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = getSettingsManager().getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        serverConnector.getNews(getApplicationData(), deviceId, updateMethodId) { newsItems -> displayNewsItems(view, newsItems, callback) }
+        serverConnector.getNews(getApplicationData(), deviceId, updateMethodId, Consumer {
+            newsItems -> displayNewsItems(view, newsItems, callback)
+        })
     }
 
     private fun displayNewsItems(view: View, newsItems: List<NewsItem>, callback: Consumer<Void>?) {
         val newsContainer = view.findViewById<RecyclerView>(R.id.newsContainer)
 
         // animate items when they load
-        val alphaInAnimationAdapter = AlphaInAnimationAdapter(NewsAdapter(context, activity as MainActivity?, newsItems))
+        // TODO (FIX)
+        /*val alphaInAnimationAdapter = AlphaInAnimationAdapter(NewsAdapter(context, activity as MainActivity?, newsItems))
         alphaInAnimationAdapter.setFirstOnly(false)
-        newsContainer.adapter = alphaInAnimationAdapter
+        newsContainer.adapter = alphaInAnimationAdapter*/
         newsContainer.layoutManager = LinearLayoutManager(context)
 
         if (!isAdded) {

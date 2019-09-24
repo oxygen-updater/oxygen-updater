@@ -1,20 +1,11 @@
 package com.arjanvlek.oxygenupdater.download
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.IntentService
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.AsyncTask
-import android.os.Build
-import android.os.Environment
-import android.os.Handler
-import android.os.StatFs
+import android.os.*
 import android.util.Pair
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -37,12 +28,7 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_D
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_ID
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_PROGRESS
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
-import com.downloader.Error
-import com.downloader.OnDownloadListener
-import com.downloader.PRDownloader
-import com.downloader.PRDownloaderConfig
-import com.downloader.Priority
-import com.downloader.Status
+import com.downloader.*
 import com.downloader.internal.DownloadRequestQueue
 import java8.util.function.Function
 import java8.util.stream.Collectors
@@ -241,12 +227,14 @@ class DownloadService : IntentService(TAG) {
     }
 
     /*
-	 * We create a notification channel and notification to allow the app downloading in the background on Android versions >= O.
+	 * We create a notification channel and notification to allow the app downloading in the
+	 * background on Android versions >= O.
 	 */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun startMyOwnForeground() {
         val channelName = getString(R.string.download_service_name)
-        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE)
+        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName,
+                NotificationManager.IMPORTANCE_NONE)
         channel.lightColor = Color.BLUE
         channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
 
@@ -273,9 +261,10 @@ class DownloadService : IntentService(TAG) {
 
         // Check if the update is downloadable
         val context = applicationContext
-        if (updateData == null || updateData.downloadUrl == null) {
-            LocalNotifications.showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
-            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, { intent ->
+        if (updateData?.downloadUrl == null) {
+            LocalNotifications.showDownloadFailedNotification(context, false,
+                    R.string.download_error_internal, R.string.download_notification_error_internal)
+            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true)
                 logError(TAG, UpdateDownloadException(withAppendedStateHistory("Update data is null or has no Download URL")))
                 intent
@@ -285,7 +274,7 @@ class DownloadService : IntentService(TAG) {
 
         if (!updateData.downloadUrl!!.contains("http")) {
             LocalNotifications.showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
-            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, { intent ->
+            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true)
                 logError(TAG, UpdateDownloadException("Update data has invalid Download URL (" + updateData.downloadUrl + ")"))
                 intent
@@ -307,7 +296,7 @@ class DownloadService : IntentService(TAG) {
                     R.string.download_error_storage,
                     R.string.download_notification_error_storage_full
             )
-            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, { intent ->
+            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_STORAGE_SPACE_ERROR, true)
                 intent
             })
@@ -319,7 +308,9 @@ class DownloadService : IntentService(TAG) {
         // Download the update
         performStateTransition(DownloadStatus.DOWNLOAD_QUEUED)
         val downloadId = PRDownloader
-                .download(updateData.downloadUrl, Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename)
+                .download(updateData.downloadUrl, Environment
+                        .getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath,
+                        updateData.filename)
                 .setPriority(Priority.HIGH)
                 .build()
                 .setOnStartOrResumeListener {
@@ -328,11 +319,11 @@ class DownloadService : IntentService(TAG) {
                 }
                 .setOnPauseListener {
                     performStateTransition(DownloadStatus.DOWNLOAD_PAUSED)
-                    sendBroadcastIntent(DownloadReceiver.TYPE_PAUSED, { intent ->
+                    sendBroadcastIntent(DownloadReceiver.TYPE_PAUSED, Function { intent ->
                         val downloadProgressData = DownloadProgressData(NOT_SET.toLong(), progressPercentage)
                         LocalNotifications.showDownloadPausedNotification(context, updateData, downloadProgressData)
                         intent.putExtra(DownloadReceiver.PARAM_PROGRESS, downloadProgressData)
-                        intent
+                        return@Function intent
                     })
                 }
                 .setOnCancelListener {
@@ -344,28 +335,57 @@ class DownloadService : IntentService(TAG) {
                         logError(TAG, UpdateDownloadException(withAppendedStateHistory("Download progress exceeded total file size. Either the server returned incorrect data or the app is in an invalid state!")))
                         cancelDownload(SettingsManager(context).getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET))
                         downloadUpdate(updateData)
-                        return@PRDownloader
+                        PRDownloader
                                 .download(updateData.downloadUrl, Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename)
                                 .setPriority(Priority.HIGH)
                                 .build()
-                                .setOnStartOrResumeListener(() -> {
-                            performStateTransition(DownloadStatus.DOWNLOADING);
-                            sendBroadcastIntent(DownloadReceiver.TYPE_STARTED_RESUMED);
-                        })
-                        .setOnPauseListener(() -> {
-                            performStateTransition(DownloadStatus.DOWNLOAD_PAUSED);
-                            sendBroadcastIntent(DownloadReceiver.TYPE_PAUSED, intent -> {
-                            DownloadProgressData downloadProgressData = new DownloadProgressData(NOT_SET, progressPercentage);
-                            LocalNotifications.showDownloadPausedNotification(context, updateData, downloadProgressData);
-                            intent.putExtra(DownloadReceiver.PARAM_PROGRESS, downloadProgressData);
-                            return intent;
-                        }));
-                        })
-                        .setOnCancelListener(() -> {
-                            performStateTransition(DownloadStatus.NOT_DOWNLOADING);
-                            sendBroadcastIntent(DownloadReceiver.TYPE_CANCELLED);
-                        })
-                        .setOnProgressListener
+                                .setOnStartOrResumeListener {
+                                    performStateTransition(DownloadStatus.DOWNLOADING)
+                                    sendBroadcastIntent(DownloadReceiver.TYPE_STARTED_RESUMED)
+                                }
+                                .setOnPauseListener {
+                                    performStateTransition(DownloadStatus.DOWNLOAD_PAUSED)
+                                    sendBroadcastIntent(DownloadReceiver.TYPE_PAUSED, Function { intent ->
+                                        val downloadProgressData =
+                                                DownloadProgressData(NOT_SET.toLong(), progressPercentage)
+                                        LocalNotifications.showDownloadPausedNotification(context,
+                                                updateData, downloadProgressData)
+                                        intent.putExtra(DownloadReceiver.PARAM_PROGRESS,
+                                                downloadProgressData)
+                                        intent
+                                    })
+                                }
+                                .setOnCancelListener {
+                                    performStateTransition(DownloadStatus.NOT_DOWNLOADING)
+                                    sendBroadcastIntent(DownloadReceiver.TYPE_CANCELLED)
+                                }
+                                .setOnPauseListener {
+                                    if (progress.currentBytes > progress.totalBytes) {
+                                        logError(TAG, UpdateDownloadException(withAppendedStateHistory("Download progress exceeded total file size. Either the server returned incorrect data or the app is in an invalid state!")))
+                                        cancelDownload(SettingsManager(context).getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET))
+                                        downloadUpdate(updateData)
+                                        return@setOnPauseListener
+                                    }
+                                    val currentTimestamp = System.currentTimeMillis()
+
+                                    // This method gets called *very* often. We only want to update
+                                    // the notification and send a broadcast once per second
+                                    // Otherwise, the UI & Notification Renderer would be overflowed by our requests
+                                    if ((previousProgressTimeStamp == NOT_SET.toLong()) or
+                                            (currentTimestamp - previousProgressTimeStamp > 1000)) {
+                                        // logDebug(TAG, "Received download progress update: " + progress.currentBytes + " / " + progress.totalBytes)
+                                        val progressData = calculateDownloadETA(progress.currentBytes, progress.totalBytes)
+                                        SettingsManager(context).savePreference(PROPERTY_DOWNLOAD_PROGRESS, progressData.progress)
+
+                                        previousProgressTimeStamp = currentTimestamp
+                                        progressPercentage = progressData.progress
+
+                                        sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE, Function { intent ->
+                                            intent.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData)
+                                        })
+                                        LocalNotifications.showDownloadingNotification(context, updateData, progressData)
+                                    }
+                                }
                     }
                     val currentTimestamp = System.currentTimeMillis()
 
@@ -379,7 +399,8 @@ class DownloadService : IntentService(TAG) {
                         previousProgressTimeStamp = currentTimestamp
                         progressPercentage = progressData.progress
 
-                        sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE, { i -> i.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData) })
+                        sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE,
+                                Function { i -> i.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData) })
                         LocalNotifications.showDownloadingNotification(context, updateData, progressData)
                     }
                 }
@@ -409,12 +430,13 @@ class DownloadService : IntentService(TAG) {
                             val progressData = DownloadProgressData(NOT_SET.toLong(), progress, true)
                             LocalNotifications.showDownloadPausedNotification(context, updateData, progressData)
 
-                            sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE, { i -> i.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData) })
+                            sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE,
+                                    Function { i -> i.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData) })
                         } else if (error.isServerError) {
                             // Otherwise, we inform the user that the server has refused the download & that it must be restarted at a later stage.
                             LocalNotifications.showDownloadFailedNotification(context, false, R.string.download_error_server, R.string.download_notification_error_server)
 
-                            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, { intent ->
+                            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
                                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_SERVER_ERROR, true)
                                 intent
                             })
@@ -425,7 +447,7 @@ class DownloadService : IntentService(TAG) {
                             // If not server and connection error, something has gone wrong internally. This should never happen!
                             LocalNotifications.showDownloadFailedNotification(context, true, R.string.download_error_internal, R.string.download_notification_error_internal)
 
-                            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, { intent ->
+                            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
                                 intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true)
                                 intent
                             })
@@ -586,7 +608,7 @@ class DownloadService : IntentService(TAG) {
             }
         }
 
-        sendBroadcastIntent(DownloadReceiver.TYPE_STATUS_REQUEST, { intent ->
+        sendBroadcastIntent(DownloadReceiver.TYPE_STATUS_REQUEST, Function { intent ->
             intent.putExtra(DownloadReceiver.PARAM_STATUS, resultStatus)
             intent.putExtra(DownloadReceiver.PARAM_PROGRESS, progress)
             intent
@@ -607,7 +629,7 @@ class DownloadService : IntentService(TAG) {
                 val downloadedFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT)
                         .absolutePath, updateData.filename!!)
 
-                return updateData.mD5Sum == null || MD5.checkMD5(updateData.mD5Sum, downloadedFile)
+                return updateData.mD5Sum == null || MD5.checkMD5(updateData.mD5Sum!!, downloadedFile)
             }
 
             override fun onPreExecute() {
@@ -655,12 +677,13 @@ class DownloadService : IntentService(TAG) {
 
         if (previousBytesDownloadedSoFar != NOT_SET.toLong()) {
 
-            val numberOfElapsedSeconds = TimeUnit.MILLISECONDS.toSeconds(currentTimeStamp - previousTimeStamp).toDouble()
+            val numberOfElapsedSeconds = TimeUnit.MILLISECONDS.toSeconds(currentTimeStamp -
+                    previousTimeStamp).toDouble()
 
-            if (numberOfElapsedSeconds > 0.0) {
-                bytesDownloadedInSecond = (bytesDownloadedSoFar - previousBytesDownloadedSoFar) / numberOfElapsedSeconds
+            bytesDownloadedInSecond = if (numberOfElapsedSeconds > 0.0) {
+                (bytesDownloadedSoFar - previousBytesDownloadedSoFar) / numberOfElapsedSeconds
             } else {
-                bytesDownloadedInSecond = 0.0
+                0.0
             }
 
             // Sometimes no new progress data is available.
@@ -741,7 +764,7 @@ class DownloadService : IntentService(TAG) {
         settingsManager.deletePreference(PROPERTY_DOWNLOADER_STATE)
     }
 
-    private fun sendBroadcastIntent(intentType: String, intentParamsCustomizer: Function<Intent, Intent> = { i -> i }) {
+    private fun sendBroadcastIntent(intentType: String, intentParamsCustomizer: Function<Intent, Intent> = Function { i -> i }) {
         var broadcastIntent = Intent()
 
         broadcastIntent.action = DownloadReceiver.ACTION_DOWNLOAD_EVENT
@@ -754,11 +777,12 @@ class DownloadService : IntentService(TAG) {
     }
 
     private fun checkDownloadCompletionByFile(updateData: UpdateData?): Boolean {
-        if (updateData == null || updateData.filename == null) {
+        if (updateData?.filename == null) {
             logInfo(TAG, "Cannot check for download completion by file - null update data or filename provided!")
             return false
         }
-        return File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.filename!!).exists()
+        return File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT),
+                updateData.filename!!).exists()
     }
 
     private fun resumeDownloadOnReconnectingToNetwork(downloadId: Int, updateData: UpdateData?) {
@@ -840,7 +864,7 @@ class DownloadService : IntentService(TAG) {
     private fun serializeExecutedStateTransitions() {
         val serializedStateHistory = StreamSupport.stream(executedStateTransitions)
                 .map { est -> String.format("%s|%s", est.first.toString(HISTORY_DATETIME_PATTERN), est.second) }
-                .collect<String, *>(Collectors.joining(","))
+                .collect(Collectors.joining(","))
 
         val settingsManager = SettingsManager(applicationContext)
         settingsManager.savePreference(PROPERTY_DOWNLOADER_STATE_HISTORY, serializedStateHistory)
@@ -853,29 +877,27 @@ class DownloadService : IntentService(TAG) {
 
         return if (serializedStateHistory == null || serializedStateHistory.isEmpty()) {
             ArrayList()
-        } else StreamSupport.stream(Arrays.asList(*serializedStateHistory.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()))
+        } else StreamSupport.stream(listOf(*serializedStateHistory.split(",".toRegex())
+                .dropLastWhile { it.isEmpty() }.toTypedArray()))
                 .map { elem ->
                     val parts = elem.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     var timestamp: LocalDateTime
 
                     if (parts.size < 2) {
                         logError(TAG, OxygenUpdaterException("Cannot parse downloader state. Contents of line: $elem, total contents: $serializedStateHistory"))
-                        return@StreamSupport.stream(Arrays.asList(serializedStateHistory.split(",")))
-                                .map null
+                        return@map null
                     }
 
-                    try {
-                        timestamp = LocalDateTime.parse(parts[0], DateTimeFormat.forPattern(HISTORY_DATETIME_PATTERN))
+                    timestamp = try {
+                        LocalDateTime.parse(parts[0], DateTimeFormat.forPattern(HISTORY_DATETIME_PATTERN))
                     } catch (e: Exception) {
-                        timestamp = LocalDateTime.now()
+                        LocalDateTime.now()
                     }
 
                     Pair.create(timestamp, parts[1])
                 }
                 .filter { e -> e != null }
-                .collect<List<Pair<LocalDateTime, String>>, Any>(Collectors.toList())
-
-
+                .collect(Collectors.toList()) as List<Pair<LocalDateTime, String>>
     }
 
     companion object {
@@ -976,9 +998,13 @@ class DownloadService : IntentService(TAG) {
                     text,
                     "History of actions performed by the downloader:",
                     StreamSupport.stream(executedStateTransitions)
-                            .filter { est -> est.first != null && est.second != null }
-                            .map { est -> est.first.toString(HISTORY_DATETIME_PATTERN) + ": " + est.second }
-                            .collect<String, *>(Collectors.joining("\n"))
+                            .filter { est ->
+                                (est.first != null) and (est.second != null)
+                            }
+                            .map { est ->
+                                est.first.toString(HISTORY_DATETIME_PATTERN) + ": " + est.second
+                            }
+                            .collect(Collectors.joining("\n"))
             )
         }
     }

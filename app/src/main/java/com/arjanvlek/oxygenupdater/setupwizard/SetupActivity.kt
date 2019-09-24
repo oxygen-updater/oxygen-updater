@@ -50,11 +50,11 @@ class SetupActivity : AppCompatActivity() {
 
         if (!settingsManager!!.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             val applicationData = application as ApplicationData
-            applicationData.getServerConnector().getDevices { result ->
-                if (!Utils.isSupportedDevice(applicationData.systemVersionProperties, result)) {
+            applicationData.getServerConnector().getDevices(java8.util.function.Consumer { result ->
+                if (!Utils.isSupportedDevice(applicationData.mSystemVersionProperties!!, result)) {
                     displayUnsupportedDeviceMessage()
                 }
-            }
+            })
         }
 
         // Create the adapter that will return a fragment for each of the three
@@ -128,7 +128,7 @@ class SetupActivity : AppCompatActivity() {
             val contributorCheckbox = findViewById<CheckBox>(R.id.introduction_step_5_contribute_checkbox)
 
             if (contributorCheckbox.isChecked) {
-                requestContributorStoragePermissions({ granted ->
+                requestContributorStoragePermissions(Consumer { granted ->
                     if (granted!!) {
                         val contributorUtils = ContributorUtils(applicationContext)
                         contributorUtils.flushSettings(true) // 1st time, will save setting to true.

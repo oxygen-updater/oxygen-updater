@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS
-import com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.domain.Device
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
@@ -38,7 +37,8 @@ class DeviceInformationFragment : AbstractFragment() {
         }
 
         displayDeviceInformation()
-        getApplicationData().getServerConnector().getDevices { this.displayFormattedDeviceName(it) }
+        getApplicationData().getServerConnector().getDevices(java8.util.function.Consumer { devices -> this@DeviceInformationFragment.displayFormattedDeviceName(devices) }
+        )
     }
 
     private fun displayFormattedDeviceName(devices: List<Device>?) {

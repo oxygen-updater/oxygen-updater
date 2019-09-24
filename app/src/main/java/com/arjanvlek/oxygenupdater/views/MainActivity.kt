@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     private var settingsManager: SettingsManager? = null
     var activityLauncher: ActivityLauncher? = null
         private set
-    private var newsAd: InterstitialAd? = null
+    var newsInterstitialAd: InterstitialAd? = null
 
     private var downloadPermissionCallback: Consumer<Boolean>? = null
     private val activeFragmentPosition: Int = 0
@@ -74,11 +74,12 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
         // Supported device check
         if (!settingsManager!!.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             val application = application as ApplicationData
-            application.serverConnector.getDevices { result ->
-                if (!Utils.isSupportedDevice(application.systemVersionProperties, result)) {
+            application.getServerConnector().getDevices(Consumer {
+                result ->
+                if (!Utils.isSupportedDevice(application.getSystemVersionProperties(), result)) {
                     displayUnsupportedDeviceMessage()
                 }
-            }
+            })
         }
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -206,9 +207,9 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
         }
 
         if (!settingsManager!!.getPreference(PROPERTY_AD_FREE, false)) {
-            newsAd = InterstitialAd(this)
-            newsAd!!.adUnitId = getString(R.string.news_ad_unit_id)
-            newsAd!!.loadAd(ApplicationData.buildAdRequest())
+            newsInterstitialAd = InterstitialAd(this)
+            newsInterstitialAd!!.adUnitId = getString(R.string.news_ad_unit_id)
+            newsInterstitialAd!!.loadAd(ApplicationData.buildAdRequest())
         }
     }
 
@@ -244,16 +245,16 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     }
 
     fun getNewsAd(): InterstitialAd? {
-        if (newsAd != null) {
-            return newsAd
+        return if (newsInterstitialAd != null) {
+            newsInterstitialAd
         } else if (mayShowNewsAd()) {
             val interstitialAd = InterstitialAd(this)
             interstitialAd.adUnitId = getString(R.string.news_ad_unit_id)
             interstitialAd.loadAd(ApplicationData.buildAdRequest())
-            newsAd = interstitialAd
-            return newsAd
+            newsInterstitialAd = interstitialAd
+            newsInterstitialAd
         } else {
-            return null
+            null
         }
     }
 

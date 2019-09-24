@@ -114,11 +114,8 @@ class SystemVersionProperties {
                 .split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
         for (item in items) {
-
-            val `in` = BufferedReader(StringReader(buildProperties))
-            var inputLine: String
-
-            while ((inputLine = `in`.readLine()) != null) {
+            do {
+                val inputLine = BufferedReader(StringReader(buildProperties)).readLine()
                 if (inputLine.contains(item)) {
                     // Remove brackets ([ and ]) and ":" from the getprop command output line
                     result = inputLine.replace("[$item]: ", "")
@@ -153,7 +150,7 @@ class SystemVersionProperties {
 
                     return result // Return the first successfully detected item. This because some keys have multiple values which all exist in the same properties file.
                 }
-            }
+            } while (inputLine != null)
         }
         return result
     }

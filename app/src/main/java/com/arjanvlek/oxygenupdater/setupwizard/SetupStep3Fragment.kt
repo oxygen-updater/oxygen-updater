@@ -14,23 +14,24 @@ import com.arjanvlek.oxygenupdater.domain.Device
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.CustomDropdown
+import java8.util.function.Consumer
 import java8.util.stream.StreamSupport
 
 class SetupStep3Fragment : AbstractFragment() {
 
     private var rootView: View? = null
-    private var settingsManager: SettingsManager? = null
+    private var mSettingsManager: SettingsManager? = null
     private var progressBar: ProgressBar? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_setup_3, container, false)
-        settingsManager = SettingsManager(getApplicationData())
+        mSettingsManager = SettingsManager(getApplicationData())
         progressBar = rootView!!.findViewById(R.id.introduction_step_3_device_loading_bar)
         return rootView
     }
 
     fun fetchDevices() {
-        getApplicationData().getServerConnector().getDevices(Consumer<List<Device>> { this.fillDeviceSettings(it) })
+        getApplicationData().getServerConnector().getDevices(Consumer { this.fillDeviceSettings(it) })
     }
 
 
@@ -44,18 +45,18 @@ class SetupStep3Fragment : AbstractFragment() {
 
         val selectedIndex: Int
         val recommendedIndex: Int
-        val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val deviceId = mSettingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
 
         recommendedIndex = StreamSupport.stream(devices)
                 .filter { d -> d.productNames != null && d.productNames!!.contains(systemVersionProperties.oxygenDeviceName) }
-                .mapToInt(ToIntFunction<Device> { devices.indexOf(it) })
+                .mapToInt { devices.indexOf(it) }
                 .findAny()
                 .orElse(-1)
 
         selectedIndex = if (deviceId != -1L) {
             StreamSupport.stream(devices)
                     .filter { d -> d.id == deviceId }
-                    .mapToInt(ToIntFunction<Device> { devices.indexOf(it) })
+                    .mapToInt { devices.indexOf(it) }
                     .findAny()
                     .orElse(-1)
         } else {
@@ -80,8 +81,8 @@ class SetupStep3Fragment : AbstractFragment() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                 val device = adapterView.getItemAtPosition(i) as Device
-                settingsManager!!.savePreference(SettingsManager.PROPERTY_DEVICE, device.name)
-                settingsManager!!.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.id)
+                mSettingsManager!!.savePreference(SettingsManager.PROPERTY_DEVICE, device.name)
+                mSettingsManager!!.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.id)
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>) {

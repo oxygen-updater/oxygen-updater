@@ -19,6 +19,7 @@ import com.arjanvlek.oxygenupdater.internal.server.NetworkException
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import com.google.android.gms.ads.InterstitialAd
+import java8.util.function.Consumer
 
 class NewsActivity : SupportActionBarActivity() {
 
@@ -46,7 +47,7 @@ class NewsActivity : SupportActionBarActivity() {
         val applicationData = application as ApplicationData
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
         applicationData.getServerConnector()
-                .getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) { newsItem ->
+                .getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L), Consumer { newsItem ->
 
                     if (retryCount == 0) {
                         setContentView(R.layout.activity_news)
@@ -68,10 +69,9 @@ class NewsActivity : SupportActionBarActivity() {
 
                             val retryButton = findViewById<Button>(R.id.newsRetryButton)
                             retryButton.visibility = View.VISIBLE
-                            retryButton.setOnClickListener { v -> loadNewsItem(1) }
+                            retryButton.setOnClickListener { loadNewsItem(1) }
                         }
-                        return@applicationData.getServerConnector()
-                                .getNewsItem
+                        return@Consumer
                     }
 
                     findViewById<View>(R.id.newsRetryButton).visibility = View.GONE
@@ -86,7 +86,7 @@ class NewsActivity : SupportActionBarActivity() {
                     // Display the title of the article.
                     val titleView = findViewById<TextView>(R.id.newsTitle)
                     titleView.visibility = View.VISIBLE
-                    titleView.text = newsItem!!.getTitle(locale)
+                    titleView.text = newsItem.getTitle(locale)
 
                     // Display the contents of the article.
                     val contentView = findViewById<WebView>(R.id.newsContent)
@@ -110,13 +110,13 @@ class NewsActivity : SupportActionBarActivity() {
                         else
                             "Light"
 
-                        contentView.settings.setUserAgentString(ApplicationData.APP_USER_AGENT)
+                        contentView.settings.userAgentString = ApplicationData.APP_USER_AGENT
                         contentView.loadUrl(newsContentUrl)
                     }
 
                     // Display the name of the author of the article
                     val authorView = findViewById<TextView>(R.id.newsAuthor)
-                    if (newsItem.authorName != null && !newsItem.authorName!!.isEmpty()) {
+                    if (newsItem.authorName != null && newsItem.authorName!!.isNotEmpty()) {
                         authorView.visibility = View.VISIBLE
                         authorView.text = getString(R.string.news_author, newsItem.authorName)
                     } else {
@@ -142,8 +142,7 @@ class NewsActivity : SupportActionBarActivity() {
                     // Mark the item as read on the server (to increase times read counter)
                     if (application != null && application is ApplicationData && Utils
                                     .checkNetworkConnection(application)) {
-                        (application as ApplicationData).serverConnector
-                                .markNewsItemAsRead(newsItem.id!!) { result ->
+                        (application as ApplicationData).mServerConnector?.markNewsItemAsRead(newsItem.id!!, Consumer { result ->
                                     if (result != null && !result.isSuccess) {
                                         logError("NewsActivity", NetworkException("Error marking news item as read on the server:" + result.errorMessage!!))
                                     }
@@ -157,9 +156,9 @@ class NewsActivity : SupportActionBarActivity() {
                                         // The ad will be shown after 10 seconds.
                                         Handler().postDelayed({ interstitialAd.show() }, 10000)
                                     }
-                                }
+                                })
                     }
-                }
+                })
     }
 
     override fun onBackPressed() {

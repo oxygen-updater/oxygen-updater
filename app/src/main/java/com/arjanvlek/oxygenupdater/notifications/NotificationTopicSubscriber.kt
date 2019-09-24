@@ -10,6 +10,7 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_D
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_NOTIFICATION_TOPIC
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD_ID
 import com.google.firebase.messaging.FirebaseMessaging
+import java8.util.function.Consumer
 
 object NotificationTopicSubscriber {
 
@@ -19,11 +20,11 @@ object NotificationTopicSubscriber {
         val settingsManager = SettingsManager(data.applicationContext)
         val serverConnector = data.getServerConnector()
 
-        val oldTopic = settingsManager.getPreference<String>(PROPERTY_NOTIFICATION_TOPIC, null)
+        val oldTopic = settingsManager.getPreference(PROPERTY_NOTIFICATION_TOPIC, "")
 
         if (oldTopic == null) {
-            serverConnector.getDevices { devices ->
-                serverConnector.getAllUpdateMethods { updateMethods ->
+            serverConnector.getDevices(Consumer { devices ->
+                serverConnector.getAllUpdateMethods( Consumer { updateMethods ->
                     // If the topic is not saved (App Version 1.0.0 did not do this), unsubscribe from all possible topics first to prevent duplicate / wrong notifications.
                     for (method in updateMethods) {
                         for (device in devices) {
@@ -31,8 +32,8 @@ object NotificationTopicSubscriber {
                                     .unsubscribeFromTopic(NOTIFICATIONS_PREFIX + DEVICE_TOPIC_PREFIX + device.id + UPDATE_METHOD_TOPIC_PREFIX + method.id)
                         }
                     }
-                }
-            }
+                })
+            })
         } else {
             FirebaseMessaging.getInstance().unsubscribeFromTopic(oldTopic)
         }

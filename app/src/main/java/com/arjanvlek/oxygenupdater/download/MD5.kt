@@ -73,11 +73,11 @@ internal object MD5 {
         }
 
         val buffer = ByteArray(8192)
-        var read: Int
         try {
-            while ((read = `is`.read(buffer)) > 0) {
+            do {
+                val read = `is`.read(buffer)
                 digest.update(buffer, 0, read)
-            }
+            } while (read > 0)
             val md5sum = digest.digest()
             val bigInt = BigInteger(1, md5sum)
             var output = bigInt.toString(16)

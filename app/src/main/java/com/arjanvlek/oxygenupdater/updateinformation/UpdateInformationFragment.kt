@@ -60,9 +60,7 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_O
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_CHECKED_DATE
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD_ID
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.*
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.MainActivity
@@ -79,8 +77,8 @@ class UpdateInformationFragment : AbstractFragment() {
     private var systemIsUpToDateRefreshLayout: SwipeRefreshLayout? = null
     private var rootView: RelativeLayout? = null
     private var adView: AdView? = null
-    private var context: Context? = null
-    private var settingsManager: SettingsManager? = null
+    private var contextVar: Context? = null
+    private var mSettingsManager: SettingsManager? = null
     private var downloadListener: UpdateDownloadListener? = null
     private var updateData: UpdateData? = null
     private var isLoadedOnce: Boolean = false
@@ -132,8 +130,8 @@ class UpdateInformationFragment : AbstractFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        context = getApplicationData()
-        settingsManager = SettingsManager(context)
+        contextVar = getApplicationData()
+        mSettingsManager = SettingsManager(contextVar)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -145,7 +143,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
     override fun onStart() {
         super.onStart()
-        if (isAdded && settingsManager!!.checkIfSetupScreenHasBeenCompleted()) {
+        if (isAdded && mSettingsManager!!.checkIfSetupScreenHasBeenCompleted()) {
             updateInformationRefreshLayout = rootView!!.findViewById(R.id.updateInformationRefreshLayout)
             systemIsUpToDateRefreshLayout = rootView!!.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout)
 
@@ -155,12 +153,12 @@ class UpdateInformationFragment : AbstractFragment() {
             systemIsUpToDateRefreshLayout!!.setOnRefreshListener { load(adsAreSupported) }
             systemIsUpToDateRefreshLayout!!.setColorSchemeResources(R.color.colorPrimary)
 
-            checkAdSupportStatus({ adsAreSupported ->
+            checkAdSupportStatus(Consumer { adsAreSupported ->
                 this.adsAreSupported = adsAreSupported!!
 
-                load(adsAreSupported!!)
+                load(adsAreSupported)
 
-                if (adsAreSupported!!) {
+                if (adsAreSupported) {
                     showAds()
                 }
             })
@@ -174,7 +172,7 @@ class UpdateInformationFragment : AbstractFragment() {
             // If service reports being inactive, check if download is finished or paused to update state.
             // If download is running then it auto-updates the UI using the downloadListener.
             if (!DownloadService.isRunning && updateData != null) {
-                DownloadService.performOperation(activity, DownloadService.ACTION_GET_INITIAL_STATUS, updateData)
+                DownloadService.performOperation(activity, DownloadService.ACTION_GET_INITIAL_STATUS, updateData!!)
             }
         }
         if (adView != null) {
@@ -217,37 +215,43 @@ class UpdateInformationFragment : AbstractFragment() {
 
         val helper = IabHelper(activity!!, PK1.A + "/" + PK2.B)
 
-        helper.startSetup { setupResult ->
-            if (!setupResult.isSuccess) {
-                // Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
-                callback.accept(!settingsManager!!.getPreference(PROPERTY_AD_FREE, false))
-                return@helper.startSetup
-            }
-
-            try {
-                helper.queryInventoryAsync(true, listOf(SKU_AD_FREE), null) { queryResult, inventory ->
-                    if (!queryResult.isSuccess) {
-                        // Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
-                        callback.accept(!settingsManager!!.getPreference(PROPERTY_AD_FREE, false))
-                        return@helper.queryInventoryAsync
-                    }
-
-                    if (queryResult.isSuccess) {
-                        if (inventory.hasPurchase(SKU_AD_FREE)) {
-                            // User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
-                            settingsManager!!.savePreference(PROPERTY_AD_FREE, true)
-                            callback.accept(false)
-                        } else {
-                            // User has not bought the item and we're online, so ads are definitely supported
-                            callback.accept(true)
-                        }
-                    }
+        helper.startSetup(object : IabHelper.OnIabSetupFinishedListener {
+            override fun onIabSetupFinished(result: IabResult) {
+                if (!result.isSuccess) {
+                    // Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
+                    callback.accept(!mSettingsManager!!.getPreference(PROPERTY_AD_FREE, false))
+                    return
                 }
-            } catch (e: IabHelper.IabAsyncInProgressException) {
-                // A check is already in progress, so wait 3 secs and try to check again.
-                Handler().postDelayed({ checkAdSupportStatus(callback) }, 3000)
+
+                try {
+                    helper.queryInventoryAsync(object : IabHelper.QueryInventoryFinishedListener {
+                        override fun onQueryInventoryFinished(result: IabResult, inv: Inventory?) {
+                            if (!result.isSuccess) {
+                                // Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
+                                callback.accept(!mSettingsManager!!.getPreference(PROPERTY_AD_FREE, false))
+                                return
+                            }
+
+                            if (result.isSuccess) {
+                                if (inv!!.hasPurchase(SKU_AD_FREE)) {
+                                    // User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
+                                    mSettingsManager!!.savePreference(PROPERTY_AD_FREE, true)
+                                    callback.accept(false)
+                                } else {
+                                    // User has not bought the item and we're online, so ads are definitely supported
+                                    callback.accept(true)
+                                }
+                            }
+                        }
+
+                    })
+                } catch (e: IabHelper.IabAsyncInProgressException) {
+                    // A check is already in progress, so wait 3 secs and try to check again.
+                    Handler().postDelayed({ checkAdSupportStatus(callback) }, 3000)
+                }
             }
-        }
+
+        })
     }
 
     /**
@@ -256,22 +260,23 @@ class UpdateInformationFragment : AbstractFragment() {
      */
     private fun load(adsAreSupported: Boolean) {
         Crashlytics.setUserIdentifier("Device: "
-                + settingsManager!!.getPreference(PROPERTY_DEVICE, "<UNKNOWN>")
+                + mSettingsManager!!.getPreference(PROPERTY_DEVICE, "<UNKNOWN>")
                 + ", Update Method: "
-                + settingsManager!!.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+                + mSettingsManager!!.getPreference(PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
 
         val instance = this
 
-        val deviceId = settingsManager!!.getPreference(PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager!!.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = mSettingsManager!!.getPreference(PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = mSettingsManager!!.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        val online = Utils.checkNetworkConnection(applicationData)
+        val online = Utils.checkNetworkConnection(appData)
 
-        val serverConnector = applicationData.getServerConnector()
-        val systemVersionProperties = applicationData.systemVersionProperties
+        val serverConnector = appData?.getServerConnector()
+        val systemVersionProperties = appData?.mSystemVersionProperties
 
-        serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.oxygenOSOTAVersion, { updateData ->
+        serverConnector?.getUpdateData(online, deviceId, updateMethodId,
+                systemVersionProperties!!.oxygenOSOTAVersion, Consumer { updateData ->
             this.updateData = updateData
 
             if (!isLoadedOnce) {
@@ -293,16 +298,17 @@ class UpdateInformationFragment : AbstractFragment() {
 
             isLoadedOnce = true
 
-        }, { error ->
+        }, Consumer { error ->
             if (error == NETWORK_CONNECTION_ERROR) {
                 Dialogs.showNoNetworkConnectionError(instance)
             }
         })
 
-        serverConnector.getInAppMessages(online, { banners -> displayServerMessageBars(banners, adsAreSupported) }, { error ->
+        serverConnector?.getInAppMessages(online, Consumer { banners ->
+            displayServerMessageBars(banners, adsAreSupported) }, Consumer { error ->
             when (error) {
                 SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(instance)
-                APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(instance, activity)
+                APP_OUTDATED_ERROR -> activity?.let { Dialogs.showAppOutdatedError(instance, it) }
             }
         })
     }
@@ -333,7 +339,7 @@ class UpdateInformationFragment : AbstractFragment() {
     }
 
     private fun deleteAllServerMessageBars() {
-        stream(serverMessageBars).filter(Predicate<ServerMessageBar> { Objects.nonNull(it) }).forEach { v -> rootView!!.removeView(v) }
+        stream(serverMessageBars).filter { Objects.nonNull(it) }.forEach { v -> rootView!!.removeView(v) }
 
         serverMessageBars = ArrayList()
     }
@@ -348,14 +354,14 @@ class UpdateInformationFragment : AbstractFragment() {
         val createdServerMessageBars = ArrayList<ServerMessageBar>()
 
         for (banner in banners) {
-            val bar = ServerMessageBar(activity)
+            val bar = ServerMessageBar(activity!!)
             val backgroundBar = bar.backgroundBar
             val textView = bar.textView
 
-            backgroundBar.setBackgroundColor(banner.getColor(context))
-            textView.text = banner.getBannerText(context)
+            backgroundBar.setBackgroundColor(banner.getColor(contextVar!!))
+            textView.text = banner.getBannerText(contextVar!!)
 
-            if (banner.getBannerText(context) is Spanned) {
+            if (banner.getBannerText(contextVar!!) is Spanned) {
                 textView.movementMethod = LinkMovementMethod.getInstance()
             }
 
@@ -364,7 +370,7 @@ class UpdateInformationFragment : AbstractFragment() {
         }
 
         // Position the app UI  to be below the last added server message bar
-        if (!createdServerMessageBars.isEmpty()) {
+        if (createdServerMessageBars.isNotEmpty()) {
             val lastServerMessageView = createdServerMessageBars[createdServerMessageBars.size - 1]
             val params = RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             params.addRule(BELOW, lastServerMessageView.id)
@@ -400,7 +406,7 @@ class UpdateInformationFragment : AbstractFragment() {
             displayUpdateInformationWhenUpToDate(updateData, online)
         }
 
-        if (updateData.isSystemIsUpToDateCheck(settingsManager) && !displayInfoWhenUpToDate || !updateData
+        if (updateData.isSystemIsUpToDateCheck(mSettingsManager) && !displayInfoWhenUpToDate || !updateData
                         .isUpdateInformationAvailable) {
             displayUpdateInformationWhenUpToDate(updateData, online)
         } else {
@@ -409,17 +415,17 @@ class UpdateInformationFragment : AbstractFragment() {
 
         if (online) {
             // Save update data for offline viewing
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_ID, updateData.id)
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSizeInMegabytes)
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_ID, updateData.id)
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSizeInMegabytes)
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData
                     .isUpdateInformationAvailable)
-            settingsManager!!.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now()
+            mSettingsManager!!.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now()
                     .toString())
-            settingsManager!!.savePreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.isSystemIsUpToDate)
+            mSettingsManager!!.savePreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.isSystemIsUpToDate)
         }
 
         // Hide the refreshing icon if it is present.
@@ -436,8 +442,8 @@ class UpdateInformationFragment : AbstractFragment() {
         rootView!!.findViewById<View>(R.id.updateInformationSystemIsUpToDateRefreshLayout).visibility = VISIBLE
 
         // Set the current Oxygen OS version if available.
-        val oxygenOSVersion = (activity!!.application as ApplicationData).systemVersionProperties
-                .oxygenOSVersion
+        val oxygenOSVersion = (activity!!.application as ApplicationData)
+                .mSystemVersionProperties?.oxygenOSVersion
         val versionNumberView = rootView!!.findViewById<TextView>(R.id.updateInformationSystemIsUpToDateVersionTextView)
         if (oxygenOSVersion != NO_OXYGEN_OS) {
             versionNumberView.visibility = VISIBLE
@@ -459,14 +465,13 @@ class UpdateInformationFragment : AbstractFragment() {
 
         // Save last time checked if online.
         if (online) {
-            settingsManager!!.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
+            mSettingsManager!!.savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
         }
 
         // Show last time checked.
         val dateCheckedView = rootView!!.findViewById<TextView>(R.id.updateInformationSystemIsUpToDateDateTextView)
         dateCheckedView.text = String.format(getString(R.string.update_information_last_checked_on), Utils
-                .formatDateTime(context, settingsManager!!.getPreference<String>(PROPERTY_UPDATE_CHECKED_DATE, null)))
-
+                .formatDateTime(contextVar!!, mSettingsManager!!.getPreference(PROPERTY_UPDATE_CHECKED_DATE, "")))
     }
 
     private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData, displayInfoWhenUpToDate: Boolean) {
@@ -483,7 +488,7 @@ class UpdateInformationFragment : AbstractFragment() {
                 buildNumberView.text = updateData.versionNumber
             }
         } else {
-            buildNumberView.text = String.format(getString(R.string.update_information_unknown_update_name), settingsManager!!.getPreference(PROPERTY_DEVICE, context!!.getString(R.string.device_information_unknown)))
+            buildNumberView.text = String.format(getString(R.string.update_information_unknown_update_name), mSettingsManager!!.getPreference(PROPERTY_DEVICE, contextVar!!.getString(R.string.device_information_unknown)))
         }
 
         // Display download size.
@@ -642,7 +647,7 @@ class UpdateInformationFragment : AbstractFragment() {
                                 .progress)
                     } else {
                         downloadStatusText.text = downloadProgressData.timeRemaining!!
-                                .toString(applicationData)
+                                .toString(appData)
                     }
                 }
             }
@@ -679,7 +684,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             override fun onDownloadComplete() {
                 if (isAdded) {
-                    Toast.makeText(applicationData, getString(R.string.download_verifying_start), LENGTH_LONG)
+                    Toast.makeText(appData, getString(R.string.download_verifying_start), LENGTH_LONG)
                             .show()
                 }
             }
@@ -740,9 +745,9 @@ class UpdateInformationFragment : AbstractFragment() {
                     hideDownloadProgressBar()
 
                     if (launchInstallation) {
-                        Toast.makeText(applicationData, getString(R.string.download_complete), LENGTH_LONG)
+                        Toast.makeText(appData, getString(R.string.download_complete), LENGTH_LONG)
                                 .show()
-                        val launcher = ActivityLauncher(activity)
+                        val launcher = ActivityLauncher(activity!!)
                         launcher.UpdateInstallation(true, updateData)
                     }
                 }
@@ -761,16 +766,16 @@ class UpdateInformationFragment : AbstractFragment() {
             DownloadStatus.NOT_DOWNLOADING -> {
                 downloadButton.text = getString(R.string.download)
 
-                if (Utils.checkNetworkConnection(applicationData) && updateData != null && updateData.downloadUrl != null
+                if (Utils.checkNetworkConnection(appData) && updateData != null && updateData.downloadUrl != null
                         && updateData.downloadUrl!!.contains("http")) {
                     downloadButton.isEnabled = true
                     downloadButton.isClickable = true
                     downloadButton.setOnClickListener(DownloadButtonOnClickListener(updateData))
-                    downloadButton.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                    downloadButton.setTextColor(ContextCompat.getColor(contextVar!!, R.color.colorPrimary))
                 } else {
                     downloadButton.isEnabled = false
                     downloadButton.isClickable = false
-                    downloadButton.setTextColor(ContextCompat.getColor(context!!, R.color.dark_grey))
+                    downloadButton.setTextColor(ContextCompat.getColor(contextVar!!, R.color.dark_grey))
                 }
 
                 if (updateData == null) {
@@ -781,26 +786,26 @@ class UpdateInformationFragment : AbstractFragment() {
                 downloadButton.text = getString(R.string.downloading)
                 downloadButton.isEnabled = true
                 downloadButton.isClickable = false
-                downloadButton.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                downloadButton.setTextColor(ContextCompat.getColor(contextVar!!, R.color.colorPrimary))
             }
             DownloadStatus.DOWNLOAD_PAUSED -> {
                 downloadButton.text = getString(R.string.paused)
                 downloadButton.isEnabled = true
                 downloadButton.isClickable = false
-                downloadButton.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                downloadButton.setTextColor(ContextCompat.getColor(contextVar!!, R.color.colorPrimary))
             }
             DownloadStatus.DOWNLOAD_COMPLETED -> {
                 downloadButton.text = getString(R.string.downloaded)
                 downloadButton.isEnabled = true
                 downloadButton.isClickable = true
                 downloadButton.setOnClickListener(AlreadyDownloadedOnClickListener(this, updateData))
-                downloadButton.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                downloadButton.setTextColor(ContextCompat.getColor(contextVar!!, R.color.colorPrimary))
             }
             DownloadStatus.VERIFYING -> {
                 downloadButton.text = getString(R.string.download_verifying)
                 downloadButton.isEnabled = true
                 downloadButton.isClickable = false
-                downloadButton.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                downloadButton.setTextColor(ContextCompat.getColor(contextVar!!, R.color.colorPrimary))
             }
         }
     }
@@ -818,7 +823,7 @@ class UpdateInformationFragment : AbstractFragment() {
             installButton.setOnClickListener { v ->
                 (activity as MainActivity).activityLauncher!!
                         .UpdateInstallation(true, updateData)
-                LocalNotifications.hideDownloadCompleteNotification(activity)
+                LocalNotifications.hideDownloadCompleteNotification(activity!!)
             }
         }
     }
@@ -855,13 +860,13 @@ class UpdateInformationFragment : AbstractFragment() {
                     showDownloadProgressBar()
                     downloadProgressBar.isIndeterminate = true
                     downloadStatusText.text = getString(R.string.download_pending)
-                    downloadPauseButton.setOnClickListener { v1 -> } // Pause is possible on first progress update
+                    downloadPauseButton.setOnClickListener { } // Pause is possible on first progress update
                 } else {
-                    mainActivity.requestDownloadPermissions { granted ->
+                    mainActivity.requestDownloadPermissions(Consumer { granted ->
                         if (granted!!) {
                             DownloadService.performOperation(activity, DownloadService.ACTION_DOWNLOAD_UPDATE, updateData)
                         }
-                    }
+                    })
                 }
             }
         }
@@ -873,13 +878,13 @@ class UpdateInformationFragment : AbstractFragment() {
     private inner class AlreadyDownloadedOnClickListener internal constructor(private val targetFragment: Fragment, private val updateData: UpdateData?) : View.OnClickListener {
 
         override fun onClick(v: View) {
-            Dialogs.showUpdateAlreadyDownloadedMessage(updateData, targetFragment) { ignored ->
+            Dialogs.showUpdateAlreadyDownloadedMessage(updateData!!, targetFragment, Consumer {
                 if (updateData != null) {
                     DownloadService.performOperation(activity, DownloadService.ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
                     initUpdateDownloadButton(updateData, DownloadStatus.NOT_DOWNLOADING)
                     initInstallButton(updateData, DownloadStatus.NOT_DOWNLOADING)
                 }
-            }
+            })
         }
     }
 
