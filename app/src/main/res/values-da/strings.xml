@@ -130,7 +130,6 @@
 	<string name="settings_buy_button_not_possible">Ikke tilgængelig</string>
 	<string name="settings_buy_ad_free_label">Opgrader til reklame-fri</string>
 
-	<!-- TODO translate these 2 to all but Dutch / Belgian / French -->
 	<string name="settings_contribute_label">Hjælp med at forbedre denne app</string>
 	<string name="settings_contribute_button">Bidrag</string>
 
@@ -326,8 +325,7 @@
 	<string name="news_load_error">Kan ikke åbne denne artikkel. Check din forbindelse og tryk på \'FORSØG IGEN\' -knappen for at åbne artikllen.</string>
 
 	<!-- Contribute strings -->
-	<!-- TODO translate this block to all but Dutch / Belgian / French -->
-	<string name="contribute">Become a contributor</string>
+	<string name="contribute">Bliv bidragsyder</string>
 	<string name="contribute_title">Bidrag med at gøre Oxygen Updater endnu bedre</string>
 	<string name="contribute_explanation">Oxygen Updater har brug for din hjælp! For at kunne give dig de seneste opdateringer, har vi behov for at få navne på opdateringsfiler. Disse er tilgængelige på din telefon, når en regulær vises. \n\nHvordan kan jeg hjælpe?\n\nOxygen Updater kan automatisk tilføje nye opdaterings filnavne til vores administratorer. Dette vil bruge en lille smule data, og lidt af batteriet. Alt du behøver at gøre er at vente (omtrent 15 minutter) før du installerer officielle system opdateringer indtil du ser en bekræftelse fra Oxygen Updater at, filen er blevet tilføjet. Kun .ota-mappen på din telefon bliver scannet en gang per 15. minut. Der checkes kun for et specifict navn i denne ene mappe.</string>
 	<string name="contribute_image_description">Upload filer til app-serveren</string>
