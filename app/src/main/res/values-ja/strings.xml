@@ -7,12 +7,12 @@
 	<!-- Update information strings-->
 	<string name="update">更新</string>
 	<string name="update_information_close">閉じる</string>
-	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはあなたのデバイスのバグfix、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
+	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグfix、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
 	<string name="update_information_file_name">ファイル名: %1$s</string>
 	<string name="update_information_for">for</string>
 	<string name="update_information_header">アップデート</string>
 	<string name="update_information_header_short">アップデート</string>
-	<string name="update_information_installed_update">最終システムアップデート日時:</string>
+	<string name="update_information_installed_update">最終アップデート日時:</string>
 	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
 	<string name="update_information_latest_available_update">新たなシステムアップデートが存在します</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
@@ -37,7 +37,7 @@
 
 	<!-- Downloader strings-->
 	<string name="download">ダウンロード</string>
-	<string name="downloaded">ダウンローぞ済</string>
+	<string name="downloaded">ダウンロード済</string>
 	<string name="downloading">ダウンロード中…</string>
 	<string name="paused">中止</string>
 
@@ -146,7 +146,7 @@
 	<string name="settings_push_news">ニュースメッセージ</string>
 
 	<string name="settings_saved">設定は自動的に保存されました。</string>
-	<string name="settings_saving">設定を保存中です。長時間このままの場合、ネットワーク接続を確認し、アプリをいったん終了して再起動して下さい。</string>
+	<string name="settings_saving">設定を保存中です。長時間この状態が続く場合、ネットワーク接続を確認し、アプリをいったん終了し再起動して下さい。</string>
 
 	<string name="settings_server_messages">アプリ内でメッセージを表示：</string>
 
@@ -288,8 +288,8 @@
 	<!-- About screen strings -->
 	<string name="about">このアプリについて</string>
 	<string name="about_app_description">Oxygen OS アップデートのための究極のツール</string>
-	<string name="about_background_story">本アプリはArjan Vlekが彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.\n\n\n注意、これはOnePlus の公式アプリケーションではありません。 \nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。\n\nこのアプリを気に入った場合は、 Playストアで今すぐ評価して下さい：</string>
-	<string name="about_rate_app_button_text">Google Playで評価</string>
+	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.\n\n\n注意、これはOnePlus の公式アプリケーションではありません。 \nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。\n\nこのアプリを気に入った場合は、 Playストアで今すぐ評価して下さい：</string>
+	<string name="about_rate_app_button_text">Google Play で評価</string>
 	<string name="about_version">バージョン: %1$s</string>
 
 
@@ -306,12 +306,12 @@
 
 	<!-- Help strings -->
 	<string name="help">ヘルプ</string>
-	<string name="help_text">Oxygen Updaterのヘルプセクションへようこそ。\n\nヘルプは次のトピックをカバーしています。\n\n•デバイスの更新\n•最新のニュースを読む\n•デバイス情報の表示\n•設定の変更\n\nスクロールダウンでトピックを参照します。</string>
+	<string name="help_text">Oxygen Updaterのヘルプセクションへようこそ。\n\nヘルプは次のトピックをカバーしています。\n\n•デバイスのアップデート\n•最新ニュースの購読\n•デバイス情報の表示\n•設定の変更\n\nスクロールダウンでトピックを参照します。</string>
 	<string name="help_updating_your_device_title">デバイスのアップデート</string>
 	<string name="help_updating_your_device_text">アプリを開くと、システムアップデートが利用可能かどうかがわかります。更新プログラムが利用可能な場合は、それをインストールできます。\n\nインストールを開始するには、（更新プログラムの説明の下にある）\"ダウンロード\"ボタンをタップしてダウンロードを開始します。ダウンロードが完了すると、インストール画面が表示されます。アプリを離れた場合、または画面がポップアップしなかった場合は、\"ダウンロード\"ボタンの横に表示される\"インストール\"ボタンをタップします。\n\nインストール画面では、root化済デバイスであるか最初に確認されます。ルート化済デバイスで場合は、確認画面でルート権限を付与し、アップデートのインストール方法を選択します。非ルート化済みデバイスの場合は、手動インストールの手順に従ってください。\n\n自動インストール：\nインストールオプションを選択するだけです。デフォルトの設定が推奨されますが、（再）インストールする必要があるルートパッケージを指定する必要があります。青いフォルダボタンを使用してルートパッケージ（zipファイル）を選択し、\"インストールを開始\"をタップしてインストールを開始します。\n\n手動インストール：\n画面にインストールガイドが表示されます。指示を書き留め、記載されているとおりに実行して更新プログラムをインストールします。</string>
-	<string name="help_reading_news_title">最新のニュースを購読</string>
+	<string name="help_reading_news_title">最新ニュースの購読</string>
 	<string name="help_reading_news_text">ニュースはアップデートスクリーンの左側に表示されます。最新アイテムは最上部に表示されます。項目をタップして読むだけです。\n←矢印をタップするか、backキーを押してニュース項目画面に戻ります。</string>
-	<string name="help_device_information_title">デバイスの情報を見る</string>
+	<string name="help_device_information_title">デバイス情報の表示</string>
 	<string name="help_device_information_text">更新画面の右側の画面を使用して、デバイスの仕様の一部を表示できます。 これは、デバイスの仕様の一部を尋ねられる可能性のあるサポートリクエストを行うときに役立ちます。</string>
 	<string name="help_change_settings_title">設定の変更</string>
 	<string name="help_change_settings_text">設定を変更するには、右上の3つドットをタップし、\"設定\"をタップします。\n次の設定を変更できます。\ n\n•デバイスと更新方法\n•プッシュ通知\n•アプリ通知\n•プライバシー設定（ログのアップロード）。\n\nスイッチを使用して、通知/プライバシー設定をオンまたはオフにします。 スイッチの上に表示されるドロップダウンメニューを使用して、デバイスおよび/または更新方法を選択します。 ドロップダウンメニューは表示されませんか？ インターネット接続を確認し、設定画面を再度開きます。</string>
@@ -331,7 +331,7 @@
 	<string name="contribute_agree">更新ファイル名を管理者へ送信することを同意</string>
 	<string name="contribute_agree_from_setup">アプリの改善に協力し、更新ファイル名を管理者に送信することに同意する。</string>
 	<string name="contribute_save">設定を保存</string>
-	<string name="contribute_more_info">詳細情報 …</string>
+	<string name="contribute_more_info">詳細情報…</string>
 	<string name="contribute_allow_storage">アプリの改善を支援するために、ストレージのアクセス許可を付与してください</string>
 	<string name="contribute_successful_notification_title">貢献に成功</string>
 	<string name="contribute_successful_notification_text">更新ファイル %1$s を管理者と共有して頂き有難うございます!</string>
