@@ -76,8 +76,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
     }
 
     fun getDevices(alwaysFetch: Boolean, callback: Consumer<List<Device>>) {
-        if (deviceFetchDate != null && deviceFetchDate!!.plusMinutes(5)
-                        .isAfter(LocalDateTime.now()) && !alwaysFetch) {
+        if (deviceFetchDate != null && deviceFetchDate!!.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
             logVerbose(TAG, "Used local cache to fetch devices...")
             callback.accept(devices)
         } else {

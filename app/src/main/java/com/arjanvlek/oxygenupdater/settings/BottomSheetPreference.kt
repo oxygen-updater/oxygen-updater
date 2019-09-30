@@ -156,11 +156,9 @@ class BottomSheetPreference : Preference {
      * @param defStyleRes  default style resource
      */
     private fun readAttrs(attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
-        val a = contextRef!!.obtainStyledAttributes(attrs, R.styleable.BottomSheetPreference,
-                defStyleAttr, defStyleRes)
+        val a = contextRef!!.obtainStyledAttributes(attrs, R.styleable.BottomSheetPreference, defStyleAttr, defStyleRes)
 
-        title = TypedArrayUtils.getString(a, R.styleable.BottomSheetPreference_title,
-                R.styleable.BottomSheetPreference_android_title)
+        title = TypedArrayUtils.getString(a, R.styleable.BottomSheetPreference_title, R.styleable.BottomSheetPreference_android_title)
         caption = a.getString(R.styleable.BottomSheetPreference_caption)
 
         val entries = a.getTextArray(R.styleable.BottomSheetPreference_android_entries)

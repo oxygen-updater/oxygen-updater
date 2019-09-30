@@ -41,8 +41,7 @@ import java.net.MalformedURLException
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
-class NewsAdapter(private val context: Context?, private val activity: AppCompatActivity?,
-                  private val newsItemList: List<NewsItem>) : Adapter<NewsViewHolder>() {
+class NewsAdapter(private val context: Context?, private val activity: AppCompatActivity?, private val newsItemList: List<NewsItem>) : Adapter<NewsViewHolder>() {
     private val settingsManager: SettingsManager = SettingsManager(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {

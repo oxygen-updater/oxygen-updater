@@ -28,8 +28,7 @@ object Dialogs {
      * @param title   Title of the error message
      * @param message Contents of the error message
      */
-    fun showDownloadError(fragment: Fragment, updateData: UpdateData, isResumable: Boolean,
-                          @StringRes title: Int, @StringRes message: Int) {
+    fun showDownloadError(fragment: Fragment, updateData: UpdateData, isResumable: Boolean, @StringRes title: Int, @StringRes message: Int) {
         showDownloadError(fragment, updateData, isResumable, fragment.getString(title),
                 fragment.getString(message))
     }
@@ -139,8 +138,7 @@ object Dialogs {
 
     }
 
-    fun showUpdateAlreadyDownloadedMessage(updateData: UpdateData, fragment: Fragment,
-                                           actionPerformedCallback: Consumer<Void>) {
+    fun showUpdateAlreadyDownloadedMessage(updateData: UpdateData, fragment: Fragment, actionPerformedCallback: Consumer<Void>) {
 
         checkPreconditions(fragment, object : Worker {
             override fun start() {
@@ -197,8 +195,7 @@ object Dialogs {
     }
 
     private fun checkPreconditions(fragment: Fragment?, callback: Worker) {
-        if (fragment != null && fragment.fragmentManager != null && fragment.isAdded &&
-                fragment.activity != null && !fragment.activity!!.isFinishing) {
+        if (fragment != null && fragment.fragmentManager != null && fragment.isAdded && fragment.activity != null && !fragment.activity!!.isFinishing) {
             callback.start()
         }
     }

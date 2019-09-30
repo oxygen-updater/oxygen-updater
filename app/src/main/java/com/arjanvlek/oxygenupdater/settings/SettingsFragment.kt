@@ -261,8 +261,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
                 else
                     updateMethod.englishName
 
-                itemList.add(BottomSheetItem(title = updateMethodName!!, value = updateMethodName,
-                        secondaryValue = updateMethod.id))
+                itemList.add(BottomSheetItem(title = updateMethodName!!, value = updateMethodName, secondaryValue = updateMethod.id))
             }
 
             updateMethodPreference!!.setCaption(context!!.getString(R.string.settings_explanation_incremental_full_update))
@@ -286,8 +285,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
                     // Subscribe to notifications for the newly selected device and update method
                     NotificationTopicSubscriber.subscribe(application!!)
                 } else {
-                    Toast.makeText(context, getString(R.string.notification_no_notification_support),
-                            LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.notification_no_notification_support), LENGTH_LONG).show()
                 }
 
                 true

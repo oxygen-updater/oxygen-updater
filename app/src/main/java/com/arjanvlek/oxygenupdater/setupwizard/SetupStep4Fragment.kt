@@ -54,11 +54,11 @@ class SetupStep4Fragment : AbstractFragment() {
                 val builder = AlertDialog.Builder(activity)
                 builder.setTitle(getString(R.string.root_check_title))
                 builder.setMessage(getString(R.string.root_check_message))
-                builder.setOnDismissListener { dialog ->
+                builder.setOnDismissListener {
                     rootMessageShown = true
                     fetchUpdateMethods()
                 }
-                builder.setPositiveButton(getString(R.string.download_error_close)) { dialog, which ->
+                builder.setPositiveButton(getString(R.string.download_error_close)) { _, _ ->
                     rootMessageShown = true
                     fetchUpdateMethods()
                 }
@@ -74,8 +74,7 @@ class SetupStep4Fragment : AbstractFragment() {
                 progressBar!!.visibility = View.VISIBLE
 
                 getApplicationData().getServerConnector()
-                        .getUpdateMethods(mSettingsManager!!.getPreference(PROPERTY_DEVICE_ID,
-                                1L), Consumer { this.fillUpdateMethodSettings(it) })
+                        .getUpdateMethods(mSettingsManager!!.getPreference(PROPERTY_DEVICE_ID, 1L), Consumer { this.fillUpdateMethodSettings(it) })
             }
         }
     }
@@ -96,7 +95,7 @@ class SetupStep4Fragment : AbstractFragment() {
             selectedPosition = StreamSupport
                     .stream(updateMethods)
                     .filter { updateMethod -> updateMethod.id == updateMethodId }
-                    .mapToInt({ updateMethods.indexOf(it) })
+                    .mapToInt { updateMethods.indexOf(it) }
                     .findAny()
                     .orElse(-1)
         } else if (recommendedPositions.isNotEmpty()) {

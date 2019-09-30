@@ -121,8 +121,7 @@ class NewsDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     fun markNewsItemAsRead(newsItem: NewsItem) {
         val values = toDatabaseContents(newsItem)
         values.put(COLUMN_READ, true)
-        writableDatabase?.update(TABLE_NAME, values, "$COLUMN_ID  LIKE ?",
-                arrayOf(newsItem.id.toString()))
+        writableDatabase?.update(TABLE_NAME, values, "$COLUMN_ID  LIKE ?", arrayOf(newsItem.id.toString()))
     }
 
     private fun insertNewsItem(newsItem: NewsItem) {

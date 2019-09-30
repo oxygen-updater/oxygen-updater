@@ -36,9 +36,7 @@ object UpdateDescriptionParser {
                 var modifiedLine = StringBuilder(EMPTY_STRING)
 
                 // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
-                if (UpdateDataVersionFormatter
-                                .canVersionInfoBeFormatted(LineDetectingUpdateInfo(currentLine)) &&
-                        element == UpdateDescriptionElement.HEADING_1) {
+                if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(LineDetectingUpdateInfo(currentLine)) && element == UpdateDescriptionElement.HEADING_1) {
                     continue
                 }
 

@@ -40,8 +40,7 @@ class RootInstallLogger : JobService() {
         val timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString()
         val failureReason = params.extras.getString(DATA_FAILURE_REASON, "")
 
-        val installation = RootInstall(deviceId, updateMethodId, status, installationId, timestamp,
-                startOSVersion, destinationOSVersion, currentOsVersion, failureReason)
+        val installation = RootInstall(deviceId, updateMethodId, status, installationId, timestamp, startOSVersion, destinationOSVersion, currentOsVersion, failureReason)
 
         connector.logRootInstall(installation, Consumer { result ->
             if (result == null) {
@@ -50,9 +49,7 @@ class RootInstallLogger : JobService() {
             } else if (!result.isSuccess) {
                 logError(TAG, OxygenUpdaterException("Failed to log update installation action on server: " + result.errorMessage!!))
                 jobFinished(params, true)
-            } else if (result.isSuccess && installation.installationStatus ==
-                    InstallationStatus.FAILED || installation.installationStatus ==
-                    InstallationStatus.FINISHED) {
+            } else if (result.isSuccess && installation.installationStatus == InstallationStatus.FAILED || installation.installationStatus == InstallationStatus.FINISHED) {
                 settingsManager.deletePreference(SettingsManager.PROPERTY_INSTALLATION_ID)
                 jobFinished(params, false)
             } else {
