@@ -1,15 +1,24 @@
 package com.arjanvlek.oxygenupdater.download
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Activity
+import android.app.IntentService
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.*
+import android.os.AsyncTask
+import android.os.Build
+import android.os.Environment
+import android.os.Handler
+import android.os.StatFs
 import android.util.Pair
+
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.APP_USER_AGENT
+
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.Utils
@@ -18,28 +27,40 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications
+import com.arjanvlek.oxygenupdater.settings.SettingsManager
+import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
+
+import com.downloader.Error
+import com.downloader.OnDownloadListener
+import com.downloader.PRDownloader
+import com.downloader.PRDownloaderConfig
+import com.downloader.Priority
+import com.downloader.Status
+import com.downloader.internal.DownloadRequestQueue
+
+import org.joda.time.DateTimeZone
+import org.joda.time.LocalDateTime
+import org.joda.time.format.DateTimeFormat
+
+import java8.util.function.Function
+import java8.util.stream.Collectors
+import java8.util.stream.StreamSupport
+
+import java.io.File
+import java.util.LinkedList
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.collections.ArrayList
+
+import com.arjanvlek.oxygenupdater.ApplicationData.Companion.APP_USER_AGENT
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.ONGOING
-import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOADER_STATE
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOADER_STATE_HISTORY
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_ID
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_PROGRESS
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
-import com.downloader.*
-import com.downloader.internal.DownloadRequestQueue
-import java8.util.function.Function
-import java8.util.stream.Collectors
-import java8.util.stream.StreamSupport
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
-import org.joda.time.format.DateTimeFormat
-import java.io.File
-import java.util.*
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * DownloadService handles the downloading and MD5 verification of OxygenOS updates.
@@ -116,7 +137,7 @@ class DownloadService : IntentService(TAG) {
 	 */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     /*
@@ -418,42 +439,46 @@ class DownloadService : IntentService(TAG) {
                         // A server error is an error which is deliberately returned by the server, such as a 404 / 500 / 503 status code.
 
                         // If the error is a connection error, we retry to resume downloading in 5 seconds (if there is a network connection then).
-                        if (error.isConnectionError) {
-                            logDebug(TAG, "Pausing download due to connection error")
-                            performStateTransition(DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION)
-                            val settingsManager = SettingsManager(context)
-                            val downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET)
-                            val progress = settingsManager.getPreference(PROPERTY_DOWNLOAD_PROGRESS, NO_PROGRESS)
+                        when {
+                            error.isConnectionError -> {
+                                logDebug(TAG, "Pausing download due to connection error")
+                                performStateTransition(DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION)
+                                val settingsManager = SettingsManager(context)
+                                val downloadId = settingsManager.getPreference(PROPERTY_DOWNLOAD_ID, NOT_SET)
+                                val progress = settingsManager.getPreference(PROPERTY_DOWNLOAD_PROGRESS, NO_PROGRESS)
 
-                            resumeDownloadOnReconnectingToNetwork(downloadId, updateData)
+                                resumeDownloadOnReconnectingToNetwork(downloadId, updateData)
 
-                            val progressData = DownloadProgressData(NOT_SET.toLong(), progress, true)
-                            LocalNotifications.showDownloadPausedNotification(context, updateData, progressData)
+                                val progressData = DownloadProgressData(NOT_SET.toLong(), progress, true)
+                                LocalNotifications.showDownloadPausedNotification(context, updateData, progressData)
 
-                            sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE,
-                                    Function { i -> i.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData) })
-                        } else if (error.isServerError) {
-                            // Otherwise, we inform the user that the server has refused the download & that it must be restarted at a later stage.
-                            LocalNotifications.showDownloadFailedNotification(context, false, R.string.download_error_server, R.string.download_notification_error_server)
+                                sendBroadcastIntent(DownloadReceiver.TYPE_PROGRESS_UPDATE,
+                                        Function { i -> i.putExtra(DownloadReceiver.PARAM_PROGRESS, progressData) })
+                            }
+                            error.isServerError -> {
+                                // Otherwise, we inform the user that the server has refused the download & that it must be restarted at a later stage.
+                                LocalNotifications.showDownloadFailedNotification(context, false, R.string.download_error_server, R.string.download_notification_error_server)
 
-                            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
-                                intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_SERVER_ERROR, true)
-                                intent
-                            })
+                                sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
+                                    intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_SERVER_ERROR, true)
+                                    intent
+                                })
 
-                            performStateTransition(DownloadStatus.NOT_DOWNLOADING)
-                            clearUp()
-                        } else {
-                            // If not server and connection error, something has gone wrong internally. This should never happen!
-                            LocalNotifications.showDownloadFailedNotification(context, true, R.string.download_error_internal, R.string.download_notification_error_internal)
+                                performStateTransition(DownloadStatus.NOT_DOWNLOADING)
+                                clearUp()
+                            }
+                            else -> {
+                                // If not server and connection error, something has gone wrong internally. This should never happen!
+                                LocalNotifications.showDownloadFailedNotification(context, true, R.string.download_error_internal, R.string.download_notification_error_internal)
 
-                            sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
-                                intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true)
-                                intent
-                            })
+                                sendBroadcastIntent(DownloadReceiver.TYPE_DOWNLOAD_ERROR, Function { intent ->
+                                    intent.putExtra(DownloadReceiver.PARAM_ERROR_IS_INTERNAL_ERROR, true)
+                                    intent
+                                })
 
-                            performStateTransition(DownloadStatus.NOT_DOWNLOADING)
-                            clearUp()
+                                performStateTransition(DownloadStatus.NOT_DOWNLOADING)
+                                clearUp()
+                            }
                         }
                     }
                 })
@@ -519,7 +544,7 @@ class DownloadService : IntentService(TAG) {
 
     @Synchronized
     private fun deleteDownloadedFile(updateData: UpdateData?) {
-        if (updateData == null || updateData.filename == null) {
+        if (updateData?.filename == null) {
             logWarning(TAG, UpdateDownloadException("Could not delete downloaded file, null update data or update data without file name was provided"))
             return
         }
@@ -706,10 +731,10 @@ class DownloadService : IntentService(TAG) {
 
             // Calculate number of seconds remaining based off average download speed.
             averageBytesPerSecond = calculateAverageBytesDownloadedInSecond(measurements).toLong()
-            if (averageBytesPerSecond > 0) {
-                numberOfSecondsRemaining = bytesRemainingToDownload / averageBytesPerSecond
+            numberOfSecondsRemaining = if (averageBytesPerSecond > 0) {
+                bytesRemainingToDownload / averageBytesPerSecond
             } else {
-                numberOfSecondsRemaining = NOT_SET.toLong()
+                NOT_SET.toLong()
             }
         }
 
@@ -734,8 +759,8 @@ class DownloadService : IntentService(TAG) {
     }
 
     private fun calculateAverageBytesDownloadedInSecond(measurements: List<Double>?): Double {
-        if (measurements == null || measurements.isEmpty()) {
-            return 0.0
+        return if (measurements == null || measurements.isEmpty()) {
+            0.0
         } else {
             var totalBytesDownloadedInSecond = 0.0
 
@@ -743,7 +768,7 @@ class DownloadService : IntentService(TAG) {
                 totalBytesDownloadedInSecond += measurementData
             }
 
-            return totalBytesDownloadedInSecond / measurements.size
+            totalBytesDownloadedInSecond / measurements.size
         }
     }
 
@@ -881,7 +906,7 @@ class DownloadService : IntentService(TAG) {
                 .dropLastWhile { it.isEmpty() }.toTypedArray()))
                 .map { elem ->
                     val parts = elem.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    var timestamp: LocalDateTime
+                    val timestamp: LocalDateTime
 
                     if (parts.size < 2) {
                         logError(TAG, OxygenUpdaterException("Cannot parse downloader state. Contents of line: $elem, total contents: $serializedStateHistory"))
