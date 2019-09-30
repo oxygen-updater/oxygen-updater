@@ -245,16 +245,16 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     }
 
     fun getNewsAd(): InterstitialAd? {
-        return if (newsInterstitialAd != null) {
-            newsInterstitialAd
-        } else if (mayShowNewsAd()) {
-            val interstitialAd = InterstitialAd(this)
-            interstitialAd.adUnitId = getString(R.string.news_ad_unit_id)
-            interstitialAd.loadAd(ApplicationData.buildAdRequest())
-            newsInterstitialAd = interstitialAd
-            newsInterstitialAd
-        } else {
-            null
+        return when {
+            newsInterstitialAd != null -> newsInterstitialAd
+            mayShowNewsAd() -> {
+                val interstitialAd = InterstitialAd(this)
+                interstitialAd.adUnitId = getString(R.string.news_ad_unit_id)
+                interstitialAd.loadAd(ApplicationData.buildAdRequest())
+                newsInterstitialAd = interstitialAd
+                newsInterstitialAd
+            }
+            else -> null
         }
     }
 
@@ -311,7 +311,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        notificationManager?.createNotificationChannel(channel)
+        notificationManager.createNotificationChannel(channel)
     }
 
     @TargetApi(26)
@@ -344,7 +344,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.
      */
-    inner class SectionsPagerAdapter internal constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    inner class SectionsPagerAdapter internal constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.

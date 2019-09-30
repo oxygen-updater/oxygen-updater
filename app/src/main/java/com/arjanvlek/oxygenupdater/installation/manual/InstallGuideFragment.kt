@@ -156,7 +156,7 @@ class InstallGuideFragment : Fragment() {
             // Fetch the custom image from the server.
             FunctionalAsyncTask<Void, Void, Bitmap>(object : Worker {
                 override fun start() { }
-            }, Function { args ->
+            }, Function {
                 var image: Bitmap?
 
                 try {

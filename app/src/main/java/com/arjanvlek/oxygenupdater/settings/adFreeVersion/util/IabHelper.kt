@@ -283,9 +283,7 @@ class IabHelper
     }
 
     private fun checkNotDisposed() {
-        if (mDisposed) {
-            throw IllegalStateException("IabHelper was disposed of, so it cannot be used.")
-        }
+        check(!mDisposed) { "IabHelper was disposed of, so it cannot be used." }
     }
 
     /**

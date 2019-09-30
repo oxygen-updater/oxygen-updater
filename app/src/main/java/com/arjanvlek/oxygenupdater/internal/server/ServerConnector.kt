@@ -286,10 +286,8 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                 if (serverStatus == null && online) {
                     this.serverStatus = ServerStatus(UNREACHABLE, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds)
                 } else {
-                    this.serverStatus = if (serverStatus != null)
-                        serverStatus
-                    else
-                        ServerStatus(NORMAL, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds)
+                    this.serverStatus = serverStatus
+                            ?: ServerStatus(NORMAL, BuildConfig.VERSION_NAME, automaticInstallationEnabled, pushNotificationsDelaySeconds)
                 }
 
                 if (settingsManager != null) {
@@ -313,7 +311,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         CollectionResponseExecutor<NewsItem>(ServerRequest.NEWS, Consumer { newsItems ->
             val databaseHelper = NewsDatabaseHelper(context)
 
-            if (newsItems != null && !newsItems!!.isEmpty() && Utils.checkNetworkConnection(context)) {
+            if (newsItems != null && newsItems.isNotEmpty() && Utils.checkNetworkConnection(context)) {
                 databaseHelper.saveNewsItems(newsItems)
             }
 
@@ -355,15 +353,15 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
     }
 
     private fun <T> findOneFromServerResponse(serverRequest: ServerRequest, body: JSONObject?, vararg params: Any): T? {
-        try {
+        return try {
             val response = performServerRequest(serverRequest, body, *params)
-            return if (response == null || response.isEmpty()) {
+            if (response == null || response.isEmpty()) {
                 null
             } else objectMapper.readValue<T>(response, objectMapper.typeFactory.constructType(serverRequest.returnClass))
 
         } catch (e: Exception) {
             logError(TAG, "JSON parse error", e)
-            return null
+            null
         }
 
     }

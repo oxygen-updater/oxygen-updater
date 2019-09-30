@@ -116,6 +116,8 @@ object Security {
             logError(TAG, "Invalid key", e)
         } catch (e: SignatureException) {
             logError(TAG, "Invalid key signature type", e)
+        } catch (t: Throwable) {
+            logError(TAG, "Error", t)
         }
 
         return false

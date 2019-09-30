@@ -41,7 +41,6 @@ import java.io.IOException
  */
 class DelayedPushNotificationDisplayer : JobService() {
 
-
     private val notificationBuilder: NotificationCompat.Builder
         get() = if (Build.VERSION.SDK_INT >= 26) {
             NotificationCompat.Builder(this, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
