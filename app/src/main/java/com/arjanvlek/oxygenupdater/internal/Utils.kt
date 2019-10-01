@@ -63,7 +63,7 @@ object Utils {
 
         val firmwareIsSupported = (oemFingerPrint != NO_OXYGEN_OS && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS) && oxygenOsVersion != NO_OXYGEN_OS)
 
-        if (devices == null || devices.isEmpty()) {
+        if (devices.isNullOrEmpty()) {
             // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
             return firmwareIsSupported
         }
@@ -78,7 +78,7 @@ object Utils {
     fun formatDateTime(context: Context, dateTimeString: String?): String? {
         var dateTimeString = dateTimeString
         try {
-            if (dateTimeString == null || dateTimeString.isEmpty()) {
+            if (dateTimeString.isNullOrEmpty()) {
                 return context.getString(R.string.device_information_unknown)
             }
             dateTimeString = dateTimeString.replace(" ", "T")

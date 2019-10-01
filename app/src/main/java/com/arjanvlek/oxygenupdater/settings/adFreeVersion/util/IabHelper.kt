@@ -347,7 +347,7 @@ class IabHelper
         try {
             logDebug("Constructing buy intent for $sku, item type: $itemType")
             val buyIntentBundle: Bundle
-            if (oldSkus == null || oldSkus.isEmpty()) {
+            if (oldSkus.isNullOrEmpty()) {
                 // Purchasing a new item or subscription re-signup
                 buyIntentBundle = mService!!.getBuyIntent(3, mContext!!.packageName, sku, itemType,
                         extraData)

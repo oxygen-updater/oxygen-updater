@@ -340,7 +340,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                                                    vararg params: Any): List<T> {
         return try {
             val response = performServerRequest(serverRequest, body, *params)
-            if (response == null || response.isEmpty()) {
+            if (response.isNullOrEmpty()) {
                 ArrayList()
             } else objectMapper.readValue(response, objectMapper.typeFactory
                     .constructCollectionType(List::class.java, serverRequest.returnClass))
@@ -355,7 +355,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
     private fun <T> findOneFromServerResponse(serverRequest: ServerRequest, body: JSONObject?, vararg params: Any): T? {
         return try {
             val response = performServerRequest(serverRequest, body, *params)
-            if (response == null || response.isEmpty()) {
+            if (response.isNullOrEmpty()) {
                 null
             } else objectMapper.readValue<T>(response, objectMapper.typeFactory.constructType(serverRequest.returnClass))
 

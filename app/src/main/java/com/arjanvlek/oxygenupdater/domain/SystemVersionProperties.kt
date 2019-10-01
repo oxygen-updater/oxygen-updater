@@ -100,7 +100,7 @@ class SystemVersionProperties {
 
     @Throws(IOException::class)
     private fun readBuildPropItem(itemKeys: String, buildProperties: String?, logText: String?): String {
-        if (buildProperties == null || buildProperties.isEmpty()) {
+        if (buildProperties.isNullOrEmpty()) {
             return NO_OXYGEN_OS
         }
 

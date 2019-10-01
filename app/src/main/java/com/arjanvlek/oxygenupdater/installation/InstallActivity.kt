@@ -116,10 +116,10 @@ class InstallActivity : SupportActionBarActivity() {
         switchView(R.layout.fragment_choose_install_method)
 
         val automaticInstallCard = findViewById<MaterialCardView>(R.id.automaticInstallCard)
-        automaticInstallCard.setOnCheckedChangeListener { _, _ -> openAutomaticInstallOptionsSelection() }
+        automaticInstallCard.setOnClickListener { openAutomaticInstallOptionsSelection() }
 
         val manualInstallCard = findViewById<MaterialCardView>(R.id.manualInstallCard)
-        manualInstallCard.setOnCheckedChangeListener { _, _ -> openInstallGuide() }
+        manualInstallCard.setOnClickListener { openInstallGuide() }
 
     }
 
@@ -204,9 +204,7 @@ class InstallActivity : SupportActionBarActivity() {
             logInstallationStart(application, currentOSVersion, targetOSVersion, currentOSVersion,
                     object : Worker {
                         override fun start() {
-                            FunctionalAsyncTask<Void, Void, String>(object : Worker {
-                                override fun start() {}
-                            }, Function {
+                            FunctionalAsyncTask<Void, Void, String>(Worker.NOOP, Function {
                                 return@Function try {
                                     settingsManager!!.savePreference(SettingsManager
                                             .PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)

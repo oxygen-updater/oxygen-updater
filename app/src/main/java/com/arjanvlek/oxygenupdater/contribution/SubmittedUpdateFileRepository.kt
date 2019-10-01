@@ -48,7 +48,7 @@ class SubmittedUpdateFileRepository(context: Context) : SQLiteOpenHelper(context
     }
 
     fun isFileAlreadySubmitted(filename: String?): Boolean {
-        return if (filename == null || filename.isEmpty()) {
+        return if (filename.isNullOrEmpty()) {
             false
         } else DatabaseUtils.queryNumEntries(
                 readableDatabase,

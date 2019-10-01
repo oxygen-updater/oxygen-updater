@@ -74,7 +74,7 @@ object UpdateInstaller {
         addRecoveryCommand(recoveryCommands, INSTALL + downloadPath)
 
         // Install the additional zip if it is selected.
-        if (additionalZipFilePath != null && !additionalZipFilePath.isEmpty()) {
+        if (!additionalZipFilePath.isNullOrEmpty()) {
             addRecoveryNewLine(recoveryCommands)
             addRecoveryText(recoveryCommands, context.getString(R.string.install_recovery_installing_additional_zip))
             addRecoveryCommand(recoveryCommands, INSTALL + additionalZipFilePath)
@@ -148,7 +148,7 @@ object UpdateInstaller {
 
         val commandsOutput = Shell.SU.run(commands)
 
-        if (commandsOutput == null || commandsOutput.isEmpty() || commandsOutput[0] != TEXT_SUCCESS) {
+        if (commandsOutput.isNullOrEmpty() || commandsOutput[0] != TEXT_SUCCESS) {
             if (context != null) {
                 throw UpdateInstallationException(context.getString(R.string.install_error_write_script_failed))
             } else {

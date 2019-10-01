@@ -752,7 +752,7 @@ class DownloadService : IntentService(TAG) {
     }
 
     private fun calculateAverageBytesDownloadedInSecond(measurements: List<Double>?): Double {
-        return if (measurements == null || measurements.isEmpty()) {
+        return if (measurements.isNullOrEmpty()) {
             0.0
         } else {
             var totalBytesDownloadedInSecond = 0.0
@@ -893,7 +893,7 @@ class DownloadService : IntentService(TAG) {
         val settingsManager = SettingsManager(applicationContext)
         val serializedStateHistory = settingsManager.getPreference<String?>(PROPERTY_DOWNLOADER_STATE_HISTORY, null)
 
-        return if (serializedStateHistory == null || serializedStateHistory.isEmpty()) {
+        return if (serializedStateHistory.isNullOrEmpty()) {
             ArrayList()
         } else StreamSupport.stream(listOf(*serializedStateHistory.split(",".toRegex())
                 .dropLastWhile { it.isEmpty() }.toTypedArray()))
