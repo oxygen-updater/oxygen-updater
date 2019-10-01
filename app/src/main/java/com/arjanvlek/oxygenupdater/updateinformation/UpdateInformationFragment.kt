@@ -228,7 +228,7 @@ class UpdateInformationFragment : AbstractFragment() {
                 }
 
                 try {
-                    helper.queryInventoryAsync(object : IabHelper.QueryInventoryFinishedListener {
+                    helper.queryInventoryAsync(true, listOf(SKU_AD_FREE), null, object : IabHelper.QueryInventoryFinishedListener {
                         override fun onQueryInventoryFinished(result: IabResult, inv: Inventory?) {
                             if (!result.isSuccess) {
                                 // Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
