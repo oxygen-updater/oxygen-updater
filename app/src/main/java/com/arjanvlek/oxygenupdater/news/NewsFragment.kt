@@ -13,9 +13,6 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
-import com.arjanvlek.oxygenupdater.views.AlphaInAnimationAdapter
-import com.arjanvlek.oxygenupdater.views.MainActivity
-import com.arjanvlek.oxygenupdater.views.NewsAdapter
 import java8.util.function.Consumer
 
 class NewsFragment : AbstractFragment() {

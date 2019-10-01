@@ -12,7 +12,6 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NavUtils
-import androidx.core.util.Consumer
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -30,7 +29,7 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_D
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD_ID
 import com.arjanvlek.oxygenupdater.views.MainActivity.Companion.PERMISSION_REQUEST_CODE
 import com.arjanvlek.oxygenupdater.views.MainActivity.Companion.VERIFY_FILE_PERMISSION
-
+import java8.util.function.Consumer
 
 class SetupActivity : AppCompatActivity() {
     private var step3Fragment: Fragment? = null
@@ -50,7 +49,7 @@ class SetupActivity : AppCompatActivity() {
 
         if (!settingsManager!!.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             val applicationData = application as ApplicationData
-            applicationData.getServerConnector().getDevices(java8.util.function.Consumer { result ->
+            applicationData.getServerConnector().getDevices(Consumer { result ->
                 if (!Utils.isSupportedDevice(applicationData.mSystemVersionProperties!!, result)) {
                     displayUnsupportedDeviceMessage()
                 }

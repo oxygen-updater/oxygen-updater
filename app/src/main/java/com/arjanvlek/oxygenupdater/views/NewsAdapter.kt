@@ -37,6 +37,7 @@ import com.google.android.gms.ads.AdListener
 import java8.util.function.Function
 import org.joda.time.LocalDateTime
 import java.net.MalformedURLException
+import java8.util.function.Consumer
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -92,7 +93,7 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
 			imageCache.put(newsItem.id!!.toInt(), image)
 
 			return@Function image
-        }, java8.util.function.Consumer { image ->
+        }, Consumer { image ->
             if ((context == null) or (activity == null)) {
                 return@Consumer
             }

@@ -21,7 +21,6 @@ import com.arjanvlek.oxygenupdater.settings.SettingsFragment.InAppPurchaseDelega
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DEVICE_ID
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD_ID
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.ALREADY_BOUGHT
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.AVAILABLE
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.UNAVAILABLE

@@ -116,7 +116,7 @@ class NewsActivity : SupportActionBarActivity() {
 
                     // Display the name of the author of the article
                     val authorView = findViewById<TextView>(R.id.newsAuthor)
-                    if (newsItem.authorName != null && newsItem.authorName!!.isNotEmpty()) {
+                    if (newsItem.authorName != null && newsItem.authorName?.isNotEmpty()) {
                         authorView.visibility = View.VISIBLE
                         authorView.text = getString(R.string.news_author, newsItem.authorName)
                     } else {
