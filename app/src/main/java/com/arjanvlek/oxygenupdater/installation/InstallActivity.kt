@@ -174,7 +174,7 @@ class InstallActivity : SupportActionBarActivity() {
 
         startInstallButton.setOnClickListener {
 
-            val additionalZipFilePath = settingsManager!!.getPreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, "")
+            val additionalZipFilePath = settingsManager!!.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 
             if (settingsManager!!.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
                 Toast.makeText(application, R.string.install_guide_zip_file_missing, LENGTH_LONG).show()
@@ -224,8 +224,8 @@ class InstallActivity : SupportActionBarActivity() {
                                 } catch (e: UpdateInstallationException) {
                                     e.message
                                 } catch (e: InterruptedException) {
-                                    logWarning(TAG, "Error installing update", e);
-                                    getString(R.string.install_temporary_error);
+                                    logWarning(TAG, "Error installing update", e)
+                                    getString(R.string.install_temporary_error)
                                 }
                             }, Consumer { errorMessage ->
                                 if (errorMessage != null) {
@@ -391,7 +391,7 @@ class InstallActivity : SupportActionBarActivity() {
         })
     }
 
-    private inner class InstallGuideSectionsPagerAdapter internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private inner class InstallGuideSectionsPagerAdapter internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.

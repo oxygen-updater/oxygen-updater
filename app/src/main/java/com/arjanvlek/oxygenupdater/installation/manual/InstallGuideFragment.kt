@@ -154,9 +154,7 @@ class InstallGuideFragment : Fragment() {
 
         if (installGuidePage.useCustomImage!!) {
             // Fetch the custom image from the server.
-            FunctionalAsyncTask<Void, Void, Bitmap>(object : Worker {
-                override fun start() { }
-            }, Function {
+            FunctionalAsyncTask<Void, Void, Bitmap>(Worker.NOOP, Function {
                 var image: Bitmap?
 
                 try {

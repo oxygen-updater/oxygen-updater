@@ -46,25 +46,21 @@ class BottomSheetPreference : Preference {
     var secondaryValue: Any? = null
         private set
 
-    private var settingsManager: SettingsManager? = null
+    private lateinit var settingsManager: SettingsManager
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-
         init(context, attrs, defStyleAttr, defStyleRes)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-
         init(context, attrs, defStyleAttr, 0)
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-
         init(context, attrs, 0, 0)
     }
 
     constructor(context: Context) : super(context) {
-
         init(context, null, 0, 0)
     }
 
@@ -133,7 +129,7 @@ class BottomSheetPreference : Preference {
 
         dialogItemLayout.setOnClickListener { setValueIndex(index) }
 
-        val currentValue = settingsManager!!.getPreference(key, "")
+        val currentValue = settingsManager.getPreference(key, "")
 
         if (item.value == currentValue) {
             markItemSelected(index)
@@ -267,7 +263,7 @@ class BottomSheetPreference : Preference {
             persistString(newValue)
 
             if (newSecondaryValue != null) {
-                settingsManager!!.savePreference(secondaryKey!!, newSecondaryValue)
+                settingsManager.savePreference(secondaryKey!!, newSecondaryValue)
             }
 
             if (changed) {
@@ -309,7 +305,7 @@ class BottomSheetPreference : Preference {
 
     override fun onSetInitialValue(defaultValue: Any?) {
         val newValue = getPersistedString(defaultValue as String?)
-        val newSecondaryValue = settingsManager!!.getPreference<Any>(secondaryKey!!, "")
+        val newSecondaryValue = settingsManager.getPreference<Any?>(secondaryKey!!, null)
 
         setValues(newValue, newSecondaryValue)
     }

@@ -15,10 +15,9 @@ import android.os.Environment
 import android.os.Handler
 import android.os.StatFs
 import android.util.Pair
-
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-
+import com.arjanvlek.oxygenupdater.ApplicationData.Companion.APP_USER_AGENT
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.Utils
@@ -27,9 +26,16 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING
+import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.ONGOING
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
+import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOADER_STATE
+import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOADER_STATE_HISTORY
+import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_ID
+import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_PROGRESS
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
-
 import com.downloader.Error
 import com.downloader.OnDownloadListener
 import com.downloader.PRDownloader
@@ -37,30 +43,17 @@ import com.downloader.PRDownloaderConfig
 import com.downloader.Priority
 import com.downloader.Status
 import com.downloader.internal.DownloadRequestQueue
-
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
-import org.joda.time.format.DateTimeFormat
-
 import java8.util.function.Function
 import java8.util.stream.Collectors
 import java8.util.stream.StreamSupport
-
+import org.joda.time.DateTimeZone
+import org.joda.time.LocalDateTime
+import org.joda.time.format.DateTimeFormat
 import java.io.File
-import java.util.LinkedList
+import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.collections.ArrayList
-
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.APP_USER_AGENT
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.ONGOING
-import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOADER_STATE
-import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOADER_STATE_HISTORY
-import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_ID
-import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_DOWNLOAD_PROGRESS
 
 /**
  * DownloadService handles the downloading and MD5 verification of OxygenOS updates.
@@ -898,7 +891,7 @@ class DownloadService : IntentService(TAG) {
     // Convert saved history from SharedPreferences back to format storable in this class.
     private fun deserializeExecutedStateTransitions(): List<Pair<LocalDateTime, String>> {
         val settingsManager = SettingsManager(applicationContext)
-        val serializedStateHistory = settingsManager.getPreference(PROPERTY_DOWNLOADER_STATE_HISTORY, "")
+        val serializedStateHistory = settingsManager.getPreference<String?>(PROPERTY_DOWNLOADER_STATE_HISTORY, null)
 
         return if (serializedStateHistory == null || serializedStateHistory.isEmpty()) {
             ArrayList()

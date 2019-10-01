@@ -60,7 +60,11 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_O
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_CHECKED_DATE
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_UPDATE_METHOD_ID
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.*
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabResult
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Inventory
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.MainActivity
@@ -305,7 +309,8 @@ class UpdateInformationFragment : AbstractFragment() {
         })
 
         serverConnector?.getInAppMessages(online, Consumer { banners ->
-            displayServerMessageBars(banners, adsAreSupported) }, Consumer { error ->
+            displayServerMessageBars(banners, adsAreSupported)
+        }, Consumer { error ->
             when (error) {
                 SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(instance)
                 APP_OUTDATED_ERROR -> activity?.let { Dialogs.showAppOutdatedError(instance, it) }

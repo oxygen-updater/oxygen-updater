@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -13,6 +14,8 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
+import com.arjanvlek.oxygenupdater.views.AlphaInAnimationAdapter
+import com.arjanvlek.oxygenupdater.views.NewsAdapter
 import java8.util.function.Consumer
 
 class NewsFragment : AbstractFragment() {
@@ -49,8 +52,8 @@ class NewsFragment : AbstractFragment() {
         }
         val deviceId = getSettingsManager().getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = getSettingsManager().getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        serverConnector.getNews(getApplicationData(), deviceId, updateMethodId, Consumer {
-            newsItems -> displayNewsItems(view, newsItems, callback)
+        serverConnector.getNews(getApplicationData(), deviceId, updateMethodId, Consumer { newsItems ->
+            displayNewsItems(view, newsItems, callback)
         })
     }
 
@@ -58,10 +61,9 @@ class NewsFragment : AbstractFragment() {
         val newsContainer = view.findViewById<RecyclerView>(R.id.newsContainer)
 
         // animate items when they load
-        // TODO (FIX)
-        /*val alphaInAnimationAdapter = AlphaInAnimationAdapter(NewsAdapter(context, activity as MainActivity?, newsItems))
+        val alphaInAnimationAdapter = AlphaInAnimationAdapter(NewsAdapter(context, activity as AppCompatActivity?, newsItems))
         alphaInAnimationAdapter.setFirstOnly(false)
-        newsContainer.adapter = alphaInAnimationAdapter*/
+        newsContainer.adapter = alphaInAnimationAdapter
         newsContainer.layoutManager = LinearLayoutManager(context)
 
         if (!isAdded) {

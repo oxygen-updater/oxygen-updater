@@ -125,12 +125,12 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                 if (settingsManager!!.checkIfOfflineUpdateDataIsAvailable()) {
                     updateData = UpdateData()
                     updateData.id = settingsManager.getPreference(PROPERTY_OFFLINE_ID, 0L)
-                    updateData.versionNumber = settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_NAME, "")
+                    updateData.versionNumber = settingsManager.getPreference<String?>(PROPERTY_OFFLINE_UPDATE_NAME, null)
                     updateData.downloadSize = settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L)
-                    updateData.description = settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, "")
-                    updateData.downloadUrl = settingsManager.getPreference(PROPERTY_OFFLINE_DOWNLOAD_URL, "")
+                    updateData.description = settingsManager.getPreference<String?>(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null)
+                    updateData.downloadUrl = settingsManager.getPreference<String?>(PROPERTY_OFFLINE_DOWNLOAD_URL, null)
                     updateData.isUpdateInformationAvailable = settingsManager.getPreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false)
-                    updateData.filename = settingsManager.getPreference(PROPERTY_OFFLINE_FILE_NAME, "")
+                    updateData.filename = settingsManager.getPreference<String?>(PROPERTY_OFFLINE_FILE_NAME, null)
                     updateData.isSystemIsUpToDate = settingsManager.getPreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
                     callback.accept(updateData)
                 } else {
@@ -311,7 +311,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         CollectionResponseExecutor<NewsItem>(ServerRequest.NEWS, Consumer { newsItems ->
             val databaseHelper = NewsDatabaseHelper(context)
 
-            if (newsItems != null && newsItems.isNotEmpty() && Utils.checkNetworkConnection(context)) {
+            if (!newsItems.isNullOrEmpty() && Utils.checkNetworkConnection(context)) {
                 databaseHelper.saveNewsItems(newsItems)
             }
 
@@ -474,4 +474,3 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         private val TAG = "ServerConnector"
     }
 }
-

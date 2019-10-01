@@ -116,7 +116,7 @@ class NewsActivity : SupportActionBarActivity() {
 
                     // Display the name of the author of the article
                     val authorView = findViewById<TextView>(R.id.newsAuthor)
-                    if (newsItem.authorName != null && newsItem.authorName?.isNotEmpty()) {
+                    if (!newsItem.authorName.isNullOrEmpty()) {
                         authorView.visibility = View.VISIBLE
                         authorView.text = getString(R.string.news_author, newsItem.authorName)
                     } else {
@@ -143,20 +143,20 @@ class NewsActivity : SupportActionBarActivity() {
                     if (application != null && application is ApplicationData && Utils
                                     .checkNetworkConnection(application)) {
                         (application as ApplicationData).mServerConnector?.markNewsItemAsRead(newsItem.id!!, Consumer { result ->
-                                    if (result != null && !result.isSuccess) {
-                                        logError("NewsActivity", NetworkException("Error marking news item as read on the server:" + result.errorMessage!!))
-                                    }
+                            if (result != null && !result.isSuccess) {
+                                logError("NewsActivity", NetworkException("Error marking news item as read on the server:" + result.errorMessage!!))
+                            }
 
-                                    // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
-                                    if (intent.getBooleanExtra(INTENT_START_WITH_AD, false) && !SettingsManager(application).getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
-                                        val interstitialAd = InterstitialAd(application)
-                                        interstitialAd.adUnitId = getString(R.string.news_ad_unit_id)
-                                        interstitialAd.loadAd(ApplicationData.buildAdRequest())
+                            // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
+                            if (intent.getBooleanExtra(INTENT_START_WITH_AD, false) && !SettingsManager(application).getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
+                                val interstitialAd = InterstitialAd(application)
+                                interstitialAd.adUnitId = getString(R.string.news_ad_unit_id)
+                                interstitialAd.loadAd(ApplicationData.buildAdRequest())
 
-                                        // The ad will be shown after 10 seconds.
-                                        Handler().postDelayed({ interstitialAd.show() }, 10000)
-                                    }
-                                })
+                                // The ad will be shown after 10 seconds.
+                                Handler().postDelayed({ interstitialAd.show() }, 10000)
+                            }
+                        })
                     }
                 })
     }

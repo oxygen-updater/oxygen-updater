@@ -25,7 +25,13 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.ALREADY
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.AVAILABLE
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus.UNAVAILABLE
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.*
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.GooglePlayBillingException
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabResult
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Inventory
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import java8.util.function.Consumer
 import org.joda.time.LocalDateTime

@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import java8.util.function.Consumer
 import java8.util.stream.Collectors
 import java8.util.stream.StreamSupport
 import java.util.*
@@ -88,7 +87,7 @@ class NewsDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     fun saveNewsItems(newsItems: List<NewsItem>?) {
-        if (newsItems != null && newsItems.isNotEmpty()) {
+        if (!newsItems.isNullOrEmpty()) {
             val newsItemsIds = StreamSupport
                     .stream(newsItems)
                     .map<Long> { it.id }

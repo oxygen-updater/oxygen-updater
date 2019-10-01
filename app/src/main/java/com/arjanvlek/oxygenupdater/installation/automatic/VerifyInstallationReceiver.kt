@@ -41,8 +41,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
                 val targetOxygenOSVersion = settingsManager.getPreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, "")
                 val currentOxygenOSVersion = properties.oxygenOSOTAVersion
 
-                if (oldOxygenOSVersion.isEmpty() || targetOxygenOSVersion.isEmpty() || currentOxygenOSVersion
-                                .isEmpty()) {
+                if (oldOxygenOSVersion.isEmpty() || targetOxygenOSVersion.isEmpty() || currentOxygenOSVersion.isEmpty()) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_unable_to_verify))
                     logFailure(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_CHECK_FAILED")
                 } else if (currentOxygenOSVersion == oldOxygenOSVersion) {

@@ -74,8 +74,7 @@ class MainActivity : AppCompatActivity(), OnMenuItemClickListener {
         // Supported device check
         if (!settingsManager!!.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             val application = application as ApplicationData
-            application.getServerConnector().getDevices(Consumer {
-                result ->
+            application.getServerConnector().getDevices(Consumer { result ->
                 if (!Utils.isSupportedDevice(application.getSystemVersionProperties(), result)) {
                     displayUnsupportedDeviceMessage()
                 }

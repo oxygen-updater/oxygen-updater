@@ -222,7 +222,7 @@ class IabHelper
         serviceIntent.setPackage("com.android.vending")
         val intentServices = mContext!!.packageManager
                 .queryIntentServices(serviceIntent, 0)
-        if (intentServices != null && intentServices.isNotEmpty()) {
+        if (!intentServices.isNullOrEmpty()) {
             // service available to handle that Intent
             mContext!!.bindService(serviceIntent, mServiceConn!!, Context.BIND_AUTO_CREATE)
         } else {

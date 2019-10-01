@@ -83,7 +83,8 @@ class UpdateData : Parcelable, FormattableUpdateData {
         get() = description!!
 
     companion object {
-        @JvmField val CREATOR: Parcelable.Creator<UpdateData> = object : Parcelable.Creator<UpdateData> {
+        @JvmField
+        val CREATOR: Parcelable.Creator<UpdateData> = object : Parcelable.Creator<UpdateData> {
 
             override fun createFromParcel(`in`: Parcel): UpdateData {
                 val data = UpdateData()

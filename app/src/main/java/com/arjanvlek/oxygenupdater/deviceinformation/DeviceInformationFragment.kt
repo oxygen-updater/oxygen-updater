@@ -16,8 +16,8 @@ import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
-import java8.util.stream.StreamSupport
 import java8.util.function.Consumer
+import java8.util.stream.StreamSupport
 
 class DeviceInformationFragment : AbstractFragment() {
     private var rootView: NestedScrollView? = null
@@ -38,8 +38,7 @@ class DeviceInformationFragment : AbstractFragment() {
         }
 
         displayDeviceInformation()
-        getApplicationData().getServerConnector().getDevices(Consumer { devices -> this@DeviceInformationFragment.displayFormattedDeviceName(devices) }
-        )
+        getApplicationData().getServerConnector().getDevices(Consumer { devices -> displayFormattedDeviceName(devices) })
     }
 
     private fun displayFormattedDeviceName(devices: List<Device>?) {
@@ -162,7 +161,7 @@ class DeviceInformationFragment : AbstractFragment() {
     }
 
     companion object {
-        private val TAG = "DeviceInformationFragment"
+        private const val TAG = "DeviceInformationFragment"
     }
 
 }

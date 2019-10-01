@@ -166,7 +166,7 @@ class SettingsFragment : PreferenceFragmentCompat(), OnPreferenceChangeListener 
      * @param devices retrieved from the server
      */
     private fun populateDeviceSettings(devices: List<Device>?) {
-        if (devices != null && devices.isNotEmpty()) {
+        if (!devices.isNullOrEmpty()) {
             devicePreference!!.isEnabled = true
             val systemVersionProperties = application!!.mSystemVersionProperties
 

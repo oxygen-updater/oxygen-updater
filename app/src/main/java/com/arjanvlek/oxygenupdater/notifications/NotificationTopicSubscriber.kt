@@ -20,11 +20,11 @@ object NotificationTopicSubscriber {
         val settingsManager = SettingsManager(data.applicationContext)
         val serverConnector = data.getServerConnector()
 
-        val oldTopic = settingsManager.getPreference(PROPERTY_NOTIFICATION_TOPIC, "")
+        val oldTopic = settingsManager.getPreference<String?>(PROPERTY_NOTIFICATION_TOPIC, null)
 
         if (oldTopic == null) {
             serverConnector.getDevices(Consumer { devices ->
-                serverConnector.getAllUpdateMethods( Consumer { updateMethods ->
+                serverConnector.getAllUpdateMethods(Consumer { updateMethods ->
                     // If the topic is not saved (App Version 1.0.0 did not do this), unsubscribe from all possible topics first to prevent duplicate / wrong notifications.
                     for (method in updateMethods) {
                         for (device in devices) {

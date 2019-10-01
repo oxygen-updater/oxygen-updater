@@ -32,28 +32,29 @@ import com.arjanvlek.oxygenupdater.news.NewsActivity
 import com.arjanvlek.oxygenupdater.news.NewsActivity.Companion.INTENT_NEWS_ITEM_ID
 import com.arjanvlek.oxygenupdater.news.NewsItem
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsViewHolder
 import com.google.android.gms.ads.AdListener
+import java8.util.function.Consumer
 import java8.util.function.Function
 import org.joda.time.LocalDateTime
 import java.net.MalformedURLException
-import java8.util.function.Consumer
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
-class NewsAdapter(private val context: Context?, private val activity: AppCompatActivity?, private val newsItemList: List<NewsItem>) : Adapter<NewsViewHolder>() {
+class NewsAdapter(private val context: Context?, private val activity: AppCompatActivity?, private val newsItemList: List<NewsItem>) : Adapter<ViewHolder>() {
     private val settingsManager: SettingsManager = SettingsManager(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
 
         return NewsViewHolder(inflater.inflate(R.layout.news_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder as NewsViewHolder
+
         // Logic to set the title, subtitle and image of each individual news item.
-		val locale = Locale.locale
+        val locale = Locale.locale
 
         val newsItem = newsItemList[position]
 
@@ -80,38 +81,38 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
             }
         }, Function {
             if (newsItem.id == null) {
-				return@Function null
-			}
+                return@Function null
+            }
 
-			var image = imageCache.get(newsItem.id!!.toInt())
+            var image = imageCache.get(newsItem.id!!.toInt())
 
-			if (image != null) {
-				return@Function image
-			}
+            if (image != null) {
+                return@Function image
+            }
 
-			image = doGetImage(newsItem.imageUrl)
-			imageCache.put(newsItem.id!!.toInt(), image)
+            image = doGetImage(newsItem.imageUrl)
+            imageCache.put(newsItem.id!!.toInt(), image)
 
-			return@Function image
+            return@Function image
         }, Consumer { image ->
             if ((context == null) or (activity == null)) {
                 return@Consumer
             }
 
             // If a fragment is not attached, do not crash the entire application but return an empty view.
-			try {
-				context?.resources
-			} catch (e: Exception) {
-				return@Consumer
-			}
+            try {
+                context?.resources
+            } catch (e: Exception) {
+                return@Consumer
+            }
 
             if (image == null) {
-				val errorImage = ResourcesCompat.getDrawable(context!!.resources, R.drawable.image,
+                val errorImage = ResourcesCompat.getDrawable(context!!.resources, R.drawable.image,
                         null)
-				holder.image.setImageDrawable(errorImage)
-			} else {
-				holder.image.setImageBitmap(image)
-			}
+                holder.image.setImageDrawable(errorImage)
+            } else {
+                holder.image.setImageBitmap(image)
+            }
 
             holder.image.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
             holder.image.visibility = View.VISIBLE

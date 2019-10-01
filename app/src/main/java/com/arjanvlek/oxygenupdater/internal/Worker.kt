@@ -12,6 +12,8 @@ interface Worker {
     fun start()
 
     companion object {
-        val NOOP = { }
+        val NOOP = object : Worker {
+            override fun start() {}
+        }
     }
 }
