@@ -43,7 +43,6 @@ internal object MD5 {
     }
 
     private fun calculateMD5(updateFile: File, retryCount: Int): String? {
-        var retryCount = retryCount
         val digest: MessageDigest
         try {
             digest = MessageDigest.getInstance("MD5")
@@ -52,9 +51,9 @@ internal object MD5 {
             return null
         }
 
-        val `is`: InputStream
+        val inputStream: InputStream
         try {
-            `is` = FileInputStream(updateFile)
+            inputStream = FileInputStream(updateFile)
         } catch (e: FileNotFoundException) {
             logError(TAG, "Exception while getting FileInputStream", e)
 
@@ -66,7 +65,7 @@ internal object MD5 {
                     logError(TAG, "Error while trying to re-verify file after 2 seconds", i)
                 }
 
-                calculateMD5(updateFile, ++retryCount)
+                calculateMD5(updateFile, retryCount + 1)
             } else {
                 null
             }
@@ -74,10 +73,11 @@ internal object MD5 {
 
         val buffer = ByteArray(8192)
         try {
-            do {
-                val read = `is`.read(buffer)
+            var read = inputStream.read(buffer)
+            while (read > 0) {
                 digest.update(buffer, 0, read)
-            } while (read > 0)
+                read = inputStream.read(buffer)
+            }
             val md5sum = digest.digest()
             val bigInt = BigInteger(1, md5sum)
             var output = bigInt.toString(16)
@@ -88,7 +88,7 @@ internal object MD5 {
             throw RuntimeException("Unable to process file for MD5", e)
         } finally {
             try {
-                `is`.close()
+                inputStream.close()
             } catch (e: IOException) {
                 logError(TAG, "Exception on closing MD5 input stream", e)
             }

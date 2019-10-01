@@ -401,14 +401,16 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                 out.close()
             }
 
-            val `in` = BufferedReader(InputStreamReader(urlConnection.inputStream))
+            val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
             val response = StringBuilder()
-            val inputLine = `in`.readLine()
-            do {
-                response.append(inputLine)
-            } while (inputLine != null)
 
-            `in`.close()
+            var inputLine = reader.readLine()
+            while (inputLine != null) {
+                response.append(inputLine)
+                inputLine = reader.readLine()
+            }
+
+            reader.close()
             val rawResponse = response.toString()
             logVerbose(TAG, "Response: $rawResponse")
             return rawResponse

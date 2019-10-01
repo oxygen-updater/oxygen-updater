@@ -31,7 +31,7 @@ object UpdateDescriptionParser {
 
             // First, loop through all lines and modify them were needed.
             // This consists of removing heading symbols, making list items, adding line separators and displaying link texts.
-            do {
+            while (currentLine != null) {
                 val element = UpdateDescriptionElement.of(currentLine)
                 var modifiedLine = StringBuilder(EMPTY_STRING)
 
@@ -89,14 +89,17 @@ object UpdateDescriptionParser {
                     ""
                 else
                     "\n")
-            } while (currentLine != null)
+
+                currentLine = reader.readLine()
+            }
+            reader.close()
 
             // Finally, loop through the modified update description and set formatting attributes for the headers and links.
             reader = BufferedReader(StringReader(modifiedUpdateDescription))
             result = SpannableString(modifiedUpdateDescription)
             currentLine = reader.readLine()
 
-            do {
+            while (currentLine != null) {
                 if (currentLine.isEmpty()) {
                     continue
                 }
@@ -124,8 +127,9 @@ object UpdateDescriptionParser {
                         // A link should be made clickable and must be displayed as a hyperlink.
                         result.setSpan(FormattedURLSpan(links[currentLine]!!), startPosition, endPosition, 0)
                 }
-            } while (currentLine != null)
-
+                currentLine = reader.readLine()
+            }
+            reader.close()
         } catch (e: Exception) {
             // If an error occurred, log it and return the original / unmodified update description
             logError(TAG, "Error parsing update description", e)
@@ -186,16 +190,19 @@ object UpdateDescriptionParser {
             // Finds the type of element of a modified line by looking it back up in the original text.
             @Throws(IOException::class)
             fun find(modifiedLine: String, originalText: String): UpdateDescriptionElement {
-                val currentLine = BufferedReader(StringReader(originalText)).readLine()
+                val reader = BufferedReader(StringReader(originalText))
+                var currentLine = reader.readLine()
 
                 // As almost all the modifications that are made are substrings, this means the original text should always contain the modified line.
                 // Then, the "of" function can be used with the belonging line to lookup the element type of the modified line.
                 // The only exception is the empty line, but it's no problem that one is returned as TEXT, because the empty line is not needed for SpannableString.
-                do {
+                while (currentLine != null) {
                     if (currentLine.contains(modifiedLine)) {
                         return of(currentLine)
                     }
-                } while (currentLine != null)
+                    currentLine = reader.readLine()
+                }
+                reader.close()
 
                 return TEXT
             }
