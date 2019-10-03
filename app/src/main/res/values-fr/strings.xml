@@ -297,7 +297,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="install_guide_zip_file_picker_title">"Sélectionnez un package root"</string>
 	<string name="install_guide_zip_file_missing">"Si vous voulez conserver votre appareil rooté vous devez spécifier au-dessus un package root"</string>
 
-	<!-— Device information strings -->
+	<!-- Device information strings -->
 	<string name="device_information_hardware_header">Matériel</string>
 	<string name="device_information_software_header">Logiciel</string>
 
