@@ -102,7 +102,7 @@
 	<string name="summary_privacy_policy">Voir en ligne</string>
 	<string name="summary_rate_app">Donner 5 étoiles</string>
 
-	<string name="label_buy_ad_free">Retirer les publicités</string>
+	<string name="label_buy_ad_free">Supprimer les publicités</string>
 	<string name="label_theme">Thème</string>
 	<string name="label_app_update_banner">Bannière signalant la disponibilité d\'une mise à jour de l\'application</string>
 	<string name="label_news_warning_banner">Bannières d\'articles et d\'avertissements</string>
@@ -126,7 +126,7 @@
 	<string name="settings_buy_button_not_possible">"Indisponible"</string>
 	<string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>
 
-	<string name="settings_contribute_label">Aider à améliorer l\'application</string>
+	<string name="settings_contribute_label">Aidez à améliorer l\'application</string>
 	<string name="settings_contribute_button">Contribuez</string>
 
 	<string name="settings_category_other">"Autres"</string>
@@ -141,7 +141,7 @@
 	<string name="settings_push_new_device">"Un nouvel appareil a été ajouté"</string>
 	<string name="settings_push_news">"Des articles sont publiés"</string>
 	<string name="settings_saved">"Vos réglages sont automatiquement sauvegardés."</string>
-	<string name="settings_saving">"Vos réglages sont en cours d'enregistrement. Si cela prend trop de temps vérifiez votre connexion à internet, quittez l'application et réessayez."</string>
+	<string name="settings_saving">"Vos réglages sont en cours d'enregistrement. Si cela prend trop de temps vérifiez votre connexion à Internet, quittez l'application et réessayez."</string>
 	<string name="settings_server_messages">"Montrer des messages dans l'application quand :"</string>
 	<string name="settings_other_options">"Autres options"</string>
 	<string name="settings_advanced_mode">"Mode avancé"</string>
@@ -159,7 +159,7 @@ Cela peut être utile quand vous :
 	<string name="faq">"FAQ"</string>
 	<string name="faq_menuitem">"Foire aux Questions"</string>
 	<string name="faq_no_network">"Pas de connexion"</string>
-	<string name="faq_no_network_text">"Vous avez besoin d'être connecté à internet pour voir la FAQ"</string>
+	<string name="faq_no_network_text">"Vous avez besoin d'être connecté à Internet pour voir la FAQ"</string>
 
 	<!-- First-time setup strings -->
 	<string name="setup">"Bienvenue"</string>
@@ -264,7 +264,7 @@ Votre appareil va redémarrer afin d'installer la mise à jour.
 — Le progrès du téléchargement va s'afficher dans l'application et dans votre barre de notifications.
 
 — Quand le téléchargement sera fini, vous verrez une notification avec le texte « Téléchargement fini ».
-Si une erreur de téléchargement s'est produite, ouvrez l'application et réessayez de télécharger l'application. Si cela ne fonctionne pas vérifiez que votre connexion internet fonctionne. Autrement, contactez le développeur de l'application.
+Si une erreur de téléchargement s'est produite, ouvrez l'application et réessayez de télécharger l'application. Si cela ne fonctionne pas vérifiez que votre connexion Internet fonctionne. Autrement, contactez le développeur de l'application.
 Vous pouvez faire cela en visitant la section « Mes applications » dans le Play Store."</string>
 	<string name="install_guide_page_2_title">"Entrez dans le mode Recovery."</string>
 	<string name="install_guide_page_2_text">"— Premièrement, éteignez votre appareil.
@@ -313,7 +313,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="device_information_patch_level_version">"Niveau du correctif de sécurité :"</string>
 	<string name="device_information_serial_number">"Numéro de série :"</string>
 	<string name="device_information_system_on_a_chip">"Système sur une puce (SoC) :"</string>
-	<string name="device_information_unknown">"inconnu"</string>
+	<string name="device_information_unknown">"Inconnu"</string>
 	<string name="device_information_your_device">"Votre appareil :"</string>
 
 	<!-- About screen strings -->
@@ -324,8 +324,8 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="about_version">"Version : %1$s"</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">"Nouveau appareil ajouté ! Le %1$s est maintenant disponible !"</string>
-	<string name="notification_new_device_short">"Ouvrez l'application pour choisir ce appareil."</string>
+	<string name="notification_new_device">"Nouvel appareil ajouté ! Le %1$s est maintenant disponible !"</string>
+	<string name="notification_new_device_short">"Ouvrez l'application pour choisir cet appareil."</string>
 	<string name="notification_no_notification_support">"Installez ou mettez à jour les services Google Play pour activer les notifications push."</string>
 	<string name="notification_version_title">"Mise à jour système disponible"</string>
 	<string name="notification_version">"%1$s est maintenant disponible pour le %2$s !"</string>
@@ -368,13 +368,13 @@ Un guide d'installation va s'afficher sur votre écran. Ecrivez sur papier les i
 	<string name="help_change_settings_text">"Vous pouvez changer vos réglages en appuyant sur les trois petits points en haut à droite de l'écran puis en sélectionnant Réglages.
 Vous pouvez changer les réglages suivants :
 
-• appareil et méthode de mise à jour
+• Appareil et méthode de mise à jour
 • Notifications push
 • Notifications dans l'application
 • Réglages relatifs à la vie privée (upload des fichiers log)
 
 Utilisez les switchs pour changer les réglages.
-Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les menus déroulants. S'ils ne sont pas visibles vérifiez votre connexion internet et rouvrez l'écran des réglages."</string>
+Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les menus déroulants. S'ils ne sont pas visibles vérifiez votre connexion Internet et rouvrez l'écran des réglages."</string>
 
 	<!-- News strings -->
 	<string name="news">"Articles"</string>
@@ -384,8 +384,8 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_load_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton « Réessayer » pour ouvrir l'article."</string>
 
 	<!-- Contribute strings -->
-	<string name="contribute">Devenir un contributeur</string>
-	<string name="contribute_title">Aider à améliorer Oxygen Updater</string>
+	<string name="contribute">Devenez un contributeur</string>
+	<string name="contribute_title">Aidez à améliorer Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater a besoin de vous ! Afin de vous donner les dernières mises à jour disponibles, nous avons besoin de connaître les noms des fichiers de mise à jour. Ceux-ci sont présents sur votre téléphone quand une mise à jour arrive depuis le système FOTA de OnePlus. \n\nComment puis-je aider !\n\nOxygen Updater peut automatiquement soumettre les noms de fichiers de mise à jour aux administrateurs. Cela utilisera une petite quantité de données et un peu de batterie. Tout ce que vous avez à faire est attendre environ 15 minutes avant d\'installer les mises à jour provenant du système FOTA de OnePlus jusqu\'à ce que vous receviez une notification disant que le nom du fichier a bien été soumis.</string>
 	<string name="contribute_image_description">Téléverser des fichiers sur le serveur de l\'application</string>
 	<string name="contribute_agree">J\'aimerais aider et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
@@ -400,10 +400,10 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="error_app_outdated">"Oh non !"</string>
 	<string name="error_app_outdated_message">"Cette version de l'application est obsolète. Il est temps de la mettre à jour ! Cliquez sur le bouton « Play Store » en dessous, puis sélectionnez « Mettre à jour »."</string>
 	<string name="error_app_requires_network_connection">"Pas de connexion"</string>
-	<string name="error_app_requires_network_connection_message">"Erreur de connexion au serveur. Veuillez vous assurer que votre connexion internet fonctionne. L'application va maintenant se fermer."</string>
+	<string name="error_app_requires_network_connection_message">"Erreur de connexion au serveur. Veuillez vous assurer que votre connexion Internet fonctionne. L'application va maintenant se fermer."</string>
 	<string name="error_button_retry">"Réessayer"</string>
 	<string name="error_exit_button_text">"Quitter"</string>
-	<string name="error_no_internet_connection">"Pas de connexion."</string>
+	<string name="error_no_Internet_connection">"Pas de connexion."</string>
 	<string name="error_maintenance">"Maintenance du serveur"</string>
 	<string name="error_maintenance_message">"Veuillez patienter. Le serveur sera disponible bientôt."</string>
 	<string name="error_push_failure">"Échec de l'activation des notifications. Veuillez fermer entièrement l'application et attendre quelques minutes, puis relancez-la."</string>
