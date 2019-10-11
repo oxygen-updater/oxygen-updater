@@ -389,7 +389,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="contribute_explanation">Oxygen Updater a besoin de vous ! Afin de vous donner les dernières mises à jour disponibles, nous avons besoin de connaître les noms des fichiers de mise à jour. Ceux-ci sont présents sur votre téléphone quand une mise à jour arrive depuis le système FOTA de OnePlus. \n\nComment puis-je aider !\n\nOxygen Updater peut automatiquement soumettre les noms de fichiers de mise à jour aux administrateurs. Cela utilisera une petite quantité de données et un peu de batterie. Tout ce que vous avez à faire est attendre environ 15 minutes avant d\'installer les mises à jour provenant du système FOTA de OnePlus jusqu\'à ce que vous receviez une notification disant que le nom du fichier a bien été soumis.</string>
 	<string name="contribute_image_description">Téléverser des fichiers sur le serveur de l\'application</string>
 	<string name="contribute_agree">J\'aimerais aider et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
-	<string name="contribute_agree_from_setup">J\'aimerais contribuer à l\'amélioration de l\'application et je donne mon accord pour la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
+	<string name="contribute_agree_from_setup">J\'aimerais contribuer à améliorer l\'application et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
 	<string name="contribute_save">Enregistrer</string>
 	<string name="contribute_more_info">Plus d\'informations…</string>
 	<string name="contribute_allow_storage">Veuillez accorder la permission d\'accéder au stockage afin de contribuer à l\'amélioration de l\'application</string>
@@ -403,7 +403,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="error_app_requires_network_connection_message">"Erreur de connexion au serveur. Veuillez vous assurer que votre connexion Internet fonctionne. L'application va maintenant se fermer."</string>
 	<string name="error_button_retry">"Réessayer"</string>
 	<string name="error_exit_button_text">"Quitter"</string>
-	<string name="error_no_Internet_connection">"Pas de connexion."</string>
+	<string name="error_no_internet_connection">"Pas de connexion."</string>
 	<string name="error_maintenance">"Maintenance du serveur"</string>
 	<string name="error_maintenance_message">"Veuillez patienter. Le serveur sera disponible bientôt."</string>
 	<string name="error_push_failure">"Échec de l'activation des notifications. Veuillez fermer entièrement l'application et attendre quelques minutes, puis relancez-la."</string>
