@@ -41,7 +41,9 @@ public class SystemVersionProperties {
 	private static final List<String> RO_PRODUCT_NAME_LOOKUP_DEVICES = Arrays.asList(
 			"OnePlus 7",
 			"OnePlus 7 Pro",
-			"OnePlus 7 Pro 5G"
+			"OnePlus 7 Pro 5G",
+			"OnePlus 7T",
+			"OnePlus 7T Pro"
 	);
 	/**
 	 * Matchable name of the device. Must be present in the Devices returned by ServerConnector
