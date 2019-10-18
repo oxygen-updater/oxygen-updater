@@ -12,7 +12,7 @@ on:
     - app/*
 
 jobs:
-  build:
+  build-debug:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -22,8 +22,5 @@ jobs:
         java-version: 1.8
     - name: Create dummy keystore.properties
       run: echo "storeFile=keyStore.jks" > keystore.properties
-    - name: Exclude crashlytics tasks if job's triggered by a PR
-      if: github.event_name == 'pull_request'
-      run: EXCLUDED_TASKS='-x :app:crashlyticsUploadDeobsDebug -x :app:crashlyticsUploadDeobsDevice -x :app:crashlyticsUploadDeobsRelease -x :app:crashlyticsUploadDeobsScreenshot'
     - name: Build with Gradle
-      run: ./gradlew build -x :app:signingConfigWriterRelease $EXCLUDED_TASKS
+      run: ./gradlew assembleDebug testDebug -x crashlyticsUploadDeobsDebug
