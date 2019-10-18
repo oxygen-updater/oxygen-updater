@@ -7,9 +7,9 @@ on:
     - app/*
   pull_request:
     paths:
-      - '*.gradle'
-      - '*.properties'
-      - app/*
+    - '*.gradle'
+    - '*.properties'
+    - app/*
 
 jobs:
   build:
