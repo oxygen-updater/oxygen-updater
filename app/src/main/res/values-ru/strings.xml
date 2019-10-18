@@ -88,53 +88,48 @@
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
 
 	<!-- Settings strings -->
-	<!-- TODO: Translate these lines -->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
-	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
-	<string name="preference_header_advanced">Advanced</string>
+	<string name="preference_header_support">Поддержать нас</string>
+	<string name="preference_header_device">Устройство</string>
+	<string name="preference_header_ui">Интерфейс</string>
+	<string name="preference_header_notifications">Уведомления</string>
+	<string name="preference_header_advanced">Дополнительно</string>
 	<string name="preference_header_about">About</string>
 
-	<!-- TODO: Translate these lines -->
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_device">Please wait…</string>
-	<string name="summary_update_method">Select a device first</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">View online</string>
-	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_on">Активно</string>
+	<string name="summary_off">Не активно</string>
+	<string name="summary_device">Пожалуйста подождите…</string>
+	<string name="summary_update_method">Сначала выберите устройство</string>
+	<string name="summary_theme">Выбрать тему</string>
+	<string name="summary_privacy_policy">Изучить online</string>
+	<string name="summary_rate_app">Поставить 5 звёзд</string>
+
+	<string name="label_buy_ad_free">Убрать рекламу</string>
+	<string name="label_theme">Тема</string>
+	<string name="label_app_update_banner">Информация о обновлениях</string>
+	<string name="label_news_warning_banner">Новости и предупреждения</string>
+	<string name="label_privacy_policy">Политика конфиденциальности</string>
+	<string name="label_rate_app">Оцените Нас</string>
+
+	<string name="theme_light">Светлая</string>
+	<string name="theme_dark">Тёмная</string>
+	<string name="theme_system">Системная</string>
+	<string name="theme_auto">Автоматическая</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="label_buy_ad_free">Remove ads</string>
-	<string name="label_theme">Theme</string>
-	<string name="label_app_update_banner">App update banners</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
-
-	<!-- TODO: Translate these lines -->
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
-	<string name="theme_system">System</string>
-	<string name="theme_auto">Auto</string>
-
-	<!-- TODO: Translate these lines -->
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
+	<string name="theme_light_subtitle">Светлая тема с основным цветом \"OnePlus Red\"</string>
+	<string name="theme_dark_subtitle">Тёмный фон и приглушенный \"OnePlus Red\" в качестве основного цвета. Тема экономит заряд батареии, особенно на AMOLED экранах</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_auto_subtitle">Автоматически выбирает Светлую или Тёмную тему в зависимости от времени суток. Снижает нагрузку на глаза</string>
+	<string name="theme_additional_note">Примечание: в Автоматической режиме при низком уровне заряда будет использована Тёмная тема для снижения расхода батареи</string>
 
-	<string name="settings">"Настройки"</string>
-	<string name="settings_buy_button_buy">"Купить (%1$s)"</string>
-	<string name="settings_buy_button_bought">"Куплено"</string>
-	<string name="settings_buy_button_not_possible">"Недоступно"</string>
-	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
+	<string name="settings">Настройки</string>
+	<string name="settings_buy_button_buy">Купить (%1$s)</string>
+	<string name="settings_buy_button_bought">Куплено</string>
+	<string name="settings_buy_button_not_possible">Недоступно</string>
+	<string name="settings_buy_ad_free_label">Отключить рекламу</string>
 
 	<!-- TODO translate these lines -->
-	<string name="settings_contribute_label">Help improving the app:</string>
+	<string name="settings_contribute_label">Help improving the app</string>
 	<string name="settings_contribute_button">Contribute</string>
 
 	<string name="settings_category_other">"Другое"</string>
@@ -148,7 +143,7 @@
 	<string name="settings_explanation_update_methods">"Объяснение вариантов обновления"</string>
 	<string name="settings_header">"Выберите ваше устройство и вариант обновления:"</string>
 	<string name="settings_push">"Присылать мне уведомления, когда:"</string>
-	<string name="settings_push_from_server">"Если какое-либо критическое предупреждение"</string>
+	<string name="settings_push_from_server">"Критическое предупреждение"</string>
 	<string name="settings_push_new_version">"Доступно обновление системы"</string>
 	<string name="settings_push_new_device">"Добавлена поддержка нового устройства"</string>
 	<string name="settings_push_news">"Была опубликована новость"</string>
@@ -164,9 +159,8 @@
  -При обновлении со стабильной прошивки на бету;
 - При возврате с беты на стабильную прошивку (не забудьте сделать сброс устройства);
 - При переустановке текущей версии прошивки."</string>
-	<string name="settings_update_method">"Вариант обновления"</string>
-	<!-- TODO translate -->
-	<string name="settings_upload_logs">Share usage data and logs</string>
+	<string name="settings_update_method">Метод обновления</string>
+	<string name="settings_upload_logs">Отправлять логи</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
@@ -182,7 +176,7 @@
 
 - Получить мгновенный доступ к последним версиям Android для устройств под управлением OxygenOS
 
-- Легко обновить устройство с рутом 
+- Легко обновить устройство с рутом
 
 - Просмотреть, что нового в установленной прошивке
 
@@ -204,7 +198,7 @@
 
 К сожалению его нельзя использовать с устройствами с рутом. Если у вас есть рут, используйте Полное обновление.
 
-Если вы используете бета версии прошивок, то выберите \"Community Edition\". 
+Если вы используете бета версии прошивок, то выберите \"Community Edition\".
 
 Проведите влево, чтобы продолжить."</string>
 	<string name="setup_page_5_title">"Вы готовы! "</string>
@@ -314,7 +308,6 @@
 	<string name="install_guide_zip_file_missing">"Если вы хотите сохранить рут-права на устройстве, выберите архив для установки выше."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these lines -->
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
