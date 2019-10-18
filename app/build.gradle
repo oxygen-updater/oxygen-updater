@@ -7,7 +7,7 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
 	signingConfigs {
-		signingConfig {
+		release {
 			keyAlias keystoreProperties['keyAlias']
 			keyPassword keystoreProperties['keyPassword']
 			storeFile file(keystoreProperties['storeFile'])
@@ -21,7 +21,6 @@ android {
 		targetSdkVersion 28
 		versionCode 58
 		versionName '3.4.0'
-		signingConfig signingConfigs.signingConfig
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 		proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 	}
@@ -51,6 +50,8 @@ android {
 			buildConfigField 'String', 'SUPPORTED_BUILD_FINGERPRINT_KEYS', '"release-keys"'
 			// Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported.
 			buildConfigField 'Boolean', 'ADS_ARE_SUPPORTED', 'true'
+
+			signingConfig signingConfigs.release
 
 			minifyEnabled true
 			shrinkResources true
