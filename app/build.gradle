@@ -19,8 +19,8 @@ android {
 		applicationId 'com.arjanvlek.oxygenupdater'
 		minSdkVersion 21
 		targetSdkVersion 28
-		versionCode 58
-		versionName '3.4.0'
+		versionCode 59
+		versionName '3.5.0'
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 		proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 	}
@@ -177,19 +177,19 @@ dependencies {
 	// https://developer.android.com/jetpack/androidx/releases/appcompat
 	implementation 'androidx.appcompat:appcompat:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/browser
-	implementation 'androidx.browser:browser:1.2.0-alpha07'
+	implementation 'androidx.browser:browser:1.2.0-alpha09'
 	// https://developer.android.com/jetpack/androidx/releases/constraintlayout
-	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
 	// https://developer.android.com/jetpack/androidx/releases/fragment
-	implementation 'androidx.fragment:fragment:1.2.0-alpha03'
+	implementation 'androidx.fragment:fragment:1.2.0-rc01'
 	// https://developer.android.com/jetpack/androidx/releases/preference
 	implementation 'androidx.preference:preference:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/recyclerview
-	implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
+	implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
 
 	// Google Material Components for Android
 	// https://github.com/material-components/material-components-android/releases
-	implementation 'com.google.android.material:material:1.1.0-alpha10'
+	implementation 'com.google.android.material:material:1.2.0-alpha01'
 
 	// JSON libraries
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
