@@ -37,11 +37,23 @@ public class SystemVersionProperties {
 	// Bypass: if the key is 'ro.display.series' and the value is one of the devices listed below, then read 'ro.product.name' instead to detect the correct device
 	private static final String RO_DISPLAY_SERIES_LOOKUP_KEY = "ro.display.series";
 	private static final String RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name";
+	private static final String RO_BUILD_SOFT_VERSION_LOOKUP_KEY = "ro.build.soft.version";
 	// @GitHub contributors, add ro.display.series values of new OP devices *HERE*
 	private static final List<String> RO_PRODUCT_NAME_LOOKUP_DEVICES = Arrays.asList(
 			"OnePlus 7",
 			"OnePlus 7 Pro",
-			"OnePlus 7 Pro 5G"
+			"OnePlus 7 Pro 5G",
+			"OnePlus 7T",
+			"OnePlus 7T Pro"
+	);
+	// @GitHub contributors, add ro.product.name values of new OP devices *HERE*
+	// This is used only to distinguish between Indian and international variants
+	// OnePlus started rolling out India-specific features with the 7T-series, but
+	// there was no distinction between ro.product.name in Indian and international variants
+	// Only workaround is to read ro.build.version.ota
+	private static final List<String> RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES = Arrays.asList(
+			"OnePlus7T",
+			"OnePlus7TPro"
 	);
 	/**
 	 * Matchable name of the device. Must be present in the Devices returned by ServerConnector
@@ -170,6 +182,21 @@ public class SystemVersionProperties {
 						// Android Logger class is not loaded during unit tests, so omit logging if called from test.
 						String logMessage = logText != null ? "Detected " + result + " variant: %s" : null;
 						result = readBuildPropItem(RO_PRODUCT_NAME_LOOKUP_KEY, buildProperties, logMessage);
+					}
+
+					// @hack #4 (BUILD_SOFT_VERSION_LOOKUP_KEY / support for Indian variants): OnePlus 7T-series and newer devices come with India-specific builds
+					// which cannot be detected by ro.product.name.
+					// However, the property ro.build.soft.version helps distinguish between international and Indian variants.
+					// Bypass: if the key is 'ro.product.name' and the value is one of these devices, then read 'ro.build.soft.version' additionally to detect the correct device
+					if (item.equals(RO_PRODUCT_NAME_LOOKUP_KEY) && RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES.contains(result)) {
+						// Android Logger class is not loaded during unit tests, so omit logging if called from test.
+						String logMessage = logText != null ? "Detected " + result + " variant: %s" : null;
+						String buildSoftVersion = readBuildPropItem(RO_BUILD_SOFT_VERSION_LOOKUP_KEY, buildProperties, logMessage);
+
+						// append _IN to mark device as Indian variant
+						if (buildSoftVersion.charAt(0) == 'I') {
+							result += "_IN";
+						}
 					}
 
 					if (logText != null) {
