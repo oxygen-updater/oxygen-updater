@@ -28,15 +28,17 @@
 			app:tabMode="auto" />
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<FrameLayout
+	<LinearLayout
+		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 		<androidx.viewpager.widget.ViewPager
 			android:id="@+id/viewpager"
+			android:layout_weight="1"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
+			android:layout_height="0dp" />
 
 		<com.google.android.gms.ads.AdView
 			android:id="@+id/updateInformationAdView"
@@ -45,5 +47,5 @@
 			android:layout_gravity="bottom|center_horizontal"
 			app:adSize="BANNER"
 			app:adUnitId="@string/advertising_banner_unit_id" />
-	</FrameLayout>
+	</LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
