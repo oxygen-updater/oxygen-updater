@@ -258,7 +258,10 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
 		checkAdSupportStatus(adsAreSupported -> {
 			if (adsAreSupported) {
+				adView.setVisibility(View.VISIBLE);
 				showAds();
+			} else {
+				adView.setVisibility(View.GONE);
 			}
 		});
 	}
