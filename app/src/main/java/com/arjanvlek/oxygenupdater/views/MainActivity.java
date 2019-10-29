@@ -14,7 +14,7 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.FrameLayout.LayoutParams;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -258,7 +258,10 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
 		checkAdSupportStatus(adsAreSupported -> {
 			if (adsAreSupported) {
+				adView.setVisibility(View.VISIBLE);
 				showAds();
+			} else {
+				adView.setVisibility(View.GONE);
 			}
 		});
 	}

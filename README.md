@@ -1,5 +1,7 @@
 # Oxygen Updater (Android App)
 
+![](https://github.com/oxygen-updater/oxygen-updater/workflows/Android%20CI/badge.svg)
+
 This repository contains all the code of the Oxygen Updater Android application.
 
 ## Building and running
@@ -25,8 +27,6 @@ keyPassword=passw0rd!
 keyAlias=my_app_key_name
 storeFile=keyStore.jks  
 ```
-
-
 
 The app can be run within the emulator but is limited to no-root features only.
 To test automatic update installations and other root features, you'll need to run it on a rooted device.
