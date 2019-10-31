@@ -48,7 +48,7 @@
 	<string name="download_error_close">اغلق</string>
 	<string name="download_error_corrupt">ملف التحديث الذي تم تحميله تالف! من فضلك حاول تحميله مرة أخرى.</string>
 	
-	<!-- TODO translate the 11 below to Arabic -->
+	<!-- translate to Arabic -->
 	<string name="download_error_network">حدث خطأ في الشبكة أثناء تحميل التحديث. سيتم إستئناف التحميل تلقائياً.</string>
 	<string name="download_error_server">حدث خطأ في الخادم أثناء تحميل التحديث. من فضلك حاول التحميل مرة أخرى.</string>
 	<string name="download_error_internal">للأسف, حدث خطأ فني أثناء تحميل التحديث. حاول تحميله مجدداً. إذا إستمر حدوث ذلك, فضلاً قم بالإتصال بمطور هذا التطبيق للمساعدة.</string>
@@ -61,7 +61,7 @@
 	<string name="download_pending">سيبدأ التحميل قريباً…</string>
 	<string name="download_permissions">إضغط تحميل مجدداً لتحميل التحديث.</string>
 
-	<!-- TODO translate the 20 below to Arabic -->
+	<!-- translate to Arabic -->
 	<string name="download_notification_error_network">التحميل متوقف مؤقتاً بسبب فقد الإتصال. سوف يستأنف قريباً.</string>
 	<string name="download_notification_error_server">خطأ في الخادم أثناء التحميل. يرجى إعادة التحميل.</string>
 	<string name="download_notification_error_internal">حدثت مشكلة تقنية أثناء التحميل. أعد التحميل أو اتصل بالدعم الفني.</string>
@@ -97,7 +97,6 @@
 	<string name="summary_theme">تعيين شكل</string>
 	<string name="summary_privacy_policy">مشاهدة حية</string>
 	<string name="summary_rate_app">أترك مراجعة من خمس نجوم</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 	<string name="label_buy_ad_free">إزالة الإعلانات</string>
 	<string name="label_theme">الشكل</string>
 	<string name="label_app_update_banner">لافتات تحديث التطبيق</string>
@@ -121,7 +120,7 @@
 	<string name="settings_buy_button_not_possible">غير متاح</string>
 	<string name="settings_buy_ad_free_label">الترقية للتخلص من الإعلانات</string>
 
-	<!-- TODO translate these 2 to all but Dutch / Belgian / French -->
+	<!-- translate to Arabic -->
 	<string name="settings_contribute_label">المساعدة في تحسين التطبيق</string>
 	<string name="settings_contribute_button">مساهمة</string>
 	<string name="settings_category_other">آخر:</string>
