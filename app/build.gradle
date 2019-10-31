@@ -19,8 +19,8 @@ android {
 		applicationId 'com.arjanvlek.oxygenupdater'
 		minSdkVersion 21
 		targetSdkVersion 28
-		versionCode 60
-		versionName '3.5.1'
+		versionCode 61
+		versionName '3.6.0'
 		testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 		proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 	}
