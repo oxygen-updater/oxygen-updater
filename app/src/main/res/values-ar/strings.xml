@@ -47,7 +47,6 @@
 	<string name="download_error">خطأ بالتحميل</string>
 	<string name="download_error_close">اغلق</string>
 	<string name="download_error_corrupt">ملف التحديث الذي تم تحميله تالف! من فضلك حاول تحميله مرة أخرى.</string>
-
 	<string name="download_error_network">حدث خطأ في الشبكة أثناء تحميل التحديث. سيتم إستئناف التحميل تلقائياً.</string>
 	<string name="download_error_server">حدث خطأ في الخادم أثناء تحميل التحديث. من فضلك حاول التحميل مرة أخرى.</string>
 	<string name="download_error_internal">للأسف, حدث خطأ فني أثناء تحميل التحديث. حاول تحميله مجدداً. إذا إستمر حدوث ذلك, فضلاً قم بالإتصال بمطور هذا التطبيق للمساعدة.</string>
@@ -59,7 +58,6 @@
 	<string name="download_oxygen_os">إصدار نظام أكسجين</string>
 	<string name="download_pending">سيبدأ التحميل قريباً…</string>
 	<string name="download_permissions">إضغط تحميل مجدداً لتحميل التحديث.</string>
-
 	<string name="download_notification_error_network">التحميل متوقف مؤقتاً بسبب فقد الإتصال. سوف يستأنف قريباً.</string>
 	<string name="download_notification_error_server">خطأ في الخادم أثناء التحميل. يرجى إعادة التحميل.</string>
 	<string name="download_notification_error_internal">حدثت مشكلة تقنية أثناء التحميل. أعد التحميل أو اتصل بالدعم الفني.</string>
@@ -117,7 +115,6 @@
 	<string name="settings_buy_button_bought">تم الشراء</string>
 	<string name="settings_buy_button_not_possible">غير متاح</string>
 	<string name="settings_buy_ad_free_label">الترقية للتخلص من الإعلانات</string>
-
 	<string name="settings_contribute_label">المساعدة في تحسين التطبيق</string>
 	<string name="settings_contribute_button">مساهمة</string>
 	<string name="settings_category_other">آخر:</string>
