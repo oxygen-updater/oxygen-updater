@@ -176,7 +176,7 @@
 
 	<string name="setup_page_1_title">Witaj w Oxygen Updater!</string>
 	<string name="setup_page_1_text">Ta aplikacji pozwoli ci na:\n\n- Szybszy dostęp do aktualizacji na twoim urządzeniu z OxygenOS\n\n- Łatwa aktualizacja na urządzeniu z rootem\n\n- Zobaczyć nowości w systemie którego obecnie używasz\n\n- Przeczytać najnowsze wiadomości o OnePlus i aktualizacjach OxygenOS\n\nPrzesuń w lewo aby kontynuować.</string>
-	<string name="setup_page_2_title">Important notice:</string>
+	<string name="setup_page_2_title">Ważna Uwaga:</string>
 	<string name="setup_page_2_text">To nie jest oficjalna aplikacja OnePlusa. Ponosisz pełne ryzyko za używanie tej aplikacji.Ani OnePlus ani deweloper tej aplikacji nie są odpowiedzialni za twoje akcje, włączając wszelkie akcje mogące wyrządzić szkody przez tę aplikację. \n\nUżywając tej apliakcji, zgadzasz się na zasady i warunki opisane powyżej. \n\nPrzesuń w lewo aby kontynuować.</string>
 	<string name="setup_page_3_title">Wybierz swoje urządzenie:</string>
 	<string name="setup_page_3_text">Twoje urządzenie jest zazwyczaj wybrane powyżej. Jeśli nie, wybierz twoje urządzenie wyżej.\n\nPrzesuń w lewo, aby kontynuować.</string>
@@ -380,7 +380,7 @@
 	<string name="processing">Przetwarzanie…</string>
 	<string name="choose_file">Wybierz plik</string>
 	<string name="root_install_logger_service_name">Zapisywanie informacji o aktualizacji</string>
-	<string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
+	<string name="delayed_push_notification_displayer_service_name">Usługa Powiadomień Push</string>
 	<string name="download_service_name">Pobieracz aktualizacji</string>
 	<string name="log_uploader_service_name">Serwis raportowania błędów</string>
 </resources>
