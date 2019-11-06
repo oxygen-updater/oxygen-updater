@@ -220,46 +220,48 @@
 
 	<string name="install_error_write_script_failed">"Не вдалося підготуватися до встановлення оновлення. Ви надавали рут права?"</string>
 
-	<string name="install_options_backup">Зарезервувати мій пристрій</string>
-	<string name="install_options_header">You may customize the installation process by changing the options shown below. Tap on \'Start installation\' to start the installation of the update.</string>
-	<string name="install_options_keep_root">Keep my device rooted</string>
-	<string name="install_options_reboot_after_install">Reboot after installation</string>
-	<string name="install_options_select_root_package">Select the root package to install…</string>
-	<string name="install_options_start_install">Start installation</string>
-	<string name="install_options_title">Choose your install options</string>
-	<string name="install_options_wipe_cache_partition">Wipe the cache partition</string>
+	<string name="install_options_backup">Зробити резервну копію</string>
+	<string name="install_options_header">Ви можете налаштувати процес встановлення, змінюючи параметри нижче. Натисніть \'Почати встановлення\', щоб розпочати встановлення оновлення.</string>
+	<string name="install_options_keep_root">Зберегти рут права</string>
+	<string name="install_options_reboot_after_install">Перезавантажити після встановлення</string>
+	<string name="install_options_select_root_package">Вибрати файл з рутом…</string>
+	<string name="install_options_start_install">Почати встановлення</string>
+	<string name="install_options_title">Виберіть параметри встановлення</string>
+	<string name="install_options_wipe_cache_partition">Очистити розділ кеша</string>
 
-	<string name="install_options_explanation_title">What do these options mean?</string>
-	<string name="install_options_explanation_backup">Backup my device:\nWhen you select this option, a backup of your system, apps and settings will be made prior to the installation. Always handy to have, in case something goes horribly wrong.</string>
-	<string name="install_options_explanation_keep_root">Keep my device rooted:\nWhen you select this option, you may specify a root package which will be installed after the update is installed. This ensures that your device stays rooted. Please note that this root package must be compatible with the NEW OxygenOS version you are going to install!</string>
-	<string name="install_options_explanation_wipe_cache">Wipe the cache partition:\nWhen you select this option, the cache partition will be wiped after the update has been installed. This ensures your device performs optimally and also reduces the likelihood of experiencing bugs caused by the installation of the update.</string>
-	<string name="install_options_explanation_reboot">Reboot after installation:\nWhen you select this option, your device will automatically reboot back to OxygenOS after the update is installed. Otherwise, your device will stay in Recovery Mode, where you can install additional packages.</string>
+	<string name="install_options_explanation_title">Що означають ці параметри?</string>
+	<string name="install_options_explanation_backup">Зробити резервну копію:\nЯкщо вибрати цей параметр, до встановлення буде створено резервну копію вашої системи, застосунків і налаштувань. Завжди потрібно мати під рукою, якщо щось піде не так.</string>
+	<string name="install_options_explanation_keep_root">Зберегти рут права:\nЯкщо вибрати цей параметр, вам буде запропоновано вибрати архів, в якому міститься рут. Цей архів буде встановлено після успішного встановлення оновлення. Таким чином, ваш пристрій матиме рут права після встановлення. Будь ласка, майте на увазі, що рут архів може бути не сумісний з НОВОЮ версією OxygenOS, яку ви збираєтеся встановити!</string>
+	<string name="install_options_explanation_wipe_cache">Очистити розділ кеша:\nЯкщо вибрати цей параметр, після встановлення оновлення буде очищено розділ з кешами. Це гарантує, що ваш пристрій буде оптимально працювати, а також зменшує ризик виникнення помилок, викликаних встановленням оновлення.</string>
+	<string name="install_options_explanation_reboot">Перезавантажити після встановлення:\nЯкщо вибрати цей параметр, ваш пристрій автоматично перезавантажиться в нову систему OxygenOS, після встановлення оновлення. Інакше, ваш пристрій залишиться в режимі Відновлення, де ви зможете встановити додаткові архіви.</string>
 
-	<string name="install_select_method_title">How do you want to install this update?</string>
-	<string name="install_select_method_automatic_title">Automatic installation*</string>
-	<string name="install_select_method_automatic_image">Automatic installation image</string>
-	<string name="install_select_method_automatic_description">The easiest way to install the update.\nYour device will restart to install the update.\n\n* Requires root access and TWRP recovery.</string>
+	<string name="install_select_method_title">Як ви хочете встановити це оновлення?</string>
+	<string name="install_select_method_automatic_title">Автоматичне встановлення*</string>
+	<string name="install_select_method_automatic_image">Зображення автоматичного встановлення</string>
+	<string name="install_select_method_automatic_description">Найлегший спосіб встановити оновлення.\nВаш пристрій перезавантажиться, щоб встановити оновлення.\n\n* Потрібні рут права і відновлювач TWRP.</string>
 
-	<string name="install_select_method_manual_title">Manual installation</string>
-	<string name="install_select_method_manual_image">Manual installation image</string>
-	<string name="install_select_method_manual_description">Read the install guide to learn how to install the update. You will install the update using the Recovery Mode of your device.</string>
+	<string name="install_select_method_manual_title">Ручне встановлення</string>
+	<string name="install_select_method_manual_image">Зображення ручного встановлення</string>
+	<string name="install_select_method_manual_description">Прочитати інструкцію, щоб дізнатися як встановити оновлення. Цей спосіб використовує режим Відновлення на вашому пристрої, щоб встановити оновлення.</string>
 
-	<string name="install_temporary_error">A temporary error occurred while preparing the installation of the update. Please try it again.</string>
+	<string name="install_temporary_error">Виникла тимчасова помилка під час підготовки до встановлення. Будь ласка, спробуйте знову.</string>
 
-	<string name="install_verify_error_title">Installation failed</string>
-	<string name="install_verify_error_nothing_installed">Error when installing the update. No changes were made to the software of your device. Try installing the update again.</string>
-	<string name="install_verify_error_unable_to_verify">Failed to check if the update was installed successfully. Please open Oxygen Updater to see if the update was installed successfully.</string>
-	<string name="install_verify_error_wrong_version_installed">A different version of OxygenOS was installed. Don\'t select an OxygenOS update file when choosing a root package under the "Keep my device rooted" option.</string>
+	<string name="install_verify_error_title">Не вдалося встановити</string>
+	<string name="install_verify_error_nothing_installed">Виникла помилка під час встановлення оновлення. До вашої системи не внесено ніяких змін. Спробуйте встановити оновлення ще раз.</string>
+	<string name="install_verify_error_unable_to_verify">Не вдалося перевірити, чи оновлення успішно встановлено. Будь ласка, відкрийте Oxygen Updater, щоб побачити, чи оновлення встановилося.</string>
+	<string name="install_verify_error_wrong_version_installed">Було встановлено іншу версію OxygenOS. Не вибирайте файл прошивки, якщо вибираєте архів рута при увімкненому параметрі "Зберегти рут права".</string>
 
-	<string name="install_verify_success_title">Installation complete</string>
-	<string name="install_verify_success_message">OxygenOS version %1$s has been installed successfully.</string>
+	<string name="install_verify_success_title">Успішно встановлено</string>
+	<string name="install_verify_success_message">Нову версію %1$s OxygenOS успішно встановлено на ваш пристрій.</string>
 
+	<!-- TODO translate below -->
 	<string name="install_zip_file_clear">Clear root package file</string>
 	<string name="install_zip_file_pick">Choose root package file</string>
 	<string name="install_zip_file_placeholder">Select a root package…</string>
 	<string name="install_zip_file_wrong_file_type">You may only select a zip file. Please select the right file.</string>
 
 	<!-- Install guide strings -->
+	<!-- TODO translate below -->
 	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide_automatic_install_disabled">Automatic installations have been temporarily disabled due to reported technical issues. Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide">Install guide</string>
@@ -300,7 +302,7 @@
 	<string name="device_information_gigahertz">%1$s ГГц</string>
 	<string name="device_information_header">Мій пристрій</string>
 	<string name="device_information_header_short">Пристрій</string>
-	<string name="device_information_image_description">Device image</string>
+	<string name="device_information_image_description">Зображення пристрою</string>
 	<string name="device_information_incremental_os_version">Номер складання:</string>
 	<string name="device_information_os_version">Версія Android:</string>
 	<string name="device_information_oxygen_os_version">Версія OxygenOS:</string>
@@ -313,13 +315,14 @@
 
 	<!-- About screen strings -->
 	<string name="about">Про цей застосунок</string>
-	<string name="about_app_description">Ефективний інструмент для оновлення OxygenOS.</string>
+	<string name="about_app_description">Ефективний інструмент для оновлення OxygenOS</string>
 	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">Оцінити на Google Play</string>
 	<string name="about_version">Версія: %1$s</string>
 
 
 	<!-- LocalNotifications strings -->
+	<!-- TODO translate below -->
 	<string name="notification_new_device">New device released! The %1$s is now supported!</string>
 	<string name="notification_new_device_short">Open the app to choose this device.</string>
 	<string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
@@ -341,6 +344,7 @@
 	<string name="help_device_information_text">You may view some of the specifications of your device using the screen to the right of the Update screen. This comes in handy when making a support request, during which you might be asked for some of the specifications of your device.</string>
 	<string name="help_change_settings_title">Змінення налаштувань</string>
 	<string name="help_change_settings_text">You can change your settings by tapping the three dots in the top right, following a tap on Settings.\nYou can change the following settings:\n\n• Device and update method\n• Push notifications\n• In app notifications\n• Privacy settings (log uploading).\n\nUse the switches to turn notification / privacy settings on and off. Select a device and / or update method using the dropdown menus shown above the switches. Dropdown menus not visible? Check your Internet connection and open the Settings screen again.</string>
+	<!-- TODO translate above -->
 
 	<!-- News strings -->
 	<string name="news">Новини</string>
@@ -373,6 +377,7 @@
 	<string name="error_no_internet_connection">Немає з\'єднання.</string>
 	<string name="error_maintenance">Сервер на обслуговуванні</string>
 	<string name="error_maintenance_message">Будь ласка, зачекайте. Сервер незабаром стане доступним.</string>
+	<!-- TODO translate below -->
 	<string name="error_push_failure">Failed to enable notifications. Fully close the app, and start it again after waiting a few minutes.</string>
 	<string name="error_reload">Reload</string>
 
@@ -380,7 +385,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Оновлення вже завантажено</string>
-	<string name="delete_message_contents">You have already downloaded this update, but not yet installed it. Tap on \"Install Guide\" to view how to install this update. Tap on \"Delete\" to permanently delete the file. Press the Back button to close this message.</string>
+	<string name="delete_message_contents">Ви вже завантажили це оновлення, але ще його не встановлювали. Натисніть \"Встановити\", щоб перейти до вікна вибору режиму встановлення цього оновлення. Натисніть \"Видалити\", щоб видалити файл оновлення зі сховища. Натисніть кнопку Назад, щоб закрити це повідомлення.</string>
 	<string name="delete_message_delete_button">Видалити</string>
 
 	<string name="unsupported_device_warning_title">Пристрій не підтримується</string>
@@ -391,12 +396,13 @@
 	<string name="root_check_message">Oxygen Updater пропонує прості автоматичні встановлення оновлень для користувачів з рутованими пристроями. Проте, інкрементне оновлення не доступні для пристроїв з рутом. Oxygen Updater може перевірити, чи має пристрій рут права, щоб запропонувати відповідні способи оновлення. \n\nЯкщо пристрій має рут права, надайте їх Oxygen Updater після того, як закриєте це вікно. \n\nНемає рут прав? Натисніть \"Закрити\" і продовжуйте використовувати застосунок.</string>
 
 	<!-- Purchasing strings -->
+	<!-- TODO translate below -->
 	<string name="purchase_error_before_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes.</string>
 	<string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
 
 	<!-- Other strings-->
 	<string name="icon">Значок</string>
-	<string name="loading">Завантаження…</string>
+	<string name="loading">Завантажується…</string>
 	<string name="processing">Опрацювання…</string>
 	<string name="choose_file">Вибрати файл</string>
 	<string name="advertising_app_id" translatable="false">ca-app-pub-1816831161514116~4275332954</string>
@@ -408,4 +414,5 @@
 	<string name="log_uploader_service_name">Error reporting service</string>
 	<string name="update_file_checker_service_name" translatable="false">Update file checking service</string>
 	<string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
+	<!-- TODO translate above -->
 </resources>
