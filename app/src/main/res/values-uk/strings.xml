@@ -242,7 +242,7 @@
 
 	<string name="install_select_method_manual_title">Ручне встановлення</string>
 	<string name="install_select_method_manual_image">Зображення ручного встановлення</string>
-	<string name="install_select_method_manual_description">Прочитати інструкцію, щоб дізнатися як встановити оновлення. Цей спосіб використовує режим Відновлення на вашому пристрої, щоб встановити оновлення.</string>
+	<string name="install_select_method_manual_description">Прочитати інструкцію, щоб дізнатися як встановити оновлення. В цьому способі, для встановлення оновлення, потрібно використовувати режим Відновлення, який має бути на вашому пристрої.</string>
 
 	<string name="install_temporary_error">Виникла тимчасова помилка під час підготовки до встановлення. Будь ласка, спробуйте знову.</string>
 
@@ -254,43 +254,41 @@
 	<string name="install_verify_success_title">Успішно встановлено</string>
 	<string name="install_verify_success_message">Нову версію %1$s OxygenOS успішно встановлено на ваш пристрій.</string>
 
-	<!-- TODO translate below -->
-	<string name="install_zip_file_clear">Clear root package file</string>
-	<string name="install_zip_file_pick">Choose root package file</string>
-	<string name="install_zip_file_placeholder">Select a root package…</string>
-	<string name="install_zip_file_wrong_file_type">You may only select a zip file. Please select the right file.</string>
+	<string name="install_zip_file_clear">Очистити рут архів</string>
+	<string name="install_zip_file_pick">Вибрати рут архів</string>
+	<string name="install_zip_file_placeholder">Вибрати рут архів…</string>
+	<string name="install_zip_file_wrong_file_type">Можна вибрати лише zip архів. Будь ласка, виберіть правильний файл.</string>
 
 	<!-- Install guide strings -->
-	<!-- TODO translate below -->
-	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
-	<string name="install_guide_automatic_install_disabled">Automatic installations have been temporarily disabled due to reported technical issues. Install the update according to the instructions shown in the install guide.</string>
-	<string name="install_guide">Install guide</string>
-	<string name="install_guide_loading">Loading the installation guide …</string>
-	<string name="install_guide_title">Install guide - %1$d of %2$d</string>
-	<string name="install_guide_image_description">Contextual image. Please tap on a lower place on the screen to hear the install guide.</string>
-	<string name="install_guide_header">Swipe &lt;- -&gt; to navigate between pages.</string>
-	<string name="install_guide_tip">- It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
+	<string name="install_guide_no_root">Встановити оновлення відповідно до інструкції.</string>
+	<string name="install_guide_automatic_install_disabled">Автоматичні встановлення тимчасово вимкнені через технічні неполадки. Встановіть оновлення відповідно до інструкції.</string>
+	<string name="install_guide">Інструкція по встановленню</string>
+	<string name="install_guide_loading">Завантаження інструкції …</string>
+	<string name="install_guide_title">Інструкція - етап %1$d з %2$d</string>
+	<string name="install_guide_image_description">Контекстуальне зображення. Будь ласка, натисніть внизу екрану, щоб прослухати інструкцію.</string>
+	<string name="install_guide_header">Потягніть &lt;- -&gt; для переміщення між сторінками.</string>
+	<string name="install_guide_tip">- Рекомендується записати всі етапи, тому що вам потрібно буде вимкнути пристрій, щоб встановити оновлення.</string>
 
-	<string name="install_guide_page_1_title">Download the update.</string>
-	<string name="install_guide_page_1_text">- Press the Download button to start downloading the update.\n\n- The download progress will appear in the app, and as a notification in your notifications screen.\n\n- When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
+	<string name="install_guide_page_1_title">Завантаження оновлення.</string>
+	<string name="install_guide_page_1_text">- Натисніть кнопку \"Завантажити\", щоб розпочати завантаження оновлення.\n\n- Внизу застосунку з\'явиться прогрес завантаження, який буде продубльовано в системному сповіщенні.\n\n- Коли завантаження завершиться, ви побачите сповіщення з текстом \"Завантаження завершено\".\nЯкщо під час завантаження трапиться помилка, відкрийте застосунок і спробуйте завантажити оновлення ще раз. Якщо і це на спрацює, тоді перевірте з\'єднання з інтернетом. Інакше, зв\'яжіться з розробником застосунку: знайдіть застосунок Oxygen Updater в Google Play > \"Контактні дані розробника\".</string>
 
-	<string name="install_guide_page_2_title">Enter Recovery Mode.</string>
-	<string name="install_guide_page_2_text">- First, power off your device.\n\n- Then, press both the power and the volume down buttons at the same time.\n\n- Your device will now start in Recovery Mode. Wait until you see the recovery menu on your screen.</string>
+	<string name="install_guide_page_2_title">Вхід в режим Відновлення.</string>
+	<string name="install_guide_page_2_text">- Спочатку, вимкнуть ваш пристрій.\n\n- Потім, одночасно затисніть кнопку живлення і кнопку зменшення гучності на декілька секунд.\n\n- Ваш пристрій перезавантажиться в режим Відновлення. Зачекайте, доки не з\'явиться меню на екрані.</string>
 
-	<string name="install_guide_page_3_title">Install the downloaded update.</string>
-	<string name="install_guide_page_3_text">- Within the recovery menu, choose your desired language first. Next, tap on (or use the volume buttons to navigate and the power button to select) \"Install from SD\".\n\n- Next, scroll down using the volume down key until you find a row with the \".zip\" file with the file name shown within the app. (Usually, this is a file starting with \"OnePlusOxygen-\").\n\n- Installation of the update will start automatically.</string>
+	<string name="install_guide_page_3_title">Встановлення завантаженого оновлення.</string>
+	<string name="install_guide_page_3_text">- В режимі Відновлення, спочатку виберіть бажану мову, і введіть пароль, якщо буде запитувати. Далі, натисніть \"Встановити\" (Install).\n\n- Серед списку файлів, виберіть завантажений \".zip\" файл, який містить оновлення (зазвичай, його назва починається з \"OnePlusOxygen-\").\n\n- Проведіть пальцем праворуч, щоб розпочати встановлення.</string>
 
-	<string name="install_guide_page_4_title">Restart your device.</string>
-	<string name="install_guide_page_4_text">- When the installation of the update is finished, you\'ll be back at the Recovery Menu. Within the recovery menu, tap on \"Reboot\".\n\n- Your device will show its startup screen for a long time during starting up.\n\n- Afterwards, you\'ll see a white message with the title \"Android is upgrading\", while your apps are being optimized.</string>
+	<string name="install_guide_page_4_title">Перезавантаження пристрою.</string>
+	<string name="install_guide_page_4_text">- Коли встановлення оновлення завершиться, перейдіть назад в меню Відновлення. З цього меню, натисніть \"Перезавантажити\" (Reboot) -> \"Система\" (System).\n\n- Ваш пристрій перезавантажиться і показуватиме екран загрузки протягом тривалого часу.\n\n- Після цього, коли система загрузиться, ви побачите повідомлення \"Оновлення Android\", під час оптимізації ваших застосунків.</string>
 
-	<string name="install_guide_page_5_title">Done. Enjoy the new OxygenOS version!</string>
-	<string name="install_guide_page_5_text">- After your device has finished optimizing its apps, the update has been successfully installed.\nTo verify this, you can check the current version of your system as following:\n\n- Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.\n\n- If you like this app, give it 5 stars at Google Play!</string>
+	<string name="install_guide_page_5_title">Готово. Насолоджуйтеся новою версією OxygenOS!</string>
+	<string name="install_guide_page_5_text">- Після того, як пристрій завершить оптимізацію застосунків, оновлення успішно завершиться.\nЩоб це перевірити, ви можете переглянути поточну версію OxygenOS наступним чином:\n\n- Зайдіть в Налаштування, в самому низу виберіть \"Про телефон\", і погляньте на номер складання.\n\n- Якщо вам сподобався цей застосунок, поставте йому 5 зірочок в Google Play!</string>
 
-	<string name="install_guide_close_button">Close Installation Guide</string>
+	<string name="install_guide_close_button">Закрити інструкцію</string>
 
-	<string name="install_guide_zip_file_deleted">The root package file you specified no longer exists. Please select a new root package above.</string>
-	<string name="install_guide_zip_file_picker_title">Select a root package</string>
-	<string name="install_guide_zip_file_missing">"If you want to keep your device rooted, you'll have to specify a root package above."</string>
+	<string name="install_guide_zip_file_deleted">Архіву з рутом, який ви обрали, більше немає. Будь ласка, виберіть новий архів вище.</string>
+	<string name="install_guide_zip_file_picker_title">Вибрати рут архів</string>
+	<string name="install_guide_zip_file_missing">"Якщо ви хочете зберегти рут права на вашому пристрої, виберіть рут архів вище."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_hardware_header">Апаратне забезпечення</string>
@@ -316,24 +314,24 @@
 	<!-- About screen strings -->
 	<string name="about">Про цей застосунок</string>
 	<string name="about_app_description">Ефективний інструмент для оновлення OxygenOS</string>
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
-	<string name="about_rate_app_button_text">Оцінити на Google Play</string>
+	<string name="about_background_story">Спочатку цей застосунок розроблявся Аржаном Влеком, як продовження іншого його застосунку, який називається <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (він надає схожий функціонал, але для користувачів Cyanogen OS).\n\nПісля 4 років, в липні 2019 року, Аржан вирішив піти з цих обидвох проєктів і передав право власності на застосунок команді розробників з різних країн. Вони взяли на себе відповідальність за надання спільноті відмінної сервісної підтримки для швидшого отримання оновлень OnePlus та подальшу розробку цього застосунку.\nВи можете знайти більше інформації <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">в цьому оголошенні</a>.\n\n14 серпня 2019 року відбувся перший випуск під новим керівництвом, який отримав нові функції, такі як темний режим та повний редизайн.\n\nДетальніше про нашу команду можна прочитати <a href="https://oxygenupdater.com/team/">на сайті</a>.\n\nЗверніть увагу, це не офіційний застосунок від OnePlus. \nІм\'я та бренд OnePlus, логотип OnePlus і OxygenOS є власністю компанії OnePlus. \nAndroid, Google, Google Play та логотип Google Play є зареєстрованими товарними знаками Google Inc. \nЦей застосунок використовує дані OnePlus та її материнської компанії Oppo, щоб показувати інформацію про оновлення.\n\nПереклад застосунку на українську мову — <a href="mailto:oster.ok@gmail.com">Тарас</a>.\n\nЯкщо вам подобається цей застосунок, будь ласка, поставте 5 зірочок в Google Play:</string>
+	<string name="about_rate_app_button_text">Оцінити в Google Play</string>
 	<string name="about_version">Версія: %1$s</string>
 
 
 	<!-- LocalNotifications strings -->
-	<!-- TODO translate below -->
-	<string name="notification_new_device">New device released! The %1$s is now supported!</string>
-	<string name="notification_new_device_short">Open the app to choose this device.</string>
-	<string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
-	<string name="notification_version_title">System update available</string>
-	<string name="notification_version">%1$s is now available for the %2$s!</string>
-	<string name="push_notification_channel_name">Push notifications</string>
-	<string name="push_notification_channel_description">Displays all important notifications of the Oxygen Updater app. These include system update notifications and breaking news notifications.</string>
-	<string name="progress_notification_channel_name">Progress notifications</string>
-	<string name="progress_notification_channel_description">Displays all non-important notifications of the Oxygen Updater app. Contains the status indicators shown during downloading.</string>
+	<string name="notification_new_device">Випущено новий пристрій! %1$s тепер доступний!</string>
+	<string name="notification_new_device_short">Відкрити застосунок, щоб вибрати цей пристрій.</string>
+	<string name="notification_no_notification_support">Встановіть або оновіть Сервіси Google Play, щоб увімкнути пуш-сповіщення.</string>
+	<string name="notification_version_title">Доступне оновлення системи</string>
+	<string name="notification_version">%1$s доступне для %2$s!</string>
+	<string name="push_notification_channel_name">Пуш-сповіщення</string>
+	<string name="push_notification_channel_description">Показує всі важливі сповіщення застосунку Oxygen Updater. Включає сповіщення про оновлення системи і сповіщення про важливі новини.</string>
+	<string name="progress_notification_channel_name">Прогрес сповіщення</string>
+	<string name="progress_notification_channel_description">Показує всі не важливі сповіщення застосунку Oxygen Updater. Включає індикатор завантаження.</string>
 
 	<!-- Help strings -->
+	<!-- TODO translate below -->
 	<string name="help">Допомога</string>
 	<string name="help_text">Вітаємо на сторінці допомоги по Oxygen Updater.\n\nЦя сторінка містить такі розділи:\n\n• Оновлення вашого пристрою\n• Читання останніх новин\n• Перегляд інформації про пристрій\n• Змінення налаштувань\n\nПрогорніть нижче, щоб перейти до цих розділів.</string>
 	<string name="help_updating_your_device_title">Оновлення вашого пристрою</string>
@@ -344,7 +342,6 @@
 	<string name="help_device_information_text">You may view some of the specifications of your device using the screen to the right of the Update screen. This comes in handy when making a support request, during which you might be asked for some of the specifications of your device.</string>
 	<string name="help_change_settings_title">Змінення налаштувань</string>
 	<string name="help_change_settings_text">You can change your settings by tapping the three dots in the top right, following a tap on Settings.\nYou can change the following settings:\n\n• Device and update method\n• Push notifications\n• In app notifications\n• Privacy settings (log uploading).\n\nUse the switches to turn notification / privacy settings on and off. Select a device and / or update method using the dropdown menus shown above the switches. Dropdown menus not visible? Check your Internet connection and open the Settings screen again.</string>
-	<!-- TODO translate above -->
 
 	<!-- News strings -->
 	<string name="news">Новини</string>
