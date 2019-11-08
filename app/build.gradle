@@ -170,8 +170,8 @@ repositories {
 dependencies {
 	implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-	compileOnly 'org.projectlombok:lombok:1.18.8'
-	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+	compileOnly 'org.projectlombok:lombok:1.18.10'
+	annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
 	// AndroidX: https://developer.android.com/jetpack/androidx/releases
 	// https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -181,7 +181,7 @@ dependencies {
 	// https://developer.android.com/jetpack/androidx/releases/constraintlayout
 	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
 	// https://developer.android.com/jetpack/androidx/releases/fragment
-	implementation 'androidx.fragment:fragment:1.2.0-rc01'
+	implementation 'androidx.fragment:fragment:1.2.0-rc02'
 	// https://developer.android.com/jetpack/androidx/releases/preference
 	implementation 'androidx.preference:preference:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -196,12 +196,12 @@ dependencies {
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9.2'
 
 	// Date and time libraries
-	implementation 'joda-time:joda-time:2.10.3'
+	implementation 'joda-time:joda-time:2.10.5'
 	implementation 'org.joda:joda-convert:2.2.1'
 
 	// Google Firebase
 	// https://firebase.google.com/support/release-notes/android
-	implementation 'com.google.firebase:firebase-ads:18.2.0'
+	implementation 'com.google.firebase:firebase-ads:18.3.0'
 	implementation 'com.google.firebase:firebase-messaging:20.0.0'
 	implementation 'com.google.android.gms:play-services-base:17.1.0'
 	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
