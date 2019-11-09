@@ -38,7 +38,7 @@
 	<!-- Downloader strings -->
 	<string name="download">"Ladda ner"</string>
 	<string name="downloaded">"Nedladdat"</string>
-	<string name="downloading">"Laddar ner"</string>
+	<string name="downloading">Laddar ner …</string>
 	<string name="paused">"Pausad"</string>
 
 	<string name="download_already_downloaded">"Uppdateringen är redan nedladdad."</string>
@@ -64,7 +64,7 @@
 	<string name="download_notification_error_network">"Nätverksfel. Kontrollera din anslutning och försök igen."</string>
 	<string name="download_notification_error_server">"Serverfel under nedladdningen. Starta om nedladdningen."</string>
 	<string name="download_notification_error_internal">"Tekniskt fel under nedladdningen. Starta om nedladdningen eller kontakta support."</string>
-	<string name="download_notification_error_storage_full">"Inte nog med lagringskapacitet."</string>
+	<string name="download_notification_error_storage_full">Otillräckligt lagringsutrymme</string>
 	<string name="download_notification_error_corrupt">"Filverifikationen misslyckades. Kontrollera din anslutning och försök igen."</string>
 	<string name="download_progress_text_hours_remaining">"%1$d%%, ungefär %2$d timmar kvar"</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, mindre än en minut kvar"</string>
@@ -84,43 +84,41 @@
 
 	<!-- Settings strings -->
 	<!-- TODO: Translate these lines -->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
+	<string name="preference_header_support">Stöd oss</string>
+	<string name="preference_header_device">Enhet</string>
 	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
-	<string name="preference_header_advanced">Advanced</string>
-	<string name="preference_header_about">About</string>
+	<string name="preference_header_notifications">Notiser</string>
+	<string name="preference_header_advanced">Avancerat</string>
+	<string name="preference_header_about">Om</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_device">Please wait…</string>
-	<string name="summary_update_method">Select a device first</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">View online</string>
-	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_on">På</string>
+	<string name="summary_off">Av</string>
+	<string name="summary_device">Var god vänta …</string>
+	<string name="summary_update_method">Välj en enhet först</string>
+	<string name="summary_theme">Välj tema</string>
+	<string name="summary_privacy_policy">Visa online</string>
+	<string name="summary_rate_app">Ge ett femstjärnigt omdöme</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="label_buy_ad_free">Remove ads</string>
-	<string name="label_theme">Theme</string>
-	<string name="label_app_update_banner">App update banners</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_buy_ad_free">Ta bort reklam</string>
+	<string name="label_theme">Tema</string>
+	<string name="label_app_update_banner">Appuppdaterings-banners</string>
+	<string name="label_news_warning_banner">Nyhets- och varningsbanners</string>
+	<string name="label_privacy_policy">Integritetspolicy</string>
+	<string name="label_rate_app">Ge appen ett omdöme</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
+	<string name="theme_light">Ljus</string>
+	<string name="theme_dark">Mörk</string>
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
 	<!-- TODO: Translate these lines -->
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_dark_subtitle">Nedtonad OnePlus-röd primär färg, med en nästan svart bakgrund. Använd detta tema för att spara batteri, speciellt på AMOLED-skärmar</string>
+	<string name="theme_system_subtitle">Använd systemets nattläge (du kan ställa in det i antingen skärminställningar eller utvecklarinställningar). Beror på enhet</string>
+	<string name="theme_auto_subtitle">Byt mellan ljusa och mörka teman baserat på tid på dagen, för att undvika ansträngning för ögonen på nätter</string>
+	<string name="theme_additional_note">Obs. om \"Auto\" är aktivt och batterispararläget är på kommer det mörka temat användas oavsett tid på dygnet för att spara batteri</string>
 
 	<string name="settings">"Inställningar"</string>
 	<string name="settings_buy_button_buy">"(%1$s)"</string>
@@ -129,8 +127,8 @@
 	<string name="settings_buy_ad_free_label">"Uppgradera till reklamfritt"</string>
 
 	<!-- TODO translate these lines -->
-	<string name="settings_contribute_label">Help improving the app:</string>
-	<string name="settings_contribute_button">Contribute</string>
+	<string name="settings_contribute_label">Hjälp till med att förbättra appen:</string>
+	<string name="settings_contribute_button">Bidra</string>
 
 	<string name="settings_category_other">"Annat:"</string>
 	<string name="settings_device">"Enhet"</string>
@@ -162,7 +160,7 @@ Detta kan vara användbart när du:
 "</string>
 	<string name="settings_update_method">"Uppdateringsmetod"</string>
 	<!-- TODO translate -->
-	<string name="settings_upload_logs">Share usage data and logs</string>
+	<string name="settings_upload_logs">Dela användningsdata och loggar</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
@@ -394,17 +392,17 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_load_error">"Misslyckades att öppna artikeln. Kontrollera din anslutning och tryck sedan på 'FÖRSÖK IGEN' knappen för att öppna artikeln."</string>
 
 	<!-- TODO translate these lines -->
-	<string name="contribute">Become a contributor</string>
+	<string name="contribute">Bli en bidragare</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
-	<string name="contribute_image_description">Upload files to the app server</string>
-	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
-	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
-	<string name="contribute_save">Save settings</string>
-	<string name="contribute_more_info">More info …</string>
-	<string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
+	<string name="contribute_explanation">Oxygen Updater behöver din hjälp! För att kunna ge dig de senaste uppdateringarna behöver vi namnen på uppdateringsfilerna. Dessa finns på din telefon när en vanlig uppdatering kommer.\n\nHur can jag hjälpa till?\n\nOxygen updater kan automatiskt lämna namn på nya uppdateringsfiler till våra admins. Detta kommer använda en liten mängd data och kan använda lite batteri. Allt du behöver göra är att vänta (ungefär 15 minuter) innan du installerar en officiel systemuppdatering tills du ser en bekräftelse att filen har blivit inlämnad. Bara .ota-directory på din telefon blir skannad en gång per 15 minuter. Den kollar för ett specifikt namn i den mappen.</string>
+	<string name="contribute_image_description">Ladda upp filer till appservern</string>
+	<string name="contribute_agree">Jag skulle vilja hjälpa till med att förbättra appen och godkänner att skicka filnamn på uppdateringar till våra admins</string>
+	<string name="contribute_agree_from_setup">Jag skulle vilja hjälpta till med att förbättra appen och jag godkänner att jag skickar filnamn på uppdateringar till våra admins</string>
+	<string name="contribute_save">Spara inställningar</string>
+	<string name="contribute_more_info">Mer info …</string>
+	<string name="contribute_allow_storage">Var god att tillåta lagringsåtkomst för att hjälpa till med att förbättra appen</string>
 	<string name="contribute_successful_notification_title">Contribution successful</string>
-	<string name="contribute_successful_notification_text">Thanks for sharing the update file %1$s with our admins!</string>
+	<string name="contribute_successful_notification_text">Tack för att du delade uppdateringsfilen %1$s med våra admins!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Åh nej!"</string>
@@ -425,7 +423,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="delete_message_title">"Uppdateringen är redan nerladdad"</string>
 	<string name="delete_message_contents">"Du har redan laddat ner denna uppdatering, men inte installerat den än. Tryck på \"Installationsguide\" för att se hur du installerar denna uppdatering. Tryck på \"Ta bort\" för att permanent ta bort filen. Tryck på bakåtknappen för att stänga detta meddelande."</string>
 	<string name="delete_message_delete_button">"Ta bort"</string>
-	<string name="unsupported_device_warning_title">"Enhet stöds ej"</string>
+	<string name="unsupported_device_warning_title">"Enhet stöds inte"</string>
 	<string name="unsupported_device_warning_message">"Det verkar som din enhet inte har Oxygen OS installerat. Du kan enbart installera system uppdateringar på enheter som har Oxygen OS installerat.
 
 Andra enheter samt OnePlus enheter som har \"Custom ROMs\" installerade är inte stöttade av appen."</string>
@@ -451,5 +449,6 @@ Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du st
 	<string name="delayed_push_notification_displayer_service_name">"Push-notifikationsservice"</string>
 	<string name="log_uploader_service_name">"Felrapportsservice"</string>
 	<string name="download_service_name">"Uppdateringsnedladdningstjänst"</string>
+	<string name="theme_light_subtitle">Tema med en vit bakgrund och OnePlus-röd primär färg</string>
 
 </resources>
