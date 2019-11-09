@@ -83,7 +83,6 @@
 	<string name="download_waiting_for_network">"%1$d%%, Väntar på nätverksanslutning…"</string>
 
 	<!-- Settings strings -->
-	<!-- TODO: Translate these lines -->
 	<string name="preference_header_support">Stöd oss</string>
 	<string name="preference_header_device">Enhet</string>
 	<string name="preference_header_ui">UI</string>
@@ -91,7 +90,6 @@
 	<string name="preference_header_advanced">Avancerat</string>
 	<string name="preference_header_about">Om</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="summary_on">På</string>
 	<string name="summary_off">Av</string>
 	<string name="summary_device">Var god vänta …</string>
@@ -100,7 +98,6 @@
 	<string name="summary_privacy_policy">Visa online</string>
 	<string name="summary_rate_app">Ge ett femstjärnigt omdöme</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="label_buy_ad_free">Ta bort reklam</string>
 	<string name="label_theme">Tema</string>
 	<string name="label_app_update_banner">Appuppdaterings-banners</string>
@@ -108,13 +105,11 @@
 	<string name="label_privacy_policy">Integritetspolicy</string>
 	<string name="label_rate_app">Ge appen ett omdöme</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="theme_light">Ljus</string>
 	<string name="theme_dark">Mörk</string>
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<!-- TODO: Translate these lines -->
 	<string name="theme_dark_subtitle">Nedtonad OnePlus-röd primär färg, med en nästan svart bakgrund. Använd detta tema för att spara batteri, speciellt på AMOLED-skärmar</string>
 	<string name="theme_system_subtitle">Använd systemets nattläge (du kan ställa in det i antingen skärminställningar eller utvecklarinställningar). Beror på enhet</string>
 	<string name="theme_auto_subtitle">Byt mellan ljusa och mörka teman baserat på tid på dagen, för att undvika ansträngning för ögonen på nätter</string>
@@ -126,7 +121,6 @@
 	<string name="settings_buy_button_not_possible">"Otillgänglig"</string>
 	<string name="settings_buy_ad_free_label">"Uppgradera till reklamfritt"</string>
 
-	<!-- TODO translate these lines -->
 	<string name="settings_contribute_label">Hjälp till med att förbättra appen:</string>
 	<string name="settings_contribute_button">Bidra</string>
 
@@ -159,7 +153,6 @@ Detta kan vara användbart när du:
 - Ominstallerar din nuvarande systemversion
 "</string>
 	<string name="settings_update_method">"Uppdateringsmetod"</string>
-	<!-- TODO translate -->
 	<string name="settings_upload_logs">Dela användningsdata och loggar</string>
 
 	<!-- FAQ strings -->
@@ -306,9 +299,8 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="install_guide_zip_file_missing">"Om du vill behålla root så måste du välja ett rootpaket ovan."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these lines -->
-	<string name="device_information_hardware_header">Hardware</string>
-	<string name="device_information_software_header">Software</string>
+	<string name="device_information_hardware_header">Hårdvara</string>
+	<string name="device_information_software_header">Mjukvara</string>
 
 	<string name="device_information_amount_of_memory">"Mängd av RAM:"</string>
 	<string name="device_information_cpu_frequency">"Processorfrekvens:"</string>
@@ -391,7 +383,6 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_empty">"Denna artikel har inget innehåll."</string>
 	<string name="news_load_error">"Misslyckades att öppna artikeln. Kontrollera din anslutning och tryck sedan på 'FÖRSÖK IGEN' knappen för att öppna artikeln."</string>
 
-	<!-- TODO translate these lines -->
 	<string name="contribute">Bli en bidragare</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater behöver din hjälp! För att kunna ge dig de senaste uppdateringarna behöver vi namnen på uppdateringsfilerna. Dessa finns på din telefon när en vanlig uppdatering kommer.\n\nHur can jag hjälpa till?\n\nOxygen updater kan automatiskt lämna namn på nya uppdateringsfiler till våra admins. Detta kommer använda en liten mängd data och kan använda lite batteri. Allt du behöver göra är att vänta (ungefär 15 minuter) innan du installerar en officiel systemuppdatering tills du ser en bekräftelse att filen har blivit inlämnad. Bara .ota-directory på din telefon blir skannad en gång per 15 minuter. Den kollar för ett specifikt namn i den mappen.</string>
