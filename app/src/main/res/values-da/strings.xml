@@ -318,7 +318,7 @@
 	<string name="help_change_settings_text">Du kan ændre dine indstillinger ved at trykke på de tre prikke, øverst til højre, efterfølgende med et tryk på Indstillinger.\nDu kan ændre de følgende indstillinger:\n\n• Enhed og opdateringsmetode\n• Push underretninger\n• App meddelelser\n• Privatlivs indstillinger (log uploading).\n\nBrug slå til og fra -switchen, for at slå meddelelser / privatlivsindstillinger til og fra. Vælg en enhed og/eller opdateringsmetode, ved at bruge rullemenuen ovenfor switchene. Vises rullemenuen ikke? Check din internet forbindelse Internet connection og åben skærmen med indstillinger igen.</string>
 
 	<!-- News strings -->
-	<string name="news">Myheder</string>
+	<string name="news">Nyheder</string>
 	<string name="news_author">Forfatter: %1$s</string>
 	<string name="news_date_published">Sidst opdateret: %1$s</string>
 	<string name="news_empty">Ingen kommentarer, til denne artikkel.</string>
