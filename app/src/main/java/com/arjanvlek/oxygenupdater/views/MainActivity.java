@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,7 +42,6 @@ import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import org.joda.time.LocalDateTime;
@@ -63,7 +61,6 @@ import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_NOTI
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SETUP_DONE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE;
 import static com.arjanvlek.oxygenupdater.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE;
-import static java.lang.Math.abs;
 
 public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener {
 
@@ -243,24 +240,16 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
 		adView = findViewById(R.id.updateInformationAdView);
 
-		AppBarLayout appBar = findViewById(R.id.app_bar);
-		// Since we're using an AppBarLayout with scrollFlags set,
-		// we need to ensure AdView stays at the bottom of the screen
-		// instead of staying hidden until the user scrolls the ViewPager
-		// which hides the AppBar and shows AdView
-		appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-			LayoutParams layoutParams = (LayoutParams) adView.getLayoutParams();
-			layoutParams.bottomMargin = appBarLayout.getTotalScrollRange() - abs(verticalOffset);
-
-			// keep AdView at the bottom
-			adView.setLayoutParams(layoutParams);
-		});
-
 		checkAdSupportStatus(adsAreSupported -> {
 			if (adsAreSupported) {
+				// need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
+				// Since the AdView's size is BANNER, bottom padding should be 50dp
+				viewPager.setPadding(0, 0, 0, (int) Utils.dpToPx(this, 66));
 				adView.setVisibility(View.VISIBLE);
 				showAds();
 			} else {
+				// reset viewPager padding
+				viewPager.setPadding(0, 0, 0, 0);
 				adView.setVisibility(View.GONE);
 			}
 		});
