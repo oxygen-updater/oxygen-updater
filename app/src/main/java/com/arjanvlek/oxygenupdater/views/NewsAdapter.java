@@ -45,6 +45,7 @@ import java.util.List;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_ID;
+import static com.arjanvlek.oxygenupdater.news.NewsActivity.INTENT_NEWS_ITEM_POSITION;
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -54,19 +55,22 @@ public class NewsAdapter extends Adapter<NewsViewHolder> {
 	private static final String TAG = "NewsAdapter";
 	private static final SparseArray<Bitmap> imageCache = new SparseArray<>();
 
+	public static NewsItemReadListener newsItemReadListener;
+
 	private final Context context;
 	private final AppCompatActivity activity;
 	private final SettingsManager settingsManager;
 
 	private final List<NewsItem> newsItemList;
 
-	public NewsAdapter(Context context, AppCompatActivity activity, List<NewsItem> newsItemList) {
+	public NewsAdapter(Context context, AppCompatActivity activity, NewsItemReadListener newsItemReadListener, List<NewsItem> newsItemList) {
 		this.context = context;
 		this.activity = activity;
 
 		this.newsItemList = newsItemList;
 
 		settingsManager = new SettingsManager(context);
+		NewsAdapter.newsItemReadListener = newsItemReadListener;
 	}
 
 	@NonNull
@@ -86,7 +90,7 @@ public class NewsAdapter extends Adapter<NewsViewHolder> {
 
 		holder.title.setText(newsItem.getTitle(locale));
 		holder.subtitle.setText(newsItem.getSubtitle(locale));
-		holder.container.setOnClickListener(v -> openNewsItem(newsItem));
+		holder.container.setOnClickListener(v -> openNewsItem(newsItem, position));
 
 		if (newsItem.isRead()) {
 			holder.title.setAlpha(0.5f);
@@ -142,7 +146,7 @@ public class NewsAdapter extends Adapter<NewsViewHolder> {
 		return newsItemList.size();
 	}
 
-	private void openNewsItem(NewsItem newsItem) {
+	private void openNewsItem(NewsItem newsItem, int position) {
 		if (activity instanceof MainActivity) {
 			MainActivity mainActivity = (MainActivity) activity;
 			if (mainActivity.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
@@ -152,7 +156,7 @@ public class NewsAdapter extends Adapter<NewsViewHolder> {
 						@Override
 						public void onAdClosed() {
 							super.onAdClosed();
-							doOpenNewsItem(newsItem);
+							doOpenNewsItem(newsItem, position);
 							ad.loadAd(ApplicationData.buildAdRequest());
 						}
 					});
@@ -165,11 +169,11 @@ public class NewsAdapter extends Adapter<NewsViewHolder> {
 				}
 			} else {
 				// If offline, too many ads are shown or the user has bought the ad-free upgrade, open the news item directly.
-				doOpenNewsItem(newsItem);
+				doOpenNewsItem(newsItem, position);
 			}
 		} else {
 			// If not attached to main activity or coming from other activity, open the news item.
-			doOpenNewsItem(newsItem);
+			doOpenNewsItem(newsItem, position);
 		}
 	}
 
@@ -199,9 +203,10 @@ public class NewsAdapter extends Adapter<NewsViewHolder> {
 		}
 	}
 
-	private void doOpenNewsItem(NewsItem newsItem) {
+	private void doOpenNewsItem(NewsItem newsItem, int position) {
 		Intent intent = new Intent(context, NewsActivity.class);
 		intent.putExtra(INTENT_NEWS_ITEM_ID, newsItem.getId());
+		intent.putExtra(INTENT_NEWS_ITEM_POSITION, position);
 		context.startActivity(intent);
 
 		new Handler().postDelayed(() -> newsItem.setRead(true), 2000);
@@ -223,5 +228,9 @@ public class NewsAdapter extends Adapter<NewsViewHolder> {
 			title = itemView.findViewById(R.id.newsItemTitle);
 			subtitle = itemView.findViewById(R.id.newsItemSubTitle);
 		}
+	}
+
+	public interface NewsItemReadListener {
+		void onNewsItemRead(int position);
 	}
 }
