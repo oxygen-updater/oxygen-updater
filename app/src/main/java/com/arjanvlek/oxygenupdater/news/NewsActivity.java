@@ -1,6 +1,7 @@
 package com.arjanvlek.oxygenupdater.news;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.internal.i18n.Locale;
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
+import com.arjanvlek.oxygenupdater.views.NewsAdapter;
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -27,6 +29,7 @@ import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 public class NewsActivity extends SupportActionBarActivity {
 
 	public static final String INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID";
+	public static final String INTENT_NEWS_ITEM_POSITION = "NEWS_ITEM_POSITION";
 	public static final String INTENT_START_WITH_AD = "START_WITH_AD";
 
 	private WebView webView;
@@ -84,10 +87,12 @@ public class NewsActivity extends SupportActionBarActivity {
 
 	@SuppressLint("SetJavaScriptEnabled")
 	private void loadNewsItem(int retryCount) {
+		Intent intent = getIntent();
+
 		ApplicationData applicationData = (ApplicationData) getApplication();
 		// Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
 		applicationData.getServerConnector()
-				.getNewsItem(applicationData, getIntent().getLongExtra(INTENT_NEWS_ITEM_ID, -1L), (newsItem -> {
+				.getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L), (newsItem -> {
 
 					if (retryCount == 0) {
 						setContentView(R.layout.activity_news);
@@ -122,6 +127,11 @@ public class NewsActivity extends SupportActionBarActivity {
 					NewsDatabaseHelper helper = new NewsDatabaseHelper(getApplication());
 					helper.markNewsItemAsRead(newsItem);
 					helper.close();
+
+					int position = intent.getIntExtra(INTENT_NEWS_ITEM_POSITION, -1);
+					if (position != -1) {
+						NewsAdapter.newsItemReadListener.onNewsItemRead(position);
+					}
 
 					// Display the title of the article.
 					TextView titleView = findViewById(R.id.newsTitle);
@@ -188,7 +198,7 @@ public class NewsActivity extends SupportActionBarActivity {
 									}
 
 									// Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
-									if (getIntent().getBooleanExtra(INTENT_START_WITH_AD, false)
+									if (intent.getBooleanExtra(INTENT_START_WITH_AD, false)
 											&& !new SettingsManager(getApplication()).getPreference(SettingsManager.PROPERTY_AD_FREE, false)) {
 										InterstitialAd interstitialAd = new InterstitialAd(getApplication());
 										interstitialAd.setAdUnitId(getString(R.string.advertising_interstitial_unit_id));

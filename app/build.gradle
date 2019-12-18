@@ -177,19 +177,19 @@ dependencies {
 	// https://developer.android.com/jetpack/androidx/releases/appcompat
 	implementation 'androidx.appcompat:appcompat:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/browser
-	implementation 'androidx.browser:browser:1.2.0-alpha09'
+	implementation 'androidx.browser:browser:1.2.0'
 	// https://developer.android.com/jetpack/androidx/releases/constraintlayout
-	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta3'
+	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 	// https://developer.android.com/jetpack/androidx/releases/fragment
-	implementation 'androidx.fragment:fragment:1.2.0-rc02'
+	implementation 'androidx.fragment:fragment:1.2.0-rc04'
 	// https://developer.android.com/jetpack/androidx/releases/preference
 	implementation 'androidx.preference:preference:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/recyclerview
-	implementation 'androidx.recyclerview:recyclerview:1.1.0-rc01'
+	implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
 	// Google Material Components for Android
 	// https://github.com/material-components/material-components-android/releases
-	implementation 'com.google.android.material:material:1.2.0-alpha01'
+	implementation 'com.google.android.material:material:1.2.0-alpha02'
 
 	// JSON libraries
 	implementation 'com.fasterxml.jackson.core:jackson-core:2.9.9'
@@ -202,7 +202,7 @@ dependencies {
 	// Google Firebase
 	// https://firebase.google.com/support/release-notes/android
 	implementation 'com.google.firebase:firebase-ads:18.3.0'
-	implementation 'com.google.firebase:firebase-messaging:20.0.0'
+	implementation 'com.google.firebase:firebase-messaging:20.1.0'
 	implementation 'com.google.android.gms:play-services-base:17.1.0'
 	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 

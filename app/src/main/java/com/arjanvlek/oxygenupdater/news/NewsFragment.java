@@ -19,6 +19,7 @@ import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 import com.arjanvlek.oxygenupdater.views.AlphaInAnimationAdapter;
 import com.arjanvlek.oxygenupdater.views.MainActivity;
 import com.arjanvlek.oxygenupdater.views.NewsAdapter;
+import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsItemReadListener;
 
 import java.util.List;
 
@@ -27,10 +28,12 @@ import java8.util.function.Consumer;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 
-public class NewsFragment extends AbstractFragment {
+public class NewsFragment extends AbstractFragment implements NewsItemReadListener {
 
 	private static final String TAG = "NewsFragment";
 	private boolean hasBeenLoadedOnce = false;
+
+	private AlphaInAnimationAdapter alphaInAnimationAdapter;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,7 +65,7 @@ public class NewsFragment extends AbstractFragment {
 		RecyclerView newsContainer = view.findViewById(R.id.newsContainer);
 
 		// animate items when they load
-		AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(new NewsAdapter(getContext(), (MainActivity) getActivity(), newsItems));
+		alphaInAnimationAdapter = new AlphaInAnimationAdapter(new NewsAdapter(getContext(), (MainActivity) getActivity(), this, newsItems));
 		alphaInAnimationAdapter.setFirstOnly(false);
 		newsContainer.setAdapter(alphaInAnimationAdapter);
 		newsContainer.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -89,5 +92,10 @@ public class NewsFragment extends AbstractFragment {
 		}
 
 		return 10;
+	}
+
+	@Override
+	public void onNewsItemRead(int position) {
+		alphaInAnimationAdapter.notifyItemChanged(position);
 	}
 }
