@@ -24,7 +24,7 @@
 
 	<!-- Server status warning strings -->
 	<string name="server_status_error">Sommige functies werken niet.</string>
-	<string name="server_status_unreachable">Kan geen verbinding met de server maken…</string>
+	<string name="server_status_unreachable">Er kan geen verbinding gemaakt worden met de server…</string>
 	<string name="server_status_warning">Sommige functies werken mogelijk niet goed.</string>
 
 	<!-- New app version message strings -->
@@ -98,7 +98,7 @@
 	<string name="summary_on">Ingeschakeld</string>
 	<string name="summary_off">Uitgeschakeld</string>
 	<string name="summary_device">Even geduld…</string>
-	<string name="summary_update_method">Selecteer eerst een apparaaat</string>
+	<string name="summary_update_method">Selecteer eerst een apparaat</string>
 	<string name="summary_theme">Selecteer een thema</string>
 	<string name="summary_privacy_policy">Bekijk online</string>
 	<string name="summary_rate_app">Geef een 5-sterren-review</string>
@@ -124,7 +124,7 @@
 	<string name="settings">Instellingen</string>
 	<string name="settings_buy_button_buy">Koop (%1$s)</string>
 	<string name="settings_buy_button_bought">Gekocht</string>
-	<string name="settings_buy_button_not_possible">Niet beschikb.</string>
+	<string name="settings_buy_button_not_possible">Niet beschikbaar</string>
 	<string name="settings_buy_ad_free_label">Verwijder advertenties</string>
 	<string name="settings_contribute_label">Verbeter de app voor anderen</string>
 	<string name="settings_contribute_button">Draag bij</string>
@@ -214,11 +214,11 @@
 
 	<string name="install_select_method_title">Hoe wil je deze update installeren?</string>
 	<string name="install_select_method_automatic_title">Automatische installatie*</string>
-	<string name="install_select_method_automatic_image">Plaatje van de automatische installatie</string>
+	<string name="install_select_method_automatic_image">Afbeelding van de automatische installatie</string>
 	<string name="install_select_method_automatic_description">De eenvoudigste manier om de update te installeren.\nJe apparaat start opnieuw op en installeert de update vervolgens vanzelf.\n\n* Vereist root-toegang en TWRP-recovery.</string>
 
 	<string name="install_select_method_manual_title">Handmatige installatie</string>
-	<string name="install_select_method_manual_image">Plaatje van de handmatige installatie</string>
+	<string name="install_select_method_manual_image">Afbeelding van de handmatige installatie</string>
 	<string name="install_select_method_manual_description">Lees de installatie-handleiding om te leren hoe je de update zelf kunt installeren. Je installeert de update via de herstelmodus van je apparaat.</string>
 
 	<string name="install_temporary_error">Er heeft zich een tijdelijke fout voorgedaan bij het voorbereiden van de installatie van de update. Probeer het opnieuw.</string>
@@ -276,7 +276,7 @@
 	<string name="device_information_cpu_frequency">Processorsnelheid:</string>
 	<string name="device_information_header">Mijn apparaat</string>
 	<string name="device_information_header_short">Mijn apparaat</string>
-	<string name="device_information_image_description">Plaatje van jouw apparaat</string>
+	<string name="device_information_image_description">Afbeelding van jouw apparaat</string>
 	<string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
 	<string name="device_information_os_version">Android-versie:</string>
 	<string name="device_information_oxygen_os_version">OxygenOS-versie:</string>
@@ -292,7 +292,7 @@
 	<string name="about">Over deze app</string>
 	<string name="about_app_description">De ultieme app voor alles over Oxygen OS-updates.</string>
 	<!-- TODO translate this string -->
-	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een gelijknamige functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de OnePlus-gemeenschap tevreden te stellen door een goede ondersteuning &amp; te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>. \n\n\nOnthoud dat dit geen officiële OnePlus-applicatie is.\nDe OnePlus naam, het OnePlus Logo en OxygenOS zijn eigendommen van OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel de app dan alsjeblieft nu op de Google Play Store:</string>
+	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een vergelijkbare functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de gemeenschap tevreden te stellen door een goede ondersteuning &amp; te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>. \n\n\nOnthoud dat dit geen officiële OnePlus-applicatie is.\nDe OnePlus naam, het OnePlus Logo en OxygenOS zijn eigendommen van OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel de app dan alsjeblieft nu op de Google Play Store:</string>
 	<string name="about_rate_app_button_text">Beoordeel op Google Play</string>
 	<string name="about_version">Versie: %1$s</string>
 
