@@ -24,7 +24,7 @@
 
 	<!-- Server status warning strings -->
 	<string name="server_status_error">Sommige functies werken niet.</string>
-	<string name="server_status_unreachable">Er kan geen verbinding gemaakt worden met de server…</string>
+	<string name="server_status_unreachable">De server kan niet worden bereikt. Probeer de pagina te vernieuwen.</string>
 	<string name="server_status_warning">Sommige functies werken mogelijk niet goed.</string>
 
 	<!-- New app version message strings -->
