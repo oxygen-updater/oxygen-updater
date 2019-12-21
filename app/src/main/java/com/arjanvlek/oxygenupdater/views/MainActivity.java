@@ -30,6 +30,8 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment;
+import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec;
+import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.news.NewsFragment;
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog;
@@ -100,9 +102,11 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 		// Supported device check
 		if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
 			ApplicationData application = ((ApplicationData) getApplication());
-			application.getServerConnector().getDevices(result -> {
-				if (!Utils.isSupportedDevice(application.getSystemVersionProperties(), result)) {
-					displayUnsupportedDeviceMessage();
+			application.getServerConnector().getDevices(DeviceRequestFilter.ALL, result -> {
+				DeviceOsSpec deviceOsSpec = Utils.checkDeviceOsSpec(application.getSystemVersionProperties(), result);
+
+				if (!deviceOsSpec.isDeviceOsSpecSupported()) {
+					displayUnsupportedDeviceOsSpecMessage(deviceOsSpec);
 				}
 			});
 		}
@@ -324,18 +328,32 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 		adView.loadAd(ApplicationData.buildAdRequest());
 	}
 
-	public void displayUnsupportedDeviceMessage() {
+	private void displayUnsupportedDeviceOsSpecMessage(DeviceOsSpec deviceOsSpec) {
 		View checkBoxView = View.inflate(MainActivity.this, R.layout.message_dialog_checkbox, null);
 		CheckBox checkBox = checkBoxView.findViewById(R.id.unsupported_device_warning_checkbox);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setView(checkBoxView);
 		builder.setTitle(getString(R.string.unsupported_device_warning_title));
-		builder.setMessage(getString(R.string.unsupported_device_warning_message));
+
+		int resourceId;
+
+		switch (deviceOsSpec) {
+			case CARRIER_EXCLUSIVE_OXYGEN_OS:
+				resourceId = R.string.carrier_exclusive_device_warning_message;
+				break;
+			case UNSUPPORTED_OXYGEN_OS:
+				resourceId = R.string.unsupported_device_warning_message;
+				break;
+			case UNSUPPORTED_OS:
+			default:
+				resourceId = R.string.unsupported_os_warning_message;
+		}
+
+		builder.setMessage(getString(resourceId));
 
 		builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> {
-			settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox
-					.isChecked());
+			settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkBox.isChecked());
 			dialog.dismiss();
 		});
 

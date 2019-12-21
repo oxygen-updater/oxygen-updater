@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 
 import org.joda.time.LocalDateTime;
@@ -18,9 +19,6 @@ import org.joda.time.LocalDateTime;
 import java.text.DateFormat;
 import java.util.List;
 import java.util.Random;
-
-import java8.util.Optional;
-import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
@@ -68,7 +66,7 @@ public class Utils {
 		return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 	}
 
-	public static synchronized boolean isSupportedDevice(SystemVersionProperties systemVersionProperties, List<Device> devices) {
+	public static synchronized DeviceOsSpec checkDeviceOsSpec(SystemVersionProperties systemVersionProperties, List<Device> devices) {
 		String oemFingerPrint = systemVersionProperties.getOemFingerprint();
 		String oxygenOsVersion = systemVersionProperties.getOxygenOSVersion();
 
@@ -80,14 +78,35 @@ public class Utils {
 
 		if (devices == null || devices.isEmpty()) {
 			// To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
-			return firmwareIsSupported;
+			return firmwareIsSupported ? DeviceOsSpec.SUPPORTED_OXYGEN_OS : DeviceOsSpec.UNSUPPORTED_OS;
 		}
 
-		Optional<Device> supportedDevice = StreamSupport.stream(devices)
-				.filter(d -> d.getProductNames() != null && d.getProductNames().contains(systemVersionProperties.getOxygenDeviceName()))
-				.findAny();
+		if (firmwareIsSupported) {
+			// user's device is definitely running OxygenOS, now onto other checks...
+			for (Device device : devices) {
+				List<String> productNames = device.getProductNames();
 
-		return supportedDevice.isPresent() && firmwareIsSupported;
+				// find the user's device in the list of devices retrieved from the server
+				if (productNames != null && productNames.contains(systemVersionProperties.getOxygenDeviceName())) {
+					if (device.isEnabled()) {
+						// device found, and is enabled, which means it is supported
+						return DeviceOsSpec.SUPPORTED_OXYGEN_OS;
+					} else {
+						// device found, but is disabled, which means it's a carrier-exclusive
+						// because only carrier-exclusive devices are disabled in the database
+						return DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS;
+					}
+				}
+			}
+
+			// device not found among the server-provided list
+			// hence, must be a newly-released OnePlus device that we're yet to add support for
+			return DeviceOsSpec.UNSUPPORTED_OXYGEN_OS;
+		} else {
+			// device isn't running OxygenOS at all
+			// note: the device may very well be a OnePlus device, but in this case it's running a custom ROM, which we don't support duh
+			return DeviceOsSpec.UNSUPPORTED_OS;
+		}
 	}
 
 	public static String formatDateTime(Context context, String dateTimeString) {

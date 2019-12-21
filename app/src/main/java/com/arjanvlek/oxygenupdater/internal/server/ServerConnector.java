@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall;
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage;
@@ -78,32 +79,80 @@ public class ServerConnector implements Cloneable {
 	private final ObjectMapper objectMapper;
 	private final SettingsManager settingsManager;
 
-	private final List<Device> devices;
-	private LocalDateTime deviceFetchDate;
+	private final List<Device> allDevices;
+	private final List<Device> enabledDevices;
+	private final List<Device> disabledDevices;
+	private LocalDateTime allDevicesFetchDate;
+	private LocalDateTime enabledDevicesFetchDate;
+	private LocalDateTime disabledDevicesFetchDate;
 	private ServerStatus serverStatus;
 
 	public ServerConnector(SettingsManager settingsManager) {
 		this.settingsManager = settingsManager;
 		objectMapper = new ObjectMapper();
-		devices = new ArrayList<>();
+		allDevices = new ArrayList<>();
+		enabledDevices = new ArrayList<>();
+		disabledDevices = new ArrayList<>();
 	}
 
-	public void getDevices(Consumer<List<Device>> callback) {
-		getDevices(false, callback);
+	public void getDevices(DeviceRequestFilter filter, Consumer<List<Device>> callback) {
+		getDevices(filter, false, callback);
 	}
 
-	public void getDevices(boolean alwaysFetch, Consumer<List<Device>> callback) {
-		if (deviceFetchDate != null && deviceFetchDate.plusMinutes(5).isAfter(LocalDateTime.now()) && !alwaysFetch) {
+	public void getDevices(DeviceRequestFilter filter, boolean alwaysFetch, Consumer<List<Device>> callback) {
+		boolean cachePreCondition;
+
+		switch (filter) {
+			case ALL:
+				cachePreCondition = allDevicesFetchDate != null && allDevicesFetchDate.plusMinutes(5).isAfter(LocalDateTime.now());
+				break;
+			case ENABLED:
+				cachePreCondition = enabledDevicesFetchDate != null && enabledDevicesFetchDate.plusMinutes(5).isAfter(LocalDateTime.now());
+				break;
+			case DISABLED:
+				cachePreCondition = disabledDevicesFetchDate != null && disabledDevicesFetchDate.plusMinutes(5).isAfter(LocalDateTime.now());
+				break;
+			default:
+				cachePreCondition = false;
+		}
+
+		if (cachePreCondition && !alwaysFetch) {
 			logVerbose(TAG, "Used local cache to fetch devices...");
-			callback.accept(devices);
+			switch (filter) {
+				case ALL:
+					callback.accept(allDevices);
+					break;
+				case ENABLED:
+					callback.accept(enabledDevices);
+					break;
+				case DISABLED:
+					callback.accept(disabledDevices);
+					break;
+				default:
+					callback.accept(new ArrayList<>());
+			}
 		} else {
 			logVerbose(TAG, "Used remote server to fetch devices...");
 			new CollectionResponseExecutor<Device>(ServerRequest.DEVICES, devices -> {
-				this.devices.clear();
-				this.devices.addAll(devices);
-				deviceFetchDate = LocalDateTime.now();
+				switch (filter) {
+					case ALL:
+						allDevicesFetchDate = LocalDateTime.now();
+						allDevices.clear();
+						allDevices.addAll(devices);
+						break;
+					case ENABLED:
+						enabledDevicesFetchDate = LocalDateTime.now();
+						enabledDevices.clear();
+						enabledDevices.addAll(devices);
+						break;
+					case DISABLED:
+						disabledDevicesFetchDate = LocalDateTime.now();
+						disabledDevices.clear();
+						disabledDevices.addAll(devices);
+						break;
+				}
 				callback.accept(devices);
-			}).execute();
+			}, filter.getFilter()).execute();
 		}
 	}
 

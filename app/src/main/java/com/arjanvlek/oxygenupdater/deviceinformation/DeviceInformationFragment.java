@@ -13,8 +13,8 @@ import androidx.core.widget.NestedScrollView;
 
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
-import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
 
@@ -24,7 +24,6 @@ import java8.util.stream.StreamSupport;
 
 import static com.arjanvlek.oxygenupdater.ApplicationData.NO_OXYGEN_OS;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug;
-import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logError;
 import static com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning;
 
 public class DeviceInformationFragment extends AbstractFragment {
@@ -50,7 +49,7 @@ public class DeviceInformationFragment extends AbstractFragment {
 		}
 
 		displayDeviceInformation();
-		getApplicationData().getServerConnector().getDevices(this::displayFormattedDeviceName);
+		getApplicationData().getServerConnector().getDevices(DeviceRequestFilter.ENABLED, this::displayFormattedDeviceName);
 	}
 
 	private void displayFormattedDeviceName(List<Device> devices) {

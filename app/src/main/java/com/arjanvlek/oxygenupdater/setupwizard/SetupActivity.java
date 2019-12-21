@@ -23,6 +23,8 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.contribution.ContributorUtils;
+import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec;
+import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter;
 import com.arjanvlek.oxygenupdater.internal.SetupUtils;
 import com.arjanvlek.oxygenupdater.internal.Utils;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
@@ -58,9 +60,11 @@ public class SetupActivity extends AppCompatActivity {
 
 		if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
 			ApplicationData applicationData = ((ApplicationData) getApplication());
-			applicationData.getServerConnector().getDevices(result -> {
-				if (!Utils.isSupportedDevice(applicationData.getSystemVersionProperties(), result)) {
-					displayUnsupportedDeviceMessage();
+			applicationData.getServerConnector().getDevices(DeviceRequestFilter.ALL, result -> {
+				DeviceOsSpec deviceOsSpec = Utils.checkDeviceOsSpec(applicationData.getSystemVersionProperties(), result);
+
+				if (!deviceOsSpec.isDeviceOsSpecSupported()) {
+					displayUnsupportedDeviceOsSpecMessage(deviceOsSpec);
 				}
 			});
 		}
@@ -102,7 +106,7 @@ public class SetupActivity extends AppCompatActivity {
 
 	}
 
-	public void displayUnsupportedDeviceMessage() {
+	private void displayUnsupportedDeviceOsSpecMessage(DeviceOsSpec deviceOsSpec) {
 		// Do not show dialog if app was already exited upon receiving of devices from the server.
 		if (isFinishing()) {
 			return;
@@ -110,10 +114,24 @@ public class SetupActivity extends AppCompatActivity {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(SetupActivity.this);
 		builder.setTitle(getString(R.string.unsupported_device_warning_title));
-		builder.setMessage(getString(R.string.unsupported_device_warning_message));
 
-		builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> dialog
-				.dismiss());
+		int resourceId;
+
+		switch (deviceOsSpec) {
+			case CARRIER_EXCLUSIVE_OXYGEN_OS:
+				resourceId = R.string.carrier_exclusive_device_warning_message;
+				break;
+			case UNSUPPORTED_OXYGEN_OS:
+				resourceId = R.string.unsupported_device_warning_message;
+				break;
+			case UNSUPPORTED_OS:
+			default:
+				resourceId = R.string.unsupported_os_warning_message;
+		}
+
+		builder.setMessage(getString(resourceId));
+
+		builder.setPositiveButton(getString(R.string.download_error_close), (dialog, which) -> dialog.dismiss());
 		builder.show();
 	}
 

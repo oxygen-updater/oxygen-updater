@@ -21,6 +21,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.BuildConfig;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils;
@@ -116,7 +117,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnPref
 		devicePreference.setEnabled(false);
 		updateMethodPreference.setEnabled(false);
 
-		application.getServerConnector().getDevices(true, this::populateDeviceSettings);
+		application.getServerConnector().getDevices(DeviceRequestFilter.ENABLED, true, this::populateDeviceSettings);
 	}
 
 	private void setupThemePreference() {

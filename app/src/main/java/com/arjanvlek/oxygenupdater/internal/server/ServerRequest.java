@@ -22,7 +22,7 @@ import static com.arjanvlek.oxygenupdater.internal.server.ServerRequest.RequestM
 
 enum ServerRequest {
 
-	DEVICES("devices", Device.class),
+	DEVICES("devices/%1$s", Device.class),
 
 	UPDATE_METHODS("updateMethods/%1d", UpdateMethod.class),
 	ALL_UPDATE_METHODS("allUpdateMethods", UpdateMethod.class),

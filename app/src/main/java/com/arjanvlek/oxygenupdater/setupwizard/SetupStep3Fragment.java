@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.R;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter;
 import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 import com.arjanvlek.oxygenupdater.views.AbstractFragment;
@@ -38,7 +39,7 @@ public class SetupStep3Fragment extends AbstractFragment {
 	}
 
 	public void fetchDevices() {
-		getApplicationData().getServerConnector().getDevices(this::fillDeviceSettings);
+		getApplicationData().getServerConnector().getDevices(DeviceRequestFilter.ENABLED, this::fillDeviceSettings);
 	}
 
 

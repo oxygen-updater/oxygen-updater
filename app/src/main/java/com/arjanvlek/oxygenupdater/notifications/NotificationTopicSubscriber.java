@@ -2,6 +2,7 @@ package com.arjanvlek.oxygenupdater.notifications;
 
 import com.arjanvlek.oxygenupdater.ApplicationData;
 import com.arjanvlek.oxygenupdater.domain.Device;
+import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter;
 import com.arjanvlek.oxygenupdater.domain.UpdateMethod;
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector;
 import com.arjanvlek.oxygenupdater.settings.SettingsManager;
@@ -26,7 +27,7 @@ public class NotificationTopicSubscriber {
 		String oldTopic = settingsManager.getPreference(PROPERTY_NOTIFICATION_TOPIC, null);
 
 		if (oldTopic == null) {
-			serverConnector.getDevices(devices -> serverConnector.getAllUpdateMethods(updateMethods -> {
+			serverConnector.getDevices(DeviceRequestFilter.ENABLED, devices -> serverConnector.getAllUpdateMethods(updateMethods -> {
 				// If the topic is not saved (App Version 1.0.0 did not do this), unsubscribe from all possible topics first to prevent duplicate / wrong notifications.
 				for (UpdateMethod method : updateMethods) {
 					for (Device device : devices) {
