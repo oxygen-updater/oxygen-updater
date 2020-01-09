@@ -173,10 +173,8 @@ repositories {
 dependencies {
 	implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-	compileOnly 'org.projectlombok:lombok:1.18.10'
-	annotationProcessor 'org.projectlombok:lombok:1.18.10'
-
 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61'
+	testImplementation 'org.jetbrains.kotlin:kotlin-test-junit:1.3.61'
 
 	// AndroidX: https://developer.android.com/jetpack/androidx/releases
 	// https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -220,9 +218,6 @@ dependencies {
 	// Update installation libraries
 	implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
 	implementation 'andhradroid.dev:aFilechooser:1.0.1'
-
-	// Java 8 backports:
-	implementation 'net.sourceforge.streamsupport:streamsupport:1.7.1'
 
 	testImplementation 'junit:junit:4.13'
 

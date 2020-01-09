@@ -15,6 +15,7 @@ class DeviceInformationData {
     val incrementalOsVersion: String = Build.VERSION.INCREMENTAL
     val cpuFrequency = calculateCpuFrequency()
 
+    @Suppress("DEPRECATION")
     @SuppressLint("HardwareIds")
     // Only used on older Android versions.
     // Serial number is only used on older Android versions as it requires too much permissions on O and higher.

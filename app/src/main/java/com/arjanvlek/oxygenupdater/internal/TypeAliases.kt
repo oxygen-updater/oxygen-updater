@@ -5,12 +5,12 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Inventory
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase
 
 /**
- * Generic Kotlin callback. This used to be [java8.util.function.Consumer] in Java
+ * Generic Kotlin callback. This used to be [java.util.function.Consumer] in Java
  */
 typealias KotlinCallback<E> = (E) -> Unit
 
 /**
- * Generic Kotlin function. This used to be [java8.util.function.Function] in Java
+ * Generic Kotlin function. This used to be [java.util.function.Function] in Java
  */
 typealias KotlinFunction<T, R> = (T) -> R
 

@@ -92,14 +92,14 @@ class SystemVersionProperties {
     /**
      * Only called from within the tests, as we do not want to call the real `getprop` command from there.
      */
-    constructor(oxygenDeviceName: String, oxygenOSVersion: String, oxygenOSOTAVersion: String, securityPatchDate: String, oemFingerprint: String, ABPartitionLayout: Boolean) {
+    constructor(oxygenDeviceName: String?, oxygenOSVersion: String?, oxygenOSOTAVersion: String?, securityPatchDate: String?, oemFingerprint: String?, ABPartitionLayout: Boolean) {
         println("Warning: SystemVersionProperties was constructed using a debug constructor. This should only happen during unit tests!")
 
-        this.oxygenDeviceName = oxygenDeviceName
-        this.oxygenOSVersion = oxygenOSVersion
-        this.oxygenOSOTAVersion = oxygenOSOTAVersion
-        this.securityPatchDate = securityPatchDate
-        this.oemFingerprint = oemFingerprint
+        this.oxygenDeviceName = oxygenDeviceName ?: ""
+        this.oxygenOSVersion = oxygenOSVersion ?: ""
+        this.oxygenOSOTAVersion = oxygenOSOTAVersion ?: ""
+        this.securityPatchDate = securityPatchDate ?: ""
+        this.oemFingerprint = oemFingerprint ?: ""
         this.isABPartitionLayout = ABPartitionLayout
     }
 
@@ -121,12 +121,12 @@ class SystemVersionProperties {
 
         items.forEach { item ->
             val reader = BufferedReader(StringReader(buildProperties))
-            var inputLine: String
+            var inputLine: String?
 
             while (reader.readLine().also { inputLine = it } != null) {
-                if (inputLine.contains(item)) {
+                if (inputLine!!.contains(item)) {
                     // Remove brackets ([ and ]) and ":" from the getprop command output line
-                    result = inputLine.replace("[$item]: ", "")
+                    result = inputLine!!.replace("[$item]: ", "")
                         .replace("[", "")
                         .replace("]", "")
 

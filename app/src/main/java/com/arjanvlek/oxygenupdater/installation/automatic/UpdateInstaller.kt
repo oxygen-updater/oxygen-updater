@@ -149,7 +149,7 @@ object UpdateInstaller {
             commands.forEach { logVerbose("UpdateInstaller", "Running SU command: $it") }
         }
 
-        val commandsOutput = Shell.SU.run(commands)
+        @Suppress("DEPRECATION") val commandsOutput = Shell.SU.run(commands)
 
         if (commandsOutput.isNullOrEmpty() || commandsOutput[0] != TEXT_SUCCESS) {
             throw UpdateInstallationException(

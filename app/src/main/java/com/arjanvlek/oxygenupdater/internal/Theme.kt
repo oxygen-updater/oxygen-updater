@@ -1,7 +1,5 @@
 package com.arjanvlek.oxygenupdater.internal
 
-import lombok.Getter
-
 /**
  * Integer values for app and OnePlus' system themes.
  *
@@ -16,7 +14,6 @@ import lombok.Getter
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  * @see ThemeUtils.OEM_BLACK_MODE
  */
-@Getter
 internal enum class Theme(private val value: Int) {
     LIGHT(0),
     DARK(1),

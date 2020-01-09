@@ -26,7 +26,6 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import java8.util.function.Function
 import kotlinx.android.synthetic.main.fragment_install_guide.*
 import java.net.MalformedURLException
 import java.net.URL
@@ -135,7 +134,7 @@ class InstallGuideFragment : Fragment() {
         val imageView = installGuideView.findViewById<ImageView>(R.id.installGuideImage)
         if (installGuidePage.useCustomImage) {
             // Fetch the custom image from the server.
-            FunctionalAsyncTask<Void?, Void, Bitmap?>({}, Function {
+            FunctionalAsyncTask<Void?, Void, Bitmap?>({},  {
                 var image: Bitmap?
 
                 try {

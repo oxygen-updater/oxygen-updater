@@ -33,7 +33,6 @@ import com.arjanvlek.oxygenupdater.news.NewsItem
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsViewHolder
 import com.google.android.gms.ads.AdListener
-import java8.util.function.Function
 import org.joda.time.LocalDateTime
 import java.net.MalformedURLException
 
@@ -68,19 +67,19 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
         FunctionalAsyncTask<Void?, Void, Bitmap?>({
             holder.image.visibility = INVISIBLE
             holder.imagePlaceholder.visibility = VISIBLE
-        }, Function {
+        }, {
             if (newsItem.id == null) {
-                return@Function null
+                null
+            } else {
+                var image = imageCache[newsItem.id.toInt()]
+                if (image != null) {
+                    image
+                } else {
+                    image = doGetImage(newsItem.imageUrl)
+                    imageCache.put(newsItem.id.toInt(), image)
+                    image
+                }
             }
-
-            var image = imageCache[newsItem.id.toInt()]
-            if (image != null) {
-                return@Function image
-            }
-
-            image = doGetImage(newsItem.imageUrl)
-            imageCache.put(newsItem.id.toInt(), image)
-            image
         }, Callback@{ image: Bitmap? ->
             if (context == null || activity == null) {
                 return@Callback

@@ -45,7 +45,6 @@ import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ipaulpro.afilechooser.FileChooserActivity
 import com.ipaulpro.afilechooser.utils.FileUtils
-import java8.util.function.Function
 import kotlinx.android.synthetic.main.activity_install_guide.*
 import kotlinx.android.synthetic.main.fragment_choose_install_method.*
 import kotlinx.android.synthetic.main.fragment_install_options.*
@@ -186,7 +185,7 @@ class InstallActivity : SupportActionBarActivity() {
             val targetOSVersion = updateData!!.otaVersionNumber!!
 
             logInstallationStart(application, currentOSVersion, targetOSVersion, currentOSVersion) {
-                FunctionalAsyncTask<Void?, Void, String>({}, Function {
+                FunctionalAsyncTask<Void?, Void, String?>({}, {
                     try {
                         settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
                         settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
@@ -196,14 +195,14 @@ class InstallActivity : SupportActionBarActivity() {
                             Environment.getExternalStoragePublicDirectory(DownloadService.DIRECTORY_ROOT).path + File.separator + updateData!!.filename
 
                         installUpdate(application, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice)
-                        return@Function null
+                        null
                     } catch (e: UpdateInstallationException) {
-                        return@Function e.message
+                        e.message
                     } catch (e: InterruptedException) {
                         logWarning(TAG, "Error installing update", e)
-                        return@Function getString(R.string.install_temporary_error)
+                        getString(R.string.install_temporary_error)
                     }
-                }, { errorMessage ->
+                }, { errorMessage: String? ->
                     if (errorMessage != null) {
                         // Cancel the verification planned on reboot.
                         settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
@@ -362,7 +361,7 @@ class InstallActivity : SupportActionBarActivity() {
         startOs: String,
         destinationOs: String,
         currentOs: String,
-        successFunction: () -> AsyncTask<Void?, Void, String>
+        successFunction: () -> AsyncTask<Void?, Void, String?>
     ) {
         // Create installation ID.
         val installationId = UUID.randomUUID().toString()

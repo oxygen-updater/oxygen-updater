@@ -124,6 +124,7 @@ class DelayedPushNotificationDisplayer : JobService() {
     }
 
     private fun getNotificationId(type: NotificationType): Int {
+        @Suppress("REDUNDANT_ELSE_IN_WHEN")
         return when (type) {
             NEW_DEVICE -> NEW_DEVICE_NOTIFICATION_ID
             NEW_VERSION -> NEW_UPDATE_NOTIFICATION_ID
@@ -162,10 +163,12 @@ class DelayedPushNotificationDisplayer : JobService() {
             .setContentText(message)
     }
 
+
     private val notificationBuilder: NotificationCompat.Builder
         get() = if (Build.VERSION.SDK_INT >= 26) {
             NotificationCompat.Builder(this, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
         } else {
+            @Suppress("DEPRECATION")
             NotificationCompat.Builder(this)
         }
 

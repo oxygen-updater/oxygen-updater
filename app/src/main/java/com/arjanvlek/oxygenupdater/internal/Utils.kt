@@ -86,7 +86,7 @@ object Utils {
             // user's device is definitely running OxygenOS, now onto other checks...
             devices.forEach {
                 // find the user's device in the list of devices retrieved from the server
-                if (it.productNames?.contains(systemVersionProperties.oxygenDeviceName) == true) {
+                if (it.productNames.contains(systemVersionProperties.oxygenDeviceName)) {
                     return if (it.enabled) {
                         // device found, and is enabled, which means it is supported
                         SUPPORTED_OXYGEN_OS
