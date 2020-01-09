@@ -36,7 +36,8 @@
 		android:label="${appName}"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.Oxygen"
-		android:usesCleartextTraffic="true">
+		android:usesCleartextTraffic="true"
+		tools:targetApi="m">
 		<!-- Cleartext traffic is required to fix download errors after targeting API 28 because the Download URLs of OnePlus are not HTTPS.  -->
 		<!-- Fix Google Ads crashing when app targets API 28 or up as per https://developers.google.com/maps/documentation/android-sdk/config#specify_requirement_for_apache_http_legacy_library -->
 		<uses-library
@@ -59,7 +60,9 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 
-			<intent-filter android:autoVerify="true">
+			<intent-filter
+				android:autoVerify="true"
+				tools:targetApi="m">
 				<action android:name="android.intent.action.VIEW" />
 
 				<category android:name="android.intent.category.DEFAULT" />

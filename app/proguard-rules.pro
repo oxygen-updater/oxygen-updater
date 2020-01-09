@@ -33,9 +33,15 @@
 -keepclassmembers class * {
      @com.fasterxml.jackson.annotation.* *;
 }
+-keep class kotlin.Metadata {
+    *;
+}
+-keep class kotlin.reflect.** {
+    *;
+}
 
 # We need to keep the method names of all getters and setters to allow Jackson to find them.
 -keep public class com.arjanvlek.oxygenupdater.** {
-  public void set*(***);
-  public *** get*();
+    public void set*(***);
+    public *** get*();
 }
