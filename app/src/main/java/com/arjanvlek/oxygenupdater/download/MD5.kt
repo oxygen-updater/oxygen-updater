@@ -8,6 +8,7 @@
  */
 package com.arjanvlek.oxygenupdater.download
 
+import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
 import java.io.File
@@ -89,6 +90,34 @@ internal object MD5 {
             } catch (e: IOException) {
                 logError(TAG, "Exception on closing MD5 input stream", e)
             }
+        }
+    }
+
+    fun calculateMD5(deviceId: String): String {
+        return try {
+            // Create MD5 Hash
+            val digest = MessageDigest.getInstance("MD5")
+
+            digest.update(deviceId.toByteArray())
+
+            val messageDigest = digest.digest()
+
+            // Create Hex String
+            val hexString = StringBuilder()
+            for (b in messageDigest) {
+                val h = StringBuilder(Integer.toHexString(0xFF and b.toInt()))
+
+                while (h.length < 2) {
+                    h.insert(0, "0")
+                }
+
+                hexString.append(h)
+            }
+
+            hexString.toString()
+        } catch (e: NoSuchAlgorithmException) {
+            logError(TAG, OxygenUpdaterException(e.message))
+            ""
         }
     }
 }

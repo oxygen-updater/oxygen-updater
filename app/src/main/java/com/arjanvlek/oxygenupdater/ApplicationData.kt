@@ -1,14 +1,16 @@
 package com.arjanvlek.oxygenupdater
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
+import com.arjanvlek.oxygenupdater.download.MD5
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.downloader.PRDownloader
@@ -18,6 +20,7 @@ import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
+import java.util.*
 import kotlin.system.exitProcess
 
 class ApplicationData : Application() {
@@ -52,6 +55,14 @@ class ApplicationData : Application() {
 
         setupCrashReporting()
         setupDownloader()
+
+        // If it's a debug build, add current device's ID to the list of test device IDs for ads
+        if (BuildConfig.DEBUG) {
+            @SuppressLint("HardwareIds")
+            val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+            val deviceId: String = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
+            ADS_TEST_DEVICES.add(deviceId)
+        }
     }
 
     /**
@@ -136,11 +147,14 @@ class ApplicationData : Application() {
         private const val TAG = "ApplicationData"
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
+        // Test devices for ads.
+        private val ADS_TEST_DEVICES = mutableListOf("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843")
+
         @JvmStatic
         fun buildAdRequest(): AdRequest {
             val adRequest = AdRequest.Builder()
 
-            AbstractFragment.ADS_TEST_DEVICES.forEach {
+            ADS_TEST_DEVICES.forEach {
                 adRequest.addTestDevice(it)
             }
 
