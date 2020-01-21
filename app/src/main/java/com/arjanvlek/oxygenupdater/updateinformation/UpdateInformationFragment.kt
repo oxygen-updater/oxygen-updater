@@ -38,6 +38,7 @@ import com.arjanvlek.oxygenupdater.download.DownloadStatus.NOT_DOWNLOADING
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.VERIFYING
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showAppOutdatedError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showDownloadError

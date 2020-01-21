@@ -17,6 +17,7 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker
+import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
@@ -30,7 +31,6 @@ import com.arjanvlek.oxygenupdater.news.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase
-import com.arjanvlek.oxygenupdater.updateinformation.Banner
 import com.fasterxml.jackson.core.JsonProcessingException
 import org.joda.time.LocalDateTime
 import org.json.JSONException

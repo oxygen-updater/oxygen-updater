@@ -106,7 +106,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class DownloadService : IntentService(TAG) {
 
-    private lateinit var updateData: UpdateData
+    private var updateData: UpdateData? = null
 
     // Progress calculation data
     private val measurements = ArrayList<Double>()
@@ -450,7 +450,7 @@ class DownloadService : IntentService(TAG) {
     }
 
     @Synchronized
-    private fun resumeDownload(downloadId: Int, updateData: UpdateData) {
+    private fun resumeDownload(downloadId: Int, updateData: UpdateData?) {
         logDebug(TAG, "Resuming download #$downloadId")
 
         if (!isStateTransitionAllowed(DOWNLOAD_QUEUED)) {
@@ -799,7 +799,7 @@ class DownloadService : IntentService(TAG) {
         return File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.filename).exists()
     }
 
-    private fun resumeDownloadOnReconnectingToNetwork(downloadId: Int, updateData: UpdateData) {
+    private fun resumeDownloadOnReconnectingToNetwork(downloadId: Int, updateData: UpdateData?) {
         val handler = Handler()
 
         if (autoResumeOnConnectionErrorRunnable == null) {

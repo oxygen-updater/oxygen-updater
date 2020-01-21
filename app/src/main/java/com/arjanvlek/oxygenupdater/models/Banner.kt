@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.updateinformation
+package com.arjanvlek.oxygenupdater.models
 
 import android.content.Context
 

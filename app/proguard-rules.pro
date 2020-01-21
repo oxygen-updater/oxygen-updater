@@ -27,7 +27,7 @@
 -keep class kotlin.reflect.** { *; }
 
 # We need to keep the method names of all getters and setters to allow Jackson to find them.
--keep class com.arjanvlek.oxygenupdater.domain.** { *; }
+-keep class com.arjanvlek.oxygenupdater.models.** { *; }
 
 # Removing this results in `ClassNotFoundException`
 -keep class com.arjanvlek.oxygenupdater.internal.i18n.AppLocale

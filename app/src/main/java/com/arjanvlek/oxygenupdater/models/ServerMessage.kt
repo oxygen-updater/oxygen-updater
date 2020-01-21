@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
-import com.arjanvlek.oxygenupdater.updateinformation.Banner
 
 data class ServerMessage(
     var id: Long = 0,
