@@ -38,6 +38,7 @@ import com.arjanvlek.oxygenupdater.download.DownloadStatus.NOT_DOWNLOADING
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.VERIFYING
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showAppOutdatedError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showDownloadError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showNoNetworkConnectionError
@@ -290,7 +291,7 @@ class UpdateInformationFragment : AbstractFragment() {
                 savePreference(SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable())
                 savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
-                savePreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.isSystemIsUpToDate)
+                savePreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
             }
         }
 
@@ -398,7 +399,7 @@ class UpdateInformationFragment : AbstractFragment() {
             downloadSizeImage.visibility = GONE
             downloadSizeView.visibility = GONE
         } else {
-            headerLabel.text = if (updateData.isSystemIsUpToDate) {
+            headerLabel.text = if (updateData.systemIsUpToDate) {
                 getString(R.string.update_information_installed_update)
             } else {
                 getString(R.string.update_information_latest_available_update)

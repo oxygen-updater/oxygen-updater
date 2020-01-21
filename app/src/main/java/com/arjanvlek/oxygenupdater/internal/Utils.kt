@@ -8,15 +8,15 @@ import androidx.annotation.Dimension
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.Device
-import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec
-import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS
-import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec.SUPPORTED_OXYGEN_OS
-import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec.UNSUPPORTED_OS
-import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
-import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.SUPPORTED_OXYGEN_OS
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import org.joda.time.LocalDateTime
 import java.util.*
 

@@ -18,11 +18,11 @@ import androidx.core.os.persistableBundleOf
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.PUSH_NOTIFICATION_CHANNEL_ID
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstallLogger.Companion.DATA_FAILURE_REASON
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstallLogger.Companion.DATA_STATUS
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT
 import com.arjanvlek.oxygenupdater.views.MainActivity

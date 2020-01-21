@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.domain
+package com.arjanvlek.oxygenupdater.models
 
 /**
  * Used primarily in [com.arjanvlek.oxygenupdater.internal.Utils.checkDeviceOsSpec]

@@ -20,12 +20,12 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.contribution.ContributorUtils
-import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec
-import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.SetupUtils
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
+import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.MainActivity
 import kotlinx.android.synthetic.main.activity_setup.*

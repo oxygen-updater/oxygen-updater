@@ -12,7 +12,7 @@ import com.arjanvlek.oxygenupdater.download.DownloadService
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
+import com.arjanvlek.oxygenupdater.models.UpdateData
 
 object Dialogs {
 

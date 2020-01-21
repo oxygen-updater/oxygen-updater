@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.versionformatter
+package com.arjanvlek.oxygenupdater.models
 
 interface FormattableUpdateData {
     val internalVersionNumber: String?

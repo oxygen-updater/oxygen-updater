@@ -6,7 +6,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException
-import com.arjanvlek.oxygenupdater.internal.server.ServerPostResult
+import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime

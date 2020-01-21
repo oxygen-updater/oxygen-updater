@@ -23,7 +23,6 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NUMBER_OF_INSTALL_GUIDE_PAGES
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.download.DownloadService
 import com.arjanvlek.oxygenupdater.installation.automatic.InstallationStatus
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall
@@ -31,16 +30,17 @@ import com.arjanvlek.oxygenupdater.installation.automatic.SubmitUpdateInstallati
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstaller.installUpdate
 import com.arjanvlek.oxygenupdater.installation.manual.InstallGuideFragment.Companion.newInstance
-import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
 import com.arjanvlek.oxygenupdater.internal.Utils.checkNetworkConnection
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
-import com.arjanvlek.oxygenupdater.internal.server.ServerPostResult
+import com.arjanvlek.oxygenupdater.models.InstallGuidePage
+import com.arjanvlek.oxygenupdater.models.ServerPostResult
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
+import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ipaulpro.afilechooser.FileChooserActivity
@@ -99,7 +99,7 @@ class InstallActivity : SupportActionBarActivity() {
 
             if (isRooted) {
                 serverConnector.getServerStatus(checkNetworkConnection(application)) { serverStatus ->
-                    if (serverStatus?.isAutomaticInstallationEnabled == true) {
+                    if (serverStatus?.automaticInstallationEnabled == true) {
                         openMethodSelectionPage()
                     } else {
                         Toast.makeText(application, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()

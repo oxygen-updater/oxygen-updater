@@ -8,7 +8,7 @@ import android.text.style.StyleSpan
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
-import com.arjanvlek.oxygenupdater.versionformatter.FormattableUpdateData
+import com.arjanvlek.oxygenupdater.models.FormattableUpdateData
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter
 import java.io.BufferedReader
 import java.io.IOException

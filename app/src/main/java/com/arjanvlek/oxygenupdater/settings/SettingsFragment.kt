@@ -15,11 +15,11 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.Device
-import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils
-import com.arjanvlek.oxygenupdater.internal.i18n.Locale
+import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
+import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
+import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showAdvancedModeExplanation
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber.subscribe
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus
@@ -243,7 +243,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                     selectedPosition = i
                 }
 
-                val updateMethodName = if (Locale.locale == Locale.NL) updateMethod.dutchName else updateMethod.englishName
+                val updateMethodName = if (AppLocale.get() == AppLocale.NL) updateMethod.dutchName else updateMethod.englishName
 
                 itemList.add(BottomSheetItem(title = updateMethodName, value = updateMethodName, secondaryValue = updateMethod.id))
             }

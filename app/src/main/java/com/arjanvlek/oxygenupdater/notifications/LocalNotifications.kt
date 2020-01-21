@@ -14,7 +14,7 @@ import com.arjanvlek.oxygenupdater.download.DownloadProgressData
 import com.arjanvlek.oxygenupdater.installation.InstallActivity
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
+import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.views.MainActivity

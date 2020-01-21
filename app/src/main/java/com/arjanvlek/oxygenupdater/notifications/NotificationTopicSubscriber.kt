@@ -4,8 +4,8 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.DEVICE_TOPIC_PREFIX
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.UPDATE_METHOD_TOPIC_PREFIX
 import com.arjanvlek.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
-import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
+import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_NOTIFICATION_TOPIC
 import com.google.firebase.messaging.FirebaseMessaging

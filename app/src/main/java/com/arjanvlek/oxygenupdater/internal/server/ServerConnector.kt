@@ -8,29 +8,30 @@ import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.Device
-import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall
-import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils.isNetworkError
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.Utils.checkNetworkConnection
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker
+import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
+import com.arjanvlek.oxygenupdater.models.InstallGuidePage
+import com.arjanvlek.oxygenupdater.models.NewsItem
+import com.arjanvlek.oxygenupdater.models.ServerMessage
+import com.arjanvlek.oxygenupdater.models.ServerPostResult
+import com.arjanvlek.oxygenupdater.models.ServerStatus
+import com.arjanvlek.oxygenupdater.models.UpdateData
+import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.news.NewsDatabaseHelper
-import com.arjanvlek.oxygenupdater.news.NewsItem
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase
 import com.arjanvlek.oxygenupdater.updateinformation.Banner
-import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage
-import com.arjanvlek.oxygenupdater.updateinformation.ServerStatus
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
 import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.joda.time.LocalDateTime
 import org.json.JSONException
 import org.json.JSONObject
@@ -40,8 +41,6 @@ import java.net.HttpURLConnection
 import java.util.*
 
 class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable {
-
-    private val objectMapper = jacksonObjectMapper()
 
     private val allDevices = ArrayList<Device>()
     private val enabledDevices = ArrayList<Device>()
@@ -113,14 +112,13 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         CollectionResponseExecutor<UpdateMethod>(
             ServerRequest.UPDATE_METHODS,
             { updateMethods ->
-                RootAccessChecker
-                    .checkRootAccess { hasRootAccess ->
-                        if (hasRootAccess) {
-                            callback.invoke(updateMethods.filter { it.forRootedDevice }.map { it.setRecommended(if (it.recommendedWithoutRoot) "1" else "0") })
-                        } else {
-                            callback.invoke(updateMethods.map { it.setRecommended(if (it.recommendedWithoutRoot) "1" else "0") })
-                        }
+                RootAccessChecker.checkRootAccess { hasRootAccess ->
+                    if (hasRootAccess) {
+                        callback.invoke(updateMethods.filter { it.supportsRootedDevice }.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") })
+                    } else {
+                        callback.invoke(updateMethods.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") })
                     }
+                }
             },
             deviceId
         ).execute()
@@ -144,7 +142,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                 if (it?.information != null
                     && it.information == ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
                     && it.isUpdateInformationAvailable()
-                    && it.isSystemIsUpToDate
+                    && it.systemIsUpToDate
                 ) {
                     getMostRecentOxygenOTAUpdate(deviceId, updateMethodId, callback)
                 } else if (!online) {
@@ -157,7 +155,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                             downloadSize = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L),
                             filename = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_FILE_NAME, null),
                             updateInformationAvailable = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false),
-                            isSystemIsUpToDate = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
+                            systemIsUpToDate = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
                         )
 
                         callback.invoke(updateData)
@@ -348,7 +346,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                     }
 
                     if (settingsManager != null) {
-                        settingsManager.savePreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, this.serverStatus!!.isAutomaticInstallationEnabled)
+                        settingsManager.savePreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, this.serverStatus!!.automaticInstallationEnabled)
                         settingsManager.savePreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, this.serverStatus!!.pushNotificationDelaySeconds)
                     }
 
@@ -413,7 +411,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         return try {
             val response = performServerRequest(serverRequest, body, *params)
 
-            if (response == null || response.isEmpty()) {
+            if (response.isNullOrEmpty()) {
                 ArrayList()
             } else objectMapper.readValue(
                 response,
@@ -429,10 +427,13 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         return try {
             val response = performServerRequest(serverRequest, body, *params)
 
-            if (response == null || response.isEmpty()) {
+            if (response.isNullOrEmpty()) {
                 null
             } else {
-                objectMapper.readValue(response, objectMapper.typeFactory.constructType(serverRequest.returnClass))
+                objectMapper.readValue(
+                    response,
+                    objectMapper.typeFactory.constructType(serverRequest.returnClass)
+                )
             }
         } catch (e: Exception) {
             logError(TAG, "JSON parse error", e)

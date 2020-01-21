@@ -11,11 +11,11 @@ import androidx.core.widget.NestedScrollView
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationData.Companion.UNKNOWN
-import com.arjanvlek.oxygenupdater.domain.Device
-import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
+import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import kotlinx.android.synthetic.main.fragment_device_information.*
 

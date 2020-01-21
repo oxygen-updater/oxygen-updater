@@ -1,28 +1,21 @@
-package com.arjanvlek.oxygenupdater.updateinformation
+package com.arjanvlek.oxygenupdater.models
 
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.updateinformation.Banner
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ServerStatus(
     var status: Status? = null,
-
-    @set:JsonProperty("latest_app_version")
     var latestAppVersion: String? = null,
-
-    var isAutomaticInstallationEnabled: Boolean = false,
+    var automaticInstallationEnabled: Boolean = false,
     var pushNotificationDelaySeconds: Int = 0
 ) : Banner {
-
-    @JsonProperty("automatic_installation_enabled")
-    fun setAutomaticInstallationEnabled(automaticInstallationEnabled: String?) {
-        isAutomaticInstallationEnabled = automaticInstallationEnabled != null && (automaticInstallationEnabled == "1")
-    }
 
     @JsonProperty("push_notification_delay_seconds")
     fun setPushNotificationDelaySeconds(pushNotificationDelaySeconds: String?) {

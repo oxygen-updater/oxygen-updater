@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.domain
+package com.arjanvlek.oxygenupdater.models
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

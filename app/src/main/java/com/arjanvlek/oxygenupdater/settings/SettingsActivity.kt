@@ -18,7 +18,7 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
-import com.arjanvlek.oxygenupdater.internal.server.ServerPostResult
+import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.settings.SettingsFragment.InAppPurchaseDelegate
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseStatus
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType

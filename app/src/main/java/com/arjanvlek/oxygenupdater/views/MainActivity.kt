@@ -25,10 +25,10 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment
-import com.arjanvlek.oxygenupdater.domain.DeviceOsSpec
-import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
+import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.news.NewsFragment
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber.subscribe

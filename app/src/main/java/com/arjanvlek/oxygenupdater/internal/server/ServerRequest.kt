@@ -1,15 +1,16 @@
 package com.arjanvlek.oxygenupdater.internal.server
 
 import com.arjanvlek.oxygenupdater.BuildConfig
-import com.arjanvlek.oxygenupdater.domain.Device
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod
-import com.arjanvlek.oxygenupdater.installation.manual.InstallGuidePage
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
-import com.arjanvlek.oxygenupdater.news.NewsItem
-import com.arjanvlek.oxygenupdater.updateinformation.ServerMessage
-import com.arjanvlek.oxygenupdater.updateinformation.ServerStatus
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
+import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.InstallGuidePage
+import com.arjanvlek.oxygenupdater.models.NewsItem
+import com.arjanvlek.oxygenupdater.models.ServerMessage
+import com.arjanvlek.oxygenupdater.models.ServerPostResult
+import com.arjanvlek.oxygenupdater.models.ServerStatus
+import com.arjanvlek.oxygenupdater.models.UpdateData
+import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import java.net.MalformedURLException
 import java.net.URL
 import java.util.*

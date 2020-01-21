@@ -186,7 +186,7 @@ dependencies {
 	// https://developer.android.com/jetpack/androidx/releases/core
 	implementation 'androidx.core:core-ktx:1.2.0-rc01'
 	// https://developer.android.com/jetpack/androidx/releases/fragment
-	implementation 'androidx.fragment:fragment-ktx:1.2.0-rc04'
+	implementation 'androidx.fragment:fragment-ktx:1.2.0-rc05'
 	// https://developer.android.com/jetpack/androidx/releases/preference
 	implementation 'androidx.preference:preference-ktx:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -196,9 +196,9 @@ dependencies {
 	// https://github.com/material-components/material-components-android/releases
 	implementation 'com.google.android.material:material:1.2.0-alpha03'
 
-	// JSON librariesO
-	implementation 'com.fasterxml.jackson.core:jackson-core:2.10.2'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.2'
+	// JSON libraries
+	// Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
+	// Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2'
 
 	// Date and time libraries

@@ -18,30 +18,22 @@
 
 # Crashlytics suggestion: to allow for meaningful crash reports
 -keepattributes *Annotation*,EnclosingMethod,Signature,SourceFile,LineNumberTable
+
 # Crashlytics suggestion: custom exceptions should be be skipped during obfuscation
 -keep public class * extends java.lang.Exception
 
-# Proguard configuration for Jackson 2.x, taken from https://github.com/FasterXML/jackson-docs/wiki/JacksonOnAndroid
--keep class com.fasterxml.jackson.databind.ObjectMapper {
-    public <methods>;
-    protected <methods>;
-}
--keep class com.fasterxml.jackson.databind.ObjectWriter {
-    public ** writeValueAsString(**);
-}
-# Removing this results in a Cannot deserialize value of type `boolean` from String "0": only "true" or "false" recognized error
--keepclassmembers class * {
-     @com.fasterxml.jackson.annotation.* *;
-}
--keep class kotlin.Metadata {
-    *;
-}
--keep class kotlin.reflect.** {
-    *;
-}
+# The following two lines are required for https://github.com/FasterXML/jackson-module-kotlin to work properly
+-keep class kotlin.Metadata { *; }
+-keep class kotlin.reflect.** { *; }
 
 # We need to keep the method names of all getters and setters to allow Jackson to find them.
--keep public class com.arjanvlek.oxygenupdater.** {
-    public void set*(***);
-    public *** get*();
-}
+-keep class com.arjanvlek.oxygenupdater.domain.** { *; }
+
+# Removing this results in `ClassNotFoundException`
+-keep class com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
+
+# Removing this results in `java.lang.IllegalStateException: Incomplete hierarchy for class UpdateData, unresolved classes [com.arjanvlek.oxygenupdater.models.FormattableUpdateData]`
+-keepnames class com.arjanvlek.oxygenupdater.models.FormattableUpdateData
+
+#-keepnames class com.arjanvlek.oxygenupdater.models.ServerStatus.Status
+#-keepnames class com.arjanvlek.oxygenupdater.models.ServerMessage.ServerMessagePriority

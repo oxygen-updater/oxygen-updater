@@ -21,6 +21,8 @@ internal enum class Theme(private val value: Int) {
     AUTO(3);
 
     companion object {
+        private val map = values().associateBy { it.value }
+
         /**
          * Returns a theme bases on value. If value isn't between [0, 3], default to [.SYSTEM]
          *
@@ -28,15 +30,7 @@ internal enum class Theme(private val value: Int) {
          *
          * @return [Theme]
          */
-        operator fun get(value: Int): Theme {
-            return when (value) {
-                0 -> LIGHT
-                1 -> DARK
-                2 -> SYSTEM
-                3 -> AUTO
-                else -> SYSTEM
-            }
-        }
+        operator fun get(value: Int): Theme = map[value] ?: SYSTEM
     }
 
 }

@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.domain
+package com.arjanvlek.oxygenupdater.models
 
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.internal.Utils.checkDeviceOsSpec

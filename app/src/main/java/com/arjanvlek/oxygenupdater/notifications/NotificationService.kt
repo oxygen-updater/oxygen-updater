@@ -10,8 +10,8 @@ import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
+import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -40,8 +40,7 @@ class NotificationService : FirebaseMessagingService() {
                 ?: throw RuntimeException("There are too many notifications scheduled. Cannot schedule a new notification!")
 
             taskData.putString(
-                DelayedPushNotificationDisplayer.KEY_NOTIFICATION_CONTENTS, jacksonObjectMapper()
-                    .writeValueAsString(messageContents)
+                DelayedPushNotificationDisplayer.KEY_NOTIFICATION_CONTENTS, objectMapper.writeValueAsString(messageContents)
             )
 
             val task = JobInfo.Builder(jobId, ComponentName(application, DelayedPushNotificationDisplayer::class.java))

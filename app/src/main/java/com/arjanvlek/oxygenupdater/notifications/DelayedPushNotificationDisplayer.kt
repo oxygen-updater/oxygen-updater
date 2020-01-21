@@ -13,9 +13,10 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.internal.i18n.Locale
-import com.arjanvlek.oxygenupdater.internal.i18n.Locale.NL
+import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
+import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale.NL
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
+import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.news.NewsActivity
 import com.arjanvlek.oxygenupdater.notifications.NotificationElement.DEVICE_NAME
 import com.arjanvlek.oxygenupdater.notifications.NotificationElement.DUTCH_MESSAGE
@@ -30,7 +31,6 @@ import com.arjanvlek.oxygenupdater.notifications.NotificationType.NEW_VERSION
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.MainActivity
 import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import java.io.IOException
 
 /**
@@ -51,7 +51,7 @@ class DelayedPushNotificationDisplayer : JobService() {
         val notificationContentsJson = params.extras.getString(KEY_NOTIFICATION_CONTENTS)
 
         messageContents = try {
-            jacksonObjectMapper().readValue(notificationContentsJson, notificationContentsTypeRef)
+            objectMapper.readValue(notificationContentsJson, notificationContentsTypeRef)
         } catch (e: IOException) {
             logError(TAG, OxygenUpdaterException("Failed to read notification contents from JSON string ($notificationContentsJson)"))
             return exit(params, false)
@@ -79,7 +79,7 @@ class DelayedPushNotificationDisplayer : JobService() {
                     return exit(params, true)
                 }
 
-                val message = if (Locale.locale == NL) messageContents[DUTCH_MESSAGE.toString()] else messageContents[ENGLISH_MESSAGE.toString()]
+                val message = if (AppLocale.get() == NL) messageContents[DUTCH_MESSAGE.toString()] else messageContents[ENGLISH_MESSAGE.toString()]
 
                 getBuilderForGeneralServerNotificationOrNewsNotification(message)
             }
@@ -88,7 +88,7 @@ class DelayedPushNotificationDisplayer : JobService() {
                     return exit(params, true)
                 }
 
-                val newsMessage = if (Locale.locale == NL) messageContents[DUTCH_MESSAGE.toString()] else messageContents[ENGLISH_MESSAGE.toString()]
+                val newsMessage = if (AppLocale.get() == NL) messageContents[DUTCH_MESSAGE.toString()] else messageContents[ENGLISH_MESSAGE.toString()]
 
                 getBuilderForGeneralServerNotificationOrNewsNotification(newsMessage)
             }

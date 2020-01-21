@@ -12,8 +12,8 @@ import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import android.widget.Toast
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
+import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
@@ -81,7 +81,7 @@ class SetupStep4Fragment : AbstractFragment() {
         if (activity != null) {
             introduction_step_4_update_method_dropdown.apply {
                 adapter = object : ArrayAdapter<UpdateMethod?>(activity!!, android.R.layout.simple_spinner_item, updateMethods) {
-                    override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+                    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                         return CustomDropdown.initCustomUpdateMethodDropdown(
                             position,
                             convertView,
@@ -93,7 +93,7 @@ class SetupStep4Fragment : AbstractFragment() {
                         )!!
                     }
 
-                    override fun getDropDownView(position: Int, convertView: View, parent: ViewGroup): View {
+                    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                         return CustomDropdown.initCustomUpdateMethodDropdown(
                             position,
                             convertView,

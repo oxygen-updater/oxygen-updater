@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.domain
+package com.arjanvlek.oxygenupdater.models
 
 import android.os.Build
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS

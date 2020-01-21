@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.Device
-import com.arjanvlek.oxygenupdater.domain.UpdateMethod
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.internal.i18n.Locale
+import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
+import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.UpdateMethod
 
 object CustomDropdown {
 
@@ -66,7 +66,7 @@ object CustomDropdown {
 
         convertView!!.findViewById<TextView>(android.R.id.text1).apply {
             // Set the view to the update method's name, according to the app language.
-            text = if (Locale.locale == Locale.NL) updateMethods[currentPosition].dutchName else updateMethods[currentPosition].englishName
+            text = if (AppLocale.get() == AppLocale.NL) updateMethods[currentPosition].dutchName else updateMethods[currentPosition].englishName
             setTextColor(ContextCompat.getColor(context!!, R.color.foreground))
 
             // If this is a recommended update method, make the text green

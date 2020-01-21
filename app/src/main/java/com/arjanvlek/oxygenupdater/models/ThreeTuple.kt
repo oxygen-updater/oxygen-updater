@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.internal
+package com.arjanvlek.oxygenupdater.models
 
 data class ThreeTuple<F, S, T>(val first: F, val second: S, val third: T) {
 

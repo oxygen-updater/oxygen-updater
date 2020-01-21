@@ -14,9 +14,9 @@ import com.arjanvlek.oxygenupdater.faq.FAQActivity
 import com.arjanvlek.oxygenupdater.help.HelpActivity
 import com.arjanvlek.oxygenupdater.installation.InstallActivity
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.settings.SettingsActivity
 import com.arjanvlek.oxygenupdater.setupwizard.SetupActivity
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
 import java.lang.ref.WeakReference
 
 @Suppress("Unused", "FunctionName")

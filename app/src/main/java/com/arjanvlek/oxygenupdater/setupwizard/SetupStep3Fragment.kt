@@ -9,8 +9,8 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.domain.Device
-import com.arjanvlek.oxygenupdater.domain.DeviceRequestFilter
+import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.CustomDropdown
@@ -43,11 +43,11 @@ class SetupStep3Fragment : AbstractFragment() {
 
         introduction_step_3_device_dropdown.apply {
             adapter = object : ArrayAdapter<Device?>(context, android.R.layout.simple_spinner_item, devices) {
-                override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     return CustomDropdown.initCustomDeviceDropdown(position, convertView, parent, android.R.layout.simple_spinner_item, devices, recommendedIndex, context)!!
                 }
 
-                override fun getDropDownView(position: Int, convertView: View, parent: ViewGroup): View {
+                override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
                     return CustomDropdown.initCustomDeviceDropdown(
                         position,
                         convertView,

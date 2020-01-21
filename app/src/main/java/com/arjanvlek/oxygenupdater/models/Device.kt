@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.domain
+package com.arjanvlek.oxygenupdater.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -23,17 +23,12 @@ data class Device(
      */
     constructor(id: Long, name: String?, productName: String) : this(id, true, name, productName)
 
-    @JsonProperty("enabled")
-    fun setEnabled(enabled: String?) {
-        this.enabled = enabled != null && enabled == "1"
-    }
-
     @JsonProperty("product_names")
     fun setProductName(productName: String) {
         productNames = getProductNames(productName)
     }
 
-    fun getProductNames(productNameTemplate: String): List<String> {
+    private fun getProductNames(productNameTemplate: String): List<String> {
         return productNameTemplate.trim { it <= ' ' }.split(",")
             // Remove spaces after comma separation.
             .map { productName -> productName.trim { it <= ' ' } }

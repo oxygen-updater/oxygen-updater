@@ -7,7 +7,7 @@ import android.os.Build
 import com.arjanvlek.oxygenupdater.download.DownloadService.Companion.PARAM_ACTION
 import com.arjanvlek.oxygenupdater.download.DownloadService.Companion.PARAM_DOWNLOAD_ID
 import com.arjanvlek.oxygenupdater.download.DownloadService.Companion.PARAM_UPDATE_DATA
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
+import com.arjanvlek.oxygenupdater.models.UpdateData
 
 /**
  * This Receiver creates a new Intent to restart [DownloadService] after it was killed whilst

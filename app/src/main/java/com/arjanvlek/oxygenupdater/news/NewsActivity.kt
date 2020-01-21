@@ -13,11 +13,11 @@ import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.internal.i18n.Locale
-import com.arjanvlek.oxygenupdater.internal.i18n.Locale.NL
+import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
+import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale.NL
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException
-import com.arjanvlek.oxygenupdater.internal.server.ServerPostResult
+import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.views.NewsAdapter
@@ -102,7 +102,7 @@ class NewsActivity : SupportActionBarActivity() {
 
             newsRetryButton.visibility = GONE
 
-            val locale = Locale.locale
+            val locale = AppLocale.get()
 
             // Mark the item as read on the device.
             NewsDatabaseHelper(application).apply {

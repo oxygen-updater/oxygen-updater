@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.domain
+package com.arjanvlek.oxygenupdater.models
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)

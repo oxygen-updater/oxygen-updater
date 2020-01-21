@@ -37,6 +37,7 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.NOT_ONGOING
@@ -49,7 +50,6 @@ import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.showDownload
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.showDownloadingNotification
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.showVerifyingNotification
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.updateinformation.UpdateData
 import com.downloader.Error
 import com.downloader.OnDownloadListener
 import com.downloader.PRDownloader
