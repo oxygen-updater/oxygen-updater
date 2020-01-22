@@ -9,7 +9,6 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
@@ -78,10 +77,8 @@ object Utils {
         if (devices.isNullOrEmpty()) {
             // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
             return if (firmwareIsSupported) {
-                logInfo(TAG, "List of devices is null/empty. Since the firmware is supported, returning ${SUPPORTED_OXYGEN_OS}.")
                 SUPPORTED_OXYGEN_OS
             } else {
-                logInfo(TAG, "List of devices is null/empty. Since the firmware isn't supported, returning ${UNSUPPORTED_OS}.")
                 UNSUPPORTED_OS
             }
         }
@@ -92,11 +89,9 @@ object Utils {
                 // find the user's device in the list of devices retrieved from the server
                 if (it.productNames.contains(systemVersionProperties.oxygenDeviceName)) {
                     return if (it.enabled) {
-                        logInfo(TAG, "Firmware is supported, and found a match. Device (${it.name}) is enabled. Returning ${SUPPORTED_OXYGEN_OS}.")
                         // device found, and is enabled, which means it is supported
                         SUPPORTED_OXYGEN_OS
                     } else {
-                        logInfo(TAG, "Firmware is supported, and found a match. Device (${it.name}) is disabled. Returning ${CARRIER_EXCLUSIVE_OXYGEN_OS}.")
                         // device found, but is disabled, which means it's a carrier-exclusive
                         // because only carrier-exclusive devices are disabled in the database
                         CARRIER_EXCLUSIVE_OXYGEN_OS
@@ -104,17 +99,10 @@ object Utils {
                 }
             }
 
-            logInfo(
-                TAG,
-                "Firmware is supported, but didn't find a match (searched through ${devices.size} devices for ${systemVersionProperties.oxygenDeviceName}). Returning ${UNSUPPORTED_OXYGEN_OS}."
-            )
-
             // device not found among the server-provided list
             // hence, must be a newly-released OnePlus device that we're yet to add support for
             UNSUPPORTED_OXYGEN_OS
         } else {
-            logInfo(TAG, "Firmware isn't supported. Returning ${UNSUPPORTED_OS}.")
-
             // device isn't running OxygenOS at all
             // note: the device may very well be a OnePlus device, but in this case it's running a custom ROM, which we don't support duh
             UNSUPPORTED_OS
