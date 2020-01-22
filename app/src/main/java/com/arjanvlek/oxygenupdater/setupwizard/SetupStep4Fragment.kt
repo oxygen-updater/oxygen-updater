@@ -76,7 +76,11 @@ class SetupStep4Fragment : AbstractFragment() {
         updateMethods.mapIndexedTo(recommendedPositions) { index, updateMethod -> if (updateMethod.recommended) index else -1 }
         recommendedPositions.retainAll { it != -1 }
 
-        val selectedPosition = if (updateMethodId != -1L) updateMethods.indexOfFirst { it.id == updateMethodId } else recommendedPositions[recommendedPositions.size - 1]
+        val selectedPosition = when {
+            updateMethodId != -1L -> updateMethods.indexOfFirst { it.id == updateMethodId }
+            recommendedPositions.size > 0 -> recommendedPositions.last()
+            else -> -1
+        }
 
         if (activity != null) {
             introduction_step_4_update_method_dropdown.apply {
