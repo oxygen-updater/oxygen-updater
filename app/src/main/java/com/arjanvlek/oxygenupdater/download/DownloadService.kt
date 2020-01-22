@@ -177,7 +177,7 @@ class DownloadService : IntentService(TAG) {
             val broadcastIntent = Intent()
                 .setAction(INTENT_SERVICE_RESTART)
                 .putExtra(PARAM_UPDATE_DATA, updateData)
-                .putExtra(PARAM_DOWNLOAD_ID, settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET))
+                .putExtra(PARAM_DOWNLOAD_ID, settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET.toInt()))
                 .setClass(this, DownloadServiceRestarter::class.java)
 
             sendBroadcast(broadcastIntent)
@@ -998,7 +998,7 @@ class DownloadService : IntentService(TAG) {
             isOperationPending.set(true)
 
             val settingsManager = SettingsManager(activity)
-            val downloadId = settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET)
+            val downloadId = settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET.toInt())
 
             val downloadIntent = Intent(activity, DownloadService::class.java)
                 .putExtra(PARAM_ACTION, action)
