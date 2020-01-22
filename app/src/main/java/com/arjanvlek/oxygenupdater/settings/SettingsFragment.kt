@@ -44,7 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         this.delegate = delegate
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         init()
 
         addPreferencesFromResource(R.xml.preferences)

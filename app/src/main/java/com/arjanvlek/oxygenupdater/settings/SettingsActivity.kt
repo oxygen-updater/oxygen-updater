@@ -49,6 +49,7 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
         setContentView(R.layout.activity_settings)
 
         SettingsFragment().let {
+            settingsFragment = it
             it.setInAppPurchaseDelegate(this)
 
             supportFragmentManager.beginTransaction()
