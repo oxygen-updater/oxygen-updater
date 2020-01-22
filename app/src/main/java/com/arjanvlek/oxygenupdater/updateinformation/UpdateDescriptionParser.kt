@@ -10,33 +10,29 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.models.FormattableUpdateData
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.StringReader
 import java.util.*
 
 object UpdateDescriptionParser {
     private const val TAG = "UpdateDescriptionParser"
     private const val EMPTY_STRING = ""
 
-    fun parse(updateDescription: String?): Spanned {
+    fun parse(updateDescription: String): Spanned {
         val result: SpannableString
         val links: MutableMap<String, String> = HashMap()
-        var currentLine: String
 
         try {
-            var reader = BufferedReader(StringReader(updateDescription))
             var modifiedUpdateDescription = EMPTY_STRING
 
             // First, loop through all lines and modify them were needed.
             // This consists of removing heading symbols, making list items, adding line separators and displaying link texts.
-            while (reader.readLine().also { currentLine = it } != null) {
+            updateDescription.lines().forEach { currentLine ->
                 val element = UpdateDescriptionElement.of(currentLine)
                 var modifiedLine = StringBuilder(EMPTY_STRING)
 
                 // If the current line contains the OxygenOS version number, skip it as it will be displayed as the update title.
                 if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(LineDetectingUpdateInfo(currentLine)) && element == UpdateDescriptionElement.HEADING_1) {
-                    continue
+                    // skip this line, continue to the next line
+                    return@forEach
                 }
 
                 when (element) {
@@ -63,12 +59,13 @@ object UpdateDescriptionParser {
                     }
                     UpdateDescriptionElement.LINK -> {
                         val linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine.lastIndexOf("]"))
-                        var linkAddress = ""
 
-                        if (currentLine.contains("(") && currentLine.contains(")")) {
-                            linkAddress = currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"))
+                        val linkAddress = if (currentLine.contains("(") && currentLine.contains(")")) {
+                            currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"))
                         } else if (currentLine.contains("{") && currentLine.contains("}")) {
-                            linkAddress = currentLine.substring(currentLine.indexOf("{") + 1, currentLine.lastIndexOf("}"))
+                            currentLine.substring(currentLine.indexOf("{") + 1, currentLine.lastIndexOf("}"))
+                        } else {
+                            ""
                         }
 
                         // We need to save the full URL somewhere, to point the browser to it when clicked...
@@ -79,15 +76,17 @@ object UpdateDescriptionParser {
                     }
                     else -> modifiedLine = StringBuilder(currentLine)
                 }
+
                 modifiedUpdateDescription = modifiedUpdateDescription + modifiedLine.toString() + if (element == UpdateDescriptionElement.LINE_SEPARATORS) "" else "\n"
             }
-            // Finally, loop through the modified update description and set formatting attributes for the headers and links.
-            reader = BufferedReader(StringReader(modifiedUpdateDescription))
+
             result = SpannableString(modifiedUpdateDescription)
 
-            while (reader.readLine().also { currentLine = it } != null) {
+            // Finally, loop through the modified update description and set formatting attributes for the headers and links.
+            modifiedUpdateDescription.lines().forEach { currentLine ->
                 if (currentLine.isEmpty()) {
-                    continue
+                    // skip this line, continue to the next line
+                    return@forEach
                 }
 
                 val element = UpdateDescriptionElement.find(currentLine, updateDescription)
@@ -119,6 +118,7 @@ object UpdateDescriptionParser {
             logError(TAG, "Error parsing update description", e)
             return SpannableString(updateDescription)
         }
+
         return result
     }
 
@@ -169,16 +169,12 @@ object UpdateDescriptionParser {
             }
 
             // Finds the type of element of a modified line by looking it back up in the original text.
-            @Throws(IOException::class)
-            fun find(modifiedLine: String?, originalText: String?): UpdateDescriptionElement {
-                val reader = BufferedReader(StringReader(originalText))
-                var currentLine: String
-
+            fun find(modifiedLine: String, originalText: String): UpdateDescriptionElement {
                 // As almost all the modifications that are made are substrings, this means the original text should always contain the modified line.
                 // Then, the "of" function can be used with the belonging line to lookup the element type of the modified line.
                 // The only exception is the empty line, but it's no problem that one is returned as TEXT, because the empty line is not needed for SpannableString.
-                while (reader.readLine().also { currentLine = it } != null) {
-                    if (currentLine.contains(modifiedLine!!)) {
+                originalText.lines().forEach { currentLine ->
+                    if (currentLine.contains(modifiedLine)) {
                         return of(currentLine)
                     }
                 }
