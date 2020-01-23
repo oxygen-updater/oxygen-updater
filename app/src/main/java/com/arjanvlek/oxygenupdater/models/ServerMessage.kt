@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.models
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
 
 data class ServerMessage(
     var id: Long = 0,

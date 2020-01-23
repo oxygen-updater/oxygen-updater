@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.internal.i18n
+package com.arjanvlek.oxygenupdater.models
 
 import com.arjanvlek.oxygenupdater.ApplicationData
 

@@ -24,7 +24,6 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NUMBER_OF_INSTALL_GUIDE_PAGES
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.download.DownloadService
-import com.arjanvlek.oxygenupdater.installation.automatic.InstallationStatus
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall
 import com.arjanvlek.oxygenupdater.installation.automatic.SubmitUpdateInstallationException
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException
@@ -37,6 +36,7 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
+import com.arjanvlek.oxygenupdater.models.InstallationStatus
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateData

@@ -23,11 +23,11 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException
 import com.arjanvlek.oxygenupdater.internal.server.RedirectingResourceStream
+import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.news.NewsActivity
 import com.arjanvlek.oxygenupdater.settings.SettingsManager

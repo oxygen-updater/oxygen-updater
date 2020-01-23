@@ -22,6 +22,7 @@ import com.arjanvlek.oxygenupdater.installation.automatic.RootInstallLogger.Comp
 import com.arjanvlek.oxygenupdater.installation.automatic.RootInstallLogger.Companion.DATA_STATUS
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
+import com.arjanvlek.oxygenupdater.models.InstallationStatus
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT

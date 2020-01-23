@@ -16,7 +16,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
+import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.UpdateMethod

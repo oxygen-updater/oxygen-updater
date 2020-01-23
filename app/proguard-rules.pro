@@ -29,12 +29,6 @@
 # We need to keep the method names of all getters and setters to allow Jackson to find them.
 -keep class com.arjanvlek.oxygenupdater.models.** { *; }
 
-# Removing this results in `ClassNotFoundException`
--keep class com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
-
 # Removing this results in `java.lang.IllegalStateException: Incomplete hierarchy for class UpdateData, unresolved classes [com.arjanvlek.oxygenupdater.models.FormattableUpdateData]`
 -keepnames class com.arjanvlek.oxygenupdater.models.FormattableUpdateData
 -keepnames class com.arjanvlek.oxygenupdater.settings.SettingsManager
-
-#-keepnames class com.arjanvlek.oxygenupdater.models.ServerStatus.Status
-#-keepnames class com.arjanvlek.oxygenupdater.models.ServerMessage.ServerMessagePriority

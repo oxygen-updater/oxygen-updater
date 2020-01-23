@@ -13,10 +13,10 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale.NL
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.objectMapper
+import com.arjanvlek.oxygenupdater.models.AppLocale
+import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.arjanvlek.oxygenupdater.news.NewsActivity
 import com.arjanvlek.oxygenupdater.notifications.NotificationElement.DEVICE_NAME
 import com.arjanvlek.oxygenupdater.notifications.NotificationElement.DUTCH_MESSAGE

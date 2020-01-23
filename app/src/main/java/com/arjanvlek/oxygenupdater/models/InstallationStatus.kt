@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.installation.automatic
+package com.arjanvlek.oxygenupdater.models
 
 import java.io.Serializable
 

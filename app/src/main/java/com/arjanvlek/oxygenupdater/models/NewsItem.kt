@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.models
 
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale.NL
+import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.io.Serializable

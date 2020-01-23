@@ -9,7 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
+import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 

@@ -19,12 +19,12 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.installation.InstallActivity
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale
-import com.arjanvlek.oxygenupdater.internal.i18n.AppLocale.NL
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException
+import com.arjanvlek.oxygenupdater.models.AppLocale
+import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import kotlinx.android.synthetic.main.fragment_install_guide.*
