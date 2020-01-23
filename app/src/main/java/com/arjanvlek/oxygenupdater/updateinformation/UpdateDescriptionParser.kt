@@ -5,6 +5,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import android.text.style.URLSpan
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
@@ -109,7 +110,7 @@ object UpdateDescriptionParser {
                         result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     UpdateDescriptionElement.LINK ->
                         // A link should be made clickable and must be displayed as a hyperlink.
-                        result.setSpan(FormattedURLSpan(links[currentLine]), startPosition, endPosition, 0)
+                        result.setSpan(URLSpan(links[currentLine]), startPosition, endPosition, 0)
                     else -> logInfo(TAG, "Case not implemented: $element")
                 }
             }

@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -346,6 +348,7 @@ class UpdateInformationFragment : AbstractFragment() {
     }
 
     private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData, displayInfoWhenUpToDate: Boolean) {
+        showDownloadLink(updateData)
         // Show "System update available" view.
         updateInformationRefreshLayout.visibility = VISIBLE
         updateInformationSystemIsUpToDateRefreshLayout.visibility = GONE
@@ -381,7 +384,7 @@ class UpdateInformationFragment : AbstractFragment() {
         }
 
         // Display update file name.
-        val fileNameView = rootView.findViewById<TextView>(R.id.updateFileNameView)
+        val fileNameView = updateFileNameView
         fileNameView.text = String.format(getString(R.string.update_information_file_name), updateData.filename)
 
         // Format top title based on system version installed.
@@ -436,8 +439,22 @@ class UpdateInformationFragment : AbstractFragment() {
         downloadProgressTable?.visibility = VISIBLE
     }
 
+    private fun showDownloadLink(updateData: UpdateData?) {
+        if (updateData != null) {
+            updateDownloadLinkView.apply {
+                visibility = VISIBLE
+                movementMethod = LinkMovementMethod.getInstance()
+                text = SpannableString(
+                    String.format(getString(R.string.update_information_download_link), updateData.downloadUrl)
+                ).apply {
+                    setSpan(URLSpan(updateData.downloadUrl), indexOf("\n") + 1, length, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
+                }
+            }
+        }
+    }
+
     private fun hideDownloadProgressBar() {
-        rootView.findViewById<View>(R.id.downloadProgressTable).visibility = GONE
+        downloadProgressTable.visibility = GONE
     }
 
     private fun hideRefreshIcons() {
@@ -597,9 +614,15 @@ class UpdateInformationFragment : AbstractFragment() {
                     hideDownloadProgressBar()
 
                     when {
-                        isServerError -> showDownloadError(updateData, R.string.download_error_server)
                         isStorageSpaceError -> showDownloadError(updateData, R.string.download_error_storage)
-                        else -> showDownloadError(updateData, R.string.download_error_internal)
+                        isServerError -> {
+                            showDownloadLink(updateData)
+                            showDownloadError(updateData, R.string.download_error_server)
+                        }
+                        else -> {
+                            showDownloadLink(updateData)
+                            showDownloadError(updateData, R.string.download_error_internal)
+                        }
                     }
                 }
             }
