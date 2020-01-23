@@ -133,7 +133,7 @@ class InstallGuideFragment : Fragment() {
         installGuideText.text = if (appLocale == NL) installGuidePage.dutchText else installGuidePage.englishText
 
         val imageView = installGuideView.findViewById<ImageView>(R.id.installGuideImage)
-        if (installGuidePage.useCustomImage) {
+        if (installGuidePage.useCustomImage == true) {
             // Fetch the custom image from the server.
             FunctionalAsyncTask<Void?, Void, Bitmap?>({},  {
                 var image: Bitmap?

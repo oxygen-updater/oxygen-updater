@@ -9,9 +9,9 @@ data class InstallGuidePage(
     var deviceId: Long?,
     var updateMethodId: Long?,
     var pageNumber: Int,
-    var fileExtension: String,
-    var imageUrl: String,
-    var useCustomImage: Boolean,
+    var fileExtension: String?,
+    var imageUrl: String?,
+    var useCustomImage: Boolean?,
 
     @JsonProperty("title_en")
     var englishTitle: String,
