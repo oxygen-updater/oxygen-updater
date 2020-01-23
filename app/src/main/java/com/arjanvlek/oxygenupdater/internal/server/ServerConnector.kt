@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils.isNetworkError
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.Utils.checkNetworkConnection
@@ -22,6 +21,7 @@ import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.models.NewsItem
+import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerMessage
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.ServerStatus
@@ -409,7 +409,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         vararg params: Any
     ): List<T> {
         return try {
-            val response = performServerRequest(serverRequest, body, *params)
+            val response = performServerRequest(serverRequest, body, params = *params)
 
             if (response.isNullOrEmpty()) {
                 ArrayList()
@@ -425,7 +425,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
 
     private fun <T> findOneFromServerResponse(serverRequest: ServerRequest, body: JSONObject?, vararg params: Any): T? {
         return try {
-            val response = performServerRequest(serverRequest, body, *params)
+            val response = performServerRequest(serverRequest, body, params = *params)
 
             if (response.isNullOrEmpty()) {
                 null
@@ -444,8 +444,8 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
     private fun performServerRequest(
         request: ServerRequest,
         body: JSONObject?,
-        vararg params: Any,
-        retryCount: Int = 0
+        retryCount: Int = 0,
+        vararg params: Any
     ): String? {
         return try {
             val requestUrl = request.getUrl(*params) ?: return null
@@ -489,7 +489,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
             rawResponse
         } catch (e: Exception) {
             if (retryCount < 5) {
-                performServerRequest(request, body, *params, retryCount + 1)
+                performServerRequest(request, body, retryCount + 1, *params)
             } else {
                 if (isNetworkError(e)) {
                     logWarning(TAG, NetworkException("Error performing request <${request.toString(params)}>."))
