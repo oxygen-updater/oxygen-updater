@@ -10,7 +10,7 @@
 	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
 	<string name="update_information_file_name">Bestandsnaam: %1$s</string>
 	<!-- TODO: Translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">string name="update_information_download_link">Omdat de download is mislukt, en de download moet opnieuw worden gestart, kan je deze link gebruiken om de update vanuit de browser te downloaden. Het kan zijn dat je het gedownloade bestand bestand vanuit je "Downloads" moet verplaatsen naar de hoofdmap. Dit is dezelfde link als wat de app normaal gezien download, wat een officiële link is van de OnePlus OTA server:\n%1$s</string>
 	<string name="update_information_for">voor</string>
 	<string name="update_information_header">Updaten</string>
 	<string name="update_information_header_short">Updaten</string>
