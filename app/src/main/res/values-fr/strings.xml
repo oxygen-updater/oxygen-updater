@@ -9,8 +9,7 @@
 	<string name="update">"Mise à jour"</string>
 	<string name="update_information_close">"Fermer"</string>
 	<string name="update_information_file_name">"Nom du fichier : %1$s"</string>
-	<!-- TODO: Translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">Étant donné qu\'une errreur de téléchargement s\'est produite et que le téléchargement doit être redémarré, vous pouvez utiliser ce lien pour télécharger le fichier de mise à jour. Vous devrez cependant le déplacer du dossier "Téléchargements" à la racine du stockage interne de votre appareil. Ce lien est le même lien que l\'application utilise et provient des serveurs FOTA de OnePlus:\n%1$s</string>
 	<string name="update_information_for">"Pour"</string>
 	<string name="update_information_header">"Mise à jour"</string>
 	<string name="update_information_header_short">"Mise à jour"</string>
@@ -30,7 +29,7 @@
 	<string name="server_status_warning">"Quelques fonctionnalités ne fonctionnent pas correctement."</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">"Une mise jour de l'application est disponible ! La version &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt; est téléchargeable dès maintenant !"</string>
+	<string name="new_app_version">"Une mise à jour de l'application est disponible ! La version &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt; est téléchargeable dès maintenant !"</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"à"</string>
