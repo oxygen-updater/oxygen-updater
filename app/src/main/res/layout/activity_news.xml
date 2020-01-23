@@ -41,6 +41,17 @@
 				android:textStyle="bold" />
 
 			<TextView
+				android:id="@+id/newsAuthor"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/padding_default"
+				android:layout_marginTop="@dimen/padding_half"
+				android:layout_marginEnd="@dimen/padding_default"
+				android:layout_marginBottom="@dimen/padding_half"
+				android:text="@string/news_author"
+				android:textStyle="italic" />
+
+			<TextView
 				android:id="@+id/newsDatePublished"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -66,18 +77,6 @@
 				android:layout_gravity="center"
 				android:text="@string/download_error_retry"
 				android:visibility="gone" />
-
-			<TextView
-				android:id="@+id/newsAuthor"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/padding_default"
-				android:layout_marginTop="@dimen/padding_half"
-				android:layout_marginEnd="@dimen/padding_default"
-				android:layout_marginBottom="@dimen/padding_half"
-				android:text="@string/news_author"
-				android:textStyle="italic" />
-
 		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
