@@ -12,7 +12,7 @@ val objectMapper: ObjectMapper = jacksonObjectMapper().registerModule(
     // coerce strings to booleans
     SimpleModule().addDeserializer(Boolean::class.java, BooleanDeserializer())
 ).setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-// ^ Tell ObjectMapper to convert camelCase to snake_case (Server API response have fields in snake case
+// ^ Tell ObjectMapper to convert camelCase to snake_case (Server API response have fields in snake case)
 // This helps us avoid annotating every field with `@JsonProperty` unnecessarily
 
 /**

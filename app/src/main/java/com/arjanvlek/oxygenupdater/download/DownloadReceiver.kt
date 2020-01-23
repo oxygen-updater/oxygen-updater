@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.download
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 
 /**
  * DownloadReceiver is capable of sending status updates from [DownloadService] to the UI
@@ -12,7 +13,7 @@ import android.content.Intent
  *
  * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 03/01/2019.
  */
-data class DownloadReceiver(val UIDownloadListener: UpdateDownloadListener) : BroadcastReceiver() {
+class DownloadReceiver(val UIDownloadListener: UpdateDownloadListener) : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.getStringExtra(PARAM_TYPE)) {

@@ -10,10 +10,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.download.DownloadProgressData
 import com.arjanvlek.oxygenupdater.installation.InstallActivity
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
+import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter

@@ -24,7 +24,6 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NUMBER_OF_INSTALL_GUIDE_PAGES
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.download.DownloadService
-import com.arjanvlek.oxygenupdater.installation.automatic.RootInstall
 import com.arjanvlek.oxygenupdater.installation.automatic.SubmitUpdateInstallationException
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstallationException
 import com.arjanvlek.oxygenupdater.installation.automatic.UpdateInstaller.installUpdate
@@ -37,6 +36,7 @@ import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.models.InstallationStatus
+import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateData
@@ -372,7 +372,17 @@ class InstallActivity : SupportActionBarActivity() {
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         val timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString()
-        val installation = RootInstall(deviceId, updateMethodId, InstallationStatus.STARTED, installationId, timestamp, startOs, destinationOs, currentOs, "")
+        val installation = RootInstall(
+            deviceId,
+            updateMethodId,
+            InstallationStatus.STARTED,
+            installationId,
+            timestamp,
+            startOs,
+            destinationOs,
+            currentOs,
+            ""
+        )
 
         serverConnector.logRootInstall(installation) { result: ServerPostResult? ->
             if (result == null) {

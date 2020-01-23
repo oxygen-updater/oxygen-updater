@@ -26,7 +26,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.download.DownloadProgressData
 import com.arjanvlek.oxygenupdater.download.DownloadReceiver
 import com.arjanvlek.oxygenupdater.download.DownloadService
 import com.arjanvlek.oxygenupdater.download.DownloadService.Companion.ACTION_DELETE_DOWNLOADED_UPDATE
@@ -39,6 +38,7 @@ import com.arjanvlek.oxygenupdater.download.DownloadStatus.VERIFYING
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.models.Banner
+import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showAppOutdatedError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showDownloadError

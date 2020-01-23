@@ -1,5 +1,7 @@
 package com.arjanvlek.oxygenupdater.download
 
+import com.arjanvlek.oxygenupdater.models.DownloadProgressData
+
 interface UpdateDownloadListener {
     fun onInitialStatusUpdate()
     fun onDownloadStarted()

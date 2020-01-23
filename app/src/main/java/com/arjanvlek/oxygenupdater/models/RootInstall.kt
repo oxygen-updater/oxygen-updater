@@ -1,6 +1,5 @@
-package com.arjanvlek.oxygenupdater.installation.automatic
+package com.arjanvlek.oxygenupdater.models
 
-import com.arjanvlek.oxygenupdater.models.InstallationStatus
 import java.io.Serializable
 
 data class RootInstall(

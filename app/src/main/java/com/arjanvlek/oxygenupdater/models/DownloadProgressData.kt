@@ -1,7 +1,8 @@
-package com.arjanvlek.oxygenupdater.download
+package com.arjanvlek.oxygenupdater.models
 
 import android.content.Context
 import com.arjanvlek.oxygenupdater.R
+import com.arjanvlek.oxygenupdater.download.DownloadService
 import java.io.Serializable
 
 /**

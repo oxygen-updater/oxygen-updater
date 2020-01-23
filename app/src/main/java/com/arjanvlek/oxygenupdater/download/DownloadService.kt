@@ -37,6 +37,7 @@ import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_ERROR
 import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.HAS_NO_ERROR
