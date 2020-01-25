@@ -188,6 +188,7 @@ abstract class SystemVersionPropertiesTest {
         Device(8, "OnePlus 5T", "OnePlus 5T"),
         Device(9, "OnePlus 6", "OnePlus 6"),
         Device(10, "OnePlus 6T (Global)", "OnePlus 6T"),
+        Device(11, "OnePlus 7", "OnePlus7"),
         Device(11, "OnePlus 7 Pro (EU)", "OnePlus7Pro_EEA"),
         Device(12, "OnePlus 7 Pro", "OnePlus7Pro"),
         Device(13, "OnePlus 7 Pro 5G (EU)", "OnePlus7ProNR_EEA"),

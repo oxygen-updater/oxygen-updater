@@ -17,7 +17,7 @@ class SystemVersionPropertiesTestOnePlus7Pro : SystemVersionPropertiesTest() {
      */
     @Test
     fun testSupportedDevice_EEAVersion_OxygenOS951GM21BA() {
-        val testDataDir = "op7pro-eea"
+        val testDataDir = "op7pro/eea"
         val testDataOfVersion = "9.5.1.GM21BA"
 
         assertTrue(
@@ -43,7 +43,7 @@ class SystemVersionPropertiesTestOnePlus7Pro : SystemVersionPropertiesTest() {
      */
     @Test
     fun testSupportedDevice_INTLVersion_OxygenOS953GM21AA() {
-        val testDataDir = "op7pro-intl"
+        val testDataDir = "op7pro/intl"
         val testDataOfVersion = "9.5.3.GM21AA"
 
         assertTrue(
@@ -64,7 +64,7 @@ class SystemVersionPropertiesTestOnePlus7Pro : SystemVersionPropertiesTest() {
 
     @Test
     fun testSupportedDevice_5GEUVersion_OxygenOS951GM27BA() {
-        val testDataDir = "op7pro-5g-eea"
+        val testDataDir = "op7pro/eea-5g"
         val testDataOfVersion = "9.5.1.GM27BA"
 
         assertTrue(

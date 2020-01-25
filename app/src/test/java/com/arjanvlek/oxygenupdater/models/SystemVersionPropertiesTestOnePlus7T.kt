@@ -17,7 +17,7 @@ class SystemVersionPropertiesTestOnePlus7T : SystemVersionPropertiesTest() {
      */
     @Test
     fun testSupportedDevice_EEAVersion_OxygenOS1003HD65BA() {
-        val testDataDir = "op7t-eea"
+        val testDataDir = "op7t/eea"
         val testDataOfVersion = "10.0.3.HD65BA"
 
         assertTrue(
@@ -43,7 +43,7 @@ class SystemVersionPropertiesTestOnePlus7T : SystemVersionPropertiesTest() {
      */
     @Test
     fun testSupportedDevice_INTLVersion_OxygenOS1001HD65AA() {
-        val testDataDir = "op7t-intl"
+        val testDataDir = "op7t/intl"
         val testDataOfVersion = "10.0.1.HD65AA"
 
         assertTrue(
