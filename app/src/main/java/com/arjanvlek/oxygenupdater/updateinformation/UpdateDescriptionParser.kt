@@ -1,11 +1,15 @@
 package com.arjanvlek.oxygenupdater.updateinformation
 
+import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import android.text.style.URLSpan
+import androidx.core.graphics.ColorUtils
+import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logInfo
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
@@ -17,7 +21,7 @@ object UpdateDescriptionParser {
     private const val TAG = "UpdateDescriptionParser"
     private const val EMPTY_STRING = ""
 
-    fun parse(updateDescription: String): Spanned {
+    fun parse(context: Context, updateDescription: String): Spanned {
         val result: SpannableString
         val links: MutableMap<String, String> = HashMap()
 
@@ -95,22 +99,26 @@ object UpdateDescriptionParser {
                 val endPosition = startPosition + currentLine.length
 
                 when (element) {
+                    // Heading 1 should be made bold and pretty large.
                     UpdateDescriptionElement.HEADING_1 -> {
-                        // Heading 1 should be made bold and pretty large.
-                        result.setSpan(RelativeSizeSpan(1.3f), startPosition, endPosition, 0)
+                        result.setSpan(RelativeSizeSpan(1.5f), startPosition, endPosition, 0)
                         result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     }
+                    // Heading 2 should be made bold and a bit larger than normal, but smaller than heading 1.
                     UpdateDescriptionElement.HEADING_2 -> {
-                        // Heading 2 should be made bold and a bit larger than normal, but smaller than heading 1.
-                        result.setSpan(RelativeSizeSpan(1.1f), startPosition, endPosition, 0)
+                        result.setSpan(RelativeSizeSpan(1.2f), startPosition, endPosition, 0)
                         result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     }
-                    UpdateDescriptionElement.HEADING_3 ->
-                        // Heading 3 is the same size as normal text but will be displayed in bold.
-                        result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
-                    UpdateDescriptionElement.LINK ->
-                        // A link should be made clickable and must be displayed as a hyperlink.
-                        result.setSpan(URLSpan(links[currentLine]), startPosition, endPosition, 0)
+                    // Heading 3 is the same size as normal text but will be displayed in bold.
+                    UpdateDescriptionElement.HEADING_3 -> result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
+                    // Decrease opacity of list items and text
+                    UpdateDescriptionElement.LIST_ITEM, UpdateDescriptionElement.TEXT -> result.setSpan(
+                        ForegroundColorSpan(
+                            ColorUtils.setAlphaComponent(ThemeUtils.getTertiaryColor(context), 192)
+                        ), startPosition, endPosition, 0
+                    )
+                    // A link should be made clickable and must be displayed as a hyperlink.
+                    UpdateDescriptionElement.LINK -> result.setSpan(URLSpan(links[currentLine]), startPosition, endPosition, 0)
                     else -> logInfo(TAG, "Case not implemented: $element")
                 }
             }
@@ -151,7 +159,7 @@ object UpdateDescriptionParser {
                 } else if (inputLine.contains("#")) {
                     logVerbose(TAG, "Matched type: HEADING_1")
                     HEADING_1
-                } else if (inputLine.contains("*")) {
+                } else if (inputLine.contains("*") || inputLine.contains("•")) {
                     logVerbose(TAG, "Matched type: LIST_ITEM")
                     LIST_ITEM
                 } else if (inputLine.contains("\\")) {

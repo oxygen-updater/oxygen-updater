@@ -15,8 +15,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -377,7 +375,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             movementMethod = LinkMovementMethod.getInstance()
             text = if (!description.isNullOrBlank() && description != "null") {
-                UpdateDescriptionParser.parse(description)
+                UpdateDescriptionParser.parse(context, description)
             } else {
                 getString(R.string.update_information_description_not_available)
             }
@@ -396,7 +394,7 @@ class UpdateInformationFragment : AbstractFragment() {
         if (displayInfoWhenUpToDate) {
             headerLabel.text = getString(R.string.update_information_installed_update)
 
-            downloadButton.visibility = GONE
+            updateInformationDownloadButton.visibility = GONE
             updateInstallationGuideButton.visibility = GONE
             fileNameView.visibility = GONE
             downloadSizeTable.visibility = GONE
@@ -409,31 +407,13 @@ class UpdateInformationFragment : AbstractFragment() {
                 getString(R.string.update_information_latest_available_update)
             }
 
-            downloadButton.visibility = VISIBLE
+            updateInformationDownloadButton.visibility = VISIBLE
             fileNameView.visibility = VISIBLE
             downloadSizeTable.visibility = VISIBLE
             downloadSizeImage.visibility = VISIBLE
             downloadSizeView.visibility = VISIBLE
         }
     }
-
-    /*
-      -------------- USER INTERFACE ELEMENT METHODS -------------------
-     */
-    private val downloadButton: Button
-        get() = updateInformationDownloadButton
-
-    private val downloadCancelButton: ImageButton
-        get() = updateInformationDownloadCancelButton
-
-    private val downloadPauseButton: ImageButton
-        get() = updateInformationDownloadPauseButton
-
-    private val downloadStatusText: TextView
-        get() = updateInformationDownloadDetailsView
-
-    private val downloadProgressBar: ProgressBar
-        get() = updateInformationDownloadProgressBar
 
     private fun showDownloadProgressBar() {
         downloadProgressTable?.visibility = VISIBLE
@@ -476,15 +456,15 @@ class UpdateInformationFragment : AbstractFragment() {
         return object : UpdateDownloadListener {
             override fun onInitialStatusUpdate() {
                 if (isAdded) {
-                    downloadCancelButton.setOnClickListener {
+                    updateInformationDownloadCancelButton.setOnClickListener {
                         DownloadService.performOperation(activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
 
                         initUpdateDownloadButton(updateData, NOT_DOWNLOADING)
                         initInstallButton(updateData, NOT_DOWNLOADING)
                     }
 
-                    downloadPauseButton.setOnClickListener {
-                        downloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.play, null))
+                    updateInformationDownloadPauseButton.setOnClickListener {
+                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.play, null))
 
                         DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
@@ -500,8 +480,8 @@ class UpdateInformationFragment : AbstractFragment() {
                     initInstallButton(updateData, DOWNLOADING)
                     showDownloadProgressBar()
 
-                    downloadPauseButton.setOnClickListener {
-                        downloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
+                    updateInformationDownloadPauseButton.setOnClickListener {
+                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
 
                         DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
@@ -509,7 +489,7 @@ class UpdateInformationFragment : AbstractFragment() {
                         initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
 
                         // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
-                        downloadPauseButton.setOnClickListener { }
+                        updateInformationDownloadPauseButton.setOnClickListener { }
                     }
                 }
             }
@@ -520,21 +500,21 @@ class UpdateInformationFragment : AbstractFragment() {
                     initInstallButton(updateData, DOWNLOADING)
                     showDownloadProgressBar()
 
-                    downloadProgressBar.isIndeterminate = false
-                    downloadProgressBar.progress = downloadProgressData.progress
+                    updateInformationDownloadProgressBar.isIndeterminate = false
+                    updateInformationDownloadProgressBar.progress = downloadProgressData.progress
 
                     if (downloadProgressData.isWaitingForConnection) {
-                        downloadPauseButton.visibility = GONE
-                        downloadStatusText.text = getString(
+                        updateInformationDownloadPauseButton.visibility = GONE
+                        updateInformationDownloadDetailsView.text = getString(
                             R.string.download_waiting_for_network, downloadProgressData
                                 .progress
                         )
                         return
                     }
 
-                    downloadPauseButton.visibility = VISIBLE
-                    downloadPauseButton.setOnClickListener {
-                        downloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
+                    updateInformationDownloadPauseButton.visibility = VISIBLE
+                    updateInformationDownloadPauseButton.setOnClickListener {
+                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
 
                         DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
@@ -542,16 +522,16 @@ class UpdateInformationFragment : AbstractFragment() {
                         initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
 
                         // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
-                        downloadPauseButton.setOnClickListener { }
+                        updateInformationDownloadPauseButton.setOnClickListener { }
                     }
 
                     if (downloadProgressData.timeRemaining == null) {
-                        downloadStatusText.text = getString(
+                        updateInformationDownloadDetailsView.text = getString(
                             R.string.download_progress_text_unknown_time_remaining, downloadProgressData
                                 .progress
                         )
                     } else {
-                        downloadStatusText.text = downloadProgressData.timeRemaining.toString(applicationData)
+                        updateInformationDownloadDetailsView.text = downloadProgressData.timeRemaining.toString(applicationData)
                     }
                 }
             }
@@ -568,16 +548,16 @@ class UpdateInformationFragment : AbstractFragment() {
                     }
 
                     if (!queued) {
-                        downloadProgressBar.progress = downloadProgressData.progress
-                        downloadStatusText.text = getString(
+                        updateInformationDownloadProgressBar.progress = downloadProgressData.progress
+                        updateInformationDownloadDetailsView.text = getString(
                             R.string.download_progress_text_paused, downloadProgressData
                                 .progress
                         )
 
-                        downloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.play, null))
+                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.play, null))
 
-                        downloadPauseButton.setOnClickListener {
-                            downloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
+                        updateInformationDownloadPauseButton.setOnClickListener {
+                            updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
 
                             DownloadService.performOperation(activity, DownloadService.ACTION_RESUME_DOWNLOAD, updateData)
 
@@ -585,10 +565,10 @@ class UpdateInformationFragment : AbstractFragment() {
                             initInstallButton(updateData, DOWNLOADING)
 
                             // No resuming twice allowed, will be updated in onDownloadProgressUpdate()
-                            downloadPauseButton.setOnClickListener { }
+                            updateInformationDownloadPauseButton.setOnClickListener { }
                         }
                     } else {
-                        downloadStatusText.text = getString(R.string.download_pending)
+                        updateInformationDownloadDetailsView.text = getString(R.string.download_pending)
                     }
                 }
             }
@@ -633,8 +613,8 @@ class UpdateInformationFragment : AbstractFragment() {
                     initInstallButton(updateData, VERIFYING)
                     showDownloadProgressBar()
 
-                    downloadProgressBar.isIndeterminate = true
-                    downloadStatusText.text = getString(R.string.download_progress_text_verifying)
+                    updateInformationDownloadProgressBar.isIndeterminate = true
+                    updateInformationDownloadDetailsView.text = getString(R.string.download_progress_text_verifying)
                 }
             }
 
@@ -668,7 +648,7 @@ class UpdateInformationFragment : AbstractFragment() {
     }
 
     private fun initUpdateDownloadButton(updateData: UpdateData?, downloadStatus: DownloadStatus) {
-        downloadButton.let {
+        updateInformationDownloadButton.let {
             when (downloadStatus) {
                 NOT_DOWNLOADING -> {
                     it.text = getString(R.string.download)
@@ -783,11 +763,11 @@ class UpdateInformationFragment : AbstractFragment() {
                     initUpdateDownloadButton(updateData, DOWNLOADING)
                     showDownloadProgressBar()
 
-                    downloadProgressBar.isIndeterminate = true
-                    downloadStatusText.text = getString(R.string.download_pending)
+                    updateInformationDownloadProgressBar.isIndeterminate = true
+                    updateInformationDownloadDetailsView.text = getString(R.string.download_pending)
 
                     // Pause is possible on first progress update
-                    downloadPauseButton.setOnClickListener { }
+                    updateInformationDownloadPauseButton.setOnClickListener { }
                 } else {
                     mainActivity.requestDownloadPermissions { granted ->
                         if (granted) {

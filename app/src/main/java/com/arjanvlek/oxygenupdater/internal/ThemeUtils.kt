@@ -6,6 +6,7 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
+import android.util.TypedValue
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.NightMode
 import com.arjanvlek.oxygenupdater.R
@@ -22,6 +23,27 @@ import java.util.*
 object ThemeUtils {
 
     const val OEM_BLACK_MODE = "oem_black_mode"
+
+    /**
+     * Checks night mode flags and returns true if night mode is active
+     *
+     * @param context the context
+     *
+     * @return true if night mode is active, else false
+     */
+    fun isNightModeActive(context: Context): Boolean {
+        return when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> true
+            Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+            else -> false
+        }
+    }
+
+    fun getTertiaryColor(context: Context): Int {
+        val value = TypedValue()
+        context.theme.resolveAttribute(android.R.attr.textColorTertiary, value, true)
+        return value.data
+    }
 
     /**
      * Translates the theme chosen by the user to the corresponding [NightMode].
@@ -96,21 +118,6 @@ object ThemeUtils {
     }
 
     /**
-     * Checks night mode flags and returns true if night mode is active
-     *
-     * @param context the context
-     *
-     * @return true if night mode is active, else false
-     */
-    fun isNightModeActive(context: Context): Boolean {
-        return when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> true
-            Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> false
-            else -> false
-        }
-    }
-
-    /**
      * OxygenOS stores the system theme at `content://settings/system/oem_black_mode`.
      *
      * If the device has an option to change the theme (Settings -> Display -> Theme), this method will return the corresponding [Theme].
@@ -126,21 +133,14 @@ object ThemeUtils {
      * @return 0 for light, 1 for dark, 2 for colorful/default theme
      */
     private fun translateOnePlusTheme(context: Context): Theme? {
-        val resolver = context.contentResolver
         try {
-            return when (Settings.System.getInt(resolver, OEM_BLACK_MODE)) {
-                0 -> {
-                    // OnePlusLight is a light theme
-                    LIGHT
-                }
-                1 -> {
-                    // OnePlusDark is a dark theme
-                    DARK
-                }
-                2 -> {
-                    // OnePlusColorful is a light theme
-                    LIGHT
-                }
+            return when (Settings.System.getInt(context.contentResolver, OEM_BLACK_MODE)) {
+                // OnePlusLight is a light theme
+                0 -> LIGHT
+                // OnePlusDark is a dark theme
+                1 -> DARK
+                // OnePlusColorful is a light theme
+                2 -> LIGHT
                 else -> null
             }
         } catch (e: SettingNotFoundException) {
