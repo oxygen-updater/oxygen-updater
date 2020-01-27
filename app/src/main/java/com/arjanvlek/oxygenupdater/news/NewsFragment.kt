@@ -57,9 +57,9 @@ class NewsFragment : AbstractFragment() {
         updateBannerText(getString(R.string.news_unread_count, newsItems.count { !it.read }))
 
         newsContainer.let { recyclerView ->
-            newsAdapter = NewsAdapter(context, activity as MainActivity?, newsItems) { position ->
-                newsAdapter.notifyItemChanged(position)
-                updateBannerText(getString(R.string.news_unread_count, newsItems.count { !it.read }))
+            newsAdapter = NewsAdapter(context, activity as MainActivity?, newsItems) { newsItemId ->
+                newsAdapter.markItemAsRead(newsItemId)
+                updateBannerText(getString(R.string.news_unread_count, newsAdapter.itemList.count { !it.read }))
             }
 
             // animate items when they load

@@ -72,7 +72,7 @@ class NewsActivity : SupportActionBarActivity() {
         val applicationData = application as ApplicationData
 
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
-        applicationData.serverConnector!!.getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) label@{ newsItem ->
+        applicationData.serverConnector!!.getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) { newsItem ->
             if (retryCount == 0) {
                 setContentView(R.layout.activity_news)
             }
@@ -97,24 +97,12 @@ class NewsActivity : SupportActionBarActivity() {
                     }
                 }
 
-                return@label
+                return@getNewsItem
             }
 
             newsRetryButton.visibility = GONE
 
             val locale = AppLocale.get()
-
-            // Mark the item as read on the device.
-            NewsDatabaseHelper(application).apply {
-                markNewsItemAsRead(newsItem)
-                close()
-            }
-
-            intent.getIntExtra(INTENT_NEWS_ITEM_POSITION, -1).let {
-                if (it != -1) {
-                    NewsAdapter.newsItemReadListener.invoke(it)
-                }
-            }
 
             // Display the title of the article.
             newsTitle.apply {
@@ -169,9 +157,17 @@ class NewsActivity : SupportActionBarActivity() {
                 }
             }
 
+            // Mark the item as read on the device.
+            NewsDatabaseHelper(application).apply {
+                markNewsItemAsRead(newsItem)
+                close()
+            }
+
+            NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
+
             // Mark the item as read on the server (to increase times read counter)
             if (application != null && application is ApplicationData && Utils.checkNetworkConnection(application)) {
-                (application as ApplicationData).serverConnector!!.markNewsItemAsRead(newsItem.id!!) { result: ServerPostResult? ->
+                (application as ApplicationData).serverConnector!!.markNewsItemAsRead(newsItem.id) { result: ServerPostResult? ->
                     if (result != null && !result.success) {
                         logError("NewsActivity", NetworkException("Error marking news item as read on the server:" + result.errorMessage))
                     }
@@ -208,7 +204,6 @@ class NewsActivity : SupportActionBarActivity() {
 
     companion object {
         const val INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID"
-        const val INTENT_NEWS_ITEM_POSITION = "NEWS_ITEM_POSITION"
         const val INTENT_START_WITH_AD = "START_WITH_AD"
     }
 }

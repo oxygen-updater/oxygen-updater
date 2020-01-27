@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Handler
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
@@ -45,10 +44,13 @@ class NewsAdapter(
     private val context: Context?,
     private val activity: AppCompatActivity?,
     private var newsItemList: List<NewsItem>,
-    newsItemReadListener: KotlinCallback<Int>
+    newsItemReadListener: KotlinCallback<Long>
 ) : RecyclerView.Adapter<NewsItemViewHolder>() {
 
     private val settingsManager: SettingsManager = SettingsManager(context)
+
+    val itemList: List<NewsItem>
+        get() = newsItemList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder = NewsItemViewHolder(
         LayoutInflater.from(context).inflate(R.layout.news_item, parent, false)
@@ -61,7 +63,7 @@ class NewsAdapter(
 
         holder.title.text = newsItem.getTitle(locale)
         holder.subtitle.text = newsItem.getSubtitle(locale)
-        holder.container.setOnClickListener { openNewsItem(newsItem, position) }
+        holder.container.setOnClickListener { openNewsItem(newsItem) }
 
         if (newsItem.read) {
             holder.title.alpha = 0.5f
@@ -120,7 +122,20 @@ class NewsAdapter(
         newsItemList = newList
     }
 
-    private fun openNewsItem(newsItem: NewsItem, position: Int) {
+    fun markItemAsRead(newsItemId: Long) {
+        newsItemList.indexOfFirst { it.id == newsItemId }.also { index ->
+            if (index != -1) {
+                val previousValueOfRead = newsItemList[index].read
+                newsItemList[index].read = true
+
+                if (!previousValueOfRead) {
+                    notifyItemChanged(index)
+                }
+            }
+        }
+    }
+
+    private fun openNewsItem(newsItem: NewsItem) {
         if (activity is MainActivity) {
             if (activity.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
                 try {
@@ -128,7 +143,7 @@ class NewsAdapter(
                         adListener = object : AdListener() {
                             override fun onAdClosed() {
                                 super.onAdClosed()
-                                doOpenNewsItem(newsItem, position)
+                                doOpenNewsItem(newsItem)
 
                                 loadAd(buildAdRequest())
                             }
@@ -144,11 +159,11 @@ class NewsAdapter(
                 }
             } else {
                 // If offline, too many ads are shown or the user has bought the ad-free upgrade, open the news item directly.
-                doOpenNewsItem(newsItem, position)
+                doOpenNewsItem(newsItem)
             }
         } else {
             // If not attached to main activity or coming from other activity, open the news item.
-            doOpenNewsItem(newsItem, position)
+            doOpenNewsItem(newsItem)
         }
     }
 
@@ -174,14 +189,11 @@ class NewsAdapter(
         }
     }
 
-    private fun doOpenNewsItem(newsItem: NewsItem, position: Int) {
+    private fun doOpenNewsItem(newsItem: NewsItem) {
         val intent = Intent(context, NewsActivity::class.java)
             .putExtra(NewsActivity.INTENT_NEWS_ITEM_ID, newsItem.id)
-            .putExtra(NewsActivity.INTENT_NEWS_ITEM_POSITION, position)
 
         context!!.startActivity(intent)
-
-        Handler().postDelayed({ newsItem.read = false }, 2000)
     }
 
     inner class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -209,7 +221,7 @@ class NewsAdapter(
     companion object {
         private const val TAG = "NewsAdapter"
         private val imageCache = SparseArray<Bitmap?>()
-        lateinit var newsItemReadListener: KotlinCallback<Int>
+        lateinit var newsItemReadListener: KotlinCallback<Long>
     }
 
     init {
