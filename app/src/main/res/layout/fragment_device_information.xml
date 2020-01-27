@@ -35,11 +35,7 @@
 			android:id="@+id/device_information_hardware_container"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/padding_default"
-			android:stateListAnimator="@animator/clicked">
+			android:padding="@dimen/padding_default">
 
 			<LinearLayout android:gravity="center_vertical">
 
@@ -157,11 +153,7 @@
 			android:id="@+id/device_information_software_container"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/padding_default"
-			android:stateListAnimator="@animator/clicked">
+			android:padding="@dimen/padding_default">
 
 			<LinearLayout android:gravity="center_vertical">
 

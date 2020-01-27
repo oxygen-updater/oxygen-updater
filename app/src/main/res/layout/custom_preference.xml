@@ -3,13 +3,16 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:background="?selectableItemBackground"
 	android:gravity="center_vertical"
-	android:padding="@dimen/padding_half">
+	android:padding="@dimen/padding_half"
+	android:stateListAnimator="@animator/clicked">
 
 	<ImageView
 		android:id="@android:id/icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:contentDescription="@string/icon"
 		android:padding="@dimen/padding_default"
 		android:tint="?colorPrimary"
 		tools:src="@drawable/oxygen_updater" />

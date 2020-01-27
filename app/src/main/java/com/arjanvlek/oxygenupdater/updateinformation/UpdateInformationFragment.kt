@@ -288,7 +288,7 @@ class UpdateInformationFragment : AbstractFragment() {
             )
         }
 
-        if (!updateData.systemIsUpToDate) {
+        if (updateData.systemIsUpToDate) {
             updateBannerText(getString(R.string.update_information_banner_already_latest))
 
             val updateMethod = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")

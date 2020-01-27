@@ -56,9 +56,9 @@ android {
 
 			signingConfig signingConfigs.release
 
-			minifyEnabled true
-			shrinkResources true
-			debuggable false
+			minifyEnabled false
+			shrinkResources false
+			debuggable true
 			manifestPlaceholders = [appName: 'Oxygen Updater', fullPackageName: defaultConfig.applicationId]
 		}
 		debug {
@@ -186,7 +186,7 @@ dependencies {
 	// https://developer.android.com/jetpack/androidx/releases/core
 	implementation 'androidx.core:core-ktx:1.2.0-rc01'
 	// https://developer.android.com/jetpack/androidx/releases/fragment
-	implementation 'androidx.fragment:fragment-ktx:1.2.0-rc05'
+	implementation 'androidx.fragment:fragment-ktx:1.2.0'
 	// https://developer.android.com/jetpack/androidx/releases/preference
 	implementation 'androidx.preference:preference-ktx:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/recyclerview
