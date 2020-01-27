@@ -6,7 +6,7 @@
 
 	<!-- Update information strings-->
 	<string name="update">Update</string>
-	<string name="update_information_close">Close</string>
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
 	<string name="update_information_file_name">File name: %1$s</string>
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -96,7 +96,6 @@
 	<string name="download_verifying">Verifying…</string>
 	<string name="download_verifying_error">File is damaged</string>
 	<string name="download_verifying_start">Your download will now be verified…</string>
-
 
 	<!-- Settings strings-->
 	<string name="preference_header_support">Support us</string>
@@ -364,7 +363,7 @@
 	<!-- TODO translate this block to all but Dutch / Belgian / French -->
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
+	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximately 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
 	<string name="contribute_image_description">Upload files to the app server</string>
 	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
 	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
@@ -392,7 +391,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Update already downloaded</string>
-	<string name="delete_message_contents">You have already downloaded this update, but not yet installed it. Tap on \"Install Guide\" to view how to install this update. Tap on \"Delete\" to permanently delete the file. Press the Back button to close this message.</string>
+	<string name="delete_message_contents">You\'ve already downloaded this update, but haven\'t installed it yet. Tap on \"Install\" to view instructions on how to install this update. Tap on \"Delete\" to permanently delete the downloaded file. Press the back button, or tap outside to close this message.</string>
 	<string name="delete_message_delete_button">Delete</string>
 
 	<string name="unsupported_device_warning_title">Unsupported device</string>

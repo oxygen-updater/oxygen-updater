@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">Ажурирај</string>
-	<string name="update_information_close">Затвори</string> 
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">Нема званичних информација о новим могућностима овог ажурирања. Обично, овакво ажурирање поправња грешке, повећавање перформанси, и / или критична ажурирања сигурности за ваш уређај.</string>
 	<string name="update_information_file_name">Име дадотеке: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -114,7 +115,7 @@
 	<string name="summary_theme">Поставите тему</string>
 	<string name="summary_privacy_policy">Погледајте на интернету</string>
 	<string name="summary_rate_app">Оставите нам 5 звездица</string>
-	
+
 
 	<string name="label_buy_ad_free">Уклоните рекламе</string>
 	<string name="label_theme">Тема</string>
@@ -128,9 +129,9 @@
 	<string name="theme_system">Систем</string>
 	<string name="theme_auto">Аутоматски</string>
 
-	
-	
-	
+
+
+
 
 	<string name="theme_light_subtitle">Теме са белом позадином и OnePlus Црвеном примарном бојом</string>
 	<string name="theme_dark_subtitle">Мутирана OnePlus Црвена примарна боја, са скоро црном позадином. Користите ову тему да уштедите батерију, поготово на AMOLED екранима</string>
@@ -371,7 +372,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Ажурирање је већ преузето</string>
-	<string name="delete_message_contents">Већ сте преузели ажурирање али га нисте инсталирали. Притисните на \"Упуство за инсталацију\" да видите како да инсталирате ово ажурирање. Притисните на \"Обриши\" да избришете фајл. Притисните дугме за назад да затворите ову поруку.</string>
+	<string name="delete_message_contents">Већ сте преузели ажурирање али га нисте инсталирали. Притисните на \"Инсталирај\" да видите како да инсталирате ово ажурирање. Притисните на \"Обриши\" да избришете фајл. Притисните дугме за назад да затворите ову поруку.</string>
 	<string name="delete_message_delete_button">Избриши</string>
 
 	<string name="unsupported_device_warning_title">Неподржан уређај</string>
@@ -396,7 +397,5 @@
 	<string name="delayed_push_notification_displayer_service_name">Сервис за обавештења</string>
 	<string name="download_service_name">Ажурирај преузимач</string>
 	<string name="log_uploader_service_name">Грешка приликом пријаве сервиса</string>
-	
+
 </resources>
-
-

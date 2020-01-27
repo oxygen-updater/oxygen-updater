@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">Opdatér</string>
-	<string name="update_information_close">Luk</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">Der er ingen officiel information om nye egenskaber, som denne opdaterring indeholder. Normalt tilbyder denne slags opdatering fejlretninger, forbedringer af ydeevnen, og/eller kritiske sikkerhedsopdateringer til din egen enhed.</string>
 	<string name="update_information_file_name">Filnavn: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -363,7 +364,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Opdatering allerede hentet</string>
-	<string name="delete_message_contents">Du har allerede denne opdatering, dog endnu ikke installeret den. Tryk på \"Installations-guide\" for at se, hvordan du kan installere opdateringen. Tryk på \"Slet\" for permanent at slette denne fil. Tryk på tilbage-knappen for at lukker denne meddelelse.</string>
+	<string name="delete_message_contents">Du har allerede denne opdatering, dog endnu ikke installeret den. Tryk på \"Installér\" for at se, hvordan du kan installere opdateringen. Tryk på \"Slet\" for permanent at slette denne fil. Tryk på tilbage-knappen for at lukker denne meddelelse.</string>
 	<string name="delete_message_delete_button">Delete</string>
 
 	<string name="unsupported_device_warning_title">Ikke understøttet enhed</string>

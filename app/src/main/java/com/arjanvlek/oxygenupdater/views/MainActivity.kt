@@ -428,12 +428,13 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private fun showNetworkError() {
         if (!isFinishing) {
-            MessageDialog()
-                .setTitle(getString(R.string.error_app_requires_network_connection))
-                .setMessage(getString(R.string.error_app_requires_network_connection_message))
-                .setNegativeButtonText(getString(R.string.download_error_close))
-                .setClosable(false)
-                .show(supportFragmentManager, "NetworkError")
+            MessageDialog(
+                this,
+                title = getString(R.string.error_app_requires_network_connection),
+                message = getString(R.string.error_app_requires_network_connection_message),
+                negativeButtonText = getString(R.string.download_error_close),
+                cancellable = false
+            ).show()
         }
     }
 

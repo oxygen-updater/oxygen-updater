@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/installGuideMainView"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -95,7 +96,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
 			android:text="@string/install_guide_close_button"
-			android:textColor="?colorPrimary"
-			android:visibility="gone" />
+			android:visibility="gone"
+			app:strokeColor="?colorPrimary" />
 	</RelativeLayout>
 </ScrollView>

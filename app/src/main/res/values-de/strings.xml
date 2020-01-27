@@ -7,7 +7,8 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Update"</string>
-	<string name="update_information_close">"Schließen"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Datei Name: %1$s"</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -217,7 +218,7 @@ Wische nach links um fortzufahren."</string>
 Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf das drei Punkte Kontext Menü in der rechten oberen Ecke, und drücke auf \"Einstellungen\""</string>
 
 	<!-- Automatic install strings -->
-	<string name="install">"Installieren "</string>
+	<string name="install">"Installieren"</string>
 	<string name="install_checking_root">"Überprüfen ob dein Gerät gerootet ist…"</string>
 	<string name="install_grant_root_permissions">"Bitte erlaube den Root Zugriff falls du gefragt wirst"</string>
 	<string name="install_going_back_not_possible">"Leider, kannst du nicht zurückgehen"</string>
@@ -443,7 +444,7 @@ Benutzen sie den Schälter zum eins-oder ausschalten des Mitteilung- und Privacy
 
 	<!-- Fuzzy -->
 	<string name="delete_message_contents">"Sie haben das Update jetzt heruntergeladen, aber nicht installiert.
-Wahlen sie \"Installation\" zum Installieren des Update. Wahlen sie \"Löschen\" zum  permanent löschen des Update-Datei."</string>
+Wahlen sie \"Installieren\" zum Installieren des Update. Wahlen sie \"Löschen\" zum permanent löschen des Update-Datei."</string>
 	<string name="delete_message_delete_button">"Löschen"</string>
 	<string name="unsupported_device_warning_title">"Nicht unterstütztes Gerät"</string>
 
@@ -460,7 +461,7 @@ Other devices, including OnePlus devices running Custom ROMs, are not supported.
 	<!-- Fuzzy -->
 	<string name="root_check_message">"Oxygen Updater offers easy, automated update installations for users with a rooted devices. However, incremental updates are not available for rooted devices. Oxygen Updater can check if you have root access to only offer appropriate update methods.
 
-If you have root access, allow Oxygen Updater to obtain root access after closing this message. 
+If you have root access, allow Oxygen Updater to obtain root access after closing this message.
 
 No root access? Press \"Close\" and continue using the app."</string>
 

@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">更新</string>
-	<string name="update_information_close">关闭</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">没有关于此更新的新功能亮点的官方信息。一般情况下，此类更新会为您的设备提供错误修复，性能增强或关键安全更新。</string>
 	<string name="update_information_file_name">文件名称： %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -361,7 +362,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">更新包已下载</string>
-	<string name="delete_message_contents">您已经下载了此更新，但尚未安装它。 点击“安装指南”以查看如何安装此更新。 点击“删除”以永久删除文件。 点击“返回”按钮关闭此消息。</string>
+	<string name="delete_message_contents">您已经下载了此更新，但尚未安装它。 点击“安装”以查看如何安装此更新。 点击“删除”以永久删除文件。 点击“返回”按钮关闭此消息。</string>
 	<string name="delete_message_delete_button">删除</string>
 
 	<string name="unsupported_device_warning_title">不支持此设备</string>
@@ -388,5 +389,3 @@
 	<string name="download_service_name">更新下载器</string>
 	<string name="log_uploader_service_name">错误报告服务</string>
 </resources>
-
-

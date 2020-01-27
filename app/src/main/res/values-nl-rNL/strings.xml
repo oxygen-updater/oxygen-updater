@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">Update</string>
-	<string name="update_information_close">Sluiten</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
 	<string name="update_information_file_name">Bestandsnaam: %1$s</string>
 	<string name="update_information_download_link">Omdat de download is mislukt, en de download opnieuw moet worden gestart, kan je deze link gebruiken om de update vanuit de browser te downloaden. Het kan zijn dat je het gedownloade bestand bestand vanuit je "Downloads" moet verplaatsen naar de hoofdmap. Dit is dezelfde link als wat de app normaal gezien download, wat een officiële link is van de OnePlus OTA server:\n%1$s</string>
@@ -365,7 +366,7 @@
 
 	<!-- Message box strings -->
 	<string name="delete_message_title">Update is al gedownload</string>
-	<string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installatie\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
+	<string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installeren\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
 	<string name="delete_message_delete_button">Verwijder</string>
 
 	<string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>

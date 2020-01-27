@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">Actualizar</string>
-	<string name="update_information_close">Cerrar</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">No hay ninguna información oficial sobre las nuevas caracterísicas que esta actualización ofrece. Normalmente, tal actualización proporciona correcciones de errores, mejoras de rendimiento, y / o actualizaciones de seguridad para tu dispositivo.</string>
 	<string name="update_information_file_name">Nombre del archivo: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -366,7 +367,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Actualizaciones ya descargadas</string>
-	<string name="delete_message_contents">Ya has descargado esta actualización, pero no ha sido instalada todavía. Pulsa \"Guía de instalación\" para saber cómo instalar la actualización. Pulsa en \"Borrar\" para borrar el archivo de forma permanente. Pulsa el botón de atrás para cerrar este mensaje.</string>
+	<string name="delete_message_contents">Ya has descargado esta actualización, pero no ha sido instalada todavía. Pulsa \"Instalar\" para saber cómo instalar la actualización. Pulsa en \"Borrar\" para borrar el archivo de forma permanente. Pulsa el botón de atrás para cerrar este mensaje.</string>
 	<string name="delete_message_delete_button">Borrar</string>
 
 	<string name="unsupported_device_warning_title">Dispositivo no soportado</string>
@@ -393,5 +394,3 @@
 	<string name="download_service_name">Descargador de actualizaciones</string>
 	<string name="log_uploader_service_name">Error al informar el servicio</string>
 </resources>
-
-

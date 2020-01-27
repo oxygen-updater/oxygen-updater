@@ -7,7 +7,8 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Обновить"</string>
-	<string name="update_information_close">"Закрыть"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Имя файла: %1$s"</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -191,7 +192,7 @@
 
 - Получить мгновенный доступ к последним версиям Android для устройств под управлением OxygenOS
 
-- Легко обновить устройство с рутом 
+- Легко обновить устройство с рутом
 
 - Просмотреть, что нового в установленной прошивке
 
@@ -213,7 +214,7 @@
 
 К сожалению его нельзя использовать с устройствами с рутом. Если у вас есть рут, используйте Полное обновление.
 
-Если вы используете бета версии прошивок, то выберите \"Community Edition\". 
+Если вы используете бета версии прошивок, то выберите \"Community Edition\".
 
 Проведите влево, чтобы продолжить."</string>
 	<string name="setup_page_5_title">"Вы готовы! "</string>
@@ -438,7 +439,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Обновление уже загружено"</string>
-	<string name="delete_message_contents">"Вы уже загрузили это обновление, но еще не установили его. Нажмите «Руководство по установке», чтобы посмотреть, как установить это обновление. Нажмите «Удалить», чтобы окончательно удалить файл. Нажмите кнопку «Назад», чтобы закрыть это сообщение."</string>
+	<string name="delete_message_contents">"Вы уже загрузили это обновление, но еще не установили его. Нажмите «Установить», чтобы посмотреть, как установить это обновление. Нажмите «Удалить», чтобы окончательно удалить файл. Нажмите кнопку «Назад», чтобы закрыть это сообщение."</string>
 	<string name="delete_message_delete_button">"Удалить"</string>
 	<string name="unsupported_device_warning_title">"Hеподдерживаемое устройство"</string>
 	<!-- TODO: translate the 2 strings below -->
@@ -451,7 +452,7 @@
 	<string name="root_check_title">"Рут-доступ"</string>
 	<string name="root_check_message">"Oxygen Updater предлагает простые автоматические установки обновлений для пользователей с рут-правами. Тем не менее, частичные обновления недоступны для устройств с рутом. Oxygen Updater может проверить, есть ли у вас рут для предоставления соответствующих методов обновления
 
-Если у вас  есть рут, крайне желательно предоставить рут-права приложению, после закрытия данного диалогового окна. 
+Если у вас  есть рут, крайне желательно предоставить рут-права приложению, после закрытия данного диалогового окна.
 
 Нет рута? Тогда нажмите \"Закрыть\" и продолжите пользоваться данным приложением."</string>
 

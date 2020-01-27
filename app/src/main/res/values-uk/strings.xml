@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">Оновлення</string>
-	<string name="update_information_close">Закрити</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">Немає офіційної інформації про зміни і нові функції, які містить це оновлення. Зазвичай, таке оновлення містить виправлення помилок, покращення продуктивності, та / або важливі оновлення безпеки для вашого пристрою.</string>
 	<string name="update_information_file_name">Назва файлу: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -363,7 +364,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Оновлення вже завантажено</string>
-	<string name="delete_message_contents">Ви вже завантажили це оновлення, але ще його не встановлювали. Натисніть \"Встановити\", щоб перейти до вікна вибору режиму встановлення цього оновлення. Натисніть \"Видалити\", щоб видалити файл оновлення зі сховища. Натисніть кнопку Назад, щоб закрити це повідомлення.</string>
+	<string name="delete_message_contents">Ви вже завантажили це оновлення, але ще його не встановлювали. Натисніть \"Встановлення\", щоб перейти до вікна вибору режиму встановлення цього оновлення. Натисніть \"Видалити\", щоб видалити файл оновлення зі сховища. Натисніть кнопку Назад, щоб закрити це повідомлення.</string>
 	<string name="delete_message_delete_button">Видалити</string>
 
 	<string name="unsupported_device_warning_title">Пристрій не підтримується</string>

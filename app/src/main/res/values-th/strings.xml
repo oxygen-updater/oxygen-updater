@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">อัพเดท</string>
-	<string name="update_information_close">ปิด</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">ยังไม่มีข้อมูลอย่างเป็นทางการเกี่ยวกับคุณสมบัติใหม่ของการอัพเดทครั้งนี้ ซึ่งโดยปกติแล้วมันคือการแก้ไขบัคต่างๆ, ปรับปรุงประสิทธิภาพของระบบ, อัพเดทความปลอดภัย</string>
 	<string name="update_information_file_name">ชื่อไฟล์: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -362,7 +363,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">อัปเดตพร้อมดาวน์โหลดแล้ว</string>
-	<string name="delete_message_contents">คุณได้ดาวน์โหลดการอัปเดตนี้แล้วแต่ยังไม่ได้ติดตั้ง แตะที่ \"คู่มือการติดตั้ง \" เพื่อดูวิธีติดตั้งอัปเดตนี้ แตะที่ \"ลบ \" เพื่อลบไฟล์อย่างถาวร กดปุ่มย้อนกลับเพื่อปิดข้อความนี้</string>
+	<string name="delete_message_contents">คุณได้ดาวน์โหลดการอัปเดตนี้แล้วแต่ยังไม่ได้ติดตั้ง แตะที่ \"ติดตั้ง\" เพื่อดูวิธีติดตั้งอัปเดตนี้ แตะที่ \"ลบ \" เพื่อลบไฟล์อย่างถาวร กดปุ่มย้อนกลับเพื่อปิดข้อความนี้</string>
 	<string name="delete_message_delete_button">ลบ</string>
 
 	<string name="unsupported_device_warning_title">อุปกรณ์ไม่รองรับ</string>

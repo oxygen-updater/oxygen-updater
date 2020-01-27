@@ -7,7 +7,8 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Päivitä"</string>
-	<string name="update_information_close">"Sulje"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Tiedostonimi: %1$s"</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -419,7 +420,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Päivitys on jo ladattuna"</string>
-	<string name="delete_message_contents">"Olet jo ladannut tämän päivityksen, mutta et vielä asentanut sitä. Napsauta \"Asennusohje\" nähdäksesi kuinka päivitys asennetaan. Napsauta \"Poista\" painiketta poistaaksesi tiedosto. Paina takaisin painiketta sulkeaksi tämä viesti."</string>
+	<string name="delete_message_contents">"Olet jo ladannut tämän päivityksen, mutta et vielä asentanut sitä. Napsauta \"Asenna\" nähdäksesi kuinka päivitys asennetaan. Napsauta \"Poista\" painiketta poistaaksesi tiedosto. Paina takaisin painiketta sulkeaksi tämä viesti."</string>
 	<string name="delete_message_delete_button">"Poista"</string>
 	<string name="unsupported_device_warning_title">"Laitetta ei tueta"</string>
 	<!-- TODO: translate the 2 strings below -->

@@ -7,7 +7,8 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Ažuriraj"</string>
-	<string name="update_information_close">"Zatvori"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Ime datoteke: %1$s"</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -408,7 +409,7 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Ažuriranje je već skinuto"</string>
-	<string name="delete_message_contents">"Već ste preuzeli ovo ažuriranje, ali ga niste još instalirali. Pritisnite na \"Priručnik o instalaciji\" da vidite kako instalirati ovo ažuriranje. Pritisnite \"Obriši\" da bi obrisali ovaj fajl. Pritisnite \"Nazad\" dugme da zatvorite ovu poruku."</string>
+	<string name="delete_message_contents">"Već ste preuzeli ovo ažuriranje, ali ga niste još instalirali. Pritisnite na \"Instaliraj\" da vidite kako instalirati ovo ažuriranje. Pritisnite \"Obriši\" da bi obrisali ovaj fajl. Pritisnite \"Nazad\" dugme da zatvorite ovu poruku."</string>
 	<string name="delete_message_delete_button">"Obriši"</string>
 	<string name="unsupported_device_warning_title">"Ovaj uređaj nije podržan"</string>
 	<!-- TODO: translate the 2 strings below -->

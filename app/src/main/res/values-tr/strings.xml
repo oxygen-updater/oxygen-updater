@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">Güncelle</string>
-	<string name="update_information_close">Kapat</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">Bu güncelleme ile gelen yeni özellikler ile ilgili herhangi orjinal bir bilgi bulunmamakta. Genellikle, bu tür güncellemeler cihazınız için sorun düzeltmeleri,performans geliştirmeleri ve/veya kritik güvenlik güncellemelerini içermektedir.</string>
 	<string name="update_information_file_name">Dosya adı: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -361,7 +362,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Günelleme zaten indirildi.</string>
-	<string name="delete_message_contents">Bu güncellemeyi zaten indirdiniz, fakat hala yüklemediniz. \"Yükleme Rehberi\" ne tıklayın ve yükleme işlemi nasıl yapılırı görüntüleyin. \"Sil\" e basarak dosyayı kalıcı olarak silin. Mesajı kapatmak için geri butonuna basınız.</string>
+	<string name="delete_message_contents">Bu güncellemeyi zaten indirdiniz, fakat hala yüklemediniz. \"Yükle\" ne tıklayın ve yükleme işlemi nasıl yapılırı görüntüleyin. \"Sil\" e basarak dosyayı kalıcı olarak silin. Mesajı kapatmak için geri butonuna basınız.</string>
 	<string name="delete_message_delete_button">Sil</string>
 
 	<string name="unsupported_device_warning_title">Desteklenmeyen Cihaz</string>
@@ -388,5 +389,3 @@
 	<string name="download_service_name">Güncelleme yükleyicisi</string>
 	<string name="log_uploader_service_name">Hatayı bildirirken sorun oluştu.</string>
 </resources>
-
-

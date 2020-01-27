@@ -62,7 +62,8 @@
 				android:layout_marginTop="@dimen/padding_default"
 				android:layout_marginBottom="@dimen/padding_default"
 				android:onClick="onSaveButtonClick"
-				android:text="@string/contribute_save" />
+				android:text="@string/contribute_save"
+				app:strokeColor="?colorPrimary" />
 		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

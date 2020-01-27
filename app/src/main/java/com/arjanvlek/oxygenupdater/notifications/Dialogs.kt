@@ -1,17 +1,14 @@
 package com.arjanvlek.oxygenupdater.notifications
 
-import android.content.Context
-import android.content.DialogInterface
+import android.app.Activity
+import android.content.DialogInterface.BUTTON_NEGATIVE
+import android.content.DialogInterface.BUTTON_NEUTRAL
+import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.download.DownloadService
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.models.UpdateData
 
 object Dialogs {
@@ -22,8 +19,10 @@ object Dialogs {
      * @param title   Title of the error message
      * @param message Contents of the error message
      */
-    fun showDownloadError(fragment: Fragment, updateData: UpdateData?, isResumable: Boolean, @StringRes title: Int, @StringRes message: Int) {
-        showDownloadError(fragment, updateData, isResumable, fragment.getString(title), fragment.getString(message))
+    fun showDownloadError(activity: Activity?, updateData: UpdateData?, isResumable: Boolean, @StringRes title: Int, @StringRes message: Int) {
+        checkPreconditions(activity) {
+            showDownloadError(activity!!, updateData, isResumable, activity.getString(title), activity.getString(message))
+        }
     }
 
     /**
@@ -32,153 +31,138 @@ object Dialogs {
      * @param title   Title of the error message
      * @param message Contents of the error message
      */
-    fun showDownloadError(fragment: Fragment, updateData: UpdateData?, isResumable: Boolean, title: String?, message: String?) {
-        checkPreconditions(fragment) {
-            val errorDialog = MessageDialog()
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButtonText(fragment.getString(R.string.download_error_close))
-                .setNegativeButtonText(
-                    if (isResumable) fragment.getString(R.string.download_error_resume) else fragment
-                        .getString(R.string.download_error_retry)
-                )
-                .setClosable(true)
-                .setDialogListener(object : MessageDialog.DialogListener {
-                    override fun onDialogPositiveButtonClick(dialogFragment: DialogInterface?) {
-                        LocalNotifications.hideDownloadCompleteNotification(fragment.activity)
-                    }
-
-                    override fun onDialogNegativeButtonClick(dialogFragment: DialogInterface?) {
-                        LocalNotifications.hideDownloadCompleteNotification(fragment.activity)
-                        DownloadService.performOperation(fragment.activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
+    fun showDownloadError(activity: Activity?, updateData: UpdateData?, isResumable: Boolean, title: String?, message: String?) {
+        checkPreconditions(activity) {
+            MessageDialog(
+                activity!!,
+                title = title,
+                message = message,
+                positiveButtonText = activity.getString(R.string.download_error_close),
+                negativeButtonText = if (isResumable) {
+                    activity.getString(R.string.download_error_resume)
+                } else {
+                    activity.getString(R.string.download_error_retry)
+                },
+                cancellable = true
+            ) {
+                when (it) {
+                    BUTTON_POSITIVE -> LocalNotifications.hideDownloadCompleteNotification(activity)
+                    BUTTON_NEGATIVE -> {
+                        LocalNotifications.hideDownloadCompleteNotification(activity)
+                        DownloadService.performOperation(activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
                         DownloadService.performOperation(
-                            fragment.activity,
+                            activity,
                             if (isResumable) DownloadService.ACTION_RESUME_DOWNLOAD else DownloadService.ACTION_DOWNLOAD_UPDATE,
                             updateData
                         )
                     }
-                })
-            try {
-                errorDialog.setTargetFragment(fragment, 0)
-
-                fragment.activity!!.supportFragmentManager.beginTransaction().apply {
-                    add(errorDialog, "DownloadError")
-                    commitAllowingStateLoss()
-                }
-            } catch (e: IllegalStateException) {
-                if (e.message?.contains("onSaveInstanceState") == true) {
-                    logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e)
-                } else {
-                    logError("MessageDialog", "Error when displaying dialog 'DownloadError'", e)
-                }
-            }
-        }
-    }
-
-    fun showNoNetworkConnectionError(fragment: Fragment) {
-        checkPreconditions(fragment) {
-            MessageDialog()
-                .setTitle(fragment.getString(R.string.error_app_requires_network_connection))
-                .setMessage(fragment.getString(R.string.error_app_requires_network_connection_message))
-                .setNegativeButtonText(fragment.getString(R.string.download_error_close))
-                .setClosable(false).apply {
-                    setTargetFragment(fragment, 0)
-                    show(fragment.parentFragmentManager, "NetworkError")
-                }
-        }
-    }
-
-    fun showServerMaintenanceError(activity: AppCompatActivity) {
-        checkPreconditions(activity) {
-            MessageDialog()
-                .setTitle(activity.getString(R.string.error_maintenance))
-                .setMessage(activity.getString(R.string.error_maintenance_message))
-                .setNegativeButtonText(activity.getString(R.string.download_error_close))
-                .setClosable(false)
-                .show(activity.supportFragmentManager, "MaintenanceError")
-        }
-    }
-
-    fun showAppOutdatedError(activity: AppCompatActivity) {
-        val activityLauncher = ActivityLauncher(activity)
-
-        checkPreconditions(activity) {
-            MessageDialog()
-                .setTitle(activity.getString(R.string.error_app_outdated))
-                .setMessage(activity.getString(R.string.error_app_outdated_message))
-                .setPositiveButtonText(activity.getString(R.string.error_google_play_button_text))
-                .setNegativeButtonText(activity.getString(R.string.download_error_close))
-                .setClosable(false)
-                .setDialogListener(object : MessageDialog.DialogListener {
-                    override fun onDialogPositiveButtonClick(dialogFragment: DialogInterface?) {
-                        activityLauncher.launchPlayStorePage(activity)
+                    BUTTON_NEUTRAL -> {
+                        // no-op
                     }
-
-                    override fun onDialogNegativeButtonClick(dialogFragment: DialogInterface?) {}
-                })
-                .show(activity.supportFragmentManager, "AppOutdatedError")
+                }
+            }.show()
         }
     }
 
-    fun showUpdateAlreadyDownloadedMessage(updateData: UpdateData?, fragment: Fragment, actionPerformedCallback: KotlinCallback<Void?>) {
-        checkPreconditions(fragment) {
-            val dialog = MessageDialog()
-                .setTitle(fragment.getString(R.string.delete_message_title))
-                .setMessage(fragment.getString(R.string.delete_message_contents))
-                .setClosable(true)
-                .setPositiveButtonText(fragment.getString(R.string.install))
-                .setNegativeButtonText(fragment.getString(R.string.delete_message_delete_button))
-                .setDialogListener(object : MessageDialog.DialogListener {
-                    override fun onDialogPositiveButtonClick(dialogFragment: DialogInterface?) {
-                        if (fragment.activity?.application == null) {
-                            return
+    fun showNoNetworkConnectionError(activity: Activity?) {
+        checkPreconditions(activity) {
+            MessageDialog(
+                activity!!,
+                title = activity.getString(R.string.error_app_requires_network_connection),
+                message = activity.getString(R.string.error_app_requires_network_connection_message),
+                negativeButtonText = activity.getString(R.string.download_error_close),
+                cancellable = false
+            ).show()
+        }
+    }
+
+    fun showServerMaintenanceError(activity: Activity?) {
+        checkPreconditions(activity) {
+            MessageDialog(
+                activity!!,
+                title = activity.getString(R.string.error_maintenance),
+                message = activity.getString(R.string.error_maintenance_message),
+                negativeButtonText = activity.getString(R.string.download_error_close),
+                cancellable = false
+            ).show()
+        }
+    }
+
+    fun showAppOutdatedError(activity: Activity?) {
+        checkPreconditions(activity) {
+            MessageDialog(
+                activity!!,
+                title = activity.getString(R.string.error_app_outdated),
+                message = activity.getString(R.string.error_app_outdated_message),
+                positiveButtonText = activity.getString(R.string.error_google_play_button_text),
+                negativeButtonText = activity.getString(R.string.download_error_close),
+                cancellable = false
+            ) {
+                when (it) {
+                    BUTTON_POSITIVE -> ActivityLauncher(activity).launchPlayStorePage(activity)
+                    BUTTON_NEGATIVE -> {
+                        // no-op
+                    }
+                    BUTTON_NEUTRAL -> {
+                        // no-op
+                    }
+                }
+            }.show()
+        }
+    }
+
+    fun showUpdateAlreadyDownloadedMessage(updateData: UpdateData?, activity: Activity?, callback: KotlinCallback<Void?>) {
+        checkPreconditions(activity) {
+            MessageDialog(
+                activity!!,
+                title = activity.getString(R.string.delete_message_title),
+                message = activity.getString(R.string.delete_message_contents),
+                positiveButtonText = activity.getString(R.string.install),
+                negativeButtonText = activity.getString(R.string.delete_message_delete_button),
+                positiveButtonIcon = R.drawable.install,
+                cancellable = true
+            ) {
+                when (it) {
+                    BUTTON_POSITIVE -> {
+                        if (activity.application == null) {
+                            return@MessageDialog
                         }
 
-                        ActivityLauncher(fragment.activity!!).UpdateInstallation(true, updateData)
+                        ActivityLauncher(activity).UpdateInstallation(true, updateData)
                     }
-
-                    override fun onDialogNegativeButtonClick(dialogFragment: DialogInterface?) {
-                        actionPerformedCallback.invoke(null)
+                    BUTTON_NEGATIVE -> callback.invoke(null)
+                    BUTTON_NEUTRAL -> {
+                        // no-op
                     }
-                })
-            try {
-                dialog.setTargetFragment(fragment, 0)
-                fragment.activity!!.supportFragmentManager.beginTransaction().apply {
-                    add(dialog, "DeleteDownload")
-                    commitAllowingStateLoss()
                 }
-            } catch (e: IllegalStateException) {
-                if (e.message?.contains("onSaveInstanceState") == true) {
-                    logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e)
-                } else {
-                    logError("MessageDialog", "Error when displaying dialog 'DeleteDownload'", e)
+            }.show()
+        }
+    }
+
+    fun showAdvancedModeExplanation(activity: Activity?, callback: KotlinCallback<Boolean>) {
+        checkPreconditions(activity) {
+            MessageDialog(
+                activity!!,
+                title = activity.getString(R.string.settings_advanced_mode),
+                message = activity.getString(R.string.settings_advanced_mode_explanation),
+                positiveButtonText = activity.getString(R.string.enable),
+                negativeButtonText = activity.getString(android.R.string.cancel),
+                positiveButtonIcon = R.drawable.done_circle,
+                cancellable = true
+            ) {
+                when (it) {
+                    BUTTON_POSITIVE -> callback.invoke(true)
+                    BUTTON_NEGATIVE -> callback.invoke(false)
+                    BUTTON_NEUTRAL -> {
+                        // no-op
+                    }
                 }
-            }
+            }.show()
         }
     }
 
-    fun showAdvancedModeExplanation(ctx: Context, fm: FragmentManager?) {
-        if (fm == null) {
-            return
-        }
-
-        MessageDialog()
-            .setTitle(ctx.getString(R.string.settings_advanced_mode))
-            .setMessage(ctx.getString(R.string.settings_advanced_mode_explanation))
-            .setClosable(true)
-            .setPositiveButtonText(ctx.getString(R.string.update_information_close)).apply {
-                show(fm, "OU_AdvancedModeExplanation")
-            }
-    }
-
-    private fun checkPreconditions(activity: AppCompatActivity?, callback: () -> Unit) {
-        if (activity?.supportFragmentManager != null && !activity.isFinishing) {
-            callback.invoke()
-        }
-    }
-
-    private fun checkPreconditions(fragment: Fragment?, callback: () -> Unit) {
-        if (fragment?.parentFragmentManager != null && fragment.isAdded && fragment.activity?.isFinishing == false) {
+    private fun checkPreconditions(activity: Activity?, callback: () -> Unit) {
+        if (activity?.isFinishing == false) {
             callback.invoke()
         }
     }

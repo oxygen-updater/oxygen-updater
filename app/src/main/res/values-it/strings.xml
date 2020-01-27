@@ -7,7 +7,8 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Aggiorna"</string>
-	<string name="update_information_close">"Chiudi"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Nome file: %1$s"</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -285,7 +286,7 @@ Il tuo dispositivo si riavvierà.
 
 - Il progresso apparirà nell'app e come notifica.
 
-- Al termine del download, riceverai una notifica con il testo \"Download completato\". 
+- Al termine del download, riceverai una notifica con il testo \"Download completato\".
 Se e' stato riscontrato un errore, apri l'app e ritenta il download. Assicurati di avere una connessione internet funzionante."</string>
 	<string name="install_guide_page_2_title">"Entra in modalità recovery."</string>
 	<string name="install_guide_page_2_text">"- Come prima cosa, spegni il tuo dispositivo.
@@ -358,7 +359,7 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="help">"Aiuto"</string>
 	<string name="help_text">"Benvenuto nella sezione aiuto di Oxygen Updater!
 
-L'aiuto copre diverse tematiche: 
+L'aiuto copre diverse tematiche:
 
 • Aggiornare il tuo dispositivo
 • Leggere le news
@@ -430,7 +431,7 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<!-- Message strings -->
 	<string name="delete_message_title">"Aggiornamento già scaricato"</string>
 	<string name="delete_message_contents">"Hai già scaricato questo aggiornamento, ma non lo hai istallato.
-Premi \"Guida Istallazione\" per vedere il processo d'istallazione. Premi su \"Cancella\" per cancellare il file. Premi \"indietro\" per chiudere questo messaggio."</string>
+Premi \"Installa\" per vedere il processo d'istallazione. Premi su \"Cancella\" per cancellare il file. Premi \"indietro\" per chiudere questo messaggio."</string>
 	<string name="delete_message_delete_button">"Cancella"</string>
 	<string name="unsupported_device_warning_title">"Device non supportato"</string>
 	<!-- TODO: translate the 2 strings below -->
@@ -443,7 +444,7 @@ Altri dispositivi della OnePlus su custom ROM, non sono supportati. "</string>
 	<string name="root_check_title">"Accesso root"</string>
 	<string name="root_check_message">"Oxygen Updater offre istallazioni facili e automatiche per utenti rootati. Pero', gli aggiornamenti incrementali non sono disponibili per quest ultimi. Oxygen Updater puo' verificare l'accesso root per garantirti l'istallazione più facile.
 
-Se hai effettuato il root, autorizza l'app a trarrne utilizzo dopo aver chiuso questo messaggio. 
+Se hai effettuato il root, autorizza l'app a trarrne utilizzo dopo aver chiuso questo messaggio.
 
 Non hai il root? Premi \"Chiudi\" e continua ad utilizzare l'app."</string>
 

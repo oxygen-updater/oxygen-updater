@@ -92,7 +92,7 @@ class BottomSheetPreference : Preference {
         dialog = BottomSheetDialog(mContext)
         val inflater = LayoutInflater.from(mContext)
 
-        dialogLayout = inflater.inflate(R.layout.bottom_sheet, null, false) as LinearLayout
+        dialogLayout = inflater.inflate(R.layout.bottom_sheet_preference, null, false) as LinearLayout
         dialogLayout.apply {
             itemListContainer = findViewById(R.id.dialog_item_list_container)
 
@@ -102,7 +102,7 @@ class BottomSheetPreference : Preference {
             logVerbose(TAG, "Setup dialog with title='$title', subtitle='$caption', and '${itemList.size}' items")
 
             itemList.indices.forEach { index ->
-                val dialogItemLayout = inflater.inflate(R.layout.bottom_sheet_item, itemListContainer, false) as LinearLayout
+                val dialogItemLayout = inflater.inflate(R.layout.bottom_sheet_preference_item, itemListContainer, false) as LinearLayout
 
                 // add the item's view at the specified index
                 itemListContainer.addView(dialogItemLayout, index)

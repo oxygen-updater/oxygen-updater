@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">تحديث</string>
-	<string name="update_information_close">إغلاق</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">لا توجد بيانات رسمية عن الميزات الجديدة التي يقدمها هذا التحديث. عادتاً, تحديث كهذا يقدم إصلاحات لأخطاء برمجية, وتحسينات في الأداء, و \ أو تحديثات أمنية حرجة لجهازك.</string>
 	<string name="update_information_file_name">إسم الملف:  %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -323,7 +324,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">تم تحميل التحديث بالفعل</string>
-	<string name="delete_message_contents">لقد قمت بالفعل بتنزيل هذا التحديث ، لكنك لم تقم بتثبيته بعد. اضغط على \"دليل التثبيت\" لعرض كيفية تثبيت هذا التحديث. اضغط على \"حذف\" لحذف هذا الملف نهائيًا. اضغط زر العودة لإغلاق هذه الرسالة.</string>
+	<string name="delete_message_contents">لقد قمت بالفعل بتنزيل هذا التحديث ، لكنك لم تقم بتثبيته بعد. اضغط على \"تثبيت\" لعرض كيفية تثبيت هذا التحديث. اضغط على \"حذف\" لحذف هذا الملف نهائيًا. اضغط زر العودة لإغلاق هذه الرسالة.</string>
 	<string name="delete_message_delete_button">حذف</string>
 	<string name="unsupported_device_warning_title">جهاز غير مدعوم</string>
 	<!-- TODO: translate the 2 strings below -->

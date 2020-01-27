@@ -1,123 +1,95 @@
 package com.arjanvlek.oxygenupdater.notifications
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.view.KeyEvent
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.VISIBLE
+import androidx.annotation.DrawableRes
+import com.arjanvlek.oxygenupdater.R
+import com.arjanvlek.oxygenupdater.internal.KotlinCallback
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
+import kotlinx.android.synthetic.main.bottom_sheet_message.*
 import kotlin.system.exitProcess
 
 /**
- * Usage: Title text, Message text, Positive button text, Negative button text.
+ * Wrapper around [BottomSheetDialog]
  */
-class MessageDialog : DialogFragment() {
+class MessageDialog(
+    private val activity: Activity,
+    private val title: String? = null,
+    private val message: String? = null,
+    private val positiveButtonText: String? = null,
+    private val negativeButtonText: String? = null,
+    private val neutralButtonText: String? = null,
+    @DrawableRes private val positiveButtonIcon: Int? = null,
+    private val cancellable: Boolean = false,
+    private val dialogListener: KotlinCallback<Int>? = null
+) : BottomSheetDialog(activity) {
 
-    private var dialogListener: DialogListener? = null
-    private var title: String? = null
-    private var message: String? = null
-    private var positiveButtonText: String? = null
-    private var negativeButtonText: String? = null
-    private var closable = false
+    @SuppressLint("InflateParams")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    fun setTitle(title: String?): MessageDialog {
-        this.title = title
-        return this
+        setContentView(LayoutInflater.from(activity).inflate(R.layout.bottom_sheet_message, null, false))
+        setupViews()
     }
 
-    fun setMessage(message: String?): MessageDialog {
-        this.message = message
-        return this
-    }
+    private fun setupViews() {
+        titleTextView.text = title
+        messageTextView.text = message
 
-    fun setDialogListener(listener: DialogListener?): MessageDialog {
-        dialogListener = listener
-        return this
-    }
+        positiveButton.setup(positiveButtonText, View.OnClickListener {
+            dismiss()
+            dialogListener?.invoke(Dialog.BUTTON_POSITIVE)
+        }, positiveButtonIcon)
 
-    fun setPositiveButtonText(positiveButtonText: String?): MessageDialog {
-        this.positiveButtonText = positiveButtonText
-        return this
-    }
+        negativeButton.setup(negativeButtonText, View.OnClickListener {
+            dismiss()
+            dialogListener?.invoke(Dialog.BUTTON_NEGATIVE)
+        })
 
-    fun setNegativeButtonText(negativeButtonText: String?): MessageDialog {
-        this.negativeButtonText = negativeButtonText
-        return this
-    }
+        neutralButton.setup(neutralButtonText, View.OnClickListener {
+            dismiss()
+            dialogListener?.invoke(Dialog.BUTTON_NEUTRAL)
+        })
 
-    fun setClosable(closable: Boolean): MessageDialog {
-        this.closable = closable
-        return this
-    }
+        setCancelable(cancellable)
+        setCanceledOnTouchOutside(cancellable)
 
-    override fun show(manager: FragmentManager, tag: String?) {
-        try {
-            super.show(manager, tag)
-        } catch (e: IllegalStateException) {
-            if (e.message?.contains("onSaveInstanceState") == true) {
-                logDebug("MessageDialog", "Ignored IllegalStateException when showing dialog because the app was already exited", e)
-            } else {
-                logError("MessageDialog", "Error when displaying dialog '$tag'", e)
-            }
-        }
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity)
-            .setTitle(title)
-            .setMessage(message)
-
-        if (negativeButtonText != null) {
-            builder.setNegativeButton(negativeButtonText) { dialog: DialogInterface?, _: Int ->
-                dialogListener?.onDialogNegativeButtonClick(dialog)
-                dismiss()
-            }
-        }
-
-        if (positiveButtonText != null) {
-            builder.setPositiveButton(positiveButtonText) { dialog: DialogInterface?, _: Int ->
-                dialogListener?.onDialogPositiveButtonClick(dialog)
-                dismiss()
-            }
-        }
-
-        if (!closable) {
-            builder.setCancelable(false)
-                .setOnKeyListener { _: DialogInterface?, keyCode: Int, _: KeyEvent? ->
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        exit()
-                    }
-                    true
+        if (!cancellable) {
+            setOnKeyListener { _, keyCode, _ ->
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    exit()
                 }
-                .setOnDismissListener { exit() }
-        }
+                true
+            }
 
-        return builder.create()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        if (!closable) {
-            exit()
+            setOnDismissListener { exit() }
         }
     }
 
-    private fun exit(activity: Activity? = getActivity()) {
+    private fun MaterialButton.setup(string: String?, onClickListener: View.OnClickListener, @DrawableRes drawableResId: Int? = null) {
+        string?.let {
+            visibility = VISIBLE
+            text = it
+            setOnClickListener(onClickListener)
+        }
+
+        drawableResId?.let { icon = activity.getDrawable(it) }
+    }
+
+    private fun exit(activity: Activity? = this.activity) {
         if (activity != null) {
             activity.finish()
             exit(activity.parent)
         } else {
             Handler().postDelayed({ exitProcess(0) }, 2000)
         }
-    }
-
-    interface DialogListener {
-        fun onDialogPositiveButtonClick(dialogFragment: DialogInterface?)
-        fun onDialogNegativeButtonClick(dialogFragment: DialogInterface?)
     }
 }

@@ -7,7 +7,8 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Mise à jour"</string>
-	<string name="update_information_close">"Fermer"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Nom du fichier : %1$s"</string>
 	<string name="update_information_download_link">Étant donné qu\'une errreur de téléchargement s\'est produite et que le téléchargement doit être redémarré, vous pouvez utiliser ce lien pour télécharger le fichier de mise à jour. Vous devrez cependant le déplacer du dossier "Téléchargements" à la racine du stockage interne de votre appareil. Ce lien est le même lien que l\'application utilise et provient des serveurs FOTA de OnePlus:\n%1$s</string>
 	<string name="update_information_for">"Pour"</string>
@@ -421,7 +422,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<!-- Message strings -->
 	<string name="delete_message_title">"La mise à jour a déjà été téléchargée."</string>
 	<string name="delete_message_contents">"Vous avez déjà téléchargé cette mise à jour mais ne l'avez pas installée.
-Cliquez sur « Guide d'installation » afin de savoir comment faire. Appuyez sur « Supprimer » pour supprimer définitivement le fichier. Appuyez sur le bouton Retour pour fermer ce message."</string>
+Cliquez sur « Installation » afin de savoir comment faire. Appuyez sur « Supprimer » pour supprimer définitivement le fichier. Appuyez sur le bouton Retour pour fermer ce message."</string>
 	<string name="delete_message_delete_button">"Supprimer."</string>
 
 	<string name="unsupported_device_warning_title">"Appareil non compatible"</string>

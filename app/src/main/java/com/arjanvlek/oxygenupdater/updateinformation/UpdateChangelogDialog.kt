@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_update_changelog.*
+import kotlinx.android.synthetic.main.bottom_sheet_update_changelog.*
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -22,7 +22,7 @@ class UpdateChangelogDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(LayoutInflater.from(mContext).inflate(R.layout.dialog_update_changelog, null, false))
+        setContentView(LayoutInflater.from(mContext).inflate(R.layout.bottom_sheet_update_changelog, null, false))
         setupViews()
     }
 

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
@@ -112,11 +113,13 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     private fun setupAdvancedModePreference() {
-        val advancedMode = findPreference<Preference>(SettingsManager.PROPERTY_ADVANCED_MODE)
+        val advancedMode = findPreference<SwitchPreference>(SettingsManager.PROPERTY_ADVANCED_MODE)
         advancedMode?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             val isAdvancedMode = settingsManager!!.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
             if (isAdvancedMode) {
-                showAdvancedModeExplanation(mContext, activity.supportFragmentManager)
+                showAdvancedModeExplanation(activity) {
+                    advancedMode?.isChecked = it
+                }
             }
 
             true

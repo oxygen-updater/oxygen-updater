@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">更新</string>
-	<string name="update_information_close">閉じる</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグfix、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
 	<string name="update_information_file_name">ファイル名: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -362,7 +363,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">アップデートファイルダウンロード済</string>
-	<string name="delete_message_contents">この更新プログラムは既にダウンロードされていますが、まだインストールされていません。 \"インストールガイド\"をタップして、この更新プログラムのインストール方法を表示します。 \"削除\"をタップして、ファイルを完全に削除します。このメッセージを閉じるには、\"戻る\"ボタンを押します。</string>
+	<string name="delete_message_contents">この更新プログラムは既にダウンロードされていますが、まだインストールされていません。 \"インストール\"をタップして、この更新プログラムのインストール方法を表示します。 \"削除\"をタップして、ファイルを完全に削除します。このメッセージを閉じるには、\"戻る\"ボタンを押します。</string>
 	<string name="delete_message_delete_button">削除</string>
 
 	<string name="unsupported_device_warning_title">未サポートデバイス</string>

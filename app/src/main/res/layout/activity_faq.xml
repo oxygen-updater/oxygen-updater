@@ -73,7 +73,8 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:onClick="onRetryButtonClick"
-				android:text="@string/download_error_retry" />
+				android:text="@string/download_error_retry"
+				app:strokeColor="?colorPrimary" />
 		</LinearLayout>
 	</RelativeLayout>
 

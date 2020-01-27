@@ -16,9 +16,9 @@
 		android:layout_marginStart="@dimen/padding_default"
 		android:layout_marginTop="@dimen/padding_default"
 		android:layout_marginEnd="@dimen/padding_default"
-		tools:text="@string/update_information_header_advanced_mode_helper"
 		android:textColor="?android:textColorSecondary"
-		android:textSize="@dimen/typography_caption" />
+		android:textSize="@dimen/typography_caption"
+		tools:text="@string/update_information_header_advanced_mode_helper" />
 
 	<View
 		android:id="@+id/headerDivider"
@@ -49,6 +49,7 @@
 				android:layout_marginStart="@dimen/padding_default"
 				android:layout_marginEnd="@dimen/padding_default"
 				android:ellipsize="end"
+				android:gravity="center"
 				android:maxLines="1"
 				android:textIsSelectable="true"
 				android:textSize="@dimen/typography_title"

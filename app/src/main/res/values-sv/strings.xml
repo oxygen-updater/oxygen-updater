@@ -7,7 +7,8 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Uppdatera"</string>
-	<string name="update_information_close">"Stäng"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Filnamn: %1$s"</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -421,7 +422,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Uppdateringen är redan nerladdad"</string>
-	<string name="delete_message_contents">"Du har redan laddat ner denna uppdatering, men inte installerat den än. Tryck på \"Installationsguide\" för att se hur du installerar denna uppdatering. Tryck på \"Ta bort\" för att permanent ta bort filen. Tryck på bakåtknappen för att stänga detta meddelande."</string>
+	<string name="delete_message_contents">"Du har redan laddat ner denna uppdatering, men inte installerat den än. Tryck på \"Installera\" för att se hur du installerar denna uppdatering. Tryck på \"Ta bort\" för att permanent ta bort filen. Tryck på bakåtknappen för att stänga detta meddelande."</string>
 	<string name="delete_message_delete_button">"Ta bort"</string>
 	<string name="unsupported_device_warning_title">"Enhet stöds inte"</string>
 	<!-- TODO: translate the 2 strings below -->

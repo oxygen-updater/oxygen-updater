@@ -6,7 +6,8 @@
 
 	<!-- Update information strings-->
 	<string name="update">Aktualizacja</string>
-	<string name="update_information_close">Zamknij</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">Brak informacji o nowych funkcjach w tej aktualizacji. Zazwyczaj taka aktualizacja zapewnia poprawki błędów, ulepszenia wydajności i / lub krytyczne aktualizacje bezpieczeństwa dla twojego urządzenia.</string>
 	<string name="update_information_file_name">Nazwa pliku: %1$s</string>
 	<!-- TODO: Translate this string below -->
@@ -368,7 +369,7 @@
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Aktualizacja została już pobrana.</string>
-	<string name="delete_message_contents">Już pobrałeś tę aktualizację, ale nie została ona jeszcze zainstalowana. Naciśnij na \"Poradnik instalacji\"T aby sprawdzić jak zainstalować tę aktualizację. Naciśnij na \"Usuń\" aby permanentnie usunąć ten plik.  Tap on \"Delete\" to permanently delete the file. Naciśnij przycisk Wstecz aby zamknąć tę wiadomość.</string>
+	<string name="delete_message_contents">Już pobrałeś tę aktualizację, ale nie została ona jeszcze zainstalowana. Naciśnij na \"Instaluj\"T aby sprawdzić jak zainstalować tę aktualizację. Naciśnij na \"Usuń\" aby permanentnie usunąć ten plik. Tap on \"Delete\" to permanently delete the file. Naciśnij przycisk Wstecz aby zamknąć tę wiadomość.</string>
 	<string name="delete_message_delete_button">Usuń</string>
 
 	<string name="unsupported_device_warning_title">Niewspierane urządzenie</string>
@@ -395,4 +396,3 @@
 	<string name="download_service_name">Pobieracz aktualizacji</string>
 	<string name="log_uploader_service_name">Serwis raportowania błędów</string>
 </resources>
-

@@ -134,7 +134,6 @@ class UpdateInformationFragment : AbstractFragment() {
                     + settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
 
-        val instance: AbstractFragment = this
         val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         val online = Utils.checkNetworkConnection(applicationData)
@@ -155,7 +154,7 @@ class UpdateInformationFragment : AbstractFragment() {
             if (!isLoadedOnce && activity?.intent?.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false) == true) {
                 val intent = activity!!.intent
                 showDownloadError(
-                    instance,
+                    activity,
                     updateData,
                     intent.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false),
                     intent.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE),
@@ -167,7 +166,7 @@ class UpdateInformationFragment : AbstractFragment() {
             isLoadedOnce = true
         }) { error ->
             if (error == ApplicationData.NETWORK_CONNECTION_ERROR) {
-                showNoNetworkConnectionError(instance)
+                showNoNetworkConnectionError(activity)
             }
         }
     }
@@ -484,7 +483,7 @@ class UpdateInformationFragment : AbstractFragment() {
     }
 
     private fun showDownloadError(updateData: UpdateData?, @StringRes message: Int) {
-        showDownloadError(this, updateData, false, R.string.download_error, message)
+        showDownloadError(activity!!, updateData, false, R.string.download_error, message)
     }
 
     private fun initDownloadLayout(updateData: UpdateData?, downloadStatus: DownloadStatus) {
@@ -703,15 +702,26 @@ class UpdateInformationFragment : AbstractFragment() {
      */
     private inner class AlreadyDownloadedOnClickListener internal constructor(private val updateData: UpdateData?) : View.OnClickListener {
         override fun onClick(view: View) {
-            showUpdateAlreadyDownloadedMessage(updateData, this@UpdateInformationFragment) {
+            showUpdateAlreadyDownloadedMessage(updateData, this@UpdateInformationFragment.activity) {
                 if (updateData != null) {
-                    DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
+                    val mainActivity = activity as MainActivity? ?: return@showUpdateAlreadyDownloadedMessage
 
-                    initDownloadLayout(updateData, NOT_DOWNLOADING)
+                    if (mainActivity.hasDownloadPermissions()) {
+                        DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
+
+                        initDownloadLayout(updateData, NOT_DOWNLOADING)
+                    } else {
+                        mainActivity.requestDownloadPermissions { granted ->
+                            if (granted) {
+                                DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
+
+                                initDownloadLayout(updateData, NOT_DOWNLOADING)
+                            }
+                        }
+                    }
                 }
             }
         }
-
     }
 
     companion object {

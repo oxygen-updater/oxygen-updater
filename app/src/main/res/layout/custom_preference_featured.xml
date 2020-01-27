@@ -11,6 +11,7 @@
 		android:id="@android:id/icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:contentDescription="@string/icon"
 		android:padding="@dimen/padding_default"
 		android:tint="?colorPrimary"
 		tools:src="@drawable/oxygen_updater" />
