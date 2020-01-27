@@ -293,15 +293,15 @@ class UpdateInformationFragment : AbstractFragment() {
             val updateMethod = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
 
             // Format top title based on system version installed.
-            headerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)
+            footerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)
 
-            headerTextView.visibility = VISIBLE
-            headerDivider.visibility = VISIBLE
+            footerTextView.visibility = VISIBLE
+            footerDivider.visibility = VISIBLE
         } else {
             updateBannerText(getString(R.string.update_information_banner_update_available, formattedOxygenOsVersion))
 
-            headerTextView.visibility = GONE
-            headerDivider.visibility = GONE
+            footerTextView.visibility = GONE
+            footerDivider.visibility = GONE
         }
 
         // Display available update version number.

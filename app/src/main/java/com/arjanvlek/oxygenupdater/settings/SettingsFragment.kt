@@ -117,6 +117,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         advancedMode?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             val isAdvancedMode = settingsManager!!.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
             if (isAdvancedMode) {
+                advancedMode?.isChecked = false
                 showAdvancedModeExplanation(activity) {
                     advancedMode?.isChecked = it
                 }

@@ -9,24 +9,6 @@
 	android:orientation="vertical"
 	tools:showIn="@layout/fragment_update_information">
 
-	<TextView
-		android:id="@+id/headerTextView"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/padding_default"
-		android:layout_marginTop="@dimen/padding_default"
-		android:layout_marginEnd="@dimen/padding_default"
-		android:textColor="?android:textColorSecondary"
-		android:textSize="@dimen/typography_caption"
-		tools:text="@string/update_information_header_advanced_mode_helper" />
-
-	<View
-		android:id="@+id/headerDivider"
-		android:layout_width="match_parent"
-		android:layout_height="1dp"
-		android:layout_marginTop="@dimen/padding_default"
-		android:background="@color/backgroundVariant" />
-
 	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
@@ -81,8 +63,32 @@
 				android:layout_marginTop="@dimen/padding_default"
 				android:layout_marginBottom="@dimen/padding_default"
 				android:background="@color/backgroundVariant"
-				app:layout_constraintBottom_toTopOf="@id/fileNameTextView"
+				app:layout_constraintBottom_toTopOf="@id/footerTextView"
 				app:layout_constraintTop_toBottomOf="@id/changelogTextView" />
+
+			<TextView
+				android:id="@+id/footerTextView"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/padding_default"
+				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginEnd="@dimen/padding_default"
+				android:layout_marginBottom="@dimen/padding_default"
+				android:textColor="?android:textColorSecondary"
+				android:textSize="@dimen/typography_caption"
+				app:layout_constraintBottom_toTopOf="@id/footerDivider"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				tools:text="@string/update_information_header_advanced_mode_helper" />
+
+			<View
+				android:id="@+id/footerDivider"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginBottom="@dimen/padding_default"
+				android:background="@color/backgroundVariant"
+				app:layout_constraintBottom_toTopOf="@id/fileNameTextView" />
 
 			<TextView
 				android:id="@+id/fileNameTextView"
@@ -122,7 +128,8 @@
 		android:id="@+id/downloadLayout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="?selectableItemBackground"
+		android:background="@color/backgroundVariant"
+		android:foreground="?selectableItemBackground"
 		android:stateListAnimator="@animator/clicked">
 
 		<View

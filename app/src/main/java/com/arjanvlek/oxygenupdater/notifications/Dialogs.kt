@@ -147,7 +147,7 @@ object Dialogs {
                 message = activity.getString(R.string.settings_advanced_mode_explanation),
                 positiveButtonText = activity.getString(R.string.enable),
                 negativeButtonText = activity.getString(android.R.string.cancel),
-                positiveButtonIcon = R.drawable.done_circle,
+                positiveButtonIcon = R.drawable.done_outline,
                 cancellable = true
             ) {
                 when (it) {
