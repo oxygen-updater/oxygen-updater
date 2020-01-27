@@ -14,11 +14,15 @@
 	<string name="update_information_for">для</string>
 	<string name="update_information_header">Оновлення</string>
 	<string name="update_information_header_short">Оновлення</string>
-	<string name="update_information_installed_update">Остання версія оновлення:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">Востаннє перевірено: %1$s</string>
 	<string name="update_information_latest_available_update">Доступне оновлення системи</string>
 	<string name="update_information_no_update_data_available">Немає інформації про оновлення</string>
-	<string name="update_information_oxygen_os_version">Версія OxygenOS: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Система оновлена</string>
 	<string name="update_information_unknown_update_name">Оновлення без назви для %1$s</string>
 	<string name="update_information_version">&#160; Версія:</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">Вчора</string>
 
 	<!-- Downloader strings-->
-	<string name="download">Завантажити</string>
-	<string name="downloaded">Завантажено</string>
-	<string name="downloading">Завантаження…</string>
-	<string name="paused">Призупинено</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">Оновлення вже завантажено і готове до встановлення.</string>
 	<string name="download_complete">Завантаження завершено</string>
@@ -72,19 +77,20 @@
 	<string name="download_notification_error_storage_full">Недостатньо вільного місця.</string>
 	<string name="download_notification_error_corrupt">Помилка перевірки файлу. Перевірте підключення та спробуйте ще раз.</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, залишилося приблизно %2$d години</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, залишилося менше хвилини</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, залишилося приблизно %2$d хвилин</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, залишилося приблизно година</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, залишилося приблизно хвилина</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, залишилося декілька секунд</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, підрахунок часу…</string>
-	<string name="download_progress_text_verifying">100%, перевірка файлу…</string>
-	<string name="download_progress_text_paused">%1$d%%, призупинено</string>
-	<string name="download_waiting_for_network">%1$d%%, очікування мережі…</string>
+	<string name="download_progress">%1$d Mб / %2$d Mб (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">залишилося приблизно %1$d години</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">залишилося менше хвилини</string>
+	<string name="download_progress_text_minutes_remaining">залишилося приблизно %1$d хвилин</string>
+	<string name="download_progress_text_one_hour_remaining">залишилося приблизно година</string>
+	<string name="download_progress_text_one_minute_remaining">залишилося приблизно хвилина</string>
+	<string name="download_progress_text_seconds_remaining">залишилося декілька секунд</string>
+	<string name="download_progress_text_unknown_time_remaining">підрахунок часу…</string>
+	<string name="download_progress_text_verifying">перевірка файлу…</string>
+	<string name="download_progress_text_paused">призупинено</string>
+	<string name="download_waiting_for_network">очікування мережі…</string>
 
 	<string name="download_size_megabyte">%1$d Мб</string>
-	<string name="download_unknown_update_name">Оновлення Oxygen OS</string>
+	<string name="download_unknown_update_name">Оновлення OxygenOS</string>
 
 	<string name="download_verifying">Перевірка…</string>
 	<string name="download_verifying_error">Файл пошкоджено</string>

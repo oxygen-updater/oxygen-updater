@@ -14,11 +14,15 @@
 	<string name="update_information_for">"для"</string>
 	<string name="update_information_header">"Обновить"</string>
 	<string name="update_information_header_short">"Обновить"</string>
-	<string name="update_information_installed_update">"Последняя версия:"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
 	<string name="update_information_latest_available_update">"Доступно новое обновление"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
-	<string name="update_information_oxygen_os_version">"Версия Oxygen OS: %1$s"</string>
+	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Система обновлена."</string>
 	<string name="update_information_unknown_update_name">"Обновление для %1$s"</string>
 	<string name="update_information_version">" Версия:"</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">"Вчера"</string>
 
 	<!-- Downloader strings -->
-	<string name="download">"Загрузить"</string>
-	<string name="downloaded">"Загружено"</string>
-	<string name="downloading">"Cкачивание…"</string>
-	<string name="paused">"помолчала"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">"Это обновление уже загружено и готово к установке."</string>
 	<string name="download_complete">"Успешная загрузка"</string>
@@ -61,7 +66,7 @@
 	<string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
 	<string name="download_failed">"Ошибка загрузки"</string>
 	<string name="download_in_background">"Обновление будет загружаться в фоне…"</string>
-	<string name="download_oxygen_os">"Версия Oxygen OS"</string>
+	<string name="download_oxygen_os">"Версия OxygenOS"</string>
 	<string name="download_pending">"Загрузка скоро начнется…"</string>
 	<string name="download_permissions">"Нажмите Загрузить снова для загрузки обновления."</string>
 
@@ -72,19 +77,21 @@
 
 	<string name="download_notification_error_storage_full">"Недостаточно места."</string>
 	<string name="download_notification_error_corrupt">"Ошибка проверки файла. Проверьте подключение и попробуйте снова."</string>
-	<string name="download_progress_text_hours_remaining">"%1$d%%, осталось около %2$d часов"</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, осталось меньше минуты"</string>
-	<string name="download_progress_text_minutes_remaining">"%1$d%%, еще около %2$d минут"</string>
-	<string name="download_progress_text_one_hour_remaining">"%1$d%%, еще около 1 часа"</string>
-	<string name="download_progress_text_one_minute_remaining">"%1$d%%, еще около минуты"</string>
-	<string name="download_progress_text_seconds_remaining">"%1$d%%, еще несколько секунд"</string>
-	<string name="download_progress_text_unknown_time_remaining">"%1$d%%, вычисление времени…"</string>
-	<string name="download_progress_text_verifying">"100%, проверка файла…"</string>
-	<string name="download_progress_text_paused">"%1$d%%, помолчала"</string>
-	<string name="download_waiting_for_network">"%1$d%%, oжидание подключения…"</string>
+
+	<string name="download_progress">%1$d MБ / %2$d MБ (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">"осталось около %1$d часов"</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"осталось меньше минуты"</string>
+	<string name="download_progress_text_minutes_remaining">"еще около %1$d минут"</string>
+	<string name="download_progress_text_one_hour_remaining">"еще около 1 часа"</string>
+	<string name="download_progress_text_one_minute_remaining">"еще около минуты"</string>
+	<string name="download_progress_text_seconds_remaining">"еще несколько секунд"</string>
+	<string name="download_progress_text_unknown_time_remaining">"вычисление времени…"</string>
+	<string name="download_progress_text_verifying">"проверка файла…"</string>
+	<string name="download_progress_text_paused">"помолчала"</string>
+	<string name="download_waiting_for_network">"oжидание подключения…"</string>
 
 	<string name="download_size_megabyte">"%1$d МБ"</string>
-	<string name="download_unknown_update_name">"Обновить Oxygen OS"</string>
+	<string name="download_unknown_update_name">"Обновить OxygenOS"</string>
 	<string name="download_verifying">"Проверка…"</string>
 	<string name="download_verifying_error">"Файл поврежден"</string>
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
@@ -260,7 +267,7 @@
 	<string name="install_verify_error_title">"Ошибка установки"</string>
 	<string name="install_verify_error_nothing_installed">"Ошибка при установке обновления. Никакие изменения не были внесены в ПО вашего устройства. Попробуйте установить обновление еще раз."</string>
 	<string name="install_verify_error_unable_to_verify">"Не удалось проверить, было ли обновление установлено успешно. Пожалуйста, откройте Oxygen Updater, чтобы убедиться, что обновление было установлено успешно."</string>
-	<string name="install_verify_error_wrong_version_installed">"Была установлена другая версия Oxygen OS. Не выбирайте файл прошивки, при выборе архива рута в опции \"Сохранить рут-права\"."</string>
+	<string name="install_verify_error_wrong_version_installed">"Была установлена другая версия OxygenOS. Не выбирайте файл прошивки, при выборе архива рута в опции \"Сохранить рут-права\"."</string>
 	<string name="install_verify_success_title">"Установка завершена"</string>
 	<string name="install_verify_success_message">"OxygenOS версии %1$s установлен успешно."</string>
 	<string name="install_zip_file_clear">"Очистить архив установки рута"</string>
@@ -303,11 +310,11 @@
 - Устройство будет загружаться дольше обычного во время первого запуска.
 
 - После этого вы увидите белое сообщение с заголовком «Android обновляется», в то время как ваши приложения оптимизируются."</string>
-	<string name="install_guide_page_5_title">"Готово. Наслаждайтесь новой версией Oxygen OS!"</string>
+	<string name="install_guide_page_5_title">"Готово. Наслаждайтесь новой версией OxygenOS!"</string>
 	<string name="install_guide_page_5_text">"- После завершения оптимизации приложений, обновление установлено успешно.
 Чтобы проверить это, вы можете узнать текущую версию системы следующим образом::
 
-- Go to Settings, tap on \"About Phone\", and check the Oxygen OS Version.
+- Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.
 
 - If you like this app, give it 5 stars at Google Play!"</string>
 	<string name="install_guide_close_button">"Закрыть Руководство по установке"</string>
@@ -327,7 +334,7 @@
 	<string name="device_information_image_description">"Изображение устройства"</string>
 	<string name="device_information_incremental_os_version">"Номер сборки ПО:"</string>
 	<string name="device_information_os_version">"Версия Android:"</string>
-	<string name="device_information_oxygen_os_version">"Версия Oxygen OS:"</string>
+	<string name="device_information_oxygen_os_version">"Версия OxygenOS:"</string>
 	<string name="device_information_oxygen_os_ota_version">"Версия OTA:"</string>
 	<string name="device_information_patch_level_version">"Патч безопасности от:"</string>
 	<string name="device_information_serial_number">"Серийный номер:"</string>
@@ -337,7 +344,7 @@
 
 	<!-- About screen strings -->
 	<string name="about">"О приложении"</string>
-	<string name="about_app_description">"Эффективный инструмент для обновления Oxygen OS."</string>
+	<string name="about_app_description">"Эффективный инструмент для обновления OxygenOS."</string>
 	<!-- TODO translate this string -->
 	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">"Оценить в Google Play"</string>
@@ -437,7 +444,7 @@
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">"Похоже, что на вашем устройстве стоит не Oxygen OS. Обратите внимание, что вы можете устанавливать обновления системы только на устройствах с Oxygen OS.
+	<string name="unsupported_os_warning_message">"Похоже, что на вашем устройстве стоит не OxygenOS. Обратите внимание, что вы можете устанавливать обновления системы только на устройствах с OxygenOS.
 
 Другие устройства, включая устройства OnePlus, работающие на кастомных прошивках, не поддерживаются."</string>
 	<string name="unsupported_device_warning_checkbox_title">"Не показывать это предупреждение снова"</string>

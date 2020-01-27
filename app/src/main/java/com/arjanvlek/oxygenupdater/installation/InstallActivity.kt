@@ -266,7 +266,7 @@ class InstallActivity : SupportActionBarActivity() {
             additionalZipFilePath.text = text
             additionalZipFileClearButton.visibility = VISIBLE
         } else {
-            additionalZipFilePath.text = getString(R.string.install_zip_file_placeholder)
+            additionalZipFilePath.setText(R.string.install_zip_file_placeholder)
             additionalZipFileClearButton.visibility = GONE
         }
     }

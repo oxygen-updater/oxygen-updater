@@ -51,7 +51,6 @@ object Utils {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.resources.displayMetrics)
     }
 
-    @JvmStatic
     fun checkNetworkConnection(context: Context?): Boolean {
         if (context == null) {
             logWarning("Utils", OxygenUpdaterException("CheckNetworkConnection: check skipped due to empty / null context"))
@@ -62,7 +61,6 @@ object Utils {
         return connectivityManager?.activeNetworkInfo?.isConnectedOrConnecting == true
     }
 
-    @JvmStatic
     @Synchronized
     fun checkDeviceOsSpec(systemVersionProperties: SystemVersionProperties, devices: List<Device>?): DeviceOsSpec {
         val oemFingerPrint: String? = systemVersionProperties.oemFingerprint
@@ -75,7 +73,7 @@ object Utils {
                 && oxygenOsVersion != ApplicationData.NO_OXYGEN_OS
 
         if (devices.isNullOrEmpty()) {
-            // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an oxygen os version is found on the device.
+            // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an OxygenOS version is found on the device.
             return if (firmwareIsSupported) {
                 SUPPORTED_OXYGEN_OS
             } else {

@@ -17,7 +17,7 @@ class AboutActivity : SupportActionBarActivity() {
         val activityLauncher = ActivityLauncher(this)
 
         // Set the version number of the app in the version number field.
-        aboutVersionNumberView.text = String.format(getString(R.string.about_version), BuildConfig.VERSION_NAME)
+        aboutVersionNumberView.text = getString(R.string.about_version, BuildConfig.VERSION_NAME)
         // Make the links in the background story clickable.
         aboutBackgroundStoryView.movementMethod = LinkMovementMethod.getInstance()
         // Set onClick listener to Google Play rate button.

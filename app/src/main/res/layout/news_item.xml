@@ -11,7 +11,8 @@
 	android:paddingStart="@dimen/padding_half"
 	android:paddingTop="@dimen/padding_default"
 	android:paddingEnd="@dimen/padding_half"
-	android:paddingBottom="@dimen/padding_default">
+	android:paddingBottom="@dimen/padding_default"
+	android:stateListAnimator="@animator/clicked">
 
 	<ImageView
 		android:id="@+id/newsItemImage"

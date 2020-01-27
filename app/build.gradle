@@ -194,7 +194,7 @@ dependencies {
 
 	// Google Material Components for Android
 	// https://github.com/material-components/material-components-android/releases
-	implementation 'com.google.android.material:material:1.2.0-alpha03'
+	implementation 'com.google.android.material:material:1.2.0-alpha04'
 
 	// JSON libraries
 	// Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above

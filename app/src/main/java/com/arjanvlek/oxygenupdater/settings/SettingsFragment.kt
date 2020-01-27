@@ -30,6 +30,7 @@ import java.util.*
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+
     private lateinit var mContext: Context
     private lateinit var activity: AppCompatActivity
     private lateinit var application: ApplicationData

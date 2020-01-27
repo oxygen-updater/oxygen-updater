@@ -24,11 +24,11 @@ object UpdateDataVersionFormatter {
     /**
      * User-readable name for regular versions of OxygenOS
      */
-    private const val OXYGEN_OS_REGULAR_DISPLAY_PREFIX = "Oxygen OS "
+    private const val OXYGEN_OS_REGULAR_DISPLAY_PREFIX = "OxygenOS "
     /**
      * User-readable name for beta versions of OxygenOS
      */
-    private const val OXYGEN_OS_BETA_DISPLAY_PREFIX = "Oxygen OS Open Beta "
+    private const val OXYGEN_OS_BETA_DISPLAY_PREFIX = "OxygenOS Open Beta "
 
     /**
      * Checks if the passed update version information contains a version number which can be
@@ -45,10 +45,10 @@ object UpdateDataVersionFormatter {
 
     /**
      * Get the formatted version number of the passed update version information. The output is as
-     * following: Regular update: "Oxygen OS 4.0.0" Open Beta update: "Oxygen OS Open Beta 28" Other
+     * following: Regular update: "OxygenOS 4.0.0" Open Beta update: "OxygenOS Open Beta 28" Other
      * update with "(#)OS Version": "OS Version: Windows 10 1709" Update without "(#)OS Version":
      * "V. OnePlus5TOxygen_23_1804231200" Null versionInfo / no internal version number in
-     * versionInfo: "Oxygen OS System Update"
+     * versionInfo: "OxygenOS System Update"
      *
      * @param versionInfo Update version information to get the formatted version number for.
      *
@@ -56,7 +56,7 @@ object UpdateDataVersionFormatter {
      */
     fun getFormattedVersionNumber(versionInfo: FormattableUpdateData?): String {
         if (!canVersionInfoBeFormatted(versionInfo)) {
-            return if (!versionInfo?.internalVersionNumber.isNullOrBlank()) "V. " + versionInfo!!.internalVersionNumber else "Oxygen OS System Update"
+            return if (!versionInfo?.internalVersionNumber.isNullOrBlank()) "V. " + versionInfo!!.internalVersionNumber else "OxygenOS System Update"
         }
 
         val firstLine = getFirstLine(versionInfo) // Can never be null due to check canVersionInfoBeFormatted
@@ -83,7 +83,6 @@ object UpdateDataVersionFormatter {
         if (versionInfo?.updateDescription.isNullOrBlank()) {
             return ""
         }
-
 
         return try {
             BufferedReader(StringReader(versionInfo?.updateDescription)).readLine() ?: ""

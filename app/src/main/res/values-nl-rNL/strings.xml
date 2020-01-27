@@ -13,11 +13,15 @@
 	<string name="update_information_for">voor</string>
 	<string name="update_information_header">Updaten</string>
 	<string name="update_information_header_short">Updaten</string>
-	<string name="update_information_installed_update">Deze update wordt momenteel verspreid:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
 	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
-	<string name="update_information_oxygen_os_version">Oxygen OS-versie: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
 	<string name="update_information_unknown_update_name">Naamloze update voor %1$s</string>
 	<string name="update_information_version">-versie:</string>
@@ -37,10 +41,11 @@
 	<string name="time_yesterday">Gisteren</string>
 
 	<!-- Downloader strings -->
-	<string name="download">Downloaden</string>
+	<string name="download">Downloaden update</string>
 	<string name="downloaded">Gedownload</string>
-	<string name="downloading">Downloaden…</string>
-	<string name="paused">Gepauzeerd</string>
+	<string name="downloading">Downloaden update…</string>
+	<!-- TODO: translate this string below -->
+	<string name="paused">Gepauzeerd - tap to resume</string>
 
 	<string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
 	<string name="download_complete">Download voltooid</string>
@@ -60,7 +65,7 @@
 
 	<string name="download_failed">Downloaden mislukt</string>
 	<string name="download_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
-	<string name="download_oxygen_os">Oxygen OS-versie</string>
+	<string name="download_oxygen_os">OxygenOS-versie</string>
 	<string name="download_pending">Je download begint zometeen…</string>
 	<string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
 
@@ -70,19 +75,20 @@
 	<string name="download_notification_error_storage_full">Onvoldoende opslagruimte.</string>
 	<string name="download_notification_error_corrupt">Bestandscontrole mislukt. Controleer je verbinding en probeer het opnieuw.</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, ongeveer %2$d uur resterend</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, minder dan een minuut resterend</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, ongeveer %2$d minuten resterend</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, ongeveer 1 uur resterend</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, ongeveer een minuut resterend</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, enkele seconden resterend</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, resterende tijd berekenen…</string>
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">Ongeveer %1$d uur resterend</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">minder dan een minuut resterend</string>
+	<string name="download_progress_text_minutes_remaining">ongeveer %1$d minuten resterend</string>
+	<string name="download_progress_text_one_hour_remaining">ongeveer 1 uur resterend</string>
+	<string name="download_progress_text_one_minute_remaining">ongeveer een minuut resterend</string>
+	<string name="download_progress_text_seconds_remaining">enkele seconden resterend</string>
+	<string name="download_progress_text_unknown_time_remaining">resterende tijd berekenen…</string>
 	<string name="download_progress_text_verifying">100%%, controleren op fouten…</string>
-	<string name="download_progress_text_paused">%1$d%%, gepauzeerd…</string>
-	<string name="download_waiting_for_network">%1$d%%, wachten op een netwerkverbinding…</string>
+	<string name="download_progress_text_paused">gepauzeerd…</string>
+	<string name="download_waiting_for_network">wachten op een netwerkverbinding…</string>
 
 	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">Oxygen OS-update</string>
+	<string name="download_unknown_update_name">OxygenOS-update</string>
 
 	<string name="download_verifying">Controleren…</string>
 	<string name="download_verifying_error">Bestand is beschadigd</string>
@@ -262,8 +268,8 @@
 	<string name="install_guide_page_4_title">Start je apparaat opnieuw op.</string>
 	<string name="install_guide_page_4_text">- Als de installatie van de update is voltooid, keert je apparaat vanzelf terug naar het Recovery-menu. In het Recovery-menu, tik je op \"Reboot\".\n\n- Je apparaat zal het opstartscherm een lange tijd laten zien terwijl het opstart.\n\n- Hierna verschijnt er een wit venster met de titel \"Android wordt bijgewerkt\" , terwijl je apps worden geoptimaliseerd.</string>
 
-	<string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe Oxygen OS-versie!</string>
-	<string name="install_guide_page_5_text">- Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de Oxygen OS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
+	<string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe OxygenOS-versie!</string>
+	<string name="install_guide_page_5_text">- Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n- Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de OxygenOS-versie.\n\n- Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
 
 	<string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
 	<string name="install_guide_zip_file_missing">"Als je root-toegang wilt behouden, moet je hierboven een root-bestand selecteren."</string>
@@ -291,7 +297,7 @@
 
 	<!-- About screen strings -->
 	<string name="about">Over deze app</string>
-	<string name="about_app_description">De ultieme app voor alles over Oxygen OS-updates.</string>
+	<string name="about_app_description">De ultieme app voor alles over OxygenOS-updates.</string>
 	<!-- TODO translate this string -->
 	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een vergelijkbare functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de gemeenschap tevreden te stellen door een goede ondersteuning &amp; te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>. \n\n\nOnthoud dat dit geen officiële OnePlus-applicatie is.\nDe OnePlus naam, het OnePlus Logo en OxygenOS zijn eigendommen van OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel de app dan alsjeblieft nu op de Google Play Store:</string>
 	<string name="about_rate_app_button_text">Beoordeel op Google Play</string>

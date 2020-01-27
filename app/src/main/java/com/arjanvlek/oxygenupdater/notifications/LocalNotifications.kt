@@ -34,7 +34,6 @@ object LocalNotifications {
     /**
      * Shows a notification that an update is downloading
      */
-    @JvmStatic
     fun showDownloadingNotification(context: Context?, updateData: UpdateData?, downloadProgressData: DownloadProgressData) {
         try {
             val builder = NotificationCompat.Builder(context!!, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
@@ -63,7 +62,6 @@ object LocalNotifications {
     /**
      * Shows a notification that the download has been paused.
      */
-    @JvmStatic
     fun showDownloadPausedNotification(context: Context, updateData: UpdateData?, downloadProgressData: DownloadProgressData) {
         try {
             // If the download-in-progress notification is clicked, go to the app itself
@@ -106,7 +104,6 @@ object LocalNotifications {
     /**
      * Shows a notification that the downloaded update file is downloaded successfully.
      */
-    @JvmStatic
     fun showDownloadCompleteNotification(context: Context, updateData: UpdateData?) {
         try { // If the download complete notification is clicked, hide the first page of the install guide.
             val resultIntent = Intent(context, InstallActivity::class.java)
@@ -178,7 +175,6 @@ object LocalNotifications {
     /**
      * Hides the downloading notification. Used when the download is cancelled by the user.
      */
-    @JvmStatic
     fun hideDownloadingNotification(context: Context?) {
         try {
             (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
@@ -195,7 +191,6 @@ object LocalNotifications {
      * Hides the download complete notification. Used when the install guide is manually clicked
      * from within the app.
      */
-    @JvmStatic
     fun hideDownloadCompleteNotification(context: Context?) {
         try {
             (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
@@ -206,7 +201,6 @@ object LocalNotifications {
         }
     }
 
-    @JvmStatic
     fun showDownloadFailedNotification(context: Context, resumable: Boolean, @StringRes message: Int, @StringRes notificationMessage: Int) {
         try { // If the download complete notification is clicked, hide the first page of the install guide.
             val resultIntent = Intent(context, MainActivity::class.java)
@@ -250,7 +244,6 @@ object LocalNotifications {
      * @param error If an error occurred during verification, display an error text in the
      * notification.
      */
-    @JvmStatic
     fun showVerifyingNotification(context: Context, ongoing: Boolean, error: Boolean) {
         try {
             val builder = NotificationCompat.Builder(context, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
@@ -283,7 +276,6 @@ object LocalNotifications {
     /**
      * Hides the verifying notification. Used when verification has succeeded.
      */
-    @JvmStatic
     fun hideVerifyingNotification(context: Context?) {
         try {
             (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {

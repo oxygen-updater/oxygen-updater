@@ -14,11 +14,15 @@
 	<string name="update_information_for">için</string>
 	<string name="update_information_header">Güncelle</string>
 	<string name="update_information_header_short">Güncelle</string>
-	<string name="update_information_installed_update">En son sistem güncellemesi:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">Son kontrol: %1$s</string>
 	<string name="update_information_latest_available_update">Yeni sistem güncellemesi mevcut</string>
 	<string name="update_information_no_update_data_available">Herhangi bir güncelleme bilgisi bulunmamaktadır.</string>
-	<string name="update_information_oxygen_os_version">Oxygen OS Versiyonu: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Sisteminiz güncel.</string>
 	<string name="update_information_unknown_update_name">İsimsiz güncelleme: %1$s</string>
 	<string name="update_information_version">&#160;versiyon:</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">Dün</string>
 
 	<!-- Downloader strings-->
-	<string name="download">İndir</string>
-	<string name="downloaded">İndirildi</string>
-	<string name="downloading">İndiriliyor…</string>
-	<string name="paused">Durduruldu</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">Güncelleme zaten indirildi. Yüklenmek için hazır.</string>
 	<string name="download_complete">İndirme tamamlandı.</string>
@@ -62,7 +67,7 @@
 
 	<string name="download_failed">Download failed</string>
 	<string name="download_in_background">Oxygen Updater is running in the background</string>
-	<string name="download_oxygen_os">Oxygen OS Version</string>
+	<string name="download_oxygen_os">OxygenOS Version</string>
 	<string name="download_pending">Your download will start soon…</string>
 	<string name="download_permissions">Tap Download again to download the update.</string>
 
@@ -72,19 +77,20 @@
 	<string name="download_notification_error_storage_full">Yeterli alan yok.</string>
 	<string name="download_notification_error_corrupt">Dosya doğrulaması başarısız oldu. Lütfen bağlantınızı kontrol edin ve tekrar deneyin.</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, yaklaşık %2$d kaldı</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 1 dakikadan az kaldı</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, yaklaşık %2$d dakika kaldı</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, Yaklaşık 1 saat kaldı.</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, yaklaşık olarak 1 dakika kaldı</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, birkaç saniye kaldı</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, kalan zaman hesaplanıyor…</string>
-	<string name="download_progress_text_verifying">100%, dosya doğrulanıyor…</string>
-	<string name="download_progress_text_paused">%1$d%%, durduruldu</string>
-	<string name="download_waiting_for_network">%1$d%%, internet bağlantısı için bekleniyor…</string>
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">Yaklaşık %1$d kaldı</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">1 dakikadan az kaldı</string>
+	<string name="download_progress_text_minutes_remaining">yaklaşık %1$d dakika kaldı</string>
+	<string name="download_progress_text_one_hour_remaining">Yaklaşık 1 saat kaldı.</string>
+	<string name="download_progress_text_one_minute_remaining">yaklaşık olarak 1 dakika kaldı</string>
+	<string name="download_progress_text_seconds_remaining">birkaç saniye kaldı</string>
+	<string name="download_progress_text_unknown_time_remaining">kalan zaman hesaplanıyor…</string>
+	<string name="download_progress_text_verifying">dosya doğrulanıyor…</string>
+	<string name="download_progress_text_paused">durduruldu</string>
+	<string name="download_waiting_for_network">internet bağlantısı için bekleniyor…</string>
 
 	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">Oxygen OS Güncellemesi</string>
+	<string name="download_unknown_update_name">OxygenOS Güncellemesi</string>
 
 	<string name="download_verifying">Doğrulanıyor…</string>
 	<string name="download_verifying_error">Dosya zarar görmüş.</string>
@@ -136,7 +142,7 @@
 	<string name="settings_category_other">Diğer:</string>
 	<string name="settings_device">Aygıt</string>
 	<string name="settings_entered_incorrectly">Ayarlar kaydedilirken hata oluştu. Lütfen geri gidin ve güncelleme metodunuzu değiştirin, veya tekrar seçin.</string>
-	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygen OSun herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
+	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygenOSun herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
 	<string name="settings_explanation_update_methods">Güncelleme metodlarının açıklamaları</string>]
 	<string name="settings_header">Cihazınızı ve güncelleme metodunuzu seçiniz:</string>
 
@@ -226,7 +232,7 @@
 	<string name="install_verify_error_title">Yükleme başarısız</string>
 	<string name="install_verify_error_nothing_installed">Güncelleme yüklenirken sorun oluştu. Cihazınızda herhangi bir değişiklik yapılmadı. Güncellemeyi tekrar indirmeyi deneyiniz.</string>
 	<string name="install_verify_error_unable_to_verify">Güncelleme indirilme doğrulaması yapılamadı. Lütfen Oxygen Updater\'ı açın, ve güncelleme indirilmişmi diye kontrol edin.</string>
-	<string name="install_verify_error_wrong_version_installed">Farklı bir OxygenOS versiyonu yüklendi. "Cihazımı rootlu tut" seçeneğini seçtiyseniz, herhangi bir Oxygen OS versiyonunu seçmeyiniz.</string>
+	<string name="install_verify_error_wrong_version_installed">Farklı bir OxygenOS versiyonu yüklendi. "Cihazımı rootlu tut" seçeneğini seçtiyseniz, herhangi bir OxygenOS versiyonunu seçmeyiniz.</string>
 
 	<string name="install_verify_success_title">Yükleme tamamlandı</string>
 	<string name="install_verify_success_message">OxygenOS versiyon %1$s başarılı bir şekilde yüklendi.</string>

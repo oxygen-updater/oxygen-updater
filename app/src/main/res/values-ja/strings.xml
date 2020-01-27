@@ -14,11 +14,15 @@
 	<string name="update_information_for">for</string>
 	<string name="update_information_header">アップデート</string>
 	<string name="update_information_header_short">アップデート</string>
-	<string name="update_information_installed_update">最終アップデート日時:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
 	<string name="update_information_latest_available_update">新たなシステムアップデートが存在します</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
-	<string name="update_information_oxygen_os_version">Oxygen OS バージョン: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">あなたのシステムは最新です</string>
 	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
 	<string name="update_information_version">&#160;バージョン:</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">昨日</string>
 
 	<!-- Downloader strings-->
-	<string name="download">ダウンロード</string>
-	<string name="downloaded">ダウンロード済</string>
-	<string name="downloading">ダウンロード中…</string>
-	<string name="paused">中止</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">アップデートは既にダウンロード済みで、インストール可能です。</string>
 	<string name="download_complete">ダウンロード完了</string>
@@ -62,7 +67,7 @@
 
 	<string name="download_failed">ダウンロードに失敗</string>
 	<string name="download_in_background">Oxygen Updater がバックグラウンドで実行中です</string>
-	<string name="download_oxygen_os">Oxygen OS バージョン</string>
+	<string name="download_oxygen_os">OxygenOS バージョン</string>
 	<string name="download_pending">ダウンロードは間もなく開始されます…</string>
 	<string name="download_permissions">「再ダウンロード」をタップしアップデートをダウンロード</string>
 
@@ -72,19 +77,20 @@
 	<string name="download_notification_error_storage_full">十分なストレージ容量がありません。</string>
 	<string name="download_notification_error_corrupt">ファイルの確認に失敗しました。ネットワーク接続を確認し再試行して下さい。</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, 残り時間 約 %2$d 時間</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 残り時間１分未満</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, 残り時間 約 %2$d 分</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, 残り時間 １時間未満</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, 残り時間１分未満</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, 残り時間数秒</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, 残り時間を計算中…</string>
-	<string name="download_progress_text_verifying">100%, ファイルを確認中…</string>
-	<string name="download_progress_text_paused">%1$d%%, 中断中</string>
-	<string name="download_waiting_for_network">%1$d%%, ネットワーク接続の待機中…</string>
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">残り時間 約 %1$d 時間</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">残り時間１分未満</string>
+	<string name="download_progress_text_minutes_remaining">残り時間 約 %1$d 分</string>
+	<string name="download_progress_text_one_hour_remaining">残り時間 １時間未満</string>
+	<string name="download_progress_text_one_minute_remaining">残り時間１分未満</string>
+	<string name="download_progress_text_seconds_remaining">残り時間数秒</string>
+	<string name="download_progress_text_unknown_time_remaining">残り時間を計算中…</string>
+	<string name="download_progress_text_verifying">ファイルを確認中…</string>
+	<string name="download_progress_text_paused">中断中</string>
+	<string name="download_waiting_for_network">ネットワーク接続の待機中…</string>
 
 	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">Oxygen OS アップデート</string>
+	<string name="download_unknown_update_name">OxygenOS アップデート</string>
 
 	<string name="download_verifying">確認中…</string>
 	<string name="download_verifying_error">ファイルが損傷しています</string>
@@ -137,7 +143,7 @@
 	<string name="settings_category_other">その他:</string>
 	<string name="settings_device">デバイス</string>
 	<string name="settings_entered_incorrectly">設定の保存に失敗しました。デバイス / 更新方法を再選択して下さい。</string>
-	<string name="settings_explanation_incremental_full_update">増分アップデートはどのバージョンからでもインストール可能です（ブートローダーをアンロックしていない場合; アンロック済みの場合はフルアップデートをアップデート方法から選択する必要があります）。\n\nOxygen OS のベータアップデートは安定バージョンを使用している場合でも常にインストールできます。安定版からベータ版に切り替えるには、設定で詳細モードを有効にする必要があります。ベータ版では、フル・増分アップデートは安定版と同じように機能します。</string>
+	<string name="settings_explanation_incremental_full_update">増分アップデートはどのバージョンからでもインストール可能です（ブートローダーをアンロックしていない場合; アンロック済みの場合はフルアップデートをアップデート方法から選択する必要があります）。\n\nOxygenOS のベータアップデートは安定バージョンを使用している場合でも常にインストールできます。安定版からベータ版に切り替えるには、設定で詳細モードを有効にする必要があります。ベータ版では、フル・増分アップデートは安定版と同じように機能します。</string>
 	<string name="settings_explanation_update_methods">アップデート方法の説明</string>
 	<string name="settings_header">デバイス・アップデート方法を選択:</string>
 
@@ -177,7 +183,7 @@
 	<string name="setup_page_3_title">あなたのデバイスを選択:</string>
 	<string name="setup_page_3_text">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。\n\n続行するには左にスワイプします。</string>
 	<string name="setup_page_4_title">アップデート方法を選択:</string>
-	<string name="setup_page_4_text">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。\n\nただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。\n\nOxygen OS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。\n\n続行するには左にスワイプします。</string>
+	<string name="setup_page_4_text">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。\n\nただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。\n\nOxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。\n\n続行するには左にスワイプします。</string>
 	<string name="setup_page_5_title">準備が出来ました!</string>
 	<string name="setup_page_5_text">アプリの使用をお楽しみください！\n\n後からいつでも設定を変更できます。そのためには、右上隅の3つのドットをタップし、\"設定\"をタップします。</string>
 
@@ -259,8 +265,8 @@
 	<string name="install_guide_page_4_title">デバイスの再起動</string>
 	<string name="install_guide_page_4_text">- アップデートのインストール終了後、リカバリメニューに戻ります。リカバリメニューで\"再起動\"をタップします。\n\n- 再起動後のスタートアップで長時間スタートアップスクリーンが表示されるでしょう。\n\n- その後、アプリケーションの最適化中に\"Android はアップデート中です\" と表示された白いメッセージが出現します。</string>
 
-	<string name="install_guide_page_5_title">完了。新しいOxygen OSバージョンを使用して下さい!</string>
-	<string name="install_guide_page_5_text">- デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n- 設定に移動し\"端末情報\"をタップしOxygen OS バージョンを確認します。\n\n- このアプリが気に入ったら、Google Playで５つ星をつけて下さい!</string>
+	<string name="install_guide_page_5_title">完了。新しいOxygenOSバージョンを使用して下さい!</string>
+	<string name="install_guide_page_5_text">- デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n- 設定に移動し\"端末情報\"をタップしOxygenOS バージョンを確認します。\n\n- このアプリが気に入ったら、Google Playで５つ星をつけて下さい!</string>
 
 	<string name="install_guide_close_button">インストールガイドを閉じる</string>
 
@@ -289,7 +295,7 @@
 
 	<!-- About screen strings -->
 	<string name="about">このアプリについて</string>
-	<string name="about_app_description">Oxygen OS アップデートのための究極のツール</string>
+	<string name="about_app_description">OxygenOS アップデートのための究極のツール</string>
 	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.\n\n\n注意、これはOnePlus の公式アプリケーションではありません。 \nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。\n\nこのアプリを気に入った場合は、 Playストアで今すぐ評価して下さい：</string>
 	<string name="about_rate_app_button_text">Google Play で評価</string>
 	<string name="about_version">バージョン: %1$s</string>
@@ -363,7 +369,7 @@
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">デバイスでOxygen OSが実行されていないようです。 Oxygen OSを実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。 \n\nカスタムROMを実行しているOnePlusデバイスを含むその他のデバイスはサポートされていません。</string>
+	<string name="unsupported_os_warning_message">デバイスでOxygenOSが実行されていないようです。 OxygenOSを実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。 \n\nカスタムROMを実行しているOnePlusデバイスを含むその他のデバイスはサポートされていません。</string>
 	<string name="unsupported_device_warning_checkbox_title">警告を二度と表示しない</string>
 
 	<string name="root_check_title">Root アクセス</string>

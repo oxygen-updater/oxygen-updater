@@ -13,11 +13,15 @@
 	<string name="update_information_for">for</string>
 	<string name="update_information_header">Update</string>
 	<string name="update_information_header_short">Update</string>
-	<string name="update_information_installed_update">The latest system update is:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
 	<string name="update_information_latest_available_update">New system update available</string>
 	<string name="update_information_no_update_data_available">No update information is available</string>
-	<string name="update_information_oxygen_os_version">Oxygen OS Version: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Your system is up to date</string>
 	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
 	<string name="update_information_version">&#160;version:</string>
@@ -37,10 +41,11 @@
 	<string name="time_yesterday">Yesterday</string>
 
 	<!-- Downloader strings-->
-	<string name="download">Download</string>
-	<string name="downloaded">Downloaded</string>
-	<string name="downloading">Downloading…</string>
-	<string name="paused">Paused</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">The update was already downloaded. It is ready to get installed.</string>
 	<string name="download_complete">Download complete</string>
@@ -62,7 +67,7 @@
 
 	<string name="download_failed">Download failed</string>
 	<string name="download_in_background">Oxygen Updater is running in the background</string>
-	<string name="download_oxygen_os">Oxygen OS Version</string>
+	<string name="download_oxygen_os">OxygenOS Version</string>
 	<string name="download_pending">Your download will start soon…</string>
 	<string name="download_permissions">Tap Download again to download the update.</string>
 
@@ -73,19 +78,20 @@
 	<string name="download_notification_error_storage_full">Insufficient storage space.</string>
 	<string name="download_notification_error_corrupt">File verification failed. Check your connection and try again.</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, about %2$d hours remaining</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, less than a minute remaining</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, about %2$d minutes remaining</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, about 1 hour remaining</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, about a minute remaining</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, a few seconds remaining</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, calculating time remaining…</string>
-	<string name="download_progress_text_verifying">100%, verifying file…</string>
-	<string name="download_progress_text_paused">%1$d%%, paused</string>
-	<string name="download_waiting_for_network">%1$d%%, waiting for a network connection…</string>
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">About %1$d hours remaining</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">Less than a minute remaining</string>
+	<string name="download_progress_text_minutes_remaining">About %1$d minutes remaining</string>
+	<string name="download_progress_text_one_hour_remaining">About 1 hour remaining</string>
+	<string name="download_progress_text_one_minute_remaining">About a minute remaining</string>
+	<string name="download_progress_text_seconds_remaining">A few seconds remaining</string>
+	<string name="download_progress_text_unknown_time_remaining">Calculating time remaining…</string>
+	<string name="download_progress_text_verifying">Verifying file…</string>
+	<string name="download_progress_text_paused">Paused</string>
+	<string name="download_waiting_for_network">Waiting for a network connection…</string>
 
 	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">Oxygen OS Update</string>
+	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">Verifying…</string>
 	<string name="download_verifying_error">File is damaged</string>
@@ -286,8 +292,8 @@
 	<string name="install_guide_page_4_title">Restart your device.</string>
 	<string name="install_guide_page_4_text">- When the installation of the update is finished, you\'ll be back at the Recovery Menu. Within the recovery menu, tap on \"Reboot\".\n\n- Your device will show its startup screen for a long time during starting up.\n\n- Afterwards, you\'ll see a white message with the title \"Android is upgrading\", while your apps are being optimized.</string>
 
-	<string name="install_guide_page_5_title">Done. Enjoy the new Oxygen OS version!</string>
-	<string name="install_guide_page_5_text">- After your device has finished optimizing its apps, the update has been successfully installed.\nTo verify this, you can check the current version of your system as following:\n\n- Go to Settings, tap on \"About Phone\", and check the Oxygen OS Version.\n\n- If you like this app, give it 5 stars at Google Play!</string>
+	<string name="install_guide_page_5_title">Done. Enjoy the new OxygenOS version!</string>
+	<string name="install_guide_page_5_text">- After your device has finished optimizing its apps, the update has been successfully installed.\nTo verify this, you can check the current version of your system as following:\n\n- Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.\n\n- If you like this app, give it 5 stars at Google Play!</string>
 
 	<string name="install_guide_close_button">Close Installation Guide</string>
 
@@ -318,7 +324,7 @@
 
 	<!-- About screen strings -->
 	<string name="about">About this app</string>
-	<string name="about_app_description">The ultimate tool for Oxygen OS updates.</string>
+	<string name="about_app_description">The ultimate tool for OxygenOS updates.</string>
 	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
 	<string name="about_rate_app_button_text">Rate on Google Play</string>
 	<string name="about_version">Version: %1$s</string>
@@ -392,7 +398,7 @@
 	<string name="unsupported_device_warning_title">Unsupported device</string>
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">It looks like your device is not running OxygenOS. Please note that you can only install system updates on devices running Oxygen OS. \n\nOther devices, including OnePlus devices running Custom ROMs, are not supported.</string>
+	<string name="unsupported_os_warning_message">It looks like your device is not running OxygenOS. Please note that you can only install system updates on devices running OxygenOS. \n\nOther devices, including OnePlus devices running Custom ROMs, are not supported.</string>
 	<string name="unsupported_device_warning_checkbox_title">Don\'t show this warning again</string>
 
 	<string name="root_check_title">Root access</string>

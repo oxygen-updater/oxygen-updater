@@ -19,7 +19,7 @@
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<ProgressBar
-		style="?android:attr/progressBarStyleLarge"
+		style="?android:progressBarStyleLarge"
 		android:layout_width="70dp"
 		android:layout_height="70dp"
 		android:layout_gravity="center_horizontal"

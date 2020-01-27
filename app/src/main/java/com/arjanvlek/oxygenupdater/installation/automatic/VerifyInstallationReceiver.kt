@@ -91,7 +91,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         val contentIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0)
 
         val builder = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.error)
+            .setSmallIcon(R.drawable.error_outline)
             .setOngoing(false)
             .setContentIntent(contentIntent)
             .setAutoCancel(true)

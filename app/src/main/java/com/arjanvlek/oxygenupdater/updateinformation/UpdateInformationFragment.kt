@@ -4,9 +4,10 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.ColorStateList
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.LayoutInflater
@@ -14,14 +15,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
@@ -33,38 +33,36 @@ import com.arjanvlek.oxygenupdater.download.DownloadService.Companion.ACTION_DOW
 import com.arjanvlek.oxygenupdater.download.DownloadStatus
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.DOWNLOADING
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.DOWNLOAD_COMPLETED
+import com.arjanvlek.oxygenupdater.download.DownloadStatus.DOWNLOAD_PAUSED
+import com.arjanvlek.oxygenupdater.download.DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION
+import com.arjanvlek.oxygenupdater.download.DownloadStatus.DOWNLOAD_QUEUED
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.NOT_DOWNLOADING
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.VERIFYING
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
-import com.arjanvlek.oxygenupdater.notifications.Dialogs.showAppOutdatedError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showDownloadError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showNoNetworkConnectionError
-import com.arjanvlek.oxygenupdater.notifications.Dialogs.showServerMaintenanceError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showUpdateAlreadyDownloadedMessage
-import com.arjanvlek.oxygenupdater.notifications.LocalNotifications.hideDownloadCompleteNotification
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.MainActivity
 import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_update_information.*
+import kotlinx.android.synthetic.main.system_is_up_to_date.*
+import kotlinx.android.synthetic.main.update_information.*
 import org.joda.time.LocalDateTime
-import java.util.*
 
 class UpdateInformationFragment : AbstractFragment() {
-    private lateinit var updateInformationRefreshLayout: SwipeRefreshLayout
-    private lateinit var systemIsUpToDateRefreshLayout: SwipeRefreshLayout
-    private lateinit var rootView: RelativeLayout
+
+    private lateinit var rootView: SwipeRefreshLayout
     private lateinit var mContext: Context
 
     private var downloadListener: UpdateDownloadListener? = null
     private var updateData: UpdateData? = null
     private var isLoadedOnce = false
-    private var serverMessageBars = ArrayList<ServerMessageBar>()
     private var downloadReceiver: DownloadReceiver? = null
 
     /*
@@ -77,7 +75,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        rootView = inflater.inflate(R.layout.fragment_update_information, container, false) as RelativeLayout
+        rootView = inflater.inflate(R.layout.fragment_update_information, container, false) as SwipeRefreshLayout
         return rootView
     }
 
@@ -85,14 +83,8 @@ class UpdateInformationFragment : AbstractFragment() {
         super.onStart()
 
         if (isAdded && settingsManager!!.checkIfSetupScreenHasBeenCompleted()) {
-            updateInformationRefreshLayout = rootView.findViewById(R.id.updateInformationRefreshLayout)
-            systemIsUpToDateRefreshLayout = rootView.findViewById(R.id.updateInformationSystemIsUpToDateRefreshLayout)
-
-            updateInformationRefreshLayout.setOnRefreshListener { load() }
-            updateInformationRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
-
-            systemIsUpToDateRefreshLayout.setOnRefreshListener { load() }
-            systemIsUpToDateRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+            rootView.setOnRefreshListener { load() }
+            rootView.setColorSchemeResources(R.color.colorPrimary)
 
             load()
         }
@@ -171,88 +163,13 @@ class UpdateInformationFragment : AbstractFragment() {
                 )
             }
 
-            displayUpdateInformation(updateData, online, false)
+            displayUpdateInformation(updateData, online)
             isLoadedOnce = true
         }) { error ->
             if (error == ApplicationData.NETWORK_CONNECTION_ERROR) {
                 showNoNetworkConnectionError(instance)
             }
         }
-
-        serverConnector.getInAppMessages(online, { displayServerMessageBars(it) }) { error ->
-            when (error) {
-                ApplicationData.SERVER_MAINTENANCE_ERROR -> showServerMaintenanceError(instance)
-                ApplicationData.APP_OUTDATED_ERROR -> showAppOutdatedError(instance, activity)
-            }
-        }
-    }
-
-    /*
-      -------------- METHODS FOR DISPLAYING DATA ON THE FRAGMENT -------------------
-     */
-    private fun addServerMessageBar(view: ServerMessageBar) {
-        // Add the message to the update information screen.
-        // Set the layout params based on the view count.
-        // First view should go below the app update message bar (if visible)
-        // Consecutive views should go below their parent / previous view.
-        val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        val numberOfBars = serverMessageBars.size
-
-        // position each bar below the previous one
-        if (serverMessageBars.isNotEmpty()) {
-            params.addRule(RelativeLayout.BELOW, serverMessageBars[serverMessageBars.size - 1].id)
-        }
-
-        view.id = numberOfBars * 20000 + 1
-        rootView.addView(view, params)
-        serverMessageBars.add(view)
-    }
-
-    private fun deleteAllServerMessageBars() {
-        serverMessageBars.forEach {
-            rootView.removeView(it)
-        }
-
-        serverMessageBars = ArrayList()
-    }
-
-    private fun displayServerMessageBars(banners: List<Banner>) {
-        if (!isAdded) {
-            return
-        }
-
-        deleteAllServerMessageBars()
-
-        val createdServerMessageBars = ArrayList<ServerMessageBar>()
-
-        banners.forEach {
-            val bar = ServerMessageBar(activity)
-            val backgroundBar = bar.backgroundBar
-            val textView = bar.textView
-
-            backgroundBar.setBackgroundColor(it.getColor(mContext))
-            textView.text = it.getBannerText(mContext)
-
-            if (it.getBannerText(mContext) is Spanned) {
-                textView.movementMethod = LinkMovementMethod.getInstance()
-            }
-
-            addServerMessageBar(bar)
-            createdServerMessageBars.add(bar)
-        }
-
-        // Position the app UI  to be below the last added server message bar
-        if (createdServerMessageBars.isNotEmpty()) {
-            val lastServerMessageView: View = createdServerMessageBars[createdServerMessageBars.size - 1]
-            val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-            params.addRule(RelativeLayout.BELOW, lastServerMessageView.id)
-
-            systemIsUpToDateRefreshLayout.layoutParams = params
-            updateInformationRefreshLayout.layoutParams = params
-        }
-
-        serverMessageBars = createdServerMessageBars
     }
 
     /**
@@ -260,25 +177,23 @@ class UpdateInformationFragment : AbstractFragment() {
      *
      * @param updateData              Update information to display
      * @param online                  Whether or not the device has an active network connection
-     * @param displayInfoWhenUpToDate Flag set to show update information anyway, even if the system is up to date.
      */
-    private fun displayUpdateInformation(updateData: UpdateData?, online: Boolean, displayInfoWhenUpToDate: Boolean) {
+    private fun displayUpdateInformation(updateData: UpdateData?, online: Boolean) {
         // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
         if (!isAdded || updateData == null) {
             return
         }
 
         // Hide the loading screen
-        updateInformationLoadingScreen.visibility = GONE
+        updateInformationProgressBar.visibility = GONE
 
-        if (updateData.id == null) {
-            displayUpdateInformationWhenUpToDate(updateData, online)
-        }
-
-        if (updateData.isSystemIsUpToDateCheck(settingsManager) && !displayInfoWhenUpToDate || !updateData.isUpdateInformationAvailable()) {
+        if (updateData.id == null
+            || updateData.isSystemIsUpToDateCheck(settingsManager)
+            || !updateData.isUpdateInformationAvailable
+        ) {
             displayUpdateInformationWhenUpToDate(updateData, online)
         } else {
-            displayUpdateInformationWhenNotUpToDate(updateData, displayInfoWhenUpToDate)
+            displayUpdateInformationWhenNotUpToDate(updateData)
         }
 
         if (online) {
@@ -290,14 +205,19 @@ class UpdateInformationFragment : AbstractFragment() {
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable())
+                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable)
                 savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
                 savePreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
             }
         }
 
         // Hide the refreshing icon if it is present.
-        hideRefreshIcons()
+        rootView.isRefreshing = false
+    }
+
+    private fun updateBannerText(string: String) {
+        bannerLayout.visibility = VISIBLE
+        bannerTextView.text = string
     }
 
     private fun displayUpdateInformationWhenUpToDate(updateData: UpdateData, online: Boolean) {
@@ -305,32 +225,38 @@ class UpdateInformationFragment : AbstractFragment() {
             return
         }
 
-        // Show "System is up to date" view.
-        updateInformationRefreshLayout.visibility = GONE
-        updateInformationSystemIsUpToDateRefreshLayout.visibility = VISIBLE
+        updateBannerText(getString(R.string.update_information_banner_congrats_latest))
 
-        // Set the current Oxygen OS version if available.
-        updateInformationSystemIsUpToDateVersionTextView.apply {
+        // Show "System is up to date" view.
+        systemIsUpToDateStub?.inflate()
+
+        // Set the current OxygenOS version if available.
+        systemIsUpToDateVersionTextView.apply {
             val oxygenOSVersion = (activity?.application as ApplicationData).systemVersionProperties?.oxygenOSVersion
 
             if (oxygenOSVersion != ApplicationData.NO_OXYGEN_OS) {
                 visibility = VISIBLE
-                text = String.format(getString(R.string.update_information_oxygen_os_version), oxygenOSVersion)
+                text = getString(R.string.update_information_oxygen_os_version, oxygenOSVersion)
             } else {
                 visibility = GONE
             }
         }
 
+        val updateChangelogDialog = UpdateChangelogDialog(
+            context!!,
+            (activity?.application as ApplicationData).systemVersionProperties?.oxygenOSVersion,
+            getUpdateChangelog(updateData.description)
+        )
+
         // Set "No Update Information Is Available" button if needed.
-        updateInformationSystemIsUpToDateStatisticsButton.apply {
-            if (!updateData.isUpdateInformationAvailable()) {
-                text = getString(R.string.update_information_no_update_data_available)
-                isClickable = false
-            } else {
-                text = getString(R.string.update_information_view_update_information)
-                isClickable = true
-                setOnClickListener { displayUpdateInformation(updateData, online, true) }
-            }
+        if (!updateData.isUpdateInformationAvailable) {
+            systemIsUpToDateStatisticsButton.visibility = VISIBLE
+            systemIsUpToDateChangelogView.visibility = GONE
+        } else {
+            systemIsUpToDateStatisticsButton.visibility = GONE
+            systemIsUpToDateChangelogView.visibility = VISIBLE
+
+            systemIsUpToDateChangelogView.setOnClickListener { updateChangelogDialog.show() }
         }
 
         // Save last time checked if online.
@@ -339,93 +265,77 @@ class UpdateInformationFragment : AbstractFragment() {
         }
 
         // Show last time checked.
-        updateInformationSystemIsUpToDateDateTextView.text = String.format(
-            getString(R.string.update_information_last_checked_on),
+        systemIsUpToDateDateTextView.text = getString(
+            R.string.update_information_last_checked_on,
             Utils.formatDateTime(mContext, settingsManager!!.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
         )
     }
 
-    private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData, displayInfoWhenUpToDate: Boolean) {
-        showDownloadLink(updateData)
+    private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData) {
         // Show "System update available" view.
-        updateInformationRefreshLayout.visibility = VISIBLE
-        updateInformationSystemIsUpToDateRefreshLayout.visibility = GONE
+        updateInformationStub?.inflate()
 
-        // Display available update version number.
-        updateInformationBuildNumberView.text = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
+        val formattedOxygenOsVersion = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
             if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {
                 UpdateDataVersionFormatter.getFormattedVersionNumber(updateData)
             } else {
                 updateData.versionNumber
             }
         } else {
-            String.format(
-                getString(R.string.update_information_unknown_update_name),
-                settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE, mContext.getString(R.string.device_information_unknown))
+            getString(
+                R.string.update_information_unknown_update_name,
+                settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
             )
         }
 
+        if (!updateData.systemIsUpToDate) {
+            updateBannerText(getString(R.string.update_information_banner_already_latest))
+
+            val updateMethod = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+
+            // Format top title based on system version installed.
+            headerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)
+
+            headerTextView.visibility = VISIBLE
+            headerDivider.visibility = VISIBLE
+        } else {
+            updateBannerText(getString(R.string.update_information_banner_update_available, formattedOxygenOsVersion))
+
+            headerTextView.visibility = GONE
+            headerDivider.visibility = GONE
+        }
+
+        // Display available update version number.
+        oxygenOsVersionTextView.text = formattedOxygenOsVersion
+
         // Display download size.
-        val downloadSizeView = rootView.findViewById<TextView>(R.id.updateInformationDownloadSizeView)
-        downloadSizeView.text = String.format(getString(R.string.download_size_megabyte), updateData.downloadSizeInMegabytes)
+        downloadSizeTextView.text = getString(R.string.download_size_megabyte, updateData.downloadSizeInMegabytes)
 
         // Display update description.
-        updateDescriptionView.apply {
-            val description = updateData.description
-
+        changelogTextView.apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = if (!description.isNullOrBlank() && description != "null") {
-                UpdateDescriptionParser.parse(context, description)
-            } else {
-                getString(R.string.update_information_description_not_available)
-            }
+            text = getUpdateChangelog(updateData.description)
         }
 
         // Display update file name.
-        val fileNameView = updateFileNameView
-        fileNameView.text = String.format(getString(R.string.update_information_file_name), updateData.filename)
-
-        // Format top title based on system version installed.
-        val headerLabel = rootView.findViewById<TextView>(R.id.headerLabel)
-        val updateInstallationGuideButton = rootView.findViewById<Button>(R.id.updateInstallationInstructionsButton)
-        val downloadSizeTable = rootView.findViewById<View>(R.id.buttonTable)
-        val downloadSizeImage = rootView.findViewById<View>(R.id.downloadSizeImage)
-
-        if (displayInfoWhenUpToDate) {
-            headerLabel.text = getString(R.string.update_information_installed_update)
-
-            updateInformationDownloadButton.visibility = GONE
-            updateInstallationGuideButton.visibility = GONE
-            fileNameView.visibility = GONE
-            downloadSizeTable.visibility = GONE
-            downloadSizeImage.visibility = GONE
-            downloadSizeView.visibility = GONE
-        } else {
-            headerLabel.text = if (updateData.systemIsUpToDate) {
-                getString(R.string.update_information_installed_update)
-            } else {
-                getString(R.string.update_information_latest_available_update)
-            }
-
-            updateInformationDownloadButton.visibility = VISIBLE
-            fileNameView.visibility = VISIBLE
-            downloadSizeTable.visibility = VISIBLE
-            downloadSizeImage.visibility = VISIBLE
-            downloadSizeView.visibility = VISIBLE
-        }
+        fileNameTextView.text = getString(R.string.update_information_file_name, updateData.filename)
     }
 
-    private fun showDownloadProgressBar() {
-        downloadProgressTable?.visibility = VISIBLE
+    private fun getUpdateChangelog(description: String?): CharSequence {
+        return if (!description.isNullOrBlank() && description != "null") {
+            UpdateDescriptionParser.parse(context, description).trim()
+        } else {
+            getString(R.string.update_information_description_not_available)
+        }
     }
 
     private fun showDownloadLink(updateData: UpdateData?) {
         if (updateData != null) {
-            updateDownloadLinkView.apply {
+            downloadLinkTextView.apply {
                 visibility = VISIBLE
                 movementMethod = LinkMovementMethod.getInstance()
                 text = SpannableString(
-                    String.format(getString(R.string.update_information_download_link), updateData.downloadUrl)
+                    getString(R.string.update_information_download_link, updateData.downloadUrl)
                 ).apply {
                     setSpan(URLSpan(updateData.downloadUrl), indexOf("\n") + 1, length, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
                 }
@@ -433,114 +343,74 @@ class UpdateInformationFragment : AbstractFragment() {
         }
     }
 
-    private fun hideDownloadProgressBar() {
-        downloadProgressTable.visibility = GONE
-    }
-
-    private fun hideRefreshIcons() {
-        if (updateInformationRefreshLayout.isRefreshing) {
-            updateInformationRefreshLayout.isRefreshing = false
-        }
-
-        if (systemIsUpToDateRefreshLayout.isRefreshing) {
-            systemIsUpToDateRefreshLayout.isRefreshing = false
-        }
-    }
-    /*
-      -------------- UPDATE DOWNLOAD METHODS -------------------
-     */
     /**
      * Creates an [UpdateDownloadListener]
      */
     private fun buildDownloadListener(updateData: UpdateData?): UpdateDownloadListener {
         return object : UpdateDownloadListener {
             override fun onInitialStatusUpdate() {
-                if (isAdded) {
-                    updateInformationDownloadCancelButton.setOnClickListener {
-                        DownloadService.performOperation(activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
-
-                        initUpdateDownloadButton(updateData, NOT_DOWNLOADING)
-                        initInstallButton(updateData, NOT_DOWNLOADING)
-                    }
-
-                    updateInformationDownloadPauseButton.setOnClickListener {
-                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.play, null))
+                if (isAdded && updateInformationLayout != null) {
+                    downloadLayout.setOnClickListener {
+                        downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
+                        (downloadIcon.drawable as AnimationDrawable).start()
 
                         DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
-                        initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
-                        initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
+                        initDownloadLayout(updateData, DOWNLOAD_PAUSED)
                     }
                 }
             }
 
             override fun onDownloadStarted() {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, DOWNLOADING)
-                    initInstallButton(updateData, DOWNLOADING)
-                    showDownloadProgressBar()
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, DOWNLOADING)
 
-                    updateInformationDownloadPauseButton.setOnClickListener {
-                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
+                    downloadLayout.setOnClickListener {
+                        downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
 
                         DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
-                        initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
-                        initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
+                        initDownloadLayout(updateData, DOWNLOAD_PAUSED)
 
                         // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
-                        updateInformationDownloadPauseButton.setOnClickListener { }
+                        downloadLayout.setOnClickListener { }
                     }
                 }
             }
 
             override fun onDownloadProgressUpdate(downloadProgressData: DownloadProgressData) {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, DOWNLOADING)
-                    initInstallButton(updateData, DOWNLOADING)
-                    showDownloadProgressBar()
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, DOWNLOADING)
 
-                    updateInformationDownloadProgressBar.isIndeterminate = false
-                    updateInformationDownloadProgressBar.progress = downloadProgressData.progress
+                    val progress = downloadProgressData.progress
+
+                    downloadProgressBar.isIndeterminate = false
+                    downloadProgressBar.progress = progress
+
+                    val downloadSizeInMegabytes = updateData!!.downloadSizeInMegabytes
+                    val completedMegabytes = (progress / 100f * downloadSizeInMegabytes).toInt()
+
+                    downloadSizeTextView.text = getString(
+                        R.string.download_progress,
+                        completedMegabytes, updateData.downloadSizeInMegabytes, progress
+                    )
 
                     if (downloadProgressData.isWaitingForConnection) {
-                        updateInformationDownloadPauseButton.visibility = GONE
-                        updateInformationDownloadDetailsView.text = getString(
-                            R.string.download_waiting_for_network, downloadProgressData
-                                .progress
-                        )
+                        downloadDetailsTextView.setText(R.string.download_waiting_for_network)
                         return
                     }
 
-                    updateInformationDownloadPauseButton.visibility = VISIBLE
-                    updateInformationDownloadPauseButton.setOnClickListener {
-                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
-
-                        DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
-
-                        initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
-                        initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
-
-                        // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
-                        updateInformationDownloadPauseButton.setOnClickListener { }
-                    }
-
                     if (downloadProgressData.timeRemaining == null) {
-                        updateInformationDownloadDetailsView.text = getString(
-                            R.string.download_progress_text_unknown_time_remaining, downloadProgressData
-                                .progress
-                        )
+                        downloadDetailsTextView.setText(R.string.download_progress_text_unknown_time_remaining)
                     } else {
-                        updateInformationDownloadDetailsView.text = downloadProgressData.timeRemaining.toString(applicationData)
+                        downloadDetailsTextView.text = downloadProgressData.timeRemaining.toString(applicationData)
                     }
                 }
             }
 
             override fun onDownloadPaused(queued: Boolean, downloadProgressData: DownloadProgressData) {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
-                    initInstallButton(updateData, DownloadStatus.DOWNLOAD_PAUSED)
-                    showDownloadProgressBar()
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, DOWNLOAD_PAUSED)
 
                     if (downloadProgressData.isWaitingForConnection) {
                         onDownloadProgressUpdate(downloadProgressData)
@@ -548,50 +418,28 @@ class UpdateInformationFragment : AbstractFragment() {
                     }
 
                     if (!queued) {
-                        updateInformationDownloadProgressBar.progress = downloadProgressData.progress
-                        updateInformationDownloadDetailsView.text = getString(
-                            R.string.download_progress_text_paused, downloadProgressData
-                                .progress
-                        )
-
-                        updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.play, null))
-
-                        updateInformationDownloadPauseButton.setOnClickListener {
-                            updateInformationDownloadPauseButton.setImageDrawable(resources.getDrawable(R.drawable.pause, null))
-
-                            DownloadService.performOperation(activity, DownloadService.ACTION_RESUME_DOWNLOAD, updateData)
-
-                            initUpdateDownloadButton(updateData, DOWNLOADING)
-                            initInstallButton(updateData, DOWNLOADING)
-
-                            // No resuming twice allowed, will be updated in onDownloadProgressUpdate()
-                            updateInformationDownloadPauseButton.setOnClickListener { }
-                        }
+                        downloadProgressBar.progress = downloadProgressData.progress
                     } else {
-                        updateInformationDownloadDetailsView.text = getString(R.string.download_pending)
+                        downloadDetailsTextView.setText(R.string.download_pending)
                     }
                 }
             }
 
             override fun onDownloadComplete() {
-                if (isAdded) {
+                if (isAdded && updateInformationLayout != null) {
                     Toast.makeText(applicationData, getString(R.string.download_verifying_start), LENGTH_LONG).show()
                 }
             }
 
             override fun onDownloadCancelled() {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, NOT_DOWNLOADING)
-                    initInstallButton(updateData, NOT_DOWNLOADING)
-                    hideDownloadProgressBar()
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, NOT_DOWNLOADING)
                 }
             }
 
             override fun onDownloadError(isInternalError: Boolean, isStorageSpaceError: Boolean, isServerError: Boolean) {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, NOT_DOWNLOADING)
-                    initInstallButton(updateData, NOT_DOWNLOADING)
-                    hideDownloadProgressBar()
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, NOT_DOWNLOADING)
 
                     when {
                         isStorageSpaceError -> showDownloadError(updateData, R.string.download_error_storage)
@@ -608,30 +456,22 @@ class UpdateInformationFragment : AbstractFragment() {
             }
 
             override fun onVerifyStarted() {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, VERIFYING)
-                    initInstallButton(updateData, VERIFYING)
-                    showDownloadProgressBar()
-
-                    updateInformationDownloadProgressBar.isIndeterminate = true
-                    updateInformationDownloadDetailsView.text = getString(R.string.download_progress_text_verifying)
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, VERIFYING)
                 }
             }
 
             override fun onVerifyError() {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, NOT_DOWNLOADING)
-                    initInstallButton(updateData, NOT_DOWNLOADING)
-                    hideDownloadProgressBar()
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, NOT_DOWNLOADING)
+
                     showDownloadError(updateData, R.string.download_error_corrupt)
                 }
             }
 
             override fun onVerifyComplete(launchInstallation: Boolean) {
-                if (isAdded) {
-                    initUpdateDownloadButton(updateData, DOWNLOAD_COMPLETED)
-                    initInstallButton(updateData, DOWNLOAD_COMPLETED)
-                    hideDownloadProgressBar()
+                if (isAdded && updateInformationLayout != null) {
+                    initDownloadLayout(updateData, DOWNLOAD_COMPLETED)
 
                     if (launchInstallation) {
                         Toast.makeText(applicationData, getString(R.string.download_complete), LENGTH_LONG).show()
@@ -647,76 +487,156 @@ class UpdateInformationFragment : AbstractFragment() {
         showDownloadError(this, updateData, false, R.string.download_error, message)
     }
 
-    private fun initUpdateDownloadButton(updateData: UpdateData?, downloadStatus: DownloadStatus) {
-        updateInformationDownloadButton.let {
-            when (downloadStatus) {
-                NOT_DOWNLOADING -> {
-                    it.text = getString(R.string.download)
+    private fun initDownloadLayout(updateData: UpdateData?, downloadStatus: DownloadStatus) {
+        when (downloadStatus) {
+            NOT_DOWNLOADING -> {
+                initDownloadActionButton(true)
 
-                    if (Utils.checkNetworkConnection(applicationData) && updateData?.downloadUrl?.contains("http") == true) {
-                        it.isEnabled = true
-                        it.isClickable = true
-                        it.setOnClickListener(DownloadButtonOnClickListener(updateData))
-                        it.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
-                    } else {
-                        it.isEnabled = false
-                        it.isClickable = false
-                        it.setTextColor(ContextCompat.getColor(mContext, R.color.dark_grey))
-                    }
+                downloadUpdateTextView.setText(R.string.download)
+                downloadSizeTextView.text = getString(R.string.download_size_megabyte, updateData?.downloadSizeInMegabytes)
 
-                    if (updateData == null) {
-                        load()
-                    }
-                }
-                DownloadStatus.DOWNLOAD_QUEUED, DOWNLOADING -> {
-                    it.text = getString(R.string.downloading)
-                    it.isEnabled = true
-                    it.isClickable = false
-                    it.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
-                }
-                DownloadStatus.DOWNLOAD_PAUSED -> {
-                    it.text = getString(R.string.paused)
-                    it.isEnabled = true
-                    it.isClickable = false
-                    it.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
-                }
-                DOWNLOAD_COMPLETED -> {
-                    it.text = getString(R.string.downloaded)
-                    it.isEnabled = true
-                    it.isClickable = true
-                    it.setOnClickListener(AlreadyDownloadedOnClickListener(this, updateData))
-                    it.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
-                }
-                VERIFYING -> {
-                    it.text = getString(R.string.download_verifying)
-                    it.isEnabled = true
-                    it.isClickable = false
-                    it.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
-                }
-                DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION -> {
+                downloadProgressBar.visibility = GONE
+                downloadActionButton.visibility = GONE
+                downloadDetailsTextView.visibility = GONE
 
+                downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPrimary)
+
+                if (Utils.checkNetworkConnection(applicationData) && updateData?.downloadUrl?.contains("http") == true) {
+                    downloadLayout.isEnabled = true
+                    downloadLayout.isClickable = true
+                    downloadLayout.setOnClickListener(DownloadNotStartedOnClickListener(updateData))
+                } else {
+                    downloadLayout.isEnabled = false
+                    downloadLayout.isClickable = false
                 }
+
+                if (updateData == null) {
+                    load()
+                }
+            }
+            DOWNLOAD_QUEUED, DOWNLOADING -> {
+                initDownloadActionButton(true)
+
+                downloadUpdateTextView.setText(R.string.downloading)
+
+                downloadProgressBar.visibility = VISIBLE
+                downloadDetailsTextView.visibility = VISIBLE
+
+                downloadLayout.isEnabled = true
+                downloadLayout.isClickable = false
+
+                downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
+                (downloadIcon.drawable as AnimationDrawable).start()
+
+                downloadLayout.setOnClickListener {
+                    downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
+
+                    DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
+
+                    initDownloadLayout(updateData, DOWNLOAD_PAUSED)
+
+                    // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
+                    downloadLayout.setOnClickListener { }
+                }
+            }
+            DOWNLOAD_PAUSED -> {
+                initDownloadActionButton(true)
+
+                downloadUpdateTextView.setText(R.string.paused)
+                downloadDetailsTextView.setText(R.string.download_progress_text_paused)
+
+                downloadProgressBar.visibility = VISIBLE
+                downloadDetailsTextView.visibility = VISIBLE
+
+                downloadLayout.isEnabled = true
+                downloadLayout.isClickable = false
+
+                downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
+
+                downloadLayout.setOnClickListener {
+                    downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
+                    (downloadIcon.drawable as AnimationDrawable).start()
+
+                    DownloadService.performOperation(activity, DownloadService.ACTION_RESUME_DOWNLOAD, updateData)
+
+                    initDownloadLayout(updateData, DOWNLOADING)
+
+                    // No resuming twice allowed, will be updated in onDownloadProgressUpdate()
+                    downloadLayout.setOnClickListener { }
+                }
+            }
+            DOWNLOAD_COMPLETED -> {
+                initDownloadActionButton(false)
+
+                downloadUpdateTextView.setText(R.string.downloaded)
+
+                downloadProgressBar.visibility = GONE
+                downloadDetailsTextView.visibility = GONE
+
+                initDownloadActionButton(false)
+
+                downloadLayout.isEnabled = true
+                downloadLayout.isClickable = true
+
+                downloadIcon.setImageResourceWithTint(R.drawable.done_outline, R.color.colorPositive)
+
+                downloadLayout.setOnClickListener(AlreadyDownloadedOnClickListener(updateData))
+            }
+            VERIFYING -> {
+                downloadUpdateTextView.setText(R.string.download_verifying)
+                downloadDetailsTextView.setText(R.string.download_progress_text_verifying)
+
+                downloadProgressBar.visibility = VISIBLE
+                downloadActionButton.visibility = GONE
+                downloadDetailsTextView.visibility = VISIBLE
+
+                downloadLayout.isEnabled = true
+                downloadLayout.isClickable = false
+                downloadProgressBar.isIndeterminate = true
+            }
+            DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION -> {
+                initDownloadActionButton(true)
+
+                downloadDetailsTextView.setText(R.string.download_waiting_for_network)
+
+                downloadProgressBar.visibility = VISIBLE
+                downloadDetailsTextView.visibility = VISIBLE
+
+                downloadProgressBar.isIndeterminate = true
             }
         }
     }
 
-    private fun initInstallButton(updateData: UpdateData?, downloadStatus: DownloadStatus) {
-        updateInstallationInstructionsButton.apply {
-            if (downloadStatus !== DOWNLOAD_COMPLETED) {
-                visibility = GONE
-            } else {
-                if (activity == null) {
-                    return
-                }
+    private fun initDownloadActionButton(isCancelAction: Boolean) {
+        val drawableResId: Int
+        val colorResId: Int
+        val onClickListener: View.OnClickListener
 
-                visibility = VISIBLE
-                setOnClickListener {
-                    (activity as MainActivity).activityLauncher.UpdateInstallation(true, updateData)
+        if (isCancelAction) {
+            drawableResId = R.drawable.close
+            colorResId = R.color.colorError
 
-                    hideDownloadCompleteNotification(activity)
-                }
+            onClickListener = View.OnClickListener {
+                DownloadService.performOperation(activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
+                initDownloadLayout(updateData, NOT_DOWNLOADING)
+            }
+        } else {
+            drawableResId = R.drawable.install
+            colorResId = R.color.colorPositive
+
+            onClickListener = View.OnClickListener {
+                ActivityLauncher(activity!!).UpdateInstallation(true, updateData)
             }
         }
+
+        downloadActionButton.visibility = VISIBLE
+        downloadActionButton.setImageResourceWithTint(drawableResId, colorResId)
+        downloadActionButton.setOnClickListener(onClickListener)
+    }
+
+    private fun ImageView.setImageResourceWithTint(@DrawableRes drawableResId: Int, @ColorRes colorResId: Int) {
+        setImageResource(drawableResId)
+        imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, colorResId))
     }
 
     private fun registerDownloadReceiver(downloadListener: UpdateDownloadListener) {
@@ -752,22 +672,21 @@ class UpdateInformationFragment : AbstractFragment() {
     /**
      * Download button click listener. Performs these actions when the button is clicked.
      */
-    private inner class DownloadButtonOnClickListener internal constructor(private val updateData: UpdateData) : View.OnClickListener {
-        override fun onClick(v: View) {
-            if (isAdded) {
+    private inner class DownloadNotStartedOnClickListener internal constructor(private val updateData: UpdateData) : View.OnClickListener {
+        override fun onClick(view: View) {
+            if (isAdded && updateInformationLayout != null) {
                 val mainActivity = activity as MainActivity? ?: return
 
                 if (mainActivity.hasDownloadPermissions()) {
                     DownloadService.performOperation(activity, ACTION_DOWNLOAD_UPDATE, updateData)
 
-                    initUpdateDownloadButton(updateData, DOWNLOADING)
-                    showDownloadProgressBar()
+                    initDownloadLayout(updateData, DOWNLOADING)
 
-                    updateInformationDownloadProgressBar.isIndeterminate = true
-                    updateInformationDownloadDetailsView.text = getString(R.string.download_pending)
+                    downloadProgressBar.isIndeterminate = true
+                    downloadDetailsTextView.setText(R.string.download_pending)
 
                     // Pause is possible on first progress update
-                    updateInformationDownloadPauseButton.setOnClickListener { }
+                    downloadLayout.setOnClickListener { }
                 } else {
                     mainActivity.requestDownloadPermissions { granted ->
                         if (granted) {
@@ -777,20 +696,18 @@ class UpdateInformationFragment : AbstractFragment() {
                 }
             }
         }
-
     }
 
     /**
      * Allows an already downloaded update file to be deleted to save storage space.
      */
-    private inner class AlreadyDownloadedOnClickListener internal constructor(private val targetFragment: Fragment, private val updateData: UpdateData?) : View.OnClickListener {
-        override fun onClick(v: View) {
-            showUpdateAlreadyDownloadedMessage(updateData, targetFragment) {
+    private inner class AlreadyDownloadedOnClickListener internal constructor(private val updateData: UpdateData?) : View.OnClickListener {
+        override fun onClick(view: View) {
+            showUpdateAlreadyDownloadedMessage(updateData, this@UpdateInformationFragment) {
                 if (updateData != null) {
                     DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
 
-                    initUpdateDownloadButton(updateData, NOT_DOWNLOADING)
-                    initInstallButton(updateData, NOT_DOWNLOADING)
+                    initDownloadLayout(updateData, NOT_DOWNLOADING)
                 }
             }
         }

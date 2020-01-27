@@ -11,7 +11,7 @@ data class InstallGuidePage(
     var pageNumber: Int,
     var fileExtension: String?,
     var imageUrl: String?,
-    var useCustomImage: Boolean?,
+    var useCustomImage: Boolean,
 
     @JsonProperty("title_en")
     var englishTitle: String,

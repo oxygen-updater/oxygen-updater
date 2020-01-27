@@ -11,6 +11,7 @@
 		android:layout_height="4dp"
 		android:layout_gravity="center"
 		android:layout_marginTop="@dimen/padding_half"
+		android:contentDescription="@string/icon"
 		android:src="@drawable/rounded"
 		android:tint="@color/backgroundVariant" />
 

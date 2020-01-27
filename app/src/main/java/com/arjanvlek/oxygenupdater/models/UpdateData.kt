@@ -28,13 +28,11 @@ data class UpdateData(
 
     val downloadSizeInMegabytes = downloadSize / 1048576L
 
+    val isUpdateInformationAvailable = updateInformationAvailable || versionNumber != null
+
     // Formatting library: interface FormattableUpdateData
     override val internalVersionNumber = versionNumber
     override val updateDescription = description
-
-    fun isUpdateInformationAvailable(): Boolean {
-        return updateInformationAvailable || versionNumber != null
-    }
 
     @JsonProperty("update_information_available")
     fun setUpdateInformationAvailable(updateInformationAvailable: Boolean) {
@@ -47,9 +45,7 @@ data class UpdateData(
         } else systemIsUpToDate
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeLong(id ?: -1L)

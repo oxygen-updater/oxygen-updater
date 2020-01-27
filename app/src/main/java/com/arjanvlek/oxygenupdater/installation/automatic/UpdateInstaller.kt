@@ -46,7 +46,6 @@ object UpdateInstaller {
     private const val CACHE = "cache"
     private const val TEXT_SUCCESS = "success"
 
-    @JvmStatic
     @Throws(UpdateInstallationException::class, InterruptedException::class)
     fun installUpdate(
         context: Context,

@@ -14,11 +14,15 @@
 	<string name="update_information_for">"per"</string>
 	<string name="update_information_header">"Aggiorna"</string>
 	<string name="update_information_header_short">"Aggiorna"</string>
-	<string name="update_information_installed_update">"Versione attuale:"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">"Ultima verifica: %1$s"</string>
 	<string name="update_information_latest_available_update">"È disponibile un nuovo aggiornamento di sistema"</string>
 	<string name="update_information_no_update_data_available">"Non è disponibile alcuna informazione sull'aggiornamento. "</string>
-	<string name="update_information_oxygen_os_version">"Oxygen OS: %1$s"</string>
+	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Il tuo sistema è aggiornato. "</string>
 	<string name="update_information_unknown_update_name">"Aggiornamento sconosciuto per %1$s"</string>
 	<string name="update_information_version">"versione:"</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">"Ieri"</string>
 
 	<!-- Downloader strings -->
-	<string name="download">"Download"</string>
-	<string name="downloaded">"Scaricato"</string>
-	<string name="downloading">"Scaricando… "</string>
-	<string name="paused">"In pausa"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">"L'aggiornamento è già stato scaricato, è pronto per l'istallazione. "</string>
 	<string name="download_complete">"Download completato"</string>
@@ -59,7 +64,7 @@
 	<string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta. "</string>
 	<string name="download_failed">"Download fallito"</string>
 	<string name="download_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
-	<string name="download_oxygen_os">"Oxygen OS V. "</string>
+	<string name="download_oxygen_os">"OxygenOS V. "</string>
 	<string name="download_pending">"Il tuo download inizierà subito… "</string>
 	<string name="download_permissions">"Premi download di nuovo per scaricare l'aggiornamento. "</string>
 
@@ -68,19 +73,21 @@
 	<string name="download_notification_error_network">"Errore di rete."</string>
 	<string name="download_notification_error_storage_full">"Spazio insufficiente. "</string>
 	<string name="download_notification_error_corrupt">"Verifica file fallita. Assicurati di essere connesso a internet e riprova. "</string>
-	<string name="download_progress_text_hours_remaining">"%1$d%%, circa %2$d ore rimanenti"</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, meno di un minuto… "</string>
-	<string name="download_progress_text_minutes_remaining">"%1$d%%, circa %2$d minuti rimanenti"</string>
-	<string name="download_progress_text_one_hour_remaining">"%1$d%%, circa un'ora rimanente"</string>
-	<string name="download_progress_text_one_minute_remaining">"%1$d%%, circa un minuto rimanente"</string>
-	<string name="download_progress_text_seconds_remaining">"%1$d%%, alcuni secondi… "</string>
-	<string name="download_progress_text_unknown_time_remaining">"%1$d%%, calcolando…"</string>
-	<string name="download_progress_text_verifying">"100%, verifica file… "</string>
-	<string name="download_progress_text_paused">"%1$d%%, in pausa"</string>
-	<string name="download_waiting_for_network">"%1$d%%, in attesa di una connessione… "</string>
+
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">"Circa %1$d ore rimanenti"</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"meno di un minuto… "</string>
+	<string name="download_progress_text_minutes_remaining">"circa %1$d minuti rimanenti"</string>
+	<string name="download_progress_text_one_hour_remaining">"circa un'ora rimanente"</string>
+	<string name="download_progress_text_one_minute_remaining">"circa un minuto rimanente"</string>
+	<string name="download_progress_text_seconds_remaining">"alcuni secondi… "</string>
+	<string name="download_progress_text_unknown_time_remaining">"calcolando…"</string>
+	<string name="download_progress_text_verifying">"verifica file… "</string>
+	<string name="download_progress_text_paused">"in pausa"</string>
+	<string name="download_waiting_for_network">"in attesa di una connessione… "</string>
 
 	<string name="download_size_megabyte">"%1$d MB"</string>
-	<string name="download_unknown_update_name">"Oxygen OS Update"</string>
+	<string name="download_unknown_update_name">"OxygenOS Update"</string>
 	<string name="download_verifying">"Verificando… "</string>
 	<string name="download_verifying_error">"File danneggiato "</string>
 	<string name="download_verifying_start">"Il tuo download verrà verificato… "</string>
@@ -300,7 +307,7 @@ Se e' stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="install_guide_page_5_text"><![CDATA["- Dopo l'ottimizzazione delle app, l'aggiornamento e' stato istallato.
 Per verificare, controlla la versione attuale del tuo sistema:
 
-- Impostazioni —> Info Telefono \"Versione Oxygen OS\".
+- Impostazioni —> Info Telefono \"Versione OxygenOS\".
 
 - Se ti piace l'app, lascia 5 stelle!"]]></string>
 	<string name="install_guide_close_button">"Chiudi guida"</string>

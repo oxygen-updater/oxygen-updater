@@ -120,8 +120,8 @@ class InstallGuideFragment : Fragment() {
         val titleResourceId = resources.getIdentifier(RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TITLE, RESOURCE_ID_PACKAGE_STRING, activity!!.packageName)
         val contentsResourceId = resources.getIdentifier(RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TEXT, RESOURCE_ID_PACKAGE_STRING, activity!!.packageName)
 
-        installGuideTitle.text = getString(titleResourceId)
-        installGuideText.text = getString(contentsResourceId)
+        installGuideTitle.setText(titleResourceId)
+        installGuideText.setText(contentsResourceId)
 
         loadDefaultImage(installGuideView.findViewById(R.id.installGuideImage), pageNumber)
     }
@@ -258,7 +258,6 @@ class InstallGuideFragment : Fragment() {
         /**
          * Returns a new instance of this fragment for the given page number.
          */
-        @JvmStatic
         fun newInstance(pageNumber: Int, isFirstPage: Boolean): InstallGuideFragment {
             val fragment = InstallGuideFragment()
 

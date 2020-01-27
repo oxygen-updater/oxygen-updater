@@ -23,7 +23,6 @@ internal object MD5 {
 
     private const val TAG = "MD5"
 
-    @JvmStatic
     fun checkMD5(md5: String?, updateFile: File?): Boolean {
         if (md5.isNullOrEmpty() || updateFile == null) {
             logError(TAG, UpdateVerificationException("MD5 string empty or updateFile null"))

@@ -14,7 +14,6 @@ object NotificationTopicSubscriber {
 
     private const val TAG = "NotificationTopicSubscriber"
 
-    @JvmStatic
     fun subscribe(data: ApplicationData) {
         val settingsManager = SettingsManager(data.applicationContext)
         val serverConnector = data.serverConnector

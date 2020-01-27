@@ -41,7 +41,7 @@
 
 		<ProgressBar
 			android:id="@+id/introduction_step_4_update_method_progress_bar"
-			style="?android:attr/progressBarStyleSmall"
+			style="?android:progressBarStyleSmall"
 			android:layout_width="24dp"
 			android:layout_height="24dp"
 			android:layout_below="@id/introduction_step_4_header_text"

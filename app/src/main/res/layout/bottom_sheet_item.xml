@@ -3,14 +3,15 @@
 	android:id="@+id/dialog_item_layout"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="?android:selectableItemBackground"
+	android:background="?selectableItemBackground"
 	android:clickable="true"
 	android:focusable="true"
 	android:orientation="horizontal"
 	android:paddingStart="@dimen/padding_default"
 	android:paddingTop="@dimen/padding_default"
 	android:paddingEnd="@dimen/padding_2x"
-	android:paddingBottom="@dimen/padding_default">
+	android:paddingBottom="@dimen/padding_default"
+	android:stateListAnimator="@animator/clicked">
 
 	<ImageView
 		android:id="@+id/dialog_item_checkmark"

@@ -14,11 +14,15 @@
 	<string name="update_information_for">适用于</string>
 	<string name="update_information_header">更新</string>
 	<string name="update_information_header_short">更新</string>
-	<string name="update_information_installed_update">最近的一次更新在：</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
 	<string name="update_information_latest_available_update">检测到新的系统更新</string>
 	<string name="update_information_no_update_data_available">没有可用的更新亮点</string>
-	<string name="update_information_oxygen_os_version">Oxygen OS 版本： %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">您的系统已是最新版本</string>
 	<string name="update_information_unknown_update_name">适用于 %1$s 的未知更新</string>
 	<string name="update_information_version">&#160;版本:</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">昨天</string>
 
 	<!-- Downloader strings-->
-	<string name="download">下载</string>
-	<string name="downloaded">已下载</string>
-	<string name="downloading">正在下载…</string>
-	<string name="paused">已暂停</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">更新已下载，安装准备就绪！</string>
 	<string name="download_complete">下载完成！</string>
@@ -62,7 +67,7 @@
 
 	<string name="download_failed">下载失败</string>
 	<string name="download_in_background">Oxygen 更新器正在后台运行</string>
-	<string name="download_oxygen_os">Oxygen OS 版本</string>
+	<string name="download_oxygen_os">OxygenOS 版本</string>
 	<string name="download_pending">您的下载即将开始…</string>
 	<string name="download_permissions">请再次点击“下载”，以开始您的下载任务</string>
 
@@ -72,19 +77,20 @@
 	<string name="download_notification_error_storage_full">存储空间不足</string>
 	<string name="download_notification_error_corrupt">文件校验失败。检查您的互联网连接，然后重试。</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, 大约还剩 %2$d 小时</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, 1 分钟之内即可完成</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, 大约还有 %2$d 分钟</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, 大约还有 1 个小时</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, 大约只剩 1 分钟了</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, 马上就好</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, 正在计算剩余时间…</string>
-	<string name="download_progress_text_verifying">100%, 正在校验文件是否完整…</string>
-	<string name="download_progress_text_paused">%1$d%%, 已暂停</string>
-	<string name="download_waiting_for_network">%1$d%%, 正在等待互联网连接…</string>
+	<string name="download_progress">%1$d 兆字节 / %2$d 兆字节 (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">大约还剩 %1$d 小时</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">1 分钟之内即可完成</string>
+	<string name="download_progress_text_minutes_remaining">大约还有 %1$d 分钟</string>
+	<string name="download_progress_text_one_hour_remaining">大约还有 1 个小时</string>
+	<string name="download_progress_text_one_minute_remaining">大约只剩 1 分钟了</string>
+	<string name="download_progress_text_seconds_remaining">马上就好</string>
+	<string name="download_progress_text_unknown_time_remaining">正在计算剩余时间…</string>
+	<string name="download_progress_text_verifying">正在校验文件是否完整…</string>
+	<string name="download_progress_text_paused">已暂停</string>
+	<string name="download_waiting_for_network">正在等待互联网连接…</string>
 
 	<string name="download_size_megabyte">%1$d 兆字节</string>
-	<string name="download_unknown_update_name">Oxygen OS 更新</string>
+	<string name="download_unknown_update_name">OxygenOS 更新</string>
 
 	<string name="download_verifying">正在校验中…</string>
 	<string name="download_verifying_error">文件损坏！</string>
@@ -136,7 +142,7 @@
 	<string name="settings_category_other">其它：</string>
 	<string name="settings_device">设备</string>
 	<string name="settings_entered_incorrectly">保存设置时出错。请返回并重新选择您的设备 / 更新方法。</string>
-	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安装（但是如果您解锁了 Bootloader，那么您只能选择安装完整包）。\n\nOxygen OS 的公开测试版可以在任何版本中（包括正式版）安装。如果您想从正式版转到测试版，请在设置中打开高级模式。测试版和正式版一样，都会要求您在解锁了 BootLoader 的情况下下载全量包。</string>
+	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安装（但是如果您解锁了 Bootloader，那么您只能选择安装完整包）。\n\nOxygenOS 的公开测试版可以在任何版本中（包括正式版）安装。如果您想从正式版转到测试版，请在设置中打开高级模式。测试版和正式版一样，都会要求您在解锁了 BootLoader 的情况下下载全量包。</string>
 	<string name="settings_explanation_update_methods">对不同更新方式的解释</string>]
 	<string name="settings_header">您的设备 / 更新方式是？</string>
 
@@ -169,13 +175,13 @@
 	<string name="setup_close_button">开始吧！</string>
 
 	<string name="setup_page_1_title">欢迎使用 Oxygen 更新器！</string>
-	<string name="setup_page_1_text">这款 App 可以帮助您：\n\nv- 更快地接收 Oxygen OS 的最新Android 更新\n- 轻松升级 Root 过的设备\n- 查看当前系统版本的更新亮点\n- 了解关于 OnePlus 与 Oxygen OS 的最新消息\n向左轻扫以继续</string>
+	<string name="setup_page_1_text">这款 App 可以帮助您：\n\nv- 更快地接收 OxygenOS 的最新Android 更新\n- 轻松升级 Root 过的设备\n- 查看当前系统版本的更新亮点\n- 了解关于 OnePlus 与 OxygenOS 的最新消息\n向左轻扫以继续</string>
 	<string name="setup_page_2_title">重要提示：</string>
 	<string name="setup_page_2_text">并不是官方的 OnePlus 应用程序，使用此应用程序完全由您自己承担风险。OnePlus和应用开发者都不对您的行为负责，包括使用此应用程序造成的任何损害。\n\n使用此应用程序即表示您同意上述条款。\n\n向左轻扫以继续</string>
 	<string name="setup_page_3_title">选择您的设备：</string>
 	<string name="setup_page_3_text">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。\n\n向左滑动即可继续</string>
 	<string name="setup_page_4_title">选择您的更新方式：</string>
-	<string name="setup_page_4_text">通常，更加推荐增量更新，因为它提供了更快，更小的下载体验。\n但是，它与 Root 过的设备不兼容。 如果您的设备已经 Root，请选择完全更新。\n如果您运行的是 Oxygen OS 的测试版, 请选择开放测试版系统\n\n向左轻扫以继续。</string>
+	<string name="setup_page_4_text">通常，更加推荐增量更新，因为它提供了更快，更小的下载体验。\n但是，它与 Root 过的设备不兼容。 如果您的设备已经 Root，请选择完全更新。\n如果您运行的是 OxygenOS 的测试版, 请选择开放测试版系统\n\n向左轻扫以继续。</string>
 	<string name="setup_page_5_title">一切就绪！</string>
 	<string name="setup_page_5_text">敬请使用吧！\n\n您可以随时在设置中更改您的设定。</string>
 
@@ -226,10 +232,10 @@
 	<string name="install_verify_error_title">安装失败</string>
 	<string name="install_verify_error_nothing_installed">安装更新时出错。尚未对您设备的系统进行任何更改。请尝试再次安装更新。</string>
 	<string name="install_verify_error_unable_to_verify">无法检查更新是否已成功安装。\n请打开 Oxygen 更新器以查看更新是否已成功安装。</string>
-	<string name="install_verify_error_wrong_version_installed">您似乎安装了一个其他版本的 Oxygen OS。请不要在选择 Root 包时，选择另外一个 Oxygen OS 的更新包。</string>
+	<string name="install_verify_error_wrong_version_installed">您似乎安装了一个其他版本的 OxygenOS。请不要在选择 Root 包时，选择另外一个 OxygenOS 的更新包。</string>
 
 	<string name="install_verify_success_title">安装完成</string>
-	<string name="install_verify_success_message">Oxygen OS 版本 %1$s 安装成功！</string>
+	<string name="install_verify_success_message">OxygenOS 版本 %1$s 安装成功！</string>
 
 	<string name="install_zip_file_clear">清除 Root 包</string>
 	<string name="install_zip_file_pick">选择一个 Root 包文件</string>
@@ -258,8 +264,8 @@
 	<string name="install_guide_page_4_title">重启您的设备</string>
 	<string name="install_guide_page_4_text">- 更新安装完成后，您将返回恢复模式菜单。在恢复模式菜单中，点击“重新启动”。\n\n- 然后，您就能看到熟悉的开机动画了！通常更新后的第一次开机会花费很长的时间。\n\n- 开机之后，您会看到一条标题为“正在完成系统更新”的通知，它的意思是指您的应用正在进行优化。</string>
 
-	<string name="install_guide_page_5_title">大功告成！在全新的 Oxygen OS 中尽情探索吧！</string>
-	<string name="install_guide_page_5_text">- 等您的设备优化完应用程序，那么这次更新就算是大功告成了！\n为了验证是否完成，您可以参见以下步骤来查看当前系统版本：\n\n- 打开设置，轻触“关于手机”，这里您就可以看到您的 Oxygen OS 版本。\n\n- 如果您喜欢这个 App，别忘了去 Google Play 给个 5 星好评哦~</string>
+	<string name="install_guide_page_5_title">大功告成！在全新的 OxygenOS 中尽情探索吧！</string>
+	<string name="install_guide_page_5_text">- 等您的设备优化完应用程序，那么这次更新就算是大功告成了！\n为了验证是否完成，您可以参见以下步骤来查看当前系统版本：\n\n- 打开设置，轻触“关于手机”，这里您就可以看到您的 OxygenOS 版本。\n\n- 如果您喜欢这个 App，别忘了去 Google Play 给个 5 星好评哦~</string>
 
 	<string name="install_guide_close_button">关闭安装指南</string>
 
@@ -288,8 +294,8 @@
 
 	<!-- About screen strings -->
 	<string name="about">关于</string>
-	<string name="about_app_description">获取 Oxygen OS 更新的终极神器！</string>
-	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用，<a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n距离发布四年后，2019 年 6 月，Arjan 决定停止支持这两款应用，并将它的所有权转让给其它团队。而他们，则担负起了为整个 OnePlus 社区提供优质的服务支持的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新主人发布了他所负责以来的第一个版本。该版本为用户们带来了耳目一新深色模式，全新界面设计，以及其它的新功能。\n\n如果您想了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。\n\n\n请注意，这并不是 OnePlus 出品的官方应用！\nOnePlus 的名称，Logo，以及 Oxygen OS 都由 OnePlus 所有！\nAndroid，Google，Google Play 以及 Google Play Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。\n\n本应用的中文翻译，由 Mastiff 提供。\n\n如果您喜欢本应用，请前往 Google Play 商店给个好评吧：</string>
+	<string name="about_app_description">获取 OxygenOS 更新的终极神器！</string>
+	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用，<a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n距离发布四年后，2019 年 6 月，Arjan 决定停止支持这两款应用，并将它的所有权转让给其它团队。而他们，则担负起了为整个 OnePlus 社区提供优质的服务支持的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新主人发布了他所负责以来的第一个版本。该版本为用户们带来了耳目一新深色模式，全新界面设计，以及其它的新功能。\n\n如果您想了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。\n\n\n请注意，这并不是 OnePlus 出品的官方应用！\nOnePlus 的名称，Logo，以及 OxygenOS 都由 OnePlus 所有！\nAndroid，Google，Google Play 以及 Google Play Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。\n\n本应用的中文翻译，由 Mastiff 提供。\n\n如果您喜欢本应用，请前往 Google Play 商店给个好评吧：</string>
 	<string name="about_rate_app_button_text">在 Google Play 上评价</string>
 	<string name="about_version">更新器版本：%1$s</string>
 

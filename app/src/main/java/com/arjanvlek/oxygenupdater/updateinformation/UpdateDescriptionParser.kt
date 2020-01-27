@@ -21,7 +21,7 @@ object UpdateDescriptionParser {
     private const val TAG = "UpdateDescriptionParser"
     private const val EMPTY_STRING = ""
 
-    fun parse(context: Context, updateDescription: String): Spanned {
+    fun parse(context: Context?, updateDescription: String): Spanned {
         val result: SpannableString
         val links: MutableMap<String, String> = HashMap()
 
@@ -112,11 +112,13 @@ object UpdateDescriptionParser {
                     // Heading 3 is the same size as normal text but will be displayed in bold.
                     UpdateDescriptionElement.HEADING_3 -> result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     // Decrease opacity of list items and text
-                    UpdateDescriptionElement.LIST_ITEM, UpdateDescriptionElement.TEXT -> result.setSpan(
-                        ForegroundColorSpan(
-                            ColorUtils.setAlphaComponent(ThemeUtils.getTertiaryColor(context), 192)
-                        ), startPosition, endPosition, 0
-                    )
+                    UpdateDescriptionElement.LIST_ITEM, UpdateDescriptionElement.TEXT -> if (context != null) {
+                        result.setSpan(
+                            ForegroundColorSpan(
+                                ColorUtils.setAlphaComponent(ThemeUtils.getTertiaryColor(context), 192)
+                            ), startPosition, endPosition, 0
+                        )
+                    }
                     // A link should be made clickable and must be displayed as a hyperlink.
                     UpdateDescriptionElement.LINK -> result.setSpan(URLSpan(links[currentLine]), startPosition, endPosition, 0)
                     else -> logInfo(TAG, "Case not implemented: $element")

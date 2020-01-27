@@ -36,7 +36,7 @@
 			android:layout_marginTop="@dimen/padding_default"
 			android:layout_marginEnd="@dimen/padding_default"
 			android:text="@string/app_name"
-			android:textAppearance="?android:attr/textAppearanceLarge" />
+			android:textAppearance="?android:textAppearanceLarge" />
 
 		<ImageView
 			android:id="@+id/aboutAppIconView"

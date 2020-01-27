@@ -141,7 +141,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
             {
                 if (it?.information != null
                     && it.information == ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
-                    && it.isUpdateInformationAvailable()
+                    && it.isUpdateInformationAvailable
                     && it.systemIsUpToDate
                 ) {
                     getMostRecentOxygenOTAUpdate(deviceId, updateMethodId, callback)

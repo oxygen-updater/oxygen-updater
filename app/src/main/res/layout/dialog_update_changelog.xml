@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<TextView
+		android:id="@+id/oxygenOsVersionTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/rounded_overlay_top"
+		android:drawableEnd="@drawable/collapse"
+		android:foreground="?selectableItemBackground"
+		android:padding="@dimen/padding_default"
+		android:stateListAnimator="@animator/clicked"
+		android:textColor="?colorPrimary"
+		android:textSize="@dimen/typography_subheading"
+		tools:text="@string/update_information_oxygen_os_version" />
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fadingEdge="vertical"
+		android:fadingEdgeLength="@dimen/padding_4x"
+		android:requiresFadingEdge="vertical">
+
+		<TextView
+			android:id="@+id/changelogTextView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/padding_default"
+			android:textIsSelectable="true"
+			tools:text="Changelog" />
+	</androidx.core.widget.NestedScrollView>
+</LinearLayout>

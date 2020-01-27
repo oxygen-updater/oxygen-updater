@@ -150,7 +150,6 @@ class ApplicationData : Application() {
         // Test devices for ads.
         private val ADS_TEST_DEVICES = mutableListOf("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843")
 
-        @JvmStatic
         fun buildAdRequest(): AdRequest {
             val adRequest = AdRequest.Builder()
 

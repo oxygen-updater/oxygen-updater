@@ -17,6 +17,7 @@ import kotlin.system.exitProcess
  * Usage: Title text, Message text, Positive button text, Negative button text.
  */
 class MessageDialog : DialogFragment() {
+
     private var dialogListener: DialogListener? = null
     private var title: String? = null
     private var message: String? = null

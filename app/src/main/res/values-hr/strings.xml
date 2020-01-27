@@ -14,11 +14,15 @@
 	<string name="update_information_for">"za"</string>
 	<string name="update_information_header">"Ažuriraj podatke"</string>
 	<string name="update_information_header_short">"Podatci o ažuriranju"</string>
-	<string name="update_information_installed_update">"Zadnje ažuriranje sistema:"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">"Zadnja provjera: %1$s"</string>
 	<string name="update_information_latest_available_update">"Novo ažuriranje sistema je dostupno"</string>
 	<string name="update_information_no_update_data_available">"Nema novosti o ažuriranju"</string>
-	<string name="update_information_oxygen_os_version">"Verzija Oxygen OS-a: %1$s"</string>
+	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Tvoj sistem koristi najnovija ažuriranja."</string>
 	<string name="update_information_unknown_update_name">"Neimenovano ažuriranje za %1$s"</string>
 	<string name="update_information_version">"Verzija:"</string>
@@ -38,9 +42,12 @@
 	<string name="time_yesterday">"Jučer"</string>
 
 	<!-- Downloader strings -->
-	<string name="download">"Preuzimanje"</string>
-	<string name="downloaded">"Preuzeto"</string>
-	<string name="downloading">"Preuzimanje…"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
+
 	<string name="download_already_downloaded">"Preuzimanje je već bilo gotovo. Spremno je za instalaciju."</string>
 	<string name="download_complete">"Preuzimanje je gotovo."</string>
 	<string name="download_complete_notification">"Preuzimanje je gotovo. Pritisnite kako bi počeli sa instalacijom."</string>
@@ -53,24 +60,26 @@
 	<string name="download_error_storage">"Na vašem uređaju nema dovoljno mjesta za preuzimanje ažuriranje. Molimo vas da uklonite neke podatke i pokušate preuzeti ponovo"</string>
 	<string name="download_failed">"Preuzimanje nije uspjelo"</string>
 	<string name="download_in_background">"Tvoje ažuriranje će se skidati u pozadini…"</string>
-	<string name="download_oxygen_os">"Oxygen OS Verzija"</string>
+	<string name="download_oxygen_os">"OxygenOS Verzija"</string>
 	<string name="download_pending">"Tvoje ažuriranje će početi uskoro…"</string>
 	<string name="download_permissions">"Pritisni preuzimanje ponovno da preuzmeš ažuriranje."</string>
 	<string name="download_notification_error_network">"Problem s mrežom. Provjerite svoju internet konekciju i pokušajte ponovno."</string>
 	<string name="download_notification_error_storage_full">"Nedovoljno prostora."</string>
 	<string name="download_notification_error_corrupt">"Verifikacija podatka neuspjela. Provjerite svoju internet konekciju i pokušajte ponovno."</string>
-	<string name="download_progress_text_hours_remaining">"%1$d%% od %2$d sati preostalo"</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%% minuta preostalo."</string>
-	<string name="download_progress_text_minutes_remaining">"%1$d%% od %2$d minuta preostalo."</string>
-	<string name="download_progress_text_one_hour_remaining">"%1$d%%, oko jedan sat preostao"</string>
-	<string name="download_progress_text_one_minute_remaining">"%1$d%%, oko minuta ostala"</string>
-	<string name="download_progress_text_seconds_remaining">"%1$d%%, oko par sekundi ostalo"</string>
-	<string name="download_progress_text_unknown_time_remaining">"%1$d%%, računanje preostalog vremena…"</string>
-	<string name="download_progress_text_verifying">"100%, verifikacija podatka…"</string>
-	<string name="download_waiting_for_network">"%1$d%%, Čekanje na internet konekciju…"</string>
+
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">"Od %1$d sati preostalo"</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%% Minuta preostalo."</string>
+	<string name="download_progress_text_minutes_remaining">"%1$d%% Od %1$d Minuta preostalo."</string>
+	<string name="download_progress_text_one_hour_remaining">"Oko jedan sat preostao"</string>
+	<string name="download_progress_text_one_minute_remaining">"Oko minuta ostala"</string>
+	<string name="download_progress_text_seconds_remaining">"Oko par sekundi ostalo"</string>
+	<string name="download_progress_text_unknown_time_remaining">"Računanje preostalog vremena…"</string>
+	<string name="download_progress_text_verifying">"Verifikacija podatka…"</string>
+	<string name="download_waiting_for_network">"Čekanje na internet konekciju…"</string>
 
 	<string name="download_size_megabyte">"%1$d MB"</string>
-	<string name="download_unknown_update_name">"Oxygen OS Update"</string>
+	<string name="download_unknown_update_name">"OxygenOS Update"</string>
 	<string name="download_verifying">"Verifikacija…"</string>
 	<string name="download_verifying_error">"Podatak je oštećen"</string>
 	<string name="download_verifying_start">"Tvoje skidanje će sada biti verifikanovan."</string>
@@ -405,7 +414,7 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">"Čini se da vaš uređaj ne koristi Oxygen OS. Molimo zapamtite da ažuriranja možete instalirati jedino na uređajima koji koriste Oxygen OS.
+	<string name="unsupported_os_warning_message">"Čini se da vaš uređaj ne koristi OxygenOS. Molimo zapamtite da ažuriranja možete instalirati jedino na uređajima koji koriste OxygenOS.
 
 Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."</string>
 	<string name="unsupported_device_warning_checkbox_title">"Nemoj više pokazivati ovo upozorenje"</string>
@@ -426,10 +435,6 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 	<string name="error_google_play_button_text">"Google Play"</string>
 	<string name="delayed_push_notification_displayer_service_name">"Push notifikacije"</string>
 	<string name="log_uploader_service_name">"Greška pri slanju servisa"</string>
-
-
-	<!-- Download is paused -->
-	<string name="paused">"Pauzirano"</string>
 
 	<!-- Server returned an error while downloading (not always a connection issue) -->
 	<string name="download_error_server">"Serverska pogreška se pojavila tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno."</string>

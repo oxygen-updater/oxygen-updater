@@ -14,11 +14,15 @@
 	<string name="update_information_for">for</string>
 	<string name="update_information_header">Opdatér</string>
 	<string name="update_information_header_short">Opdatér</string>
-	<string name="update_information_installed_update">Den seneste system-opdatering er:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">Senest checket den: %1$s</string>
 	<string name="update_information_latest_available_update">Ny system opdatering tilgængelig</string>
 	<string name="update_information_no_update_data_available">Ingen opdatering information tilgængelig</string>
-	<string name="update_information_oxygen_os_version">Oxygen OS version: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Dit system er opdateret</string>
 	<string name="update_information_unknown_update_name">Unavngiven opdatering for %1$s</string>
 	<string name="update_information_version">&#160;version:</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">i går</string>
 
 	<!-- Downloader strings-->
-	<string name="download">Download</string>
-	<string name="downloaded">Downloaded</string>
-	<string name="downloading">Downloader…</string>
-	<string name="paused">Pauset</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">Opdateringen er allerede downloaded. Den er klar til at blive installeret.</string>
 	<string name="download_complete">Download færdig</string>
@@ -63,7 +68,7 @@
 
 	<string name="download_failed">Download fejlede</string>
 	<string name="download_in_background">Oxygen Updater kører i baggruunden</string>
-	<string name="download_oxygen_os">Oxygen OS version</string>
+	<string name="download_oxygen_os">OxygenOS version</string>
 	<string name="download_pending">Din download vil starte om et øjeblik …</string>
 	<string name="download_permissions">Tryk på: Download igen for at downloade opdateringen.</string>
 
@@ -74,19 +79,20 @@
 	<string name="download_notification_error_storage_full">Manglende ledig plads lagerplads.</string>
 	<string name="download_notification_error_corrupt">Fil-undersøgelse fejlede. Check din forbindelse, og prøv igen.</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, af %2$d timer mangler</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, mindre end et minute mangler</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, omtrent %2$d minutter mangler</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, omtrent 1 time mangler</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, omtrent et minute mangler</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, få sekunder mangler</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, beregner den manglende tid der mangler…</string>
-	<string name="download_progress_text_verifying">100%, undersøger fil…</string>
-	<string name="download_progress_text_paused">%1$d%%, pauset</string>
-	<string name="download_waiting_for_network">%1$d%%, venter på en netværks tilutning…</string>
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">Af %1$d timer mangler</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">Mindre end et minute mangler</string>
+	<string name="download_progress_text_minutes_remaining">Omtrent %1$d minutter mangler</string>
+	<string name="download_progress_text_one_hour_remaining">Omtrent 1 time mangler</string>
+	<string name="download_progress_text_one_minute_remaining">Omtrent et minute mangler</string>
+	<string name="download_progress_text_seconds_remaining">Få sekunder mangler</string>
+	<string name="download_progress_text_unknown_time_remaining">Beregner den manglende tid der mangler…</string>
+	<string name="download_progress_text_verifying">Undersøger fil…</string>
+	<string name="download_progress_text_paused">Pauset</string>
+	<string name="download_waiting_for_network">Venter på en netværks tilutning…</string>
 
 	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">Oxygen OS Update</string>
+	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">Undersøger .…</string>
 	<string name="download_verifying_error">Fil er beskadiget</string>
@@ -260,8 +266,8 @@
 	<string name="install_guide_page_4_title">Genstart din enhed.</string>
 	<string name="install_guide_page_4_text">- Når installationen af opdateringen er færdig, sp vil du være tilbage i Fejlsikret tilstand\'s menu. I menuen, tryk da på \"Genstart\".\n\n- din enhed vil nu vise dens startop-skærm i et stykke tid, mens den starter op.\n\n- Efterfølgende, vil du se en hvid besked med teksten \"Android opgraderes\", altimens dine apps opdatimeres.</string>
 
-	<string name="install_guide_page_5_title">Færdig. Nyd den nye Oxygen OS version!</string>
-	<string name="install_guide_page_5_text">- Efter at din enhed er færdig med at optimere dens apps, er opdateringen fejlfri blevet installeret.\nFor at bekræfte dette, så kan du undersøge versionsnummeret af dit system, på følgende vis:\n\n- Åben Indstillinger, Tryk på \"Om telefon\", og check da Oxygen OS Version.\n\n- Hvis du kan lide denne app, overvej at bedømme den med en 5 stjerner på Google Play!</string>
+	<string name="install_guide_page_5_title">Færdig. Nyd den nye OxygenOS version!</string>
+	<string name="install_guide_page_5_text">- Efter at din enhed er færdig med at optimere dens apps, er opdateringen fejlfri blevet installeret.\nFor at bekræfte dette, så kan du undersøge versionsnummeret af dit system, på følgende vis:\n\n- Åben Indstillinger, Tryk på \"Om telefon\", og check da OxygenOS Version.\n\n- Hvis du kan lide denne app, overvej at bedømme den med en 5 stjerner på Google Play!</string>
 
 	<string name="install_guide_close_button">Luk Installations- Guide</string>
 
@@ -290,7 +296,7 @@
 
 	<!-- About screen strings -->
 	<string name="about">Om denne app</string>
-	<string name="about_app_description">Det ultimative værktøj til Oxygen OS opdateringer.</string>
+	<string name="about_app_description">Det ultimative værktøj til OxygenOS opdateringer.</string>
 	<string name="about_background_story">Denne app blev oprindeligt udviklet af Arjan Vlek, som opfølgning af en af hans andre apps, med navnet <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den tilbyder samme funktionalitet til Oyanogen OS brugere).\n\nEfter 4 år, i juli 2019, besluttede Arjan sig for trappe ned på sine projekter og vidergav ejerskabet af denne app til et hold af udviklere, fra forskellige lande. De tog så ansvaret  for, at tilvejebringe et fællesskab med fantastisk service og give support til og af OnePlus opdateringer hurtigere.\nDu kan finde mere information om dette via <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">-linket</a>.\n\nDen 14. august 2019 blev den første opdatering offentliggjort og markerede ejerskiftet; den kom med muligheder som mørkt tema, et komplet re-design af appen.\n\nFor more information omkring holdet, besøg linket <a href="https://oxygenupdater.com/team/"> her</a>.\n\n\nBemærk venligst, at dette IKKE er en officiel OnePlus applikation. \nOnePlus mavmet, OnePlus logo\'et og OxygenOS er ejendele af OnePlus. \nAndroid, Google, Google Play og Google Play logo\'er er registrerede varemærker tilhørende Google Inc. \nDenne app amvemder data fra OnePlus og dets moderselskab Oppo, til at vise opdateringsinformation.\n\nHvis du synes om denne app, bedøm den venligst på Play Store nu:</string>
 	<string name="about_rate_app_button_text">Bedøm på Google Play</string>
 	<string name="about_version">Version: %1$s</string>
@@ -364,7 +370,7 @@
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">Det lader til at din enhed ikke har Oxygen OS. Bemærk, at du kan kun installere system opdateringer på enheder der kører med Oxygen OS. \n\Andre enheder, her i blandt OnePlus enheder der kører med Brugertilpassede ROM\'s, uderstøttes ikke.</string>
+	<string name="unsupported_os_warning_message">Det lader til at din enhed ikke har OxygenOS. Bemærk, at du kan kun installere system opdateringer på enheder der kører med OxygenOS. \n\Andre enheder, her i blandt OnePlus enheder der kører med Brugertilpassede ROM\'s, uderstøttes ikke.</string>
 	<string name="unsupported_device_warning_checkbox_title">Vis ikke denne advarsel igen</string>
 
 	<string name="root_check_title">Rod-adgang</string>

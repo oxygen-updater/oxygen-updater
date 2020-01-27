@@ -27,25 +27,25 @@ data class DownloadProgressData(val numberOfSecondsRemaining: Long, val progress
      */
     inner class TimeRemaining internal constructor(val hoursRemaining: Int, val minutesRemaining: Int, val secondsRemaining: Int) : Serializable {
 
-        fun toString(activity: Context?): String {
-            if (activity == null) {
+        fun toString(context: Context?): String {
+            if (context == null) {
                 return ""
             }
 
             return if (hoursRemaining > 1) {
-                activity.getString(R.string.download_progress_text_hours_remaining, progress, hoursRemaining)
+                context.getString(R.string.download_progress_text_hours_remaining, hoursRemaining)
             } else if (hoursRemaining == 1) {
-                activity.getString(R.string.download_progress_text_one_hour_remaining, progress)
+                context.getString(R.string.download_progress_text_one_hour_remaining)
             } else if (hoursRemaining == 0 && minutesRemaining > 1) {
-                activity.getString(R.string.download_progress_text_minutes_remaining, progress, minutesRemaining)
+                context.getString(R.string.download_progress_text_minutes_remaining, minutesRemaining)
             } else if (hoursRemaining == 0 && minutesRemaining == 1) {
-                activity.getString(R.string.download_progress_text_one_minute_remaining, progress)
+                context.getString(R.string.download_progress_text_one_minute_remaining)
             } else if (hoursRemaining == 0 && minutesRemaining == 0 && secondsRemaining > 10) {
-                activity.getString(R.string.download_progress_text_less_than_a_minute_remaining, progress)
+                context.getString(R.string.download_progress_text_less_than_a_minute_remaining)
             } else if (hoursRemaining == 0 && minutesRemaining == 0 && secondsRemaining <= 10) {
-                activity.getString(R.string.download_progress_text_seconds_remaining, progress)
+                context.getString(R.string.download_progress_text_seconds_remaining)
             } else {
-                activity.getString(R.string.download_progress_text_unknown_time_remaining, progress)
+                context.getString(R.string.download_progress_text_unknown_time_remaining)
             }
         }
     }

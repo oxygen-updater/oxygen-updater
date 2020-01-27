@@ -14,11 +14,15 @@
 	<string name="update_information_for">"för"</string>
 	<string name="update_information_header">"Uppdatering"</string>
 	<string name="update_information_header_short">"Uppdatering"</string>
-	<string name="update_information_installed_update">"Den sensate systemuppdateringen är:"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">"Kollade senast den: %1$s"</string>
 	<string name="update_information_latest_available_update">"En ny systemuppdatering är tillgänglig"</string>
 	<string name="update_information_no_update_data_available">"Ingen uppdateringsinformation är tillgänglig."</string>
-	<string name="update_information_oxygen_os_version">"Oxygen OS Version: %1$s"</string>
+	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Din enhet är uppdaterad"</string>
 	<string name="update_information_unknown_update_name">"Namnlös uppdatering för: %1$s"</string>
 	<string name="update_information_version">"version:"</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">"Igår"</string>
 
 	<!-- Downloader strings -->
-	<string name="download">"Ladda ner"</string>
-	<string name="downloaded">"Nedladdat"</string>
-	<string name="downloading">Laddar ner …</string>
-	<string name="paused">"Pausad"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">"Uppdateringen är redan nedladdad."</string>
 	<string name="download_complete">"Nedladdning klar"</string>
@@ -59,7 +64,7 @@
 	<string name="download_error_storage">"Det finns inte tillräckligt med lagringskapacitet på din enhet. Ta bort filer och försök sedan ladda ned på nytt."</string>
 	<string name="download_failed">"Nerladdningen misslyckades"</string>
 	<string name="download_in_background">"Oxygen Updater kör i bakgrunden"</string>
-	<string name="download_oxygen_os">"Oxygen OS Version"</string>
+	<string name="download_oxygen_os">"OxygenOS Version"</string>
 	<string name="download_pending">"Din nedladdning påbörjas snart…"</string>
 	<string name="download_permissions">"Tryck på Ladda ner en gång till för att hämta uppdateringen."</string>
 
@@ -68,21 +73,23 @@
 	<string name="download_notification_error_internal">"Tekniskt fel under nedladdningen. Starta om nedladdningen eller kontakta support."</string>
 	<string name="download_notification_error_storage_full">Otillräckligt lagringsutrymme</string>
 	<string name="download_notification_error_corrupt">"Filverifikationen misslyckades. Kontrollera din anslutning och försök igen."</string>
-	<string name="download_progress_text_hours_remaining">"%1$d%%, ungefär %2$d timmar kvar"</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, mindre än en minut kvar"</string>
-	<string name="download_progress_text_minutes_remaining">"%1$d%%, ungefär %2$d minuter kvar"</string>
-	<string name="download_progress_text_one_hour_remaining">"%1$d%%, ungefär en timma kvar"</string>
-	<string name="download_progress_text_one_minute_remaining">"%1$d%%, ungefär en minut kvar"</string>
-	<string name="download_progress_text_seconds_remaining">"%1$d%%, några sekunder kvar"</string>
-	<string name="download_progress_text_unknown_time_remaining">"%1$d%%, beräknar nedladdningstid…"</string>
-	<string name="download_progress_text_verifying">"100%, Verifierar fil…"</string>
+
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">"Ungefär %1$d timmar kvar"</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"mindre än en minut kvar"</string>
+	<string name="download_progress_text_minutes_remaining">"ungefär %1$d minuter kvar"</string>
+	<string name="download_progress_text_one_hour_remaining">"ungefär en timma kvar"</string>
+	<string name="download_progress_text_one_minute_remaining">"ungefär en minut kvar"</string>
+	<string name="download_progress_text_seconds_remaining">"några sekunder kvar"</string>
+	<string name="download_progress_text_unknown_time_remaining">"beräknar nedladdningstid…"</string>
+	<string name="download_progress_text_verifying">"Verifierar fil…"</string>
 	<string name="download_size_megabyte">"%1$d MB"</string>
-	<string name="download_unknown_update_name">"Oxygen OS Uppdatering"</string>
+	<string name="download_unknown_update_name">"OxygenOS Uppdatering"</string>
 	<string name="download_verifying">"Verifierar…"</string>
 	<string name="download_verifying_error">"Filen är skadad"</string>
 	<string name="download_verifying_start">"Din nedladdning blir nu verifierad…"</string>
-	<string name="download_progress_text_paused">"%1$d%%, pausad"</string>
-	<string name="download_waiting_for_network">"%1$d%%, Väntar på nätverksanslutning…"</string>
+	<string name="download_progress_text_paused">"pausad"</string>
+	<string name="download_waiting_for_network">"Väntar på nätverksanslutning…"</string>
 
 	<!-- Settings strings -->
 	<string name="preference_header_support">Stöd oss</string>
@@ -292,7 +299,7 @@ Din enhet kommer starta om för att installera uppdateringen.
 	<string name="install_guide_page_5_text">"- När enheten har slutfört optimeringen av apparna har uppdateringen installerats.
 För att verifiera detta kan du kontrollera nuvarande version av ditt system enligt följande instruktioner:
 
-- Gå till Inställningar, tryck på \"Om telefonen\", och kolla Oxygen OS Version.
+- Gå till Inställningar, tryck på \"Om telefonen\", och kolla OxygenOS Version.
 
 - Om du gillar den här appen, ge den 5 stjärnor på Google Play!"</string>
 	<string name="install_guide_close_button">"Stäng Installationsguiden"</string>
@@ -420,7 +427,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">"Det verkar som din enhet inte har Oxygen OS installerat. Du kan enbart installera system uppdateringar på enheter som har Oxygen OS installerat.
+	<string name="unsupported_os_warning_message">"Det verkar som din enhet inte har OxygenOS installerat. Du kan enbart installera system uppdateringar på enheter som har OxygenOS installerat.
 
 Andra enheter samt OnePlus enheter som har \"Custom ROMs\" installerade är inte stöttade av appen."</string>
 	<string name="unsupported_device_warning_checkbox_title">"Visa inte denna varning igen"</string>

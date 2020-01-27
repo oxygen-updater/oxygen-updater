@@ -57,7 +57,7 @@ class DeviceInformationFragment : AbstractFragment() {
 
         // Device name (in top)
         device_information_header.text =
-            String.format(getString(R.string.device_information_device_name), deviceInformationData.deviceManufacturer, deviceInformationData.deviceName)
+            getString(R.string.device_information_device_name, deviceInformationData.deviceManufacturer, deviceInformationData.deviceName)
 
         // SoC
         device_information_soc_field.text = deviceInformationData.soc
@@ -67,7 +67,7 @@ class DeviceInformationFragment : AbstractFragment() {
             val cpuFreqString = deviceInformationData.cpuFrequency
 
             text = if (cpuFreqString != UNKNOWN) {
-                String.format(getString(R.string.device_information_gigahertz), cpuFreqString)
+                getString(R.string.device_information_gigahertz, cpuFreqString)
             } else {
                 getString(R.string.device_information_unknown)
             }
@@ -87,14 +87,14 @@ class DeviceInformationFragment : AbstractFragment() {
         // Total amount of RAM (if available)
         device_information_memory_field.apply {
             if (totalMemory != 0L) {
-                text = String.format(getString(R.string.download_size_megabyte), totalMemory)
+                text = getString(R.string.download_size_megabyte, totalMemory)
             } else {
                 device_information_memory_label.visibility = GONE
                 visibility = GONE
             }
         }
 
-        // Oxygen OS version (if available)
+        // OxygenOS version (if available)
         device_information_oxygen_os_ver_field.apply {
             val oxygenOSVersion = systemVersionProperties?.oxygenOSVersion
 
@@ -106,7 +106,7 @@ class DeviceInformationFragment : AbstractFragment() {
             }
         }
 
-        // Oxygen OS OTA version (if available)
+        // OxygenOS OTA version (if available)
         device_information_oxygen_os_ota_ver_field.apply {
             val oxygenOSOTAVersion = systemVersionProperties?.oxygenOSOTAVersion
 

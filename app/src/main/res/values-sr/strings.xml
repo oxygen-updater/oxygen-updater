@@ -14,11 +14,15 @@
 	<string name="update_information_for">за</string>
 	<string name="update_information_header">Ажурирај</string>
 	<string name="update_information_header_short">Ажурирај</string>
-	<string name="update_information_installed_update">Задње ажурирање система:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">Задња провера: %1$s</string>
 	<string name="update_information_latest_available_update">Ново ажурирање система је доступно</string>
 	<string name="update_information_no_update_data_available">Нема новости о ажурирању</string>
-	<string name="update_information_oxygen_os_version">Верзија Oxygen OS-а: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Твој систем користи најновија ажурирања</string>
 	<string name="update_information_unknown_update_name">Неименовано ажурирање за %1$s</string>
 	<string name="update_information_version">&#160;верзија:</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">Јуче</string>
 
 	<!-- Downloader strings-->
-	<string name="download">Преузимање</string>
-	<string name="downloaded">Преузето</string>
-	<string name="downloading">Преузимање…</string>
-	<string name="paused">Паузирано</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">Ажурирање је већ преузето. Спремно је за инсталирање.</string>
 	<string name="download_complete">Преузимање је готово</string>
@@ -63,7 +68,7 @@
 
 	<string name="download_failed">Недовољно простора</string>
 	<string name="download_in_background">Oxygen Updater ради у позадини</string>
-	<string name="download_oxygen_os">Oxygen OS верзија</string>
+	<string name="download_oxygen_os">OxygenOS верзија</string>
 	<string name="download_pending">Ваше преузимање ће ускоро почети…</string>
 	<string name="download_permissions">Притисните за поновно преузимање.</string>
 
@@ -74,19 +79,20 @@
 	<string name="download_notification_error_storage_full">Недовољно простора.</string>
 	<string name="download_notification_error_corrupt">Верификација фајла неуспешна. Проверите конекцију и покушајте поново.</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, од %2$d сати преостало</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, мање од минута остало</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, од %2$d минута преостало</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, око један сат преостало</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, око једног минута преостало</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, пар секунди је преостало</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, израчунавање преосталог времена…</string>
-	<string name="download_progress_text_verifying">100%, верификација фајла…</string>
-	<string name="download_progress_text_paused">%1$d%%, паузирано</string>
-	<string name="download_waiting_for_network">%1$d%%, чекање интернет конекције…</string>
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">од %1$d сати преостало</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">мање од минута остало</string>
+	<string name="download_progress_text_minutes_remaining">од %1$d минута преостало</string>
+	<string name="download_progress_text_one_hour_remaining">око један сат преостало</string>
+	<string name="download_progress_text_one_minute_remaining">око једног минута преостало</string>
+	<string name="download_progress_text_seconds_remaining">пар секунди је преостало</string>
+	<string name="download_progress_text_unknown_time_remaining">израчунавање преосталог времена…</string>
+	<string name="download_progress_text_verifying">верификација фајла…</string>
+	<string name="download_progress_text_paused">паузирано</string>
+	<string name="download_waiting_for_network">чекање интернет конекције…</string>
 
 	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">Oxygen OS Update</string>
+	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">Верификација…</string>
 	<string name="download_verifying_error">Фајл је оштећен</string>
@@ -267,8 +273,8 @@
 	<string name="install_guide_page_4_title">Поново покрените ваш уређај.</string>
 	<string name="install_guide_page_4_text">- Када инсталација ажурирања буде готова бићете враћени у Recovery Menu. У recovery менију, притисните на \"Reboot\".\n\n- Ваш уређај ће показати екран укључивања мало дуже.\n\n- Након тога видећете белу поруку са текстом \"Android is upgrading\", док ваше апликације буду опримизоване.</string>
 
-	<string name="install_guide_page_5_title">Завршено. Уживајте у новој Oxygen OS верзији!</string>
-	<string name="install_guide_page_5_text">- Након што уређај заврши са оптимизовањем ваших апликација ажурирање ће бити успешно инсталирано.\nДа бисте проверили ово, можете проверити тренутну верзију система на следећи начин:\n\n- Идите у подешавања, кликните на \"About phone\", и проверите Oxygen OS верзију.\n\n- Ако вам се свиђа апликација, молимо вас оцените нас са 5 звездица на Google Play продавници!</string>
+	<string name="install_guide_page_5_title">Завршено. Уживајте у новој OxygenOS верзији!</string>
+	<string name="install_guide_page_5_text">- Након што уређај заврши са оптимизовањем ваших апликација ажурирање ће бити успешно инсталирано.\nДа бисте проверили ово, можете проверити тренутну верзију система на следећи начин:\n\n- Идите у подешавања, кликните на \"About phone\", и проверите OxygenOS верзију.\n\n- Ако вам се свиђа апликација, молимо вас оцените нас са 5 звездица на Google Play продавници!</string>
 
 	<string name="install_guide_close_button">Затвори упуство за инсталацију</string>
 
@@ -297,7 +303,7 @@
 
 	<!-- About screen strings -->
 	<string name="about">О овој апликацији</string>
-	<string name="about_app_description">Ултимативни алат Oxygen OS ажурирања.</string>
+	<string name="about_app_description">Ултимативни алат OxygenOS ажурирања.</string>
 	<string name="about_background_story">Ова апликација је оригинално направљена од стране Arjan Vlek-а као наследник за још једну од његових апликација звану <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (која пружа сличну употребу као ова апликација за Cyanogen OS кориснике).\n\nНакон 4 године, у јулу 2019, Arjan је одлучио да препусти оба пројекта и преда њихово власнишство тиму програмера из различитих држава. Они су преузели одговорност да пруже људима одличне услуге &amp; подршку добијања OnePlus ажурирања брже.\nМожете пронаћи више информација о обавештењу <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">here</a>.\n\n14. Август 2019. означава прво издање под новим власништвом, које долази са новим опцијама као што су тамни режим и комплетно мењање дизајна.\n\nЗа више информација о тиму погледајте <a href="https://oxygenupdater.com/team/">веб сајт</a>.\n\n\nОво није званична OnePlus апликација. \nOnePlus име, OnePlus лого и OxygenOS су власништво OnePlus-а. \nAndroid, Google, Google Play и Google Play лого су регистровани заштитни знакови код Google Inc. \nОва апликација користи податке од OnePlus-а и његове матичне компаније Oppo да прикаже податке о ажурирањуn.\n\nАко вам се свиђа апликација, оцените је на Play продавници сада:</string>
 	<string name="about_rate_app_button_text">Оцените на Google Play</string>
 	<string name="about_version">Верзија: %1$s</string>
@@ -371,7 +377,7 @@
 	<string name="unsupported_device_warning_title">Неподржан уређај</string>
 	<string name="carrier_exclusive_device_warning_message">Изгледа као да користите уређај специјално прављен за мобилног оператера. Иако користите OxygenOS, нећете бити у могућности да инсталирате ажурирања. Мобилни оператери обично закључају уређај тако да корисник не може да мења систем. Ово је уобичајено у Америци: опција "Локално ажурирање" је обрисана из уређаја који су специјално направљени за мобилне оператере. Ова опција је неопходна ради инсталирања ажурирања ручно, иако не користите ову апликацију. Нажалост не можемо да урадимо ништа поводом овога, јер смо технички и легално онемогућени. Контактирајте нас преко мејла или Doscprd сервера ради појашњења.</string>
 	<string name="unsupported_device_warning_message">Честитамо вам на вашем новом OnePlus утеђају! Нажалост нисмо додали подршку за овај уређај још увек. Али не брините, додаћемо га чим будемо могли. Ми не волимо да правимо грешке, али је процес верификације да ли је све како треба дуг, стога вас молимо да будете стрпљиви. Пошаљите нам мејл или нам се придружите на Discord серверу ако желите да нам помогнете или да будете обавештени када пустимо верзију апликације која подржава ваш уређај.</string>
-	<string name="unsupported_os_warning_message">Изгледа као да ваш уређај није на OxygenOS-у. Молимо вас запамтите да можете да радите ажурирања само за уређаје са Oxygen OS-ом. \n\nОстали уређаји, укључујући OnePlus уређаје који користе друге ROM-ове нису подржани.</string>
+	<string name="unsupported_os_warning_message">Изгледа као да ваш уређај није на OxygenOS-у. Молимо вас запамтите да можете да радите ажурирања само за уређаје са OxygenOS-ом. \n\nОстали уређаји, укључујући OnePlus уређаје који користе друге ROM-ове нису подржани.</string>
 	<string name="unsupported_device_warning_checkbox_title">Не приказуј ово упозорење опет</string>
 
 	<string name="root_check_title">Root access</string>

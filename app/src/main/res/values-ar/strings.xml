@@ -14,11 +14,15 @@
 	<string name="update_information_for">إلى</string>
 	<string name="update_information_header">تحديث</string>
 	<string name="update_information_header_short">تحديث</string>
-	<string name="update_information_installed_update">آخر تحديث للنظام هو:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">أخر فحص تم في: %1$s</string>
 	<string name="update_information_latest_available_update">متاح تحديث جديد للنظام</string>
 	<string name="update_information_no_update_data_available">لا توجد بيانات متاحة عن التحديث</string>
-	<string name="update_information_oxygen_os_version">إصدار Oxygen OS: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">نظامك محدث بالفعل</string>
 	<string name="update_information_unknown_update_name">تحديث بلا إسم لـ %1$s</string>
 	<string name="update_information_version">&#160;إصدار:</string>
@@ -38,10 +42,12 @@
 	<string name="time_yesterday">أمس</string>
 
 	<!-- Downloader strings-->
-	<string name="download">تحميل</string>
-	<string name="downloaded">محمل بالفعل</string>
-	<string name="downloading">جاري التحميل…</string>
-	<string name="paused">متوقف</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
+
 	<string name="download_already_downloaded">تم بالفعل تحميل التحديث. وهو جاهز للتثبيت.</string>
 	<string name="download_complete">تم التحميل</string>
 	<string name="download_complete_notification">تم التحميل. إضغط لبدء التثبيت.</string>
@@ -65,16 +71,18 @@
 	<string name="download_notification_error_internal">حدثت مشكلة تقنية أثناء التحميل. أعد التحميل أو اتصل بالدعم الفني.</string>
 	<string name="download_notification_error_storage_full">مساحة تخزين غير كافية</string>
 	<string name="download_notification_error_corrupt">فشل التحقق من الملف. إفحص اتصالك وحاول مرة أخرى.</string>
-	<string name="download_progress_text_hours_remaining">%1$d%%, حوالي %2$d ساعات متبقية.</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, متبقي أقل من دقيقة</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, حوالي %2$d دقائق متبقية.</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, متبقي حوالي ساعة</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, متبقي حوالي دقيقة</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, متبقي عدة ثواني</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, جاري حساب الوقت المتبقي…</string>
-	<string name="download_progress_text_verifying">100%, التحقق من الملف…</string>
-	<string name="download_progress_text_paused">%1$d%%, متوقف</string>
-	<string name="download_waiting_for_network">%1$d%%, بإنتظار إتصال الشبكة…</string>
+
+	<string name="download_progress">%1$d ميجا بايت / %2$d ميجا بايت (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">حوالي %1$d ساعات متبقية.</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">متبقي أقل من دقيقة</string>
+	<string name="download_progress_text_minutes_remaining">حوالي %1$d دقائق متبقية.</string>
+	<string name="download_progress_text_one_hour_remaining">متبقي حوالي ساعة</string>
+	<string name="download_progress_text_one_minute_remaining">متبقي حوالي دقيقة</string>
+	<string name="download_progress_text_seconds_remaining">متبقي عدة ثواني</string>
+	<string name="download_progress_text_unknown_time_remaining">جاري حساب الوقت المتبقي…</string>
+	<string name="download_progress_text_verifying">التحقق من الملف…</string>
+	<string name="download_progress_text_paused">متوقف</string>
+	<string name="download_waiting_for_network">بإنتظار إتصال الشبكة…</string>
 	<string name="download_size_megabyte">%1$d ميجا بايت</string>
 	<string name="download_unknown_update_name">حدث نظام أكسجين</string>
 	<string name="download_verifying">جاري التحقق…</string>

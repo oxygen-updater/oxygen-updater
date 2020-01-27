@@ -26,6 +26,29 @@
 			android:layout_height="wrap_content"
 			app:tabGravity="fill"
 			app:tabMode="auto" />
+
+		<LinearLayout
+			android:id="@+id/serverMessageLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:animateLayoutChanges="true"
+			android:background="@color/backgroundVariant"
+			android:foreground="?selectableItemBackground"
+			android:orientation="vertical"
+			android:padding="@dimen/padding_half"
+			android:visibility="gone"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/info"
+				android:drawablePadding="@dimen/padding_half"
+				android:drawableTint="?android:textColorTertiary"
+				android:gravity="center_vertical"
+				android:padding="@dimen/padding_half"
+				android:text="Tap here to view notices" />
+		</LinearLayout>
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<androidx.viewpager.widget.ViewPager

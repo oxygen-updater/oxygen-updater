@@ -10,7 +10,6 @@ import javax.net.ssl.SSLException
  * Oxygen Updater, copyright 2018 Arjan Vlek. File created by arjan.vlek on 18-01-18.
  */
 object ExceptionUtils {
-    @JvmStatic
     fun isNetworkError(t: Throwable): Boolean {
         return (t is SocketException
                 || t is SocketTimeoutException

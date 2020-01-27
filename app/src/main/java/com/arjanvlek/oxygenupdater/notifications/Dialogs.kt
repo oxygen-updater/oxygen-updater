@@ -1,9 +1,9 @@
 package com.arjanvlek.oxygenupdater.notifications
 
-import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.arjanvlek.oxygenupdater.ActivityLauncher
@@ -32,7 +32,6 @@ object Dialogs {
      * @param title   Title of the error message
      * @param message Contents of the error message
      */
-    @JvmStatic
     fun showDownloadError(fragment: Fragment, updateData: UpdateData?, isResumable: Boolean, title: String?, message: String?) {
         checkPreconditions(fragment) {
             val errorDialog = MessageDialog()
@@ -76,7 +75,6 @@ object Dialogs {
         }
     }
 
-    @JvmStatic
     fun showNoNetworkConnectionError(fragment: Fragment) {
         checkPreconditions(fragment) {
             MessageDialog()
@@ -90,29 +88,26 @@ object Dialogs {
         }
     }
 
-    @JvmStatic
-    fun showServerMaintenanceError(fragment: Fragment) {
-        checkPreconditions(fragment) {
+    fun showServerMaintenanceError(activity: AppCompatActivity) {
+        checkPreconditions(activity) {
             MessageDialog()
-                .setTitle(fragment.getString(R.string.error_maintenance))
-                .setMessage(fragment.getString(R.string.error_maintenance_message))
-                .setNegativeButtonText(fragment.getString(R.string.download_error_close))
-                .setClosable(false).apply {
-                    setTargetFragment(fragment, 0)
-                    show(fragment.parentFragmentManager, "MaintenanceError")
-                }
+                .setTitle(activity.getString(R.string.error_maintenance))
+                .setMessage(activity.getString(R.string.error_maintenance_message))
+                .setNegativeButtonText(activity.getString(R.string.download_error_close))
+                .setClosable(false)
+                .show(activity.supportFragmentManager, "MaintenanceError")
         }
     }
 
-    @JvmStatic
-    fun showAppOutdatedError(fragment: Fragment, activity: Activity?) {
-        val activityLauncher = ActivityLauncher(activity!!)
-        checkPreconditions(fragment) {
+    fun showAppOutdatedError(activity: AppCompatActivity) {
+        val activityLauncher = ActivityLauncher(activity)
+
+        checkPreconditions(activity) {
             MessageDialog()
-                .setTitle(fragment.getString(R.string.error_app_outdated))
-                .setMessage(fragment.getString(R.string.error_app_outdated_message))
-                .setPositiveButtonText(fragment.getString(R.string.error_google_play_button_text))
-                .setNegativeButtonText(fragment.getString(R.string.download_error_close))
+                .setTitle(activity.getString(R.string.error_app_outdated))
+                .setMessage(activity.getString(R.string.error_app_outdated_message))
+                .setPositiveButtonText(activity.getString(R.string.error_google_play_button_text))
+                .setNegativeButtonText(activity.getString(R.string.download_error_close))
                 .setClosable(false)
                 .setDialogListener(object : MessageDialog.DialogListener {
                     override fun onDialogPositiveButtonClick(dialogFragment: DialogInterface?) {
@@ -120,14 +115,11 @@ object Dialogs {
                     }
 
                     override fun onDialogNegativeButtonClick(dialogFragment: DialogInterface?) {}
-                }).apply {
-                    setTargetFragment(fragment, 0)
-                    show(fragment.parentFragmentManager, "AppOutdatedError")
-                }
+                })
+                .show(activity.supportFragmentManager, "AppOutdatedError")
         }
     }
 
-    @JvmStatic
     fun showUpdateAlreadyDownloadedMessage(updateData: UpdateData?, fragment: Fragment, actionPerformedCallback: KotlinCallback<Void?>) {
         checkPreconditions(fragment) {
             val dialog = MessageDialog()
@@ -138,7 +130,7 @@ object Dialogs {
                 .setNegativeButtonText(fragment.getString(R.string.delete_message_delete_button))
                 .setDialogListener(object : MessageDialog.DialogListener {
                     override fun onDialogPositiveButtonClick(dialogFragment: DialogInterface?) {
-                        if (fragment.activity == null || fragment.activity!!.application == null) {
+                        if (fragment.activity?.application == null) {
                             return
                         }
 
@@ -165,7 +157,6 @@ object Dialogs {
         }
     }
 
-    @JvmStatic
     fun showAdvancedModeExplanation(ctx: Context, fm: FragmentManager?) {
         if (fm == null) {
             return
@@ -178,6 +169,12 @@ object Dialogs {
             .setPositiveButtonText(ctx.getString(R.string.update_information_close)).apply {
                 show(fm, "OU_AdvancedModeExplanation")
             }
+    }
+
+    private fun checkPreconditions(activity: AppCompatActivity?, callback: () -> Unit) {
+        if (activity?.supportFragmentManager != null && !activity.isFinishing) {
+            callback.invoke()
+        }
     }
 
     private fun checkPreconditions(fragment: Fragment?, callback: () -> Unit) {

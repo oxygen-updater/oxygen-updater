@@ -14,11 +14,15 @@
 	<string name="update_information_for">dla</string>
 	<string name="update_information_header">Aktualizacja</string>
 	<string name="update_information_header_short">Akt.</string>
-	<string name="update_information_installed_update">Ostatnia aktualizacja systemu to:</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_last_checked_on">Ostatnio sprawdzono: %1$s</string>
 	<string name="update_information_latest_available_update">Nowa aktualizacja systemu dostępna</string>
 	<string name="update_information_no_update_data_available">Brak dostępnych informacji o aktualizacjach</string>
-	<string name="update_information_oxygen_os_version">Wersja OxygenOS: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Twój system jest zaktualizowany do najnowszej wersji</string>
 	<string name="update_information_unknown_update_name">Nieznana aktualizacja dla %1$s</string>
 	<string name="update_information_version">&#160;wersja:</string>
@@ -38,10 +42,11 @@
 	<string name="time_yesterday">Wczoraj</string>
 
 	<!-- Downloader strings-->
-	<string name="download">Pobierz</string>
-	<string name="downloaded">Pobrane</string>
-	<string name="downloading">Pobieranie…</string>
-	<string name="paused">Pauza</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">Aktualizacja została już pobrana. Jest gotowa do instalacji.</string>
 	<string name="download_complete">Pobieranie zakończone</string>
@@ -63,7 +68,7 @@
 
 	<string name="download_failed">Pobieranie nieudane</string>
 	<string name="download_in_background">Oxygen Updater działa w tle</string>
-	<string name="download_oxygen_os">Wersja Oxygen OS</string>
+	<string name="download_oxygen_os">Wersja OxygenOS</string>
 	<string name="download_pending">Twoje pobieranie zacznie się niedługo…</string>
 	<string name="download_permissions">Naciśnij ponownie przycisk Pobierz aby pobrać aktualizację.</string>
 
@@ -74,19 +79,20 @@
 	<string name="download_notification_error_storage_full">Niewystarczająca ilość miejsca.</string>
 	<string name="download_notification_error_corrupt">Weryfikacja pliki zakończona niepowodzeniem. Sprawdź swoje połączenie z internetem i spróbuj ponownie.</string>
 
-	<string name="download_progress_text_hours_remaining">%1$d%%, pozostało około %2$d godzin</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, mniej niż minuta do końca</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, około %2$d minut do końca</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, około 1 godzina do końca</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, około minuta do końca</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, około kilka sekund do końca</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, obliczanie pozostałego czasu…</string>
-	<string name="download_progress_text_verifying">100%, weryfikacja pliku…</string>
-	<string name="download_progress_text_paused">%1$d%%, wstrzymane</string>
-	<string name="download_waiting_for_network">%1$d%%, czekanie na połączenie z siecią…</string>
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">Pozostało około %1$d godzin</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">Mniej niż minuta do końca</string>
+	<string name="download_progress_text_minutes_remaining">Około %1$d minut do końca</string>
+	<string name="download_progress_text_one_hour_remaining">Około 1 godzina do końca</string>
+	<string name="download_progress_text_one_minute_remaining">Około minuta do końca</string>
+	<string name="download_progress_text_seconds_remaining">Około kilka sekund do końca</string>
+	<string name="download_progress_text_unknown_time_remaining">Obliczanie pozostałego czasu…</string>
+	<string name="download_progress_text_verifying">Weryfikacja pliku…</string>
+	<string name="download_progress_text_paused">Wstrzymane</string>
+	<string name="download_waiting_for_network">Czekanie na połączenie z siecią…</string>
 
 	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">Aktualizacja Oxygen OS</string>
+	<string name="download_unknown_update_name">Aktualizacja OxygenOS</string>
 
 	<string name="download_verifying">Weryfikacja…</string>
 	<string name="download_verifying_error">Plik jest uszkodzony</string>
