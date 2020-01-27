@@ -293,6 +293,8 @@
 	<string name="news_date_published">آخر تحديث: %1$s</string>
 	<string name="news_empty">لا توجد محتويات داخل هذا المقال.</string>
 	<string name="news_load_error">فشل فتح المقال. تحقق من اتصالك واضغط على زر \'إعادة المحاولة\' لفتح المقال.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">كن مساهماً</string>

@@ -391,6 +391,8 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_date_published">"Dernière mise à jour : %1$s"</string>
 	<string name="news_empty">"Cet article n'a pas de contenu."</string>
 	<string name="news_load_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton « Réessayer » pour ouvrir l'article."</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Devenez un contributeur</string>

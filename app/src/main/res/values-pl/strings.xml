@@ -337,6 +337,8 @@
 	<string name="news_date_published">Ostatnia aktualizacja: %1$s</string>
 	<string name="news_empty">Ten artykuł nie ma treści.</string>
 	<string name="news_load_error">Niepowodzenie otwierania artykułu. Sprawdź połączenie z internetem i naciśnij przycisk \'PONÓW PRÓBĘ\' aby otworzyć artykuł.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Zostań osoba wnoszącą wkład</string>

@@ -335,6 +335,8 @@
 	<string name="news_date_published">Laatste update: %1$s</string>
 	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
 	<string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \'OPNIEUW\' om het artikel opnieuw te laden.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Draag bij</string>

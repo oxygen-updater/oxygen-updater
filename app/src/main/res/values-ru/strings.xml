@@ -408,6 +408,8 @@
 	<string name="news_date_published">"Последнее обновление: %1$s"</string>
 	<string name="news_empty">"В этой статье нет содержания."</string>
 	<string name="news_load_error">"Не удалось открыть статью. Нет сетевого подключения. Нажмите «Повторить» для загрузки"</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- TODO translate these lines -->
 	<string name="contribute">Become a contributor</string>

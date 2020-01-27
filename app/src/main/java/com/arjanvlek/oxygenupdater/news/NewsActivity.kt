@@ -112,7 +112,7 @@ class NewsActivity : SupportActionBarActivity() {
 
             intent.getIntExtra(INTENT_NEWS_ITEM_POSITION, -1).let {
                 if (it != -1) {
-                    NewsAdapter.newsItemReadListener.onNewsItemRead(it)
+                    NewsAdapter.newsItemReadListener.invoke(it)
                 }
             }
 

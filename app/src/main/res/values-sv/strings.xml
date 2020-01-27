@@ -392,6 +392,8 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_date_published">"Senaste uppdatering: %1$s"</string>
 	<string name="news_empty">"Denna artikel har inget innehåll."</string>
 	<string name="news_load_error">"Misslyckades att öppna artikeln. Kontrollera din anslutning och tryck sedan på 'FÖRSÖK IGEN' knappen för att öppna artikeln."</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<string name="contribute">Bli en bidragare</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>

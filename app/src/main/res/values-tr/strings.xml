@@ -330,6 +330,8 @@
 	<string name="news_date_published">Son güncelleme: %1$s</string>
 	<string name="news_empty">Bu içerikte birşey bulunmamakta.</string>
 	<string name="news_load_error">İçerik açılamadı. İnternet bağlantınızı kontrol edin ve \"Tekrar\" tuşuna basınız.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Katkıda bulunan biri olun</string>

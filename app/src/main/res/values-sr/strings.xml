@@ -339,6 +339,8 @@
 	<string name="news_date_published">Последње ажурирање: %1$s</string>
 	<string name="news_empty">Ова вест нема садржај.</string>
 	<string name="news_load_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<!-- TODO translate this block to all but Dutch / Belgian / French -->

@@ -331,6 +331,8 @@
 	<string name="news_date_published">การอัพเดทครั้งล่าสุด: %1$s</string>
 	<string name="news_empty">บทความนี้ไม่มีเนื้อหา</string>
 	<string name="news_load_error">ไม่สามารถเปิดบทความ ตรวจสอบการเชื่อมต่อของคุณและกดปุ่ม \'ลองอีกครั้ง \' เพื่อเปิดบทความ</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">เป็นผู้มีส่วนร่วม</string>

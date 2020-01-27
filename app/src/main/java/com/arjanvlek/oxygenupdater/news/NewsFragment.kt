@@ -17,12 +17,14 @@ import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.AlphaInAnimationAdapter
 import com.arjanvlek.oxygenupdater.views.MainActivity
 import com.arjanvlek.oxygenupdater.views.NewsAdapter
-import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsItemReadListener
 import kotlinx.android.synthetic.main.fragment_news.*
 
-class NewsFragment : AbstractFragment(), NewsItemReadListener {
+class NewsFragment : AbstractFragment() {
+
     private var hasBeenLoadedOnce = false
-    private lateinit var alphaInAnimationAdapter: AlphaInAnimationAdapter
+    private var isShowingOnlyUnreadArticles = false
+
+    private lateinit var newsAdapter: NewsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -48,20 +50,36 @@ class NewsFragment : AbstractFragment(), NewsItemReadListener {
         val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        serverConnector!!.getNews(applicationData, deviceId, updateMethodId) { newsItems -> displayNewsItems(newsItems, callback) }
+        serverConnector!!.getNews(applicationData, deviceId, updateMethodId) { displayNewsItems(it, callback) }
     }
 
     private fun displayNewsItems(newsItems: List<NewsItem>, callback: () -> Unit) {
-        newsContainer.let {
+        updateBannerText(getString(R.string.news_unread_count, newsItems.count { !it.read }))
+
+        newsContainer.let { recyclerView ->
+            newsAdapter = NewsAdapter(context, activity as MainActivity?, newsItems) { position ->
+                newsAdapter.notifyItemChanged(position)
+                updateBannerText(getString(R.string.news_unread_count, newsItems.count { !it.read }))
+            }
+
             // animate items when they load
             @Suppress("UNCHECKED_CAST")
-            alphaInAnimationAdapter = AlphaInAnimationAdapter(
-                NewsAdapter(context, activity as MainActivity?, this, newsItems) as RecyclerView.Adapter<RecyclerView.ViewHolder>
-            )
-            alphaInAnimationAdapter.setFirstOnly(false)
+            AlphaInAnimationAdapter(newsAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>).apply {
+                setFirstOnly(false)
+                recyclerView.adapter = this
+            }
 
-            it.adapter = alphaInAnimationAdapter
-            it.layoutManager = LinearLayoutManager(context)
+            recyclerView.layoutManager = LinearLayoutManager(context)
+
+            // toggle between showing only reading articles and showing all articles
+            bannerLayout.setOnClickListener {
+                newsAdapter.updateList(
+                    if (isShowingOnlyUnreadArticles) newsItems
+                    else newsItems.filter { !it.read }
+                )
+
+                isShowingOnlyUnreadArticles = !isShowingOnlyUnreadArticles
+            }
         }
 
         if (!isAdded) {
@@ -77,18 +95,16 @@ class NewsFragment : AbstractFragment(), NewsItemReadListener {
         callback.invoke()
     }
 
-    private val loadDelayMilliseconds: Int
-        get() {
-            if (!hasBeenLoadedOnce) {
-                hasBeenLoadedOnce = true
-                return 3000
-            }
+    private fun updateBannerText(string: String) {
+        bannerLayout.visibility = View.VISIBLE
+        bannerTextView.text = string
+    }
 
-            return 10
-        }
-
-    override fun onNewsItemRead(position: Int) {
-        alphaInAnimationAdapter.notifyItemChanged(position)
+    private val loadDelayMilliseconds = if (!hasBeenLoadedOnce) {
+        hasBeenLoadedOnce = true
+        3000
+    } else {
+        10
     }
 
     companion object {

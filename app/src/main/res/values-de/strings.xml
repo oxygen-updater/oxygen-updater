@@ -403,6 +403,8 @@ Benutzen sie den Schälter zum eins-oder ausschalten des Mitteilung- und Privacy
 	<string name="news_date_published">"Letztes Update: %1$s"</string>
 	<string name="news_empty">"Dieser Artikel hat keinen Inhalt."</string>
 	<string name="news_load_error">"Fehler "</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- TODO translate these lines -->
 	<string name="contribute">Become a contributor</string>

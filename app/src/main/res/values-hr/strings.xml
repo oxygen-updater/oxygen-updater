@@ -379,6 +379,8 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 	<string name="news_date_published">"Najnovije vijesti: %1$s"</string>
 	<string name="news_empty">"Ovaj članak nema komentara"</string>
 	<string name="news_load_error">"Došlo je do pogreške. Molimo provjerite vašu internet vezu i pritisnite \"Retry\" tipku da otvorite članak"</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- TODO translate these lines -->
 	<string name="contribute">Become a contributor</string>

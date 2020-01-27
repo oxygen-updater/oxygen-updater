@@ -332,6 +332,8 @@
 	<string name="news_date_published">Sidst opdateret: %1$s</string>
 	<string name="news_empty">Ingen kommentarer, til denne artikkel.</string>
 	<string name="news_load_error">Kan ikke åbne denne artikkel. Check din forbindelse og tryk på \'FORSØG IGEN\' -knappen for at åbne artikllen.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Bliv bidragsyder</string>

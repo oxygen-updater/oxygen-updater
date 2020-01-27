@@ -358,6 +358,8 @@
 	<string name="news_date_published">Last update: %1$s</string>
 	<string name="news_empty">This article has no contents.</string>
 	<string name="news_load_error">Failed to open article. Check your connection and press the \'RETRY\' button to open the article.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
 
 	<!-- Contribute strings -->
 	<!-- TODO translate this block to all but Dutch / Belgian / French -->

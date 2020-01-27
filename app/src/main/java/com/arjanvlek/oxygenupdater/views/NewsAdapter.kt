@@ -17,11 +17,13 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.ExceptionUtils
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
+import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
@@ -31,7 +33,7 @@ import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.news.NewsActivity
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsViewHolder
+import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsItemViewHolder
 import com.google.android.gms.ads.AdListener
 import org.joda.time.LocalDateTime
 import java.net.MalformedURLException
@@ -39,17 +41,20 @@ import java.net.MalformedURLException
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
-class NewsAdapter(private val context: Context?, private val activity: AppCompatActivity?, newsItemReadListener: NewsItemReadListener, private val newsItemList: List<NewsItem>) :
-    RecyclerView.Adapter<NewsViewHolder>() {
+class NewsAdapter(
+    private val context: Context?,
+    private val activity: AppCompatActivity?,
+    private var newsItemList: List<NewsItem>,
+    newsItemReadListener: KotlinCallback<Int>
+) : RecyclerView.Adapter<NewsItemViewHolder>() {
 
     private val settingsManager: SettingsManager = SettingsManager(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val inflater = LayoutInflater.from(context)
-        return NewsViewHolder(inflater.inflate(R.layout.news_item, parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsItemViewHolder = NewsItemViewHolder(
+        LayoutInflater.from(context).inflate(R.layout.news_item, parent, false)
+    )
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
         // Logic to set the title, subtitle and image of each individual news item.
         val locale = AppLocale.get()
         val newsItem = newsItemList[position]
@@ -105,8 +110,14 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
         }).execute()
     }
 
-    override fun getItemCount(): Int {
-        return newsItemList.size
+    override fun getItemCount() = newsItemList.size
+
+    /**
+     * Update underlying data set using [RecyclerView]'s powerful [DiffUtil] tool
+     */
+    fun updateList(newList: List<NewsItem>) {
+        DiffUtil.calculateDiff(NewsItemDiffUtil(newsItemList, newList)).dispatchUpdatesTo(this)
+        newsItemList = newList
     }
 
     private fun openNewsItem(newsItem: NewsItem, position: Int) {
@@ -173,7 +184,7 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
         Handler().postDelayed({ newsItem.read = false }, 2000)
     }
 
-    inner class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val container: RelativeLayout = itemView.findViewById(R.id.newsItemContainer)
         val image: ImageView = itemView.findViewById(R.id.newsItemImage)
         val imagePlaceholder: ImageView = itemView.findViewById(R.id.newsItemImagePlaceholder)
@@ -181,14 +192,24 @@ class NewsAdapter(private val context: Context?, private val activity: AppCompat
         val subtitle: TextView = itemView.findViewById(R.id.newsItemSubTitle)
     }
 
-    interface NewsItemReadListener {
-        fun onNewsItemRead(position: Int)
+    private inner class NewsItemDiffUtil(
+        private val oldList: List<NewsItem>,
+        private val newList: List<NewsItem>
+    ) : DiffUtil.Callback() {
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition].id == newList[newItemPosition].id
+
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition] == newList[newItemPosition]
     }
 
     companion object {
         private const val TAG = "NewsAdapter"
         private val imageCache = SparseArray<Bitmap?>()
-        lateinit var newsItemReadListener: NewsItemReadListener
+        lateinit var newsItemReadListener: KotlinCallback<Int>
     }
 
     init {
