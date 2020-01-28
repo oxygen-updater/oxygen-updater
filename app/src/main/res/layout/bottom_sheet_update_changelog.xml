@@ -12,7 +12,7 @@
 		android:background="@drawable/rounded_overlay_top"
 		android:drawableEnd="@drawable/collapse"
 		android:foreground="?selectableItemBackground"
-		android:padding="@dimen/padding_default"
+		android:padding="@dimen/spacing_default"
 		android:stateListAnimator="@animator/clicked"
 		android:textColor="?colorPrimary"
 		android:textSize="@dimen/typography_subheading"
@@ -22,14 +22,14 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/padding_4x"
+		android:fadingEdgeLength="@dimen/spacing_4x"
 		android:requiresFadingEdge="vertical">
 
 		<TextView
 			android:id="@+id/changelogTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/padding_default"
+			android:layout_margin="@dimen/spacing_default"
 			android:textIsSelectable="true"
 			tools:text="Changelog" />
 	</androidx.core.widget.NestedScrollView>

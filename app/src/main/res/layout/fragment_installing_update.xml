@@ -7,7 +7,8 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
@@ -34,14 +35,14 @@
 			android:id="@+id/preparingInstallationText"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/padding_default"
+			android:layout_marginTop="@dimen/spacing_default"
 			android:text="@string/install_preparing_installation"
 			android:textSize="@dimen/typography_title" />
 
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/padding_half"
+			android:layout_marginTop="@dimen/spacing_half"
 			android:text="@string/install_grant_root_permissions" />
 	</LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

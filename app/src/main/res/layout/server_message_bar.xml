@@ -3,7 +3,7 @@
 	android:id="@+id/server_message_background_bar"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:padding="@dimen/padding_half">
+	android:padding="@dimen/spacing_half">
 
 	<TextView
 		android:id="@+id/server_message_text_view"

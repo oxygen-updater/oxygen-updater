@@ -14,7 +14,7 @@
 			android:layout_height="wrap_content"
 			android:background="@color/appBarBackground"
 			android:gravity="center"
-			android:padding="@dimen/padding_default"
+			android:padding="@dimen/spacing_default"
 			android:visibility="gone"
 			tools:visibility="visible">
 
@@ -29,8 +29,8 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
-				android:layout_marginStart="@dimen/padding_half"
-				android:layout_marginEnd="@dimen/padding_default"
+				android:layout_marginStart="@dimen/spacing_half"
+				android:layout_marginEnd="@dimen/spacing_default"
 				android:textColor="@color/white"
 				tools:text="@string/update_information_banner_already_latest" />
 		</LinearLayout>

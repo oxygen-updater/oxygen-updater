@@ -3,10 +3,10 @@
 	android:id="@+id/installGuideMainView"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:paddingLeft="@dimen/padding_default"
-	android:paddingTop="@dimen/padding_default"
-	android:paddingRight="@dimen/padding_default"
-	android:paddingBottom="@dimen/padding_default">
+	android:paddingLeft="@dimen/spacing_default"
+	android:paddingTop="@dimen/spacing_default"
+	android:paddingRight="@dimen/spacing_default"
+	android:paddingBottom="@dimen/spacing_default">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -17,7 +17,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
-			android:layout_marginBottom="@dimen/padding_half"
+			android:layout_marginBottom="@dimen/spacing_half"
 			android:gravity="center_horizontal"
 			android:text="@string/install_guide_header"
 			android:visibility="gone" />
@@ -35,7 +35,7 @@
 			android:id="@+id/installGuideTitle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/installGuideImage"
+			android:layout_below="@id/installGuideImage"
 			android:layout_centerHorizontal="true"
 			android:gravity="center_horizontal"
 			android:textAppearance="?android:textAppearanceLarge"
@@ -48,7 +48,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/installGuideTitle"
 			android:layout_centerHorizontal="true"
-			android:layout_marginTop="@dimen/padding_default"
+			android:layout_marginTop="@dimen/spacing_default"
 			android:text="@string/install_guide_tip"
 			android:textColor="?android:textColorSecondary"
 			android:visibility="gone" />
@@ -58,7 +58,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/installGuideTip"
-			android:layout_marginTop="@dimen/padding_default"
+			android:layout_marginTop="@dimen/spacing_default"
 			android:textColor="?android:textColorSecondary"
 			android:visibility="invisible" />
 
@@ -81,7 +81,7 @@
 				android:id="@+id/installGuideLoadingText"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_half"
+				android:layout_marginTop="@dimen/spacing_half"
 				android:text="@string/install_guide_loading"
 				android:textAlignment="center"
 				android:textSize="@dimen/typography_title" />

@@ -7,7 +7,8 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
@@ -35,7 +36,7 @@
 			android:background="@color/backgroundVariant"
 			android:foreground="?selectableItemBackground"
 			android:orientation="vertical"
-			android:padding="@dimen/padding_half"
+			android:padding="@dimen/spacing_half"
 			android:visibility="gone"
 			app:layout_constraintTop_toTopOf="parent">
 
@@ -43,10 +44,10 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:drawableStart="@drawable/info"
-				android:drawablePadding="@dimen/padding_half"
+				android:drawablePadding="@dimen/spacing_half"
 				android:drawableTint="?android:textColorTertiary"
 				android:gravity="center_vertical"
-				android:padding="@dimen/padding_half"
+				android:padding="@dimen/spacing_half"
 				android:text="Tap here to view notices" />
 		</LinearLayout>
 	</com.google.android.material.appbar.AppBarLayout>

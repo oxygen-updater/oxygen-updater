@@ -7,7 +7,8 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
@@ -27,14 +28,14 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
 			android:orientation="vertical">
 
 			<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/install_select_method_title"
 				android:textAlignment="center"
 				android:textStyle="bold" />
@@ -44,13 +45,13 @@
 				android:layout_width="match_parent"
 				android:layout_height="200dp"
 				android:layout_gravity="center"
-				android:layout_marginTop="@dimen/padding_default">
+				android:layout_marginTop="@dimen/spacing_default">
 
 				<TextView
 					android:id="@+id/automaticInstallTitle"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="@dimen/padding_half"
+					android:layout_marginTop="@dimen/spacing_half"
 					android:text="@string/install_select_method_automatic_title"
 					android:textAlignment="center"
 					android:textStyle="bold" />
@@ -63,7 +64,7 @@
 						android:id="@+id/automaticInstallImage"
 						android:layout_width="70dp"
 						android:layout_height="70dp"
-						android:layout_marginStart="@dimen/padding_default"
+						android:layout_marginStart="@dimen/spacing_default"
 						android:layout_marginTop="66dp"
 						android:contentDescription="@string/install_select_method_automatic_image"
 						android:src="@drawable/auto"
@@ -73,10 +74,10 @@
 						android:id="@+id/automaticInstallExplanation"
 						android:layout_width="wrap_content"
 						android:layout_height="fill_parent"
-						android:layout_marginStart="@dimen/padding_half"
-						android:layout_marginTop="@dimen/padding_2x"
-						android:layout_marginEnd="@dimen/padding_half"
-						android:layout_marginBottom="@dimen/padding_2x"
+						android:layout_marginStart="@dimen/spacing_half"
+						android:layout_marginTop="@dimen/spacing_2x"
+						android:layout_marginEnd="@dimen/spacing_half"
+						android:layout_marginBottom="@dimen/spacing_2x"
 						android:layout_toEndOf="@id/automaticInstallImage"
 						android:gravity="center_vertical"
 						android:text="@string/install_select_method_automatic_description" />
@@ -89,13 +90,13 @@
 				android:layout_width="match_parent"
 				android:layout_height="200dp"
 				android:layout_gravity="center"
-				android:layout_marginTop="@dimen/padding_default">
+				android:layout_marginTop="@dimen/spacing_default">
 
 				<TextView
 					android:id="@+id/manualInstallTitle"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="@dimen/padding_half"
+					android:layout_marginTop="@dimen/spacing_half"
 					android:text="@string/install_select_method_manual_title"
 					android:textAlignment="center"
 					android:textStyle="bold" />
@@ -108,7 +109,7 @@
 						android:id="@+id/manualInstallImage"
 						android:layout_width="70dp"
 						android:layout_height="70dp"
-						android:layout_marginStart="@dimen/padding_default"
+						android:layout_marginStart="@dimen/spacing_default"
 						android:layout_marginTop="66dp"
 						android:contentDescription="@string/install_select_method_manual_image"
 						android:src="@drawable/list"
@@ -118,10 +119,10 @@
 						android:id="@+id/manualInstallExplanation"
 						android:layout_width="wrap_content"
 						android:layout_height="fill_parent"
-						android:layout_marginStart="@dimen/padding_half"
-						android:layout_marginTop="@dimen/padding_2x"
-						android:layout_marginEnd="@dimen/padding_half"
-						android:layout_marginBottom="@dimen/padding_2x"
+						android:layout_marginStart="@dimen/spacing_half"
+						android:layout_marginTop="@dimen/spacing_2x"
+						android:layout_marginEnd="@dimen/spacing_half"
+						android:layout_marginBottom="@dimen/spacing_2x"
 						android:layout_toEndOf="@id/manualInstallImage"
 						android:gravity="center_vertical"
 						android:text="@string/install_select_method_manual_description" />

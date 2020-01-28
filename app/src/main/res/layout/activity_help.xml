@@ -6,7 +6,8 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
@@ -20,8 +21,8 @@
 	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:paddingLeft="@dimen/padding_default"
-		android:paddingRight="@dimen/padding_default"
+		android:paddingLeft="@dimen/spacing_default"
+		android:paddingRight="@dimen/spacing_default"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 		<LinearLayout
@@ -35,7 +36,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="start"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -43,7 +44,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_updating_your_device_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -53,7 +54,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_updating_your_device_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -61,7 +62,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_reading_news_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -71,7 +72,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_reading_news_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -79,7 +80,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_device_information_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -89,7 +90,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_device_information_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 
@@ -97,7 +98,7 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/help_change_settings_title"
 				android:textAlignment="center"
 				android:textAppearance="?android:textAppearanceLarge"
@@ -107,8 +108,8 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
-				android:layout_marginBottom="@dimen/padding_half"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_half"
 				android:text="@string/help_change_settings_text"
 				android:textAppearance="?android:textAppearanceMedium" />
 		</LinearLayout>

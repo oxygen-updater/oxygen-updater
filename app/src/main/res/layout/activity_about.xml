@@ -7,7 +7,8 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
@@ -32,9 +33,9 @@
 			android:layout_alignParentTop="true"
 			android:layout_centerHorizontal="true"
 			android:layout_gravity="center_horizontal"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
 			android:text="@string/app_name"
 			android:textAppearance="?android:textAppearanceLarge" />
 
@@ -44,9 +45,9 @@
 			android:layout_height="100dp"
 			android:layout_below="@+id/aboutAppNameView"
 			android:layout_centerHorizontal="true"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
 			android:contentDescription="@string/icon"
 			android:src="@mipmap/ic_launcher" />
 
@@ -56,9 +57,9 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/aboutAppIconView"
 			android:layout_centerHorizontal="true"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
 			android:gravity="center_horizontal"
 			android:text="@string/about_version"
 			android:textStyle="bold" />
@@ -69,9 +70,9 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/aboutVersionNumberView"
 			android:layout_centerHorizontal="true"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
 			android:gravity="center_horizontal"
 			android:text="@string/about_app_description"
 			android:textAppearance="?android:textAppearanceSmall"
@@ -81,9 +82,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/aboutSlogan"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
 			android:background="@android:color/transparent">
 
 			<LinearLayout
@@ -107,8 +108,8 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_gravity="center"
-					android:layout_marginStart="@dimen/padding_default"
-					android:layout_marginEnd="@dimen/padding_default"
+					android:layout_marginStart="@dimen/spacing_default"
+					android:layout_marginEnd="@dimen/spacing_default"
 					android:text="@string/about_rate_app_button_text" />
 			</LinearLayout>
 		</androidx.core.widget.NestedScrollView>

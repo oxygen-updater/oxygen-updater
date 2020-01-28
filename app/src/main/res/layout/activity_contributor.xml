@@ -7,7 +7,8 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
@@ -29,13 +30,13 @@
 			android:layout_height="wrap_content"
 			android:gravity="center"
 			android:orientation="vertical"
-			android:padding="@dimen/padding_default">
+			android:padding="@dimen/spacing_default">
 
 			<TextView
 				android:id="@+id/contributeTitle"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/contribute_title"
 				android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 				android:textStyle="bold" />
@@ -44,14 +45,14 @@
 				android:id="@+id/contributeExplanation"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_half"
+				android:layout_marginTop="@dimen/spacing_half"
 				android:text="@string/contribute_explanation" />
 
 			<CheckBox
 				android:id="@+id/contributeCheckbox"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/contribute_agree" />
 
 			<com.google.android.material.button.MaterialButton
@@ -59,8 +60,8 @@
 				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/padding_default"
-				android:layout_marginBottom="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_default"
 				android:onClick="onSaveButtonClick"
 				android:text="@string/contribute_save"
 				app:strokeColor="?colorPrimary" />

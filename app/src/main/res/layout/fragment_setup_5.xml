@@ -3,10 +3,10 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	android:paddingStart="@dimen/padding_default"
-	android:paddingTop="@dimen/padding_default"
-	android:paddingEnd="@dimen/padding_default"
-	android:paddingBottom="@dimen/padding_default">
+	android:paddingStart="@dimen/spacing_default"
+	android:paddingTop="@dimen/spacing_default"
+	android:paddingEnd="@dimen/spacing_default"
+	android:paddingBottom="@dimen/spacing_default">
 
 	<ScrollView
 		android:layout_width="match_parent"
@@ -32,7 +32,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/setup_page_5_title"
 				android:textSize="@dimen/typography_title" />
 
@@ -41,7 +41,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
-				android:layout_marginTop="@dimen/padding_default"
+				android:layout_marginTop="@dimen/spacing_default"
 				android:text="@string/setup_page_5_text"
 				android:textColor="?android:textColorSecondary" />
 		</LinearLayout>
@@ -52,7 +52,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:layout_marginTop="@dimen/padding_default"
+		android:layout_marginTop="@dimen/spacing_default"
 		android:orientation="vertical">
 
 		<CheckBox
@@ -64,7 +64,7 @@
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/padding_2x"
+			android:layout_marginStart="@dimen/spacing_2x"
 			android:onClick="onContributeMoreInfoClick"
 			android:text="@string/contribute_more_info"
 			android:textColor="@color/blue_500"

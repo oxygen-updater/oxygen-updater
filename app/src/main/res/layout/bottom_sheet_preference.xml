@@ -7,10 +7,10 @@
 	android:orientation="vertical">
 
 	<ImageView
-		android:layout_width="@dimen/padding_2x"
-		android:layout_height="4dp"
+		android:layout_width="@dimen/spacing_2x"
+		android:layout_height="@dimen/spacing_quarter"
 		android:layout_gravity="center"
-		android:layout_marginTop="@dimen/padding_half"
+		android:layout_marginTop="@dimen/spacing_half"
 		android:contentDescription="@string/icon"
 		android:src="@drawable/rounded"
 		android:tint="@color/backgroundVariant" />
@@ -19,9 +19,9 @@
 		android:id="@+id/dialog_title"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingStart="@dimen/padding_default"
-		android:paddingEnd="@dimen/padding_default"
-		android:paddingBottom="@dimen/padding_half"
+		android:paddingStart="@dimen/spacing_default"
+		android:paddingEnd="@dimen/spacing_default"
+		android:paddingBottom="@dimen/spacing_half"
 		android:textColor="?colorPrimary"
 		android:textSize="@dimen/typography_subheading"
 		tools:text="Header" />
@@ -31,7 +31,7 @@
 		android:layout_height="0dp"
 		android:layout_weight="1"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/padding_4x"
+		android:fadingEdgeLength="@dimen/spacing_4x"
 		android:requiresFadingEdge="vertical">
 
 		<LinearLayout
@@ -51,7 +51,7 @@
 		android:id="@+id/dialog_caption"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_margin="@dimen/padding_default"
+		android:layout_margin="@dimen/spacing_default"
 		android:textSize="@dimen/typography_caption"
 		tools:text="Additional explanation" />
 </LinearLayout>

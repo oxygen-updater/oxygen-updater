@@ -3,7 +3,7 @@
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
 	android:orientation="horizontal"
-	android:padding="@dimen/padding_default">
+	android:padding="@dimen/spacing_default">
 
 	<CheckBox
 		android:id="@+id/unsupported_device_warning_checkbox"
