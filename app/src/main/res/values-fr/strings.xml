@@ -7,18 +7,16 @@
 
 	<!-- Update information strings -->
 	<string name="update">"Mise à jour"</string>
-	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Activer</string>
 	<string name="update_information_file_name">"Nom du fichier : %1$s"</string>
 	<string name="update_information_download_link">Étant donné qu\'une errreur de téléchargement s\'est produite et que le téléchargement doit être redémarré, vous pouvez utiliser ce lien pour télécharger le fichier de mise à jour. Vous devrez cependant le déplacer du dossier "Téléchargements" à la racine du stockage interne de votre appareil. Ce lien est le même lien que l\'application utilise et provient des serveurs FOTA de OnePlus:\n%1$s</string>
 	<string name="update_information_for">"Pour"</string>
 	<string name="update_information_header">"Mise à jour"</string>
 	<string name="update_information_header_short">"Mise à jour"</string>
-	<!-- TODO: translate these 4 strings below -->
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_banner_already_latest">Vous êtes déjà sur la dernière version d\'OxygenOS</string>
+	<string name="update_information_banner_congrats_latest">Félicitations ! Votre appareil est sur la dernière version d\'OxygenOS</string>
+	<string name="update_information_banner_update_available">Une nouvelle mise à jour est disponible: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier ZIP pour la méthode de mise à jour \'%1$s\'.\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
 	<string name="update_information_last_checked_on">"Dernière vérification : %1$s"</string>
 	<string name="update_information_latest_available_update">"Une nouvelle mise à jour système est disponible"</string>
 	<string name="update_information_no_update_data_available">"Aucune information de mise à jour n'est disponible."</string>
@@ -42,11 +40,10 @@
 	<string name="time_yesterday">"Hier"</string>
 
 	<!-- Downloader strings -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
-	<string name="paused">Paused - tap to resume</string>
+	<string name="download">Télécharger la mise à jour</string>
+	<string name="downloaded">Mise à jour téléchargée</string>
+	<string name="downloading">Téléchargement de la mise à jour…</string>
+	<string name="paused">Téléchargement en pause - appuyez pour le reprendre</string>
 
 	<string name="download_already_downloaded">"La mise à jour a déjà été téléchargée et est prête à être installée."</string>
 	<string name="download_complete">"Téléchargement terminé"</string>
@@ -391,8 +388,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_date_published">"Dernière mise à jour : %1$s"</string>
 	<string name="news_empty">"Cet article n'a pas de contenu."</string>
 	<string name="news_load_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton « Réessayer » pour ouvrir l'article."</string>
-	<!-- TODO: translate this string below -->
-	<string name="news_unread_count">You have %1$d unread news articles</string>
+	<string name="news_unread_count">Vous avez %1$d articles non lus</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Devenez un contributeur</string>
