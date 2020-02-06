@@ -3,6 +3,7 @@ apply plugin: 'io.fabric'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def keystorePropertiesFile = rootProject.file('keystore.properties')
 def keystoreProperties = new Properties()
@@ -190,9 +191,9 @@ dependencies {
 	// https://developer.android.com/jetpack/androidx/releases/constraintlayout
 	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 	// https://developer.android.com/jetpack/androidx/releases/core
-	implementation 'androidx.core:core-ktx:1.2.0-rc01'
+	implementation 'androidx.core:core-ktx:1.2.0'
 	// https://developer.android.com/jetpack/androidx/releases/fragment
-	implementation 'androidx.fragment:fragment-ktx:1.2.0'
+	implementation 'androidx.fragment:fragment-ktx:1.2.1'
 	// https://developer.android.com/jetpack/androidx/releases/preference
 	implementation 'androidx.preference:preference-ktx:1.1.0'
 	// https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -202,6 +203,17 @@ dependencies {
 	// https://github.com/material-components/material-components-android/releases
 	implementation 'com.google.android.material:material:1.2.0-alpha04'
 
+	// Google Firebase
+	// https://firebase.google.com/support/release-notes/android
+	implementation 'com.google.firebase:firebase-ads:18.3.0'
+	implementation 'com.google.firebase:firebase-messaging:20.1.0'
+	implementation 'com.google.android.gms:play-services-base:17.1.0'
+	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+	// Image loading + caching library
+	implementation 'com.github.bumptech.glide:glide:4.11.0'
+	kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
 	// JSON libraries
 	// Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
 	// Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
@@ -210,13 +222,6 @@ dependencies {
 	// Date and time libraries
 	implementation 'joda-time:joda-time:2.10.5'
 	implementation 'org.joda:joda-convert:2.2.1'
-
-	// Google Firebase
-	// https://firebase.google.com/support/release-notes/android
-	implementation 'com.google.firebase:firebase-ads:18.3.0'
-	implementation 'com.google.firebase:firebase-messaging:20.1.0'
-	implementation 'com.google.android.gms:play-services-base:17.1.0'
-	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
 	// Update downloader library
 	implementation 'com.mindorks.android:prdownloader:0.6.0'

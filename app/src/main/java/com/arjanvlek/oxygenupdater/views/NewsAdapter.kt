@@ -2,40 +2,27 @@ package com.arjanvlek.oxygenupdater.views
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.internal.ExceptionUtils
-import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
-import com.arjanvlek.oxygenupdater.internal.server.NetworkException
-import com.arjanvlek.oxygenupdater.internal.server.RedirectingResourceStream
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.news.NewsActivity
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.NewsAdapter.NewsItemViewHolder
+import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import org.joda.time.LocalDateTime
-import java.net.MalformedURLException
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -70,46 +57,11 @@ class NewsAdapter(
             holder.subtitle.alpha = 0.7f
         }
 
-        // Obtain the thumbnail image from the server.
-        FunctionalAsyncTask<Void?, Void, Bitmap?>({
-            holder.image.visibility = INVISIBLE
-            holder.imagePlaceholder.visibility = VISIBLE
-        }, {
-            if (newsItem.id == null) {
-                null
-            } else {
-                var image = imageCache[newsItem.id.toInt()]
-                if (image != null) {
-                    image
-                } else {
-                    image = doGetImage(newsItem.imageUrl)
-                    imageCache.put(newsItem.id.toInt(), image)
-                    image
-                }
-            }
-        }, Callback@{ image: Bitmap? ->
-            if (context == null || activity == null) {
-                return@Callback
-            }
-
-            // If a fragment is not attached, do not crash the entire application but return an empty view.
-            try {
-                context.resources
-            } catch (e: Exception) {
-                return@Callback
-            }
-
-            if (image == null) {
-                val errorImage = ResourcesCompat.getDrawable(context.resources, R.drawable.image, null)
-                holder.image.setImageDrawable(errorImage)
-            } else {
-                holder.image.setImageBitmap(image)
-            }
-
-            holder.image.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
-            holder.image.visibility = VISIBLE
-            holder.imagePlaceholder.visibility = INVISIBLE
-        }).execute()
+        Glide.with(holder.itemView.context)
+            .load(newsItem.imageUrl)
+            .placeholder(R.drawable.image)
+            .error(R.drawable.image)
+            .into(holder.image)
     }
 
     override fun getItemCount() = newsItemList.size
@@ -167,28 +119,6 @@ class NewsAdapter(
         }
     }
 
-    private fun doGetImage(imageUrl: String?, retryCount: Int = 0): Bitmap? {
-        return try {
-            BitmapFactory.decodeStream(RedirectingResourceStream.getInputStream(imageUrl))
-        } catch (e: MalformedURLException) {
-            // No retry, because malformed url will never work.
-            logError(TAG, NetworkException("Error displaying news image: Invalid image URL <$imageUrl>"))
-            null
-        } catch (e: Exception) {
-            if (retryCount < 5) {
-                doGetImage(imageUrl, retryCount + 1)
-            } else {
-                if (ExceptionUtils.isNetworkError(e)) {
-                    logWarning(TAG, NetworkException("Error obtaining news image from <$imageUrl>."))
-                } else {
-                    logError(TAG, "Error obtaining news image from <$imageUrl>", e)
-                }
-
-                null
-            }
-        }
-    }
-
     private fun doOpenNewsItem(newsItem: NewsItem) {
         val intent = Intent(context, NewsActivity::class.java)
             .putExtra(NewsActivity.INTENT_NEWS_ITEM_ID, newsItem.id)
@@ -199,7 +129,6 @@ class NewsAdapter(
     inner class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val container: RelativeLayout = itemView.findViewById(R.id.newsItemContainer)
         val image: ImageView = itemView.findViewById(R.id.newsItemImage)
-        val imagePlaceholder: ImageView = itemView.findViewById(R.id.newsItemImagePlaceholder)
         val title: TextView = itemView.findViewById(R.id.newsItemTitle)
         val subtitle: TextView = itemView.findViewById(R.id.newsItemSubTitle)
     }
@@ -219,8 +148,6 @@ class NewsAdapter(
     }
 
     companion object {
-        private const val TAG = "NewsAdapter"
-        private val imageCache = SparseArray<Bitmap?>()
         lateinit var newsItemReadListener: KotlinCallback<Long>
     }
 

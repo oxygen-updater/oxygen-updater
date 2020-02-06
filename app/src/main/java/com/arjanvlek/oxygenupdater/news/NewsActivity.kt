@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.BuildConfig
@@ -22,10 +25,12 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.views.NewsAdapter
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
+import com.bumptech.glide.Glide
 import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : SupportActionBarActivity() {
+
     private var webView: WebView? = null
 
     @SuppressLint("SetJavaScriptEnabled") // JS is required to load videos and other dynamic content.
@@ -37,8 +42,26 @@ class NewsActivity : SupportActionBarActivity() {
             return
         }
 
-        setContentView(R.layout.loading)
+        setContentView(R.layout.activity_news)
+
+        findViewById<ViewGroup>(android.R.id.content).getChildAt(0).systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+        enableLoadingState()
+
         loadNewsItem()
+    }
+
+    fun enableLoadingState() {
+        progressBar.visibility = VISIBLE
+        newsLayout.visibility = GONE
+
+        // Display the title of the article.
+        collapsingToolbarLayout.title = getString(R.string.loading)
+    }
+
+    fun disableLoadingState() {
+        progressBar.visibility = GONE
+        newsLayout.visibility = VISIBLE
     }
 
     override fun onResume() {
@@ -73,10 +96,6 @@ class NewsActivity : SupportActionBarActivity() {
 
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
         applicationData.serverConnector!!.getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) { newsItem ->
-            if (retryCount == 0) {
-                setContentView(R.layout.activity_news)
-            }
-
             if (newsItem == null || !newsItem.isFullyLoaded) {
                 if (Utils.checkNetworkConnection(applicationData) && retryCount < 5) {
                     loadNewsItem(retryCount + 1)
@@ -86,10 +105,8 @@ class NewsActivity : SupportActionBarActivity() {
                         loadDataWithBaseURL("", getString(R.string.news_load_error), "text/html", "UTF-8", "")
                     }
 
-                    // Hide the title, author name and last updated views.
-                    newsTitle.visibility = GONE
+                    // Hide the last updated view.
                     newsDatePublished.visibility = GONE
-                    newsAuthor.visibility = GONE
 
                     newsRetryButton.apply {
                         visibility = VISIBLE
@@ -105,10 +122,13 @@ class NewsActivity : SupportActionBarActivity() {
             val locale = AppLocale.get()
 
             // Display the title of the article.
-            newsTitle.apply {
-                visibility = VISIBLE
-                text = newsItem.getTitle(locale)
-            }
+            collapsingToolbarLayout.title = newsItem.getTitle(locale)
+            // Display the name of the author of the article
+            collapsingToolbarLayout.subtitle = newsItem.authorName
+
+            Glide.with(this)
+                .load(newsItem.imageUrl)
+                .into(collapsingToolbarImage)
 
             // Display the contents of the article.
             newsContent.apply {
@@ -131,15 +151,13 @@ class NewsActivity : SupportActionBarActivity() {
                     settings.userAgentString = ApplicationData.APP_USER_AGENT
                     loadUrl(newsContentUrl)
                 }
-            }
 
-            // Display the name of the author of the article
-            newsAuthor.apply {
-                if (!newsItem.authorName.isNullOrEmpty()) {
-                    visibility = VISIBLE
-                    text = getString(R.string.news_author, newsItem.authorName)
-                } else {
-                    visibility = GONE
+                // disable loading state once page is completely loaded
+                webViewClient = object : WebViewClient() {
+                    override fun onPageCommitVisible(view: WebView?, url: String?) {
+                        super.onPageCommitVisible(view, url)
+                        disableLoadingState()
+                    }
                 }
             }
 
@@ -153,7 +171,6 @@ class NewsActivity : SupportActionBarActivity() {
                     text = getString(R.string.news_date_published, Utils.formatDateTime(application, newsItem.dateLastEdited))
                 } else {
                     visibility = GONE
-                    newsTitle.visibility = GONE
                 }
             }
 
@@ -178,8 +195,12 @@ class NewsActivity : SupportActionBarActivity() {
                             adUnitId = getString(R.string.advertising_interstitial_unit_id)
                             loadAd(buildAdRequest())
 
-                            // The ad will be shown after 10 seconds.
-                            Handler().postDelayed({ show() }, 10000)
+                            // The ad will be shown after 5 seconds.
+                            Handler().postDelayed({
+                                if (!isFinishing) {
+                                    show()
+                                }
+                            }, 5000)
                         }
                     }
                 }

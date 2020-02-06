@@ -6,10 +6,10 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:background="?selectableItemBackground"
-	android:paddingStart="@dimen/padding_half"
-	android:paddingTop="@dimen/padding_default"
-	android:paddingEnd="@dimen/padding_half"
-	android:paddingBottom="@dimen/padding_default"
+	android:paddingStart="@dimen/spacing_half"
+	android:paddingTop="@dimen/spacing_default"
+	android:paddingEnd="@dimen/spacing_half"
+	android:paddingBottom="@dimen/spacing_default"
 	android:stateListAnimator="@animator/clicked">
 
 	<ImageView
@@ -17,25 +17,15 @@
 		android:layout_width="64dp"
 		android:layout_height="64dp"
 		android:contentDescription="@string/icon"
-		android:visibility="invisible"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
-
-	<ImageView
-		android:id="@+id/newsItemImagePlaceholder"
-		android:layout_width="60dp"
-		android:layout_height="60dp"
-		android:contentDescription="@string/icon"
-		android:src="@drawable/image"
-		android:tint="@color/divider"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+		app:layout_constraintTop_toTopOf="parent"
+		tools:src="@drawable/image" />
 
 	<TextView
 		android:id="@+id/newsItemTitle"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/padding_half"
+		android:layout_marginStart="@dimen/spacing_half"
 		android:layout_toEndOf="@id/newsItemImage"
 		android:text="@string/loading"
 		android:textAppearance="?android:textAppearanceListItem"
@@ -47,7 +37,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/newsItemTitle"
-		android:layout_marginStart="@dimen/padding_half"
+		android:layout_marginStart="@dimen/spacing_half"
 		android:layout_marginTop="6dp"
 		android:layout_toEndOf="@id/newsItemImage"
 		android:text="@string/loading"

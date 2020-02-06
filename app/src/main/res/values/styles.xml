@@ -35,6 +35,12 @@
 		<item name="android:windowContentTransitions">true</item>
 	</style>
 
+	<!-- Used in activities that support edge-to-edge UI -->
+	<style name="Theme.Oxygen.FullScreen">
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+		<item name="android:statusBarColor">@android:color/transparent</item>
+	</style>
+
 	<style name="AppBarLayoutStyle" parent="Widget.MaterialComponents.AppBarLayout.Surface">
 		<item name="android:background">@color/appBarBackground</item>
 	</style>
@@ -59,11 +65,38 @@
 	</style>
 
 	<style name="BottomSheetShapeAppearance" parent="ShapeAppearance.MaterialComponents.LargeComponent">
-		<item name="cornerSize">@dimen/padding_default</item>
+		<item name="cornerSize">@dimen/spacing_default</item>
 	</style>
 
 	<style name="Theme.Oxygen.Switch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="colorAccent">@color/colorPrimary</item>
+	</style>
+
+	<style name="Widget.Design.SuperpoweredCollapsingToolbar" parent="Widget.Design.CollapsingToolbar">
+		<!-- Same as expandedTitleMargin, defined in Widget.Design.CollapsingToolbar -->
+		<item name="expandedSubtitleMargin">32dp</item>
+	</style>
+
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.ExpandedTitle" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+		<item name="android:textSize">@dimen/typography_headline</item>
+	</style>
+
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.ExpandedTitle.Inverse">
+		<item name="android:textColor">?android:textColorPrimaryInverse</item>
+	</style>
+
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.ExpandedSubtitle" parent="android:TextAppearance.Material.Widget.ActionBar.Subtitle" />
+
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.ExpandedSubtitle.Inverse" parent="android:TextAppearance.Material.Widget.ActionBar.Subtitle.Inverse" />
+
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedTitle" parent="android:TextAppearance.Material.Widget.ActionBar.Title" />
+
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedSubtitle" parent="android:TextAppearance.Material.Widget.ActionBar.Subtitle">
+		<item name="android:textSize">@dimen/typography_body</item>
+	</style>
+
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedSubtitle.Inverse">
+		<item name="android:textColor">?android:textColorSecondaryInverse</item>
 	</style>
 
 </resources>
