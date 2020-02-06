@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.installation.manual
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.SparseArray
@@ -17,19 +16,20 @@ import androidx.fragment.app.Fragment
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.installation.InstallActivity
-import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
-import com.arjanvlek.oxygenupdater.internal.server.NetworkException
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.fragment_install_guide.*
-import java.net.MalformedURLException
-import java.net.URL
 
 class InstallGuideFragment : Fragment() {
 
@@ -60,18 +60,18 @@ class InstallGuideFragment : Fragment() {
                 if (application is ApplicationData) {
                     application.serverConnector!!.getInstallGuidePage(deviceId, updateMethodId, pageNumber) { page ->
                         cache.put(pageNumber, page)
-                        displayInstallGuide(installGuideView, page, pageNumber, isFirstPage)
+                        displayInstallGuide(page, pageNumber, isFirstPage)
                     }
                 }
             }
         } else {
-            displayInstallGuide(installGuideView, cache[pageNumber], pageNumber, isFirstPage)
+            displayInstallGuide(cache[pageNumber], pageNumber, isFirstPage)
         }
 
         return installGuideView
     }
 
-    private fun displayInstallGuide(installGuideView: View, installGuidePage: InstallGuidePage?, pageNumber: Int, isFirstPage: Boolean) {
+    private fun displayInstallGuide(installGuidePage: InstallGuidePage?, pageNumber: Int, isFirstPage: Boolean) {
         if (!isAdded) {
             // Happens when a page is scrolled too far outside the screen (2 or more rows) and content then gets resolved from the server.
             logDebug(TAG, "isAdded() returned false (displayInstallGuide)")
@@ -91,9 +91,9 @@ class InstallGuideFragment : Fragment() {
         }
 
         if (installGuidePage?.deviceId == null || installGuidePage.updateMethodId == null) {
-            displayDefaultInstallGuide(installGuideView, pageNumber)
+            displayDefaultInstallGuide(pageNumber)
         } else {
-            displayCustomInstallGuide(installGuideView, pageNumber, installGuidePage)
+            displayCustomInstallGuide(pageNumber, installGuidePage)
         }
 
         // Hide the loading screen of the install guide page.
@@ -110,7 +110,7 @@ class InstallGuideFragment : Fragment() {
         }
     }
 
-    private fun displayDefaultInstallGuide(installGuideView: View, pageNumber: Int) {
+    private fun displayDefaultInstallGuide(pageNumber: Int) {
         if (activity == null) {
             // Should never happen.
             logError(TAG, OxygenUpdaterException("getActivity() is null (displayDefaultInstallGuide)"))
@@ -123,61 +123,39 @@ class InstallGuideFragment : Fragment() {
         installGuideTitle.setText(titleResourceId)
         installGuideText.setText(contentsResourceId)
 
-        loadDefaultImage(installGuideView.findViewById(R.id.installGuideImage), pageNumber)
+        loadDefaultImage(installGuideImage, pageNumber)
     }
 
-    private fun displayCustomInstallGuide(installGuideView: View, pageNumber: Int, installGuidePage: InstallGuidePage) {
+    private fun displayCustomInstallGuide(pageNumber: Int, installGuidePage: InstallGuidePage) {
         val appLocale = AppLocale.get()
 
         installGuideTitle.text = if (appLocale == NL) installGuidePage.dutchTitle else installGuidePage.englishTitle
         installGuideText.text = if (appLocale == NL) installGuidePage.dutchText else installGuidePage.englishText
 
-        val imageView = installGuideView.findViewById<ImageView>(R.id.installGuideImage)
-        if (installGuidePage.useCustomImage == true) {
+        if (installGuidePage.useCustomImage) {
             // Fetch the custom image from the server.
-            FunctionalAsyncTask<Void?, Void, Bitmap?>({},  {
-                var image: Bitmap?
-
-                try {
-                    val cache = if (activity != null) {
-                        (activity as InstallActivity?)!!.installGuideImageCache
-                    } else {
-                        SparseArray()
+            Glide.with(this)
+                .load(completeImageUrl(installGuidePage.imageUrl, installGuidePage.fileExtension))
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        installGuideImage.visibility = VISIBLE
+                        return false
                     }
 
-                    // If the cache contains the image, return the image from the cache.
-                    if (cache[installGuidePage.pageNumber] != null) {
-                        image = cache[installGuidePage.pageNumber]
-                    } else {
-                        // Otherwise, fetch the image from the server.
-                        if (isAdded) {
-                            image = doGetCustomImage(completeImageUrl(installGuidePage.imageUrl, installGuidePage.fileExtension))
-                            cache.put(installGuidePage.pageNumber, image)
-                        } else {
-                            image = null
-                        }
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        installGuideImage.visibility = VISIBLE
+                        return false
                     }
-                } catch (e: MalformedURLException) {
-                    image = null
-                    logError(TAG, NetworkException(String.format("Error loading custom image: Invalid image URL <%s>", installGuidePage.imageUrl)))
-                }
-
-                image
-            }, { image ->
-                // If there is no image, load a "no entry" sign to show that the image failed to load.
-                if (image == null && isAdded) {
-                    loadErrorImage(imageView)
-                } else {
-                    loadCustomImage(imageView, image)
-                }
-            }).execute()
+                })
+                // Load a "no entry" sign to show that the image failed to load.
+                .error(R.drawable.error_image)
+                .into(installGuideImage)
         } else {
-            loadDefaultImage(imageView, pageNumber)
+            loadDefaultImage(installGuideImage, pageNumber)
         }
     }
 
-    @Throws(MalformedURLException::class)
-    private fun completeImageUrl(imageUrl: String?, fileExtension: String?): URL {
+    private fun completeImageUrl(imageUrl: String?, fileExtension: String?): String {
         val imageVariant: String = when (resources.displayMetrics.densityDpi) {
             DisplayMetrics.DENSITY_LOW -> IMAGE_VARIANT_LDPI
             DisplayMetrics.DENSITY_MEDIUM -> IMAGE_VARIANT_MDPI
@@ -189,25 +167,7 @@ class InstallGuideFragment : Fragment() {
             else -> IMAGE_VARIANT_DEFAULT
         }
 
-        return URL("${imageUrl}_$imageVariant.$fileExtension")
-    }
-
-    private fun loadCustomImage(view: ImageView, image: Bitmap?) {
-        view.setImageBitmap(image)
-        view.visibility = VISIBLE
-    }
-
-    private fun doGetCustomImage(imageUrl: URL, retryCount: Int = 0): Bitmap? {
-        return try {
-            BitmapFactory.decodeStream(imageUrl.openStream())
-        } catch (e: Exception) {
-            if (retryCount < 5) {
-                doGetCustomImage(imageUrl, retryCount + 1)
-            } else {
-                logError(TAG, "Error loading custom install guide image", e)
-                null
-            }
-        }
+        return "${imageUrl}_$imageVariant.$fileExtension"
     }
 
     private fun loadDefaultImage(view: ImageView, pageNumber: Int) {
@@ -223,11 +183,6 @@ class InstallGuideFragment : Fragment() {
             setImageDrawable(image)
             visibility = VISIBLE
         }
-    }
-
-    private fun loadErrorImage(view: ImageView) {
-        view.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.error_image, null))
-        view.visibility = VISIBLE
     }
 
     companion object {

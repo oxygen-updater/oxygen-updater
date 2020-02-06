@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.installation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
@@ -62,8 +61,6 @@ class InstallActivity : SupportActionBarActivity() {
     private lateinit var serverConnector: ServerConnector
 
     var installGuideCache = SparseArray<InstallGuidePage>()
-        private set
-    var installGuideImageCache = SparseArray<Bitmap>()
         private set
 
     private var showDownloadPage = true
@@ -214,7 +211,6 @@ class InstallActivity : SupportActionBarActivity() {
             }
         }
     }
-
 
     private fun openInstallGuide() {
         title = getString(
