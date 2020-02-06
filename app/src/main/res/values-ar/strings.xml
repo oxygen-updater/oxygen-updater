@@ -240,6 +240,12 @@
 	<string name="install_guide_zip_file_missing">"إذا كنت ترغب في الحفاظ علي جهازك ممتلكاً للروت، سيكون عليك تحديد حزمة الروت أعلاه."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these 4 strings below -->
+	<string name="device_information_supported_oxygen_os">Your device is supported</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
+	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
+	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+
 	<string name="device_information_hardware_header">العتاد</string>
 	<string name="device_information_software_header">النظام</string>
 	<string name="device_information_amount_of_memory">مقدار الذاكرة العشوائية:</string>

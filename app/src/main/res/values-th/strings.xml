@@ -276,6 +276,12 @@
 	<string name="install_guide_zip_file_missing">"หากคุณต้องการให้อุปกรณ์ของคุณรูทคุณจะต้องระบุแพ็คเกจด้านบน"</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these 4 strings below -->
+	<string name="device_information_supported_oxygen_os">Your device is supported</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
+	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
+	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 

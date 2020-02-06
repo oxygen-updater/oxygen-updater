@@ -17,6 +17,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -57,7 +58,6 @@ import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.message_dialog_checkbox.*
 import org.joda.time.LocalDateTime
 import java.util.*
 import kotlin.math.abs
@@ -66,13 +66,18 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var viewPager: ViewPager
     private lateinit var settingsManager: SettingsManager
-    private var serverMessageBars = ArrayList<ServerMessageBar>()
     lateinit var activityLauncher: ActivityLauncher
         private set
 
+    private var serverMessageBars = ArrayList<ServerMessageBar>()
     private var newsAd: InterstitialAd? = null
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
     private var adView: AdView? = null
+
+    var deviceOsSpec: DeviceOsSpec? = null
+        private set
+
+    private lateinit var deviceOsSpecCheckedListener: DeviceOsSpecCheckedListener
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,16 +90,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             settingsManager.deletePreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
         }
 
+        val application = application as ApplicationData
+
         // Supported device check
-        if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-            val application = application as ApplicationData
+        application.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { result ->
+            deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, result)
+            deviceOsSpecCheckedListener.onDeviceOsSpecChecked(deviceOsSpec!!)
 
-            application.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { result ->
-                val deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, result)
+            val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
 
-                if (!deviceOsSpec.isDeviceOsSpecSupported) {
-                    displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
-                }
+            if (showDeviceWarningDialog && !deviceOsSpec!!.isDeviceOsSpecSupported) {
+                displayUnsupportedDeviceOsSpecMessage(deviceOsSpec!!)
             }
         }
 
@@ -400,7 +406,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         adView!!.loadAd(buildAdRequest())
     }
 
-    private fun displayUnsupportedDeviceOsSpecMessage(deviceOsSpec: DeviceOsSpec) {
+    fun displayUnsupportedDeviceOsSpecMessage(deviceOsSpec: DeviceOsSpec) {
         // Do not show dialog if app was already exited upon receiving of devices from the server.
         if (isFinishing) {
             return
@@ -420,7 +426,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             .setTitle(getString(R.string.unsupported_device_warning_title))
             .setMessage(getString(resourceId))
             .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
-                settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, unsupported_device_warning_checkbox.isChecked)
+                val checkbox = checkBoxView.findViewById<CheckBox>(R.id.unsupported_device_warning_checkbox)
+                settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkbox.isChecked)
                 dialog.dismiss()
             }
             .show()
@@ -534,7 +541,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             return when (position) {
                 PAGE_NEWS -> NewsFragment()
                 PAGE_UPDATE_INFORMATION -> UpdateInformationFragment()
-                PAGE_DEVICE_INFORMATION -> DeviceInformationFragment()
+                PAGE_DEVICE_INFORMATION -> DeviceInformationFragment().also { this@MainActivity.deviceOsSpecCheckedListener = it }
                 else -> TODO()
             }
         }
@@ -552,6 +559,10 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 else -> null
             }
         }
+    }
+
+    interface DeviceOsSpecCheckedListener {
+        fun onDeviceOsSpecChecked(deviceOsSpec: DeviceOsSpec)
     }
 
     companion object {

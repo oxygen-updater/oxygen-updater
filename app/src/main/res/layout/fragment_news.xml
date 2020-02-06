@@ -35,7 +35,7 @@
 				android:layout_marginStart="@dimen/spacing_half"
 				android:layout_marginEnd="@dimen/spacing_default"
 				android:textColor="@color/white"
-				tools:text="@string/update_information_banner_already_latest" />
+				tools:text="@string/news_unread_count" />
 		</LinearLayout>
 
 		<androidx.recyclerview.widget.RecyclerView

@@ -10,6 +10,34 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
+		<LinearLayout
+			android:id="@+id/bannerLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/appBarBackground"
+			android:foreground="?android:selectableItemBackground"
+			android:gravity="center"
+			android:padding="@dimen/spacing_default"
+			android:visibility="gone"
+			tools:visibility="visible">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:contentDescription="@string/icon"
+				android:src="@drawable/info" />
+
+			<TextView
+				android:id="@+id/bannerTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginStart="@dimen/spacing_half"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:textColor="@color/white"
+				tools:text="@string/device_information_supported_oxygen_os" />
+		</LinearLayout>
+
 		<TextView
 			android:id="@+id/device_information_header"
 			android:layout_width="wrap_content"

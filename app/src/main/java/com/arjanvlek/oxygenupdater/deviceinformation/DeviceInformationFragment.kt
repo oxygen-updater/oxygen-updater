@@ -15,11 +15,13 @@ import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.internal.logger.Logger
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
+import com.arjanvlek.oxygenupdater.views.MainActivity
 import kotlinx.android.synthetic.main.fragment_device_information.*
 
-class DeviceInformationFragment : AbstractFragment() {
+class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecCheckedListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -34,6 +36,29 @@ class DeviceInformationFragment : AbstractFragment() {
 
         displayDeviceInformation()
         applicationData!!.serverConnector!!.getDevices(DeviceRequestFilter.ENABLED) { devices -> displayFormattedDeviceName(devices) }
+    }
+
+    override fun onDeviceOsSpecChecked(deviceOsSpec: DeviceOsSpec) {
+        if (isAdded) {
+            updateBannerText(deviceOsSpec)
+        }
+    }
+
+    private fun updateBannerText(deviceOsSpec: DeviceOsSpec) {
+        bannerTextView.text = getString(
+            when (deviceOsSpec) {
+                DeviceOsSpec.SUPPORTED_OXYGEN_OS -> R.string.device_information_supported_oxygen_os
+                DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS -> R.string.device_information_carrier_exclusive_oxygen_os
+                DeviceOsSpec.UNSUPPORTED_OXYGEN_OS -> R.string.device_information_unsupported_oxygen_os
+                DeviceOsSpec.UNSUPPORTED_OS -> R.string.device_information_unsupported_os
+            }
+        )
+
+        bannerLayout.visibility = View.VISIBLE
+
+        if (!deviceOsSpec.isDeviceOsSpecSupported) {
+            bannerLayout.setOnClickListener { (activity as MainActivity).displayUnsupportedDeviceOsSpecMessage(deviceOsSpec) }
+        }
     }
 
     private fun displayFormattedDeviceName(devices: List<Device>?) {
