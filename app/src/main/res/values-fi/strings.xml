@@ -15,11 +15,12 @@
 	<string name="update_information_for">"laitteelle"</string>
 	<string name="update_information_header">"Päivitys"</string>
 	<string name="update_information_header_short">"Päivitys"</string>
-	<!-- TODO: translate these 4 strings below -->
+	<!-- TODO: translate these 5 strings below -->
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
 	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
 	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
 	<string name="update_information_latest_available_update">"Uusi päivitys saatavilla"</string>
 	<string name="update_information_no_update_data_available">"Päivitystietoja ei saatavilla"</string>
@@ -310,7 +311,7 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="install_guide_zip_file_missing">"Jos haluat pitää laitteesi rootattuna sinun tulee valita asennettava root paketti yläpuolelta."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
+	<!-- TODO: translate these 4 strings below -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
 	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>

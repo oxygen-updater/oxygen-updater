@@ -241,10 +241,34 @@ class UpdateInformationFragment : AbstractFragment() {
             }
         }
 
+        val formattedOxygenOsVersion = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
+            if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {
+                UpdateDataVersionFormatter.getFormattedVersionNumber(updateData)
+            } else {
+                updateData.versionNumber
+            }
+        } else {
+            getString(
+                R.string.update_information_unknown_update_name,
+                settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
+            )
+        }
+
+        // display a notice in the dialog if the user's currently installed version doesn't match the version this changelog is meant for
+        val differentVersionChangelogNoticeText = if (updateData.otaVersionNumber != (activity?.application as ApplicationData).systemVersionProperties?.oxygenOSOTAVersion) {
+            getString(
+                R.string.update_information_different_version_changelog_notice,
+                settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+            )
+        } else {
+            null
+        }
+
         val updateChangelogDialog = UpdateChangelogDialog(
             context!!,
-            (activity?.application as ApplicationData).systemVersionProperties?.oxygenOSVersion,
-            getUpdateChangelog(updateData.description)
+            formattedOxygenOsVersion,
+            getUpdateChangelog(updateData.description),
+            differentVersionChangelogNoticeText
         )
 
         // Set "No Update Information Is Available" button if needed.
@@ -292,7 +316,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             val updateMethod = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
 
-            // Format top title based on system version installed.
+            // Format footer based on system version installed.
             footerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)
 
             footerTextView.visibility = VISIBLE

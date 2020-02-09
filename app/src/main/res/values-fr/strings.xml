@@ -17,6 +17,8 @@
 	<string name="update_information_banner_congrats_latest">Félicitations ! Votre appareil est sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_update_available">Une nouvelle mise à jour est disponible: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier ZIP pour la méthode de mise à jour \'%1$s\'.\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
+	<!-- TODO: translate this string below -->
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">"Dernière vérification : %1$s"</string>
 	<string name="update_information_latest_available_update">"Une nouvelle mise à jour système est disponible"</string>
 	<string name="update_information_no_update_data_available">"Aucune information de mise à jour n'est disponible."</string>
