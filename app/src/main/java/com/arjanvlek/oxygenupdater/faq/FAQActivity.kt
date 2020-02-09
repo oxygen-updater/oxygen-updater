@@ -1,11 +1,15 @@
 package com.arjanvlek.oxygenupdater.faq
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
@@ -24,9 +28,16 @@ class FAQActivity : SupportActionBarActivity() {
     override fun onStart() {
         super.onStart()
 
-        faq_webpage_layout.apply {
+        swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.colorPrimary)
             setOnRefreshListener { loadFaqPage() }
+            // needs to be done as a workaround to WebView not being able to scroll up if it's not a direct child of a SwipeRefreshLayout
+            setOnChildScrollUpCallback { _, _ ->
+                // allow scrolling up (and thus, disable the swipe-to-refresh gesture) only if:
+                // 1. currently displayed view is a WebView,
+                // 2. and this WebView is not at the topmost Y position
+                webView.isVisible && webView.scrollY != 0
+            }
         }
 
         loadFaqPage()
@@ -58,11 +69,12 @@ class FAQActivity : SupportActionBarActivity() {
     @SuppressLint("SetJavaScriptEnabled") // JavaScript is required to toggle the FAQ Item boxes.
     private fun loadFaqPage() {
         if (Utils.checkNetworkConnection(applicationContext)) {
-            faq_webpage_layout.isRefreshing = true
-
             switchViews(true)
 
-            faqWebView.apply {
+            webView.apply {
+                // must be done to avoid the white background in dark themes
+                setBackgroundColor(Color.TRANSPARENT)
+
                 // since we can't edit CSS in WebViews,
                 // append 'Light' or 'Dark' to faqServerUrl to get the corresponding themed version
                 // backend handles CSS according to material spec
@@ -71,10 +83,17 @@ class FAQActivity : SupportActionBarActivity() {
                 settings.javaScriptEnabled = true
                 settings.userAgentString = ApplicationData.APP_USER_AGENT
                 clearCache(true)
-                loadUrl(faqServerUrl)
-            }
+                loadUrl(faqServerUrl).also { swipeRefreshLayout.isRefreshing = true }
 
-            faq_webpage_layout.isRefreshing = false
+                // disable loading state once page is completely loaded
+                webViewClient = object : WebViewClient() {
+                    override fun onPageCommitVisible(view: WebView?, url: String?) {
+                        super.onPageCommitVisible(view, url)
+                        // hide progress bar since the page has been loaded
+                        swipeRefreshLayout.isRefreshing = false
+                    }
+                }
+            }
         } else {
             switchViews(false)
         }
@@ -91,13 +110,13 @@ class FAQActivity : SupportActionBarActivity() {
     }
 
     /**
-     * Switches between the Web Browser view and the No Network connection screen based on the
+     * Switches between the WebView and the No Network connection screen based on the
      * hasNetwork parameter.
      *
      * @param hasNetwork Whether the device has a network connection or not.
      */
     private fun switchViews(hasNetwork: Boolean) {
-        faq_no_network_view.visibility = if (hasNetwork) GONE else VISIBLE
-        faq_webpage_layout.visibility = if (hasNetwork) VISIBLE else GONE
+        noNetworkView.visibility = if (hasNetwork) GONE else VISIBLE
+        webView.visibility = if (hasNetwork) VISIBLE else GONE
     }
 }

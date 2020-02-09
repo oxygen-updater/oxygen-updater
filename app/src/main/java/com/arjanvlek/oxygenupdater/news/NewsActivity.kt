@@ -1,6 +1,7 @@
 package com.arjanvlek.oxygenupdater.news
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
@@ -30,8 +31,6 @@ import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : SupportActionBarActivity() {
-
-    private var webView: WebView? = null
 
     @SuppressLint("SetJavaScriptEnabled") // JS is required to load videos and other dynamic content.
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,23 +64,21 @@ class NewsActivity : SupportActionBarActivity() {
     }
 
     override fun onResume() {
-        webView?.onResume()
+        webView.onResume()
         super.onResume()
     }
 
     override fun onPause() {
-        webView?.onPause()
+        webView.onPause()
         super.onPause()
     }
 
     override fun onDestroy() {
-        webView?.apply {
+        webView.apply {
             loadUrl("")
             stopLoading()
             destroy()
         }
-
-        webView = null
         super.onDestroy()
     }
 
@@ -100,8 +97,8 @@ class NewsActivity : SupportActionBarActivity() {
                 if (Utils.checkNetworkConnection(applicationData) && retryCount < 5) {
                     loadNewsItem(retryCount + 1)
                 } else {
-                    newsContent?.apply {
-                        webView = this
+                    webView.apply {
+                        setBackgroundColor(Color.TRANSPARENT)
                         loadDataWithBaseURL("", getString(R.string.news_load_error), "text/html", "UTF-8", "")
                     }
 
@@ -131,8 +128,9 @@ class NewsActivity : SupportActionBarActivity() {
                 .into(collapsingToolbarImage)
 
             // Display the contents of the article.
-            newsContent.apply {
-                webView = this
+            webView.apply {
+                // must be done to avoid the white background in dark themes
+                setBackgroundColor(Color.TRANSPARENT)
 
                 visibility = VISIBLE
                 settings.javaScriptEnabled = true

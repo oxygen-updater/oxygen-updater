@@ -105,7 +105,7 @@
 
 				<!-- news-content HTML already has an 8px margin -->
 				<WebView
-					android:id="@+id/newsContent"
+					android:id="@+id/webView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_margin="@dimen/spacing_half" />
