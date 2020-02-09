@@ -77,8 +77,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     var deviceOsSpec: DeviceOsSpec? = null
         private set
 
-    private lateinit var deviceOsSpecCheckedListener: DeviceOsSpecCheckedListener
-
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -95,7 +93,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         // Supported device check
         application.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { result ->
             deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, result)
-            deviceOsSpecCheckedListener.onDeviceOsSpecChecked(deviceOsSpec!!)
 
             val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
 
@@ -541,7 +538,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             return when (position) {
                 PAGE_NEWS -> NewsFragment()
                 PAGE_UPDATE_INFORMATION -> UpdateInformationFragment()
-                PAGE_DEVICE_INFORMATION -> DeviceInformationFragment().also { this@MainActivity.deviceOsSpecCheckedListener = it }
+                PAGE_DEVICE_INFORMATION -> DeviceInformationFragment()
                 else -> TODO()
             }
         }

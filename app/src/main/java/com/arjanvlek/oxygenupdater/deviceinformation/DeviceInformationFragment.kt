@@ -35,7 +35,11 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
         }
 
         displayDeviceInformation()
-        applicationData!!.serverConnector!!.getDevices(DeviceRequestFilter.ENABLED) { devices -> displayFormattedDeviceName(devices) }
+        applicationData!!.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { devices ->
+            updateBannerText(Utils.checkDeviceOsSpec(applicationData!!.systemVersionProperties!!, devices))
+
+            displayFormattedDeviceName(devices)
+        }
     }
 
     override fun onDeviceOsSpecChecked(deviceOsSpec: DeviceOsSpec) {
@@ -57,7 +61,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
         bannerLayout.visibility = View.VISIBLE
 
         if (!deviceOsSpec.isDeviceOsSpecSupported) {
-            bannerLayout.setOnClickListener { (activity as MainActivity).displayUnsupportedDeviceOsSpecMessage(deviceOsSpec) }
+            bannerLayout.setOnClickListener { (activity as MainActivity?)?.displayUnsupportedDeviceOsSpecMessage(deviceOsSpec) }
         }
     }
 
