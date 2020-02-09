@@ -95,6 +95,7 @@
 			android:layout_below="@+id/installGuideText"
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
+			android:layout_marginTop="@dimen/spacing_default"
 			android:text="@string/install_guide_close_button"
 			android:visibility="gone"
 			app:strokeColor="?colorPrimary" />

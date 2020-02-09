@@ -11,17 +11,17 @@ data class InstallGuidePage(
     var pageNumber: Int,
     var fileExtension: String?,
     var imageUrl: String?,
-    var useCustomImage: Boolean,
+    var useCustomImage: Boolean = false,
 
     @JsonProperty("title_en")
-    var englishTitle: String,
+    var englishTitle: String?,
 
     @JsonProperty("title_nl")
-    var dutchTitle: String,
+    var dutchTitle: String?,
 
     @JsonProperty("text_en")
-    var englishText: String,
+    var englishText: String?,
 
     @JsonProperty("text_nl")
-    var dutchText: String
+    var dutchText: String?
 )

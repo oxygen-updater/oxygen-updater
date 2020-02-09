@@ -242,7 +242,6 @@ class InstallActivity : SupportActionBarActivity() {
         }
     }
 
-
     private fun displayZipFilePath() {
         val zipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 

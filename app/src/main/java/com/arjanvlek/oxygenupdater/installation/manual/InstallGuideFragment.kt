@@ -71,7 +71,7 @@ class InstallGuideFragment : Fragment() {
         return installGuideView
     }
 
-    private fun displayInstallGuide(installGuidePage: InstallGuidePage?, pageNumber: Int, isFirstPage: Boolean) {
+    private fun displayInstallGuide(installGuidePage: InstallGuidePage, pageNumber: Int, isFirstPage: Boolean) {
         if (!isAdded) {
             // Happens when a page is scrolled too far outside the screen (2 or more rows) and content then gets resolved from the server.
             logDebug(TAG, "isAdded() returned false (displayInstallGuide)")
@@ -90,7 +90,7 @@ class InstallGuideFragment : Fragment() {
             installGuideTip.visibility = VISIBLE
         }
 
-        if (installGuidePage?.deviceId == null || installGuidePage.updateMethodId == null) {
+        if (installGuidePage.deviceId == null || installGuidePage.updateMethodId == null) {
             displayDefaultInstallGuide(pageNumber)
         } else {
             displayCustomInstallGuide(pageNumber, installGuidePage)
