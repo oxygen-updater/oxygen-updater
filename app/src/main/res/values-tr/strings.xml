@@ -353,7 +353,7 @@ Hopefully you\'re a little wiser now from reading it all.\n\nTap the banner agai
 	<!-- Contribute strings -->
 	<string name="contribute">Katkıda bulunan biri olun</string>
 	<string name="contribute_title">Oxygen Updater\'ı geliştirmemizde yardımcı olun.</string>
-	<string name="contribute_explanation">Oxygen Updater\'ın yardımınıza ihtiyacı var! En sonki yenilikleri sunmak için, güncelleme dosyalarının ismine ihtiyacımız var.\n\nNasıl yardım edebilirim?\n\nOxygen Updater otomatik olarak yeni güncelleme isimlerini yetkililere iletir. Sadece bir miktar veri(internet) ve pil kaybı yaşatır. Tek yapmanız gereken beklemek (yaklaşık olarak 15 dakika) bu sırada dosyalar yüklenir, Oxygen Updater tarafından doğrulanır. Sadece .ota-directory bölümü telefonunuzda 15 dakikada bir taranır.</string>
+	<string name="contribute_explanation">Oxygen Updater\'ın yardımınıza ihtiyacı var! En sonki yenilikleri sunmak için, güncelleme dosyalarının ismine ihtiyacımız var.\n\nNasıl yardım edebilirim?\n\nOxygen Updater otomatik olarak yeni güncelleme isimlerini yetkililere iletir. Sadece bir miktar veri(internet) ve pil kaybı yaşatır. Tek yapmanız gereken beklemek (yaklaşık olarak 15 dakika) bu sırada dosyalar yüklenir, Oxygen Updater tarafından doğrulanır. Sadece ".Ota" directory bölümü telefonunuzda 15 dakikada bir taranır.</string>
 	<string name="contribute_image_description">Dosyaları uygulama sunucusuna yüklemek</string>
 	<string name="contribute_agree">Dosyaları yükleyerek yöneticilere yardım etmek isterim.</string>
 	<string name="contribute_agree_from_setup">Uygulamanın dosyaları doğrulayıp yöneticilere gönermesine yardım etmek isterim.</string>

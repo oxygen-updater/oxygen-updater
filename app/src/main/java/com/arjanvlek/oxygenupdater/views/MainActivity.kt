@@ -267,20 +267,24 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
      */
     override fun onMenuItemClick(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> {
-                activityLauncher.Settings()
-                true
-            }
-            R.id.action_about -> {
-                activityLauncher.About()
+            R.id.action_faq -> {
+                activityLauncher.FAQ()
                 true
             }
             R.id.action_help -> {
                 activityLauncher.Help()
                 true
             }
-            R.id.action_faq -> {
-                activityLauncher.FAQ()
+            R.id.action_settings -> {
+                activityLauncher.Settings()
+                true
+            }
+            R.id.action_contribute -> {
+                activityLauncher.Contribute()
+                true
+            }
+            R.id.action_about -> {
+                activityLauncher.About()
                 true
             }
             else -> super.onOptionsItemSelected(item)

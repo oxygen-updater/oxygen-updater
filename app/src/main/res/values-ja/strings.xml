@@ -354,7 +354,7 @@ Hopefully you\'re a little wiser now from reading it all.\n\nTap the banner agai
 	<!-- Contribute strings -->
 	<string name="contribute">貢献者になる</string>
 	<string name="contribute_title">Oxygen Updaterの改善に協力する</string>
-	<string name="contribute_explanation">Oxygen Updaterはあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。\n\nどうすればよいですか？\n\nOxygen Updaterは、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたというOxygen Updaterの確認が表示されるまで、公式のシステムアップデートをインストールする前に（約15分）待つことです。 電話機の.ota-directoryのみが15分ごとに1回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
+	<string name="contribute_explanation">Oxygen Updaterはあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。\n\nどうすればよいですか？\n\nOxygen Updaterは、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたというOxygen Updaterの確認が表示されるまで、公式のシステムアップデートをインストールする前に（約15分）待つことです。 電話機の".Ota" directoryのみが15分ごとに1回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
 	<string name="contribute_image_description">アプリケーションサーバへファイルをアップロード</string>
 	<string name="contribute_agree">更新ファイル名を管理者へ送信することを同意</string>
 	<string name="contribute_agree_from_setup">アプリの改善に協力し、更新ファイル名を管理者に送信することに同意する。</string>

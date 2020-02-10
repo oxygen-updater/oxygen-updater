@@ -20,7 +20,7 @@ import kotlin.system.exitProcess
 /**
  * Wrapper around [BottomSheetDialog]
  */
-class MessageDialog(
+open class MessageDialog(
     private val activity: Activity,
     private val title: String? = null,
     private val message: String? = null,

@@ -2,12 +2,6 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
-		android:id="@+id/action_settings"
-		android:orderInCategory="0"
-		android:title="@string/settings"
-		app:showAsAction="never" />
-
-	<item
 		android:id="@+id/action_faq"
 		android:icon="@drawable/faq"
 		android:orderInCategory="30"
@@ -22,7 +16,18 @@
 		app:showAsAction="ifRoom" />
 
 	<item
-		android:id="@+id/action_about"
+		android:id="@+id/action_settings"
+		android:orderInCategory="0"
+		android:title="@string/settings"
+		app:showAsAction="never" />
+
+	<item
+		android:id="@+id/action_contribute"
 		android:orderInCategory="100"
+		android:title="@string/contribute" />
+
+	<item
+		android:id="@+id/action_about"
+		android:orderInCategory="150"
 		android:title="@string/about" />
 </menu>

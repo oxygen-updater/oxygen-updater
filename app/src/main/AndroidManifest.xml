@@ -130,7 +130,8 @@
 			android:name=".contribution.ContributorActivity"
 			android:label="@string/contribute"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait">
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.Oxygen.FullScreen">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />

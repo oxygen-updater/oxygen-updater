@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_contributor.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 class ContributorActivity : SupportActionBarActivity() {
+
     private val localContributeSetting = AtomicBoolean(false)
     private val saveOptionsHidden = AtomicBoolean(false)
     private var permissionCallback: KotlinCallback<Boolean>? = null
