@@ -306,11 +306,10 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="install_guide_zip_file_missing">"Si vous voulez conserver votre appareil rooté vous devez spécifier au-dessus un package root"</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
-	<string name="device_information_supported_oxygen_os">Your device is supported</string>
-	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
-	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
-	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+	<string name="device_information_supported_oxygen_os">Votre appareil est supporté</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Votre appareil n\'est pas supporté car vendu exclusivement par un opérateur</string>
+	<string name="device_information_unsupported_oxygen_os">Nous ne supportons pas pour l\'instant votre nouvel appareil</string>
+	<string name="device_information_unsupported_os">Votre appareil n\'est pas supporté, étant donné qu\'il ne fonctionne pas sous OxygenOS</string>
 
 	<string name="device_information_hardware_header">Matériel</string>
 	<string name="device_information_software_header">Logiciel</string>
