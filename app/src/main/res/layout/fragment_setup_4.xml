@@ -24,7 +24,7 @@
 			android:id="@+id/introduction_step_4_header_text"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/introduction_step_4_image"
+			android:layout_below="@id/introduction_step_4_image"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:gravity="center_horizontal"
@@ -54,7 +54,7 @@
 			android:id="@+id/introduction_step_4_text_block_1"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/introduction_step_4_update_method_dropdown"
+			android:layout_below="@id/introduction_step_4_update_method_dropdown"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:text="@string/setup_page_4_text"
 			android:textColor="?android:textColorSecondary" />

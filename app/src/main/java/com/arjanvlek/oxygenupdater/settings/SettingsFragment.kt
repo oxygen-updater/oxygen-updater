@@ -150,7 +150,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
         // Open the app's Play Store page
         rateApp?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            activityLauncher.launchPlayStorePage(mContext)
+            activityLauncher.openPlayStorePage(mContext)
             true
         }
 

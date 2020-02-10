@@ -57,7 +57,7 @@
 			android:id="@+id/installGuideText"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/installGuideTip"
+			android:layout_below="@id/installGuideTip"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:textColor="?android:textColorSecondary"
 			android:visibility="invisible" />
@@ -92,7 +92,7 @@
 			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/installGuideText"
+			android:layout_below="@id/installGuideText"
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="@dimen/spacing_default"

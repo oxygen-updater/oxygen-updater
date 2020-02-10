@@ -295,7 +295,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             adapter = SectionsPagerAdapter(supportFragmentManager)
             tabs.setupWithViewPager(this)
 
-            app_bar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
                 val params = this.layoutParams as CoordinatorLayout.LayoutParams
                 params.bottomMargin = appBarLayout.totalScrollRange - abs(verticalOffset)
 

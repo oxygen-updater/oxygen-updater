@@ -98,7 +98,6 @@
 	<string name="download_verifying_error">ファイルが損傷しています</string>
 	<string name="download_verifying_start">ダウンロードファイルを確認します…</string>
 
-
 	<!-- Settings strings-->
 	<string name="preference_header_support">Support us</string>
 	<string name="preference_header_device">デバイス</string>
@@ -304,10 +303,13 @@
 	<!-- About screen strings -->
 	<string name="about">このアプリについて</string>
 	<string name="about_app_description">OxygenOS アップデートのための究極のツール</string>
-	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.\n\n\n注意、これはOnePlus の公式アプリケーションではありません。 \nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。\n\nこのアプリを気に入った場合は、 Playストアで今すぐ評価して下さい：</string>
-	<string name="about_rate_app_button_text">Google Play で評価</string>
-	<string name="about_version">バージョン: %1$s</string>
-
+	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
+	<string name="about_third_party_app_notice">注意、これはOnePlus の公式アプリケーションではありません。\nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
+	<string name="about_rate_button_text">評価</string>
+	<string name="about_github_button_text">GitHub</string>
+	<!-- TODO: Translate this string below -->
+	<string name="about_website_button_text">Website</string>
+	<string name="about_email_button_text">Eメール</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device">新デバイスがリリースされました! %1$s がサポートされました!</string>
@@ -344,7 +346,7 @@
 	<!-- Contribute strings -->
 	<string name="contribute">貢献者になる</string>
 	<string name="contribute_title">Oxygen Updaterの改善に協力する</string>
-	<string name="contribute_explanation">Oxygen Updaterはあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。 \n\nどうすればよいですか？\n\nOxygen Updaterは、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたというOxygen Updaterの確認が表示されるまで、公式のシステムアップデートをインストールする前に（約15分）待つことです。 電話機の.ota-directoryのみが15分ごとに1回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
+	<string name="contribute_explanation">Oxygen Updaterはあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。\n\nどうすればよいですか？\n\nOxygen Updaterは、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたというOxygen Updaterの確認が表示されるまで、公式のシステムアップデートをインストールする前に（約15分）待つことです。 電話機の.ota-directoryのみが15分ごとに1回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
 	<string name="contribute_image_description">アプリケーションサーバへファイルをアップロード</string>
 	<string name="contribute_agree">更新ファイル名を管理者へ送信することを同意</string>
 	<string name="contribute_agree_from_setup">アプリの改善に協力し、更新ファイル名を管理者に送信することに同意する。</string>
@@ -379,11 +381,11 @@
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">デバイスでOxygenOSが実行されていないようです。 OxygenOSを実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。 \n\nカスタムROMを実行しているOnePlusデバイスを含むその他のデバイスはサポートされていません。</string>
+	<string name="unsupported_os_warning_message">デバイスでOxygenOSが実行されていないようです。 OxygenOSを実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。\n\nカスタムROMを実行しているOnePlusデバイスを含むその他のデバイスはサポートされていません。</string>
 	<string name="unsupported_device_warning_checkbox_title">警告を二度と表示しない</string>
 
 	<string name="root_check_title">Root アクセス</string>
-	<string name="root_check_message">Oxygen Updaterは、ルート化されたデバイスを持つユーザー向けに、簡単で自動化されたアップデートインストールを提供します。 ただし、ルート化されたデバイスの増分更新は使用できません。 Oxygen Updaterは、適切な更新方法のみを提供するルートアクセス権があるかどうかを確認できます。 \n\nルートアクセスがある場合は、このメッセージを閉じた後、Oxygen Updaterがルートアクセスを取得できるようにします。 \n\nルートアクセスなし？ \"閉じる\"を押して、アプリの使用を続けます</string>
+	<string name="root_check_message">Oxygen Updaterは、ルート化されたデバイスを持つユーザー向けに、簡単で自動化されたアップデートインストールを提供します。 ただし、ルート化されたデバイスの増分更新は使用できません。 Oxygen Updaterは、適切な更新方法のみを提供するルートアクセス権があるかどうかを確認できます。\n\nルートアクセスがある場合は、このメッセージを閉じた後、Oxygen Updaterがルートアクセスを取得できるようにします。\n\nルートアクセスなし？ \"閉じる\"を押して、アプリの使用を続けます</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_before_payment">内部エラーが発生したため、広告なしバージョンの購入に失敗しました。 数分後にもう一度お試しください。</string>

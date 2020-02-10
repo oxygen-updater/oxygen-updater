@@ -6,7 +6,7 @@
 	android:layout_height="match_parent">
 
 	<com.google.android.material.appbar.AppBarLayout
-		android:id="@+id/app_bar"
+		android:id="@+id/appBar"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/size_collapsing_toolbar"
 		android:fitsSystemWindows="true"
@@ -17,7 +17,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:contentScrim="@color/appBarBackground"
 			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
 			app:maxLines="3"
 			app:multiline="true"
@@ -94,9 +93,9 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_margin="@dimen/spacing_default"
+					android:text="@string/news_date_published"
 					android:textColor="?android:textColorSecondary"
-					android:textSize="@dimen/typography_caption"
-					android:text="@string/news_date_published" />
+					android:textSize="@dimen/typography_caption" />
 
 				<View
 					android:layout_width="match_parent"

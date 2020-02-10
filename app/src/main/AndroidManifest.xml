@@ -83,28 +83,17 @@
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
-
-			<intent-filter>
-				<action android:name="updateInstallationInformationActivity" />
-
-				<category android:name="android.intent.category.default" />
-			</intent-filter>
 		</activity>
 
 		<activity
 			android:name=".about.AboutActivity"
 			android:label="@string/about"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait">
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.Oxygen.FullScreen">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
-
-			<intent-filter>
-				<action android:name="aboutActivity" />
-
-				<category android:name="android.intent.category.default" />
-			</intent-filter>
 		</activity>
 
 		<activity

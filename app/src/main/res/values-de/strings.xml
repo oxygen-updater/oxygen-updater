@@ -158,7 +158,7 @@ Ein OxygenOS Beta Update kann nur installiert werden wenn du bereits eine Beta V
 	<string name="settings_push_new_device">"Ein neues Gerät wird unterstützt"</string>
 	<string name="settings_push_news">"Neuigkeiten wurden veröffentlicht"</string>
 	<string name="settings_saved">"Deine Einstellungen wurden automatisch gespeichert."</string>
-	<string name="settings_saving">"Deine Einstellungen werden weiterhin gespeichert. wenn das  zu lange dauern sollte: überprüfe deine Verbindung, schließe die App und starte sie erneut."</string>
+	<string name="settings_saving">"Deine Einstellungen werden weiterhin gespeichert. wenn das zu lange dauern sollte: überprüfe deine Verbindung, schließe die App und starte sie erneut."</string>
 	<string name="settings_server_messages">"Sende Nachrichten in der App wenn:"</string>
 	<string name="settings_other_options">"Andere Optionen:"</string>
 	<string name="settings_advanced_mode">"Fortgeschrittener Modus"</string>
@@ -202,7 +202,7 @@ durch die Benutzung dieser App Stimmst du den oben genannten Nutzungsbedingungen
 
 Wische nach links um fortzufahren."</string>
 	<string name="setup_page_3_title">"Wähle dein gerät:"</string>
-	<string name="setup_page_3_text">"Normalerweise sollte dein Gerät bereits oben  ausgewählt sein. Falls nicht, wähle dein Gerät oben aus.
+	<string name="setup_page_3_text">"Normalerweise sollte dein Gerät bereits oben ausgewählt sein. Falls nicht, wähle dein Gerät oben aus.
 
 Wische nach links um fortzufahren."</string>
 	<string name="setup_page_4_title">"Wähle deine Update Methode:"</string>
@@ -227,7 +227,7 @@ Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf d
 	<string name="install_recovery_installer_title">"Update Installer"</string>
 
 	<!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">"Ein Backup wird erstellt. Das kann etwas brauchen!  "</string>
+	<string name="install_recovery_backing_up">"Ein Backup wird erstellt. Das kann etwas brauchen! "</string>
 	<string name="install_recovery_clearing_cache">"Cache Partition wird gesäubert…"</string>
 	<string name="install_recovery_done">"Abgeschlossen. Dein Gerät wird neu gestartet."</string>
 	<string name="install_recovery_installing_additional_zip">"Zusätzliche ZIP Datei wird installiert…"</string>
@@ -265,7 +265,7 @@ Dein Gerät wird neustarten um das Update zu installieren.
 	<string name="install_verify_error_title">"Installation fehlgeschlagen"</string>
 	<string name="install_verify_error_nothing_installed">"Fehler beim installieren des Updates. Es wurden keine Veränderung an der Software von deinem Gerät gemacht. Versuche das Update nochmal zu installieren."</string>
 	<string name="install_verify_error_unable_to_verify">"Prüfen ob das erfolgreich installiert wurde ist fehlgeschlagen. Bitte öffne den Oxygen Updater um zu überprüfen ob das Update erfolgreich installiert wurde."</string>
-	<string name="install_verify_error_wrong_version_installed">"Eine andere Version von OxygenOS wurde installiert. Wähle keine OxygenOS Update Datei aus wenn du ein Root Paket wählst unter der  \"behalte Root\" Option."</string>
+	<string name="install_verify_error_wrong_version_installed">"Eine andere Version von OxygenOS wurde installiert. Wähle keine OxygenOS Update Datei aus wenn du ein Root Paket wählst unter der \"behalte Root\" Option."</string>
 	<string name="install_verify_success_title">"Installation abgeschlossen"</string>
 	<string name="install_verify_success_message">"OxygenOS version %1$s wurde erfolgreich installiert."</string>
 	<string name="install_zip_file_clear">"Lösche die Root Paket Datei"</string>
@@ -281,7 +281,7 @@ Dein Gerät wird neustarten um das Update zu installieren.
 	<string name="install_guide_title">"Installationsanleitung - %1$d von %2$d"</string>
 	<string name="install_guide_image_description">"Kontextsensitives Bild. Bitte tippe etwas tiefer auf den Bildschirm um die Installationsanleitung zu hören."</string>
 	<string name="install_guide_header">"Wische &lt;--&gt; um zwischen den Seiten hin und her zu navigieren."</string>
-	<string name="install_guide_tip">"-Es ist empfehlenswert alle Schritte aufzuschreiben,  da du dein Gerät während dem Update ausschalten musst."</string>
+	<string name="install_guide_tip">"-Es ist empfehlenswert alle Schritte aufzuschreiben, da du dein Gerät während dem Update ausschalten musst."</string>
 	<string name="install_guide_page_1_title">"Update herunterzuladen."</string>
 	<string name="install_guide_page_1_text">"-Drücke den Download Button um mit dem downloaden des Updates zu starten
 
@@ -317,7 +317,7 @@ Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="install_guide_close_button">"Installationsanleitung schließen"</string>
 	<string name="install_guide_zip_file_deleted">"Das Root Paket das du ausgewählt hast existiert nicht mehr. Bitte wähle oben ein neues aus."</string>
 	<string name="install_guide_zip_file_picker_title">"Wähle ein Root Paket"</string>
-	<string name="install_guide_zip_file_missing">"Wenn du möchtest das dein Gerät gerootet bleibt, dann musst du  oben ein Root Paket angeben."</string>
+	<string name="install_guide_zip_file_missing">"Wenn du möchtest das dein Gerät gerootet bleibt, dann musst du oben ein Root Paket angeben."</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: Translate these lines -->
@@ -349,9 +349,13 @@ Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="about">"Über diese App"</string>
 	<string name="about_app_description">"das Ultimative Werkzeug für OxygenOS Updates."</string>
 	<!-- TODO translate this string -->
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
-	<string name="about_rate_app_button_text">"Bewerte im Google Play Store"</string>
-	<string name="about_version">"Version: %1$s"</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
+	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
+	<string name="about_rate_button_text">Bewerten</string>
+	<string name="about_github_button_text">GitHub</string>
+	<!-- TODO: Translate this string below -->
+	<string name="about_website_button_text">Website</string>
+	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device">"Neues Gerät veröffentlicht! Das %1$s wird jetzt unterstützt!"</string>
@@ -416,7 +420,7 @@ Benutzen sie den Schälter zum eins-oder ausschalten des Mitteilung- und Privacy
 	<!-- TODO translate these lines -->
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
+	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
 	<string name="contribute_image_description">Upload files to the app server</string>
 	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
 	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>

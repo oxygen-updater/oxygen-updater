@@ -2,6 +2,6 @@
 <changeBounds xmlns:android="http://schemas.android.com/apk/res/android"
 	android:interpolator="@android:interpolator/linear_out_slow_in">
 	<targets>
-		<target android:targetId="@id/app_bar" />
+		<target android:targetId="@id/appBar" />
 	</targets>
 </changeBounds>

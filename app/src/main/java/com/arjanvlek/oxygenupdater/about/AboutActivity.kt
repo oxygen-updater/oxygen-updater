@@ -16,12 +16,15 @@ class AboutActivity : SupportActionBarActivity() {
 
         val activityLauncher = ActivityLauncher(this)
 
-        // Set the version number of the app in the version number field.
-        aboutVersionNumberView.text = getString(R.string.about_version, BuildConfig.VERSION_NAME)
+        // Set the version number of the app as the subtitle
+        collapsingToolbarLayout.subtitle = getString(R.string.summary_oxygen, BuildConfig.VERSION_NAME)
         // Make the links in the background story clickable.
-        aboutBackgroundStoryView.movementMethod = LinkMovementMethod.getInstance()
-        // Set onClick listener to Google Play rate button.
-        aboutRateButton.setOnClickListener { activityLauncher.launchPlayStorePage(this) }
+        backgroundStoryTextView.movementMethod = LinkMovementMethod.getInstance()
+
+        githubButton.setOnClickListener { activityLauncher.openGitHub(this) }
+        websiteButton.setOnClickListener { activityLauncher.openWebsite(this) }
+        emailButton.setOnClickListener { activityLauncher.openEmail(this) }
+        rateButton.setOnClickListener { activityLauncher.openPlayStorePage(this) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

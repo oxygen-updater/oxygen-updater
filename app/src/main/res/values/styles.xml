@@ -75,6 +75,9 @@
 	<style name="Widget.Design.SuperpoweredCollapsingToolbar" parent="Widget.Design.CollapsingToolbar">
 		<!-- Same as expandedTitleMargin, defined in Widget.Design.CollapsingToolbar -->
 		<item name="expandedSubtitleMargin">32dp</item>
+		<!-- Custom scrims to match @color/appBarBackground -->
+		<item name="contentScrim">@color/appBarBackground</item>
+		<item name="statusBarScrim">@color/appBarBackground</item>
 	</style>
 
 	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.ExpandedTitle" parent="TextAppearance.Design.CollapsingToolbar.Expanded">

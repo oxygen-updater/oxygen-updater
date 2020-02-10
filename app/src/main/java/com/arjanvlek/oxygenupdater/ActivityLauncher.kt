@@ -24,7 +24,7 @@ class ActivityLauncher(baseActivity: Activity) {
 
     private val baseActivity: WeakReference<Activity> = WeakReference(baseActivity)
 
-    fun launchPlayStorePage(context: Context) {
+    fun openPlayStorePage(context: Context) {
         val appPackageName = context.packageName
 
         try {
@@ -40,6 +40,22 @@ class ActivityLauncher(baseActivity: Activity) {
                 logWarning("AboutActivity", "App rating without google play store support", e1)
             }
         }
+    }
+
+    fun openEmail(context: Context) {
+        val intent = Intent(Intent.ACTION_SENDTO)
+            .setData(Uri.parse("mailto:"))
+            .putExtra(Intent.EXTRA_EMAIL, arrayOf(context.getString(R.string.email_address)))
+
+        context.startActivity(intent)
+    }
+
+    fun openGitHub(context: Context) {
+        context.startActivity(Intent(ACTION_VIEW, Uri.parse(context.getString(R.string.github_url))))
+    }
+
+    fun openWebsite(context: Context) {
+        context.startActivity(Intent(ACTION_VIEW, Uri.parse(context.getString(R.string.website_url))))
     }
 
     /**
@@ -64,6 +80,20 @@ class ActivityLauncher(baseActivity: Activity) {
     }
 
     /**
+     * Opens the help page.
+     */
+    fun Help() {
+        startActivity(HelpActivity::class.java)
+    }
+
+    /**
+     * Opens the faq page.
+     */
+    fun FAQ() {
+        startActivity(FAQActivity::class.java)
+    }
+
+    /**
      * Opens the contribution popup.
      */
     fun Contribute() {
@@ -79,20 +109,6 @@ class ActivityLauncher(baseActivity: Activity) {
             .addFlags(FLAG_ACTIVITY_NEW_TASK)
 
         baseActivity.get()!!.startActivity(intent)
-    }
-
-    /**
-     * Opens the help page.
-     */
-    fun Help() {
-        startActivity(HelpActivity::class.java)
-    }
-
-    /**
-     * Opens the faq page.
-     */
-    fun FAQ() {
-        startActivity(FAQActivity::class.java)
     }
 
     /**
@@ -117,5 +133,4 @@ class ActivityLauncher(baseActivity: Activity) {
     fun dispose() {
         baseActivity.clear()
     }
-
 }

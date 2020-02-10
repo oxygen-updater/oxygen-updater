@@ -278,7 +278,7 @@ Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
 - Latauksen edistyminen tulee näkyviin sovelluksessa ja ilmoituksena ilmoituskeskuksessa.
 
 - Kun lataus on valmistunut näet ilmoituksen \"Lataus valmis\".
-Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudelleen. Jos tämä ei toimi varmista, että sinulla on toimiva yhteys. Muutoin olen yhteydessä sovelluksen kehittäjään. Voit tehdä tämän myös vierailemalla \"Omat sovellukset\" osiossa  Play Kaupassa."</string>
+Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudelleen. Jos tämä ei toimi varmista, että sinulla on toimiva yhteys. Muutoin olen yhteydessä sovelluksen kehittäjään. Voit tehdä tämän myös vierailemalla \"Omat sovellukset\" osiossa Play Kaupassa."</string>
 	<string name="install_guide_page_2_title">"Siirry palautustilaan (Recovery Mode)"</string>
 	<string name="install_guide_page_2_text">"- Ensin katkaise laitttesta virta.
 
@@ -338,9 +338,13 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<!-- About screen strings -->
 	<string name="about">"Tietoja sovelluksesta"</string>
 	<string name="about_app_description">"Ylivoimaisesti paras työkalu OxygenOS päivityksille."</string>
-	<string name="about_background_story">Tämän sovelluksen on alunperin kehittänyt Arjan Vlek hänen toisen sovelluksensa jatkona nimeltä <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (se tarjoaa vastaavia toimintoja Cyanogen OS käyttäjille).\n\nNeljän vuoden jälkeen, heinäkuussa 2019, Arjan päätti luopua molemmista projekteista ja siirsi sovellusten omistajuuden kehitystiimille jonka jäsenet ovat kotoisin eri maista. He ottivat vastuun tarjota yhteisölle erinomaisen palvelun &amp; tuen saadakseen OnePlus päivitykset nopeammin.\nLöydät lisätietoja ilmoituksesta <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">täältä</a> (englanniksi).\n\n14 elokuuta 2019 merkitsi ensimmäistä julkaisua uuden omistajuuden alla ja tämä päivitys sisälsi uusia ominaisuuksia, kuten tumman tilan ja täydellisen uudelleensuunnitelun.\n\nLisätietoja uudesta tiimistä löydät <a href="https://oxygenupdater.com/team/">verkkosivuilta</a>.\n\n\nHuomaathan, että tämä ei ole virallinen OnePlus sovellus \nOnePlus -nimi, OnePlus -logo ja OxygenOS ovat OnePlussan omaisuutta. \nAndroid, Google, Google Play ja Google Play -logo ovat Google Inc: n rekisteröityjä tavaramerkkejä. \nTämä sovellus käyttää OnePlussan ja sen emoyhtiön Oppon tietoja päivitystietojen näyttämiseen. \n\nJos pidät tästä sovelluksesta, arvioi se nyt Play Kaupassa:</string>
-	<string name="about_rate_app_button_text">"Arvostele Play Kaupassa"</string>
-	<string name="about_version">"Versio: %1$s"</string>
+	<string name="about_background_story">Tämän sovelluksen on alunperin kehittänyt Arjan Vlek hänen toisen sovelluksensa jatkona nimeltä <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (se tarjoaa vastaavia toimintoja Cyanogen OS käyttäjille).\n\nNeljän vuoden jälkeen, heinäkuussa 2019, Arjan päätti luopua molemmista projekteista ja siirsi sovellusten omistajuuden kehitystiimille jonka jäsenet ovat kotoisin eri maista. He ottivat vastuun tarjota yhteisölle erinomaisen palvelun &amp; tuen saadakseen OnePlus päivitykset nopeammin.\nLöydät lisätietoja ilmoituksesta <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">täältä</a> (englanniksi).\n\n14 elokuuta 2019 merkitsi ensimmäistä julkaisua uuden omistajuuden alla ja tämä päivitys sisälsi uusia ominaisuuksia, kuten tumman tilan ja täydellisen uudelleensuunnitelun.\n\nLisätietoja uudesta tiimistä löydät <a href="https://oxygenupdater.com/team/">verkkosivuilta</a>.</string>
+	<string name="about_third_party_app_notice">Huomaathan, että tämä ei ole virallinen OnePlus sovellus\nOnePlus -nimi, OnePlus -logo ja OxygenOS ovat OnePlussan omaisuutta.\nAndroid, Google, Google Play ja Google Play -logo ovat Google Inc: n rekisteröityjä tavaramerkkejä.\nTämä sovellus käyttää OnePlussan ja sen emoyhtiön Oppon tietoja päivitystietojen näyttämiseen.</string>
+	<string name="about_rate_button_text">Arvostele</string>
+	<string name="about_github_button_text">GitHub</string>
+	<!-- TODO: Translate this string below -->
+	<string name="about_website_button_text">Website</string>
+	<string name="about_email_button_text">Sähköposti</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device">"Uusi laite on julkaistu! %1$s on nyt tuettu!"</string>
@@ -403,7 +407,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 
 	<string name="contribute">Tule tukijaksi</string>
 	<string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
-	<string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu. \n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi vie vähän akkuvirtaa. Kaikki mitä sinun tulee tehdä on vain odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>
+	<string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu.\n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi vie vähän akkuvirtaa. Kaikki mitä sinun tulee tehdä on vain odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>
 	<string name="contribute_image_description">Lähetä tiedostot sovelluksen palvelimelle</string>
 	<string name="contribute_agree">Haluan auttaa ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
 	<string name="contribute_agree_from_setup">Haluan auttaa parantamaan sovellusta ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>

@@ -178,7 +178,7 @@
 	<string name="setup_page_1_text">Met deze app kun je:\n\n- De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n\n- Een \"rooted\" apparaat eenvoudig bijwerken\n\n- Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n\n- Nieuwsberichten over OxygenOS en OnePlus lezen\n\nVeeg naar links om verder te gaan.</string>
 
 	<string name="setup_page_2_title">Belangrijke mededeling:</string>
-	<string name="setup_page_2_text">Dit is geen officiële app van OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app. \n\nDoor deze app te gebruiken, ga je hiermee akkoord.\n\nVeeg naar links om verder te gaan.</string>
+	<string name="setup_page_2_text">Dit is geen officiële app van OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app.\n\nDoor deze app te gebruiken, ga je hiermee akkoord.\n\nVeeg naar links om verder te gaan.</string>
 
 	<string name="setup_page_3_title">Kies je apparaat:</string>
 	<string name="setup_page_3_text">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? kies het dan hierboven.\n\nVeeg naar links om verder te gaan.</string>
@@ -245,7 +245,6 @@
 	<string name="install_zip_file_placeholder">Selecteer een root-bestand…</string>
 	<string name="install_zip_file_wrong_file_type">Je kunt alleen een zipbestand selecteren. Selecteer het juiste bestand.</string>
 
-
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
 	<string name="install_guide_automatic_install_disabled">Automatiche installaties zijn vanwege technische mankementen tijdelijk uitgeschakeld. Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
@@ -302,15 +301,17 @@
 	<string name="device_information_unknown">onbekend</string>
 	<string name="device_information_your_device">Jouw apparaat:</string>
 
-
 	<!-- About screen strings -->
 	<string name="about">Over deze app</string>
 	<string name="about_app_description">De ultieme app voor alles over OxygenOS-updates.</string>
 	<!-- TODO translate this string -->
-	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een vergelijkbare functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de gemeenschap tevreden te stellen door een goede ondersteuning &amp; te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>. \n\n\nOnthoud dat dit geen officiële OnePlus-applicatie is.\nDe OnePlus naam, het OnePlus Logo en OxygenOS zijn eigendommen van OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.\n\nAls je deze app leuk vindt, beoordeel de app dan alsjeblieft nu op de Google Play Store:</string>
-	<string name="about_rate_app_button_text">Beoordeel op Google Play</string>
-	<string name="about_version">Versie: %1$s</string>
-
+	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een vergelijkbare functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de gemeenschap tevreden te stellen door een goede ondersteuning &amp; te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>.</string>
+	<string name="about_third_party_app_notice">Onthoud dat dit geen officiële OnePlus-applicatie is.\nDe OnePlus naam, het OnePlus Logo en OxygenOS zijn eigendommen van OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.</string>
+	<string name="about_rate_button_text">Beoordeel</string>
+	<string name="about_github_button_text">GitHub</string>
+	<!-- TODO: Translate this string below -->
+	<string name="about_website_button_text">Website</string>
+	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device">Nieuw apparaat toegevoegd! De %1$s wordt nu ondersteund!</string>
@@ -322,7 +323,6 @@
 	<string name="push_notification_channel_description">Toont alle pushberichten van de Oxygen Updater-app. Dit zijn o.a. de systeemupdate-meldingen en de meldingen die verschijnen wanneer er belangrijk nieuws is.</string>
 	<string name="progress_notification_channel_name">Voortgangsindicatoren</string>
 	<string name="progress_notification_channel_description">Toont alle voortgangsindicatoren van de Oxygen Updater-app. Dit zijn o.a. de meldingen die tijdens het downloaden van updates verschijnen.</string>
-
 
 	<!-- Help strings -->
 	<string name="help">Help</string>
@@ -348,7 +348,7 @@
 	<!-- Contribute strings -->
 	<string name="contribute">Draag bij</string>
 	<string name="contribute_title">Maak Oxygen Updater nóg beter</string>
-	<string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon. \n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend. Alleen de .ota-map op uw telefoon wordt eenmaal per 15 minuten gescand. Het controleert alleen voor een specifieke naam in die bepaalde map.</string>
+	<string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon.\n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend. Alleen de .ota-map op uw telefoon wordt eenmaal per 15 minuten gescand. Het controleert alleen voor een specifieke naam in die bepaalde map.</string>
 	<string name="contribute_image_description">Upload bestandsnamen naar de app-server</string>
 	<string name="contribute_agree">Ik help mee en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
 	<string name="contribute_agree_from_setup">Ik wil helpen om de app nog beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
@@ -382,11 +382,11 @@
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan. \n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
+	<string name="unsupported_os_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan.\n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
 	<string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
 	<string name="root_check_title">Root-toegang</string>
-	<string name="root_check_message">Oxygen Updater biedt eenvoudige, automatische update-installaties voor gebruikers met root-toegang. Maar: de incrementele updates werken niet als je root-toegang hebt. Oxygen Updater kan op root-toegang controleren om de juiste-update-methode(s) aan te bieden. \n\nAls je root-toegang hebt, geef dan na het sluiten van deze melding toestemming voor het gebruik van root-toegang.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
+	<string name="root_check_message">Oxygen Updater biedt eenvoudige, automatische update-installaties voor gebruikers met root-toegang. Maar: de incrementele updates werken niet als je root-toegang hebt. Oxygen Updater kan op root-toegang controleren om de juiste-update-methode(s) aan te bieden.\n\nAls je root-toegang hebt, geef dan na het sluiten van deze melding toestemming voor het gebruik van root-toegang.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
 
 	<!-- Purchase strings -->
 	<string name="purchase_error_before_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw.</string>

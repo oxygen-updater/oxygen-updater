@@ -99,7 +99,7 @@ object Dialogs {
                 cancellable = false
             ) {
                 when (it) {
-                    BUTTON_POSITIVE -> ActivityLauncher(activity).launchPlayStorePage(activity)
+                    BUTTON_POSITIVE -> ActivityLauncher(activity).openPlayStorePage(activity)
                     BUTTON_NEGATIVE -> {
                         // no-op
                     }

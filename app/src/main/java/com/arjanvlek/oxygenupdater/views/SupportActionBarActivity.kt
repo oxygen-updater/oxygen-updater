@@ -45,6 +45,11 @@ abstract class SupportActionBarActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // enable full screen
+        if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_Oxygen_FullScreen) {
+            findViewById<ViewGroup>(android.R.id.content).getChildAt(0).systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        }
     }
 
 }
