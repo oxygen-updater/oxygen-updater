@@ -202,7 +202,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                     inAppBars.addAll(serverMessages)
                 }
 
-                val status = serverStatus!!.status
+                val status = serverStatus.status
                 if (status!!.isUserRecoverableError) {
                     inAppBars.add(serverStatus)
                 }
@@ -315,7 +315,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         ObjectResponseExecutor(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId, updateMethodId).execute()
     }
 
-    fun getServerStatus(online: Boolean, callback: KotlinCallback<ServerStatus?>) {
+    fun getServerStatus(online: Boolean, callback: KotlinCallback<ServerStatus>) {
         if (serverStatus == null) {
             ObjectResponseExecutor<ServerStatus?>(
                 ServerRequest.SERVER_STATUS,
@@ -336,13 +336,12 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                             pushNotificationsDelaySeconds
                         )
                     } else {
-                        this.serverStatus = serverStatus
-                            ?: ServerStatus(
-                                ServerStatus.Status.NORMAL,
-                                BuildConfig.VERSION_NAME,
-                                automaticInstallationEnabled,
-                                pushNotificationsDelaySeconds
-                            )
+                        this.serverStatus = serverStatus ?: ServerStatus(
+                            ServerStatus.Status.NORMAL,
+                            BuildConfig.VERSION_NAME,
+                            automaticInstallationEnabled,
+                            pushNotificationsDelaySeconds
+                        )
                     }
 
                     if (settingsManager != null) {
@@ -350,11 +349,11 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                         settingsManager.savePreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, this.serverStatus!!.pushNotificationDelaySeconds)
                     }
 
-                    callback.invoke(this.serverStatus)
+                    callback.invoke(this.serverStatus!!)
                 }
             ).execute()
         } else {
-            callback.invoke(serverStatus)
+            callback.invoke(serverStatus!!)
         }
     }
 
@@ -530,7 +529,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         override fun onPostExecute(results: List<T>) {
             callback?.invoke(results)
         }
-
     }
 
     private inner class ObjectResponseExecutor<E> internal constructor(

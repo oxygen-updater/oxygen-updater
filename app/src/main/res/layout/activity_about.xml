@@ -56,6 +56,36 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
+			<LinearLayout
+				android:id="@+id/bannerLayout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/appBarBackground"
+				android:foreground="?android:selectableItemBackground"
+				android:gravity="center"
+				android:padding="@dimen/spacing_default"
+				android:visibility="gone"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:visibility="visible">
+
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="top"
+					android:contentDescription="@string/icon"
+					android:src="@drawable/info" />
+
+				<TextView
+					android:id="@+id/bannerTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginStart="@dimen/spacing_half"
+					android:layout_marginEnd="@dimen/spacing_default"
+					android:textColor="@color/white"
+					tools:text="@string/new_app_version_detailed" />
+			</LinearLayout>
+
 			<ImageView
 				android:id="@+id/appLogo"
 				android:layout_width="wrap_content"
@@ -65,7 +95,7 @@
 				android:src="@mipmap/ic_launcher"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
+				app:layout_constraintTop_toBottomOf="@id/bannerLayout" />
 
 			<TextView
 				android:id="@+id/appTagline"

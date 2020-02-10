@@ -3,13 +3,16 @@ package com.arjanvlek.oxygenupdater.about
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
+import android.view.View
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
+import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import kotlinx.android.synthetic.main.activity_about.*
 
 class AboutActivity : SupportActionBarActivity() {
+
     public override fun onCreate(savedInstanceSate: Bundle?) {
         super.onCreate(savedInstanceSate)
         setContentView(R.layout.activity_about)
@@ -26,6 +29,15 @@ class AboutActivity : SupportActionBarActivity() {
         websiteButton.setOnClickListener { activityLauncher.openWebsite(this) }
         emailButton.setOnClickListener { activityLauncher.openEmail(this) }
         rateButton.setOnClickListener { activityLauncher.openPlayStorePage(this) }
+
+        // banner is displayed if app version is outdated
+        bannerLayout.setOnClickListener { activityLauncher.openPlayStorePage(this) }
+
+        applicationData?.serverConnector?.getServerStatus(Utils.checkNetworkConnection(application)) {
+            if (!it.checkIfAppIsUpToDate()) {
+                updateBannerText(it.latestAppVersion!!)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -36,5 +48,10 @@ class AboutActivity : SupportActionBarActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateBannerText(latestAppVersion: String) {
+        bannerLayout.visibility = View.VISIBLE
+        bannerTextView.text = getString(R.string.new_app_version_detailed, latestAppVersion)
     }
 }

@@ -47,7 +47,10 @@ data class ServerStatus(
 
     fun checkIfAppIsUpToDate(): Boolean {
         return try {
-            val appVersionNumeric = BuildConfig.VERSION_NAME.replace(".", "").toInt()
+            val appVersionNumeric = BuildConfig.VERSION_NAME.replace(".", "")
+                // handle custom buildConfigs
+                .split("-")[0]
+                .toInt()
             val appVersionFromResultNumeric = latestAppVersion!!.replace(".", "").toInt()
             appVersionFromResultNumeric <= appVersionNumeric
         } catch (e: Exception) {

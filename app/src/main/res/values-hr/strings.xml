@@ -37,6 +37,8 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">"Ažuriranje je dostupno! Version &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt; "</string>
+	<!-- TODO: translate this string below -->
+	<string name="new_app_version_detailed">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"u"</string>
