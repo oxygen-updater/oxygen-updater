@@ -336,6 +336,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="about_third_party_app_notice">Veuillez noter que cette application n\'est pas une application officielle de OnePlus.\nLe nom OnePlus, le logo OnePlus et OxygenOS sont propriétés de OnePlus.\nAndroid, Google, Google Play et le logo Google Play sont des marques déposées de Google Inc.\nCette application utilise des données de OnePlus et d\'OPPO pour montrer les informations de mise à jour.</string>
 	<string name="about_rate_button_text">"Noter"</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>

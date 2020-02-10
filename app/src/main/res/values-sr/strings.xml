@@ -310,6 +310,7 @@
 	<string name="about_third_party_app_notice">Ово није званична OnePlus апликација.\nOnePlus име, OnePlus лого и OxygenOS су власништво OnePlus-а.\nAndroid, Google, Google Play и Google Play лого су регистровани заштитни знакови код Google Inc.\nОва апликација користи податке од OnePlus-а и његове матичне компаније Oppo да прикаже податке о ажурирањуn.</string>
 	<string name="about_rate_button_text">Оцените</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Емаил</string>

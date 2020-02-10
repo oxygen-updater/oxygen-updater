@@ -309,6 +309,7 @@
 	<string name="about_third_party_app_notice">Bemærk venligst, at dette IKKE er en officiel OnePlus applikation.\nOnePlus mavmet, OnePlus logo\'et og OxygenOS er ejendele af OnePlus.\nAndroid, Google, Google Play og Google Play logo\'er er registrerede varemærker tilhørende Google Inc.\nDenne app amvemder data fra OnePlus og dets moderselskab Oppo, til at vise opdateringsinformation.</string>
 	<string name="about_rate_button_text">Bedøm</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>

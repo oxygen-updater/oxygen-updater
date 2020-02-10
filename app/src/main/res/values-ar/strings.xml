@@ -271,6 +271,7 @@
 	<string name="about_third_party_app_notice"> فضلاً لاحظ, أن هذا التطبيق غير رسمي من شركة ون بلس.\nإسم وشعار ونظام أكسجين هي ملكيات تخص شركة ون بلس.\nكما أن شعارات أندرويد وجوجل وسوق بلاي هي علامات مسجلة تخص شركة جوجل.\nهذا التطبيق يستخدم البيانات من شركة ون بلس وشركتها الأم شركة أوبو لعرض بيانات التحديث.</string>
 	<string name="about_rate_button_text">تقييم</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">البريد الإلكتروني</string>

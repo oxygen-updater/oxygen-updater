@@ -83,14 +83,25 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_margin="@dimen/spacing_default"
-				app:constraint_referenced_ids="githubButton,websiteButton,emailButton,rateButton"
+				app:constraint_referenced_ids="discordButton,githubButton,websiteButton,emailButton,rateButton"
 				app:flow_horizontalGap="@dimen/spacing_quarter"
-				app:flow_horizontalStyle="spread_inside"
 				app:flow_verticalGap="@dimen/spacing_quarter"
 				app:flow_wrapMode="chain"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/appTagline" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/discordButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/about_discord_button_text"
+				android:textColor="?android:textColorTertiary"
+				app:icon="@drawable/discord"
+				app:iconTint="?android:textColorTertiary"
+				app:rippleColor="@color/ripple_neutral"
+				tools:ignore="MissingConstraints" />
 
 			<com.google.android.material.button.MaterialButton
 				android:id="@+id/githubButton"

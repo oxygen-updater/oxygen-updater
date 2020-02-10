@@ -342,6 +342,7 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="about_third_party_app_notice">Huomaathan, että tämä ei ole virallinen OnePlus sovellus\nOnePlus -nimi, OnePlus -logo ja OxygenOS ovat OnePlussan omaisuutta.\nAndroid, Google, Google Play ja Google Play -logo ovat Google Inc: n rekisteröityjä tavaramerkkejä.\nTämä sovellus käyttää OnePlussan ja sen emoyhtiön Oppon tietoja päivitystietojen näyttämiseen.</string>
 	<string name="about_rate_button_text">Arvostele</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Sähköposti</string>

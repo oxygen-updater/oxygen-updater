@@ -308,6 +308,7 @@
 	<string name="about_third_party_app_notice">Зверніть увагу, це не офіційний застосунок від OnePlus.\nІм\'я та бренд OnePlus, логотип OnePlus і OxygenOS є власністю компанії OnePlus.\nAndroid, Google, Google Play та логотип Google Play є зареєстрованими товарними знаками Google Inc.\nЦей застосунок використовує дані OnePlus та її материнської компанії Oppo, щоб показувати інформацію про оновлення.</string>
 	<string name="about_rate_button_text">Оцінити</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Електронна пошта</string>

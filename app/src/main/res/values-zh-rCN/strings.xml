@@ -305,6 +305,7 @@
 	<string name="about_third_party_app_notice">请注意，这并不是 OnePlus 出品的官方应用！\nOnePlus 的名称，Logo，以及 OxygenOS 都由 OnePlus 所有！\nAndroid，Google，Google Play 以及 Google Play Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。</string>
 	<string name="about_rate_button_text">评分</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">電子郵件</string>

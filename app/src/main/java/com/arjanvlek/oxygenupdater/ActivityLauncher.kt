@@ -50,6 +50,10 @@ class ActivityLauncher(baseActivity: Activity) {
         context.startActivity(intent)
     }
 
+    fun openDiscord(context: Context) {
+        context.startActivity(Intent(ACTION_VIEW, Uri.parse(context.getString(R.string.discord_url))))
+    }
+
     fun openGitHub(context: Context) {
         context.startActivity(Intent(ACTION_VIEW, Uri.parse(context.getString(R.string.github_url))))
     }

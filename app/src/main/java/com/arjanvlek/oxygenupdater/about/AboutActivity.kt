@@ -21,6 +21,7 @@ class AboutActivity : SupportActionBarActivity() {
         // Make the links in the background story clickable.
         backgroundStoryTextView.movementMethod = LinkMovementMethod.getInstance()
 
+        discordButton.setOnClickListener { activityLauncher.openDiscord(this) }
         githubButton.setOnClickListener { activityLauncher.openGitHub(this) }
         websiteButton.setOnClickListener { activityLauncher.openWebsite(this) }
         emailButton.setOnClickListener { activityLauncher.openEmail(this) }

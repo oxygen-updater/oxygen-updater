@@ -306,6 +306,7 @@
 	<string name="about_third_party_app_notice">Lütfen dikkat edin, bu resmi bir OnePlus uygulaması değildir.\n OnePlus adı, OnePlus Logosu ve OxygenOS, OnePlusa aittir.\n Android, Google, Google Play ve Google Play logosunun mülkiyetindedir Google Inc. in tescilli ticari markalarıdır.\nBu uygulama güncelleme bilgilerini göstermek için "OnePlus" ve ana şirketi "Oppo" \'ya ait verileri kullanır.</string>
 	<string name="about_rate_button_text">Derecelendir</string>
 	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">E-posta</string>
