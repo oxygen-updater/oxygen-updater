@@ -74,7 +74,14 @@ class NewsFragment : AbstractFragment() {
         updateBannerText(getString(R.string.news_unread_count, newsItems.count { !it.read }))
 
         newsContainer.let { recyclerView ->
-            newsAdapter = NewsAdapter(context, activity as MainActivity?, newsItems) { newsItemId ->
+            // respect unread articles filtering
+            val itemList = if (isShowingOnlyUnreadArticles) {
+                newsItems.filter { !it.read }
+            } else {
+                newsItems
+            }
+
+            newsAdapter = NewsAdapter(context, activity as MainActivity?, itemList) { newsItemId ->
                 newsAdapter.markItemAsRead(newsItemId)
                 updateBannerText(getString(R.string.news_unread_count, newsAdapter.itemList.count { !it.read }))
             }
@@ -103,6 +110,8 @@ class NewsFragment : AbstractFragment() {
                     } else {
                         displayEmptyState()
                     }
+                } else {
+                    emptyStateLayout.visibility = GONE
                 }
             }
         }
