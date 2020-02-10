@@ -1,46 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/newsItemContainer"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:background="?selectableItemBackground"
-	android:paddingStart="@dimen/spacing_half"
-	android:paddingTop="@dimen/spacing_default"
-	android:paddingEnd="@dimen/spacing_half"
-	android:paddingBottom="@dimen/spacing_default"
+	android:padding="@dimen/spacing_default"
 	android:stateListAnimator="@animator/clicked">
 
 	<ImageView
 		android:id="@+id/newsItemImage"
-		android:layout_width="64dp"
-		android:layout_height="64dp"
+		android:layout_width="@dimen/spacing_4x"
+		android:layout_height="@dimen/spacing_4x"
 		android:contentDescription="@string/icon"
+		android:scaleType="centerCrop"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:src="@drawable/image" />
 
 	<TextView
 		android:id="@+id/newsItemTitle"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/spacing_half"
-		android:layout_toEndOf="@id/newsItemImage"
-		android:text="@string/loading"
-		android:textAppearance="?android:textAppearanceListItem"
 		android:textSize="@dimen/typography_subheading"
-		tools:text="Title" />
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/newsItemImage"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="An unnecessarily long news title, to get an accurate understanding of how long titles are rendered" />
 
 	<TextView
 		android:id="@+id/newsItemSubTitle"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/newsItemTitle"
 		android:layout_marginStart="@dimen/spacing_half"
 		android:layout_marginTop="6dp"
-		android:layout_toEndOf="@id/newsItemImage"
-		android:text="@string/loading"
 		android:textColor="?android:textColorSecondary"
-		tools:text="@string/help_change_settings_text" />
-</RelativeLayout>
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@id/newsItemImage"
+		app:layout_constraintTop_toBottomOf="@id/newsItemTitle"
+		tools:text="An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered" />
+</androidx.constraintlayout.widget.ConstraintLayout>

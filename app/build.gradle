@@ -210,6 +210,9 @@ dependencies {
 	implementation 'com.google.android.gms:play-services-base:17.1.0'
 	implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
+	// Loading shimmer animation
+	implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 	// Image loading + caching library
 	implementation 'com.github.bumptech.glide:glide:4.11.0'
 	kapt 'com.github.bumptech.glide:compiler:4.11.0'

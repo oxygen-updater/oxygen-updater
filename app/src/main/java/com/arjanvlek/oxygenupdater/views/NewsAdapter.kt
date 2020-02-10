@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
@@ -127,7 +127,7 @@ class NewsAdapter(
     }
 
     inner class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val container: RelativeLayout = itemView.findViewById(R.id.newsItemContainer)
+        val container: ConstraintLayout = itemView.findViewById(R.id.newsItemContainer)
         val image: ImageView = itemView.findViewById(R.id.newsItemImage)
         val title: TextView = itemView.findViewById(R.id.newsItemTitle)
         val subtitle: TextView = itemView.findViewById(R.id.newsItemSubTitle)

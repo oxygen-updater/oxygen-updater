@@ -305,8 +305,13 @@
 	<string name="news_date_published">آخر تحديث: %1$s</string>
 	<string name="news_empty">لا توجد محتويات داخل هذا المقال.</string>
 	<string name="news_load_error">فشل فتح المقال. تحقق من اتصالك واضغط على زر \'إعادة المحاولة\' لفتح المقال.</string>
-	<!-- TODO: translate this string below -->
+	<!-- TODO: translate these 5 strings below -->
 	<string name="news_unread_count">You have %1$d unread news articles</string>
+	<string name="news_empty_state_none_available_header">No articles yet</string>
+	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
+	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
+	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!
+Hopefully you\'re a little wiser now from reading it all.\n\nTap the banner again to show all news articles.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">كن مساهماً</string>
