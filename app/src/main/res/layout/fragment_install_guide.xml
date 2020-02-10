@@ -10,7 +10,6 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
-		<!-- placeholders are inflated into this layout in NewsFragment -->
 		<com.facebook.shimmer.ShimmerFrameLayout
 			android:id="@+id/shimmerFrameLayout"
 			android:layout_width="match_parent"

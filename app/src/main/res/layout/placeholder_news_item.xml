@@ -20,7 +20,7 @@
 		android:layout_height="@dimen/spacing_half"
 		android:layout_marginStart="@dimen/spacing_default"
 		android:layout_marginTop="@dimen/spacing_half"
-		android:alpha=".1"
+		android:alpha=".15"
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintStart_toEndOf="@id/newsItemImagePlaceholder"
 		app:layout_constraintTop_toTopOf="parent" />

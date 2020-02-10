@@ -127,6 +127,9 @@ class UpdateInformationFragment : AbstractFragment() {
      * checks
      */
     private fun load() {
+        // show the loading shimmer
+        shimmerFrameLayout.visibility = VISIBLE
+
         Crashlytics.setUserIdentifier(
             "Device: "
                     + settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
@@ -228,6 +231,8 @@ class UpdateInformationFragment : AbstractFragment() {
 
         // Show "System is up to date" view.
         systemIsUpToDateStub?.inflate()
+        // hide the loading shimmer
+        shimmerFrameLayout.visibility = GONE
 
         // Set the current OxygenOS version if available.
         systemIsUpToDateVersionTextView.apply {
@@ -297,6 +302,8 @@ class UpdateInformationFragment : AbstractFragment() {
     private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData) {
         // Show "System update available" view.
         updateInformationStub?.inflate()
+        // hide the loading shimmer
+        shimmerFrameLayout.visibility = GONE
 
         val formattedOxygenOsVersion = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
             if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {
