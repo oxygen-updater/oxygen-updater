@@ -1,103 +1,100 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/installGuideMainView"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:paddingLeft="@dimen/spacing_default"
-	android:paddingTop="@dimen/spacing_default"
-	android:paddingRight="@dimen/spacing_default"
-	android:paddingBottom="@dimen/spacing_default">
+	android:padding="@dimen/spacing_default">
 
-	<RelativeLayout
+	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
-		<TextView
-			android:id="@+id/installGuideHeader"
-			android:layout_width="wrap_content"
+		<!-- placeholders are inflated into this layout in NewsFragment -->
+		<com.facebook.shimmer.ShimmerFrameLayout
+			android:id="@+id/shimmerFrameLayout"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_marginBottom="@dimen/spacing_half"
-			android:gravity="center_horizontal"
-			android:text="@string/install_guide_header"
-			android:visibility="gone" />
+			app:shimmer_auto_start="true">
 
-		<ImageView
-			android:id="@+id/installGuideImage"
-			android:layout_width="300dp"
-			android:layout_height="200dp"
-			android:layout_below="@id/installGuideHeader"
-			android:layout_centerHorizontal="true"
-			android:contentDescription="@string/install_guide_image_description"
-			android:visibility="invisible" />
-
-		<TextView
-			android:id="@+id/installGuideTitle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/installGuideImage"
-			android:layout_centerHorizontal="true"
-			android:gravity="center_horizontal"
-			android:textAppearance="?android:textAppearanceLarge"
-			android:textStyle="bold"
-			android:visibility="invisible" />
-
-		<TextView
-			android:id="@+id/installGuideTip"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/installGuideTitle"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="@dimen/spacing_default"
-			android:text="@string/install_guide_tip"
-			android:textColor="?android:textColorSecondary"
-			android:visibility="gone" />
-
-		<TextView
-			android:id="@+id/installGuideText"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/installGuideTip"
-			android:layout_marginTop="@dimen/spacing_default"
-			android:textColor="?android:textColorSecondary"
-			android:visibility="invisible" />
+			<include layout="@layout/placeholder_install_guide" />
+		</com.facebook.shimmer.ShimmerFrameLayout>
 
 		<LinearLayout
-			android:id="@+id/installGuideLoadingScreen"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_centerHorizontal="true"
-			android:layout_centerVertical="true"
-			android:gravity="center"
+			android:layout_height="wrap_content"
 			android:orientation="vertical">
 
-			<ProgressBar
-				android:id="@+id/installGuideLoadingIcon"
-				style="?android:progressBarStyleLarge"
+			<TextView
+				android:id="@+id/installGuideHeader"
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content" />
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_marginBottom="@dimen/spacing_half"
+				android:gravity="center_horizontal"
+				android:text="@string/install_guide_header"
+				android:visibility="gone"
+				tools:visibility="visible" />
+
+			<!--
+				Default visibility must be "invisible", instead of "gone"
+				Otherwise, Glide will load the image with a dimension of 0x0
+			-->
+			<ImageView
+				android:id="@+id/installGuideImage"
+				android:layout_width="match_parent"
+				android:layout_height="200dp"
+				android:layout_gravity="center"
+				android:contentDescription="@string/install_guide_image_description"
+				android:visibility="invisible"
+				tools:src="@drawable/install_guide_page_1_image"
+				tools:visibility="visible" />
 
 			<TextView
-				android:id="@+id/installGuideLoadingText"
-				android:layout_width="match_parent"
+				android:id="@+id/installGuideTitle"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_half"
-				android:text="@string/install_guide_loading"
-				android:textAlignment="center"
-				android:textSize="@dimen/typography_title" />
-		</LinearLayout>
+				android:layout_gravity="center"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:gravity="center_horizontal"
+				android:textAppearance="?android:textAppearanceLarge"
+				android:textStyle="bold"
+				android:visibility="gone"
+				tools:text="Install guide title"
+				tools:visibility="visible" />
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/installGuideCloseButton"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/installGuideText"
-			android:layout_alignParentBottom="true"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="@dimen/spacing_default"
-			android:text="@string/install_guide_close_button"
-			android:visibility="gone"
-			app:strokeColor="?colorPrimary" />
-	</RelativeLayout>
+			<TextView
+				android:id="@+id/installGuideTip"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:text="@string/install_guide_tip"
+				android:textColor="?android:textColorSecondary"
+				android:visibility="gone"
+				tools:text="Install guide tip"
+				tools:visibility="visible" />
+
+			<TextView
+				android:id="@+id/installGuideText"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:textColor="?android:textColorSecondary"
+				android:visibility="gone"
+				tools:text="Install guide text"
+				tools:visibility="visible" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/installGuideCloseButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center|bottom"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:text="@string/install_guide_close_button"
+				android:visibility="gone"
+				app:strokeColor="?colorPrimary"
+				tools:visibility="visible" />
+		</LinearLayout>
+	</FrameLayout>
 </ScrollView>

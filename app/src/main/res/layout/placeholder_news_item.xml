@@ -15,7 +15,7 @@
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<View
-		android:id="@+id/newsItemPlaceholder"
+		android:id="@+id/newsItemTitlePlaceholder"
 		android:layout_width="200dp"
 		android:layout_height="@dimen/spacing_half"
 		android:layout_marginStart="@dimen/spacing_default"
@@ -35,5 +35,5 @@
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@id/newsItemImagePlaceholder"
-		app:layout_constraintTop_toBottomOf="@id/newsItemPlaceholder" />
+		app:layout_constraintTop_toBottomOf="@id/newsItemTitlePlaceholder" />
 </androidx.constraintlayout.widget.ConstraintLayout>

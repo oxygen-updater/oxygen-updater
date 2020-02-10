@@ -274,7 +274,6 @@
 	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide_automatic_install_disabled">Automatic installations have been temporarily disabled due to reported technical issues. Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide">Install guide</string>
-	<string name="install_guide_loading">Loading the installation guide …</string>
 	<string name="install_guide_title">Install guide - %1$d of %2$d</string>
 	<string name="install_guide_image_description">Contextual image. Please tap on a lower place on the screen to hear the install guide.</string>
 	<string name="install_guide_header">Swipe &lt;- -&gt; to navigate between pages.</string>

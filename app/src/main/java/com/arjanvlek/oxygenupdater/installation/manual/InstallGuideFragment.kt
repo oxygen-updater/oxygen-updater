@@ -97,7 +97,7 @@ class InstallGuideFragment : Fragment() {
         }
 
         // Hide the loading screen of the install guide page.
-        installGuideLoadingScreen.visibility = GONE
+        shimmerFrameLayout.visibility = GONE
         installGuideTitle.visibility = VISIBLE
         installGuideText.visibility = VISIBLE
 
