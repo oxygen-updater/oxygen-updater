@@ -37,7 +37,6 @@
 
 	<!-- Used in activities that support edge-to-edge UI -->
 	<style name="Theme.Oxygen.FullScreen">
-		<item name="android:navigationBarColor">@android:color/transparent</item>
 		<item name="android:statusBarColor">@android:color/transparent</item>
 	</style>
 
