@@ -7,14 +7,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.internal.WebViewClient
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import kotlinx.android.synthetic.main.activity_faq.*
 
@@ -86,12 +85,9 @@ class FAQActivity : SupportActionBarActivity() {
                 loadUrl(faqServerUrl).also { swipeRefreshLayout.isRefreshing = true }
 
                 // disable loading state once page is completely loaded
-                webViewClient = object : WebViewClient() {
-                    override fun onPageCommitVisible(view: WebView?, url: String?) {
-                        super.onPageCommitVisible(view, url)
-                        // hide progress bar since the page has been loaded
-                        swipeRefreshLayout.isRefreshing = false
-                    }
+                webViewClient = WebViewClient(context) {
+                    // hide progress bar since the page has been loaded
+                    swipeRefreshLayout.isRefreshing = false
                 }
             }
         } else {

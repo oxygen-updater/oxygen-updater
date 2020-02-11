@@ -7,14 +7,13 @@ import android.os.Handler
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.internal.WebViewClient
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.internal.server.NetworkException
 import com.arjanvlek.oxygenupdater.models.AppLocale
@@ -147,11 +146,9 @@ class NewsActivity : SupportActionBarActivity() {
                 }
 
                 // disable loading state once page is completely loaded
-                webViewClient = object : WebViewClient() {
-                    override fun onPageCommitVisible(view: WebView?, url: String?) {
-                        super.onPageCommitVisible(view, url)
-                        disableLoadingState()
-                    }
+                webViewClient = WebViewClient(context) {
+                    // hide progress bar since the page has been loaded
+                    disableLoadingState()
                 }
             }
 
