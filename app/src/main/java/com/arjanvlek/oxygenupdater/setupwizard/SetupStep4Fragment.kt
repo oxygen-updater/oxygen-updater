@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.setupwizard
 
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +18,7 @@ import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.CustomDropdown
 import com.crashlytics.android.Crashlytics
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_setup_4.*
 
 class SetupStep4Fragment : AbstractFragment() {
@@ -41,7 +41,7 @@ class SetupStep4Fragment : AbstractFragment() {
     fun fetchUpdateMethods() {
         if (!rootMessageShown) {
             try {
-                AlertDialog.Builder(activity)
+                MaterialAlertDialogBuilder(activity)
                     .setTitle(getString(R.string.root_check_title))
                     .setMessage(getString(R.string.root_check_message))
                     .setOnDismissListener {

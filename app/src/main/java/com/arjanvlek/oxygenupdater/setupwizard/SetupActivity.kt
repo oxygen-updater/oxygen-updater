@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.setupwizard
 
-import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
@@ -28,6 +27,7 @@ import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.views.MainActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_setup.*
 import kotlinx.android.synthetic.main.fragment_setup_5.*
 
@@ -95,7 +95,7 @@ class SetupActivity : AppCompatActivity() {
             else -> R.string.unsupported_os_warning_message
         }
 
-        AlertDialog.Builder(this@SetupActivity)
+        MaterialAlertDialogBuilder(this)
             .setTitle(getString(R.string.unsupported_device_warning_title))
             .setPositiveButton(getString(R.string.download_error_close)) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
             .setMessage(getString(resourceId))

@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.views
 
 import android.annotation.TargetApi
-import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -57,6 +56,7 @@ import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import org.joda.time.LocalDateTime
 import java.util.*
@@ -422,7 +422,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         val checkBoxView = View.inflate(this@MainActivity, R.layout.message_dialog_checkbox, null)
 
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setView(checkBoxView)
             .setTitle(getString(R.string.unsupported_device_warning_title))
             .setMessage(getString(resourceId))
