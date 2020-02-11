@@ -17,8 +17,7 @@
 	<string name="update_information_banner_congrats_latest">Félicitations ! Votre appareil est sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_update_available">Une nouvelle mise à jour est disponible: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier ZIP pour la méthode de mise à jour \'%1$s\'.\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
-	<!-- TODO: translate this string below -->
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_different_version_changelog_notice">Vous regardez un changelog conçu pour la dernière mise à jour disponible dans la méthode de mise à jour \'%1$s\'. Si vous souhaitez installer cette mise à jour, vous devez d\'abord activer le mode avancé dans les réglages de l\'application.\n\nCependant, si vous souhaitez voir le changelog pour la version actuellement installée sur votre appareil vous devez resélectionner la précédente méthode de mise à jour.</string>
 	<string name="update_information_last_checked_on">"Dernière vérification : %1$s"</string>
 	<string name="update_information_latest_available_update">"Une nouvelle mise à jour système est disponible"</string>
 	<string name="update_information_no_update_data_available">"Aucune information de mise à jour n'est disponible."</string>
@@ -35,8 +34,7 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">"Une mise à jour de l'application est disponible ! La version &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt; est téléchargeable dès maintenant !"</string>
-	<!-- TODO: translate this string below -->
-	<string name="new_app_version_detailed">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_detailed">Une mise à jour de l\'application (%1$s) est disponible. Maintenir l\'application à jour vous permet de bénéficier des dernières fonctionnalités et corrections de bugs.\nAppuyez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"à"</string>
@@ -339,8 +337,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="about_rate_button_text">"Noter"</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">Site</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
@@ -403,10 +400,10 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_empty">"Cet article n'a pas de contenu."</string>
 	<string name="news_load_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton « Réessayer » pour ouvrir l'article."</string>
 	<string name="news_unread_count">Vous avez %1$d articles non lus</string>
-	<!-- TODO: translate these 4 strings below -->
-	<string name="news_empty_state_none_available_header">No articles yet</string>
-	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
-	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
+	<string name="news_empty_state_none_available_header">Aucun article n\'est présent</string>
+	<string name="news_empty_state_all_read_header">Aucun article non lu</string>
+	<string name="news_empty_state_none_available_text">Aucun article n\'est disponible pour l\'instant, veuillez réessayez plus tard.</string>
+	<!-- TODO: translate this string below -->
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!
 Hopefully you\'re a little wiser now from reading it all.\n\nTap the banner again to show all news articles.</string>
 
