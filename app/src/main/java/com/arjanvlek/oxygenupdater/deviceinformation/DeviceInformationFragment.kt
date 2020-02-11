@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.R
@@ -118,7 +119,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             if (totalMemory != 0L) {
                 text = getString(R.string.download_size_megabyte, totalMemory)
             } else {
-                device_information_memory_label.visibility = GONE
+                device_information_memory_label.isVisible = false
                 visibility = GONE
             }
         }
@@ -130,7 +131,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             if (oxygenOSVersion != NO_OXYGEN_OS) {
                 text = oxygenOSVersion
             } else {
-                device_information_oxygen_os_ver_label.visibility = GONE
+                device_information_oxygen_os_ver_label.isVisible = false
                 visibility = GONE
             }
         }
@@ -159,7 +160,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             if (securityPatchDate != NO_OXYGEN_OS) {
                 text = securityPatchDate
             } else {
-                device_information_os_patch_level_label.visibility = GONE
+                device_information_os_patch_level_label.isVisible = false
                 visibility = GONE
             }
         }
@@ -171,7 +172,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             if (serialNumber != UNKNOWN) {
                 text = serialNumber
             } else {
-                device_information_serial_number_label.visibility = GONE
+                device_information_serial_number_label.isVisible = false
                 visibility = GONE
             }
         }

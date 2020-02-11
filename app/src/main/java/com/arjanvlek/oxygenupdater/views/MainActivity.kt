@@ -25,6 +25,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -52,6 +54,7 @@ import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1
 import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessageBar
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -198,7 +201,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
 
         view.id = View.generateViewId()
-        view.visibility = GONE
+        view.isVisible = false
         serverMessageLayout.addView(view, params)
         serverMessageBars.add(view)
     }
@@ -252,7 +255,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 }
             }
         } else {
-            serverMessageLayout.visibility = GONE
+            serverMessageLayout.isVisible = false
         }
 
         serverMessageBars = createdServerMessageBars
@@ -332,17 +335,24 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         adView = updateInformationAdView
         checkAdSupportStatus { adsAreSupported ->
             if (adsAreSupported) {
-                // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
-                // Since the AdView's size is BANNER, bottom padding should be 50dp
-                viewPager.setPadding(0, 0, 0, Utils.dpToPx(this, 66f).toInt())
+                adView?.adListener = object : AdListener() {
+                    override fun onAdLoaded() {
+                        super.onAdLoaded()
 
-                adView?.visibility = VISIBLE
+                        // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
+                        // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
+                        // which can only be calculated once the AdView has been drawn on the screen
+                        adView?.post { viewPager.updatePadding(bottom = adView!!.height) }
+                    }
+                }
+
+                adView?.isVisible = true
                 showAds()
             } else {
                 // reset viewPager padding
                 viewPager.setPadding(0, 0, 0, 0)
 
-                adView?.visibility = GONE
+                adView?.isVisible = false
             }
         }
     }

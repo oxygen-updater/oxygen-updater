@@ -22,6 +22,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
@@ -187,7 +188,7 @@ class UpdateInformationFragment : AbstractFragment() {
         }
 
         // Hide the loading screen
-        updateInformationProgressBar.visibility = GONE
+        updateInformationProgressBar.isVisible = false
 
         if (updateData.id == null
             || updateData.isSystemIsUpToDateCheck(settingsManager)
@@ -232,7 +233,7 @@ class UpdateInformationFragment : AbstractFragment() {
         // Show "System is up to date" view.
         systemIsUpToDateStub?.inflate()
         // hide the loading shimmer
-        shimmerFrameLayout.visibility = GONE
+        shimmerFrameLayout.isVisible = false
 
         // Set the current OxygenOS version if available.
         systemIsUpToDateVersionTextView.apply {
@@ -279,9 +280,9 @@ class UpdateInformationFragment : AbstractFragment() {
         // Set "No Update Information Is Available" button if needed.
         if (!updateData.isUpdateInformationAvailable) {
             systemIsUpToDateStatisticsButton.visibility = VISIBLE
-            systemIsUpToDateChangelogView.visibility = GONE
+            systemIsUpToDateChangelogView.isVisible = false
         } else {
-            systemIsUpToDateStatisticsButton.visibility = GONE
+            systemIsUpToDateStatisticsButton.isVisible = false
             systemIsUpToDateChangelogView.visibility = VISIBLE
 
             systemIsUpToDateChangelogView.setOnClickListener { updateChangelogDialog.show() }
@@ -303,7 +304,7 @@ class UpdateInformationFragment : AbstractFragment() {
         // Show "System update available" view.
         updateInformationStub?.inflate()
         // hide the loading shimmer
-        shimmerFrameLayout.visibility = GONE
+        shimmerFrameLayout.isVisible = false
 
         val formattedOxygenOsVersion = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
             if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {
@@ -331,8 +332,8 @@ class UpdateInformationFragment : AbstractFragment() {
         } else {
             updateBannerText(getString(R.string.update_information_banner_update_available, formattedOxygenOsVersion))
 
-            footerTextView.visibility = GONE
-            footerDivider.visibility = GONE
+            footerTextView.isVisible = false
+            footerDivider.isVisible = false
         }
 
         // Display available update version number.
@@ -525,9 +526,9 @@ class UpdateInformationFragment : AbstractFragment() {
                 downloadUpdateTextView.setText(R.string.download)
                 downloadSizeTextView.text = getString(R.string.download_size_megabyte, updateData?.downloadSizeInMegabytes)
 
-                downloadProgressBar.visibility = GONE
-                downloadActionButton.visibility = GONE
-                downloadDetailsTextView.visibility = GONE
+                downloadProgressBar.isVisible = false
+                downloadActionButton.isVisible = false
+                downloadDetailsTextView.isVisible = false
 
                 downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPrimary)
 
@@ -600,8 +601,8 @@ class UpdateInformationFragment : AbstractFragment() {
 
                 downloadUpdateTextView.setText(R.string.downloaded)
 
-                downloadProgressBar.visibility = GONE
-                downloadDetailsTextView.visibility = GONE
+                downloadProgressBar.isVisible = false
+                downloadDetailsTextView.isVisible = false
 
                 initDownloadActionButton(false)
 
@@ -617,7 +618,7 @@ class UpdateInformationFragment : AbstractFragment() {
                 downloadDetailsTextView.setText(R.string.download_progress_text_verifying)
 
                 downloadProgressBar.visibility = VISIBLE
-                downloadActionButton.visibility = GONE
+                downloadActionButton.isVisible = false
                 downloadDetailsTextView.visibility = VISIBLE
 
                 downloadLayout.isEnabled = true

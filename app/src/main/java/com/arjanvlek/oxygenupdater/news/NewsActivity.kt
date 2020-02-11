@@ -7,6 +7,7 @@ import android.os.Handler
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.BuildConfig
@@ -47,14 +48,14 @@ class NewsActivity : SupportActionBarActivity() {
 
     fun enableLoadingState() {
         progressBar.visibility = VISIBLE
-        newsLayout.visibility = GONE
+        newsLayout.isVisible = false
 
         // Display the title of the article.
         collapsingToolbarLayout.title = getString(R.string.loading)
     }
 
     fun disableLoadingState() {
-        progressBar.visibility = GONE
+        progressBar.isVisible = false
         newsLayout.visibility = VISIBLE
     }
 
@@ -98,7 +99,7 @@ class NewsActivity : SupportActionBarActivity() {
                     }
 
                     // Hide the last updated view.
-                    newsDatePublished.visibility = GONE
+                    newsDatePublished.isVisible = false
 
                     newsRetryButton.apply {
                         visibility = VISIBLE
@@ -109,7 +110,7 @@ class NewsActivity : SupportActionBarActivity() {
                 return@getNewsItem
             }
 
-            newsRetryButton.visibility = GONE
+            newsRetryButton.isVisible = false
 
             val locale = AppLocale.get()
 

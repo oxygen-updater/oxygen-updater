@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils
 import android.widget.CompoundButton
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -262,7 +263,7 @@ class InstallActivity : SupportActionBarActivity() {
             additionalZipFileClearButton.visibility = VISIBLE
         } else {
             additionalZipFilePath.setText(R.string.install_zip_file_placeholder)
-            additionalZipFileClearButton.visibility = GONE
+            additionalZipFileClearButton.isVisible = false
         }
     }
 

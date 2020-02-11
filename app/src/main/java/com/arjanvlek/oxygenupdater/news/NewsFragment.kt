@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arjanvlek.oxygenupdater.R
@@ -64,7 +64,7 @@ class NewsFragment : AbstractFragment() {
     }
 
     private fun displayNewsItems(newsItems: List<NewsItem>, callback: () -> Unit) {
-        shimmerFrameLayout.visibility = GONE
+        shimmerFrameLayout.isVisible = false
 
         if (newsItems.isNullOrEmpty()) {
             displayEmptyState()
@@ -111,7 +111,7 @@ class NewsFragment : AbstractFragment() {
                         displayEmptyState()
                     }
                 } else {
-                    emptyStateLayout.visibility = GONE
+                    emptyStateLayout.isVisible = false
                 }
             }
         }

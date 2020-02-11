@@ -60,10 +60,10 @@
 
 	<com.google.android.gms.ads.AdView
 		android:id="@+id/updateInformationAdView"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom|center_horizontal"
 		android:layout_marginBottom="0dp"
-		app:adSize="BANNER"
+		app:adSize="SMART_BANNER"
 		app:adUnitId="@string/advertising_banner_unit_id" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

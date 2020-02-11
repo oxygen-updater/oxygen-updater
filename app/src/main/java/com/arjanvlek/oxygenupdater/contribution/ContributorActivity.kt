@@ -5,8 +5,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
@@ -26,8 +26,8 @@ class ContributorActivity : SupportActionBarActivity() {
         setContentView(R.layout.activity_contributor)
 
         if (intent.getBooleanExtra(INTENT_HIDE_ENROLLMENT, false)) {
-            contributeCheckbox.visibility = GONE
-            contributeSaveButton.visibility = GONE
+            contributeCheckbox.isVisible = false
+            contributeSaveButton.isVisible = false
 
             saveOptionsHidden.compareAndSet(false, true)
         }

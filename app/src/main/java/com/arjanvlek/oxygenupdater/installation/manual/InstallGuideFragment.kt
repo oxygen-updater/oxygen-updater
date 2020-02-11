@@ -6,12 +6,12 @@ import android.util.DisplayMetrics
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
@@ -97,7 +97,7 @@ class InstallGuideFragment : Fragment() {
         }
 
         // Hide the loading screen of the install guide page.
-        shimmerFrameLayout.visibility = GONE
+        shimmerFrameLayout.isVisible = false
         installGuideTitle.visibility = VISIBLE
         installGuideText.visibility = VISIBLE
 
