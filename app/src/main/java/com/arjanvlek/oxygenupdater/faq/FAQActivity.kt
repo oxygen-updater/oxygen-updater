@@ -5,8 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
@@ -112,7 +110,7 @@ class FAQActivity : SupportActionBarActivity() {
      * @param hasNetwork Whether the device has a network connection or not.
      */
     private fun switchViews(hasNetwork: Boolean) {
-        noNetworkView.visibility = if (hasNetwork) GONE else VISIBLE
-        webView.visibility = if (hasNetwork) VISIBLE else GONE
+        noNetworkView.isVisible = !hasNetwork
+        webView.isVisible = hasNetwork
     }
 }

@@ -6,7 +6,6 @@ import android.util.DisplayMetrics
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
@@ -86,8 +85,8 @@ class InstallGuideFragment : Fragment() {
 
         // Display a reminder to write everything down on the first page.
         if (isFirstPage) {
-            installGuideHeader.visibility = VISIBLE
-            installGuideTip.visibility = VISIBLE
+            installGuideHeader.isVisible = true
+            installGuideTip.isVisible = true
         }
 
         if (installGuidePage.deviceId == null || installGuidePage.updateMethodId == null) {
@@ -98,14 +97,14 @@ class InstallGuideFragment : Fragment() {
 
         // Hide the loading screen of the install guide page.
         shimmerFrameLayout.isVisible = false
-        installGuideTitle.visibility = VISIBLE
-        installGuideText.visibility = VISIBLE
+        installGuideTitle.isVisible = true
+        installGuideText.isVisible = true
 
         // Display the "Close" button on the last page.
         if (pageNumber == ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES) {
             installGuideCloseButton.apply {
                 setOnClickListener { activity?.finish() }
-                visibility = VISIBLE
+                isVisible = true
             }
         }
     }
@@ -138,12 +137,12 @@ class InstallGuideFragment : Fragment() {
                 .load(completeImageUrl(installGuidePage.imageUrl, installGuidePage.fileExtension))
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        installGuideImage.visibility = VISIBLE
+                        installGuideImage.isVisible = true
                         return false
                     }
 
                     override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        installGuideImage.visibility = VISIBLE
+                        installGuideImage.isVisible = true
                         return false
                     }
                 })
@@ -181,7 +180,7 @@ class InstallGuideFragment : Fragment() {
 
         view.apply {
             setImageDrawable(image)
-            visibility = VISIBLE
+            isVisible = true
         }
     }
 

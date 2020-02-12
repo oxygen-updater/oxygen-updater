@@ -8,8 +8,8 @@ import android.os.Handler
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -76,7 +76,7 @@ open class MessageDialog(
 
     private fun MaterialButton.setup(string: String?, onClickListener: View.OnClickListener, @DrawableRes drawableResId: Int? = null) {
         string?.let {
-            visibility = VISIBLE
+            isVisible = true
             text = it
             setOnClickListener(onClickListener)
         }

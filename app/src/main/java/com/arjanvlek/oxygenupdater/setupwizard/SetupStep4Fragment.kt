@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
@@ -60,7 +61,7 @@ class SetupStep4Fragment : AbstractFragment() {
             }
         } else {
             if (settingsManager!!.containsPreference(SettingsManager.PROPERTY_DEVICE_ID)) {
-                progressBar.visibility = View.VISIBLE
+                progressBar.isVisible = true
 
                 applicationData?.serverConnector!!.getUpdateMethods(settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, 1L)) {
                     fillUpdateMethodSettings(it)
@@ -140,7 +141,7 @@ class SetupStep4Fragment : AbstractFragment() {
                 }
             }
 
-            progressBar.visibility = View.GONE
+            progressBar.isVisible = false
         }
     }
 }

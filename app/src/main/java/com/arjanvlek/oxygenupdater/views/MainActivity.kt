@@ -8,13 +8,10 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
@@ -45,13 +42,8 @@ import com.arjanvlek.oxygenupdater.news.NewsFragment
 import com.arjanvlek.oxygenupdater.notifications.Dialogs
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber.subscribe
-import com.arjanvlek.oxygenupdater.settings.SettingsActivity.Companion.SKU_AD_FREE
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_AD_FREE
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper.IabAsyncInProgressException
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2
 import com.arjanvlek.oxygenupdater.updateinformation.ServerMessageBar
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment
 import com.google.android.gms.ads.AdListener
@@ -242,12 +234,12 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         // Position the app UI  to be below the last added server message bar
         if (createdServerMessageBars.isNotEmpty()) {
             serverMessageLayout.apply {
-                // visibility = VISIBLE
+                // isVisible = true
 
                 setOnClickListener {
                     children.forEach {
                         if (it is ServerMessageBar) {
-                            it.visibility = if (it.visibility == VISIBLE) GONE else VISIBLE
+                            it.isVisible = !it.isVisible
                         } else if (it is TextView) {
                             it.text = if (it.text == "Tap here to view notices") "Tap here to collapse" else "Tap here to view notices"
                         }
@@ -317,10 +309,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private fun setupAds() {
         val application = application as ApplicationData
 
-        if (application.checkPlayServices(this, false)) {
-            MobileAds.initialize(this, getString(R.string.advertising_app_id))
-        } else {
-            Toast.makeText(application, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
+        if (!application.checkPlayServices(this, false)) {
+            Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
         }
 
         if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
@@ -333,26 +323,27 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
 
         adView = updateInformationAdView
-        checkAdSupportStatus { adsAreSupported ->
+        Utils.checkAdSupportStatus(this) { adsAreSupported ->
             if (adsAreSupported) {
-                adView?.adListener = object : AdListener() {
-                    override fun onAdLoaded() {
-                        super.onAdLoaded()
+                adView?.apply {
+                    isVisible = true
+                    loadAd(buildAdRequest())
+                    adListener = object : AdListener() {
+                        override fun onAdLoaded() {
+                            super.onAdLoaded()
 
-                        // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
-                        // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
-                        // which can only be calculated once the AdView has been drawn on the screen
-                        adView?.post { viewPager.updatePadding(bottom = adView!!.height) }
+                            // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
+                            // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
+                            // which can only be calculated once the AdView has been drawn on the screen
+                            post { viewPager.updatePadding(bottom = height) }
+                        }
                     }
                 }
-
-                adView?.isVisible = true
-                showAds()
             } else {
+                adView?.isVisible = false
+
                 // reset viewPager padding
                 viewPager.setPadding(0, 0, 0, 0)
-
-                adView?.isVisible = false
             }
         }
     }
@@ -370,51 +361,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     public override fun onDestroy() {
         super.onDestroy()
         adView?.destroy()
-    }
-
-    /**
-     * Checks if ads should be shown
-     *
-     * @param callback the callback that receives the result: false if user has purchased ad-free, true otherwise
-     */
-    private fun checkAdSupportStatus(callback: KotlinCallback<Boolean>) {
-        val helper = IabHelper(this, PK1.A + "/" + PK2.B)
-
-        helper.startSetup { setupResult ->
-            if (!setupResult.success) {
-                // Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
-                callback.invoke(!settingsManager.getPreference(PROPERTY_AD_FREE, false))
-                return@startSetup
-            }
-
-            try {
-                helper.queryInventoryAsync(true, listOf(SKU_AD_FREE), null) { queryResult, inventory ->
-                    if (!queryResult.success) {
-                        // Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
-                        callback.invoke(!settingsManager.getPreference(PROPERTY_AD_FREE, false))
-                    } else {
-                        if (inventory != null && inventory.hasPurchase(SKU_AD_FREE)) {
-                            // User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
-                            settingsManager.savePreference(PROPERTY_AD_FREE, true)
-                            callback.invoke(false)
-                        } else {
-                            // User has not bought the item and we're online, so ads are definitely supported
-                            callback.invoke(true)
-                        }
-                    }
-                }
-            } catch (e: IabAsyncInProgressException) {
-                // A check is already in progress, so wait 3 secs and try to check again.
-                Handler().postDelayed({ checkAdSupportStatus(callback) }, 3000)
-            }
-        }
-    }
-
-    /**
-     * Loads an ad
-     */
-    private fun showAds() {
-        adView!!.loadAd(buildAdRequest())
     }
 
     fun displayUnsupportedDeviceOsSpecMessage(deviceOsSpec: DeviceOsSpec) {

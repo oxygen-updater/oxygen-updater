@@ -16,6 +16,7 @@ import com.crashlytics.android.core.CrashlyticsCore
 import com.downloader.PRDownloader
 import com.downloader.PRDownloaderConfig
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -54,6 +55,7 @@ class ApplicationData : Application() {
         super.onCreate()
 
         setupCrashReporting()
+        setupMobileAds()
         setupDownloader()
 
         // If it's a debug build, add current device's ID to the list of test device IDs for ads
@@ -63,6 +65,10 @@ class ApplicationData : Application() {
             val deviceId: String = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
             ADS_TEST_DEVICES.add(deviceId)
         }
+    }
+
+    private fun setupMobileAds() {
+        MobileAds.initialize(this, getString(R.string.advertising_app_id))
     }
 
     /**

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -42,8 +42,8 @@ class UpdateChangelogDialog(
         // display a notice if the user's currently installed version doesn't match the version this changelog is meant for
         if (differentVersionChangelogNoticeText != null) {
             differentVersionChangelogNoticeTextView.text = differentVersionChangelogNoticeText
-            differentVersionChangelogNoticeTextView.visibility = View.VISIBLE
-            differentVersionChangelogNoticeDivider.visibility = View.VISIBLE
+            differentVersionChangelogNoticeTextView.isVisible = true
+            differentVersionChangelogNoticeDivider.isVisible = true
         }
     }
 }

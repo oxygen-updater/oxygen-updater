@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -59,7 +58,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             }
         )
 
-        bannerLayout.visibility = View.VISIBLE
+        bannerLayout.isVisible = true
 
         if (!deviceOsSpec.isDeviceOsSpecSupported) {
             bannerLayout.setOnClickListener { (activity as MainActivity?)?.displayUnsupportedDeviceOsSpecMessage(deviceOsSpec) }
@@ -120,7 +119,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
                 text = getString(R.string.download_size_megabyte, totalMemory)
             } else {
                 device_information_memory_label.isVisible = false
-                visibility = GONE
+                isVisible = false
             }
         }
 
@@ -132,7 +131,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
                 text = oxygenOSVersion
             } else {
                 device_information_oxygen_os_ver_label.isVisible = false
-                visibility = GONE
+                isVisible = false
             }
         }
 
@@ -143,7 +142,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
                 text = oxygenOSOTAVersion
             } else {
-                visibility = GONE
+                isVisible = false
             }
         }
 
@@ -161,7 +160,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
                 text = securityPatchDate
             } else {
                 device_information_os_patch_level_label.isVisible = false
-                visibility = GONE
+                isVisible = false
             }
         }
 
@@ -173,7 +172,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
                 text = serialNumber
             } else {
                 device_information_serial_number_label.isVisible = false
-                visibility = GONE
+                isVisible = false
             }
         }
     }

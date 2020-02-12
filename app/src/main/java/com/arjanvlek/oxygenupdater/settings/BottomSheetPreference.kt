@@ -7,11 +7,12 @@ import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.res.TypedArrayUtils
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.preference.Preference
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.logger.Logger
@@ -211,10 +212,10 @@ class BottomSheetPreference : Preference {
      */
     private fun setText(textView: TextView, text: String?) {
         if (text != null) {
-            textView.visibility = View.VISIBLE
+            textView.isVisible = true
             textView.text = text
         } else {
-            textView.visibility = View.GONE
+            textView.isVisible = false
         }
     }
 
@@ -427,7 +428,7 @@ class BottomSheetPreference : Preference {
             val dialogItemLayout = itemListContainer.getChildAt(selectedIndex) as LinearLayout
             val checkmarkView = dialogItemLayout.findViewById<ImageView>(R.id.dialog_item_checkmark)
 
-            checkmarkView.visibility = View.INVISIBLE
+            checkmarkView.isInvisible = true
             val outValue = TypedValue()
             mContext.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
             dialogItemLayout.setBackgroundResource(outValue.resourceId)
@@ -446,7 +447,7 @@ class BottomSheetPreference : Preference {
             val dialogItemLayout = itemListContainer.getChildAt(selectedIndex) as LinearLayout
             val checkmarkView = dialogItemLayout.findViewById<ImageView>(R.id.dialog_item_checkmark)
 
-            checkmarkView.visibility = View.VISIBLE
+            checkmarkView.isVisible = true
             dialogItemLayout.setBackgroundResource(R.drawable.rounded_overlay)
 
             logVerbose(TAG, String.format(Locale.getDefault(), "Item #%d marked selected with title='%s', and subtitle='%s'", selectedIndex, title, caption))

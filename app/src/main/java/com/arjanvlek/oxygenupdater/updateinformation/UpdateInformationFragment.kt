@@ -12,8 +12,6 @@ import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
@@ -129,7 +127,7 @@ class UpdateInformationFragment : AbstractFragment() {
      */
     private fun load() {
         // show the loading shimmer
-        shimmerFrameLayout.visibility = VISIBLE
+        shimmerFrameLayout.isVisible = true
 
         Crashlytics.setUserIdentifier(
             "Device: "
@@ -219,7 +217,7 @@ class UpdateInformationFragment : AbstractFragment() {
     }
 
     private fun updateBannerText(string: String) {
-        bannerLayout.visibility = VISIBLE
+        bannerLayout.isVisible = true
         bannerTextView.text = string
     }
 
@@ -240,10 +238,10 @@ class UpdateInformationFragment : AbstractFragment() {
             val oxygenOSVersion = (activity?.application as ApplicationData).systemVersionProperties?.oxygenOSVersion
 
             if (oxygenOSVersion != ApplicationData.NO_OXYGEN_OS) {
-                visibility = VISIBLE
+                isVisible = true
                 text = getString(R.string.update_information_oxygen_os_version, oxygenOSVersion)
             } else {
-                visibility = GONE
+                isVisible = false
             }
         }
 
@@ -279,11 +277,11 @@ class UpdateInformationFragment : AbstractFragment() {
 
         // Set "No Update Information Is Available" button if needed.
         if (!updateData.isUpdateInformationAvailable) {
-            systemIsUpToDateStatisticsButton.visibility = VISIBLE
+            systemIsUpToDateStatisticsButton.isVisible = true
             systemIsUpToDateChangelogView.isVisible = false
         } else {
             systemIsUpToDateStatisticsButton.isVisible = false
-            systemIsUpToDateChangelogView.visibility = VISIBLE
+            systemIsUpToDateChangelogView.isVisible = true
 
             systemIsUpToDateChangelogView.setOnClickListener { updateChangelogDialog.show() }
         }
@@ -327,8 +325,8 @@ class UpdateInformationFragment : AbstractFragment() {
             // Format footer based on system version installed.
             footerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)
 
-            footerTextView.visibility = VISIBLE
-            footerDivider.visibility = VISIBLE
+            footerTextView.isVisible = true
+            footerDivider.isVisible = true
         } else {
             updateBannerText(getString(R.string.update_information_banner_update_available, formattedOxygenOsVersion))
 
@@ -363,7 +361,7 @@ class UpdateInformationFragment : AbstractFragment() {
     private fun showDownloadLink(updateData: UpdateData?) {
         if (updateData != null) {
             downloadLinkTextView.apply {
-                visibility = VISIBLE
+                isVisible = true
                 movementMethod = LinkMovementMethod.getInstance()
                 text = SpannableString(
                     getString(R.string.update_information_download_link, updateData.downloadUrl)
@@ -550,8 +548,8 @@ class UpdateInformationFragment : AbstractFragment() {
 
                 downloadUpdateTextView.setText(R.string.downloading)
 
-                downloadProgressBar.visibility = VISIBLE
-                downloadDetailsTextView.visibility = VISIBLE
+                downloadProgressBar.isVisible = true
+                downloadDetailsTextView.isVisible = true
 
                 downloadLayout.isEnabled = true
                 downloadLayout.isClickable = false
@@ -576,8 +574,8 @@ class UpdateInformationFragment : AbstractFragment() {
                 downloadUpdateTextView.setText(R.string.paused)
                 downloadDetailsTextView.setText(R.string.download_progress_text_paused)
 
-                downloadProgressBar.visibility = VISIBLE
-                downloadDetailsTextView.visibility = VISIBLE
+                downloadProgressBar.isVisible = true
+                downloadDetailsTextView.isVisible = true
 
                 downloadLayout.isEnabled = true
                 downloadLayout.isClickable = false
@@ -617,9 +615,9 @@ class UpdateInformationFragment : AbstractFragment() {
                 downloadUpdateTextView.setText(R.string.download_verifying)
                 downloadDetailsTextView.setText(R.string.download_progress_text_verifying)
 
-                downloadProgressBar.visibility = VISIBLE
+                downloadProgressBar.isVisible = true
                 downloadActionButton.isVisible = false
-                downloadDetailsTextView.visibility = VISIBLE
+                downloadDetailsTextView.isVisible = true
 
                 downloadLayout.isEnabled = true
                 downloadLayout.isClickable = false
@@ -630,8 +628,8 @@ class UpdateInformationFragment : AbstractFragment() {
 
                 downloadDetailsTextView.setText(R.string.download_waiting_for_network)
 
-                downloadProgressBar.visibility = VISIBLE
-                downloadDetailsTextView.visibility = VISIBLE
+                downloadProgressBar.isVisible = true
+                downloadDetailsTextView.isVisible = true
 
                 downloadProgressBar.isIndeterminate = true
             }
@@ -660,7 +658,7 @@ class UpdateInformationFragment : AbstractFragment() {
             }
         }
 
-        downloadActionButton.visibility = VISIBLE
+        downloadActionButton.isVisible = true
         downloadActionButton.setImageResourceWithTint(drawableResId, colorResId)
         downloadActionButton.setOnClickListener(onClickListener)
     }

@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.ProgressBar
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
@@ -75,6 +76,6 @@ class SetupStep3Fragment : AbstractFragment() {
             }
         }
 
-        progressBar.visibility = View.GONE
+        progressBar.isVisible = false
     }
 }

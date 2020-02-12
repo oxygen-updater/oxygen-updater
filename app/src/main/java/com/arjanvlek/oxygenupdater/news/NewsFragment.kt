@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -55,7 +54,7 @@ class NewsFragment : AbstractFragment() {
             return
         }
 
-        shimmerFrameLayout.visibility = VISIBLE
+        shimmerFrameLayout.isVisible = true
 
         val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
@@ -161,12 +160,12 @@ class NewsFragment : AbstractFragment() {
     }
 
     private fun updateBannerText(string: String) {
-        bannerLayout.visibility = VISIBLE
+        bannerLayout.isVisible = true
         bannerTextView.text = string
     }
 
     private fun displayEmptyState(isAllReadEmptyState: Boolean = false) {
-        emptyStateLayout.visibility = VISIBLE
+        emptyStateLayout.isVisible = true
 
         emptyStateHeader.text = if (isAllReadEmptyState) {
             getString(R.string.news_empty_state_all_read_header)

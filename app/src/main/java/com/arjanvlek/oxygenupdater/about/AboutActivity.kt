@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.about
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
-import android.view.View
+import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
@@ -51,7 +51,7 @@ class AboutActivity : SupportActionBarActivity() {
     }
 
     private fun updateBannerText(latestAppVersion: String) {
-        bannerLayout.visibility = View.VISIBLE
+        bannerLayout.isVisible = true
         bannerTextView.text = getString(R.string.new_app_version_detailed, latestAppVersion)
     }
 }

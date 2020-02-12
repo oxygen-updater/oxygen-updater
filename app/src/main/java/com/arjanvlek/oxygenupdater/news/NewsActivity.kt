@@ -5,9 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.BuildConfig
@@ -20,11 +19,10 @@ import com.arjanvlek.oxygenupdater.internal.server.NetworkException
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
-import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.views.NewsAdapter
 import com.arjanvlek.oxygenupdater.views.SupportActionBarActivity
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_news.*
 
@@ -41,13 +39,56 @@ class NewsActivity : SupportActionBarActivity() {
 
         setContentView(R.layout.activity_news)
 
+        setupAds()
+
         enableLoadingState()
 
         loadNewsItem()
     }
 
+    private fun setupAds() {
+        Utils.checkAdSupportStatus(this) { adsAreSupported ->
+            if (adsAreSupported) {
+                newsArticleAdView.apply {
+                    isVisible = true
+                    loadAd(buildAdRequest())
+                    adListener = object : AdListener() {
+                        override fun onAdLoaded() {
+                            super.onAdLoaded()
+
+                            // need to add spacing between NestedScrollView contents and the AdView to avoid overlapping the last item
+                            // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
+                            // which can only be calculated once the AdView has been drawn on the screen
+                            post { nestedScrollView.updatePadding(bottom = height) }
+                        }
+                    }
+                }
+
+                // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
+                if (intent.getBooleanExtra(INTENT_START_WITH_AD, false)) {
+                    InterstitialAd(application).apply {
+                        adUnitId = getString(R.string.advertising_interstitial_unit_id)
+                        loadAd(buildAdRequest())
+
+                        // The ad will be shown after 5 seconds.
+                        Handler().postDelayed({
+                            if (!isFinishing) {
+                                show()
+                            }
+                        }, 5000)
+                    }
+                }
+            } else {
+                // reset NestedScrollView padding
+                nestedScrollView.setPadding(0, 0, 0, 0)
+
+                newsArticleAdView.isVisible = false
+            }
+        }
+    }
+
     fun enableLoadingState() {
-        progressBar.visibility = VISIBLE
+        progressBar.isVisible = true
         newsLayout.isVisible = false
 
         // Display the title of the article.
@@ -56,7 +97,7 @@ class NewsActivity : SupportActionBarActivity() {
 
     fun disableLoadingState() {
         progressBar.isVisible = false
-        newsLayout.visibility = VISIBLE
+        newsLayout.isVisible = true
     }
 
     override fun onResume() {
@@ -102,7 +143,7 @@ class NewsActivity : SupportActionBarActivity() {
                     newsDatePublished.isVisible = false
 
                     newsRetryButton.apply {
-                        visibility = VISIBLE
+                        isVisible = true
                         setOnClickListener { loadNewsItem(1) }
                     }
                 }
@@ -128,7 +169,7 @@ class NewsActivity : SupportActionBarActivity() {
                 // must be done to avoid the white background in dark themes
                 setBackgroundColor(Color.TRANSPARENT)
 
-                visibility = VISIBLE
+                isVisible = true
                 settings.javaScriptEnabled = true
 
                 if (newsItem.getText(locale).isNullOrEmpty()) {
@@ -156,13 +197,13 @@ class NewsActivity : SupportActionBarActivity() {
             // Display the last update time of the article.
             newsDatePublished.apply {
                 if (newsItem.dateLastEdited == null && newsItem.datePublished != null) {
-                    visibility = VISIBLE
+                    isVisible = true
                     text = getString(R.string.news_date_published, Utils.formatDateTime(application, newsItem.datePublished))
                 } else if (newsItem.dateLastEdited != null) {
-                    visibility = VISIBLE
+                    isVisible = true
                     text = getString(R.string.news_date_published, Utils.formatDateTime(application, newsItem.dateLastEdited))
                 } else {
-                    visibility = GONE
+                    isVisible = false
                 }
             }
 
@@ -177,23 +218,8 @@ class NewsActivity : SupportActionBarActivity() {
             // Mark the item as read on the server (to increase times read counter)
             if (application != null && application is ApplicationData && Utils.checkNetworkConnection(application)) {
                 (application as ApplicationData).serverConnector!!.markNewsItemAsRead(newsItem.id) { result: ServerPostResult? ->
-                    if (result != null && !result.success) {
+                    if (result?.success == false) {
                         logError("NewsActivity", NetworkException("Error marking news item as read on the server:" + result.errorMessage))
-                    }
-
-                    // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
-                    if (intent.getBooleanExtra(INTENT_START_WITH_AD, false) && !SettingsManager(application).getPreference(PROPERTY_AD_FREE, false)) {
-                        InterstitialAd(application).apply {
-                            adUnitId = getString(R.string.advertising_interstitial_unit_id)
-                            loadAd(buildAdRequest())
-
-                            // The ad will be shown after 5 seconds.
-                            Handler().postDelayed({
-                                if (!isFinishing) {
-                                    show()
-                                }
-                            }, 5000)
-                        }
                     }
                 }
             }

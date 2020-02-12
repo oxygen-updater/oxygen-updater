@@ -1,7 +1,9 @@
 package com.arjanvlek.oxygenupdater.internal
 
+import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
+import android.os.Handler
 import android.text.format.DateFormat
 import android.util.TypedValue
 import androidx.annotation.Dimension
@@ -17,6 +19,11 @@ import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.SUPPORTED_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
+import com.arjanvlek.oxygenupdater.settings.SettingsActivity
+import com.arjanvlek.oxygenupdater.settings.SettingsManager
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.IabHelper
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK1
+import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.PK2
 import org.joda.time.LocalDateTime
 import java.util.*
 
@@ -27,28 +34,60 @@ object Utils {
     private val random = Random()
 
     /**
-     * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later
-     * versions
+     * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later versions
      *
      * @param string the string to test
      *
      * @return true if string is a number, false otherwise
      */
-    fun isNumeric(string: String): Boolean {
-        return try {
-            string.toLong()
-            true
-        } catch (e: NumberFormatException) {
-            false
+    fun isNumeric(string: String) = try {
+        string.toLong()
+        true
+    } catch (e: NumberFormatException) {
+        false
+    }
+
+    fun dpToPx(context: Context, @Dimension(unit = Dimension.DP) dp: Float) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics)
+
+    fun spToPx(context: Context, @Dimension(unit = Dimension.SP) sp: Float) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.resources.displayMetrics)
+
+    /**
+     * Checks if ads should be shown
+     *
+     * @param callback the callback that receives the result: false if user has purchased ad-free, true otherwise
+     */
+    fun checkAdSupportStatus(activity: Activity, callback: KotlinCallback<Boolean>) {
+        val settingsManager = SettingsManager(activity)
+        val helper = IabHelper(activity, PK1.A + "/" + PK2.B)
+
+        helper.startSetup { setupResult ->
+            if (!setupResult.success) {
+                // Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
+                callback.invoke(!settingsManager.getPreference(SettingsManager.PROPERTY_AD_FREE, false))
+                return@startSetup
+            }
+
+            try {
+                helper.queryInventoryAsync(true, listOf(SettingsActivity.SKU_AD_FREE), null) { queryResult, inventory ->
+                    if (!queryResult.success) {
+                        // Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
+                        callback.invoke(!settingsManager.getPreference(SettingsManager.PROPERTY_AD_FREE, false))
+                    } else {
+                        if (inventory != null && inventory.hasPurchase(SettingsActivity.SKU_AD_FREE)) {
+                            // User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
+                            settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
+                            callback.invoke(false)
+                        } else {
+                            // User has not bought the item and we're online, so ads are definitely supported
+                            callback.invoke(true)
+                        }
+                    }
+                }
+            } catch (e: IabHelper.IabAsyncInProgressException) {
+                // A check is already in progress, so wait 3 secs and try to check again.
+                Handler().postDelayed({ checkAdSupportStatus(activity, callback) }, 3000)
+            }
         }
-    }
-
-    fun dpToPx(context: Context, @Dimension(unit = Dimension.DP) dp: Float): Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics)
-    }
-
-    fun spToPx(context: Context, @Dimension(unit = Dimension.SP) sp: Float): Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.resources.displayMetrics)
     }
 
     fun checkNetworkConnection(context: Context?): Boolean {
@@ -138,14 +177,10 @@ object Utils {
         }
     }
 
-    fun getSystemService(context: Context?, serviceName: String): Any? {
-        return context?.getSystemService(serviceName)
-    }
+    fun getSystemService(context: Context?, serviceName: String) = context?.getSystemService(serviceName)
 
     /**
      * Min is inclusive and max is exclusive in this case
      */
-    fun randomBetween(min: Int, max: Int): Int {
-        return random.nextInt(max - min) + min
-    }
+    fun randomBetween(min: Int, max: Int) = random.nextInt(max - min) + min
 }

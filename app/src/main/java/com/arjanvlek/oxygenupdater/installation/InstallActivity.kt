@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.SparseArray
 import android.view.MenuItem
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.CompoundButton
@@ -125,12 +123,12 @@ class InstallActivity : SupportActionBarActivity() {
         initSettingsSwitch(SettingsManager.PROPERTY_BACKUP_DEVICE, true)
 
         initSettingsSwitch(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false, CompoundButton.OnCheckedChangeListener { _, isChecked ->
-            additionalZipContainer.visibility = if (isChecked) VISIBLE else GONE
+            additionalZipContainer.isVisible = isChecked
 
             settingsManager.savePreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, isChecked)
         })
 
-        additionalZipContainer.visibility = if (settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)) VISIBLE else GONE
+        additionalZipContainer.isVisible = settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)
 
         initSettingsSwitch(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true)
         initSettingsSwitch(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true)
@@ -223,7 +221,7 @@ class InstallActivity : SupportActionBarActivity() {
         switchView(R.layout.activity_install_guide)
 
         updateInstallationInstructionsPager.apply {
-            visibility = VISIBLE
+            isVisible = true
             offscreenPageLimit = 4 // Install guide is 5 pages max. So there can be only 4 off-screen.
             adapter = InstallGuideSectionsPagerAdapter(supportFragmentManager)
 
@@ -260,7 +258,7 @@ class InstallActivity : SupportActionBarActivity() {
             }
 
             additionalZipFilePath.text = text
-            additionalZipFileClearButton.visibility = VISIBLE
+            additionalZipFileClearButton.isVisible = true
         } else {
             additionalZipFilePath.setText(R.string.install_zip_file_placeholder)
             additionalZipFileClearButton.isVisible = false

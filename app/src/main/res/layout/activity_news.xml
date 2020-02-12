@@ -50,6 +50,7 @@
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<androidx.core.widget.NestedScrollView
+		android:id="@+id/nestedScrollView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -111,4 +112,13 @@
 			</LinearLayout>
 		</FrameLayout>
 	</androidx.core.widget.NestedScrollView>
+
+	<com.google.android.gms.ads.AdView
+		android:id="@+id/newsArticleAdView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|center_horizontal"
+		android:layout_marginBottom="0dp"
+		app:adSize="SMART_BANNER"
+		app:adUnitId="@string/advertising_news_banner_unit_id" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
