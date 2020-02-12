@@ -329,6 +329,8 @@ class UpdateInformationFragment : AbstractFragment() {
             footerDivider.isVisible = true
         } else {
             updateBannerText(getString(R.string.update_information_banner_update_available, formattedOxygenOsVersion))
+            // display badge to indicate a new system update is available
+            (activity as MainActivity?)?.updateTabBadge(1)
 
             footerTextView.isVisible = false
             footerDivider.isVisible = false

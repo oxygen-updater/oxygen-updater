@@ -8,6 +8,7 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
@@ -17,6 +18,7 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.IntRange
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -34,6 +36,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
+import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 import com.arjanvlek.oxygenupdater.internal.Utils
 import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
@@ -294,12 +297,77 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             adapter = SectionsPagerAdapter(supportFragmentManager)
             tabs.setupWithViewPager(this)
 
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {}
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+                override fun onPageSelected(position: Int) {
+                    when (position) {
+                        0, 1 -> hideTabBadge(position, 1000)
+                        else -> {
+                            // no-op
+                        }
+                    }
+                }
+            })
+
             appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
                 val params = this.layoutParams as CoordinatorLayout.LayoutParams
                 params.bottomMargin = appBarLayout.totalScrollRange - abs(verticalOffset)
 
                 this.layoutParams = params
             })
+        }
+    }
+
+    /**
+     * Update the state of a [Tab](com.google.android.material.tabs.TabLayout.Tab)'s [BadgeDrawable](com.google.android.material.badge.BadgeDrawable)
+     *
+     * @param position position of the tab/fragment
+     * @param show flag to control the badge's visibility
+     * @param count optional number to display in the badge
+     *
+     * @see hideTabBadge
+     */
+    fun updateTabBadge(@IntRange(from = 0, to = 2) position: Int, show: Boolean = true, count: Int? = null) {
+        tabs.getTabAt(position)?.orCreateBadge?.apply {
+            isVisible = show
+
+            if (isVisible) {
+                backgroundColor = if (ThemeUtils.isNightModeActive(this@MainActivity)) {
+                    ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)
+                } else {
+                    Color.WHITE
+                }
+
+                if (count != null /*&& count != 0*/) {
+                    badgeTextColor = ContextCompat.getColor(this@MainActivity, R.color.foreground)
+                    number = count
+                    maxCharacterCount = 3
+                }
+            }
+        }
+    }
+
+    /**
+     * Hide the [Tab]](com.google.android.material.tabs.TabLayout.Tab)'s [BadgeDrawable](com.google.android.material.badge.BadgeDrawable) after a specified delay
+     *
+     * Even though [updateTabBadge] can be used to hide a badge, this function is different because it only hides an existing badge, after a specified delay.
+     * It's meant to be called from the [viewPager]'s `onPageSelected` callback, within this class.
+     * [updateTabBadge] can be called from child fragments to hide the badge immediately, for example, if required after refreshing
+     *
+     * @param position position of the tab/fragment
+     * @param delayMillis the delay, in milliseconds
+     *
+     * @see updateTabBadge
+     */
+    @Suppress("SameParameterValue")
+    private fun hideTabBadge(@IntRange(from = 0, to = 2) position: Int, delayMillis: Long = 0) {
+        tabs.getTabAt(position)?.badge?.apply {
+            Handler().postDelayed({
+                isVisible = false
+            }, delayMillis)
         }
     }
 

@@ -70,7 +70,7 @@ class NewsFragment : AbstractFragment() {
             return
         }
 
-        updateBannerText(getString(R.string.news_unread_count, newsItems.count { !it.read }))
+        updateBannerText(newsItems.count { !it.read })
 
         newsContainer.let { recyclerView ->
             // respect unread articles filtering
@@ -82,7 +82,7 @@ class NewsFragment : AbstractFragment() {
 
             newsAdapter = NewsAdapter(context, activity as MainActivity?, itemList) { newsItemId ->
                 newsAdapter.markItemAsRead(newsItemId)
-                updateBannerText(getString(R.string.news_unread_count, newsAdapter.itemList.count { !it.read }))
+                updateBannerText(newsAdapter.itemList.count { !it.read })
             }
 
             // animate items when they load
@@ -159,9 +159,13 @@ class NewsFragment : AbstractFragment() {
         shimmerFrameLayout.addView(parent)
     }
 
-    private fun updateBannerText(string: String) {
+    private fun updateBannerText(count: Int) {
         bannerLayout.isVisible = true
-        bannerTextView.text = string
+        bannerTextView.text = getString(R.string.news_unread_count, count)
+
+        // display badge with the number of unread news articles
+        // if there aren't any unread articles, the badge is hidden
+        (activity as MainActivity?)?.updateTabBadge(0, count != 0, count)
     }
 
     private fun displayEmptyState(isAllReadEmptyState: Boolean = false) {

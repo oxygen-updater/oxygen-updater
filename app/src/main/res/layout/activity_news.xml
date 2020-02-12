@@ -108,7 +108,9 @@
 					android:id="@+id/webView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_margin="@dimen/spacing_half" />
+					android:layout_marginStart="@dimen/spacing_half"
+					android:layout_marginEnd="@dimen/spacing_half"
+					android:layout_marginBottom="@dimen/spacing_half" />
 			</LinearLayout>
 		</FrameLayout>
 	</androidx.core.widget.NestedScrollView>

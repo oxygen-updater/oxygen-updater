@@ -31,18 +31,15 @@ object ThemeUtils {
      *
      * @return true if night mode is active, else false
      */
-    fun isNightModeActive(context: Context): Boolean {
-        return when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> true
-            Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> false
-            else -> false
-        }
+    fun isNightModeActive(context: Context) = when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+        Configuration.UI_MODE_NIGHT_YES -> true
+        Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+        else -> false
     }
 
-    fun getTertiaryColor(context: Context): Int {
-        val value = TypedValue()
-        context.theme.resolveAttribute(android.R.attr.textColorTertiary, value, true)
-        return value.data
+    fun getTertiaryColor(context: Context) = TypedValue().let {
+        context.theme.resolveAttribute(android.R.attr.textColorTertiary, it, true)
+        it.data
     }
 
     /**
@@ -56,7 +53,6 @@ object ThemeUtils {
      *  * Auto: `MODE_NIGHT_YES` if it's night-time. Otherwise, `MODE_NIGHT_AUTO_BATTERY`
      *  * System: `MODE_NIGHT_FOLLOW_SYSTEM` above Android Pie (9.0). Otherwise, MODE_NIGHT_AUTO_BATTERY
      *
-     *
      * @param context the context
      *
      * @return the [NightMode] to apply using [androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode]
@@ -67,51 +63,49 @@ object ThemeUtils {
         return translateThemeToNightMode(context, Theme.Companion[theme])
     }
 
-    private fun translateThemeToNightMode(context: Context, theme: Theme): Int {
-        @Suppress("REDUNDANT_ELSE_IN_WHEN")
-        return when (theme) {
-            LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-            DARK -> AppCompatDelegate.MODE_NIGHT_YES
-            AUTO -> {
-                val hour = Calendar.getInstance()[Calendar.HOUR_OF_DAY]
+    @Suppress("REDUNDANT_ELSE_IN_WHEN")
+    private fun translateThemeToNightMode(context: Context, theme: Theme) = when (theme) {
+        LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+        DARK -> AppCompatDelegate.MODE_NIGHT_YES
+        AUTO -> {
+            val hour = Calendar.getInstance()[Calendar.HOUR_OF_DAY]
 
-                if (hour in 19..23 || hour in 0..6) {
-                    AppCompatDelegate.MODE_NIGHT_YES
+            if (hour in 19..23 || hour in 0..6) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+            }
+        }
+        SYSTEM -> {
+            val translatedTheme = translateOnePlusTheme(context)
+
+            // if the user has chosen Dark theme for their OnePlus device, honor it.
+            // otherwise resort to Android-provided modes
+            if (translatedTheme == DARK) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else if (translatedTheme == LIGHT) {
+                AppCompatDelegate.MODE_NIGHT_NO
+            } else {
+                // Android Pie (9.0) introduced a night mode system flag that could be set in developer options
+                if (VERSION.SDK_INT >= VERSION_CODES.P && translatedTheme != null) {
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 } else {
                     AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
                 }
             }
-            SYSTEM -> {
-                val translatedTheme = translateOnePlusTheme(context)
+        }
+        else -> {
+            val translatedTheme = translateOnePlusTheme(context)
 
-                // if the user has chosen Dark theme for their OnePlus device, honor it.
-                // otherwise resort to Android-provided modes
-                if (translatedTheme == DARK) {
-                    AppCompatDelegate.MODE_NIGHT_YES
-                } else if (translatedTheme == LIGHT) {
-                    AppCompatDelegate.MODE_NIGHT_NO
+            if (translatedTheme == DARK) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else if (translatedTheme == LIGHT) {
+                AppCompatDelegate.MODE_NIGHT_NO
+            } else {
+                if (VERSION.SDK_INT >= VERSION_CODES.P && translatedTheme != null) {
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 } else {
-                    // Android Pie (9.0) introduced a night mode system flag that could be set in developer options
-                    if (VERSION.SDK_INT >= VERSION_CODES.P && translatedTheme != null) {
-                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                    } else {
-                        AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-                    }
-                }
-            }
-            else -> {
-                val translatedTheme = translateOnePlusTheme(context)
-
-                if (translatedTheme == DARK) {
-                    AppCompatDelegate.MODE_NIGHT_YES
-                } else if (translatedTheme == LIGHT) {
-                    AppCompatDelegate.MODE_NIGHT_NO
-                } else {
-                    if (VERSION.SDK_INT >= VERSION_CODES.P && translatedTheme != null) {
-                        AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                    } else {
-                        AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-                    }
+                    AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
                 }
             }
         }
