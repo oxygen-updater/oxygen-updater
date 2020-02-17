@@ -9,21 +9,15 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.IntRange
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
@@ -38,16 +32,13 @@ import com.arjanvlek.oxygenupdater.deviceinformation.DeviceInformationFragment
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 import com.arjanvlek.oxygenupdater.internal.Utils
-import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.news.NewsFragment
-import com.arjanvlek.oxygenupdater.notifications.Dialogs
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog
 import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber.subscribe
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_AD_FREE
-import com.arjanvlek.oxygenupdater.updateinformation.ServerMessageBar
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdView
@@ -57,7 +48,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import org.joda.time.LocalDateTime
-import java.util.*
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
@@ -67,7 +57,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     lateinit var activityLauncher: ActivityLauncher
         private set
 
-    private var serverMessageBars = ArrayList<ServerMessageBar>()
     private var newsAd: InterstitialAd? = null
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
     private var adView: AdView? = null
@@ -169,91 +158,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 subscribe((application as ApplicationData))
             }
         }
-
-        val application = application as ApplicationData
-        val online = Utils.checkNetworkConnection(application)
-        application.serverConnector?.getInAppMessages(online, { displayServerMessageBars(it) }) { error ->
-            when (error) {
-                ApplicationData.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(this)
-                ApplicationData.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(this)
-            }
-        }
-    }
-
-    /*
-      -------------- METHODS FOR DISPLAYING DATA ON THE FRAGMENT -------------------
-     */
-    private fun addServerMessageBar(view: ServerMessageBar) {
-        // Add the message to the update information screen.
-        // Set the layout params based on the view count.
-        // First view should go below the app update message bar (if visible)
-        // Consecutive views should go below their parent / previous view.
-        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        // position each bar below the previous one
-        if (serverMessageBars.isNotEmpty()) {
-            // params.topToBottom = serverMessageBars[serverMessageBars.size - 1].id
-        }
-
-        view.id = View.generateViewId()
-        view.isVisible = false
-        serverMessageLayout.addView(view, params)
-        serverMessageBars.add(view)
-    }
-
-    private fun deleteAllServerMessageBars() {
-        serverMessageBars.forEach {
-            serverMessageLayout.removeView(it)
-        }
-
-        serverMessageBars = ArrayList()
-    }
-
-    private fun displayServerMessageBars(banners: List<Banner>) {
-        if (isFinishing) {
-            return
-        }
-
-        deleteAllServerMessageBars()
-
-        val createdServerMessageBars = ArrayList<ServerMessageBar>()
-
-        banners.forEach {
-            val bar = ServerMessageBar(this)
-            val backgroundBar = bar.backgroundBar
-            val textView = bar.textView
-
-            backgroundBar.setBackgroundColor(it.getColor(this))
-            textView.text = it.getBannerText(this)
-
-            if (it.getBannerText(this) is Spanned) {
-                textView.movementMethod = LinkMovementMethod.getInstance()
-            }
-
-            addServerMessageBar(bar)
-            createdServerMessageBars.add(bar)
-        }
-
-        // Position the app UI  to be below the last added server message bar
-        if (createdServerMessageBars.isNotEmpty()) {
-            serverMessageLayout.apply {
-                // isVisible = true
-
-                setOnClickListener {
-                    children.forEach {
-                        if (it is ServerMessageBar) {
-                            it.isVisible = !it.isVisible
-                        } else if (it is TextView) {
-                            it.text = if (it.text == "Tap here to view notices") "Tap here to collapse" else "Tap here to view notices"
-                        }
-                    }
-                }
-            }
-        } else {
-            serverMessageLayout.isVisible = false
-        }
-
-        serverMessageBars = createdServerMessageBars
     }
 
     /**

@@ -39,19 +39,22 @@ import com.arjanvlek.oxygenupdater.download.DownloadStatus.NOT_DOWNLOADING
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.VERIFYING
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
+import com.arjanvlek.oxygenupdater.notifications.Dialogs
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showDownloadError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showNoNetworkConnectionError
 import com.arjanvlek.oxygenupdater.notifications.Dialogs.showUpdateAlreadyDownloadedMessage
+import com.arjanvlek.oxygenupdater.notifications.ServerMessagesDialog
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.versionformatter.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.views.AbstractFragment
 import com.arjanvlek.oxygenupdater.views.MainActivity
 import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_update_information.*
-import kotlinx.android.synthetic.main.system_is_up_to_date.*
-import kotlinx.android.synthetic.main.update_information.*
+import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
+import kotlinx.android.synthetic.main.layout_update_information.*
 import org.joda.time.LocalDateTime
 
 class UpdateInformationFragment : AbstractFragment() {
@@ -171,6 +174,36 @@ class UpdateInformationFragment : AbstractFragment() {
                 showNoNetworkConnectionError(activity)
             }
         }
+
+        serverConnector.getInAppMessages(online, { displayServerMessageBars(it) }) { error ->
+            when (error) {
+                ApplicationData.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
+                ApplicationData.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)
+            }
+        }
+    }
+
+    /**
+     * Makes [serverBannerTextView] visible.
+     *
+     * If there are banners that have non-empty text, clicking [serverBannerTextView] will show a [ServerMessagesDialog]
+     */
+    private fun displayServerMessageBars(banners: List<Banner>) {
+        // select only the banners that have a non-empty text (`ServerStatus.kt` has empty text in some cases)
+        val bannerList = banners.filter { !it.getBannerText(context!!).isNullOrBlank() }
+
+        if (!isAdded || bannerList.isEmpty()) {
+            return
+        }
+
+        val dialog = ServerMessagesDialog(context!!, bannerList)
+
+        serverBannerTextView.apply {
+            isVisible = true
+
+            // show dialog
+            setOnClickListener { dialog.show() }
+        }
     }
 
     /**
@@ -229,7 +262,7 @@ class UpdateInformationFragment : AbstractFragment() {
         updateBannerText(getString(R.string.update_information_banner_congrats_latest))
 
         // Show "System is up to date" view.
-        systemIsUpToDateStub?.inflate()
+        systemIsUpToDateLayoutStub?.inflate()
         // hide the loading shimmer
         shimmerFrameLayout.isVisible = false
 
@@ -300,7 +333,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
     private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData) {
         // Show "System update available" view.
-        updateInformationStub?.inflate()
+        updateInformationLayoutStub?.inflate()
         // hide the loading shimmer
         shimmerFrameLayout.isVisible = false
 

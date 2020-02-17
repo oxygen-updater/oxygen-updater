@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.models
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.R
+import com.arjanvlek.oxygenupdater.internal.ThemeUtils
 
 data class ServerMessage(
     var id: Long = 0,
@@ -13,17 +14,20 @@ data class ServerMessage(
     var priority: ServerMessagePriority? = null
 ) : Banner {
 
-    override fun getBannerText(context: Context?): String? {
-        return if (AppLocale.get() == AppLocale.NL) dutchMessage else englishMessage
+    override fun getBannerText(context: Context) = if (AppLocale.get() == AppLocale.NL) dutchMessage else englishMessage
+
+    override fun getColor(context: Context) = when (priority) {
+        ServerMessagePriority.LOW -> ContextCompat.getColor(context, R.color.colorPositive)
+        ServerMessagePriority.MEDIUM -> ContextCompat.getColor(context, R.color.colorWarn)
+        ServerMessagePriority.HIGH -> ContextCompat.getColor(context, R.color.colorError)
+        else -> ThemeUtils.getTertiaryColor(context)
     }
 
-    override fun getColor(context: Context?): Int {
-        return when (priority) {
-            ServerMessagePriority.LOW -> ContextCompat.getColor(context!!, R.color.colorPositive)
-            ServerMessagePriority.MEDIUM -> ContextCompat.getColor(context!!, R.color.colorWarn)
-            ServerMessagePriority.HIGH -> ContextCompat.getColor(context!!, R.color.colorPrimary)
-            else -> ContextCompat.getColor(context!!, R.color.colorPositive)
-        }
+    override fun getDrawableRes(context: Context) = when (priority) {
+        ServerMessagePriority.LOW -> R.drawable.info
+        ServerMessagePriority.MEDIUM -> R.drawable.warning
+        ServerMessagePriority.HIGH -> R.drawable.error_outline
+        else -> R.drawable.info
     }
 
     enum class ServerMessagePriority {

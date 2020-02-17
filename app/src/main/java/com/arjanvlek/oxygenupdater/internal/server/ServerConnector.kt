@@ -187,14 +187,11 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                 // Add the "No connection" bar depending on the network status of the device.
                 if (!online) {
                     inAppBars.add(object : Banner {
-                        override fun getBannerText(context: Context?): String? {
-                            return context!!.getString(R.string.error_no_internet_connection)
-                        }
+                        override fun getBannerText(context: Context) = context.getString(R.string.error_no_internet_connection)
 
-                        override fun getColor(context: Context?): Int {
-                            // since the primary color is red, use that to match the app bar
-                            return ContextCompat.getColor(context!!, R.color.colorPrimary)
-                        }
+                        override fun getColor(context: Context) = ContextCompat.getColor(context, R.color.colorError)
+
+                        override fun getDrawableRes(context: Context) = R.drawable.error_outline
                     })
                 }
 
@@ -211,26 +208,27 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                     when (status) {
                         ServerStatus.Status.MAINTENANCE -> errorCallback.invoke(ApplicationData.SERVER_MAINTENANCE_ERROR)
                         ServerStatus.Status.OUTDATED -> errorCallback.invoke(ApplicationData.APP_OUTDATED_ERROR)
-                        else -> TODO()
+                        else -> {
+                            // no-op
+                        }
                     }
                 }
 
                 if (settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
                     inAppBars.add(object : Banner {
-                        override fun getBannerText(context: Context?): CharSequence? {
-                            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                Html.fromHtml(String.format(context!!.getString(R.string.new_app_version), serverStatus.latestAppVersion), Html.FROM_HTML_MODE_LEGACY)
-                            } else {
-                                @Suppress("DEPRECATION")
-                                Html.fromHtml(String.format(context!!.getString(R.string.new_app_version), serverStatus.latestAppVersion))
-                            }
+                        override fun getBannerText(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            Html.fromHtml(String.format(context.getString(R.string.new_app_version), serverStatus.latestAppVersion), Html.FROM_HTML_MODE_LEGACY)
+                        } else {
+                            @Suppress("DEPRECATION")
+                            Html.fromHtml(String.format(context.getString(R.string.new_app_version), serverStatus.latestAppVersion))
                         }
 
-                        override fun getColor(context: Context?): Int {
-                            return ContextCompat.getColor(context!!, R.color.colorPositive)
-                        }
+                        override fun getColor(context: Context) = ContextCompat.getColor(context, R.color.colorPositive)
+
+                        override fun getDrawableRes(context: Context) = R.drawable.info
                     })
                 }
+
                 callback.invoke(inAppBars)
             }
         }

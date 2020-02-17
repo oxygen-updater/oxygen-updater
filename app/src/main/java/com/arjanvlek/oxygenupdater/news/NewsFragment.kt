@@ -9,7 +9,6 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
@@ -91,8 +90,6 @@ class NewsFragment : AbstractFragment() {
                 setFirstOnly(false)
                 recyclerView.adapter = this
             }
-
-            recyclerView.layoutManager = LinearLayoutManager(context)
 
             // toggle between showing only reading articles and showing all articles
             bannerLayout.setOnClickListener {

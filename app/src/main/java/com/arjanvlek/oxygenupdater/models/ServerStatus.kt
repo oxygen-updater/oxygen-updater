@@ -23,39 +23,42 @@ data class ServerStatus(
         }
     }
 
-    override fun getBannerText(context: Context?): String? {
-        return when (status) {
-            Status.WARNING -> context!!.getString(R.string.server_status_warning)
-            Status.ERROR -> context!!.getString(R.string.server_status_error)
-            Status.MAINTENANCE -> ""
-            Status.OUTDATED -> ""
-            Status.UNREACHABLE -> context!!.getString(R.string.server_status_unreachable)
-            else -> ""
-        }
+    override fun getBannerText(context: Context) = when (status) {
+        Status.WARNING -> context.getString(R.string.server_status_warning)
+        Status.ERROR -> context.getString(R.string.server_status_error)
+        Status.MAINTENANCE -> ""
+        Status.OUTDATED -> ""
+        Status.UNREACHABLE -> context.getString(R.string.server_status_unreachable)
+        else -> ""
     }
 
-    override fun getColor(context: Context?): Int {
-        return when (status) {
-            Status.WARNING -> ContextCompat.getColor(context!!, R.color.colorWarn)
-            Status.ERROR -> ContextCompat.getColor(context!!, R.color.colorPrimary)
-            Status.MAINTENANCE -> 0
-            Status.OUTDATED -> 0
-            Status.UNREACHABLE -> ContextCompat.getColor(context!!, R.color.colorPrimary)
-            else -> 0
-        }
+    override fun getColor(context: Context) = when (status) {
+        Status.WARNING -> ContextCompat.getColor(context, R.color.colorWarn)
+        Status.ERROR -> ContextCompat.getColor(context, R.color.colorPrimary)
+        Status.MAINTENANCE -> 0
+        Status.OUTDATED -> 0
+        Status.UNREACHABLE -> ContextCompat.getColor(context, R.color.colorPrimary)
+        else -> 0
     }
 
-    fun checkIfAppIsUpToDate(): Boolean {
-        return try {
-            val appVersionNumeric = BuildConfig.VERSION_NAME.replace(".", "")
-                // handle custom buildConfigs
-                .split("-")[0]
-                .toInt()
-            val appVersionFromResultNumeric = latestAppVersion!!.replace(".", "").toInt()
-            appVersionFromResultNumeric <= appVersionNumeric
-        } catch (e: Exception) {
-            true
-        }
+    override fun getDrawableRes(context: Context) = when (status) {
+        Status.WARNING -> R.drawable.warning
+        Status.ERROR -> R.drawable.error_outline
+        Status.MAINTENANCE -> 0
+        Status.OUTDATED -> 0
+        Status.UNREACHABLE -> R.drawable.info
+        else -> 0
+    }
+
+    fun checkIfAppIsUpToDate() = try {
+        val appVersionNumeric = BuildConfig.VERSION_NAME.replace(".", "")
+            // handle custom buildConfigs
+            .split("-")[0]
+            .toInt()
+        val appVersionFromResultNumeric = latestAppVersion!!.replace(".", "").toInt()
+        appVersionFromResultNumeric <= appVersionNumeric
+    } catch (e: Exception) {
+        true
     }
 
     enum class Status {
@@ -66,10 +69,10 @@ data class ServerStatus(
         OUTDATED,
         UNREACHABLE;
 
-        val isUserRecoverableError: Boolean
+        val isUserRecoverableError
             get() = equals(WARNING) || equals(ERROR) || equals(UNREACHABLE)
 
-        val isNonRecoverableError: Boolean
+        val isNonRecoverableError
             get() = !isUserRecoverableError && !equals(NORMAL)
     }
 }

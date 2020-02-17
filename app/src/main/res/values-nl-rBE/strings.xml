@@ -15,7 +15,8 @@
 	<string name="update_information_for">voor</string>
 	<string name="update_information_header">Updaten</string>
 	<string name="update_information_header_short">Updaten</string>
-	<!-- TODO: translate these 5 strings below -->
+	<!-- TODO: translate these 6 strings below -->
+	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
 	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
 	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>

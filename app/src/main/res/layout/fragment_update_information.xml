@@ -32,10 +32,25 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
 				android:layout_marginStart="@dimen/spacing_half"
-				android:layout_marginEnd="@dimen/spacing_default"
 				android:textColor="@color/white"
 				tools:text="@string/update_information_banner_already_latest" />
 		</LinearLayout>
+
+		<TextView
+			android:id="@+id/serverBannerTextView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/backgroundVariant"
+			android:drawableEnd="@drawable/open_in_browser"
+			android:drawableTint="?colorPrimary"
+			android:foreground="?selectableItemBackground"
+			android:padding="@dimen/spacing_default"
+			android:stateListAnimator="@animator/clicked"
+			android:text="@string/update_information_banner_server"
+			android:textColor="?colorPrimary"
+			android:visibility="gone"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:visibility="visible" />
 
 		<ProgressBar
 			android:id="@+id/updateInformationProgressBar"
@@ -55,17 +70,17 @@
 		</com.facebook.shimmer.ShimmerFrameLayout>
 
 		<ViewStub
-			android:id="@+id/updateInformationStub"
+			android:id="@+id/updateInformationLayoutStub"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout="@layout/update_information"
+			android:layout="@layout/layout_update_information"
 			tools:visibility="visible" />
 
 		<ViewStub
-			android:id="@+id/systemIsUpToDateStub"
+			android:id="@+id/systemIsUpToDateLayoutStub"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:layout="@layout/system_is_up_to_date"
+			android:layout="@layout/layout_system_is_up_to_date"
 			tools:visibility="visible" />
 	</LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

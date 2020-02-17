@@ -13,6 +13,8 @@
 	<string name="update_information_for">"Pour"</string>
 	<string name="update_information_header">"Mise à jour"</string>
 	<string name="update_information_header_short">"Mise à jour"</string>
+	<!-- TODO: translate this string below -->
+	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">Vous êtes déjà sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_congrats_latest">Félicitations ! Votre appareil est sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_update_available">Une nouvelle mise à jour est disponible: %1$s</string>
