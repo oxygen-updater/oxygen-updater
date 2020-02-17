@@ -22,5 +22,8 @@
 		android:id="@+id/recyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:fadingEdge="vertical"
+		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:requiresFadingEdge="vertical"
 		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </LinearLayout>

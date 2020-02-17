@@ -2,6 +2,7 @@ package com.arjanvlek.oxygenupdater.views
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -44,6 +45,18 @@ abstract class SupportActionBarActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
+        // Postpone the transition until the window's decor view has finished its layout.
+        postponeEnterTransition()
+
+        val decor = window.decorView
+        decor.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+            override fun onPreDraw(): Boolean {
+                decor.viewTreeObserver.removeOnPreDrawListener(this)
+                startPostponedEnterTransition()
+                return true
+            }
+        })
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 

@@ -15,6 +15,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.makeSceneTransitionAnimationBundle
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.news.NewsActivity
@@ -123,7 +124,7 @@ class NewsAdapter(
         val intent = Intent(context, NewsActivity::class.java)
             .putExtra(NewsActivity.INTENT_NEWS_ITEM_ID, newsItem.id)
 
-        context!!.startActivity(intent)
+        context!!.startActivity(intent, activity!!.makeSceneTransitionAnimationBundle())
     }
 
     inner class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
