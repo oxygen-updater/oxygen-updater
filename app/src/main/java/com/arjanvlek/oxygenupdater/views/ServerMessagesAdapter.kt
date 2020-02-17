@@ -7,7 +7,6 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +31,6 @@ class ServerMessagesAdapter(
     override fun getItemCount() = bannerList.size
 
     inner class ServerMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val container: LinearLayout = itemView.findViewById(R.id.bannerContainer)
         val message: TextView = itemView.findViewById(R.id.bannerTextView)
 
         fun setItem(banner: Banner) {

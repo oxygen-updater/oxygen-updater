@@ -130,6 +130,10 @@ class NewsActivity : SupportActionBarActivity() {
 
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
         applicationData.serverConnector!!.getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) { newsItem ->
+            if (isFinishing || isDestroyed) {
+                return@getNewsItem
+            }
+
             if (newsItem == null || !newsItem.isFullyLoaded) {
                 if (Utils.checkNetworkConnection(applicationData) && retryCount < 5) {
                     loadNewsItem(retryCount + 1)
@@ -226,19 +230,16 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        finish()
-    }
+    override fun onBackPressed() = finish()
 
     /**
      * Respond to the action bar's Up/Home button
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
+        finish()
+        true
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     companion object {

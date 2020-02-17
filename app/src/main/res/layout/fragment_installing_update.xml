@@ -14,8 +14,7 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle" />
+			android:theme="@style/ToolbarTheme" />
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<LinearLayout
@@ -36,6 +35,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/spacing_default"
+			android:fontFamily="@font/google_sans_medium"
 			android:text="@string/install_preparing_installation"
 			android:textSize="@dimen/typography_title" />
 

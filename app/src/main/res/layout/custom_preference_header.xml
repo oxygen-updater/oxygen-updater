@@ -4,6 +4,7 @@
 	android:id="@android:id/title"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:fontFamily="@font/google_sans_medium"
 	android:paddingStart="@dimen/spacing_default"
 	android:paddingTop="@dimen/spacing_default"
 	android:paddingEnd="@dimen/spacing_default"

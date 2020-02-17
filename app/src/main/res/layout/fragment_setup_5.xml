@@ -33,6 +33,7 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
 				android:layout_marginTop="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/setup_page_5_title"
 				android:textSize="@dimen/typography_title" />
 

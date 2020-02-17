@@ -13,8 +13,7 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle"
+			android:theme="@style/ToolbarTheme"
 			app:title="@string/help" />
 	</com.google.android.material.appbar.AppBarLayout>
 
@@ -29,92 +28,118 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:gravity="center"
 			android:orientation="vertical"
-			android:paddingLeft="@dimen/spacing_default"
-			android:paddingRight="@dimen/spacing_default">
+			android:paddingTop="@dimen/spacing_default"
+			android:paddingBottom="@dimen/spacing_default">
 
 			<!-- Help -->
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="start"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:text="@string/help_text" />
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
 				android:layout_marginTop="@dimen/spacing_default"
-				android:text="@string/help_text"
-				android:textAppearance="?android:textAppearanceMedium" />
+				android:layout_marginBottom="@dimen/spacing_default"
+				android:background="@color/backgroundVariant" />
 
 			<!-- Updating your device -->
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/help_updating_your_device_title"
-				android:textAlignment="center"
-				android:textAppearance="?android:textAppearanceLarge"
-				android:textSize="18sp"
-				android:textStyle="bold" />
+				android:textSize="@dimen/typography_subheading" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginTop="@dimen/spacing_default"
-				android:text="@string/help_updating_your_device_text"
-				android:textAppearance="?android:textAppearanceMedium" />
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:text="@string/help_updating_your_device_text" />
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_default"
+				android:background="@color/backgroundVariant" />
 
 			<!-- Reading news -->
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/help_reading_news_title"
-				android:textAlignment="center"
-				android:textAppearance="?android:textAppearanceLarge"
-				android:textSize="18sp"
-				android:textStyle="bold" />
+				android:textSize="@dimen/typography_subheading" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginTop="@dimen/spacing_default"
-				android:text="@string/help_reading_news_text"
-				android:textAppearance="?android:textAppearanceMedium" />
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:text="@string/help_reading_news_text" />
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_default"
+				android:background="@color/backgroundVariant" />
 
 			<!-- Viewing device information -->
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/help_device_information_title"
-				android:textAlignment="center"
-				android:textAppearance="?android:textAppearanceLarge"
-				android:textSize="18sp"
-				android:textStyle="bold" />
+				android:textSize="@dimen/typography_subheading" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginTop="@dimen/spacing_default"
-				android:text="@string/help_device_information_text"
-				android:textAppearance="?android:textAppearanceMedium" />
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:text="@string/help_device_information_text" />
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_default"
+				android:background="@color/backgroundVariant" />
 
 			<!-- Changing settings -->
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/help_change_settings_title"
-				android:textAlignment="center"
-				android:textAppearance="?android:textAppearanceLarge"
-				android:textSize="18sp"
-				android:textStyle="bold" />
+				android:textSize="@dimen/typography_subheading" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginTop="@dimen/spacing_default"
-				android:layout_marginBottom="@dimen/spacing_half"
-				android:text="@string/help_change_settings_text"
-				android:textAppearance="?android:textAppearanceMedium" />
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:text="@string/help_change_settings_text" />
 		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

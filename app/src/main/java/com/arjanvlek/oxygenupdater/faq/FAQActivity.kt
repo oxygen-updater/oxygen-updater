@@ -41,24 +41,19 @@ class FAQActivity : SupportActionBarActivity() {
     }
 
     /**
-     * Handles action bar item clicks
+     * Respond to the action bar's Up/Home button, exit the activity gracefully to prevent downloads getting stuck
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Respond to the action bar's Up/Home button, exit the activity gracefully to prevent downloads getting stuck
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
+        finish()
+        true
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     /**
      * Gracefully quit the activity if the Back button is pressed to speed the app up
      */
-    override fun onBackPressed() {
-        finish()
-    }
+    override fun onBackPressed() = finish()
 
     /**
      * Loads the FAQ page, or displays a No Network connection screen if there is no network connection

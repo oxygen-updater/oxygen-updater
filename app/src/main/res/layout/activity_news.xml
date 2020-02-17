@@ -16,7 +16,7 @@
 			android:id="@+id/collapsingToolbarLayout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			android:theme="@style/ToolbarTheme"
 			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
 			app:maxLines="3"
 			app:multiline="true"
@@ -43,9 +43,8 @@
 				android:id="@+id/toolbar"
 				android:layout_width="match_parent"
 				android:layout_height="?actionBarSize"
-				android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-				app:layout_collapseMode="pin"
-				app:popupTheme="@style/ToolbarPopupStyle" />
+				android:theme="@style/ToolbarTheme"
+				app:layout_collapseMode="pin" />
 		</com.google.android.material.appbar.SuperpoweredCollapsingToolbarLayout>
 	</com.google.android.material.appbar.AppBarLayout>
 

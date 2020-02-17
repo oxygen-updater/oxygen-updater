@@ -48,6 +48,10 @@
 			android:name="asset_statements"
 			android:resource="@string/asset_statements" />
 
+		<meta-data
+			android:name="preloaded_fonts"
+			android:resource="@array/preloaded_fonts" />
+
 		<!-- All screens -->
 		<activity
 			android:name=".views.MainActivity"

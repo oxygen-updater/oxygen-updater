@@ -43,6 +43,7 @@
 			android:background="@color/backgroundVariant"
 			android:drawableEnd="@drawable/open_in_browser"
 			android:drawableTint="?colorPrimary"
+			android:fontFamily="@font/google_sans"
 			android:foreground="?selectableItemBackground"
 			android:padding="@dimen/spacing_default"
 			android:stateListAnimator="@animator/clicked"

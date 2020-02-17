@@ -51,24 +51,21 @@ class ContributorActivity : SupportActionBarActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        // Respond to the device's back button
-        finish()
-    }
+    override fun onBackPressed() = finish()
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Respond to the action bar's Back arrow button
-        if (item.itemId == android.R.id.home) {
-            if (!saveOptionsHidden.get()) {
-                onSaveButtonClick(null)
-            } else {
-                finish()
-            }
-
-            return true
+    /**
+     * Respond to the action bar's Up/Home button
+     */
+    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
+        if (!saveOptionsHidden.get()) {
+            onSaveButtonClick(null)
+        } else {
+            finish()
         }
 
-        return super.onOptionsItemSelected(item)
+        true
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     private fun setInitialCheckboxState() {

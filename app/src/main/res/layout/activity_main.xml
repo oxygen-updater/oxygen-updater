@@ -14,11 +14,10 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			android:theme="@style/ToolbarTheme"
 			app:layout_collapseMode="pin"
 			app:layout_scrollFlags="scroll|snap|enterAlways"
 			app:menu="@menu/menu_main"
-			app:popupTheme="@style/ToolbarPopupStyle"
 			app:title="@string/app_name" />
 
 		<com.google.android.material.tabs.TabLayout

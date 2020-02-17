@@ -24,6 +24,7 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_marginStart="@dimen/spacing_half"
+		android:fontFamily="@font/google_sans"
 		android:textSize="@dimen/typography_subheading"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toEndOf="@id/newsItemImage"

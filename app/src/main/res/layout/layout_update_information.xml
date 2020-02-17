@@ -30,6 +30,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginEnd="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:gravity="center"
 				android:textIsSelectable="true"
 				android:textSize="@dimen/typography_title"

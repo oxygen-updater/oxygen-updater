@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/bannerContainer"
+	android:id="@+id/bannerTextView"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:padding="@dimen/spacing_default">
-
-	<TextView
-		android:id="@+id/bannerTextView"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:drawablePadding="@dimen/spacing_half"
-		android:linksClickable="true"
-		android:textIsSelectable="true"
-		tools:drawableStart="@drawable/info"
-		tools:drawableTint="@color/colorPositive"
-		tools:text="An unnecessarily long server message, to get an accurate understanding of how long titles are rendered"
-		tools:textColor="@color/colorPositive" />
-</LinearLayout>
+	android:drawablePadding="@dimen/spacing_half"
+	android:linksClickable="true"
+	android:padding="@dimen/spacing_default"
+	android:textIsSelectable="true"
+	tools:drawableStart="@drawable/info"
+	tools:drawableTint="@color/colorPositive"
+	tools:text="An unnecessarily long server message, to get an accurate understanding of how long titles are rendered"
+	tools:textColor="@color/colorPositive" />

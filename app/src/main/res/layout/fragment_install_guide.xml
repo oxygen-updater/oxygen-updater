@@ -55,9 +55,9 @@
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
 				android:layout_marginTop="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:gravity="center_horizontal"
-				android:textAppearance="?android:textAppearanceLarge"
-				android:textStyle="bold"
+				android:textSize="@dimen/typography_title"
 				android:visibility="gone"
 				tools:text="Install guide title"
 				tools:visibility="visible" />

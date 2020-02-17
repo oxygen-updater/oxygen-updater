@@ -14,8 +14,7 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle" />
+			android:theme="@style/ToolbarTheme" />
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<androidx.core.widget.NestedScrollView
@@ -35,9 +34,9 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/install_options_title"
-				android:textAlignment="center"
-				android:textStyle="bold" />
+				android:textSize="@dimen/typography_subheading" />
 
 			<com.google.android.material.card.MaterialCardView
 				android:id="@+id/customizeSettingsContainer"
@@ -196,9 +195,9 @@
 					android:layout_height="wrap_content"
 					android:layout_marginTop="@dimen/spacing_half"
 					android:layout_marginBottom="@dimen/spacing_half"
+					android:fontFamily="@font/google_sans_medium"
 					android:text="@string/install_options_explanation_title"
-					android:textAlignment="center"
-					android:textStyle="bold" />
+					android:textSize="@dimen/typography_subheading" />
 
 				<TextView
 					android:layout_width="match_parent"

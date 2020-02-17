@@ -406,8 +406,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_empty_state_all_read_header">Aucun article non lu</string>
 	<string name="news_empty_state_none_available_text">Aucun article n\'est disponible pour l\'instant, veuillez réessayez plus tard.</string>
 	<!-- TODO: translate this string below -->
-	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!
-Hopefully you\'re a little wiser now from reading it all.\n\nTap the banner again to show all news articles.</string>
+	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Devenez un contributeur</string>

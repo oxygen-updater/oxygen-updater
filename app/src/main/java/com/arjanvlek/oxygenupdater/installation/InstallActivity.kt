@@ -336,18 +336,16 @@ class InstallActivity : SupportActionBarActivity() {
         super.onActivityResult(resultCode, resultCode, data)
     }
 
-    override fun onBackPressed() {
+    override fun onBackPressed() = handleBackAction()
+
+    /**
+     * Respond to the action bar's Up/Home button
+     */
+    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
         handleBackAction()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Respond to the action bar's Up/Home button
-        if (item.itemId == android.R.id.home) {
-            handleBackAction()
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
+        true
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     private fun logInstallationStart(

@@ -53,6 +53,7 @@
 				android:id="@+id/emptyStateHeader"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/news_empty_state_all_read_header"
 				android:textSize="@dimen/typography_headline" />
 

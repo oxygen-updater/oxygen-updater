@@ -15,8 +15,7 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle"
+			android:theme="@style/ToolbarTheme"
 			app:title="@string/faq" />
 	</com.google.android.material.appbar.AppBarLayout>
 
@@ -54,6 +53,7 @@
 					android:id="@+id/faq_no_network_title"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:fontFamily="@font/google_sans_medium"
 					android:text="@string/faq_no_network"
 					android:textSize="@dimen/typography_headline" />
 

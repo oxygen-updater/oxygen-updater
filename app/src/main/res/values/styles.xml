@@ -11,9 +11,10 @@
 		<item name="android:colorAccent">@color/colorSecondary</item>
 		<item name="colorError">@color/colorError</item>
 
-		<item name="appBarLayoutStyle">@style/AppBarLayoutStyle</item>
-		<item name="tabStyle">@style/TabLayoutStyle</item>
-		<item name="bottomSheetDialogTheme">@style/BottomSheetDialogStyle</item>
+		<item name="appBarLayoutStyle">@style/AppBarLayout</item>
+		<item name="materialAlertDialogTheme">@style/MaterialAlertDialog</item>
+		<item name="tabStyle">@style/TabLayout</item>
+		<item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
 
 		<item name="colorOnBackground">?colorOnSurface</item>
 
@@ -40,23 +41,39 @@
 		<item name="android:statusBarColor">@android:color/transparent</item>
 	</style>
 
-	<style name="AppBarLayoutStyle" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+	<style name="AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
 		<item name="android:background">@color/appBarBackground</item>
 	</style>
 
-	<style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout.Colored" />
+	<style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+		<item name="popupTheme">@style/ToolbarPopupTheme</item>
+		<item name="fontFamily">@font/google_sans_medium</item>
+		<item name="android:fontFamily">@font/google_sans_medium</item>
+	</style>
 
-	<style name="ToolbarPopupStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+	<style name="ToolbarPopupTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
+		<item name="fontFamily">sans-serif</item>
+		<item name="android:fontFamily">sans-serif</item>
 		<item name="android:textColorPrimary">@color/foreground</item>
 	</style>
 
-	<style name="BottomSheetDialogStyle" parent="ThemeOverlay.MaterialComponents.DayNight.BottomSheetDialog">
-		<item name="android:windowIsFloating">false</item>
-		<item name="android:navigationBarColor">?colorSurface</item>
-		<item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+	<style name="TabLayout" parent="Widget.MaterialComponents.TabLayout.Colored" />
+
+	<style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+		<item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialogTitle</item>
 	</style>
 
-	<style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+	<style name="MaterialAlertDialogTitle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+		<item name="android:textAppearance">@style/TextAppearance.GoogleSans.Subtitle1</item>
+	</style>
+
+	<style name="BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.DayNight.BottomSheetDialog">
+		<item name="android:windowIsFloating">false</item>
+		<item name="android:navigationBarColor">?colorSurface</item>
+		<item name="bottomSheetStyle">@style/BottomSheetModal</item>
+	</style>
+
+	<style name="BottomSheetModal" parent="Widget.MaterialComponents.BottomSheet.Modal">
 		<!-- To cancel the background lightening effect for dark themes -->
 		<item name="android:elevation">0dp</item>
 		<item name="shapeAppearance">@style/BottomSheetShapeAppearance</item>
@@ -69,6 +86,16 @@
 
 	<style name="Theme.Oxygen.Switch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="colorAccent">@color/colorPrimary</item>
+	</style>
+
+	<style name="TextAppearance.GoogleSans.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+		<item name="fontFamily">@font/google_sans_medium</item>
+		<item name="android:fontFamily">@font/google_sans_medium</item>
+	</style>
+
+	<style name="TextAppearance.GoogleSans.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+		<item name="fontFamily">@font/google_sans</item>
+		<item name="android:fontFamily">@font/google_sans</item>
 	</style>
 
 	<style name="Widget.Design.SuperpoweredCollapsingToolbar" parent="Widget.Design.CollapsingToolbar">

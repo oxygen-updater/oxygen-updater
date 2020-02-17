@@ -11,6 +11,7 @@
 		android:layout_height="wrap_content"
 		android:background="@drawable/rounded_overlay_top"
 		android:drawableEnd="@drawable/collapse"
+		android:fontFamily="@font/google_sans_medium"
 		android:foreground="?selectableItemBackground"
 		android:padding="@dimen/spacing_default"
 		android:stateListAnimator="@animator/clicked"

@@ -27,6 +27,7 @@
 			android:layout_below="@id/introduction_step_4_image"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="@dimen/spacing_default"
+			android:fontFamily="@font/google_sans_medium"
 			android:gravity="center_horizontal"
 			android:text="@string/setup_page_4_title"
 			android:textSize="@dimen/typography_title" />

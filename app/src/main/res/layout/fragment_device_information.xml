@@ -45,6 +45,7 @@
 			android:layout_gravity="center_horizontal"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:ellipsize="end"
+			android:fontFamily="@font/google_sans_medium"
 			android:maxLines="1"
 			android:text="@string/device_information_your_device"
 			android:textSize="@dimen/typography_title" />
@@ -80,6 +81,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginStart="@dimen/spacing_half"
+					android:fontFamily="@font/google_sans"
 					android:text="@string/device_information_hardware_header"
 					android:textSize="@dimen/typography_subheading" />
 			</LinearLayout>
@@ -198,6 +200,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginStart="@dimen/spacing_half"
+					android:fontFamily="@font/google_sans"
 					android:text="@string/device_information_software_header"
 					android:textSize="@dimen/typography_subheading" />
 			</LinearLayout>

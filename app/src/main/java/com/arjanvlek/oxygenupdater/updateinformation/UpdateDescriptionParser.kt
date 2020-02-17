@@ -101,12 +101,12 @@ object UpdateDescriptionParser {
                 when (element) {
                     // Heading 1 should be made bold and pretty large.
                     UpdateDescriptionElement.HEADING_1 -> {
-                        result.setSpan(RelativeSizeSpan(1.5f), startPosition, endPosition, 0)
+                        result.setSpan(RelativeSizeSpan(1.3f), startPosition, endPosition, 0)
                         result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     }
                     // Heading 2 should be made bold and a bit larger than normal, but smaller than heading 1.
                     UpdateDescriptionElement.HEADING_2 -> {
-                        result.setSpan(RelativeSizeSpan(1.2f), startPosition, endPosition, 0)
+                        result.setSpan(RelativeSizeSpan(1.1f), startPosition, endPosition, 0)
                         result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     }
                     // Heading 3 is the same size as normal text but will be displayed in bold.

@@ -92,27 +92,25 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
         }
     }
 
-    override fun onBackPressed() {
-        if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
-            NavUtils.navigateUpFromSameTask(this)
-        } else {
-            showSettingsWarning()
-        }
+    override fun onBackPressed() = if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+        NavUtils.navigateUpFromSameTask(this)
+    } else {
+        showSettingsWarning()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Respond to the action bar's Up/Home button
-        return if (item.itemId == android.R.id.home) {
-            if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
-                NavUtils.navigateUpFromSameTask(this)
-                true
-            } else {
-                showSettingsWarning()
-                true
-            }
+    /**
+     * Respond to the action bar's Up/Home button
+     */
+    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
+        if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+            NavUtils.navigateUpFromSameTask(this)
+            true
         } else {
-            super.onOptionsItemSelected(item)
+            showSettingsWarning()
+            true
         }
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     /* IN APP BILLING (AD FREE PURCHASING) METHODS */
