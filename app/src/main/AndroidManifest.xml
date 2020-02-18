@@ -84,9 +84,6 @@
 			android:label="@string/install_guide"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<activity
@@ -95,9 +92,6 @@
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Oxygen.FullScreen">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<activity
@@ -105,9 +99,6 @@
 			android:label="@string/settings"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<activity
@@ -115,9 +106,6 @@
 			android:label="@string/setup"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<activity
@@ -125,9 +113,6 @@
 			android:label="@string/help"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<activity
@@ -136,9 +121,6 @@
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Oxygen.FullScreen">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<activity
@@ -146,9 +128,6 @@
 			android:label="@string/faq"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<activity
@@ -157,9 +136,6 @@
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Oxygen.FullScreen">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="com.arjanvlek.oxygenupdater.views.MainActivity" />
 		</activity>
 
 		<!-- File picker -->
