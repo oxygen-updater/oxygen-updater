@@ -26,174 +26,179 @@
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
-			android:layout_marginEnd="@dimen/spacing_default"
-			android:orientation="vertical">
+			android:orientation="vertical"
+			android:paddingTop="@dimen/spacing_default">
 
 			<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
 				android:fontFamily="@font/google_sans_medium"
 				android:text="@string/install_options_title"
 				android:textSize="@dimen/typography_subheading" />
 
-			<com.google.android.material.card.MaterialCardView
-				android:id="@+id/customizeSettingsContainer"
+			<TextView
+				android:id="@+id/customizeSettingsExplanation"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginTop="@dimen/spacing_default">
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_half"
+				android:text="@string/install_options_header" />
 
-				<LinearLayout
-					android:layout_width="match_parent"
+			<LinearLayout
+				android:id="@+id/backupDeviceContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:gravity="center">
+
+				<TextView
+					android:id="@+id/backupDeviceLabel"
+					android:layout_width="0dp"
 					android:layout_height="wrap_content"
-					android:layout_margin="@dimen/spacing_half"
-					android:orientation="vertical">
+					android:layout_weight="1"
+					android:text="@string/install_options_backup" />
 
-					<TextView
-						android:id="@+id/customizeSettingsExplanation"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginBottom="@dimen/spacing_half"
-						android:text="@string/install_options_header" />
+				<com.google.android.material.switchmaterial.SwitchMaterial
+					android:id="@+id/backupDeviceSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
 
-					<LinearLayout
-						android:id="@+id/backupDeviceContainer"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:gravity="center">
+			<LinearLayout
+				android:id="@+id/keepDeviceRootedContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginTop="@dimen/spacing_half"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:gravity="center">
 
-						<TextView
-							android:id="@+id/backupDeviceLabel"
-							android:layout_width="0dp"
-							android:layout_height="wrap_content"
-							android:layout_weight="1"
-							android:text="@string/install_options_backup" />
+				<TextView
+					android:id="@+id/keepDeviceRootedLabel"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/install_options_keep_root" />
 
-						<com.google.android.material.switchmaterial.SwitchMaterial
-							android:id="@+id/backupDeviceSwitch"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content" />
-					</LinearLayout>
+				<com.google.android.material.switchmaterial.SwitchMaterial
+					android:id="@+id/keepDeviceRootedSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
 
-					<LinearLayout
-						android:id="@+id/keepDeviceRootedContainer"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="@dimen/spacing_half"
-						android:gravity="center">
+			<LinearLayout
+				android:id="@+id/additionalZipContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginTop="@dimen/spacing_half"
+				android:layout_marginEnd="@dimen/spacing_default"
+				android:gravity="center"
+				android:visibility="visible">
 
-						<TextView
-							android:id="@+id/keepDeviceRootedLabel"
-							android:layout_width="0dp"
-							android:layout_height="wrap_content"
-							android:layout_weight="1"
-							android:text="@string/install_options_keep_root" />
+				<TextView
+					android:id="@+id/additionalZipFilePath"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/spacing_half"
+					android:layout_weight="1"
+					android:enabled="false"
+					android:text="@string/install_options_select_root_package" />
 
-						<com.google.android.material.switchmaterial.SwitchMaterial
-							android:id="@+id/keepDeviceRootedSwitch"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content" />
-					</LinearLayout>
+				<ImageButton
+					android:id="@+id/additionalZipFileClearButton"
+					android:layout_width="@dimen/spacing_2x"
+					android:layout_height="@dimen/spacing_2x"
+					android:background="@android:color/transparent"
+					android:contentDescription="@string/install_zip_file_clear"
+					android:src="@drawable/cancel"
+					android:tint="?colorPrimary" />
 
-					<LinearLayout
-						android:id="@+id/additionalZipContainer"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="@dimen/spacing_half"
-						android:gravity="center"
-						android:visibility="visible">
+				<ImageButton
+					android:id="@+id/additionalZipFilePickButton"
+					android:layout_width="@dimen/spacing_2x"
+					android:layout_height="@dimen/spacing_2x"
+					android:layout_marginEnd="@dimen/spacing_half"
+					android:background="@android:color/transparent"
+					android:contentDescription="@string/install_zip_file_pick"
+					android:src="@drawable/folder"
+					android:tint="@color/colorPositive" />
+			</LinearLayout>
 
-						<TextView
-							android:id="@+id/additionalZipFilePath"
-							android:layout_width="0dp"
-							android:layout_height="wrap_content"
-							android:layout_marginStart="@dimen/spacing_half"
-							android:layout_weight="1"
-							android:enabled="false"
-							android:text="@string/install_options_select_root_package" />
+			<LinearLayout
+				android:id="@+id/wipeCachePartitionContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginTop="@dimen/spacing_half"
+				android:layout_marginEnd="@dimen/spacing_default">
 
-						<ImageButton
-							android:id="@+id/additionalZipFileClearButton"
-							android:layout_width="@dimen/spacing_2x"
-							android:layout_height="@dimen/spacing_2x"
-							android:background="@android:color/transparent"
-							android:contentDescription="@string/install_zip_file_clear"
-							android:src="@drawable/cancel"
-							android:tint="?colorPrimary" />
+				<TextView
+					android:id="@+id/wipeCachePartitionLabel"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/install_options_wipe_cache_partition" />
 
-						<ImageButton
-							android:id="@+id/additionalZipFilePickButton"
-							android:layout_width="@dimen/spacing_2x"
-							android:layout_height="@dimen/spacing_2x"
-							android:layout_marginEnd="@dimen/spacing_half"
-							android:background="@android:color/transparent"
-							android:contentDescription="@string/install_zip_file_pick"
-							android:src="@drawable/folder"
-							android:tint="@color/colorPositive" />
-					</LinearLayout>
+				<com.google.android.material.switchmaterial.SwitchMaterial
+					android:id="@+id/wipeCachePartitionSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
 
-					<LinearLayout
-						android:id="@+id/wipeCachePartitionContainer"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="@dimen/spacing_half">
+			<LinearLayout
+				android:id="@+id/rebootAfterInstallContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginTop="@dimen/spacing_half"
+				android:layout_marginEnd="@dimen/spacing_default">
 
-						<TextView
-							android:id="@+id/wipeCachePartitionLabel"
-							android:layout_width="0dp"
-							android:layout_height="wrap_content"
-							android:layout_weight="1"
-							android:text="@string/install_options_wipe_cache_partition" />
+				<TextView
+					android:id="@+id/rebootAfterInstallLabel"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/install_options_reboot_after_install" />
 
-						<com.google.android.material.switchmaterial.SwitchMaterial
-							android:id="@+id/wipeCachePartitionSwitch"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content" />
-					</LinearLayout>
+				<com.google.android.material.switchmaterial.SwitchMaterial
+					android:id="@+id/rebootAfterInstallSwitch"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
 
-					<LinearLayout
-						android:id="@+id/rebootAfterInstallContainer"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="@dimen/spacing_half">
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/startInstallButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:text="@string/install_options_start_install" />
 
-						<TextView
-							android:id="@+id/rebootAfterInstallLabel"
-							android:layout_width="0dp"
-							android:layout_height="wrap_content"
-							android:layout_weight="1"
-							android:text="@string/install_options_reboot_after_install" />
-
-						<com.google.android.material.switchmaterial.SwitchMaterial
-							android:id="@+id/rebootAfterInstallSwitch"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content" />
-					</LinearLayout>
-
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/startInstallButton"
-						style="@style/Widget.MaterialComponents.Button.TextButton"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_gravity="center"
-						android:layout_marginTop="@dimen/spacing_half"
-						android:text="@string/install_options_start_install" />
-				</LinearLayout>
-			</com.google.android.material.card.MaterialCardView>
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_default"
+				android:background="@color/backgroundVariant" />
 
 			<LinearLayout
 				android:id="@+id/settingsExplanationContainer"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_half"
-				android:orientation="vertical">
+				android:orientation="vertical"
+				android:paddingStart="@dimen/spacing_default"
+				android:paddingEnd="@dimen/spacing_default">
 
 				<TextView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="@dimen/spacing_half"
 					android:layout_marginBottom="@dimen/spacing_half"
 					android:fontFamily="@font/google_sans_medium"
 					android:text="@string/install_options_explanation_title"

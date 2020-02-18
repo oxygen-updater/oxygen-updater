@@ -95,7 +95,7 @@ class InstallActivity : SupportActionBarActivity() {
 
             if (isRooted) {
                 serverConnector.getServerStatus(checkNetworkConnection(application)) { serverStatus ->
-                    if (serverStatus?.automaticInstallationEnabled == true) {
+                    if (serverStatus.automaticInstallationEnabled) {
                         openMethodSelectionPage()
                     } else {
                         Toast.makeText(application, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()
@@ -300,10 +300,9 @@ class InstallActivity : SupportActionBarActivity() {
     private fun handleBackAction() {
         // If at the install options screen or in the install guide when rooted, go back to the method selection page.
         if (layoutId == R.layout.fragment_install_options
-            || rooted && settingsManager.getPreference(
-                SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED,
-                false
-            ) && layoutId == R.layout.activity_install_guide
+            || rooted
+            && settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false)
+            && layoutId == R.layout.activity_install_guide
         ) {
             openMethodSelectionPage()
         } else if (layoutId == R.layout.fragment_installing_update) {
