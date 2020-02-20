@@ -87,6 +87,20 @@
 				android:id="@+id/fileNameTextView"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_default"
+				android:layout_marginEnd="@dimen/spacing_half"
+				android:textColor="?android:textColorSecondary"
+				android:textIsSelectable="true"
+				android:textSize="@dimen/typography_caption"
+				app:layout_constraintBottom_toTopOf="@id/md5TextView"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				tools:text="@string/update_information_file_name" />
+
+			<TextView
+				android:id="@+id/md5TextView"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
 				android:layout_margin="@dimen/spacing_default"
 				android:textColor="?android:textColorSecondary"
 				android:textIsSelectable="true"
@@ -95,7 +109,7 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_goneMarginBottom="0dp"
-				tools:text="@string/update_information_file_name" />
+				tools:text="@string/update_information_md5" />
 
 			<TextView
 				android:id="@+id/downloadLinkTextView"

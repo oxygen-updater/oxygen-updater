@@ -380,6 +380,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
         // Display update file name.
         fileNameTextView.text = getString(R.string.update_information_file_name, updateData.filename)
+        md5TextView.text = getString(R.string.update_information_md5, updateData.mD5Sum)
     }
 
     private fun getUpdateChangelog(description: String?): CharSequence {

@@ -91,7 +91,9 @@ class BottomSheetPreference : Preference {
      * Setup the internal [BottomSheetDialog]
      */
     @SuppressLint("InflateParams")
-    private fun setupDialog() = BottomSheetDialog(mContext).let { dialog ->
+    private fun setupDialog() = BottomSheetDialog(mContext).let {
+        dialog = it
+
         val inflater = LayoutInflater.from(mContext)
 
         (inflater.inflate(R.layout.bottom_sheet_preference, null, false) as LinearLayout).apply {
