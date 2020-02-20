@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.models
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.internal.ThemeUtils
+import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 
 data class ServerMessage(
     var id: Long = 0,
@@ -20,7 +20,7 @@ data class ServerMessage(
         ServerMessagePriority.LOW -> ContextCompat.getColor(context, R.color.colorPositive)
         ServerMessagePriority.MEDIUM -> ContextCompat.getColor(context, R.color.colorWarn)
         ServerMessagePriority.HIGH -> ContextCompat.getColor(context, R.color.colorError)
-        else -> ThemeUtils.getTertiaryColor(context)
+        else -> ThemeUtils.getTextColorTertiary(context)
     }
 
     override fun getDrawableRes(context: Context) = when (priority) {

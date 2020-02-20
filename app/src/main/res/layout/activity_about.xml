@@ -25,6 +25,7 @@
 				android:id="@+id/collapsingToolbarImage"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:contentDescription="@string/icon"
 				android:fitsSystemWindows="true"
 				android:scaleType="centerCrop"
 				android:src="@drawable/logo_outline"

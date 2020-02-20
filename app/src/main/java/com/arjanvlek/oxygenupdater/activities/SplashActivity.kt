@@ -12,9 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.setupwizard.OnboardingActivity
-import com.arjanvlek.oxygenupdater.views.MainActivity
+import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 
 class SplashActivity : AppCompatActivity() {
 

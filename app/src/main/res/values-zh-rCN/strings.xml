@@ -248,7 +248,6 @@
 	<string name="install_guide_no_root">请根据安装指南中显示的说明安装更新。</string>
 	<string name="install_guide_automatic_install_disabled">由于收到了用户的反馈，自动安装已暂时停用。请根据安装指南中显示的说明安装更新。</string>
 	<string name="install_guide">安装指南</string>
-	<string name="install_guide_loading">正在加载安装指南…</string>
 	<string name="install_guide_title">安装指南 - 第 %1$d 页，共 %2$d 页</string>
 	<string name="install_guide_image_description">请轻点屏幕下方以获取安装指南</string>
 	<string name="install_guide_header">左右轻扫 &lt;- -&gt; 在页面间切换</string>

@@ -31,7 +31,7 @@
 
 # Removing this results in `java.lang.IllegalStateException: Incomplete hierarchy for class UpdateData, unresolved classes [com.arjanvlek.oxygenupdater.models.FormattableUpdateData]`
 -keepnames class com.arjanvlek.oxygenupdater.models.FormattableUpdateData
--keepnames class com.arjanvlek.oxygenupdater.settings.SettingsManager
+-keepnames class com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 
 # Glide proguard config, copied from https://bumptech.github.io/glide/doc/download-setup.html#proguard
 -keep public class * implements com.bumptech.glide.module.GlideModule

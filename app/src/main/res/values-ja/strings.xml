@@ -250,7 +250,6 @@
 	<string name="install_guide_no_root">インストールガイドに示されている指示に従い、アップデートをインストールします。</string>
 	<string name="install_guide_automatic_install_disabled">技術的な問題により自動インストールは一時的に無効にされました。インストールガイドに示されている指示に従い、アップデートをインストールして下さい。</string>
 	<string name="install_guide">インストールガイド</string>
-	<string name="install_guide_loading">インストールガイドを読み込み中 …</string>
 	<string name="install_guide_title">インストールガイド - %1$d of %2$d</string>
 	<string name="install_guide_image_description">コンテキスト画像。 画面の下部をタップして、インストールガイドを聞いてください。</string>
 	<string name="install_guide_header">スワイプ &lt;- -&gt; ページ間の移動</string>

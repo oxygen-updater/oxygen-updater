@@ -250,7 +250,6 @@
 	<string name="install_guide_no_root">ติดตั้งการอัปเดตตามคำแนะนำที่แสดงในคู่มือการติดตั้ง</string>
 	<string name="install_guide_automatic_install_disabled">การติดตั้งอัตโนมัติถูกปิดใช้งานชั่วคราวเนื่องจากรายงานปัญหาทางเทคนิค ติดตั้งการอัปเดตตามคำแนะนำที่แสดงในคู่มือการติดตั้ง</string>
 	<string name="install_guide">คู่มือการติดตั้ง</string>
-	<string name="install_guide_loading">กำลังโหลดคู่มือการติดตั้ง…</string>
 	<string name="install_guide_title">คู่มือการติดตั้ง - %1$d จาก %2$d</string>
 	<string name="install_guide_image_description">ภาพตามบริบท โปรดแตะที่ส่วนล่างของหน้าจอเพื่อฟังคำแนะนำในการติดตั้ง</string>
 	<string name="install_guide_header">ปัด &lt;- -&gt; เพื่อเปลี่ยนหน้า</string>

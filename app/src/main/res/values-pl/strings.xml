@@ -255,7 +255,6 @@
 	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide_automatic_install_disabled">Automatyczne instalacje zostały tymczasowo zablokowane z powodu zgłaszanych błędów technicznych. Zainstaluj aktualizację zgodnie z instrukcjami widocznymi w poradniku instalacji.</string>
 	<string name="install_guide">Poradnik instalacji</string>
-	<string name="install_guide_loading">Ładowanie poradnika instalacji …</string>
 	<string name="install_guide_title">Poradnik instalacji - %1$d z %2$d</string>
 	<string name="install_guide_image_description">Obraz kontekstowy. Proszę naciśnij niżej na ekranie aby usłyszeć poradnik instalacji.</string>
 	<string name="install_guide_header">Przesuń &lt;- -&gt; aby przełączać się pomiędzy stronami.</string>

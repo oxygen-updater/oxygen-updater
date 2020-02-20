@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.models
 
 import com.arjanvlek.oxygenupdater.ApplicationData
-import com.arjanvlek.oxygenupdater.internal.Utils.checkDeviceOsSpec
+import com.arjanvlek.oxygenupdater.utils.Utils.checkDeviceOsSpec
 import java.lang.reflect.InvocationTargetException
 import java.util.*
 import kotlin.test.assertEquals

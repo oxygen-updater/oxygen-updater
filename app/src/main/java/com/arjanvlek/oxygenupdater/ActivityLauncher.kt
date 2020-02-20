@@ -14,16 +14,16 @@ import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.core.view.updatePadding
-import com.arjanvlek.oxygenupdater.about.AboutActivity
-import com.arjanvlek.oxygenupdater.contribution.ContributorActivity
-import com.arjanvlek.oxygenupdater.faq.FAQActivity
-import com.arjanvlek.oxygenupdater.help.HelpActivity
-import com.arjanvlek.oxygenupdater.installation.InstallActivity
-import com.arjanvlek.oxygenupdater.internal.doOnApplyWindowInsets
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.activities.AboutActivity
+import com.arjanvlek.oxygenupdater.activities.ContributorActivity
+import com.arjanvlek.oxygenupdater.activities.FAQActivity
+import com.arjanvlek.oxygenupdater.activities.HelpActivity
+import com.arjanvlek.oxygenupdater.activities.InstallActivity
+import com.arjanvlek.oxygenupdater.activities.MainActivity
+import com.arjanvlek.oxygenupdater.activities.SettingsActivity
+import com.arjanvlek.oxygenupdater.extensions.doOnApplyWindowInsets
 import com.arjanvlek.oxygenupdater.models.UpdateData
-import com.arjanvlek.oxygenupdater.settings.SettingsActivity
-import com.arjanvlek.oxygenupdater.views.MainActivity
+import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.google.android.material.appbar.AppBarLayout
 import java.lang.ref.WeakReference
 

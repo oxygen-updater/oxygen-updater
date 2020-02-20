@@ -66,25 +66,17 @@
 			android:layout_height="wrap_content"
 			android:padding="@dimen/spacing_default">
 
-			<LinearLayout android:gravity="center_vertical">
-
-				<ImageView
-					android:id="@+id/hardware_icon"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:contentDescription="@string/icon"
-					android:src="@drawable/memory"
-					android:tint="?colorPrimary" />
-
-				<TextView
-					android:id="@+id/hardware_header"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/spacing_half"
-					android:fontFamily="@font/google_sans"
-					android:text="@string/device_information_hardware_header"
-					android:textSize="@dimen/typography_subheading" />
-			</LinearLayout>
+			<TextView
+				android:id="@+id/hardware_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/memory"
+				android:drawablePadding="@dimen/spacing_half"
+				android:drawableTint="?colorPrimary"
+				android:fontFamily="@font/google_sans"
+				android:gravity="center_vertical"
+				android:text="@string/device_information_hardware_header"
+				android:textSize="@dimen/typography_subheading" />
 
 			<TableRow
 				android:layout_marginStart="@dimen/spacing_2x"
@@ -185,25 +177,17 @@
 			android:layout_height="wrap_content"
 			android:padding="@dimen/spacing_default">
 
-			<LinearLayout android:gravity="center_vertical">
-
-				<ImageView
-					android:id="@+id/software_icon"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:contentDescription="@string/icon"
-					android:src="@drawable/adb"
-					android:tint="?colorPrimary" />
-
-				<TextView
-					android:id="@+id/software_header"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/spacing_half"
-					android:fontFamily="@font/google_sans"
-					android:text="@string/device_information_software_header"
-					android:textSize="@dimen/typography_subheading" />
-			</LinearLayout>
+			<TextView
+				android:id="@+id/software_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/adb"
+				android:drawablePadding="@dimen/spacing_half"
+				android:drawableTint="?colorPrimary"
+				android:fontFamily="@font/google_sans"
+				android:gravity="center_vertical"
+				android:text="@string/device_information_software_header"
+				android:textSize="@dimen/typography_subheading" />
 
 			<TableRow
 				android:layout_marginStart="@dimen/spacing_2x"

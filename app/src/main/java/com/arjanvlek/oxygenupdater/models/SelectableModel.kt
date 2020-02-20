@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.models
 
 import com.arjanvlek.oxygenupdater.adapters.ChooserOnboardingAdapter
-import com.arjanvlek.oxygenupdater.setupwizard.ChooserOnboardingFragment
+import com.arjanvlek.oxygenupdater.fragments.ChooserOnboardingFragment
 
 /**
  * Mainly used in [ChooserOnboardingFragment] and [ChooserOnboardingAdapter]. Used to

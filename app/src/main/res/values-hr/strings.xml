@@ -260,7 +260,6 @@ Vaš uređaj će se restartirati da bi instalirao ažuriranja.
 	<string name="install_guide_no_root">"Instalirajte ažuriranje kao što je prikazano u instalacijskom priručniku."</string>
 	<string name="install_guide_automatic_install_disabled">"Automatsko instaliranje je trenutačno onemogučeno zbog tehničkih poteškoća. Instalirajte ažuriranje kao što je prikazano u instalacijskom priručniku."</string>
 	<string name="install_guide">"instalacijski priručnik"</string>
-	<string name="install_guide_loading">"Učitavanje instalacijskog priručnika"</string>
 	<string name="install_guide_title">"Instalacijski priručnik - %1$d od %2$d "</string>
 	<string name="install_guide_image_description">"kontekstualna slika. Molimo pritisnite donji dio ekrana da čujete instalacijski priručnik"</string>
 	<string name="install_guide_header"><![CDATA["Povuci <—> da navigirate među stranicama"]]></string>

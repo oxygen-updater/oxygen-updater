@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="TextAppearance.GoogleSans.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+		<item name="fontFamily">@font/google_sans_medium</item>
+		<item name="android:fontFamily">@font/google_sans_medium</item>
+	</style>
+
+	<style name="TextAppearance.GoogleSans.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+		<item name="fontFamily">@font/google_sans</item>
+		<item name="android:fontFamily">@font/google_sans</item>
+	</style>
+
+</resources>

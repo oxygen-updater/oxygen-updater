@@ -8,14 +8,14 @@ import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.internal.ExceptionUtils.isNetworkError
+import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
+import com.arjanvlek.oxygenupdater.enums.PurchaseType
+import com.arjanvlek.oxygenupdater.enums.ServerRequest
+import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.internal.Utils.checkNetworkConnection
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
+import com.arjanvlek.oxygenupdater.internal.iab.Purchase
 import com.arjanvlek.oxygenupdater.internal.objectMapper
-import com.arjanvlek.oxygenupdater.internal.root.RootAccessChecker
+import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
@@ -27,10 +27,12 @@ import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.ServerStatus
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
-import com.arjanvlek.oxygenupdater.news.NewsDatabaseHelper
-import com.arjanvlek.oxygenupdater.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.PurchaseType
-import com.arjanvlek.oxygenupdater.settings.adFreeVersion.util.Purchase
+import com.arjanvlek.oxygenupdater.utils.ExceptionUtils.isNetworkError
+import com.arjanvlek.oxygenupdater.utils.Logger.logError
+import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
+import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
+import com.arjanvlek.oxygenupdater.utils.Utils.checkNetworkConnection
 import com.fasterxml.jackson.core.JsonProcessingException
 import org.joda.time.LocalDateTime
 import org.json.JSONException
@@ -50,9 +52,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
     private var disabledDevicesFetchDate: LocalDateTime? = null
     private var serverStatus: ServerStatus? = null
 
-    fun getDevices(filter: DeviceRequestFilter, callback: KotlinCallback<List<Device>>) {
-        getDevices(filter, false, callback)
-    }
+    fun getDevices(filter: DeviceRequestFilter, callback: KotlinCallback<List<Device>>) = getDevices(filter, false, callback)
 
     fun getDevices(
         filter: DeviceRequestFilter,
@@ -60,7 +60,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         callback: KotlinCallback<List<Device>>
     ) {
         @Suppress("REDUNDANT_ELSE_IN_WHEN")
-        val cachePreCondition: Boolean = when (filter) {
+        val cachePreCondition = when (filter) {
             DeviceRequestFilter.ALL -> allDevicesFetchDate != null && allDevicesFetchDate!!.plusMinutes(5).isAfter(LocalDateTime.now())
             DeviceRequestFilter.ENABLED -> enabledDevicesFetchDate != null && enabledDevicesFetchDate!!.plusMinutes(5).isAfter(LocalDateTime.now())
             DeviceRequestFilter.DISABLED -> disabledDevicesFetchDate != null && disabledDevicesFetchDate!!.plusMinutes(5).isAfter(LocalDateTime.now())

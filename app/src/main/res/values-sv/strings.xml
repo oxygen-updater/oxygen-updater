@@ -270,7 +270,6 @@ Din enhet kommer starta om för att installera uppdateringen.
 	<string name="install_guide_no_root">"Installera uppdateringen enligt installationsguidens instruktioner."</string>
 	<string name="install_guide_automatic_install_disabled">"Automatisk installation har blivit temporärt inaktiverad på grund av rapporterade tekniska problem. Installera uppdateringen enligt instruktionerna i installationsguiden."</string>
 	<string name="install_guide">"Installationsguide"</string>
-	<string name="install_guide_loading">"Laddar installationsguiden …"</string>
 	<string name="install_guide_title">"Installationsguide - %1$d of %2$d"</string>
 	<string name="install_guide_image_description">"Kontextuell bild. Tryck på en lägre delen av skärmen för att höra installationsguiden."</string>
 	<string name="install_guide_header">"Svep &lt;- -&gt; för att navigera mellan sidorna"</string>

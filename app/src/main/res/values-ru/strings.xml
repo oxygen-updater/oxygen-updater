@@ -283,7 +283,6 @@
 	<string name="install_guide_no_root">"Установите обновление, следуя инструкциям в руководстве по установке."</string>
 	<string name="install_guide_automatic_install_disabled">"Автоматические установки были временно отключены из-за технических проблем. Установите обновление в соответствии с инструкциями, приведенными в руководстве по установке."</string>
 	<string name="install_guide">"Руководство по установке"</string>
-	<string name="install_guide_loading">"Загрузка руководства по установке…"</string>
 	<string name="install_guide_title">"Руководство по установке - %1$d of %2$d"</string>
 	<string name="install_guide_image_description">"Контекстное изображение. Нажмите на нижнюю часть экрана, чтобы услышать руководство по установке."</string>
 	<string name="install_guide_header">"Проведите &lt;- -&gt; для навигации."</string>

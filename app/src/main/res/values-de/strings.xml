@@ -279,10 +279,9 @@ Dein Gerät wird neustarten um das Update zu installieren.
 	<string name="install_guide_no_root">"Instaliere das Update gemäß den Anweisungen in der Installationsanleitung."</string>
 	<string name="install_guide_automatic_install_disabled">"Automatische Installationen würden temporär deaktiviert wegen gemeldeten technischen Problemen."</string>
 	<string name="install_guide">"Installationsanleitung"</string>
-	<string name="install_guide_loading">"Laden der Installationsanleitung …"</string>
 	<string name="install_guide_title">"Installationsanleitung - %1$d von %2$d"</string>
 	<string name="install_guide_image_description">"Kontextsensitives Bild. Bitte tippe etwas tiefer auf den Bildschirm um die Installationsanleitung zu hören."</string>
-	<string name="install_guide_header">"Wische &lt;--&gt; um zwischen den Seiten hin und her zu navigieren."</string>
+	<string name="install_guide_header">"Wische &lt;- -&gt; um zwischen den Seiten hin und her zu navigieren."</string>
 	<string name="install_guide_tip">"-Es ist empfehlenswert alle Schritte aufzuschreiben, da du dein Gerät während dem Update ausschalten musst."</string>
 	<string name="install_guide_page_1_title">"Update herunterzuladen."</string>
 	<string name="install_guide_page_1_text">"-Drücke den Download Button um mit dem downloaden des Updates zu starten

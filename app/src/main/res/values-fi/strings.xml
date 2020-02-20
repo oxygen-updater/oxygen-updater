@@ -269,7 +269,6 @@ Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
 	<string name="install_guide_no_root">"Asenna päivitys asennusohjeen mukaisesti"</string>
 	<string name="install_guide_automatic_install_disabled">"Automaattiset asennukset on tilapäisesti poissa käytöstä raportoitujen teknisten ongelmien vuoksi. Asenna päivitys asennusohjeen mukaisesti."</string>
 	<string name="install_guide">"Asennusohje"</string>
-	<string name="install_guide_loading">"Etsitään asennusohjetta...."</string>
 	<string name="install_guide_title">"Install guide - %1$d / %2$d"</string>
 	<string name="install_guide_image_description">"Sisältökuva. Ole hyvä ja napsauta alapuolelta kuullaksesi asennusohjeet."</string>
 	<string name="install_guide_header">"Pyyhkäise &lt;- -&gt; navigoidaksesi sivujen välillä."</string>
@@ -419,7 +418,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="contribute_agree">Haluan auttaa ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
 	<string name="contribute_agree_from_setup">Haluan auttaa parantamaan sovellusta ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
 	<string name="contribute_save">Tallenna asetukset</string>
-	<string name="contribute_more_info">Lisätietoja...</string>
+	<string name="contribute_more_info">Lisätietoja…</string>
 	<string name="contribute_allow_storage">Ole hyvä ja anna tallennustilan käyttöoikeus auttaaksesi parantamaan sovellusta</string>
 	<string name="contribute_successful_notification_title">Osallistuminen onnistui</string>
 	<string name="contribute_successful_notification_text">Kiitos että jaoit päivitystiedoston %1$s ylläpitäjiemme!</string>

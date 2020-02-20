@@ -8,10 +8,10 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.arjanvlek.oxygenupdater.news.NewsActivity
-import com.arjanvlek.oxygenupdater.settings.SettingsActivity
-import com.arjanvlek.oxygenupdater.setupwizard.OnboardingActivity
-import com.arjanvlek.oxygenupdater.views.MainActivity
+import com.arjanvlek.oxygenupdater.activities.MainActivity
+import com.arjanvlek.oxygenupdater.activities.NewsActivity
+import com.arjanvlek.oxygenupdater.activities.OnboardingActivity
+import com.arjanvlek.oxygenupdater.activities.SettingsActivity
 import org.hamcrest.Matchers
 import org.junit.Before
 import org.junit.Rule
@@ -20,7 +20,8 @@ import org.junit.runner.RunWith
 import java.io.File
 
 /**
- * Oxygen Updater - © 2017 Arjan Vlek
+ * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author Arjan Vlek (github.com/arjanvlek)
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest

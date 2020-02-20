@@ -22,20 +22,15 @@ class WebViewClient(
      * [Intent.ACTION_VIEW] should be enough to handle cases of opening page links in the browser,
      * as well as handle custom URL schemes (apps register themselves to handle URIs: e.g. `mailto://`, `reddit://`, `tel://`, etc)
      */
-    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-        request?.let {
-            context.startActivity(Intent(Intent.ACTION_VIEW, request.url))
-            return true
-        }
-
-        return super.shouldOverrideUrlLoading(view, request)
-    }
+    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?) = request?.let {
+        context.startActivity(Intent(Intent.ACTION_VIEW, request.url))
+        true
+    } ?: super.shouldOverrideUrlLoading(view, request)
 
     /**
      * Just invokes the callback, nothing special
      */
-    override fun onPageCommitVisible(view: WebView?, url: String?) {
-        pageCommitVisibleCallback.invoke()
+    override fun onPageCommitVisible(view: WebView?, url: String?) = pageCommitVisibleCallback.invoke().also {
         super.onPageCommitVisible(view, url)
     }
 }

@@ -3,14 +3,19 @@ package com.arjanvlek.oxygenupdater
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
-import com.arjanvlek.oxygenupdater.download.MD5
-import com.arjanvlek.oxygenupdater.internal.ThemeUtils
-import com.arjanvlek.oxygenupdater.internal.logger.Logger.logVerbose
+import androidx.lifecycle.MutableLiveData
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
+import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
-import com.arjanvlek.oxygenupdater.settings.SettingsManager
+import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
+import com.arjanvlek.oxygenupdater.utils.MD5
+import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.downloader.PRDownloader
@@ -25,6 +30,16 @@ import java.util.*
 import kotlin.system.exitProcess
 
 class ApplicationData : Application() {
+
+    val networkCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onLost(network: Network) {
+            isNetworkAvailable.postValue(false)
+        }
+
+        override fun onAvailable(network: Network) {
+            isNetworkAvailable.postValue(true)
+        }
+    }
 
     var serverConnector: ServerConnector? = null
         get() {
@@ -55,6 +70,7 @@ class ApplicationData : Application() {
         super.onCreate()
 
         setupCrashReporting()
+        setupNetworkCallback()
         setupMobileAds()
         setupDownloader()
 
@@ -65,6 +81,15 @@ class ApplicationData : Application() {
             val deviceId: String = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
             ADS_TEST_DEVICES.add(deviceId)
         }
+    }
+
+    private fun setupNetworkCallback() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        connectivityManager.registerNetworkCallback(
+            NetworkRequest.Builder().build(),
+            networkCallback
+        )
     }
 
     private fun setupMobileAds() {
@@ -138,6 +163,12 @@ class ApplicationData : Application() {
 
     @Suppress("unused")
     companion object {
+        private const val TAG = "ApplicationData"
+        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
+
+        // Test devices for ads.
+        private val ADS_TEST_DEVICES = mutableListOf("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843")
+
         const val NO_OXYGEN_OS = "no_oxygen_os_ver_found"
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
         const val DEVICE_TOPIC_PREFIX = "device_"
@@ -148,22 +179,13 @@ class ApplicationData : Application() {
         const val NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR"
         const val SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR"
         const val APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR"
-        const val PUSH_NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.notifications"
+        const val PUSH_NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.internal.notifications"
         const val PROGRESS_NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.progress"
-        private const val TAG = "ApplicationData"
-        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
-        // Test devices for ads.
-        private val ADS_TEST_DEVICES = mutableListOf("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843")
+        val isNetworkAvailable = MutableLiveData<Boolean>()
 
-        fun buildAdRequest(): AdRequest {
-            val adRequest = AdRequest.Builder()
-
-            ADS_TEST_DEVICES.forEach {
-                adRequest.addTestDevice(it)
-            }
-
-            return adRequest.build()
-        }
+        fun buildAdRequest(): AdRequest = AdRequest.Builder().apply {
+            ADS_TEST_DEVICES.forEach { addTestDevice(it) }
+        }.build()
     }
 }

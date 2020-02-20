@@ -250,7 +250,6 @@
 	<string name="install_guide_no_root">Встановіть оновлення відповідно до інструкції</string>
 	<string name="install_guide_automatic_install_disabled">Автоматичні встановлення тимчасово вимкнені через технічні неполадки. Встановіть оновлення відповідно до інструкції.</string>
 	<string name="install_guide">Інструкція по встановленню</string>
-	<string name="install_guide_loading">Завантаження інструкції …</string>
 	<string name="install_guide_title">Інструкція - етап %1$d з %2$d</string>
 	<string name="install_guide_image_description">Контекстуальне зображення. Будь ласка, натисніть внизу екрану, щоб прослухати інструкцію.</string>
 	<string name="install_guide_header">Потягніть &lt;- -&gt; для переміщення між сторінками.</string>

@@ -262,7 +262,6 @@ Votre appareil va redémarrer afin d'installer la mise à jour.
 	<string name="install_guide_no_root">"Installez la mise à jour en suivant les instructions du guide d'installation."</string>
 	<string name="install_guide_automatic_install_disabled">"Les installations automatiques ont été temporairement désactivées suite à des rapports de problèmes. Installez la mise à jour en suivant les instructions du guide d'installation."</string>
 	<string name="install_guide">"Guide d'installation"</string>
-	<string name="install_guide_loading">"Chargement du guide d'installation"</string>
 	<string name="install_guide_title">"Guide d'installation — %1$d de %2$d"</string>
 	<string name="install_guide_image_description">"Image contextuelle. Veuillez cliquer sur un endroit plus petit sur l'écran pour entendre le guide d'installation."</string>
 	<string name="install_guide_header">"Balayez vers la droite ou gauche pour naviguer entre les pages."</string>
@@ -468,6 +467,5 @@ Si vous n'avez pas un accès root pressez « Fermer » et continuez à utilise
 	<string name="error_google_play_button_text">"Play Store"</string>
 	<string name="delayed_push_notification_displayer_service_name">"Service de notifications Push"</string>
 	<string name="log_uploader_service_name">"Service de rapports d'erreurs"</string>
-	<string name="update_file_checker_service_name">Service de vérification du nom de fichier de mise à jour</string>
 	<string name="download_service_name">"Service pour télécharger les mises à jour"</string>
 </resources>

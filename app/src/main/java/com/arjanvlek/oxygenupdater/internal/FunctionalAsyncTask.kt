@@ -3,7 +3,8 @@ package com.arjanvlek.oxygenupdater.internal
 import android.os.AsyncTask
 
 /**
- * Oxygen Updater - © 2017 Arjan Vlek
+ * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author Arjan Vlek (github.com/arjanvlek)
  */
 class FunctionalAsyncTask<Params, Progress, Result> @JvmOverloads constructor(
     private val preExecuteFunction: () -> Unit,
@@ -12,19 +13,12 @@ class FunctionalAsyncTask<Params, Progress, Result> @JvmOverloads constructor(
     private val progressUpdateFunction: KotlinCallback<Array<Progress>>? = null
 ) : AsyncTask<Params, Progress, Result>() {
 
-    override fun doInBackground(params: Array<Params>): Result {
-        return backgroundFunction.invoke(params)
-    }
+    override fun doInBackground(params: Array<Params>) = backgroundFunction.invoke(params)
 
-    override fun onPreExecute() {
-        preExecuteFunction.invoke()
-    }
+    override fun onPreExecute() = preExecuteFunction.invoke()
 
-    override fun onPostExecute(result: Result) {
-        postExecuteFunction.invoke(result)
-    }
+    override fun onPostExecute(result: Result) = postExecuteFunction.invoke(result)
 
-    @SafeVarargs
     override fun onProgressUpdate(progress: Array<Progress>) {
         progressUpdateFunction?.invoke(progress)
     }

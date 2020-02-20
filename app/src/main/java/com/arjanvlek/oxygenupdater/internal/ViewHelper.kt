@@ -6,17 +6,23 @@ import android.view.View
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
 object ViewHelper {
-    fun clear(v: View) {
-        v.alpha = 1f
-        v.scaleY = 1f
-        v.scaleX = 1f
-        v.translationY = 0f
-        v.translationX = 0f
-        v.rotation = 0f
-        v.rotationY = 0f
-        v.rotationX = 0f
-        v.pivotY = (v.measuredHeight shr 2.toFloat().toInt()).toFloat()
-        v.pivotX = (v.measuredWidth shr 2.toFloat().toInt()).toFloat()
-        v.animate().setInterpolator(null).startDelay = 0
+
+    fun clear(view: View) {
+        view.alpha = 1f
+
+        view.scaleY = 1f
+        view.scaleX = 1f
+
+        view.translationY = 0f
+        view.translationX = 0f
+
+        view.rotation = 0f
+        view.rotationY = 0f
+        view.rotationX = 0f
+
+        view.pivotY = (view.measuredHeight shr 2.toFloat().toInt()).toFloat()
+        view.pivotX = (view.measuredWidth shr 2.toFloat().toInt()).toFloat()
+
+        view.animate().setInterpolator(null).startDelay = 0
     }
 }

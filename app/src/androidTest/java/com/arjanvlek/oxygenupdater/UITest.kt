@@ -5,7 +5,8 @@ import androidx.test.runner.AndroidJUnit4
 import org.junit.runner.RunWith
 
 /**
- * Oxygen Updater - © 2017 Arjan Vlek
+ * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author Arjan Vlek (github.com/arjanvlek)
  */
 @RunWith(AndroidJUnit4::class)
 @LargeTest

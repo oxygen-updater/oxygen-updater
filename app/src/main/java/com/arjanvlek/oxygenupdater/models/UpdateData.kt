@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.models
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseBooleanArray
-import com.arjanvlek.oxygenupdater.settings.SettingsManager
+import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 

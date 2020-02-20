@@ -83,58 +83,58 @@
 
 		<!-- All screens -->
 		<activity
-			android:name=".views.MainActivity"
+			android:name=".activities.MainActivity"
 			android:label="${appName}"
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".installation.InstallActivity"
+			android:name=".activities.InstallActivity"
 			android:label="@string/install_guide"
-			android:parentActivityName=".views.MainActivity"
+			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".about.AboutActivity"
+			android:name=".activities.AboutActivity"
 			android:label="@string/about"
-			android:parentActivityName=".views.MainActivity"
+			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<activity
-			android:name=".settings.SettingsActivity"
+			android:name=".activities.SettingsActivity"
 			android:label="@string/settings"
-			android:parentActivityName=".views.MainActivity"
+			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".setupwizard.OnboardingActivity"
+			android:name=".activities.OnboardingActivity"
 			android:label="@string/onboarding"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<activity
-			android:name=".help.HelpActivity"
+			android:name=".activities.HelpActivity"
 			android:label="@string/help"
-			android:parentActivityName=".views.MainActivity"
+			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".contribution.ContributorActivity"
+			android:name=".activities.ContributorActivity"
 			android:label="@string/contribute"
-			android:parentActivityName=".views.MainActivity"
+			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<activity
-			android:name=".faq.FAQActivity"
+			android:name=".activities.FAQActivity"
 			android:label="@string/faq"
-			android:parentActivityName=".views.MainActivity"
+			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".news.NewsActivity"
+			android:name=".activities.NewsActivity"
 			android:label="@string/news"
-			android:parentActivityName=".views.MainActivity"
+			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.Oxygen.FullScreen" />
 
@@ -163,7 +163,7 @@
 
 		<!-- Push notifications services and receiver, Package updated receiver -->
 		<service
-			android:name=".notifications.NotificationService"
+			android:name=".services.NotificationService"
 			android:exported="false">
 			<intent-filter>
 				<action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -171,34 +171,34 @@
 		</service>
 
 		<!-- Receiver to check auto update installation status at device startup -->
-		<receiver android:name=".installation.automatic.VerifyInstallationReceiver">
+		<receiver android:name="com.arjanvlek.oxygenupdater.receivers.VerifyInstallationReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 		</receiver>
 
 		<service
-			android:name=".contribution.UpdateFileChecker"
+			android:name=".services.UpdateFileChecker"
 			android:label="@string/update_file_checker_service_name"
 			android:permission="android.permission.BIND_JOB_SERVICE" />
 
 		<service
-			android:name=".installation.automatic.RootInstallLogger"
+			android:name=".services.RootInstallLogger"
 			android:label="@string/root_install_logger_service_name"
 			android:permission="android.permission.BIND_JOB_SERVICE" />
 
 		<service
-			android:name=".notifications.DelayedPushNotificationDisplayer"
+			android:name=".services.DelayedPushNotificationDisplayer"
 			android:label="@string/delayed_push_notification_displayer_service_name"
 			android:permission="android.permission.BIND_JOB_SERVICE" />
 
 		<!-- Background downloader service & receiver -->
 		<service
-			android:name=".download.DownloadService"
+			android:name=".services.DownloadService"
 			android:label="@string/download_service_name" />
 
 		<receiver
-			android:name=".download.DownloadServiceRestarter"
+			android:name=".receivers.DownloadServiceRestarter"
 			android:enabled="true"
 			android:exported="true"
 			android:label="Restart downloader service when app gets stopped"

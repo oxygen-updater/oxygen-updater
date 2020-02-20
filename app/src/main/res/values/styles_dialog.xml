@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="MaterialAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+		<item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialogTitle</item>
+	</style>
+
+	<style name="MaterialAlertDialogTitle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+		<item name="android:textAppearance">@style/TextAppearance.GoogleSans.Subtitle1</item>
+	</style>
+
+	<style name="BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.DayNight.BottomSheetDialog">
+		<item name="android:windowIsFloating">false</item>
+		<item name="android:navigationBarColor">?colorSurface</item>
+		<item name="bottomSheetStyle">@style/BottomSheetModal</item>
+	</style>
+
+	<style name="BottomSheetModal" parent="Widget.MaterialComponents.BottomSheet.Modal">
+		<!-- To cancel the background lightening effect for dark themes -->
+		<item name="android:elevation">0dp</item>
+		<item name="shapeAppearance">@style/BottomSheetShapeAppearance</item>
+		<item name="backgroundTint">@color/background</item>
+	</style>
+
+	<style name="BottomSheetShapeAppearance" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+		<item name="cornerSize">@dimen/spacing_default</item>
+	</style>
+
+</resources>

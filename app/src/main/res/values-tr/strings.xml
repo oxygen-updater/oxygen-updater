@@ -8,7 +8,7 @@
 	<string name="update">Güncelle</string>
 	<!-- TODO: translate this string below -->
 	<string name="enable">Enable</string>
-	<string name="update_information_description_not_available">Bu güncelleme ile gelen yeni özellikler ile ilgili herhangi orjinal bir bilgi bulunmamakta. Genellikle, bu tür güncellemeler cihazınız için sorun düzeltmeleri,performans geliştirmeleri ve/veya kritik güvenlik güncellemelerini içermektedir.</string>
+	<string name="update_information_description_not_available">Bu güncelleme ile gelen yeni özellikler ile ilgili herhangi orijinal bir bilgi bulunmamakta. Genellikle, bu tür güncellemeler cihazınız için sorun düzeltmeleri,performans geliştirmeleri ve/veya kritik güvenlik güncellemelerini içermektedir.</string>
 	<string name="update_information_file_name">Dosya adı: %1$s</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
@@ -181,7 +181,7 @@
 
 	<string name="onboarding_page_1_title">Oxygen Updatera hoşgeldiniz!</string>
 	<string name="onboarding_page_1_text">Bu uygulama size:\n\n- En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n\n- Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n\n- Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n\n- OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.\n\n Devam etmek için sola kaydırın.</string>
-	<string name="onboarding_page_1_caption">Orjinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir.\n\n Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
+	<string name="onboarding_page_1_caption">Orijinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir.\n\n Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
 	<string name="onboarding_page_2_title">Cihazınızı seçin</string>
 	<string name="onboarding_page_2_caption">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.</string>
 	<string name="onboarding_page_3_title">Güncelleme metodunuzu seçiniz</string>
@@ -193,7 +193,7 @@
 	<string name="install">Yükle</string>
 	<string name="install_checking_root">Cihazınızın root durumu kontrol ediliyor…</string>
 	<string name="install_grant_root_permissions">Lütfen root iznini sorulduğunda izin veriniz.</string>
-	<string name="install_going_back_not_possible">Ne yazık ki, artık geri dönemezsiniz...</string>
+	<string name="install_going_back_not_possible">Ne yazık ki, artık geri dönemezsiniz…</string>
 	<string name="install_preparing_installation">Yükleme hazırlanıyor…</string>
 
 	<string name="install_recovery_installer_title">Güncelleme yükleyicisi &#160;&#160; </string> <!-- Add 2 spaces to the end -->
@@ -249,7 +249,6 @@
 	<string name="install_guide_no_root">Güncellemeyi rehberde gösterildiği sekilde uygulayınız.</string>
 	<string name="install_guide_automatic_install_disabled">Otomatik yükleme geçici olarak devredışı, teknik bir sorun bulunmakta. Güncelleme yüklemeyi rehbere göre kendiniz yapınız.</string>
 	<string name="install_guide">Yükleme rehberi</string>
-	<string name="install_guide_loading">Yükleme rehberi yükleniyor…</string>
 	<string name="install_guide_title">Yükleme rehberi - %1$d of %2$d</string>
 	<string name="install_guide_image_description">Bağlamsal imaj. Lütfen ekranın alt bölümünde bir yere tıklayın, rehberi sesli olarak dinleyebilirsiniz.</string>
 	<string name="install_guide_header">Kaydır &lt;- -&gt; sayfalar arasında geçiş yapabilmek için.</string>
@@ -326,7 +325,7 @@
 
 	<!-- Help strings -->
 	<string name="help">Yardım</string>
-	<string name="help_text">Yardım bölümüne hoşgeldiniz.\n\nBu bölüm:\n\n• Cihaz güncellemeyi\n• Güncel haberleri okumayı\n• Cihaz bilgisi göstermeyi\n• Ayar değiştirmeyi içerir.\n\nKonuları incelemek için aşşağı kaydırın.</string>
+	<string name="help_text">Yardım bölümüne hoşgeldiniz.\n\nBu bölüm:\n\n• Cihaz güncellemeyi\n• Güncel haberleri okumayı\n• Cihaz bilgisi göstermeyi\n• Ayar değiştirmeyi içerir.\n\nKonuları incelemek için aşağı kaydırın.</string>
 	<string name="help_updating_your_device_title">Cihazı güncellemek</string>
 	<string name="help_updating_your_device_text">Uygulamayı açtığınızda, eğer güncelleme varsa bunu göreceksinizdir. Varsa, güncellemeyi indiredebilirsiniz.\n\n İndirmeyi başlatmak için, \"İndir\" butonuna basınız. (Güncelleme detayları altında). İndirme bittiğinde, yükleme ekranı karşınıza çıkacaktır. Herhangi bir şey olmadıysa(indirme sonrası), \"Yükle\" butonuna tıklayınız, Normalde \"İndir\" butonunun yanında bulunmakta.\n\nYükleme ekranı öncelikle cihazınız rootlu mu diye kontrol edecektir. Rootlu cihazınız varsa, sizden root erişimi istendiğinde izin vermeniz gerekecektir. Aksi takdirde, Manuel yükleme rehberini inceleyiniz.\n\nOtomatik yükleme:\n Sadece yükleme ayarlarını seçeceksiniz. Varsayılan ayarlar önerilmektedir, root paketinizi tekrar kurmak için seçmeniz gerekecek bölüm dışında. Root paketi içeren bir ZIP dosyasını "mavi dosya" simgesinden seçiniz ve daha sonra \"Yüklemeyi Başlat\" a tıklayıp başlatınız.\n\nManuel yükleme:\nEkranınızda yükleme rehberini göreceksiniz. Rehberde gözüken adımları not etmeniz önerilir.</string>
 	<string name="help_reading_news_title">Güncel haberleri okumak.</string>
@@ -340,7 +339,7 @@
 	<string name="news">Haberler</string>
 	<string name="news_author">Yazar: %1$s</string>
 	<string name="news_date_published">Son güncelleme: %1$s</string>
-	<string name="news_empty">Bu içerikte birşey bulunmamakta.</string>
+	<string name="news_empty">Bu içerikte bir şey bulunmamakta.</string>
 	<string name="news_load_error">İçerik açılamadı. İnternet bağlantınızı kontrol edin ve \"Tekrar\" tuşuna basınız.</string>
 	<!-- TODO: translate these 5 strings below -->
 	<string name="news_unread_count">You have %1$d unread news articles</string>

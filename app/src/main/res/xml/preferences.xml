@@ -33,7 +33,7 @@
 		android:title="@string/preference_header_device">
 
 		<!--suppress AndroidElementNotAllowed -->
-		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
+		<com.arjanvlek.oxygenupdater.internal.settings.BottomSheetPreference
 			android:icon="@drawable/smartphone"
 			android:key="@string/key_device"
 			android:layout="@layout/custom_preference"
@@ -41,7 +41,7 @@
 			android:title="@string/settings_device" />
 
 		<!--suppress AndroidElementNotAllowed -->
-		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
+		<com.arjanvlek.oxygenupdater.internal.settings.BottomSheetPreference
 			android:icon="@drawable/cloud_download"
 			android:key="@string/key_update_method"
 			android:layout="@layout/custom_preference"
@@ -54,7 +54,7 @@
 		android:title="@string/preference_header_ui">
 
 		<!--suppress AndroidElementNotAllowed -->
-		<com.arjanvlek.oxygenupdater.settings.BottomSheetPreference
+		<com.arjanvlek.oxygenupdater.internal.settings.BottomSheetPreference
 			android:entries="@array/themeList"
 			android:entryValues="@array/themeList"
 			android:icon="@drawable/theme"

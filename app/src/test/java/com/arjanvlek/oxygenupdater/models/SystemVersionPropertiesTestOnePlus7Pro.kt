@@ -5,7 +5,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * Oxygen Updater, copyright 2019 Arjan Vlek. File created by arjan.vlek on 16/05/2019.
+ * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author Arjan Vlek (github.com/arjanvlek)
  */
 class SystemVersionPropertiesTestOnePlus7Pro : SystemVersionPropertiesTest() {
 

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.utils.Utils
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 

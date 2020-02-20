@@ -252,7 +252,6 @@
 	<string name="install_guide_no_root">Installer opdatering efter de instruktioner der vises i installations-guiden.</string>
 	<string name="install_guide_automatic_install_disabled">Automatisk installation er midlertidigt blevet deaktiveret, da der er rapporteret tekniske udfordringer. Installer opdatering efter de instruktioner der vises i installations-guiden.</string>
 	<string name="install_guide">Installations guide</string>
-	<string name="install_guide_loading">Læser installations guide …</string>
 	<string name="install_guide_title">Installations guide - %1$d af %2$d</string>
 	<string name="install_guide_image_description">Kontelstafhængig image. Tryk på et lavere sted på skærmen, for at høre installations-guiden..</string>
 	<string name="install_guide_header">Swipe &lt;- -&gt; for at navigere mellem siderne.</string>

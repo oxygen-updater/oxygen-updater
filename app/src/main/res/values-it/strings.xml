@@ -153,7 +153,7 @@
 
 Un aggiornamento completo puo' essere istallato sempre - indipendentemente dalla versione attuale presente sul tuo dispositivo.
 
-Un aggiornamento beta puo' essere istallato solo se ti trovi gia' sul branch delle beta."</string>
+Un aggiornamento beta puo' essere istallato solo se ti trovi già' sul branch delle beta."</string>
 	<string name="settings_explanation_update_methods">"Spiegazione dei metodi d'aggiornamento "</string>
 	<string name="settings_header">"Seleziona il tuo dispositivo e metodo d'aggiornamento:"</string>
 	<string name="settings_push">"Inviami una notifica quando:"</string>
@@ -279,7 +279,6 @@ Il tuo dispositivo si riavvierà.
 	<string name="install_guide_no_root">"Istalla secondo le istruzioni mostrate nella guida."</string>
 	<string name="install_guide_automatic_install_disabled">"Le istallazioni automatiche sono state temporaneamente disabilitate a causa di un problema tecnico. Istalla l'aggiornamento secondo le istruzioni mostrate nella guida."</string>
 	<string name="install_guide">"Guida d'istallazione"</string>
-	<string name="install_guide_loading">"Caricando la guida d'istallazione…"</string>
 	<string name="install_guide_title">"Guida - %1$d of %2$d"</string>
 	<string name="install_guide_image_description">"Immagine contestuale. Premi su un posto inferiore sullo schermo per ascoltare la guida."</string>
 	<string name="install_guide_header">"Trascina &lt;- -&gt; per navigare le pagine."</string>
@@ -424,7 +423,7 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 
 	<string name="contribute">Diventa un contributor</string>
 	<string name="contribute_title">Migliora Oxygen Updater</string>
-	<string name="contribute_explanation">"Oxygen Updater ha bisogno di te! Per avere gli aggiornamenti piu' recenti, abbiamo bisogno del nome dei file d'aggiornamento. Questi sono presenti sul tuo telefono nel momento in cui appare un aggiornamento.\n\nCome posso aiutare?\n\nOxygen Updater puo automaticamente mandare i nomi dei file agli admin to our admins. Questo processo richiedera' il trasferimento di alcuni kb e un pizzico della tua batteria!. L'unico prerequisito e' aspettare circa 15 min prima di istallare un aggiornamento finche' non appare una notifica di conferma da parte nostra. (approximataly 15 minutes) Solo la \".Ota\" directory viene controllata una volta ogni 15 minuti."</string>
+	<string name="contribute_explanation">"Oxygen Updater ha bisogno di te! Per avere gli aggiornamenti più' recenti, abbiamo bisogno del nome dei file d'aggiornamento. Questi sono presenti sul tuo telefono nel momento in cui appare un aggiornamento.\n\nCome posso aiutare?\n\nOxygen Updater puo automaticamente mandare i nomi dei file agli admin to our admins. Questo processo richiedera' il trasferimento di alcuni kb e un pizzico della tua batteria!. L'unico prerequisito e' aspettare circa 15 min prima di istallare un aggiornamento finche' non appare una notifica di conferma da parte nostra. (approximataly 15 minutes) Solo la \".Ota\" directory viene controllata una volta ogni 15 minuti."</string>
 	<string name="contribute_image_description">Carica file sul server</string>
 	<string name="contribute_agree">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento."</string>
 	<string name="contribute_agree_from_setup">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento agli admin."</string>
