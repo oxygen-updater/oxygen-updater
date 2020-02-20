@@ -174,24 +174,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
-	<string name="faq_menuitem">FAQ</string>
+	<string name="faq_menu_item">FAQ</string>
 	<string name="faq_no_network">Ingen forbindelse.</string>
 	<string name="faq_no_network_text">Der kræves en fungerende netværksforbindelse, for at kunne se FAQ-siden.</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">Velkommen …</string>
-	<string name="setup_close_button">start app</string>
+	<string name="onboarding">Velkommen …</string>
+	<string name="onboarding_finished_button">start app</string>
 
-	<string name="setup_page_1_title">Velkommen til Oxygen Updater!</string>
-	<string name="setup_page_1_text">Denne app vil tillade dig at:\n\n- Få hurtigere adgang til de seneste Android opdateringer til din OxygenOS styrede enhed\n\n- Nem opdatering en root\'et enhed\n\n- Se hvad der er nyt, i det syste,-software du allerede anvender\n\n- Læs seneste nyt om OnePlus og OxygenOS\n\nSwipe til venstre, for at fortsætte.</string>
-	<string name="setup_page_2_title">Vigtig varsel:</string>
-	<string name="setup_page_2_text">Dette er ikke en officel OnePlus aaplikation. Brug af denne app, er ene og alene på eget ansvar. Hverken OnePlus eller denne apps udvikler kan drages til ansvar, hverken for dine handlinger, eller eventuelle skader denne app måtte foresage.\n\nVed at anvende denne app, så accepterer du dens vilkår og betingelser, som er angivet herover.\n\nSwipe til venstre for at fortsætte.</string>
-	<string name="setup_page_3_title">Vælg din enhed:</string>
-	<string name="setup_page_3_text">Din enhed er normalt allerede valgt ovenfor. Hvis ikke, vælg da din enhged ovenfor.\n\nSwipe til venstre for at fortsætte.</string>
-	<string name="setup_page_4_title">Vælg opdateringsmetode:</string>
-	<string name="setup_page_4_text">Normalt, er den trinevise opdatering, det rigtige valg her, fordi den tilbyder hurtigere og mindre downloads.\n\nDog er den ikke kompatibel med root\'ede enheder. Hvis du har en root\'et enhed, så vælæg da en fuld opdatering.\n\nHvis du har en beta version af OxygenOS, vælg (en af) de åbne beta -opdateringsmetoder.\n\nSwipe til venstre for at fortsætte.</string>
-	<string name="setup_page_5_title">Du er nu klar til at fortsætte!</string>
-	<string name="setup_page_5_text">Held og lykke med denne app!\n\nDu kan altid ændre dine indstillinger senere. Gør det ved at: Tryk på de tre prikker i øverste højre hjørne, og vælg da\"Indstillinger\".</string>
+	<string name="onboarding_page_1_title">Velkommen til Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">Denne app vil tillade dig at:\n\n- Få hurtigere adgang til de seneste Android opdateringer til din OxygenOS styrede enhed\n\n- Nem opdatering en root\'et enhed\n\n- Se hvad der er nyt, i det syste,-software du allerede anvender\n\n- Læs seneste nyt om OnePlus og OxygenOS\n\nSwipe til venstre, for at fortsætte.</string>
+	<string name="onboarding_page_1_caption">Dette er ikke en officel OnePlus aaplikation. Brug af denne app, er ene og alene på eget ansvar. Hverken OnePlus eller denne apps udvikler kan drages til ansvar, hverken for dine handlinger, eller eventuelle skader denne app måtte foresage.\n\nVed at anvende denne app, så accepterer du dens vilkår og betingelser, som er angivet herover.</string>
+	<string name="onboarding_page_2_title">Vælg din enhed</string>
+	<string name="onboarding_page_2_caption">Din enhed er normalt allerede valgt ovenfor. Hvis ikke, vælg da din enhged ovenfor.</string>
+	<string name="onboarding_page_3_title">Vælg opdateringsmetode</string>
+	<string name="onboarding_page_3_caption">Normalt, er den trinevise opdatering, det rigtige valg her, fordi den tilbyder hurtigere og mindre downloads.\n\nDog er den ikke kompatibel med root\'ede enheder. Hvis du har en root\'et enhed, så vælæg da en fuld opdatering.\n\nHvis du har en beta version af OxygenOS, vælg (en af) de åbne beta -opdateringsmetoder.</string>
+	<string name="onboarding_page_4_title">Du er nu klar til at fortsætte!</string>
+	<string name="onboarding_page_4_text">Held og lykke med denne app!\n\nDu kan altid ændre dine indstillinger senere. Gør det ved at: Tryk på de tre prikker i øverste højre hjørne, og vælg da\"Indstillinger\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Installér</string>

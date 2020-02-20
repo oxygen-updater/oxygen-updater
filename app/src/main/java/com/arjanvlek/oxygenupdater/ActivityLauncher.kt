@@ -8,19 +8,22 @@ import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.core.view.updatePadding
 import com.arjanvlek.oxygenupdater.about.AboutActivity
 import com.arjanvlek.oxygenupdater.contribution.ContributorActivity
 import com.arjanvlek.oxygenupdater.faq.FAQActivity
 import com.arjanvlek.oxygenupdater.help.HelpActivity
 import com.arjanvlek.oxygenupdater.installation.InstallActivity
+import com.arjanvlek.oxygenupdater.internal.doOnApplyWindowInsets
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logWarning
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.settings.SettingsActivity
-import com.arjanvlek.oxygenupdater.setupwizard.SetupActivity
+import com.arjanvlek.oxygenupdater.views.MainActivity
 import com.google.android.material.appbar.AppBarLayout
 import java.lang.ref.WeakReference
 
@@ -65,9 +68,9 @@ class ActivityLauncher(baseActivity: Activity) {
     fun Settings() = startActivity(SettingsActivity::class.java)
 
     /**
-     * Opens the welcome tutorial.
+     * Opens the main page.
      */
-    fun Tutorial() = startActivity(SetupActivity::class.java)
+    fun Main() = startActivity(MainActivity::class.java)
 
     /**
      * Opens the about page.
@@ -113,6 +116,22 @@ class ActivityLauncher(baseActivity: Activity) {
     }
 
     fun dispose() = baseActivity.clear()
+}
+
+/**
+ * Allow activity to draw itself full screen
+ */
+fun Activity.enableEdgeToEdgeUiSupport() {
+    if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_Oxygen_FullScreen) {
+        findViewById<ViewGroup>(android.R.id.content).getChildAt(0).apply {
+            systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+
+            doOnApplyWindowInsets { view, insets, initialPadding ->
+                // initialPadding contains the original padding values after inflation
+                view.updatePadding(bottom = initialPadding.bottom + insets.systemWindowInsetBottom)
+            }
+        }
+    }
 }
 
 fun Activity.makeSceneTransitionAnimationBundle() = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *createTransitionPairs().toTypedArray()).toBundle()

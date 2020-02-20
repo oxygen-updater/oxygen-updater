@@ -172,24 +172,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">ЧаПи</string>
-	<string name="faq_menuitem">ЧаПи</string>
+	<string name="faq_menu_item">ЧаПи</string>
 	<string name="faq_no_network">Немає з\'єднання.</string>
 	<string name="faq_no_network_text">Щоб переглянути сторінку ЧаПи, потрібне робоче з\'єднання з мережею.</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">Вітання</string>
-	<string name="setup_close_button">розпочати</string>
+	<string name="onboarding">Вітання</string>
+	<string name="onboarding_finished_button">розпочати</string>
 
-	<string name="setup_page_1_title">Ласкаво просимо до Oxygen Updater!</string>
-	<string name="setup_page_1_text">Цей застосунок дозволить вам:\n\n- Отримати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n\n- Легко оновити пристрій з рутом\n\n- Переглянути, що нового на встановленій прошивці\n\n- Читати останні новини про OnePlus і OxygenOS\n\nПроведіть вліво, щоб продовжити.</string>
-	<string name="setup_page_2_title">Важливе зауваження</string>
-	<string name="setup_page_2_text">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком.\n\nВикористовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.\n\nПроведіть вліво, щоб продовжити.</string>
-	<string name="setup_page_3_title">Виберіть ваш пристрій</string>
-	<string name="setup_page_3_text">Зазвичай пристрій визначається автоматично. Якщо ні, тоді виберіть його зі списку.\n\nПроведіть вліво, щоб продовжити.</string>
-	<string name="setup_page_4_title">Виберіть спосіб оновлення</string>
-	<string name="setup_page_4_text">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що для цього потрібно завантажити менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open beta).\n\nПроведіть вліво, щоб продовжити.</string>
-	<string name="setup_page_5_title">Ви готові до оновлення!</string>
-	<string name="setup_page_5_text">Сподіваємося, вам буде приємно користуватися цим застосунком!\n\nВи завжди можете змінити налаштування. Щоб це зробити, натисніть на три крапки в правому верхньому куті, і виберіть \"Налаштування\".</string>
+	<string name="onboarding_page_1_title">Ласкаво просимо до Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">Цей застосунок дозволить вам:\n\n- Отримати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n\n- Легко оновити пристрій з рутом\n\n- Переглянути, що нового на встановленій прошивці\n\n- Читати останні новини про OnePlus і OxygenOS\n\nПроведіть вліво, щоб продовжити.</string>
+	<string name="onboarding_page_1_caption">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком.\n\nВикористовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
+	<string name="onboarding_page_2_title">Виберіть ваш пристрій</string>
+	<string name="onboarding_page_2_caption">Зазвичай пристрій визначається автоматично. Якщо ні, тоді виберіть його зі списку.</string>
+	<string name="onboarding_page_3_title">Виберіть спосіб оновлення</string>
+	<string name="onboarding_page_3_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що для цього потрібно завантажити менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open beta).</string>
+	<string name="onboarding_page_4_title">Ви готові до оновлення!</string>
+	<string name="onboarding_page_4_text">Сподіваємося, вам буде приємно користуватися цим застосунком!\n\nВи завжди можете змінити налаштування. Щоб це зробити, натисніть на три крапки в правому верхньому куті, і виберіть \"Налаштування\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Встановлення</string>

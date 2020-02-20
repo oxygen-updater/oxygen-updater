@@ -177,24 +177,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
-	<string name="faq_menuitem">FAQ</string>
+	<string name="faq_menu_item">FAQ</string>
 	<string name="faq_no_network">Brak połączenia.</string>
 	<string name="faq_no_network_text">Będziesz potrzebował działającego połączenia z internetem aby zobaczyć FAQ.</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">Witaj</string>
-	<string name="setup_close_button">włącz aplikację</string>
+	<string name="onboarding">Witaj</string>
+	<string name="onboarding_finished_button">włącz aplikację</string>
 
-	<string name="setup_page_1_title">Witaj w Oxygen Updater!</string>
-	<string name="setup_page_1_text">Ta aplikacji pozwoli ci na:\n\n- Szybszy dostęp do aktualizacji na twoim urządzeniu z OxygenOS\n\n- Łatwa aktualizacja na urządzeniu z rootem\n\n- Zobaczyć nowości w systemie którego obecnie używasz\n\n- Przeczytać najnowsze wiadomości o OnePlus i aktualizacjach OxygenOS\n\nPrzesuń w lewo aby kontynuować.</string>
-	<string name="setup_page_2_title">Ważna Uwaga:</string>
-	<string name="setup_page_2_text">To nie jest oficjalna aplikacja OnePlusa. Ponosisz pełne ryzyko za używanie tej aplikacji.Ani OnePlus ani deweloper tej aplikacji nie są odpowiedzialni za twoje akcje, włączając wszelkie akcje mogące wyrządzić szkody przez tę aplikację.\n\nUżywając tej apliakcji, zgadzasz się na zasady i warunki opisane powyżej.\n\nPrzesuń w lewo aby kontynuować.</string>
-	<string name="setup_page_3_title">Wybierz swoje urządzenie:</string>
-	<string name="setup_page_3_text">Twoje urządzenie jest zazwyczaj wybrane powyżej. Jeśli nie, wybierz twoje urządzenie wyżej.\n\nPrzesuń w lewo, aby kontynuować.</string>
-	<string name="setup_page_4_title">Wybierz metodę aktualizacji:</string>
-	<string name="setup_page_4_text">Zazwyczaj, częściowa aktualizacja jest tutaj właściwym wyborem, ponieważ umożliwia znacznie szybsze pobieranie oraz mniejszy rozmiar pliku.\n\nAczkolwiek, ta opcja nie jest kompatybilna ze zrootowanymi urządzeniami. Jeśli masz zrootowane urzadzenie, wybierz Pełną aktualizację.\n\nJeśli masz wersję beta OxygenOS, wybierz (jedną z) metod aktualizacji wersji Open Beta.\n\nPrzesuń w lewo, aby kontynuować.</string>
-	<string name="setup_page_5_title">Jesteś gotowy do uruchomienia aplikacji!</string>
-	<string name="setup_page_5_text">Miłego korzystania z tej aplikacji !\n\nMożesz zawsze zmienić swoje ustawienia w dowolnym momencie. Aby to zrobić: Naciśnij trzy kropki w prawym górnym rogu oraz wybierz \"Ustawienia\".</string>
+	<string name="onboarding_page_1_title">Witaj w Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">Ta aplikacji pozwoli ci na:\n\n- Szybszy dostęp do aktualizacji na twoim urządzeniu z OxygenOS\n\n- Łatwa aktualizacja na urządzeniu z rootem\n\n- Zobaczyć nowości w systemie którego obecnie używasz\n\n- Przeczytać najnowsze wiadomości o OnePlus i aktualizacjach OxygenOS\n\nPrzesuń w lewo aby kontynuować.</string>
+	<string name="onboarding_page_1_caption">To nie jest oficjalna aplikacja OnePlusa. Ponosisz pełne ryzyko za używanie tej aplikacji.Ani OnePlus ani deweloper tej aplikacji nie są odpowiedzialni za twoje akcje, włączając wszelkie akcje mogące wyrządzić szkody przez tę aplikację.\n\nUżywając tej apliakcji, zgadzasz się na zasady i warunki opisane powyżej.</string>
+	<string name="onboarding_page_2_title">Wybierz swoje urządzenie</string>
+	<string name="onboarding_page_2_caption">Twoje urządzenie jest zazwyczaj wybrane powyżej. Jeśli nie, wybierz twoje urządzenie wyżej.</string>
+	<string name="onboarding_page_3_title">Wybierz metodę aktualizacji</string>
+	<string name="onboarding_page_3_caption">Zazwyczaj, częściowa aktualizacja jest tutaj właściwym wyborem, ponieważ umożliwia znacznie szybsze pobieranie oraz mniejszy rozmiar pliku.\n\nAczkolwiek, ta opcja nie jest kompatybilna ze zrootowanymi urządzeniami. Jeśli masz zrootowane urzadzenie, wybierz Pełną aktualizację.\n\nJeśli masz wersję beta OxygenOS, wybierz (jedną z) metod aktualizacji wersji Open Beta.</string>
+	<string name="onboarding_page_4_title">Jesteś gotowy do uruchomienia aplikacji!</string>
+	<string name="onboarding_page_4_text">Miłego korzystania z tej aplikacji !\n\nMożesz zawsze zmienić swoje ustawienia w dowolnym momencie. Aby to zrobić: Naciśnij trzy kropki w prawym górnym rogu oraz wybierz \"Ustawienia\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Instaluj</string>

@@ -54,9 +54,11 @@
 
 		<!-- All screens -->
 		<activity
-			android:name=".views.MainActivity"
+			android:name=".activities.SplashActivity"
 			android:label="${appName}"
-			android:screenOrientation="portrait">
+			android:screenOrientation="portrait"
+			android:theme="@style/SplashTheme.Oxygen">
+
 			<tools:validation testUrl="https://oxygenupdater.com/inapp" />
 
 			<intent-filter>
@@ -79,64 +81,62 @@
 			</intent-filter>
 		</activity>
 
+		<!-- All screens -->
+		<activity
+			android:name=".views.MainActivity"
+			android:label="${appName}"
+			android:screenOrientation="portrait" />
+
 		<activity
 			android:name=".installation.InstallActivity"
 			android:label="@string/install_guide"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait" />
 
 		<activity
 			android:name=".about.AboutActivity"
 			android:label="@string/about"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.Oxygen.FullScreen">
-		</activity>
+			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<activity
 			android:name=".settings.SettingsActivity"
 			android:label="@string/settings"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".setupwizard.SetupActivity"
-			android:label="@string/setup"
-			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait">
-		</activity>
+			android:name=".setupwizard.OnboardingActivity"
+			android:label="@string/onboarding"
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<activity
 			android:name=".help.HelpActivity"
 			android:label="@string/help"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait" />
 
 		<activity
 			android:name=".contribution.ContributorActivity"
 			android:label="@string/contribute"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.Oxygen.FullScreen">
-		</activity>
+			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<activity
 			android:name=".faq.FAQActivity"
 			android:label="@string/faq"
 			android:parentActivityName=".views.MainActivity"
-			android:screenOrientation="portrait">
-		</activity>
+			android:screenOrientation="portrait" />
 
 		<activity
 			android:name=".news.NewsActivity"
 			android:label="@string/news"
 			android:parentActivityName=".views.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.Oxygen.FullScreen">
-		</activity>
+			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<!-- File picker -->
 		<activity

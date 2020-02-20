@@ -6,10 +6,9 @@ import android.view.ViewTreeObserver
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.updatePadding
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.internal.doOnApplyWindowInsets
+import com.arjanvlek.oxygenupdater.enableEdgeToEdgeUiSupport
 
 /**
  * Sets support action bar and enables home up button on the toolbar.
@@ -63,15 +62,6 @@ abstract class SupportActionBarActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // allow activity to draw itself full screen
-        if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_Oxygen_FullScreen) {
-            findViewById<ViewGroup>(android.R.id.content).getChildAt(0).apply {
-                systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-
-                doOnApplyWindowInsets { view, insets, initialPadding ->
-                    // initialPadding contains the original padding values after inflation
-                    view.updatePadding(bottom = initialPadding.bottom + insets.systemWindowInsetBottom)
-                }
-            }
-        }
+        enableEdgeToEdgeUiSupport()
     }
 }

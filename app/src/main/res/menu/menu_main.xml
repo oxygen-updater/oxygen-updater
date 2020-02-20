@@ -5,7 +5,7 @@
 		android:id="@+id/action_faq"
 		android:icon="@drawable/faq"
 		android:orderInCategory="30"
-		android:title="@string/faq_menuitem"
+		android:title="@string/faq_menu_item"
 		app:showAsAction="ifRoom" />
 
 	<item

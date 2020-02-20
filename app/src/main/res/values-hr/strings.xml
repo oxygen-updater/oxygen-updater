@@ -166,15 +166,15 @@ To može biti korisno:
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
-	<string name="faq_menuitem">"FAQ"</string>
+	<string name="faq_menu_item">"FAQ"</string>
 	<string name="faq_no_network">"Nema konekcije."</string>
 	<string name="faq_no_network_text">"Trebati će vam internet konekcija da pogledate FAQ."</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Dobrodošli"</string>
-	<string name="setup_close_button">"Pokretanje aplikacije"</string>
-	<string name="setup_page_1_title">"Dobrodošli u Oxygen Updater!"</string>
-	<string name="setup_page_1_text">"Ova aplikacija vam omogućava:
+	<string name="onboarding">"Dobrodošli"</string>
+	<string name="onboarding_finished_button">"Pokretanje aplikacije"</string>
+	<string name="onboarding_page_1_title">"Dobrodošli u Oxygen Updater!"</string>
+	<string name="onboarding_page_1_text">"Ova aplikacija vam omogućava:
 
 - Dobivanje ažuriranje brže na vaše OxygenOS uređaje
 
@@ -185,22 +185,21 @@ To može biti korisno:
 - Najnovije vijesti o OnePlus-u i OxygenOs-u
 
 Povucite lijevo za nastavak."</string>
-	<string name="setup_page_2_title">"Važna obavijest"</string>
-	<string name="setup_page_2_text">"Ovo nije službena aplikacija OnePlus-a. Koristite ovu aplikaciju na svoj rizik. OnePlus i developer ove aplikacije nisu dogovorni za vaše postupke, uključujući ikakvu štetu koristeči ovu aplikaciju."</string>
-	<string name="setup_page_3_title">"Izaberi svoj uređaj:"</string>
-	<string name="setup_page_3_text">"Vaš uređaj je uobičajno već izabran. Ako nije izaberite svoj uređaj gore.
+	<string name="onboarding_page_1_caption">"Ovo nije službena aplikacija OnePlus-a. Koristite ovu aplikaciju na svoj rizik. OnePlus i developer ove aplikacije nisu dogovorni za vaše postupke, uključujući ikakvu štetu koristeči ovu aplikaciju."</string>
+	<string name="onboarding_page_2_title">"Izaberi svoj uređaj:"</string>
+	<string name="onboarding_page_2_caption">"Vaš uređaj je uobičajno već izabran. Ako nije izaberite svoj uređaj gore.
 
 Povuci lijevo da nastaviš."</string>
-	<string name="setup_page_4_title">"Izaberi svoju metodu ažuriranja:"</string>
-	<string name="setup_page_4_text">"Uobičajno inkrementalno ažuriranje je pravi odabir ovdje zato što pruža puno brže i manje skidanja.
+	<string name="onboarding_page_3_title">"Izaberi svoju metodu ažuriranja:"</string>
+	<string name="onboarding_page_3_caption">"Uobičajno inkrementalno ažuriranje je pravi odabir ovdje zato što pruža puno brže i manje skidanja.
 
 Iako ono nije kompatibilno sa rootanim uređajima. Ako je vaš uređaj rootan izaberite puno ažuriranje.
 
 Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranje/a.
 
 Povuci lijevo da nastaviš."</string>
-	<string name="setup_page_5_title">"Spreman si da kreneš!"</string>
-	<string name="setup_page_5_text">"Uživajte u korištenju aplikacije!"</string>
+	<string name="onboarding_page_4_title">"Spreman si da kreneš!"</string>
+	<string name="onboarding_page_4_text">"Uživajte u korištenju aplikacije!"</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Instaliraj"</string>

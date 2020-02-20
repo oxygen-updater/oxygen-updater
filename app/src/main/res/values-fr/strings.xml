@@ -167,15 +167,15 @@ Cela peut être utile quand vous :
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
-	<string name="faq_menuitem">"Foire aux Questions"</string>
+	<string name="faq_menu_item">"Foire aux Questions"</string>
 	<string name="faq_no_network">"Pas de connexion"</string>
 	<string name="faq_no_network_text">"Vous avez besoin d'être connecté à Internet pour voir la FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Bienvenue"</string>
-	<string name="setup_close_button">"Démarrer l'application"</string>
-	<string name="setup_page_1_title">"Bienvenue dans Oxygen Updater !"</string>
-	<string name="setup_page_1_text">"Cette application vous permettra :
+	<string name="onboarding">"Bienvenue"</string>
+	<string name="onboarding_finished_button">"Démarrer l'application"</string>
+	<string name="onboarding_page_1_title">"Bienvenue dans Oxygen Updater !"</string>
+	<string name="onboarding_page_1_text">"Cette application vous permettra :
 
 — D'avoir un accès plus rapide aux dernières mises à jour Android pour votre appareil sous OxygenOS
 — De mettre à jour aisément un appareil rooté
@@ -183,26 +183,25 @@ Cela peut être utile quand vous :
 — Lire les dernières informations à propos de OnePlus et OxygenOS
 
 Balayez vers la droite pour continuer."</string>
-	<string name="setup_page_2_title">"Informations importantes :"</string>
-	<string name="setup_page_2_text">"Cette application n'est pas une application officielle de OnePlus. Son usage est à vos propres risques. Ni OnePlus ni le développeur de cette application ne peuvent être tenus pour responsable de vos actions, incluant celle causées par l'usage de cette application.
+	<string name="onboarding_page_1_caption">"Cette application n'est pas une application officielle de OnePlus. Son usage est à vos propres risques. Ni OnePlus ni le développeur de cette application ne peuvent être tenus pour responsable de vos actions, incluant celle causées par l'usage de cette application.
 
 En utilisant cette application vous acceptez les termes et conditions énoncées précédemment.
 
 Balayez vers la droite pour continuer."</string>
-	<string name="setup_page_3_title">"Choisissez votre appareil :"</string>
-	<string name="setup_page_3_text">"Votre appareil est normalement déjà sélectionné. Si ce n'est pas le cas, sélectionnez-le au-dessus.
+	<string name="onboarding_page_2_title">"Choisissez votre appareil :"</string>
+	<string name="onboarding_page_2_caption">"Votre appareil est normalement déjà sélectionné. Si ce n'est pas le cas, sélectionnez-le au-dessus.
 
 Balayez vers la droite pour continuer."</string>
-	<string name="setup_page_4_title">"Choisissez votre méthode de mise à jour."</string>
-	<string name="setup_page_4_text">"Habituellement la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit.
+	<string name="onboarding_page_3_title">"Choisissez votre méthode de mise à jour."</string>
+	<string name="onboarding_page_3_caption">"Habituellement la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit.
 
 Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté choisissez la méthode complète.
 
 Si vous utilisez une version bêta d'OxygenOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes.
 
 Balayez vers la droite pour continuer."</string>
-	<string name="setup_page_5_title">"Tout est prêt !"</string>
-	<string name="setup_page_5_text">"Profitez de cette application !
+	<string name="onboarding_page_4_title">"Tout est prêt !"</string>
+	<string name="onboarding_page_4_text">"Profitez de cette application !
 
 Vous pourrez changer vos réglages plus tard si vous le souhaitez. Pour cela cliquez sur les trois petits points dans le coin supérieur droit de l'écran et appuyez sur « Réglages »."</string>
 

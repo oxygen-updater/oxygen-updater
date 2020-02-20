@@ -1,9 +1,5 @@
 package com.arjanvlek.oxygenupdater.views
 
-import android.annotation.TargetApi
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Color
 import android.os.Build
@@ -19,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -36,7 +33,7 @@ import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.news.NewsFragment
 import com.arjanvlek.oxygenupdater.notifications.MessageDialog
-import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber.subscribe
+import com.arjanvlek.oxygenupdater.notifications.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.updateinformation.UpdateInformationFragment
@@ -47,6 +44,9 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.appBar
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.activity_onboarding.*
 import org.joda.time.LocalDateTime
 import kotlin.math.abs
 
@@ -67,13 +67,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        settingsManager = SettingsManager(this)
 
-        // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
-        if (settingsManager.containsPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
-            settingsManager.savePreference(SettingsManager.PROPERTY_ADVANCED_MODE, !settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true))
-            settingsManager.deletePreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
-        }
+        settingsManager = SettingsManager(this)
 
         val application = application as ApplicationData
 
@@ -86,6 +81,13 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             if (showDeviceWarningDialog && !deviceOsSpec!!.isDeviceOsSpecSupported) {
                 displayUnsupportedDeviceOsSpecMessage(deviceOsSpec!!)
             }
+        }
+
+        // subscribe to notification topics
+        // we're doing it here, instead of SplashActivity, because it requires the app to be setup first
+        // (deviceId, updateMethodId, etc need to be saved in SharedPreferences)
+        if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
+            NotificationTopicSubscriber.subscribe(application)
         }
 
         toolbar.setOnMenuItemClickListener(this)
@@ -110,12 +112,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         setupAds()
 
-        // Support functions for Android 8.0 "Oreo" and up.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createPushNotificationChannel()
-            createProgressNotificationChannel()
-        }
-
         // Remove "long" download ID in favor of "int" id
         try {
             // Do not remove this int assignment, even though the IDE warns it's unused.
@@ -132,31 +128,9 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         if (!settingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE) && settingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)) {
             activityLauncher.Contribute()
         }
-    }
 
-    public override fun onStart() {
-        super.onStart()
-
-        // Mark the welcome tutorial as finished if the user is moving from older app version.
-        // This is checked by either having stored update information for offline viewing,
-        // or if the last update checked date is set (if user always had up to date system and never viewed update information before)
-        if (!settingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)
-            && (settingsManager.checkIfOfflineUpdateDataIsAvailable() || settingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE))
-        ) {
-            settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
-        }
-
-        // Show the welcome tutorial if the app needs to be set up
-        if (!settingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)) {
-            if (Utils.checkNetworkConnection(applicationContext)) {
-                activityLauncher.Tutorial()
-            } else {
-                showNetworkError()
-            }
-        } else {
-            if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
-                subscribe((application as ApplicationData))
-            }
+        if (!Utils.checkNetworkConnection(applicationContext)) {
+            showNetworkError()
         }
     }
 
@@ -216,11 +190,10 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 }
             })
 
-            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                val params = this.layoutParams as CoordinatorLayout.LayoutParams
-                params.bottomMargin = appBarLayout.totalScrollRange - abs(verticalOffset)
-
-                this.layoutParams = params
+            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+                updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                    bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
+                }
             })
         }
     }
@@ -415,52 +388,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                 && ContextCompat.checkSelfPermission(application, DOWNLOAD_FILE_PERMISSION) == PERMISSION_GRANTED)
     }
 
-    @TargetApi(26)
-    private fun createPushNotificationChannel() {
-        // The id of the channel.
-        val id = ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID
-
-        // The user-visible name of the channel.
-        val name: CharSequence = getString(R.string.push_notification_channel_name)
-
-        // The user-visible description of the channel.
-        NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH).apply {
-            // Configure the notification channel.
-            description = getString(R.string.push_notification_channel_description)
-            enableLights(true)
-
-            // Sets the notification light color for notifications posted to this
-            // channel, if the device supports this feature.
-            lightColor = Color.RED
-            enableVibration(true)
-            vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
-
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-            notificationManager?.createNotificationChannel(this)
-        }
-    }
-
-    @TargetApi(26)
-    private fun createProgressNotificationChannel() {
-        // The id of the channel.
-        val id = ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID
-
-        // The user-visible name of the channel.
-        val name = getString(R.string.progress_notification_channel_name)
-
-        // The user-visible description of the channel.
-        NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW).apply {
-            // Configure the notification channel.
-            description = getString(R.string.progress_notification_channel_description)
-
-            enableLights(false)
-            enableVibration(false)
-
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-            notificationManager?.createNotificationChannel(this)
-        }
-    }
-    // Android 8.0 Notification Channels
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.
      */

@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<style name="SplashTheme.Oxygen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+		<!-- Use the correct primary color, because we don't ever want the desaturated primary color as a background, even in dark themes -->
+		<item name="colorPrimary">@color/oneplus_red_600</item>
+
+		<!--
+			Splash screens should only be used to display brand identity on cold starts.
+			It's faster to set a custom theme on SplashActivity, and set windowBackground to a drawable that contains the app's logo.
+			This is much less expensive than calling setContentView().
+			This is especially useful, because SplashActivity just proxies to other activities, based on conditions.
+		-->
+		<item name="android:windowBackground">@drawable/splash_background</item>
+
+		<!-- Make the theme appear "fullscreen" -->
+		<item name="android:navigationBarColor">?colorPrimary</item>
+		<item name="android:statusBarColor">?colorPrimary</item>
+	</style>
+
 	<style name="Theme.Oxygen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryVariant">@color/colorPrimary</item>

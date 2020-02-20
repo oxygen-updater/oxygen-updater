@@ -171,15 +171,15 @@ Tämä voi olla hyödyllista kun:
 
 	<!-- FAQ strings -->
 	<string name="faq">"UKK"</string>
-	<string name="faq_menuitem">"UKK"</string>
+	<string name="faq_menu_item">"UKK"</string>
 	<string name="faq_no_network">"Ei verkkoyhteyttä"</string>
 	<string name="faq_no_network_text">"Toimiva yhteys tarvitaan, jotta voidaan katsella UKK sivua"</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Tervetuloa"</string>
-	<string name="setup_close_button">"käynnistä sovellus"</string>
-	<string name="setup_page_1_title">"Tervetuloa Oxygen Updateriin!"</string>
-	<string name="setup_page_1_text">"Tämä sovellus mahdollistaa sinulle:
+	<string name="onboarding">"Tervetuloa"</string>
+	<string name="onboarding_finished_button">"käynnistä sovellus"</string>
+	<string name="onboarding_page_1_title">"Tervetuloa Oxygen Updateriin!"</string>
+	<string name="onboarding_page_1_text">"Tämä sovellus mahdollistaa sinulle:
 
 -Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS laitteellesi
 
@@ -190,26 +190,25 @@ Tämä voi olla hyödyllista kun:
 -Lukea viimeisimpiä uutisia koskien OnePlussaa ja OxygeOS:ää
 
 Pyyhkäise vasemmalle jatkaaksesi"</string>
-	<string name="setup_page_2_title">"Tärkeä huomautus:"</string>
-	<string name="setup_page_2_text">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu.
+	<string name="onboarding_page_1_caption">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu.
 
 Käyttämällä sovellusta hyväksyt yllä olevat käyttöehdot.
 
 Pyyhkäise vasemmalle jatkaaksesi"</string>
-	<string name="setup_page_3_title">"Valitse laitteesi:"</string>
-	<string name="setup_page_3_text">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta.
+	<string name="onboarding_page_2_title">"Valitse laitteesi:"</string>
+	<string name="onboarding_page_2_caption">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta.
 
 Pyyhkäise vasemmalle jatkaaksesi."</string>
-	<string name="setup_page_4_title">"Valitse päivitystapasi"</string>
-	<string name="setup_page_4_text">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot
+	<string name="onboarding_page_3_title">"Valitse päivitystapasi"</string>
+	<string name="onboarding_page_3_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot
 
 Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys.
 
 Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoista.
 
 Pyyhkäise vasemmalle jatkaaksesi."</string>
-	<string name="setup_page_5_title">"Olet valmis!"</string>
-	<string name="setup_page_5_text">"Nauti sovelluksesta!
+	<string name="onboarding_page_4_title">"Olet valmis!"</string>
+	<string name="onboarding_page_4_text">"Nauti sovelluksesta!
 
 Voit aina muuttaa asetuksiasi myöhemmin napsauttamalla oikealta yläkulmasta kolmea pistettä ja napsauttamalla \"Asetukset\"."</string>
 

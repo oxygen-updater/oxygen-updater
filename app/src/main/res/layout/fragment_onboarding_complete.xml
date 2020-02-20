@@ -1,0 +1,75 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fadingEdge="vertical"
+	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fillViewport="true"
+	android:requiresFadingEdge="vertical">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:paddingTop="@dimen/spacing_default"
+		android:paddingBottom="@dimen/spacing_default">
+
+		<TextView
+			android:id="@+id/onboardingPage4TextView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:text="@string/onboarding_page_4_text"
+			app:layout_constraintBottom_toTopOf="@id/divider"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_chainStyle="spread_inside" />
+
+		<View
+			android:id="@+id/divider"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginBottom="@dimen/spacing_default"
+			android:background="@color/backgroundVariant"
+			app:layout_constraintBottom_toTopOf="@id/onboardingPage4ContributeCheckbox"
+			app:layout_constraintTop_toBottomOf="@id/onboardingPage4TextView" />
+
+		<CheckBox
+			android:id="@+id/onboardingPage4ContributeCheckbox"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:layout_marginBottom="@dimen/spacing_half"
+			android:text="@string/contribute_agree_from_setup"
+			android:textColor="?android:textColorSecondary"
+			android:textSize="@dimen/typography_caption"
+			app:layout_constraintBottom_toTopOf="@id/onboardingPage4MoreInfoButton" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/onboardingPage4MoreInfoButton"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:onClick="onMoreInfoButtonClicked"
+			android:text="@string/contribute_more_info"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/onboardingPage4StartAppButton"
+			app:strokeColor="?colorPrimary" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/onboardingPage4StartAppButton"
+			style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="end"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:onClick="onStartAppButtonClicked"
+			android:text="@string/onboarding_finished_button"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:strokeColor="?colorPrimary" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

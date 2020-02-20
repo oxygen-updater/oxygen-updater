@@ -10,7 +10,7 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.arjanvlek.oxygenupdater.news.NewsActivity
 import com.arjanvlek.oxygenupdater.settings.SettingsActivity
-import com.arjanvlek.oxygenupdater.setupwizard.SetupActivity
+import com.arjanvlek.oxygenupdater.setupwizard.OnboardingActivity
 import com.arjanvlek.oxygenupdater.views.MainActivity
 import org.hamcrest.Matchers
 import org.junit.Before
@@ -27,7 +27,7 @@ import java.io.File
 class AppUIFlowTest {
 
     @Rule
-    var setupActivityRule = ActivityTestRule(SetupActivity::class.java, false, false)
+    var setupActivityRule = ActivityTestRule(OnboardingActivity::class.java, false, false)
 
     @Rule
     var mainActivityRule = ActivityTestRule(MainActivity::class.java, false, false)
@@ -62,11 +62,11 @@ class AppUIFlowTest {
         val activity = setupActivityRule.launchActivity(null)
 
         // Swipe through the first 2 screens of the setup wizard
-        Espresso.onView(ViewMatchers.withId(R.id.introduction_step_1_text_block_1)).perform(ViewActions.swipeLeft())
+        Espresso.onView(ViewMatchers.withId(R.id.onboarding_page_1_text)).perform(ViewActions.swipeLeft())
 
         Thread.sleep(1000)
 
-        Espresso.onView(ViewMatchers.withId(R.id.introduction_step_2_text_block_1)).perform(ViewActions.swipeLeft())
+        Espresso.onView(ViewMatchers.withId(R.id.onboardingPage1Caption)).perform(ViewActions.swipeLeft())
 
         Thread.sleep(1000)
 
@@ -99,7 +99,7 @@ class AppUIFlowTest {
 
         Thread.sleep(1000)
 
-        Espresso.onView(ViewMatchers.withId(R.id.introduction_step_5_close_button)).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.onboardingPage4StartAppButton)).perform(ViewActions.click())
 
         // Open the main screen
         val mainActivity = mainActivityRule.launchActivity(null)

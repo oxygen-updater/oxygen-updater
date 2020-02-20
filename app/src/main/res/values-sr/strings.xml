@@ -175,24 +175,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
-	<string name="faq_menuitem">FAQ</string>
+	<string name="faq_menu_item">FAQ</string>
 	<string name="faq_no_network">Нема конекције.</string>
 	<string name="faq_no_network_text">Требаће вам интернет конекција да погледате FAQ страницу.</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">Добродошли</string>
-	<string name="setup_close_button">Покрените апликацију</string>
+	<string name="onboarding">Добродошли</string>
+	<string name="onboarding_finished_button">Покрените апликацију</string>
 
-	<string name="setup_page_1_title">Добродошли у Oxygen Updater!</string>
-	<string name="setup_page_1_text">Ова апликација ће вам омогућити:\n\n- Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n\n- Лако ажурирајте рутован уређај\n\n- Погледајте шта има ново у софтверу који тренутно користите\n\n- Прочитајте последње вести о OnePlus-у и OxgenOS-у\n\nПревуците лево за наставак.</string>
-	<string name="setup_page_2_title">Важно обавештење:</string>
-	<string name="setup_page_2_text">Ово није званична OnePlus апликација. Користите ову апликацију комплетно на ваш ризик. Ни OnePlus нити људи који раде на овој апликацији нису одговорни за ваше поступке, укључујући било коју штету која је настала коришћењем ове апликације.\n\nКоришћењем ове апликације прихватате услове наведене изнад.\n\nПревуците лево за наставак.</string>
-	<string name="setup_page_3_title">Изаберите ваш уређај:</string>
-	<string name="setup_page_3_text">Обично је ваш уређај већ изабран. Ако није, изаберите уређај изнад.\n\nПревуците лево за наставак.</string>
-	<string name="setup_page_4_title">Изаберите методу ажурирањ:</string>
-	<string name="setup_page_4_text">Обично је делимично ажурирање прави избор, зато што омогућава мања и бржа преузимања.\n\nАли тај метод ажурирања није компатибилан са рутованим уређајима. Ако имате рутован уређај изаберите пуно ажурирање.\n\nАко имате beta верзију OxgenOS-a, изаберите једну од Open Beta метода ажурирања.\n\nПревуците лево за наставак.</string>
-	<string name="setup_page_5_title">Спремни сте за коришћење!</string>
-	<string name="setup_page_5_text">Уживајте у коришћењу апликације!\n\nМожете увек променити поставке у подешавањима касније. Да урадите то: кликните на три тачке у горњем десном углу, и притисните на \"Settings\". </string>
+	<string name="onboarding_page_1_title">Добродошли у Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">Ова апликација ће вам омогућити:\n\n- Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n\n- Лако ажурирајте рутован уређај\n\n- Погледајте шта има ново у софтверу који тренутно користите\n\n- Прочитајте последње вести о OnePlus-у и OxgenOS-у\n\nПревуците лево за наставак.</string>
+	<string name="onboarding_page_1_caption">Ово није званична OnePlus апликација. Користите ову апликацију комплетно на ваш ризик. Ни OnePlus нити људи који раде на овој апликацији нису одговорни за ваше поступке, укључујући било коју штету која је настала коришћењем ове апликације.\n\nКоришћењем ове апликације прихватате услове наведене изнад.</string>
+	<string name="onboarding_page_2_title">Изаберите ваш уређај</string>
+	<string name="onboarding_page_2_caption">Обично је ваш уређај већ изабран. Ако није, изаберите уређај изнад.</string>
+	<string name="onboarding_page_3_title">Изаберите методу ажурирањ</string>
+	<string name="onboarding_page_3_caption">Обично је делимично ажурирање прави избор, зато што омогућава мања и бржа преузимања.\n\nАли тај метод ажурирања није компатибилан са рутованим уређајима. Ако имате рутован уређај изаберите пуно ажурирање.\n\nАко имате beta верзију OxgenOS-a, изаберите једну од Open Beta метода ажурирања.</string>
+	<string name="onboarding_page_4_title">Спремни сте за коришћење!</string>
+	<string name="onboarding_page_4_text">Уживајте у коришћењу апликације!\n\nМожете увек променити поставке у подешавањима касније. Да урадите то: кликните на три тачке у горњем десном углу, и притисните на \"Settings\". </string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Инсталирај</string>

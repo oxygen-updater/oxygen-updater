@@ -136,7 +136,7 @@ class DelayedPushNotificationDisplayer : JobService() {
 
     private fun getBuilderForGeneralServerNotificationOrNewsNotification(message: String?): NotificationCompat.Builder {
         return notificationBuilder
-            .setSmallIcon(R.drawable.oxygen_updater)
+            .setSmallIcon(R.drawable.logo_outline)
             .setStyle(NotificationCompat.BigTextStyle().bigText(message))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(message)

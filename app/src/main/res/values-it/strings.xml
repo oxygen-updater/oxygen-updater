@@ -178,15 +178,15 @@ Questo puo' essere utile quando:
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
-	<string name="faq_menuitem">"FAQ"</string>
+	<string name="faq_menu_item">"FAQ"</string>
 	<string name="faq_no_network">"Nessuna connessione. "</string>
 	<string name="faq_no_network_text">"Hai bisogno di una connessione funzionante per accedere al FAQ. "</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Benvenuto"</string>
-	<string name="setup_close_button">"avvia app"</string>
-	<string name="setup_page_1_title">"Benvenuto su Oxygen Updater!"</string>
-	<string name="setup_page_1_text">"Quest app ti permetterà di:
+	<string name="onboarding">"Benvenuto"</string>
+	<string name="onboarding_finished_button">"avvia app"</string>
+	<string name="onboarding_page_1_title">"Benvenuto su Oxygen Updater!"</string>
+	<string name="onboarding_page_1_text">"Quest app ti permetterà di:
 
 -Avere accesso più veloce a gli'ultimi aggiornamenti di Android per il tuo dispositivo OnePlus con OxygenOS
 
@@ -197,26 +197,25 @@ Questo puo' essere utile quando:
 -Leggere le novità su OnePlus e OxygenOS
 
 Trascina verso sinistra per continuare."</string>
-	<string name="setup_page_2_title">"Messaggio importante:"</string>
-	<string name="setup_page_2_text">"Questa non e' un applicazione ufficiale. L'uso di questa app e' completamente a rischio proprio. Ne' OnePlus ne' lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app.
+	<string name="onboarding_page_1_caption">"Questa non e' un applicazione ufficiale. L'uso di questa app e' completamente a rischio proprio. Ne' OnePlus ne' lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app.
 
 Usando l'app consenti ai termini e condizioni citati sopra.
 
 Trascina verso sinistra per continuare."</string>
-	<string name="setup_page_3_title">"Seleziona il tuo dispositivo:"</string>
-	<string name="setup_page_3_text">"Il tuo dovrebbe già essere selezionato, se non lo e', selezionalo sopra.
+	<string name="onboarding_page_2_title">"Seleziona il tuo dispositivo:"</string>
+	<string name="onboarding_page_2_caption">"Il tuo dovrebbe già essere selezionato, se non lo e', selezionalo sopra.
 
 Trascina verso sinistra per continuare"</string>
-	<string name="setup_page_4_title">"Seleziona il tuo metodo d'aggiornamento. "</string>
-	<string name="setup_page_4_text">"Di solito, l'aggiornamento progressivo e' la scelta corretta, perche' offre download molto più facili e piccoli.
+	<string name="onboarding_page_3_title">"Seleziona il tuo metodo d'aggiornamento. "</string>
+	<string name="onboarding_page_3_caption">"Di solito, l'aggiornamento progressivo e' la scelta corretta, perche' offre download molto più facili e piccoli.
 
 Pero', non completamente comnpatibili con dispositivi rootati. Se hai un dispositivo con root, seleziona l'aggiornamento completo.
 
 Se hai una versione beta, seleziona una delle opzioni Open Beta.
 
 Trascina verso sinistra per continuare."</string>
-	<string name="setup_page_5_title">"Sei pronto per continuare! "</string>
-	<string name="setup_page_5_text">"Goditi l'app!
+	<string name="onboarding_page_4_title">"Sei pronto per continuare! "</string>
+	<string name="onboarding_page_4_text">"Goditi l'app!
 
 Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i tre puntini in alto a destra e selezionando \"Impostazioni\"."</string>
 

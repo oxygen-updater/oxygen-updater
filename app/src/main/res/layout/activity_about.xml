@@ -27,7 +27,7 @@
 				android:layout_height="match_parent"
 				android:fitsSystemWindows="true"
 				android:scaleType="centerCrop"
-				android:src="@drawable/oxygen_updater"
+				android:src="@drawable/logo_outline"
 				app:layout_collapseMode="parallax" />
 
 			<View

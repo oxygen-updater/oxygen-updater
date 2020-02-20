@@ -65,7 +65,8 @@
 			android:id="@+id/shimmerFrameLayout"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			app:shimmer_auto_start="true">
+			app:shimmer_auto_start="true"
+			tools:visibility="gone">
 
 			<include layout="@layout/placeholder_update_information" />
 		</com.facebook.shimmer.ShimmerFrameLayout>

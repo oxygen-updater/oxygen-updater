@@ -5,14 +5,11 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.OxygenUpdaterException
-import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.internal.addPlaceholderItemsForShimmer
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logDebug
 import com.arjanvlek.oxygenupdater.internal.logger.Logger.logError
 import com.arjanvlek.oxygenupdater.models.NewsItem
@@ -33,7 +30,10 @@ class NewsFragment : AbstractFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_news, container, false).also {
-            it.post { addPlaceholderItemsForShimmer(inflater, container, it) }
+            it.post {
+                // placeholderItem's height is 2x 16dp padding + 64dp image = 96dp
+                addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_news_item, 96f)
+            }
         }
     }
 
@@ -123,37 +123,6 @@ class NewsFragment : AbstractFragment() {
         }
 
         callback.invoke()
-    }
-
-    /**
-     * Inflates and adds as many placeholderItems as necessary, as per the calculation: rootView.height / placeholderItemHeight
-     *
-     * @param inflater the LayoutInflater
-     * @param container the container
-     * @param rootView this fragment's rootView
-     */
-    private fun addPlaceholderItemsForShimmer(inflater: LayoutInflater, container: ViewGroup?, rootView: View) {
-        val parent = LinearLayout(context).apply {
-            layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-            orientation = LinearLayout.VERTICAL
-        }
-
-        // calculate how many placeholderItems to add
-        // placeholderItem's height is 2x 16dp padding + 64dp image = 96dp
-        // we have to hardcode the height, because View.getHeight() returns 0 for views that haven't been drawn yet
-        // View.post() won't work either, because control goes into the lambda only after the view has been drawn
-        val count = rootView.height / Utils.dpToPx(context!!, 96f).toInt()
-
-        // add `count + 1` placeholderItems
-        for (i in 0..count) {
-            parent.addView(
-                // each placeholderItem must be inflated within the loop to avoid
-                // the "The specified child already has a parent. You must call removeView() on the child's parent first." error
-                inflater.inflate(R.layout.placeholder_news_item, container, false)
-            )
-        }
-
-        shimmerFrameLayout.addView(parent)
     }
 
     private fun updateBannerText(count: Int) {

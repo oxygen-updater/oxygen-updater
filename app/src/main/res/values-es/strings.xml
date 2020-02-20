@@ -175,24 +175,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
-	<string name="faq_menuitem">FAQ</string>
+	<string name="faq_menu_item">FAQ</string>
 	<string name="faq_no_network">Sin conexión a Internet.</string>
 	<string name="faq_no_network_text">Necesitas una conexión a Internet para ver el FAQ.</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">Bienvenido</string>
-	<string name="setup_close_button">iniciar app</string>
+	<string name="onboarding">Bienvenido</string>
+	<string name="onboarding_finished_button">iniciar app</string>
 
-	<string name="setup_page_1_title">¡Bienvenido a Oxygen Updater!</string>
-	<string name="setup_page_1_text">Esta app te permitirá:\n\n- Acceder rápidamente a nuevas actualizaciones para tu Oneplus gracias a OxygenOS\n\n- Actualiza fácilmente tu dispositivo con acceso root\n\n- Ver las novedades del sistema operativo que estás usando actualmente\n\n- Leer las últimas noticias sobre OnePlus y OxygenOS\n\nDesliza a la izquierda para continuar.</string>
-	<string name="setup_page_2_title">Aviso importante:</string>
-	<string name="setup_page_2_text">Esta no es una aplicación oficial de Oneplus. El uso de esta app está sujeto a tu propia responsabilidad. Ni Oneplus ni el desarrollador son responsables de tu acciones, incluyendo el daño causado por esta app.\n\nAl usar esta app, aceptas los términos y condiciones arriba mencionados.\n\nDesliza a la izquierda pata continuar.</string>
-	<string name="setup_page_3_title">Elige tu dispositivo:</string>
-	<string name="setup_page_3_text">Tu dispositivo suele seleccionarse automáticamente. Si no es así, selecciona tu dispositivo arriba.\n\nDesliza a la izquierda pata continuar.</string>
-	<string name="setup_page_4_title">Elige el método para actualizar:</string>
-	<string name="setup_page_4_text">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas.\n\Sin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa.\n\nSi tienes una versión beta de OxygenOS, elige (uno de los) método(s) de actualización de la beta abierta.\n\nDesliza a la izquierda pata continuar.</string>
-	<string name="setup_page_5_title">¡Ya estás listo para comenzar!</string>
-	<string name="setup_page_5_text">¡Disfruta esta app!\n\nSiempre podrás cambiar las preferencias más tarde. Para hacerlo: Haz click en los tres puntos en la esquina derecha, y selecciona \"Ajustes\".</string>
+	<string name="onboarding_page_1_title">¡Bienvenido a Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">Esta app te permitirá:\n\n- Acceder rápidamente a nuevas actualizaciones para tu Oneplus gracias a OxygenOS\n\n- Actualiza fácilmente tu dispositivo con acceso root\n\n- Ver las novedades del sistema operativo que estás usando actualmente\n\n- Leer las últimas noticias sobre OnePlus y OxygenOS\n\nDesliza a la izquierda para continuar.</string>
+	<string name="onboarding_page_1_caption">Esta no es una aplicación oficial de Oneplus. El uso de esta app está sujeto a tu propia responsabilidad. Ni Oneplus ni el desarrollador son responsables de tu acciones, incluyendo el daño causado por esta app.\n\nAl usar esta app, aceptas los términos y condiciones arriba mencionados.</string>
+	<string name="onboarding_page_2_title">Elige tu dispositivo</string>
+	<string name="onboarding_page_2_caption">Tu dispositivo suele seleccionarse automáticamente. Si no es así, selecciona tu dispositivo arriba.</string>
+	<string name="onboarding_page_3_title">Elige el método para actualizar</string>
+	<string name="onboarding_page_3_caption">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas.\n\Sin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa.\n\nSi tienes una versión beta de OxygenOS, elige (uno de los) método(s) de actualización de la beta abierta.</string>
+	<string name="onboarding_page_4_title">¡Ya estás listo para comenzar!</string>
+	<string name="onboarding_page_4_text">¡Disfruta esta app!\n\nSiempre podrás cambiar las preferencias más tarde. Para hacerlo: Haz click en los tres puntos en la esquina derecha, y selecciona \"Ajustes\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Instalar</string>

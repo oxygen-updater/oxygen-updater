@@ -184,15 +184,15 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
-	<string name="faq_menuitem">"FAQ"</string>
+	<string name="faq_menu_item">"FAQ"</string>
 	<string name="faq_no_network">"Hет соединения."</string>
 	<string name="faq_no_network_text">"Необходимо подключение, чтобы открыть FAQ."</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Добро пожаловать"</string>
-	<string name="setup_close_button">"начать"</string>
-	<string name="setup_page_1_title">"Добро пожаловать в Oxygen Updater!"</string>
-	<string name="setup_page_1_text">"Данное приложение позволит вам:
+	<string name="onboarding">"Добро пожаловать"</string>
+	<string name="onboarding_finished_button">"начать"</string>
+	<string name="onboarding_page_1_title">"Добро пожаловать в Oxygen Updater!"</string>
+	<string name="onboarding_page_1_text">"Данное приложение позволит вам:
 
 - Получить мгновенный доступ к последним версиям Android для устройств под управлением OxygenOS
 
@@ -203,26 +203,25 @@
 - Читать последние новости о OnePlus и OxygenOS
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_2_title">"Важное замечание:"</string>
-	<string name="setup_page_2_text">"Данное приложение не является официальным приложением OnePlus. Вы используете его на свой страх и риск. OnePlus и разработчик этого приложения не несут ответственности за нанесение какого-либо вреда вашему устройству.
+	<string name="onboarding_page_1_caption">"Данное приложение не является официальным приложением OnePlus. Вы используете его на свой страх и риск. OnePlus и разработчик этого приложения не несут ответственности за нанесение какого-либо вреда вашему устройству.
 
 Используя Oxygen Updater, вы соглашаетесь с условиями, указанными выше.
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_3_title">"Выберите ваше устройство:"</string>
-	<string name="setup_page_3_text">"Обычно устройство определяется автоматически. Если нет, выберите ваше устройство выше.
+	<string name="onboarding_page_2_title">"Выберите ваше устройство:"</string>
+	<string name="onboarding_page_2_caption">"Обычно устройство определяется автоматически. Если нет, выберите ваше устройство выше.
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_4_title">"Выберите метод обновления"</string>
-	<string name="setup_page_4_text">"Обычно, частичное обновление является оптимальным решением, так как оно характеризуется быстрой загрузкой меньших по объему файлов.
+	<string name="onboarding_page_3_title">"Выберите метод обновления"</string>
+	<string name="onboarding_page_3_caption">"Обычно, частичное обновление является оптимальным решением, так как оно характеризуется быстрой загрузкой меньших по объему файлов.
 
 К сожалению его нельзя использовать с устройствами с рутом. Если у вас есть рут, используйте Полное обновление.
 
 Если вы используете бета версии прошивок, то выберите \"Community Edition\".
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_5_title">"Вы готовы! "</string>
-	<string name="setup_page_5_text">"Наслаждайтесь использованием данного приложения!
+	<string name="onboarding_page_4_title">"Вы готовы! "</string>
+	<string name="onboarding_page_4_text">"Наслаждайтесь использованием данного приложения!
 
 Вы всегда можете изменить настройки приложения. Чтобы сделать это: Нажмите на три точки в правом верхнем углу, после нажмите на \"Настройки\"."</string>
 

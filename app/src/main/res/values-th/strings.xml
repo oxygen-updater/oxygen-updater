@@ -172,24 +172,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
-	<string name="faq_menuitem">FAQ</string>
+	<string name="faq_menu_item">FAQ</string>
 	<string name="faq_no_network">ไม่มีการเชื่อมต่อ.</string>
 	<string name="faq_no_network_text">คุณต้องเชื่อมต่ออินเทอร์เน็ตก่อน</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">ยินดีต้อนรับ</string>
-	<string name="setup_close_button">เริ่มใช้งาน</string>
+	<string name="onboarding">ยินดีต้อนรับ</string>
+	<string name="onboarding_finished_button">เริ่มใช้งาน</string>
 
-	<string name="setup_page_1_title">ยินดีต้อนรับสู่ Oxygen Updater!</string>
-	<string name="setup_page_1_text">แอพนนี้จะทำให้คุณสามารถ:\n\n- ติดตั้ง OxygenOS เวอร์ชั่นใหม่ได้ก่อน\n\n- ง่ายต่อเครื่องที่ผ่านการรูท\n\n- และสามารถดูข้อมูลการอัพเดทต่างๆของระบบเวอร์ชั่นปัจจุบันที่คุณกำลังใช้อยู่\n\n- อ่านข่าวล่าสุดเกี่ยวกับ Oneplus และ OxygenOS\n\nปัดไปทางซ้ายเพื่อดำเนินการต่อ</string>
-	<string name="setup_page_2_title">หมายเหตุ:</string>
-	<string name="setup_page_2_text">นี้ไม่ใช่แอพพลิเคชั่นอย่างทางการของ Oneplus ใช้แอพพลิเคชั่นนี้ด้วยความเสี่ยงของคุณเอง OnePlus หรือผู้พัฒนาแอปจะไม่รับผิดชอบต่อการกระทำของคุณร่วมถึงความเสียหายทีเกิดขี้นจากแอพนี้\n\nโดยการใช้แอพนี้คุณยอมรับข้อกำหนดและเงื่อนไขตามที่ระบุไว้ข้างต้น\n\nปัดไปทางซ้ายเพื่อดำเนินการต่อ</string>
-	<string name="setup_page_3_title">เลือกอุปกรณ์ของคุณ:</string>
-	<string name="setup_page_3_text">โดยปกติอุปกรณ์ของคุณจะถูกเลือกไว้ด้านบน หากไม่ คุณสามารถเลือกอุปกรณ์ของคุณด้านบน\n\nnปัดไปทางซ้ายเพื่อดำเนินการต่อ</string>
-	<string name="setup_page_4_title">เลือกวิธีการอัพเดทของคุณ:</string>
-	<string name="setup_page_4_text">โดยปกติแล้วการอัปเดตธรรมดาจะเป็นตัวเลือกที่เหมาะสมเนื่องจากมีการดาวน์โหลดที่เร็วกว่าและเล็กกว่ามาก\n\n อย่างไรก็ตามมันเข้ากันไม่ได้กับอุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้เลือกการอัพเดทแบบเต็มรูปแบบ\n\nหากคุณมี OxygenOS รุ่นเบต้าให้เลือก (หนึ่งใน) วิธีการอัปเดต Open Beta\n\nปัดไปทางซ้ายเพื่อดำเนินการต่อ</string>
-	<string name="setup_page_5_title">คุณพร้อมแล้ว!</string>
-	<string name="setup_page_5_text">ขอสนุกกับการใช้แอพนี้!\n\n คุณสามารถเปลี่ยนการตั้งค่าได้ในภายหลัง โดยทำดังนี้: แตะจุดสามจุดที่มุมขวาบนแล้วแตะที่ \"การตั้งค่า \".</string>
+	<string name="onboarding_page_1_title">ยินดีต้อนรับสู่ Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">แอพนนี้จะทำให้คุณสามารถ:\n\n- ติดตั้ง OxygenOS เวอร์ชั่นใหม่ได้ก่อน\n\n- ง่ายต่อเครื่องที่ผ่านการรูท\n\n- และสามารถดูข้อมูลการอัพเดทต่างๆของระบบเวอร์ชั่นปัจจุบันที่คุณกำลังใช้อยู่\n\n- อ่านข่าวล่าสุดเกี่ยวกับ Oneplus และ OxygenOS\n\nปัดไปทางซ้ายเพื่อดำเนินการต่อ</string>
+	<string name="onboarding_page_1_caption">นี้ไม่ใช่แอพพลิเคชั่นอย่างทางการของ Oneplus ใช้แอพพลิเคชั่นนี้ด้วยความเสี่ยงของคุณเอง OnePlus หรือผู้พัฒนาแอปจะไม่รับผิดชอบต่อการกระทำของคุณร่วมถึงความเสียหายทีเกิดขี้นจากแอพนี้\n\nโดยการใช้แอพนี้คุณยอมรับข้อกำหนดและเงื่อนไขตามที่ระบุไว้ข้างต้น</string>
+	<string name="onboarding_page_2_title">เลือกอุปกรณ์ของคุณ</string>
+	<string name="onboarding_page_2_caption">โดยปกติอุปกรณ์ของคุณจะถูกเลือกไว้ด้านบน หากไม่ คุณสามารถเลือกอุปกรณ์ของคุณด้านบน</string>
+	<string name="onboarding_page_3_title">เลือกวิธีการอัพเดทของคุณ</string>
+	<string name="onboarding_page_3_caption">โดยปกติแล้วการอัปเดตธรรมดาจะเป็นตัวเลือกที่เหมาะสมเนื่องจากมีการดาวน์โหลดที่เร็วกว่าและเล็กกว่ามาก\n\n อย่างไรก็ตามมันเข้ากันไม่ได้กับอุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้เลือกการอัพเดทแบบเต็มรูปแบบ\n\nหากคุณมี OxygenOS รุ่นเบต้าให้เลือก (หนึ่งใน) วิธีการอัปเดต Open Beta</string>
+	<string name="onboarding_page_4_title">คุณพร้อมแล้ว!</string>
+	<string name="onboarding_page_4_text">ขอสนุกกับการใช้แอพนี้!\n\n คุณสามารถเปลี่ยนการตั้งค่าได้ในภายหลัง โดยทำดังนี้: แตะจุดสามจุดที่มุมขวาบนแล้วแตะที่ \"การตั้งค่า \".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">ติดตั้ง</string>

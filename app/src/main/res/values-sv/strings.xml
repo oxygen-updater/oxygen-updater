@@ -171,15 +171,15 @@ Detta kan vara användbart när du:
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
-	<string name="faq_menuitem">"FAQ"</string>
+	<string name="faq_menu_item">"FAQ"</string>
 	<string name="faq_no_network">"Ingen anslutning."</string>
 	<string name="faq_no_network_text">"Du behöver en fungerande internetanslutning för att se X sidan."</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Välkommen"</string>
-	<string name="setup_close_button">"starta appen"</string>
-	<string name="setup_page_1_title">"Välkommen till Oxygen Updater!"</string>
-	<string name="setup_page_1_text">"Denna app kommer låta dig:
+	<string name="onboarding">"Välkommen"</string>
+	<string name="onboarding_finished_button">"starta appen"</string>
+	<string name="onboarding_page_1_title">"Välkommen till Oxygen Updater!"</string>
+	<string name="onboarding_page_1_text">"Denna app kommer låta dig:
 
 - Få snabbare tillgång till Android uppdateringar för din enhet med OxygenOS
 
@@ -190,26 +190,25 @@ Detta kan vara användbart när du:
 - Läsa de senaste nyheterna som relaterar till OnePlus och OXygenOS
 
 Dra till vänster för att fortsätta."</string>
-	<string name="setup_page_2_title">"Viktig notis:"</string>
-	<string name="setup_page_2_text">"Detta är inte en officiell OnePlus applikation. Användande av denna app är helt på egen risk. Vare sig OnePlus eller utvecklaren av denna app är ansvariga för dina handlingar, detta inkluderar skada av din enhet som har tillkommit efter användande av denna app.
+	<string name="onboarding_page_1_caption">"Detta är inte en officiell OnePlus applikation. Användande av denna app är helt på egen risk. Vare sig OnePlus eller utvecklaren av denna app är ansvariga för dina handlingar, detta inkluderar skada av din enhet som har tillkommit efter användande av denna app.
 
 Genom att använda denna app accepterar du de ovanstående villkoren.
 
 Dra till vänster för att fortsätta."</string>
-	<string name="setup_page_3_title">"Välj din enhet:"</string>
-	<string name="setup_page_3_text">"Din enhet är oftast redan förvald ovan, om inte, välj din enhet ovan.
+	<string name="onboarding_page_2_title">"Välj din enhet:"</string>
+	<string name="onboarding_page_2_caption">"Din enhet är oftast redan förvald ovan, om inte, välj din enhet ovan.
 
 Dra till vänster för att fortsätta."</string>
-	<string name="setup_page_4_title">"Välj din uppdateringsmetod:"</string>
-	<string name="setup_page_4_text">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek.
+	<string name="onboarding_page_3_title">"Välj din uppdateringsmetod:"</string>
+	<string name="onboarding_page_3_caption">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek.
 
 Däremot är det inte kompatibelt med rostade enheter. Välj istället en full uppdatering om du har en rootad enhet.
 
 Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetoderna för Open Beta.
 
 Svep vänster för att fortsätta."</string>
-	<string name="setup_page_5_title">"Du är redo!"</string>
-	<string name="setup_page_5_text">"Hoppas du kommer tycka om appen!
+	<string name="onboarding_page_4_title">"Du är redo!"</string>
+	<string name="onboarding_page_4_text">"Hoppas du kommer tycka om appen!
 
 Du kan alltid ändra inställningar senare. För att göra det: Tryck på de tre punkterna i översta högra hörnet och tryck sedan på \"Inställningar\"."</string>
 

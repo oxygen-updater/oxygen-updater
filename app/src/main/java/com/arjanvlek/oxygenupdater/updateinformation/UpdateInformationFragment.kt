@@ -4,7 +4,6 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.ColorStateList
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.text.SpannableString
@@ -13,13 +12,9 @@ import android.text.style.URLSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arjanvlek.oxygenupdater.ActivityLauncher
@@ -39,6 +34,7 @@ import com.arjanvlek.oxygenupdater.download.DownloadStatus.NOT_DOWNLOADING
 import com.arjanvlek.oxygenupdater.download.DownloadStatus.VERIFYING
 import com.arjanvlek.oxygenupdater.download.UpdateDownloadListener
 import com.arjanvlek.oxygenupdater.internal.Utils
+import com.arjanvlek.oxygenupdater.internal.setImageResourceWithTint
 import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
@@ -696,11 +692,6 @@ class UpdateInformationFragment : AbstractFragment() {
         downloadActionButton.isVisible = true
         downloadActionButton.setImageResourceWithTint(drawableResId, colorResId)
         downloadActionButton.setOnClickListener(onClickListener)
-    }
-
-    private fun ImageView.setImageResourceWithTint(@DrawableRes drawableResId: Int, @ColorRes colorResId: Int) {
-        setImageResource(drawableResId)
-        imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, colorResId))
     }
 
     private fun registerDownloadReceiver(downloadListener: UpdateDownloadListener) {

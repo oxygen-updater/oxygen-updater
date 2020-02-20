@@ -14,7 +14,7 @@
 		android:contentDescription="@string/icon"
 		android:padding="@dimen/spacing_default"
 		android:tint="?colorPrimary"
-		tools:src="@drawable/oxygen_updater" />
+		tools:src="@drawable/logo_outline" />
 
 	<RelativeLayout
 		android:layout_width="0dp"

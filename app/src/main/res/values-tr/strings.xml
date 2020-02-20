@@ -171,24 +171,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">SSS</string>
-	<string name="faq_menuitem">SSS</string>
+	<string name="faq_menu_item">SSS</string>
 	<string name="faq_no_network">Bağlantı yok.</string>
 	<string name="faq_no_network_text">SSS sayfasını görüntülemek için bağlantıya ihtiyacınız olacak.</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">Hoşgelidiniz</string>
-	<string name="setup_close_button">Uygulamayı başlat</string>
+	<string name="onboarding">Hoşgelidiniz</string>
+	<string name="onboarding_finished_button">Uygulamayı başlat</string>
 
-	<string name="setup_page_1_title">Oxygen Updatera hoşgeldiniz!</string>
-	<string name="setup_page_1_text">Bu uygulama size:\n\n- En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n\n- Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n\n- Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n\n- OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.\n\n Devam etmek için sola kaydırın.</string>
-	<string name="setup_page_2_title">Önemli hatırlatma:</string>
-	<string name="setup_page_2_text">Orjinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir.\n\n Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.\n\nDevam etmek için sola kaydırın.</string>
-	<string name="setup_page_3_title">Cihazınızı seçin:</string>
-	<string name="setup_page_3_text">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.\n\nDevam etmek için sola kaydırın.</string>
-	<string name="setup_page_4_title">Güncelleme metodunuzu seçiniz:</string>
-	<string name="setup_page_4_text">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır.\n\nAncak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz.\n\nEğer OxygenOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.\n\nDevam etmek için sola kaydırın.</string>
-	<string name="setup_page_5_title">Başlamak için hazırsınız!</string>
-	<string name="setup_page_5_text">Uygulamayı güle güle kullanın!\n\nHer zaman ayarlarınızı daha sonra değiştirebilirsiniz. Yapmak için: Sol üst köşedeki üç noktadan \"Ayarlar\" ı seçiniz.</string>
+	<string name="onboarding_page_1_title">Oxygen Updatera hoşgeldiniz!</string>
+	<string name="onboarding_page_1_text">Bu uygulama size:\n\n- En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n\n- Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n\n- Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n\n- OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.\n\n Devam etmek için sola kaydırın.</string>
+	<string name="onboarding_page_1_caption">Orjinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir.\n\n Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
+	<string name="onboarding_page_2_title">Cihazınızı seçin</string>
+	<string name="onboarding_page_2_caption">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.</string>
+	<string name="onboarding_page_3_title">Güncelleme metodunuzu seçiniz</string>
+	<string name="onboarding_page_3_caption">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır.\n\nAncak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz.\n\nEğer OxygenOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.</string>
+	<string name="onboarding_page_4_title">Başlamak için hazırsınız!</string>
+	<string name="onboarding_page_4_text">Uygulamayı güle güle kullanın!\n\nHer zaman ayarlarınızı daha sonra değiştirebilirsiniz. Yapmak için: Sol üst köşedeki üç noktadan \"Ayarlar\" ı seçiniz.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Yükle</string>

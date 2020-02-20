@@ -179,15 +179,15 @@ Das könnte nützlich sein wenn:
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
-	<string name="faq_menuitem">"FAQ"</string>
+	<string name="faq_menu_item">"FAQ"</string>
 	<string name="faq_no_network">"Keine Verbindung"</string>
 	<string name="faq_no_network_text">"Du benötigst eine funktionierende Internet Verbindung um die FAQ Seite zu sehen."</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Herzlich Willkommen"</string>
-	<string name="setup_close_button">"App Starten"</string>
-	<string name="setup_page_1_title">"Herzlich Willkommen im Oxygen Updater!"</string>
-	<string name="setup_page_1_text">"diese App erlaubt es dir:
+	<string name="onboarding">"Herzlich Willkommen"</string>
+	<string name="onboarding_finished_button">"App Starten"</string>
+	<string name="onboarding_page_1_title">"Herzlich Willkommen im Oxygen Updater!"</string>
+	<string name="onboarding_page_1_text">"diese App erlaubt es dir:
 
 Schneller die neusten Updates für dein OxygenOS Gerät zu bekommen
 
@@ -198,26 +198,25 @@ Schneller die neusten Updates für dein OxygenOS Gerät zu bekommen
 -Die neusten Updates über OnePlus und OxygenOS zu sehen
 
 Wische nach links um fortzufahren."</string>
-	<string name="setup_page_2_title">"Wichtige Mitteilung:"</string>
-	<string name="setup_page_2_text">"Das ist keine Offizielle OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder Oneplus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden.
+	<string name="onboarding_page_1_caption">"Das ist keine Offizielle OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder Oneplus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden.
 
 durch die Benutzung dieser App Stimmst du den oben genannten Nutzungsbedingungen zu.
 
 Wische nach links um fortzufahren."</string>
-	<string name="setup_page_3_title">"Wähle dein gerät:"</string>
-	<string name="setup_page_3_text">"Normalerweise sollte dein Gerät bereits oben ausgewählt sein. Falls nicht, wähle dein Gerät oben aus.
+	<string name="onboarding_page_2_title">"Wähle dein gerät:"</string>
+	<string name="onboarding_page_2_caption">"Normalerweise sollte dein Gerät bereits oben ausgewählt sein. Falls nicht, wähle dein Gerät oben aus.
 
 Wische nach links um fortzufahren."</string>
-	<string name="setup_page_4_title">"Wähle deine Update Methode:"</string>
-	<string name="setup_page_4_text">"Für gewöhnlich ist das \"inkrementelle update\" die richtige Wahl da es einen schnelleren und geringeren download bietet.
+	<string name="onboarding_page_3_title">"Wähle deine Update Methode:"</string>
+	<string name="onboarding_page_3_caption">"Für gewöhnlich ist das \"inkrementelle update\" die richtige Wahl da es einen schnelleren und geringeren download bietet.
 
 Weshalb auch immer, es ist nicht kompatibel mit gerooteten Geräten. Falls du ein gerootetes Gerät hast dann wähle das \"komplette Update\".
 
 Falls auf deinem Gerät eine Beta Version von OxygenOS läuft, dann wähle (eine) der/die Offene Beta Update Methode(n).
 
 Wische nach links um fortzufahren."</string>
-	<string name="setup_page_5_title">"Du bist bereit!"</string>
-	<string name="setup_page_5_text">"Viel Spaß beim benutzen dieser App!
+	<string name="onboarding_page_4_title">"Du bist bereit!"</string>
+	<string name="onboarding_page_4_text">"Viel Spaß beim benutzen dieser App!
 
 Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf das drei Punkte Kontext Menü in der rechten oberen Ecke, und drücke auf \"Einstellungen\""</string>
 

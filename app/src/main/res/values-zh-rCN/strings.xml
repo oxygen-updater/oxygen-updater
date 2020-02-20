@@ -170,24 +170,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">常见问题</string>
-	<string name="faq_menuitem">常见问题</string>
+	<string name="faq_menu_item">常见问题</string>
 	<string name="faq_no_network">无互联网连接</string>
 	<string name="faq_no_network_text">您需要连接至互联网来查看常见的问题</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">欢迎</string>
-	<string name="setup_close_button">开始吧！</string>
+	<string name="onboarding">欢迎</string>
+	<string name="onboarding_finished_button">开始吧！</string>
 
-	<string name="setup_page_1_title">欢迎使用 Oxygen 更新器！</string>
-	<string name="setup_page_1_text">这款 App 可以帮助您：\n\nv- 更快地接收 OxygenOS 的最新Android 更新\n- 轻松升级 Root 过的设备\n- 查看当前系统版本的更新亮点\n- 了解关于 OnePlus 与 OxygenOS 的最新消息\n向左轻扫以继续</string>
-	<string name="setup_page_2_title">重要提示：</string>
-	<string name="setup_page_2_text">并不是官方的 OnePlus 应用程序，使用此应用程序完全由您自己承担风险。OnePlus和应用开发者都不对您的行为负责，包括使用此应用程序造成的任何损害。\n\n使用此应用程序即表示您同意上述条款。\n\n向左轻扫以继续</string>
-	<string name="setup_page_3_title">选择您的设备：</string>
-	<string name="setup_page_3_text">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。\n\n向左滑动即可继续</string>
-	<string name="setup_page_4_title">选择您的更新方式：</string>
-	<string name="setup_page_4_text">通常，更加推荐增量更新，因为它提供了更快，更小的下载体验。\n但是，它与 Root 过的设备不兼容。 如果您的设备已经 Root，请选择完全更新。\n如果您运行的是 OxygenOS 的测试版, 请选择开放测试版系统\n\n向左轻扫以继续。</string>
-	<string name="setup_page_5_title">一切就绪！</string>
-	<string name="setup_page_5_text">敬请使用吧！\n\n您可以随时在设置中更改您的设定。</string>
+	<string name="onboarding_page_1_title">欢迎使用 Oxygen 更新器！</string>
+	<string name="onboarding_page_1_text">这款 App 可以帮助您：\n\nv- 更快地接收 OxygenOS 的最新Android 更新\n- 轻松升级 Root 过的设备\n- 查看当前系统版本的更新亮点\n- 了解关于 OnePlus 与 OxygenOS 的最新消息\n向左轻扫以继续</string>
+	<string name="onboarding_page_1_caption">并不是官方的 OnePlus 应用程序，使用此应用程序完全由您自己承担风险。OnePlus和应用开发者都不对您的行为负责，包括使用此应用程序造成的任何损害。\n\n使用此应用程序即表示您同意上述条款。</string>
+	<string name="onboarding_page_2_title">选择您的设备：</string>
+	<string name="onboarding_page_2_caption">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。</string>
+	<string name="onboarding_page_3_title">选择您的更新方式：</string>
+	<string name="onboarding_page_3_caption">通常，更加推荐增量更新，因为它提供了更快，更小的下载体验。\n但是，它与 Root 过的设备不兼容。 如果您的设备已经 Root，请选择完全更新。\n如果您运行的是 OxygenOS 的测试版, 请选择开放测试版系统</string>
+	<string name="onboarding_page_4_title">一切就绪！</string>
+	<string name="onboarding_page_4_text">敬请使用吧！\n\n您可以随时在设置中更改您的设定。</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">安装</string>

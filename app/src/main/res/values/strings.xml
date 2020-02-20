@@ -198,24 +198,23 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
-	<string name="faq_menuitem">FAQ</string>
+	<string name="faq_menu_item">FAQ</string>
 	<string name="faq_no_network">No connection.</string>
 	<string name="faq_no_network_text">You\'ll need a working connection to view the FAQ page.</string>
 
-	<!-- First-time setup strings -->
-	<string name="setup">Welcome</string>
-	<string name="setup_close_button">start app</string>
+	<!-- First-time onboarding strings -->
+	<string name="onboarding">Welcome</string>
+	<string name="onboarding_finished_button">Start app</string>
 
-	<string name="setup_page_1_title">Welcome to Oxygen Updater!</string>
-	<string name="setup_page_1_text">This app will allow you to:\n\n- Get faster access to the latest Android updates for your OxygenOS powered device\n\n- Easily update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
-	<string name="setup_page_2_title">Important notice:</string>
-	<string name="setup_page_2_text">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app.\n\nBy using this app, you agree to the terms and conditions as stated above.\n\nSwipe to the left to continue.</string>
-	<string name="setup_page_3_title">Choose your device:</string>
-	<string name="setup_page_3_text">Your device is usually already selected above. If not, select your device above.\n\nSwipe to the left to continue.</string>
-	<string name="setup_page_4_title">Choose your update method:</string>
-	<string name="setup_page_4_text">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).\n\nSwipe to the left to continue.</string>
-	<string name="setup_page_5_title">You are ready to go!</string>
-	<string name="setup_page_5_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
+	<string name="onboarding_page_1_title">Welcome to Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">This app will allow you to:\n\n- Get faster access to the latest Android updates for your OxygenOS powered device\n\n- Easily update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
+	<string name="onboarding_page_1_caption">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app.\n\nBy using this app, you agree to the terms and conditions as stated above.</string>
+	<string name="onboarding_page_2_title">Choose your device</string>
+	<string name="onboarding_page_2_caption">Your device is usually already selected above. If not, select your device above.</string>
+	<string name="onboarding_page_3_title">Choose your update method</string>
+	<string name="onboarding_page_3_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
+	<string name="onboarding_page_4_title">You are ready to go!</string>
+	<string name="onboarding_page_4_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>

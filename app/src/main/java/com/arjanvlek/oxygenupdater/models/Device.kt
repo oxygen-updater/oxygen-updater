@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Device(
-    val id: Long,
+    override val id: Long,
     var enabled: Boolean,
-    val name: String?,
+    override val name: String?,
 
     @JsonIgnore
     private val productName: String
-) {
+) : SelectableModel {
 
     lateinit var productNames: List<String>
 
