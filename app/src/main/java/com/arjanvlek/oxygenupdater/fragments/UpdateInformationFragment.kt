@@ -194,7 +194,7 @@ class UpdateInformationFragment : AbstractFragment() {
             if (settingsManager!!.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
                 appUpdateBannerLayout.isVisible = true
                 appUpdateBannerLayout.setOnClickListener { ActivityLauncher(activity!!).openPlayStorePage(context!!) }
-                appUpdateBannerTextView.text = getString(R.string.new_app_version_detailed, serverStatus.latestAppVersion)
+                appUpdateBannerTextView.text = getString(R.string.new_app_version, serverStatus.latestAppVersion)
             }
 
             serverConnector.getInAppMessages(serverStatus, { displayServerMessageBars(it) }) { error ->

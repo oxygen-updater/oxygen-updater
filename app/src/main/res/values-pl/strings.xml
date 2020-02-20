@@ -39,9 +39,8 @@
 	<string name="server_status_warning">Niektóre funkcje mogą nie działać poprawnie.</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">Aktualizacja aplikacji dostępna ! Wersja &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> została wydana!</string>
 	<!-- TODO: translate this string below -->
-	<string name="new_app_version_detailed">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">w</string>
