@@ -2,12 +2,8 @@ package com.arjanvlek.oxygenupdater.internal.server
 
 import android.content.Context
 import android.os.AsyncTask
-import android.os.Build
-import android.text.Html
-import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
-import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.enums.PurchaseType
 import com.arjanvlek.oxygenupdater.enums.ServerRequest
@@ -173,64 +169,32 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
     }
 
     fun getInAppMessages(
-        online: Boolean,
+        serverStatus: ServerStatus,
         callback: KotlinCallback<List<Banner>>,
         errorCallback: KotlinCallback<String?>
     ) {
         val inAppBars = ArrayList<Banner>()
 
-        getServerStatus(online) { serverStatus ->
-            getServerMessages(
-                settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L),
-                settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-            ) { serverMessages: List<ServerMessage>? ->
-                // Add the "No connection" bar depending on the network status of the device.
-                if (!online) {
-                    inAppBars.add(object : Banner {
-                        override fun getBannerText(context: Context) = context.getString(R.string.error_no_internet_connection)
+        getServerMessages(
+            settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L),
+            settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        ) { serverMessages: List<ServerMessage>? ->
+            if (serverMessages != null && settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES, true)) {
+                inAppBars.addAll(serverMessages)
+            }
 
-                        override fun getColor(context: Context) = ContextCompat.getColor(context, R.color.colorError)
-
-                        override fun getDrawableRes(context: Context) = R.drawable.error_outline
-                    })
-                }
-
-                if (serverMessages != null && settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES, true)) {
-                    inAppBars.addAll(serverMessages)
-                }
-
-                val status = serverStatus.status
-                if (status!!.isUserRecoverableError) {
-                    inAppBars.add(serverStatus)
-                }
-
-                if (status.isNonRecoverableError) {
-                    when (status) {
-                        ServerStatus.Status.MAINTENANCE -> errorCallback.invoke(ApplicationData.SERVER_MAINTENANCE_ERROR)
-                        ServerStatus.Status.OUTDATED -> errorCallback.invoke(ApplicationData.APP_OUTDATED_ERROR)
-                        else -> {
-                            // no-op
-                        }
+            val status = serverStatus.status!!
+            if (status.isNonRecoverableError) {
+                when (status) {
+                    ServerStatus.Status.MAINTENANCE -> errorCallback.invoke(ApplicationData.SERVER_MAINTENANCE_ERROR)
+                    ServerStatus.Status.OUTDATED -> errorCallback.invoke(ApplicationData.APP_OUTDATED_ERROR)
+                    else -> {
+                        // no-op
                     }
                 }
-
-                if (settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
-                    inAppBars.add(object : Banner {
-                        override fun getBannerText(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            Html.fromHtml(String.format(context.getString(R.string.new_app_version), serverStatus.latestAppVersion), Html.FROM_HTML_MODE_LEGACY)
-                        } else {
-                            @Suppress("DEPRECATION")
-                            Html.fromHtml(String.format(context.getString(R.string.new_app_version), serverStatus.latestAppVersion))
-                        }
-
-                        override fun getColor(context: Context) = ContextCompat.getColor(context, R.color.colorPositive)
-
-                        override fun getDrawableRes(context: Context) = R.drawable.info
-                    })
-                }
-
-                callback.invoke(inAppBars)
             }
+
+            callback.invoke(inAppBars)
         }
     }
 

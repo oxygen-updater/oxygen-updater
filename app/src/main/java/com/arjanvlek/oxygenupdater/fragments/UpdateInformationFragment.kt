@@ -16,6 +16,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import androidx.lifecycle.observe
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.ApplicationData
@@ -172,10 +173,35 @@ class UpdateInformationFragment : AbstractFragment() {
             }
         }
 
-        serverConnector.getInAppMessages(online, { displayServerMessageBars(it) }) { error ->
-            when (error) {
-                ApplicationData.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
-                ApplicationData.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)
+        // display the "No connection" banner if required
+        ApplicationData.isNetworkAvailable.observe(viewLifecycleOwner) {
+            noConnectionTextView.isVisible = !it
+        }
+
+        serverConnector.getServerStatus(online) { serverStatus ->
+            // display server status banner if required
+            val status = serverStatus.status
+            if (status!!.isUserRecoverableError) {
+                serverStatusTextView.apply {
+                    isVisible = true
+                    text = serverStatus.getBannerText(context!!)
+                    setBackgroundColor(serverStatus.getColor(context!!))
+                    setCompoundDrawablesRelativeWithIntrinsicBounds(serverStatus.getDrawableRes(context!!), 0, 0, 0)
+                }
+            }
+
+            // banner is displayed if app version is outdated
+            if (settingsManager!!.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
+                appUpdateBannerLayout.isVisible = true
+                appUpdateBannerLayout.setOnClickListener { ActivityLauncher(activity!!).openPlayStorePage(context!!) }
+                appUpdateBannerTextView.text = getString(R.string.new_app_version_detailed, serverStatus.latestAppVersion)
+            }
+
+            serverConnector.getInAppMessages(serverStatus, { displayServerMessageBars(it) }) { error ->
+                when (error) {
+                    ApplicationData.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
+                    ApplicationData.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)
+                }
             }
         }
     }
