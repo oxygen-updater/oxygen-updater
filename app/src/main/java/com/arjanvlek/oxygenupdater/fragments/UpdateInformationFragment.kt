@@ -147,7 +147,7 @@ class UpdateInformationFragment : AbstractFragment() {
             this.updateData = updateData
 
             if (!isLoadedOnce) {
-                downloadListener = buildDownloadListener(updateData)
+                downloadListener = buildDownloadListener()
                 registerDownloadReceiver(downloadListener!!)
 
                 DownloadService.performOperation(activity, DownloadService.ACTION_GET_INITIAL_STATUS, updateData)
@@ -434,7 +434,7 @@ class UpdateInformationFragment : AbstractFragment() {
     /**
      * Creates an [UpdateDownloadListener]
      */
-    private fun buildDownloadListener(updateData: UpdateData?): UpdateDownloadListener {
+    private fun buildDownloadListener(): UpdateDownloadListener {
         return object : UpdateDownloadListener {
             override fun onInitialStatusUpdate() {
                 if (isAdded && updateInformationLayout != null) {
@@ -444,21 +444,21 @@ class UpdateInformationFragment : AbstractFragment() {
 
                         DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
-                        initDownloadLayout(updateData, DOWNLOAD_PAUSED)
+                        initDownloadLayout(DOWNLOAD_PAUSED)
                     }
                 }
             }
 
             override fun onDownloadStarted() {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, DOWNLOADING)
+                    initDownloadLayout(DOWNLOADING)
 
                     downloadLayout.setOnClickListener {
                         downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
 
                         DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
-                        initDownloadLayout(updateData, DOWNLOAD_PAUSED)
+                        initDownloadLayout(DOWNLOAD_PAUSED)
 
                         // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
                         downloadLayout.setOnClickListener { }
@@ -468,7 +468,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             override fun onDownloadProgressUpdate(downloadProgressData: DownloadProgressData) {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, DOWNLOADING)
+                    initDownloadLayout(DOWNLOADING)
 
                     val progress = downloadProgressData.progress
 
@@ -480,7 +480,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
                     downloadSizeTextView.text = getString(
                         R.string.download_progress,
-                        completedMegabytes, updateData.downloadSizeInMegabytes, progress
+                        completedMegabytes, downloadSizeInMegabytes, progress
                     )
 
                     if (downloadProgressData.isWaitingForConnection) {
@@ -498,7 +498,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             override fun onDownloadPaused(queued: Boolean, downloadProgressData: DownloadProgressData) {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, DOWNLOAD_PAUSED)
+                    initDownloadLayout(DOWNLOAD_PAUSED)
 
                     if (downloadProgressData.isWaitingForConnection) {
                         onDownloadProgressUpdate(downloadProgressData)
@@ -521,13 +521,13 @@ class UpdateInformationFragment : AbstractFragment() {
 
             override fun onDownloadCancelled() {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, NOT_DOWNLOADING)
+                    initDownloadLayout(NOT_DOWNLOADING)
                 }
             }
 
             override fun onDownloadError(isInternalError: Boolean, isStorageSpaceError: Boolean, isServerError: Boolean) {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, NOT_DOWNLOADING)
+                    initDownloadLayout(NOT_DOWNLOADING)
 
                     when {
                         isStorageSpaceError -> showDownloadError(updateData, R.string.download_error_storage)
@@ -545,13 +545,13 @@ class UpdateInformationFragment : AbstractFragment() {
 
             override fun onVerifyStarted() {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, VERIFYING)
+                    initDownloadLayout(VERIFYING)
                 }
             }
 
             override fun onVerifyError() {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, NOT_DOWNLOADING)
+                    initDownloadLayout(NOT_DOWNLOADING)
 
                     showDownloadError(updateData, R.string.download_error_corrupt)
                 }
@@ -559,7 +559,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             override fun onVerifyComplete(launchInstallation: Boolean) {
                 if (isAdded && updateInformationLayout != null) {
-                    initDownloadLayout(updateData, DOWNLOAD_COMPLETED)
+                    initDownloadLayout(DOWNLOAD_COMPLETED)
 
                     if (launchInstallation) {
                         Toast.makeText(applicationData, getString(R.string.download_complete), LENGTH_LONG).show()
@@ -575,7 +575,7 @@ class UpdateInformationFragment : AbstractFragment() {
         showDownloadError(activity!!, updateData, false, R.string.download_error, message)
     }
 
-    private fun initDownloadLayout(updateData: UpdateData?, downloadStatus: DownloadStatus) {
+    private fun initDownloadLayout(downloadStatus: DownloadStatus) {
         when (downloadStatus) {
             NOT_DOWNLOADING -> {
                 initDownloadActionButton(true)
@@ -592,7 +592,7 @@ class UpdateInformationFragment : AbstractFragment() {
                 if (Utils.checkNetworkConnection(applicationData) && updateData?.downloadUrl?.contains("http") == true) {
                     downloadLayout.isEnabled = true
                     downloadLayout.isClickable = true
-                    downloadLayout.setOnClickListener(DownloadNotStartedOnClickListener(updateData))
+                    downloadLayout.setOnClickListener(DownloadNotStartedOnClickListener())
                 } else {
                     downloadLayout.isEnabled = false
                     downloadLayout.isClickable = false
@@ -621,7 +621,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
                     DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
 
-                    initDownloadLayout(updateData, DOWNLOAD_PAUSED)
+                    initDownloadLayout(DOWNLOAD_PAUSED)
 
                     // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
                     downloadLayout.setOnClickListener { }
@@ -647,7 +647,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
                     DownloadService.performOperation(activity, DownloadService.ACTION_RESUME_DOWNLOAD, updateData)
 
-                    initDownloadLayout(updateData, DOWNLOADING)
+                    initDownloadLayout(DOWNLOADING)
 
                     // No resuming twice allowed, will be updated in onDownloadProgressUpdate()
                     downloadLayout.setOnClickListener { }
@@ -668,7 +668,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
                 downloadIcon.setImageResourceWithTint(R.drawable.done_outline, R.color.colorPositive)
 
-                downloadLayout.setOnClickListener(AlreadyDownloadedOnClickListener(updateData))
+                downloadLayout.setOnClickListener(AlreadyDownloadedOnClickListener())
             }
             VERIFYING -> {
                 downloadUpdateTextView.setText(R.string.download_verifying)
@@ -706,7 +706,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             onClickListener = View.OnClickListener {
                 DownloadService.performOperation(activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
-                initDownloadLayout(updateData, NOT_DOWNLOADING)
+                initDownloadLayout(NOT_DOWNLOADING)
             }
         } else {
             drawableResId = R.drawable.install
@@ -755,7 +755,7 @@ class UpdateInformationFragment : AbstractFragment() {
     /**
      * Download button click listener. Performs these actions when the button is clicked.
      */
-    private inner class DownloadNotStartedOnClickListener internal constructor(private val updateData: UpdateData) : View.OnClickListener {
+    private inner class DownloadNotStartedOnClickListener : View.OnClickListener {
         override fun onClick(view: View) {
             if (isAdded && updateInformationLayout != null) {
                 val mainActivity = activity as MainActivity? ?: return
@@ -763,7 +763,7 @@ class UpdateInformationFragment : AbstractFragment() {
                 if (mainActivity.hasDownloadPermissions()) {
                     DownloadService.performOperation(activity, ACTION_DOWNLOAD_UPDATE, updateData)
 
-                    initDownloadLayout(updateData, DOWNLOADING)
+                    initDownloadLayout(DOWNLOADING)
 
                     downloadProgressBar.isIndeterminate = true
                     downloadDetailsTextView.setText(R.string.download_pending)
@@ -784,7 +784,7 @@ class UpdateInformationFragment : AbstractFragment() {
     /**
      * Allows an already downloaded update file to be deleted to save storage space.
      */
-    private inner class AlreadyDownloadedOnClickListener internal constructor(private val updateData: UpdateData?) : View.OnClickListener {
+    private inner class AlreadyDownloadedOnClickListener internal constructor() : View.OnClickListener {
         override fun onClick(view: View) {
             showUpdateAlreadyDownloadedMessage(updateData, this@UpdateInformationFragment.activity) {
                 if (updateData != null) {
@@ -793,13 +793,13 @@ class UpdateInformationFragment : AbstractFragment() {
                     if (mainActivity.hasDownloadPermissions()) {
                         DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
 
-                        initDownloadLayout(updateData, NOT_DOWNLOADING)
+                        initDownloadLayout(NOT_DOWNLOADING)
                     } else {
                         mainActivity.requestDownloadPermissions { granted ->
                             if (granted) {
                                 DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
 
-                                initDownloadLayout(updateData, NOT_DOWNLOADING)
+                                initDownloadLayout(NOT_DOWNLOADING)
                             }
                         }
                     }
