@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.enableEdgeToEdgeUiSupport
+import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 
 /**
  * Sets support action bar and enables home up button on the toolbar.

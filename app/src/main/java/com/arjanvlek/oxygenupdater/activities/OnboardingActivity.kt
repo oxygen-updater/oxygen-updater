@@ -20,7 +20,7 @@ import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.OnboardingActivity.SimpleOnboardingFragment.Companion.ARG_PAGE_NUMBER
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
-import com.arjanvlek.oxygenupdater.enableEdgeToEdgeUiSupport
+import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.arjanvlek.oxygenupdater.fragments.ChooserOnboardingFragment
 import com.arjanvlek.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.arjanvlek.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
@@ -158,11 +158,11 @@ class OnboardingActivity : AppCompatActivity() {
                 requestContributorStoragePermissions { granted: Boolean ->
                     if (granted) {
                         // 1st time, will save setting to true.
-                        ContributorUtils(applicationContext).flushSettings(true)
+                        ContributorUtils(this).flushSettings(true)
                         settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
                         activityLauncher.Main()
                     } else {
-                        Toast.makeText(application, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
                     }
                 }
             } else {

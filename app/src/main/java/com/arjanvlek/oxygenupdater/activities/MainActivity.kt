@@ -54,8 +54,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var viewPager: ViewPager
     private lateinit var settingsManager: SettingsManager
-    lateinit var activityLauncher: ActivityLauncher
-        private set
+    private lateinit var activityLauncher: ActivityLauncher
 
     private var newsAd: InterstitialAd? = null
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
