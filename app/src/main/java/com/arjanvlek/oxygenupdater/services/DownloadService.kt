@@ -15,6 +15,7 @@ import android.os.Build
 import android.os.Environment
 import android.os.Handler
 import android.os.StatFs
+import android.util.Log
 import android.util.Pair
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -280,6 +281,7 @@ class DownloadService : IntentService(TAG) {
     @Synchronized
     private fun downloadUpdate(updateData: UpdateData?) {
         if (!isStateTransitionAllowed(DOWNLOAD_QUEUED)) {
+            Log.e(TAG, state.toString())
             logWarning(
                 TAG,
                 UpdateDownloadException("Not downloading update, is a download operation already in progress?")
@@ -879,20 +881,22 @@ class DownloadService : IntentService(TAG) {
         state -> true
         // Currently, a transition to not downloading exists from every possible state.
         NOT_DOWNLOADING -> true
-        // Start download in service or when update is already (manually) downloaded
-        NOT_DOWNLOADING -> newState == DOWNLOAD_QUEUED || newState == DOWNLOAD_COMPLETED
-        // Start download execute (by library)
-        DOWNLOAD_QUEUED -> newState == DOWNLOADING
-        // Pause download, wait for connection or download completed
-        DOWNLOADING -> newState == DOWNLOAD_PAUSED
-                || newState == DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION
-                || newState == VERIFYING
-        // Resume download (either via PRDownloader.Resume or via downloadUpdate()
-        DOWNLOAD_PAUSED -> newState == DOWNLOAD_QUEUED
-        // Resume download
-        DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION -> newState == DOWNLOAD_QUEUED
-        VERIFYING -> newState == DOWNLOAD_COMPLETED
-        else -> false
+        else -> when (state) {
+            // Start download in service or when update is already (manually) downloaded
+            NOT_DOWNLOADING -> newState == DOWNLOAD_QUEUED || newState == DOWNLOAD_COMPLETED
+            // Start download execute (by library)
+            DOWNLOAD_QUEUED -> newState == DOWNLOADING
+            // Pause download, wait for connection or download completed
+            DOWNLOADING -> newState == DOWNLOAD_PAUSED
+                    || newState == DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION
+                    || newState == VERIFYING
+            // Resume download (either via PRDownloader.Resume or via downloadUpdate()
+            DOWNLOAD_PAUSED -> newState == DOWNLOAD_QUEUED
+            // Resume download
+            DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION -> newState == DOWNLOAD_QUEUED
+            VERIFYING -> newState == DOWNLOAD_COMPLETED
+            else -> false
+        }
     }
 
     /**
