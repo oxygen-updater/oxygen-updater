@@ -6,7 +6,7 @@ import android.view.ViewTreeObserver
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 
@@ -18,10 +18,10 @@ import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
  */
 abstract class SupportActionBarActivity : AppCompatActivity() {
 
-    protected var applicationData: ApplicationData? = null
+    protected var application: OxygenUpdater? = null
         get() {
             if (field == null) {
-                field = application as ApplicationData
+                field = getApplication() as OxygenUpdater
             }
 
             return field

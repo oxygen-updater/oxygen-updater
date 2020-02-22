@@ -7,9 +7,9 @@ import android.os.Handler
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import com.arjanvlek.oxygenupdater.ApplicationData
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.BuildConfig
+import com.arjanvlek.oxygenupdater.OxygenUpdater
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.adapters.NewsAdapter
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
@@ -66,7 +66,7 @@ class NewsActivity : SupportActionBarActivity() {
 
                 // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
                 if (intent.getBooleanExtra(INTENT_START_WITH_AD, false)) {
-                    InterstitialAd(application).apply {
+                    InterstitialAd(this).apply {
                         adUnitId = getString(R.string.advertising_interstitial_unit_id)
                         loadAd(buildAdRequest())
 
@@ -126,16 +126,15 @@ class NewsActivity : SupportActionBarActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadNewsItem(retryCount: Int) {
         val intent = intent
-        val applicationData = application as ApplicationData
 
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
-        applicationData.serverConnector!!.getNewsItem(applicationData, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) { newsItem ->
+        application!!.serverConnector!!.getNewsItem(this, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) { newsItem ->
             if (isFinishing || isDestroyed) {
                 return@getNewsItem
             }
 
             if (newsItem == null || !newsItem.isFullyLoaded) {
-                if (Utils.checkNetworkConnection(applicationData) && retryCount < 5) {
+                if (Utils.checkNetworkConnection(this) && retryCount < 5) {
                     loadNewsItem(retryCount + 1)
                 } else {
                     webView.apply {
@@ -187,7 +186,7 @@ class NewsActivity : SupportActionBarActivity() {
                     // backend handles CSS according to material spec
                     newsContentUrl += if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
 
-                    settings.userAgentString = ApplicationData.APP_USER_AGENT
+                    settings.userAgentString = OxygenUpdater.APP_USER_AGENT
                     loadUrl(newsContentUrl)
                 }
 
@@ -212,7 +211,7 @@ class NewsActivity : SupportActionBarActivity() {
             }
 
             // Mark the item as read on the device.
-            NewsDatabaseHelper(application).apply {
+            NewsDatabaseHelper(this).apply {
                 markNewsItemAsRead(newsItem)
                 close()
             }
@@ -220,11 +219,12 @@ class NewsActivity : SupportActionBarActivity() {
             NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
 
             // Mark the item as read on the server (to increase times read counter)
-            if (application != null && application is ApplicationData && Utils.checkNetworkConnection(application)) {
-                (application as ApplicationData).serverConnector!!.markNewsItemAsRead(newsItem.id) { result: ServerPostResult? ->
+            if (Utils.checkNetworkConnection(this)) {
+                application?.serverConnector?.markNewsItemAsRead(newsItem.id) { result: ServerPostResult? ->
                     if (result?.success == false) {
-                        logError("NewsActivity",
-                            NetworkException("Error marking news item as read on the server:" + result.errorMessage)
+                        logError(
+                            "NewsActivity",
+                            NetworkException("Error marking news item as read on the server: ${result.errorMessage}")
                         )
                     }
                 }

@@ -1,8 +1,8 @@
 package com.arjanvlek.oxygenupdater.models
 
 import android.os.Build
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.BuildConfig
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import java.io.BufferedReader

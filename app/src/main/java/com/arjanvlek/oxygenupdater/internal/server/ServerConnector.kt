@@ -2,8 +2,8 @@ package com.arjanvlek.oxygenupdater.internal.server
 
 import android.content.Context
 import android.os.AsyncTask
-import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.enums.PurchaseType
 import com.arjanvlek.oxygenupdater.enums.ServerRequest
@@ -136,7 +136,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
             ServerRequest.UPDATE_DATA,
             {
                 if (it?.information != null
-                    && it.information == ApplicationData.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
+                    && it.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
                     && it.isUpdateInformationAvailable
                     && it.systemIsUpToDate
                 ) {
@@ -156,7 +156,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
 
                         callback.invoke(updateData)
                     } else {
-                        errorFunction.invoke(ApplicationData.NETWORK_CONNECTION_ERROR)
+                        errorFunction.invoke(OxygenUpdater.NETWORK_CONNECTION_ERROR)
                     }
                 } else {
                     callback.invoke(it)
@@ -186,8 +186,8 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
             val status = serverStatus.status!!
             if (status.isNonRecoverableError) {
                 when (status) {
-                    ServerStatus.Status.MAINTENANCE -> errorCallback.invoke(ApplicationData.SERVER_MAINTENANCE_ERROR)
-                    ServerStatus.Status.OUTDATED -> errorCallback.invoke(ApplicationData.APP_OUTDATED_ERROR)
+                    ServerStatus.Status.MAINTENANCE -> errorCallback.invoke(OxygenUpdater.SERVER_MAINTENANCE_ERROR)
+                    ServerStatus.Status.OUTDATED -> errorCallback.invoke(OxygenUpdater.APP_OUTDATED_ERROR)
                     else -> {
                         // no-op
                     }
@@ -419,7 +419,7 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
             val timeOutInMilliseconds = request.timeOutInSeconds * 1000
 
             //setup request
-            urlConnection.setRequestProperty(USER_AGENT_TAG, ApplicationData.APP_USER_AGENT)
+            urlConnection.setRequestProperty(USER_AGENT_TAG, OxygenUpdater.APP_USER_AGENT)
             urlConnection.requestMethod = request.requestMethod.toString()
             urlConnection.connectTimeout = timeOutInMilliseconds
             urlConnection.readTimeout = timeOutInMilliseconds

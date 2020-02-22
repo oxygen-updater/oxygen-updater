@@ -4,7 +4,7 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import android.os.Environment
 import androidx.core.os.bundleOf
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.database.SubmittedUpdateFileRepository
 import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
@@ -131,7 +131,7 @@ class UpdateFileChecker : JobService() {
                     logDebug(TAG, "Submitting update file $fileName")
                     openNetworkCalls.incrementAndGet()
 
-                    (application as ApplicationData).serverConnector!!.submitUpdateFile(fileName, callback)
+                    (application as OxygenUpdater).serverConnector!!.submitUpdateFile(fileName, callback)
                 } else {
                     logDebug(TAG, "Update file $fileName has already been submitted. Ignoring...")
                 }

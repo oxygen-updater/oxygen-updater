@@ -12,7 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.InstallActivity
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
@@ -58,7 +58,7 @@ class InstallGuideFragment : Fragment() {
 
         if (cache[pageNumber] == null) {
             activity?.application?.let { application ->
-                if (application is ApplicationData) {
+                if (application is OxygenUpdater) {
                     application.serverConnector!!.getInstallGuidePage(deviceId, updateMethodId, pageNumber) { page ->
                         cache.put(pageNumber, page)
                         displayInstallGuide(page, pageNumber, isFirstPage)
@@ -103,7 +103,7 @@ class InstallGuideFragment : Fragment() {
         installGuideText.isVisible = true
 
         // Display the "Close" button on the last page.
-        if (pageNumber == ApplicationData.NUMBER_OF_INSTALL_GUIDE_PAGES) {
+        if (pageNumber == OxygenUpdater.NUMBER_OF_INSTALL_GUIDE_PAGES) {
             installGuideCloseButton.apply {
                 setOnClickListener { activity?.finish() }
                 isVisible = true

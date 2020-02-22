@@ -1,6 +1,7 @@
 package com.arjanvlek.oxygenupdater.activities
 
 import android.annotation.TargetApi
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -8,9 +9,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.storage.StorageManager
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import com.arjanvlek.oxygenupdater.ActivityLauncher
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 
@@ -33,7 +37,25 @@ class SplashActivity : AppCompatActivity() {
 
         migrateOldSettings()
 
-        chooseActivityToLaunch()
+        // chooseActivityToLaunch()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val storageManager = getSystemService<StorageManager>()!!
+            val intent = storageManager.primaryStorageVolume.createOpenDocumentTreeIntent()
+            startActivityForResult(intent, MainActivity.PERMISSION_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == MainActivity.PERMISSION_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val treeUri = data!!.data!!
+            val takeFlags = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+
+            Log.e("TAG", "takePersistableUriPermission: $treeUri")
+            contentResolver.takePersistableUriPermission(treeUri, takeFlags)
+        }
     }
 
     /**
@@ -44,7 +66,7 @@ class SplashActivity : AppCompatActivity() {
     @TargetApi(26)
     private fun createPushNotificationChannel() {
         // The id of the channel.
-        val id = ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID
+        val id = OxygenUpdater.PUSH_NOTIFICATION_CHANNEL_ID
 
         // The user-visible name of the channel.
         val name: CharSequence = getString(R.string.push_notification_channel_name)
@@ -74,7 +96,7 @@ class SplashActivity : AppCompatActivity() {
     @TargetApi(26)
     private fun createProgressNotificationChannel() {
         // The id of the channel.
-        val id = ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID
+        val id = OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID
 
         // The user-visible name of the channel.
         val name = getString(R.string.progress_notification_channel_name)

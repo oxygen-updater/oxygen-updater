@@ -18,13 +18,13 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
         onboardingChooserCaption.setText(R.string.onboarding_page_2_caption)
     }
 
-    override fun fetchData() = applicationData?.serverConnector!!.getDevices(DeviceRequestFilter.ENABLED) { setupRecyclerView(it) }
+    override fun fetchData() = application?.serverConnector!!.getDevices(DeviceRequestFilter.ENABLED) { setupRecyclerView(it) }
 
     @Suppress("UNCHECKED_CAST", "NAME_SHADOWING")
     override fun setupRecyclerView(data: List<SelectableModel>, initialSelectedIndex: Int, onItemSelectedListener: KotlinCallback<SelectableModel>) {
         val data = data as List<Device>
 
-        val systemVersionProperties = applicationData?.systemVersionProperties!!
+        val systemVersionProperties = application?.systemVersionProperties!!
         val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
 
         val recommendedIndex = data.indexOfFirst { it.productNames.contains(systemVersionProperties.oxygenDeviceName) }

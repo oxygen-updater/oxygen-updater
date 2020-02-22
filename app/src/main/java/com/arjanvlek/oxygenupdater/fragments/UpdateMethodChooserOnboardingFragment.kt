@@ -43,7 +43,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
             }
         } else {
             if (settingsManager!!.containsPreference(SettingsManager.PROPERTY_DEVICE_ID)) {
-                applicationData?.serverConnector!!.getUpdateMethods(settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, 1L)) {
+                application?.serverConnector!!.getUpdateMethods(settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, 1L)) {
                     setupRecyclerView(it)
                 }
             }
@@ -77,11 +77,11 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
                 )
             }
 
-            if (applicationData?.checkPlayServices(activity, false) == true) {
+            if (application?.checkPlayServices(activity, false) == true) {
                 // Subscribe to notifications for the newly selected device and update method
-                NotificationTopicSubscriber.subscribe(applicationData!!)
+                NotificationTopicSubscriber.subscribe(application!!)
             } else {
-                Toast.makeText(applicationData, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
             }
         }
     }

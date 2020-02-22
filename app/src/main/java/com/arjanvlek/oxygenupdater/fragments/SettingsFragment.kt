@@ -13,8 +13,8 @@ import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.arjanvlek.oxygenupdater.ActivityLauncher
-import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs.showAdvancedModeExplanation
 import com.arjanvlek.oxygenupdater.enums.PurchaseStatus
@@ -37,7 +37,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     private lateinit var mContext: Context
     private lateinit var activity: AppCompatActivity
-    private lateinit var application: ApplicationData
+    private lateinit var application: OxygenUpdater
     private lateinit var activityLauncher: ActivityLauncher
     private lateinit var devicePreference: BottomSheetPreference
     private lateinit var updateMethodPreference: BottomSheetPreference
@@ -69,7 +69,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
         (getActivity() as AppCompatActivity).let {
             activity = it
-            application = it.application as ApplicationData
+            application = it.application as OxygenUpdater
             activityLauncher = ActivityLauncher(it)
         }
 

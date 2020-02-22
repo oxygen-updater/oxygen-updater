@@ -18,8 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.arjanvlek.oxygenupdater.ApplicationData
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NUMBER_OF_INSTALL_GUIDE_PAGES
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NUMBER_OF_INSTALL_GUIDE_PAGES
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.exceptions.SubmitUpdateInstallationException
 import com.arjanvlek.oxygenupdater.exceptions.UpdateInstallationException
@@ -69,8 +68,8 @@ class InstallActivity : SupportActionBarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        settingsManager = SettingsManager(application)
-        serverConnector = (application as ApplicationData).serverConnector!!
+        settingsManager = SettingsManager(this)
+        serverConnector = application?.serverConnector!!
 
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
 
@@ -93,16 +92,16 @@ class InstallActivity : SupportActionBarActivity() {
             rooted = isRooted
 
             if (isRooted) {
-                serverConnector.getServerStatus(checkNetworkConnection(application)) { serverStatus ->
+                serverConnector.getServerStatus(checkNetworkConnection(this)) { serverStatus ->
                     if (serverStatus.automaticInstallationEnabled) {
                         openMethodSelectionPage()
                     } else {
-                        Toast.makeText(application, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()
                         openInstallGuide()
                     }
                 }
             } else {
-                Toast.makeText(application, getString(R.string.install_guide_no_root), LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.install_guide_no_root), LENGTH_LONG).show()
                 openInstallGuide()
             }
         }
@@ -154,7 +153,7 @@ class InstallActivity : SupportActionBarActivity() {
             val additionalZipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 
             if (settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
-                Toast.makeText(application, R.string.install_guide_zip_file_missing, LENGTH_LONG).show()
+                Toast.makeText(this, R.string.install_guide_zip_file_missing, LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -162,7 +161,7 @@ class InstallActivity : SupportActionBarActivity() {
                 val file = File(additionalZipFilePath)
 
                 if (!file.exists()) {
-                    Toast.makeText(application, R.string.install_guide_zip_file_deleted, LENGTH_LONG).show()
+                    Toast.makeText(this, R.string.install_guide_zip_file_deleted, LENGTH_LONG).show()
                     return@setOnClickListener
                 }
             }
@@ -179,7 +178,7 @@ class InstallActivity : SupportActionBarActivity() {
             val isAbPartitionLayout = systemVersionProperties.isABPartitionLayout
             val targetOSVersion = updateData!!.otaVersionNumber!!
 
-            logInstallationStart(application, currentOSVersion, targetOSVersion, currentOSVersion) {
+            logInstallationStart(this, currentOSVersion, targetOSVersion, currentOSVersion) {
                 FunctionalAsyncTask<Void?, Void, String?>({}, {
                     try {
                         settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
@@ -189,7 +188,7 @@ class InstallActivity : SupportActionBarActivity() {
                         val downloadedUpdateFilePath =
                             Environment.getExternalStoragePublicDirectory(DownloadService.DIRECTORY_ROOT).path + File.separator + updateData!!.filename
 
-                        installUpdate(application, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice)
+                        installUpdate(this, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice)
                         null
                     } catch (e: UpdateInstallationException) {
                         e.message
@@ -203,7 +202,7 @@ class InstallActivity : SupportActionBarActivity() {
                         settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
 
                         openAutomaticInstallOptionsSelection()
-                        Toast.makeText(application, errorMessage, LENGTH_LONG).show()
+                        Toast.makeText(this, errorMessage, LENGTH_LONG).show()
                     }
                 }).execute()
             }
@@ -252,7 +251,7 @@ class InstallActivity : SupportActionBarActivity() {
 
             val extension = text.substring(text.length - 4)
             if (extension != EXTENSION_ZIP) {
-                Toast.makeText(application, R.string.install_zip_file_wrong_file_type, LENGTH_LONG).show()
+                Toast.makeText(this, R.string.install_zip_file_wrong_file_type, LENGTH_LONG).show()
                 return
             }
 
@@ -306,7 +305,7 @@ class InstallActivity : SupportActionBarActivity() {
             openMethodSelectionPage()
         } else if (layoutId == R.layout.fragment_installing_update) {
             // Once the installation is being started, there is no way out.
-            Toast.makeText(application, R.string.install_going_back_not_possible, LENGTH_LONG).show()
+            Toast.makeText(this, R.string.install_going_back_not_possible, LENGTH_LONG).show()
         } else {
             finish()
         }

@@ -32,7 +32,7 @@ class AboutActivity : SupportActionBarActivity() {
         // banner is displayed if app version is outdated
         bannerLayout.setOnClickListener { activityLauncher.openPlayStorePage(this) }
 
-        applicationData?.serverConnector?.getServerStatus(Utils.checkNetworkConnection(application)) {
+        application?.serverConnector?.getServerStatus(Utils.checkNetworkConnection(application)) {
             if (!it.checkIfAppIsUpToDate()) {
                 updateBannerText(it.latestAppVersion!!)
             }

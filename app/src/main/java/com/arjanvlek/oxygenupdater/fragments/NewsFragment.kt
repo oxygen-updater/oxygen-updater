@@ -57,7 +57,7 @@ class NewsFragment : AbstractFragment() {
         val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        serverConnector!!.getNews(applicationData, deviceId, updateMethodId) { displayNewsItems(it, callback) }
+        serverConnector!!.getNews(context, deviceId, updateMethodId) { displayNewsItems(it, callback) }
     }
 
     private fun displayNewsItems(newsItems: List<NewsItem>, callback: () -> Unit) {

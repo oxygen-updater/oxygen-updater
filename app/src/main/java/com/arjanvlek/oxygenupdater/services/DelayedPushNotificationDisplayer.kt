@@ -9,7 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.activities.NewsActivity
@@ -42,7 +42,7 @@ import java.io.IOException
 class DelayedPushNotificationDisplayer : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
-        if (params == null || !params.extras.containsKey(KEY_NOTIFICATION_CONTENTS) || application !is ApplicationData) {
+        if (params == null || !params.extras.containsKey(KEY_NOTIFICATION_CONTENTS) || application !is OxygenUpdater) {
             return exit(params, false)
         }
 
@@ -162,7 +162,7 @@ class DelayedPushNotificationDisplayer : JobService() {
 
 
     private val notificationBuilder = if (Build.VERSION.SDK_INT >= 26) {
-        NotificationCompat.Builder(this, ApplicationData.PUSH_NOTIFICATION_CHANNEL_ID)
+        NotificationCompat.Builder(this, OxygenUpdater.PUSH_NOTIFICATION_CHANNEL_ID)
     } else {
         @Suppress("DEPRECATION")
         NotificationCompat.Builder(this)

@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
-import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.WebViewClient
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
@@ -72,7 +72,7 @@ class FAQActivity : SupportActionBarActivity() {
                 val faqServerUrl = BuildConfig.FAQ_SERVER_URL + "/" + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
 
                 settings.javaScriptEnabled = true
-                settings.userAgentString = ApplicationData.APP_USER_AGENT
+                settings.userAgentString = OxygenUpdater.APP_USER_AGENT
                 clearCache(true)
                 loadUrl(faqServerUrl).also { swipeRefreshLayout.isRefreshing = true }
 

@@ -1,9 +1,7 @@
 package com.arjanvlek.oxygenupdater.utils
 
-import com.arjanvlek.oxygenupdater.ApplicationData
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.DEVICE_TOPIC_PREFIX
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.UPDATE_METHOD_TOPIC_PREFIX
 import com.arjanvlek.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_NOTIFICATION_TOPIC
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
@@ -13,8 +11,10 @@ import com.google.firebase.messaging.FirebaseMessaging
 object NotificationTopicSubscriber {
 
     private const val TAG = "NotificationTopicSubscriber"
+    private const val DEVICE_TOPIC_PREFIX = "device_"
+    private const val UPDATE_METHOD_TOPIC_PREFIX = "_update-method_"
 
-    fun subscribe(data: ApplicationData) {
+    fun subscribe(data: OxygenUpdater) {
         val settingsManager = SettingsManager(data.applicationContext)
         val serverConnector = data.serverConnector
 

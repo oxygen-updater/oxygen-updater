@@ -6,8 +6,8 @@ import android.os.Handler
 import android.text.format.DateFormat
 import android.util.TypedValue
 import androidx.annotation.Dimension
-import com.arjanvlek.oxygenupdater.ApplicationData
 import com.arjanvlek.oxygenupdater.BuildConfig
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.SettingsActivity
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
@@ -108,7 +108,7 @@ object Utils {
             return false
         }
 
-        return ApplicationData.isNetworkAvailable.value == true
+        return OxygenUpdater.isNetworkAvailable.value == true
     }
 
     @Synchronized
@@ -117,10 +117,10 @@ object Utils {
         val oxygenOsVersion: String? = systemVersionProperties.oxygenOSVersion
 
         val firmwareIsSupported = oemFingerPrint != null
-                && oemFingerPrint != ApplicationData.NO_OXYGEN_OS
+                && oemFingerPrint != OxygenUpdater.NO_OXYGEN_OS
                 && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
                 && oxygenOsVersion != null
-                && oxygenOsVersion != ApplicationData.NO_OXYGEN_OS
+                && oxygenOsVersion != OxygenUpdater.NO_OXYGEN_OS
 
         if (devices.isNullOrEmpty()) {
             // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an OxygenOS version is found on the device.

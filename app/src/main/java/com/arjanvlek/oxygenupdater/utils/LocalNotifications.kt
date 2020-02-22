@@ -8,7 +8,7 @@ import android.content.Intent
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.InstallActivity
 import com.arjanvlek.oxygenupdater.activities.MainActivity
@@ -36,7 +36,7 @@ object LocalNotifications {
      */
     fun showDownloadingNotification(context: Context?, updateData: UpdateData?, downloadProgressData: DownloadProgressData) {
         try {
-            val builder = NotificationCompat.Builder(context!!, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context!!, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.stat_sys_download)
                 .setOngoing(true)
                 .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
@@ -75,7 +75,7 @@ object LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
 
-            val builder = NotificationCompat.Builder(context, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.stat_sys_download_done)
                 .setOngoing(true)
                 .setContentIntent(resultPendingIntent)
@@ -120,7 +120,7 @@ object LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
 
-            val builder = NotificationCompat.Builder(context, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.stat_sys_download_done)
                 .setOngoing(false)
                 .setContentIntent(resultPendingIntent)
@@ -156,7 +156,7 @@ object LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
 
-            val builder = NotificationCompat.Builder(context, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.stat_sys_upload_done)
                 .setOngoing(false)
                 .setContentIntent(resultPendingIntent)
@@ -219,7 +219,7 @@ object LocalNotifications {
             // Gets a PendingIntent containing the entire back stack
             val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
 
-            val builder = NotificationCompat.Builder(context, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.stat_sys_download_done)
                 .setOngoing(false)
                 .setContentIntent(resultPendingIntent)
@@ -247,7 +247,7 @@ object LocalNotifications {
      */
     fun showVerifyingNotification(context: Context, ongoing: Boolean, error: Boolean) {
         try {
-            val builder = NotificationCompat.Builder(context, ApplicationData.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(if (ongoing) android.R.drawable.stat_sys_download else android.R.drawable.stat_sys_download_done)
                 .setOngoing(ongoing)
                 .setCategory(Notification.CATEGORY_PROGRESS)

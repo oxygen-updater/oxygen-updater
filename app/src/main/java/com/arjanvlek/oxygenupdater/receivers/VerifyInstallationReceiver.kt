@@ -15,8 +15,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.CATEGORY_STATUS
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
 import androidx.core.os.persistableBundleOf
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.PUSH_NOTIFICATION_CHANNEL_ID
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.PUSH_NOTIFICATION_CHANNEL_ID
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager

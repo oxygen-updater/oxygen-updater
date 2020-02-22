@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.bottom_sheet_update_changelog.*
@@ -33,7 +33,7 @@ class UpdateChangelogDialog(
         changelogTextView.text = changelog
 
         oxygenOsVersionTextView.setOnClickListener { cancel() }
-        oxygenOsVersionTextView.text = if (oxygenOsVersion != ApplicationData.NO_OXYGEN_OS) {
+        oxygenOsVersionTextView.text = if (oxygenOsVersion != OxygenUpdater.NO_OXYGEN_OS) {
             oxygenOsVersion
         } else {
             mContext.getString(R.string.update_information_view_update_information)

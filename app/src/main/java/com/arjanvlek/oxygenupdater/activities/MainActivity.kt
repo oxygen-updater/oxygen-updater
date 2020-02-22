@@ -22,8 +22,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.arjanvlek.oxygenupdater.ActivityLauncher
-import com.arjanvlek.oxygenupdater.ApplicationData
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
+import com.arjanvlek.oxygenupdater.OxygenUpdater
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.MessageDialog
 import com.arjanvlek.oxygenupdater.fragments.DeviceInformationFragment
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         settingsManager = SettingsManager(this)
 
-        val application = application as ApplicationData
+        val application = application as OxygenUpdater
 
         // Supported device check
         application.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { result ->
@@ -251,7 +251,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
      * Checks for Play Services and initialises [MobileAds] if found
      */
     private fun setupAds() {
-        val application = application as ApplicationData
+        val application = application as OxygenUpdater
 
         if (!application.checkPlayServices(this, false)) {
             Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
@@ -418,18 +418,15 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    interface DeviceOsSpecCheckedListener {
-        fun onDeviceOsSpecChecked(deviceOsSpec: DeviceOsSpec)
-    }
-
     companion object {
-        const val PAGE_NEWS = 0
-        const val PAGE_UPDATE_INFORMATION = 1
-        const val PAGE_DEVICE_INFORMATION = 2
+        private const val INTENT_START_PAGE = "start_page"
+        private const val PAGE_NEWS = 0
+        private const val PAGE_UPDATE_INFORMATION = 1
+        private const val PAGE_DEVICE_INFORMATION = 2
+
         // Permissions constants
+        private const val DOWNLOAD_FILE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE"
         const val PERMISSION_REQUEST_CODE = 200
-        const val DOWNLOAD_FILE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE"
         const val VERIFY_FILE_PERMISSION = "android.permission.READ_EXTERNAL_STORAGE"
-        const val INTENT_START_PAGE = "start_page"
     }
 }

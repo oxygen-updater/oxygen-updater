@@ -2,7 +2,7 @@ package com.arjanvlek.oxygenupdater.services
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -16,12 +16,12 @@ import org.joda.time.LocalDateTime
 class RootInstallLogger : JobService() {
 
     override fun onStartJob(params: JobParameters?): Boolean {
-        if (params == null || application !is ApplicationData) {
+        if (params == null || application !is OxygenUpdater) {
             // Retrying wont fix this issue. This is a lost cause.
             return true
         }
 
-        val applicationData = application as ApplicationData
+        val applicationData = application as OxygenUpdater
         val serverConnector = applicationData.serverConnector
         val settingsManager = SettingsManager(applicationData)
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)

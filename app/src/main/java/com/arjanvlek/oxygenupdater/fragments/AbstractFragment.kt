@@ -1,22 +1,23 @@
 package com.arjanvlek.oxygenupdater.fragments
 
 import androidx.fragment.app.Fragment
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 
 abstract class AbstractFragment : Fragment() {
-    var applicationData: ApplicationData? = null
+
+    var application: OxygenUpdater? = null
         get() {
             if (field == null) {
                 field = try {
-                    activity!!.application as ApplicationData
+                    activity!!.application as OxygenUpdater
                 } catch (e: Exception) {
                     logError("AbstractFragment", "FAILED to get Application instance", e)
 
                     // Return empty application data which can still be used for SystemVersionProperties and to check for root access.
-                    ApplicationData()
+                    OxygenUpdater()
                 }
             }
 
@@ -26,12 +27,12 @@ abstract class AbstractFragment : Fragment() {
 
     var settingsManager: SettingsManager? = null
         get() {
-            if (applicationData == null && activity != null) {
-                applicationData = activity!!.application as ApplicationData
+            if (application == null && activity != null) {
+                application = activity!!.application as OxygenUpdater
             }
 
             if (field == null) {
-                field = SettingsManager(applicationData)
+                field = SettingsManager(application)
             }
 
             return field
@@ -40,10 +41,10 @@ abstract class AbstractFragment : Fragment() {
 
     val serverConnector: ServerConnector?
         get() {
-            if (applicationData == null && activity != null) {
-                applicationData = activity!!.application as ApplicationData
+            if (application == null && activity != null) {
+                application = activity!!.application as OxygenUpdater
             }
 
-            return applicationData?.serverConnector ?: ServerConnector(SettingsManager(null))
+            return application?.serverConnector ?: ServerConnector(SettingsManager(null))
         }
 }

@@ -29,7 +29,7 @@ import io.fabric.sdk.android.Fabric
 import java.util.*
 import kotlin.system.exitProcess
 
-class ApplicationData : Application() {
+class OxygenUpdater : Application() {
 
     val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onLost(network: Network) {
@@ -163,7 +163,7 @@ class ApplicationData : Application() {
 
     @Suppress("unused")
     companion object {
-        private const val TAG = "ApplicationData"
+        private const val TAG = "OxygenUpdater"
         private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
         // Test devices for ads.
@@ -171,10 +171,7 @@ class ApplicationData : Application() {
 
         const val NO_OXYGEN_OS = "no_oxygen_os_ver_found"
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
-        const val DEVICE_TOPIC_PREFIX = "device_"
-        const val UPDATE_METHOD_TOPIC_PREFIX = "_update-method_"
         const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
-        const val LOCALE_DUTCH = "Nederlands"
         const val UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build"
         const val NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR"
         const val SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR"

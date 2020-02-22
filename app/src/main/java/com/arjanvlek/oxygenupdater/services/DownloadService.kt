@@ -19,7 +19,7 @@ import android.util.Log
 import android.util.Pair
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOADING
@@ -194,7 +194,7 @@ class DownloadService : IntentService(TAG) {
 
         val config = PRDownloaderConfig.newBuilder()
             .setDatabaseEnabled(true)
-            .setUserAgent(ApplicationData.APP_USER_AGENT)
+            .setUserAgent(OxygenUpdater.APP_USER_AGENT)
             .setConnectTimeout(CONNECT_TIMEOUT)
             .setReadTimeout(READ_TIMEOUT)
             .build()

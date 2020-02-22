@@ -1,12 +1,12 @@
 package com.arjanvlek.oxygenupdater.models
 
-import com.arjanvlek.oxygenupdater.ApplicationData
-
 enum class AppLocale {
     NL,
     EN;
 
     companion object {
-        fun get() = if (java.util.Locale.getDefault().displayLanguage == ApplicationData.LOCALE_DUTCH) NL else EN
+        private const val LOCALE_DUTCH = "Nederlands"
+
+        fun get() = if (java.util.Locale.getDefault().displayLanguage == LOCALE_DUTCH) NL else EN
     }
 }

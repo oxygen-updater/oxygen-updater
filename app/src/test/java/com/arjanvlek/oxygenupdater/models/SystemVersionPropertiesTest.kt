@@ -1,6 +1,6 @@
 package com.arjanvlek.oxygenupdater.models
 
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.utils.Utils.checkDeviceOsSpec
 import java.lang.reflect.InvocationTargetException
 import java.util.*
@@ -109,7 +109,7 @@ abstract class SystemVersionPropertiesTest {
     // the output is "key=value" in contrast to getprop output of format "[key]:[value]".
     // So we need to split the result on the "=" sign in this helper method to get the same result as on a real device.
     private fun getBuildPropItem(key: String, propertyFileContents: String): String {
-        var result = ApplicationData.NO_OXYGEN_OS
+        var result = OxygenUpdater.NO_OXYGEN_OS
 
         try {
             val readBuildPropItem = SystemVersionProperties::class.java.getDeclaredMethod("readBuildPropItem", String::class.java, String::class.java, String::class.java)
@@ -118,7 +118,7 @@ abstract class SystemVersionPropertiesTest {
 
             val rawResult = readBuildPropItem.invoke(systemVersionProperties, key, propertyFileContents, null) as String
 
-            if (rawResult != ApplicationData.NO_OXYGEN_OS) {
+            if (rawResult != OxygenUpdater.NO_OXYGEN_OS) {
                 val keyValue = rawResult.split("=")
 
                 if (keyValue.size > 1) {

@@ -29,7 +29,7 @@
 	<uses-permission android:name="${fullPackageName}.permission.accessDownloadServiceRestarter" />
 
 	<application
-		android:name=".ApplicationData"
+		android:name=".OxygenUpdater"
 		android:allowBackup="true"
 		android:fullBackupContent="true"
 		android:icon="@mipmap/ic_launcher"

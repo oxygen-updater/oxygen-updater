@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.OnboardingActivity.SimpleOnboardingFragment.Companion.ARG_PAGE_NUMBER
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
@@ -67,7 +67,7 @@ class OnboardingActivity : AppCompatActivity() {
         activityLauncher = ActivityLauncher(this)
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-            val applicationData = application as ApplicationData
+            val applicationData = application as OxygenUpdater
             applicationData.serverConnector!!.getDevices(DeviceRequestFilter.ALL) {
                 val deviceOsSpec = Utils.checkDeviceOsSpec(applicationData.systemVersionProperties!!, it)
 
@@ -263,6 +263,6 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "SetupActivity"
+        private const val TAG = "OnboardingActivity"
     }
 }

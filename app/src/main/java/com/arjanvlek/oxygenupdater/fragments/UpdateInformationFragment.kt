@@ -19,7 +19,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arjanvlek.oxygenupdater.ActivityLauncher
-import com.arjanvlek.oxygenupdater.ApplicationData
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
@@ -58,20 +58,11 @@ import org.joda.time.LocalDateTime
 class UpdateInformationFragment : AbstractFragment() {
 
     private lateinit var rootView: SwipeRefreshLayout
-    private lateinit var mContext: Context
 
     private var downloadListener: UpdateDownloadListener? = null
     private var updateData: UpdateData? = null
     private var isLoadedOnce = false
     private var downloadReceiver: DownloadReceiver? = null
-
-    /*
-      -------------- ANDROID ACTIVITY LIFECYCLE METHODS -------------------
-     */
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mContext = applicationData as Context
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -118,7 +109,7 @@ class UpdateInformationFragment : AbstractFragment() {
         }
 
         if (activity != null && isDownloadServiceRunning) {
-            activity!!.stopService(Intent(mContext, DownloadService::class.java))
+            activity!!.stopService(Intent(context, DownloadService::class.java))
         }
     }
 
@@ -139,9 +130,9 @@ class UpdateInformationFragment : AbstractFragment() {
 
         val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        val online = Utils.checkNetworkConnection(applicationData)
-        val serverConnector = applicationData?.serverConnector!!
-        val systemVersionProperties = applicationData?.systemVersionProperties!!
+        val online = Utils.checkNetworkConnection(context)
+        val serverConnector = application?.serverConnector!!
+        val systemVersionProperties = application?.systemVersionProperties!!
 
         serverConnector.getUpdateData(online, deviceId, updateMethodId, systemVersionProperties.oxygenOSOTAVersion, { updateData ->
             this.updateData = updateData
@@ -168,13 +159,13 @@ class UpdateInformationFragment : AbstractFragment() {
             displayUpdateInformation(updateData, online)
             isLoadedOnce = true
         }) { error ->
-            if (error == ApplicationData.NETWORK_CONNECTION_ERROR) {
+            if (error == OxygenUpdater.NETWORK_CONNECTION_ERROR) {
                 showNoNetworkConnectionError(activity)
             }
         }
 
         // display the "No connection" banner if required
-        ApplicationData.isNetworkAvailable.observe(viewLifecycleOwner) {
+        OxygenUpdater.isNetworkAvailable.observe(viewLifecycleOwner) {
             noConnectionTextView.isVisible = !it
         }
 
@@ -199,8 +190,8 @@ class UpdateInformationFragment : AbstractFragment() {
 
             serverConnector.getInAppMessages(serverStatus, { displayServerMessageBars(it) }) { error ->
                 when (error) {
-                    ApplicationData.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
-                    ApplicationData.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)
+                    OxygenUpdater.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
+                    OxygenUpdater.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)
                 }
             }
         }
@@ -291,9 +282,9 @@ class UpdateInformationFragment : AbstractFragment() {
 
         // Set the current OxygenOS version if available.
         systemIsUpToDateVersionTextView.apply {
-            val oxygenOSVersion = (activity?.application as ApplicationData).systemVersionProperties?.oxygenOSVersion
+            val oxygenOSVersion = application?.systemVersionProperties?.oxygenOSVersion
 
-            if (oxygenOSVersion != ApplicationData.NO_OXYGEN_OS) {
+            if (oxygenOSVersion != OxygenUpdater.NO_OXYGEN_OS) {
                 isVisible = true
                 text = getString(R.string.update_information_oxygen_os_version, oxygenOSVersion)
             } else {
@@ -315,7 +306,7 @@ class UpdateInformationFragment : AbstractFragment() {
         }
 
         // display a notice in the dialog if the user's currently installed version doesn't match the version this changelog is meant for
-        val differentVersionChangelogNoticeText = if (updateData.otaVersionNumber != (activity?.application as ApplicationData).systemVersionProperties?.oxygenOSOTAVersion) {
+        val differentVersionChangelogNoticeText = if (updateData.otaVersionNumber != application?.systemVersionProperties?.oxygenOSOTAVersion) {
             getString(
                 R.string.update_information_different_version_changelog_notice,
                 settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
@@ -350,7 +341,7 @@ class UpdateInformationFragment : AbstractFragment() {
         // Show last time checked.
         systemIsUpToDateDateTextView.text = getString(
             R.string.update_information_last_checked_on,
-            Utils.formatDateTime(mContext, settingsManager!!.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
+            Utils.formatDateTime(context!!, settingsManager!!.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
         )
     }
 
@@ -491,7 +482,7 @@ class UpdateInformationFragment : AbstractFragment() {
                     if (downloadProgressData.timeRemaining == null) {
                         downloadDetailsTextView.setText(R.string.download_progress_text_unknown_time_remaining)
                     } else {
-                        downloadDetailsTextView.text = downloadProgressData.timeRemaining.toString(applicationData)
+                        downloadDetailsTextView.text = downloadProgressData.timeRemaining.toString(context)
                     }
                 }
             }
@@ -515,7 +506,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
             override fun onDownloadComplete() {
                 if (isAdded && updateInformationLayout != null) {
-                    Toast.makeText(applicationData, getString(R.string.download_verifying_start), LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.download_verifying_start), LENGTH_LONG).show()
                 }
             }
 
@@ -562,7 +553,7 @@ class UpdateInformationFragment : AbstractFragment() {
                     initDownloadLayout(DOWNLOAD_COMPLETED)
 
                     if (launchInstallation) {
-                        Toast.makeText(applicationData, getString(R.string.download_complete), LENGTH_LONG).show()
+                        Toast.makeText(context, getString(R.string.download_complete), LENGTH_LONG).show()
 
                         ActivityLauncher(activity!!).UpdateInstallation(true, updateData)
                     }
@@ -589,7 +580,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
                 downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPrimary)
 
-                if (Utils.checkNetworkConnection(applicationData) && updateData?.downloadUrl?.contains("http") == true) {
+                if (Utils.checkNetworkConnection(context) && updateData?.downloadUrl?.contains("http") == true) {
                     downloadLayout.isEnabled = true
                     downloadLayout.isClickable = true
                     downloadLayout.setOnClickListener(DownloadNotStartedOnClickListener())

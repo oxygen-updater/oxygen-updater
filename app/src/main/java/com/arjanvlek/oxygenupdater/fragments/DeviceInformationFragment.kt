@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.NO_OXYGEN_OS
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.internal.DeviceInformationData
@@ -20,7 +20,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Utils
 import kotlinx.android.synthetic.main.fragment_device_information.*
 
-class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecCheckedListener {
+class DeviceInformationFragment : AbstractFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -34,16 +34,10 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
         }
 
         displayDeviceInformation()
-        applicationData!!.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { devices ->
-            updateBannerText(Utils.checkDeviceOsSpec(applicationData!!.systemVersionProperties!!, devices))
+        application!!.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { devices ->
+            updateBannerText(Utils.checkDeviceOsSpec(application!!.systemVersionProperties!!, devices))
 
             displayFormattedDeviceName(devices)
-        }
-    }
-
-    override fun onDeviceOsSpecChecked(deviceOsSpec: DeviceOsSpec) {
-        if (isAdded) {
-            updateBannerText(deviceOsSpec)
         }
     }
 
@@ -70,7 +64,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             return
         }
 
-        devices?.find { device -> device.productNames.contains(applicationData?.systemVersionProperties?.oxygenDeviceName) }
+        devices?.find { device -> device.productNames.contains(application?.systemVersionProperties?.oxygenDeviceName) }
             ?.let { device -> device_information_header.text = device.name }
     }
 
@@ -80,7 +74,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
             return
         }
 
-        val systemVersionProperties = applicationData?.systemVersionProperties
+        val systemVersionProperties = application?.systemVersionProperties
 
         // Device name (in top)
         device_information_header.text =
@@ -102,7 +96,7 @@ class DeviceInformationFragment : AbstractFragment(), MainActivity.DeviceOsSpecC
 
         val totalMemory: Long = try {
             val mi = ActivityManager.MemoryInfo()
-            val activityManager = Utils.getSystemService(applicationData, Context.ACTIVITY_SERVICE) as ActivityManager
+            val activityManager = Utils.getSystemService(context, Context.ACTIVITY_SERVICE) as ActivityManager
 
             activityManager.getMemoryInfo(mi)
             mi.totalMem / 1048576L

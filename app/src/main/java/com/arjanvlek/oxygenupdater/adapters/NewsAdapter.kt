@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.arjanvlek.oxygenupdater.ApplicationData.Companion.buildAdRequest
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.activities.NewsActivity

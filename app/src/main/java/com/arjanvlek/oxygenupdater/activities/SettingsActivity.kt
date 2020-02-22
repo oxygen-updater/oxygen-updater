@@ -221,7 +221,7 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             callback.invoke(false)
         }
 
-        applicationData?.serverConnector?.verifyPurchase(purchase, price, PurchaseType.AD_FREE) { validationResult: ServerPostResult? ->
+        application?.serverConnector?.verifyPurchase(purchase, price, PurchaseType.AD_FREE) { validationResult: ServerPostResult? ->
             when {
                 validationResult == null -> {
                     // server can't be reached. Keep trying until it can be reached...
@@ -291,7 +291,7 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
                 if (result.isFailure) {
                     if (result.response != IabHelper.IABHELPER_USER_CANCELLED) {
                         logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow", result)
-                        Toast.makeText(application, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
                     } else {
                         logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
                         settingsFragment.setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, price)
