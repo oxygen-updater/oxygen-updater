@@ -26,6 +26,10 @@ import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.fragment.koin.fragmentFactory
+import org.koin.core.context.startKoin
 import java.util.*
 import kotlin.system.exitProcess
 
@@ -70,6 +74,7 @@ class OxygenUpdater : Application() {
         super.onCreate()
 
         setupCrashReporting()
+        setupKoin()
         setupNetworkCallback()
         setupMobileAds()
         setupDownloader()
@@ -80,6 +85,19 @@ class OxygenUpdater : Application() {
             val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
             val deviceId: String = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
             ADS_TEST_DEVICES.add(deviceId)
+        }
+    }
+
+    private fun setupKoin() {
+        startKoin {
+            // use AndroidLogger as Koin Logger - default Level.INFO
+            androidLogger()
+            // use the Android context given there
+            androidContext(this@OxygenUpdater)
+            // setup a KoinFragmentFactory instance
+            fragmentFactory()
+            // module list
+            modules(allModules)
         }
     }
 

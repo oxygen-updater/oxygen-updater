@@ -2,7 +2,7 @@ const val KOTLIN_VERSION = "1.3.61"
 
 object BuildPlugins {
     private object Versions {
-        const val BUILD_TOOLS_VERSION = "3.5.3"
+        const val BUILD_TOOLS_VERSION = "3.6.0"
         const val FABRIC_GRADLE_PLUGIN = "1.31.1"
         const val GOOGLE_SERVICES_PLUGIN = "4.3.3"
     }
@@ -73,6 +73,7 @@ object Libraries {
         const val JODA_TIME = "2.10.5"
         const val KOIN = "2.0.1"
         const val KOIN_UNSTABLE = "2.1.0-beta-1"
+        const val KOTLIN_COROUTINES = "1.3.3"
         const val MATERIAL = "1.2.0-alpha05"
         const val OKHTTP_LOGGING_INTERCEPTOR = "4.3.1"
         const val PLAY_SERVICES_BASE = "17.1.0"
@@ -81,6 +82,8 @@ object Libraries {
     }
 
     const val KOTLIN_STDLIB_JDK8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VERSION"
+    const val KOTLIN_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
+    const val KOTLIN_COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES}"
 
     // Google Material Components for Android
     // https://github.com/material-components/material-components-android/releases

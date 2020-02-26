@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
@@ -17,7 +18,9 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
+import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_news.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class NewsFragment : AbstractFragment() {
 
@@ -26,12 +29,17 @@ class NewsFragment : AbstractFragment() {
 
     private lateinit var newsAdapter: NewsAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_news, container, false).also {
-            it.post {
+    private val mainViewModel: MainViewModel by sharedViewModel()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = super.onCreateView(inflater, container, savedInstanceState).let {
+        inflater.inflate(R.layout.fragment_news, container, false).also { rootView ->
+            rootView.post {
                 // placeholderItem's height is 2x 16dp padding + 64dp image = 96dp
-                addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_news_item, 96f)
+                addPlaceholderItemsForShimmer(inflater, container, rootView, R.layout.placeholder_news_item, 96f)
             }
         }
     }
@@ -57,7 +65,9 @@ class NewsFragment : AbstractFragment() {
         val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        serverConnector!!.getNews(context, deviceId, updateMethodId) { displayNewsItems(it, callback) }
+        mainViewModel.fetchNews(context!!, deviceId, updateMethodId).observe(viewLifecycleOwner, Observer {
+            displayNewsItems(it, callback)
+        })
     }
 
     private fun displayNewsItems(newsItems: List<NewsItem>, callback: () -> Unit) {

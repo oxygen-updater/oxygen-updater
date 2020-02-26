@@ -1,10 +1,8 @@
 package com.arjanvlek.oxygenupdater.internal.server
 
-import android.content.Context
 import android.os.AsyncTask
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
-import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.enums.PurchaseType
 import com.arjanvlek.oxygenupdater.enums.ServerRequest
 import com.arjanvlek.oxygenupdater.exceptions.NetworkException
@@ -12,23 +10,18 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.iab.Purchase
 import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
-import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.models.RootInstall
-import com.arjanvlek.oxygenupdater.models.ServerMessage
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.ServerStatus
-import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.ExceptionUtils.isNetworkError
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
-import com.arjanvlek.oxygenupdater.utils.Utils.checkNetworkConnection
 import com.fasterxml.jackson.core.JsonProcessingException
 import org.joda.time.LocalDateTime
 import org.json.JSONException
@@ -124,80 +117,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         CollectionResponseExecutor(ServerRequest.ALL_UPDATE_METHODS, callback).execute()
     }
 
-    fun getUpdateData(
-        online: Boolean,
-        deviceId: Long,
-        updateMethodId: Long,
-        incrementalSystemVersion: String,
-        callback: KotlinCallback<UpdateData?>,
-        errorFunction: KotlinCallback<String?>
-    ) {
-        ObjectResponseExecutor<UpdateData?>(
-            ServerRequest.UPDATE_DATA,
-            {
-                if (it?.information != null
-                    && it.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
-                    && it.isUpdateInformationAvailable
-                    && it.systemIsUpToDate
-                ) {
-                    getMostRecentOxygenOTAUpdate(deviceId, updateMethodId, callback)
-                } else if (!online) {
-                    if (settingsManager!!.checkIfOfflineUpdateDataIsAvailable()) {
-                        val updateData = UpdateData(
-                            id = settingsManager.getPreference<Long?>(SettingsManager.PROPERTY_OFFLINE_ID, null),
-                            versionNumber = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME, null),
-                            description = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null),
-                            downloadUrl = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL, null),
-                            downloadSize = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L),
-                            filename = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_FILE_NAME, null),
-                            updateInformationAvailable = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false),
-                            systemIsUpToDate = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
-                        )
-
-                        callback.invoke(updateData)
-                    } else {
-                        errorFunction.invoke(OxygenUpdater.NETWORK_CONNECTION_ERROR)
-                    }
-                } else {
-                    callback.invoke(it)
-                }
-            },
-            deviceId,
-            updateMethodId,
-            incrementalSystemVersion
-        ).execute()
-    }
-
-    fun getInAppMessages(
-        serverStatus: ServerStatus,
-        callback: KotlinCallback<List<Banner>>,
-        errorCallback: KotlinCallback<String?>
-    ) {
-        val inAppBars = ArrayList<Banner>()
-
-        getServerMessages(
-            settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L),
-            settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        ) { serverMessages: List<ServerMessage>? ->
-            if (serverMessages != null && settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES, true)) {
-                inAppBars.addAll(serverMessages)
-            }
-
-            val status = serverStatus.status!!
-            if (status.isNonRecoverableError) {
-                when (status) {
-                    ServerStatus.Status.MAINTENANCE -> errorCallback.invoke(OxygenUpdater.SERVER_MAINTENANCE_ERROR)
-                    ServerStatus.Status.OUTDATED -> errorCallback.invoke(OxygenUpdater.APP_OUTDATED_ERROR)
-                    else -> {
-                        // no-op
-                    }
-                }
-            }
-
-            callback.invoke(inAppBars)
-        }
-    }
-
     fun getInstallGuidePage(deviceId: Long, updateMethodId: Long, pageNumber: Int, callback: KotlinCallback<InstallGuidePage>?) {
         ObjectResponseExecutor(
             ServerRequest.INSTALL_GUIDE_PAGE,
@@ -264,19 +183,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         ObjectResponseExecutor(ServerRequest.VERIFY_PURCHASE, purchaseData, callback).execute()
     }
 
-    fun markNewsItemAsRead(newsItemId: Long, callback: KotlinCallback<ServerPostResult>?) {
-        val body = JSONObject()
-        try {
-            body.put("news_item_id", newsItemId)
-        } catch (ignored: JSONException) {
-        }
-        ObjectResponseExecutor(ServerRequest.NEWS_READ, body, callback).execute()
-    }
-
-    private fun getMostRecentOxygenOTAUpdate(deviceId: Long, updateMethodId: Long, callback: KotlinCallback<UpdateData?>) {
-        ObjectResponseExecutor(ServerRequest.MOST_RECENT_UPDATE_DATA, callback, deviceId, updateMethodId).execute()
-    }
-
     fun getServerStatus(online: Boolean, callback: KotlinCallback<ServerStatus>) {
         if (serverStatus == null) {
             ObjectResponseExecutor<ServerStatus?>(
@@ -317,51 +223,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         } else {
             callback.invoke(serverStatus!!)
         }
-    }
-
-    private fun getServerMessages(
-        deviceId: Long,
-        updateMethodId: Long,
-        callback: KotlinCallback<List<ServerMessage>>
-    ) {
-        CollectionResponseExecutor(ServerRequest.SERVER_MESSAGES, callback, deviceId, updateMethodId).execute()
-    }
-
-    fun getNews(
-        context: Context?,
-        deviceId: Long,
-        updateMethodId: Long,
-        callback: KotlinCallback<List<NewsItem>>
-    ) {
-        CollectionResponseExecutor<NewsItem>(
-            ServerRequest.NEWS,
-            {
-                val databaseHelper = NewsDatabaseHelper(context)
-
-                if (!it.isNullOrEmpty() && checkNetworkConnection(context)) {
-                    databaseHelper.saveNewsItems(it)
-                }
-
-                callback.invoke(databaseHelper.allNewsItems)
-                databaseHelper.close()
-            },
-            deviceId,
-            updateMethodId
-        ).execute()
-    }
-
-    fun getNewsItem(context: Context?, newsItemId: Long, callback: KotlinCallback<NewsItem?>) {
-        ObjectResponseExecutor<NewsItem?>(ServerRequest.NEWS_ITEM, {
-            val databaseHelper = NewsDatabaseHelper(context)
-
-            if (it != null && checkNetworkConnection(context)) {
-                databaseHelper.saveNewsItem(it)
-            }
-
-            callback.invoke(databaseHelper.getNewsItem(newsItemId))
-
-            databaseHelper.close()
-        }, newsItemId).execute()
     }
 
     private fun <T> findMultipleFromServerResponse(

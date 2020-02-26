@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
@@ -21,17 +23,19 @@ import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.viewmodels.NewsViewModel
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_news.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsActivity : SupportActionBarActivity() {
 
-    @SuppressLint("SetJavaScriptEnabled") // JS is required to load videos and other dynamic content.
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val newsViewModel: NewsViewModel by viewModel()
 
+    @SuppressLint("SetJavaScriptEnabled") // JS is required to load videos and other dynamic content.
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         if (intent == null || intent.extras == null) {
             finish()
             return
@@ -100,37 +104,32 @@ class NewsActivity : SupportActionBarActivity() {
         newsLayout.isVisible = true
     }
 
-    override fun onResume() {
+    override fun onResume() = super.onResume().also {
         webView.onResume()
-        super.onResume()
     }
 
-    override fun onPause() {
+    override fun onPause() = super.onPause().also {
         webView.onPause()
-        super.onPause()
     }
 
-    override fun onDestroy() {
+    override fun onDestroy() = super.onDestroy().also {
         webView.apply {
             loadUrl("")
             stopLoading()
             destroy()
         }
-        super.onDestroy()
     }
 
-    private fun loadNewsItem() {
-        loadNewsItem(0)
-    }
+    private fun loadNewsItem() = loadNewsItem(0)
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadNewsItem(retryCount: Int) {
         val intent = intent
 
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
-        application!!.serverConnector!!.getNewsItem(this, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)) { newsItem ->
+        newsViewModel.fetchNewsItem(this, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)).observe(this, Observer { newsItem ->
             if (isFinishing || isDestroyed) {
-                return@getNewsItem
+                return@Observer
             }
 
             if (newsItem == null || !newsItem.isFullyLoaded) {
@@ -151,7 +150,7 @@ class NewsActivity : SupportActionBarActivity() {
                     }
                 }
 
-                return@getNewsItem
+                return@Observer
             }
 
             newsRetryButton.isVisible = false
@@ -201,10 +200,16 @@ class NewsActivity : SupportActionBarActivity() {
             newsDatePublished.apply {
                 if (newsItem.dateLastEdited == null && newsItem.datePublished != null) {
                     isVisible = true
-                    text = getString(R.string.news_date_published, Utils.formatDateTime(application, newsItem.datePublished))
+                    text = getString(
+                        R.string.news_date_published,
+                        Utils.formatDateTime(this@NewsActivity, newsItem.datePublished)
+                    )
                 } else if (newsItem.dateLastEdited != null) {
                     isVisible = true
-                    text = getString(R.string.news_date_published, Utils.formatDateTime(application, newsItem.dateLastEdited))
+                    text = getString(
+                        R.string.news_date_published,
+                        Utils.formatDateTime(this@NewsActivity, newsItem.dateLastEdited)
+                    )
                 } else {
                     isVisible = false
                 }
@@ -212,7 +217,7 @@ class NewsActivity : SupportActionBarActivity() {
 
             // Mark the item as read on the device.
             NewsDatabaseHelper(this).apply {
-                markNewsItemAsRead(newsItem)
+                markNewsItemRead(newsItem)
                 close()
             }
 
@@ -220,16 +225,17 @@ class NewsActivity : SupportActionBarActivity() {
 
             // Mark the item as read on the server (to increase times read counter)
             if (Utils.checkNetworkConnection(this)) {
-                application?.serverConnector?.markNewsItemAsRead(newsItem.id) { result: ServerPostResult? ->
+                newsViewModel.markNewsItemRead(newsItem.id).observe(this, Observer { result: ServerPostResult? ->
+                    Log.e("NA", result.toString())
                     if (result?.success == false) {
                         logError(
                             "NewsActivity",
                             NetworkException("Error marking news item as read on the server: ${result.errorMessage}")
                         )
                     }
-                }
+                })
             }
-        }
+        })
     }
 
     override fun onBackPressed() = finish()

@@ -9,10 +9,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.storage.StorageManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
@@ -37,13 +35,13 @@ class SplashActivity : AppCompatActivity() {
 
         migrateOldSettings()
 
-        // chooseActivityToLaunch()
+        chooseActivityToLaunch()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val storageManager = getSystemService<StorageManager>()!!
-            val intent = storageManager.primaryStorageVolume.createOpenDocumentTreeIntent()
-            startActivityForResult(intent, MainActivity.PERMISSION_REQUEST_CODE)
-        }
+        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        //     val storageManager = getSystemService<StorageManager>()!!
+        //     val intent = storageManager.primaryStorageVolume.createOpenDocumentTreeIntent()
+        //     startActivityForResult(intent, MainActivity.PERMISSION_REQUEST_CODE)
+        // }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

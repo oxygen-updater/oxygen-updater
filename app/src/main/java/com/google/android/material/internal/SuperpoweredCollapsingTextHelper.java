@@ -1172,7 +1172,7 @@ public final class SuperpoweredCollapsingTextHelper {
 
 					// Cross-section between both texts (should stay at original alpha)
 					titlePaint.setAlpha(originalAlpha);
-					canvas.drawText(tmp, 0, titleLayout.getLineEnd(0) <= tmp.length() ? titleLayout.getLineEnd(0) : tmp.length(), 0, -titleAscent / titleScale, titlePaint);
+					canvas.drawText(tmp, 0, Math.min(titleLayout.getLineEnd(0), tmp.length()), 0, -titleAscent / titleScale, titlePaint);
 				}
 			}
 		}
@@ -1541,7 +1541,7 @@ public final class SuperpoweredCollapsingTextHelper {
 			tmp = tmp.substring(0, tmp.length() - 1);
 		}
 
-		c.drawText(tmp, 0, titleLayout.getLineEnd(0) <= tmp.length() ? titleLayout.getLineEnd(0) : tmp.length(), 0, -titlePaint.ascent() / titleScale, titlePaint);
+		c.drawText(tmp, 0, Math.min(titleLayout.getLineEnd(0), tmp.length()), 0, -titlePaint.ascent() / titleScale, titlePaint);
 
 		if (titleTexturePaint == null) {
 			// Make sure we have a paint

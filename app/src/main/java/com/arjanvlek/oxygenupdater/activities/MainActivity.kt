@@ -20,6 +20,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
@@ -33,10 +34,10 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
-import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.InterstitialAd
@@ -48,6 +49,7 @@ import kotlinx.android.synthetic.main.activity_main.appBar
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import org.joda.time.LocalDateTime
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
@@ -60,31 +62,31 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
     private var adView: AdView? = null
 
+    private val mainViewModel: MainViewModel by viewModel()
+
     var deviceOsSpec: DeviceOsSpec? = null
         private set
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    public override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_main)
 
         settingsManager = SettingsManager(this)
 
         val application = application as OxygenUpdater
 
-        // Supported device check
-        application.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { result ->
-            deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, result)
+        mainViewModel.fetchAllDevices().observe(this, Observer {
+            deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, it)
 
             val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
 
             if (showDeviceWarningDialog && !deviceOsSpec!!.isDeviceOsSpecSupported) {
                 displayUnsupportedDeviceOsSpecMessage(deviceOsSpec!!)
             }
-        }
+        })
 
         // subscribe to notification topics
-        // we're doing it here, instead of SplashActivity, because it requires the app to be setup first
-        // (deviceId, updateMethodId, etc need to be saved in SharedPreferences)
+        // we're doing it here, instead of [SplashActivity], because it requires the app to be setup first
+        // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences])
         if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
             NotificationTopicSubscriber.subscribe(application)
         }
@@ -140,61 +142,42 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
      *
      * @return true if clicked
      */
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_faq -> {
-                activityLauncher.FAQ()
-                true
-            }
-            R.id.action_help -> {
-                activityLauncher.Help()
-                true
-            }
-            R.id.action_settings -> {
-                activityLauncher.Settings()
-                true
-            }
-            R.id.action_contribute -> {
-                activityLauncher.Contribute()
-                true
-            }
-            R.id.action_about -> {
-                activityLauncher.About()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+    override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
+        R.id.action_faq -> activityLauncher.FAQ().let { true }
+        R.id.action_help -> activityLauncher.Help().let { true }
+        R.id.action_settings -> activityLauncher.Settings().let { true }
+        R.id.action_contribute -> activityLauncher.Contribute().let { true }
+        R.id.action_about -> activityLauncher.About().let { true }
+        else -> super.onOptionsItemSelected(item)
     }
 
-    private fun setupViewPager() {
-        viewpager.apply {
-            viewPager = this
+    private fun setupViewPager() = viewpager.apply {
+        viewPager = this
 
-            offscreenPageLimit = 2
-            adapter = SectionsPagerAdapter(supportFragmentManager)
-            tabs.setupWithViewPager(this)
+        offscreenPageLimit = 2
+        adapter = SectionsPagerAdapter(supportFragmentManager)
+        tabs.setupWithViewPager(this)
 
-            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrollStateChanged(state: Int) {}
+        addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
 
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
-                override fun onPageSelected(position: Int) {
-                    when (position) {
-                        0, 1 -> hideTabBadge(position, 1000)
-                        else -> {
-                            // no-op
-                        }
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0, 1 -> hideTabBadge(position, 1000)
+                    else -> {
+                        // no-op
                     }
                 }
-            })
+            }
+        })
 
-            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-                updateLayoutParams<CoordinatorLayout.LayoutParams> {
-                    bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
-                }
-            })
-        }
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
+            }
+        })
     }
 
     /**
@@ -206,22 +189,24 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
      *
      * @see hideTabBadge
      */
-    fun updateTabBadge(@IntRange(from = 0, to = 2) position: Int, show: Boolean = true, count: Int? = null) {
-        tabs.getTabAt(position)?.orCreateBadge?.apply {
-            isVisible = show
+    fun updateTabBadge(
+        @IntRange(from = 0, to = 2) position: Int,
+        show: Boolean = true,
+        count: Int? = null
+    ) = tabs.getTabAt(position)?.orCreateBadge?.apply {
+        isVisible = show
 
-            if (isVisible) {
-                backgroundColor = if (ThemeUtils.isNightModeActive(this@MainActivity)) {
-                    ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)
-                } else {
-                    Color.WHITE
-                }
+        if (isVisible) {
+            backgroundColor = if (ThemeUtils.isNightModeActive(this@MainActivity)) {
+                ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)
+            } else {
+                Color.WHITE
+            }
 
-                if (count != null /*&& count != 0*/) {
-                    badgeTextColor = ContextCompat.getColor(this@MainActivity, R.color.foreground)
-                    number = count
-                    maxCharacterCount = 3
-                }
+            if (count != null /*&& count != 0*/) {
+                badgeTextColor = ContextCompat.getColor(this@MainActivity, R.color.foreground)
+                number = count
+                maxCharacterCount = 3
             }
         }
     }
@@ -239,12 +224,14 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
      * @see updateTabBadge
      */
     @Suppress("SameParameterValue")
-    private fun hideTabBadge(@IntRange(from = 0, to = 2) position: Int, delayMillis: Long = 0) {
-        tabs.getTabAt(position)?.badge?.apply {
-            Handler().postDelayed({
-                isVisible = false
-            }, delayMillis)
-        }
+    private fun hideTabBadge(
+        @IntRange(from = 0, to = 2)
+        position: Int,
+        delayMillis: Long = 0
+    ) = tabs.getTabAt(position)?.badge?.apply {
+        Handler().postDelayed({
+            isVisible = false
+        }, delayMillis)
     }
 
     /**
@@ -292,18 +279,15 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    public override fun onResume() {
-        super.onResume()
+    public override fun onResume() = super.onResume().also {
         adView?.resume()
     }
 
-    public override fun onPause() {
-        super.onPause()
+    public override fun onPause() = super.onPause().also {
         adView?.pause()
     }
 
-    public override fun onDestroy() {
-        super.onDestroy()
+    public override fun onDestroy() = super.onDestroy().also {
         adView?.destroy()
     }
 
@@ -346,27 +330,23 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    fun getNewsAd(): InterstitialAd? {
-        return when {
-            newsAd != null -> newsAd
-            mayShowNewsAd() -> {
-                InterstitialAd(this).apply {
-                    adUnitId = getString(R.string.advertising_interstitial_unit_id)
-                    loadAd(buildAdRequest())
+    fun getNewsAd() = when {
+        newsAd != null -> newsAd
+        mayShowNewsAd() -> {
+            InterstitialAd(this).apply {
+                adUnitId = getString(R.string.advertising_interstitial_unit_id)
+                loadAd(buildAdRequest())
 
-                    newsAd = this
-                    newsAd
-                }
+                newsAd = this
+                newsAd
             }
-            else -> null
         }
+        else -> null
     }
 
-    fun mayShowNewsAd(): Boolean {
-        return (!settingsManager.getPreference(PROPERTY_AD_FREE, false)
-                && LocalDateTime.parse(settingsManager.getPreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, "1970-01-01T00:00:00.000"))
-            .isBefore(LocalDateTime.now().minusMinutes(5)))
-    }
+    fun mayShowNewsAd() = !settingsManager.getPreference(PROPERTY_AD_FREE, false)
+            && LocalDateTime.parse(settingsManager.getPreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, "1970-01-01T00:00:00.000"))
+        .isBefore(LocalDateTime.now().minusMinutes(5))
 
     fun requestDownloadPermissions(callback: KotlinCallback<Boolean>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -384,10 +364,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     // Android 6.0 Run-time permissions
-    fun hasDownloadPermissions(): Boolean {
-        return (ContextCompat.checkSelfPermission(application, VERIFY_FILE_PERMISSION) == PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(application, DOWNLOAD_FILE_PERMISSION) == PERMISSION_GRANTED)
-    }
+    fun hasDownloadPermissions() = ContextCompat.checkSelfPermission(this, VERIFY_FILE_PERMISSION) == PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(this, DOWNLOAD_FILE_PERMISSION) == PERMISSION_GRANTED
 
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.

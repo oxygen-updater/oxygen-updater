@@ -7,24 +7,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.internal.DeviceInformationData
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
-import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.utils.Logger
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_device_information.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DeviceInformationFragment : AbstractFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_device_information, container, false) as NestedScrollView
+    private val mainViewModel: MainViewModel by sharedViewModel()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = super.onCreateView(inflater, container, savedInstanceState).let {
+        inflater.inflate(R.layout.fragment_device_information, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,11 +40,12 @@ class DeviceInformationFragment : AbstractFragment() {
         }
 
         displayDeviceInformation()
-        application!!.serverConnector!!.getDevices(DeviceRequestFilter.ALL) { devices ->
+
+        mainViewModel.allDevices.observe(viewLifecycleOwner, Observer { devices ->
             updateBannerText(Utils.checkDeviceOsSpec(application!!.systemVersionProperties!!, devices))
 
             displayFormattedDeviceName(devices)
-        }
+        })
     }
 
     private fun updateBannerText(deviceOsSpec: DeviceOsSpec) {

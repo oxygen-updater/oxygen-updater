@@ -98,7 +98,7 @@ class NewsDatabaseHelper(context: Context?) : SQLiteOpenHelper(
         updateNewsItem(existing.id!!, newsItem)
     } ?: insertNewsItem(newsItem)
 
-    fun markNewsItemAsRead(newsItem: NewsItem) = toDatabaseContents(newsItem).let { values ->
+    fun markNewsItemRead(newsItem: NewsItem) = toDatabaseContents(newsItem).let { values ->
         values.put(COLUMN_READ, true)
         writableDatabase.update(TABLE_NAME, values, "$COLUMN_ID  LIKE ?", arrayOf(newsItem.id.toString()))
     }

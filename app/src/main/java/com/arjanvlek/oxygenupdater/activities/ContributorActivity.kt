@@ -81,7 +81,7 @@ class ContributorActivity : SupportActionBarActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun onSaveButtonClick(checkbox: View?) {
-        val contributorUtils = ContributorUtils(application)
+        val contributorUtils = ContributorUtils(this)
         val contributor = localContributeSetting.get()
 
         if (contributor) {
@@ -90,7 +90,7 @@ class ContributorActivity : SupportActionBarActivity() {
                     contributorUtils.flushSettings(true)
                     finish()
                 } else {
-                    Toast.makeText(this@ContributorActivity, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
                 }
             }
         } else {

@@ -289,10 +289,10 @@ class InstallActivity : SupportActionBarActivity() {
     private fun switchView(newViewId: Int) {
         layoutId = newViewId
 
-        val newView = layoutInflater.inflate(newViewId, null, false)
-        newView.startAnimation(AnimationUtils.loadAnimation(application, android.R.anim.fade_in))
-
-        setContentView(newView)
+        layoutInflater.inflate(newViewId, null, false).let {
+            it.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in))
+            setContentView(it)
+        }
     }
 
     private fun handleBackAction() {

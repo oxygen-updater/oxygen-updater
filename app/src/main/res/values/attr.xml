@@ -71,9 +71,9 @@
 		<!-- The title appearance of the CollapsingToolbarLayouts subtitle when it is fully 'collapsed' -->
 		<attr name="collapsedSubtitleTextAppearance" format="reference" />
 		<!-- Specifies how the subtitle should be positioned when expanded. -->
-		<attr name="expandedSubtitleGravity" />
+		<attr name="expandedSubtitleGravity" format="dimension" />
 		<!-- Specifies how the subtitle should be positioned when collapsed. -->
-		<attr name="collapsedSubtitleGravity" />
+		<attr name="collapsedSubtitleGravity" format="dimension"  />
 		<!-- Whether the CollapsingToolbarLayout should draw its own shrinking/growing subtitle. -->
 		<attr name="subtitleEnabled" format="boolean" />
 		<!-- The subtitle to show when subtitleEnabled is set to true. -->
