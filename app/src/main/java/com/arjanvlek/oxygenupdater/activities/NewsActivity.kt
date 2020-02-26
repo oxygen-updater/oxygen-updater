@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -226,7 +225,6 @@ class NewsActivity : SupportActionBarActivity() {
             // Mark the item as read on the server (to increase times read counter)
             if (Utils.checkNetworkConnection(this)) {
                 newsViewModel.markNewsItemRead(newsItem.id).observe(this, Observer { result: ServerPostResult? ->
-                    Log.e("NA", result.toString())
                     if (result?.success == false) {
                         logError(
                             "NewsActivity",

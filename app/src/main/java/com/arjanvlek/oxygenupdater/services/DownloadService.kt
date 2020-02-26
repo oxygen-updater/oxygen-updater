@@ -15,7 +15,6 @@ import android.os.Build
 import android.os.Environment
 import android.os.Handler
 import android.os.StatFs
-import android.util.Log
 import android.util.Pair
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
@@ -281,7 +280,6 @@ class DownloadService : IntentService(TAG) {
     @Synchronized
     private fun downloadUpdate(updateData: UpdateData?) {
         if (!isStateTransitionAllowed(DOWNLOAD_QUEUED)) {
-            Log.e(TAG, state.toString())
             logWarning(
                 TAG,
                 UpdateDownloadException("Not downloading update, is a download operation already in progress?")

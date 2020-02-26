@@ -15,9 +15,11 @@ import org.joda.time.format.ISODateTimeFormat
  */
 class SubmittedUpdateFileRepository(context: Context?) : SQLiteOpenHelper(
     context,
-    DATABASE_NAME, null,
+    DATABASE_NAME,
+    null,
     DATABASE_VERSION
 ) {
+
     private var readableSqLiteDatabase: SQLiteDatabase? = null
     private var writableSqLiteDatabase: SQLiteDatabase? = null
 

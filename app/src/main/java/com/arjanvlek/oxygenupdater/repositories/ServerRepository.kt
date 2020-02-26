@@ -92,7 +92,7 @@ class ServerRepository constructor(
         }
     }
 
-    suspend fun getMostRecentUpdateData(
+    private suspend fun getMostRecentUpdateData(
         deviceId: Long,
         updateMethodId: Long
     ): UpdateData = apiResponse(serverApi.getMostRecentUpdateData(deviceId, updateMethodId))
@@ -155,12 +155,13 @@ class ServerRepository constructor(
         context: Context,
         deviceId: Long,
         updateMethodId: Long
-    ) = apiResponse(serverApi.getNews(deviceId, updateMethodId)).also {
-        if (!it.isNullOrEmpty()) {
-            NewsDatabaseHelper(context).apply {
-                saveNewsItems(it)
-                close()
+    ) = apiResponse(serverApi.getNews(deviceId, updateMethodId)).let {
+        NewsDatabaseHelper(context).let { databaseHelper ->
+            if (!it.isNullOrEmpty() && Utils.checkNetworkConnection(context)) {
+                databaseHelper.saveNewsItems(it)
             }
+
+            databaseHelper.allNewsItems.also { databaseHelper.close() }
         }
     }
 
