@@ -29,7 +29,7 @@ class NewsFragment : AbstractFragment() {
 
     private lateinit var newsAdapter: NewsAdapter
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val mainViewModel by sharedViewModel<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,8 +62,8 @@ class NewsFragment : AbstractFragment() {
 
         shimmerFrameLayout.isVisible = true
 
-        val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         mainViewModel.fetchNews(context!!, deviceId, updateMethodId).observe(viewLifecycleOwner, Observer {
             displayNewsItems(it, callback)

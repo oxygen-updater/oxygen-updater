@@ -22,40 +22,40 @@ import retrofit2.http.QueryMap
 interface ServerApi {
 
     @GET("devices/{filter}")
-    suspend fun getDevices(
+    suspend fun fetchDevices(
         @Path("filter") filter: String
     ): Response<List<Device>>
 
     @GET("updateData/{deviceId}/{updateMethodId}/{incrementalSystemVersion}")
-    suspend fun getUpdateData(
+    suspend fun fetchUpdateData(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
         @Path("incrementalSystemVersion") incrementalSystemVersion: String
     ): Response<UpdateData>
 
     @GET("mostRecentUpdateData/{deviceId}/{updateMethodId}")
-    suspend fun getMostRecentUpdateData(
+    suspend fun fetchMostRecentUpdateData(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long
     ): Response<UpdateData>
 
     @GET("serverStatus")
-    suspend fun getServerStatus(): Response<ServerStatus>
+    suspend fun fetchServerStatus(): Response<ServerStatus>
 
     @GET("serverMessages/{deviceId}/{updateMethodId}")
-    suspend fun getServerMessages(
+    suspend fun fetchServerMessages(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long
     ): Response<List<ServerMessage>>
 
     @GET("news/{deviceId}/{updateMethodId}")
-    suspend fun getNews(
+    suspend fun fetchNews(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long
     ): Response<List<NewsItem>>
 
     @GET("news-item/{newsItemId}")
-    suspend fun getNewsItem(
+    suspend fun fetchNewsItem(
         @Path("newsItemId") newsItemId: Long
     ): Response<NewsItem>
 
@@ -65,19 +65,19 @@ interface ServerApi {
     ): Response<ServerPostResult>
 
     @GET("updateMethods/{deviceId}")
-    suspend fun getUpdateMethodsForDevice(
+    suspend fun fetchUpdateMethodsForDevice(
         @Path("deviceId") deviceId: Long
     ): Response<List<UpdateMethod>>
 
     @GET("allUpdateMethods")
-    suspend fun getAllUpdateMethods(): Response<List<UpdateMethod>>
+    suspend fun fetchAllUpdateMethods(): Response<List<UpdateMethod>>
 
-    @GET("updateData/{deviceId}/{updateMethodId}/{pageNumber}")
-    suspend fun getInstallGuidePage(
+    @GET("installGuide/{deviceId}/{updateMethodId}/{pageNumber}")
+    suspend fun fetchInstallGuidePage(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
         @Path("pageNumber") pageNumber: Int
-    ): Response<List<InstallGuidePage>>
+    ): Response<InstallGuidePage>
 
     @POST("submit-update-file")
     suspend fun submitUpdateFile(

@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.activities
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
@@ -17,6 +16,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NUMBER_OF_INSTALL_GUIDE_PAGES
 import com.arjanvlek.oxygenupdater.R
@@ -25,7 +25,6 @@ import com.arjanvlek.oxygenupdater.exceptions.UpdateInstallationException
 import com.arjanvlek.oxygenupdater.fragments.InstallGuideFragment.Companion.newInstance
 import com.arjanvlek.oxygenupdater.internal.AutomaticUpdateInstaller.installUpdate
 import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.models.InstallationStatus
@@ -38,6 +37,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
 import com.arjanvlek.oxygenupdater.utils.Utils.checkNetworkConnection
+import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ipaulpro.afilechooser.FileChooserActivity
 import com.ipaulpro.afilechooser.utils.FileUtils
@@ -46,6 +46,8 @@ import kotlinx.android.synthetic.main.fragment_choose_install_method.*
 import kotlinx.android.synthetic.main.fragment_install_options.*
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.util.*
 
@@ -53,9 +55,6 @@ import java.util.*
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */
 class InstallActivity : SupportActionBarActivity() {
-
-    private lateinit var settingsManager: SettingsManager
-    private lateinit var serverConnector: ServerConnector
 
     var installGuideCache = SparseArray<InstallGuidePage>()
         private set
@@ -65,11 +64,11 @@ class InstallActivity : SupportActionBarActivity() {
     private var layoutId = 0
     private var rooted = false
 
+    private val settingsManager by inject<SettingsManager>()
+    private val installViewModel by viewModel<InstallViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        settingsManager = SettingsManager(this)
-        serverConnector = application?.serverConnector!!
 
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
 
@@ -92,14 +91,14 @@ class InstallActivity : SupportActionBarActivity() {
             rooted = isRooted
 
             if (isRooted) {
-                serverConnector.getServerStatus(checkNetworkConnection(this)) { serverStatus ->
+                installViewModel.fetchServerStatus(checkNetworkConnection(this)).observe(this, Observer { serverStatus ->
                     if (serverStatus.automaticInstallationEnabled) {
                         openMethodSelectionPage()
                     } else {
                         Toast.makeText(this, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()
                         openInstallGuide()
                     }
-                }
+                })
             } else {
                 Toast.makeText(this, getString(R.string.install_guide_no_root), LENGTH_LONG).show()
                 openInstallGuide()
@@ -178,7 +177,7 @@ class InstallActivity : SupportActionBarActivity() {
             val isAbPartitionLayout = systemVersionProperties.isABPartitionLayout
             val targetOSVersion = updateData!!.otaVersionNumber!!
 
-            logInstallationStart(this, currentOSVersion, targetOSVersion, currentOSVersion) {
+            logInstallationStart(currentOSVersion, targetOSVersion, currentOSVersion) {
                 FunctionalAsyncTask<Void?, Void, String?>({}, {
                     try {
                         settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
@@ -346,7 +345,6 @@ class InstallActivity : SupportActionBarActivity() {
     }
 
     private fun logInstallationStart(
-        context: Context,
         startOs: String,
         destinationOs: String,
         currentOs: String,
@@ -354,9 +352,8 @@ class InstallActivity : SupportActionBarActivity() {
     ) {
         // Create installation ID.
         val installationId = UUID.randomUUID().toString()
-        val manager = SettingsManager(context)
 
-        manager.savePreference(SettingsManager.PROPERTY_INSTALLATION_ID, installationId)
+        settingsManager.savePreference(SettingsManager.PROPERTY_INSTALLATION_ID, installationId)
 
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
@@ -373,20 +370,22 @@ class InstallActivity : SupportActionBarActivity() {
             ""
         )
 
-        serverConnector.logRootInstall(installation) { result: ServerPostResult? ->
+        installViewModel.logRootInstall(installation).observe(this, Observer { result: ServerPostResult? ->
             if (result == null) {
-                logError(TAG,
+                logError(
+                    TAG,
                     SubmitUpdateInstallationException("Failed to log update installation action: No response from server")
                 )
             } else if (!result.success) {
-                logError(TAG,
+                logError(
+                    TAG,
                     SubmitUpdateInstallationException("Failed to log update installation action: ${result.errorMessage}")
                 )
             }
 
             // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
             successFunction.invoke()
-        }
+        })
     }
 
     companion object {

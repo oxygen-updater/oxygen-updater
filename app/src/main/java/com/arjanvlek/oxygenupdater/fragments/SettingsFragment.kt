@@ -28,6 +28,7 @@ import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber.subscribe
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.crashlytics.android.Crashlytics
+import org.koin.android.ext.android.inject
 import java.util.*
 
 /**
@@ -43,7 +44,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private lateinit var updateMethodPreference: BottomSheetPreference
 
     private lateinit var delegate: InAppPurchaseDelegate
-    private var settingsManager: SettingsManager? = null
+
+    private val settingsManager by inject<SettingsManager>()
 
     fun setInAppPurchaseDelegate(delegate: InAppPurchaseDelegate) {
         this.delegate = delegate
@@ -72,8 +74,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             application = it.application as OxygenUpdater
             activityLauncher = ActivityLauncher(it)
         }
-
-        settingsManager = SettingsManager(mContext)
     }
 
     override fun onResume() {
@@ -118,7 +118,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private fun setupAdvancedModePreference() {
         val advancedMode = findPreference<SwitchPreference>(SettingsManager.PROPERTY_ADVANCED_MODE)
         advancedMode?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val isAdvancedMode = settingsManager!!.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
+            val isAdvancedMode = settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
             if (isAdvancedMode) {
                 advancedMode?.isChecked = false
                 showAdvancedModeExplanation(activity) {
@@ -180,7 +180,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             var recommendedPosition = -1
             var selectedPosition = -1
 
-            val deviceId = settingsManager!!.getPreference(mContext.getString(R.string.key_device_id), -1L)
+            val deviceId = settingsManager.getPreference(mContext.getString(R.string.key_device_id), -1L)
 
             val itemList: MutableList<BottomSheetItem> = ArrayList()
             val deviceMap = HashMap<CharSequence, Long>()
@@ -236,7 +236,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         if (!updateMethods.isNullOrEmpty()) {
             updateMethodPreference.isEnabled = true
 
-            val currentUpdateMethodId = settingsManager!!.getPreference(mContext.getString(R.string.key_update_method_id), -1L)
+            val currentUpdateMethodId = settingsManager.getPreference(mContext.getString(R.string.key_update_method_id), -1L)
 
             val recommendedPositions: MutableList<Int> = ArrayList()
             var selectedPosition = -1
@@ -276,8 +276,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             updateMethodPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
                 Crashlytics.setUserIdentifier(
-                    "Device: " + settingsManager!!.getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
-                            + ", Update Method: " + settingsManager!!.getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
+                    "Device: " + settingsManager.getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
+                            + ", Update Method: " + settingsManager.getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
                 )
 
                 // Google Play services are not required if the user doesn't use notifications

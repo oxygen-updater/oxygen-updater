@@ -26,6 +26,7 @@ import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
@@ -34,6 +35,8 @@ import java.util.*
 import kotlin.system.exitProcess
 
 class OxygenUpdater : Application() {
+
+    private val settingsManager by inject<SettingsManager>()
 
     val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onLost(network: Network) {
@@ -49,7 +52,7 @@ class OxygenUpdater : Application() {
         get() {
             if (field == null) {
                 logVerbose(TAG, "Created ServerConnector for use within the application...")
-                field = ServerConnector(SettingsManager(this))
+                field = ServerConnector(settingsManager)
             }
 
             return field
@@ -70,11 +73,11 @@ class OxygenUpdater : Application() {
         }
 
     override fun onCreate() {
+        setupKoin()
         AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this))
         super.onCreate()
 
         setupCrashReporting()
-        setupKoin()
         setupNetworkCallback()
         setupMobileAds()
         setupDownloader()
@@ -148,8 +151,6 @@ class OxygenUpdater : Application() {
     }
 
     private fun setupCrashReporting() {
-        val settingsManager = SettingsManager(this)
-
         // Do not upload crash logs if we are on a debug build or if the user has turned off analytics in the Settings screen.
         val shareAnalytics = settingsManager.getPreference(SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
         val disableCrashCollection = BuildConfig.DEBUG || !shareAnalytics

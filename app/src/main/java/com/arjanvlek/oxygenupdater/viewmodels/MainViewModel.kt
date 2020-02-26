@@ -39,7 +39,7 @@ class MainViewModel(
     private val _serverMessages = MutableLiveData<List<ServerMessage>>()
 
     fun fetchAllDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
-        _allDevices.postValue(serverRepository.getDevices(DeviceRequestFilter.ALL, false))
+        _allDevices.postValue(serverRepository.fetchDevices(DeviceRequestFilter.ALL, false))
     }.let { _allDevices }
 
     fun fetchUpdateData(
@@ -49,7 +49,7 @@ class MainViewModel(
         incrementalSystemVersion: String,
         errorCallback: KotlinCallback<String?>
     ): LiveData<UpdateData> = viewModelScope.launch(Dispatchers.IO) {
-        _updateData.postValue(serverRepository.getUpdateData(online, deviceId, updateMethodId, incrementalSystemVersion, errorCallback))
+        _updateData.postValue(serverRepository.fetchUpdateData(online, deviceId, updateMethodId, incrementalSystemVersion, errorCallback))
     }.let { _updateData }
 
     fun fetchNews(
@@ -57,17 +57,17 @@ class MainViewModel(
         deviceId: Long,
         updateMethodId: Long
     ): LiveData<List<NewsItem>> = viewModelScope.launch(Dispatchers.IO) {
-        _newsList.postValue(serverRepository.getNews(context, deviceId, updateMethodId))
+        _newsList.postValue(serverRepository.fetchNews(context, deviceId, updateMethodId))
     }.let { _newsList }
 
     fun fetchServerStatus(online: Boolean): LiveData<ServerStatus> = viewModelScope.launch(Dispatchers.IO) {
-        _serverStatus.postValue(serverRepository.getServerStatus(online))
+        _serverStatus.postValue(serverRepository.fetchServerStatus(online))
     }.let { _serverStatus }
 
     fun fetchServerMessages(
         serverStatus: ServerStatus,
         errorCallback: KotlinCallback<String?>
     ): LiveData<List<ServerMessage>> = viewModelScope.launch(Dispatchers.IO) {
-        _serverMessages.postValue(serverRepository.getServerMessages(serverStatus, errorCallback))
+        _serverMessages.postValue(serverRepository.fetchServerMessages(serverStatus, errorCallback))
     }.let { _serverMessages }
 }

@@ -23,7 +23,7 @@ private val networkModule = module {
 
 private val preferencesModule = module {
     single { PreferenceManager.getDefaultSharedPreferences(androidContext()) }
-    single { SettingsManager(androidContext()) }
+    single { SettingsManager() }
 }
 
 private val repositoryModule = module {

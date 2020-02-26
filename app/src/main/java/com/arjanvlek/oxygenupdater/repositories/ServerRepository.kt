@@ -21,7 +21,9 @@ import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.Logger
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.utils.apiResponse
+import com.fasterxml.jackson.core.JsonProcessingException
 import org.joda.time.LocalDateTime
+import org.json.JSONException
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -36,7 +38,7 @@ class ServerRepository constructor(
 
     private var serverStatus: ServerStatus? = null
 
-    suspend fun getDevices(
+    suspend fun fetchDevices(
         filter: DeviceRequestFilter,
         alwaysFetch: Boolean = false
     ): List<Device> {
@@ -50,27 +52,27 @@ class ServerRepository constructor(
 
             devicesCache[filter]!!.second
         } else {
-            apiResponse(serverApi.getDevices(filter.filter)).also {
+            apiResponse(serverApi.fetchDevices(filter.filter)).also {
                 devicesCache[filter] = Pair(LocalDateTime.now(), it.toList())
             }
         }
     }
 
-    suspend fun getUpdateData(
+    suspend fun fetchUpdateData(
         online: Boolean,
         deviceId: Long,
         updateMethodId: Long,
         incrementalSystemVersion: String,
         errorCallback: KotlinCallback<String?>
     ) = apiResponse(
-        serverApi.getUpdateData(deviceId, updateMethodId, incrementalSystemVersion)
+        serverApi.fetchUpdateData(deviceId, updateMethodId, incrementalSystemVersion)
     ).let { updateData: UpdateData? ->
         if (updateData?.information != null
             && updateData.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
             && updateData.isUpdateInformationAvailable
             && updateData.systemIsUpToDate
         ) {
-            getMostRecentUpdateData(deviceId, updateMethodId)
+            fetchMostRecentUpdateData(deviceId, updateMethodId)
         } else if (!online) {
             if (settingsManager.checkIfOfflineUpdateDataIsAvailable()) {
                 UpdateData(
@@ -92,12 +94,12 @@ class ServerRepository constructor(
         }
     }
 
-    private suspend fun getMostRecentUpdateData(
+    private suspend fun fetchMostRecentUpdateData(
         deviceId: Long,
         updateMethodId: Long
-    ): UpdateData = apiResponse(serverApi.getMostRecentUpdateData(deviceId, updateMethodId))
+    ): UpdateData = apiResponse(serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId))
 
-    suspend fun getServerStatus(online: Boolean) = serverStatus ?: apiResponse(serverApi.getServerStatus()).let { status: ServerStatus? ->
+    suspend fun fetchServerStatus(online: Boolean) = serverStatus ?: apiResponse(serverApi.fetchServerStatus()).let { status: ServerStatus? ->
         val automaticInstallationEnabled = settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false)
         val pushNotificationsDelaySeconds = settingsManager.getPreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800)
 
@@ -123,11 +125,11 @@ class ServerRepository constructor(
         response.also { serverStatus = it }
     }
 
-    suspend fun getServerMessages(
+    suspend fun fetchServerMessages(
         serverStatus: ServerStatus,
         errorCallback: KotlinCallback<String?>
     ) = apiResponse(
-        serverApi.getServerMessages(
+        serverApi.fetchServerMessages(
             settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L),
             settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         )
@@ -151,11 +153,11 @@ class ServerRepository constructor(
         }
     }
 
-    suspend fun getNews(
+    suspend fun fetchNews(
         context: Context,
         deviceId: Long,
         updateMethodId: Long
-    ) = apiResponse(serverApi.getNews(deviceId, updateMethodId)).let {
+    ) = apiResponse(serverApi.fetchNews(deviceId, updateMethodId)).let {
         NewsDatabaseHelper(context).let { databaseHelper ->
             if (!it.isNullOrEmpty() && Utils.checkNetworkConnection(context)) {
                 databaseHelper.saveNewsItems(it)
@@ -165,10 +167,10 @@ class ServerRepository constructor(
         }
     }
 
-    suspend fun getNewsItem(
+    suspend fun fetchNewsItem(
         context: Context,
         newsItemId: Long
-    ) = apiResponse(serverApi.getNewsItem(newsItemId)).let { newsItem: NewsItem? ->
+    ) = apiResponse(serverApi.fetchNewsItem(newsItemId)).let { newsItem: NewsItem? ->
         NewsDatabaseHelper(context).let { databaseHelper ->
             if (newsItem != null && Utils.checkNetworkConnection(context)) {
                 databaseHelper.saveNewsItem(newsItem)
@@ -182,17 +184,17 @@ class ServerRepository constructor(
         newsItemId: Long
     ): ServerPostResult = apiResponse(serverApi.markNewsItemRead(mapOf("news_item_id" to newsItemId)))
 
-    suspend fun getUpdateMethodsForDevice(
+    suspend fun fetchUpdateMethodsForDevice(
         deviceId: Long
-    ): List<UpdateMethod> = apiResponse(serverApi.getUpdateMethodsForDevice(deviceId))
+    ): List<UpdateMethod> = apiResponse(serverApi.fetchUpdateMethodsForDevice(deviceId))
 
-    suspend fun getAllMethods(): List<UpdateMethod> = apiResponse(serverApi.getAllUpdateMethods())
+    suspend fun fetchAllMethods(): List<UpdateMethod> = apiResponse(serverApi.fetchAllUpdateMethods())
 
-    suspend fun getInstallGuidePage(
+    suspend fun fetchInstallGuidePage(
         deviceId: Long,
         updateMethodId: Long,
         pageNumber: Int
-    ): List<InstallGuidePage> = apiResponse(serverApi.getInstallGuidePage(deviceId, updateMethodId, pageNumber))
+    ): InstallGuidePage = apiResponse(serverApi.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber))
 
     suspend fun submitUpdateFile(
         filename: String
@@ -200,7 +202,19 @@ class ServerRepository constructor(
 
     suspend fun logRootInstall(
         rootInstall: RootInstall
-    ): ServerPostResult = apiResponse(serverApi.logRootInstall(rootInstall))
+    ) = try {
+        apiResponse(serverApi.logRootInstall(rootInstall))
+    } catch (e: JSONException) {
+        ServerPostResult(
+            false,
+            "IN-APP ERROR (ServerConnector): Json parse error on input data $rootInstall"
+        )
+    } catch (e: JsonProcessingException) {
+        ServerPostResult(
+            false,
+            "IN-APP ERROR (ServerConnector): Json parse error on input data $rootInstall"
+        )
+    }
 
     suspend fun verifyPurchase(
         purchase: Purchase,

@@ -18,6 +18,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.google.firebase.analytics.FirebaseAnalytics
+import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
@@ -29,6 +30,8 @@ import java.util.concurrent.atomic.AtomicInteger
 class UpdateFileChecker : JobService() {
 
     private var repository: SubmittedUpdateFileRepository? = null
+
+    private val settingsManager by inject<SettingsManager>()
 
     override fun onStartJob(params: JobParameters): Boolean {
         return try {
@@ -81,7 +84,8 @@ class UpdateFileChecker : JobService() {
                     val callback: KotlinCallback<ServerPostResult?> = { serverPostResult ->
                         if (serverPostResult == null) {
                             // network error, try again later
-                            logWarning(TAG,
+                            logWarning(
+                                TAG,
                                 NetworkException("Error submitting update file $fileName: No network connection or empty response")
                             )
                         } else if (!serverPostResult.success) {
@@ -97,7 +101,8 @@ class UpdateFileChecker : JobService() {
                                 FirebaseAnalytics.getInstance(application).logEvent("CONTRIBUTION_NOT_NEEDED", bundleOf("CONTRIBUTION_FILENAME" to fileName))
                             } else {
                                 // server error, try again later
-                                logError(TAG,
+                                logError(
+                                    TAG,
                                     NetworkException("Error submitting update file " + fileName + ": " + serverPostResult.errorMessage)
                                 )
                             }
@@ -109,7 +114,6 @@ class UpdateFileChecker : JobService() {
                                 LocalNotifications.showContributionSuccessfulNotification(application, fileName)
 
                                 // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
-                                val settingsManager = SettingsManager(application)
                                 settingsManager.savePreference(
                                     PROPERTY_CONTRIBUTION_COUNT,
                                     settingsManager.getPreference(PROPERTY_CONTRIBUTION_COUNT, 0) + 1

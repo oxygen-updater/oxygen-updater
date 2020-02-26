@@ -12,6 +12,7 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.P
 import com.arjanvlek.oxygenupdater.services.UpdateFileChecker
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.google.firebase.analytics.FirebaseAnalytics
+import org.koin.java.KoinJavaComponent.inject
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -19,9 +20,9 @@ import com.google.firebase.analytics.FirebaseAnalytics
  */
 class ContributorUtils(private val context: Context) {
 
-    fun flushSettings(isContributing: Boolean) {
-        val settingsManager = SettingsManager(context)
+    private val settingsManager by inject(SettingsManager::class.java)
 
+    fun flushSettings(isContributing: Boolean) {
         val isFirstTime = !settingsManager.containsPreference(PROPERTY_CONTRIBUTE)
         val wasContributing = settingsManager.getPreference(PROPERTY_CONTRIBUTE, false)
 

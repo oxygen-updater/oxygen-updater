@@ -23,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DeviceInformationFragment : AbstractFragment() {
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val mainViewModel by sharedViewModel<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

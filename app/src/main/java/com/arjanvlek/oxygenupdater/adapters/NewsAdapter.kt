@@ -24,6 +24,7 @@ import com.arjanvlek.oxygenupdater.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import org.joda.time.LocalDateTime
+import org.koin.java.KoinJavaComponent.inject
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
@@ -35,7 +36,7 @@ class NewsAdapter(
     newsItemReadListener: KotlinCallback<Long>
 ) : RecyclerView.Adapter<NewsItemViewHolder>() {
 
-    private val settingsManager: SettingsManager = SettingsManager(context)
+    private val settingsManager by inject(SettingsManager::class.java)
 
     val itemList: List<NewsItem>
         get() = newsItemList

@@ -14,13 +14,14 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.koin.android.ext.android.inject
 
 class NotificationService : FirebaseMessagingService() {
 
+    private val settingsManager by inject<SettingsManager>()
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
-            val settingsManager = SettingsManager(applicationContext)
-
             //  Receive the notification contents but build / show the actual notification with a small random delay to avoid overloading the server.
             val messageContents = remoteMessage.data
             val displayDelayInSeconds = Utils.randomBetween(1, settingsManager.getPreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800))

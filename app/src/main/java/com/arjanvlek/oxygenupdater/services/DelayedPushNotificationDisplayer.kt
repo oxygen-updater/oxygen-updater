@@ -33,6 +33,7 @@ import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.fasterxml.jackson.core.type.TypeReference
+import org.koin.android.ext.android.inject
 import java.io.IOException
 
 /**
@@ -41,12 +42,12 @@ import java.io.IOException
  */
 class DelayedPushNotificationDisplayer : JobService() {
 
+    private val settingsManager by inject<SettingsManager>()
+
     override fun onStartJob(params: JobParameters?): Boolean {
         if (params == null || !params.extras.containsKey(KEY_NOTIFICATION_CONTENTS) || application !is OxygenUpdater) {
             return exit(params, false)
         }
-
-        val settingsManager = SettingsManager(application)
 
         // Get notification contents of FCM.
         val notificationContentsTypeRef: TypeReference<Map<String, String>> = object : TypeReference<Map<String, String>>() {}

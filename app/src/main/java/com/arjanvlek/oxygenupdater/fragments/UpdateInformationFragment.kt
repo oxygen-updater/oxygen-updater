@@ -67,7 +67,7 @@ class UpdateInformationFragment : AbstractFragment() {
     private var isLoadedOnce = false
     private var downloadReceiver: DownloadReceiver? = null
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
+    private val mainViewModel by sharedViewModel<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +79,7 @@ class UpdateInformationFragment : AbstractFragment() {
     }
 
     override fun onStart() = super.onStart().also {
-        if (isAdded && settingsManager!!.checkIfSetupScreenHasBeenCompleted()) {
+        if (isAdded && settingsManager.checkIfSetupScreenHasBeenCompleted()) {
             rootView.setOnRefreshListener { load() }
             rootView.setColorSchemeResources(R.color.colorPrimary)
 
@@ -125,13 +125,13 @@ class UpdateInformationFragment : AbstractFragment() {
 
         Crashlytics.setUserIdentifier(
             "Device: "
-                    + settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                    + settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
                     + ", Update Method: "
-                    + settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+                    + settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
 
-        val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         val online = Utils.checkNetworkConnection(context)
         val systemVersionProperties = application?.systemVersionProperties!!
 
@@ -183,7 +183,7 @@ class UpdateInformationFragment : AbstractFragment() {
             }
 
             // banner is displayed if app version is outdated
-            if (settingsManager!!.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
+            if (settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
                 appUpdateBannerLayout.isVisible = true
                 appUpdateBannerLayout.setOnClickListener { ActivityLauncher(activity!!).openPlayStorePage(context!!) }
                 appUpdateBannerTextView.text = getString(R.string.new_app_version, serverStatus.latestAppVersion)
@@ -249,7 +249,7 @@ class UpdateInformationFragment : AbstractFragment() {
 
         if (online) {
             // Save update data for offline viewing
-            settingsManager?.apply {
+            settingsManager.apply {
                 savePreference(SettingsManager.PROPERTY_OFFLINE_ID, updateData.id)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSizeInMegabytes)
@@ -304,7 +304,7 @@ class UpdateInformationFragment : AbstractFragment() {
         } else {
             getString(
                 R.string.update_information_unknown_update_name,
-                settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
+                settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
             )
         }
 
@@ -312,7 +312,7 @@ class UpdateInformationFragment : AbstractFragment() {
         val differentVersionChangelogNoticeText = if (updateData.otaVersionNumber != application?.systemVersionProperties?.oxygenOSOTAVersion) {
             getString(
                 R.string.update_information_different_version_changelog_notice,
-                settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+                settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
             )
         } else {
             null
@@ -338,13 +338,13 @@ class UpdateInformationFragment : AbstractFragment() {
 
         // Save last time checked if online.
         if (online) {
-            settingsManager!!.savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
+            settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
         }
 
         // Show last time checked.
         systemIsUpToDateDateTextView.text = getString(
             R.string.update_information_last_checked_on,
-            Utils.formatDateTime(context!!, settingsManager!!.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
+            Utils.formatDateTime(context!!, settingsManager.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
         )
     }
 
@@ -363,14 +363,14 @@ class UpdateInformationFragment : AbstractFragment() {
         } else {
             getString(
                 R.string.update_information_unknown_update_name,
-                settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
+                settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
             )
         }
 
         if (updateData.systemIsUpToDate) {
             updateBannerText(getString(R.string.update_information_banner_already_latest))
 
-            val updateMethod = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+            val updateMethod = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
 
             // Format footer based on system version installed.
             footerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)

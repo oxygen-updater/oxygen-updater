@@ -19,6 +19,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import org.koin.java.KoinJavaComponent.inject
 import java.util.*
 import kotlin.math.min
 
@@ -47,7 +48,7 @@ class BottomSheetPreference : Preference {
     var secondaryValue: Any? = null
         private set
 
-    private var settingsManager: SettingsManager? = null
+    private val settingsManager by inject(SettingsManager::class.java)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
         init(context, attrs, defStyleAttr, defStyleRes)
@@ -75,8 +76,6 @@ class BottomSheetPreference : Preference {
      */
     private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
         this.mContext = context
-
-        settingsManager = SettingsManager(context)
 
         readAttrs(attrs, defStyleAttr, defStyleRes)
 
@@ -145,8 +144,8 @@ class BottomSheetPreference : Preference {
 
         dialogItemLayout.setOnClickListener { setValueIndex(index) }
 
-        val currentValue = settingsManager!!.getPreference<Any?>(key, null)
-        val currentSecondaryValue = settingsManager!!.getPreference<Any?>(secondaryKey, null)
+        val currentValue = settingsManager.getPreference<Any?>(key, null)
+        val currentSecondaryValue = settingsManager.getPreference<Any?>(secondaryKey, null)
         val secondaryValue = item.secondaryValue
 
         // value is mandatory, secondary value is optional
@@ -269,10 +268,10 @@ class BottomSheetPreference : Preference {
             value = newValue
             secondaryValue = newSecondaryValue
             valueSet = true
-            settingsManager!!.savePreference(key, newValue)
+            settingsManager.savePreference(key, newValue)
 
             if (newSecondaryValue != null) {
-                settingsManager!!.savePreference(secondaryKey, newSecondaryValue)
+                settingsManager.savePreference(secondaryKey, newSecondaryValue)
             }
 
             if (changed) {
@@ -310,8 +309,8 @@ class BottomSheetPreference : Preference {
     }
 
     override fun onSetInitialValue(defaultValue: Any?) {
-        val newValue = settingsManager!!.getPreference<Any?>(key, null)
-        val newSecondaryValue = settingsManager!!.getPreference<Any?>(secondaryKey, null)
+        val newValue = settingsManager.getPreference<Any?>(key, null)
+        val newSecondaryValue = settingsManager.getPreference<Any?>(secondaryKey, null)
         setValues(newValue, newSecondaryValue)
     }
 

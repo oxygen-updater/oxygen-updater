@@ -66,6 +66,7 @@ import com.downloader.internal.DownloadRequestQueue
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
+import org.koin.android.ext.android.inject
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -123,6 +124,8 @@ class DownloadService : IntentService(TAG) {
     private var previousTimeStamp = NOT_SET
     private var previousNumberOfSecondsRemaining = NOT_SET
 
+    private val settingsManager by inject<SettingsManager>()
+
     /*
 	 * We want to keep this service running, even if the app gets killed.
 	 * Otherwise, the download stops and can no longer be resumed.
@@ -146,8 +149,6 @@ class DownloadService : IntentService(TAG) {
 	 * We auto-restart this service if it gets killed while a download is still in progress.
 	 */
     override fun onDestroy() = super.onDestroy().also {
-        val settingsManager = SettingsManager(applicationContext)
-
         settingsManager.savePreference(SettingsManager.PROPERTY_DOWNLOADER_STATE, state.toString())
 
         if (isRunning()) {
@@ -205,7 +206,6 @@ class DownloadService : IntentService(TAG) {
         updateData = intent.getParcelableExtra(PARAM_UPDATE_DATA)
 
         // Restore saved state
-        val settingsManager = SettingsManager(applicationContext)
         state = DownloadStatus.valueOf(settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOADER_STATE, NOT_DOWNLOADING.toString()))
 
         when (action) {
@@ -367,7 +367,7 @@ class DownloadService : IntentService(TAG) {
                         TAG,
                         UpdateDownloadException(withAppendedStateHistory("Download progress exceeded total file size. Either the server returned incorrect data or the app is in an invalid state!"))
                     )
-                    cancelDownload(SettingsManager(context).getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET.toInt()))
+                    cancelDownload(settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET.toInt()))
                     downloadUpdate(updateData)
                     return@setOnProgressListener
                 }
@@ -380,7 +380,7 @@ class DownloadService : IntentService(TAG) {
                     // logDebug(TAG, "Received download progress update: " + progress.currentBytes + " / " + progress.totalBytes);
 
                     val progressData: DownloadProgressData = calculateDownloadETA(progress.currentBytes, progress.totalBytes)
-                    SettingsManager(context).savePreference(SettingsManager.PROPERTY_DOWNLOAD_PROGRESS, progressData.progress)
+                    settingsManager.savePreference(SettingsManager.PROPERTY_DOWNLOAD_PROGRESS, progressData.progress)
 
                     previousProgressTimeStamp = currentTimestamp
                     progressPercentage = progressData.progress
@@ -407,7 +407,6 @@ class DownloadService : IntentService(TAG) {
                             logDebug(TAG, "Pausing download due to connection error")
                             performStateTransition(DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION)
 
-                            val settingsManager = SettingsManager(context)
                             val downloadId = settingsManager.getPreference(
                                 SettingsManager.PROPERTY_DOWNLOAD_ID,
                                 NOT_SET
@@ -455,7 +454,7 @@ class DownloadService : IntentService(TAG) {
             })
 
         // We persist the download ID so we can access it from anywhere and even after an app restart.
-        SettingsManager(context).savePreference(SettingsManager.PROPERTY_DOWNLOAD_ID, downloadId)
+        settingsManager.savePreference(SettingsManager.PROPERTY_DOWNLOAD_ID, downloadId)
     }
 
     @Synchronized
@@ -567,7 +566,7 @@ class DownloadService : IntentService(TAG) {
             }
             DOWNLOADING -> {
                 // If running, return the previously-stored progress percentage.
-                val storedProgressPercentage = SettingsManager(applicationContext).getPreference(
+                val storedProgressPercentage = settingsManager.getPreference(
                     SettingsManager.PROPERTY_DOWNLOAD_PROGRESS,
                     NO_PROGRESS
                 )
@@ -579,7 +578,7 @@ class DownloadService : IntentService(TAG) {
             }
             DOWNLOAD_PAUSED -> {
                 // If the download is paused, we return its current percentage and allow resuming of it.
-                val storedProgressPercentage = SettingsManager(applicationContext).getPreference(
+                val storedProgressPercentage = settingsManager.getPreference(
                     SettingsManager.PROPERTY_DOWNLOAD_PROGRESS,
                     NO_PROGRESS
                 )
@@ -591,7 +590,7 @@ class DownloadService : IntentService(TAG) {
             }
             DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION -> {
                 // If the download is paused, we return its current percentage and allow resuming of it.
-                val storedProgressPercentage = SettingsManager(applicationContext).getPreference(
+                val storedProgressPercentage = settingsManager.getPreference(
                     SettingsManager.PROPERTY_DOWNLOAD_PROGRESS,
                     NO_PROGRESS
                 )
@@ -799,7 +798,7 @@ class DownloadService : IntentService(TAG) {
         verifier = null
         autoResumeOnConnectionErrorRunnable = null
 
-        SettingsManager(applicationContext).apply {
+        settingsManager.apply {
             deletePreference(SettingsManager.PROPERTY_DOWNLOAD_PROGRESS)
             deletePreference(SettingsManager.PROPERTY_DOWNLOAD_ID)
             deletePreference(SettingsManager.PROPERTY_DOWNLOADER_STATE)
@@ -862,7 +861,7 @@ class DownloadService : IntentService(TAG) {
 
             state = newState
 
-            SettingsManager(applicationContext).savePreference(SettingsManager.PROPERTY_DOWNLOADER_STATE, state.toString())
+            settingsManager.savePreference(SettingsManager.PROPERTY_DOWNLOADER_STATE, state.toString())
         }
     }
 
@@ -902,13 +901,13 @@ class DownloadService : IntentService(TAG) {
      * 2019-01-01 00:00:00.000|DOWNLOADING -> PAUSED,2019-01-01 00:00:01.000|PAUSED -> DOWNLOAD_QUEUED
      */
     private fun serializeExecutedStateTransitions() = executedStateTransitions.joinToString(",") { "${it.first}|${it.second}" }.let {
-        SettingsManager(applicationContext).savePreference(SettingsManager.PROPERTY_DOWNLOADER_STATE_HISTORY, it)
+        settingsManager.savePreference(SettingsManager.PROPERTY_DOWNLOADER_STATE_HISTORY, it)
     }
 
     /**
      * Convert saved history from SharedPreferences back to format storable in this class.
      */
-    private fun deserializeExecutedStateTransitions() = SettingsManager(applicationContext).getPreference(
+    private fun deserializeExecutedStateTransitions() = settingsManager.getPreference(
         SettingsManager.PROPERTY_DOWNLOADER_STATE_HISTORY,
         ""
     ).let { serializedStateHistory ->
@@ -1019,7 +1018,7 @@ class DownloadService : IntentService(TAG) {
             // We want to make sure the new operation can always be processed, even if the service is kept running in a thread loop.
             isOperationPending.set(true)
 
-            val settingsManager = SettingsManager(activity)
+            val settingsManager = SettingsManager()
             val downloadId = settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_ID, NOT_SET.toInt())
 
             val downloadIntent = Intent(activity, DownloadService::class.java)

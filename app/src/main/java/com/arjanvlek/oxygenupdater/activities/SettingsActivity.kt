@@ -33,16 +33,18 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.SetupUtils
 import org.joda.time.LocalDateTime
+import org.koin.android.ext.android.inject
 
 /**
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
-    private lateinit var settingsManager: SettingsManager
     private lateinit var settingsFragment: SettingsFragment
     private var iabHelper: IabHelper? = null
     private var price: String? = ""
+
+    private val settingsManager by inject<SettingsManager>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +60,6 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
                 .replace(R.id.settings_container, it, "Settings")
                 .commitNow()
         }
-
-        settingsManager = SettingsManager(applicationContext)
 
         IabHelper(this, PK1.A + "/" + PK2.B).apply {
             iabHelper = this
@@ -285,37 +285,38 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             iabHelper!!.launchPurchaseFlow(this,
                 SKU_AD_FREE,
                 IAB_REQUEST_CODE, { result: IabResult, purchase: Purchase? ->
-                logDebug(TAG, "IAB: Purchase dialog closed. Result: " + result.toString() + if (purchase != null) ", purchase: $purchase" else "")
+                    logDebug(TAG, "IAB: Purchase dialog closed. Result: " + result.toString() + if (purchase != null) ", purchase: $purchase" else "")
 
-                // If the purchase failed, but the user did not cancel it, notify the user and log an error. Otherwise, do nothing.
-                if (result.isFailure) {
-                    if (result.response != IabHelper.IABHELPER_USER_CANCELLED) {
-                        logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow", result)
-                        Toast.makeText(this, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
-                    } else {
-                        logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
-                        settingsFragment.setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, price)
-                    }
-
-                    return@launchPurchaseFlow
-                }
-
-                // if the result is successful and contains purchase data, verify the purchase details on the server and grant the ad-free package to the user.
-                if (result.success && purchase != null) {
-                    if (purchase.sku == SKU_AD_FREE) {
-                        validateAdFreePurchase(purchase) { valid: Boolean ->
-                            if (valid) {
-                                settingsFragment.setupBuyAdFreePreference(PurchaseStatus.ALREADY_BOUGHT)
-                                settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
-                            } else {
-                                settingsFragment.setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, price)
-                            }
+                    // If the purchase failed, but the user did not cancel it, notify the user and log an error. Otherwise, do nothing.
+                    if (result.isFailure) {
+                        if (result.response != IabHelper.IABHELPER_USER_CANCELLED) {
+                            logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow", result)
+                            Toast.makeText(this, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
+                        } else {
+                            logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
+                            settingsFragment.setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, price)
                         }
-                    } else {
-                        logIABError("Another product than expected was bought. ($purchase)", result)
+
+                        return@launchPurchaseFlow
                     }
-                }
-            }, developerPayload)
+
+                    // if the result is successful and contains purchase data, verify the purchase details on the server and grant the ad-free package to the user.
+                    if (result.success && purchase != null) {
+                        if (purchase.sku == SKU_AD_FREE) {
+                            validateAdFreePurchase(purchase) { valid: Boolean ->
+                                if (valid) {
+                                    settingsFragment.setupBuyAdFreePreference(PurchaseStatus.ALREADY_BOUGHT)
+                                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
+                                } else {
+                                    settingsFragment.setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, price)
+                                }
+                            }
+                        } else {
+                            logIABError("Another product than expected was bought. ($purchase)", result)
+                        }
+                    }
+                }, developerPayload
+            )
         } catch (e: IabAsyncInProgressException) {
             // If the purchase window can't be opened because an operation is in progress, try opening it again in a second (repeated until it can be opened).
             Handler().postDelayed({ doPurchaseAdFree() }, 1000)

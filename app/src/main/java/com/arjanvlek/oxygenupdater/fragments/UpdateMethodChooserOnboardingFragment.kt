@@ -42,8 +42,8 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
                 fetchData()
             }
         } else {
-            if (settingsManager!!.containsPreference(SettingsManager.PROPERTY_DEVICE_ID)) {
-                application?.serverConnector!!.getUpdateMethods(settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, 1L)) {
+            if (settingsManager.containsPreference(SettingsManager.PROPERTY_DEVICE_ID)) {
+                application?.serverConnector!!.getUpdateMethods(settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, 1L)) {
                     setupRecyclerView(it)
                 }
             }
@@ -54,7 +54,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
     override fun setupRecyclerView(data: List<SelectableModel>, initialSelectedIndex: Int, onItemSelectedListener: KotlinCallback<SelectableModel>) {
         val data = data as List<UpdateMethod>
 
-        val updateMethodId = settingsManager!!.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         val recommendedPositions = ArrayList<Int>()
         data.mapIndexedTo(recommendedPositions) { index, updateMethod -> if (updateMethod.recommended) index else -1 }
@@ -67,7 +67,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
         }
 
         super.setupRecyclerView(data, initialSelectedIndex) {
-            settingsManager?.apply {
+            settingsManager.apply {
                 savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, it.id)
                 savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, it.name)
 

@@ -1,11 +1,13 @@
 package com.arjanvlek.oxygenupdater.internal.settings
 
-import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
-import androidx.preference.PreferenceManager
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
+import org.koin.java.KoinJavaComponent.inject
 
-class SettingsManager(context: Context?) {
+class SettingsManager {
+
+    private val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
 
     @Suppress("UNCHECKED_CAST")
     @Synchronized
@@ -100,13 +102,6 @@ class SettingsManager(context: Context?) {
                 && containsPreference(PROPERTY_OFFLINE_FILE_NAME)
     } catch (ignored: Exception) {
         false
-    }
-
-    // Helper methods
-    private val sharedPreferences = if (context == null) {
-        null
-    } else {
-        PreferenceManager.getDefaultSharedPreferences(context)
     }
 
     companion object {

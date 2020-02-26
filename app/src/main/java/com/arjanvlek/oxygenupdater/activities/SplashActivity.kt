@@ -15,16 +15,17 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
+import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var settingsManager: SettingsManager
     private lateinit var activityLauncher: ActivityLauncher
+
+    private val settingsManager by inject<SettingsManager>()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        settingsManager = SettingsManager(this)
         activityLauncher = ActivityLauncher(this)
 
         // Support functions for Android 8.0 "Oreo" and up.

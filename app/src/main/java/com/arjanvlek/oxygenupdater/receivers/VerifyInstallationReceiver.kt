@@ -28,13 +28,14 @@ import com.arjanvlek.oxygenupdater.services.RootInstallLogger.Companion.DATA_FAI
 import com.arjanvlek.oxygenupdater.services.RootInstallLogger.Companion.DATA_STATUS
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Utils
+import org.koin.java.KoinJavaComponent.inject
 
 class VerifyInstallationReceiver : BroadcastReceiver() {
 
+    private val settingsManager by inject(SettingsManager::class.java)
+
     override fun onReceive(context: Context, intent: Intent) {
         try {
-            val settingsManager = SettingsManager(context)
-
             if (settingsManager.getPreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
                 && intent.action != null && (intent.action == "android.intent.action.BOOT_COMPLETED")
             ) {
@@ -113,7 +114,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         startOs: String,
         destinationOs: String,
         currentOs: String
-    ) = buildLogData(context, startOs, destinationOs, currentOs).let {
+    ) = buildLogData(startOs, destinationOs, currentOs).let {
         it.putString(DATA_STATUS, InstallationStatus.FINISHED.toString())
 
         scheduleLogUploadTask(context, it)
@@ -125,15 +126,15 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         destinationOs: String,
         currentOs: String,
         reason: String
-    ) = buildLogData(context, startOs, destinationOs, currentOs).let {
+    ) = buildLogData(startOs, destinationOs, currentOs).let {
         it.putString(DATA_STATUS, InstallationStatus.FAILED.toString())
         it.putString(DATA_FAILURE_REASON, reason)
 
         scheduleLogUploadTask(context, it)
     }
 
-    private fun buildLogData(context: Context, startOs: String, destinationOs: String, currentOs: String) = persistableBundleOf(
-        RootInstallLogger.DATA_INSTALL_ID to SettingsManager(context).getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
+    private fun buildLogData(startOs: String, destinationOs: String, currentOs: String) = persistableBundleOf(
+        RootInstallLogger.DATA_INSTALL_ID to settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
         RootInstallLogger.DATA_START_OS to startOs,
         RootInstallLogger.DATA_DESTINATION_OS to destinationOs,
         RootInstallLogger.DATA_CURR_OS to currentOs

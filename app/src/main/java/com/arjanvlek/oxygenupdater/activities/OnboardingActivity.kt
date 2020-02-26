@@ -37,17 +37,18 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import kotlinx.android.synthetic.main.fragment_onboarding_complete.*
+import org.koin.android.ext.android.inject
 import kotlin.math.abs
 
 class OnboardingActivity : AppCompatActivity() {
-
-    private lateinit var settingsManager: SettingsManager
     private lateinit var activityLauncher: ActivityLauncher
 
     private var deviceChooserOnboardingFragment: ChooserOnboardingFragment? = null
     private var updateMethodChooserOnboardingFragment: ChooserOnboardingFragment? = null
 
     private var permissionCallback: KotlinCallback<Boolean>? = null
+
+    private val settingsManager by inject<SettingsManager>()
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -63,7 +64,6 @@ class OnboardingActivity : AppCompatActivity() {
 
         enableEdgeToEdgeUiSupport()
 
-        settingsManager = SettingsManager(this)
         activityLauncher = ActivityLauncher(this)
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {

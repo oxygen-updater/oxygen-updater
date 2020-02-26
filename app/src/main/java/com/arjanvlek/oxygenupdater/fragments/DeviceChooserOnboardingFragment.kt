@@ -25,13 +25,13 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
         val data = data as List<Device>
 
         val systemVersionProperties = application?.systemVersionProperties!!
-        val deviceId = settingsManager!!.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
 
         val recommendedIndex = data.indexOfFirst { it.productNames.contains(systemVersionProperties.oxygenDeviceName) }
         val initialSelectedIndex = if (deviceId != -1L) data.indexOfFirst { it.id == deviceId } else recommendedIndex
 
         super.setupRecyclerView(data, initialSelectedIndex) label@{
-            settingsManager?.apply {
+            settingsManager.apply {
                 savePreference(SettingsManager.PROPERTY_DEVICE_ID, it.id)
                 savePreference(SettingsManager.PROPERTY_DEVICE, it.name)
             }

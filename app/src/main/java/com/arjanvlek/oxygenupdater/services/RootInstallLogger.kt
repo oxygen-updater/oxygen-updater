@@ -12,8 +12,11 @@ import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
+import org.koin.android.ext.android.inject
 
 class RootInstallLogger : JobService() {
+
+    private val settingsManager by inject<SettingsManager>()
 
     override fun onStartJob(params: JobParameters?): Boolean {
         if (params == null || application !is OxygenUpdater) {
@@ -23,7 +26,6 @@ class RootInstallLogger : JobService() {
 
         val applicationData = application as OxygenUpdater
         val serverConnector = applicationData.serverConnector
-        val settingsManager = SettingsManager(applicationData)
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 

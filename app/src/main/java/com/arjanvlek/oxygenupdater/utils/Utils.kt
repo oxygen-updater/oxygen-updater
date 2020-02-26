@@ -26,6 +26,7 @@ import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import org.joda.time.LocalDateTime
+import org.koin.java.KoinJavaComponent.inject
 import java.util.*
 
 @Suppress("unused")
@@ -33,6 +34,8 @@ object Utils {
 
     private const val TAG = "Utils"
     private val random = Random()
+
+    private val settingsManager by inject(SettingsManager::class.java)
 
     /**
      * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later versions
@@ -66,7 +69,6 @@ object Utils {
      * @param callback the callback that receives the result: false if user has purchased ad-free, true otherwise
      */
     fun checkAdSupportStatus(activity: Activity, callback: KotlinCallback<Boolean>) {
-        val settingsManager = SettingsManager(activity)
         val helper = IabHelper(activity, PK1.A + "/" + PK2.B)
 
         helper.startSetup { setupResult ->

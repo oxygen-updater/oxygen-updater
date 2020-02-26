@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.InstallActivity
@@ -23,14 +24,20 @@ import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import kotlinx.android.synthetic.main.fragment_install_guide.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class InstallGuideFragment : Fragment() {
+
+    private val settingsManager by inject<SettingsManager>()
+    private val installViewModel by sharedViewModel<InstallViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val installGuideView = inflater.inflate(R.layout.fragment_install_guide, container, false)
@@ -43,28 +50,23 @@ class InstallGuideFragment : Fragment() {
             isFirstPage = it.getBoolean(ARG_IS_FIRST_PAGE, false)
         }
 
-        val settingsManager = SettingsManager(context)
-
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         val cache = if (activity is InstallActivity) {
             (activity as InstallActivity?)!!.installGuideCache
         } else {
-            logWarning(TAG,
+            logWarning(
+                TAG,
                 OxygenUpdaterException("getActivity() returned null or was not an instance of InstallActivity (onCreateView, getInstallGuideCache)")
             )
             SparseArray()
         }
 
         if (cache[pageNumber] == null) {
-            activity?.application?.let { application ->
-                if (application is OxygenUpdater) {
-                    application.serverConnector!!.getInstallGuidePage(deviceId, updateMethodId, pageNumber) { page ->
-                        cache.put(pageNumber, page)
-                        displayInstallGuide(page, pageNumber, isFirstPage)
-                    }
-                }
-            }
+            installViewModel.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber).observe(viewLifecycleOwner, Observer { page ->
+                cache.put(pageNumber, page)
+                displayInstallGuide(page, pageNumber, isFirstPage)
+            })
         } else {
             displayInstallGuide(cache[pageNumber], pageNumber, isFirstPage)
         }
@@ -120,10 +122,12 @@ class InstallGuideFragment : Fragment() {
 
         val titleResourceId = resources.getIdentifier(
             RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TITLE,
-            RESOURCE_ID_PACKAGE_STRING, activity!!.packageName)
+            RESOURCE_ID_PACKAGE_STRING, activity!!.packageName
+        )
         val contentsResourceId = resources.getIdentifier(
             RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TEXT,
-            RESOURCE_ID_PACKAGE_STRING, activity!!.packageName)
+            RESOURCE_ID_PACKAGE_STRING, activity!!.packageName
+        )
 
         installGuideTitle.setText(titleResourceId)
         installGuideText.setText(contentsResourceId)
@@ -183,7 +187,8 @@ class InstallGuideFragment : Fragment() {
 
         val imageResourceId = resources.getIdentifier(
             RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_IMAGE,
-            RESOURCE_ID_PACKAGE_DRAWABLE, activity!!.packageName)
+            RESOURCE_ID_PACKAGE_DRAWABLE, activity!!.packageName
+        )
         val image = ResourcesCompat.getDrawable(resources, imageResourceId, null)
 
         view.apply {

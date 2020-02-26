@@ -1,7 +1,6 @@
 package com.arjanvlek.oxygenupdater.internal.server
 
 import android.os.AsyncTask
-import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.enums.PurchaseType
 import com.arjanvlek.oxygenupdater.enums.ServerRequest
@@ -12,7 +11,6 @@ import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
-import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.ServerStatus
@@ -117,16 +115,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
         CollectionResponseExecutor(ServerRequest.ALL_UPDATE_METHODS, callback).execute()
     }
 
-    fun getInstallGuidePage(deviceId: Long, updateMethodId: Long, pageNumber: Int, callback: KotlinCallback<InstallGuidePage>?) {
-        ObjectResponseExecutor(
-            ServerRequest.INSTALL_GUIDE_PAGE,
-            callback,
-            deviceId,
-            updateMethodId,
-            pageNumber
-        ).execute()
-    }
-
     fun submitUpdateFile(filename: String, callback: KotlinCallback<ServerPostResult?>) {
         val postBody = JSONObject()
         try {
@@ -181,48 +169,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
             return
         }
         ObjectResponseExecutor(ServerRequest.VERIFY_PURCHASE, purchaseData, callback).execute()
-    }
-
-    fun getServerStatus(online: Boolean, callback: KotlinCallback<ServerStatus>) {
-        if (serverStatus == null) {
-            ObjectResponseExecutor<ServerStatus?>(
-                ServerRequest.SERVER_STATUS,
-                { serverStatus ->
-                    var automaticInstallationEnabled = false
-                    var pushNotificationsDelaySeconds = 1800
-
-                    if (settingsManager != null) {
-                        automaticInstallationEnabled = settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false)
-                        pushNotificationsDelaySeconds = settingsManager.getPreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800)
-                    }
-
-                    if (serverStatus == null && online) {
-                        this.serverStatus = ServerStatus(
-                            ServerStatus.Status.UNREACHABLE,
-                            BuildConfig.VERSION_NAME,
-                            automaticInstallationEnabled,
-                            pushNotificationsDelaySeconds
-                        )
-                    } else {
-                        this.serverStatus = serverStatus ?: ServerStatus(
-                            ServerStatus.Status.NORMAL,
-                            BuildConfig.VERSION_NAME,
-                            automaticInstallationEnabled,
-                            pushNotificationsDelaySeconds
-                        )
-                    }
-
-                    if (settingsManager != null) {
-                        settingsManager.savePreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, this.serverStatus!!.automaticInstallationEnabled)
-                        settingsManager.savePreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, this.serverStatus!!.pushNotificationDelaySeconds)
-                    }
-
-                    callback.invoke(this.serverStatus!!)
-                }
-            ).execute()
-        } else {
-            callback.invoke(serverStatus!!)
-        }
     }
 
     private fun <T> findMultipleFromServerResponse(

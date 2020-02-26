@@ -7,6 +7,7 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.P
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.google.firebase.messaging.FirebaseMessaging
+import org.koin.java.KoinJavaComponent.inject
 
 object NotificationTopicSubscriber {
 
@@ -14,8 +15,9 @@ object NotificationTopicSubscriber {
     private const val DEVICE_TOPIC_PREFIX = "device_"
     private const val UPDATE_METHOD_TOPIC_PREFIX = "_update-method_"
 
+    private val settingsManager by inject(SettingsManager::class.java)
+
     fun subscribe(data: OxygenUpdater) {
-        val settingsManager = SettingsManager(data.applicationContext)
         val serverConnector = data.serverConnector
 
         val oldTopic = settingsManager.getPreference<String?>(PROPERTY_NOTIFICATION_TOPIC, null)

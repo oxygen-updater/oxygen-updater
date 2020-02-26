@@ -49,28 +49,27 @@ import kotlinx.android.synthetic.main.activity_main.appBar
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import org.joda.time.LocalDateTime
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var viewPager: ViewPager
-    private lateinit var settingsManager: SettingsManager
     private lateinit var activityLauncher: ActivityLauncher
 
     private var newsAd: InterstitialAd? = null
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
     private var adView: AdView? = null
 
-    private val mainViewModel: MainViewModel by viewModel()
+    private val settingsManager by inject<SettingsManager>()
+    private val mainViewModel by viewModel<MainViewModel>()
 
     var deviceOsSpec: DeviceOsSpec? = null
         private set
 
     public override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_main)
-
-        settingsManager = SettingsManager(this)
 
         val application = application as OxygenUpdater
 

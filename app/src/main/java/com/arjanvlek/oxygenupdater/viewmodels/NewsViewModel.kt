@@ -24,7 +24,7 @@ class NewsViewModel(
     private val _markNewsItemReadResult = MutableLiveData<ServerPostResult>()
 
     fun fetchNewsItem(context: Context, newsItemId: Long): LiveData<NewsItem> = viewModelScope.launch(Dispatchers.IO) {
-        _newsItem.postValue(serverRepository.getNewsItem(context, newsItemId))
+        _newsItem.postValue(serverRepository.fetchNewsItem(context, newsItemId))
     }.let { _newsItem }
 
     fun markNewsItemRead(newsItemId: Long): LiveData<ServerPostResult> = viewModelScope.launch(Dispatchers.IO) {

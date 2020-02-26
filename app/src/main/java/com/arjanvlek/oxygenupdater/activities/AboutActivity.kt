@@ -15,10 +15,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutActivity : SupportActionBarActivity() {
 
-    private val aboutViewModel: AboutViewModel by viewModel()
+    private val aboutViewModel by viewModel<AboutViewModel>()
 
-    public override fun onCreate(savedInstanceSate: Bundle?) {
-        super.onCreate(savedInstanceSate)
+    public override fun onCreate(savedInstanceSate: Bundle?) = super.onCreate(savedInstanceSate).also {
         setContentView(R.layout.activity_about)
 
         val activityLauncher = ActivityLauncher(this)
@@ -44,14 +43,14 @@ class AboutActivity : SupportActionBarActivity() {
         })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Respond to the action bar's Up/Home button
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
+    /**
+     * Respond to the action bar's Up/Home button
+     */
+    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
+        finish()
+        true
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     private fun updateBannerText(latestAppVersion: String) {

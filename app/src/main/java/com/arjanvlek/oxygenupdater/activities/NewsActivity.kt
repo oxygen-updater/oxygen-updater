@@ -31,7 +31,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsActivity : SupportActionBarActivity() {
 
-    private val newsViewModel: NewsViewModel by viewModel()
+    private val newsViewModel by viewModel<NewsViewModel>()
 
     @SuppressLint("SetJavaScriptEnabled") // JS is required to load videos and other dynamic content.
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
