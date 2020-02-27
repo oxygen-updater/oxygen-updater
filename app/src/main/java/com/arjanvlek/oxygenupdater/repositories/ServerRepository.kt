@@ -170,7 +170,7 @@ class ServerRepository constructor(
                 databaseHelper.saveNewsItems(it)
             }
 
-            databaseHelper.allNewsItems.also { databaseHelper.close() }
+            databaseHelper.allNewsItems
         }
     }
 
@@ -185,7 +185,7 @@ class ServerRepository constructor(
                 databaseHelper.saveNewsItem(newsItem)
             }
 
-            databaseHelper.getNewsItem(newsItemId).also { databaseHelper.close() }
+            databaseHelper.getNewsItem(newsItemId)
         }
     }
 

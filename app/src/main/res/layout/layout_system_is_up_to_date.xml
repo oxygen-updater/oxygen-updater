@@ -1,95 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/systemIsUpToDateLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:showIn="@layout/fragment_update_information">
+	android:fadingEdge="vertical"
+	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fillViewport="true"
+	android:requiresFadingEdge="vertical">
 
-	<TextView
-		android:id="@+id/systemIsUpToDateHeader"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_default"
-		android:layout_marginTop="@dimen/spacing_default"
-		android:layout_marginEnd="@dimen/spacing_default"
-		android:layout_marginBottom="@dimen/spacing_half"
-		android:text="@string/update_information_system_is_up_to_date"
-		android:textSize="@dimen/typography_headline"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
-
-	<TextView
-		android:id="@+id/systemIsUpToDateVersionTextView"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_default"
-		android:layout_marginEnd="@dimen/spacing_default"
-		android:textColor="?android:textColorSecondary"
-		android:textIsSelectable="true"
-		android:textSize="@dimen/typography_title"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateHeader"
-		tools:text="@string/update_information_oxygen_os_version" />
-
-	<TextView
-		android:id="@+id/systemIsUpToDateDateTextView"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_horizontal"
-		android:layout_marginStart="@dimen/spacing_default"
-		android:layout_marginEnd="@dimen/spacing_default"
-		android:textColor="?android:textColorSecondary"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateVersionTextView"
-		tools:text="@string/update_information_last_checked_on" />
-
-	<ImageView
-		android:id="@+id/systemIsUpToDateImage"
-		android:layout_width="@dimen/size_collapsing_toolbar"
-		android:layout_height="@dimen/size_collapsing_toolbar"
-		android:layout_margin="@dimen/spacing_default"
-		android:contentDescription="@string/icon"
-		android:src="@drawable/done_outline"
-		android:tint="@color/colorPositive"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateDateTextView"
-		app:layout_constraintTop_toTopOf="parent" />
-
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/systemIsUpToDateStatisticsButton"
-		style="@style/Widget.MaterialComponents.Button.TextButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_default"
-		android:layout_marginEnd="@dimen/spacing_default"
-		android:clickable="false"
-		android:text="@string/update_information_no_update_data_available"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateImage" />
-
-	<TextView
-		android:id="@+id/systemIsUpToDateChangelogView"
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:background="@drawable/rounded_overlay_top"
-		android:drawableEnd="@drawable/expand"
-		android:fontFamily="@font/google_sans_medium"
-		android:foreground="?selectableItemBackground"
-		android:gravity="center_vertical"
-		android:padding="@dimen/spacing_default"
-		android:stateListAnimator="@animator/clicked"
-		android:text="@string/update_information_view_update_information"
-		android:textColor="?colorPrimary"
-		android:textSize="@dimen/typography_subheading"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+		android:layout_height="match_parent"
+		tools:showIn="@layout/fragment_update_information">
+
+		<TextView
+			android:id="@+id/systemIsUpToDateHeader"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:layout_marginBottom="@dimen/spacing_half"
+			android:text="@string/update_information_system_is_up_to_date"
+			android:textSize="@dimen/typography_headline"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/systemIsUpToDateVersionTextView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:textColor="?android:textColorSecondary"
+			android:textIsSelectable="true"
+			android:textSize="@dimen/typography_title"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateHeader"
+			tools:text="@string/update_information_oxygen_os_version" />
+
+		<TextView
+			android:id="@+id/systemIsUpToDateDateTextView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:textColor="?android:textColorSecondary"
+			app:layout_constraintBottom_toTopOf="@id/systemIsUpToDateImage"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateVersionTextView"
+			app:layout_constraintVertical_chainStyle="spread_inside"
+			tools:text="@string/update_information_last_checked_on" />
+
+		<ImageView
+			android:id="@+id/systemIsUpToDateImage"
+			android:layout_width="@dimen/size_collapsing_toolbar"
+			android:layout_height="@dimen/size_collapsing_toolbar"
+			android:layout_margin="@dimen/spacing_default"
+			android:contentDescription="@string/icon"
+			android:src="@drawable/done_outline"
+			android:tint="@color/colorPositive"
+			app:layout_constraintBottom_toTopOf="@id/systemIsUpToDateChangelogView"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateDateTextView" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/systemIsUpToDateStatisticsButton"
+			style="@style/Widget.MaterialComponents.Button.TextButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:clickable="false"
+			android:text="@string/update_information_no_update_data_available"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateImage" />
+
+		<TextView
+			android:id="@+id/systemIsUpToDateChangelogView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/rounded_overlay_top"
+			android:drawableEnd="@drawable/expand"
+			android:fontFamily="@font/google_sans_medium"
+			android:foreground="?selectableItemBackground"
+			android:gravity="center_vertical"
+			android:padding="@dimen/spacing_default"
+			android:stateListAnimator="@animator/clicked"
+			android:text="@string/update_information_view_update_information"
+			android:textColor="?colorPrimary"
+			android:textSize="@dimen/typography_subheading"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateImage" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

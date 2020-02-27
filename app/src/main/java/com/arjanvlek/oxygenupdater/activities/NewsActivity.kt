@@ -217,10 +217,7 @@ class NewsActivity : SupportActionBarActivity() {
             }
 
             // Mark the item as read on the device.
-            newsDatabaseHelper.apply {
-                markNewsItemRead(newsItem)
-                close()
-            }
+            newsDatabaseHelper.markNewsItemRead(newsItem)
 
             NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
 
