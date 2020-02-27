@@ -10,11 +10,11 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.res.TypedArrayUtils
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.preference.Preference
 import com.arjanvlek.oxygenupdater.R
+import com.arjanvlek.oxygenupdater.extensions.getString
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -171,7 +171,7 @@ class BottomSheetPreference : Preference {
     private fun readAttrs(attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
         val a = mContext.obtainStyledAttributes(attrs, R.styleable.BottomSheetPreference, defStyleAttr, defStyleRes)
 
-        title = TypedArrayUtils.getString(a, R.styleable.BottomSheetPreference_title, R.styleable.BottomSheetPreference_android_title)
+        title = a.getString(R.styleable.BottomSheetPreference_title, R.styleable.BottomSheetPreference_android_title)
         caption = a.getString(R.styleable.BottomSheetPreference_caption)
         secondaryKey = a.getString(R.styleable.BottomSheetPreference_secondaryKey)
 

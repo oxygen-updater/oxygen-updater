@@ -2,7 +2,6 @@ package com.arjanvlek.oxygenupdater.fragments
 
 import androidx.fragment.app.Fragment
 import com.arjanvlek.oxygenupdater.OxygenUpdater
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import org.koin.android.ext.android.inject
@@ -27,13 +26,4 @@ abstract class AbstractFragment : Fragment() {
         private set
 
     val settingsManager by inject<SettingsManager>()
-
-    val serverConnector: ServerConnector?
-        get() {
-            if (application == null && activity != null) {
-                application = activity!!.application as OxygenUpdater
-            }
-
-            return application?.serverConnector ?: ServerConnector(settingsManager)
-        }
 }

@@ -9,6 +9,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.app.NavUtils
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commitNow
+import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.enums.PurchaseStatus
@@ -32,8 +34,10 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.SetupUtils
+import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
 import org.joda.time.LocalDateTime
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -45,6 +49,7 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
     private var price: String? = ""
 
     private val settingsManager by inject<SettingsManager>()
+    private val settingsViewModel by viewModel<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +60,10 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             settingsFragment = it
             it.setInAppPurchaseDelegate(this)
 
-            supportFragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.settings_container, it, "Settings")
-                .commitNow()
+            supportFragmentManager.commitNow {
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                replace(R.id.settings_container, it, "Settings")
+            }
         }
 
         IabHelper(this, PK1.A + "/" + PK2.B).apply {
@@ -221,7 +226,11 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             callback.invoke(false)
         }
 
-        application?.serverConnector?.verifyPurchase(purchase, price, PurchaseType.AD_FREE) { validationResult: ServerPostResult? ->
+        settingsViewModel.verifyPurchase(
+            purchase,
+            price,
+            PurchaseType.AD_FREE
+        ).observe(this, Observer { validationResult: ServerPostResult? ->
             when {
                 validationResult == null -> {
                     // server can't be reached. Keep trying until it can be reached...
@@ -239,7 +248,7 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
                     callback.invoke(false)
                 }
             }
-        }
+        })
     }
 
     override fun performInAppPurchase() {
@@ -282,7 +291,8 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
                     + LocalDateTime.now().toString("yyyy-MM-dd HH:mm:ss"))
 
             // Open the purchase window.
-            iabHelper!!.launchPurchaseFlow(this,
+            iabHelper!!.launchPurchaseFlow(
+                this,
                 SKU_AD_FREE,
                 IAB_REQUEST_CODE, { result: IabResult, purchase: Purchase? ->
                     logDebug(TAG, "IAB: Purchase dialog closed. Result: " + result.toString() + if (purchase != null) ", purchase: $purchase" else "")

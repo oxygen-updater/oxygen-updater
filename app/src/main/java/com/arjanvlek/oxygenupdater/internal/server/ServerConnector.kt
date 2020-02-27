@@ -19,7 +19,6 @@ import com.arjanvlek.oxygenupdater.utils.ExceptionUtils.isNetworkError
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
-import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
 import com.fasterxml.jackson.core.JsonProcessingException
 import org.joda.time.LocalDateTime
 import org.json.JSONException
@@ -93,22 +92,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
                 filter.filter
             ).execute()
         }
-    }
-
-    fun getUpdateMethods(deviceId: Long, callback: KotlinCallback<List<UpdateMethod>>) {
-        CollectionResponseExecutor<UpdateMethod>(
-            ServerRequest.UPDATE_METHODS,
-            { updateMethods ->
-                RootAccessChecker.checkRootAccess { hasRootAccess ->
-                    if (hasRootAccess) {
-                        callback.invoke(updateMethods.filter { it.supportsRootedDevice }.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") })
-                    } else {
-                        callback.invoke(updateMethods.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") })
-                    }
-                }
-            },
-            deviceId
-        ).execute()
     }
 
     fun getAllUpdateMethods(callback: KotlinCallback<List<UpdateMethod>>) {

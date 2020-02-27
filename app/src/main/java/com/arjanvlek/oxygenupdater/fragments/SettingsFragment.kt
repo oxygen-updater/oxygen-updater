@@ -3,11 +3,13 @@ package com.arjanvlek.oxygenupdater.fragments
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
@@ -23,12 +25,13 @@ import com.arjanvlek.oxygenupdater.internal.settings.BottomSheetPreference
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.Device
-import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber.subscribe
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
+import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
 import com.crashlytics.android.Crashlytics
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 /**
@@ -46,6 +49,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private lateinit var delegate: InAppPurchaseDelegate
 
     private val settingsManager by inject<SettingsManager>()
+    private val settingsViewModel by sharedViewModel<SettingsViewModel>()
 
     fun setInAppPurchaseDelegate(delegate: InAppPurchaseDelegate) {
         this.delegate = delegate
@@ -55,7 +59,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         init()
 
         addPreferencesFromResource(R.xml.preferences)
+    }
 
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) = super.onViewCreated(view, savedInstanceState).also {
         setupSupportPreferences()
         setupDevicePreferences()
         setupThemePreference()
@@ -105,7 +114,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         devicePreference.isEnabled = false
         updateMethodPreference.isEnabled = false
 
-        application.serverConnector!!.getDevices(DeviceRequestFilter.ENABLED, true) { populateDeviceSettings(it) }
+        settingsViewModel.fetchEnabledDevices().observe(viewLifecycleOwner, Observer {
+            populateDeviceSettings(it)
+        })
     }
 
     private fun setupThemePreference() {
@@ -208,8 +219,16 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 devicePreference.setValueIndex(recommendedPosition)
             }
 
+            // re-use the same observer to avoid duplicated callbacks
+            val observer = Observer<List<UpdateMethod>> {
+                populateUpdateMethods(it)
+            }
+
             // Retrieve update methods for the selected device
-            application.serverConnector!!.getUpdateMethods(deviceId) { populateUpdateMethods(it) }
+            settingsViewModel.fetchUpdateMethodsForDevice(deviceId).observe(
+                viewLifecycleOwner,
+                observer
+            )
 
             // listen for preference change so that we can save the corresponding device ID,
             // and populate update methods
@@ -218,7 +237,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 updateMethodPreference.isEnabled = false
 
                 // Retrieve update methods for the selected device
-                application.serverConnector!!.getUpdateMethods(deviceMap[value.toString()]!!) { populateUpdateMethods(it) }
+                settingsViewModel.fetchUpdateMethodsForDevice(deviceMap[value.toString()]!!).observe(
+                    viewLifecycleOwner,
+                    observer
+                )
                 true
             }
         } else {
