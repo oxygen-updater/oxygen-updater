@@ -7,7 +7,7 @@ import java.net.UnknownHostException
 import javax.net.ssl.SSLException
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 object ExceptionUtils {

@@ -5,7 +5,7 @@ import androidx.test.runner.AndroidJUnit4
 import org.junit.runner.RunWith
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 @RunWith(AndroidJUnit4::class)

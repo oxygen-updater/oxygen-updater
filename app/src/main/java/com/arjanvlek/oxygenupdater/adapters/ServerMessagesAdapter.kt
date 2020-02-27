@@ -15,7 +15,7 @@ import com.arjanvlek.oxygenupdater.adapters.ServerMessagesAdapter.ServerMessageV
 import com.arjanvlek.oxygenupdater.models.Banner
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class ServerMessagesAdapter(
     private val context: Context?,

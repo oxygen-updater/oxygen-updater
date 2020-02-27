@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.utils
 import com.arjanvlek.oxygenupdater.exceptions.UserSettingsCouldNotBeSavedException
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 object SetupUtils {

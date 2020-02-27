@@ -15,7 +15,7 @@ import com.arjanvlek.oxygenupdater.services.DownloadService.Companion.PARAM_UPDA
  * in-progress. It receives a Download ID and UpdateData objects which it returns to the new
  * instance of DownloadService.
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 class DownloadServiceRestarter : BroadcastReceiver() {

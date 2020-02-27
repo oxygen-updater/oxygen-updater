@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 /**
  * For [com.arjanvlek.oxygenupdater.activities.OnboardingActivity]
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class OnboardingViewModel(
     private val serverRepository: ServerRepository,

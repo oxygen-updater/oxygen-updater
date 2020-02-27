@@ -13,7 +13,7 @@ import com.arjanvlek.oxygenupdater.models.DownloadProgressData
  * A UpdateDownloadListener is saved when registering the receiver, that contains the actual code of
  * the UI class.
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 class DownloadReceiver(val UIDownloadListener: UpdateDownloadListener) : BroadcastReceiver() {

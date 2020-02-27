@@ -11,7 +11,7 @@ import android.webkit.WebViewClient
  * Note: Overriding [shouldOverrideUrlLoading] is necessary, as without it, custom URL schemes won't work (mailto, tel, etc)
  * Moreover, clicking page links in the associated WebView will load those pages within the WebView, which is not desired.
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class WebViewClient(
     private val context: Context,

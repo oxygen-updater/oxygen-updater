@@ -107,7 +107,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * If a new command has been ordered, it exits the current loop (causing a restart), executes the new Intent (because Intents are sequential) and then executes the restart intent
  * The after-executed restart intent *should* do nothing, because the action usually cancelled or paused the download.
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 class DownloadService : IntentService(TAG) {

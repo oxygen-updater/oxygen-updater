@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 /**
  * For [com.arjanvlek.oxygenupdater.activities.AboutActivity]
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class AboutViewModel(
     private val serverRepository: ServerRepository

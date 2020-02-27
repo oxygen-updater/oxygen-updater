@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.models
 /**
  * Used primarily in [com.arjanvlek.oxygenupdater.internal.Utils.checkDeviceOsSpec]
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Suppress("unused")
 enum class DeviceOsSpec {

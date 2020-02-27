@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class AlphaInAnimationAdapter private constructor(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>, private val mFrom: Float) : AnimationAdapter(adapter) {
 

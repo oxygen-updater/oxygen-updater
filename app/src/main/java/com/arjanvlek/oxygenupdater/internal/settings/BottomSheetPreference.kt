@@ -26,7 +26,7 @@ import kotlin.math.min
 /**
  * Overridden class to add custom functionality (setting title/message, custom on click listeners for dismissing).
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Suppress("unused")
 class BottomSheetPreference : Preference {

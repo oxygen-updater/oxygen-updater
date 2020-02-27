@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.models
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 enum class DeviceRequestFilter(val filter: String) {
     ALL("all"),

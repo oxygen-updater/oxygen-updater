@@ -14,7 +14,7 @@ import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
  * Sets support action bar and enables home up button on the toolbar.
  * Additionally, it sets up a full screen activity if its theme is [R.style.Theme_Oxygen_FullScreen]
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 abstract class SupportActionBarActivity : AppCompatActivity() {
 

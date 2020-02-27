@@ -12,7 +12,7 @@ import com.google.android.material.appbar.AppBarLayout
 
 /**
  * Allow activity to draw itself full screen
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun Activity.enableEdgeToEdgeUiSupport() {
     if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_Oxygen_FullScreen) {

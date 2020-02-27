@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.internal
 import android.view.View
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 object ViewHelper {
 

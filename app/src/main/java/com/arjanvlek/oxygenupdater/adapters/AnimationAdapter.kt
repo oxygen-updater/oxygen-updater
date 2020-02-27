@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.arjanvlek.oxygenupdater.internal.ViewHelper
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Suppress("unused")
 abstract class AnimationAdapter internal constructor(val wrappedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

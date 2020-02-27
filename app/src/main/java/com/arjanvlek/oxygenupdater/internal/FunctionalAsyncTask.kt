@@ -3,7 +3,7 @@ package com.arjanvlek.oxygenupdater.internal
 import android.os.AsyncTask
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 class FunctionalAsyncTask<Params, Progress, Result> @JvmOverloads constructor(

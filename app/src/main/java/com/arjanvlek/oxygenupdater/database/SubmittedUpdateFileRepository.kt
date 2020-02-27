@@ -10,7 +10,7 @@ import org.joda.time.LocalDateTime
 import org.joda.time.format.ISODateTimeFormat
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 class SubmittedUpdateFileRepository(context: Context?) : SQLiteOpenHelper(

@@ -27,7 +27,7 @@ import org.joda.time.LocalDateTime
 import org.koin.java.KoinJavaComponent.inject
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class NewsAdapter(
     private val context: Context?,

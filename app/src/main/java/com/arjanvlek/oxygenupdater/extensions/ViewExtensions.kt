@@ -21,7 +21,7 @@ import androidx.core.view.WindowInsetsCompat
  * Wrapper around [androidx.core.view.OnApplyWindowInsetsListener] that records the * initial padding of the view
  * and requests that insets are applied when attached.
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun View.doOnApplyWindowInsets(function: (View, WindowInsetsCompat, InitialPadding) -> Unit) = recordInitialPaddingForView(
     this

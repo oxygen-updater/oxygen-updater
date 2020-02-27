@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 /**
  * Convenient extension to set a drawable and a tint for an [ImageView]
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun ImageView.setImageResourceWithTint(@DrawableRes drawableResId: Int, @ColorRes colorResId: Int) {
     setImageResource(drawableResId)
@@ -21,7 +21,7 @@ fun ImageView.setImageResourceWithTint(@DrawableRes drawableResId: Int, @ColorRe
 /**
  * Convenient extension to set a drawable after an animation for an [ImageView]
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun ImageView.setImageResourceWithAnimation(@DrawableRes drawableResId: Int, @AnimRes animResId: Int) {
     startAnimation(AnimationUtils.loadAnimation(context, animResId))

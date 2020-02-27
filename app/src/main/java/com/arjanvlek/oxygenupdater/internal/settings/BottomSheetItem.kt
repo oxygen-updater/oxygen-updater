@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.internal.settings
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 data class BottomSheetItem(
     var title: String? = null,

@@ -52,7 +52,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * This class is mostly based on code from <a href="https://github.com/hendraanggrian/collapsingtoolbarlayout-subtitle/blob/master/collapsingtoolbarlayout-subtitle/src/com/google/android/material/appbar/SubtitleCollapsingToolbarLayout.java">SubtitleCollapsingToolbarLayout.java</a>, but I've taken inspiration from <a href="https://github.com/material-components/material-components-android/blob/217380e5c0b44727c9f451ae48faf6dfb96c5214/lib/java/com/google/android/material/appbar/CollapsingToolbarLayout.java">CollapsingToolbarLayout.java</a> as well
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @SuppressWarnings("unused")
 @SuppressLint("RestrictedApi")

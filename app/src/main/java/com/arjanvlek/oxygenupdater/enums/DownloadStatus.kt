@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.enums
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 enum class DownloadStatus {

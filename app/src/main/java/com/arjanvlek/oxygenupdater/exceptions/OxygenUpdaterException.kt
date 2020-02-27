@@ -6,7 +6,7 @@ package com.arjanvlek.oxygenupdater.exceptions
  *
  * @param message Warning / Error message to log
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 open class OxygenUpdaterException(message: String?) : RuntimeException(message) {

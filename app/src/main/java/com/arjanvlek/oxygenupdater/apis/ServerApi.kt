@@ -17,7 +17,7 @@ import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 interface ServerApi {
 

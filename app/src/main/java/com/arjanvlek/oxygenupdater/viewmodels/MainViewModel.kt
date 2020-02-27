@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
  * 2. [com.arjanvlek.oxygenupdater.fragments.UpdateInformationFragment]
  * 3. [com.arjanvlek.oxygenupdater.fragments.DeviceInformationFragment]
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class MainViewModel(
     private val serverRepository: ServerRepository

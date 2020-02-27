@@ -22,7 +22,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
  * @param rootView this fragment's rootView
  * @param placeholderItemHeight height of the placeholder item, in pixels
  *
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun Fragment.addPlaceholderItemsForShimmer(
     inflater: LayoutInflater,

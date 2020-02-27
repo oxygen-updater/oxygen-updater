@@ -26,7 +26,7 @@ import org.joda.time.LocalDateTime
 import org.json.JSONException
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Suppress("unused")
 class ServerRepository constructor(

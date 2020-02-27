@@ -16,7 +16,7 @@ import com.arjanvlek.oxygenupdater.models.SelectableModel
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 
 /**
- * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class ChooserOnboardingAdapter(
     private val context: Context?,
