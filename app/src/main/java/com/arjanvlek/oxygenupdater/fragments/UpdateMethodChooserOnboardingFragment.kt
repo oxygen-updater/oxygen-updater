@@ -3,6 +3,8 @@ package com.arjanvlek.oxygenupdater.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -10,18 +12,21 @@ import com.arjanvlek.oxygenupdater.models.SelectableModel
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
-import com.crashlytics.android.Crashlytics
+import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
 
     private var rootMessageShown = false
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         onboardingChooserCaption.setText(R.string.onboarding_page_3_caption)
+
+        fetchData()
     }
 
     override fun fetchData() {
@@ -41,17 +46,33 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
                 rootMessageShown = true
                 fetchData()
             }
-        } else {
-            if (settingsManager.containsPreference(SettingsManager.PROPERTY_DEVICE_ID)) {
-                application?.serverConnector!!.getUpdateMethods(settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, 1L)) {
-                    setupRecyclerView(it)
-                }
-            }
+        } else if (onboardingViewModel.selectedDevice.value != null) {
+            fetchDataInternal(onboardingViewModel.selectedDevice.value!!.id)
         }
+
+        // re-fetch update methods if selected device changes
+        onboardingViewModel.selectedDevice.observe(viewLifecycleOwner, Observer {
+            if (rootMessageShown) {
+                fetchDataInternal(it.id)
+            }
+        })
+    }
+
+    private fun fetchDataInternal(deviceId: Long) {
+        shimmerFrameLayout.isVisible = true
+
+        onboardingViewModel.fetchUpdateMethodsForDevice(deviceId).observe(
+            viewLifecycleOwner,
+            Observer { setupRecyclerView(it) }
+        )
     }
 
     @Suppress("UNCHECKED_CAST", "NAME_SHADOWING")
-    override fun setupRecyclerView(data: List<SelectableModel>, initialSelectedIndex: Int, onItemSelectedListener: KotlinCallback<SelectableModel>) {
+    override fun setupRecyclerView(
+        data: List<SelectableModel>,
+        initialSelectedIndex: Int,
+        onItemSelectedListener: KotlinCallback<SelectableModel>
+    ) {
         val data = data as List<UpdateMethod>
 
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
@@ -67,15 +88,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
         }
 
         super.setupRecyclerView(data, initialSelectedIndex) {
-            settingsManager.apply {
-                savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, it.id)
-                savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, it.name)
-
-                Crashlytics.setUserIdentifier(
-                    "Device: " + getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
-                            + ", Update Method: " + getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
-                )
-            }
+            onboardingViewModel.updateSelectedUpdateMethod(it as UpdateMethod)
 
             if (application?.checkPlayServices(activity, false) == true) {
                 // Subscribe to notifications for the newly selected device and update method

@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * For [com.arjanvlek.oxygenupdater.activities.AboutActivity]
+ * For [com.arjanvlek.oxygenupdater.activities.InstallActivity]
  *
  * @author Adhiraj Singh Chauhan (github.com/adhirajsinghchauhan)
  */

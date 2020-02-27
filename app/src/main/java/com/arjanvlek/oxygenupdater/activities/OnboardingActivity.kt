@@ -13,6 +13,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
@@ -21,45 +22,42 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.OnboardingActivity.SimpleOnboardingFragment.Companion.ARG_PAGE_NUMBER
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
 import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
-import com.arjanvlek.oxygenupdater.fragments.ChooserOnboardingFragment
+import com.arjanvlek.oxygenupdater.extensions.setImageResourceWithAnimation
 import com.arjanvlek.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.arjanvlek.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
-import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.utils.ContributorUtils
 import com.arjanvlek.oxygenupdater.utils.Logger
 import com.arjanvlek.oxygenupdater.utils.SetupUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_onboarding.*
 import kotlinx.android.synthetic.main.fragment_onboarding_complete.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class OnboardingActivity : AppCompatActivity() {
-    private lateinit var activityLauncher: ActivityLauncher
 
-    private var deviceChooserOnboardingFragment: ChooserOnboardingFragment? = null
-    private var updateMethodChooserOnboardingFragment: ChooserOnboardingFragment? = null
+    private lateinit var activityLauncher: ActivityLauncher
 
     private var permissionCallback: KotlinCallback<Boolean>? = null
 
     private val settingsManager by inject<SettingsManager>()
+    private val onboardingViewModel by viewModel<OnboardingViewModel>()
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-
+        override fun onPageSelected(position: Int) = super.onPageSelected(position).also {
             handlePageChangeCallback(position + 1)
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_onboarding)
 
         enableEdgeToEdgeUiSupport()
@@ -68,32 +66,29 @@ class OnboardingActivity : AppCompatActivity() {
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
             val applicationData = application as OxygenUpdater
-            applicationData.serverConnector!!.getDevices(DeviceRequestFilter.ALL) {
+            onboardingViewModel.fetchAllDevices().observe(this, Observer {
                 val deviceOsSpec = Utils.checkDeviceOsSpec(applicationData.systemVersionProperties!!, it)
 
                 if (!deviceOsSpec.isDeviceOsSpecSupported) {
                     displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
                 }
-            }
+            })
         }
 
         setupViewPager()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroy() = super.onDestroy().also {
         viewPager?.unregisterOnPageChangeCallback(pageChangeCallback)
     }
 
-    override fun onBackPressed() {
-        if (viewPager.currentItem == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed()
-        } else {
-            // Otherwise, select the previous step.
-            viewPager.currentItem = viewPager.currentItem - 1
-        }
+    override fun onBackPressed() = if (viewPager.currentItem == 0) {
+        // If the user is currently looking at the first step, allow the system to handle the
+        // Back button. This calls finish() on this activity and pops the back stack.
+        super.onBackPressed()
+    } else {
+        // Otherwise, select the previous step.
+        viewPager.currentItem = viewPager.currentItem - 1
     }
 
     private fun setupViewPager() {
@@ -120,31 +115,55 @@ class OnboardingActivity : AppCompatActivity() {
         }
     }
 
-    private fun handlePageChangeCallback(pageNumber: Int) {
-        when (pageNumber) {
-            1 -> {
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
-                collapsingToolbarImage.setImageResource(R.drawable.logo_outline)
-            }
-            2 -> {
-                deviceChooserOnboardingFragment?.fetchData()
+    private fun handlePageChangeCallback(pageNumber: Int) = when (pageNumber) {
+        1 -> {
+            collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
+            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.logo_outline, android.R.anim.fade_in)
+        }
+        2 -> {
+            collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
+            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.smartphone, android.R.anim.fade_in)
 
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
-                collapsingToolbarImage.setImageResource(R.drawable.smartphone)
-            }
-            3 -> {
-                updateMethodChooserOnboardingFragment?.fetchData()
+            if (onboardingViewModel.selectedDevice.value == null) {
+                // disable ViewPager2 swiping until a device is selected
+                viewPager.isUserInputEnabled = false
 
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
-                collapsingToolbarImage.setImageResource(R.drawable.cloud_download)
+                // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
+                onboardingViewModel.selectedDevice.observe(this, Observer {
+                    viewPager.isUserInputEnabled = true
+                })
+            } else {
+                viewPager.isUserInputEnabled = true
+
+                // no need to observe changes to selectedDevice anymore
+                onboardingViewModel.selectedDevice.removeObservers(this)
             }
-            4 -> {
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
-                collapsingToolbarImage.setImageResource(R.drawable.done_all)
+        }
+        3 -> {
+            collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
+            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.cloud_download, android.R.anim.fade_in)
+
+            if (onboardingViewModel.selectedUpdateMethod.value == null) {
+                // disable ViewPager2 swiping until a device is selected
+                viewPager.isUserInputEnabled = false
+
+                // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
+                onboardingViewModel.selectedUpdateMethod.observe(this, Observer {
+                    viewPager.isUserInputEnabled = true
+                })
+            } else {
+                viewPager.isUserInputEnabled = true
+
+                // no need to observe changes to selectedDevice anymore
+                onboardingViewModel.selectedUpdateMethod.removeObservers(this)
             }
-            else -> {
-                // no-op
-            }
+        }
+        4 -> {
+            collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
+            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.done_all, android.R.anim.fade_in)
+        }
+        else -> {
+            // no-op
         }
     }
 
@@ -208,9 +227,11 @@ class OnboardingActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) = super.onRequestPermissionsResult(requestCode, permissions, grantResults).also {
         if (grantResults.isNotEmpty() && requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
             permissionCallback?.invoke(grantResults[0] == PackageManager.PERMISSION_GRANTED)
         }
@@ -221,10 +242,12 @@ class OnboardingActivity : AppCompatActivity() {
      */
     class SimpleOnboardingFragment : Fragment() {
 
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            super.onCreateView(inflater, container, savedInstanceState)
-
-            return when (arguments?.getInt(ARG_PAGE_NUMBER, 0)) {
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ) = super.onCreateView(inflater, container, savedInstanceState).let {
+            when (arguments?.getInt(ARG_PAGE_NUMBER, 0)) {
                 1 -> inflater.inflate(R.layout.fragment_onboarding_welcome, container, false)
                 4 -> inflater.inflate(R.layout.fragment_onboarding_complete, container, false)
                 else -> null
@@ -250,8 +273,8 @@ class OnboardingActivity : AppCompatActivity() {
          */
         override fun createFragment(position: Int) = (position + 1).let { pageNumber ->
             when (pageNumber) {
-                2 -> DeviceChooserOnboardingFragment().apply { deviceChooserOnboardingFragment = this }
-                3 -> UpdateMethodChooserOnboardingFragment().apply { updateMethodChooserOnboardingFragment = this }
+                2 -> DeviceChooserOnboardingFragment()
+                3 -> UpdateMethodChooserOnboardingFragment()
                 else -> SimpleOnboardingFragment().apply { arguments = bundleOf(ARG_PAGE_NUMBER to pageNumber) }
             }
         }

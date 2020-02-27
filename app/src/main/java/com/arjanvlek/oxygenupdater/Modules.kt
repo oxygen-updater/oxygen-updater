@@ -8,6 +8,7 @@ import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import com.arjanvlek.oxygenupdater.utils.createNetworkClient
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.NewsViewModel
+import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -27,10 +28,11 @@ private val preferencesModule = module {
 }
 
 private val repositoryModule = module {
-    single { ServerRepository(get(), get()) }
+    single { ServerRepository(get(), get(), get()) }
 }
 
 private val viewModelModule = module {
+    viewModel { OnboardingViewModel(get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { NewsViewModel(get()) }
 }

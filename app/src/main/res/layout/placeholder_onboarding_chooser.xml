@@ -9,7 +9,6 @@
 	android:paddingBottom="21dp">
 
 	<View
-		android:id="@+id/oxygenOsVersionPlaceholder"
 		android:layout_width="100dp"
 		android:layout_height="@dimen/typography_body"
 		android:layout_marginStart="@dimen/spacing_2x"

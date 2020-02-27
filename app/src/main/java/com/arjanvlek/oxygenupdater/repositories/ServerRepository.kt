@@ -31,7 +31,8 @@ import org.json.JSONException
 @Suppress("unused")
 class ServerRepository constructor(
     private val serverApi: ServerApi,
-    private val settingsManager: SettingsManager
+    private val settingsManager: SettingsManager,
+    private val newsDatabaseHelper: NewsDatabaseHelper
 ) {
 
     private val devicesCache = HashMap<DeviceRequestFilter, Pair<LocalDateTime, List<Device>>>()
@@ -97,9 +98,13 @@ class ServerRepository constructor(
     private suspend fun fetchMostRecentUpdateData(
         deviceId: Long,
         updateMethodId: Long
-    ): UpdateData = apiResponse(serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId))
+    ): UpdateData = apiResponse(
+        serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId)
+    )
 
-    suspend fun fetchServerStatus(online: Boolean) = serverStatus ?: apiResponse(serverApi.fetchServerStatus()).let { status: ServerStatus? ->
+    suspend fun fetchServerStatus(online: Boolean) = serverStatus ?: apiResponse(
+        serverApi.fetchServerStatus()
+    ).let { status: ServerStatus? ->
         val automaticInstallationEnabled = settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false)
         val pushNotificationsDelaySeconds = settingsManager.getPreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800)
 
@@ -157,8 +162,10 @@ class ServerRepository constructor(
         context: Context,
         deviceId: Long,
         updateMethodId: Long
-    ) = apiResponse(serverApi.fetchNews(deviceId, updateMethodId)).let {
-        NewsDatabaseHelper(context).let { databaseHelper ->
+    ) = apiResponse(
+        serverApi.fetchNews(deviceId, updateMethodId)
+    ).let {
+        newsDatabaseHelper.let { databaseHelper ->
             if (!it.isNullOrEmpty() && Utils.checkNetworkConnection(context)) {
                 databaseHelper.saveNewsItems(it)
             }
@@ -170,8 +177,10 @@ class ServerRepository constructor(
     suspend fun fetchNewsItem(
         context: Context,
         newsItemId: Long
-    ) = apiResponse(serverApi.fetchNewsItem(newsItemId)).let { newsItem: NewsItem? ->
-        NewsDatabaseHelper(context).let { databaseHelper ->
+    ) = apiResponse(
+        serverApi.fetchNewsItem(newsItemId)
+    ).let { newsItem: NewsItem? ->
+        newsDatabaseHelper.let { databaseHelper ->
             if (newsItem != null && Utils.checkNetworkConnection(context)) {
                 databaseHelper.saveNewsItem(newsItem)
             }
@@ -182,13 +191,26 @@ class ServerRepository constructor(
 
     suspend fun markNewsItemRead(
         newsItemId: Long
-    ): ServerPostResult = apiResponse(serverApi.markNewsItemRead(mapOf("news_item_id" to newsItemId)))
+    ): ServerPostResult = apiResponse(
+        serverApi.markNewsItemRead(mapOf("news_item_id" to newsItemId))
+    )
 
     suspend fun fetchUpdateMethodsForDevice(
-        deviceId: Long
-    ): List<UpdateMethod> = apiResponse(serverApi.fetchUpdateMethodsForDevice(deviceId))
+        deviceId: Long,
+        hasRootAccess: Boolean
+    ) = apiResponse(
+        serverApi.fetchUpdateMethodsForDevice(deviceId)
+    ).let { updateMethods ->
+        if (hasRootAccess) {
+            updateMethods.filter { it.supportsRootedDevice }.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") }
+        } else {
+            updateMethods.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") }
+        }
+    }
 
-    suspend fun fetchAllMethods(): List<UpdateMethod> = apiResponse(serverApi.fetchAllUpdateMethods())
+    suspend fun fetchAllMethods(): List<UpdateMethod> = apiResponse(
+        serverApi.fetchAllUpdateMethods()
+    )
 
     suspend fun fetchInstallGuidePage(
         deviceId: Long,
@@ -198,11 +220,11 @@ class ServerRepository constructor(
 
     suspend fun submitUpdateFile(
         filename: String
-    ): ServerPostResult = apiResponse(serverApi.submitUpdateFile(mapOf("filename" to filename)))
+    ): ServerPostResult = apiResponse(
+        serverApi.submitUpdateFile(mapOf("filename" to filename))
+    )
 
-    suspend fun logRootInstall(
-        rootInstall: RootInstall
-    ) = try {
+    suspend fun logRootInstall(rootInstall: RootInstall) = try {
         apiResponse(serverApi.logRootInstall(rootInstall))
     } catch (e: JSONException) {
         ServerPostResult(

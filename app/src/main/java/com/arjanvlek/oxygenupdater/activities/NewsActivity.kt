@@ -27,10 +27,12 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_news.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsActivity : SupportActionBarActivity() {
 
+    private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val newsViewModel by viewModel<NewsViewModel>()
 
     @SuppressLint("SetJavaScriptEnabled") // JS is required to load videos and other dynamic content.
@@ -215,7 +217,7 @@ class NewsActivity : SupportActionBarActivity() {
             }
 
             // Mark the item as read on the device.
-            NewsDatabaseHelper(this).apply {
+            newsDatabaseHelper.apply {
                 markNewsItemRead(newsItem)
                 close()
             }
