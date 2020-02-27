@@ -43,6 +43,8 @@ class AboutActivity : SupportActionBarActivity() {
         })
     }
 
+    override fun onBackPressed() = finish()
+
     /**
      * Respond to the action bar's Up/Home button
      */

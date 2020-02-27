@@ -6,6 +6,8 @@ import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import com.arjanvlek.oxygenupdater.utils.createNetworkClient
+import com.arjanvlek.oxygenupdater.viewmodels.AboutViewModel
+import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.NewsViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
@@ -36,6 +38,8 @@ private val viewModelModule = module {
     viewModel { OnboardingViewModel(get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { NewsViewModel(get()) }
+    viewModel { InstallViewModel(get()) }
+    viewModel { AboutViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
 }
 
