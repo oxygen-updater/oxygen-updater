@@ -243,7 +243,7 @@ Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf d
 	<string name="install_options_reboot_after_install">"Nach der Installation neustarten"</string>
 	<string name="install_options_select_root_package">"Wähle das Root Paket aus zum installieren…"</string>
 	<string name="install_options_start_install">"Installation starten"</string>
-	<string name="install_options_title">"Wähle deine Installations Optionen"</string>
+	<string name="install_options_subtitle">"Wähle deine Installations Optionen"</string>
 	<string name="install_options_wipe_cache_partition">"lösche die Cache Partition"</string>
 	<string name="install_options_explanation_title">"Was bedeuten diese Optionen?"</string>
 	<string name="install_options_explanation_backup">"Mein Gerät backupen:
@@ -254,16 +254,18 @@ Wenn du diese Option auswählst, kannst du ein Root Paket auswählen welches ins
 Wenn du diese Option auswählst, wird die Cache Partition, nach dem das Update installiert wurde, gelöscht das versichert, das dein Gerät optimal Performt und senkt die Wahrscheinlichkeit von Bugs die durch das Update entstanden sind."</string>
 	<string name="install_options_explanation_reboot">"Neustarten nach der Installation:
 Wenn du diese Option auswählst, wird dein Gerät automatisch zurück zu OxygenOS neustarten nachdem das Update installiert wurde. Ansonsten wird dein Gerät im Recovery Modus bleiben in dem du noch weitere Paket installieren kannst."</string>
-	<string name="install_select_method_title">"Wie möchtest du dieses Update installieren?"</string>
-	<string name="install_select_method_automatic_title">"Automatische Installation*"</string>
-	<string name="install_select_method_automatic_image">"Automatisches Installations Images"</string>
-	<string name="install_select_method_automatic_description">"Die einfachste Methode und das Update zu installieren.
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">"Wie möchtest du dieses Update installieren?"</string>
+	<string name="install_method_chooser_automatic_title">"Automatische Installation*"</string>
+	<string name="install_method_chooser_automatic_image">"Automatisches Installations Images"</string>
+	<string name="install_method_chooser_automatic_description">"Die einfachste Methode und das Update zu installieren.
 Dein Gerät wird neustarten um das Update zu installieren.
 
 *Benötigt Root Zugriff und TWRP Recovery."</string>
-	<string name="install_select_method_manual_title">"Manuelle Installation"</string>
-	<string name="install_select_method_manual_image">"Manuelles Installations Image"</string>
-	<string name="install_select_method_manual_description">"Lese die Installationsanleitung um herauszufinden wie man das Update installiert. Du wirst das Update über den Recovery Modus von deinem Gerät installieren."</string>
+	<string name="install_method_chooser_manual_title">"Manuelle Installation"</string>
+	<string name="install_method_chooser_manual_image">"Manuelles Installations Image"</string>
+	<string name="install_method_chooser_manual_description">"Lese die Installationsanleitung um herauszufinden wie man das Update installiert. Du wirst das Update über den Recovery Modus von deinem Gerät installieren."</string>
 	<string name="install_temporary_error">"Ein temporärer Fehler ist aufgetreten während der Vorbereitung, für die Installation des Updates."</string>
 	<string name="install_verify_error_title">"Installation fehlgeschlagen"</string>
 	<string name="install_verify_error_nothing_installed">"Fehler beim installieren des Updates. Es wurden keine Veränderung an der Software von deinem Gerät gemacht. Versuche das Update nochmal zu installieren."</string>
@@ -280,19 +282,18 @@ Dein Gerät wird neustarten um das Update zu installieren.
 	<string name="install_guide_no_root">"Instaliere das Update gemäß den Anweisungen in der Installationsanleitung."</string>
 	<string name="install_guide_automatic_install_disabled">"Automatische Installationen würden temporär deaktiviert wegen gemeldeten technischen Problemen."</string>
 	<string name="install_guide">"Installationsanleitung"</string>
-	<string name="install_guide_title">"Installationsanleitung - %1$d von %2$d"</string>
+	<string name="install_guide_subtitle">"Installationsanleitung - %1$d von %2$d"</string>
 	<string name="install_guide_image_description">"Kontextsensitives Bild. Bitte tippe etwas tiefer auf den Bildschirm um die Installationsanleitung zu hören."</string>
-	<string name="install_guide_header">"Wische &lt;- -&gt; um zwischen den Seiten hin und her zu navigieren."</string>
-	<string name="install_guide_tip">"-Es ist empfehlenswert alle Schritte aufzuschreiben, da du dein Gerät während dem Update ausschalten musst."</string>
+	<string name="install_guide_tip">"&#8226;Es ist empfehlenswert alle Schritte aufzuschreiben, da du dein Gerät während dem Update ausschalten musst."</string>
 	<string name="install_guide_page_1_title">"Update herunterzuladen."</string>
-	<string name="install_guide_page_1_text">"-Drücke den Download Button um mit dem downloaden des Updates zu starten
+	<string name="install_guide_page_1_text">"&#8226;Drücke den Download Button um mit dem downloaden des Updates zu starten
 
 -Der Download Fortschritt wird in der App angezeigt und als Nachricht in der Nachrichten leiste.
 
 -Wenn der Download abgeschlossen ist, wirst du eine Nachricht sehen mit dem Text \"Download abgeschlossen\".
 Falls es einen Download Error gibt, öffne die App und versuche das Update erneut zu downloaden.wenn das nicht funktioniert, kontrolliere ob du eine funktionierende Internet Verbindung hast. Ansonsten kontaktiere den Entwickler dieser App. Du kannst das wenn du auf \"Meine Apps\" im Google Play Store gehst."</string>
 	<string name="install_guide_page_2_title">"Recovery Modus wird geöffnet."</string>
-	<string name="install_guide_page_2_text">"-Als erstes schalte dein Gerät aus.
+	<string name="install_guide_page_2_text">"&#8226;Als erstes schalte dein Gerät aus.
 
 -dann drücke gleichzeitig die Power Taste und die leiser Taste gleichzeitig.
 
@@ -310,7 +311,7 @@ Falls es einen Download Error gibt, öffne die App und versuche das Update erneu
 
 -Danach wirst du eine Nachricht sehen mit dem Titel \" Android is upgrading\", während deine Apps optimiert werden."</string>
 	<string name="install_guide_page_5_title">"Fertig. Viel Spaß mit der neues OxygenOS version!"</string>
-	<string name="install_guide_page_5_text">"-Wenn dein Gerät fertig ist mit dem optimieren der Apps, würde das Update erfolgreich installiert.
+	<string name="install_guide_page_5_text">"&#8226;Wenn dein Gerät fertig ist mit dem optimieren der Apps, würde das Update erfolgreich installiert.
 Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrollieren:
 
 -Gehe in die Einstellungen, tippe auf \"Über das Telefon\", und überprüfe die OxygenOS Version.

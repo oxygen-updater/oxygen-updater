@@ -91,7 +91,8 @@
 			android:name=".activities.InstallActivity"
 			android:label="@string/install_guide"
 			android:parentActivityName=".activities.MainActivity"
-			android:screenOrientation="portrait" />
+			android:screenOrientation="portrait"
+			android:theme="@style/Theme.Oxygen.FullScreen" />
 
 		<activity
 			android:name=".activities.AboutActivity"

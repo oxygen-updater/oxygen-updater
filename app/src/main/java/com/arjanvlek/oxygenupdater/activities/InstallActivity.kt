@@ -1,74 +1,60 @@
 package com.arjanvlek.oxygenupdater.activities
 
-import android.app.Activity
-import android.content.Intent
-import android.os.AsyncTask
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.Environment
-import android.util.SparseArray
+import android.util.DisplayMetrics
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.CompoundButton
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
-import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NUMBER_OF_INSTALL_GUIDE_PAGES
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.exceptions.SubmitUpdateInstallationException
-import com.arjanvlek.oxygenupdater.exceptions.UpdateInstallationException
-import com.arjanvlek.oxygenupdater.fragments.InstallGuideFragment.Companion.newInstance
-import com.arjanvlek.oxygenupdater.internal.AutomaticUpdateInstaller.installUpdate
-import com.arjanvlek.oxygenupdater.internal.FunctionalAsyncTask
-import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.models.InstallGuidePage
-import com.arjanvlek.oxygenupdater.models.InstallationStatus
-import com.arjanvlek.oxygenupdater.models.RootInstall
-import com.arjanvlek.oxygenupdater.models.ServerPostResult
-import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
+import com.arjanvlek.oxygenupdater.extensions.setImageResourceWithAnimation
+import com.arjanvlek.oxygenupdater.fragments.InstallGuideFragment
+import com.arjanvlek.oxygenupdater.fragments.InstallMethodChooserFragment
+import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.UpdateData
-import com.arjanvlek.oxygenupdater.services.DownloadService
-import com.arjanvlek.oxygenupdater.utils.Logger.logError
-import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
 import com.arjanvlek.oxygenupdater.utils.Utils.checkNetworkConnection
 import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.ipaulpro.afilechooser.FileChooserActivity
-import com.ipaulpro.afilechooser.utils.FileUtils
-import kotlinx.android.synthetic.main.activity_install_guide.*
-import kotlinx.android.synthetic.main.fragment_choose_install_method.*
-import kotlinx.android.synthetic.main.fragment_install_options.*
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
-import org.koin.android.ext.android.inject
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.extensions.CacheImplementation
+import kotlinx.android.extensions.ContainerOptions
+import kotlinx.android.synthetic.main.activity_install.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.io.File
-import java.util.*
+import kotlin.math.abs
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
+@ContainerOptions(CacheImplementation.NO_CACHE)
 class InstallActivity : SupportActionBarActivity() {
-
-    var installGuideCache = SparseArray<InstallGuidePage>()
-        private set
 
     private var showDownloadPage = true
     private var updateData: UpdateData? = null
-    private var layoutId = 0
-    private var rooted = false
 
-    private val settingsManager by inject<SettingsManager>()
     private val installViewModel by viewModel<InstallViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val installGuidePageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) = handleInstallGuidePageChangeCallback(position)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?)  = super.onCreate(savedInstanceState).also {
+        setContentView(R.layout.activity_install)
 
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
 
@@ -76,19 +62,30 @@ class InstallActivity : SupportActionBarActivity() {
             updateData = intent.getParcelableExtra(INTENT_UPDATE_DATA)
         }
 
+        installViewModel.firstInstallGuidePageLoaded.observe(this, Observer {
+            if (it) {
+                handleInstallGuidePageChangeCallback(0)
+            }
+        })
+
+        installViewModel.toolbarTitle.observe(this, Observer {
+            collapsingToolbarLayout.title = getString(it)
+        })
+
+        installViewModel.toolbarSubtitle.observe(this, Observer {
+            collapsingToolbarLayout.subtitle = if (it != null) getString(it) else null
+        })
+
+        installViewModel.toolbarImage.observe(this, Observer {
+            collapsingToolbarImage.setImageResourceWithAnimation(it, android.R.anim.fade_in)
+        })
+
         initialize()
     }
 
-    override fun setContentView(layoutResId: Int) {
-        layoutId = layoutResId
-        super.setContentView(layoutResId)
-    }
-
     private fun initialize() {
-        setContentView(R.layout.fragment_checking_root_access)
-
         RootAccessChecker.checkRootAccess { isRooted ->
-            rooted = isRooted
+            rootStatusCheckLayout.isVisible = false
 
             if (isRooted) {
                 installViewModel.fetchServerStatus(checkNetworkConnection(this)).observe(this, Observer { serverStatus ->
@@ -106,323 +103,182 @@ class InstallActivity : SupportActionBarActivity() {
         }
     }
 
-    private fun openMethodSelectionPage() {
-        switchView(R.layout.fragment_choose_install_method)
-
-        automaticInstallCard.setOnClickListener { openAutomaticInstallOptionsSelection() }
-        manualInstallCard.setOnClickListener { openInstallGuide() }
-    }
-
-
-    private fun openAutomaticInstallOptionsSelection() {
-        switchView(R.layout.fragment_install_options)
-
-        initSettingsSwitch(SettingsManager.PROPERTY_BACKUP_DEVICE, true)
-
-        initSettingsSwitch(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false, CompoundButton.OnCheckedChangeListener { _, isChecked ->
-            additionalZipContainer.isVisible = isChecked
-
-            settingsManager.savePreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, isChecked)
-        })
-
-        additionalZipContainer.isVisible = settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)
-
-        initSettingsSwitch(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true)
-        initSettingsSwitch(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true)
-
-        additionalZipFilePickButton.setOnClickListener {
-            // Implicitly allow the user to select a particular kind of data
-            val intent = Intent(applicationContext, FileChooserActivity::class.java)
-                // Only return URIs that can be opened with ContentResolver
-                .addCategory(Intent.CATEGORY_OPENABLE)
-                // The MIME data type filter
-                .setType("application/zip")
-
-            startActivityForResult(intent, REQUEST_FILE_PICKER)
-        }
-
-        displayZipFilePath()
-
-        additionalZipFileClearButton.setOnClickListener {
-            settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
-            displayZipFilePath()
-        }
-
-        startInstallButton.setOnClickListener {
-            val additionalZipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
-
-            if (settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
-                Toast.makeText(this, R.string.install_guide_zip_file_missing, LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-
-            if (additionalZipFilePath != null) {
-                val file = File(additionalZipFilePath)
-
-                if (!file.exists()) {
-                    Toast.makeText(this, R.string.install_guide_zip_file_deleted, LENGTH_LONG).show()
-                    return@setOnClickListener
-                }
-            }
-
-            switchView(R.layout.fragment_installing_update)
-
-            val backup = settingsManager.getPreference(SettingsManager.PROPERTY_BACKUP_DEVICE, true)
-            val wipeCachePartition = settingsManager.getPreference(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true)
-            val rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true)
-
-            // Plan install verification on reboot.
-            val systemVersionProperties = SystemVersionProperties()
-            val currentOSVersion = systemVersionProperties.oxygenOSOTAVersion
-            val isAbPartitionLayout = systemVersionProperties.isABPartitionLayout
-            val targetOSVersion = updateData!!.otaVersionNumber!!
-
-            logInstallationStart(currentOSVersion, targetOSVersion, currentOSVersion) {
-                FunctionalAsyncTask<Void?, Void, String?>({}, {
-                    try {
-                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
-                        settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
-                        settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
-
-                        val downloadedUpdateFilePath =
-                            Environment.getExternalStoragePublicDirectory(DownloadService.DIRECTORY_ROOT).path + File.separator + updateData!!.filename
-
-                        installUpdate(this, isAbPartitionLayout, downloadedUpdateFilePath, additionalZipFilePath, backup, wipeCachePartition, rebootDevice)
-                        null
-                    } catch (e: UpdateInstallationException) {
-                        e.message
-                    } catch (e: InterruptedException) {
-                        logWarning(TAG, "Error installing update", e)
-                        getString(R.string.install_temporary_error)
-                    }
-                }, { errorMessage: String? ->
-                    if (errorMessage != null) {
-                        // Cancel the verification planned on reboot.
-                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
-
-                        openAutomaticInstallOptionsSelection()
-                        Toast.makeText(this, errorMessage, LENGTH_LONG).show()
-                    }
-                }).execute()
-            }
-        }
-    }
-
-    private fun openInstallGuide() {
-        title = getString(
-            R.string.install_guide_title,
-            1,
-            if (showDownloadPage) NUMBER_OF_INSTALL_GUIDE_PAGES else NUMBER_OF_INSTALL_GUIDE_PAGES - 1
+    private fun openMethodSelectionPage() = supportFragmentManager.commit {
+        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        replace(
+            R.id.fragmentContainer,
+            InstallMethodChooserFragment().apply {
+                arguments = bundleOf(INTENT_UPDATE_DATA to updateData)
+            },
+            INSTALL_METHOD_CHOOSER_FRAGMENT_TAG
         )
+        addToBackStack(INSTALL_METHOD_CHOOSER_FRAGMENT_TAG)
+    }
 
-        switchView(R.layout.activity_install_guide)
+    fun openInstallGuide() {
+        fragmentContainer.isVisible = false
+        viewPagerContainer.isVisible = true
 
-        updateInstallationInstructionsPager.apply {
-            isVisible = true
-            offscreenPageLimit = 4 // Install guide is 5 pages max. So there can be only 4 off-screen.
-            adapter = InstallGuideSectionsPagerAdapter(supportFragmentManager)
+        setupViewPager()
+    }
 
-            addOnPageChangeListener(object : OnPageChangeListener {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+    private fun setupViewPager() {
+        viewPager.apply {
+            offscreenPageLimit = 4 // Install guide is 5 pages max. So there can be only 4 off-screen
+            adapter = InstallGuidePagerAdapter()
 
-                override fun onPageSelected(position: Int) {
-                    title = getString(
-                        R.string.install_guide_title,
-                        position + 1,
-                        if (showDownloadPage) NUMBER_OF_INSTALL_GUIDE_PAGES else NUMBER_OF_INSTALL_GUIDE_PAGES - 1
-                    )
+            // attach TabLayout to ViewPager2
+            TabLayoutMediator(tabLayout, this) { _, _ -> }.attach()
+
+            registerOnPageChangeCallback(installGuidePageChangeCallback)
+        }
+
+        appBar.post {
+            // adjust bottom margin on first load
+            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
+
+            // adjust bottom margin on scroll
+            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+                viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                    bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
                 }
-
-                override fun onPageScrollStateChanged(state: Int) {}
             })
         }
     }
 
-    private fun displayZipFilePath() {
-        val zipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+    private fun handleInstallGuidePageChangeCallback(position: Int) {
+        val pageNumber = position + if (showDownloadPage) 1 else 2
 
-        if (zipFilePath != null) {
-            // Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
-            val text = zipFilePath.replace(
-                Environment.getExternalStoragePublicDirectory(DownloadService.DIRECTORY_ROOT).absolutePath + File.separator,
-                ""
+        installViewModel.installGuideCache[pageNumber]?.run {
+            collapsingToolbarLayout.title = if (AppLocale.get() == AppLocale.NL) dutchTitle else englishTitle
+            collapsingToolbarLayout.subtitle = getString(
+                R.string.install_guide_subtitle,
+                position + 1,
+                if (showDownloadPage) NUMBER_OF_INSTALL_GUIDE_PAGES else NUMBER_OF_INSTALL_GUIDE_PAGES - 1
             )
 
-            val extension = text.substring(text.length - 4)
-            if (extension != EXTENSION_ZIP) {
-                Toast.makeText(this, R.string.install_zip_file_wrong_file_type, LENGTH_LONG).show()
-                return
+            if (!isDefaultPage && useCustomImage) {
+                // Fetch the custom image from the server.
+                Glide.with(this@InstallActivity)
+                    .load(completeImageUrl(imageUrl, fileExtension))
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                            collapsingToolbarImage.isVisible = true
+                            return false
+                        }
+
+                        override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            collapsingToolbarImage.isVisible = true
+                            return false
+                        }
+                    })
+                    // Load a "no entry" sign to show that the image failed to load.
+                    .error(R.drawable.error_image)
+                    .into(collapsingToolbarImage)
+            } else {
+                val imageResourceId = resources.getIdentifier(
+                    RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_IMAGE,
+                    RESOURCE_ID_PACKAGE_DRAWABLE,
+                    packageName
+                )
+
+                collapsingToolbarImage.setImageResourceWithAnimation(imageResourceId, android.R.anim.fade_in)
             }
-
-            additionalZipFilePath.text = text
-            additionalZipFileClearButton.isVisible = true
-        } else {
-            additionalZipFilePath.setText(R.string.install_zip_file_placeholder)
-            additionalZipFileClearButton.isVisible = false
         }
     }
 
-    private fun initSettingsSwitch(settingName: String, defaultValue: Boolean, listener: CompoundButton.OnCheckedChangeListener) {
-        val switchCompat = findViewById<SwitchMaterial>(
-            resources.getIdentifier(
-                settingName + SETTINGS_SWITCH,
-                PACKAGE_ID,
-                packageName
-            )
-        )
-
-        switchCompat.isChecked = settingsManager.getPreference(settingName, defaultValue)
-        switchCompat.setOnCheckedChangeListener(listener)
-    }
-
-    @Suppress("SameParameterValue")
-    private fun initSettingsSwitch(settingName: String, defaultValue: Boolean) {
-        initSettingsSwitch(
-            settingName,
-            defaultValue,
-            CompoundButton.OnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean -> settingsManager.savePreference(settingName, isChecked) }
-        )
-    }
-
-
-    private fun switchView(newViewId: Int) {
-        layoutId = newViewId
-
-        layoutInflater.inflate(newViewId, null, false).let {
-            it.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in))
-            setContentView(it)
+    private fun completeImageUrl(imageUrl: String?, fileExtension: String?): String {
+        val imageVariant: String = when (resources.displayMetrics.densityDpi) {
+            DisplayMetrics.DENSITY_LOW -> IMAGE_VARIANT_LDPI
+            DisplayMetrics.DENSITY_MEDIUM -> IMAGE_VARIANT_MDPI
+            DisplayMetrics.DENSITY_TV -> IMAGE_VARIANT_TVDPI
+            DisplayMetrics.DENSITY_HIGH -> IMAGE_VARIANT_HDPI
+            DisplayMetrics.DENSITY_280, DisplayMetrics.DENSITY_XHIGH -> IMAGE_VARIANT_XHDPI
+            DisplayMetrics.DENSITY_360, DisplayMetrics.DENSITY_400, DisplayMetrics.DENSITY_420, DisplayMetrics.DENSITY_XXHIGH -> IMAGE_VARIANT_XXHDPI
+            DisplayMetrics.DENSITY_560, DisplayMetrics.DENSITY_XXXHIGH -> IMAGE_VARIANT_XXXHDPI
+            else -> IMAGE_VARIANT_DEFAULT
         }
+
+        return "${imageUrl}_$imageVariant.$fileExtension"
     }
 
-    private fun handleBackAction() {
-        // If at the install options screen or in the install guide when rooted, go back to the method selection page.
-        if (layoutId == R.layout.fragment_install_options
-            || rooted
-            && settingsManager.getPreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, false)
-            && layoutId == R.layout.activity_install_guide
-        ) {
-            openMethodSelectionPage()
-        } else if (layoutId == R.layout.fragment_installing_update) {
-            // Once the installation is being started, there is no way out.
-            Toast.makeText(this, R.string.install_going_back_not_possible, LENGTH_LONG).show()
-        } else {
-            finish()
+    override fun onDestroy() = super.onDestroy().also {
+        viewPager?.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
+    }
+
+    override fun onBackPressed() = when {
+        // Once the installation is being started, there is no way out.
+        !installViewModel.canGoBack -> Toast.makeText(this, R.string.install_going_back_not_possible, LENGTH_LONG).show()
+        // if InstallGuide is being displayed, switch back to fragmentContainer
+        viewPagerContainer.isVisible -> {
+            fragmentContainer.isVisible = true
+            viewPagerContainer.isVisible = false
+
+            // update toolbar state to reflect values set in `InstallMethodChooserFragment`
+            installViewModel.updateToolbarTitle(R.string.install_method_chooser_subtitle)
+            installViewModel.updateToolbarSubtitle(R.string.install_method_chooser_subtitle)
+            installViewModel.updateToolbarImage(R.drawable.list_select)
+
+            viewPager.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
         }
+        supportFragmentManager.backStackEntryCount == 1 -> finish()
+        else -> super.onBackPressed()
     }
 
     /**
-     * Handle the action from the ZIP file picker
+     * Respond to the action bar's Up/Home button.
+     * Navigating upwards [onBackPressed] respects [FragmentManager]'s back stack
      */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_FILE_PICKER && resultCode == Activity.RESULT_OK) {
-            try {
-                val uri = data?.data
-
-                // Get the zip file path from the Uri
-                settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, FileUtils.getPath(this, uri))
-                displayZipFilePath()
-            } catch (e: Throwable) {
-                logError(TAG, "Error handling root package ZIP selection", e)
-
-                settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
-                displayZipFilePath()
-            }
-        }
-
-        super.onActivityResult(resultCode, resultCode, data)
-    }
-
-    override fun onBackPressed() = handleBackAction()
-
-    /**
-     * Respond to the action bar's Up/Home button
-     */
-    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
-        handleBackAction()
-        true
-    } else {
-        super.onOptionsItemSelected(item)
-    }
-
-    private fun logInstallationStart(
-        startOs: String,
-        destinationOs: String,
-        currentOs: String,
-        successFunction: () -> AsyncTask<Void?, Void, String?>
-    ) {
-        // Create installation ID.
-        val installationId = UUID.randomUUID().toString()
-
-        settingsManager.savePreference(SettingsManager.PROPERTY_INSTALLATION_ID, installationId)
-
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        val timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString()
-        val installation = RootInstall(
-            deviceId,
-            updateMethodId,
-            InstallationStatus.STARTED,
-            installationId,
-            timestamp,
-            startOs,
-            destinationOs,
-            currentOs,
-            ""
-        )
-
-        installViewModel.logRootInstall(installation).observe(this, Observer { result: ServerPostResult? ->
-            if (result == null) {
-                logError(
-                    TAG,
-                    SubmitUpdateInstallationException("Failed to log update installation action: No response from server")
-                )
-            } else if (!result.success) {
-                logError(
-                    TAG,
-                    SubmitUpdateInstallationException("Failed to log update installation action: ${result.errorMessage}")
-                )
-            }
-
-            // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
-            successFunction.invoke()
-        })
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> onBackPressed().let { true }
+        else -> super.onOptionsItemSelected(item)
     }
 
     companion object {
+        private const val RESOURCE_ID_IMAGE = "_image"
+        private const val RESOURCE_ID_PACKAGE_DRAWABLE = "drawable"
+
+        private const val IMAGE_VARIANT_LDPI = "ldpi"
+        private const val IMAGE_VARIANT_MDPI = "mdpi"
+        private const val IMAGE_VARIANT_TVDPI = "tvdpi"
+        private const val IMAGE_VARIANT_HDPI = "hdpi"
+        private const val IMAGE_VARIANT_XHDPI = "xhdpi"
+        private const val IMAGE_VARIANT_XXHDPI = "xxhdpi"
+        private const val IMAGE_VARIANT_XXXHDPI = "xxxhdpi"
+        private const val IMAGE_VARIANT_DEFAULT = "default"
+
+        const val RESOURCE_ID_PREFIX = "install_guide_page_"
+
         const val INTENT_SHOW_DOWNLOAD_PAGE = "show_download_page"
         const val INTENT_UPDATE_DATA = "update_data"
 
-        private const val REQUEST_FILE_PICKER = 1606
-        private const val TAG = "InstallActivity"
-        private const val EXTENSION_ZIP = ".zip"
-        private const val PACKAGE_ID = "id"
-        private const val SETTINGS_SWITCH = "Switch"
+        const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
+
+        const val INSTALL_METHOD_CHOOSER_FRAGMENT_TAG = "InstallMethodChooser"
+        const val AUTOMATIC_INSTALL_FRAGMENT_TAG = "AutomaticInstall"
     }
 
-    private inner class InstallGuideSectionsPagerAdapter internal constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getItem(position: Int): Fragment {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a InstallGuideFragment.
-            val startingPage = position + if (showDownloadPage) 1 else 2
-            return newInstance(startingPage, position == 0)
-        }
+    /**
+     * A [FragmentStateAdapter] that returns a fragment corresponding to one of the sections/tabs/pages
+     */
+    private inner class InstallGuidePagerAdapter : FragmentStateAdapter(this) {
 
-        override fun destroyItem(container: ViewGroup, position: Int, fragment: Any) {
-            if (position >= count) {
-                val manager = (fragment as Fragment?)?.parentFragmentManager
+        /**
+         * This is called to instantiate the fragment for the given page.
+         * Returns an instance of [InstallGuideFragment]
+         */
+        override fun createFragment(position: Int) = InstallGuideFragment.newInstance(
+            (position + if (showDownloadPage) 1 else 2),
+            position == 0
+        )
 
-                if (manager != null) {
-                    val transaction = manager.beginTransaction()
-
-                    transaction.remove(fragment)
-                    transaction.commit()
-                }
-            }
-        }
-
-        override fun getCount(): Int {
-            // Show the predefined amount of total pages.
-            return if (showDownloadPage) NUMBER_OF_INSTALL_GUIDE_PAGES else NUMBER_OF_INSTALL_GUIDE_PAGES - 1
+        /**
+         * Show the predefined amount of total pages
+         */
+        override fun getItemCount() = if (showDownloadPage) {
+            NUMBER_OF_INSTALL_GUIDE_PAGES
+        } else {
+            NUMBER_OF_INSTALL_GUIDE_PAGES - 1
         }
     }
 }

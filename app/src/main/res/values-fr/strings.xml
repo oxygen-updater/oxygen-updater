@@ -226,7 +226,7 @@ Vous pourrez changer vos réglages plus tard si vous le souhaitez. Pour cela cli
 	<string name="install_options_reboot_after_install">"Redémarrer après l'installation"</string>
 	<string name="install_options_select_root_package">"Sélectionnez le package root à installer"</string>
 	<string name="install_options_start_install">"Commencer l'installation"</string>
-	<string name="install_options_title">"Choisissez vos options d'installation"</string>
+	<string name="install_options_subtitle">"Choisissez vos options d'installation"</string>
 	<string name="install_options_wipe_cache_partition">"Formater la partition « cache »"</string>
 	<string name="install_options_explanation_title">"Que signifient ces options ?"</string>
 	<string name="install_options_explanation_backup">"Sauvegarder mon appareil :
@@ -237,16 +237,18 @@ Quand vous sélectionnez cette option vous devez sélectionner un package root q
 Quand vous sélectionnez cette option la partition « cache » sera formatée après que la mise à jour soit installée. Cela garantira que votre appareil fonctionne de manière optimale et réduira la possibilité de bugs causés par l'installation de la mise à jour."</string>
 	<string name="install_options_explanation_reboot">"Redémarrer après l'installation :
 Quand vous sélectionnez cette option votre appareil redémarrera automatiquement sur OxygenOS après que la mise à jour soit installée. Autrement, votre appareil restera en mode Recovery à partir duquel vous pourrez installer des packages supplémentaires."</string>
-	<string name="install_select_method_title">"Comment voulez-vous installer cette mise à jour ?"</string>
-	<string name="install_select_method_automatic_title">"Installation automatique"</string>
-	<string name="install_select_method_automatic_image">"Installation automatique de l'image"</string>
-	<string name="install_select_method_automatic_description">"La voie la plus facile d'installer une mise à jour.
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">"Comment voulez-vous installer cette mise à jour ?"</string>
+	<string name="install_method_chooser_automatic_title">"Installation automatique"</string>
+	<string name="install_method_chooser_automatic_image">"Installation automatique de l'image"</string>
+	<string name="install_method_chooser_automatic_description">"La voie la plus facile d'installer une mise à jour.
 Votre appareil va redémarrer afin d'installer la mise à jour.
 
 * Requiert un accès root et le recovery TWRP"</string>
-	<string name="install_select_method_manual_title">"Installation manuelle"</string>
-	<string name="install_select_method_manual_image">"Image d'installation manuelle"</string>
-	<string name="install_select_method_manual_description">"Lisez le guide d'installation pour savoir comment installer la mise à jour. Vous apprendrez comment utiliser le mode Recovery de votre appareil."</string>
+	<string name="install_method_chooser_manual_title">"Installation manuelle"</string>
+	<string name="install_method_chooser_manual_image">"Image d'installation manuelle"</string>
+	<string name="install_method_chooser_manual_description">"Lisez le guide d'installation pour savoir comment installer la mise à jour. Vous apprendrez comment utiliser le mode Recovery de votre appareil."</string>
 	<string name="install_temporary_error">"Une erreur temporaire s'est produite pendant la préparation de l'installation de la mise à jour. Veuillez réessayer."</string>
 	<string name="install_verify_error_title">"L'installation a échouée."</string>
 	<string name="install_verify_error_nothing_installed">"Erreur lors de l'installation de la mise à jour. Aucun changement n'a été apporté au système d'exploitation de votre appareil. Veuillez réessayer d'installer la mise à jour."</string>
@@ -263,9 +265,8 @@ Votre appareil va redémarrer afin d'installer la mise à jour.
 	<string name="install_guide_no_root">"Installez la mise à jour en suivant les instructions du guide d'installation."</string>
 	<string name="install_guide_automatic_install_disabled">"Les installations automatiques ont été temporairement désactivées suite à des rapports de problèmes. Installez la mise à jour en suivant les instructions du guide d'installation."</string>
 	<string name="install_guide">"Guide d'installation"</string>
-	<string name="install_guide_title">"Guide d'installation — %1$d de %2$d"</string>
+	<string name="install_guide_subtitle">"Guide d'installation — %1$d de %2$d"</string>
 	<string name="install_guide_image_description">"Image contextuelle. Veuillez cliquer sur un endroit plus petit sur l'écran pour entendre le guide d'installation."</string>
-	<string name="install_guide_header">"Balayez vers la droite ou gauche pour naviguer entre les pages."</string>
 	<string name="install_guide_tip">"Il est recommandé d'écrire sur papier les étapes suivantes, étant donné que vous devrez éteindre votre appareil pendant l'installation de la mise à jour."</string>
 	<string name="install_guide_page_1_title">"Téléchargez la mise à jour."</string>
 	<string name="install_guide_page_1_text">"Pressez le bouton Téléchargement pour commencer à télécharger la mise à jour.

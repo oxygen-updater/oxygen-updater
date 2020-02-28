@@ -185,7 +185,7 @@
 	<string name="onboarding_finished_button">Покрените апликацију</string>
 
 	<string name="onboarding_page_1_title">Добродошли у Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Ова апликација ће вам омогућити:\n\n- Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n\n- Лако ажурирајте рутован уређај\n\n- Погледајте шта има ново у софтверу који тренутно користите\n\n- Прочитајте последње вести о OnePlus-у и OxgenOS-у\n\nПревуците лево за наставак.</string>
+	<string name="onboarding_page_1_text">Ова апликација ће вам омогућити:\n\n&#8226; Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n\n&#8226; Лако ажурирајте рутован уређај\n\n&#8226; Погледајте шта има ново у софтверу који тренутно користите\n\n&#8226; Прочитајте последње вести о OnePlus-у и OxgenOS-у\n\nПревуците лево за наставак.</string>
 	<string name="onboarding_page_1_caption">Ово није званична OnePlus апликација. Користите ову апликацију комплетно на ваш ризик. Ни OnePlus нити људи који раде на овој апликацији нису одговорни за ваше поступке, укључујући било коју штету која је настала коришћењем ове апликације.\n\nКоришћењем ове апликације прихватате услове наведене изнад.</string>
 	<string name="onboarding_page_2_title">Изаберите ваш уређај</string>
 	<string name="onboarding_page_2_caption">Обично је ваш уређај већ изабран. Ако није, изаберите уређај изнад.</string>
@@ -217,7 +217,7 @@
 	<string name="install_options_reboot_after_install">Поново покрени након инсталације</string>
 	<string name="install_options_select_root_package">Изаберите пакет рутовања…</string>
 	<string name="install_options_start_install">Покренути инсталацију</string>
-	<string name="install_options_title">Одаберите опцију инсталације</string>
+	<string name="install_options_subtitle">Одаберите опцију инсталације</string>
 	<string name="install_options_wipe_cache_partition">Обриши "cache" партицију</string>
 
 	<string name="install_options_explanation_title">Шта значе ове опције?</string>
@@ -226,14 +226,16 @@
 	<string name="install_options_explanation_wipe_cache">Обриши "cache" партицију:\nкада изаберете ову опцију "cache" партиција ће бити избрисана након инсталације ажурирања. Ово осигурава да ће ваш уређај радити оптимално, такође умањује могућност појављивања неправилности у раду након инсталације ажурирања.</string>
 	<string name="install_options_explanation_reboot">Поново покрени након инсталације:\nкада изаберете ову опцију, ваш уређај ће се аутоматски поново покренути назад у OxygenOS након инсталације ажурирања.У супротном, ваш уређај ће истати у "Recovery mode", где можете инсталирати додатне пакете.</string>
 
-	<string name="install_select_method_title">Како желите да инсталирате ово ажурирање?</string>
-	<string name="install_select_method_automatic_title">Аутоматска инсталација*</string>
-	<string name="install_select_method_automatic_image">Аутоматска инсталација слике</string>
-	<string name="install_select_method_automatic_description">Најлакши начин за инсталирање ажурирања.\nВаш уређај ће се поново покренути након инсталације.\n\n* Захтева приступ руту и "TWRP recovery".</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">Како желите да инсталирате ово ажурирање?</string>
+	<string name="install_method_chooser_automatic_title">Аутоматска инсталација*</string>
+	<string name="install_method_chooser_automatic_image">Аутоматска инсталација слике</string>
+	<string name="install_method_chooser_automatic_description">Најлакши начин за инсталирање ажурирања.\nВаш уређај ће се поново покренути након инсталације.\n\n* Захтева приступ руту и "TWRP recovery".</string>
 
-	<string name="install_select_method_manual_title">Ручна инсталација</string>
-	<string name="install_select_method_manual_image">Ручна инсталација слике</string>
-	<string name="install_select_method_manual_description">Прочитајте упуство за инсталацију. Инсталираћете ажирирање користећи Recovery mode вашег уређаја.</string>
+	<string name="install_method_chooser_manual_title">Ручна инсталација</string>
+	<string name="install_method_chooser_manual_image">Ручна инсталација слике</string>
+	<string name="install_method_chooser_manual_description">Прочитајте упуство за инсталацију. Инсталираћете ажирирање користећи Recovery mode вашег уређаја.</string>
 
 	<string name="install_temporary_error">Привремена грешка се десила приликом припреме инталације ажурирања. Молимо вас покушајте поново.</string>
 
@@ -254,25 +256,24 @@
 	<string name="install_guide_no_root">Инсталирај ажурирање према упуствима у "Упуство за инталацију"</string>
 	<string name="install_guide_automatic_install_disabled">Аутоматско инсталирање је тренутно онемогућено због пријављеног техничког проблема. Инсталирајте ажурирање према упуствима приказаним у "Упуство за инсталацију"</string>
 	<string name="install_guide">Упуство за инталацију</string>
-	<string name="install_guide_title">Упуство за инсталацију - %1$d од %2$d</string>
+	<string name="install_guide_subtitle">Упуство за инсталацију - %1$d од %2$d</string>
 	<string name="install_guide_image_description">Контекстуална слика. Молимо вас кликните на доњи део екрана да чујете инсталационо упуство..</string>
-	<string name="install_guide_header">Превуците &lt;- -&gt; да се померате по страницама.</string>
-	<string name="install_guide_tip">- Препоручљиво је да запишете све кораке на папир због тога што ћете морати да угасите уређај приликом инсталације ажурирања.</string>
+	<string name="install_guide_tip">&#8226; Препоручљиво је да запишете све кораке на папир због тога што ћете морати да угасите уређај приликом инсталације ажурирања.</string>
 
-	<string name="install_guide_page_1_title">Преузмите ажурирање.</string>
-	<string name="install_guide_page_1_text">- Притисните дугме за преузимање да започнете преузимање ажурирања.\n\n- Прогрес преузимања ће се појавити у апликацији, такође и као обавештење.\n\n- Када је преузимање завршено, видећете обавештење са текстом \"Преузимање завшено\".\nАко је дошло до грешке приликом преузимања, отворите апликацију и покушајте поново са преузимањем. Ако то не ради, проверите да ли имате интернет конекцију. У супротном, контактирајте нас. То можете учинити одласком на \" Моје апликације \" секцију на Goole Play продавници.</string>
+	<string name="install_guide_page_1_title">Преузмите ажурирање</string>
+	<string name="install_guide_page_1_text">&#8226; Притисните дугме за преузимање да започнете преузимање ажурирања.\n\n&#8226; Прогрес преузимања ће се појавити у апликацији, такође и као обавештење.\n\n&#8226; Када је преузимање завршено, видећете обавештење са текстом \"Преузимање завшено\".\nАко је дошло до грешке приликом преузимања, отворите апликацију и покушајте поново са преузимањем. Ако то не ради, проверите да ли имате интернет конекцију. У супротном, контактирајте нас. То можете учинити одласком на \" Моје апликације \" секцију на Goole Play продавници.</string>
 
-	<string name="install_guide_page_2_title">Уђите у Recovery Mode.</string>
-	<string name="install_guide_page_2_text">- Прво искључите уређај.\n\n- Затим притисните у исто време дугме за гашење и дугме за смањивање звука.\n\n- Ваш уређај ће ући у Recovery mode. Сачекајте док не видите мени recovery mode-a.</string>
+	<string name="install_guide_page_2_title">Уђите у Recovery Mode</string>
+	<string name="install_guide_page_2_text">&#8226; Прво искључите уређај.\n\n&#8226; Затим притисните у исто време дугме за гашење и дугме за смањивање звука.\n\n&#8226; Ваш уређај ће ући у Recovery mode. Сачекајте док не видите мени recovery mode-a.</string>
 
-	<string name="install_guide_page_3_title">Инсталирајте преузето ажурирање.</string>
-	<string name="install_guide_page_3_text">- У recovery менију, изаберите језик по избору. Следеће кликните на (или користите дугме за звук за навођење и дугме за гашење за селектовање) \"Install from SD\" .\n\n- Следеће листајте помоћу дугмета за смањивање звука док не дођете до реда где пише \".zip\" фајл са именом приказаним у апликацији. (Обично је то фај који почиње са \"OnePlusOxygen-\").\n\n- Инсталација ажурирања ће кренути аутоматски.</string>
+	<string name="install_guide_page_3_title">Инсталирајте преузето ажурирање</string>
+	<string name="install_guide_page_3_text">&#8226; У recovery менију, изаберите језик по избору. Следеће кликните на (или користите дугме за звук за навођење и дугме за гашење за селектовање) \"Install from SD\" .\n\n&#8226; Следеће листајте помоћу дугмета за смањивање звука док не дођете до реда где пише \".zip\" фајл са именом приказаним у апликацији. (Обично је то фај који почиње са \"OnePlusOxygen-\").\n\n&#8226; Инсталација ажурирања ће кренути аутоматски.</string>
 
-	<string name="install_guide_page_4_title">Поново покрените ваш уређај.</string>
-	<string name="install_guide_page_4_text">- Када инсталација ажурирања буде готова бићете враћени у Recovery Menu. У recovery менију, притисните на \"Reboot\".\n\n- Ваш уређај ће показати екран укључивања мало дуже.\n\n- Након тога видећете белу поруку са текстом \"Android is upgrading\", док ваше апликације буду опримизоване.</string>
+	<string name="install_guide_page_4_title">Поново покрените ваш уређај</string>
+	<string name="install_guide_page_4_text">&#8226; Када инсталација ажурирања буде готова бићете враћени у Recovery Menu. У recovery менију, притисните на \"Reboot\".\n\n&#8226; Ваш уређај ће показати екран укључивања мало дуже.\n\n&#8226; Након тога видећете белу поруку са текстом \"Android is upgrading\", док ваше апликације буду опримизоване.</string>
 
 	<string name="install_guide_page_5_title">Завршено. Уживајте у новој OxygenOS верзији!</string>
-	<string name="install_guide_page_5_text">- Након што уређај заврши са оптимизовањем ваших апликација ажурирање ће бити успешно инсталирано.\nДа бисте проверили ово, можете проверити тренутну верзију система на следећи начин:\n\n- Идите у подешавања, кликните на \"About phone\", и проверите OxygenOS верзију.\n\n- Ако вам се свиђа апликација, молимо вас оцените нас са 5 звездица на Google Play продавници!</string>
+	<string name="install_guide_page_5_text">&#8226; Након што уређај заврши са оптимизовањем ваших апликација ажурирање ће бити успешно инсталирано.\nДа бисте проверили ово, можете проверити тренутну верзију система на следећи начин:\n\n&#8226; Идите у подешавања, кликните на \"About phone\", и проверите OxygenOS верзију.\n\n&#8226; Ако вам се свиђа апликација, молимо вас оцените нас са 5 звездица на Google Play продавници!</string>
 
 	<string name="install_guide_close_button">Затвори упуство за инсталацију</string>
 

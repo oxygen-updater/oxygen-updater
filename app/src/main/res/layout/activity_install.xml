@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
@@ -19,8 +20,7 @@
 			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
 			app:maxLines="3"
 			app:multiline="true"
-			app:subtitle="@string/contribute"
-			app:title="@string/contribute_title">
+			app:title="@string/install_checking_root">
 
 			<ImageView
 				android:id="@+id/collapsingToolbarImage"
@@ -29,7 +29,7 @@
 				android:contentDescription="@string/icon"
 				android:fitsSystemWindows="true"
 				android:scaleType="centerCrop"
-				android:src="@drawable/note_add"
+				android:src="@drawable/logo_outline"
 				app:layout_collapseMode="parallax" />
 
 			<View
@@ -48,55 +48,65 @@
 		</com.google.android.material.appbar.SuperpoweredCollapsingToolbarLayout>
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<androidx.core.widget.NestedScrollView
+	<LinearLayout
+		android:id="@+id/rootStatusCheckLayout"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
 		android:orientation="vertical"
-		android:requiresFadingEdge="vertical"
+		android:padding="@dimen/spacing_default"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<LinearLayout
+		<ProgressBar
+			style="?android:progressBarStyleLarge"
+			android:layout_width="100dp"
+			android:layout_height="100dp"
+			android:layout_gravity="center" />
+
+		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical">
+			android:layout_gravity="center"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:gravity="center_horizontal"
+			android:text="@string/install_grant_root_permissions" />
+	</LinearLayout>
 
-			<TextView
-				android:id="@+id/contributeExplanation"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginTop="@dimen/spacing_default"
-				android:layout_marginEnd="@dimen/spacing_default"
-				android:text="@string/contribute_explanation" />
+	<FrameLayout
+		android:id="@+id/fragmentContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_marginTop="@dimen/spacing_default"
-				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant" />
+	<LinearLayout
+		android:id="@+id/viewPagerContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		tools:visibility="visible">
 
-			<CheckBox
-				android:id="@+id/contributeCheckbox"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginEnd="@dimen/spacing_default"
-				android:text="@string/contribute_agree" />
+		<androidx.viewpager2.widget.ViewPager2
+			android:id="@+id/viewPager"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1" />
 
-			<com.google.android.material.button.MaterialButton
-				android:id="@+id/contributeSaveButton"
-				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_margin="@dimen/spacing_default"
-				android:onClick="onSaveButtonClick"
-				android:text="@string/contribute_save"
-				app:strokeColor="?colorPrimary" />
-		</LinearLayout>
-	</androidx.core.widget.NestedScrollView>
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/backgroundVariant" />
+
+		<com.google.android.material.tabs.TabLayout
+			android:id="@+id/tabLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:background="@android:color/transparent"
+			app:tabBackground="@drawable/tab_selector"
+			app:tabGravity="center"
+			app:tabIndicatorHeight="0dp" />
+	</LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -67,7 +67,7 @@ android {
             // Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported
             buildConfigField("Boolean", "ADS_ARE_SUPPORTED", "true")
 
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
 
             isMinifyEnabled = true
             isShrinkResources = true

@@ -242,7 +242,7 @@ Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i t
 	<string name="install_options_reboot_after_install">"Riavvia dopo istallazione"</string>
 	<string name="install_options_select_root_package">"Selezione il pacchetto root da installare… "</string>
 	<string name="install_options_start_install">"Avvia istallazione"</string>
-	<string name="install_options_title">"Seleziona le tue impostazioni d'istallazione"</string>
+	<string name="install_options_subtitle">"Seleziona le tue impostazioni d'istallazione"</string>
 	<string name="install_options_wipe_cache_partition">"Cancella cache"</string>
 	<string name="install_options_explanation_title">"Cosa indicano queste opzioni? "</string>
 	<string name="install_options_explanation_backup">"Esegui il backup del dispositivo:
@@ -254,16 +254,18 @@ N.B. Il pacchetto dev'essere compatibile con la nuova versione di OOS che stai p
 Selezionando questa opzione, verrà eliminata la partizione cache dopo l'aggiornamento. Questo puo' tornare utile per assicurarti dell'ottimo andamento del tuo dispositivo. "</string>
 	<string name="install_options_explanation_reboot">"Riavvia dopo istallazione:
 Selezionando questa opzione, il tuo dispositivo si riavvierà in automatico al termine dell'istallazione. Altrimenti, il dispositivo rimarrà in modalità recovery."</string>
-	<string name="install_select_method_title">"Come vuoi installare l'aggiornamento? "</string>
-	<string name="install_select_method_automatic_title">"Istallazione automatica*"</string>
-	<string name="install_select_method_automatic_image">"Seleziona istallazione automatica"</string>
-	<string name="install_select_method_automatic_description">"Il modo più semplice per installare l'aggiornamento.
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">"Come vuoi installare l'aggiornamento? "</string>
+	<string name="install_method_chooser_automatic_title">"Istallazione automatica*"</string>
+	<string name="install_method_chooser_automatic_image">"Seleziona istallazione automatica"</string>
+	<string name="install_method_chooser_automatic_description">"Il modo più semplice per installare l'aggiornamento.
 Il tuo dispositivo si riavvierà.
 
 * Obbligatorio accesso root e recovery TWRP."</string>
-	<string name="install_select_method_manual_title">"Istallazione manuale"</string>
-	<string name="install_select_method_manual_image">"Immagine d'istallazione manuale"</string>
-	<string name="install_select_method_manual_description">"Leggi la guida per l'istallazione. Istallerai l'aggiornamento tramite la modalità recovery."</string>
+	<string name="install_method_chooser_manual_title">"Istallazione manuale"</string>
+	<string name="install_method_chooser_manual_image">"Immagine d'istallazione manuale"</string>
+	<string name="install_method_chooser_manual_description">"Leggi la guida per l'istallazione. Istallerai l'aggiornamento tramite la modalità recovery."</string>
 	<string name="install_temporary_error">"E' stato riscontrato un errore temporaneo. Per favore ritenta. "</string>
 	<string name="install_verify_error_title">"Istallazione fallita"</string>
 	<string name="install_verify_error_nothing_installed">"Errore nell'istallazione. Nessun cambiamento e' stato effettuato sul tuo dispostivio. Riprova."</string>
@@ -280,31 +282,30 @@ Il tuo dispositivo si riavvierà.
 	<string name="install_guide_no_root">"Istalla secondo le istruzioni mostrate nella guida."</string>
 	<string name="install_guide_automatic_install_disabled">"Le istallazioni automatiche sono state temporaneamente disabilitate a causa di un problema tecnico. Istalla l'aggiornamento secondo le istruzioni mostrate nella guida."</string>
 	<string name="install_guide">"Guida d'istallazione"</string>
-	<string name="install_guide_title">"Guida - %1$d of %2$d"</string>
+	<string name="install_guide_subtitle">"Guida - %1$d of %2$d"</string>
 	<string name="install_guide_image_description">"Immagine contestuale. Premi su un posto inferiore sullo schermo per ascoltare la guida."</string>
-	<string name="install_guide_header">"Trascina &lt;- -&gt; per navigare le pagine."</string>
-	<string name="install_guide_tip">"- E' consigliato scriversi tutti i passaggi, giacche' e' ecessario spegnere il dispositivo durante l'istallazione."</string>
+	<string name="install_guide_tip">"&#8226; E' consigliato scriversi tutti i passaggi, giacche' e' ecessario spegnere il dispositivo durante l'istallazione."</string>
 	<string name="install_guide_page_1_title">"Scarica l'aggiornamento."</string>
-	<string name="install_guide_page_1_text">"- Premi il bottone Download per iniziare a scaricare.
+	<string name="install_guide_page_1_text">"&#8226; Premi il bottone Download per iniziare a scaricare.
 
 - Il progresso apparirà nell'app e come notifica.
 
 - Al termine del download, riceverai una notifica con il testo \"Download completato\".
 Se e' stato riscontrato un errore, apri l'app e ritenta il download. Assicurati di avere una connessione internet funzionante."</string>
 	<string name="install_guide_page_2_title">"Entra in modalità recovery."</string>
-	<string name="install_guide_page_2_text">"- Come prima cosa, spegni il tuo dispositivo.
+	<string name="install_guide_page_2_text">"&#8226; Come prima cosa, spegni il tuo dispositivo.
 
 - Poi, premi il bottone di accensione e quello di volume in basso allo stesso momento.
 
 - Il tuo dispositivo ora enterà in modalità Recovery. Aspetta finche' appare il menu."</string>
 	<string name="install_guide_page_3_title">"Istalla l'aggiornamento scaricato."</string>
-	<string name="install_guide_page_3_text">"- Dentro il menu, scegli la tua lingua. Poi, premi (o usa i bottoni di volume per navigare) \"istalla da SD\".
+	<string name="install_guide_page_3_text">"&#8226; Dentro il menu, scegli la tua lingua. Poi, premi (o usa i bottoni di volume per navigare) \"istalla da SD\".
 
 - Continua giu' finche' non giungi ad un riga con il tuo file \".zip\" mostrato all'interno dell'app. (Di solito, inizia per \"OnePlusOxygen-\").
 
 - L'istallazione partirà in automatico."</string>
 	<string name="install_guide_page_4_title">"Riavvia il tuo dispositivo."</string>
-	<string name="install_guide_page_4_text">"- Al termine dell'istallazione, tornerai alla Recovery. Dentro di essa, premi \"Reboot\".
+	<string name="install_guide_page_4_text">"&#8226; Al termine dell'istallazione, tornerai alla Recovery. Dentro di essa, premi \"Reboot\".
 
 - Il tuo dispositivo ci metterà più del solito al primo avvio. "</string>
 	<string name="install_guide_page_5_title">"Fine. Buon divertimento!"</string>

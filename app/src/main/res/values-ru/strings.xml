@@ -247,7 +247,7 @@
 	<string name="install_options_reboot_after_install">"Перезагрузить после установки"</string>
 	<string name="install_options_select_root_package">"Выберите файл установки рута"</string>
 	<string name="install_options_start_install">"Начать установку"</string>
-	<string name="install_options_title">"Выберите настройки установки"</string>
+	<string name="install_options_subtitle">"Выберите настройки установки"</string>
 	<string name="install_options_wipe_cache_partition">"Очистить кэш (cache partition)"</string>
 	<string name="install_options_explanation_title">"Что эти настройки означают?"</string>
 	<string name="install_options_explanation_backup">"Резервная копия устройства:
@@ -258,16 +258,18 @@
 При выборе этой опции, раздел кэша будет очищен после установки обновлерия. Это гарантирует стабильную работу устройства и снижает вероятность возникновения ошибок, вызванных установкой обновления."</string>
 	<string name="install_options_explanation_reboot">"Перезагрузить после установки:
 При выборе этой опции ваше устройство автоматически загрузится в систему после установки обновления. В противном случае ваше устройство останется в рекавери, где вы можете установить дополнительные архивы."</string>
-	<string name="install_select_method_title">"Как вы хотите установить обновление?"</string>
-	<string name="install_select_method_automatic_title">"Автоматическая установка*"</string>
-	<string name="install_select_method_automatic_image">"Изображение автоматической установки"</string>
-	<string name="install_select_method_automatic_description">"Самый простой способ установки.
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">"Как вы хотите установить обновление?"</string>
+	<string name="install_method_chooser_automatic_title">"Автоматическая установка*"</string>
+	<string name="install_method_chooser_automatic_image">"Изображение автоматической установки"</string>
+	<string name="install_method_chooser_automatic_description">"Самый простой способ установки.
 Устройство перезагрузится для установки обновления.
 
 * Требуются рут-права и TWRP рекавери."</string>
-	<string name="install_select_method_manual_title">"Ручная установка"</string>
-	<string name="install_select_method_manual_image">"Изображение ручной установки"</string>
-	<string name="install_select_method_manual_description">"Прочтите руководство по установке, чтобы узнать, как установить обновление. Вы установите обновление, используя режим восстановления вашего устройства."</string>
+	<string name="install_method_chooser_manual_title">"Ручная установка"</string>
+	<string name="install_method_chooser_manual_image">"Изображение ручной установки"</string>
+	<string name="install_method_chooser_manual_description">"Прочтите руководство по установке, чтобы узнать, как установить обновление. Вы установите обновление, используя режим восстановления вашего устройства."</string>
 	<string name="install_temporary_error">"При подготовке установки обновления произошла временная ошибка. Повторите попытку."</string>
 	<string name="install_verify_error_title">"Ошибка установки"</string>
 	<string name="install_verify_error_nothing_installed">"Ошибка при установке обновления. Никакие изменения не были внесены в ПО вашего устройства. Попробуйте установить обновление еще раз."</string>
@@ -284,12 +286,11 @@
 	<string name="install_guide_no_root">"Установите обновление, следуя инструкциям в руководстве по установке."</string>
 	<string name="install_guide_automatic_install_disabled">"Автоматические установки были временно отключены из-за технических проблем. Установите обновление в соответствии с инструкциями, приведенными в руководстве по установке."</string>
 	<string name="install_guide">"Руководство по установке"</string>
-	<string name="install_guide_title">"Руководство по установке - %1$d of %2$d"</string>
+	<string name="install_guide_subtitle">"Руководство по установке - %1$d of %2$d"</string>
 	<string name="install_guide_image_description">"Контекстное изображение. Нажмите на нижнюю часть экрана, чтобы услышать руководство по установке."</string>
-	<string name="install_guide_header">"Проведите &lt;- -&gt; для навигации."</string>
-	<string name="install_guide_tip">"- Рекомендуется записать все шаги установки, так как потребуется отключить устройство во время обновления."</string>
+	<string name="install_guide_tip">"&#8226; Рекомендуется записать все шаги установки, так как потребуется отключить устройство во время обновления."</string>
 	<string name="install_guide_page_1_title">"Загрузить обновление."</string>
-	<string name="install_guide_page_1_text">"- Нажмите кнопку Загрузить для скачивания обновления.
+	<string name="install_guide_page_1_text">"&#8226; Нажмите кнопку Загрузить для скачивания обновления.
 
 - Прогресс загрузки будет отображаться в приложении и в уведомлении.
 
@@ -297,25 +298,25 @@
 Если произошла ошибка загрузки, откройте приложение и попробуйте снова загрузить обновление. Если это не работает, убедитесь, что у вас работает интернет подключение.
 В противном случае обратитесь к разработчику приложения. Вы можете сделать это, посетив раздел «Мои приложения» в Google Play Mаркет."</string>
 	<string name="install_guide_page_2_title">"Зайти в режим восстановления."</string>
-	<string name="install_guide_page_2_text">"- Выключите устройство.
+	<string name="install_guide_page_2_text">"&#8226; Выключите устройство.
 
 - Зажмите одновременно кнопку выключения и громкости вниз
 
 - Ваше устройство перейдет в режим восстановления. Подождите, пока не увидите меню рекавери на экране."</string>
 	<string name="install_guide_page_3_title">"Установка загруженного обновления."</string>
-	<string name="install_guide_page_3_text">"- В меню рекавери сначала выберите нужный язык. Затем нажмите (или используйте кнопки громкости для навигации и кнопку питания для выбора) «Install from SD».
+	<string name="install_guide_page_3_text">"&#8226; В меню рекавери сначала выберите нужный язык. Затем нажмите (или используйте кнопки громкости для навигации и кнопку питания для выбора) «Install from SD».
 
 - Затем прокрутите вниз с помощью клавиши уменьшения громкости, пока не найдете строку с файлом «.zip» с именем файла, отображаемым в приложении. (Обычно название файла начинается с \"OnePlusOxygen-\").
 
 - Установка обновления начнется автоматически."</string>
 	<string name="install_guide_page_4_title">"Перезагрузите устройство."</string>
-	<string name="install_guide_page_4_text">"- Когда установка обновления будет завершена, вы вернетесь в меню рекавери. Там же нажмите \"Reboot\".
+	<string name="install_guide_page_4_text">"&#8226; Когда установка обновления будет завершена, вы вернетесь в меню рекавери. Там же нажмите \"Reboot\".
 
 - Устройство будет загружаться дольше обычного во время первого запуска.
 
 - После этого вы увидите белое сообщение с заголовком «Android обновляется», в то время как ваши приложения оптимизируются."</string>
 	<string name="install_guide_page_5_title">"Готово. Наслаждайтесь новой версией OxygenOS!"</string>
-	<string name="install_guide_page_5_text">"- После завершения оптимизации приложений, обновление установлено успешно.
+	<string name="install_guide_page_5_text">"&#8226; После завершения оптимизации приложений, обновление установлено успешно.
 Чтобы проверить это, вы можете узнать текущую версию системы следующим образом::
 
 - Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.

@@ -182,7 +182,7 @@
 	<string name="onboarding_finished_button">アプリの開始</string>
 
 	<string name="onboarding_page_1_title">Oxygen Updater にようこそ!</string>
-	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n- OxygenOS搭載デバイスの最新のAndroidアップデートを高速アクセスで取得\n\n- ルート化済デバイスを簡単に更新\n\n- 現在使用しているシステムソフトウェアの最新情報を表示\n\n- OnePlusとOxygenOSに関する最新ニュースを読む\n\n続行するには左にスワイプします。</string>
+	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n&#8226; OxygenOS搭載デバイスの最新のAndroidアップデートを高速アクセスで取得\n\n&#8226; ルート化済デバイスを簡単に更新\n\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n\n&#8226; OnePlusとOxygenOSに関する最新ニュースを読む\n\n続行するには左にスワイプします。</string>
 	<string name="onboarding_page_1_caption">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlusもアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。\n\nこのアプリを使用すると、上記の利用規約に同意したことになります。</string>
 	<string name="onboarding_page_2_title">あなたのデバイスを選択</string>
 	<string name="onboarding_page_2_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
@@ -214,7 +214,7 @@
 	<string name="install_options_reboot_after_install">インストール後に再起動する</string>
 	<string name="install_options_select_root_package">インストール対象のルートパッケージを選択…</string>
 	<string name="install_options_start_install">インストールの開始</string>
-	<string name="install_options_title">インストールオプションの選択</string>
+	<string name="install_options_subtitle">インストールオプションの選択</string>
 	<string name="install_options_wipe_cache_partition">cacheパーティションの消去</string>
 
 	<string name="install_options_explanation_title">これらのオプションの意味は?</string>
@@ -223,14 +223,16 @@
 	<string name="install_options_explanation_wipe_cache">cacheパテーションの消去:\n本オプションの選択時、アップデート完了後にキャッシュパテーションが消去されます。これにより、デバイスが最適に動作し、更新プログラムのインストールに起因するバグが発生する可能性が低くなります。</string>
 	<string name="install_options_explanation_reboot">インストール後に再起動:\n本オプションの選択時アップデート完了後にデバイスは再起動され自動的にOxygenOS が立ち上がります。非選択時はアップデート後もデバイスはリカバリモードのままとなり、追加パッケージのインストールが可能です。</string>
 
-	<string name="install_select_method_title">このアップデートをインストールする必要はありますか?</string>
-	<string name="install_select_method_automatic_title">自動インストール*</string>
-	<string name="install_select_method_automatic_image">イメージの自動インストール</string>
-	<string name="install_select_method_automatic_description">アップデートをインストールする最も簡単な方法。\nデバイスを再起動してアップデートをインストールします。\n\n*ルートアクセスとTWRP リカバリが必要です。</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">このアップデートをインストールする必要はありますか?</string>
+	<string name="install_method_chooser_automatic_title">自動インストール*</string>
+	<string name="install_method_chooser_automatic_image">イメージの自動インストール</string>
+	<string name="install_method_chooser_automatic_description">アップデートをインストールする最も簡単な方法。\nデバイスを再起動してアップデートをインストールします。\n\n*ルートアクセスとTWRP リカバリが必要です。</string>
 
-	<string name="install_select_method_manual_title">手動インストール</string>
-	<string name="install_select_method_manual_image">イメージの手動インストール</string>
-	<string name="install_select_method_manual_description">ガイドを読み、アップデートをインストール方法について理解して下さい。デバイスのリカバリモードを使用してアップデートをインストールできます。</string>
+	<string name="install_method_chooser_manual_title">手動インストール</string>
+	<string name="install_method_chooser_manual_image">イメージの手動インストール</string>
+	<string name="install_method_chooser_manual_description">ガイドを読み、アップデートをインストール方法について理解して下さい。デバイスのリカバリモードを使用してアップデートをインストールできます。</string>
 
 	<string name="install_temporary_error">アップデートのインストール準備中に一時的なエラーが発生しました。再試行して下さい。</string>
 
@@ -251,25 +253,24 @@
 	<string name="install_guide_no_root">インストールガイドに示されている指示に従い、アップデートをインストールします。</string>
 	<string name="install_guide_automatic_install_disabled">技術的な問題により自動インストールは一時的に無効にされました。インストールガイドに示されている指示に従い、アップデートをインストールして下さい。</string>
 	<string name="install_guide">インストールガイド</string>
-	<string name="install_guide_title">インストールガイド - %1$d of %2$d</string>
+	<string name="install_guide_subtitle">インストールガイド - %1$d of %2$d</string>
 	<string name="install_guide_image_description">コンテキスト画像。 画面の下部をタップして、インストールガイドを聞いてください。</string>
-	<string name="install_guide_header">スワイプ &lt;- -&gt; ページ間の移動</string>
-	<string name="install_guide_tip">- 更新プログラムのインストール中にデバイスの電源を切る必要があるため、すべての手順を書き留めておくことをお勧めします。</string>
+	<string name="install_guide_tip">&#8226; 更新プログラムのインストール中にデバイスの電源を切る必要があるため、すべての手順を書き留めておくことをお勧めします。</string>
 
 	<string name="install_guide_page_1_title">アップデートのダウンロード</string>
-	<string name="install_guide_page_1_text">- ダウンロードボタンを押して、更新プログラムのダウンロードを開始します。\n\n- ダウンロードの進行状況がアプリに表示され、通知画面に通知として表示されます。\n\n- ダウンロードが完了すると、\"ダウンロード完了\"というテキストの通知が表示されます。\nダウンロードエラーが発生した場合は、アプリを開き、更新プログラムのダウンロードを再試行してください。機能しない場合は、接続が機能していることを確認してください。それ以外の場合は、Google Playストアの\"マイアプリ\"セクションにアクセスし、アプリの開発者に連絡してください。</string>
+	<string name="install_guide_page_1_text">&#8226; ダウンロードボタンを押して、更新プログラムのダウンロードを開始します。\n\n&#8226; ダウンロードの進行状況がアプリに表示され、通知画面に通知として表示されます。\n\n&#8226; ダウンロードが完了すると、\"ダウンロード完了\"というテキストの通知が表示されます。\nダウンロードエラーが発生した場合は、アプリを開き、更新プログラムのダウンロードを再試行してください。機能しない場合は、接続が機能していることを確認してください。それ以外の場合は、Google Playストアの\"マイアプリ\"セクションにアクセスし、アプリの開発者に連絡してください。</string>
 
 	<string name="install_guide_page_2_title">リカバリモードの起動</string>
-	<string name="install_guide_page_2_text">- デバイスの電源を切り\n\n- 電源ボタンとボリウムダウンボタンを同時に押します。\n\n- デバイスはリカバリモードで起動し、リカバリメニューが表示されるまで待ちます。</string>
+	<string name="install_guide_page_2_text">&#8226; デバイスの電源を切り\n\n&#8226; 電源ボタンとボリウムダウンボタンを同時に押します。\n\n&#8226; デバイスはリカバリモードで起動し、リカバリメニューが表示されるまで待ちます。</string>
 
 	<string name="install_guide_page_3_title">ダウンロード済みアップデートのインストール</string>
-	<string name="install_guide_page_3_text">- リカバリメニューで希望の言語を選択します。次に\"SDからのインストール\"をタップ（もしくはボリウムボタンで選択して電源ボタンで決定）します。\n\n- さらにアプリ内に表示されているファイル名の\".zip\"ファイル行が見つかるまで、ボリウムダウンキーを使用して下にスクロールします（通常、これは\"OnePlusOxygen- \"で始まるファイルです）。\n\n- 更新プログラムのインストールが自動的に開始されます。</string>
+	<string name="install_guide_page_3_text">&#8226; リカバリメニューで希望の言語を選択します。次に\"SDからのインストール\"をタップ（もしくはボリウムボタンで選択して電源ボタンで決定）します。\n\n&#8226; さらにアプリ内に表示されているファイル名の\".zip\"ファイル行が見つかるまで、ボリウムダウンキーを使用して下にスクロールします（通常、これは\"OnePlusOxygen- \"で始まるファイルです）。\n\n&#8226; 更新プログラムのインストールが自動的に開始されます。</string>
 
 	<string name="install_guide_page_4_title">デバイスの再起動</string>
-	<string name="install_guide_page_4_text">- アップデートのインストール終了後、リカバリメニューに戻ります。リカバリメニューで\"再起動\"をタップします。\n\n- 再起動後のスタートアップで長時間スタートアップスクリーンが表示されるでしょう。\n\n- その後、アプリケーションの最適化中に\"Android はアップデート中です\" と表示された白いメッセージが出現します。</string>
+	<string name="install_guide_page_4_text">&#8226; アップデートのインストール終了後、リカバリメニューに戻ります。リカバリメニューで\"再起動\"をタップします。\n\n&#8226; 再起動後のスタートアップで長時間スタートアップスクリーンが表示されるでしょう。\n\n&#8226; その後、アプリケーションの最適化中に\"Android はアップデート中です\" と表示された白いメッセージが出現します。</string>
 
 	<string name="install_guide_page_5_title">完了。新しいOxygenOSバージョンを使用して下さい!</string>
-	<string name="install_guide_page_5_text">- デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n- 設定に移動し\"端末情報\"をタップしOxygenOS バージョンを確認します。\n\n- このアプリが気に入ったら、Google Playで５つ星をつけて下さい!</string>
+	<string name="install_guide_page_5_text">&#8226; デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n&#8226; 設定に移動し\"端末情報\"をタップしOxygenOS バージョンを確認します。\n\n&#8226; このアプリが気に入ったら、Google Playで５つ星をつけて下さい!</string>
 
 	<string name="install_guide_close_button">インストールガイドを閉じる</string>
 

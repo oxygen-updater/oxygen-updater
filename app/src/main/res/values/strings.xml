@@ -208,7 +208,7 @@
 	<string name="onboarding_finished_button">Start app</string>
 
 	<string name="onboarding_page_1_title">Welcome to Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">This app will allow you to:\n\n- Get faster access to the latest Android updates for your OxygenOS powered device\n\n- Easily update a rooted device\n\n- View what\'s new in the system software you are currently using\n\n- Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
+	<string name="onboarding_page_1_text">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS powered device\n\n&#8226; Easily update a rooted device\n\n&#8226; View what\'s new in the system software you are currently using\n\n&#8226; Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
 	<string name="onboarding_page_1_caption">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app.\n\nBy using this app, you agree to the terms and conditions as stated above.</string>
 	<string name="onboarding_page_2_title">Choose your device</string>
 	<string name="onboarding_page_2_caption">Your device is usually already selected above. If not, select your device above.</string>
@@ -240,7 +240,7 @@
 	<string name="install_options_reboot_after_install">Reboot after installation</string>
 	<string name="install_options_select_root_package">Select the root package to install…</string>
 	<string name="install_options_start_install">Start installation</string>
-	<string name="install_options_title">Choose your install options</string>
+	<string name="install_options_subtitle">Choose your install options</string>
 	<string name="install_options_wipe_cache_partition">Wipe the cache partition</string>
 
 	<string name="install_options_explanation_title">What do these options mean?</string>
@@ -249,14 +249,16 @@
 	<string name="install_options_explanation_wipe_cache">Wipe the cache partition:\nWhen you select this option, the cache partition will be wiped after the update has been installed. This ensures your device performs optimally and also reduces the likelihood of experiencing bugs caused by the installation of the update.</string>
 	<string name="install_options_explanation_reboot">Reboot after installation:\nWhen you select this option, your device will automatically reboot back to OxygenOS after the update is installed. Otherwise, your device will stay in Recovery Mode, where you can install additional packages.</string>
 
-	<string name="install_select_method_title">How do you want to install this update?</string>
-	<string name="install_select_method_automatic_title">Automatic installation*</string>
-	<string name="install_select_method_automatic_image">Automatic installation image</string>
-	<string name="install_select_method_automatic_description">The easiest way to install the update.\nYour device will restart to install the update.\n\n* Requires root access and TWRP recovery.</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">How do you want to install this update?</string>
+	<string name="install_method_chooser_automatic_title">Automatic installation*</string>
+	<string name="install_method_chooser_automatic_image">Automatic installation image</string>
+	<string name="install_method_chooser_automatic_description">The easiest way to install the update.\nYour device will restart to install the update.\n\n* Requires root access and TWRP recovery.</string>
 
-	<string name="install_select_method_manual_title">Manual installation</string>
-	<string name="install_select_method_manual_image">Manual installation image</string>
-	<string name="install_select_method_manual_description">Read the install guide to learn how to install the update. You will install the update using the Recovery Mode of your device.</string>
+	<string name="install_method_chooser_manual_title">Manual installation</string>
+	<string name="install_method_chooser_manual_image">Manual installation image</string>
+	<string name="install_method_chooser_manual_description">Read the install guide to learn how to install the update. You will install the update using the Recovery Mode of your device.</string>
 
 	<string name="install_temporary_error">A temporary error occurred while preparing the installation of the update. Please try it again.</string>
 
@@ -277,25 +279,24 @@
 	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide_automatic_install_disabled">Automatic installations have been temporarily disabled due to reported technical issues. Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide">Install guide</string>
-	<string name="install_guide_title">Install guide - %1$d of %2$d</string>
+	<string name="install_guide_subtitle">Install guide - %1$d of %2$d</string>
 	<string name="install_guide_image_description">Contextual image. Please tap on a lower place on the screen to hear the install guide.</string>
-	<string name="install_guide_header">Swipe &lt;- -&gt; to navigate between pages.</string>
-	<string name="install_guide_tip">- It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
+	<string name="install_guide_tip">&#8226; It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
 
-	<string name="install_guide_page_1_title">Download the update.</string>
-	<string name="install_guide_page_1_text">- Press the Download button to start downloading the update.\n\n- The download progress will appear in the app, and as a notification in your notifications screen.\n\n- When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
+	<string name="install_guide_page_1_title">Download the update</string>
+	<string name="install_guide_page_1_text">&#8226; Press the Download button to start downloading the update.\n\n&#8226; The download progress will appear in the app, and as a notification in your notifications screen.\n\n&#8226; When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
 
-	<string name="install_guide_page_2_title">Enter Recovery Mode.</string>
-	<string name="install_guide_page_2_text">- First, power off your device.\n\n- Then, press both the power and the volume down buttons at the same time.\n\n- Your device will now start in Recovery Mode. Wait until you see the recovery menu on your screen.</string>
+	<string name="install_guide_page_2_title">Enter Recovery Mode</string>
+	<string name="install_guide_page_2_text">&#8226; First, power off your device.\n\n&#8226; Then, press both the power and the volume down buttons at the same time.\n\n&#8226; Your device will now start in Recovery Mode. Wait until you see the recovery menu on your screen.</string>
 
-	<string name="install_guide_page_3_title">Install the downloaded update.</string>
-	<string name="install_guide_page_3_text">- Within the recovery menu, choose your desired language first. Next, tap on (or use the volume buttons to navigate and the power button to select) \"Install from SD\".\n\n- Next, scroll down using the volume down key until you find a row with the \".zip\" file with the file name shown within the app. (Usually, this is a file starting with \"OnePlusOxygen-\").\n\n- Installation of the update will start automatically.</string>
+	<string name="install_guide_page_3_title">Install the downloaded update</string>
+	<string name="install_guide_page_3_text">&#8226; Within the recovery menu, choose your desired language first. Next, tap on (or use the volume buttons to navigate and the power button to select) \"Install from SD\".\n\n&#8226; Next, scroll down using the volume down key until you find a row with the \".zip\" file with the file name shown within the app. (Usually, this is a file starting with \"OnePlusOxygen-\").\n\n&#8226; Installation of the update will start automatically.</string>
 
-	<string name="install_guide_page_4_title">Restart your device.</string>
-	<string name="install_guide_page_4_text">- When the installation of the update is finished, you\'ll be back at the Recovery Menu. Within the recovery menu, tap on \"Reboot\".\n\n- Your device will show its startup screen for a long time during starting up.\n\n- Afterwards, you\'ll see a white message with the title \"Android is upgrading\", while your apps are being optimized.</string>
+	<string name="install_guide_page_4_title">Restart your device</string>
+	<string name="install_guide_page_4_text">&#8226; When the installation of the update is finished, you\'ll be back at the Recovery Menu. Within the recovery menu, tap on \"Reboot\".\n\n&#8226; Your device will show its startup screen for a long time during starting up.\n\n&#8226; Afterwards, you\'ll see a white message with the title \"Android is upgrading\", while your apps are being optimized.</string>
 
 	<string name="install_guide_page_5_title">Done. Enjoy the new OxygenOS version!</string>
-	<string name="install_guide_page_5_text">- After your device has finished optimizing its apps, the update has been successfully installed.\nTo verify this, you can check the current version of your system as following:\n\n- Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.\n\n- If you like this app, give it 5 stars at Google Play!</string>
+	<string name="install_guide_page_5_text">&#8226; After your device has finished optimizing its apps, the update has been successfully installed.\nTo verify this, you can check the current version of your system as following:\n\n&#8226; Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.\n\n&#8226; If you like this app, give it 5 stars at Google Play!</string>
 
 	<string name="install_guide_close_button">Close Installation Guide</string>
 

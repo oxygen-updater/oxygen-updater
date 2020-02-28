@@ -233,7 +233,7 @@ Voit aina muuttaa asetuksiasi myöhemmin napsauttamalla oikealta yläkulmasta ko
 	<string name="install_options_reboot_after_install">"Käynnistä uudelleen asennuksen jälkeen"</string>
 	<string name="install_options_select_root_package">"Valitse asennettava root paketti"</string>
 	<string name="install_options_start_install">"Aloita asennus"</string>
-	<string name="install_options_title">"Valise asennuksen vaihtoehdot"</string>
+	<string name="install_options_subtitle">"Valise asennuksen vaihtoehdot"</string>
 	<string name="install_options_wipe_cache_partition">"Pyyhi välimuisti osio"</string>
 	<string name="install_options_explanation_title">"Mitä nämä vaihtoehdot tarkoittavat?"</string>
 	<string name="install_options_explanation_backup">"Varmuuskopio laitteeni:
@@ -244,16 +244,18 @@ Kun valitset tämän vaihtoehdon voit valita root paketin joka asennetaan päivi
 Kun valitset tämän vaihtoehdon välimuistiosio pyyhitään automaattisesti kun asennus on suoritettu. Tämä varmistaa, että laitteesi suorityskyky on optimaalinen ja vähentää samalla myös bugien mahdollisuutta päivityksestä johtuen."</string>
 	<string name="install_options_explanation_reboot">"Käynnistä uudelleen asennuksen jälkeen:
 Kun valitset tämän vaihtoehdon laitteesi käynnistätään uudelleen automaattisesti OxygenOS:sään kun päivitys on asennettu. Muussa tapauksessa laitteesi pysyy palautustilassa, jossa voit asentaa ylimääräisiä lisäpaketteja."</string>
-	<string name="install_select_method_title">"Kuinka haluat asentaa tämän päivityksen?"</string>
-	<string name="install_select_method_automatic_title">"Automaattinen asennus*"</string>
-	<string name="install_select_method_automatic_image">"Automaattisen asennuksen levykuva"</string>
-	<string name="install_select_method_automatic_description">"Helpoin tapa asentaa päivitys.
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">"Kuinka haluat asentaa tämän päivityksen?"</string>
+	<string name="install_method_chooser_automatic_title">"Automaattinen asennus*"</string>
+	<string name="install_method_chooser_automatic_image">"Automaattisen asennuksen levykuva"</string>
+	<string name="install_method_chooser_automatic_description">"Helpoin tapa asentaa päivitys.
 Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
 
 * vaatii root oikeuden ja TWRP recoveryn."</string>
-	<string name="install_select_method_manual_title">"Manuaalinen asennus"</string>
-	<string name="install_select_method_manual_image">"Manuaalisen asennuksen levykuva"</string>
-	<string name="install_select_method_manual_description">"Lue asennusohje oppiaksesi kuinka päivitys asennetaan. Asennat päivityksen käyttäen laitteesi palautustilaa."</string>
+	<string name="install_method_chooser_manual_title">"Manuaalinen asennus"</string>
+	<string name="install_method_chooser_manual_image">"Manuaalisen asennuksen levykuva"</string>
+	<string name="install_method_chooser_manual_description">"Lue asennusohje oppiaksesi kuinka päivitys asennetaan. Asennat päivityksen käyttäen laitteesi palautustilaa."</string>
 	<string name="install_temporary_error">"Tilapäinen virhe ilmeni kun valmisteltiin päivityksen asennusta. Ole hyvä ja yritä uudelleen."</string>
 	<string name="install_verify_error_title">"Asennus epäonnistui"</string>
 	<string name="install_verify_error_nothing_installed">"Virhe päivitystä asennettaessa. Mitään muutoksia ei tehty laitteen ohjelmistoon. Yritä asentaa päivitys uudelleen."</string>
@@ -270,38 +272,37 @@ Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
 	<string name="install_guide_no_root">"Asenna päivitys asennusohjeen mukaisesti"</string>
 	<string name="install_guide_automatic_install_disabled">"Automaattiset asennukset on tilapäisesti poissa käytöstä raportoitujen teknisten ongelmien vuoksi. Asenna päivitys asennusohjeen mukaisesti."</string>
 	<string name="install_guide">"Asennusohje"</string>
-	<string name="install_guide_title">"Install guide - %1$d / %2$d"</string>
+	<string name="install_guide_subtitle">"Install guide - %1$d / %2$d"</string>
 	<string name="install_guide_image_description">"Sisältökuva. Ole hyvä ja napsauta alapuolelta kuullaksesi asennusohjeet."</string>
-	<string name="install_guide_header">"Pyyhkäise &lt;- -&gt; navigoidaksesi sivujen välillä."</string>
-	<string name="install_guide_tip">"- On suositeltavaa kirjoittaa kaikki vaiheet ylös, koska laitteen virta tulee katkaista päivitystä asennettaessa."</string>
+	<string name="install_guide_tip">"&#8226; On suositeltavaa kirjoittaa kaikki vaiheet ylös, koska laitteen virta tulee katkaista päivitystä asennettaessa."</string>
 	<string name="install_guide_page_1_title">"Lataa päivitys"</string>
-	<string name="install_guide_page_1_text">"- Paina lataa painiketta käynnistääksesi päivityksen lataamisen.
+	<string name="install_guide_page_1_text">"&#8226; Paina lataa painiketta käynnistääksesi päivityksen lataamisen.
 
 - Latauksen edistyminen tulee näkyviin sovelluksessa ja ilmoituksena ilmoituskeskuksessa.
 
 - Kun lataus on valmistunut näet ilmoituksen \"Lataus valmis\".
 Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudelleen. Jos tämä ei toimi varmista, että sinulla on toimiva yhteys. Muutoin olen yhteydessä sovelluksen kehittäjään. Voit tehdä tämän myös vierailemalla \"Omat sovellukset\" osiossa Play Kaupassa."</string>
 	<string name="install_guide_page_2_title">"Siirry palautustilaan (Recovery Mode)"</string>
-	<string name="install_guide_page_2_text">"- Ensin katkaise laitttesta virta.
+	<string name="install_guide_page_2_text">"&#8226; Ensin katkaise laitttesta virta.
 
 - Paina virta- ja äänenvoimakkuus alas painikkkeita yhtäaikaa
 
 - Laitteesi käynnistyy nyt palautustilassa. Odota että palautustilan valikon näytölläsi."</string>
 	<string name="install_guide_page_3_title">"Asenna ladattu päivitys."</string>
-	<string name="install_guide_page_3_text">"- Palautustilassa valitse ensin haluamasi kieli
+	<string name="install_guide_page_3_text">"&#8226; Palautustilassa valitse ensin haluamasi kieli
 Seuraavaksi napsauta (tai käytä äänenvoimakkuus näppäimiä navigoimiseen ja virtanäppäintä valitsemiseen) \"Install from SD\".
 
 - Seuraavaksi rullaa alas äänenvoimakkuus alas näppäimellä kunnes löydät .\"zip\" tiedoston jonka nimi on sama sovelluksessa näytetyn kanssa. (Yleensä tiedoston nimi alkaa \"OnePlusOxygen-\").
 
 - Päivityksen asennus alkaa automaattisesti."</string>
 	<string name="install_guide_page_4_title">"Käynnistä laitteesi uudelleen."</string>
-	<string name="install_guide_page_4_text">"- Kun päivityksen asennus on valmistunut, palaat takaisin palautustilan valikon alkuun. Valikosta valitse \"Reboot\".
+	<string name="install_guide_page_4_text">"&#8226; Kun päivityksen asennus on valmistunut, palaat takaisin palautustilan valikon alkuun. Valikosta valitse \"Reboot\".
 
 - Laitteesi näyttää käynnistyksen kuvaa pitkään käynnistyksen yhteydessä.
 
 - Tämän jälkeen näet valkoisen viestit otsikolla \"Android is upgrading\", kun sovelluksiasi optimoidaan."</string>
 	<string name="install_guide_page_5_title">"Valmis. Nauti uudesta OxygenOS versiosta!"</string>
-	<string name="install_guide_page_5_text">"- Kun laitteesi on viimeistellyt sovellusten optimoinnin, asennus on onnistuneesti suoritettu.
+	<string name="install_guide_page_5_text">"&#8226; Kun laitteesi on viimeistellyt sovellusten optimoinnin, asennus on onnistuneesti suoritettu.
 Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavasti:
 
 - Mene asetuksiin, napsauta \"Tietoja puhelimesta\" ja tarkista OxygenOS versio.

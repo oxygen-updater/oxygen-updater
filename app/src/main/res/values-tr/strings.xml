@@ -181,7 +181,7 @@
 	<string name="onboarding_finished_button">Uygulamayı başlat</string>
 
 	<string name="onboarding_page_1_title">Oxygen Updatera hoşgeldiniz!</string>
-	<string name="onboarding_page_1_text">Bu uygulama size:\n\n- En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n\n- Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n\n- Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n\n- OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.\n\n Devam etmek için sola kaydırın.</string>
+	<string name="onboarding_page_1_text">Bu uygulama size:\n\n&#8226; En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n\n&#8226; Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n\n&#8226; Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n\n&#8226; OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.\n\n Devam etmek için sola kaydırın.</string>
 	<string name="onboarding_page_1_caption">Orijinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir.\n\n Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
 	<string name="onboarding_page_2_title">Cihazınızı seçin</string>
 	<string name="onboarding_page_2_caption">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.</string>
@@ -213,7 +213,7 @@
 	<string name="install_options_reboot_after_install">Güncelledikten sonra cihazımı yeniden başlat</string>
 	<string name="install_options_select_root_package">indirmek istediğiniz root paketini seçiniz…</string>
 	<string name="install_options_start_install">Yüklemeyi başlat</string>
-	<string name="install_options_title">İndirme yönteminizi seçiniz</string>
+	<string name="install_options_subtitle">İndirme yönteminizi seçiniz</string>
 	<string name="install_options_wipe_cache_partition">Önbelleği temizleyiniz.</string>
 
 	<string name="install_options_explanation_title">Bu ayarlar ne anlama geliyor?</string>
@@ -222,14 +222,16 @@
 	<string name="install_options_explanation_wipe_cache">Önbelleği sıfırlama:\nBu opsiyonu seçtiğinizde, Güncelleme sonrası önbellek temizlenecek ve sıfırlanacak. Bu sayede sorunsuz bir güncelleme olacaktır.</string>
 	<string name="install_options_explanation_reboot">Yüklemeden sonra yeniden başlat:\nBu opsiyonu seçtiğinizde, Cihazınız güncelleme sonrası otomatik olarak yeniden başlatılacak. Diğer türlü, cihazınız kurtarma modunda kalacaktır, bu sayede istediğiniz paketleri indirebilirsiniz.</string>
 
-	<string name="install_select_method_title">Güncellemeyi nasıl yüklemek istersiniz?</string>
-	<string name="install_select_method_automatic_title">Otomatik yükleme*</string>
-	<string name="install_select_method_automatic_image">Otomatik yükleme imajı</string>
-	<string name="install_select_method_automatic_description">Güncellemeyi yüklemenin en kolay yolu.\nCihazınız güncellemeyi yüklemek için yeniden başlatılacak.\n\n* Root izni ve TWRP yedeklemesi gerektirir.</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">Güncellemeyi nasıl yüklemek istersiniz?</string>
+	<string name="install_method_chooser_automatic_title">Otomatik yükleme*</string>
+	<string name="install_method_chooser_automatic_image">Otomatik yükleme imajı</string>
+	<string name="install_method_chooser_automatic_description">Güncellemeyi yüklemenin en kolay yolu.\nCihazınız güncellemeyi yüklemek için yeniden başlatılacak.\n\n* Root izni ve TWRP yedeklemesi gerektirir.</string>
 
-	<string name="install_select_method_manual_title">Manuel yükleme</string>
-	<string name="install_select_method_manual_image">Manuel yükleme imajı</string>
-	<string name="install_select_method_manual_description">Nasıl yüklendiğini öğrenmek için rehberi okuyun. Cihazınızın kurtarma modunu kullanarak güncellemeyi yükleyeceksiniz.</string>
+	<string name="install_method_chooser_manual_title">Manuel yükleme</string>
+	<string name="install_method_chooser_manual_image">Manuel yükleme imajı</string>
+	<string name="install_method_chooser_manual_description">Nasıl yüklendiğini öğrenmek için rehberi okuyun. Cihazınızın kurtarma modunu kullanarak güncellemeyi yükleyeceksiniz.</string>
 
 	<string name="install_temporary_error">Güncellemeyi yüklemeyi denerken bir sorun oluştu. Lütfen tekrar deneyin.</string>
 
@@ -250,25 +252,24 @@
 	<string name="install_guide_no_root">Güncellemeyi rehberde gösterildiği sekilde uygulayınız.</string>
 	<string name="install_guide_automatic_install_disabled">Otomatik yükleme geçici olarak devredışı, teknik bir sorun bulunmakta. Güncelleme yüklemeyi rehbere göre kendiniz yapınız.</string>
 	<string name="install_guide">Yükleme rehberi</string>
-	<string name="install_guide_title">Yükleme rehberi - %1$d of %2$d</string>
+	<string name="install_guide_subtitle">Yükleme rehberi - %1$d of %2$d</string>
 	<string name="install_guide_image_description">Bağlamsal imaj. Lütfen ekranın alt bölümünde bir yere tıklayın, rehberi sesli olarak dinleyebilirsiniz.</string>
-	<string name="install_guide_header">Kaydır &lt;- -&gt; sayfalar arasında geçiş yapabilmek için.</string>
-	<string name="install_guide_tip">- Bütün adımları not etmeniz önerilir, güncelleme sırasında cihazınız kapalı olacaktır.</string>
+	<string name="install_guide_tip">&#8226; Bütün adımları not etmeniz önerilir, güncelleme sırasında cihazınız kapalı olacaktır.</string>
 
-	<string name="install_guide_page_1_title">Güncellemeyi indirmek.</string>
-	<string name="install_guide_page_1_text">- Güncellemeyi indirmeyi başlatmak için butona basınız.\n\n- İndirme işlemi uygulama içinde gözükecektir, ayrıca bildirim olarakta gösterilecektir.\n\n- İndirme bittiğinde, Bu bildirimi göreceksiniz \"İndirme tamamlandı\".\nEğer indirmede sorun oluşutuysa, Uygulamayı tekrar açın ve indirmeyi birdaha başlatın. Eğer çalışmazsa, internet bağlantınız olduğundan emin olun. Aksi takdirde, uygulama geliştiricileriyle iletişime geçiniz. Google Play\'de \"Uygulamalarım\" bölümünden bakabilirsiniz.</string>
+	<string name="install_guide_page_1_title">Güncellemeyi indirmek</string>
+	<string name="install_guide_page_1_text">&#8226; Güncellemeyi indirmeyi başlatmak için butona basınız.\n\n&#8226; İndirme işlemi uygulama içinde gözükecektir, ayrıca bildirim olarakta gösterilecektir.\n\n&#8226; İndirme bittiğinde, Bu bildirimi göreceksiniz \"İndirme tamamlandı\".\nEğer indirmede sorun oluşutuysa, Uygulamayı tekrar açın ve indirmeyi birdaha başlatın. Eğer çalışmazsa, internet bağlantınız olduğundan emin olun. Aksi takdirde, uygulama geliştiricileriyle iletişime geçiniz. Google Play\'de \"Uygulamalarım\" bölümünden bakabilirsiniz.</string>
 
-	<string name="install_guide_page_2_title">Kurtarma moduna geçiş yapın.</string>
-	<string name="install_guide_page_2_text">- Cihazınızı kapatın.\n\n- Sonra, ses kısma ve güç tuşuna aynı anda basılı tutun.\n\n- Cihazınız kurtarma moduna başlatılacak. Kurtarma menüsünü görene kadar bekleyiniz.</string>
+	<string name="install_guide_page_2_title">Kurtarma moduna geçiş yapın</string>
+	<string name="install_guide_page_2_text">&#8226; Cihazınızı kapatın.\n\n&#8226; Sonra, ses kısma ve güç tuşuna aynı anda basılı tutun.\n\n&#8226; Cihazınız kurtarma moduna başlatılacak. Kurtarma menüsünü görene kadar bekleyiniz.</string>
 
-	<string name="install_guide_page_3_title">İndirilmiş güncellemeyi yüklemek.</string>
-	<string name="install_guide_page_3_text">- Kurtarma modu bölümünde, öncelikle İngilizce dilini seçiniz. Sonra, \"Install from SD\" yi seçiniz.\n\n- Sonra, indirililen \".zip\" dosyasını uygulamada belirtilen versiyonunu seçiniz. (Genellikle, bu dosya \"OnePlusOxygen-\" ismiyle başlar).\n\n- Güncelleme yüklemesi otomatik olarak başlayacktır.</string>
+	<string name="install_guide_page_3_title">İndirilmiş güncellemeyi yüklemek</string>
+	<string name="install_guide_page_3_text">&#8226; Kurtarma modu bölümünde, öncelikle İngilizce dilini seçiniz. Sonra, \"Install from SD\" yi seçiniz.\n\n&#8226; Sonra, indirililen \".zip\" dosyasını uygulamada belirtilen versiyonunu seçiniz. (Genellikle, bu dosya \"OnePlusOxygen-\" ismiyle başlar).\n\n&#8226; Güncelleme yüklemesi otomatik olarak başlayacktır.</string>
 
-	<string name="install_guide_page_4_title">Cihazınızı yeniden başlatın.</string>
-	<string name="install_guide_page_4_text">- Güncelleme yüklemesi bittiğinde, Kurtarma modu\'na geri gideceksiniz. Kurtarma modu bölümünde,\"Reboot\" bölümüne basınız.\n\n-Cihazınız uzun süre başlatılma ekranını gösterecektir.\n\n- Daha sonra, beyaz bir yazıyla \"Android is upgrading\" yazısını göreceksiniz, bu sırada uygulamalarınız optimize edilecektir.</string>
+	<string name="install_guide_page_4_title">Cihazınızı yeniden başlatın</string>
+	<string name="install_guide_page_4_text">&#8226; Güncelleme yüklemesi bittiğinde, Kurtarma modu\'na geri gideceksiniz. Kurtarma modu bölümünde,\"Reboot\" bölümüne basınız.\n\n&#8226;Cihazınız uzun süre başlatılma ekranını gösterecektir.\n\n&#8226; Daha sonra, beyaz bir yazıyla \"Android is upgrading\" yazısını göreceksiniz, bu sırada uygulamalarınız optimize edilecektir.</string>
 
 	<string name="install_guide_page_5_title">Bitti. OxygenOS un yeni sürümünün tadını çıkarın!</string>
-	<string name="install_guide_page_5_text">- Optimize edilme bittiğinde, güncelleme de başarılı şekilde olmuş demektir.\n Sistem ayarlarınızdan bunu görüntüleyebilirsiniz.\n\n- Uygulamayı beğendiyseniz, lütfen Google Play\'de 5 yıldız vermeyi unutmayınız!</string>
+	<string name="install_guide_page_5_text">&#8226; Optimize edilme bittiğinde, güncelleme de başarılı şekilde olmuş demektir.\n Sistem ayarlarınızdan bunu görüntüleyebilirsiniz.\n\n&#8226; Uygulamayı beğendiyseniz, lütfen Google Play\'de 5 yıldız vermeyi unutmayınız!</string>
 
 	<string name="install_guide_close_button">Yükleme Rehberini Kapat</string>
 

@@ -184,7 +184,7 @@
 	<string name="onboarding_finished_button">start app</string>
 
 	<string name="onboarding_page_1_title">Velkommen til Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Denne app vil tillade dig at:\n\n- Få hurtigere adgang til de seneste Android opdateringer til din OxygenOS styrede enhed\n\n- Nem opdatering en root\'et enhed\n\n- Se hvad der er nyt, i det syste,-software du allerede anvender\n\n- Læs seneste nyt om OnePlus og OxygenOS\n\nSwipe til venstre, for at fortsætte.</string>
+	<string name="onboarding_page_1_text">Denne app vil tillade dig at:\n\n&#8226; Få hurtigere adgang til de seneste Android opdateringer til din OxygenOS styrede enhed\n\n&#8226; Nem opdatering en root\'et enhed\n\n&#8226; Se hvad der er nyt, i det syste,-software du allerede anvender\n\n&#8226; Læs seneste nyt om OnePlus og OxygenOS\n\nSwipe til venstre, for at fortsætte.</string>
 	<string name="onboarding_page_1_caption">Dette er ikke en officel OnePlus aaplikation. Brug af denne app, er ene og alene på eget ansvar. Hverken OnePlus eller denne apps udvikler kan drages til ansvar, hverken for dine handlinger, eller eventuelle skader denne app måtte foresage.\n\nVed at anvende denne app, så accepterer du dens vilkår og betingelser, som er angivet herover.</string>
 	<string name="onboarding_page_2_title">Vælg din enhed</string>
 	<string name="onboarding_page_2_caption">Din enhed er normalt allerede valgt ovenfor. Hvis ikke, vælg da din enhged ovenfor.</string>
@@ -216,7 +216,7 @@
 	<string name="install_options_reboot_after_install">Genstart ved endt installation</string>
 	<string name="install_options_select_root_package">Vælg den rod-pakke der skal installeres…</string>
 	<string name="install_options_start_install">Start installation</string>
-	<string name="install_options_title">Vælg dine installations-muligheder</string>
+	<string name="install_options_subtitle">Vælg dine installations-muligheder</string>
 	<string name="install_options_wipe_cache_partition">Nulstil cache partitionen</string>
 
 	<string name="install_options_explanation_title">Hvad betyder disse muligheder?</string>
@@ -225,14 +225,16 @@
 	<string name="install_options_explanation_wipe_cache">Nulstil cache partitionen:\nVed valg af denne mulighed, så vil cache partitionen blive udslettet eftter at opdateringen er blevet installeret. Dette sikrer dig, at din enhed fungerer optimalt, og reducerer også sandsynligheden for at opleve fejl forårsaget af installationen af updateringen.</string>
 	<string name="install_options_explanation_reboot">Genstart ved endt installation:\nVed valg af denne mulighed, vil din enhed automatisk blive genstartet tilbage til OxygenOS, efter at opdateringe ner blevet installeret; ellers vil din enhed forblive i Fejlsikret tilstand, hvor du kan installere ekstra pakker.</string>
 
-	<string name="install_select_method_title">Hvordan ønsker du at installere denne opdatering?</string>
-	<string name="install_select_method_automatic_title">Automatisk installation*</string>
-	<string name="install_select_method_automatic_image">Automatisk installation image</string>
-	<string name="install_select_method_automatic_description">Den letteste måde at installere en opdatering.\nDin enhed vil genstarte og installere opdateringen.\n\n* Der kræves rod-adgang og TWRP adgang.</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">Hvordan ønsker du at installere denne opdatering?</string>
+	<string name="install_method_chooser_automatic_title">Automatisk installation*</string>
+	<string name="install_method_chooser_automatic_image">Automatisk installation image</string>
+	<string name="install_method_chooser_automatic_description">Den letteste måde at installere en opdatering.\nDin enhed vil genstarte og installere opdateringen.\n\n* Der kræves rod-adgang og TWRP adgang.</string>
 
-	<string name="install_select_method_manual_title">Manuel installation</string>
-	<string name="install_select_method_manual_image">Manuel installation image</string>
-	<string name="install_select_method_manual_description">Læs installations-guiden, for at lære hvordan en opdatering installeres. Du vil installere opdateringen ved at anvende Fejlsikret tilstand, på din enhed.</string>
+	<string name="install_method_chooser_manual_title">Manuel installation</string>
+	<string name="install_method_chooser_manual_image">Manuel installation image</string>
+	<string name="install_method_chooser_manual_description">Læs installations-guiden, for at lære hvordan en opdatering installeres. Du vil installere opdateringen ved at anvende Fejlsikret tilstand, på din enhed.</string>
 
 	<string name="install_temporary_error">En midlertidig fejl opstod, men forberedelsen af installationen foregik. Forsøg venligst igen.</string>
 
@@ -253,25 +255,24 @@
 	<string name="install_guide_no_root">Installer opdatering efter de instruktioner der vises i installations-guiden.</string>
 	<string name="install_guide_automatic_install_disabled">Automatisk installation er midlertidigt blevet deaktiveret, da der er rapporteret tekniske udfordringer. Installer opdatering efter de instruktioner der vises i installations-guiden.</string>
 	<string name="install_guide">Installations guide</string>
-	<string name="install_guide_title">Installations guide - %1$d af %2$d</string>
+	<string name="install_guide_subtitle">Installations guide - %1$d af %2$d</string>
 	<string name="install_guide_image_description">Kontelstafhængig image. Tryk på et lavere sted på skærmen, for at høre installations-guiden..</string>
-	<string name="install_guide_header">Swipe &lt;- -&gt; for at navigere mellem siderne.</string>
-	<string name="install_guide_tip">- Det er anbefalelsesværdigt at notere sig alle punkter ned. da du vil blive bedt om at slukke enheden under selve installationen af opdateringen.</string>
+	<string name="install_guide_tip">&#8226; Det er anbefalelsesværdigt at notere sig alle punkter ned. da du vil blive bedt om at slukke enheden under selve installationen af opdateringen.</string>
 
-	<string name="install_guide_page_1_title">Download opdateringen.</string>
-	<string name="install_guide_page_1_text">- Tryk på Download knappen, for at starte med at downloade opdateringen.\n\n- The download progress will appear in the app, and as a notification in your notifications screen.\n\n- When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
+	<string name="install_guide_page_1_title">Download opdateringen</string>
+	<string name="install_guide_page_1_text">&#8226; Tryk på Download knappen, for at starte med at downloade opdateringen.\n\n&#8226; The download progress will appear in the app, and as a notification in your notifications screen.\n\n&#8226; When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
 
-	<string name="install_guide_page_2_title">Tilgå Fejlsikret tilstand.</string>
-	<string name="install_guide_page_2_text">- Først, sluk enheden.\n\n- Tryk da på, både power og lyd down -knapperne på samme tid.\n\n- Din enhed vil nu starte op i Fejlsikret tilstand. Vent, indtil du ser reperations-menuen på skærmen.</string>
+	<string name="install_guide_page_2_title">Tilgå Fejlsikret tilstand</string>
+	<string name="install_guide_page_2_text">&#8226; Først, sluk enheden.\n\n&#8226; Tryk da på, både power og lyd down -knapperne på samme tid.\n\n&#8226; Din enhed vil nu starte op i Fejlsikret tilstand. Vent, indtil du ser reperations-menuen på skærmen.</string>
 
-	<string name="install_guide_page_3_title">Installler den hentede opdatering.</string>
-	<string name="install_guide_page_3_text">- I den fejlsikrede tilstand, vælg det ønskede sprog først. Dernæst, tryk på (eller brug lydstyrke-knapperne til at navigere, og power-knappen ti lat vælge) \"Installer fra SD\".\n\n- Næste, rul ned, ved at anvende lydstyrke-knapperne indtil du ser \".zip\" filen med navnet i appen. (Typisk, er dette en fil der starter med \"OnePlusOxygen-\").\n\n- Installationen af opdateringen vil starte automatisk.</string>
+	<string name="install_guide_page_3_title">Installler den hentede opdatering</string>
+	<string name="install_guide_page_3_text">&#8226; I den fejlsikrede tilstand, vælg det ønskede sprog først. Dernæst, tryk på (eller brug lydstyrke-knapperne til at navigere, og power-knappen ti lat vælge) \"Installer fra SD\".\n\n&#8226; Næste, rul ned, ved at anvende lydstyrke-knapperne indtil du ser \".zip\" filen med navnet i appen. (Typisk, er dette en fil der starter med \"OnePlusOxygen-\").\n\n&#8226; Installationen af opdateringen vil starte automatisk.</string>
 
-	<string name="install_guide_page_4_title">Genstart din enhed.</string>
-	<string name="install_guide_page_4_text">- Når installationen af opdateringen er færdig, sp vil du være tilbage i Fejlsikret tilstand\'s menu. I menuen, tryk da på \"Genstart\".\n\n- din enhed vil nu vise dens startop-skærm i et stykke tid, mens den starter op.\n\n- Efterfølgende, vil du se en hvid besked med teksten \"Android opgraderes\", altimens dine apps opdatimeres.</string>
+	<string name="install_guide_page_4_title">Genstart din enhed</string>
+	<string name="install_guide_page_4_text">&#8226; Når installationen af opdateringen er færdig, sp vil du være tilbage i Fejlsikret tilstand\'s menu. I menuen, tryk da på \"Genstart\".\n\n&#8226; din enhed vil nu vise dens startop-skærm i et stykke tid, mens den starter op.\n\n&#8226; Efterfølgende, vil du se en hvid besked med teksten \"Android opgraderes\", altimens dine apps opdatimeres.</string>
 
 	<string name="install_guide_page_5_title">Færdig. Nyd den nye OxygenOS version!</string>
-	<string name="install_guide_page_5_text">- Efter at din enhed er færdig med at optimere dens apps, er opdateringen fejlfri blevet installeret.\nFor at bekræfte dette, så kan du undersøge versionsnummeret af dit system, på følgende vis:\n\n- Åben Indstillinger, Tryk på \"Om telefon\", og check da OxygenOS Version.\n\n- Hvis du kan lide denne app, overvej at bedømme den med en 5 stjerner på Google Play!</string>
+	<string name="install_guide_page_5_text">&#8226; Efter at din enhed er færdig med at optimere dens apps, er opdateringen fejlfri blevet installeret.\nFor at bekræfte dette, så kan du undersøge versionsnummeret af dit system, på følgende vis:\n\n&#8226; Åben Indstillinger, Tryk på \"Om telefon\", og check da OxygenOS Version.\n\n&#8226; Hvis du kan lide denne app, overvej at bedømme den med en 5 stjerner på Google Play!</string>
 
 	<string name="install_guide_close_button">Luk Installations- Guide</string>
 
@@ -307,7 +308,7 @@
 	<!-- About screen strings -->
 	<string name="about">Om denne app</string>
 	<string name="about_app_description">Det ultimative værktøj til OxygenOS opdateringer.</string>
-	<string name="about_background_story">Denne app blev oprindeligt udviklet af Arjan Vlek, som opfølgning af en af hans andre apps, med navnet <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den tilbyder samme funktionalitet til Oyanogen OS brugere).\n\nEfter 4 år, i juli 2019, besluttede Arjan sig for trappe ned på sine projekter og vidergav ejerskabet af denne app til et hold af udviklere, fra forskellige lande. De tog så ansvaret for, at tilvejebringe et fællesskab med fantastisk service og give support til og af OnePlus opdateringer hurtigere.\nDu kan finde mere information om dette via <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">-linket</a>.\n\nDen 14. august 2019 blev den første opdatering offentliggjort og markerede ejerskiftet; den kom med muligheder som mørkt tema, et komplet re-design af appen.\n\nFor more information omkring holdet, besøg linket <a href="https://oxygenupdater.com/team/"> her</a>.</string>
+	<string name="about_background_story">Denne app blev oprindeligt udviklet af Arjan Vlek, som opfølgning af en af hans andre apps, med navnet <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den tilbyder samme funktionalitet til Oyanogen OS brugere).\n\nEfter 4 år, i juli 2019, besluttede Arjan sig for trappe ned på sine projekter og vidergav ejerskabet af denne app til et hold af udviklere, fra forskellige lande. De tog så ansvaret for, at tilvejebringe et fællesskab med fantastisk service og give support til og af OnePlus opdateringer hurtigere.\nDu kan finde mere information om dette via <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">&#8226;linket</a>.\n\nDen 14. august 2019 blev den første opdatering offentliggjort og markerede ejerskiftet; den kom med muligheder som mørkt tema, et komplet re-design af appen.\n\nFor more information omkring holdet, besøg linket <a href="https://oxygenupdater.com/team/"> her</a>.</string>
 	<string name="about_third_party_app_notice">Bemærk venligst, at dette IKKE er en officiel OnePlus applikation.\nOnePlus mavmet, OnePlus logo\'et og OxygenOS er ejendele af OnePlus.\nAndroid, Google, Google Play og Google Play logo\'er er registrerede varemærker tilhørende Google Inc.\nDenne app amvemder data fra OnePlus og dets moderselskab Oppo, til at vise opdateringsinformation.</string>
 	<string name="about_rate_button_text">Bedøm</string>
 	<string name="about_github_button_text">GitHub</string>

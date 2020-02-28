@@ -185,7 +185,7 @@
 	<string name="onboarding_finished_button">iniciar app</string>
 
 	<string name="onboarding_page_1_title">¡Bienvenido a Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Esta app te permitirá:\n\n- Acceder rápidamente a nuevas actualizaciones para tu Oneplus gracias a OxygenOS\n\n- Actualiza fácilmente tu dispositivo con acceso root\n\n- Ver las novedades del sistema operativo que estás usando actualmente\n\n- Leer las últimas noticias sobre OnePlus y OxygenOS\n\nDesliza a la izquierda para continuar.</string>
+	<string name="onboarding_page_1_text">Esta app te permitirá:\n\n&#8226; Acceder rápidamente a nuevas actualizaciones para tu Oneplus gracias a OxygenOS\n\n&#8226; Actualiza fácilmente tu dispositivo con acceso root\n\n&#8226; Ver las novedades del sistema operativo que estás usando actualmente\n\n&#8226; Leer las últimas noticias sobre OnePlus y OxygenOS\n\nDesliza a la izquierda para continuar.</string>
 	<string name="onboarding_page_1_caption">Esta no es una aplicación oficial de Oneplus. El uso de esta app está sujeto a tu propia responsabilidad. Ni Oneplus ni el desarrollador son responsables de tu acciones, incluyendo el daño causado por esta app.\n\nAl usar esta app, aceptas los términos y condiciones arriba mencionados.</string>
 	<string name="onboarding_page_2_title">Elige tu dispositivo</string>
 	<string name="onboarding_page_2_caption">Tu dispositivo suele seleccionarse automáticamente. Si no es así, selecciona tu dispositivo arriba.</string>
@@ -217,7 +217,7 @@
 	<string name="install_options_reboot_after_install">Reiniciar al finalizar la instalación</string>
 	<string name="install_options_select_root_package">Selecciona el paquete root para instalar…</string>
 	<string name="install_options_start_install">Iniciar instalación</string>
-	<string name="install_options_title">Elige las opciones para la actualización</string>
+	<string name="install_options_subtitle">Elige las opciones para la actualización</string>
 	<string name="install_options_wipe_cache_partition">Borrar la partición Cache</string>
 
 	<string name="install_options_explanation_title">¿Qué significan estas opciones?</string>
@@ -226,14 +226,16 @@
 	<string name="install_options_explanation_wipe_cache">Borrar la partición cache:\nAl selecionar esta opción, la partición cache será borrada después de que la actualización se haya completado. Esto aseguro que tu dispositivo rinda perféctamente y además reduce la probabilidad de experimentar errores causados por la instalación de la actualización.</string>
 	<string name="install_options_explanation_reboot">Reiniciar después de la actualización:\nAl selecionar esta opción, tu dispositivo se reiniciará automáticamente a OxygenOS al completar la actualización. De otra manera, tu dispositivo se mantendrá en el Modo Recovery, donde podrás instalar paquetes adicionales.</string>
 
-	<string name="install_select_method_title">¿Cómo instalar esta actualización?</string>
-	<string name="install_select_method_automatic_title">Instalación automática*</string>
-	<string name="install_select_method_automatic_image">Imagen de la instalación automática</string>
-	<string name="install_select_method_automatic_description">La manera más fácil de instalar la actualización.\nTu dispositivo se reiniciará para instalar la actualización.\n\n* Requiere acceso root y el recovery TWRP.</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">¿Cómo instalar esta actualización?</string>
+	<string name="install_method_chooser_automatic_title">Instalación automática*</string>
+	<string name="install_method_chooser_automatic_image">Imagen de la instalación automática</string>
+	<string name="install_method_chooser_automatic_description">La manera más fácil de instalar la actualización.\nTu dispositivo se reiniciará para instalar la actualización.\n\n* Requiere acceso root y el recovery TWRP.</string>
 
-	<string name="install_select_method_manual_title">Instalación manual</string>
-	<string name="install_select_method_manual_image">Imagen de la instalación manual</string>
-	<string name="install_select_method_manual_description">Lee la guía de instalación para aprender como instalar la actualización. Deberás instalar la actualización usando el Modo Recovery de tu dispositivo.</string>
+	<string name="install_method_chooser_manual_title">Instalación manual</string>
+	<string name="install_method_chooser_manual_image">Imagen de la instalación manual</string>
+	<string name="install_method_chooser_manual_description">Lee la guía de instalación para aprender como instalar la actualización. Deberás instalar la actualización usando el Modo Recovery de tu dispositivo.</string>
 
 	<string name="install_temporary_error">Un error temporal ocurrió mientras se preparaba la actualización. Por favor, inténtalo de nuevo.</string>
 
@@ -254,25 +256,24 @@
 	<string name="install_guide_no_root">Instalar la actualización basándose en las instrucciones de la guía de instalación.</string>
 	<string name="install_guide_automatic_install_disabled">Las actualizaciones automáticas has sido temporalmente inhabilitadas a causa de problemas técnicos. Instala la actualización basándote en las instrucciones de la guía de instalación.</string>
 	<string name="install_guide">Guía de instalación</string>
-	<string name="install_guide_title">Guía de instalación - %1$d de %2$d</string>
+	<string name="install_guide_subtitle">Guía de instalación - %1$d de %2$d</string>
 	<string name="install_guide_image_description">Imagen contextual. Toca en un lugar bajo de la pantalla para escuchar la guía de instalación..</string>
-	<string name="install_guide_header">Desliza &lt;- -&gt; para navegar entre las pantallas.</string>
-	<string name="install_guide_tip">- Es recomendable apuntar todos los pasos a seguir ya que deberás apagar tu dispositivo en el proceso de actualización.</string>
+	<string name="install_guide_tip">&#8226; Es recomendable apuntar todos los pasos a seguir ya que deberás apagar tu dispositivo en el proceso de actualización.</string>
 
-	<string name="install_guide_page_1_title">Descargar la actualización.</string>
-	<string name="install_guide_page_1_text">- Pulsa el botón Descargar para empezar a descargar la actualización.\n\n- El progreso de la descarga aparecerá en la aplicación y como notificación.\n\n- Cuando la descarga haya terminado, verás una notificación diciendo \"Descarga completa\".\nSi ocurre algún error durante la descarga, abre la app e intenta descargar la actualización de nuevo. Si esto no funciona, asegúrate de que tienes una conexión a internet. De otra manera, contacta con el desarrollador de esta app. Puedes hacer esto visitando la sección \"Mis aplicaciones\" en Google Play Store.</string>
+	<string name="install_guide_page_1_title">Descargar la actualización</string>
+	<string name="install_guide_page_1_text">&#8226; Pulsa el botón Descargar para empezar a descargar la actualización.\n\n&#8226; El progreso de la descarga aparecerá en la aplicación y como notificación.\n\n&#8226; Cuando la descarga haya terminado, verás una notificación diciendo \"Descarga completa\".\nSi ocurre algún error durante la descarga, abre la app e intenta descargar la actualización de nuevo. Si esto no funciona, asegúrate de que tienes una conexión a internet. De otra manera, contacta con el desarrollador de esta app. Puedes hacer esto visitando la sección \"Mis aplicaciones\" en Google Play Store.</string>
 
-	<string name="install_guide_page_2_title">Iniciar Modo Recovery.</string>
-	<string name="install_guide_page_2_text">- Primero, apaga tu dispositivo.\n\n- Después, presiona el botón de encendido y bajar volumen a la vez.\n\n- Tu dispositivo se iniciará en el Modo Recovery. Espera hasta que el menú del Modo Recovery aparezca.</string>
+	<string name="install_guide_page_2_title">Iniciar Modo Recovery</string>
+	<string name="install_guide_page_2_text">&#8226; Primero, apaga tu dispositivo.\n\n&#8226; Después, presiona el botón de encendido y bajar volumen a la vez.\n\n&#8226; Tu dispositivo se iniciará en el Modo Recovery. Espera hasta que el menú del Modo Recovery aparezca.</string>
 
-	<string name="install_guide_page_3_title">Instalar la actualización ya descargada.</string>
-	<string name="install_guide_page_3_text">- Dentro del menú recovery, escoge tu idioma. Después, pulsa en (o usa los botones de volumen para navegar y el botón de encendido para seleccionar) \"Instalar desde la tarjeta SD\".\n\n- Después, desliza hacia abajo usando la tecla de bajar volúmen hasta que encuentres el archivo \".zip\" anteriormente mostrado en la app. (Normalmente, el nombre del archivo vomienza con \"OnePlusOxygen-\").\n\n- La instalación de la actualización comenzará automáticamente.</string>
+	<string name="install_guide_page_3_title">Instalar la actualización ya descargada</string>
+	<string name="install_guide_page_3_text">&#8226; Dentro del menú recovery, escoge tu idioma. Después, pulsa en (o usa los botones de volumen para navegar y el botón de encendido para seleccionar) \"Instalar desde la tarjeta SD\".\n\n&#8226; Después, desliza hacia abajo usando la tecla de bajar volúmen hasta que encuentres el archivo \".zip\" anteriormente mostrado en la app. (Normalmente, el nombre del archivo vomienza con \"OnePlusOxygen-\").\n\n&#8226; La instalación de la actualización comenzará automáticamente.</string>
 
-	<string name="install_guide_page_4_title">Reiniciar tu dispositivo.</string>
-	<string name="install_guide_page_4_text">- Cuando la actualización haya terminado, serás reconducido al Menú Recovery. Dentro del menú, pulsa en \"Reiniciar\".\n\n- Tu dispositivo se mantendrá en la pantalla de inicio durante un rato.\n\n- Después de eso, verás un mensaje con el título \"Android se está actualizando\", mientras tus apps son optimizadas.</string>
+	<string name="install_guide_page_4_title">Reiniciar tu dispositivo</string>
+	<string name="install_guide_page_4_text">&#8226; Cuando la actualización haya terminado, serás reconducido al Menú Recovery. Dentro del menú, pulsa en \"Reiniciar\".\n\n&#8226; Tu dispositivo se mantendrá en la pantalla de inicio durante un rato.\n\n&#8226; Después de eso, verás un mensaje con el título \"Android se está actualizando\", mientras tus apps son optimizadas.</string>
 
 	<string name="install_guide_page_5_title">Hecho. ¡Disfruta de la nueva versión de OxygenOS!</string>
-	<string name="install_guide_page_5_text">- Después de que el dispositivo haya terminado de optimizar tus apps, la actualización se habrá instalado correctamente.\nPara verificarlo,puedes comprobar la versión actual del sistema:\n\n- Ve a ajustes, pulsa en \"Información del teléfono\", y comprueba tu versión de OxygenOS.\n\n- Si te gusta esta app, ¡valórala con 5 stars en Google Play!</string>
+	<string name="install_guide_page_5_text">&#8226; Después de que el dispositivo haya terminado de optimizar tus apps, la actualización se habrá instalado correctamente.\nPara verificarlo,puedes comprobar la versión actual del sistema:\n\n&#8226; Ve a ajustes, pulsa en \"Información del teléfono\", y comprueba tu versión de OxygenOS.\n\n&#8226; Si te gusta esta app, ¡valórala con 5 stars en Google Play!</string>
 
 	<string name="install_guide_close_button">Cerrar la guía de instalación</string>
 

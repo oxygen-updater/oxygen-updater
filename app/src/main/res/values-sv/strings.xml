@@ -234,7 +234,7 @@ Du kan alltid ändra inställningar senare. För att göra det: Tryck på de tre
 	<string name="install_options_reboot_after_install">"Starta om efter installation"</string>
 	<string name="install_options_select_root_package">"Välj rootpaket att installera…"</string>
 	<string name="install_options_start_install">"Påbörja installationen."</string>
-	<string name="install_options_title">"Välj installationsinställningar"</string>
+	<string name="install_options_subtitle">"Välj installationsinställningar"</string>
 	<string name="install_options_wipe_cache_partition">"Rensa cache partition"</string>
 	<string name="install_options_explanation_title">"Vad betyder dessa inställningar?"</string>
 	<string name="install_options_explanation_backup">"Backa upp min enhet:
@@ -245,16 +245,18 @@ När du väljer detta alternativ kommer du få välja ett rootpaket som kommer i
 När du väljer detta alternativ kommer cachepartitionen bli rensad efter uppdateringen har installerats. Det ser till att din enhet behåller bra prestanda och minskar chansen för buggar orsakade av installationen."</string>
 	<string name="install_options_explanation_reboot">"Starta om efter installationen:
 När du väljer detta alternativ kommer din enhet att startas om automatiskt till OxygenOS efter uppdateringen har installerat. Annars kommer din enhet stanna i återställningsläget där du kan installera ytterligare paket."</string>
-	<string name="install_select_method_title">"Hur vill du installera denna uppdatering?"</string>
-	<string name="install_select_method_automatic_title">"Automatisk Installation\""</string>
-	<string name="install_select_method_automatic_image">"Automatisk installationsbild"</string>
-	<string name="install_select_method_automatic_description">"Det enklaste sättet att installera uppdateringen.
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">"Hur vill du installera denna uppdatering?"</string>
+	<string name="install_method_chooser_automatic_title">"Automatisk Installation\""</string>
+	<string name="install_method_chooser_automatic_image">"Automatisk installationsbild"</string>
+	<string name="install_method_chooser_automatic_description">"Det enklaste sättet att installera uppdateringen.
 Din enhet kommer starta om för att installera uppdateringen.
 
 * Kräver root behörighet och TWRP recovery."</string>
-	<string name="install_select_method_manual_title">"Manuell installation"</string>
-	<string name="install_select_method_manual_image">"Manuell installationsbild"</string>
-	<string name="install_select_method_manual_description">"Läs installationsguiden för att ta reda på hur man installerar uppdateringen. Du kommer installera uppdateringen genom din enhets Återställningsläge."</string>
+	<string name="install_method_chooser_manual_title">"Manuell installation"</string>
+	<string name="install_method_chooser_manual_image">"Manuell installationsbild"</string>
+	<string name="install_method_chooser_manual_description">"Läs installationsguiden för att ta reda på hur man installerar uppdateringen. Du kommer installera uppdateringen genom din enhets Återställningsläge."</string>
 	<string name="install_temporary_error">"Ett tillfälligt fel har uppstått under förberedningen av uppdateringens installation. Vänligen försök igen."</string>
 	<string name="install_verify_error_title">"Installationen misslyckades"</string>
 	<string name="install_verify_error_nothing_installed">"Fel vid installation av uppdatering. Inga ändringar gjordes på din enhet. Försök installera uppdateringen igen."</string>
@@ -271,36 +273,35 @@ Din enhet kommer starta om för att installera uppdateringen.
 	<string name="install_guide_no_root">"Installera uppdateringen enligt installationsguidens instruktioner."</string>
 	<string name="install_guide_automatic_install_disabled">"Automatisk installation har blivit temporärt inaktiverad på grund av rapporterade tekniska problem. Installera uppdateringen enligt instruktionerna i installationsguiden."</string>
 	<string name="install_guide">"Installationsguide"</string>
-	<string name="install_guide_title">"Installationsguide - %1$d of %2$d"</string>
+	<string name="install_guide_subtitle">"Installationsguide - %1$d of %2$d"</string>
 	<string name="install_guide_image_description">"Kontextuell bild. Tryck på en lägre delen av skärmen för att höra installationsguiden."</string>
-	<string name="install_guide_header">"Svep &lt;- -&gt; för att navigera mellan sidorna"</string>
-	<string name="install_guide_tip">"- Det är rekommenderat att skriva ner alla stegen eftersom du kommer behöva stänga av din enhet under installationsprocessen."</string>
+	<string name="install_guide_tip">"&#8226; Det är rekommenderat att skriva ner alla stegen eftersom du kommer behöva stänga av din enhet under installationsprocessen."</string>
 	<string name="install_guide_page_1_title">"Ladda ner uppdateringen."</string>
-	<string name="install_guide_page_1_text">"- Tryck på nedladdningsknappen för att starta nedladdningen av uppdateringen.
+	<string name="install_guide_page_1_text">"&#8226; Tryck på nedladdningsknappen för att starta nedladdningen av uppdateringen.
 
 - Nedladdningens status kommer visas i appen och som en notifikation på din enhet.
 
 - När nedladdningen är klar visas en notifikation med texten \"Nedladdning klar\". Om ett nedladdningsfel inträffat öppnar du appen och försöker hämta uppdateringen igen. Om det inte fungerar, se till att du har en fungerande anslutning. Annars kontakta utvecklaren av appen. Du kan göra det genom att besöka sektionen \"Mina appar\" i Google Play Butik."</string>
 	<string name="install_guide_page_2_title">"Starta återställningsläge."</string>
-	<string name="install_guide_page_2_text">"- Stäng först av din enhet.
+	<string name="install_guide_page_2_text">"&#8226; Stäng först av din enhet.
 
 - Tryck sedan på både strömknappen och knappen för att sänka volymen samtidigt.
 
 - Din enhet startar nu i Återställningsläge. Vänta tills du ser återställningsmenyn på skärmen."</string>
 	<string name="install_guide_page_3_title">"Installera den nedladdade uppdateringen."</string>
-	<string name="install_guide_page_3_text">"- Inuti återstänningsxenyn, välj ditt önskade språk först. Tryck sedan på (Eller använd volymknapparna och startknappen för att navigera och välja) \"Installera från SD kort\".
+	<string name="install_guide_page_3_text">"&#8226; Inuti återstänningsxenyn, välj ditt önskade språk först. Tryck sedan på (Eller använd volymknapparna och startknappen för att navigera och välja) \"Installera från SD kort\".
 
 - Scrolla sedan med hjälp av volymknapparna ner till en \".zip\" fil som delat filnamnet som visas i appen. (Detta är vanligtvis en fil som börjar med \"OnePlusOxygen-\").
 
 - Installationen av uppdateringen påbörjas automatiskt."</string>
 	<string name="install_guide_page_4_title">"Starta om enheten."</string>
-	<string name="install_guide_page_4_text">"- När installationen av uppdateringen är klar kommer du tillbaka till Återställningsmenyn. Inom återställningsmenyn trycker du på \"Starta om\".
+	<string name="install_guide_page_4_text">"&#8226; När installationen av uppdateringen är klar kommer du tillbaka till Återställningsmenyn. Inom återställningsmenyn trycker du på \"Starta om\".
 
 - Din enhet kommer att visa startskärmen under en lång tid vid uppstarten.
 
 - Efteråt ser du ett vitt meddelande med titeln \"Android uppgraderar\", under tiden dina appar optimeras."</string>
 	<string name="install_guide_page_5_title">"Klar. Njut av den nya versionen av OxygenOS!"</string>
-	<string name="install_guide_page_5_text">"- När enheten har slutfört optimeringen av apparna har uppdateringen installerats.
+	<string name="install_guide_page_5_text">"&#8226; När enheten har slutfört optimeringen av apparna har uppdateringen installerats.
 För att verifiera detta kan du kontrollera nuvarande version av ditt system enligt följande instruktioner:
 
 - Gå till Inställningar, tryck på \"Om telefonen\", och kolla OxygenOS Version.

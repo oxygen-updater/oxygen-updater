@@ -1,14 +1,18 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/installGuideMainView"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:padding="@dimen/spacing_default">
+	android:fadingEdge="vertical"
+	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fillViewport="true"
+	android:requiresFadingEdge="vertical">
 
 	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:padding="@dimen/spacing_default">
 
 		<com.facebook.shimmer.ShimmerFrameLayout
 			android:id="@+id/shimmerFrameLayout"
@@ -25,48 +29,10 @@
 			android:orientation="vertical">
 
 			<TextView
-				android:id="@+id/installGuideHeader"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginBottom="@dimen/spacing_half"
-				android:gravity="center_horizontal"
-				android:text="@string/install_guide_header"
-				android:visibility="gone"
-				tools:visibility="visible" />
-
-			<!--
-				Default visibility must be "invisible", instead of "gone"
-				Otherwise, Glide will load the image with a dimension of 0x0
-			-->
-			<ImageView
-				android:id="@+id/installGuideImage"
-				android:layout_width="match_parent"
-				android:layout_height="200dp"
-				android:layout_gravity="center"
-				android:contentDescription="@string/install_guide_image_description"
-				android:visibility="invisible"
-				tools:src="@drawable/install_guide_page_1_image"
-				tools:visibility="visible" />
-
-			<TextView
-				android:id="@+id/installGuideTitle"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginTop="@dimen/spacing_default"
-				android:fontFamily="@font/google_sans_medium"
-				android:gravity="center_horizontal"
-				android:textSize="@dimen/typography_title"
-				android:visibility="gone"
-				tools:text="Install guide title"
-				tools:visibility="visible" />
-
-			<TextView
 				android:id="@+id/installGuideTip"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_default"
 				android:text="@string/install_guide_tip"
 				android:textColor="?android:textColorSecondary"
 				android:visibility="gone"
@@ -77,7 +43,6 @@
 				android:id="@+id/installGuideText"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/spacing_default"
 				android:textColor="?android:textColorSecondary"
 				android:visibility="gone"
 				tools:text="Install guide text"
@@ -96,4 +61,4 @@
 				tools:visibility="visible" />
 		</LinearLayout>
 	</FrameLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

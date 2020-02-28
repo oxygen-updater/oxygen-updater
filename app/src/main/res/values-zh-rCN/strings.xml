@@ -212,7 +212,7 @@
 	<string name="install_options_reboot_after_install">安装后重启</string>
 	<string name="install_options_select_root_package">选择您需要的 Root 包…</string>
 	<string name="install_options_start_install">开始安装</string>
-	<string name="install_options_title">选择您的安装选项</string>
+	<string name="install_options_subtitle">选择您的安装选项</string>
 	<string name="install_options_wipe_cache_partition">清理缓存分区</string>
 
 	<string name="install_options_explanation_title">这些选项什么意思呢？</string>
@@ -221,14 +221,16 @@
 	<string name="install_options_explanation_wipe_cache">清理缓存分区：\n选择此选项后，将在安装更新后清除缓存分区。这可以确保您的设备以最佳状态运行，并降低因安装更新而导致错误的可能性。</string>
 	<string name="install_options_explanation_reboot">安装后重启：\n选择此选项后，将在安装更新后，自动重新启动回 OxygenOS。如果不勾选的话，您的设备将保持在恢复模式中，这样您就可以在其中安装其他软件包了。</string>
 
-	<string name="install_select_method_title">您想用哪种方式安装？</string>
-	<string name="install_select_method_automatic_title">自动安装</string>
-	<string name="install_select_method_automatic_image">自动安装图片</string>
-	<string name="install_select_method_automatic_description">最简单的更新方式，下载，安装，重启，一气呵成。\n\n* 需要 Root 权限与 TWRP</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">您想用哪种方式安装？</string>
+	<string name="install_method_chooser_automatic_title">自动安装</string>
+	<string name="install_method_chooser_automatic_image">自动安装图片</string>
+	<string name="install_method_chooser_automatic_description">最简单的更新方式，下载，安装，重启，一气呵成。\n\n* 需要 Root 权限与 TWRP</string>
 
-	<string name="install_select_method_manual_title">手动安装</string>
-	<string name="install_select_method_manual_image">手动安装图片</string>
-	<string name="install_select_method_manual_description">阅读安装指南以了解如何安装更新。 您将使用设备的恢复模式安装更新。</string>
+	<string name="install_method_chooser_manual_title">手动安装</string>
+	<string name="install_method_chooser_manual_image">手动安装图片</string>
+	<string name="install_method_chooser_manual_description">阅读安装指南以了解如何安装更新。 您将使用设备的恢复模式安装更新。</string>
 
 	<string name="install_temporary_error">准备安装时发生了临时性的错误，请稍候重试。</string>
 
@@ -249,25 +251,24 @@
 	<string name="install_guide_no_root">请根据安装指南中显示的说明安装更新。</string>
 	<string name="install_guide_automatic_install_disabled">由于收到了用户的反馈，自动安装已暂时停用。请根据安装指南中显示的说明安装更新。</string>
 	<string name="install_guide">安装指南</string>
-	<string name="install_guide_title">安装指南 - 第 %1$d 页，共 %2$d 页</string>
+	<string name="install_guide_subtitle">安装指南 - 第 %1$d 页，共 %2$d 页</string>
 	<string name="install_guide_image_description">请轻点屏幕下方以获取安装指南</string>
-	<string name="install_guide_header">左右轻扫 &lt;- -&gt; 在页面间切换</string>
-	<string name="install_guide_tip">- 推荐您把全部步骤都用纸笔写下来，因为在安装过程中，您的设备会关机。</string>
+	<string name="install_guide_tip">&#8226; 推荐您把全部步骤都用纸笔写下来，因为在安装过程中，您的设备会关机。</string>
 
 	<string name="install_guide_page_1_title">下载更新包</string>
-	<string name="install_guide_page_1_text">- 轻触“下载”按钮以开始下载。\n\n- 下载进度会在 App 中显示，同时，它也会在通知中心里实时显示。\n\n- 当下载结束时，您将会看到“下载完成”的通知。\n如果下载中出现错误，请尝试前往 App 中重试一遍。如果仍出现错误，请您检查您的互联网连接。或者您也可以尝试通过 Google Play 中该应用留下的联系方式联系该应用的开发者。</string>
+	<string name="install_guide_page_1_text">&#8226; 轻触“下载”按钮以开始下载。\n\n&#8226; 下载进度会在 App 中显示，同时，它也会在通知中心里实时显示。\n\n&#8226; 当下载结束时，您将会看到“下载完成”的通知。\n如果下载中出现错误，请尝试前往 App 中重试一遍。如果仍出现错误，请您检查您的互联网连接。或者您也可以尝试通过 Google Play 中该应用留下的联系方式联系该应用的开发者。</string>
 
 	<string name="install_guide_page_2_title">进入恢复模式</string>
-	<string name="install_guide_page_2_text">- 首先，将您的设备关机\n\n- 然后，同时长按 *音量减* 以及 *电源键*\n\n- 接着，您的设备便会进入恢复模式。 请等待您的屏幕上显示恢复模式的菜单。</string>
+	<string name="install_guide_page_2_text">&#8226; 首先，将您的设备关机\n\n&#8226; 然后，同时长按 *音量减* 以及 *电源键*\n\n&#8226; 接着，您的设备便会进入恢复模式。 请等待您的屏幕上显示恢复模式的菜单。</string>
 
 	<string name="install_guide_page_3_title">安装下载好的更新包</string>
-	<string name="install_guide_page_3_text">- 在恢复模式中，请先选择您的语言， 然后点击"从 SD 卡安装"。\n\n- 接下来，使用 *音量减小键* 向下滚动，直到找到包含应用程序中显示的文件后缀名为“.zip”文件（一般情况下，它以“OnePlusOxygen-”开头）。\n\n- 然后安装将会自动进行。</string>
+	<string name="install_guide_page_3_text">&#8226; 在恢复模式中，请先选择您的语言， 然后点击"从 SD 卡安装"。\n\n&#8226; 接下来，使用 *音量减小键* 向下滚动，直到找到包含应用程序中显示的文件后缀名为“.zip”文件（一般情况下，它以“OnePlusOxygen-”开头）。\n\n&#8226; 然后安装将会自动进行。</string>
 
 	<string name="install_guide_page_4_title">重启您的设备</string>
-	<string name="install_guide_page_4_text">- 更新安装完成后，您将返回恢复模式菜单。在恢复模式菜单中，点击“重新启动”。\n\n- 然后，您就能看到熟悉的开机动画了！通常更新后的第一次开机会花费很长的时间。\n\n- 开机之后，您会看到一条标题为“正在完成系统更新”的通知，它的意思是指您的应用正在进行优化。</string>
+	<string name="install_guide_page_4_text">&#8226; 更新安装完成后，您将返回恢复模式菜单。在恢复模式菜单中，点击“重新启动”。\n\n&#8226; 然后，您就能看到熟悉的开机动画了！通常更新后的第一次开机会花费很长的时间。\n\n&#8226; 开机之后，您会看到一条标题为“正在完成系统更新”的通知，它的意思是指您的应用正在进行优化。</string>
 
 	<string name="install_guide_page_5_title">大功告成！在全新的 OxygenOS 中尽情探索吧！</string>
-	<string name="install_guide_page_5_text">- 等您的设备优化完应用程序，那么这次更新就算是大功告成了！\n为了验证是否完成，您可以参见以下步骤来查看当前系统版本：\n\n- 打开设置，轻触“关于手机”，这里您就可以看到您的 OxygenOS 版本。\n\n- 如果您喜欢这个 App，别忘了去 Google Play 给个 5 星好评哦~</string>
+	<string name="install_guide_page_5_text">&#8226; 等您的设备优化完应用程序，那么这次更新就算是大功告成了！\n为了验证是否完成，您可以参见以下步骤来查看当前系统版本：\n\n&#8226; 打开设置，轻触“关于手机”，这里您就可以看到您的 OxygenOS 版本。\n\n&#8226; 如果您喜欢这个 App，别忘了去 Google Play 给个 5 星好评哦~</string>
 
 	<string name="install_guide_close_button">关闭安装指南</string>
 

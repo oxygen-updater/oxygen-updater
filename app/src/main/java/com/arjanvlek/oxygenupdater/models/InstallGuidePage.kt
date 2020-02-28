@@ -24,4 +24,16 @@ data class InstallGuidePage(
 
     @JsonProperty("text_nl")
     var dutchText: String?
-)
+) {
+    val isDefaultPage = deviceId == null || updateMethodId == null
+
+    fun cloneWithDefaultTitleAndText(
+        title: String,
+        text: String
+    ) = copy(
+        englishTitle = title,
+        dutchTitle = title,
+        englishText = text,
+        dutchText = text
+    )
+}
