@@ -57,6 +57,6 @@ class AboutActivity : SupportActionBarActivity() {
 
     private fun updateBannerText(latestAppVersion: String) {
         bannerLayout.isVisible = true
-        bannerTextView.text = getString(R.string.new_app_version, latestAppVersion)
+        bannerTextView.text = getString(R.string.new_app_version_long, latestAppVersion)
     }
 }

@@ -37,7 +37,8 @@
 	<string name="server_status_warning">"Quelques fonctionnalités ne fonctionnent pas correctement."</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">Une mise à jour de l\'application (%1$s) est disponible. Maintenir l\'application à jour vous permet de bénéficier des dernières fonctionnalités et corrections de bugs.\nAppuyez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
+	<string name="new_app_version">Une mise à jour de l\'application (%1$s) est disponible.\nAppuyez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
+	<string name="new_app_version_long">Une mise à jour de l\'application (%1$s) est disponible. Maintenir l\'application à jour vous permet de bénéficier des dernières fonctionnalités et corrections de bugs.\nAppuyez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"à"</string>

@@ -39,8 +39,9 @@
 	<string name="server_status_warning">部分功能可能无法正常工作</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate this string below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">在</string>

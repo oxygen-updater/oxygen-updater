@@ -85,7 +85,7 @@
 					android:layout_gravity="center_vertical"
 					android:layout_marginStart="@dimen/spacing_half"
 					android:textColor="@color/white"
-					tools:text="@string/new_app_version" />
+					tools:text="@string/new_app_version_long" />
 			</LinearLayout>
 
 			<ImageView
