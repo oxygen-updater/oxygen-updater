@@ -24,9 +24,11 @@ class InstallMethodChooserFragment : Fragment(R.layout.fragment_install_method_c
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        installViewModel.updateToolbarTitle(R.string.install_method_chooser_subtitle)
+        installViewModel.updateToolbarTitle(R.string.install_method_chooser_title)
         installViewModel.updateToolbarSubtitle(R.string.install_method_chooser_subtitle)
         installViewModel.updateToolbarImage(R.drawable.list_select)
+
+        (activity as InstallActivity?)?.setupAppBarForMethodChooserFragment()
 
         automaticInstallCard.setOnClickListener { openAutomaticInstallOptionsSelection() }
         manualInstallCard.setOnClickListener { (activity as InstallActivity?)?.openInstallGuide() }

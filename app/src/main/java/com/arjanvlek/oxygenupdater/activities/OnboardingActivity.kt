@@ -102,14 +102,20 @@ class OnboardingActivity : AppCompatActivity() {
             registerOnPageChangeCallback(pageChangeCallback)
         }
 
+        setupAppBarForViewPager()
+    }
+
+    private fun setupAppBarForViewPager() {
         appBar.post {
+            val totalScrollRange = appBar.totalScrollRange
+
             // adjust bottom margin on first load
-            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
+            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = totalScrollRange }
 
             // adjust bottom margin on scroll
             appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
                 viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
-                    bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
+                    bottomMargin = totalScrollRange - abs(verticalOffset)
                 }
             })
         }

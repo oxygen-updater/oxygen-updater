@@ -100,7 +100,7 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
         // Display the "Close" button on the last page.
         if (pageNumber == InstallActivity.NUMBER_OF_INSTALL_GUIDE_PAGES) {
             installGuideCloseButton.apply {
-                setOnClickListener { activity?.finish() }
+                setOnClickListener { activity?.onBackPressed() }
                 isVisible = true
             }
         }

@@ -52,6 +52,8 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         installViewModel.updateToolbarSubtitle(R.string.install_options_subtitle)
         installViewModel.updateToolbarImage(R.drawable.auto)
 
+        (activity as InstallActivity?)?.resetAppBarForMethodChooserFragment()
+
         init()
     }
 

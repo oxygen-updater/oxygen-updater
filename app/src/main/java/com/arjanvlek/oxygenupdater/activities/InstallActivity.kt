@@ -43,17 +43,22 @@ import kotlin.math.abs
  */
 @ContainerOptions(CacheImplementation.NO_CACHE)
 class InstallActivity : SupportActionBarActivity() {
-
     private var showDownloadPage = true
     private var updateData: UpdateData? = null
 
     private val installViewModel by viewModel<InstallViewModel>()
 
+    private val appBarOffsetChangeListenerForMethodChooserFragment = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+            bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
+        }
+    }
+
     private val installGuidePageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) = handleInstallGuidePageChangeCallback(position)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?)  = super.onCreate(savedInstanceState).also {
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_install)
 
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
@@ -115,15 +120,43 @@ class InstallActivity : SupportActionBarActivity() {
         addToBackStack(INSTALL_METHOD_CHOOSER_FRAGMENT_TAG)
     }
 
-    fun openInstallGuide() {
-        fragmentContainer.isVisible = false
-        viewPagerContainer.isVisible = true
+    fun setupAppBarForMethodChooserFragment() {
+        appBar.post {
+            // adjust bottom margin on first load
+            fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
 
+            // adjust bottom margin on scroll
+            appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
+        }
+    }
+
+    fun resetAppBarForMethodChooserFragment() {
+        appBar.post {
+            // reset bottom margin on first load
+            fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
+
+            // adjust bottom margin on scroll
+            appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
+        }
+    }
+
+    fun openInstallGuide() {
+        resetAppBarForMethodChooserFragment()
         setupViewPager()
     }
 
+    private fun hideViewPager() {
+        fragmentContainer.isVisible = true
+        tabLayoutContainer.isVisible = false
+        viewPager.isVisible = false
+    }
+
     private fun setupViewPager() {
+        fragmentContainer.isVisible = false
+        tabLayoutContainer.isVisible = true
+
         viewPager.apply {
+            isVisible = true
             offscreenPageLimit = 4 // Install guide is 5 pages max. So there can be only 4 off-screen
             adapter = InstallGuidePagerAdapter()
 
@@ -131,18 +164,6 @@ class InstallActivity : SupportActionBarActivity() {
             TabLayoutMediator(tabLayout, this) { _, _ -> }.attach()
 
             registerOnPageChangeCallback(installGuidePageChangeCallback)
-        }
-
-        appBar.post {
-            // adjust bottom margin on first load
-            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
-
-            // adjust bottom margin on scroll
-            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-                viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
-                    bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
-                }
-            })
         }
     }
 
@@ -206,20 +227,34 @@ class InstallActivity : SupportActionBarActivity() {
         viewPager?.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
     }
 
+    /**
+     * Handles the following cases:
+     * * Once the installation is being started, there is no way out => do nothing
+     * * If [InstallGuideFragment] is being displayed, and was opened from [InstallMethodChooserFragment], switch back to [fragmentContainer]
+     * * If [InstallGuideFragment] was opened directly after checking for root (meaning if the device isn't rooted), call [finish]
+     * * If [InstallMethodChooserFragment] is the only fragment being displayed (meaning [FragmentManager.getBackStackEntryCount] returns `1`, call [finish]
+     * * Otherwise just call `super`, which respects [FragmentManager]'s back stack
+     */
     override fun onBackPressed() = when {
         // Once the installation is being started, there is no way out.
         !installViewModel.canGoBack -> Toast.makeText(this, R.string.install_going_back_not_possible, LENGTH_LONG).show()
-        // if InstallGuide is being displayed, switch back to fragmentContainer
-        viewPagerContainer.isVisible -> {
-            fragmentContainer.isVisible = true
-            viewPagerContainer.isVisible = false
+        // if InstallGuide is being displayed, and was opened from `InstallMethodChooserFragment`, switch back to fragmentContainer
+        // if it was opened directly after checking for root (meaning if the device isn't rooted), call `finish()`
+        viewPager.isVisible -> {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                finish()
+            } else {
+                hideViewPager()
 
-            // update toolbar state to reflect values set in `InstallMethodChooserFragment`
-            installViewModel.updateToolbarTitle(R.string.install_method_chooser_subtitle)
-            installViewModel.updateToolbarSubtitle(R.string.install_method_chooser_subtitle)
-            installViewModel.updateToolbarImage(R.drawable.list_select)
+                // update toolbar state to reflect values set in `InstallMethodChooserFragment`
+                installViewModel.updateToolbarTitle(R.string.install_method_chooser_title)
+                installViewModel.updateToolbarSubtitle(R.string.install_method_chooser_subtitle)
+                installViewModel.updateToolbarImage(R.drawable.list_select)
 
-            viewPager.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
+                setupAppBarForMethodChooserFragment()
+
+                viewPager.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
+            }
         }
         supportFragmentManager.backStackEntryCount == 1 -> finish()
         else -> super.onBackPressed()
@@ -227,7 +262,7 @@ class InstallActivity : SupportActionBarActivity() {
 
     /**
      * Respond to the action bar's Up/Home button.
-     * Navigating upwards [onBackPressed] respects [FragmentManager]'s back stack
+     * Delegate to [onBackPressed] is [android.R.id.home] is clicked, otherwise call `super`
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> onBackPressed().let { true }
