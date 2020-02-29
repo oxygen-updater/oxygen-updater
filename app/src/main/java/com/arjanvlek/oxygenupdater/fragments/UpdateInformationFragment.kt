@@ -257,17 +257,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         rootView.isRefreshing = false
     }
 
-    private fun updateBannerText(string: String) {
-        bannerLayout.isVisible = true
-        bannerTextView.text = string
-    }
-
     private fun displayUpdateInformationWhenUpToDate(updateData: UpdateData, online: Boolean) {
         if (activity?.application == null) {
             return
         }
-
-        updateBannerText(getString(R.string.update_information_banner_congrats_latest))
 
         // Show "System is up to date" view.
         systemIsUpToDateLayoutStub?.inflate()
@@ -359,8 +352,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
 
         if (updateData.systemIsUpToDate) {
-            updateBannerText(getString(R.string.update_information_banner_already_latest))
-
             val updateMethod = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
 
             // Format footer based on system version installed.
@@ -369,7 +360,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             footerTextView.isVisible = true
             footerDivider.isVisible = true
         } else {
-            updateBannerText(getString(R.string.update_information_banner_update_available, formattedOxygenOsVersion))
             // display badge to indicate a new system update is available
             (activity as MainActivity?)?.updateTabBadge(1)
 

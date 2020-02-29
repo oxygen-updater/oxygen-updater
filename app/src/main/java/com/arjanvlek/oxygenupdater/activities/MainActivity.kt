@@ -72,21 +72,18 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    var deviceOsSpec: DeviceOsSpec? = null
-        private set
-
     public override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_main)
 
         val application = application as OxygenUpdater
 
         mainViewModel.fetchAllDevices().observe(this, Observer {
-            deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, it)
+            val deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, it)
 
             val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
 
-            if (showDeviceWarningDialog && !deviceOsSpec!!.isDeviceOsSpecSupported) {
-                displayUnsupportedDeviceOsSpecMessage(deviceOsSpec!!)
+            if (showDeviceWarningDialog && !deviceOsSpec.isDeviceOsSpecSupported) {
+                displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
             }
         })
 

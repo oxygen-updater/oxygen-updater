@@ -27,9 +27,15 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
         displayDeviceInformation()
 
         mainViewModel.allDevices.observe(viewLifecycleOwner, Observer { devices ->
-            updateBannerText(Utils.checkDeviceOsSpec(application!!.systemVersionProperties!!, devices))
+            val deviceOsSpec = Utils.checkDeviceOsSpec(application!!.systemVersionProperties!!, devices)
 
             displayFormattedDeviceName(devices)
+
+            if (!deviceOsSpec.isDeviceOsSpecSupported) {
+                updateBannerText(deviceOsSpec)
+            } else {
+                bannerLayout.isVisible = false
+            }
         })
     }
 
@@ -41,18 +47,16 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
 
         bannerTextView.text = getString(
             when (deviceOsSpec) {
-                DeviceOsSpec.SUPPORTED_OXYGEN_OS -> R.string.device_information_supported_oxygen_os
                 DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS -> R.string.device_information_carrier_exclusive_oxygen_os
                 DeviceOsSpec.UNSUPPORTED_OXYGEN_OS -> R.string.device_information_unsupported_oxygen_os
                 DeviceOsSpec.UNSUPPORTED_OS -> R.string.device_information_unsupported_os
+                else -> R.string.device_information_unsupported_os
             }
         )
 
         bannerLayout.isVisible = true
 
-        if (!deviceOsSpec.isDeviceOsSpecSupported) {
-            bannerLayout.setOnClickListener { (activity as MainActivity?)?.displayUnsupportedDeviceOsSpecMessage(deviceOsSpec) }
-        }
+        bannerLayout.setOnClickListener { (activity as MainActivity?)?.displayUnsupportedDeviceOsSpecMessage(deviceOsSpec) }
     }
 
     private fun displayFormattedDeviceName(devices: List<Device>?) {
