@@ -2,11 +2,9 @@ package com.arjanvlek.oxygenupdater.internal.server
 
 import android.os.AsyncTask
 import com.arjanvlek.oxygenupdater.OxygenUpdater
-import com.arjanvlek.oxygenupdater.enums.PurchaseType
 import com.arjanvlek.oxygenupdater.enums.ServerRequest
 import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.internal.iab.Purchase
 import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Device
@@ -132,26 +130,6 @@ class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable
 
             callback.invoke(errorResult)
         }
-    }
-
-    fun verifyPurchase(purchase: Purchase, amount: String?, purchaseType: PurchaseType, callback: KotlinCallback<ServerPostResult?>) {
-        val purchaseData: JSONObject
-        try {
-            purchaseData = JSONObject(purchase.originalJson)
-            purchaseData.put("purchaseType", purchaseType.toString())
-            purchaseData.put("itemType", purchase.itemType)
-            purchaseData.put("signature", purchase.signature)
-            purchaseData.put("amount", amount)
-        } catch (ignored: JSONException) {
-            val result = ServerPostResult(
-                false,
-                "IN-APP ERROR (ServerConnector): JSON parse error on input data ${purchase.originalJson}"
-            )
-
-            callback.invoke(result)
-            return
-        }
-        ObjectResponseExecutor(ServerRequest.VERIFY_PURCHASE, purchaseData, callback).execute()
     }
 
     private fun <T> findMultipleFromServerResponse(

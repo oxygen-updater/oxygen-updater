@@ -14,7 +14,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.QueryMap
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -91,6 +90,6 @@ interface ServerApi {
 
     @POST("verify-purchase")
     suspend fun verifyPurchase(
-        @QueryMap queryMap: Map<String, Any?>
+        @Body purchaseData: HashMap<String, Any?>
     ): Response<ServerPostResult>
 }

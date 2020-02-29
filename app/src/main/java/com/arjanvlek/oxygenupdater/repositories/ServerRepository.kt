@@ -244,21 +244,7 @@ class ServerRepository constructor(
         purchaseType: PurchaseType
     ): ServerPostResult = apiResponse(
         serverApi.verifyPurchase(
-            mapOf(
-                "orderId" to purchase.orderId,
-                "packageName" to purchase.packageName,
-                "productId" to purchase.sku,
-                "purchaseTime" to purchase.purchaseTime,
-                "purchaseState" to purchase.purchaseState,
-                "developerPayload" to purchase.developerPayload,
-                "token" to purchase.token,
-                "purchaseToken" to purchase.token,
-                "autoRenewing" to purchase.isAutoRenewing,
-                "purchaseType" to purchaseType,
-                "itemType" to purchase.itemType,
-                "signature" to purchase.signature,
-                "amount" to amount
-            )
+            purchase.createHashMapForVerificationRequest(amount, purchaseType)
         )
     )
 
