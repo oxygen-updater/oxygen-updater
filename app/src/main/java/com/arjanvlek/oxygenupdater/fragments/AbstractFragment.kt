@@ -1,12 +1,13 @@
 package com.arjanvlek.oxygenupdater.fragments
 
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import org.koin.android.ext.android.inject
 
-abstract class AbstractFragment : Fragment() {
+abstract class AbstractFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
 
     var application: OxygenUpdater? = null
         get() {

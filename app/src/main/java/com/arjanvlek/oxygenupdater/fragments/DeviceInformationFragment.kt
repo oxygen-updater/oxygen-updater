@@ -3,9 +3,7 @@ package com.arjanvlek.oxygenupdater.fragments
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
@@ -21,24 +19,11 @@ import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_device_information.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class DeviceInformationFragment : AbstractFragment() {
+class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_information) {
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = super.onCreateView(inflater, container, savedInstanceState).let {
-        inflater.inflate(R.layout.fragment_device_information, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (!isAdded) {
-            logDebug(TAG, "Fragment not added. Can not create the view!")
-            return
-        }
-
         displayDeviceInformation()
 
         mainViewModel.allDevices.observe(viewLifecycleOwner, Observer { devices ->
@@ -49,6 +34,11 @@ class DeviceInformationFragment : AbstractFragment() {
     }
 
     private fun updateBannerText(deviceOsSpec: DeviceOsSpec) {
+        if (!isAdded) {
+            logDebug(TAG, "Fragment not added. Can not update banner text!")
+            return
+        }
+
         bannerTextView.text = getString(
             when (deviceOsSpec) {
                 DeviceOsSpec.SUPPORTED_OXYGEN_OS -> R.string.device_information_supported_oxygen_os

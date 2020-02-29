@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 /**
  * Shared between [com.arjanvlek.oxygenupdater.activities.MainActivity] and its three child fragments
- * (as part of [androidx.viewpager.widget.ViewPager]):
+ * (as part of [androidx.viewpager2.widget.ViewPager2]):
  * 1. [com.arjanvlek.oxygenupdater.fragments.NewsFragment]
  * 2. [com.arjanvlek.oxygenupdater.fragments.UpdateInformationFragment]
  * 3. [com.arjanvlek.oxygenupdater.fragments.DeviceInformationFragment]

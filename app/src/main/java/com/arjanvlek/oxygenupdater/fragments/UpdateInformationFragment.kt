@@ -9,9 +9,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
@@ -58,7 +56,7 @@ import kotlinx.android.synthetic.main.layout_update_information.*
 import org.joda.time.LocalDateTime
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class UpdateInformationFragment : AbstractFragment() {
+class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_information) {
 
     private lateinit var rootView: SwipeRefreshLayout
 
@@ -69,17 +67,10 @@ class UpdateInformationFragment : AbstractFragment() {
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = super.onCreateView(inflater, container, savedInstanceState).let {
-        rootView = inflater.inflate(R.layout.fragment_update_information, container, false) as SwipeRefreshLayout
-        rootView
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        rootView = view as SwipeRefreshLayout
 
-    override fun onStart() = super.onStart().also {
-        if (isAdded && settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+        if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
             rootView.setOnRefreshListener { load() }
             rootView.setColorSchemeResources(R.color.colorPrimary)
 

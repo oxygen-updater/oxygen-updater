@@ -30,7 +30,7 @@
 				android:drawableStart="@drawable/auto"
 				android:drawablePadding="@dimen/spacing_half"
 				android:drawableTint="?colorPrimary"
-				android:fontFamily="@font/google_sans_medium"
+				android:fontFamily="@font/google_sans"
 				android:text="@string/install_method_chooser_automatic_title"
 				android:textSize="@dimen/typography_subheading" />
 
@@ -65,7 +65,7 @@
 				android:drawableStart="@drawable/library_book"
 				android:drawablePadding="@dimen/spacing_half"
 				android:drawableTint="?colorPrimary"
-				android:fontFamily="@font/google_sans_medium"
+				android:fontFamily="@font/google_sans"
 				android:text="@string/install_method_chooser_manual_title"
 				android:textSize="@dimen/typography_subheading" />
 

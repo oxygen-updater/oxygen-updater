@@ -17,11 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
@@ -44,10 +43,8 @@ import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.appBar
-import kotlinx.android.synthetic.main.activity_main.toolbar
-import kotlinx.android.synthetic.main.activity_onboarding.*
 import org.joda.time.LocalDateTime
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -55,7 +52,6 @@ import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
-    private lateinit var viewPager: ViewPager
     private lateinit var activityLauncher: ActivityLauncher
 
     private var newsAd: InterstitialAd? = null
@@ -64,6 +60,17 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private val settingsManager by inject<SettingsManager>()
     private val mainViewModel by viewModel<MainViewModel>()
+
+    private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            when (position) {
+                0, 1 -> hideTabBadge(position, 1000)
+                else -> {
+                    // no-op
+                }
+            }
+        }
+    }
 
     var deviceOsSpec: DeviceOsSpec? = null
         private set
@@ -150,33 +157,41 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         else -> super.onOptionsItemSelected(item)
     }
 
-    private fun setupViewPager() = viewpager.apply {
-        viewPager = this
+    private fun setupViewPager() {
+        viewPager.apply {
+            offscreenPageLimit = 2 // 3 tabs, so there can be only 2 off-screen
+            adapter = MainPagerAdapter()
 
-        offscreenPageLimit = 2
-        adapter = SectionsPagerAdapter(supportFragmentManager)
-        tabs.setupWithViewPager(this)
-
-        addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    0, 1 -> hideTabBadge(position, 1000)
-                    else -> {
-                        // no-op
-                    }
+            // attach TabLayout to ViewPager2
+            TabLayoutMediator(tabLayout, this) { tab, position ->
+                tab.text = when (position) {
+                    PAGE_NEWS -> getString(R.string.news)
+                    PAGE_UPDATE_INFORMATION -> getString(R.string.update_information_header_short)
+                    PAGE_DEVICE_INFORMATION -> getString(R.string.device_information_header_short)
+                    else -> null
                 }
-            }
-        })
+            }.attach()
 
-        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-            updateLayoutParams<CoordinatorLayout.LayoutParams> {
-                bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
-            }
-        })
+            registerOnPageChangeCallback(pageChangeCallback)
+        }
+
+        setupAppBarForViewPager()
+    }
+
+    private fun setupAppBarForViewPager() {
+        appBar.post {
+            val totalScrollRange = appBar.totalScrollRange
+
+            // adjust bottom margin on first load
+            viewPager.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = totalScrollRange }
+
+            // adjust bottom margin on scroll
+            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+                viewPager.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                    bottomMargin = totalScrollRange - abs(verticalOffset)
+                }
+            })
+        }
     }
 
     /**
@@ -192,7 +207,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         @IntRange(from = 0, to = 2) position: Int,
         show: Boolean = true,
         count: Int? = null
-    ) = tabs.getTabAt(position)?.orCreateBadge?.apply {
+    ) = tabLayout.getTabAt(position)?.orCreateBadge?.apply {
         isVisible = show
 
         if (isVisible) {
@@ -227,7 +242,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
         @IntRange(from = 0, to = 2)
         position: Int,
         delayMillis: Long = 0
-    ) = tabs.getTabAt(position)?.badge?.apply {
+    ) = tabLayout.getTabAt(position)?.badge?.apply {
         Handler().postDelayed({
             isVisible = false
         }, delayMillis)
@@ -369,30 +384,26 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.
      */
-    inner class SectionsPagerAdapter internal constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getItem(position: Int): Fragment {
-            // getItem is called to instantiate the fragment for the given page.
-            return when (position) {
-                PAGE_NEWS -> NewsFragment()
-                PAGE_UPDATE_INFORMATION -> UpdateInformationFragment()
-                PAGE_DEVICE_INFORMATION -> DeviceInformationFragment()
-                else -> TODO()
-            }
+    inner class MainPagerAdapter : FragmentStateAdapter(this) {
+
+        /**
+         * This is called to instantiate the fragment for the given page.
+         * Return one of:
+         * * [NewsFragment]
+         * * [UpdateInformationFragment]
+         * * [DeviceInformationFragment]
+         */
+        override fun createFragment(position: Int) = when (position) {
+            PAGE_NEWS -> NewsFragment()
+            PAGE_UPDATE_INFORMATION -> UpdateInformationFragment()
+            PAGE_DEVICE_INFORMATION -> DeviceInformationFragment()
+            else -> TODO()
         }
 
-        override fun getCount(): Int {
-            // Show 3 total pages.
-            return 3
-        }
-
-        override fun getPageTitle(position: Int): CharSequence? {
-            return when (position) {
-                PAGE_NEWS -> getString(R.string.news)
-                PAGE_UPDATE_INFORMATION -> getString(R.string.update_information_header_short)
-                PAGE_DEVICE_INFORMATION -> getString(R.string.device_information_header_short)
-                else -> null
-            }
-        }
+        /**
+         * Show 3 total pages: News, Update Information, and Device Information
+         */
+        override fun getItemCount() = 3
     }
 
     companion object {

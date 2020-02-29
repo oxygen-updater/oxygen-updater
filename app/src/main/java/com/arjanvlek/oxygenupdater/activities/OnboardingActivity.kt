@@ -4,26 +4,22 @@ import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.activities.OnboardingActivity.SimpleOnboardingFragment.Companion.ARG_PAGE_NUMBER
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
 import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.arjanvlek.oxygenupdater.extensions.setImageResourceWithAnimation
 import com.arjanvlek.oxygenupdater.fragments.DeviceChooserOnboardingFragment
+import com.arjanvlek.oxygenupdater.fragments.SimpleOnboardingFragment
 import com.arjanvlek.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -52,9 +48,7 @@ class OnboardingActivity : AppCompatActivity() {
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) = super.onPageSelected(position).also {
-            handlePageChangeCallback(position + 1)
-        }
+        override fun onPageSelected(position: Int) = handlePageChangeCallback(position + 1)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
@@ -244,44 +238,22 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     /**
-     * Contains the basic / non interactive onboarding fragments.
-     */
-    class SimpleOnboardingFragment : Fragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ) = super.onCreateView(inflater, container, savedInstanceState).let {
-            when (arguments?.getInt(ARG_PAGE_NUMBER, 0)) {
-                1 -> inflater.inflate(R.layout.fragment_onboarding_welcome, container, false)
-                4 -> inflater.inflate(R.layout.fragment_onboarding_complete, container, false)
-                else -> null
-            }
-        }
-
-        companion object {
-            /**
-             * The fragment argument representing the page number for this fragment.
-             */
-            const val ARG_PAGE_NUMBER = "page_number"
-        }
-    }
-
-    /**
      * A [FragmentStateAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.
      */
     inner class OnboardingPagerAdapter : FragmentStateAdapter(this) {
 
         /**
          * This is called to instantiate the fragment for the given page.
-         * Return a [SimpleOnboardingFragment] (defined as a static inner class below).
+         * Return one of:
+         * * [DeviceChooserOnboardingFragment]
+         * * [UpdateMethodChooserOnboardingFragment]
+         * * [SimpleOnboardingFragment]
          */
         override fun createFragment(position: Int) = (position + 1).let { pageNumber ->
             when (pageNumber) {
                 2 -> DeviceChooserOnboardingFragment()
                 3 -> UpdateMethodChooserOnboardingFragment()
-                else -> SimpleOnboardingFragment().apply { arguments = bundleOf(ARG_PAGE_NUMBER to pageNumber) }
+                else -> SimpleOnboardingFragment.newInstance(pageNumber)
             }
         }
 

@@ -22,7 +22,7 @@ import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_news.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class NewsFragment : AbstractFragment() {
+class NewsFragment : AbstractFragment(R.layout.fragment_news) {
 
     private var hasBeenLoadedOnce = false
     private var isShowingOnlyUnreadArticles = false
@@ -35,12 +35,10 @@ class NewsFragment : AbstractFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = super.onCreateView(inflater, container, savedInstanceState).let {
-        inflater.inflate(R.layout.fragment_news, container, false).also { rootView ->
-            rootView.post {
-                // placeholderItem's height is 2x 16dp padding + 64dp image = 96dp
-                addPlaceholderItemsForShimmer(inflater, container, rootView, R.layout.placeholder_news_item, 96f)
-            }
+    ) = super.onCreateView(inflater, container, savedInstanceState).also {
+        it?.post {
+            // placeholderItem's height is 2x 16dp padding + 64dp image = 96dp
+            addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_news_item, 96f)
         }
     }
 

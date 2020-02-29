@@ -13,18 +13,16 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.models.SelectableModel
 import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
 
-abstract class ChooserOnboardingFragment : AbstractFragment() {
+abstract class ChooserOnboardingFragment : AbstractFragment(R.layout.fragment_onboarding_chooser) {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = super.onCreateView(inflater, container, savedInstanceState).let {
-        inflater.inflate(R.layout.fragment_onboarding_chooser, container, false).also {
-            it.post {
-                // placeholderItem's height is 2x 16dp padding + 24dp icon = 56dp
-                addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_onboarding_chooser, 56f)
-            }
+    ) = super.onCreateView(inflater, container, savedInstanceState).also {
+        it?.post {
+            // placeholderItem's height is 2x 16dp padding + 24dp icon = 56dp
+            addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_onboarding_chooser, 56f)
         }
     }
 
