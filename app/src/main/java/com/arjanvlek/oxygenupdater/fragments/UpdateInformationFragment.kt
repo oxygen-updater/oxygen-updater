@@ -16,7 +16,6 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
@@ -58,8 +57,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_information) {
 
-    private lateinit var rootView: SwipeRefreshLayout
-
     private var downloadListener: UpdateDownloadListener? = null
     private var updateData: UpdateData? = null
     private var isLoadedOnce = false
@@ -68,11 +65,9 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        rootView = view as SwipeRefreshLayout
-
         if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
-            rootView.setOnRefreshListener { load() }
-            rootView.setColorSchemeResources(R.color.colorPrimary)
+            swipeRefreshLayout.setOnRefreshListener { load() }
+            swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
 
             load()
         }
@@ -254,7 +249,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
 
         // Hide the refreshing icon if it is present.
-        rootView.isRefreshing = false
+        swipeRefreshLayout.isRefreshing = false
     }
 
     private fun displayUpdateInformationWhenUpToDate(updateData: UpdateData, online: Boolean) {

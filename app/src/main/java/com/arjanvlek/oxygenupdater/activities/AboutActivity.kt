@@ -21,6 +21,7 @@ class AboutActivity : SupportActionBarActivity() {
         setContentView(R.layout.activity_about)
 
         val activityLauncher = ActivityLauncher(this)
+        val online = Utils.checkNetworkConnection(application)
 
         // Set the version number of the app as the subtitle
         collapsingToolbarLayout.subtitle = getString(R.string.summary_oxygen, BuildConfig.VERSION_NAME)
@@ -36,7 +37,7 @@ class AboutActivity : SupportActionBarActivity() {
         // banner is displayed if app version is outdated
         bannerLayout.setOnClickListener { activityLauncher.openPlayStorePage(this) }
 
-        aboutViewModel.fetchServerStatus(Utils.checkNetworkConnection(application)).observe(this, Observer {
+        aboutViewModel.fetchServerStatus(online).observe(this, Observer {
             if (!it.checkIfAppIsUpToDate()) {
                 updateBannerText(it.latestAppVersion!!)
             }
@@ -48,14 +49,16 @@ class AboutActivity : SupportActionBarActivity() {
     /**
      * Respond to the action bar's Up/Home button
      */
-    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
-        finish()
-        true
-    } else {
-        super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> onBackPressed().let { true }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun updateBannerText(latestAppVersion: String) {
+        if (isFinishing) {
+            return
+        }
+
         bannerLayout.isVisible = true
         bannerTextView.text = getString(R.string.new_app_version_long, latestAppVersion)
     }

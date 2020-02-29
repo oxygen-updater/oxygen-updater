@@ -40,7 +40,11 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         if (installViewModel.installGuideCache[pageNumber] == null) {
-            installViewModel.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber).observe(viewLifecycleOwner, Observer {
+            installViewModel.fetchInstallGuidePage(
+                deviceId,
+                updateMethodId,
+                pageNumber
+            ).observe(viewLifecycleOwner, Observer {
                 // we need to clone the object, otherwise the correct object won't get reflected in
                 val page = if (it.isDefaultPage) {
                     val titleResourceId = resources.getIdentifier(

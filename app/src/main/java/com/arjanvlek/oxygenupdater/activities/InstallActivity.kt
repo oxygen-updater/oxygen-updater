@@ -93,7 +93,9 @@ class InstallActivity : SupportActionBarActivity() {
             rootStatusCheckLayout.isVisible = false
 
             if (isRooted) {
-                installViewModel.fetchServerStatus(checkNetworkConnection(this)).observe(this, Observer { serverStatus ->
+                installViewModel.fetchServerStatus(
+                    checkNetworkConnection(this)
+                ).observe(this, Observer { serverStatus ->
                     if (serverStatus.automaticInstallationEnabled) {
                         openMethodSelectionPage()
                     } else {

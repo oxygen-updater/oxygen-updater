@@ -31,6 +31,15 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
+    /**
+     * Re-use the same observer to avoid duplicated callbacks
+     */
+    private val fetchNewsObserver = Observer<List<NewsItem>> { newsItems ->
+        displayNewsItems(newsItems)
+
+        swipeRefreshLayout.isRefreshing = false
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,14 +54,15 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Load the news after up to 3 seconds to allow the update info screen to load first
         // This way, the app feels a lot faster. Also, it doesn't affect users that much, as they will always see the update info screen first.
-        Handler().postDelayed({ refreshNews {} }, loadDelayMilliseconds.toLong())
+        Handler().postDelayed({ refreshNews() }, loadDelayMilliseconds.toLong())
 
-        newsRefreshContainer.apply {
-            setOnRefreshListener { refreshNews { isRefreshing = false } }
+        swipeRefreshLayout.apply {
+            setOnRefreshListener { refreshNews() }
+            setColorSchemeResources(R.color.colorPrimary)
         }
     }
 
-    private fun refreshNews(callback: () -> Unit) {
+    private fun refreshNews() {
         // If the view was suspended during the 3-second delay, stop performing any further actions.
         if (!isAdded || activity == null) {
             return
@@ -63,12 +73,10 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        mainViewModel.fetchNews(context!!, deviceId, updateMethodId).observe(viewLifecycleOwner, Observer {
-            displayNewsItems(it, callback)
-        })
+        mainViewModel.fetchNews(context!!, deviceId, updateMethodId).observe(viewLifecycleOwner, fetchNewsObserver)
     }
 
-    private fun displayNewsItems(newsItems: List<NewsItem>, callback: () -> Unit) {
+    private fun displayNewsItems(newsItems: List<NewsItem>) {
         shimmerFrameLayout.isVisible = false
 
         if (newsItems.isNullOrEmpty()) {
@@ -128,8 +136,6 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
             logError(TAG, OxygenUpdaterException("getActivity() returned null (displayNewsItems)"))
             return
         }
-
-        callback.invoke()
     }
 
     private fun updateBannerText(count: Int) {

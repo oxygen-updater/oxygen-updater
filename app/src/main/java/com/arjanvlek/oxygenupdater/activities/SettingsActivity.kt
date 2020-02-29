@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.core.app.NavUtils
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commitNow
-import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.enums.PurchaseStatus
@@ -44,6 +43,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @author Arjan Vlek (github.com/arjanvlek)
  */
 class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
+
     private lateinit var settingsFragment: SettingsFragment
     private var iabHelper: IabHelper? = null
     private var price: String? = ""
@@ -218,11 +218,13 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
 
         if (!purchase.developerPayload.startsWith(expectedPayload)) {
             logError(
-                TAG, GooglePlayBillingException(
+                TAG,
+                GooglePlayBillingException(
                     "Purchase of the ad-free version failed. The returned developer payload was incorrect ("
                             + purchase.developerPayload + ")"
                 )
             )
+
             callback.invoke(false)
         }
 
@@ -230,25 +232,23 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             purchase,
             price,
             PurchaseType.AD_FREE
-        ).observe(this, Observer { validationResult: ServerPostResult? ->
+        ) { validationResult: ServerPostResult? ->
             when {
-                validationResult == null -> {
-                    // server can't be reached. Keep trying until it can be reached...
-                    Handler().postDelayed({ validateAdFreePurchase(purchase, callback) }, 2000)
-                }
+                // server can't be reached. Keep trying until it can be reached...
+                validationResult == null -> Handler().postDelayed(
+                    { validateAdFreePurchase(purchase, callback) },
+                    2000
+                )
                 validationResult.success -> callback.invoke(true)
-                else -> {
-                    logError(
-                        TAG, GooglePlayBillingException(
-                            "Purchase of the ad-free version failed. Failed to verify purchase on the server. Error message: "
-                                    + validationResult.errorMessage
-                        )
+                else -> logError(
+                    TAG,
+                    GooglePlayBillingException(
+                        "Purchase of the ad-free version failed. Failed to verify purchase on the server. Error message: "
+                                + validationResult.errorMessage
                     )
-
-                    callback.invoke(false)
-                }
+                ).also { callback.invoke(false) }
             }
-        })
+        }
     }
 
     override fun performInAppPurchase() {

@@ -18,6 +18,7 @@ import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.WebViewClient
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.AppLocale.NL
+import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
@@ -32,10 +33,131 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsActivity : SupportActionBarActivity() {
 
+    private var retryCount = 0
+
     private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val newsViewModel by viewModel<NewsViewModel>()
 
-    @SuppressLint("SetJavaScriptEnabled") // JS is required to load videos and other dynamic content.
+    /**
+     * Re-use the same observer to avoid duplicated callbacks
+     */
+    private val markNewsItemReadObserver = Observer<ServerPostResult?> { result ->
+        if (result?.success == false) {
+            logError(
+                "NewsActivity",
+                NetworkException("Error marking news item as read on the server: ${result.errorMessage}")
+            )
+        }
+    }
+
+    /**
+     * Re-use the same observer to avoid duplicated callbacks.
+     *
+     * Note: JS is required to load videos and other dynamic content
+     */
+    @SuppressLint("SetJavaScriptEnabled")
+    private val fetchNewsItemObserver = Observer<NewsItem> { newsItem ->
+        if (isFinishing || isDestroyed) {
+            return@Observer
+        }
+
+        if (newsItem == null || !newsItem.isFullyLoaded) {
+            if (Utils.checkNetworkConnection(this) && retryCount++ < 5) {
+                loadNewsItem()
+            } else {
+                webView.apply {
+                    setBackgroundColor(Color.TRANSPARENT)
+                    loadDataWithBaseURL("", getString(R.string.news_load_error), "text/html", "UTF-8", "")
+                }
+
+                // Hide the last updated view.
+                newsDatePublished.isVisible = false
+
+                newsRetryButton.apply {
+                    isVisible = true
+                    setOnClickListener {
+                        // reload news item and reset retryCount
+                        loadNewsItem().also { retryCount = 1 }
+                    }
+                }
+            }
+
+            return@Observer
+        }
+
+        newsRetryButton.isVisible = false
+
+        val locale = AppLocale.get()
+
+        // Display the title of the article.
+        collapsingToolbarLayout.title = newsItem.getTitle(locale)
+        // Display the name of the author of the article
+        collapsingToolbarLayout.subtitle = newsItem.authorName
+
+        Glide.with(this)
+            .load(newsItem.imageUrl)
+            .into(collapsingToolbarImage)
+
+        // Display the contents of the article.
+        webView.apply {
+            // must be done to avoid the white background in dark themes
+            setBackgroundColor(Color.TRANSPARENT)
+
+            isVisible = true
+            settings.javaScriptEnabled = true
+
+            if (newsItem.getText(locale).isNullOrEmpty()) {
+                loadDataWithBaseURL("", getString(R.string.news_empty), "text/html", "UTF-8", "")
+            } else {
+                val newsLanguage = if (locale == NL) "NL" else "EN"
+                var newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.id + "/" + newsLanguage + "/"
+
+                // since we can't edit CSS in WebViews,
+                // append 'Light' or 'Dark' to newContentUrl to get the corresponding themed version
+                // backend handles CSS according to material spec
+                newsContentUrl += if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
+
+                settings.userAgentString = OxygenUpdater.APP_USER_AGENT
+                loadUrl(newsContentUrl)
+            }
+
+            // disable loading state once page is completely loaded
+            webViewClient = WebViewClient(context) {
+                // hide progress bar since the page has been loaded
+                disableLoadingState()
+            }
+        }
+
+        // Display the last update time of the article.
+        newsDatePublished.apply {
+            if (newsItem.dateLastEdited == null && newsItem.datePublished != null) {
+                isVisible = true
+                text = getString(
+                    R.string.news_date_published,
+                    Utils.formatDateTime(this@NewsActivity, newsItem.datePublished)
+                )
+            } else if (newsItem.dateLastEdited != null) {
+                isVisible = true
+                text = getString(
+                    R.string.news_date_published,
+                    Utils.formatDateTime(this@NewsActivity, newsItem.dateLastEdited)
+                )
+            } else {
+                isVisible = false
+            }
+        }
+
+        // Mark the item as read on the device.
+        newsDatabaseHelper.markNewsItemRead(newsItem)
+
+        NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
+
+        // Mark the item as read on the server (to increase times read counter)
+        if (Utils.checkNetworkConnection(this)) {
+            newsViewModel.markNewsItemRead(newsItem.id).observe(this, markNewsItemReadObserver)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         if (intent == null || intent.extras == null) {
             finish()
@@ -121,118 +243,12 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
-    private fun loadNewsItem() = loadNewsItem(0)
-
     @SuppressLint("SetJavaScriptEnabled")
-    private fun loadNewsItem(retryCount: Int) {
+    private fun loadNewsItem() {
         val intent = intent
 
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
-        newsViewModel.fetchNewsItem(this, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)).observe(this, Observer { newsItem ->
-            if (isFinishing || isDestroyed) {
-                return@Observer
-            }
-
-            if (newsItem == null || !newsItem.isFullyLoaded) {
-                if (Utils.checkNetworkConnection(this) && retryCount < 5) {
-                    loadNewsItem(retryCount + 1)
-                } else {
-                    webView.apply {
-                        setBackgroundColor(Color.TRANSPARENT)
-                        loadDataWithBaseURL("", getString(R.string.news_load_error), "text/html", "UTF-8", "")
-                    }
-
-                    // Hide the last updated view.
-                    newsDatePublished.isVisible = false
-
-                    newsRetryButton.apply {
-                        isVisible = true
-                        setOnClickListener { loadNewsItem(1) }
-                    }
-                }
-
-                return@Observer
-            }
-
-            newsRetryButton.isVisible = false
-
-            val locale = AppLocale.get()
-
-            // Display the title of the article.
-            collapsingToolbarLayout.title = newsItem.getTitle(locale)
-            // Display the name of the author of the article
-            collapsingToolbarLayout.subtitle = newsItem.authorName
-
-            Glide.with(this)
-                .load(newsItem.imageUrl)
-                .into(collapsingToolbarImage)
-
-            // Display the contents of the article.
-            webView.apply {
-                // must be done to avoid the white background in dark themes
-                setBackgroundColor(Color.TRANSPARENT)
-
-                isVisible = true
-                settings.javaScriptEnabled = true
-
-                if (newsItem.getText(locale).isNullOrEmpty()) {
-                    loadDataWithBaseURL("", getString(R.string.news_empty), "text/html", "UTF-8", "")
-                } else {
-                    val newsLanguage = if (locale == NL) "NL" else "EN"
-                    var newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.id + "/" + newsLanguage + "/"
-
-                    // since we can't edit CSS in WebViews,
-                    // append 'Light' or 'Dark' to newContentUrl to get the corresponding themed version
-                    // backend handles CSS according to material spec
-                    newsContentUrl += if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
-
-                    settings.userAgentString = OxygenUpdater.APP_USER_AGENT
-                    loadUrl(newsContentUrl)
-                }
-
-                // disable loading state once page is completely loaded
-                webViewClient = WebViewClient(context) {
-                    // hide progress bar since the page has been loaded
-                    disableLoadingState()
-                }
-            }
-
-            // Display the last update time of the article.
-            newsDatePublished.apply {
-                if (newsItem.dateLastEdited == null && newsItem.datePublished != null) {
-                    isVisible = true
-                    text = getString(
-                        R.string.news_date_published,
-                        Utils.formatDateTime(this@NewsActivity, newsItem.datePublished)
-                    )
-                } else if (newsItem.dateLastEdited != null) {
-                    isVisible = true
-                    text = getString(
-                        R.string.news_date_published,
-                        Utils.formatDateTime(this@NewsActivity, newsItem.dateLastEdited)
-                    )
-                } else {
-                    isVisible = false
-                }
-            }
-
-            // Mark the item as read on the device.
-            newsDatabaseHelper.markNewsItemRead(newsItem)
-
-            NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
-
-            // Mark the item as read on the server (to increase times read counter)
-            if (Utils.checkNetworkConnection(this)) {
-                newsViewModel.markNewsItemRead(newsItem.id).observe(this, Observer { result: ServerPostResult? ->
-                    if (result?.success == false) {
-                        logError(
-                            "NewsActivity",
-                            NetworkException("Error marking news item as read on the server: ${result.errorMessage}")
-                        )
-                    }
-                })
-            }
-        })
+        newsViewModel.fetchNewsItem(this, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)).observe(this, fetchNewsItemObserver)
     }
 
     override fun onBackPressed() = finish()

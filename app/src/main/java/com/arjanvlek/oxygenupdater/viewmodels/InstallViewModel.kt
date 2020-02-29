@@ -81,5 +81,5 @@ class InstallViewModel(
 
     fun updateToolbarImage(@DrawableRes resId: Int) = _toolbarImage.postValue(resId)
 
-    fun markFirstInstallGuidePageLoaded()  = _firstInstallGuidePageLoaded.postValue(true)
+    fun markFirstInstallGuidePageLoaded() = _firstInstallGuidePageLoaded.postValue(true)
 }

@@ -47,11 +47,6 @@ private val databaseHelperModule = module {
     single { NewsDatabaseHelper(androidContext()) }
 }
 
-// private val fragmentModule = module {
-//     factory { MainFragment() }
-//     factory { ErrorFragment() }
-// }
-
 val allModules = listOf(
     retrofitModule,
     networkModule,
@@ -59,5 +54,4 @@ val allModules = listOf(
     repositoryModule,
     viewModelModule,
     databaseHelperModule
-    // fragmentModule,
 )

@@ -29,7 +29,6 @@ import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
 import java.util.*
 import kotlin.system.exitProcess
@@ -97,8 +96,6 @@ class OxygenUpdater : Application() {
             androidLogger()
             // use the Android context given there
             androidContext(this@OxygenUpdater)
-            // setup a KoinFragmentFactory instance
-            fragmentFactory()
             // module list
             modules(allModules)
         }

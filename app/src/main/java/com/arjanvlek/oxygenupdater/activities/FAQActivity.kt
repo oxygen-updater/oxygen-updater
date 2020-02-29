@@ -25,8 +25,8 @@ class FAQActivity : SupportActionBarActivity() {
         super.onStart()
 
         swipeRefreshLayout.apply {
-            setColorSchemeResources(R.color.colorPrimary)
             setOnRefreshListener { loadFaqPage() }
+            setColorSchemeResources(R.color.colorPrimary)
             // needs to be done as a workaround to WebView not being able to scroll up if it's not a direct child of a SwipeRefreshLayout
             setOnChildScrollUpCallback { _, _ ->
                 // allow scrolling up (and thus, disable the swipe-to-refresh gesture) only if:
