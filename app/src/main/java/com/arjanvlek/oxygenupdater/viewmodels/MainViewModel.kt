@@ -44,6 +44,7 @@ import com.arjanvlek.oxygenupdater.utils.LocalNotifications.showDownloadFailedNo
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.workers.DIRECTORY_ROOT
 import com.arjanvlek.oxygenupdater.workers.DownloadWorker
 import com.arjanvlek.oxygenupdater.workers.Md5VerificationWorker
@@ -126,6 +127,15 @@ class MainViewModel(
     ): LiveData<List<ServerMessage>> = viewModelScope.launch(Dispatchers.IO) {
         _serverMessages.postValue(serverRepository.fetchServerMessages(serverStatus, errorCallback))
     }.let { _serverMessages }
+
+    fun subscribeToNotificationTopics(
+        enabledDeviceList: List<Device>
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        NotificationTopicSubscriber.subscribe(
+            enabledDeviceList,
+            serverRepository.fetchAllMethods()
+        )
+    }
 
     fun updateDownloadStatus(downloadStatus: DownloadStatus) {
         _downloadStatus = downloadStatus

@@ -11,7 +11,6 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.SelectableModel
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
-import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
@@ -92,7 +91,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
 
             if (application?.checkPlayServices(activity, false) == true) {
                 // Subscribe to notifications for the newly selected device and update method
-                NotificationTopicSubscriber.subscribe(application!!)
+                onboardingViewModel.subscribeToNotificationTopics()
             } else {
                 Toast.makeText(context, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
             }

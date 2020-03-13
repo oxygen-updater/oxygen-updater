@@ -33,7 +33,6 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
-import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
@@ -77,22 +76,22 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
         val application = application as OxygenUpdater
 
-        mainViewModel.fetchAllDevices().observe(this, Observer {
-            val deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, it)
+        mainViewModel.fetchAllDevices().observe(this, Observer { deviceList ->
+            val deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, deviceList)
 
             val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
 
             if (showDeviceWarningDialog && !deviceOsSpec.isDeviceOsSpecSupported) {
                 displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
             }
-        })
 
-        // subscribe to notification topics
-        // we're doing it here, instead of [SplashActivity], because it requires the app to be setup first
-        // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences])
-        if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
-            NotificationTopicSubscriber.subscribe(application)
-        }
+            // subscribe to notification topics
+            // we're doing it here, instead of [SplashActivity], because it requires the app to be setup first
+            // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences])
+            if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
+                mainViewModel.subscribeToNotificationTopics(deviceList.filter { it.enabled })
+            }
+        })
 
         toolbar.setOnMenuItemClickListener(this)
 

@@ -26,7 +26,7 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
-import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber.subscribe
+import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
 import com.crashlytics.android.Crashlytics
@@ -76,7 +76,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
      * Initialises context, activity, application, and their relevant references
      */
     private fun init() {
-        mContext = context!!
+        mContext = requireContext()
 
         (getActivity() as AppCompatActivity).let {
             activity = it
@@ -221,7 +221,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             // re-use the same observer to avoid duplicated callbacks
             val observer = Observer<List<UpdateMethod>> {
-                populateUpdateMethods(it)
+                populateUpdateMethods(devices, it)
             }
 
             // Retrieve update methods for the selected device
@@ -254,7 +254,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
      *
      * @param updateMethods retrieved from the server
      */
-    private fun populateUpdateMethods(updateMethods: List<UpdateMethod>?) {
+    private fun populateUpdateMethods(
+        devices: List<Device>,
+        updateMethods: List<UpdateMethod>?
+    ) {
         if (!updateMethods.isNullOrEmpty()) {
             updateMethodPreference.isEnabled = true
 
@@ -303,8 +306,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 )
 
                 // Google Play services are not required if the user doesn't use notifications
-                if (application.checkPlayServices(activity.parent, false)) { // Subscribe to notifications for the newly selected device and update method
-                    subscribe(application)
+                if (application.checkPlayServices(activity.parent, false)) {
+                    // Subscribe to notifications for the newly selected device and update method
+                    NotificationTopicSubscriber.subscribe(devices, updateMethods)
                 } else {
                     Toast.makeText(mContext, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
                 }

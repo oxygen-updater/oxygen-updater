@@ -7,18 +7,13 @@ import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.objectMapper
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.models.Device
-import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
-import com.arjanvlek.oxygenupdater.models.ServerStatus
-import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.ExceptionUtils.isNetworkError
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.fasterxml.jackson.core.JsonProcessingException
-import org.joda.time.LocalDateTime
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -27,74 +22,6 @@ import java.net.HttpURLConnection
 import java.util.*
 
 class ServerConnector(private val settingsManager: SettingsManager?) : Cloneable {
-
-    private val allDevices = ArrayList<Device>()
-    private val enabledDevices = ArrayList<Device>()
-    private val disabledDevices = ArrayList<Device>()
-    private var allDevicesFetchDate: LocalDateTime? = null
-    private var enabledDevicesFetchDate: LocalDateTime? = null
-    private var disabledDevicesFetchDate: LocalDateTime? = null
-    private var serverStatus: ServerStatus? = null
-
-    fun getDevices(filter: DeviceRequestFilter, callback: KotlinCallback<List<Device>>) = getDevices(filter, false, callback)
-
-    fun getDevices(
-        filter: DeviceRequestFilter,
-        alwaysFetch: Boolean,
-        callback: KotlinCallback<List<Device>>
-    ) {
-        @Suppress("REDUNDANT_ELSE_IN_WHEN")
-        val cachePreCondition = when (filter) {
-            DeviceRequestFilter.ALL -> allDevicesFetchDate != null && allDevicesFetchDate!!.plusMinutes(5).isAfter(LocalDateTime.now())
-            DeviceRequestFilter.ENABLED -> enabledDevicesFetchDate != null && enabledDevicesFetchDate!!.plusMinutes(5).isAfter(LocalDateTime.now())
-            DeviceRequestFilter.DISABLED -> disabledDevicesFetchDate != null && disabledDevicesFetchDate!!.plusMinutes(5).isAfter(LocalDateTime.now())
-            else -> false
-        }
-
-        if (cachePreCondition && !alwaysFetch) {
-            logVerbose(TAG, "Used local cache to fetch devices...")
-
-            @Suppress("REDUNDANT_ELSE_IN_WHEN")
-            when (filter) {
-                DeviceRequestFilter.ALL -> callback.invoke(allDevices)
-                DeviceRequestFilter.ENABLED -> callback.invoke(enabledDevices)
-                DeviceRequestFilter.DISABLED -> callback.invoke(disabledDevices)
-                else -> callback.invoke(ArrayList())
-            }
-        } else {
-            logVerbose(TAG, "Used remote server to fetch devices...")
-
-            CollectionResponseExecutor<Device>(
-                ServerRequest.DEVICES,
-                {
-                    when (filter) {
-                        DeviceRequestFilter.ALL -> {
-                            allDevicesFetchDate = LocalDateTime.now()
-                            allDevices.clear()
-                            allDevices.addAll(it)
-                        }
-                        DeviceRequestFilter.ENABLED -> {
-                            enabledDevicesFetchDate = LocalDateTime.now()
-                            enabledDevices.clear()
-                            enabledDevices.addAll(it)
-                        }
-                        DeviceRequestFilter.DISABLED -> {
-                            disabledDevicesFetchDate = LocalDateTime.now()
-                            disabledDevices.clear()
-                            disabledDevices.addAll(it)
-                        }
-                    }
-
-                    callback.invoke(it)
-                },
-                filter.filter
-            ).execute()
-        }
-    }
-
-    fun getAllUpdateMethods(callback: KotlinCallback<List<UpdateMethod>>) {
-        CollectionResponseExecutor(ServerRequest.ALL_UPDATE_METHODS, callback).execute()
-    }
 
     fun submitUpdateFile(filename: String, callback: KotlinCallback<ServerPostResult?>) {
         val postBody = JSONObject()

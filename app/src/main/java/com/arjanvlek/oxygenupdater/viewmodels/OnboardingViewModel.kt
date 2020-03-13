@@ -9,6 +9,7 @@ import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
+import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
 import com.crashlytics.android.Crashlytics
 import kotlinx.coroutines.Dispatchers
@@ -83,6 +84,13 @@ class OnboardingViewModel(
         Crashlytics.setUserIdentifier(
             "Device: " + it.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
                     + ", Update Method: " + it.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+        )
+    }
+
+    fun subscribeToNotificationTopics() = viewModelScope.launch(Dispatchers.IO) {
+        NotificationTopicSubscriber.subscribe(
+            _enabledDevices.value ?: ArrayList(),
+            serverRepository.fetchAllMethods()
         )
     }
 }
