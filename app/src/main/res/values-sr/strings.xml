@@ -68,6 +68,8 @@
 	<string name="download_error_network">Проблем са интернет мрежом се појавио приликом преузимања. Преузимање ће се наставити аутоматски.</string>
 	<string name="download_error_server">Грешка са сервером је настала приликом преузимања. Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_internal">Нажалост, техничка грешка је настала приликом преузимања ажурирања. Молимо вас покушајте да преузмете поново. Ако грешка настави да се појављује, молимо вас контактирајте нас за помоћ.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">ПОНОВИ</string>
 	<string name="download_error_resume">НАСТАВИ</string>

@@ -57,36 +57,50 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
 
     // Ensure atomic access to mAsyncInProgress and mDisposeAfterAsync.
     private val mAsyncInProgressLock = Any()
+
     // Is debug logging enabled?
     var mDebugLog = false
     var mDebugTag = "IabHelper"
+
     // Is setup done?
     var mSetupDone = false
+
     // Has this object been disposed of? (If so, we should ignore callbacks, etc)
     var mDisposed = false
+
     // Do we need to dispose this object after an in-progress asynchronous operation?
     var mDisposeAfterAsync = false
+
     // Are subscriptions supported?
     var mSubscriptionsSupported = false
+
     // Is subscription update supported?
     var mSubscriptionUpdateSupported = false
+
     // Is an asynchronous operation in progress?
     // (only one at a time can be in progress)
     var mAsyncInProgress = false
+
     // (for logging/debugging)
     // if mAsyncInProgress == true, what asynchronous operation is in progress?
     var mAsyncOperation = ""
+
     // Context we were passed during initialization
     var mContext: Context?
+
     // Connection to the service
     var mService: IInAppBillingService? = null
     var mServiceConn: ServiceConnection? = null
+
     // The request code used to launch purchase flow
     var mRequestCode = 0
+
     // The item type of the current purchase flow
     var mPurchasingItemType: String? = null
+
     // Public key for verifying signature, in base64 encoding
     var mSignatureBase64: String? = null
+
     // The listener registered on launchPurchaseFlow, which we have to call back when
     // the purchase finishes
     var mPurchaseListener: OnIabPurchaseFinishedListener? = null
@@ -906,6 +920,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         const val BILLING_RESPONSE_RESULT_ERROR = 6
         const val BILLING_RESPONSE_RESULT_ITEM_ALREADY_OWNED = 7
         const val BILLING_RESPONSE_RESULT_ITEM_NOT_OWNED = 8
+
         // IAB Helper error codes
         const val IABHELPER_ERROR_BASE = -1000
         const val IABHELPER_REMOTE_EXCEPTION = -1001
@@ -919,6 +934,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         const val IABHELPER_SUBSCRIPTIONS_NOT_AVAILABLE = -1009
         const val IABHELPER_INVALID_CONSUMPTION = -1010
         const val IABHELPER_SUBSCRIPTION_UPDATE_NOT_AVAILABLE = -1011
+
         // Keys for the responses from InAppBillingService
         const val RESPONSE_CODE = "RESPONSE_CODE"
         const val RESPONSE_GET_SKU_DETAILS_LIST = "DETAILS_LIST"
@@ -929,12 +945,15 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         const val RESPONSE_INAPP_PURCHASE_DATA_LIST = "INAPP_PURCHASE_DATA_LIST"
         const val RESPONSE_INAPP_SIGNATURE_LIST = "INAPP_DATA_SIGNATURE_LIST"
         const val INAPP_CONTINUATION_TOKEN = "INAPP_CONTINUATION_TOKEN"
+
         // Item types
         const val ITEM_TYPE_INAPP = "inapp"
         const val ITEM_TYPE_SUBS = "subs"
+
         // some fields on the getSkuDetails response bundle
         const val GET_SKU_DETAILS_ITEM_LIST = "ITEM_ID_LIST"
         const val GET_SKU_DETAILS_ITEM_TYPE_LIST = "ITEM_TYPE_LIST"
+
         /**
          * Returns a human-readable description for the given response code.
          *

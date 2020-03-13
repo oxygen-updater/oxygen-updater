@@ -65,6 +65,8 @@
 	<string name="download_error_network">"Ett nätverksfel inträffade under nedladdningen av uppdateringen. Nedladdningen återupptas automatiskt."</string>
 	<string name="download_error_server">"Ett server fel uppstod under nedladdningen av uppdateringen. Försök ladda ner den igen-"</string>
 	<string name="download_error_internal">"Oturligt nog uppstod det ett tekniskt fel under nedladdningen av uppdateringen. Försök att ladda ner den igen. Om detta fel upprepar sig, vänligen kontakta utvecklaren av denna app."</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">"FÖRSÖK IGEN"</string>
 	<string name="download_error_resume">"ÅTERUPPTA"</string>

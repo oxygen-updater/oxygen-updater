@@ -65,6 +65,8 @@
 	<string name="download_error_network">حدث خطأ في الشبكة أثناء تحميل التحديث. سيتم إستئناف التحميل تلقائياً.</string>
 	<string name="download_error_server">حدث خطأ في الخادم أثناء تحميل التحديث. من فضلك حاول التحميل مرة أخرى.</string>
 	<string name="download_error_internal">للأسف, حدث خطأ فني أثناء تحميل التحديث. حاول تحميله مجدداً. إذا إستمر حدوث ذلك, فضلاً قم بالإتصال بمطور هذا التطبيق للمساعدة.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">أعد المحاولة</string>
 	<string name="download_error_resume">إستئناف</string>
 	<string name="download_error_storage">لا توجد مساحة تخزين كافية على جهازك لتحميل التحديث. فضلاً قم بحذف بعض الملفات وحاول تحميله مرة أخرى.</string>

@@ -64,6 +64,8 @@
 	<string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova. "</string>
 
 	<string name="download_error_internal">"Errore interno."</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_server">"Errore nel server."</string>
 	<string name="download_error_network">"Errore di rete."</string>
 	<string name="download_error_retry">"RIPROVA"</string>

@@ -67,6 +67,8 @@
 	<string name="download_error_network">Під час завантаження оновлення сталася помилка мережі. Завантаження автоматично відновиться, коли буде підключення до мережі.</string>
 	<string name="download_error_server">Під час завантаження оновлення сталася помилка на сервері. Будь ласка, спробуйте завантажити оновлення знову.</string>
 	<string name="download_error_internal">На жаль, під час завантаження оновлення виникла технічна помилка. Спробуйте завантажити його знову. Але якщо помилка не зникне, тоді зв\'яжіться з розробником застосунку для консультації.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">ПОВТОРИТИ</string>
 	<string name="download_error_resume">ПРОДОВЖИТИ</string>

@@ -67,6 +67,8 @@
 	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">"Попробовать снова"</string>
 	<string name="download_error_resume">"продолжить"</string>

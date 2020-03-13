@@ -84,6 +84,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.install_verify_success_message, oxygenOSVersion)))
             .setContentText(context.getString(R.string.install_verify_success_message, oxygenOSVersion))
             .setCategory(CATEGORY_STATUS)
+            .setPriority(PRIORITY_HIGH)
 
         (Utils.getSystemService(context, NOTIFICATION_SERVICE) as NotificationManager).apply {
             notify(NOTIFICATION_ID, builder.build())
@@ -103,6 +104,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             .setContentTitle(context.getString(R.string.install_verify_error_title))
             .setContentText(errorMessage)
             .setCategory(CATEGORY_STATUS)
+            .setPriority(PRIORITY_HIGH)
 
         (Utils.getSystemService(context, NOTIFICATION_SERVICE) as NotificationManager).apply {
             notify(NOTIFICATION_ID, builder.build())

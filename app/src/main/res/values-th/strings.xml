@@ -67,6 +67,8 @@
 	<string name="download_error_network">ขณะดาวน์โหลดการอัพเดตได้เกิดข้อผิดพลาดระหว่างเครือข่าย การดาวน์โหลดจะกลับมาทำงานต่อโดยอัตโนมัติ</string>
 	<string name="download_error_server">เซิร์ฟเวอร์เกิดขัดข้องระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง</string>
 	<string name="download_error_internal">ขออภัยในความไม่สะดวก เกิดปัญหาทางเทคนิคระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง ถ้าปัญหานี้ยังคงเกิดขึ้นกรุณาติดต่อนักพัฒนา</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">ลองอีกครั้ง</string>
 	<string name="download_error_resume">เริ่มต้นใหม่</string>

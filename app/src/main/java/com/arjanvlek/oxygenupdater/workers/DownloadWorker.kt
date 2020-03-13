@@ -90,6 +90,7 @@ class DownloadWorker(
             .setSmallIcon(R.drawable.logo_outline)
             .setOngoing(true)
             .setCategory(Notification.CATEGORY_PROGRESS)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             // Add the cancel action to the notification which can
             // be used to cancel the worker
             .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)
@@ -98,7 +99,12 @@ class DownloadWorker(
         return ForegroundInfo(FOREGROUND_NOTIFICATION_ID, notification)
     }
 
-    private fun createProgressForegroundInfo(bytesDone: Long, totalBytes: Long, progress: Int, downloadEta: String?): ForegroundInfo {
+    private fun createProgressForegroundInfo(
+        bytesDone: Long,
+        totalBytes: Long,
+        progress: Int,
+        downloadEta: String?
+    ): ForegroundInfo {
         // This PendingIntent can be used to cancel the worker
         val cancelPendingIntent = workManager.createCancelPendingIntent(id)
 
@@ -113,12 +119,13 @@ class DownloadWorker(
             .setContentText(text)
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .bigText(downloadEta ?: "")
+                    .setSummaryText(downloadEta ?: "")
             )
             .setProgress(100, progress, false)
             .setSmallIcon(android.R.drawable.stat_sys_download)
             .setOngoing(true)
             .setCategory(Notification.CATEGORY_PROGRESS)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             // Add the cancel action to the notification which can
             // be used to cancel the worker
             .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)

@@ -67,6 +67,8 @@
 	<string name="download_error_network">Ha ocurrido un error de conexión mientras se descargaba la actualización. La descarga se reanudará automáticamente.</string>
 	<string name="download_error_server">Ha ocurrido un error en el servidor mientras se descargaba la actualización. Por favor, intenta descargar la actualización de nuevo.</string>
 	<string name="download_error_internal">Desafortunadamente, un error técnico ha ocurrido mientras se descargaba la actualización. Intenta descargarla de nuevo. Si el error no desaparece, por favor contacta con el desarrollador de esta app para obtener asistencia.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">REINTENTAR</string>
 	<string name="download_error_resume">RESUMIR</string>

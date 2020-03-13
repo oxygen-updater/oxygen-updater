@@ -65,6 +65,8 @@
 	<string name="download_error_network">Latauksen aikana tapahtui verkkovirhe. Lataus jatkuu automaattisesti.</string>
 	<string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
 	<string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">"Uudelleen"</string>
 	<string name="download_error_resume">"Jatkaa"</string>
 	<string name="download_error_storage">"Laitteessasi ei ole tarpeeksi vapaata tallennustilaa päivityksen lataamiseksi. Vapauta tilaa laittteestasi poistamalla tiedostoja ja yritä ladata päivitys uudelleen."</string>

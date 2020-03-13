@@ -65,6 +65,8 @@
 	<string name="download_error_network">"Ein Verbindungsfehler ist während dem herunterladen des Updates aufgetreten. Das heruntladen wird fortgesetzt."</string>
 	<string name="download_error_server">"Ein Serverfehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen."</string>
 	<string name="download_error_internal">"Ein App-fehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen, oder schicke ein Support-Mail wenn es wieder fehlschlagt."</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">"ERNEUT VERSUCHEN"</string>
 	<string name="download_error_resume">"FORTSETZEN"</string>
 	<string name="download_error_storage">"Auf deinem Gerät ist nicht genügend Speicherplatz verfügbar um das Update herunterzuladen. Entferne ein paar Dateien und Versuche erneut es herunterzuladen."</string>

@@ -50,6 +50,7 @@ class Md5VerificationWorker(
         .setSmallIcon(R.drawable.logo_outline)
         .setOngoing(true)
         .setCategory(Notification.CATEGORY_PROGRESS)
+        .setPriority(NotificationCompat.PRIORITY_LOW)
         .build().let {
             ForegroundInfo(FOREGROUND_NOTIFICATION_ID, it)
         }

@@ -48,7 +48,7 @@ class SplashActivity : AppCompatActivity() {
         val id = OxygenUpdater.PUSH_NOTIFICATION_CHANNEL_ID
 
         // The user-visible name of the channel.
-        val name: CharSequence = getString(R.string.push_notification_channel_name)
+        val name = getString(R.string.push_notification_channel_name)
 
         // The user-visible description of the channel.
         NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH).apply {

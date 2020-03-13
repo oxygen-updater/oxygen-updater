@@ -63,6 +63,8 @@
 	<string name="download_error_server">Une erreur serveur s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger.</string>
 	    
 	<string name="download_error_internal">Malheureusement, une erreur critique s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger et si le problème persiste, veuillez contacter le développeur pour obtenir de l\'assistance.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">"Réessayer"</string>
 	<string name="download_error_resume">"Reprendre"</string>
 	<string name="download_error_storage">"Pas assez d'espace disponible sur votre appareil pour télécharger la mise à jour. Veuillez supprimer quelques fichiers et réessayer."</string>

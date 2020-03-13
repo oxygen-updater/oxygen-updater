@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.app.TaskStackBuilder
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
@@ -50,6 +51,7 @@ object LocalNotifications {
                 )
                 .setProgress(100, downloadProgressData.progress, false)
                 .setCategory(Notification.CATEGORY_PROGRESS)
+                .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
                 cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
@@ -94,6 +96,7 @@ object LocalNotifications {
                         )
                 )
                 .setCategory(Notification.CATEGORY_PROGRESS)
+                .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
                 // Same as downloading so we can't have both a downloading and paused notification.
@@ -131,6 +134,7 @@ object LocalNotifications {
                 .setContentIntent(resultPendingIntent)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_SYSTEM)
+                .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
                 cancel(DOWNLOADING_NOTIFICATION_ID)
@@ -167,6 +171,7 @@ object LocalNotifications {
                 .setContentTitle(context.getString(R.string.contribute_successful_notification_title))
                 .setContentText(context.getString(R.string.contribute_successful_notification_text, filename))
                 .setCategory(Notification.CATEGORY_SYSTEM)
+                .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
                 notify(CONTRIBUTE_SUCCESSFUL_NOTIFICATION_ID, builder.build())
@@ -230,6 +235,7 @@ object LocalNotifications {
                 .setContentTitle(context.getString(R.string.download_failed))
                 .setContentText(context.getString(notificationMessage))
                 .setCategory(Notification.CATEGORY_SYSTEM)
+                .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
                 cancel(DOWNLOADING_NOTIFICATION_ID)
@@ -251,6 +257,7 @@ object LocalNotifications {
             .setSmallIcon(R.drawable.logo_outline)
             .setOngoing(true)
             .setCategory(Notification.CATEGORY_PROGRESS)
+            .setPriority(PRIORITY_LOW)
             .build()
 
         notificationManager.apply {

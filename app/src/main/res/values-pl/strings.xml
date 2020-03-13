@@ -68,6 +68,8 @@
 	<string name="download_error_network">Wystąpił problem z siecią podczas pobierania aktualizacji. Pobieranie zostanie wznowione automatycznie.</string>
 	<string name="download_error_server">Wystąpił bląd serwera podczas pobierania aktualizacji. Spróbuj pobrać aktualizację ponownie.</string>
 	<string name="download_error_internal">Niestety, wystąpił błąd techniczny podczas pobierania aktualizacji. Spróbuj pobrać ją ponownie. Jeśli to się powtarza, skontaktuj się z deweloperem aplikacji w ramach pomocy.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">PONÓW</string>
 	<string name="download_error_resume">WZNÓW</string>

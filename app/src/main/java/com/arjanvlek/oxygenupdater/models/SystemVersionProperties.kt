@@ -23,22 +23,27 @@ class SystemVersionProperties {
      * Matchable name of the device. Must be present in the Devices returned by ServerConnector
      */
     val oxygenDeviceName: String
+
     /**
      * Human-readable OxygenOS version. Shown within the UI of the app
      */
     val oxygenOSVersion: String
+
     /**
      * Technical / OTA version of OxygenOS. Used to check for updates and shown in Device Info tab
      */
     val oxygenOSOTAVersion: String
+
     /**
      * Security patch date. Must be looked up manually on Android versions < 6.0
      */
     val securityPatchDate: String
+
     /**
      * Fingerprint of the build. Used to check if the device uses an official build of OxygenOS
      */
     val oemFingerprint: String
+
     /**
      * Whether or not the device has an A/B partition layout. Required to generate a proper install
      * script for Automatic Update Installations (root feature)

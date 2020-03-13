@@ -136,6 +136,7 @@ class DelayedPushNotificationDisplayer : JobService() {
         .setStyle(NotificationCompat.BigTextStyle().bigText(message))
         .setContentTitle(getString(R.string.app_name))
         .setContentText(message)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     private fun getBuilderForNewDeviceNotification(newDeviceName: String?) = getString(
         R.string.notification_new_device,
@@ -146,6 +147,7 @@ class DelayedPushNotificationDisplayer : JobService() {
             .setStyle(NotificationCompat.BigTextStyle().bigText(it).setSummaryText(getString(R.string.notification_new_device_short)))
             .setContentTitle(getString(R.string.app_name))
             .setContentText(it)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
     }
 
     private fun getBuilderForNewVersionNotification(deviceName: String?, versionNumber: String?) = getString(
@@ -159,6 +161,7 @@ class DelayedPushNotificationDisplayer : JobService() {
             .setWhen(System.currentTimeMillis())
             .setContentTitle(getString(R.string.notification_version_title))
             .setContentText(it)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
     }
 
 

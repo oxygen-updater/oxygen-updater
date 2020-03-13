@@ -67,6 +67,8 @@
 	<string name="download_error_network">アップデートのダウンロード中にネットワークエラーが発生しました。ダウンロードは自動的に再開します。</string>
 	<string name="download_error_server">アップデートのダウンロード中にサーバエラーが発生しました。再度ダウンロードを試行して下さい。</string>
 	<string name="download_error_internal">アップロードのダウンロード中に技術的なエラーが発生しました。このエラーが継続している場合、アプリの開発者に連絡してサポートを受けて下さい。</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">再試行</string>
 	<string name="download_error_resume">再開</string>

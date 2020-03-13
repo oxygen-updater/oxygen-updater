@@ -68,6 +68,8 @@
 	<string name="download_error_network">En netværksfejl opstod under forsøget på at downloade opdateringen. Download vil forsætte automatisk.</string>
 	<string name="download_error_server">En netværksfejl opstod under forsøget på at downloade opdateringen. Forsøg at downloade opdateringen igen.</string>
 	<string name="download_error_internal">Desværre opstod der en teknisk fejl, i forsøget på at downloade opdateringen. Forsøg at downloade igen. Kontakt udvikleren af denne app, hvis problemet gentager sig.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">PRØV IGEN</string>
 	<string name="download_error_resume">GENIOTAG</string>
