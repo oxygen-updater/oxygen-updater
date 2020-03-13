@@ -16,6 +16,8 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 /**
+ * Used to communicate with the Oxygen Updater backend
+ *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 interface ServerApi {

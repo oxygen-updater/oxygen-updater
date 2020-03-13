@@ -16,6 +16,7 @@ import com.arjanvlek.oxygenupdater.fragments.UpdateInformationFragment
 import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
+import org.koin.java.KoinJavaComponent
 
 object LocalNotifications {
 
@@ -30,6 +31,8 @@ object LocalNotifications {
     const val ONGOING = true
     const val HAS_NO_ERROR = false
     const val HAS_ERROR = true
+
+    private val notificationManager by KoinJavaComponent.inject(NotificationManager::class.java)
 
     /**
      * Shows a notification that an update is downloading
@@ -48,7 +51,7 @@ object LocalNotifications {
                 .setProgress(100, downloadProgressData.progress, false)
                 .setCategory(Notification.CATEGORY_PROGRESS)
 
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
                 cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
                 cancel(VERIFYING_NOTIFICATION_ID)
@@ -76,7 +79,7 @@ object LocalNotifications {
             val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
 
             val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                .setSmallIcon(R.drawable.download)
                 .setOngoing(true)
                 .setContentIntent(resultPendingIntent)
                 .setAutoCancel(false)
@@ -92,7 +95,7 @@ object LocalNotifications {
                 )
                 .setCategory(Notification.CATEGORY_PROGRESS)
 
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 // Same as downloading so we can't have both a downloading and paused notification.
                 notify(DOWNLOADING_NOTIFICATION_ID, builder.build())
             }
@@ -121,15 +124,15 @@ object LocalNotifications {
             val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
 
             val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentText(context.getString(R.string.download_complete_notification))
+                .setSmallIcon(R.drawable.download)
                 .setOngoing(false)
                 .setContentIntent(resultPendingIntent)
                 .setAutoCancel(true)
-                .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(context.getString(R.string.download_complete_notification))
                 .setCategory(Notification.CATEGORY_SYSTEM)
 
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 cancel(DOWNLOADING_NOTIFICATION_ID)
                 cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
                 cancel(VERIFYING_NOTIFICATION_ID)
@@ -165,7 +168,7 @@ object LocalNotifications {
                 .setContentText(context.getString(R.string.contribute_successful_notification_text, filename))
                 .setCategory(Notification.CATEGORY_SYSTEM)
 
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 notify(CONTRIBUTE_SUCCESSFUL_NOTIFICATION_ID, builder.build())
             }
         } catch (e: Exception) {
@@ -176,9 +179,9 @@ object LocalNotifications {
     /**
      * Hides the downloading notification. Used when the download is cancelled by the user.
      */
-    fun hideDownloadingNotification(context: Context?) {
+    fun hideDownloadingNotification() {
         try {
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 cancel(DOWNLOADING_NOTIFICATION_ID)
                 cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
                 cancel(VERIFYING_NOTIFICATION_ID)
@@ -192,9 +195,9 @@ object LocalNotifications {
      * Hides the download complete notification. Used when the install guide is manually clicked
      * from within the app.
      */
-    fun hideDownloadCompleteNotification(context: Context?) {
+    fun hideDownloadCompleteNotification() {
         try {
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
             }
         } catch (e: Exception) {
@@ -220,7 +223,7 @@ object LocalNotifications {
             val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
 
             val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.stat_sys_download_done)
+                .setSmallIcon(R.drawable.download)
                 .setOngoing(false)
                 .setContentIntent(resultPendingIntent)
                 .setAutoCancel(true)
@@ -228,7 +231,7 @@ object LocalNotifications {
                 .setContentText(context.getString(notificationMessage))
                 .setCategory(Notification.CATEGORY_SYSTEM)
 
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 cancel(DOWNLOADING_NOTIFICATION_ID)
                 cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
                 cancel(VERIFYING_NOTIFICATION_ID)
@@ -236,6 +239,25 @@ object LocalNotifications {
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display download failed notification: ", e)
+        }
+    }
+
+    fun showVerificationFailedNotification(context: Context) {
+        val text = context.getString(R.string.download_notification_error_corrupt)
+        val notification = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            .setContentTitle(context.getString(R.string.download_verifying_error))
+            .setTicker(text)
+            .setContentText(text)
+            .setSmallIcon(R.drawable.logo_outline)
+            .setOngoing(true)
+            .setCategory(Notification.CATEGORY_PROGRESS)
+            .build()
+
+        notificationManager.apply {
+            cancel(DOWNLOADING_NOTIFICATION_ID)
+            cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
+            cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
+            notify(VERIFYING_NOTIFICATION_ID, notification)
         }
     }
 
@@ -248,7 +270,7 @@ object LocalNotifications {
     fun showVerifyingNotification(context: Context, ongoing: Boolean, error: Boolean) {
         try {
             val builder = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(if (ongoing) android.R.drawable.stat_sys_download else android.R.drawable.stat_sys_download_done)
+                .setSmallIcon(if (ongoing) android.R.drawable.stat_sys_download else R.drawable.download)
                 .setOngoing(ongoing)
                 .setCategory(Notification.CATEGORY_PROGRESS)
 
@@ -263,7 +285,7 @@ object LocalNotifications {
                 builder.setContentTitle(context.getString(R.string.download_verifying))
             }
 
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 cancel(DOWNLOADING_NOTIFICATION_ID)
                 cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
                 cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
@@ -277,9 +299,9 @@ object LocalNotifications {
     /**
      * Hides the verifying notification. Used when verification has succeeded.
      */
-    fun hideVerifyingNotification(context: Context?) {
+    fun hideVerifyingNotification() {
         try {
-            (Utils.getSystemService(context, Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+            notificationManager.apply {
                 cancel(VERIFYING_NOTIFICATION_ID)
             }
         } catch (e: Exception) {

@@ -17,6 +17,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.workers.DIRECTORY_ROOT
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.koin.android.ext.android.inject
 import java.io.File
@@ -25,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @author Arjan Vlek (github.com/arjanvlek)
+ * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
 class UpdateFileChecker : JobService() {
 
@@ -65,7 +66,7 @@ class UpdateFileChecker : JobService() {
         repository = SubmittedUpdateFileRepository(applicationContext)
 
         UPDATE_DIRECTORIES.forEach { directoryName ->
-            val directory = File(Environment.getExternalStoragePublicDirectory(DownloadService.DIRECTORY_ROOT), directoryName)
+            val directory = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), directoryName)
 
             if (!directory.exists()) {
                 logDebug(TAG, "Directory: " + directory.absolutePath + " does not exist. Skipping...")

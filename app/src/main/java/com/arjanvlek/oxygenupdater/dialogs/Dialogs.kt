@@ -9,7 +9,6 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.models.UpdateData
-import com.arjanvlek.oxygenupdater.services.DownloadService
 import com.arjanvlek.oxygenupdater.utils.LocalNotifications
 
 object Dialogs {
@@ -22,17 +21,17 @@ object Dialogs {
      */
     fun showDownloadError(
         activity: Activity?,
-        updateData: UpdateData?,
         isResumable: Boolean,
         @StringRes title: Int,
-        @StringRes message: Int
+        @StringRes message: Int,
+        callback: KotlinCallback<Boolean>? = null
     ) = checkPreconditions(activity) {
         showDownloadError(
             activity!!,
-            updateData,
             isResumable,
             activity.getString(title),
-            activity.getString(message)
+            activity.getString(message),
+            callback
         )
     }
 
@@ -44,33 +43,28 @@ object Dialogs {
      */
     fun showDownloadError(
         activity: Activity?,
-        updateData: UpdateData?,
         isResumable: Boolean,
         title: String?,
-        message: String?
+        message: String?,
+        callback: KotlinCallback<Boolean>? = null
     ) = checkPreconditions(activity) {
         MessageDialog(
             activity!!,
             title = title,
             message = message,
             positiveButtonText = activity.getString(R.string.download_error_close),
-            negativeButtonText = if (isResumable) {
-                activity.getString(R.string.download_error_resume)
-            } else {
-                activity.getString(R.string.download_error_retry)
+            negativeButtonText = when {
+                callback == null -> null
+                isResumable -> activity.getString(R.string.download_error_resume)
+                else -> activity.getString(R.string.download_error_retry)
             },
             cancellable = true
         ) {
             when (it) {
-                BUTTON_POSITIVE -> LocalNotifications.hideDownloadCompleteNotification(activity)
+                BUTTON_POSITIVE -> LocalNotifications.hideDownloadCompleteNotification()
                 BUTTON_NEGATIVE -> {
-                    LocalNotifications.hideDownloadCompleteNotification(activity)
-                    DownloadService.performOperation(activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
-                    DownloadService.performOperation(
-                        activity,
-                        if (isResumable) DownloadService.ACTION_RESUME_DOWNLOAD else DownloadService.ACTION_DOWNLOAD_UPDATE,
-                        updateData
-                    )
+                    LocalNotifications.hideDownloadCompleteNotification()
+                    callback?.invoke(isResumable)
                 }
                 BUTTON_NEUTRAL -> {
                     // no-op

@@ -3,12 +3,13 @@ package com.arjanvlek.oxygenupdater
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
+import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.getSystemService
 import androidx.lifecycle.MutableLiveData
 import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -18,10 +19,9 @@ import com.arjanvlek.oxygenupdater.utils.MD5
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
-import com.downloader.PRDownloader
-import com.downloader.PRDownloaderConfig
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -32,6 +32,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import java.util.*
 import kotlin.system.exitProcess
+
 
 class OxygenUpdater : Application() {
 
@@ -79,15 +80,6 @@ class OxygenUpdater : Application() {
         setupCrashReporting()
         setupNetworkCallback()
         setupMobileAds()
-        setupDownloader()
-
-        // If it's a debug build, add current device's ID to the list of test device IDs for ads
-        if (BuildConfig.DEBUG) {
-            @SuppressLint("HardwareIds")
-            val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-            val deviceId: String = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
-            ADS_TEST_DEVICES.add(deviceId)
-        }
     }
 
     private fun setupKoin() {
@@ -102,16 +94,33 @@ class OxygenUpdater : Application() {
     }
 
     private fun setupNetworkCallback() {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        connectivityManager.registerNetworkCallback(
-            NetworkRequest.Builder().build(),
-            networkCallback
-        )
+        getSystemService<ConnectivityManager>()?.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                registerDefaultNetworkCallback(networkCallback)
+            } else {
+                registerNetworkCallback(
+                    NetworkRequest.Builder().build(),
+                    networkCallback
+                )
+            }
+        }
     }
 
     private fun setupMobileAds() {
+        // If it's a debug build, add current device's ID to the list of test device IDs for ads
+        if (BuildConfig.DEBUG) {
+            @SuppressLint("HardwareIds")
+            val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+            val deviceId: String = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
+            ADS_TEST_DEVICES.add(deviceId)
+        }
+
+        val requestConfiguration = RequestConfiguration.Builder()
+            .setTestDeviceIds(ADS_TEST_DEVICES)
+            .build()
+
         MobileAds.initialize(this, getString(R.string.advertising_app_id))
+        MobileAds.setRequestConfiguration(requestConfiguration)
     }
 
     /**
@@ -166,17 +175,6 @@ class OxygenUpdater : Application() {
         Fabric.with(this, crashlytics)
     }
 
-    private fun setupDownloader() {
-        val config = PRDownloaderConfig.newBuilder()
-            .setDatabaseEnabled(true)
-            .setUserAgent(APP_USER_AGENT)
-            .setConnectTimeout(30000)
-            .setReadTimeout(120000)
-            .build()
-
-        PRDownloader.initialize(applicationContext, config)
-    }
-
     @Suppress("unused")
     companion object {
         private const val TAG = "OxygenUpdater"
@@ -197,8 +195,6 @@ class OxygenUpdater : Application() {
 
         val isNetworkAvailable = MutableLiveData<Boolean>()
 
-        fun buildAdRequest(): AdRequest = AdRequest.Builder().apply {
-            ADS_TEST_DEVICES.forEach { addTestDevice(it) }
-        }.build()
+        fun buildAdRequest(): AdRequest = AdRequest.Builder().build()
     }
 }

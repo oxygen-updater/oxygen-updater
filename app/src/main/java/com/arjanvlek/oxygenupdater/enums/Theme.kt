@@ -25,7 +25,7 @@ internal enum class Theme(private val value: Int) {
         private val map = values().associateBy { it.value }
 
         /**
-         * Returns a theme bases on value. If value isn't between [0, 3], default to [.SYSTEM]
+         * Returns a theme based on value. If value isn't between [0, 3], default to [SYSTEM]
          *
          * @param value the integer value
          *

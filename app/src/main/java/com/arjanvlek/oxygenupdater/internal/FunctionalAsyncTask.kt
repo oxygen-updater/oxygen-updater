@@ -4,7 +4,7 @@ import android.os.AsyncTask
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @author Arjan Vlek (github.com/arjanvlek)
+ * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
 class FunctionalAsyncTask<Params, Progress, Result> @JvmOverloads constructor(
     private val preExecuteFunction: () -> Unit,

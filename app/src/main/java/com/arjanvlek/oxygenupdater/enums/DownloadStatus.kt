@@ -2,7 +2,7 @@ package com.arjanvlek.oxygenupdater.enums
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @author Arjan Vlek (github.com/arjanvlek)
+ * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
 enum class DownloadStatus {
     /**
@@ -26,17 +26,30 @@ enum class DownloadStatus {
     DOWNLOAD_PAUSED,
 
     /**
-     * The download has been paused due to the loss of network connectivity
+     * The file has been successfully downloaded
      */
-    DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION,
+    DOWNLOAD_COMPLETED,
 
     /**
-     * The downloaded file is being verified (MD5 check)
+     * The file could not be downloaded
+     */
+    DOWNLOAD_FAILED,
+
+    /**
+     * The downloaded file's MD5 checksum is being verified
      */
     VERIFYING,
 
     /**
-     * The file has been successfully downloaded
+     * The downloaded file's MD5 checksum has been verified
      */
-    DOWNLOAD_COMPLETED
+    VERIFICATION_COMPLETED,
+
+    /**
+     * The downloaded file's MD5 checksum could not be verified
+     */
+    VERIFICATION_FAILED;
+
+    fun shouldPruneWork() = this == DOWNLOAD_COMPLETED || this == DOWNLOAD_FAILED
+            || this == VERIFICATION_COMPLETED || this == VERIFICATION_FAILED
 }

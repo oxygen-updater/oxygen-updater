@@ -38,7 +38,7 @@ import java.io.IOException
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @author Arjan Vlek (github.com/arjanvlek)
+ * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
 class DelayedPushNotificationDisplayer : JobService() {
 

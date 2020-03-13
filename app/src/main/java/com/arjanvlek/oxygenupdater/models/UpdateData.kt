@@ -21,7 +21,7 @@ data class UpdateData(
     var mD5Sum: String? = null,
 
     var information: String? = null,
-    private var updateInformationAvailable: Boolean = false,
+    var updateInformationAvailable: Boolean = false,
 
     var systemIsUpToDate: Boolean = false
 ) : Parcelable, FormattableUpdateData {
@@ -35,15 +35,14 @@ data class UpdateData(
     override val updateDescription = description
 
     @JsonProperty("update_information_available")
-    fun setUpdateInformationAvailable(updateInformationAvailable: Boolean) {
+    fun setIsUpdateInformationAvailable(updateInformationAvailable: Boolean) {
         this.updateInformationAvailable = updateInformationAvailable
     }
 
-    fun isSystemIsUpToDateCheck(settingsManager: SettingsManager?): Boolean {
-        return if (settingsManager != null && settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)) {
-            false
-        } else systemIsUpToDate
-    }
+    fun isSystemIsUpToDateCheck(settingsManager: SettingsManager?) = if (settingsManager != null
+        && settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
+    ) false
+    else systemIsUpToDate
 
     override fun describeContents() = 0
 
@@ -66,30 +65,30 @@ data class UpdateData(
         }
     }
 
-    companion object CREATOR : Parcelable.Creator<UpdateData> {
-        override fun createFromParcel(parcel: Parcel): UpdateData? {
-            val data = UpdateData(
-                id = parcel.readLong(),
-                versionNumber = parcel.readString(),
-                otaVersionNumber = parcel.readString(),
-                description = parcel.readString(),
-                downloadUrl = parcel.readString(),
-                downloadSize = parcel.readLong(),
-                filename = parcel.readString(),
-                mD5Sum = parcel.readString(),
-                information = parcel.readString()
-            )
+    companion object {
+        val CREATOR = object : Parcelable.Creator<UpdateData> {
+            override fun createFromParcel(parcel: Parcel): UpdateData? {
+                val data = UpdateData(
+                    id = parcel.readLong(),
+                    versionNumber = parcel.readString(),
+                    otaVersionNumber = parcel.readString(),
+                    description = parcel.readString(),
+                    downloadUrl = parcel.readString(),
+                    downloadSize = parcel.readLong(),
+                    filename = parcel.readString(),
+                    mD5Sum = parcel.readString(),
+                    information = parcel.readString()
+                )
 
-            parcel.readSparseBooleanArray()?.let {
-                data.setUpdateInformationAvailable(it[0])
-                data.systemIsUpToDate = it[1]
+                parcel.readSparseBooleanArray()?.let {
+                    data.setIsUpdateInformationAvailable(it[0])
+                    data.systemIsUpToDate = it[1]
+                }
+
+                return data
             }
 
-            return data
-        }
-
-        override fun newArray(size: Int): Array<UpdateData?> {
-            return arrayOfNulls(size)
+            override fun newArray(size: Int) = arrayOfNulls<UpdateData?>(size)
         }
     }
 }

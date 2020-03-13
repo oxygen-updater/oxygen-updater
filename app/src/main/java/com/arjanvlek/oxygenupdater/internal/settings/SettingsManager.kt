@@ -10,10 +10,8 @@ class SettingsManager {
     private val sharedPreferences: SharedPreferences by inject(SharedPreferences::class.java)
 
     @Suppress("UNCHECKED_CAST")
-    @Synchronized
     fun <T> getPreference(key: String?, defaultValue: T): T = sharedPreferences.let {
         when {
-            it == null -> defaultValue
             it.contains(key) -> it.all[key] as T
             else -> defaultValue
         }
@@ -26,16 +24,14 @@ class SettingsManager {
      *
      * @return Returns if the given key is stored in the preferences.
      */
-    @Synchronized
-    fun containsPreference(key: String?) = sharedPreferences?.contains(key) == true
+    fun containsPreference(key: String?) = sharedPreferences.contains(key)
 
     /**
      * Deletes a preference
      *
      * @param key Preference Key
      */
-    @Synchronized
-    fun deletePreference(key: String?) = sharedPreferences?.edit { remove(key) }
+    fun deletePreference(key: String?) = sharedPreferences.edit { remove(key) }
 
     /**
      * Saves a preference to sharedPreferences
@@ -43,9 +39,8 @@ class SettingsManager {
      * @param key   Item key to later retrieve the item back
      * @param value Item that needs to be saved in shared preferences.
      */
-    @Synchronized
     fun savePreference(key: String?, value: Any?) = try {
-        sharedPreferences?.edit {
+        sharedPreferences.edit {
             when (value) {
                 null -> putString(key, null)
                 is String -> putString(key, value.toString())
@@ -68,7 +63,7 @@ class SettingsManager {
         logError(TAG, "Failed to save preference with key $key and value $value. Defaulting to String value! ${e.message}", e)
 
         // If this doesn't work, try to use String instead.
-        sharedPreferences?.edit {
+        sharedPreferences.edit {
             putString(key, value.toString())
         }
     }
@@ -123,6 +118,7 @@ class SettingsManager {
         const val PROPERTY_ADVANCED_MODE = "advanced_mode"
         const val PROPERTY_SETUP_DONE = "setup_done"
         const val PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings"
+        const val PROPERTY_DOWNLOAD_BYTES_DONE = "download_bytes_done"
         const val PROPERTY_DOWNLOAD_ID = "download_id"
         const val PROPERTY_DOWNLOADER_STATE = "downloader_state"
         const val PROPERTY_DOWNLOADER_STATE_HISTORY = "downloader_state_history"

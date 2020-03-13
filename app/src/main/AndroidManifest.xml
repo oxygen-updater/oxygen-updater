@@ -23,11 +23,6 @@
 	<!-- In-App Billing permission -->
 	<uses-permission android:name="com.android.vending.BILLING" />
 
-	<permission
-		android:name="${fullPackageName}.permission.accessDownloadServiceRestarter"
-		android:protectionLevel="signature" />
-	<uses-permission android:name="${fullPackageName}.permission.accessDownloadServiceRestarter" />
-
 	<application
 		android:name=".OxygenUpdater"
 		android:allowBackup="true"
@@ -192,18 +187,6 @@
 			android:name=".services.DelayedPushNotificationDisplayer"
 			android:label="@string/delayed_push_notification_displayer_service_name"
 			android:permission="android.permission.BIND_JOB_SERVICE" />
-
-		<!-- Background downloader service & receiver -->
-		<service
-			android:name=".services.DownloadService"
-			android:label="@string/download_service_name" />
-
-		<receiver
-			android:name=".receivers.DownloadServiceRestarter"
-			android:enabled="true"
-			android:exported="true"
-			android:label="Restart downloader service when app gets stopped"
-			android:permission="${fullPackageName}.permission.accessDownloadServiceRestarter" />
 
 		<meta-data
 			android:name="com.google.android.gms.version"

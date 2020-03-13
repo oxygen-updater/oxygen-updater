@@ -1,12 +1,13 @@
 package com.arjanvlek.oxygenupdater.fragments
 
-import android.app.ActivityManager
-import android.content.Context
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.os.Handler
 import android.text.SpannableString
+import android.text.format.Formatter
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import androidx.work.WorkInfo
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
@@ -29,25 +31,28 @@ import com.arjanvlek.oxygenupdater.dialogs.UpdateChangelogDialog
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOADING
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOAD_COMPLETED
+import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOAD_FAILED
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOAD_PAUSED
-import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOAD_QUEUED
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.NOT_DOWNLOADING
+import com.arjanvlek.oxygenupdater.enums.DownloadStatus.VERIFICATION_COMPLETED
+import com.arjanvlek.oxygenupdater.enums.DownloadStatus.VERIFICATION_FAILED
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.VERIFYING
 import com.arjanvlek.oxygenupdater.extensions.setImageResourceWithTint
-import com.arjanvlek.oxygenupdater.internal.UpdateDownloadListener
+import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Banner
-import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
-import com.arjanvlek.oxygenupdater.receivers.DownloadReceiver
-import com.arjanvlek.oxygenupdater.services.DownloadService
-import com.arjanvlek.oxygenupdater.services.DownloadService.Companion.ACTION_DELETE_DOWNLOADED_UPDATE
-import com.arjanvlek.oxygenupdater.services.DownloadService.Companion.ACTION_DOWNLOAD_UPDATE
 import com.arjanvlek.oxygenupdater.utils.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.utils.UpdateDescriptionParser
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
+import com.arjanvlek.oxygenupdater.workers.DownloadFailure
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_BYTES_DONE
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_ETA
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_TYPE
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_PROGRESS
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_TOTAL_BYTES
 import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_update_information.*
 import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
@@ -57,12 +62,51 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_information) {
 
-    private var downloadListener: UpdateDownloadListener? = null
     private var updateData: UpdateData? = null
     private var isLoadedOnce = false
-    private var downloadReceiver: DownloadReceiver? = null
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
+
+    private val fetchUpdateDataObserver = Observer<UpdateData> {
+        this.updateData = it
+
+        // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
+        if (!isLoadedOnce && activity?.intent?.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false) == true) {
+            val intent = requireActivity().intent
+            showDownloadError(
+                activity,
+                intent.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false),
+                intent.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE),
+                intent.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE)
+            ) { isResumable ->
+                if (!isResumable) {
+                    // Delete downloaded file, so the user can restart the download
+                    mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                }
+
+                mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+            }
+        }
+
+        displayUpdateInformation(updateData)
+        isLoadedOnce = true
+    }
+
+    private val downloadStatusObserver = Observer<Pair<DownloadStatus, WorkInfo?>> {
+        initDownloadLayout(it)
+    }
+
+    private val verificationWorkObserver = Observer<List<WorkInfo>> {
+        if (it.isNotEmpty()) {
+            mainViewModel.updateDownloadStatus(it.first(), true)
+        }
+    }
+
+    private val downloadWorkObserver = Observer<List<WorkInfo>> {
+        if (it.isNotEmpty()) {
+            mainViewModel.updateDownloadStatus(it.first())
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
@@ -75,30 +119,16 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
     override fun onResume() = super.onResume().also {
         if (isLoadedOnce) {
-            registerDownloadReceiver(downloadListener!!)
-
-            // If service reports being inactive, check if download is finished or paused to update state.
-            // If download is running then it auto-updates the UI using the downloadListener.
-            if (!DownloadService.isRunning() && updateData != null) {
-                DownloadService.performOperation(activity, DownloadService.ACTION_GET_INITIAL_STATUS, updateData)
+            if (mainViewModel.checkDownloadCompletionByFile(updateData)) {
+                mainViewModel.updateDownloadStatus(DOWNLOAD_COMPLETED)
+            } else {
+                mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
             }
         }
     }
 
-    override fun onPause() = super.onPause().also {
-        if (downloadReceiver != null) {
-            unregisterDownloadReceiver()
-        }
-    }
-
     override fun onDestroy() = super.onDestroy().also {
-        if (downloadReceiver != null) {
-            unregisterDownloadReceiver()
-        }
-
-        if (activity != null && isDownloadServiceRunning) {
-            activity!!.stopService(Intent(context, DownloadService::class.java))
-        }
+        mainViewModel.maybePruneWork()
     }
 
     /**
@@ -125,31 +155,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             if (error == OxygenUpdater.NETWORK_CONNECTION_ERROR) {
                 showNoNetworkConnectionError(activity)
             }
-        }.observe(viewLifecycleOwner, Observer { updateData ->
-            this.updateData = updateData
-
-            if (!isLoadedOnce) {
-                downloadListener = buildDownloadListener()
-                registerDownloadReceiver(downloadListener!!)
-
-                DownloadService.performOperation(activity, DownloadService.ACTION_GET_INITIAL_STATUS, updateData)
-            }
-
-            // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
-            if (!isLoadedOnce && activity?.intent?.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false) == true) {
-                val intent = activity!!.intent
-                showDownloadError(
-                    activity,
-                    updateData,
-                    intent.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false),
-                    intent.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE),
-                    intent.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE)
-                )
-            }
-
-            displayUpdateInformation(updateData, online)
-            isLoadedOnce = true
-        })
+        }.observe(viewLifecycleOwner, fetchUpdateDataObserver)
 
         // display the "No connection" banner if required
         OxygenUpdater.isNetworkAvailable.observe(viewLifecycleOwner) {
@@ -162,16 +168,16 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             if (status!!.isUserRecoverableError) {
                 serverStatusTextView.apply {
                     isVisible = true
-                    text = serverStatus.getBannerText(context!!)
-                    setBackgroundColor(serverStatus.getColor(context!!))
-                    setCompoundDrawablesRelativeWithIntrinsicBounds(serverStatus.getDrawableRes(context!!), 0, 0, 0)
+                    text = serverStatus.getBannerText(requireContext())
+                    setBackgroundColor(serverStatus.getColor(requireContext()))
+                    setCompoundDrawablesRelativeWithIntrinsicBounds(serverStatus.getDrawableRes(requireContext()), 0, 0, 0)
                 }
             }
 
             // banner is displayed if app version is outdated
             if (settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
                 appUpdateBannerLayout.isVisible = true
-                appUpdateBannerLayout.setOnClickListener { ActivityLauncher(activity!!).openPlayStorePage(context!!) }
+                appUpdateBannerLayout.setOnClickListener { ActivityLauncher(requireActivity()).openPlayStorePage(requireContext()) }
                 appUpdateBannerTextView.text = getString(R.string.new_app_version, serverStatus.latestAppVersion)
             }
 
@@ -193,13 +199,13 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
      */
     private fun displayServerMessageBars(banners: List<Banner>) {
         // select only the banners that have a non-empty text (`ServerStatus.kt` has empty text in some cases)
-        val bannerList = banners.filter { !it.getBannerText(context!!).isNullOrBlank() }
+        val bannerList = banners.filter { !it.getBannerText(requireContext()).isNullOrBlank() }
 
         if (!isAdded || bannerList.isEmpty()) {
             return
         }
 
-        val dialog = ServerMessagesDialog(context!!, bannerList)
+        val dialog = ServerMessagesDialog(requireContext(), bannerList)
 
         serverBannerTextView.apply {
             isVisible = true
@@ -213,9 +219,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
      * Displays the update information from a [UpdateData] with update information.
      *
      * @param updateData              Update information to display
-     * @param online                  Whether or not the device has an active network connection
      */
-    private fun displayUpdateInformation(updateData: UpdateData?, online: Boolean) {
+    private fun displayUpdateInformation(updateData: UpdateData?) {
+        val online = Utils.checkNetworkConnection(context)
+
         // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
         if (!isAdded || updateData == null) {
             return
@@ -298,7 +305,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
 
         val updateChangelogDialog = UpdateChangelogDialog(
-            context!!,
+            requireContext(),
             formattedOxygenOsVersion,
             getUpdateChangelog(updateData.description),
             differentVersionChangelogNoticeText
@@ -323,7 +330,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         // Show last time checked.
         systemIsUpToDateDateTextView.text = getString(
             R.string.update_information_last_checked_on,
-            Utils.formatDateTime(context!!, settingsManager.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
+            Utils.formatDateTime(requireContext(), settingsManager.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
         )
     }
 
@@ -377,6 +384,18 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         // Display update file name.
         fileNameTextView.text = getString(R.string.update_information_file_name, updateData.filename)
         md5TextView.text = getString(R.string.update_information_md5, updateData.mD5Sum)
+
+        mainViewModel.setupWorkRequests(updateData)
+
+        mainViewModel.downloadWorkInfo.observe(viewLifecycleOwner, downloadWorkObserver)
+        mainViewModel.verificationWorkInfo.observe(viewLifecycleOwner, verificationWorkObserver)
+        mainViewModel.downloadStatus.observe(viewLifecycleOwner, downloadStatusObserver)
+
+        if (mainViewModel.checkDownloadCompletionByFile(updateData)) {
+            mainViewModel.updateDownloadStatus(DOWNLOAD_COMPLETED)
+        } else {
+            mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+        }
     }
 
     private fun getUpdateChangelog(description: String?) = if (!description.isNullOrBlank() && description != "null") {
@@ -385,282 +404,284 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         getString(R.string.update_information_description_not_available)
     }
 
-    private fun showDownloadLink(updateData: UpdateData?) {
+    private fun showDownloadLink() {
         if (updateData != null) {
             downloadLinkTextView.apply {
                 isVisible = true
                 movementMethod = LinkMovementMethod.getInstance()
                 text = SpannableString(
-                    getString(R.string.update_information_download_link, updateData.downloadUrl)
+                    getString(R.string.update_information_download_link, updateData!!.downloadUrl)
                 ).apply {
-                    setSpan(URLSpan(updateData.downloadUrl), indexOf("\n") + 1, length, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
+                    setSpan(URLSpan(updateData!!.downloadUrl), indexOf("\n") + 1, length, SpannableString.SPAN_INCLUSIVE_EXCLUSIVE)
                 }
             }
         }
     }
 
-    /**
-     * Creates an [UpdateDownloadListener]
-     */
-    private fun buildDownloadListener() = object : UpdateDownloadListener {
-        override fun onInitialStatusUpdate() {
-            if (isAdded && updateInformationLayout != null) {
-                downloadLayout.setOnClickListener {
-                    downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
-                    (downloadIcon.drawable as AnimationDrawable).start()
-
-                    DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
-
-                    initDownloadLayout(DOWNLOAD_PAUSED)
-                }
-            }
-        }
-
-        override fun onDownloadStarted() {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(DOWNLOADING)
-
-                downloadLayout.setOnClickListener {
-                    downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
-
-                    DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
-
-                    initDownloadLayout(DOWNLOAD_PAUSED)
-
-                    // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
-                    downloadLayout.setOnClickListener { }
-                }
-            }
-        }
-
-        override fun onDownloadProgressUpdate(downloadProgressData: DownloadProgressData) {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(DOWNLOADING)
-
-                val progress = downloadProgressData.progress
-
-                downloadProgressBar.isIndeterminate = false
-                downloadProgressBar.progress = progress
-
-                val downloadSizeInMegabytes = updateData!!.downloadSizeInMegabytes
-                val completedMegabytes = (progress / 100f * downloadSizeInMegabytes).toInt()
-
-                downloadSizeTextView.text = getString(
-                    R.string.download_progress,
-                    completedMegabytes, downloadSizeInMegabytes, progress
-                )
-
-                if (downloadProgressData.isWaitingForConnection) {
-                    downloadDetailsTextView.setText(R.string.download_waiting_for_network)
-                    return
-                }
-
-                if (downloadProgressData.timeRemaining == null) {
-                    downloadDetailsTextView.setText(R.string.download_progress_text_unknown_time_remaining)
-                } else {
-                    downloadDetailsTextView.text = downloadProgressData.timeRemaining.toString(context)
-                }
-            }
-        }
-
-        override fun onDownloadPaused(queued: Boolean, downloadProgressData: DownloadProgressData) {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(DOWNLOAD_PAUSED)
-
-                if (downloadProgressData.isWaitingForConnection) {
-                    onDownloadProgressUpdate(downloadProgressData)
-                    return
-                }
-
-                if (!queued) {
-                    downloadProgressBar.progress = downloadProgressData.progress
-                } else {
-                    downloadDetailsTextView.setText(R.string.download_pending)
-                }
-            }
-        }
-
-        override fun onDownloadComplete() {
-            if (isAdded && updateInformationLayout != null) {
-                Toast.makeText(context, getString(R.string.download_verifying_start), LENGTH_LONG).show()
-            }
-        }
-
-        override fun onDownloadCancelled() {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(NOT_DOWNLOADING)
-            }
-        }
-
-        override fun onDownloadError(isInternalError: Boolean, isStorageSpaceError: Boolean, isServerError: Boolean) {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(NOT_DOWNLOADING)
-
-                when {
-                    isStorageSpaceError -> showDownloadError(updateData, R.string.download_error_storage)
-                    isServerError -> {
-                        showDownloadLink(updateData)
-                        showDownloadError(updateData, R.string.download_error_server)
-                    }
-                    else -> {
-                        showDownloadLink(updateData)
-                        showDownloadError(updateData, R.string.download_error_internal)
-                    }
-                }
-            }
-        }
-
-        override fun onVerifyStarted() {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(VERIFYING)
-            }
-        }
-
-        override fun onVerifyError() {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(NOT_DOWNLOADING)
-
-                showDownloadError(updateData, R.string.download_error_corrupt)
-            }
-        }
-
-        override fun onVerifyComplete(launchInstallation: Boolean) {
-            if (isAdded && updateInformationLayout != null) {
-                initDownloadLayout(DOWNLOAD_COMPLETED)
-
-                if (launchInstallation) {
-                    Toast.makeText(context, getString(R.string.download_complete), LENGTH_LONG).show()
-
-                    ActivityLauncher(activity!!).UpdateInstallation(true, updateData)
-                }
-            }
-        }
-    }
-
-    private fun showDownloadError(updateData: UpdateData?, @StringRes message: Int) = showDownloadError(
-        activity!!,
-        updateData,
-        false,
+    private fun showDownloadError(
+        @StringRes message: Int,
+        isResumable: Boolean = false,
+        callback: KotlinCallback<Boolean>? = null
+    ) = showDownloadError(
+        requireActivity(),
+        isResumable,
         R.string.download_error,
-        message
+        message,
+        callback
     )
 
-    private fun initDownloadLayout(downloadStatus: DownloadStatus) {
-        when (downloadStatus) {
-            NOT_DOWNLOADING -> {
-                initDownloadActionButton(true)
+    private fun initDownloadLayout(pair: Pair<DownloadStatus, WorkInfo?>) {
+        // If the stub is null, that means it's been inflated, which means views used in this function aren't null
+        if (updateInformationLayoutStub == null) {
+            val workInfo = pair.second
 
-                downloadUpdateTextView.setText(R.string.download)
-                downloadSizeTextView.text = getString(R.string.download_size_megabyte, updateData?.downloadSizeInMegabytes)
+            when (pair.first) {
+                NOT_DOWNLOADING -> {
+                    initDownloadActionButton(true)
 
-                downloadProgressBar.isVisible = false
-                downloadActionButton.isVisible = false
-                downloadDetailsTextView.isVisible = false
+                    downloadUpdateTextView.setText(R.string.download)
+                    downloadSizeTextView.text = Formatter.formatFileSize(context, updateData?.downloadSize ?: 0)
 
-                downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPrimary)
+                    downloadProgressBar.isVisible = false
+                    downloadActionButton.isVisible = false
+                    downloadDetailsTextView.isVisible = false
 
-                if (Utils.checkNetworkConnection(context) && updateData?.downloadUrl?.contains("http") == true) {
-                    downloadLayout.isEnabled = true
-                    downloadLayout.isClickable = true
-                    downloadLayout.setOnClickListener(DownloadNotStartedOnClickListener())
-                } else {
-                    downloadLayout.isEnabled = false
-                    downloadLayout.isClickable = false
+                    downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPrimary)
+
+                    downloadLayout.apply {
+                        val shouldEnable = updateData?.downloadUrl?.contains("http") == true
+                        isEnabled = shouldEnable
+                        isClickable = shouldEnable
+
+                        if (shouldEnable) {
+                            setOnClickListener(DownloadNotStartedOnClickListener())
+                        }
+                    }
+
+                    if (updateData == null) {
+                        load()
+                    }
                 }
+                DOWNLOAD_QUEUED,
+                DOWNLOADING -> {
+                    initDownloadActionButton(true)
 
-                if (updateData == null) {
-                    load()
+                    downloadUpdateTextView.setText(R.string.downloading)
+
+                    val workProgress = workInfo?.progress
+                    val bytesDone = workProgress?.getLong(WORK_DATA_DOWNLOAD_BYTES_DONE, -1L) ?: -1L
+                    val totalBytes = workProgress?.getLong(WORK_DATA_DOWNLOAD_TOTAL_BYTES, -1L) ?: -1L
+                    val currentProgress = workProgress?.getInt(WORK_DATA_DOWNLOAD_PROGRESS, 0) ?: 0
+                    val downloadEta = workProgress?.getString(WORK_DATA_DOWNLOAD_ETA)
+
+                    downloadDetailsTextView.apply {
+                        isVisible = true
+                        if (downloadEta != null) {
+                            text = downloadEta
+                        }
+                    }
+
+                    downloadProgressBar.apply {
+                        isVisible = true
+
+                        if (bytesDone != -1L && totalBytes != -1L) {
+                            val previousProgress = progress
+
+                            // only update view in increments of progress to avoid multiple unnecessary view updates or logs
+                            if (currentProgress != previousProgress) {
+                                isIndeterminate = false
+                                progress = currentProgress
+
+                                val bytesDoneStr = Formatter.formatFileSize(context, bytesDone)
+                                val totalBytesStr = Formatter.formatFileSize(context, totalBytes)
+
+                                @SuppressLint("SetTextI18n")
+                                downloadSizeTextView.text = "$bytesDoneStr / $totalBytesStr ($currentProgress%)"
+                            }
+                        } else {
+                            isIndeterminate = true
+                        }
+                    }
+
+                    downloadIcon.apply {
+                        if (drawable !is AnimationDrawable || !(drawable as AnimationDrawable).isRunning) {
+                            setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
+                            (drawable as AnimationDrawable).start()
+                        }
+                    }
+
+                    downloadLayout.apply {
+                        isEnabled = true
+                        isClickable = false
+                        setOnClickListener {
+                            downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
+
+                            mainViewModel.pauseDownloadWork()
+
+                            // Prevents sending duplicate Intents
+                            setOnClickListener { }
+                        }
+                    }
                 }
-            }
-            DOWNLOAD_QUEUED, DOWNLOADING -> {
-                initDownloadActionButton(true)
+                DOWNLOAD_PAUSED -> {
+                    initDownloadActionButton(true)
 
-                downloadUpdateTextView.setText(R.string.downloading)
+                    downloadUpdateTextView.setText(R.string.paused)
+                    downloadDetailsTextView.setText(R.string.download_progress_text_paused)
 
-                downloadProgressBar.isVisible = true
-                downloadDetailsTextView.isVisible = true
+                    // Hide progress bar if it's in an indeterminate state
+                    downloadProgressBar.isVisible = !downloadProgressBar.isIndeterminate
+                    downloadDetailsTextView.isVisible = true
 
-                downloadLayout.isEnabled = true
-                downloadLayout.isClickable = false
-
-                downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
-                (downloadIcon.drawable as AnimationDrawable).start()
-
-                downloadLayout.setOnClickListener {
                     downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
 
-                    DownloadService.performOperation(activity, DownloadService.ACTION_PAUSE_DOWNLOAD, updateData)
+                    downloadLayout.apply {
+                        isEnabled = true
+                        isClickable = false
+                        setOnClickListener {
+                            downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
+                            (downloadIcon.drawable as AnimationDrawable).start()
 
-                    initDownloadLayout(DOWNLOAD_PAUSED)
+                            mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
 
-                    // Prevents sending duplicate Intents, will be automatically overridden in onDownloadPaused().
-                    downloadLayout.setOnClickListener { }
+                            // No resuming twice allowed
+                            setOnClickListener { }
+                        }
+                    }
                 }
-            }
-            DOWNLOAD_PAUSED -> {
-                initDownloadActionButton(true)
+                DOWNLOAD_COMPLETED -> {
+                    initDownloadActionButton(false)
 
-                downloadUpdateTextView.setText(R.string.paused)
-                downloadDetailsTextView.setText(R.string.download_progress_text_paused)
+                    downloadUpdateTextView.setText(R.string.downloaded)
 
-                downloadProgressBar.isVisible = true
-                downloadDetailsTextView.isVisible = true
+                    downloadProgressBar.isVisible = false
+                    downloadDetailsTextView.isVisible = false
 
-                downloadLayout.isEnabled = true
-                downloadLayout.isClickable = false
+                    downloadIcon.setImageResourceWithTint(R.drawable.done_outline, R.color.colorPositive)
 
-                downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
+                    // `workInfo` is null only while delivering the initial status update
+                    // This check prevents starting verification work as soon as the app starts
+                    if (workInfo != null) {
+                        downloadLayout.apply {
+                            isEnabled = false
+                            isClickable = false
+                            setOnClickListener { }
+                        }
 
-                downloadLayout.setOnClickListener {
-                    downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
-                    (downloadIcon.drawable as AnimationDrawable).start()
-
-                    DownloadService.performOperation(activity, DownloadService.ACTION_RESUME_DOWNLOAD, updateData)
-
-                    initDownloadLayout(DOWNLOADING)
-
-                    // No resuming twice allowed, will be updated in onDownloadProgressUpdate()
-                    downloadLayout.setOnClickListener { }
+                        // Since download has completed successfully, we can start the verification work immediately
+                        Toast.makeText(
+                            context,
+                            getString(R.string.download_verifying_start), LENGTH_LONG
+                        ).show()
+                        mainViewModel.enqueueVerificationWork()
+                    } else {
+                        downloadLayout.apply {
+                            isEnabled = true
+                            isClickable = true
+                            setOnClickListener(AlreadyDownloadedOnClickListener())
+                        }
+                    }
                 }
-            }
-            DOWNLOAD_COMPLETED -> {
-                initDownloadActionButton(false)
+                VERIFICATION_COMPLETED -> {
+                    initDownloadActionButton(false)
 
-                downloadUpdateTextView.setText(R.string.downloaded)
+                    downloadUpdateTextView.setText(R.string.downloaded)
 
-                downloadProgressBar.isVisible = false
-                downloadDetailsTextView.isVisible = false
+                    downloadProgressBar.isVisible = false
+                    downloadDetailsTextView.isVisible = false
 
-                initDownloadActionButton(false)
+                    downloadIcon.setImageResourceWithTint(R.drawable.done_outline, R.color.colorPositive)
 
-                downloadLayout.isEnabled = true
-                downloadLayout.isClickable = true
+                    downloadLayout.apply {
+                        isEnabled = true
+                        isClickable = true
+                        setOnClickListener(AlreadyDownloadedOnClickListener())
+                    }
 
-                downloadIcon.setImageResourceWithTint(R.drawable.done_outline, R.color.colorPositive)
+                    // Since file has been verified, we can prune the work and launch [InstallActivity]
+                    mainViewModel.maybePruneWork()
+                    Toast.makeText(context, getString(R.string.download_complete), LENGTH_LONG).show()
+                    ActivityLauncher(requireActivity()).UpdateInstallation(true, updateData)
+                }
+                DOWNLOAD_FAILED -> {
+                    val outputData = workInfo?.outputData
 
-                downloadLayout.setOnClickListener(AlreadyDownloadedOnClickListener())
-            }
-            VERIFYING -> {
-                downloadUpdateTextView.setText(R.string.download_verifying)
-                downloadDetailsTextView.setText(R.string.download_progress_text_verifying)
+                    val failureType = outputData?.getString(WORK_DATA_DOWNLOAD_FAILURE_TYPE)
 
-                downloadProgressBar.isVisible = true
-                downloadActionButton.isVisible = false
-                downloadDetailsTextView.isVisible = true
+                    if (failureType != null) {
+                        mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
 
-                downloadLayout.isEnabled = true
-                downloadLayout.isClickable = false
-                downloadProgressBar.isIndeterminate = true
-            }
-            DOWNLOAD_PAUSED_WAITING_FOR_CONNECTION -> {
-                initDownloadActionButton(true)
+                        when (DownloadFailure[failureType]) {
+                            DownloadFailure.SERVER_ERROR -> {
+                                showDownloadLink()
+                                showDownloadError(
+                                    R.string.download_error_server,
+                                    true
+                                ) {
+                                    mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                                }
+                            }
+                            DownloadFailure.NULL_UPDATE_DATA_OR_DOWNLOAD_URL,
+                            DownloadFailure.DOWNLOAD_URL_INVALID_SCHEME,
+                            DownloadFailure.UNKNOWN -> {
+                                showDownloadLink()
+                                showDownloadError(R.string.download_error_internal)
+                            }
+                            DownloadFailure.COULD_NOT_MOVE_TEMP_FILE -> showDownloadError(R.string.download_error_could_not_move_temp_file)
+                        }
+                    }
+                }
+                VERIFYING -> {
+                    downloadUpdateTextView.setText(R.string.download_verifying)
+                    downloadDetailsTextView.setText(R.string.download_progress_text_verifying)
 
-                downloadDetailsTextView.setText(R.string.download_waiting_for_network)
+                    downloadProgressBar.isVisible = true
+                    downloadActionButton.isVisible = false
+                    downloadDetailsTextView.isVisible = true
 
-                downloadProgressBar.isVisible = true
-                downloadDetailsTextView.isVisible = true
+                    downloadProgressBar.isIndeterminate = true
+                    downloadLayout.apply {
+                        isEnabled = true
+                        isClickable = false
+                    }
+                }
+                VERIFICATION_FAILED -> {
+                    initDownloadActionButton(false)
 
-                downloadProgressBar.isIndeterminate = true
+                    downloadUpdateTextView.setText(R.string.download_verifying_error)
+
+                    downloadProgressBar.isVisible = false
+                    downloadDetailsTextView.isVisible = true
+
+                    downloadDetailsTextView.setText(R.string.download_notification_error_corrupt)
+
+                    downloadIcon.setImageResourceWithTint(R.drawable.download, R.color.colorPositive)
+
+                    downloadLayout.apply {
+                        isEnabled = true
+                        isClickable = true
+
+                        setOnClickListener {
+                            downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
+                            (downloadIcon.drawable as AnimationDrawable).start()
+
+                            mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+
+                            // No resuming twice allowed
+                            setOnClickListener { }
+                        }
+                    }
+
+                    // Show error message
+                    showDownloadError(
+                        R.string.download_error_corrupt,
+                        false
+                    ) {
+                        mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                    }
+                    // Delete downloaded file, so the user can restart the download
+                    mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                }
             }
         }
     }
@@ -675,52 +696,28 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             colorResId = R.color.colorError
 
             onClickListener = View.OnClickListener {
-                DownloadService.performOperation(activity, DownloadService.ACTION_CANCEL_DOWNLOAD, updateData)
-                initDownloadLayout(NOT_DOWNLOADING)
+                mainViewModel.cancelDownloadWork(requireContext(), updateData)
+
+                Handler().postDelayed(
+                    { mainViewModel.updateDownloadStatus(NOT_DOWNLOADING) },
+                    250
+                )
             }
         } else {
             drawableResId = R.drawable.install
             colorResId = R.color.colorPositive
 
             onClickListener = View.OnClickListener {
-                ActivityLauncher(activity!!).UpdateInstallation(true, updateData)
+                ActivityLauncher(requireActivity()).UpdateInstallation(true, updateData)
             }
         }
 
-        downloadActionButton.isVisible = true
-        downloadActionButton.setImageResourceWithTint(drawableResId, colorResId)
-        downloadActionButton.setOnClickListener(onClickListener)
-    }
-
-    private fun registerDownloadReceiver(downloadListener: UpdateDownloadListener) {
-        val filter = IntentFilter(DownloadReceiver.ACTION_DOWNLOAD_EVENT)
-        filter.addCategory(Intent.CATEGORY_DEFAULT)
-
-        downloadReceiver = DownloadReceiver(downloadListener)
-
-        activity?.registerReceiver(downloadReceiver, filter)
-    }
-
-    private fun unregisterDownloadReceiver() {
-        if (activity != null) {
-            activity?.unregisterReceiver(downloadReceiver)
-            downloadReceiver = null
+        downloadActionButton.apply {
+            isVisible = true
+            setImageResourceWithTint(drawableResId, colorResId)
+            setOnClickListener(onClickListener)
         }
     }
-
-    private val isDownloadServiceRunning: Boolean
-        get() {
-            val manager = (activity?.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager?) ?: return false
-
-            @Suppress("DEPRECATION")
-            manager.getRunningServices(5).forEach {
-                if (DownloadService::class.java.name == it.service.className) {
-                    return true
-                }
-            }
-
-            return false
-        }
 
     /**
      * Download button click listener. Performs these actions when the button is clicked.
@@ -731,9 +728,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                 val mainActivity = activity as MainActivity? ?: return
 
                 if (mainActivity.hasDownloadPermissions()) {
-                    DownloadService.performOperation(activity, ACTION_DOWNLOAD_UPDATE, updateData)
-
-                    initDownloadLayout(DOWNLOADING)
+                    mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
 
                     downloadProgressBar.isIndeterminate = true
                     downloadDetailsTextView.setText(R.string.download_pending)
@@ -743,7 +738,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                 } else {
                     mainActivity.requestDownloadPermissions { granted ->
                         if (granted) {
-                            DownloadService.performOperation(activity, ACTION_DOWNLOAD_UPDATE, updateData)
+                            mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
                         }
                     }
                 }
@@ -761,15 +756,15 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                     val mainActivity = activity as MainActivity? ?: return@showUpdateAlreadyDownloadedMessage
 
                     if (mainActivity.hasDownloadPermissions()) {
-                        DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
+                        mainViewModel.deleteDownloadedFile(requireContext(), updateData)
 
-                        initDownloadLayout(NOT_DOWNLOADING)
+                        mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
                     } else {
                         mainActivity.requestDownloadPermissions { granted ->
                             if (granted) {
-                                DownloadService.performOperation(activity, ACTION_DELETE_DOWNLOADED_UPDATE, updateData)
+                                mainViewModel.deleteDownloadedFile(requireContext(), updateData)
 
-                                initDownloadLayout(NOT_DOWNLOADING)
+                                mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
                             }
                         }
                     }
@@ -778,7 +773,29 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == MANAGE_STORAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+            } else if (requestCode == Activity.RESULT_CANCELED) {
+                showDownloadError(R.string.download_error_storage)
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     companion object {
+        const val TAG = "UpdateInformationFragment"
+
+        const val MANAGE_STORAGE_REQUEST_CODE = 300
+
+        /**
+         * Amount of free storage space to reserve when downloading an update.
+         * Currently: `25 MB`
+         */
+        const val SAFE_MARGIN = 1048576 * 25L
+
         // In app message bar collections and identifiers.
         const val KEY_HAS_DOWNLOAD_ERROR = "has_download_error"
         const val KEY_DOWNLOAD_ERROR_TITLE = "download_error_title"

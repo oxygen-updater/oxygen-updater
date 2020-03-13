@@ -22,10 +22,10 @@ import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateData
-import com.arjanvlek.oxygenupdater.services.DownloadService
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
+import com.arjanvlek.oxygenupdater.workers.DIRECTORY_ROOT
 import com.ipaulpro.afilechooser.FileChooserActivity
 import com.ipaulpro.afilechooser.utils.FileUtils
 import kotlinx.android.synthetic.main.fragment_automatic_install.*
@@ -44,7 +44,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
     private val installViewModel by sharedViewModel<InstallViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
-        updateData = arguments!!.getParcelable(InstallActivity.INTENT_UPDATE_DATA)!!
+        updateData = requireArguments().getParcelable(InstallActivity.INTENT_UPDATE_DATA)!!
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -124,10 +124,10 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                         settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
 
                         val downloadedUpdateFilePath =
-                            Environment.getExternalStoragePublicDirectory(DownloadService.DIRECTORY_ROOT).path + File.separator + updateData.filename
+                            Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).path + File.separator + updateData.filename
 
                         AutomaticUpdateInstaller.installUpdate(
-                            context!!,
+                            requireContext(),
                             isAbPartitionLayout,
                             downloadedUpdateFilePath,
                             additionalZipFilePath,
@@ -260,7 +260,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         if (zipFilePath != null) {
             // Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
             val text = zipFilePath.replace(
-                Environment.getExternalStoragePublicDirectory(DownloadService.DIRECTORY_ROOT).absolutePath + File.separator,
+                Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath + File.separator,
                 ""
             )
 

@@ -225,11 +225,13 @@ dependencies {
     implementation(AndroidXLibraries.KTX_LIFECYCLE_LIVEDATA)
     implementation(AndroidXLibraries.KTX_LIFECYCLE_VIEWMODEL)
     implementation(AndroidXLibraries.KTX_PREFERENCE)
+    implementation(AndroidXLibraries.KTX_WORK)
 
     implementation(Libraries.MATERIAL)
 
     implementation(Libraries.CRASHLYTICS)
     implementation(Libraries.FIREBASE_ADS)
+    implementation(Libraries.FIREBASE_ANALYTICS)
     implementation(Libraries.FIREBASE_MESSAGING)
     implementation(Libraries.PLAY_SERVICES_BASE)
 
@@ -251,8 +253,6 @@ dependencies {
 
     implementation(Libraries.JODA_CONVERT)
     implementation(Libraries.JODA_TIME)
-
-    implementation(Libraries.PR_DOWNLOADER)
 
     implementation(Libraries.CHAINFIRE_LIBSUPERUSER)
 
