@@ -11,7 +11,6 @@ import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
 import androidx.lifecycle.MutableLiveData
-import com.arjanvlek.oxygenupdater.internal.server.ServerConnector
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
@@ -47,16 +46,6 @@ class OxygenUpdater : Application() {
             isNetworkAvailable.postValue(true)
         }
     }
-
-    var serverConnector: ServerConnector? = null
-        get() {
-            if (field == null) {
-                logVerbose(TAG, "Created ServerConnector for use within the application...")
-                field = ServerConnector(settingsManager)
-            }
-
-            return field
-        }
 
     // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
     var systemVersionProperties: SystemVersionProperties? = null

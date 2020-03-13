@@ -66,13 +66,13 @@
 	<string name="download_error_server">"Ett server fel uppstod under nedladdningen av uppdateringen. Försök ladda ner den igen-"</string>
 	<string name="download_error_internal">"Oturligt nog uppstod det ett tekniskt fel under nedladdningen av uppdateringen. Försök att ladda ner den igen. Om detta fel upprepar sig, vänligen kontakta utvecklaren av denna app."</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">"FÖRSÖK IGEN"</string>
 	<string name="download_error_resume">"ÅTERUPPTA"</string>
 	<string name="download_error_storage">"Det finns inte tillräckligt med lagringskapacitet på din enhet. Ta bort filer och försök sedan ladda ned på nytt."</string>
 	<string name="download_failed">"Nerladdningen misslyckades"</string>
-	<string name="download_in_background">"Oxygen Updater kör i bakgrunden"</string>
+	<string name="running_in_background">"Oxygen Updater kör i bakgrunden"</string>
 	<string name="download_oxygen_os">"OxygenOS Version"</string>
 	<string name="download_pending">"Din nedladdning påbörjas snart…"</string>
 	<string name="download_permissions">"Tryck på Ladda ner en gång till för att hämta uppdateringen."</string>
@@ -472,11 +472,8 @@ Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du st
 	<string name="loading">"Laddar…"</string>
 	<string name="processing">"Bearbetar…"</string>
 	<string name="choose_file">"Välj fil"</string>
-	<string name="root_install_logger_service_name">"Installationsloggare"</string>
 	<string name="update_information_description_not_available">"Det finns ingen officiell information om de nya funktionerna denna uppdatering innehåller. Vanligtvis innehåller en sådan uppdatering buggfixar, prestandaförbättringar och / eller viktiga säkerhetsuppdateringar för din enhet."</string>
 	<string name="delayed_push_notification_displayer_service_name">"Push-notifikationsservice"</string>
-	<string name="log_uploader_service_name">"Felrapportsservice"</string>
-	<string name="download_service_name">"Uppdateringsnedladdningstjänst"</string>
 	<string name="theme_light_subtitle">Tema med en vit bakgrund och OnePlus-röd primär färg</string>
 
 </resources>

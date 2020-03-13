@@ -68,14 +68,14 @@
 	<string name="download_error_server">Під час завантаження оновлення сталася помилка на сервері. Будь ласка, спробуйте завантажити оновлення знову.</string>
 	<string name="download_error_internal">На жаль, під час завантаження оновлення виникла технічна помилка. Спробуйте завантажити його знову. Але якщо помилка не зникне, тоді зв\'яжіться з розробником застосунку для консультації.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">ПОВТОРИТИ</string>
 	<string name="download_error_resume">ПРОДОВЖИТИ</string>
 	<string name="download_error_storage">На вашому пристрої недостатньо місця, щоб завантажити оновлення. Будь ласка, видаліть деякі файли і спробуйте завантажити його знову.</string>
 
 	<string name="download_failed">Не вдалося завантажити</string>
-	<string name="download_in_background">Oxygen Updater працює в фоновому режимі</string>
+	<string name="running_in_background">Oxygen Updater працює в фоновому режимі</string>
 	<string name="download_oxygen_os">Версія OxygenOS</string>
 	<string name="download_pending">Завантаження незабаром розпочнеться…</string>
 	<string name="download_permissions">Натисніть Завантажити знову, щоб завантажити оновлення.</string>
@@ -407,8 +407,5 @@
 	<string name="loading">Завантажується…</string>
 	<string name="processing">Опрацювання…</string>
 	<string name="choose_file">Вибрати файл</string>
-	<string name="root_install_logger_service_name">Журналювання встановлення оновлення</string>
 	<string name="delayed_push_notification_displayer_service_name">Сервіс пуш-сповіщень</string>
-	<string name="download_service_name">Завантажувач оновлення</string>
-	<string name="log_uploader_service_name">Сервіс надсилання помилок</string>
 </resources>

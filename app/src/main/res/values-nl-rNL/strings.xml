@@ -67,13 +67,13 @@
 	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">OPNIEUW</string>
 	<string name="download_error_resume">HERVATTEN</string>
 	<string name="download_error_storage">Er is onvoldoende opslagruimte op je apparaat beschikbaar om de update te downloaden. Verwijder één of meer bestanden en probeer het opnieuw te downloaden.</string>
 
 	<string name="download_failed">Downloaden mislukt</string>
-	<string name="download_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
+	<string name="running_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
 	<string name="download_oxygen_os">OxygenOS-versie</string>
 	<string name="download_pending">Je download begint zometeen…</string>
 	<string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
@@ -409,7 +409,4 @@
 	<string name="processing">Verwerken…</string>
 	<string name="choose_file">Kies een bestand</string>
 	<string name="delayed_push_notification_displayer_service_name">"Pushnotificatie-service"</string>
-	<string name="log_uploader_service_name">"Foutenrapportage-service"</string>
-	<string name="root_install_logger_service_name">Logger voor update-installaties</string>
-	<string name="download_service_name">Update-downloadservice</string>
 </resources>

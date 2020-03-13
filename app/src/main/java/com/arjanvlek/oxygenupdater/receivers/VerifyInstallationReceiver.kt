@@ -2,19 +2,22 @@ package com.arjanvlek.oxygenupdater.receivers
 
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
 import android.content.BroadcastReceiver
-import android.content.ComponentName
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-import android.os.Build
-import android.os.PersistableBundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.CATEGORY_STATUS
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
-import androidx.core.os.persistableBundleOf
+import androidx.work.BackoffPolicy
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
+import androidx.work.workDataOf
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.PUSH_NOTIFICATION_CHANNEL_ID
 import com.arjanvlek.oxygenupdater.R
@@ -23,15 +26,22 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT
 import com.arjanvlek.oxygenupdater.models.InstallationStatus
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
-import com.arjanvlek.oxygenupdater.services.RootInstallLogger
-import com.arjanvlek.oxygenupdater.services.RootInstallLogger.Companion.DATA_FAILURE_REASON
-import com.arjanvlek.oxygenupdater.services.RootInstallLogger.Companion.DATA_STATUS
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.workers.RootInstallLogUploadWorker
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_CURR_OS
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_DESTINATION_OS
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_FAILURE_REASON
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_INSTALL_ID
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_START_OS
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_STATUS
+import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_LOG_UPLOAD_NAME
 import org.koin.java.KoinJavaComponent.inject
+import java.util.concurrent.TimeUnit
 
 class VerifyInstallationReceiver : BroadcastReceiver() {
 
+    private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -54,16 +64,16 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
 
                 if (oldOxygenOSVersion.isEmpty() || targetOxygenOSVersion.isEmpty() || currentOxygenOSVersion.isEmpty()) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_unable_to_verify))
-                    logFailure(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_CHECK_FAILED")
+                    logFailure(oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_CHECK_FAILED")
                 } else if (currentOxygenOSVersion == oldOxygenOSVersion) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_nothing_installed))
-                    logFailure(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_INSTALL_FAILED")
+                    logFailure(oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_INSTALL_FAILED")
                 } else if (currentOxygenOSVersion != targetOxygenOSVersion) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_wrong_version_installed))
-                    logFailure(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_WRONG_OS_INSTALLED")
+                    logFailure(oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_WRONG_OS_INSTALLED")
                 } else {
                     displaySuccessNotification(context, properties.oxygenOSVersion)
-                    logSuccess(context, oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion)
+                    logSuccess(oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion)
                 }
             }
         } catch (e: Throwable) {
@@ -112,58 +122,50 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
     }
 
     private fun logSuccess(
-        context: Context,
         startOs: String,
         destinationOs: String,
         currentOs: String
-    ) = buildLogData(startOs, destinationOs, currentOs).let {
-        it.putString(DATA_STATUS, InstallationStatus.FINISHED.toString())
+    ) = buildLogData(startOs, destinationOs, currentOs).apply {
+        add(WORK_DATA_LOG_UPLOAD_STATUS to InstallationStatus.FINISHED.toString())
 
-        scheduleLogUploadTask(context, it)
+        scheduleLogUploadTask(workDataOf(*toTypedArray()))
     }
 
     private fun logFailure(
-        context: Context,
         startOs: String,
         destinationOs: String,
         currentOs: String,
         reason: String
-    ) = buildLogData(startOs, destinationOs, currentOs).let {
-        it.putString(DATA_STATUS, InstallationStatus.FAILED.toString())
-        it.putString(DATA_FAILURE_REASON, reason)
+    ) = buildLogData(startOs, destinationOs, currentOs).apply {
+        add(WORK_DATA_LOG_UPLOAD_STATUS to InstallationStatus.FAILED.toString())
+        add(WORK_DATA_LOG_UPLOAD_FAILURE_REASON to reason)
 
-        scheduleLogUploadTask(context, it)
+        scheduleLogUploadTask(workDataOf(*toTypedArray()))
     }
 
-    private fun buildLogData(startOs: String, destinationOs: String, currentOs: String) = persistableBundleOf(
-        RootInstallLogger.DATA_INSTALL_ID to settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
-        RootInstallLogger.DATA_START_OS to startOs,
-        RootInstallLogger.DATA_DESTINATION_OS to destinationOs,
-        RootInstallLogger.DATA_CURR_OS to currentOs
+    private fun buildLogData(startOs: String, destinationOs: String, currentOs: String) = arrayListOf(
+        WORK_DATA_LOG_UPLOAD_INSTALL_ID to settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
+        WORK_DATA_LOG_UPLOAD_START_OS to startOs,
+        WORK_DATA_LOG_UPLOAD_DESTINATION_OS to destinationOs,
+        WORK_DATA_LOG_UPLOAD_CURR_OS to currentOs
     )
 
-    private fun scheduleLogUploadTask(context: Context, logData: PersistableBundle) {
-        val task = JobInfo.Builder(TASK_ID, ComponentName(context, RootInstallLogger::class.java))
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-            .setRequiresDeviceIdle(false)
-            .setRequiresCharging(false)
-            .setMinimumLatency(3000)
-            .setExtras(logData)
-            .setBackoffCriteria(3000, JobInfo.BACKOFF_POLICY_EXPONENTIAL)
+    private fun scheduleLogUploadTask(inputData: Data) {
+        val logUploadWorkRequest = OneTimeWorkRequestBuilder<RootInstallLogUploadWorker>()
+            .setInputData(inputData)
+            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+            .build()
 
-        if (Build.VERSION.SDK_INT >= 26) {
-            task.setRequiresBatteryNotLow(false)
-            task.setRequiresStorageNotLow(false)
-        }
-
-        (context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler).apply {
-            schedule(task.build())
-        }
+        workManager.enqueueUniqueWork(
+            WORK_UNIQUE_LOG_UPLOAD_NAME,
+            ExistingWorkPolicy.REPLACE,
+            logUploadWorkRequest
+        )
     }
 
     companion object {
         private const val NOTIFICATION_ID = 79243095
-        private const val TASK_ID = 395819383
         private const val TAG = "VerifyInstallReceiver"
     }
 }

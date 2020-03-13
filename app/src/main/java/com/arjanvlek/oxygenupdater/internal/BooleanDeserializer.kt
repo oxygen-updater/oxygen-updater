@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.internal.server
+package com.arjanvlek.oxygenupdater.internal
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext

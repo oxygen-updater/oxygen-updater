@@ -18,7 +18,9 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -27,18 +29,23 @@ import java.security.DigestInputStream
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
+/**
+ * Handles MD5 checksum verification on downloaded ZIPs
+ *
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
+ */
 class Md5VerificationWorker(
     private val context: Context,
     parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
 
-    val updateData = createFromWorkData(parameters.inputData)
+    private val updateData = createFromWorkData(parameters.inputData)
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important
         setForeground(createVerificationForegroundInfo())
 
-        return verify()
+        verify()
     }
 
     private fun createVerificationForegroundInfo() = NotificationCompat.Builder(
@@ -52,11 +59,11 @@ class Md5VerificationWorker(
         .setCategory(Notification.CATEGORY_PROGRESS)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .build().let {
-            ForegroundInfo(FOREGROUND_NOTIFICATION_ID, it)
+            ForegroundInfo(DOWNLOAD_FOREGROUND_NOTIFICATION_ID, it)
         }
 
-    private suspend fun verify(): Result {
-        return if (updateData == null) {
+    private suspend fun verify(): Result = withContext(Dispatchers.IO) {
+        if (updateData == null) {
             logError(TAG, UpdateVerificationException("updateData = null"))
             Result.failure(
                 workDataOf(
@@ -103,12 +110,12 @@ class Md5VerificationWorker(
         }
     }
 
-    private suspend fun calculateMd5(): String? {
+    private suspend fun calculateMd5(): String? = withContext(Dispatchers.IO) {
         val digest = try {
             MessageDigest.getInstance("MD5")
         } catch (e: NoSuchAlgorithmException) {
             logError(TAG, "Exception while getting digest", e)
-            return null
+            return@withContext null
         }
 
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData!!.filename!!)
@@ -122,7 +129,7 @@ class Md5VerificationWorker(
                     FileNotFoundException("File doesn't exist, even after retrying every 2 seconds upto 5 times")
                 )
 
-                return null
+                return@withContext null
             }
 
             logWarning(TAG, "File doesn't exist yet, retrying after 2 seconds (${4 - retryCount} retries left)")
@@ -142,7 +149,7 @@ class Md5VerificationWorker(
         DigestInputStream(zipFile.inputStream(), digest).use { stream ->
             val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
 
-            return try {
+            return@withContext try {
                 while (stream.read(buffer, 0, buffer.size) > 0) {
                     // no-op
                 }

@@ -1,18 +1,20 @@
 package com.arjanvlek.oxygenupdater.utils
 
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Context
-import android.os.Build
 import androidx.core.os.bundleOf
-import com.arjanvlek.oxygenupdater.exceptions.ContributorException
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_CONTRIBUTE
-import com.arjanvlek.oxygenupdater.services.UpdateFileChecker
-import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.workers.UpdateFileCheckWorker
+import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_UPDATE_FILE_CHECK_NAME
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.koin.java.KoinJavaComponent.inject
+import java.util.concurrent.TimeUnit
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -20,6 +22,7 @@ import org.koin.java.KoinJavaComponent.inject
  */
 class ContributorUtils(private val context: Context) {
 
+    private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
     fun flushSettings(isContributing: Boolean) {
@@ -47,34 +50,20 @@ class ContributorUtils(private val context: Context) {
     }
 
     private fun startFileCheckingProcess() {
-        val task = JobInfo.Builder(CONTRIBUTOR_FILE_SCANNER_JOB_ID, ComponentName(context, UpdateFileChecker::class.java))
-            .setRequiresDeviceIdle(false)
-            .setRequiresCharging(false)
-            .setPersisted(true)
-            .setPeriodic(CONTRIBUTOR_FILE_SCANNER_INTERVAL_MINUTES * 60 * 1000.toLong())
+        val logUploadWorkRequest = PeriodicWorkRequestBuilder<UpdateFileCheckWorker>(
+            MIN_PERIODIC_INTERVAL_MILLIS,
+            TimeUnit.MILLISECONDS
+        ).setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+            .build()
 
-        if (Build.VERSION.SDK_INT >= 26) {
-            task.setRequiresBatteryNotLow(false)
-            task.setRequiresStorageNotLow(false)
-        }
-
-        val scheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        val resultCode = scheduler.schedule(task.build())
-
-        if (resultCode != JobScheduler.RESULT_SUCCESS) {
-            logWarning(
-                "ContributorActivity",
-                ContributorException("File check could not be scheduled. Exit code of scheduler: $resultCode")
-            )
-        }
+        workManager.enqueueUniquePeriodicWork(
+            WORK_UNIQUE_UPDATE_FILE_CHECK_NAME,
+            ExistingPeriodicWorkPolicy.REPLACE,
+            logUploadWorkRequest
+        )
     }
 
-    private fun stopFileCheckingProcess() = (context.getSystemService(
-        Context.JOB_SCHEDULER_SERVICE
-    ) as JobScheduler).cancel(CONTRIBUTOR_FILE_SCANNER_JOB_ID)
-
-    companion object {
-        private const val CONTRIBUTOR_FILE_SCANNER_JOB_ID = 424242
-        private const val CONTRIBUTOR_FILE_SCANNER_INTERVAL_MINUTES = 15
-    }
+    private fun stopFileCheckingProcess() = workManager.cancelUniqueWork(
+        WORK_UNIQUE_UPDATE_FILE_CHECK_NAME
+    )
 }

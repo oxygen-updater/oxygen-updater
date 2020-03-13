@@ -66,12 +66,12 @@
 	<string name="download_error_server">"Ein Serverfehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen."</string>
 	<string name="download_error_internal">"Ein App-fehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen, oder schicke ein Support-Mail wenn es wieder fehlschlagt."</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">"ERNEUT VERSUCHEN"</string>
 	<string name="download_error_resume">"FORTSETZEN"</string>
 	<string name="download_error_storage">"Auf deinem Gerät ist nicht genügend Speicherplatz verfügbar um das Update herunterzuladen. Entferne ein paar Dateien und Versuche erneut es herunterzuladen."</string>
 	<string name="download_failed">"Download fehlgeschlagen"</string>
-	<string name="download_in_background">"Oxygen Updater läuft im Hintergrund…"</string>
+	<string name="running_in_background">"Oxygen Updater läuft im Hintergrund…"</string>
 	<string name="download_oxygen_os">"OxygenOS Version"</string>
 	<string name="download_pending">"Der Download wird startet später…"</string>
 	<string name="download_permissions">"Drücke auf erneut herunterzuladen und das Update herunterzuladen."</string>
@@ -498,10 +498,7 @@ No root access? Press \"Close\" and continue using the app."</string>
 	<string name="loading">"Laden…"</string>
 	<string name="processing">"Bearbeiten…"</string>
 	<string name="choose_file">"Datei auswählen"</string>
-	<string name="root_install_logger_service_name">"Update instalations logger"</string>
 	<string name="update_information_description_not_available">"Es gibt keine offiziellen Informationen über die Neuerungen in diesem Update. Normalerweise beinhaltet solch ein Update Bug fixes, Performance Verbesserungen, und / oder wichtige Sicherheitsupdates für dein Gerät."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
 	<string name="delayed_push_notification_displayer_service_name">"Push Benachrichtigungsdienst"</string>
-	<string name="download_service_name">"Update-Downloader"</string>
-	<string name="log_uploader_service_name">"Fehlermeldungsdienst"</string>
 </resources>

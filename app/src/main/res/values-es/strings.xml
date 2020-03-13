@@ -68,14 +68,14 @@
 	<string name="download_error_server">Ha ocurrido un error en el servidor mientras se descargaba la actualización. Por favor, intenta descargar la actualización de nuevo.</string>
 	<string name="download_error_internal">Desafortunadamente, un error técnico ha ocurrido mientras se descargaba la actualización. Intenta descargarla de nuevo. Si el error no desaparece, por favor contacta con el desarrollador de esta app para obtener asistencia.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">REINTENTAR</string>
 	<string name="download_error_resume">RESUMIR</string>
 	<string name="download_error_storage">No hay suficiente espacio en el dispositivo para descargar la actualización. Por favor, elimina algunos archivos e inténtalo de nuevo.</string>
 
 	<string name="download_failed">Descarga fallida</string>
-	<string name="download_in_background">Oxygen Updater se está ejecuando en segundo plano</string>
+	<string name="running_in_background">Oxygen Updater se está ejecuando en segundo plano</string>
 	<string name="download_oxygen_os">Versión de OxygenOS</string>
 	<string name="download_pending">La descarga comenzará pronto…</string>
 	<string name="download_permissions">Pulsa Descargar de nuevo para descargar la actualización.</string>
@@ -410,8 +410,5 @@
 	<string name="loading">Cargando…</string>
 	<string name="processing">Procesando…</string>
 	<string name="choose_file">Selecciona un archivo</string>
-	<string name="root_install_logger_service_name">Actualizar el logger de instalación</string>
 	<string name="delayed_push_notification_displayer_service_name">Servicio de Notificaciones Push</string>
-	<string name="download_service_name">Descargador de actualizaciones</string>
-	<string name="log_uploader_service_name">Error al informar el servicio</string>
 </resources>

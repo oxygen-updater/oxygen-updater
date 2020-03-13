@@ -174,16 +174,6 @@
 		</receiver>
 
 		<service
-			android:name=".services.UpdateFileChecker"
-			android:label="@string/update_file_checker_service_name"
-			android:permission="android.permission.BIND_JOB_SERVICE" />
-
-		<service
-			android:name=".services.RootInstallLogger"
-			android:label="@string/root_install_logger_service_name"
-			android:permission="android.permission.BIND_JOB_SERVICE" />
-
-		<service
 			android:name=".services.DelayedPushNotificationDisplayer"
 			android:label="@string/delayed_push_notification_displayer_service_name"
 			android:permission="android.permission.BIND_JOB_SERVICE" />

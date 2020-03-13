@@ -199,13 +199,16 @@ class MainViewModel(
         return File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.filename!!).exists()
     }
 
-    fun deleteDownloadedFile(context: Context, updateData: UpdateData?) {
+    /**
+     * @return true if the downloaded ZIP was successfully deleted
+     */
+    fun deleteDownloadedFile(context: Context, updateData: UpdateData?): Boolean {
         if (updateData?.filename == null) {
             logWarning(
                 UpdateInformationFragment.TAG,
                 UpdateDownloadException("Could not delete downloaded file, null update data or update data without file name was provided")
             )
-            return
+            return false
         }
 
         logDebug(UpdateInformationFragment.TAG, "Deleting any associated tracker preferences for downloaded file")
@@ -216,15 +219,19 @@ class MainViewModel(
         val tempFile = File(context.getExternalFilesDir(null), updateData.filename!!)
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
+
         if (tempFile.exists() && !tempFile.delete()) {
             logWarning(UpdateInformationFragment.TAG, UpdateDownloadException("Could not delete temporary file ${updateData.filename}"))
         }
 
+        var deleted = true
         if (zipFile.exists() && !zipFile.delete()) {
             logWarning(UpdateInformationFragment.TAG, UpdateDownloadException("Could not delete downloaded file ${updateData.filename}"))
+            deleted = false
         }
 
         updateDownloadStatus(DownloadStatus.NOT_DOWNLOADING)
+        return deleted
     }
 
     fun setupWorkRequests(updateData: UpdateData) {

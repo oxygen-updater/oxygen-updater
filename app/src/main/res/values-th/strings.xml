@@ -68,14 +68,14 @@
 	<string name="download_error_server">เซิร์ฟเวอร์เกิดขัดข้องระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง</string>
 	<string name="download_error_internal">ขออภัยในความไม่สะดวก เกิดปัญหาทางเทคนิคระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง ถ้าปัญหานี้ยังคงเกิดขึ้นกรุณาติดต่อนักพัฒนา</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">ลองอีกครั้ง</string>
 	<string name="download_error_resume">เริ่มต้นใหม่</string>
 	<string name="download_error_storage">ดูเหมือนพื้นที่ในอุปกรณ์ของคุณจะไม่พอในการดาวน์โหลดการอัพเดต กรุณาเพิ่มพื้นที่ของคุณและลองใหม่อีกครั้ง</string>
 
 	<string name="download_failed">การดาวน์โหลดล้มเหลว</string>
-	<string name="download_in_background">Oxygen Updater กำลังทำงานในพื้นหลัง</string>
+	<string name="running_in_background">Oxygen Updater กำลังทำงานในพื้นหลัง</string>
 	<string name="download_oxygen_os">เวอร์ชั่น OxygenOS</string>
 	<string name="download_pending">การดาวน์โหลดของคุณจะเริ่มขึ้นเร็วๆนี้…</string>
 	<string name="download_permissions">แตะที่ดาวน์โหลดอีกครั้งเพื่อดาวน์โหลดการอัพเดท</string>
@@ -407,8 +407,5 @@
 	<string name="loading">กำลังโหลด…</string>
 	<string name="processing">กำลังประมวลผล…</string>
 	<string name="choose_file">เลือกไฟล์</string>
-	<string name="root_install_logger_service_name">อัพเดตตัวบันทึกการติดตั้ง</string>
 	<string name="delayed_push_notification_displayer_service_name">บริการแจ้งเตือนแบบพุช</string>
-	<string name="download_service_name">อัพเดตตัวดาวน์โหลด</string>
-	<string name="log_uploader_service_name">บริการรายงานข้อผิดพลาด</string>
 </resources>

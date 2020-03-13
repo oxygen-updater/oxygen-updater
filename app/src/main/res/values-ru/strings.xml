@@ -68,13 +68,13 @@
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">"Попробовать снова"</string>
 	<string name="download_error_resume">"продолжить"</string>
 	<string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
 	<string name="download_failed">"Ошибка загрузки"</string>
-	<string name="download_in_background">"Обновление будет загружаться в фоне…"</string>
+	<string name="running_in_background">"Обновление будет загружаться в фоне…"</string>
 	<string name="download_oxygen_os">"Версия OxygenOS"</string>
 	<string name="download_pending">"Загрузка скоро начнется…"</string>
 	<string name="download_permissions">"Нажмите Загрузить снова для загрузки обновления."</string>
@@ -489,9 +489,6 @@
 	<string name="loading">"Загрузка…"</string>
 	<string name="processing">"Обработка…"</string>
 	<string name="choose_file">"Выберите файл"</string>
-	<string name="root_install_logger_service_name">"Обновить регистратор установки"</string>
 	<string name="update_information_description_not_available">"Официальная информация об обновлении не предоставлена. Обычно такие обновления содержат исправления мелких ошибок, улучшения производительности и/или критические обновления безопасности."</string>
 	<string name="delayed_push_notification_displayer_service_name">"Служба Push-уведомлений"</string>
-	<string name="log_uploader_service_name">"Служба отчетов об ошибках"</string>
-	<string name="download_service_name">"Служба Загрузить"</string>
 </resources>

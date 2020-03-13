@@ -66,12 +66,12 @@
 	<string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
 	<string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">"Uudelleen"</string>
 	<string name="download_error_resume">"Jatkaa"</string>
 	<string name="download_error_storage">"Laitteessasi ei ole tarpeeksi vapaata tallennustilaa päivityksen lataamiseksi. Vapauta tilaa laittteestasi poistamalla tiedostoja ja yritä ladata päivitys uudelleen."</string>
 	<string name="download_failed">"Lataus epäonnistui"</string>
-	<string name="download_in_background">Oxygen Updater on käynnissä taustalla</string>
+	<string name="running_in_background">Oxygen Updater on käynnissä taustalla</string>
 	<string name="download_oxygen_os">"OxygenOS Versio"</string>
 	<string name="download_pending">"Latauksesi alkaa pian…"</string>
 	<string name="download_permissions">"Napsauta uudelleen Lataa ladataksesi päivitys."</string>
@@ -470,10 +470,7 @@ Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käytt
 	<string name="loading">"Ladataan…"</string>
 	<string name="processing">"Prosessoidaan…"</string>
 	<string name="choose_file">"Valitse tiedosto"</string>
-	<string name="root_install_logger_service_name">"Päivitysten asentajan lokittaja"</string>
 	<string name="update_information_description_not_available">"Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugi korjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi."</string>
 	<string name="error_google_play_button_text">"Play Kauppa"</string>
 	<string name="delayed_push_notification_displayer_service_name">"Push ilmoitus palvelu"</string>
-	<string name="log_uploader_service_name">"Virhe raportoidessa palvelua"</string>
-	<string name="download_service_name">"Päivitä-ladattavissa"</string>
 </resources>

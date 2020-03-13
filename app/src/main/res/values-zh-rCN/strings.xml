@@ -68,14 +68,14 @@
 	<string name="download_error_server">下载更新时服务器发生错误，请尝试重新下载更新。</string>
 	<string name="download_error_internal">抱歉，下载更新时发生了技术故障，请尝试再次下载。如果这种情况不断发生，请联系此应用开发者以获取帮助。</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">重试</string>
 	<string name="download_error_resume">继续</string>
 	<string name="download_error_storage">您的设备上没有足够的存储空间来下载更新。请清理一下空间，然后再次尝试下载吧。</string>
 
 	<string name="download_failed">下载失败</string>
-	<string name="download_in_background">Oxygen 更新器正在后台运行</string>
+	<string name="running_in_background">Oxygen 更新器正在后台运行</string>
 	<string name="download_oxygen_os">OxygenOS 版本</string>
 	<string name="download_pending">您的下载即将开始…</string>
 	<string name="download_permissions">请再次点击“下载”，以开始您的下载任务</string>
@@ -405,8 +405,5 @@
 	<string name="loading">加载中…</string>
 	<string name="processing">正在处理…</string>
 	<string name="choose_file">选择一个文件</string>
-	<string name="root_install_logger_service_name">更新安装日志记录器</string>
 	<string name="delayed_push_notification_displayer_service_name">消息推送服务</string>
-	<string name="download_service_name">更新下载器</string>
-	<string name="log_uploader_service_name">错误报告服务</string>
 </resources>

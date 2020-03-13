@@ -65,14 +65,14 @@
 
 	<string name="download_error_internal">"Errore interno."</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_server">"Errore nel server."</string>
 	<string name="download_error_network">"Errore di rete."</string>
 	<string name="download_error_retry">"RIPROVA"</string>
 	<string name="download_error_resume">"RIPRENDI"</string>
 	<string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta. "</string>
 	<string name="download_failed">"Download fallito"</string>
-	<string name="download_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
+	<string name="running_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
 	<string name="download_oxygen_os">"OxygenOS V. "</string>
 	<string name="download_pending">"Il tuo download inizierà subito… "</string>
 	<string name="download_permissions">"Premi download di nuovo per scaricare l'aggiornamento. "</string>
@@ -482,10 +482,7 @@ Ritenta in alcuni minuti."</string>
 	<string name="loading">"Caricando…"</string>
 	<string name="processing">"Processando…"</string>
 	<string name="choose_file">"Seleziona file"</string>
-	<string name="root_install_logger_service_name">"Aggiorna logger istallazioni"</string>
 	<string name="update_information_description_not_available">"Non esiste alcuna informazione ufficiale del changelog di questo aggiornamento. Di solito, questo include dei fix per i bug, miglioramenti di performance e / o aggiornamenti critici di sicurezza per il tuo dispositivo."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
 	<string name="delayed_push_notification_displayer_service_name">"Servizio notifiche Push"</string>
-	<string name="log_uploader_service_name">"Error reporting service"</string>
-	<string name="download_service_name">"Servizio de scaricato"</string>
 </resources>

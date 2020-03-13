@@ -66,14 +66,14 @@
 	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">RETRY</string>
 	<string name="download_error_resume">RESUME</string>
 	<string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
 
 	<string name="download_failed">Download failed</string>
-	<string name="download_in_background">Oxygen Updater is running in the background</string>
+	<string name="running_in_background">Oxygen Updater is running in the background</string>
 	<string name="download_oxygen_os">OxygenOS Version</string>
 	<string name="download_pending">Your download will start soon…</string>
 	<string name="download_permissions">Tap Download again to download the update.</string>
@@ -440,10 +440,6 @@
 	<string name="advertising_main_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/9792024147</string>
 	<string name="advertising_news_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/5072283884</string>
 	<string name="advertising_interstitial_unit_id" translatable="false">ca-app-pub-1816831161514116/8641953374</string>
-	<string name="root_install_logger_service_name">Update installation logger</string>
 	<string name="delayed_push_notification_displayer_service_name">Push Notification Service</string>
-	<string name="download_service_name">Update downloader</string>
-	<string name="log_uploader_service_name">Error reporting service</string>
-	<string name="update_file_checker_service_name" translatable="false">Update file checking service</string>
 	<string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>

@@ -69,14 +69,14 @@
 	<string name="download_error_server">Грешка са сервером је настала приликом преузимања. Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_internal">Нажалост, техничка грешка је настала приликом преузимања ажурирања. Молимо вас покушајте да преузмете поново. Ако грешка настави да се појављује, молимо вас контактирајте нас за помоћ.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">ПОНОВИ</string>
 	<string name="download_error_resume">НАСТАВИ</string>
 	<string name="download_error_storage">Немате довољно простора на уређају за ажурирање. Молимо вас уклоните неке податке и покушајте поново.</string>
 
 	<string name="download_failed">Недовољно простора</string>
-	<string name="download_in_background">Oxygen Updater ради у позадини</string>
+	<string name="running_in_background">Oxygen Updater ради у позадини</string>
 	<string name="download_oxygen_os">OxygenOS верзија</string>
 	<string name="download_pending">Ваше преузимање ће ускоро почети…</string>
 	<string name="download_permissions">Притисните за поновно преузимање.</string>
@@ -410,9 +410,6 @@
 	<string name="loading">Учитавање…</string>
 	<string name="processing">Обрада…</string>
 	<string name="choose_file">Узаберите фајл</string>
-	<string name="root_install_logger_service_name">Ажурирајте инсталациони записник</string>
 	<string name="delayed_push_notification_displayer_service_name">Сервис за обавештења</string>
-	<string name="download_service_name">Ажурирај преузимач</string>
-	<string name="log_uploader_service_name">Грешка приликом пријаве сервиса</string>
 
 </resources>

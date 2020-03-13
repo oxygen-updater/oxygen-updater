@@ -64,12 +64,12 @@
 	    
 	<string name="download_error_internal">Malheureusement, une erreur critique s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger et si le problème persiste, veuillez contacter le développeur pour obtenir de l\'assistance.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">"Réessayer"</string>
 	<string name="download_error_resume">"Reprendre"</string>
 	<string name="download_error_storage">"Pas assez d'espace disponible sur votre appareil pour télécharger la mise à jour. Veuillez supprimer quelques fichiers et réessayer."</string>
 	<string name="download_failed">"Le téléchargement a échoué"</string>
-	<string name="download_in_background">Oxygen Updater fonctionne en arrière-plan</string>
+	<string name="running_in_background">Oxygen Updater fonctionne en arrière-plan</string>
 	<string name="download_oxygen_os">"Version d'OxygenOS"</string>
 	<string name="download_pending">"Le téléchargement va bientôt commencer…"</string>
 	<string name="download_permissions">"Cliquez sur « Télécharger » à nouveau pour télécharger la mise à jour."</string>
@@ -467,10 +467,7 @@ Si vous n'avez pas un accès root pressez « Fermer » et continuez à utilise
 	<string name="loading">"Chargement…"</string>
 	<string name="processing">"Achat en cours…"</string>
 	<string name="choose_file">"Sélectionnez un fichier"</string>
-	<string name="root_install_logger_service_name">"Logger de l'installation de la mise à jour"</string>
 	<string name="update_information_description_not_available">"Aucune information officielle à propos de nouvelles fonctionnalités apportées par cette mise à jour n'est disponible. Habituellement les mises à jour amènent des corrections de bugs, des améliorations de performance et/ou des correctifs critiques de sécurité pour votre appareil."</string>
 	<string name="error_google_play_button_text">"Play Store"</string>
 	<string name="delayed_push_notification_displayer_service_name">"Service de notifications Push"</string>
-	<string name="log_uploader_service_name">"Service de rapports d'erreurs"</string>
-	<string name="download_service_name">"Service pour télécharger les mises à jour"</string>
 </resources>

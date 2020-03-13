@@ -68,14 +68,14 @@
 	<string name="download_error_server">アップデートのダウンロード中にサーバエラーが発生しました。再度ダウンロードを試行して下さい。</string>
 	<string name="download_error_internal">アップロードのダウンロード中に技術的なエラーが発生しました。このエラーが継続している場合、アプリの開発者に連絡してサポートを受けて下さい。</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">再試行</string>
 	<string name="download_error_resume">再開</string>
 	<string name="download_error_storage">更新をダウンロードするには、デバイスに十分なストレージ容量がありません。 いくつかのファイルを削除して、もう一度ダウンロードしてください。</string>
 
 	<string name="download_failed">ダウンロードに失敗</string>
-	<string name="download_in_background">Oxygen Updater がバックグラウンドで実行中です</string>
+	<string name="running_in_background">Oxygen Updater がバックグラウンドで実行中です</string>
 	<string name="download_oxygen_os">OxygenOS バージョン</string>
 	<string name="download_pending">ダウンロードは間もなく開始されます…</string>
 	<string name="download_permissions">「再ダウンロード」をタップしアップデートをダウンロード</string>
@@ -407,8 +407,5 @@
 	<string name="loading">読み込中…</string>
 	<string name="processing">処理中…</string>
 	<string name="choose_file">ファイルを選択</string>
-	<string name="root_install_logger_service_name">インストールロガーを更新する</string>
 	<string name="delayed_push_notification_displayer_service_name">プッシュ通知サービス</string>
-	<string name="download_service_name">アップデートダウンローダー</string>
-	<string name="log_uploader_service_name">エラー報告サービス</string>
 </resources>

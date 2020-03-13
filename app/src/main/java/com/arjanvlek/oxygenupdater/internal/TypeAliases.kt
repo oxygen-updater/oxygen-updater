@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.internal
 import com.arjanvlek.oxygenupdater.internal.iab.IabResult
 import com.arjanvlek.oxygenupdater.internal.iab.Inventory
 import com.arjanvlek.oxygenupdater.internal.iab.Purchase
-import com.arjanvlek.oxygenupdater.internal.server.BooleanDeserializer
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.module.SimpleModule

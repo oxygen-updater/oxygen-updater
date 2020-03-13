@@ -68,14 +68,14 @@
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">RETRY</string>
 	<string name="download_error_resume">RESUME</string>
 	<string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
 
 	<string name="download_failed">Download failed</string>
-	<string name="download_in_background">Oxygen Updater is running in the background</string>
+	<string name="running_in_background">Oxygen Updater is running in the background</string>
 	<string name="download_oxygen_os">OxygenOS Version</string>
 	<string name="download_pending">Your download will start soon…</string>
 	<string name="download_permissions">Tap Download again to download the update.</string>
@@ -406,8 +406,5 @@
 	<string name="loading">Yükleniyor…</string>
 	<string name="processing">İşleniyor…</string>
 	<string name="choose_file">Dosya seçiniz</string>
-	<string name="root_install_logger_service_name">Güncelleme yükleme kayıtları</string>
 	<string name="delayed_push_notification_displayer_service_name">Bildirim servisi</string>
-	<string name="download_service_name">Güncelleme yükleyicisi</string>
-	<string name="log_uploader_service_name">Hatayı bildirirken sorun oluştu.</string>
 </resources>

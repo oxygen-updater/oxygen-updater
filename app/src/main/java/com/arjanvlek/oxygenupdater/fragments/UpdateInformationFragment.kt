@@ -43,6 +43,7 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Banner
 import com.arjanvlek.oxygenupdater.models.UpdateData
+import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.utils.UpdateDescriptionParser
 import com.arjanvlek.oxygenupdater.utils.Utils
@@ -93,6 +94,8 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     }
 
     private val downloadStatusObserver = Observer<Pair<DownloadStatus, WorkInfo?>> {
+        logDebug(TAG, "Download status updated: ${it.first}")
+
         initDownloadLayout(it)
     }
 
@@ -627,7 +630,15 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                                 showDownloadLink()
                                 showDownloadError(R.string.download_error_internal)
                             }
-                            DownloadFailure.COULD_NOT_MOVE_TEMP_FILE -> showDownloadError(R.string.download_error_could_not_move_temp_file)
+                            DownloadFailure.COULD_NOT_MOVE_TEMP_FILE -> showDownloadError(
+                                requireActivity(),
+                                false,
+                                getString(R.string.download_error),
+                                getString(
+                                    R.string.download_error_could_not_move_temp_file,
+                                    "Android/data/${requireContext().packageName}/files"
+                                )
+                            )
                         }
                     }
                 }
@@ -756,15 +767,19 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                     val mainActivity = activity as MainActivity? ?: return@showUpdateAlreadyDownloadedMessage
 
                     if (mainActivity.hasDownloadPermissions()) {
-                        mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                        val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
 
-                        mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                        if (deleted) {
+                            mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                        }
                     } else {
                         mainActivity.requestDownloadPermissions { granted ->
                             if (granted) {
-                                mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                                val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
 
-                                mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                                if (deleted) {
+                                    mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                                }
                             }
                         }
                     }

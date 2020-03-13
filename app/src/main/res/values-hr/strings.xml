@@ -66,7 +66,7 @@
 	<string name="download_error_retry">"PONOVI"</string>
 	<string name="download_error_storage">"Na vašem uređaju nema dovoljno mjesta za preuzimanje ažuriranje. Molimo vas da uklonite neke podatke i pokušate preuzeti ponovo"</string>
 	<string name="download_failed">"Preuzimanje nije uspjelo"</string>
-	<string name="download_in_background">"Tvoje ažuriranje će se skidati u pozadini…"</string>
+	<string name="running_in_background">"Tvoje ažuriranje će se skidati u pozadini…"</string>
 	<string name="download_oxygen_os">"OxygenOS Verzija"</string>
 	<string name="download_pending">"Tvoje ažuriranje će početi uskoro…"</string>
 	<string name="download_permissions">"Pritisni preuzimanje ponovno da preuzmeš ažuriranje."</string>
@@ -453,19 +453,16 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 	<string name="loading">"Učitavanje…"</string>
 	<string name="processing">"Procesiranje…"</string>
 	<string name="choose_file">"Odaberite fajl"</string>
-	<string name="root_install_logger_service_name">"Ažuriranje instalacijski logger"</string>
 	<string name="update_information_description_not_available">"Nema službenih informacija o tome što ovo ažuriranje donosi. Obično takva ažuriranja donose popravke za bugove, poboljšanje performanci i kritična ažuriranja za sigurnost vašeg uređaja."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
 	<string name="delayed_push_notification_displayer_service_name">"Push notifikacije"</string>
-	<string name="log_uploader_service_name">"Greška pri slanju servisa"</string>
-
 	<!-- Server returned an error while downloading (not always a connection issue) -->
 	<string name="download_error_server">"Serverska pogreška se pojavila tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno."</string>
 
 	<!-- Internal error when downloading. Never a connection error! -->
 	<string name="download_error_internal">"Nažalost došlo je do tehničkih problema tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno. Ako se problem nastavi molimo kontaktirajte kreatora ove aplikacije za pomoć."</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
 
 	<!-- Resume a paused download -->
 	<string name="download_error_resume">"Pokušaj ponovo"</string>
@@ -480,5 +477,4 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 	<string name="download_progress_text_paused">"%1$d%% pauzirano"</string>
 
 	<!-- Internal name of background downloading service / process -->
-	<string name="download_service_name">"Ažurirajte servis za preuzimanje"</string>
 </resources>

@@ -24,6 +24,8 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.UpdateDataVersionFormatter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent.inject
 import java.io.File
 import java.io.IOException
@@ -32,6 +34,11 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
+/**
+ * Handles downloading ZIPs from OnePlus OTA servers
+ *
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
+ */
 class DownloadWorker(
     private val context: Context,
     parameters: WorkerParameters
@@ -49,11 +56,11 @@ class DownloadWorker(
     private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important
         setForeground(createInitialForegroundInfo())
 
-        return when {
+        when {
             updateData?.downloadUrl == null -> {
                 showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
 
@@ -96,7 +103,7 @@ class DownloadWorker(
             .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)
             .build()
 
-        return ForegroundInfo(FOREGROUND_NOTIFICATION_ID, notification)
+        return ForegroundInfo(DOWNLOAD_FOREGROUND_NOTIFICATION_ID, notification)
     }
 
     private fun createProgressForegroundInfo(
@@ -131,10 +138,10 @@ class DownloadWorker(
             .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)
             .build()
 
-        return ForegroundInfo(FOREGROUND_NOTIFICATION_ID, notification)
+        return ForegroundInfo(DOWNLOAD_FOREGROUND_NOTIFICATION_ID, notification)
     }
 
-    private suspend fun download(): Result {
+    private suspend fun download(): Result = withContext(Dispatchers.IO) {
         tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
         zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
@@ -196,7 +203,7 @@ class DownloadWorker(
                         publishProgressIfNeeded(bytesRead, contentLength)
                     }
                 } catch (e: Exception) {
-                    return if (isStopped) {
+                    return@withContext if (isStopped) {
                         logDebug(TAG, "Ignoring exception since worker is in stopped state: ${e.message}")
                         Result.success()
                     } else {
@@ -255,7 +262,9 @@ class DownloadWorker(
                 try {
                     moveTempFileToCorrectLocation()
                 } catch (e: IOException) {
-                    return Result.failure(
+                    logError(TAG, "Could not rename file", e)
+
+                    return@withContext Result.failure(
                         workDataOf(
                             WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.COULD_NOT_MOVE_TEMP_FILE.name
                         )
@@ -264,7 +273,7 @@ class DownloadWorker(
             }
         }
 
-        return Result.success()
+        Result.success()
     }
 
     /**
@@ -281,7 +290,9 @@ class DownloadWorker(
 
         // Move operation: rename `tempFile` to `zipFile`
         if (!tempFile.renameTo(zipFile)) {
-            throw IOException("Rename Failed")
+            // If the file couldn't be renamed, copy it.
+            // An [IOException] will be thrown if this fails as well
+            tempFile.copyTo(zipFile)
         }
 
         // Delete `tempFile`, if it still exists after the rename operation
@@ -298,7 +309,7 @@ class DownloadWorker(
      * @param bytesDone bytes read so far, including any bytes previously read in paused/cancelled download for the same file
      * @param totalBytes total bytes that need to be read
      */
-    private suspend fun publishProgressIfNeeded(bytesDone: Long, totalBytes: Long) {
+    private suspend fun publishProgressIfNeeded(bytesDone: Long, totalBytes: Long) = withContext(Dispatchers.IO) {
         if (!isStopped) {
             val currentTimestamp = System.currentTimeMillis()
             if (isFirstPublish || currentTimestamp - previousProgressTimestamp > THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED) {
@@ -339,7 +350,6 @@ class DownloadWorker(
             }
         }
     }
-
 
     private fun calculateDownloadEta(
         currentTimestamp: Long,
