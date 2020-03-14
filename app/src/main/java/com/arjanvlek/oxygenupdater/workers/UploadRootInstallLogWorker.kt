@@ -22,7 +22,7 @@ import org.koin.java.KoinJavaComponent.inject
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class RootInstallLogUploadWorker(
+class UploadRootInstallLogWorker(
     context: Context,
     private val parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
@@ -53,12 +53,12 @@ class RootInstallLogUploadWorker(
         var failureReason: String
 
         parameters.inputData.run {
-            status = InstallationStatus.valueOf(getString(WORK_DATA_LOG_UPLOAD_STATUS) ?: "")
-            installationId = getString(WORK_DATA_LOG_UPLOAD_INSTALL_ID) ?: "<INVALID>"
-            startOSVersion = getString(WORK_DATA_LOG_UPLOAD_START_OS) ?: "<UNKNOWN>"
-            destinationOSVersion = getString(WORK_DATA_LOG_UPLOAD_DESTINATION_OS) ?: "<UNKNOWN>"
-            currentOsVersion = getString(WORK_DATA_LOG_UPLOAD_CURR_OS) ?: "<UNKNOWN>"
-            failureReason = getString(WORK_DATA_LOG_UPLOAD_FAILURE_REASON) ?: ""
+            status = InstallationStatus.valueOf(getString(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_STATUS) ?: "")
+            installationId = getString(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_INSTALL_ID) ?: "<INVALID>"
+            startOSVersion = getString(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_START_OS) ?: "<UNKNOWN>"
+            destinationOSVersion = getString(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS) ?: "<UNKNOWN>"
+            currentOsVersion = getString(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS) ?: "<UNKNOWN>"
+            failureReason = getString(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_FAILURE_REASON) ?: ""
         }
 
         val installation = RootInstall(
@@ -97,6 +97,6 @@ class RootInstallLogUploadWorker(
     }
 
     companion object {
-        private const val TAG = "RootInstallLogUploadWorker"
+        private const val TAG = "UploadRootInstallLogWorker"
     }
 }

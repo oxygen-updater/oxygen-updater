@@ -28,14 +28,14 @@ import com.arjanvlek.oxygenupdater.models.InstallationStatus
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Utils
-import com.arjanvlek.oxygenupdater.workers.RootInstallLogUploadWorker
-import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_CURR_OS
-import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_DESTINATION_OS
-import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_FAILURE_REASON
-import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_INSTALL_ID
-import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_START_OS
-import com.arjanvlek.oxygenupdater.workers.WORK_DATA_LOG_UPLOAD_STATUS
-import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_LOG_UPLOAD_NAME
+import com.arjanvlek.oxygenupdater.workers.UploadRootInstallLogWorker
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_FAILURE_REASON
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_INSTALL_ID
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_START_OS
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_STATUS
+import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_UPLOAD_ROOT_INSTALL_LOG
 import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.TimeUnit
 
@@ -47,7 +47,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         try {
             if (settingsManager.getPreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
-                && intent.action != null && (intent.action == "android.intent.action.BOOT_COMPLETED")
+                && intent.action == Intent.ACTION_BOOT_COMPLETED
             ) {
                 settingsManager.savePreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
 
@@ -126,7 +126,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         destinationOs: String,
         currentOs: String
     ) = buildLogData(startOs, destinationOs, currentOs).apply {
-        add(WORK_DATA_LOG_UPLOAD_STATUS to InstallationStatus.FINISHED.toString())
+        add(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_STATUS to InstallationStatus.FINISHED.toString())
 
         scheduleLogUploadTask(workDataOf(*toTypedArray()))
     }
@@ -137,28 +137,28 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         currentOs: String,
         reason: String
     ) = buildLogData(startOs, destinationOs, currentOs).apply {
-        add(WORK_DATA_LOG_UPLOAD_STATUS to InstallationStatus.FAILED.toString())
-        add(WORK_DATA_LOG_UPLOAD_FAILURE_REASON to reason)
+        add(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_STATUS to InstallationStatus.FAILED.toString())
+        add(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_FAILURE_REASON to reason)
 
         scheduleLogUploadTask(workDataOf(*toTypedArray()))
     }
 
     private fun buildLogData(startOs: String, destinationOs: String, currentOs: String) = arrayListOf(
-        WORK_DATA_LOG_UPLOAD_INSTALL_ID to settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
-        WORK_DATA_LOG_UPLOAD_START_OS to startOs,
-        WORK_DATA_LOG_UPLOAD_DESTINATION_OS to destinationOs,
-        WORK_DATA_LOG_UPLOAD_CURR_OS to currentOs
+        WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_INSTALL_ID to settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
+        WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_START_OS to startOs,
+        WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS to destinationOs,
+        WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS to currentOs
     )
 
     private fun scheduleLogUploadTask(inputData: Data) {
-        val logUploadWorkRequest = OneTimeWorkRequestBuilder<RootInstallLogUploadWorker>()
+        val logUploadWorkRequest = OneTimeWorkRequestBuilder<UploadRootInstallLogWorker>()
             .setInputData(inputData)
             .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .build()
 
         workManager.enqueueUniqueWork(
-            WORK_UNIQUE_LOG_UPLOAD_NAME,
+            WORK_UNIQUE_UPLOAD_ROOT_INSTALL_LOG,
             ExistingWorkPolicy.REPLACE,
             logUploadWorkRequest
         )

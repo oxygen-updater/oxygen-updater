@@ -48,8 +48,8 @@ import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.workers.DIRECTORY_ROOT
 import com.arjanvlek.oxygenupdater.workers.DownloadWorker
 import com.arjanvlek.oxygenupdater.workers.Md5VerificationWorker
-import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_DOWNLOAD_NAME
-import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_MD5_VERIFICATION_NAME
+import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_DOWNLOAD
+import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_MD5_VERIFICATION
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
@@ -84,10 +84,10 @@ class MainViewModel(
         get() = _downloadStatusLiveData
 
     val downloadWorkInfo
-        get() = workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_DOWNLOAD_NAME)
+        get() = workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_DOWNLOAD)
 
     val verificationWorkInfo
-        get() = workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_MD5_VERIFICATION_NAME)
+        get() = workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_MD5_VERIFICATION)
 
     private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
@@ -265,7 +265,7 @@ class MainViewModel(
 
                 // Since the required space has been freed up, we can enqueue the download work
                 workManager.enqueueUniqueWork(
-                    WORK_UNIQUE_DOWNLOAD_NAME,
+                    WORK_UNIQUE_DOWNLOAD,
                     ExistingWorkPolicy.REPLACE,
                     downloadWorkRequest
                 )
@@ -292,7 +292,7 @@ class MainViewModel(
             if (usableBytes + SAFE_MARGIN >= requiredFreeBytes) {
                 // Since we have enough space available, we can enqueue the download work
                 workManager.enqueueUniqueWork(
-                    WORK_UNIQUE_DOWNLOAD_NAME,
+                    WORK_UNIQUE_DOWNLOAD,
                     ExistingWorkPolicy.REPLACE,
                     downloadWorkRequest
                 )
@@ -317,19 +317,19 @@ class MainViewModel(
 
     fun enqueueVerificationWork() {
         workManager.enqueueUniqueWork(
-            WORK_UNIQUE_MD5_VERIFICATION_NAME,
+            WORK_UNIQUE_MD5_VERIFICATION,
             ExistingWorkPolicy.REPLACE,
             verificationWorkRequest
         )
     }
 
     fun cancelDownloadWork(context: Context, updateData: UpdateData?) {
-        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD_NAME)
+        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD)
         deleteDownloadedFile(context, updateData)
     }
 
     fun pauseDownloadWork() {
-        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD_NAME)
+        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD)
     }
 
     /**

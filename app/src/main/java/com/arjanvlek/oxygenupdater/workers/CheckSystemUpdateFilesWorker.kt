@@ -32,7 +32,7 @@ import java.util.*
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class UpdateFileCheckWorker(
+class CheckSystemUpdateFilesWorker(
     private val context: Context,
     parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
@@ -166,7 +166,7 @@ class UpdateFileCheckWorker(
     }
 
     companion object {
-        private const val TAG = "UpdateFileCheckWorker"
+        private const val TAG = "CheckSystemUpdateFilesWorker"
 
         private const val FILE_ALREADY_IN_DATABASE = "E_FILE_ALREADY_IN_DB"
         private const val FILENAME_INVALID = "E_FILE_INVALID"

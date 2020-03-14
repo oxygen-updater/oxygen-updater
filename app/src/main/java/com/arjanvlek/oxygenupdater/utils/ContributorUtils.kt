@@ -10,8 +10,8 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_CONTRIBUTE
-import com.arjanvlek.oxygenupdater.workers.UpdateFileCheckWorker
-import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_UPDATE_FILE_CHECK_NAME
+import com.arjanvlek.oxygenupdater.workers.CheckSystemUpdateFilesWorker
+import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_CHECK_SYSTEM_UPDATE_FILES
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.koin.java.KoinJavaComponent.inject
 import java.util.concurrent.TimeUnit
@@ -50,20 +50,20 @@ class ContributorUtils(private val context: Context) {
     }
 
     private fun startFileCheckingProcess() {
-        val logUploadWorkRequest = PeriodicWorkRequestBuilder<UpdateFileCheckWorker>(
+        val periodicWorkRequest = PeriodicWorkRequestBuilder<CheckSystemUpdateFilesWorker>(
             MIN_PERIODIC_INTERVAL_MILLIS,
             TimeUnit.MILLISECONDS
         ).setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .build()
 
         workManager.enqueueUniquePeriodicWork(
-            WORK_UNIQUE_UPDATE_FILE_CHECK_NAME,
+            WORK_UNIQUE_CHECK_SYSTEM_UPDATE_FILES,
             ExistingPeriodicWorkPolicy.REPLACE,
-            logUploadWorkRequest
+            periodicWorkRequest
         )
     }
 
     private fun stopFileCheckingProcess() = workManager.cancelUniqueWork(
-        WORK_UNIQUE_UPDATE_FILE_CHECK_NAME
+        WORK_UNIQUE_CHECK_SYSTEM_UPDATE_FILES
     )
 }
