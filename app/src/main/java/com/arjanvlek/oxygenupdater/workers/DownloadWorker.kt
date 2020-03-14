@@ -209,23 +209,45 @@ class DownloadWorker(
                     } else {
                         logError(TAG, "Exception while reading from byteStream", e)
 
+                        val retryCount = runAttemptCount + 1
+
                         when {
                             ExceptionUtils.isNetworkError(e) -> {
+                                if (retryCount <= 5) {
+                                    logDebug(TAG, "Network error encountered. Retrying ($retryCount/5)")
+                                    Result.retry()
+                                } else {
+                                    showDownloadFailedNotification(
+                                        context,
+                                        false,
+                                        R.string.download_error_server,
+                                        R.string.download_notification_error_server
+                                    )
+
+                                    Result.failure(
+                                        workDataOf(
+                                            WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.SERVER_ERROR.name
+                                        )
+                                    )
+                                }
+                            }
+                            e is IOException -> if (retryCount <= 5) {
+                                logDebug(TAG, "IOException encountered. Retrying ($retryCount/5)")
+                                Result.retry()
+                            } else {
                                 showDownloadFailedNotification(
                                     context,
                                     false,
                                     R.string.download_error_server,
-                                    R.string.download_notification_error_server
+                                    R.string.download_notification_error_internal
                                 )
 
                                 Result.failure(
                                     workDataOf(
-                                        WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.SERVER_ERROR.name
+                                        WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.CONNECTION_ERROR.name
                                     )
                                 )
                             }
-                            // This is just a connection error, we can probably retry this work
-                            e is IOException -> Result.retry()
                             else -> {
                                 // Delete any associated tracker preferences to allow retrying this work with a fresh state
                                 settingsManager.deletePreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE)

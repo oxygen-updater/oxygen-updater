@@ -624,6 +624,15 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                                     mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
                                 }
                             }
+                            DownloadFailure.CONNECTION_ERROR -> {
+                                showDownloadLink()
+                                showDownloadError(
+                                    R.string.download_error_internal,
+                                    true
+                                ) {
+                                    mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                                }
+                            }
                             DownloadFailure.NULL_UPDATE_DATA_OR_DOWNLOAD_URL,
                             DownloadFailure.DOWNLOAD_URL_INVALID_SCHEME,
                             DownloadFailure.UNKNOWN -> {

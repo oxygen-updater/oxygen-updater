@@ -26,6 +26,11 @@ enum class DownloadFailure {
     SERVER_ERROR,
 
     /**
+     * If an [java.io.IOException] is thrown while downloading/writing the file.
+     */
+    CONNECTION_ERROR,
+
+    /**
      * If the temporary downloaded file can't be copied to the root directory of internal storage
      */
     COULD_NOT_MOVE_TEMP_FILE,

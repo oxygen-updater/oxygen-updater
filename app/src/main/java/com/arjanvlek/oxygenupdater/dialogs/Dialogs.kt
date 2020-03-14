@@ -14,7 +14,7 @@ import com.arjanvlek.oxygenupdater.utils.LocalNotifications
 object Dialogs {
 
     /**
-     * Shows an [MessageDialog] with the occurred download error.
+     * Shows a [MessageDialog] with the occurred download error.
      *
      * @param title   Title of the error message
      * @param message Contents of the error message
@@ -36,7 +36,7 @@ object Dialogs {
     }
 
     /**
-     * Shows an [MessageDialog] with the occurred download error.
+     * Shows a [MessageDialog] with the occurred download error.
      *
      * @param title   Title of the error message
      * @param message Contents of the error message
@@ -52,20 +52,25 @@ object Dialogs {
             activity!!,
             title = title,
             message = message,
-            positiveButtonText = activity.getString(R.string.download_error_close),
-            negativeButtonText = when {
+            positiveButtonText = when {
                 callback == null -> null
                 isResumable -> activity.getString(R.string.download_error_resume)
                 else -> activity.getString(R.string.download_error_retry)
             },
+            negativeButtonText = activity.getString(R.string.download_error_close),
+            positiveButtonIcon = when {
+                callback == null -> null
+                isResumable -> R.drawable.download
+                else -> R.drawable.auto
+            },
             cancellable = true
         ) {
             when (it) {
-                BUTTON_POSITIVE -> LocalNotifications.hideDownloadCompleteNotification()
-                BUTTON_NEGATIVE -> {
+                BUTTON_POSITIVE -> {
                     LocalNotifications.hideDownloadCompleteNotification()
                     callback?.invoke(isResumable)
                 }
+                BUTTON_NEGATIVE -> LocalNotifications.hideDownloadCompleteNotification()
                 BUTTON_NEUTRAL -> {
                     // no-op
                 }
