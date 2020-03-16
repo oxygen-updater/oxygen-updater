@@ -73,7 +73,7 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        mainViewModel.fetchNews(context!!, deviceId, updateMethodId).observe(viewLifecycleOwner, fetchNewsObserver)
+        mainViewModel.fetchNews(deviceId, updateMethodId).observe(viewLifecycleOwner, fetchNewsObserver)
     }
 
     private fun displayNewsItems(newsItems: List<NewsItem>) {

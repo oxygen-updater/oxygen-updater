@@ -8,6 +8,7 @@ import com.arjanvlek.oxygenupdater.apis.DownloadApi
 import com.arjanvlek.oxygenupdater.apis.ServerApi
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import com.arjanvlek.oxygenupdater.utils.createDownloadClient
 import com.arjanvlek.oxygenupdater.utils.createNetworkClient
@@ -67,6 +68,13 @@ private val workManagerModule = module {
     single { WorkManager.getInstance(androidContext()) }
 }
 
+private val miscellaneousSingletonModule = module {
+    /**
+     * A singleton [SystemVersionProperties] helps avoid unnecessary calls to the native `getprop` command.
+     */
+    single { SystemVersionProperties() }
+}
+
 val allModules = listOf(
     retrofitModule,
     networkModule,
@@ -75,5 +83,6 @@ val allModules = listOf(
     viewModelModule,
     databaseHelperModule,
     notificationModule,
-    workManagerModule
+    workManagerModule,
+    miscellaneousSingletonModule
 )

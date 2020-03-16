@@ -490,5 +490,4 @@
 	<string name="processing">"Обработка…"</string>
 	<string name="choose_file">"Выберите файл"</string>
 	<string name="update_information_description_not_available">"Официальная информация об обновлении не предоставлена. Обычно такие обновления содержат исправления мелких ошибок, улучшения производительности и/или критические обновления безопасности."</string>
-	<string name="delayed_push_notification_displayer_service_name">"Служба Push-уведомлений"</string>
 </resources>

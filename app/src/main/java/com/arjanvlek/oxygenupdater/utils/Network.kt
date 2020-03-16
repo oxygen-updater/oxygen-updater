@@ -1,17 +1,24 @@
 package com.arjanvlek.oxygenupdater.utils
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Build
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.objectMapper
+import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
+import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -21,10 +28,27 @@ import java.util.concurrent.TimeUnit
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 
+@Suppress("ObjectPropertyName")
+private val _isNetworkAvailable = MutableLiveData<Boolean>()
+val isNetworkAvailable: LiveData<Boolean>
+    get() = _isNetworkAvailable
+
+val networkCallback = object : ConnectivityManager.NetworkCallback() {
+    override fun onLost(network: Network) {
+        _isNetworkAvailable.postValue(false)
+    }
+
+    override fun onAvailable(network: Network) {
+        _isNetworkAvailable.postValue(true)
+    }
+}
+
 private const val TAG = "OxygenUpdaterNetwork"
 private const val USER_AGENT_TAG = "User-Agent"
 private const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
 private const val CACHE_SIZE = 10L * 1024 * 1024 // 10 MB
+
+const val HEADER_READ_TIMEOUT = "X-Read-Timeout"
 
 fun createNetworkClient(cache: Cache) = retrofitClient(httpClient(cache))
 fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
@@ -48,18 +72,28 @@ fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VER
 private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
     cache(cache)
     addInterceptor { chain ->
-        val request = chain.request().newBuilder()
+        val request = chain.request()
+
+        logDebug(TAG, "Method: ${request.method}, URL: ${request.url}")
+
+        val builder = request.newBuilder()
             .addHeader(USER_AGENT_TAG, APP_USER_AGENT)
-            .build()
 
-        logVerbose(TAG, "Performing ${request.method} request to URL ${request.url}")
+        val readTimeout = request.header(HEADER_READ_TIMEOUT)?.toInt()?.let {
+            builder.removeHeader(HEADER_READ_TIMEOUT)
+            it
+        }
 
-        if (request.url.pathSegments.last() == "verify-purchase") {
-            logVerbose(TAG, "Timeout is set to 120 seconds.")
-            chain.withReadTimeout(120, TimeUnit.SECONDS).proceed(request)
-        } else {
-            logVerbose(TAG, "Timeout is set to 10 seconds.")
-            chain.proceed(request)
+        chain.run {
+            if (readTimeout != null) {
+                logDebug(TAG, "readTimeout = ${readTimeout}s")
+
+                withReadTimeout(readTimeout, TimeUnit.SECONDS)
+            } else {
+                logDebug(TAG, "readTimeout = ${chain.readTimeoutMillis() / 1000}s")
+            }
+
+            proceed(builder.build())
         }
     }
 
@@ -89,18 +123,62 @@ private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Build
     .client(httpClient)
     .build()
 
-fun <T> apiResponse(retrofitResponse: Response<T>): T {
-    if (retrofitResponse.isSuccessful && retrofitResponse.code() in 200..299) {
-        retrofitResponse.body()!!.let {
-            logVerbose(TAG, "Response: $it")
-            return it!!
+suspend inline fun <reified R> performServerRequest(
+    crossinline block: suspend () -> Response<R>
+): R? {
+    val logTag = "OxygenUpdaterNetworkRetry"
+
+    var retryCount = 0
+    while (retryCount < 5) {
+        try {
+            val response = block()
+
+            return if (response.isSuccessful) {
+                response.body().apply {
+                    logVerbose(logTag, "Response: $this")
+                }
+            } else {
+                val json = convertErrorBody(response)
+                logWarning(
+                    logTag, "Response: $json",
+                    OxygenUpdaterException("API Response Error: $json")
+                )
+                null
+            }
+        } catch (e: Exception) {
+            if (retryCount++ < 5) {
+                logDebug(logTag, "Retrying the request ($retryCount/5)")
+                continue
+            } else {
+                when {
+                    e is HttpException -> logWarning(
+                        logTag,
+                        "HttpException: [code: ${e.code()}, errorBody: ${convertErrorBody(e)}]"
+                    )
+                    ExceptionUtils.isNetworkError(e) -> logWarning(
+                        logTag,
+                        "Network error while performing request", e
+                    )
+                    else -> logError(
+                        logTag,
+                        "Error performing request", e
+                    )
+                }
+            }
         }
-    } else if (retrofitResponse.isSuccessful) {
-        logWarning(TAG, "Response: ${retrofitResponse.body()}", OxygenUpdaterException("API Response Error: ${retrofitResponse.code()}"))
-        throw OxygenUpdaterException("API Response Error: ${retrofitResponse.code()}")
-    } else {
-        val json = retrofitResponse.errorBody()?.string()
-        logWarning(TAG, "Response: $json", OxygenUpdaterException("API Response Error: $json"))
-        throw OxygenUpdaterException("API Response Error: $json")
     }
+
+    return null
+}
+
+fun <T> convertErrorBody(response: Response<T>) = try {
+    response.errorBody()?.string()
+} catch (exception: Exception) {
+    null
+}
+
+fun convertErrorBody(e: HttpException) = try {
+    e.response()?.errorBody()?.string()
+} catch (exception: Exception) {
+    null
 }

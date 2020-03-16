@@ -455,7 +455,6 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 	<string name="choose_file">"Odaberite fajl"</string>
 	<string name="update_information_description_not_available">"Nema službenih informacija o tome što ovo ažuriranje donosi. Obično takva ažuriranja donose popravke za bugove, poboljšanje performanci i kritična ažuriranja za sigurnost vašeg uređaja."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
-	<string name="delayed_push_notification_displayer_service_name">"Push notifikacije"</string>
 	<!-- Server returned an error while downloading (not always a connection issue) -->
 	<string name="download_error_server">"Serverska pogreška se pojavila tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno."</string>
 

@@ -29,8 +29,7 @@
 # We need to keep the method names of all getters and setters to allow Jackson to find them.
 -keep class com.arjanvlek.oxygenupdater.models.** { *; }
 
-# Removing this results in `java.lang.IllegalStateException: Incomplete hierarchy for class UpdateData, unresolved classes [com.arjanvlek.oxygenupdater.models.FormattableUpdateData]`
--keepnames class com.arjanvlek.oxygenupdater.models.FormattableUpdateData
+# Removing this results in `java.lang.ClassNotFoundException: Didn't find class "com.arjanvlek.oxygenupdater.internal.settings.SettingsManager"`
 -keepnames class com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 
 # Disable the annoying "Parameter specified as non-null is null" exceptions

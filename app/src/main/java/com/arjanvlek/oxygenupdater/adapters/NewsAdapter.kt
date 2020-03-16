@@ -91,7 +91,7 @@ class NewsAdapter(
 
     private fun openNewsItem(newsItem: NewsItem) {
         if (activity is MainActivity) {
-            if (activity.mayShowNewsAd() && Utils.checkNetworkConnection(context)) {
+            if (activity.mayShowNewsAd() && Utils.checkNetworkConnection()) {
                 try {
                     activity.getNewsAd()?.apply {
                         adListener = object : AdListener() {

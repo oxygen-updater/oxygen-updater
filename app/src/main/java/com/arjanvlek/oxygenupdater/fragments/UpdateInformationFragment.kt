@@ -15,7 +15,6 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.work.WorkInfo
 import com.arjanvlek.oxygenupdater.ActivityLauncher
@@ -28,6 +27,7 @@ import com.arjanvlek.oxygenupdater.dialogs.Dialogs.showNoNetworkConnectionError
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs.showUpdateAlreadyDownloadedMessage
 import com.arjanvlek.oxygenupdater.dialogs.ServerMessagesDialog
 import com.arjanvlek.oxygenupdater.dialogs.UpdateChangelogDialog
+import com.arjanvlek.oxygenupdater.enums.DownloadFailure
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOADING
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus.DOWNLOAD_COMPLETED
@@ -42,13 +42,14 @@ import com.arjanvlek.oxygenupdater.extensions.setImageResourceWithTint
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Banner
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.utils.UpdateDescriptionParser
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.utils.isNetworkAvailable
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
-import com.arjanvlek.oxygenupdater.workers.DownloadFailure
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_BYTES_DONE
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_ETA
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_TYPE
@@ -59,6 +60,7 @@ import kotlinx.android.synthetic.main.fragment_update_information.*
 import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
 import kotlinx.android.synthetic.main.layout_update_information.*
 import org.joda.time.LocalDateTime
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_information) {
@@ -66,55 +68,18 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     private var updateData: UpdateData? = null
     private var isLoadedOnce = false
 
+    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
-
-    private val fetchUpdateDataObserver = Observer<UpdateData> {
-        this.updateData = it
-
-        // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
-        if (!isLoadedOnce && activity?.intent?.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false) == true) {
-            val intent = requireActivity().intent
-            showDownloadError(
-                activity,
-                intent.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false),
-                intent.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE),
-                intent.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE)
-            ) { isResumable ->
-                if (!isResumable) {
-                    // Delete downloaded file, so the user can restart the download
-                    mainViewModel.deleteDownloadedFile(requireContext(), updateData)
-                }
-
-                mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
-            }
-        }
-
-        displayUpdateInformation(updateData)
-        isLoadedOnce = true
-    }
-
-    private val downloadStatusObserver = Observer<Pair<DownloadStatus, WorkInfo?>> {
-        logDebug(TAG, "Download status updated: ${it.first}")
-
-        initDownloadLayout(it)
-    }
-
-    private val verificationWorkObserver = Observer<List<WorkInfo>> {
-        if (it.isNotEmpty()) {
-            mainViewModel.updateDownloadStatus(it.first(), true)
-        }
-    }
-
-    private val downloadWorkObserver = Observer<List<WorkInfo>> {
-        if (it.isNotEmpty()) {
-            mainViewModel.updateDownloadStatus(it.first())
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
-            swipeRefreshLayout.setOnRefreshListener { load() }
-            swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+            swipeRefreshLayout.apply {
+                setOnRefreshListener { load() }
+                setColorSchemeResources(R.color.colorPrimary)
+            }
+
+            setupServerResponseObservers()
+            setupWorkObservers()
 
             load()
         }
@@ -134,38 +99,17 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         mainViewModel.maybePruneWork()
     }
 
-    /**
-     * Fetches all server data. This includes update information, server messages and server status
-     * checks
-     */
-    private fun load() {
-        // show the loading shimmer
-        shimmerFrameLayout.isVisible = true
-
-        Crashlytics.setUserIdentifier(
-            "Device: "
-                    + settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
-                    + ", Update Method: "
-                    + settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
-        )
-
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        val online = Utils.checkNetworkConnection(context)
-        val systemVersionProperties = application?.systemVersionProperties!!
-
-        mainViewModel.fetchUpdateData(online, deviceId, updateMethodId, systemVersionProperties.oxygenOSOTAVersion) { error ->
-            if (error == OxygenUpdater.NETWORK_CONNECTION_ERROR) {
-                showNoNetworkConnectionError(activity)
-            }
-        }.observe(viewLifecycleOwner, fetchUpdateDataObserver)
-
+    private fun setupServerResponseObservers() {
         // display the "No connection" banner if required
-        OxygenUpdater.isNetworkAvailable.observe(viewLifecycleOwner) {
+        isNetworkAvailable.observe(viewLifecycleOwner) {
             noConnectionTextView.isVisible = !it
         }
 
-        mainViewModel.fetchServerStatus(online).observe(viewLifecycleOwner, Observer { serverStatus ->
+        mainViewModel.serverMessages.observe(viewLifecycleOwner) {
+            displayServerMessageBars(it)
+        }
+
+        mainViewModel.serverStatus.observe(viewLifecycleOwner) { serverStatus ->
             // display server status banner if required
             val status = serverStatus.status
             if (status!!.isUserRecoverableError) {
@@ -189,10 +133,84 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                     OxygenUpdater.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
                     OxygenUpdater.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)
                 }
-            }.observe(viewLifecycleOwner, Observer {
-                displayServerMessageBars(it)
-            })
-        })
+            }
+        }
+
+        mainViewModel.updateData.observe(viewLifecycleOwner) {
+            this.updateData = it
+
+            // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
+            if (!isLoadedOnce && activity?.intent?.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false) == true) {
+                val intent = requireActivity().intent
+                showDownloadError(
+                    activity,
+                    intent.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false),
+                    intent.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE),
+                    intent.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE)
+                ) { isResumable ->
+                    if (!isResumable) {
+                        // Delete downloaded file, so the user can restart the download
+                        mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                    }
+
+                    mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                }
+            }
+
+            displayUpdateInformation(updateData)
+            isLoadedOnce = true
+        }
+    }
+
+    private fun setupWorkObservers() {
+        mainViewModel.downloadWorkInfo.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                mainViewModel.updateDownloadStatus(it.first())
+            }
+        }
+
+        mainViewModel.verificationWorkInfo.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                mainViewModel.updateDownloadStatus(it.first(), true)
+            }
+        }
+
+        mainViewModel.downloadStatus.observe(viewLifecycleOwner) {
+            logDebug(TAG, "Download status updated: ${it.first}")
+
+            initDownloadLayout(it)
+        }
+    }
+
+    /**
+     * Fetches all server data. This includes update information, server messages and server status
+     * checks
+     */
+    private fun load() {
+        // show the loading shimmer
+        shimmerFrameLayout.isVisible = true
+
+        Crashlytics.setUserIdentifier(
+            "Device: "
+                    + settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                    + ", Update Method: "
+                    + settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+        )
+
+        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+
+        mainViewModel.fetchServerStatus()
+
+        mainViewModel.fetchUpdateData(
+            deviceId,
+            updateMethodId,
+            systemVersionProperties.oxygenOSOTAVersion
+        ) { error ->
+            if (error == OxygenUpdater.NETWORK_CONNECTION_ERROR) {
+                showNoNetworkConnectionError(activity)
+            }
+        }
     }
 
     /**
@@ -224,7 +242,11 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
      * @param updateData              Update information to display
      */
     private fun displayUpdateInformation(updateData: UpdateData?) {
-        val online = Utils.checkNetworkConnection(context)
+        if (!isAdded) {
+            return
+        }
+
+        val online = Utils.checkNetworkConnection()
 
         // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
         if (!isAdded || updateData == null) {
@@ -263,10 +285,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     }
 
     private fun displayUpdateInformationWhenUpToDate(updateData: UpdateData, online: Boolean) {
-        if (activity?.application == null) {
-            return
-        }
-
         // Show "System is up to date" view.
         systemIsUpToDateLayoutStub?.inflate()
         // hide the loading shimmer
@@ -274,7 +292,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
         // Set the current OxygenOS version if available.
         systemIsUpToDateVersionTextView.apply {
-            val oxygenOSVersion = application?.systemVersionProperties?.oxygenOSVersion
+            val oxygenOSVersion = systemVersionProperties.oxygenOSVersion
 
             if (oxygenOSVersion != OxygenUpdater.NO_OXYGEN_OS) {
                 isVisible = true
@@ -298,7 +316,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
 
         // display a notice in the dialog if the user's currently installed version doesn't match the version this changelog is meant for
-        val differentVersionChangelogNoticeText = if (updateData.otaVersionNumber != application?.systemVersionProperties?.oxygenOSOTAVersion) {
+        val differentVersionChangelogNoticeText = if (updateData.otaVersionNumber != systemVersionProperties.oxygenOSOTAVersion) {
             getString(
                 R.string.update_information_different_version_changelog_notice,
                 settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
@@ -389,10 +407,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         md5TextView.text = getString(R.string.update_information_md5, updateData.mD5Sum)
 
         mainViewModel.setupWorkRequests(updateData)
-
-        mainViewModel.downloadWorkInfo.observe(viewLifecycleOwner, downloadWorkObserver)
-        mainViewModel.verificationWorkInfo.observe(viewLifecycleOwner, verificationWorkObserver)
-        mainViewModel.downloadStatus.observe(viewLifecycleOwner, downloadStatusObserver)
 
         if (mainViewModel.checkDownloadCompletionByFile(updateData)) {
             mainViewModel.updateDownloadStatus(DOWNLOAD_COMPLETED)

@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.workers
+package com.arjanvlek.oxygenupdater.enums
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)

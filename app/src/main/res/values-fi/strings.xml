@@ -472,5 +472,4 @@ Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käytt
 	<string name="choose_file">"Valitse tiedosto"</string>
 	<string name="update_information_description_not_available">"Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugi korjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi."</string>
 	<string name="error_google_play_button_text">"Play Kauppa"</string>
-	<string name="delayed_push_notification_displayer_service_name">"Push ilmoitus palvelu"</string>
 </resources>

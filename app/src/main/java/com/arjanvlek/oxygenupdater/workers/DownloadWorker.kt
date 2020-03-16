@@ -1,6 +1,7 @@
 package com.arjanvlek.oxygenupdater.workers
 
 import android.app.Notification
+import android.app.NotificationManager
 import android.content.Context
 import android.os.Environment
 import android.text.format.Formatter
@@ -13,6 +14,7 @@ import androidx.work.workDataOf
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.apis.DownloadApi
+import com.arjanvlek.oxygenupdater.enums.DownloadFailure
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.extensions.createFromWorkData
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -23,6 +25,9 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.FOREGROUND_NOTIFICATION_DOWNLOAD
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_DOWNLOAD
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_MD5_VERIFICATION
 import com.arjanvlek.oxygenupdater.utils.UpdateDataVersionFormatter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -54,6 +59,7 @@ class DownloadWorker(
 
     private val downloadApi by inject(DownloadApi::class.java)
     private val workManager by inject(WorkManager::class.java)
+    private val notificationManager by inject(NotificationManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -103,7 +109,7 @@ class DownloadWorker(
             .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)
             .build()
 
-        return ForegroundInfo(DOWNLOAD_FOREGROUND_NOTIFICATION_ID, notification)
+        return ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, notification)
     }
 
     private fun createProgressForegroundInfo(
@@ -138,7 +144,12 @@ class DownloadWorker(
             .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)
             .build()
 
-        return ForegroundInfo(DOWNLOAD_FOREGROUND_NOTIFICATION_ID, notification)
+        notificationManager.apply {
+            cancel(LOCAL_NOTIFICATION_DOWNLOAD)
+            cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
+        }
+
+        return ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, notification)
     }
 
     private suspend fun download(): Result = withContext(Dispatchers.IO) {

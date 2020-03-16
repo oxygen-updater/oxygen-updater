@@ -412,5 +412,4 @@
 	<string name="loading">Ładowanie…</string>
 	<string name="processing">Przetwarzanie…</string>
 	<string name="choose_file">Wybierz plik</string>
-	<string name="delayed_push_notification_displayer_service_name">Usługa Powiadomień Push</string>
 </resources>

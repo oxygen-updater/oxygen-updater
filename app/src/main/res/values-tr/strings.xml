@@ -406,5 +406,4 @@
 	<string name="loading">Yükleniyor…</string>
 	<string name="processing">İşleniyor…</string>
 	<string name="choose_file">Dosya seçiniz</string>
-	<string name="delayed_push_notification_displayer_service_name">Bildirim servisi</string>
 </resources>

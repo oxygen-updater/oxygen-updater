@@ -74,9 +74,18 @@ class MainViewModel(
         get() = _allDevices
 
     private val _updateData = MutableLiveData<UpdateData>()
+    val updateData: LiveData<UpdateData>
+        get() = _updateData
+
     private val _newsList = MutableLiveData<List<NewsItem>>()
+
     private val _serverStatus = MutableLiveData<ServerStatus>()
+    val serverStatus: LiveData<ServerStatus>
+        get() = _serverStatus
+
     private val _serverMessages = MutableLiveData<List<ServerMessage>>()
+    val serverMessages: LiveData<List<ServerMessage>>
+        get() = _serverMessages
 
     private val _downloadStatusLiveData = MutableLiveData<Pair<DownloadStatus, WorkInfo?>>()
     private var _downloadStatus = DownloadStatus.NOT_DOWNLOADING
@@ -96,44 +105,52 @@ class MainViewModel(
     private lateinit var verificationWorkRequest: OneTimeWorkRequest
 
     fun fetchAllDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
-        _allDevices.postValue(serverRepository.fetchDevices(DeviceRequestFilter.ALL, false))
+        serverRepository.fetchDevices(DeviceRequestFilter.ALL)?.let {
+            _allDevices.postValue(it)
+        }
     }.let { _allDevices }
 
     fun fetchUpdateData(
-        online: Boolean,
         deviceId: Long,
         updateMethodId: Long,
         incrementalSystemVersion: String,
         errorCallback: KotlinCallback<String?>
-    ): LiveData<UpdateData> = viewModelScope.launch(Dispatchers.IO) {
-        _updateData.postValue(serverRepository.fetchUpdateData(online, deviceId, updateMethodId, incrementalSystemVersion, errorCallback))
-    }.let { _updateData }
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchUpdateData(deviceId, updateMethodId, incrementalSystemVersion, errorCallback)?.let {
+            _updateData.postValue(it)
+        }
+    }
 
     fun fetchNews(
-        context: Context,
         deviceId: Long,
         updateMethodId: Long
     ): LiveData<List<NewsItem>> = viewModelScope.launch(Dispatchers.IO) {
-        _newsList.postValue(serverRepository.fetchNews(context, deviceId, updateMethodId))
+        serverRepository.fetchNews(deviceId, updateMethodId).let {
+            _newsList.postValue(it)
+        }
     }.let { _newsList }
 
-    fun fetchServerStatus(online: Boolean): LiveData<ServerStatus> = viewModelScope.launch(Dispatchers.IO) {
-        _serverStatus.postValue(serverRepository.fetchServerStatus(online))
-    }.let { _serverStatus }
+    fun fetchServerStatus() = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchServerStatus().let {
+            _serverStatus.postValue(it)
+        }
+    }
 
     fun fetchServerMessages(
         serverStatus: ServerStatus,
         errorCallback: KotlinCallback<String?>
-    ): LiveData<List<ServerMessage>> = viewModelScope.launch(Dispatchers.IO) {
-        _serverMessages.postValue(serverRepository.fetchServerMessages(serverStatus, errorCallback))
-    }.let { _serverMessages }
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchServerMessages(serverStatus, errorCallback)?.let {
+            _serverMessages.postValue(it)
+        }
+    }
 
     fun subscribeToNotificationTopics(
         enabledDeviceList: List<Device>
     ) = viewModelScope.launch(Dispatchers.IO) {
         NotificationTopicSubscriber.subscribe(
             enabledDeviceList,
-            serverRepository.fetchAllMethods()
+            serverRepository.fetchAllMethods() ?: ArrayList()
         )
     }
 
@@ -237,13 +254,13 @@ class MainViewModel(
     fun setupWorkRequests(updateData: UpdateData) {
         downloadWorkRequest = OneTimeWorkRequestBuilder<DownloadWorker>()
             .setInputData(updateData.toWorkData())
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .setBackoffCriteria(BackoffPolicy.LINEAR, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .build()
 
         verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
             .setInputData(updateData.toWorkData())
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .setBackoffCriteria(BackoffPolicy.LINEAR, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .build()
     }
 

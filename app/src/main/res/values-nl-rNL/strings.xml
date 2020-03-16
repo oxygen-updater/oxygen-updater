@@ -408,5 +408,4 @@
 	<string name="loading">Laden…</string>
 	<string name="processing">Verwerken…</string>
 	<string name="choose_file">Kies een bestand</string>
-	<string name="delayed_push_notification_displayer_service_name">"Pushnotificatie-service"</string>
 </resources>

@@ -5,8 +5,6 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 
@@ -18,28 +16,22 @@ import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
  */
 abstract class SupportActionBarActivity : AppCompatActivity() {
 
-    protected var application: OxygenUpdater? = null
-        get() {
-            if (field == null) {
-                field = getApplication() as OxygenUpdater
-            }
-
-            return field
-        }
-        private set
-
-    override fun setContentView(@LayoutRes layoutResId: Int) {
-        super.setContentView(layoutResId)
+    override fun setContentView(
+        @LayoutRes layoutResId: Int
+    ) = super.setContentView(layoutResId).also {
         setupToolbar()
     }
 
-    override fun setContentView(view: View) {
-        super.setContentView(view)
+    override fun setContentView(
+        view: View
+    ) = super.setContentView(view).also {
         setupToolbar()
     }
 
-    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
-        super.setContentView(view, params)
+    override fun setContentView(
+        view: View,
+        params: ViewGroup.LayoutParams
+    ) = super.setContentView(view, params).also {
         setupToolbar()
     }
 
@@ -56,8 +48,9 @@ abstract class SupportActionBarActivity : AppCompatActivity() {
             }
         })
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        // We must use `findViewById` because
+        // neither ViewBinding nor Kotlin View Extensions will correctly resolve an individual activity's toolbar
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

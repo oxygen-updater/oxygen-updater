@@ -23,7 +23,6 @@ import com.arjanvlek.oxygenupdater.fragments.InstallMethodChooserFragment
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
-import com.arjanvlek.oxygenupdater.utils.Utils.checkNetworkConnection
 import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -93,9 +92,7 @@ class InstallActivity : SupportActionBarActivity() {
             rootStatusCheckLayout.isVisible = false
 
             if (isRooted) {
-                installViewModel.fetchServerStatus(
-                    checkNetworkConnection(this)
-                ).observe(this, Observer { serverStatus ->
+                installViewModel.fetchServerStatus().observe(this, Observer { serverStatus ->
                     if (serverStatus.automaticInstallationEnabled) {
                         openMethodSelectionPage()
                     } else {

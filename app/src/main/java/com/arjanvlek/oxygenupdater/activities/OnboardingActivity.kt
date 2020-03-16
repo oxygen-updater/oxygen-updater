@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
-import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
 import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
@@ -59,9 +58,8 @@ class OnboardingActivity : AppCompatActivity() {
         activityLauncher = ActivityLauncher(this)
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-            val applicationData = application as OxygenUpdater
             onboardingViewModel.fetchAllDevices().observe(this, Observer {
-                val deviceOsSpec = Utils.checkDeviceOsSpec(applicationData.systemVersionProperties!!, it)
+                val deviceOsSpec = Utils.checkDeviceOsSpec(it)
 
                 if (!deviceOsSpec.isDeviceOsSpecSupported) {
                     displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)

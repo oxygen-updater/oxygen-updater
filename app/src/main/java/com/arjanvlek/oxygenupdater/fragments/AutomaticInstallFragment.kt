@@ -40,6 +40,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
 
     private lateinit var updateData: UpdateData
 
+    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val settingsManager by inject<SettingsManager>()
     private val installViewModel by sharedViewModel<InstallViewModel>()
 
@@ -73,7 +74,6 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         val rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true)
 
         // Plan install verification on reboot.
-        val systemVersionProperties = SystemVersionProperties()
         val currentOSVersion = systemVersionProperties.oxygenOSOTAVersion
         val isAbPartitionLayout = systemVersionProperties.isABPartitionLayout
         val targetOSVersion = updateData.otaVersionNumber!!

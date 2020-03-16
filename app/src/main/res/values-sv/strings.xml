@@ -473,7 +473,6 @@ Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du st
 	<string name="processing">"Bearbetar…"</string>
 	<string name="choose_file">"Välj fil"</string>
 	<string name="update_information_description_not_available">"Det finns ingen officiell information om de nya funktionerna denna uppdatering innehåller. Vanligtvis innehåller en sådan uppdatering buggfixar, prestandaförbättringar och / eller viktiga säkerhetsuppdateringar för din enhet."</string>
-	<string name="delayed_push_notification_displayer_service_name">"Push-notifikationsservice"</string>
 	<string name="theme_light_subtitle">Tema med en vit bakgrund och OnePlus-röd primär färg</string>
 
 </resources>

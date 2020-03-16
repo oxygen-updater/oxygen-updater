@@ -407,5 +407,4 @@
 	<string name="loading">กำลังโหลด…</string>
 	<string name="processing">กำลังประมวลผล…</string>
 	<string name="choose_file">เลือกไฟล์</string>
-	<string name="delayed_push_notification_displayer_service_name">บริการแจ้งเตือนแบบพุช</string>
 </resources>

@@ -500,5 +500,4 @@ No root access? Press \"Close\" and continue using the app."</string>
 	<string name="choose_file">"Datei auswählen"</string>
 	<string name="update_information_description_not_available">"Es gibt keine offiziellen Informationen über die Neuerungen in diesem Update. Normalerweise beinhaltet solch ein Update Bug fixes, Performance Verbesserungen, und / oder wichtige Sicherheitsupdates für dein Gerät."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
-	<string name="delayed_push_notification_displayer_service_name">"Push Benachrichtigungsdienst"</string>
 </resources>

@@ -410,6 +410,5 @@
 	<string name="loading">Учитавање…</string>
 	<string name="processing">Обрада…</string>
 	<string name="choose_file">Узаберите фајл</string>
-	<string name="delayed_push_notification_displayer_service_name">Сервис за обавештења</string>
 
 </resources>

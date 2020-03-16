@@ -120,9 +120,6 @@ class SettingsManager {
         const val PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings"
         const val PROPERTY_DOWNLOAD_BYTES_DONE = "download_bytes_done"
         const val PROPERTY_DOWNLOAD_ID = "download_id"
-        const val PROPERTY_DOWNLOADER_STATE = "downloader_state"
-        const val PROPERTY_DOWNLOADER_STATE_HISTORY = "downloader_state_history"
-        const val PROPERTY_DOWNLOAD_PROGRESS = "download_progress"
         const val PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs" // Value cannot be changed - is from older version where it was called 'upload_logs'
         const val PROPERTY_ADDITIONAL_ZIP_FILE_PATH = "additional_zip_file_path"
         const val PROPERTY_BACKUP_DEVICE = "backupDevice"
@@ -149,6 +146,7 @@ class SettingsManager {
         const val PROPERTY_OFFLINE_IS_UP_TO_DATE = "offlineIsUpToDate"
 
         // Notifications properties
+        const val PROPERTY_FIREBASE_TOKEN = "firebase_token"
         const val PROPERTY_NOTIFICATION_TOPIC = "notification_topic"
         const val PROPERTY_NOTIFICATION_DELAY_IN_SECONDS = "notification_delay_in_seconds"
 

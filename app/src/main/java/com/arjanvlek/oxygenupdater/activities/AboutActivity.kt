@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.viewmodels.AboutViewModel
 import kotlinx.android.synthetic.main.activity_about.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,7 +20,6 @@ class AboutActivity : SupportActionBarActivity() {
         setContentView(R.layout.activity_about)
 
         val activityLauncher = ActivityLauncher(this)
-        val online = Utils.checkNetworkConnection(application)
 
         // Set the version number of the app as the subtitle
         collapsingToolbarLayout.subtitle = getString(R.string.summary_oxygen, BuildConfig.VERSION_NAME)
@@ -37,7 +35,7 @@ class AboutActivity : SupportActionBarActivity() {
         // banner is displayed if app version is outdated
         bannerLayout.setOnClickListener { activityLauncher.openPlayStorePage(this) }
 
-        aboutViewModel.fetchServerStatus(online).observe(this, Observer {
+        aboutViewModel.fetchServerStatus().observe(this, Observer {
             if (!it.checkIfAppIsUpToDate()) {
                 updateBannerText(it.latestAppVersion!!)
             }

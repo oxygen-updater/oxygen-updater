@@ -56,8 +56,7 @@ abstract class SystemVersionPropertiesTest {
         assertTrue(buildFingerPrint.contains(SUPPORTED_BUILD_FINGERPRINT_KEYS))
         assertEquals(expectedAbPartitionLayout, abPartitionLayout)
 
-        val systemVersionProperties = SystemVersionProperties(expectedDeviceDisplayName23x!!, oxygenOSDisplayVersion, oxygenOSOtaVersion, null, buildFingerPrint, abPartitionLayout)
-        val deviceOsSpec = checkDeviceOsSpec(systemVersionProperties, allOnePlusDevicesApp232AndNewer)
+        val deviceOsSpec = checkDeviceOsSpec(allOnePlusDevicesApp232AndNewer)
 
         assertSame(deviceOsSpec, DeviceOsSpec.SUPPORTED_OXYGEN_OS)
 

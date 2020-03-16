@@ -409,5 +409,4 @@
 	<string name="loading">Indlæser…</string>
 	<string name="processing">Arbejder…</string>
 	<string name="choose_file">Vælg en fil</string>
-	<string name="delayed_push_notification_displayer_service_name">Push underretninger</string>
 </resources>

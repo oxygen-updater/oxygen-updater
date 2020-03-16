@@ -11,6 +11,7 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.SelectableModel
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
+import com.arjanvlek.oxygenupdater.utils.Utils.checkPlayServices
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
@@ -89,7 +90,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
         super.setupRecyclerView(data, initialSelectedIndex) {
             onboardingViewModel.updateSelectedUpdateMethod(it as UpdateMethod)
 
-            if (application?.checkPlayServices(activity, false) == true) {
+            if (checkPlayServices(activity, false)) {
                 // Subscribe to notifications for the newly selected device and update method
                 onboardingViewModel.subscribeToNotificationTopics()
             } else {

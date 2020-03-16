@@ -47,15 +47,17 @@ class OnboardingViewModel(
      * whereas [enabledDevices] is used in [com.arjanvlek.oxygenupdater.fragments.DeviceChooserOnboardingFragment]
      */
     fun fetchAllDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.fetchDevices(DeviceRequestFilter.ALL, false).also { allDevices ->
+        serverRepository.fetchDevices(DeviceRequestFilter.ALL).also { allDevices ->
             _allDevices.postValue(allDevices)
-            _enabledDevices.postValue(allDevices.filter { it.enabled })
+            _enabledDevices.postValue(allDevices?.filter { it.enabled })
         }
     }.let { _allDevices }
 
     fun fetchUpdateMethodsForDevice(deviceId: Long): LiveData<List<UpdateMethod>> = RootAccessChecker.checkRootAccess { hasRootAccess ->
         viewModelScope.launch(Dispatchers.IO) {
-            _updateMethodsForDevice.postValue(serverRepository.fetchUpdateMethodsForDevice(deviceId, hasRootAccess))
+            serverRepository.fetchUpdateMethodsForDevice(deviceId, hasRootAccess)?.let {
+                _updateMethodsForDevice.postValue(it)
+            }
         }
     }.let { _updateMethodsForDevice }
 
@@ -90,7 +92,7 @@ class OnboardingViewModel(
     fun subscribeToNotificationTopics() = viewModelScope.launch(Dispatchers.IO) {
         NotificationTopicSubscriber.subscribe(
             _enabledDevices.value ?: ArrayList(),
-            serverRepository.fetchAllMethods()
+            serverRepository.fetchAllMethods() ?: ArrayList()
         )
     }
 }

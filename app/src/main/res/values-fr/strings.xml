@@ -469,5 +469,4 @@ Si vous n'avez pas un accès root pressez « Fermer » et continuez à utilise
 	<string name="choose_file">"Sélectionnez un fichier"</string>
 	<string name="update_information_description_not_available">"Aucune information officielle à propos de nouvelles fonctionnalités apportées par cette mise à jour n'est disponible. Habituellement les mises à jour amènent des corrections de bugs, des améliorations de performance et/ou des correctifs critiques de sécurité pour votre appareil."</string>
 	<string name="error_google_play_button_text">"Play Store"</string>
-	<string name="delayed_push_notification_displayer_service_name">"Service de notifications Push"</string>
 </resources>

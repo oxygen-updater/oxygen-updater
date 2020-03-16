@@ -405,5 +405,4 @@
 	<string name="loading">加载中…</string>
 	<string name="processing">正在处理…</string>
 	<string name="choose_file">选择一个文件</string>
-	<string name="delayed_push_notification_displayer_service_name">消息推送服务</string>
 </resources>

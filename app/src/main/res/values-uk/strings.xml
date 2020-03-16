@@ -407,5 +407,4 @@
 	<string name="loading">Завантажується…</string>
 	<string name="processing">Опрацювання…</string>
 	<string name="choose_file">Вибрати файл</string>
-	<string name="delayed_push_notification_displayer_service_name">Сервіс пуш-сповіщень</string>
 </resources>

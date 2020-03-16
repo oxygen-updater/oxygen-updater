@@ -1,9 +1,9 @@
 package com.arjanvlek.oxygenupdater.fragments
 
 import android.app.ActivityManager
-import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
@@ -12,22 +12,25 @@ import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.internal.DeviceInformationData
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_device_information.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_information) {
 
+    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         displayDeviceInformation()
 
         mainViewModel.allDevices.observe(viewLifecycleOwner, Observer { devices ->
-            val deviceOsSpec = Utils.checkDeviceOsSpec(application!!.systemVersionProperties!!, devices)
+            val deviceOsSpec = Utils.checkDeviceOsSpec(devices)
 
             displayFormattedDeviceName(devices)
 
@@ -65,7 +68,7 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
             return
         }
 
-        devices?.find { device -> device.productNames.contains(application?.systemVersionProperties?.oxygenDeviceName) }
+        devices?.find { device -> device.productNames.contains(systemVersionProperties.oxygenDeviceName) }
             ?.let { device -> device_information_header.text = device.name }
     }
 
@@ -74,8 +77,6 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
             logDebug(TAG, "Fragment not added. Can not display device information!")
             return
         }
-
-        val systemVersionProperties = application?.systemVersionProperties
 
         // Device name (in top)
         device_information_header.text =
@@ -97,7 +98,7 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
 
         val totalMemory: Long = try {
             val mi = ActivityManager.MemoryInfo()
-            val activityManager = Utils.getSystemService(context, Context.ACTIVITY_SERVICE) as ActivityManager
+            val activityManager = requireContext().getSystemService<ActivityManager>()!!
 
             activityManager.getMemoryInfo(mi)
             mi.totalMem / 1048576L
@@ -118,7 +119,7 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
 
         // OxygenOS version (if available)
         device_information_oxygen_os_ver_field.apply {
-            val oxygenOSVersion = systemVersionProperties?.oxygenOSVersion
+            val oxygenOSVersion = systemVersionProperties.oxygenOSVersion
 
             if (oxygenOSVersion != NO_OXYGEN_OS) {
                 text = oxygenOSVersion
@@ -130,7 +131,7 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
 
         // OxygenOS OTA version (if available)
         device_information_oxygen_os_ota_ver_field.apply {
-            val oxygenOSOTAVersion = systemVersionProperties?.oxygenOSOTAVersion
+            val oxygenOSOTAVersion = systemVersionProperties.oxygenOSOTAVersion
 
             if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
                 text = oxygenOSOTAVersion
@@ -147,7 +148,7 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
 
         // Security Patch Date (if available)
         device_information_os_patch_level_field.apply {
-            val securityPatchDate = systemVersionProperties?.securityPatchDate
+            val securityPatchDate = systemVersionProperties.securityPatchDate
 
             if (securityPatchDate != NO_OXYGEN_OS) {
                 text = securityPatchDate

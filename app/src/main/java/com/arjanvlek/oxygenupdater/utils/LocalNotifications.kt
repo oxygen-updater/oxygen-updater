@@ -17,52 +17,16 @@ import com.arjanvlek.oxygenupdater.fragments.UpdateInformationFragment
 import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
-import org.koin.java.KoinJavaComponent
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_CONTRIBUTION
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_DOWNLOAD
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_MD5_VERIFICATION
+import org.koin.java.KoinJavaComponent.inject
 
 object LocalNotifications {
 
-    private const val VERIFYING_NOTIFICATION_ID = 500000000
-    private const val DOWNLOAD_COMPLETE_NOTIFICATION_ID = 1000000000
-    private const val DOWNLOADING_NOTIFICATION_ID = 1500000000
-    private const val DOWNLOAD_FAILED_NOTIFICATION_ID = 200000000
-    private const val CONTRIBUTE_SUCCESSFUL_NOTIFICATION_ID = 250000000
     private const val TAG = "LocalNotifications"
 
-    const val NOT_ONGOING = false
-    const val ONGOING = true
-    const val HAS_NO_ERROR = false
-    const val HAS_ERROR = true
-
-    private val notificationManager by KoinJavaComponent.inject(NotificationManager::class.java)
-
-    /**
-     * Shows a notification that an update is downloading
-     */
-    fun showDownloadingNotification(context: Context?, updateData: UpdateData?, downloadProgressData: DownloadProgressData) {
-        try {
-            val builder = NotificationCompat.Builder(context!!, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(android.R.drawable.stat_sys_download)
-                .setOngoing(true)
-                .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
-                .setStyle(
-                    NotificationCompat.BigTextStyle()
-                        .setBigContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
-                        .bigText(if (downloadProgressData.timeRemaining != null) downloadProgressData.timeRemaining.toString(context) else "")
-                )
-                .setProgress(100, downloadProgressData.progress, false)
-                .setCategory(Notification.CATEGORY_PROGRESS)
-                .setPriority(PRIORITY_LOW)
-
-            notificationManager.apply {
-                cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
-                cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
-                cancel(VERIFYING_NOTIFICATION_ID)
-                notify(DOWNLOADING_NOTIFICATION_ID, builder.build())
-            }
-        } catch (e: Exception) {
-            logError(TAG, "Can't display 'downloading' notification", e)
-        }
-    }
+    private val notificationManager by inject(NotificationManager::class.java)
 
     /**
      * Shows a notification that the download has been paused.
@@ -100,7 +64,7 @@ object LocalNotifications {
 
             notificationManager.apply {
                 // Same as downloading so we can't have both a downloading and paused notification.
-                notify(DOWNLOADING_NOTIFICATION_ID, builder.build())
+                notify(LOCAL_NOTIFICATION_DOWNLOAD, builder.build())
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display 'download paused' notification", e)
@@ -137,10 +101,8 @@ object LocalNotifications {
                 .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
-                cancel(DOWNLOADING_NOTIFICATION_ID)
-                cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
-                cancel(VERIFYING_NOTIFICATION_ID)
-                notify(DOWNLOAD_COMPLETE_NOTIFICATION_ID, builder.build())
+                cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
+                notify(LOCAL_NOTIFICATION_DOWNLOAD, builder.build())
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display 'download complete' notification", e)
@@ -174,7 +136,7 @@ object LocalNotifications {
                 .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
-                notify(CONTRIBUTE_SUCCESSFUL_NOTIFICATION_ID, builder.build())
+                notify(LOCAL_NOTIFICATION_CONTRIBUTION, builder.build())
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display 'successful contribution' notification", e)
@@ -187,9 +149,8 @@ object LocalNotifications {
     fun hideDownloadingNotification() {
         try {
             notificationManager.apply {
-                cancel(DOWNLOADING_NOTIFICATION_ID)
-                cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
-                cancel(VERIFYING_NOTIFICATION_ID)
+                cancel(LOCAL_NOTIFICATION_DOWNLOAD)
+                cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't hide 'downloading' notification", e)
@@ -203,7 +164,7 @@ object LocalNotifications {
     fun hideDownloadCompleteNotification() {
         try {
             notificationManager.apply {
-                cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
+                cancel(LOCAL_NOTIFICATION_DOWNLOAD)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't hide 'download complete' notification", e)
@@ -238,10 +199,8 @@ object LocalNotifications {
                 .setPriority(PRIORITY_LOW)
 
             notificationManager.apply {
-                cancel(DOWNLOADING_NOTIFICATION_ID)
-                cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
-                cancel(VERIFYING_NOTIFICATION_ID)
-                notify(DOWNLOAD_FAILED_NOTIFICATION_ID, builder.build())
+                cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
+                notify(LOCAL_NOTIFICATION_DOWNLOAD, builder.build())
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display download failed notification: ", e)
@@ -261,10 +220,8 @@ object LocalNotifications {
             .build()
 
         notificationManager.apply {
-            cancel(DOWNLOADING_NOTIFICATION_ID)
-            cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
-            cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
-            notify(VERIFYING_NOTIFICATION_ID, notification)
+            cancel(LOCAL_NOTIFICATION_DOWNLOAD)
+            notify(LOCAL_NOTIFICATION_MD5_VERIFICATION, notification)
         }
     }
 
@@ -293,10 +250,8 @@ object LocalNotifications {
             }
 
             notificationManager.apply {
-                cancel(DOWNLOADING_NOTIFICATION_ID)
-                cancel(DOWNLOAD_COMPLETE_NOTIFICATION_ID)
-                cancel(DOWNLOAD_FAILED_NOTIFICATION_ID)
-                notify(VERIFYING_NOTIFICATION_ID, builder.build())
+                cancel(LOCAL_NOTIFICATION_DOWNLOAD)
+                notify(LOCAL_NOTIFICATION_MD5_VERIFICATION, builder.build())
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display 'verifying' (still going: $ongoing, verification failed: $error) notification", e)
@@ -309,7 +264,7 @@ object LocalNotifications {
     fun hideVerifyingNotification() {
         try {
             notificationManager.apply {
-                cancel(VERIFYING_NOTIFICATION_ID)
+                cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't hide 'verifying' notification", e)

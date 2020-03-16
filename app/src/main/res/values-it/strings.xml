@@ -484,5 +484,4 @@ Ritenta in alcuni minuti."</string>
 	<string name="choose_file">"Seleziona file"</string>
 	<string name="update_information_description_not_available">"Non esiste alcuna informazione ufficiale del changelog di questo aggiornamento. Di solito, questo include dei fix per i bug, miglioramenti di performance e / o aggiornamenti critici di sicurezza per il tuo dispositivo."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
-	<string name="delayed_push_notification_displayer_service_name">"Servizio notifiche Push"</string>
 </resources>

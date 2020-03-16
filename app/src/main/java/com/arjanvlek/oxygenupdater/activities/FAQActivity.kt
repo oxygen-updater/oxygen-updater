@@ -59,7 +59,7 @@ class FAQActivity : SupportActionBarActivity() {
      */
     @SuppressLint("SetJavaScriptEnabled") // JavaScript is required to toggle the FAQ Item boxes.
     private fun loadFaqPage() {
-        if (Utils.checkNetworkConnection(applicationContext)) {
+        if (Utils.checkNetworkConnection()) {
             switchViews(true)
 
             webView.apply {

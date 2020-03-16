@@ -22,7 +22,6 @@ import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
-import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.MessageDialog
@@ -35,6 +34,7 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.P
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.utils.Utils.checkPlayServices
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdView
@@ -74,10 +74,8 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     public override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_main)
 
-        val application = application as OxygenUpdater
-
         mainViewModel.fetchAllDevices().observe(this, Observer { deviceList ->
-            val deviceOsSpec = Utils.checkDeviceOsSpec(application.systemVersionProperties!!, deviceList)
+            val deviceOsSpec = Utils.checkDeviceOsSpec(deviceList)
 
             val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
 
@@ -132,7 +130,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             activityLauncher.Contribute()
         }
 
-        if (!Utils.checkNetworkConnection(applicationContext)) {
+        if (!Utils.checkNetworkConnection()) {
             showNetworkError()
         }
     }
@@ -248,9 +246,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
      * Checks for Play Services and initialises [MobileAds] if found
      */
     private fun setupAds() {
-        val application = application as OxygenUpdater
-
-        if (!application.checkPlayServices(this, false)) {
+        if (!checkPlayServices(this, false)) {
             Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
         }
 

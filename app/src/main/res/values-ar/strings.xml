@@ -368,5 +368,4 @@
 	<string name="loading">جاري التحميل…</string>
 	<string name="processing">جاري المعالجة…</string>
 	<string name="choose_file">أختر ملف</string>
-	<string name="delayed_push_notification_displayer_service_name">خدمة الإشعارات</string>
 </resources>

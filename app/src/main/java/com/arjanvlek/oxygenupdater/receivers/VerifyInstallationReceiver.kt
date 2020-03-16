@@ -4,7 +4,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.CATEGORY_STATUS
@@ -27,7 +26,6 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.P
 import com.arjanvlek.oxygenupdater.models.InstallationStatus
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
-import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.workers.UploadRootInstallLogWorker
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS
@@ -41,6 +39,8 @@ import java.util.concurrent.TimeUnit
 
 class VerifyInstallationReceiver : BroadcastReceiver() {
 
+    private val systemVersionProperties by inject(SystemVersionProperties::class.java)
+    private val notificationManager by inject(NotificationManager::class.java)
     private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
@@ -51,16 +51,16 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             ) {
                 settingsManager.savePreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
 
-                val properties = SystemVersionProperties()
-
                 // Don't check on unsupported devices.
-                if ((properties.oxygenOSVersion == NO_OXYGEN_OS) || (properties.oxygenOSOTAVersion == NO_OXYGEN_OS)) {
+                if (systemVersionProperties.oxygenOSVersion == NO_OXYGEN_OS
+                    || systemVersionProperties.oxygenOSOTAVersion == NO_OXYGEN_OS
+                ) {
                     return
                 }
 
                 val oldOxygenOSVersion = settingsManager.getPreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, "")
                 val targetOxygenOSVersion = settingsManager.getPreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, "")
-                val currentOxygenOSVersion = properties.oxygenOSOTAVersion
+                val currentOxygenOSVersion = systemVersionProperties.oxygenOSOTAVersion
 
                 if (oldOxygenOSVersion.isEmpty() || targetOxygenOSVersion.isEmpty() || currentOxygenOSVersion.isEmpty()) {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_unable_to_verify))
@@ -72,7 +72,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
                     displayFailureNotification(context, context.getString(R.string.install_verify_error_wrong_version_installed))
                     logFailure(oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion, "ERR_WRONG_OS_INSTALLED")
                 } else {
-                    displaySuccessNotification(context, properties.oxygenOSVersion)
+                    displaySuccessNotification(context, systemVersionProperties.oxygenOSVersion)
                     logSuccess(oldOxygenOSVersion, targetOxygenOSVersion, currentOxygenOSVersion)
                 }
             }
@@ -96,9 +96,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             .setCategory(CATEGORY_STATUS)
             .setPriority(PRIORITY_HIGH)
 
-        (Utils.getSystemService(context, NOTIFICATION_SERVICE) as NotificationManager).apply {
-            notify(NOTIFICATION_ID, builder.build())
-        }
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 
     private fun displayFailureNotification(context: Context, errorMessage: String) {
@@ -116,9 +114,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             .setCategory(CATEGORY_STATUS)
             .setPriority(PRIORITY_HIGH)
 
-        (Utils.getSystemService(context, NOTIFICATION_SERVICE) as NotificationManager).apply {
-            notify(NOTIFICATION_ID, builder.build())
-        }
+        notificationManager.notify(NOTIFICATION_ID, builder.build())
     }
 
     private fun logSuccess(
@@ -153,7 +149,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
     private fun scheduleLogUploadTask(inputData: Data) {
         val logUploadWorkRequest = OneTimeWorkRequestBuilder<UploadRootInstallLogWorker>()
             .setInputData(inputData)
-            .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .setBackoffCriteria(BackoffPolicy.LINEAR, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .build()
 
@@ -166,6 +162,6 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
 
     companion object {
         private const val NOTIFICATION_ID = 79243095
-        private const val TAG = "VerifyInstallReceiver"
+        private const val TAG = "VerifyInstallationReceiver"
     }
 }

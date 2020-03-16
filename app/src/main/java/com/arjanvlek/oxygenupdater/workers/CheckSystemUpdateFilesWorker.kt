@@ -20,6 +20,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.FOREGROUND_NOTIFICATION_CONTRIBUTION
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -144,7 +145,7 @@ class CheckSystemUpdateFilesWorker(
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
 
-        return ForegroundInfo(MISC_FOREGROUND_NOTIFICATION_ID, notification)
+        return ForegroundInfo(FOREGROUND_NOTIFICATION_CONTRIBUTION, notification)
     }
 
     private fun getAllFileNames(folder: File, result: MutableList<String>) {

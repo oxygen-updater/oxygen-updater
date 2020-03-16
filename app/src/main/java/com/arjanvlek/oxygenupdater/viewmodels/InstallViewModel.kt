@@ -59,8 +59,10 @@ class InstallViewModel(
     val logRootInstallResult: LiveData<ServerPostResult>
         get() = _logRootInstallResult
 
-    fun fetchServerStatus(online: Boolean): LiveData<ServerStatus> = viewModelScope.launch(Dispatchers.IO) {
-        _serverStatus.postValue(serverRepository.fetchServerStatus(online))
+    fun fetchServerStatus(): LiveData<ServerStatus> = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchServerStatus().let {
+            _serverStatus.postValue(it)
+        }
     }.let { _serverStatus }
 
     fun fetchInstallGuidePage(
@@ -68,11 +70,15 @@ class InstallViewModel(
         updateMethodId: Long,
         pageNumber: Int
     ): LiveData<InstallGuidePage> = viewModelScope.launch(Dispatchers.IO) {
-        _installGuidePage.postValue(serverRepository.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber))
+        serverRepository.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber)?.let {
+            _installGuidePage.postValue(it)
+        }
     }.let { _installGuidePage }
 
     fun logRootInstall(rootInstall: RootInstall) = viewModelScope.launch(Dispatchers.IO) {
-        _logRootInstallResult.postValue(serverRepository.logRootInstall(rootInstall))
+        serverRepository.logRootInstall(rootInstall)?.let {
+            _logRootInstallResult.postValue(it)
+        }
     }
 
     fun updateToolbarTitle(@StringRes resId: Int) = _toolbarTitle.postValue(resId)

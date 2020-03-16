@@ -30,14 +30,18 @@ class SettingsViewModel(
     private val _updateMethodsForDevice = MutableLiveData<List<UpdateMethod>>()
 
     fun fetchEnabledDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
-        _enabledDevices.postValue(serverRepository.fetchDevices(DeviceRequestFilter.ENABLED, true))
+        serverRepository.fetchDevices(DeviceRequestFilter.ENABLED)?.let {
+            _enabledDevices.postValue(it)
+        }
     }.let { _enabledDevices }
 
     fun fetchUpdateMethodsForDevice(
         deviceId: Long
     ): LiveData<List<UpdateMethod>> = RootAccessChecker.checkRootAccess { hasRootAccess ->
         viewModelScope.launch(Dispatchers.IO) {
-            _updateMethodsForDevice.postValue(serverRepository.fetchUpdateMethodsForDevice(deviceId, hasRootAccess))
+            serverRepository.fetchUpdateMethodsForDevice(deviceId, hasRootAccess)?.let {
+                _updateMethodsForDevice.postValue(it)
+            }
         }
     }.let { _updateMethodsForDevice }
 
@@ -45,7 +49,7 @@ class SettingsViewModel(
         purchase: Purchase,
         amount: String?,
         purchaseType: PurchaseType,
-        callback: KotlinCallback<ServerPostResult>
+        callback: KotlinCallback<ServerPostResult?>
     ) = viewModelScope.launch(Dispatchers.IO) {
         val result = serverRepository.verifyPurchase(purchase, amount, purchaseType)
 

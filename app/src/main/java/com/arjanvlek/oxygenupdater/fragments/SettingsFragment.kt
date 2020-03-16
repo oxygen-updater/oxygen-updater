@@ -25,9 +25,11 @@ import com.arjanvlek.oxygenupdater.internal.settings.BottomSheetPreference
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.Device
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
+import com.arjanvlek.oxygenupdater.utils.Utils.checkPlayServices
 import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
 import com.crashlytics.android.Crashlytics
 import org.koin.android.ext.android.inject
@@ -48,6 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     private lateinit var delegate: InAppPurchaseDelegate
 
+    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val settingsManager by inject<SettingsManager>()
     private val settingsViewModel by sharedViewModel<SettingsViewModel>()
 
@@ -185,7 +188,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private fun populateDeviceSettings(devices: List<Device>?) {
         if (!devices.isNullOrEmpty()) {
             devicePreference.isEnabled = true
-            val systemVersionProperties = application.systemVersionProperties
 
             // Set the spinner to the previously selected device.
             var recommendedPosition = -1
@@ -201,7 +203,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
                 val productNames = device.productNames
 
-                if (productNames.contains(systemVersionProperties?.oxygenDeviceName)) {
+                if (productNames.contains(systemVersionProperties.oxygenDeviceName)) {
                     recommendedPosition = i
                 }
 
@@ -306,7 +308,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 )
 
                 // Google Play services are not required if the user doesn't use notifications
-                if (application.checkPlayServices(activity.parent, false)) {
+                if (checkPlayServices(activity, false)) {
                     // Subscribe to notifications for the newly selected device and update method
                     NotificationTopicSubscriber.subscribe(devices, updateMethods)
                 } else {

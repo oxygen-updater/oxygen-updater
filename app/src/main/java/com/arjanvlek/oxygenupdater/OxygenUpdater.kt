@@ -1,28 +1,22 @@
 package com.arjanvlek.oxygenupdater
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
-import androidx.lifecycle.MutableLiveData
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
-import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.MD5
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
+import com.arjanvlek.oxygenupdater.utils.networkCallback
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
-import com.google.android.gms.common.ConnectionResult.SUCCESS
-import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
@@ -30,36 +24,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import java.util.*
-import kotlin.system.exitProcess
-
 
 class OxygenUpdater : Application() {
-
-    private val settingsManager by inject<SettingsManager>()
-
-    val networkCallback = object : ConnectivityManager.NetworkCallback() {
-        override fun onLost(network: Network) {
-            isNetworkAvailable.postValue(false)
-        }
-
-        override fun onAvailable(network: Network) {
-            isNetworkAvailable.postValue(true)
-        }
-    }
-
-    // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
-    var systemVersionProperties: SystemVersionProperties? = null
-        get() {
-            // Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
-            if (field == null) {
-                logVerbose(TAG, "Creating new SystemVersionProperties instance...")
-                field = SystemVersionProperties()
-            } else {
-                logVerbose(TAG, "Using cached instance of SystemVersionProperties")
-            }
-
-            return field
-        }
 
     override fun onCreate() {
         setupKoin()
@@ -112,40 +78,9 @@ class OxygenUpdater : Application() {
         MobileAds.setRequestConfiguration(requestConfiguration)
     }
 
-    /**
-     * Checks if the Google Play Services are installed on the device.
-     *
-     * @return Returns if the Google Play Services are installed.
-     */
-    fun checkPlayServices(activity: Activity?, showErrorIfMissing: Boolean): Boolean {
-        logVerbose(TAG, "Executing Google Play Services check...")
-
-        val googleApiAvailability = GoogleApiAvailability.getInstance()
-        val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(this)
-
-        return if (resultCode != SUCCESS && showErrorIfMissing) {
-            if (googleApiAvailability.isUserResolvableError(resultCode)) {
-                googleApiAvailability.getErrorDialog(activity, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show()
-            } else {
-                exitProcess(0)
-            }
-
-            logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
-            false
-        } else {
-            val result = resultCode == SUCCESS
-
-            if (result) {
-                logVerbose(TAG, "Google Play Services are available.")
-            } else {
-                logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
-            }
-
-            result
-        }
-    }
-
     private fun setupCrashReporting() {
+        val settingsManager by inject<SettingsManager>()
+
         // Do not upload crash logs if we are on a debug build or if the user has turned off analytics in the Settings screen.
         val shareAnalytics = settingsManager.getPreference(SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
         val disableCrashCollection = BuildConfig.DEBUG || !shareAnalytics
@@ -167,7 +102,6 @@ class OxygenUpdater : Application() {
     @Suppress("unused")
     companion object {
         private const val TAG = "OxygenUpdater"
-        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
         // Test devices for ads.
         private val ADS_TEST_DEVICES = mutableListOf("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843")
@@ -181,8 +115,6 @@ class OxygenUpdater : Application() {
         const val APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR"
         const val PUSH_NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.internal.notifications"
         const val PROGRESS_NOTIFICATION_CHANNEL_ID = "com.arjanvlek.oxygenupdater.progress"
-
-        val isNetworkAvailable = MutableLiveData<Boolean>()
 
         fun buildAdRequest(): AdRequest = AdRequest.Builder().build()
     }

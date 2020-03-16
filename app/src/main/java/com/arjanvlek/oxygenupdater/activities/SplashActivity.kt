@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.activities
 import android.annotation.TargetApi
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -19,6 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var activityLauncher: ActivityLauncher
 
+    private val notificationManager by inject<NotificationManager>()
     private val settingsManager by inject<SettingsManager>()
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,8 +62,7 @@ class SplashActivity : AppCompatActivity() {
             enableVibration(true)
             vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
 
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-            notificationManager?.createNotificationChannel(this)
+            notificationManager.createNotificationChannel(this)
         }
     }
 
@@ -88,8 +87,7 @@ class SplashActivity : AppCompatActivity() {
             enableLights(false)
             enableVibration(false)
 
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
-            notificationManager?.createNotificationChannel(this)
+            notificationManager.createNotificationChannel(this)
         }
     }
 

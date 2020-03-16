@@ -10,7 +10,6 @@ import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.SettingsActivity
-import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.iab.IabHelper
 import com.arjanvlek.oxygenupdater.internal.iab.PK1
@@ -24,17 +23,23 @@ import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
-import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import org.joda.time.LocalDateTime
 import org.koin.java.KoinJavaComponent.inject
 import java.util.*
+import kotlin.system.exitProcess
 
 @Suppress("unused")
 object Utils {
 
     private const val TAG = "Utils"
+    private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
+
     private val random = Random()
 
+    private val systemVersionProperties by inject(SystemVersionProperties::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
     /**
@@ -62,6 +67,43 @@ object Utils {
         sp,
         context.resources.displayMetrics
     )
+
+    /**
+     * Checks if the Google Play Services are installed on the device.
+     *
+     * @return Returns if the Google Play Services are installed.
+     */
+    fun checkPlayServices(activity: Activity?, showErrorIfMissing: Boolean): Boolean {
+        logVerbose(TAG, "Executing Google Play Services check...")
+
+        val googleApiAvailability = GoogleApiAvailability.getInstance()
+        val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(activity)
+
+        return if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
+            if (googleApiAvailability.isUserResolvableError(resultCode)) {
+                googleApiAvailability.getErrorDialog(
+                    activity,
+                    resultCode,
+                    PLAY_SERVICES_RESOLUTION_REQUEST
+                ).show()
+            } else {
+                exitProcess(0)
+            }
+
+            logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
+            false
+        } else {
+            val result = resultCode == ConnectionResult.SUCCESS
+
+            if (result) {
+                logVerbose(TAG, "Google Play Services are available.")
+            } else {
+                logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
+            }
+
+            result
+        }
+    }
 
     /**
      * Checks if ads should be shown
@@ -101,27 +143,16 @@ object Utils {
         }
     }
 
-    fun checkNetworkConnection(context: Context?): Boolean {
-        if (context == null) {
-            logWarning(
-                TAG,
-                OxygenUpdaterException("CheckNetworkConnection: check skipped due to empty / null context")
-            )
-            return false
-        }
+    fun checkNetworkConnection() = isNetworkAvailable.value == true
 
-        return OxygenUpdater.isNetworkAvailable.value == true
-    }
-
-    @Synchronized
-    fun checkDeviceOsSpec(systemVersionProperties: SystemVersionProperties, devices: List<Device>?): DeviceOsSpec {
+    fun checkDeviceOsSpec(devices: List<Device>?): DeviceOsSpec {
         val oemFingerPrint: String? = systemVersionProperties.oemFingerprint
         val oxygenOsVersion: String? = systemVersionProperties.oxygenOSVersion
 
-        val firmwareIsSupported = oemFingerPrint != null
+        val firmwareIsSupported = !oemFingerPrint.isNullOrEmpty()
                 && oemFingerPrint != OxygenUpdater.NO_OXYGEN_OS
                 && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
-                && oxygenOsVersion != null
+                && !oxygenOsVersion.isNullOrEmpty()
                 && oxygenOsVersion != OxygenUpdater.NO_OXYGEN_OS
 
         if (devices.isNullOrEmpty()) {
@@ -189,8 +220,6 @@ object Utils {
             dateTimeString
         }
     }
-
-    fun getSystemService(context: Context?, serviceName: String) = context?.getSystemService(serviceName)
 
     /**
      * Min is inclusive and max is exclusive in this case

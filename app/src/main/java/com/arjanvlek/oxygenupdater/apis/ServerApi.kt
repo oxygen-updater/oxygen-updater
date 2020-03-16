@@ -9,9 +9,11 @@ import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.ServerStatus
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
+import com.arjanvlek.oxygenupdater.utils.HEADER_READ_TIMEOUT
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -91,6 +93,7 @@ interface ServerApi {
     ): Response<ServerPostResult>
 
     @POST("verify-purchase")
+    @Headers("$HEADER_READ_TIMEOUT:120")
     suspend fun verifyPurchase(
         @Body purchaseData: HashMap<String, Any?>
     ): Response<ServerPostResult>

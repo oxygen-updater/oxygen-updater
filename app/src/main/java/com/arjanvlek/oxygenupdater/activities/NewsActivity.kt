@@ -62,7 +62,7 @@ class NewsActivity : SupportActionBarActivity() {
         }
 
         if (newsItem == null || !newsItem.isFullyLoaded) {
-            if (Utils.checkNetworkConnection(this) && retryCount++ < 5) {
+            if (Utils.checkNetworkConnection() && retryCount++ < 5) {
                 loadNewsItem()
             } else {
                 webView.apply {
@@ -153,7 +153,7 @@ class NewsActivity : SupportActionBarActivity() {
         NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
 
         // Mark the item as read on the server (to increase times read counter)
-        if (Utils.checkNetworkConnection(this)) {
+        if (Utils.checkNetworkConnection()) {
             newsViewModel.markNewsItemRead(newsItem.id).observe(this, markNewsItemReadObserver)
         }
     }
@@ -248,7 +248,7 @@ class NewsActivity : SupportActionBarActivity() {
         val intent = intent
 
         // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
-        newsViewModel.fetchNewsItem(this, intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)).observe(this, fetchNewsItemObserver)
+        newsViewModel.fetchNewsItem(intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)).observe(this, fetchNewsItemObserver)
     }
 
     override fun onBackPressed() = finish()

@@ -1,6 +1,5 @@
 package com.arjanvlek.oxygenupdater.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,11 +22,17 @@ class NewsViewModel(
     private val _newsItem = MutableLiveData<NewsItem>()
     private val _markNewsItemReadResult = MutableLiveData<ServerPostResult>()
 
-    fun fetchNewsItem(context: Context, newsItemId: Long): LiveData<NewsItem> = viewModelScope.launch(Dispatchers.IO) {
-        _newsItem.postValue(serverRepository.fetchNewsItem(context, newsItemId))
+    fun fetchNewsItem(
+        newsItemId: Long
+    ): LiveData<NewsItem> = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchNewsItem(newsItemId)?.let {
+            _newsItem.postValue(it)
+        }
     }.let { _newsItem }
 
     fun markNewsItemRead(newsItemId: Long): LiveData<ServerPostResult> = viewModelScope.launch(Dispatchers.IO) {
-        _markNewsItemReadResult.postValue(serverRepository.markNewsItemRead(newsItemId))
+        serverRepository.markNewsItemRead(newsItemId)?.let {
+            _markNewsItemReadResult.postValue(it)
+        }
     }.let { _markNewsItemReadResult }
 }

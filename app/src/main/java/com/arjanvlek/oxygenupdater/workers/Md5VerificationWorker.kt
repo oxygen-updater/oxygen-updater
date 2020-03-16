@@ -10,6 +10,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
+import com.arjanvlek.oxygenupdater.enums.Md5VerificationFailure
 import com.arjanvlek.oxygenupdater.exceptions.UpdateVerificationException
 import com.arjanvlek.oxygenupdater.extensions.createFromWorkData
 import com.arjanvlek.oxygenupdater.utils.LocalNotifications
@@ -17,6 +18,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.FOREGROUND_NOTIFICATION_DOWNLOAD
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -59,7 +61,7 @@ class Md5VerificationWorker(
         .setCategory(Notification.CATEGORY_PROGRESS)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .build().let {
-            ForegroundInfo(DOWNLOAD_FOREGROUND_NOTIFICATION_ID, it)
+            ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, it)
         }
 
     private suspend fun verify(): Result = withContext(Dispatchers.IO) {

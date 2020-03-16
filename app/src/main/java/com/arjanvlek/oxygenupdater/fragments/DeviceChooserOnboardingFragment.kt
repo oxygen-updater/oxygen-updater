@@ -8,12 +8,15 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.SelectableModel
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
 
+    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +44,6 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
     ) {
         val data = data as List<Device>
 
-        val systemVersionProperties = application?.systemVersionProperties!!
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
 
         val recommendedIndex = data.indexOfFirst { it.productNames.contains(systemVersionProperties.oxygenDeviceName) }
