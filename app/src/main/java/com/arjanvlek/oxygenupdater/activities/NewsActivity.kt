@@ -59,7 +59,7 @@ class NewsActivity : SupportActionBarActivity() {
      */
     @SuppressLint("SetJavaScriptEnabled")
     private val fetchNewsItemObserver = Observer<NewsItem> { newsItem ->
-        if (isFinishing || isDestroyed) {
+        if (isFinishing) {
             return@Observer
         }
 
@@ -135,10 +135,10 @@ class NewsActivity : SupportActionBarActivity() {
         // Mark the item as read on the device.
         newsDatabaseHelper.markNewsItemRead(newsItem)
 
-        NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
+        NewsAdapter.newsItemReadListener?.invoke(newsItem.id!!)
 
         // Mark the item as read on the server (to increase times read counter)
-        newsViewModel.markNewsItemRead(newsItem.id).observe(this, markNewsItemReadObserver)
+        newsViewModel.markNewsItemRead(newsItem.id!!).observe(this, markNewsItemReadObserver)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
@@ -243,7 +243,9 @@ class NewsActivity : SupportActionBarActivity() {
                     override fun onAdLoaded() = super.onAdLoaded().also {
                         logDebug(TAG, "Interstitial ad loaded")
 
-                        show()
+                        if (!isFinishing) {
+                            show()
+                        }
                     }
                 }
             }

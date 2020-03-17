@@ -31,7 +31,6 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.FormatStyle
-import java.util.*
 import kotlin.system.exitProcess
 
 @Suppress("unused")
@@ -42,8 +41,6 @@ object Utils {
 
     private const val TAG = "Utils"
     private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-
-    private val random = Random()
 
     private val systemVersionProperties by inject(SystemVersionProperties::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
@@ -231,9 +228,4 @@ object Utils {
             dateTimeString
         }
     }
-
-    /**
-     * Min is inclusive and max is exclusive in this case
-     */
-    fun randomBetween(min: Int, max: Int) = random.nextInt(max - min) + min
 }

@@ -94,7 +94,7 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
                 newsItems
             }
 
-            newsAdapter = NewsAdapter(context, activity as MainActivity?, itemList) { newsItemId ->
+            newsAdapter = NewsAdapter(context, itemList) { newsItemId ->
                 newsAdapter.markItemAsRead(newsItemId)
                 updateBannerText(newsAdapter.itemList.count { !it.read })
             }

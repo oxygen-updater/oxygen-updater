@@ -12,6 +12,7 @@ import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.activities.NewsActivity
+import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.enums.NotificationElement
 import com.arjanvlek.oxygenupdater.enums.NotificationType
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
@@ -20,6 +21,7 @@ import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.NotificationIds
 import org.koin.java.KoinJavaComponent.inject
+
 
 /**
  * Enqueued from [com.arjanvlek.oxygenupdater.services.FirebaseMessagingService]
@@ -41,6 +43,7 @@ class DisplayDelayedNotificationWorker(
         OxygenUpdater.PUSH_NOTIFICATION_CHANNEL_ID
     )
 
+    private val newsDatabaseHelper by inject(NewsDatabaseHelper::class.java)
     private val notificationManager by inject(NotificationManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
@@ -68,6 +71,7 @@ class DisplayDelayedNotificationWorker(
                 )
             }
             NotificationType.GENERAL_NOTIFICATION -> if (!settingsManager.getPreference(SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true)) {
+                // Don't show notification if user has opted out
                 return Result.success()
             } else {
                 val message = if (AppLocale.get() == AppLocale.NL) {
@@ -78,7 +82,14 @@ class DisplayDelayedNotificationWorker(
 
                 getGeneralServerOrNewsNotificationBuilder(message)
             }
-            NotificationType.NEWS -> if (!settingsManager.getPreference(SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true)) {
+            NotificationType.NEWS -> if (!settingsManager.getPreference(SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true)
+                && newsDatabaseHelper.getNewsItem(messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong())?.read == true
+            ) {
+                // Don't show notification if user has opted out, or if
+                // user has already read this article
+                // This is useful when we want to bump a news article in admin portal
+                // However, only app versions from v4.0.0 onwards (Kotlin rebuild) support this,
+                // so use the "bump" feature on admin portal with care - the notification will still be shown on older app versions
                 return Result.success()
             } else {
                 val newsMessage = if (AppLocale.get() == AppLocale.NL) {
@@ -160,13 +171,26 @@ class DisplayDelayedNotificationWorker(
     private fun getNotificationIntent(
         notificationType: NotificationType
     ) = if (notificationType == NotificationType.NEWS) {
+        val backIntent = Intent(context, MainActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
         val newsIntent = Intent(context, NewsActivity::class.java)
             .putExtra(NewsActivity.INTENT_NEWS_ITEM_ID, messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong())
             .putExtra(NewsActivity.INTENT_DELAY_AD_START, true)
 
-        PendingIntent.getActivity(context, 0, newsIntent, 0)
+        PendingIntent.getActivities(
+            context,
+            0,
+            arrayOf(backIntent, newsIntent),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
     } else {
-        PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0)
+        PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MainActivity::class.java),
+            0
+        )
     }
 
     companion object {

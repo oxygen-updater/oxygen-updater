@@ -8,14 +8,16 @@ import androidx.work.workDataOf
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
-import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.workers.DisplayDelayedNotificationWorker
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 class FirebaseMessagingService : FirebaseMessagingService() {
+
+    private val random = Random.Default
 
     private val workManager by inject<WorkManager>()
     private val settingsManager by inject<SettingsManager>()
@@ -27,11 +29,19 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
+            val serverSpecifiedDelay = settingsManager.getPreference(
+                SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+                1800
+            ).let {
+                // random.nextInt(from, until) throws an exception if until and from have the same value
+                if (it == 1) 2 else it
+            }
+
             // Receive the notification contents but build/show the actual notification
             // with a small random delay to avoid overloading the server.
-            val displayDelayInSeconds = Utils.randomBetween(
+            val displayDelayInSeconds = random.nextInt(
                 1,
-                settingsManager.getPreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 1800)
+                serverSpecifiedDelay
             )
 
             logDebug(TAG, "Displaying push notification in $displayDelayInSeconds second(s)")

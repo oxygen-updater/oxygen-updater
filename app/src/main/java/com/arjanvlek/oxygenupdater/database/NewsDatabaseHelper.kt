@@ -117,7 +117,6 @@ class NewsDatabaseHelper(context: Context?) : SQLiteOpenHelper(
         arrayOf(id.toString())
     )
 
-
     private fun deleteNewsItem(id: Long) = writableDatabase.delete(
         TABLE_NAME,
         "$COLUMN_ID LIKE ?",
