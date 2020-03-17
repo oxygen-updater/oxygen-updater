@@ -16,13 +16,10 @@ import kotlinx.android.synthetic.main.activity_faq.*
 
 class FAQActivity : SupportActionBarActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_faq)
-    }
-
-    override fun onStart() {
-        super.onStart()
 
         swipeRefreshLayout.apply {
             setOnRefreshListener { loadFaqPage() }
@@ -39,20 +36,16 @@ class FAQActivity : SupportActionBarActivity() {
         loadFaqPage()
     }
 
-    /**
-     * Respond to the action bar's Up/Home button, exit the activity gracefully to prevent downloads getting stuck
-     */
-    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
-        finish()
-        true
-    } else {
-        super.onOptionsItemSelected(item)
-    }
+    override fun onBackPressed() = finish()
 
     /**
-     * Gracefully quit the activity if the Back button is pressed to speed the app up
+     * Respond to the action bar's Up/Home button.
+     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
      */
-    override fun onBackPressed() = finish()
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> onBackPressed().let { true }
+        else -> super.onOptionsItemSelected(item)
+    }
 
     /**
      * Loads the FAQ page, or displays a No Network connection screen if there is no network connection

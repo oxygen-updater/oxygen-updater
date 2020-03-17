@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * For [com.arjanvlek.oxygenupdater.activities.SettingsActivity]
+ * For [com.arjanvlek.oxygenupdater.activities.SettingsActivity] and its child fragment
+ * [com.arjanvlek.oxygenupdater.fragments.SettingsFragment]
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */

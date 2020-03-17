@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
@@ -16,7 +16,9 @@ class AboutActivity : SupportActionBarActivity() {
 
     private val aboutViewModel by viewModel<AboutViewModel>()
 
-    public override fun onCreate(savedInstanceSate: Bundle?) = super.onCreate(savedInstanceSate).also {
+    public override fun onCreate(
+        savedInstanceSate: Bundle?
+    ) = super.onCreate(savedInstanceSate).also {
         setContentView(R.layout.activity_about)
 
         val activityLauncher = ActivityLauncher(this)
@@ -35,17 +37,18 @@ class AboutActivity : SupportActionBarActivity() {
         // banner is displayed if app version is outdated
         bannerLayout.setOnClickListener { activityLauncher.openPlayStorePage(this) }
 
-        aboutViewModel.fetchServerStatus().observe(this, Observer {
+        aboutViewModel.fetchServerStatus().observe(this) {
             if (!it.checkIfAppIsUpToDate()) {
                 updateBannerText(it.latestAppVersion!!)
             }
-        })
+        }
     }
 
     override fun onBackPressed() = finish()
 
     /**
-     * Respond to the action bar's Up/Home button
+     * Respond to the action bar's Up/Home button.
+     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> onBackPressed().let { true }

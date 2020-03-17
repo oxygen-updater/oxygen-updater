@@ -141,7 +141,9 @@ class NewsActivity : SupportActionBarActivity() {
         newsViewModel.markNewsItemRead(newsItem.id!!).observe(this, markNewsItemReadObserver)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) = super.onCreate(savedInstanceState).also {
         if (intent?.extras == null) {
             finish()
             return
@@ -296,7 +298,8 @@ class NewsActivity : SupportActionBarActivity() {
     override fun onBackPressed() = finish()
 
     /**
-     * Respond to the action bar's Up/Home button
+     * Respond to the action bar's Up/Home button.
+     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> onBackPressed().let { true }

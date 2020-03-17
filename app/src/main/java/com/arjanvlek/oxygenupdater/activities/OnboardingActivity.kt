@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.updateLayoutParams
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
@@ -58,13 +58,13 @@ class OnboardingActivity : AppCompatActivity() {
         activityLauncher = ActivityLauncher(this)
 
         if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-            onboardingViewModel.fetchAllDevices().observe(this, Observer {
+            onboardingViewModel.fetchAllDevices().observe(this) {
                 val deviceOsSpec = Utils.checkDeviceOsSpec(it)
 
                 if (!deviceOsSpec.isDeviceOsSpecSupported) {
                     displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
                 }
-            })
+            }
         }
 
         setupViewPager()
@@ -113,55 +113,57 @@ class OnboardingActivity : AppCompatActivity() {
         }
     }
 
-    private fun handlePageChangeCallback(pageNumber: Int) = when (pageNumber) {
-        1 -> {
-            collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
-            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.logo_outline, android.R.anim.fade_in)
-        }
-        2 -> {
-            collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
-            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.smartphone, android.R.anim.fade_in)
-
-            if (onboardingViewModel.selectedDevice.value == null) {
-                // disable ViewPager2 swiping until a device is selected
-                viewPager.isUserInputEnabled = false
-
-                // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
-                onboardingViewModel.selectedDevice.observe(this, Observer {
-                    viewPager.isUserInputEnabled = true
-                })
-            } else {
-                viewPager.isUserInputEnabled = true
-
-                // no need to observe changes to selectedDevice anymore
-                onboardingViewModel.selectedDevice.removeObservers(this)
+    private fun handlePageChangeCallback(pageNumber: Int) {
+        when (pageNumber) {
+            1 -> {
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.logo_outline, android.R.anim.fade_in)
             }
-        }
-        3 -> {
-            collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
-            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.cloud_download, android.R.anim.fade_in)
+            2 -> {
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.smartphone, android.R.anim.fade_in)
 
-            if (onboardingViewModel.selectedUpdateMethod.value == null) {
-                // disable ViewPager2 swiping until a device is selected
-                viewPager.isUserInputEnabled = false
+                if (onboardingViewModel.selectedDevice.value == null) {
+                    // disable ViewPager2 swiping until a device is selected
+                    viewPager.isUserInputEnabled = false
 
-                // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
-                onboardingViewModel.selectedUpdateMethod.observe(this, Observer {
+                    // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
+                    onboardingViewModel.selectedDevice.observe(this) {
+                        viewPager.isUserInputEnabled = true
+                    }
+                } else {
                     viewPager.isUserInputEnabled = true
-                })
-            } else {
-                viewPager.isUserInputEnabled = true
 
-                // no need to observe changes to selectedDevice anymore
-                onboardingViewModel.selectedUpdateMethod.removeObservers(this)
+                    // no need to observe changes to selectedDevice anymore
+                    onboardingViewModel.selectedDevice.removeObservers(this)
+                }
             }
-        }
-        4 -> {
-            collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
-            collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.done_all, android.R.anim.fade_in)
-        }
-        else -> {
-            // no-op
+            3 -> {
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.cloud_download, android.R.anim.fade_in)
+
+                if (onboardingViewModel.selectedUpdateMethod.value == null) {
+                    // disable ViewPager2 swiping until a device is selected
+                    viewPager.isUserInputEnabled = false
+
+                    // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
+                    onboardingViewModel.selectedUpdateMethod.observe(this) {
+                        viewPager.isUserInputEnabled = true
+                    }
+                } else {
+                    viewPager.isUserInputEnabled = true
+
+                    // no need to observe changes to selectedDevice anymore
+                    onboardingViewModel.selectedUpdateMethod.removeObservers(this)
+                }
+            }
+            4 -> {
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.done_all, android.R.anim.fade_in)
+            }
+            else -> {
+                // no-op
+            }
         }
     }
 

@@ -13,7 +13,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.R
@@ -31,8 +31,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.extensions.CacheImplementation
-import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.activity_install.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
@@ -40,8 +38,8 @@ import kotlin.math.abs
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-@ContainerOptions(CacheImplementation.NO_CACHE)
 class InstallActivity : SupportActionBarActivity() {
+
     private var showDownloadPage = true
     private var updateData: UpdateData? = null
 
@@ -57,7 +55,9 @@ class InstallActivity : SupportActionBarActivity() {
         override fun onPageSelected(position: Int) = handleInstallGuidePageChangeCallback(position)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_install)
 
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
@@ -66,23 +66,23 @@ class InstallActivity : SupportActionBarActivity() {
             updateData = intent.getParcelableExtra(INTENT_UPDATE_DATA)
         }
 
-        installViewModel.firstInstallGuidePageLoaded.observe(this, Observer {
+        installViewModel.firstInstallGuidePageLoaded.observe(this) {
             if (it) {
                 handleInstallGuidePageChangeCallback(0)
             }
-        })
+        }
 
-        installViewModel.toolbarTitle.observe(this, Observer {
+        installViewModel.toolbarTitle.observe(this) {
             collapsingToolbarLayout.title = getString(it)
-        })
+        }
 
-        installViewModel.toolbarSubtitle.observe(this, Observer {
+        installViewModel.toolbarSubtitle.observe(this) {
             collapsingToolbarLayout.subtitle = if (it != null) getString(it) else null
-        })
+        }
 
-        installViewModel.toolbarImage.observe(this, Observer {
+        installViewModel.toolbarImage.observe(this) {
             collapsingToolbarImage.setImageResourceWithAnimation(it, android.R.anim.fade_in)
-        })
+        }
 
         initialize()
     }
@@ -92,14 +92,14 @@ class InstallActivity : SupportActionBarActivity() {
             rootStatusCheckLayout.isVisible = false
 
             if (isRooted) {
-                installViewModel.fetchServerStatus().observe(this, Observer { serverStatus ->
+                installViewModel.fetchServerStatus().observe(this) { serverStatus ->
                     if (serverStatus.automaticInstallationEnabled) {
                         openMethodSelectionPage()
                     } else {
                         Toast.makeText(this, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()
                         openInstallGuide()
                     }
-                })
+                }
             } else {
                 Toast.makeText(this, getString(R.string.install_guide_no_root), LENGTH_LONG).show()
                 openInstallGuide()
@@ -261,7 +261,7 @@ class InstallActivity : SupportActionBarActivity() {
 
     /**
      * Respond to the action bar's Up/Home button.
-     * Delegate to [onBackPressed] is [android.R.id.home] is clicked, otherwise call `super`
+     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> onBackPressed().let { true }

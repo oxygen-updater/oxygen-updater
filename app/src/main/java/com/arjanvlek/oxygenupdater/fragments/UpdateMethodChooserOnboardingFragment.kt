@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -51,11 +52,11 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
         }
 
         // re-fetch update methods if selected device changes
-        onboardingViewModel.selectedDevice.observe(viewLifecycleOwner, Observer {
+        onboardingViewModel.selectedDevice.observe(viewLifecycleOwner) {
             if (rootMessageShown) {
                 fetchDataInternal(it.id)
             }
-        })
+        }
     }
 
     private fun fetchDataInternal(deviceId: Long) {

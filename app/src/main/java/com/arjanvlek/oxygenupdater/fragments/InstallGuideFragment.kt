@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.InstallActivity
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
@@ -44,18 +44,18 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
                 deviceId,
                 updateMethodId,
                 pageNumber
-            ).observe(viewLifecycleOwner, Observer {
+            ).observe(viewLifecycleOwner) {
                 // we need to clone the object, otherwise the correct object won't get reflected in
                 val page = if (it.isDefaultPage) {
                     val titleResourceId = resources.getIdentifier(
                         InstallActivity.RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TITLE,
                         RESOURCE_ID_PACKAGE_STRING,
-                        activity!!.packageName
+                        requireActivity().packageName
                     )
                     val contentsResourceId = resources.getIdentifier(
                         InstallActivity.RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TEXT,
                         RESOURCE_ID_PACKAGE_STRING,
-                        activity!!.packageName
+                        requireActivity().packageName
                     )
 
                     it.cloneWithDefaultTitleAndText(
@@ -68,7 +68,7 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
 
                 installViewModel.installGuideCache.put(pageNumber, page)
                 displayInstallGuide(installViewModel.installGuideCache[pageNumber])
-            })
+            }
         } else {
             displayInstallGuide(installViewModel.installGuideCache[pageNumber])
         }

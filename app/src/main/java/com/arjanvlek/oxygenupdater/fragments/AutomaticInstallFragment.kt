@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.InstallActivity
 import com.arjanvlek.oxygenupdater.exceptions.SubmitUpdateInstallationException
@@ -103,7 +103,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         val additionalZipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 
         if (!installViewModel.logRootInstallResult.hasActiveObservers()) {
-            installViewModel.logRootInstallResult.observe(viewLifecycleOwner, Observer { result: ServerPostResult? ->
+            installViewModel.logRootInstallResult.observe(viewLifecycleOwner) { result: ServerPostResult? ->
                 if (result == null) {
                     logError(
                         TAG,
@@ -153,7 +153,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                         }
                     }
                 }).execute()
-            })
+            }
         }
     }
 

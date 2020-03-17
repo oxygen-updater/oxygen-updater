@@ -18,7 +18,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     public override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_main)
 
-        mainViewModel.fetchAllDevices().observe(this, Observer { deviceList ->
+        mainViewModel.fetchAllDevices().observe(this) { deviceList ->
             val deviceOsSpec = Utils.checkDeviceOsSpec(deviceList)
 
             val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
                 mainViewModel.subscribeToNotificationTopics(deviceList.filter { it.enabled })
             }
-        })
+        }
 
         toolbar.setOnMenuItemClickListener(this)
 
@@ -250,7 +250,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     isVisible = true
                     loadAd(buildAdRequest())
                     adListener = object : AdListener() {
-                        override fun onAdLoaded()  = super.onAdLoaded().also {
+                        override fun onAdLoaded() = super.onAdLoaded().also {
                             // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
                             // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
                             // which can only be calculated once the AdView has been drawn on the screen

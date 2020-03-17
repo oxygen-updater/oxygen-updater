@@ -23,8 +23,9 @@ class ContributorActivity : SupportActionBarActivity() {
 
     private val settingsManager by inject<SettingsManager>()
 
-    public override fun onCreate(savedInstanceSate: Bundle?) {
-        super.onCreate(savedInstanceSate)
+    public override fun onCreate(
+        savedInstanceSate: Bundle?
+    ) = super.onCreate(savedInstanceSate).also {
         setContentView(R.layout.activity_contributor)
 
         if (intent.getBooleanExtra(INTENT_HIDE_ENROLLMENT, false)) {
@@ -33,41 +34,39 @@ class ContributorActivity : SupportActionBarActivity() {
 
             saveOptionsHidden.compareAndSet(false, true)
         }
-    }
 
-    public override fun onStart() {
-        super.onStart()
         setInitialCheckboxState()
-    }
-
-    public override fun onResume() {
-        super.onResume()
         setCheckboxClickListener()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) = super.onRequestPermissionsResult(
+        requestCode,
+        permissions,
+        grantResults
+    ).also {
         if (requestCode == MainActivity.PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
             permissionCallback?.invoke(grantResults[0] == PackageManager.PERMISSION_GRANTED)
         }
     }
 
-    override fun onBackPressed() = finish()
+    override fun onBackPressed() = if (!saveOptionsHidden.get()) {
+        // Save settings when user leaves the activity
+        onSaveButtonClick(null)
+    } else {
+        finish()
+    }
 
     /**
-     * Respond to the action bar's Up/Home button
+     * Respond to the action bar's Up/Home button.
+     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
      */
-    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
-        if (!saveOptionsHidden.get()) {
-            onSaveButtonClick(null)
-        } else {
-            finish()
-        }
-
-        true
-    } else {
-        super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> onBackPressed().let { true }
+        else -> super.onOptionsItemSelected(item)
     }
 
     private fun setInitialCheckboxState() {

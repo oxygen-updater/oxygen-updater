@@ -53,9 +53,9 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
     private val settingsManager by inject<SettingsManager>()
     private val settingsViewModel by viewModel<SettingsViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) = super.onCreate(savedInstanceState).also {
         setContentView(R.layout.activity_settings)
 
         SettingsFragment().let {
@@ -76,15 +76,13 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
         }
     }
 
-    public override fun onDestroy() {
-        super.onDestroy()
-
+    override fun onDestroy() = super.onDestroy().also {
         try {
             iabHelper?.disposeWhenFinished()
 
             iabHelper = null
         } catch (ignored: Throwable) {
-
+            // no-op
         }
     }
 
@@ -107,18 +105,12 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
     }
 
     /**
-     * Respond to the action bar's Up/Home button
+     * Respond to the action bar's Up/Home button.
+     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
      */
-    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
-        if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
-            NavUtils.navigateUpFromSameTask(this)
-            true
-        } else {
-            showSettingsWarning()
-            true
-        }
-    } else {
-        super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> onBackPressed().let { true }
+        else -> super.onOptionsItemSelected(item)
     }
 
     /* IN APP BILLING (AD FREE PURCHASING) METHODS */

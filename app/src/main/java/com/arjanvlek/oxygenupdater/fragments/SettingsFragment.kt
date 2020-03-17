@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
@@ -117,9 +118,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         devicePreference.isEnabled = false
         updateMethodPreference.isEnabled = false
 
-        settingsViewModel.fetchEnabledDevices().observe(viewLifecycleOwner, Observer {
+        settingsViewModel.fetchEnabledDevices().observe(viewLifecycleOwner) {
             populateDeviceSettings(it)
-        })
+        }
     }
 
     private fun setupThemePreference() {

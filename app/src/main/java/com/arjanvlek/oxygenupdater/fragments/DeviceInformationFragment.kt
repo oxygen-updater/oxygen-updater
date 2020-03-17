@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
@@ -29,7 +29,7 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         displayDeviceInformation()
 
-        mainViewModel.allDevices.observe(viewLifecycleOwner, Observer { devices ->
+        mainViewModel.allDevices.observe(viewLifecycleOwner) { devices ->
             val deviceOsSpec = Utils.checkDeviceOsSpec(devices)
 
             displayFormattedDeviceName(devices)
@@ -39,7 +39,7 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
             } else {
                 bannerLayout.isVisible = false
             }
-        })
+        }
     }
 
     private fun updateBannerText(deviceOsSpec: DeviceOsSpec) {
