@@ -97,15 +97,15 @@ class NewsAdapter(
                             override fun onAdClosed() = super.onAdClosed().also {
                                 doOpenNewsItem(newsItem)
 
+                                // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
+                                settingsManager.savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime.now().toString())
+
                                 loadAd(buildAdRequest())
                             }
                         }
 
                         show()
                     }
-
-                    // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                    settingsManager.savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime.now().toString())
                 } catch (e: NullPointerException) {
                     // Ad is not loaded, because the user bought the ad-free upgrade. Nothing to do here...
                 }

@@ -48,33 +48,6 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
-    private fun showErrorState() {
-        // hide progress bar since the page failed to load
-        disableLoadingState()
-
-        webView.apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            loadDataWithBaseURL(
-                "",
-                getString(R.string.news_load_error),
-                "text/html",
-                "UTF-8",
-                ""
-            )
-        }
-
-        // Hide the last updated view.
-        newsDatePublished.isVisible = false
-
-        newsRetryButton.apply {
-            isVisible = true
-            setOnClickListener {
-                // reload news item and reset retryCount
-                loadNewsItem()
-            }
-        }
-    }
-
     /**
      * Re-use the same observer to avoid duplicated callbacks.
      *
@@ -92,7 +65,8 @@ class NewsActivity : SupportActionBarActivity() {
             return@Observer
         }
 
-        newsRetryButton.isVisible = false
+        // hide the error layout
+        errorLayout.isVisible = true
 
         val locale = AppLocale.get()
 
@@ -131,7 +105,7 @@ class NewsActivity : SupportActionBarActivity() {
             // disable loading state once page is completely loaded
             webViewClient = WebViewClient(context) {
                 // hide progress bar since the page has been loaded
-                disableLoadingState()
+                hideLoadingState()
             }
         }
 
@@ -172,10 +146,23 @@ class NewsActivity : SupportActionBarActivity() {
         setContentView(R.layout.activity_news)
 
         setupAds()
-
-        enableLoadingState()
-
         loadNewsItem()
+    }
+
+    override fun onResume() = super.onResume().also {
+        webView.onResume()
+    }
+
+    override fun onPause() = super.onPause().also {
+        webView.onPause()
+    }
+
+    override fun onDestroy() = super.onDestroy().also {
+        webView.apply {
+            loadUrl("")
+            stopLoading()
+            destroy()
+        }
     }
 
     private fun setupAds() {
@@ -217,7 +204,10 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
-    fun enableLoadingState() {
+    private fun showLoadingState() {
+        // hide the error layout
+        errorLayout.isVisible = false
+
         progressBar.isVisible = true
         newsLayout.isVisible = false
 
@@ -225,24 +215,22 @@ class NewsActivity : SupportActionBarActivity() {
         collapsingToolbarLayout.title = getString(R.string.loading)
     }
 
-    fun disableLoadingState() {
+    private fun hideLoadingState() {
         progressBar.isVisible = false
         newsLayout.isVisible = true
     }
 
-    override fun onResume() = super.onResume().also {
-        webView.onResume()
-    }
+    private fun showErrorState() {
+        // hide progress bar since the page failed to load
+        progressBar.isVisible = false
 
-    override fun onPause() = super.onPause().also {
-        webView.onPause()
-    }
+        // Hide the last updated view.
+        newsDatePublished.isVisible = false
+        // show the error layout
+        errorLayout.isVisible = true
 
-    override fun onDestroy() = super.onDestroy().also {
-        webView.apply {
-            loadUrl("")
-            stopLoading()
-            destroy()
+        newsRetryButton.setOnClickListener {
+            loadNewsItem()
         }
     }
 
@@ -250,8 +238,12 @@ class NewsActivity : SupportActionBarActivity() {
     private fun loadNewsItem() {
         val intent = intent
 
-        // Obtain the contents of the news item (to save data when loading the entire list of news items, only title + subtitle are returned there).
-        newsViewModel.fetchNewsItem(intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)).observe(this, fetchNewsItemObserver)
+        showLoadingState()
+        // Obtain the contents of the news item
+        // (to save data when loading the entire list of news items, only title & subtitle are returned there)
+        newsViewModel.fetchNewsItem(
+            intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)
+        ).observe(this, fetchNewsItemObserver)
     }
 
     override fun onBackPressed() = finish()
@@ -259,11 +251,13 @@ class NewsActivity : SupportActionBarActivity() {
     /**
      * Respond to the action bar's Up/Home button
      */
-    override fun onOptionsItemSelected(item: MenuItem) = if (item.itemId == android.R.id.home) {
-        finish()
-        true
-    } else {
-        super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> {
+
+            finish()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     companion object {

@@ -46,12 +46,6 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 .build()
 
             workManager.enqueue(oneTimeWorkRequest)
-
-            // workManager.enqueueUniqueWork(
-            //     WORK_UNIQUE_UPLOAD_ROOT_INSTALL_LOG,
-            //     ExistingWorkPolicy.REPLACE,
-            //     oneTimeWorkRequest
-            // )
         } catch (e: Exception) {
             logError(TAG, "Error dispatching push notification", e)
         }

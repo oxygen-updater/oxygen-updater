@@ -62,17 +62,43 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<com.google.android.material.button.MaterialButton
-				android:id="@+id/newsRetryButton"
-				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-				android:layout_width="wrap_content"
+			<LinearLayout
+				android:id="@+id/errorLayout"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_margin="@dimen/spacing_default"
-				android:text="@string/download_error_retry"
+				android:gravity="center"
+				android:orientation="vertical"
+				android:padding="@dimen/spacing_default"
 				android:visibility="gone"
-				app:strokeColor="?colorPrimary"
-				tools:visibility="visible" />
+				tools:visibility="visible">
+
+				<ImageView
+					android:id="@+id/faq_no_network_image"
+					android:layout_width="match_parent"
+					android:layout_height="150dp"
+					android:layout_marginTop="@dimen/spacing_default"
+					android:layout_marginBottom="@dimen/spacing_default"
+					android:contentDescription="@string/icon"
+					android:src="@drawable/error_outline"
+					android:tint="?colorPrimary" />
+
+				<TextView
+					android:id="@+id/faq_no_network_text"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:text="@string/news_load_error" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/newsRetryButton"
+					style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:layout_marginTop="@dimen/spacing_default"
+					android:text="@string/download_error_retry"
+					app:strokeColor="?colorPrimary" />
+			</LinearLayout>
 
 			<ProgressBar
 				android:id="@+id/progressBar"
