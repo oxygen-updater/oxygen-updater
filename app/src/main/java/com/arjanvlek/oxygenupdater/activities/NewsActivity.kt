@@ -16,10 +16,12 @@ import com.arjanvlek.oxygenupdater.adapters.NewsAdapter
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.WebViewClient
+import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
+import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
@@ -30,11 +32,13 @@ import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_news.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDateTime
 
 class NewsActivity : SupportActionBarActivity() {
 
     private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val newsViewModel by viewModel<NewsViewModel>()
+    private val settingsManager by inject<SettingsManager>()
 
     /**
      * Re-use the same observer to avoid duplicated callbacks
@@ -66,7 +70,7 @@ class NewsActivity : SupportActionBarActivity() {
         }
 
         // hide the error layout
-        errorLayout.isVisible = true
+        errorLayout.isVisible = false
 
         val locale = AppLocale.get()
 
@@ -138,7 +142,7 @@ class NewsActivity : SupportActionBarActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
-        if (intent == null || intent.extras == null) {
+        if (intent?.extras == null) {
             finish()
             return
         }
@@ -166,40 +170,82 @@ class NewsActivity : SupportActionBarActivity() {
     }
 
     private fun setupAds() {
-        Utils.checkAdSupportStatus(this) { adsAreSupported ->
-            if (adsAreSupported) {
-                newsArticleAdView.apply {
-                    isVisible = true
-                    loadAd(buildAdRequest())
-                    adListener = object : AdListener() {
-                        override fun onAdLoaded() = super.onAdLoaded().also {
-                            // need to add spacing between NestedScrollView contents and the AdView to avoid overlapping the last item
-                            // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
-                            // which can only be calculated once the AdView has been drawn on the screen
-                            post { nestedScrollView.updatePadding(bottom = height) }
+        if (newsViewModel.mayShowAds) {
+            setupBannerAd()
+
+            if (intent.getBooleanExtra(INTENT_DELAY_AD_START, false)) {
+                logDebug(TAG, "Setting up interstitial ad in 5s")
+
+                Handler().postDelayed(
+                    {
+                        if (!isFinishing) {
+                            setupInterstitialAd()
                         }
-                    }
-                }
-
-                // Delayed display of ad if coming from a notification. Otherwise ad is displayed when transitioning from NewsFragment.
-                if (intent.getBooleanExtra(INTENT_START_WITH_AD, false)) {
-                    InterstitialAd(this).apply {
-                        adUnitId = getString(R.string.advertising_interstitial_unit_id)
-                        loadAd(buildAdRequest())
-
-                        // The ad will be shown after 5 seconds.
-                        Handler().postDelayed({
-                            if (!isFinishing) {
-                                show()
-                            }
-                        }, 5000)
-                    }
-                }
+                    }, 5000
+                )
             } else {
-                // reset NestedScrollView padding
-                nestedScrollView.setPadding(0, 0, 0, 0)
+                setupInterstitialAd()
+            }
+        } else {
+            // reset NestedScrollView padding
+            nestedScrollView.setPadding(0, 0, 0, 0)
 
-                newsArticleAdView.isVisible = false
+            newsArticleAdView.isVisible = false
+        }
+    }
+
+    private fun setupBannerAd() {
+        newsArticleAdView.apply {
+            isVisible = true
+            loadAd(buildAdRequest())
+            adListener = object : AdListener() {
+                override fun onAdLoaded() = super.onAdLoaded().also {
+                    logDebug(TAG, "Banner ad loaded")
+
+                    // Need to add spacing between NestedScrollView contents and the AdView to avoid overlapping the last item
+                    // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
+                    // which can only be calculated once the AdView has been drawn on the screen
+                    post { nestedScrollView.updatePadding(bottom = height) }
+                }
+            }
+        }
+    }
+
+    private fun setupInterstitialAd() {
+        if (newsViewModel.mayShowInterstitialAd) {
+            InterstitialAd(this).apply {
+                adUnitId = getString(R.string.advertising_interstitial_unit_id)
+                loadAd(buildAdRequest())
+
+                adListener = object : AdListener() {
+                    override fun onAdFailedToLoad(
+                        errorCode: Int
+                    ) = super.onAdFailedToLoad(errorCode).also {
+                        logDebug(TAG, "Interstitial ad failed to load: $errorCode")
+
+                        // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
+                        settingsManager.savePreference(
+                            SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
+                            LocalDateTime.now().toString()
+                        )
+                    }
+
+                    override fun onAdClosed() = super.onAdClosed().also {
+                        logDebug(TAG, "Interstitial ad closed")
+
+                        // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
+                        settingsManager.savePreference(
+                            SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
+                            LocalDateTime.now().toString()
+                        )
+                    }
+
+                    override fun onAdLoaded() = super.onAdLoaded().also {
+                        logDebug(TAG, "Interstitial ad loaded")
+
+                        show()
+                    }
+                }
             }
         }
     }
@@ -236,9 +282,8 @@ class NewsActivity : SupportActionBarActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadNewsItem() {
-        val intent = intent
-
         showLoadingState()
+
         // Obtain the contents of the news item
         // (to save data when loading the entire list of news items, only title & subtitle are returned there)
         newsViewModel.fetchNewsItem(
@@ -252,16 +297,14 @@ class NewsActivity : SupportActionBarActivity() {
      * Respond to the action bar's Up/Home button
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        android.R.id.home -> {
-
-            finish()
-            true
-        }
+        android.R.id.home -> onBackPressed().let { true }
         else -> super.onOptionsItemSelected(item)
     }
 
     companion object {
+        private const val TAG = "NewsActivity"
+
         const val INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID"
-        const val INTENT_START_WITH_AD = "START_WITH_AD"
+        const val INTENT_DELAY_AD_START = "DELAY_AD_START"
     }
 }

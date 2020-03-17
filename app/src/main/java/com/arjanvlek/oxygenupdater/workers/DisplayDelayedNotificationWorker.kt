@@ -162,7 +162,7 @@ class DisplayDelayedNotificationWorker(
     ) = if (notificationType == NotificationType.NEWS) {
         val newsIntent = Intent(context, NewsActivity::class.java)
             .putExtra(NewsActivity.INTENT_NEWS_ITEM_ID, messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong())
-            .putExtra(NewsActivity.INTENT_START_WITH_AD, true)
+            .putExtra(NewsActivity.INTENT_DELAY_AD_START, true)
 
         PendingIntent.getActivity(context, 0, newsIntent, 0)
     } else {

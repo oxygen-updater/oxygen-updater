@@ -11,19 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.activities.NewsActivity
 import com.arjanvlek.oxygenupdater.adapters.NewsAdapter.NewsItemViewHolder
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.bumptech.glide.Glide
-import com.google.android.gms.ads.AdListener
-import org.koin.java.KoinJavaComponent.inject
-import org.threeten.bp.LocalDateTime
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -34,8 +28,6 @@ class NewsAdapter(
     private var newsItemList: List<NewsItem>,
     newsItemReadListener: KotlinCallback<Long>
 ) : RecyclerView.Adapter<NewsItemViewHolder>() {
-
-    private val settingsManager by inject(SettingsManager::class.java)
 
     val itemList: List<NewsItem>
         get() = newsItemList
@@ -89,37 +81,6 @@ class NewsAdapter(
     }
 
     private fun openNewsItem(newsItem: NewsItem) {
-        if (activity is MainActivity) {
-            if (activity.mayShowNewsAd()) {
-                try {
-                    activity.getNewsAd()?.apply {
-                        adListener = object : AdListener() {
-                            override fun onAdClosed() = super.onAdClosed().also {
-                                doOpenNewsItem(newsItem)
-
-                                // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                                settingsManager.savePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, LocalDateTime.now().toString())
-
-                                loadAd(buildAdRequest())
-                            }
-                        }
-
-                        show()
-                    }
-                } catch (e: NullPointerException) {
-                    // Ad is not loaded, because the user bought the ad-free upgrade. Nothing to do here...
-                }
-            } else {
-                // If offline, too many ads are shown or the user has bought the ad-free upgrade, open the news item directly.
-                doOpenNewsItem(newsItem)
-            }
-        } else {
-            // If not attached to main activity or coming from other activity, open the news item.
-            doOpenNewsItem(newsItem)
-        }
-    }
-
-    private fun doOpenNewsItem(newsItem: NewsItem) {
         val intent = Intent(context, NewsActivity::class.java)
             .putExtra(NewsActivity.INTENT_NEWS_ITEM_ID, newsItem.id)
 

@@ -30,15 +30,12 @@ import com.arjanvlek.oxygenupdater.fragments.NewsFragment
 import com.arjanvlek.oxygenupdater.fragments.UpdateInformationFragment
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_AD_FREE
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.utils.Utils.checkPlayServices
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -46,16 +43,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDateTime
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
 
     private lateinit var activityLauncher: ActivityLauncher
 
-    private var newsAd: InterstitialAd? = null
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
-    private var adView: AdView? = null
 
     private val settingsManager by inject<SettingsManager>()
     private val mainViewModel by viewModel<MainViewModel>()
@@ -250,25 +244,13 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
         }
 
-        if (!settingsManager.getPreference(PROPERTY_AD_FREE, false)) {
-            InterstitialAd(this).apply {
-                newsAd = this
-
-                adUnitId = getString(R.string.advertising_interstitial_unit_id)
-                loadAd(buildAdRequest())
-            }
-        }
-
-        adView = updateInformationAdView
         Utils.checkAdSupportStatus(this) { adsAreSupported ->
             if (adsAreSupported) {
-                adView?.apply {
+                bannerAdView?.apply {
                     isVisible = true
                     loadAd(buildAdRequest())
                     adListener = object : AdListener() {
-                        override fun onAdLoaded() {
-                            super.onAdLoaded()
-
+                        override fun onAdLoaded()  = super.onAdLoaded().also {
                             // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
                             // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
                             // which can only be calculated once the AdView has been drawn on the screen
@@ -277,7 +259,7 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
                     }
                 }
             } else {
-                adView?.isVisible = false
+                bannerAdView?.isVisible = false
 
                 // reset viewPager padding
                 viewPager.setPadding(0, 0, 0, 0)
@@ -286,15 +268,15 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
     }
 
     public override fun onResume() = super.onResume().also {
-        adView?.resume()
+        bannerAdView?.resume()
     }
 
     public override fun onPause() = super.onPause().also {
-        adView?.pause()
+        bannerAdView?.pause()
     }
 
     public override fun onDestroy() = super.onDestroy().also {
-        adView?.destroy()
+        bannerAdView?.destroy()
     }
 
     fun displayUnsupportedDeviceOsSpecMessage(deviceOsSpec: DeviceOsSpec) {
@@ -335,24 +317,6 @@ class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
             ).show()
         }
     }
-
-    fun getNewsAd() = when {
-        newsAd != null -> newsAd
-        mayShowNewsAd() -> {
-            InterstitialAd(this).apply {
-                adUnitId = getString(R.string.advertising_interstitial_unit_id)
-                loadAd(buildAdRequest())
-
-                newsAd = this
-                newsAd
-            }
-        }
-        else -> null
-    }
-
-    fun mayShowNewsAd() = !settingsManager.getPreference(PROPERTY_AD_FREE, false)
-            && LocalDateTime.parse(settingsManager.getPreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN, "1970-01-01T00:00:00.000"))
-        .isBefore(LocalDateTime.now().minusMinutes(5))
 
     fun requestDownloadPermissions(callback: KotlinCallback<Boolean>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

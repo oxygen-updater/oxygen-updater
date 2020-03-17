@@ -35,7 +35,7 @@
 		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 	<com.google.android.gms.ads.AdView
-		android:id="@+id/updateInformationAdView"
+		android:id="@+id/bannerAdView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom|center_horizontal"
