@@ -48,6 +48,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.utils.UpdateDescriptionParser
 import com.arjanvlek.oxygenupdater.utils.Utils
+import com.arjanvlek.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
 import com.arjanvlek.oxygenupdater.utils.isNetworkAvailable
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_BYTES_DONE
@@ -59,9 +60,9 @@ import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_update_information.*
 import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
 import kotlinx.android.synthetic.main.layout_update_information.*
-import org.joda.time.LocalDateTime
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.threeten.bp.LocalDateTime
 
 class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_information) {
 
@@ -275,7 +276,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                 savePreference(SettingsManager.PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable)
-                savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
+                savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now(SERVER_TIME_ZONE).toString())
                 savePreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
             }
         }
@@ -345,7 +346,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
         // Save last time checked if online.
         if (online) {
-            settingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now().toString())
+            settingsManager.savePreference(
+                SettingsManager.PROPERTY_UPDATE_CHECKED_DATE,
+                LocalDateTime.now(SERVER_TIME_ZONE).toString()
+            )
         }
 
         // Show last time checked.

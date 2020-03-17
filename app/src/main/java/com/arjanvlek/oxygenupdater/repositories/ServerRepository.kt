@@ -9,7 +9,6 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.iab.Purchase
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
-import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.ServerStatus
@@ -30,12 +29,6 @@ class ServerRepository constructor(
 ) {
 
     private var serverStatus: ServerStatus? = null
-
-    // suspend fun fetchDevices(
-    //     filter: DeviceRequestFilter
-    // ) = performServerRequest {
-    //     serverApi.fetchDevices(filter.filter)
-    // }
 
     suspend fun fetchDevices(
         filter: DeviceRequestFilter
@@ -151,27 +144,23 @@ class ServerRepository constructor(
     ) = performServerRequest {
         serverApi.fetchNews(deviceId, updateMethodId)
     }.let {
-        newsDatabaseHelper.let { databaseHelper ->
-            if (!it.isNullOrEmpty()) {
-                databaseHelper.saveNewsItems(it)
-            }
-
-            databaseHelper.allNewsItems
+        if (!it.isNullOrEmpty()) {
+            newsDatabaseHelper.saveNewsItems(it)
         }
+
+        newsDatabaseHelper.allNewsItems
     }
 
     suspend fun fetchNewsItem(
         newsItemId: Long
     ) = performServerRequest {
         serverApi.fetchNewsItem(newsItemId)
-    }.let { newsItem: NewsItem? ->
-        newsDatabaseHelper.let { databaseHelper ->
-            if (newsItem != null) {
-                databaseHelper.saveNewsItem(newsItem)
-            }
-
-            databaseHelper.getNewsItem(newsItemId)
+    }.let { newsItem ->
+        if (newsItem != null) {
+            newsDatabaseHelper.saveNewsItem(newsItem)
         }
+
+        newsDatabaseHelper.getNewsItem(newsItemId)
     }
 
     suspend fun markNewsItemRead(
@@ -201,7 +190,9 @@ class ServerRepository constructor(
         deviceId: Long,
         updateMethodId: Long,
         pageNumber: Int
-    ) = performServerRequest { serverApi.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber) }
+    ) = performServerRequest {
+        serverApi.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber)
+    }
 
     suspend fun submitUpdateFile(
         filename: String

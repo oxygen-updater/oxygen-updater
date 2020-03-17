@@ -33,8 +33,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NewsActivity : SupportActionBarActivity() {
 
-    private var retryCount = 0
-
     private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val newsViewModel by viewModel<NewsViewModel>()
 
@@ -50,6 +48,33 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
+    private fun showErrorState() {
+        // hide progress bar since the page failed to load
+        disableLoadingState()
+
+        webView.apply {
+            setBackgroundColor(Color.TRANSPARENT)
+            loadDataWithBaseURL(
+                "",
+                getString(R.string.news_load_error),
+                "text/html",
+                "UTF-8",
+                ""
+            )
+        }
+
+        // Hide the last updated view.
+        newsDatePublished.isVisible = false
+
+        newsRetryButton.apply {
+            isVisible = true
+            setOnClickListener {
+                // reload news item and reset retryCount
+                loadNewsItem()
+            }
+        }
+    }
+
     /**
      * Re-use the same observer to avoid duplicated callbacks.
      *
@@ -62,25 +87,7 @@ class NewsActivity : SupportActionBarActivity() {
         }
 
         if (newsItem == null || !newsItem.isFullyLoaded) {
-            if (Utils.checkNetworkConnection() && retryCount++ < 5) {
-                loadNewsItem()
-            } else {
-                webView.apply {
-                    setBackgroundColor(Color.TRANSPARENT)
-                    loadDataWithBaseURL("", getString(R.string.news_load_error), "text/html", "UTF-8", "")
-                }
-
-                // Hide the last updated view.
-                newsDatePublished.isVisible = false
-
-                newsRetryButton.apply {
-                    isVisible = true
-                    setOnClickListener {
-                        // reload news item and reset retryCount
-                        loadNewsItem().also { retryCount = 1 }
-                    }
-                }
-            }
+            showErrorState()
 
             return@Observer
         }
@@ -153,9 +160,7 @@ class NewsActivity : SupportActionBarActivity() {
         NewsAdapter.newsItemReadListener.invoke(newsItem.id!!)
 
         // Mark the item as read on the server (to increase times read counter)
-        if (Utils.checkNetworkConnection()) {
-            newsViewModel.markNewsItemRead(newsItem.id).observe(this, markNewsItemReadObserver)
-        }
+        newsViewModel.markNewsItemRead(newsItem.id).observe(this, markNewsItemReadObserver)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
@@ -180,9 +185,7 @@ class NewsActivity : SupportActionBarActivity() {
                     isVisible = true
                     loadAd(buildAdRequest())
                     adListener = object : AdListener() {
-                        override fun onAdLoaded() {
-                            super.onAdLoaded()
-
+                        override fun onAdLoaded() = super.onAdLoaded().also {
                             // need to add spacing between NestedScrollView contents and the AdView to avoid overlapping the last item
                             // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
                             // which can only be calculated once the AdView has been drawn on the screen

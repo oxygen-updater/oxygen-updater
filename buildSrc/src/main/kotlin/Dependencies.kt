@@ -98,10 +98,9 @@ object Libraries {
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
         const val JACKSON_KOTLIN_MODULE = "2.10.3"
-        // https://www.joda.org/joda-convert/changes-report.html
-        const val JODA_CONVERT = "2.2.1"
-        // https://www.joda.org/joda-time/changes-report.html
-        const val JODA_TIME = "2.10.5"
+        // https://github.com/JakeWharton/ThreeTenABP/releases
+        // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
+        const val THREE_TEN_ABP = "1.2.2"
         // https://doc.insert-koin.io/#/setup/index
         // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
         const val KOIN = "2.1.3"
@@ -162,10 +161,9 @@ object Libraries {
     // https://github.com/facebook/shimmer-android/releases
     const val FACEBOOK_SHIMMER = "com.facebook.shimmer:shimmer:${Versions.FACEBOOK_SHIMMER}"
 
-    // https://www.joda.org/joda-convert/changes-report.html
-    const val JODA_CONVERT = "org.joda:joda-convert:${Versions.JODA_CONVERT}"
-    // https://www.joda.org/joda-time/changes-report.html
-    const val JODA_TIME = "joda-time:joda-time:${Versions.JODA_TIME}"
+    // https://github.com/JakeWharton/ThreeTenABP/releases
+    // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
+    const val THREE_TEN_ABP = "com.jakewharton.threetenabp:threetenabp:${Versions.THREE_TEN_ABP}"
 
     // https://github.com/Chainfire/libsuperuser/releases
     const val CHAINFIRE_LIBSUPERUSER = "eu.chainfire:libsuperuser:${Versions.CHAINFIRE_LIBSUPERUSER}"

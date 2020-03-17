@@ -126,7 +126,7 @@ private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Build
 suspend inline fun <reified R> performServerRequest(
     crossinline block: suspend () -> Response<R>
 ): R? {
-    val logTag = "OxygenUpdaterNetworkRetry"
+    val logTag = "OxygenUpdaterNetwork"
 
     var retryCount = 0
     while (retryCount < 5) {

@@ -24,15 +24,15 @@ import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
+import com.arjanvlek.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
 import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
 import com.arjanvlek.oxygenupdater.workers.DIRECTORY_ROOT
 import com.ipaulpro.afilechooser.FileChooserActivity
 import com.ipaulpro.afilechooser.utils.FileUtils
 import kotlinx.android.synthetic.main.fragment_automatic_install.*
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.threeten.bp.LocalDateTime
 import java.io.File
 import java.util.*
 
@@ -238,7 +238,8 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
 
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        val timestamp = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString()
+        val timestamp = LocalDateTime.now(SERVER_TIME_ZONE).toString()
+
         val installation = RootInstall(
             deviceId,
             updateMethodId,

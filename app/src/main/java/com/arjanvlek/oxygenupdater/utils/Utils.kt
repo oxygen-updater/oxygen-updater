@@ -3,7 +3,6 @@ package com.arjanvlek.oxygenupdater.utils
 import android.app.Activity
 import android.content.Context
 import android.os.Handler
-import android.text.format.DateFormat
 import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.arjanvlek.oxygenupdater.BuildConfig
@@ -26,13 +25,20 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import org.joda.time.LocalDateTime
 import org.koin.java.KoinJavaComponent.inject
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 import java.util.*
 import kotlin.system.exitProcess
 
 @Suppress("unused")
 object Utils {
+
+    val SERVER_TIME_ZONE: ZoneId = ZoneId.of("Europe/Amsterdam")
+    val USER_TIME_ZONE: ZoneId = ZoneId.systemDefault()
 
     private const val TAG = "Utils"
     private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
@@ -191,6 +197,7 @@ object Utils {
     }
 
     fun formatDateTime(context: Context, dateTimeString: String?): String? {
+        @Suppress("NAME_SHADOWING")
         var dateTimeString = dateTimeString
 
         return try {
@@ -200,20 +207,24 @@ object Utils {
 
             dateTimeString = dateTimeString.replace(" ", "T")
 
-            val dateTime = LocalDateTime.parse(dateTimeString)
-            val timeFormat = DateFormat.getTimeFormat(context)
-            val formattedTime = timeFormat.format(dateTime.toDate())
-            val today = LocalDateTime.now()
+            val serverDateTime = LocalDateTime.parse(dateTimeString)
+                .atZone(SERVER_TIME_ZONE)
+                .withSecond(0)
+                .withNano(0)
 
-            if (dateTime.dayOfMonth == today.dayOfMonth && dateTime.monthOfYear == today.monthOfYear && dateTime.year == today.year) {
-                formattedTime
-            } else if (dateTime.dayOfMonth + 1 == today.dayOfMonth && dateTime.monthOfYear == today.monthOfYear && dateTime.year == today.year) {
-                context.getString(R.string.time_yesterday) + " " + context.getString(R.string.time_at) + " " + formattedTime
-            } else {
-                val dateFormat = DateFormat.getDateFormat(context)
-                val formattedDate = dateFormat.format(dateTime.toDate())
+            val serverLocalDate = serverDateTime.toLocalDate()
+            val userDateTime = serverDateTime.withZoneSameInstant(USER_TIME_ZONE)
+            val formattedTime = userDateTime.toLocalTime().toString()
+            val today = LocalDate.now()
 
-                formattedDate + " " + context.getString(R.string.time_at) + " " + formattedTime
+            when {
+                serverLocalDate.isEqual(today) -> formattedTime
+                serverLocalDate.isEqual(today.minusDays(1)) -> context.getString(R.string.time_yesterday) + " " +
+                        context.getString(R.string.time_at) + " " +
+                        formattedTime
+                else -> userDateTime.toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + " " +
+                        context.getString(R.string.time_at) + " " +
+                        formattedTime
             }
         } catch (e: Exception) {
             logError("DateTimeFormatter", String.format("Unable to parse date from input '%s'", dateTimeString), e)

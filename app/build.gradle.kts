@@ -251,8 +251,7 @@ dependencies {
 
     implementation(Libraries.FACEBOOK_SHIMMER)
 
-    implementation(Libraries.JODA_CONVERT)
-    implementation(Libraries.JODA_TIME)
+    implementation(Libraries.THREE_TEN_ABP)
 
     implementation(Libraries.CHAINFIRE_LIBSUPERUSER)
 

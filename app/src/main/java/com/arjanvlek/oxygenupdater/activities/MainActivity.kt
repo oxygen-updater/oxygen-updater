@@ -44,9 +44,9 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joda.time.LocalDateTime
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDateTime
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {

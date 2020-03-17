@@ -11,11 +11,11 @@ import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
+import com.arjanvlek.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
 import org.koin.java.KoinJavaComponent.inject
+import org.threeten.bp.LocalDateTime
 
 /**
  * Uploads root installation logs, after an installation has completed, to the backend
@@ -33,7 +33,7 @@ class UploadRootInstallLogWorker(
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-        val timestamp: String = LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString()
+        val timestamp = LocalDateTime.now(SERVER_TIME_ZONE).toString()
 
         if (deviceId == -1L || updateMethodId == -1L) {
             logError(

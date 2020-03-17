@@ -20,11 +20,10 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.NewsItem
-import com.arjanvlek.oxygenupdater.utils.Utils
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
-import org.joda.time.LocalDateTime
 import org.koin.java.KoinJavaComponent.inject
+import org.threeten.bp.LocalDateTime
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -91,12 +90,11 @@ class NewsAdapter(
 
     private fun openNewsItem(newsItem: NewsItem) {
         if (activity is MainActivity) {
-            if (activity.mayShowNewsAd() && Utils.checkNetworkConnection()) {
+            if (activity.mayShowNewsAd()) {
                 try {
                     activity.getNewsAd()?.apply {
                         adListener = object : AdListener() {
-                            override fun onAdClosed() {
-                                super.onAdClosed()
+                            override fun onAdClosed() = super.onAdClosed().also {
                                 doOpenNewsItem(newsItem)
 
                                 loadAd(buildAdRequest())

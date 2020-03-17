@@ -33,10 +33,12 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.SetupUtils
+import com.arjanvlek.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
 import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
-import org.joda.time.LocalDateTime
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -288,7 +290,7 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             @SuppressLint("HardwareIds")
             val developerPayload = ("OxygenUpdater-AdFree-"
                     + (if (Build.SERIAL != "unknown") Build.SERIAL + "-" else "")
-                    + LocalDateTime.now().toString("yyyy-MM-dd HH:mm:ss"))
+                    + LocalDateTime.now(SERVER_TIME_ZONE).format(DateTimeFormatter.ISO_DATE_TIME))
 
             // Open the purchase window.
             iabHelper!!.launchPurchaseFlow(

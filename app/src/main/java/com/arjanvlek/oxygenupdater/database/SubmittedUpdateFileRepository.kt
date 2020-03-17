@@ -5,9 +5,8 @@ import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.core.content.contentValuesOf
-import org.joda.time.DateTimeZone
-import org.joda.time.LocalDateTime
-import org.joda.time.format.ISODateTimeFormat
+import com.arjanvlek.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
+import org.threeten.bp.LocalDateTime
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -63,7 +62,7 @@ class SubmittedUpdateFileRepository(context: Context?) : SQLiteOpenHelper(
             writableDatabase.insert(
                 TABLE_NAME, null, contentValuesOf(
                     COLUMN_NAME to filename,
-                    COLUMN_DATE_SUBMITTED to LocalDateTime.now(DateTimeZone.forID("Europe/Amsterdam")).toString(ISODateTimeFormat.basicDateTime())
+                    COLUMN_DATE_SUBMITTED to LocalDateTime.now(SERVER_TIME_ZONE).toString()
                 )
             )
         }

@@ -163,7 +163,6 @@ class NewsDatabaseHelper(context: Context?) : SQLiteOpenHelper(
         // If you change the database schema, you must increment the database version.
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "NewsItems.db"
-        private const val DATE_FORMAT = "yyyy-MM-dd HH:mm::ss"
 
         // Table name
         private const val TABLE_NAME = "news_item"

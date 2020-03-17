@@ -18,6 +18,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.jakewharton.threetenabp.AndroidThreeTen
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -31,6 +32,7 @@ class OxygenUpdater : Application() {
         setupKoin()
         AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this))
         super.onCreate()
+        AndroidThreeTen.init(this)
 
         setupCrashReporting()
         setupNetworkCallback()
