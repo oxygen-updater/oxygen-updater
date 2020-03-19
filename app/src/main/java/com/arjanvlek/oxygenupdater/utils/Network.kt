@@ -146,24 +146,23 @@ suspend inline fun <reified R> performServerRequest(
                 null
             }
         } catch (e: Exception) {
+            when {
+                e is HttpException -> logWarning(
+                    logTag,
+                    "HttpException: [code: ${e.code()}, errorBody: ${convertErrorBody(e)}]"
+                )
+                ExceptionUtils.isNetworkError(e) -> logWarning(
+                    logTag,
+                    "Network error while performing request", e
+                )
+                else -> logError(
+                    logTag,
+                    "Error performing request", e
+                )
+            }
+
             if (retryCount++ < 5) {
                 logDebug(logTag, "Retrying the request ($retryCount/5)")
-                continue
-            } else {
-                when {
-                    e is HttpException -> logWarning(
-                        logTag,
-                        "HttpException: [code: ${e.code()}, errorBody: ${convertErrorBody(e)}]"
-                    )
-                    ExceptionUtils.isNetworkError(e) -> logWarning(
-                        logTag,
-                        "Network error while performing request", e
-                    )
-                    else -> logError(
-                        logTag,
-                        "Error performing request", e
-                    )
-                }
             }
         }
     }

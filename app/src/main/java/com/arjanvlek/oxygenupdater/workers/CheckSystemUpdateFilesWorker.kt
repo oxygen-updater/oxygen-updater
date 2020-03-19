@@ -49,6 +49,7 @@ class CheckSystemUpdateFilesWorker(
 
         logDebug(TAG, "Started update file check")
 
+        var anySubmitFailed = false
         UPDATE_DIRECTORIES.forEach { directoryName ->
             val directory = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), directoryName)
 
@@ -75,6 +76,7 @@ class CheckSystemUpdateFilesWorker(
                             TAG,
                             NetworkException("Error submitting update file $fileName: No network connection or empty response")
                         )
+                        anySubmitFailed = true
                     } else if (!serverPostResult.success) {
                         val errorMessage = serverPostResult.errorMessage
 
@@ -95,6 +97,7 @@ class CheckSystemUpdateFilesWorker(
                                 TAG,
                                 NetworkException("Error submitting update file $fileName: ${serverPostResult.errorMessage}")
                             )
+                            anySubmitFailed = true
                         }
                     } else {
                         logInfo(TAG, "Successfully submitted update file $fileName")
@@ -128,7 +131,7 @@ class CheckSystemUpdateFilesWorker(
         }
 
         repository.close()
-        Result.success()
+        if (anySubmitFailed) Result.failure() else Result.success()
     }
 
     private fun createInitialForegroundInfo(): ForegroundInfo {

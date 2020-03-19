@@ -134,6 +134,7 @@ class SettingsManager {
         const val PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown"
         const val PROPERTY_CONTRIBUTE = "contribute"
         const val PROPERTY_CONTRIBUTION_COUNT = "contribution_count"
+        const val PROPERTY_IS_EU_BUILD = "isEuBuild"
 
         // Offline cache properties
         const val PROPERTY_OFFLINE_ID = "offlineId"

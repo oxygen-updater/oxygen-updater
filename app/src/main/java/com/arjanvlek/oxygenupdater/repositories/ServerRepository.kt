@@ -197,7 +197,12 @@ class ServerRepository constructor(
     suspend fun submitUpdateFile(
         filename: String
     ) = performServerRequest {
-        serverApi.submitUpdateFile(mapOf("filename" to filename))
+        serverApi.submitUpdateFile(
+            hashMapOf(
+                "filename" to filename,
+                "isEuBuild" to settingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, true)
+            )
+        )
     }
 
     suspend fun logRootInstall(rootInstall: RootInstall) = try {

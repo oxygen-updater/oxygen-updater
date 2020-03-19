@@ -82,9 +82,14 @@ interface ServerApi {
         @Path("pageNumber") pageNumber: Int
     ): Response<InstallGuidePage>
 
+    /**
+     * @param body includes the following fields:
+     * * `filename: String`
+     * * `isEuBuild: Boolean`
+     */
     @POST("submit-update-file")
     suspend fun submitUpdateFile(
-        @Body filename: Map<String, String>
+        @Body body: HashMap<String, Any>
     ): Response<ServerPostResult>
 
     @POST("log-update-installation")
