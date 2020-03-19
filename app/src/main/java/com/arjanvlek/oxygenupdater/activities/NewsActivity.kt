@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
@@ -107,9 +108,23 @@ class NewsActivity : SupportActionBarActivity() {
             }
 
             // disable loading state once page is completely loaded
-            webViewClient = WebViewClient(context) {
+            webViewClient = WebViewClient(context) { error ->
                 // hide progress bar since the page has been loaded
                 hideLoadingState()
+
+                if (error == null) {
+                    // Show newsLayout, which contains the WebView
+                    newsLayout.isVisible = true
+                    // Hide error layout
+                    errorLayout.isVisible = false
+                } else {
+                    // Hide newsLayout, which contains the WebView
+                    newsLayout.isVisible = false
+                    // Show error layout
+                    errorLayout.isVisible = true
+
+                    errorTitle.text = error.errorCodeString
+                }
             }
         }
 
@@ -255,11 +270,9 @@ class NewsActivity : SupportActionBarActivity() {
     }
 
     private fun showLoadingState() {
-        // hide the error layout
-        errorLayout.isVisible = false
-
         progressBar.isVisible = true
         newsLayout.isVisible = false
+        errorLayout.isVisible = false
 
         // Display the title of the article.
         collapsingToolbarLayout.title = getString(R.string.loading)
@@ -273,16 +286,20 @@ class NewsActivity : SupportActionBarActivity() {
     private fun showErrorState() {
         // hide progress bar since the page failed to load
         progressBar.isVisible = false
-
-        // Hide the last updated view.
-        newsDatePublished.isVisible = false
-        // show the error layout
+        newsLayout.isVisible = false
         errorLayout.isVisible = true
 
-        newsRetryButton.setOnClickListener {
-            loadNewsItem()
-        }
+        // Reset errorTitle, since this is set only for WebView errors
+        errorTitle.text = null
     }
+
+    /**
+     * Handler for the "Retry" button
+     *
+     * @param v View
+     */
+    @Suppress("UNUSED_PARAMETER", "unused")
+    fun onRetryButtonClick(v: View?) = loadNewsItem()
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadNewsItem() {

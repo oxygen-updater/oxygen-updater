@@ -40,7 +40,7 @@
 				tools:visibility="visible" />
 
 			<LinearLayout
-				android:id="@+id/noNetworkView"
+				android:id="@+id/errorLayout"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:gravity="center"
@@ -50,25 +50,23 @@
 				tools:visibility="visible">
 
 				<TextView
-					android:id="@+id/faq_no_network_title"
+					android:id="@+id/errorTitle"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:fontFamily="@font/google_sans_medium"
-					android:text="@string/faq_no_network"
-					android:textSize="@dimen/typography_headline" />
+					android:textSize="@dimen/typography_title"
+					tools:text="net::ERR_CONNECTION_REFUSED" />
 
 				<ImageView
-					android:id="@+id/faq_no_network_image"
 					android:layout_width="match_parent"
 					android:layout_height="150dp"
 					android:layout_marginTop="@dimen/spacing_default"
 					android:layout_marginBottom="@dimen/spacing_default"
 					android:contentDescription="@string/icon"
-					android:src="@drawable/wifi_off"
+					android:src="@drawable/error_outline"
 					android:tint="?colorPrimary" />
 
 				<TextView
-					android:id="@+id/faq_no_network_text"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:gravity="center"

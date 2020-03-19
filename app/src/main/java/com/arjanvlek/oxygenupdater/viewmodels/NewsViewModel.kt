@@ -42,7 +42,6 @@ class NewsViewModel(
         logDebug(TAG, "mayShowInterstitialAd: mayShowAds: $mayShowAds, haveFiveMinutesPassed: $haveFiveMinutesPassed")
 
         mayShowAds && haveFiveMinutesPassed
-        true
     }
 
     fun fetchNewsItem(

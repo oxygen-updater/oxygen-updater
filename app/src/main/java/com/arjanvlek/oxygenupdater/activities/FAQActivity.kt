@@ -11,7 +11,6 @@ import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.WebViewClient
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
-import com.arjanvlek.oxygenupdater.utils.Utils
 import kotlinx.android.synthetic.main.activity_faq.*
 
 class FAQActivity : SupportActionBarActivity() {
@@ -52,52 +51,47 @@ class FAQActivity : SupportActionBarActivity() {
      */
     @SuppressLint("SetJavaScriptEnabled") // JavaScript is required to toggle the FAQ Item boxes.
     private fun loadFaqPage() {
-        if (Utils.checkNetworkConnection()) {
-            switchViews(true)
+        webView.apply {
+            // must be done to avoid the white background in dark themes
+            setBackgroundColor(Color.TRANSPARENT)
 
-            webView.apply {
-                // must be done to avoid the white background in dark themes
-                setBackgroundColor(Color.TRANSPARENT)
+            // since we can't edit CSS in WebViews,
+            // append 'Light' or 'Dark' to faqServerUrl to get the corresponding themed version
+            // backend handles CSS according to material spec
+            val faqServerUrl = BuildConfig.FAQ_SERVER_URL + "/" + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
 
-                // since we can't edit CSS in WebViews,
-                // append 'Light' or 'Dark' to faqServerUrl to get the corresponding themed version
-                // backend handles CSS according to material spec
-                val faqServerUrl = BuildConfig.FAQ_SERVER_URL + "/" + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
+            settings.javaScriptEnabled = true
+            settings.userAgentString = OxygenUpdater.APP_USER_AGENT
+            clearCache(true)
+            loadUrl(faqServerUrl).also { swipeRefreshLayout.isRefreshing = true }
 
-                settings.javaScriptEnabled = true
-                settings.userAgentString = OxygenUpdater.APP_USER_AGENT
-                clearCache(true)
-                loadUrl(faqServerUrl).also { swipeRefreshLayout.isRefreshing = true }
+            // disable loading state once page is completely loaded
+            webViewClient = WebViewClient(context) { error ->
+                // hide progress bar since the page has been loaded
+                swipeRefreshLayout.isRefreshing = false
 
-                // disable loading state once page is completely loaded
-                webViewClient = WebViewClient(context) {
-                    // hide progress bar since the page has been loaded
-                    swipeRefreshLayout.isRefreshing = false
+                if (error == null) {
+                    // Show WebView
+                    webView.isVisible = true
+                    // Hide error layout
+                    errorLayout.isVisible = false
+                } else {
+                    // Hide WebView
+                    webView.isVisible = false
+                    // Show error layout
+                    errorLayout.isVisible = true
+
+                    errorTitle.text = error.errorCodeString
                 }
             }
-        } else {
-            switchViews(false)
         }
     }
 
     /**
-     * Handler for the Retry button on the "No network connection" page.
+     * Handler for the "Retry" button
      *
      * @param v View
      */
     @Suppress("UNUSED_PARAMETER", "unused")
-    fun onRetryButtonClick(v: View?) {
-        loadFaqPage()
-    }
-
-    /**
-     * Switches between the WebView and the No Network connection screen based on the
-     * hasNetwork parameter.
-     *
-     * @param hasNetwork Whether the device has a network connection or not.
-     */
-    private fun switchViews(hasNetwork: Boolean) {
-        noNetworkView.isVisible = !hasNetwork
-        webView.isVisible = hasNetwork
-    }
+    fun onRetryButtonClick(v: View?) = loadFaqPage()
 }
