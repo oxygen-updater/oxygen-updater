@@ -27,10 +27,11 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.TextUtils.TruncateAt;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -44,10 +45,13 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 
 import com.google.android.material.animation.AnimationUtils;
+import com.google.android.material.internal.StaticLayoutBuilderCompat.StaticLayoutBuilderCompatException;
 import com.google.android.material.resources.CancelableFontCallback;
 import com.google.android.material.resources.TextAppearance;
 
+import static android.text.Layout.Alignment.ALIGN_NORMAL;
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static androidx.core.util.Preconditions.checkNotNull;
 
 /**
  * Helper class for rendering and animating collapsed title.
@@ -63,6 +67,8 @@ public final class SuperpoweredCollapsingTextHelper {
 	// by using our own texture
 	@SuppressLint("ObsoleteSdkInt")
 	private static final boolean USE_SCALING_TEXTURE = Build.VERSION.SDK_INT < 18;
+	private static final String TAG = "CollapsingTextHelper";
+	private static final String ELLIPSIS_NORMAL = "\u2026"; // HORIZONTAL ELLIPSIS (…)
 
 	private static final boolean DEBUG_DRAW = false;
 	@NonNull
@@ -436,10 +442,6 @@ public final class SuperpoweredCollapsingTextHelper {
 	}
 
 	public void setExpandedTitleGravity(int gravity) {
-		if ((gravity & GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0) {
-			gravity |= GravityCompat.START;
-		}
-
 		if (expandedTitleGravity != gravity) {
 			expandedTitleGravity = gravity;
 			recalculate();
@@ -466,10 +468,6 @@ public final class SuperpoweredCollapsingTextHelper {
 	}
 
 	public void setCollapsedTitleGravity(int gravity) {
-		if ((gravity & GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0) {
-			gravity |= GravityCompat.START;
-		}
-
 		if (collapsedTitleGravity != gravity) {
 			collapsedTitleGravity = gravity;
 			recalculate();
@@ -906,8 +904,6 @@ public final class SuperpoweredCollapsingTextHelper {
 	}
 
 	private void calculateBaseOffsets() {
-		float currentTitleSize = this.currentTitleSize;
-		float currentSubtitleSize = this.currentSubtitleSize;
 		boolean isTitleOnly = TextUtils.isEmpty(subtitle);
 
 		// We then calculate the collapsed title size, using the same logic
@@ -915,7 +911,14 @@ public final class SuperpoweredCollapsingTextHelper {
 		// We then calculate the collapsed subtitle size, using the same logic
 		calculateUsingSubtitleSize(collapsedSubtitleSize);
 
-		titleToDrawCollapsed = titleToDraw;
+		if (titleToDraw != null && titleLayout != null) {
+			titleToDrawCollapsed = TextUtils.ellipsize(
+					titleToDraw,
+					titlePaint,
+					titleLayout.getWidth(),
+					TruncateAt.END
+			);
+		}
 
 		float titleWidth = titleToDrawCollapsed != null
 				? titlePaint.measureText(titleToDrawCollapsed, 0, titleToDrawCollapsed.length())
@@ -928,28 +931,30 @@ public final class SuperpoweredCollapsingTextHelper {
 				isRtl ? ViewCompat.LAYOUT_DIRECTION_RTL : ViewCompat.LAYOUT_DIRECTION_LTR
 		);
 
-		float titleHeight = titleLayout != null ? titleLayout.getHeight() : 0;
-		float titleOffset = titleHeight / 2;
+		float titleLayoutHeight = titleLayout != null ? titleLayout.getHeight() : 0;
+		float titleHeight = titlePaint.descent() - titlePaint.ascent();
+		float titleOffset = (titleHeight / 2) - titlePaint.descent();
 		float subtitleHeight = subtitlePaint.descent() - subtitlePaint.ascent();
-		float subtitleOffset = subtitleHeight / 2 - subtitlePaint.descent();
 
 		if (isTitleOnly) {
 			switch (collapsedAbsGravity & Gravity.VERTICAL_GRAVITY_MASK) {
 				case Gravity.BOTTOM:
-					collapsedTitleDrawY = collapsedBounds.bottom - titleHeight;
+					collapsedTitleDrawY = collapsedBounds.bottom - titleLayoutHeight;
 					break;
 				case Gravity.TOP:
 					collapsedTitleDrawY = collapsedBounds.top;
 					break;
 				case Gravity.CENTER_VERTICAL:
 				default:
-					collapsedTitleDrawY = collapsedBounds.centerY() - titleOffset;
+					collapsedTitleDrawY = shouldDrawMultiline()
+							? collapsedBounds.centerY() - titleHeight / 2
+							: collapsedBounds.centerY() + titleOffset;
 					break;
 			}
 		} else {
-			float offset = (collapsedBounds.height() - (titleHeight + subtitleHeight)) / 3;
+			float offset = (collapsedBounds.height() - (titleLayoutHeight + subtitleHeight)) / 3;
 			collapsedTitleDrawY = collapsedBounds.top + offset;
-			collapsedSubtitleDrawY = collapsedBounds.top + offset * 2 + titleHeight - subtitlePaint.ascent();
+			collapsedSubtitleDrawY = collapsedBounds.top + offset * 2 + titleLayoutHeight - subtitlePaint.ascent();
 		}
 
 		switch (collapsedAbsGravity & GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK) {
@@ -971,58 +976,50 @@ public final class SuperpoweredCollapsingTextHelper {
 		calculateUsingTitleSize(expandedTitleSize);
 		calculateUsingSubtitleSize(expandedSubtitleSize);
 
-		if (isRtl) {
-			// fallback for RTL
-			titleWidth = titleToDrawCollapsed != null
-					? titlePaint.measureText(titleToDrawCollapsed, 0, titleToDrawCollapsed.length())
-					: 0;
-		} else {
-			titleWidth = titleLayout != null ? titleLayout.getLineWidth(0) : 0;
-		}
-
-		subtitleWidth = subtitleToDraw != null ? subtitlePaint.measureText(subtitleToDraw, 0, subtitleToDraw.length()) : 0;
+		float measuredWidth = titleToDraw != null
+				? titlePaint.measureText(titleToDraw, 0, titleToDraw.length())
+				: 0;
+		titleWidth = titleLayout != null && maxLines > 1 && !isRtl
+				? titleLayout.getLineWidth(0)
+				: measuredWidth;
 
 		expandedFirstLineDrawX = titleLayout != null ? titleLayout.getLineLeft(0) : 0;
-
-		titleHeight = titleLayout != null ? titleLayout.getHeight() : 0;
-		titleOffset = titleHeight;
-		subtitleHeight = subtitlePaint.descent() - subtitlePaint.ascent();
-		subtitleOffset = subtitleHeight / 2 - subtitlePaint.descent();
 
 		int expandedAbsGravity = GravityCompat.getAbsoluteGravity(
 				expandedTitleGravity,
 				isRtl ? ViewCompat.LAYOUT_DIRECTION_RTL : ViewCompat.LAYOUT_DIRECTION_LTR
 		);
 
-		titleHeight = titleLayout != null ? titleLayout.getHeight() : 0;
-
 		if (isTitleOnly) {
 			switch (expandedAbsGravity & Gravity.VERTICAL_GRAVITY_MASK) {
 				case Gravity.BOTTOM:
-					expandedTitleDrawY = expandedTitleBounds.bottom - titleHeight + titlePaint.descent();
+					float offset = shouldDrawMultiline() ? titleLayoutHeight - titlePaint.descent() : 0;
+					expandedTitleDrawY = expandedTitleBounds.bottom - offset;
 					break;
 				case Gravity.TOP:
 					expandedTitleDrawY = expandedTitleBounds.top;
 					break;
 				case Gravity.CENTER_VERTICAL:
 				default:
-					expandedTitleDrawY = expandedTitleBounds.centerY() - titleHeight / 2;
+					expandedTitleDrawY = shouldDrawMultiline()
+							? expandedTitleBounds.centerY() - titleLayoutHeight / 2
+							: expandedTitleBounds.centerY() + titleOffset;
 					break;
 			}
 		} else {
 			switch (expandedAbsGravity & Gravity.VERTICAL_GRAVITY_MASK) {
 				case Gravity.BOTTOM:
-					expandedTitleDrawY = expandedTitleBounds.bottom - subtitleHeight - titleOffset;
+					expandedTitleDrawY = expandedTitleBounds.bottom - subtitleHeight - titleLayoutHeight;
 					expandedSubtitleDrawY = expandedSubtitleBounds.bottom;
 					break;
 				case Gravity.TOP:
 					expandedTitleDrawY = expandedTitleBounds.top - titlePaint.ascent();
-					expandedSubtitleDrawY = expandedTitleDrawY + subtitleHeight + titleOffset;
+					expandedSubtitleDrawY = expandedTitleDrawY + subtitleHeight + titleLayoutHeight;
 					break;
 				case Gravity.CENTER_VERTICAL:
 				default:
-					expandedTitleDrawY = expandedTitleBounds.centerY() + titleOffset;
-					expandedSubtitleDrawY = expandedTitleDrawY + subtitleHeight + titleOffset;
+					expandedTitleDrawY = expandedTitleBounds.centerY() + titleLayoutHeight;
+					expandedSubtitleDrawY = expandedTitleDrawY + subtitleHeight + titleLayoutHeight;
 					break;
 			}
 		}
@@ -1062,45 +1059,46 @@ public final class SuperpoweredCollapsingTextHelper {
 	public void draw(@NonNull Canvas canvas) {
 		int titleSaveCount = canvas.save();
 
+		// Compute where to draw titleLayout for this frame
 		if (titleToDraw != null && drawTitle) {
+			float currentExpandedTitleX = currentTitleDrawX + titleLayout.getLineLeft(0) - expandedFirstLineDrawX * 2;
+
+			// Update the TextPaint to the current title size
+			titlePaint.setTextSize(currentTitleSize);
+
 			float titleX = currentTitleDrawX;
 			float titleY = currentTitleDrawY;
 			float subtitleX = currentSubtitleDrawX;
 			float subtitleY = currentSubtitleDrawY;
 
-			boolean drawTexture = useTexture
-					&& expandedTitleTexture != null
-					&& collapsedTitleTexture != null
-					&& crossSectionTitleTexture != null;
+			boolean drawTexture = useTexture && expandedTitleTexture != null;
 
 			float titleAscent;
-			float titleDescent;
-			float subtitleAscent;
-			float subtitleDescent;
-
-			// Update the TextPaint to the current title size
-			titlePaint.setTextSize(currentTitleSize);
+			float titleDescent = titleLayout.getHeight() * titleScale;
+			float subtitleAscent = subtitlePaint.ascent() * subtitleScale;
+			float subtitleDescent = subtitlePaint.descent() * subtitleScale;
 
 			if (drawTexture) {
 				titleAscent = 0;
-				titleDescent = titleLayout.getHeight() * titleScale;
-				subtitleAscent = subtitlePaint.ascent() * subtitleScale;
-				subtitleDescent = subtitlePaint.descent() * subtitleScale;
-			} else {
-				titleAscent = titlePaint.ascent() * titleScale;
-				titleDescent = titlePaint.descent() * titleScale;
-				subtitleAscent = subtitlePaint.ascent() * subtitleScale;
-				subtitleDescent = subtitlePaint.descent() * subtitleScale;
-			}
-
-			if (drawTexture) {
 				titleY += titleAscent;
 				subtitleY += subtitleAscent;
+			} else {
+				titleAscent = titlePaint.ascent() * titleScale;
 			}
 
 			if (DEBUG_DRAW) {
 				// Just a debug tool, which drawn a magenta rect in the title bounds
-				canvas.drawRect(currentTitleBounds.left, titleY, currentTitleBounds.right, titleY + titleDescent, DEBUG_DRAW_PAINT);
+				canvas.drawRect(
+						currentTitleBounds.left,
+						titleY,
+						currentTitleBounds.right,
+						titleY + titleDescent,
+						DEBUG_DRAW_PAINT
+				);
+			}
+
+			if (titleScale != 1f) {
+				canvas.scale(titleScale, titleScale, titleX, titleY);
 			}
 
 			// IMPORTANT: separate canvas save for subtitle
@@ -1120,12 +1118,6 @@ public final class SuperpoweredCollapsingTextHelper {
 				canvas.restoreToCount(subtitleSaveCount);
 			}
 
-			if (titleScale != 1f) {
-				canvas.scale(titleScale, titleScale, titleX, titleY);
-			}
-
-			// Compute where to draw titleLayout for this frame
-			float currentExpandedTitleX = currentTitleDrawX + titleLayout.getLineLeft(0) - expandedFirstLineDrawX * 2;
 			if (drawTexture) {
 				// If we should use a texture, draw it instead of title
 				if (isRtl) {
@@ -1143,41 +1135,47 @@ public final class SuperpoweredCollapsingTextHelper {
 					titleTexturePaint.setAlpha(255);
 					canvas.drawBitmap(crossSectionTitleTexture, titleX, titleY, titleTexturePaint);
 				}
+			} else if (shouldDrawMultiline()) {
+				drawMultilineTransition(canvas, currentExpandedTitleX, titleX, titleY, titleAscent);
 			} else {
-				if (isRtl) {
-					// fallback for RTL: draw only collapsed title
-					canvas.drawText(titleToDrawCollapsed, 0, titleToDrawCollapsed.length(), titleX, titleY - titleAscent / titleScale, titlePaint);
-				} else {
-					int originalAlpha = titlePaint.getAlpha();
-
-					// position expanded title appropriately
-					canvas.translate(currentExpandedTitleX, titleY);
-
-					// Expanded title
-					titlePaint.setAlpha((int) (expandedTitleBlend * originalAlpha));
-					titleLayout.draw(canvas);
-
-					// position the overlays
-					canvas.translate(titleX - currentExpandedTitleX, 0);
-
-					// Collapsed title
-					titlePaint.setAlpha((int) (collapsedTitleBlend * originalAlpha));
-					canvas.drawText(titleToDrawCollapsed, 0, titleToDrawCollapsed.length(), 0, -titleAscent / titleScale, titlePaint);
-
-					// Remove ellipsis for Cross-section animation
-					String tmp = titleToDrawCollapsed.toString().trim();
-					if (tmp.endsWith("\u2026")) {
-						tmp = tmp.substring(0, tmp.length() - 1);
-					}
-
-					// Cross-section between both texts (should stay at original alpha)
-					titlePaint.setAlpha(originalAlpha);
-					canvas.drawText(tmp, 0, Math.min(titleLayout.getLineEnd(0), tmp.length()), 0, -titleAscent / titleScale, titlePaint);
-				}
+				canvas.translate(titleX, titleY);
+				titleLayout.draw(canvas);
 			}
+
+			canvas.restoreToCount(titleSaveCount);
+		}
+	}
+
+	private boolean shouldDrawMultiline() {
+		return maxLines > 1 && !isRtl && !useTexture;
+	}
+
+	private void drawMultilineTransition(@NonNull Canvas canvas, float currentTitleExpandedX, float x, float y, float ascent) {
+		int originalAlpha = titlePaint.getAlpha();
+
+		// position expanded text appropriately
+		canvas.translate(currentTitleExpandedX, y);
+
+		// Expanded text
+		titlePaint.setAlpha((int) (expandedTitleBlend * originalAlpha));
+		titleLayout.draw(canvas);
+
+		// position the overlays
+		canvas.translate(x - currentTitleExpandedX, 0);
+
+		// Collapsed text
+		titlePaint.setAlpha((int) (collapsedTitleBlend * originalAlpha));
+		canvas.drawText(titleToDrawCollapsed, 0, titleToDrawCollapsed.length(), 0, -ascent / titleScale, titlePaint);
+
+		// Remove ellipsis for Cross-section animation
+		String tmp = titleToDrawCollapsed.toString().trim();
+		if (tmp.endsWith(ELLIPSIS_NORMAL)) {
+			tmp = tmp.substring(0, tmp.length() - 1);
 		}
 
-		canvas.restoreToCount(titleSaveCount);
+		// Cross-section between both texts (should stay at original alpha)
+		titlePaint.setAlpha(originalAlpha);
+		canvas.drawText(tmp, 0, Math.min(titleLayout.getLineEnd(0), tmp.length()), 0, -ascent / titleScale, titlePaint);
 	}
 
 	private boolean calculateIsRtl(@NonNull CharSequence text) {
@@ -1239,7 +1237,6 @@ public final class SuperpoweredCollapsingTextHelper {
 		float availableWidth;
 		float newTextSize;
 		boolean updateDrawText = false;
-		int maxLines;
 
 		if (isClose(size, collapsedTitleSize)) {
 			newTextSize = collapsedTitleSize;
@@ -1251,7 +1248,6 @@ public final class SuperpoweredCollapsingTextHelper {
 			}
 
 			availableWidth = collapsedWidth;
-			maxLines = 1;
 		} else {
 			newTextSize = expandedTitleSize;
 
@@ -1268,10 +1264,17 @@ public final class SuperpoweredCollapsingTextHelper {
 				titleScale = size / expandedTitleSize;
 			}
 
-			availableWidth = expandedWidth;
-
-			// fallback for RTL: draw only one line
-			maxLines = isRtl ? 1 : this.maxLines;
+			float textSizeRatio = collapsedTitleSize / expandedTitleSize;
+			// This is the size of the expanded bounds when it is scaled to match the
+			// collapsed text size
+			float scaledDownWidth = expandedWidth * textSizeRatio;
+			// If the scaled down size is larger than the actual collapsed width, we need to
+			// cap the available width so that when the expanded text scales down, it matches
+			// the collapsed width
+			// Otherwise we'll just use the expanded width
+			availableWidth = scaledDownWidth > collapsedWidth
+					? Math.min(collapsedWidth / textSizeRatio, expandedWidth)
+					: expandedWidth;
 		}
 
 		if (availableWidth > 0) {
@@ -1287,78 +1290,9 @@ public final class SuperpoweredCollapsingTextHelper {
 			// Use linear title scaling if we're scaling the canvas
 			titlePaint.setLinearText(titleScale != 1f);
 
-			CharSequence truncatedText;
-
-			StaticLayout layout = new StaticLayout(
-					title,
-					titlePaint,
-					(int) availableWidth,
-					Layout.Alignment.ALIGN_NORMAL,
-					lineSpacingMultiplier,
-					lineSpacingExtra,
-					false
-			);
-
-			if (layout.getLineCount() > maxLines) {
-				int lastLine = maxLines - 1;
-
-				CharSequence textBefore = lastLine > 0 ? title.subSequence(0, layout.getLineEnd(lastLine - 1)) : "";
-				CharSequence lineText = title.subSequence(layout.getLineStart(lastLine), layout.getLineEnd(lastLine));
-
-				// if last char in line is space, move it behind the ellipsis
-				CharSequence lineEnd = "";
-				if (lineText.charAt(lineText.length() - 1) == ' ') {
-					lineEnd = lineText.subSequence(lineText.length() - 1, lineText.length());
-					lineText = lineText.subSequence(0, lineText.length() - 1);
-				}
-
-				// insert ellipsis character
-				lineText = TextUtils.concat(lineText, "\u2026", lineEnd);
-
-				// if the title is too long, truncate it
-				CharSequence truncatedLineText = TextUtils.ellipsize(
-						lineText,
-						titlePaint,
-						availableWidth,
-						TextUtils.TruncateAt.END
-				);
-				truncatedText = TextUtils.concat(textBefore, truncatedLineText);
-			} else {
-				truncatedText = title;
-			}
-
-			if (!TextUtils.equals(truncatedText, titleToDraw)) {
-				titleToDraw = truncatedText;
-				isRtl = calculateIsRtl(titleToDraw);
-			}
-
-			Layout.Alignment alignment;
-
-			// Don't rectify gravity for RTL languages, Layout.Alignment does it already.
-			switch (expandedTitleGravity & GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK) {
-				case Gravity.CENTER_HORIZONTAL:
-					alignment = Layout.Alignment.ALIGN_CENTER;
-					break;
-				case Gravity.RIGHT:
-				case Gravity.END:
-					alignment = Layout.Alignment.ALIGN_OPPOSITE;
-					break;
-				case Gravity.LEFT:
-				case Gravity.START:
-				default:
-					alignment = Layout.Alignment.ALIGN_NORMAL;
-					break;
-			}
-
-			titleLayout = new StaticLayout(
-					titleToDraw,
-					titlePaint,
-					(int) availableWidth,
-					alignment,
-					lineSpacingMultiplier,
-					lineSpacingExtra,
-					false
-			);
+			isRtl = calculateIsRtl(title);
+			titleLayout = createStaticLayout(shouldDrawMultiline() ? maxLines : 1, availableWidth, isRtl);
+			titleToDraw = titleLayout.getText();
 		}
 	}
 
@@ -1442,6 +1376,23 @@ public final class SuperpoweredCollapsingTextHelper {
 				isRtl = calculateIsRtl(subtitleToDraw);
 			}
 		}
+	}
+
+	private StaticLayout createStaticLayout(int maxLines, float availableWidth, boolean isRtl) {
+		StaticLayout textLayout = null;
+		try {
+			textLayout = StaticLayoutBuilderCompat.obtain(title, titlePaint, (int) availableWidth)
+					.setEllipsize(TruncateAt.END)
+					.setIsRtl(isRtl)
+					.setAlignment(ALIGN_NORMAL)
+					.setIncludePad(false)
+					.setMaxLines(maxLines)
+					.build();
+		} catch (StaticLayoutBuilderCompatException e) {
+			Log.e(TAG, e.getCause().getMessage(), e);
+		}
+
+		return checkNotNull(textLayout);
 	}
 
 	private void ensureExpandedTitleTexture() {

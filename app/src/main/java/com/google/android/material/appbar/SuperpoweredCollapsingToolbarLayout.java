@@ -42,6 +42,8 @@ import com.google.android.material.internal.ThemeEnforcement;
 
 import org.jetbrains.annotations.NotNull;
 
+import static com.google.android.material.theme.overlay.MaterialThemeOverlay.wrap;
+
 /**
  * This class is a combination of <a href="https://github.com/hendraanggrian/collapsingtoolbarlayout-subtitle">collapsingtoolbarlayout-subtitle</a>
  * and <a href="https://github.com/opacapp/multiline-collapsingtoolbar">multiline-collapsingtoolbar</a>.
@@ -58,6 +60,7 @@ import org.jetbrains.annotations.NotNull;
 @SuppressLint("RestrictedApi")
 public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
+	private static final int DEF_STYLE_RES = R.style.Widget_Design_SuperpoweredCollapsingToolbar;
 	private static final int DEFAULT_SCRIM_ANIMATION_DURATION = 600;
 
 	private final Rect tmpRect = new Rect();
@@ -117,7 +120,9 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 	}
 
 	public SuperpoweredCollapsingToolbarLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
+		super(wrap(context, attrs, defStyleAttr, DEF_STYLE_RES), attrs, defStyleAttr);
+		// Ensure we are using the correctly themed context rather than the context that was passed in.
+		context = getContext();
 
 		collapsingTextHelper = new SuperpoweredCollapsingTextHelper(this);
 		collapsingTextHelper.setTextSizeInterpolator(AnimationUtils.DECELERATE_INTERPOLATOR);
@@ -127,7 +132,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 				attrs,
 				R.styleable.SuperpoweredCollapsingToolbarLayout,
 				defStyleAttr,
-				R.style.Widget_Design_SuperpoweredCollapsingToolbar
+				DEF_STYLE_RES
 		);
 
 		collapsingTextHelper.setExpandedTitleGravity(a.getInt(R.styleable.SuperpoweredCollapsingToolbarLayout_expandedTitleGravity,
