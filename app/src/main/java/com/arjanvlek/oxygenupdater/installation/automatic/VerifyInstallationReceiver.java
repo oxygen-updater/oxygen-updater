@@ -39,7 +39,7 @@ public class VerifyInstallationReceiver extends BroadcastReceiver {
 					.equals("android.intent.action.BOOT_COMPLETED")) {
 				settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false);
 
-				SystemVersionProperties properties = new SystemVersionProperties();
+				SystemVersionProperties properties = new SystemVersionProperties(context);
 
 				// Don't check on unsupported devices.
 				if (properties.getOxygenOSVersion()

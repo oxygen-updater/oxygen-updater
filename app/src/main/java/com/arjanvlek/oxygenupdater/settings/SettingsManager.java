@@ -46,6 +46,7 @@ public class SettingsManager {
 	public static final String PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown";
 	public static final String PROPERTY_CONTRIBUTE = "contribute";
 	public static final String PROPERTY_CONTRIBUTION_COUNT = "contribution_count";
+	public static final String PROPERTY_IS_EU_BUILD = "isEuBuild";
 
 	// Offline cache properties
 	public static final String PROPERTY_OFFLINE_ID = "offlineId";
