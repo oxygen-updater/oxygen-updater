@@ -273,6 +273,7 @@ public class ServerConnector implements Cloneable {
 		JSONObject postBody = new JSONObject();
 		try {
 			postBody.put("filename", filename);
+			postBody.put("isEuBuild", settingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false));
 		} catch (JSONException e) {
 			ServerPostResult errorResult = new ServerPostResult();
 			errorResult.setSuccess(false);

@@ -1,9 +1,11 @@
 package com.arjanvlek.oxygenupdater.domain;
 
 
+import android.content.Context;
 import android.os.Build;
 
 import com.arjanvlek.oxygenupdater.BuildConfig;
+import com.arjanvlek.oxygenupdater.settings.SettingsManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,6 +40,13 @@ public class SystemVersionProperties {
 	private static final String RO_DISPLAY_SERIES_LOOKUP_KEY = "ro.display.series";
 	private static final String RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name";
 	private static final String RO_BUILD_SOFT_VERSION_LOOKUP_KEY = "ro.build.soft.version";
+	// This isn't a hack, but was introduced in the first Open Beta for 7T-series
+	// These keys will be checked for on all devices, for better future-proofing, and saved to SharedPreferences
+	// The saved SharedPreferences value will be used while sending a POST request to the `/submit-update-file` endpoint,
+	// so that it's easy for contributors on Discord to figure out which build is for which region
+	// (backend will take this into account while firing the webhook)
+	private static final String RO_BUILD_EU_LOOKUP_KEYS = "ro.build.eu, ro.vendor.build.eu";
+
 	// @GitHub contributors, add ro.display.series values of new OP devices *HERE*
 	private static final List<String> RO_PRODUCT_NAME_LOOKUP_DEVICES = Arrays.asList(
 			"OnePlus 7",
@@ -81,7 +90,7 @@ public class SystemVersionProperties {
 	 */
 	private final boolean ABPartitionLayout;
 
-	public SystemVersionProperties() {
+	public SystemVersionProperties(Context context) {
 		String oxygenOSVersion = NO_OXYGEN_OS;
 		String oxygenOSOTAVersion = NO_OXYGEN_OS;
 		String oxygenDeviceName = NO_OXYGEN_OS;
@@ -104,6 +113,11 @@ public class SystemVersionProperties {
 			oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected Oxygen OS ROM with OTA version: %s ...");
 			oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s ...");
 			ABPartitionLayout = Boolean.parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s ..."));
+			boolean isEuBuild = Boolean.parseBoolean(readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s ..."));
+
+			// Null check because this is only instantiated in the constructor that gets called within the app's code,
+			// and not in the one that gets called within tests
+			new SettingsManager(context).savePreference(SettingsManager.PROPERTY_IS_EU_BUILD, isEuBuild);
 
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				securityPatchDate = Build.VERSION.SECURITY_PATCH; // Already available using Android API since Android 6.0

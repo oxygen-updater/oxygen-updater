@@ -203,7 +203,7 @@ public class InstallActivity extends SupportActionBarActivity {
 			boolean rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true);
 
 			// Plan install verification on reboot.
-			SystemVersionProperties systemVersionProperties = new SystemVersionProperties();
+			SystemVersionProperties systemVersionProperties = new SystemVersionProperties(this);
 			String currentOSVersion = systemVersionProperties.getOxygenOSOTAVersion();
 			boolean isAbPartitionLayout = systemVersionProperties.isABPartitionLayout();
 			String targetOSVersion = updateData.getOtaVersionNumber();

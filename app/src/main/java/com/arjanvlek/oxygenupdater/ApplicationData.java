@@ -71,7 +71,7 @@ public class ApplicationData extends Application {
 		// Store the system version properties in a cache, to prevent unnecessary calls to the native "getProp" command.
 		if (systemVersionProperties == null) {
 			logVerbose(TAG, "Creating new SystemVersionProperties instance...");
-			systemVersionProperties = new SystemVersionProperties();
+			systemVersionProperties = new SystemVersionProperties(this);
 		} else {
 			logVerbose(TAG, "Using cached instance of SystemVersionProperties");
 		}
