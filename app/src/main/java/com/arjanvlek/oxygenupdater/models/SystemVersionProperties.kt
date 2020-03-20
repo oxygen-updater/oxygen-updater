@@ -77,6 +77,9 @@ class SystemVersionProperties {
             oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with OTA version: %s ...")
             oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s ...")
             abPartitionLayout = parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s ..."))
+            val isEuBuild = parseBoolean(readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s ..."))
+
+            settingsManager.savePreference(SettingsManager.PROPERTY_IS_EU_BUILD, isEuBuild)
 
             securityPatchDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // Already available using Android API since Android 6.0
@@ -138,11 +141,6 @@ class SystemVersionProperties {
                     result = inputLine!!.replace("[$item]: ", "")
                         .replace("[", "")
                         .replace("]", "")
-
-                    // Save `isEuBuild` in SharedPreferences
-                    if (item == RO_VENDOR_BUILD_EU_LOOKUP_KEY || item == RO_BUILD_EU_LOOKUP_KEY) {
-                        settingsManager.savePreference(SettingsManager.PROPERTY_IS_EU_BUILD, result.toBoolean())
-                    }
 
                     // @hack #1 (OS_VERSION_NUMBER_LOOKUP_KEY): OxygenOS 2.0.0 - 3.x sometimes contain incorrect H2OS values for ro.rom.version
                     // if this is the case, discard the value and try with the next item in "items" array
@@ -214,13 +212,12 @@ class SystemVersionProperties {
         private const val RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name"
         private const val RO_BUILD_SOFT_VERSION_LOOKUP_KEY = "ro.build.soft.version"
 
-        // The following two lines aren't a hack, but were introduced in the first Open Beta for 7T-series
+        // This isn't a hack, but was introduced in the first Open Beta for 7T-series
         // These keys will be checked for on all devices, for better future-proofing, and saved to SharedPreferences
         // The saved SharedPreferences value will be used while sending a POST request to the `/submit-update-file` endpoint,
         // so that it's easy for contributors on Discord to figure out which build is for which region
         // (backend will take this into account while firing the webhook)
-        private const val RO_VENDOR_BUILD_EU_LOOKUP_KEY = "ro.vendor.build.eu"
-        private const val RO_BUILD_EU_LOOKUP_KEY = "ro.build.eu"
+        private const val RO_BUILD_EU_LOOKUP_KEYS = "ro.build.eu, ro.vendor.build.eu"
 
         // @GitHub contributors, add ro.display.series values of new OP devices *HERE*
         private val RO_PRODUCT_NAME_LOOKUP_DEVICES = listOf(
