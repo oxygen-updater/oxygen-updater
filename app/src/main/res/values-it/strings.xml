@@ -17,13 +17,14 @@
 	<string name="update_information_for">"per"</string>
 	<string name="update_information_header">"Aggiorna"</string>
 	<string name="update_information_header_short">"Aggiorna"</string>
-	<!-- TODO: translate these 6 strings below -->
+	<!-- TODO: translate these 7 strings below -->
+	<string name="update_information_error_text">Couldn\'t retrieve the latest update data information. The server may be down for maintenance. Try again after some time, or report it to us either via email or on our Discord server - the links are available in the "About" screen</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
 	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
 	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">"Ultima verifica: %1$s"</string>
 	<string name="update_information_latest_available_update">"È disponibile un nuovo aggiornamento di sistema"</string>
 	<string name="update_information_no_update_data_available">"Non è disponibile alcuna informazione sull'aggiornamento. "</string>
@@ -65,7 +66,7 @@
 
 	<string name="download_error_internal">"Errore interno."</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_server">"Errore nel server."</string>
 	<string name="download_error_network">"Errore di rete."</string>
 	<string name="download_error_retry">"RIPROVA"</string>
@@ -138,7 +139,7 @@
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
 	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
 
 	<string name="settings">"Impostazioni"</string>
@@ -478,6 +479,8 @@ Ritenta in alcuni minuti."</string>
 	<string name="purchase_error_after_payment">"Il pagamento non e' andato a buon fine a causa di un errore interno. Ritenta in alcuni minuti. Se hai già pagato, contatta Google Play Support per assistenza."</string>
 
 	<!-- Other strings -->
+	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Icona"</string>
 	<string name="loading">"Caricando…"</string>
 	<string name="processing">"Processando…"</string>

@@ -4,14 +4,15 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.core.view.isVisible
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.WebViewClient
+import com.arjanvlek.oxygenupdater.internal.WebViewError
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import kotlinx.android.synthetic.main.activity_faq.*
+import kotlinx.android.synthetic.main.layout_error.*
 
 class FAQActivity : SupportActionBarActivity() {
 
@@ -73,25 +74,33 @@ class FAQActivity : SupportActionBarActivity() {
                 if (error == null) {
                     // Show WebView
                     webView.isVisible = true
-                    // Hide error layout
-                    errorLayout.isVisible = false
+
+                    hideErrorStateIfInflated()
                 } else {
                     // Hide WebView
                     webView.isVisible = false
-                    // Show error layout
-                    errorLayout.isVisible = true
 
-                    errorTitle.text = error.errorCodeString
+                    inflateAndShowErrorState(error)
                 }
             }
         }
     }
 
-    /**
-     * Handler for the "Retry" button
-     *
-     * @param v View
-     */
-    @Suppress("UNUSED_PARAMETER", "unused")
-    fun onRetryButtonClick(v: View?) = loadFaqPage()
+    private fun inflateAndShowErrorState(error: WebViewError) {
+        // Show error layout
+        errorLayoutStub?.inflate()
+        errorLayout.isVisible = true
+        errorTitle.text = error.errorCodeString
+        errorText.text = getString(R.string.faq_no_network_text)
+        errorActionButton.setOnClickListener { loadFaqPage() }
+    }
+
+    private fun hideErrorStateIfInflated() {
+        // Stub is null only after it has been inflated, and
+        // we need to hide the error state only if it has been inflated
+        if (errorLayoutStub == null) {
+            errorLayout.isVisible = false
+            errorActionButton.setOnClickListener { }
+        }
+    }
 }

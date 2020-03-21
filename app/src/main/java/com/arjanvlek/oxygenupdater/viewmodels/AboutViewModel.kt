@@ -21,7 +21,7 @@ class AboutViewModel(
     private val _serverStatus = MutableLiveData<ServerStatus>()
 
     fun fetchServerStatus(): LiveData<ServerStatus> = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.fetchServerStatus().let {
+        serverRepository.fetchServerStatus(true).let {
             _serverStatus.postValue(it)
         }
     }.let { _serverStatus }

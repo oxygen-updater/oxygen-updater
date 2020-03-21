@@ -73,8 +73,8 @@ class MainViewModel(
     val allDevices: LiveData<List<Device>>
         get() = _allDevices
 
-    private val _updateData = MutableLiveData<UpdateData>()
-    val updateData: LiveData<UpdateData>
+    private val _updateData = MutableLiveData<UpdateData?>()
+    val updateData: LiveData<UpdateData?>
         get() = _updateData
 
     private val _newsList = MutableLiveData<List<NewsItem>>()
@@ -116,7 +116,12 @@ class MainViewModel(
         incrementalSystemVersion: String,
         errorCallback: KotlinCallback<String?>
     ) = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.fetchUpdateData(deviceId, updateMethodId, incrementalSystemVersion, errorCallback)?.let {
+        serverRepository.fetchUpdateData(
+            deviceId,
+            updateMethodId,
+            incrementalSystemVersion,
+            errorCallback
+        ).let {
             _updateData.postValue(it)
         }
     }

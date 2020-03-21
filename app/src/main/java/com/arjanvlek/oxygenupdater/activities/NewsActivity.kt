@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
@@ -17,6 +16,7 @@ import com.arjanvlek.oxygenupdater.adapters.NewsAdapter
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.WebViewClient
+import com.arjanvlek.oxygenupdater.internal.WebViewError
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.AppLocale.NL
@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import kotlinx.android.synthetic.main.activity_news.*
+import kotlinx.android.synthetic.main.layout_error.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDateTime
@@ -70,8 +71,7 @@ class NewsActivity : SupportActionBarActivity() {
             return@Observer
         }
 
-        // hide the error layout
-        errorLayout.isVisible = false
+        hideErrorStateIfInflated()
 
         val locale = AppLocale.get()
 
@@ -115,15 +115,13 @@ class NewsActivity : SupportActionBarActivity() {
                 if (error == null) {
                     // Show newsLayout, which contains the WebView
                     newsLayout.isVisible = true
-                    // Hide error layout
-                    errorLayout.isVisible = false
+
+                    hideErrorStateIfInflated()
                 } else {
                     // Hide newsLayout, which contains the WebView
                     newsLayout.isVisible = false
-                    // Show error layout
-                    errorLayout.isVisible = true
 
-                    errorTitle.text = error.errorCodeString
+                    inflateAndShowErrorState(error)
                 }
             }
         }
@@ -269,10 +267,22 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun loadNewsItem() {
+        showLoadingState()
+
+        // Obtain the contents of the news item
+        // (to save data when loading the entire list of news items, only title & subtitle are returned there)
+        newsViewModel.fetchNewsItem(
+            intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)
+        ).observe(this, fetchNewsItemObserver)
+    }
+
     private fun showLoadingState() {
         progressBar.isVisible = true
         newsLayout.isVisible = false
-        errorLayout.isVisible = false
+
+        hideErrorStateIfInflated()
 
         // Display the title of the article.
         collapsingToolbarLayout.title = getString(R.string.loading)
@@ -287,29 +297,32 @@ class NewsActivity : SupportActionBarActivity() {
         // hide progress bar since the page failed to load
         progressBar.isVisible = false
         newsLayout.isVisible = false
-        errorLayout.isVisible = true
 
-        // Reset errorTitle, since this is set only for WebView errors
-        errorTitle.text = null
+        inflateAndShowErrorState()
     }
 
-    /**
-     * Handler for the "Retry" button
-     *
-     * @param v View
-     */
-    @Suppress("UNUSED_PARAMETER", "unused")
-    fun onRetryButtonClick(v: View?) = loadNewsItem()
+    private fun inflateAndShowErrorState(error: WebViewError? = null) {
+        // Show error layout
+        errorLayoutStub?.inflate()
+        errorLayout.isVisible = true
+        errorText.text = getString(R.string.news_load_error)
+        errorActionButton.setOnClickListener { loadNewsItem() }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun loadNewsItem() {
-        showLoadingState()
+        if (error != null) {
+            errorTitle.text = error.errorCodeString
+            errorTitle.isVisible = true
+        } else {
+            errorTitle.isVisible = false
+        }
+    }
 
-        // Obtain the contents of the news item
-        // (to save data when loading the entire list of news items, only title & subtitle are returned there)
-        newsViewModel.fetchNewsItem(
-            intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)
-        ).observe(this, fetchNewsItemObserver)
+    private fun hideErrorStateIfInflated() {
+        // Stub is null only after it has been inflated, and
+        // we need to hide the error state only if it has been inflated
+        if (errorLayoutStub == null) {
+            errorLayout.isVisible = false
+            errorActionButton.setOnClickListener { }
+        }
     }
 
     override fun onBackPressed() = finish()

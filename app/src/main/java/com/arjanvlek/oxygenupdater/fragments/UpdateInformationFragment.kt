@@ -58,6 +58,7 @@ import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_PROGRESS
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_TOTAL_BYTES
 import com.crashlytics.android.Crashlytics
 import kotlinx.android.synthetic.main.fragment_update_information.*
+import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
 import kotlinx.android.synthetic.main.layout_update_information.*
 import org.koin.android.ext.android.inject
@@ -120,6 +121,8 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                     setBackgroundColor(serverStatus.getColor(requireContext()))
                     setCompoundDrawablesRelativeWithIntrinsicBounds(serverStatus.getDrawableRes(requireContext()), 0, 0, 0)
                 }
+            } else {
+                serverStatusTextView.isVisible = false
             }
 
             // banner is displayed if app version is outdated
@@ -138,28 +141,34 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
 
         mainViewModel.updateData.observe(viewLifecycleOwner) {
-            this.updateData = it
+            if (it == null) {
+                inflateAndShowErrorState()
+            } else {
+                hideErrorStateIfInflated()
 
-            // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
-            if (!isLoadedOnce && activity?.intent?.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false) == true) {
-                val intent = requireActivity().intent
-                showDownloadError(
-                    activity,
-                    intent.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false),
-                    intent.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE),
-                    intent.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE)
-                ) { isResumable ->
-                    if (!isResumable) {
-                        // Delete downloaded file, so the user can restart the download
-                        mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                this.updateData = it
+
+                // If the activity is started with a download error (when clicked on a "download failed" notification), show it to the user.
+                if (!isLoadedOnce && activity?.intent?.getBooleanExtra(KEY_HAS_DOWNLOAD_ERROR, false) == true) {
+                    val intent = requireActivity().intent
+                    showDownloadError(
+                        activity,
+                        intent.getBooleanExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, false),
+                        intent.getStringExtra(KEY_DOWNLOAD_ERROR_TITLE),
+                        intent.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE)
+                    ) { isResumable ->
+                        if (!isResumable) {
+                            // Delete downloaded file, so the user can restart the download
+                            mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                        }
+
+                        mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
                     }
-
-                    mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
                 }
-            }
 
-            displayUpdateInformation(updateData)
-            isLoadedOnce = true
+                displayUpdateInformation(updateData!!)
+                isLoadedOnce = true
+            }
         }
     }
 
@@ -214,6 +223,29 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
     }
 
+    private fun inflateAndShowErrorState() {
+        // Hide the loading shimmer since an error state can only be enabled after a load completes
+        shimmerFrameLayout.isVisible = false
+        // Hide the refreshing icon if it is present
+        swipeRefreshLayout.isRefreshing = false
+
+        // Show error layout
+        errorLayoutStub?.inflate()
+        errorLayout.isVisible = true
+        errorTitle.isVisible = false
+        errorText.text = getString(R.string.update_information_error_text)
+        errorActionButton.setOnClickListener { load() }
+    }
+
+    private fun hideErrorStateIfInflated() {
+        // Stub is null only after it has been inflated, and
+        // we need to hide the error state only if it has been inflated
+        if (errorLayoutStub == null) {
+            errorLayout.isVisible = false
+            errorActionButton.setOnClickListener { }
+        }
+    }
+
     /**
      * Makes [serverBannerTextView] visible.
      *
@@ -242,20 +274,17 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
      *
      * @param updateData              Update information to display
      */
-    private fun displayUpdateInformation(updateData: UpdateData?) {
+    private fun displayUpdateInformation(updateData: UpdateData) {
         if (!isAdded) {
             return
         }
 
         val online = Utils.checkNetworkConnection()
 
-        // Abort if no update data is found or if the fragment is not attached to its activity to prevent crashes.
-        if (!isAdded || updateData == null) {
-            return
-        }
-
-        // Hide the loading screen
-        updateInformationProgressBar.isVisible = false
+        // hide the loading shimmer
+        shimmerFrameLayout.isVisible = false
+        // Hide the refreshing icon if it is present
+        swipeRefreshLayout.isRefreshing = false
 
         if (updateData.id == null
             || updateData.isSystemIsUpToDateCheck(settingsManager)
@@ -280,16 +309,11 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                 savePreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
             }
         }
-
-        // Hide the refreshing icon if it is present.
-        swipeRefreshLayout.isRefreshing = false
     }
 
     private fun displayUpdateInformationWhenUpToDate(updateData: UpdateData, online: Boolean) {
         // Show "System is up to date" view.
         systemIsUpToDateLayoutStub?.inflate()
-        // hide the loading shimmer
-        shimmerFrameLayout.isVisible = false
 
         // Set the current OxygenOS version if available.
         systemIsUpToDateVersionTextView.apply {
@@ -362,8 +386,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData) {
         // Show "System update available" view.
         updateInformationLayoutStub?.inflate()
-        // hide the loading shimmer
-        shimmerFrameLayout.isVisible = false
 
         val formattedOxygenOsVersion = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
             if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {

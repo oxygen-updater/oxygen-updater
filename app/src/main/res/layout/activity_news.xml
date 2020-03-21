@@ -94,48 +94,11 @@
 					android:layout_marginBottom="@dimen/spacing_half" />
 			</LinearLayout>
 
-			<LinearLayout
-				android:id="@+id/errorLayout"
+			<ViewStub
+				android:id="@+id/errorLayoutStub"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:gravity="center"
-				android:orientation="vertical"
-				android:padding="@dimen/spacing_default"
-				android:visibility="gone"
-				tools:visibility="visible">
-
-				<TextView
-					android:id="@+id/errorTitle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:fontFamily="@font/google_sans_medium"
-					android:textSize="@dimen/typography_title"
-					tools:text="net::ERR_CONNECTION_REFUSED" />
-
-				<ImageView
-					android:layout_width="match_parent"
-					android:layout_height="150dp"
-					android:layout_marginTop="@dimen/spacing_default"
-					android:layout_marginBottom="@dimen/spacing_default"
-					android:contentDescription="@string/icon"
-					android:src="@drawable/error_outline"
-					android:tint="?colorPrimary" />
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:gravity="center"
-					android:text="@string/news_load_error" />
-
-				<com.google.android.material.button.MaterialButton
-					style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginTop="@dimen/spacing_default"
-					android:onClick="onRetryButtonClick"
-					android:text="@string/download_error_retry"
-					app:strokeColor="?colorPrimary" />
-			</LinearLayout>
+				android:layout="@layout/layout_error" />
 
 			<ProgressBar
 				android:id="@+id/progressBar"

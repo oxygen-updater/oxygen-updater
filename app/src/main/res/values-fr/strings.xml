@@ -15,13 +15,14 @@
 	<string name="update_information_for">"Pour"</string>
 	<string name="update_information_header">"Mise à jour"</string>
 	<string name="update_information_header_short">"Mise à jour"</string>
-	<!-- TODO: translate this string below -->
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_error_text">Couldn\'t retrieve the latest update data information. The server may be down for maintenance. Try again after some time, or report it to us either via email or on our Discord server - the links are available in the "About" screen</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">Vous êtes déjà sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_congrats_latest">Félicitations ! Votre appareil est sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_update_available">Une nouvelle mise à jour est disponible: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier ZIP pour la méthode de mise à jour \'%1$s\'.\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
-	<string name="update_information_different_version_changelog_notice">Vous regardez un changelog conçu pour la dernière mise à jour disponible dans la méthode de mise à jour \'%1$s\'. Si vous souhaitez installer cette mise à jour, vous devez d\'abord activer le mode avancé dans les réglages de l\'application.\n\nCependant, si vous souhaitez voir le changelog pour la version actuellement installée sur votre appareil vous devez resélectionner la précédente méthode de mise à jour.</string>
+	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier ZIP pour la méthode de mise à jour \"%1$s\".\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
+	<string name="update_information_different_version_changelog_notice">Vous regardez un changelog conçu pour la dernière mise à jour disponible dans la méthode de mise à jour \"%1$s\". Si vous souhaitez installer cette mise à jour, vous devez d\'abord activer le mode avancé dans les réglages de l\'application.\n\nCependant, si vous souhaitez voir le changelog pour la version actuellement installée sur votre appareil vous devez resélectionner la précédente méthode de mise à jour.</string>
 	<string name="update_information_last_checked_on">"Dernière vérification : %1$s"</string>
 	<string name="update_information_latest_available_update">"Une nouvelle mise à jour système est disponible"</string>
 	<string name="update_information_no_update_data_available">"Aucune information de mise à jour n'est disponible."</string>
@@ -64,7 +65,7 @@
 	    
 	<string name="download_error_internal">Malheureusement, une erreur critique s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger et si le problème persiste, veuillez contacter le développeur pour obtenir de l\'assistance.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">"Réessayer"</string>
 	<string name="download_error_resume">"Reprendre"</string>
 	<string name="download_error_storage">"Pas assez d'espace disponible sur votre appareil pour télécharger la mise à jour. Veuillez supprimer quelques fichiers et réessayer."</string>
@@ -463,6 +464,8 @@ Si vous n'avez pas un accès root pressez « Fermer » et continuez à utilise
 	<string name="purchase_error_after_payment">"L'achat de la version sans publicités a échoué en raison d'une erreur interne. Veuillez réessayer dans quelques minutes. Si vous avez déjà payé, veuillez contacter le support du Play Store."</string>
 
 	<!-- Other strings -->
+	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Icône"</string>
 	<string name="loading">"Chargement…"</string>
 	<string name="processing">"Achat en cours…"</string>

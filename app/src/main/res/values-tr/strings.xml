@@ -17,13 +17,14 @@
 	<string name="update_information_for">için</string>
 	<string name="update_information_header">Güncelle</string>
 	<string name="update_information_header_short">Güncelle</string>
-	<!-- TODO: translate these 6 strings below -->
+	<!-- TODO: translate these 7 strings below -->
+	<string name="update_information_error_text">Couldn\'t retrieve the latest update data information. The server may be down for maintenance. Try again after some time, or report it to us either via email or on our Discord server - the links are available in the "About" screen</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
 	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
 	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Son kontrol: %1$s</string>
 	<string name="update_information_latest_available_update">Yeni sistem güncellemesi mevcut</string>
 	<string name="update_information_no_update_data_available">Herhangi bir güncelleme bilgisi bulunmamaktadır.</string>
@@ -68,7 +69,7 @@
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">RETRY</string>
 	<string name="download_error_resume">RESUME</string>
@@ -402,6 +403,8 @@
 	<string name="purchase_error_after_payment">Reklamsız versiyon için satın alma başarısız oldu, bir hata ile karşılaşıldı. Birkaç dakika sonra tekrar deneyiniz. Zaten satın aldıysanız ve Google Play size içeriği sunamadıysa onlarla iletişime geçiniz.</string>
 
 	<!-- Other strings-->
+	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">İkon</string>
 	<string name="loading">Yükleniyor…</string>
 	<string name="processing">İşleniyor…</string>

@@ -17,13 +17,14 @@
 	<string name="update_information_for">适用于</string>
 	<string name="update_information_header">更新</string>
 	<string name="update_information_header_short">更新</string>
-	<!-- TODO: translate these 6 strings below -->
+	<!-- TODO: translate these 7 strings below -->
+	<string name="update_information_error_text">Couldn\'t retrieve the latest update data information. The server may be down for maintenance. Try again after some time, or report it to us either via email or on our Discord server - the links are available in the "About" screen</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
 	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
 	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
 	<string name="update_information_latest_available_update">检测到新的系统更新</string>
 	<string name="update_information_no_update_data_available">没有可用的更新亮点</string>
@@ -68,7 +69,7 @@
 	<string name="download_error_server">下载更新时服务器发生错误，请尝试重新下载更新。</string>
 	<string name="download_error_internal">抱歉，下载更新时发生了技术故障，请尝试再次下载。如果这种情况不断发生，请联系此应用开发者以获取帮助。</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">重试</string>
 	<string name="download_error_resume">继续</string>
@@ -401,6 +402,8 @@
 	<string name="purchase_error_after_payment">由于内部错误，购买移除广告服务失败。请稍候重试。 如果您已付款，请与 Google Play 支持小组联系以获取帮助。</string>
 
 	<!-- Other strings-->
+	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">图标</string>
 	<string name="loading">加载中…</string>
 	<string name="processing">正在处理…</string>

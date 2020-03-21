@@ -76,38 +76,44 @@ class ServerRepository constructor(
         serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId)
     }
 
-    suspend fun fetchServerStatus() = serverStatus ?: performServerRequest {
-        serverApi.fetchServerStatus()
-    }.let { status: ServerStatus? ->
-        val automaticInstallationEnabled = settingsManager.getPreference(
-            SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED,
-            false
-        )
-        val pushNotificationsDelaySeconds = settingsManager.getPreference(
-            SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
-            1800
-        )
+    suspend fun fetchServerStatus(
+        useCache: Boolean = false
+    ) = if (useCache && serverStatus != null) {
+        serverStatus!!
+    } else {
+        performServerRequest {
+            serverApi.fetchServerStatus()
+        }.let { status ->
+            val automaticInstallationEnabled = settingsManager.getPreference(
+                SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED,
+                false
+            )
+            val pushNotificationsDelaySeconds = settingsManager.getPreference(
+                SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+                1800
+            )
 
-        val response = if (status == null && Utils.checkNetworkConnection()) {
-            ServerStatus(
-                ServerStatus.Status.UNREACHABLE,
-                BuildConfig.VERSION_NAME,
-                automaticInstallationEnabled,
-                pushNotificationsDelaySeconds
-            )
-        } else {
-            status ?: ServerStatus(
-                ServerStatus.Status.NORMAL,
-                BuildConfig.VERSION_NAME,
-                automaticInstallationEnabled,
-                pushNotificationsDelaySeconds
-            )
+            val response = if (status == null && Utils.checkNetworkConnection()) {
+                ServerStatus(
+                    ServerStatus.Status.UNREACHABLE,
+                    BuildConfig.VERSION_NAME,
+                    automaticInstallationEnabled,
+                    pushNotificationsDelaySeconds
+                )
+            } else {
+                status ?: ServerStatus(
+                    ServerStatus.Status.NORMAL,
+                    BuildConfig.VERSION_NAME,
+                    automaticInstallationEnabled,
+                    pushNotificationsDelaySeconds
+                )
+            }
+
+            settingsManager.savePreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, response.automaticInstallationEnabled)
+            settingsManager.savePreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, response.pushNotificationDelaySeconds)
+
+            response.also { serverStatus = it }
         }
-
-        settingsManager.savePreference(SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED, response.automaticInstallationEnabled)
-        settingsManager.savePreference(SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, response.pushNotificationDelaySeconds)
-
-        response.also { serverStatus = it }
     }
 
     suspend fun fetchServerMessages(

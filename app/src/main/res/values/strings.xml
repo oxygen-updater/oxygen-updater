@@ -11,17 +11,18 @@
 	<string name="update_information_file_name">File name: %1$s</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_for">for</string>
 	<string name="update_information_header">Update</string>
 	<string name="update_information_header_short">Update</string>
-	<!-- TODO: translate these 6 strings below -->
+	<!-- TODO: translate these 7 strings below -->
+	<string name="update_information_error_text">Couldn\'t retrieve the latest update data information. The server may be down for maintenance. Try again after some time, or report it to us either via email or on our Discord server - the links are available in the \"About\" screen.</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
 	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
 	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
 	<string name="update_information_latest_available_update">New system update available</string>
 	<string name="update_information_no_update_data_available">No update information is available</string>
@@ -66,7 +67,7 @@
 	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">RETRY</string>
 	<string name="download_error_resume">RESUME</string>
@@ -160,7 +161,7 @@
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
 	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
 
 	<string name="settings">Settings</string>
@@ -237,7 +238,7 @@
 	<string name="install_error_write_script_failed">"Failed to prepare the installation of the update. Did you allow root access?"</string>
 
 	<string name="install_options_backup">Backup my device</string>
-	<string name="install_options_header">You may customize the installation process by changing the options shown below. Tap on \'Start installation\' to start the installation of the update.</string>
+	<string name="install_options_header">You may customize the installation process by changing the options shown below. Tap on \"Start installation\" to start the installation of the update.</string>
 	<string name="install_options_keep_root">Keep my device rooted</string>
 	<string name="install_options_reboot_after_install">Reboot after installation</string>
 	<string name="install_options_select_root_package">Select the root package to install…</string>
@@ -267,7 +268,7 @@
 	<string name="install_verify_error_title">Installation failed</string>
 	<string name="install_verify_error_nothing_installed">Error when installing the update. No changes were made to the software of your device. Try installing the update again.</string>
 	<string name="install_verify_error_unable_to_verify">Failed to check if the update was installed successfully. Please open Oxygen Updater to see if the update was installed successfully.</string>
-	<string name="install_verify_error_wrong_version_installed">A different version of OxygenOS was installed. Don\'t select an OxygenOS update file when choosing a root package under the "Keep my device rooted" option.</string>
+	<string name="install_verify_error_wrong_version_installed">A different version of OxygenOS was installed. Don\'t select an OxygenOS update file when choosing a root package under the \"Keep my device rooted\" option.</string>
 
 	<string name="install_verify_success_title">Installation complete</string>
 	<string name="install_verify_success_message">OxygenOS version %1$s has been installed successfully.</string>
@@ -371,7 +372,7 @@
 	<string name="news_author">Author: %1$s</string>
 	<string name="news_date_published">Last update: %1$s</string>
 	<string name="news_empty">This article has no contents.</string>
-	<string name="news_load_error">Failed to open article. Check your connection and press the \'RETRY\' button to open the article.</string>
+	<string name="news_load_error">Failed to open article. Check your connection and press the \"RETRY\" button to open the article.</string>
 	<!-- TODO: translate these 5 strings below -->
 	<string name="news_unread_count">You have %1$d unread news articles</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
@@ -383,7 +384,7 @@
 	<!-- TODO translate this block to all but Dutch / Belgian / French -->
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improve Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximately 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the ".Ota" directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
+	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximately 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the \".Ota\" directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
 	<string name="contribute_image_description">Upload files to the app server</string>
 	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
 	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
@@ -415,7 +416,7 @@
 	<string name="delete_message_delete_button">Delete</string>
 
 	<string name="unsupported_device_warning_title">Unsupported device</string>
-	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
+	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the \"Local Upgrade\" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
 	<string name="unsupported_os_warning_message">It looks like your device is not running OxygenOS. Please note that you can only install system updates on devices running OxygenOS.\n\nOther devices, including OnePlus devices running Custom ROMs, are not supported.</string>
 	<string name="unsupported_device_warning_checkbox_title">Don\'t show this warning again</string>
@@ -432,6 +433,7 @@
 	<string name="github_url" translatable="false">https://github.com/oxygen-updater/oxygen-updater</string>
 	<string name="website_url" translatable="false">https://oxygenupdater.com</string>
 	<string name="email_address" translatable="false">support@oxygenupdater.com</string>
+	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>
 	<string name="processing">Processing…</string>

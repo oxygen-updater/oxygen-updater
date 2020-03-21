@@ -17,13 +17,14 @@
 	<string name="update_information_for">for</string>
 	<string name="update_information_header">Opdatér</string>
 	<string name="update_information_header_short">Opdatér</string>
-	<!-- TODO: translate these 6 strings below -->
+	<!-- TODO: translate these 7 strings below -->
+	<string name="update_information_error_text">Couldn\'t retrieve the latest update data information. The server may be down for maintenance. Try again after some time, or report it to us either via email or on our Discord server - the links are available in the "About" screen</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
 	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
 	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \'%1$s\'.\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \'%1$s\' upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Senest checket den: %1$s</string>
 	<string name="update_information_latest_available_update">Ny system opdatering tilgængelig</string>
 	<string name="update_information_no_update_data_available">Ingen opdatering information tilgængelig</string>
@@ -69,7 +70,7 @@
 	<string name="download_error_server">En netværksfejl opstod under forsøget på at downloade opdateringen. Forsøg at downloade opdateringen igen.</string>
 	<string name="download_error_internal">Desværre opstod der en teknisk fejl, i forsøget på at downloade opdateringen. Forsøg at downloade igen. Kontakt udvikleren af denne app, hvis problemet gentager sig.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \'%1$s\' and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">PRØV IGEN</string>
 	<string name="download_error_resume">GENIOTAG</string>
@@ -139,7 +140,7 @@
 	<string name="theme_dark_subtitle">Dæmpet OnePlus rød primær farve, med en næsten sort baggrund. Anvend dette tema og spar på batteri, især hvis du anvender AMOLED skærme</string>
 	<string name="theme_system_subtitle">Anvend systemets nat-indstilling (du kan indstille dette via Skærmindstillinger, eller i enhedens Udvikller-menu). Dette varierer afhængigt af hvilken enhed du har.</string>
 	<string name="theme_auto_subtitle">Skift mellem lyst og mærk tema, afhængig af hvad klokken er, for day, to at undgå trætte øjne, om natten</string>
-	<string name="theme_additional_note">Hint: Hvis \'Auto\' tema er aktiveret og batterisparefunktionen er aktivertet, så vil det mørke tema automatisk blive anvendt, uanset hvad klokken er, for at spare batteri</string>
+	<string name="theme_additional_note">Hint: Hvis \"Auto\" tema er aktiveret og batterisparefunktionen er aktivertet, så vil det mørke tema automatisk blive anvendt, uanset hvad klokken er, for at spare batteri</string>
 
 	<string name="settings">Indstillinger</string>
 	<string name="settings_buy_button_buy">Køb (%1$s)</string>
@@ -405,6 +406,8 @@
 	<string name="purchase_error_after_payment">Købet af den reklamefri version fejlede, på grund af en intern internal fejl. Prøv igen om et par minutter. Har du allerede betalt, kontakt Google Play support for at få hjælp.</string>
 
 	<!-- Other strings-->
+	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Indlæser…</string>
 	<string name="processing">Arbejder…</string>

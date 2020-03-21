@@ -60,7 +60,7 @@ class InstallViewModel(
         get() = _logRootInstallResult
 
     fun fetchServerStatus(): LiveData<ServerStatus> = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.fetchServerStatus().let {
+        serverRepository.fetchServerStatus(true).let {
             _serverStatus.postValue(it)
         }
     }.let { _serverStatus }
