@@ -232,8 +232,11 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         // Show error layout
         errorLayoutStub?.inflate()
         errorLayout.isVisible = true
-        errorTitle.isVisible = false
-        errorText.text = getString(R.string.update_information_error_text)
+
+        errorTitle.text = getString(R.string.update_information_error_title)
+        // Make the links clickable
+        errorText.movementMethod = LinkMovementMethod.getInstance()
+
         errorActionButton.setOnClickListener { load() }
     }
 

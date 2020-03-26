@@ -33,7 +33,9 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		tools:text="Error text" />
+		android:linksClickable="true"
+		android:text="@string/error_maintenance_retry"
+		android:textColorLink="?colorPrimary" />
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/errorActionButton"

@@ -12,6 +12,14 @@
 		app:layout_constraintTop_toTopOf="parent"
 		app:shimmer_auto_start="true" />
 
+	<ViewStub
+		android:id="@+id/errorLayoutStub"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout="@layout/layout_error"
+		app:layout_constraintBottom_toTopOf="@id/divider"
+		app:layout_constraintTop_toTopOf="parent" />
+
 	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/onboardingChooserRecyclerView"
 		android:layout_width="match_parent"

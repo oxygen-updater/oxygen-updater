@@ -25,10 +25,10 @@ class OnboardingViewModel(
     private val settingsManager: SettingsManager
 ) : ViewModel() {
 
-    private val _allDevices = MutableLiveData<List<Device>>()
+    private val _allDevices = MutableLiveData<List<Device>?>()
 
-    private val _enabledDevices = MutableLiveData<List<Device>>()
-    val enabledDevices: LiveData<List<Device>>
+    private val _enabledDevices = MutableLiveData<List<Device>?>()
+    val enabledDevices: LiveData<List<Device>?>
         get() = _enabledDevices
 
     private val _updateMethodsForDevice = MutableLiveData<List<UpdateMethod>>()
@@ -46,7 +46,7 @@ class OnboardingViewModel(
      * This function is used directly in [com.arjanvlek.oxygenupdater.activities.OnboardingActivity],
      * whereas [enabledDevices] is used in [com.arjanvlek.oxygenupdater.fragments.DeviceChooserOnboardingFragment]
      */
-    fun fetchAllDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchAllDevices(): LiveData<List<Device>?> = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.fetchDevices(DeviceRequestFilter.ALL).also { allDevices ->
             _allDevices.postValue(allDevices)
             _enabledDevices.postValue(allDevices?.filter { it.enabled })

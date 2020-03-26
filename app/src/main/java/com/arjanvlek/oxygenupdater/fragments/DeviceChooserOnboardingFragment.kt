@@ -1,8 +1,10 @@
 package com.arjanvlek.oxygenupdater.fragments
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.core.view.isVisible
+import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -11,6 +13,7 @@ import com.arjanvlek.oxygenupdater.models.SelectableModel
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
+import kotlinx.android.synthetic.main.layout_error.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -30,10 +33,13 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
      * right after the API call for `fetchAllDevices()` completes
      */
     override fun fetchData() {
-        onboardingViewModel.enabledDevices.observe(
-            viewLifecycleOwner,
-            Observer { setupRecyclerView(it) }
-        )
+        onboardingViewModel.enabledDevices.observe(viewLifecycleOwner) {
+            if (it == null) {
+                inflateAndShowErrorState()
+            } else {
+                setupRecyclerView(it)
+            }
+        }
     }
 
     @Suppress("UNCHECKED_CAST", "NAME_SHADOWING")
@@ -42,6 +48,8 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
         initialSelectedIndex: Int,
         onItemSelectedListener: KotlinCallback<SelectableModel>
     ) {
+        hideErrorStateIfInflated()
+
         val data = data as List<Device>
 
         val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
@@ -51,6 +59,28 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
 
         super.setupRecyclerView(data, initialSelectedIndex) {
             onboardingViewModel.updateSelectedDevice(it as Device)
+        }
+    }
+
+    private fun inflateAndShowErrorState() {
+        // Hide the loading shimmer since an error state can only be enabled after a load completes
+        shimmerFrameLayout.isVisible = false
+
+        // Show error layout
+        errorLayoutStub?.inflate()
+        errorLayout.isVisible = true
+        errorActionButton.isVisible = false
+
+        errorTitle.text = getString(R.string.device_chooser_error_title)
+        // Make the links clickable
+        errorText.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun hideErrorStateIfInflated() {
+        // Stub is null only after it has been inflated, and
+        // we need to hide the error state only if it has been inflated
+        if (errorLayoutStub == null) {
+            errorLayout.isVisible = false
         }
     }
 }

@@ -24,7 +24,8 @@ import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.utils.ContributorUtils
-import com.arjanvlek.oxygenupdater.utils.Logger
+import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
+import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.SetupUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
@@ -37,9 +38,10 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
-class OnboardingActivity : AppCompatActivity() {
+class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
     private lateinit var activityLauncher: ActivityLauncher
+    private lateinit var viewPagerAdapter: OnboardingPagerAdapter
 
     private var permissionCallback: KotlinCallback<Boolean>? = null
 
@@ -47,23 +49,23 @@ class OnboardingActivity : AppCompatActivity() {
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) = handlePageChangeCallback(position + 1)
+        override fun onPageSelected(
+            position: Int
+        ) = handlePageChangeCallback(position + 1)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
-        setContentView(R.layout.activity_onboarding)
-
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) = super.onCreate(savedInstanceState).also {
         enableEdgeToEdgeUiSupport()
 
         activityLauncher = ActivityLauncher(this)
 
-        if (!settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)) {
-            onboardingViewModel.fetchAllDevices().observe(this) {
-                val deviceOsSpec = Utils.checkDeviceOsSpec(it)
+        onboardingViewModel.fetchAllDevices().observe(this) {
+            val deviceOsSpec = Utils.checkDeviceOsSpec(it)
 
-                if (!deviceOsSpec.isDeviceOsSpecSupported) {
-                    displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
-                }
+            if (!deviceOsSpec.isDeviceOsSpecSupported) {
+                displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
             }
         }
 
@@ -86,7 +88,7 @@ class OnboardingActivity : AppCompatActivity() {
     private fun setupViewPager() {
         viewPager.apply {
             // create the adapter that will return a fragment for each of the pages of the activity.
-            adapter = OnboardingPagerAdapter()
+            adapter = OnboardingPagerAdapter().also { viewPagerAdapter = it }
 
             // attach TabLayout to ViewPager2
             TabLayoutMediator(tabLayout, this) { _, _ -> }.attach()
@@ -95,6 +97,7 @@ class OnboardingActivity : AppCompatActivity() {
         }
 
         setupAppBarForViewPager()
+        setupObserversForViewPagerAdapter()
     }
 
     private fun setupAppBarForViewPager() {
@@ -113,56 +116,102 @@ class OnboardingActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupObserversForViewPagerAdapter() {
+        onboardingViewModel.enabledDevices.observe(this) {
+            if (it == null) {
+                viewPagerAdapter.numberOfPages = 2
+                logDebug(TAG, "Couldn't retrieve supported devices. Hiding last 2 fragments.")
+            } else {
+                if (viewPagerAdapter.numberOfPages <= 2) {
+                    viewPagerAdapter.numberOfPages = 3
+                    logDebug(TAG, "Retrieved ${it.size} supported devices. Showing the next fragment.")
+                } else {
+                    logDebug(TAG, "Retrieved ${it.size} supported devices.")
+                }
+            }
+        }
+
+        onboardingViewModel.selectedDevice.observe(this) {
+            if (viewPagerAdapter.numberOfPages <= 2) {
+                viewPagerAdapter.numberOfPages = 3
+                logDebug(TAG, "Selected device: $it. Showing the next fragment.")
+            } else {
+                logDebug(TAG, "Selected device: $it")
+            }
+        }
+
+        onboardingViewModel.selectedUpdateMethod.observe(this) {
+            if (viewPagerAdapter.numberOfPages <= 3) {
+                viewPagerAdapter.numberOfPages = 4
+                logDebug(TAG, "Selected update method: $it. Showing the next fragment.")
+            } else {
+                logDebug(TAG, "Selected update method: $it")
+            }
+        }
+    }
+
     private fun handlePageChangeCallback(pageNumber: Int) {
         when (pageNumber) {
             1 -> {
+                previousPageButton.isEnabled = false
+                nextPageButton.isEnabled = true
+
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
                 collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.logo_outline, android.R.anim.fade_in)
             }
             2 -> {
+                previousPageButton.isEnabled = true
+                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
+
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
                 collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.smartphone, android.R.anim.fade_in)
-
-                if (onboardingViewModel.selectedDevice.value == null) {
-                    // disable ViewPager2 swiping until a device is selected
-                    viewPager.isUserInputEnabled = false
-
-                    // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
-                    onboardingViewModel.selectedDevice.observe(this) {
-                        viewPager.isUserInputEnabled = true
-                    }
-                } else {
-                    viewPager.isUserInputEnabled = true
-
-                    // no need to observe changes to selectedDevice anymore
-                    onboardingViewModel.selectedDevice.removeObservers(this)
-                }
             }
             3 -> {
+                previousPageButton.isEnabled = true
+                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3
+
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
                 collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.cloud_download, android.R.anim.fade_in)
-
-                if (onboardingViewModel.selectedUpdateMethod.value == null) {
-                    // disable ViewPager2 swiping until a device is selected
-                    viewPager.isUserInputEnabled = false
-
-                    // observe changes to selectedDevice anymore, so we can update ViewPager swiping capabilities
-                    onboardingViewModel.selectedUpdateMethod.observe(this) {
-                        viewPager.isUserInputEnabled = true
-                    }
-                } else {
-                    viewPager.isUserInputEnabled = true
-
-                    // no need to observe changes to selectedDevice anymore
-                    onboardingViewModel.selectedUpdateMethod.removeObservers(this)
-                }
             }
             4 -> {
+                previousPageButton.isEnabled = true
+                nextPageButton.isEnabled = true
+
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
                 collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.done_all, android.R.anim.fade_in)
             }
             else -> {
                 // no-op
+            }
+        }
+
+        previousPageButton.setOnClickListener {
+            viewPager.currentItem = if (viewPager.currentItem == 0) {
+                0
+            } else {
+                viewPager.currentItem - 1
+            }
+        }
+
+        nextPageButton.apply {
+            rotation = if (pageNumber == 4) {
+                setImageResource(R.drawable.checkmark)
+                0f
+            } else {
+                setImageResource(R.drawable.expand)
+                90f
+            }
+
+            setOnClickListener {
+                if (pageNumber == 4) {
+                    onStartAppButtonClicked(it)
+                } else {
+                    viewPager.currentItem = if (viewPager.currentItem == 3) {
+                        3
+                    } else {
+                        viewPager.currentItem + 1
+                    }
+                }
             }
         }
     }
@@ -193,7 +242,7 @@ class OnboardingActivity : AppCompatActivity() {
         } else {
             val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
             val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-            Logger.logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId))
+            logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId))
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
         }
     }
@@ -243,6 +292,21 @@ class OnboardingActivity : AppCompatActivity() {
     inner class OnboardingPagerAdapter : FragmentStateAdapter(this) {
 
         /**
+         * Used to hide fragments if required. Done in the following cases:
+         * * Devices couldn't be retrieved from the server, or if the user hasn't selected a device yet
+         *   Set to 2, to hide the last 2 fragments
+         * * Update methods couldn't be retrieved from the server, or if the user hasn't selected an update method yet
+         *   Set to 3, to hide the last fragment
+         *
+         * This implicitly calls [notifyDataSetChanged] if the value changes.
+         */
+        var numberOfPages = 2
+            set(value) {
+                field = value
+                notifyDataSetChanged()
+            }
+
+        /**
          * This is called to instantiate the fragment for the given page.
          * Return one of:
          * * [DeviceChooserOnboardingFragment]
@@ -260,7 +324,7 @@ class OnboardingActivity : AppCompatActivity() {
         /**
          * Show 4 total pages: Welcome screen, device selection, update method selection, and completion screen
          */
-        override fun getItemCount() = 4
+        override fun getItemCount() = numberOfPages
     }
 
     companion object {
