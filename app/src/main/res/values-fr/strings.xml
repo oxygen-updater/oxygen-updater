@@ -5,22 +5,19 @@
 	<string name="app_name">"Oxygen Updater"</string>
 	<string name="launcher_app_name">"Oxygen Updater"</string>
 
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Impossible de récupérer la liste des appareils supportés</string>
 
 	<!-- Update information strings -->
 	<string name="update">"Mise à jour"</string>
 	<string name="enable">Activer</string>
 	<string name="update_information_file_name">"Nom du fichier : %1$s"</string>
-	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Étant donné qu\'une errreur de téléchargement s\'est produite et que le téléchargement doit être redémarré, vous pouvez utiliser ce lien pour télécharger le fichier de mise à jour. Vous devrez cependant le déplacer du dossier "Téléchargements" à la racine du stockage interne de votre appareil. Ce lien est le même lien que l\'application utilise et provient des serveurs FOTA de OnePlus:\n%1$s</string>
 	<string name="update_information_for">"Pour"</string>
 	<string name="update_information_header">"Mise à jour"</string>
 	<string name="update_information_header_short">"Mise à jour"</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
+	<string name="update_information_error_title">Impossible de récupérer les dernières données de mise à jour</string>
+	<string name="update_information_banner_server">Appuyez ici afin de voir des informations importantes</string>
 	<string name="update_information_banner_already_latest">Vous êtes déjà sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_congrats_latest">Félicitations ! Votre appareil est sur la dernière version d\'OxygenOS</string>
 	<string name="update_information_banner_update_available">Une nouvelle mise à jour est disponible: %1$s</string>
@@ -67,8 +64,7 @@
 	<string name="download_error_server">Une erreur serveur s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger.</string>
 	    
 	<string name="download_error_internal">Malheureusement, une erreur critique s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger et si le problème persiste, veuillez contacter le développeur pour obtenir de l\'assistance.</string>
-	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">"Le fichier de mise à jour a été téléchargé, mais n\'a pas pu être déplacé automatiquement. Ouvrez un gestionnaire de fichiers, naviguez à \"%1$s\" et déplacez manuellement le fichier de mise à jour à la racine du stockage interne."</string>
 	<string name="download_error_retry">"Réessayer"</string>
 	<string name="download_error_resume">"Reprendre"</string>
 	<string name="download_error_storage">"Pas assez d'espace disponible sur votre appareil pour télécharger la mise à jour. Veuillez supprimer quelques fichiers et réessayer."</string>
@@ -244,8 +240,7 @@ Quand vous sélectionnez cette option vous devez sélectionner un package root q
 Quand vous sélectionnez cette option la partition « cache » sera formatée après que la mise à jour soit installée. Cela garantira que votre appareil fonctionne de manière optimale et réduira la possibilité de bugs causés par l'installation de la mise à jour."</string>
 	<string name="install_options_explanation_reboot">"Redémarrer après l'installation :
 Quand vous sélectionnez cette option votre appareil redémarrera automatiquement sur OxygenOS après que la mise à jour soit installée. Autrement, votre appareil restera en mode Recovery à partir duquel vous pourrez installer des packages supplémentaires."</string>
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_title">Choisissez une méthode d\'installation</string>
 	<string name="install_method_chooser_subtitle">"Comment voulez-vous installer cette mise à jour ?"</string>
 	<string name="install_method_chooser_automatic_title">"Installation automatique"</string>
 	<string name="install_method_chooser_automatic_image">"Installation automatique de l'image"</string>
@@ -438,8 +433,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="error_no_internet_connection">"Pas de connexion."</string>
 	<string name="error_maintenance">"Maintenance du serveur"</string>
 	<string name="error_maintenance_message">"Veuillez patienter. Le serveur sera disponible bientôt."</string>
-	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry">Le serveur est probablement en cours de maintenance. Veuillez réessayez dans quelques instants ou signalez-le nous par <a href="mailto:support@oxygenupdater.com">email</a> ou par  <a href="https://discord.gg/5TXdhKJ">Discord</a>.</string>
 	<string name="error_push_failure">"Échec de l'activation des notifications. Veuillez fermer entièrement l'application et attendre quelques minutes, puis relancez-la."</string>
 	<string name="error_reload">"Recharger"</string>
 	<string name="error_unable_to_rate_app">"Vous ne pouvez pas évaluer cette application car le Play Store n'est pas installé sur votre appareil."</string>
@@ -469,8 +463,7 @@ Si vous n'avez pas un accès root pressez « Fermer » et continuez à utilise
 	<string name="purchase_error_after_payment">"L'achat de la version sans publicités a échoué en raison d'une erreur interne. Veuillez réessayer dans quelques minutes. Si vous avez déjà payé, veuillez contacter le support du Play Store."</string>
 
 	<!-- Other strings -->
-	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
+	<string name="error">Erreur</string>
 	<string name="icon">"Icône"</string>
 	<string name="loading">"Chargement…"</string>
 	<string name="processing">"Achat en cours…"</string>
