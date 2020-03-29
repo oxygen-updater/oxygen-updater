@@ -4,29 +4,25 @@
 	<string name="app_name">Oxygen Updater</string>
 	<string name="launcher_app_name">Oxygen Updater</string>
 
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Kon lijst van ondersteunde apparaten niet ophalen.</string>
 
 	<!-- Update information strings-->
 	<string name="update">Update</string>
-	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Inschakelen</string>
 	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
 	<string name="update_information_file_name">Bestandsnaam: %1$s</string>
-	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Omdat de download is mislukt, en de download opnieuw moet worden gestart, kan je deze link gebruiken om de update vanuit de browser te downloaden. Het kan zijn dat je het gedownloade bestand bestand vanuit je "Downloads" moet verplaatsen naar de hoofdmap. Dit is dezelfde link als wat de app normaal gezien download, wat een officiële link is van de OnePlus OTA server:\n%1$s</string>
 	<string name="update_information_for">voor</string>
 	<string name="update_information_header">Updaten</string>
 	<string name="update_information_header_short">Updaten</string>
-	<!-- TODO: translate these 7 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_error_title">Kon laatste update data niet ophalen</string>
+	<string name="update_information_banner_server">Tik hier om belangrijke mededelingen te bekijken</string>
+	<string name="update_information_banner_already_latest">Je draait al de laatste OxygenOS versie</string>
+	<string name="update_information_banner_congrats_latest">Gefeliciteerd! Je apparaat draait de laatste OxygenOS versie</string>
+	<string name="update_information_banner_update_available">Er is een nieuwe systeemupdate beschikbaar: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Omdat je geavanceerde modus hebt ingeschakeld, kan je de laatste ZIP voor \"%1$s\".\n\nJe kan geavanceerde modus uitzetten in de instellingen </string>
+	<string name="update_information_different_version_changelog_notice">Je bekijkt een changelog van de laatste update in het \"%1$s\" update pad. Als je deze update wilde installeren, dan moet je geavanceerde modus aanzetten (in instellingen).\n\nEchter, als je wenst de changelog van de huidig-geïnstalleerde versie wilt zien, zul je terug moeten gaan naar de correcte update methode.</string>
 	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
 	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
@@ -42,9 +38,8 @@
 	<string name="server_status_warning">Sommige functies werken mogelijk niet goed.</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 2 strings below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">Er is een app-update beschikbaar (%1$s). Tik hier om de Play Store te openen en update de app.</string>
+	<string name="new_app_version_long">Er is een app-update beschikbaar (%1$s). Door de app up-to-date te houden, krijg je altijd de nieuwste functies en bugfixes.\nTik hier om de Play Store te openen en update de app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">om</string>
@@ -55,8 +50,7 @@
 	<string name="download">Downloaden update</string>
 	<string name="downloaded">Gedownload</string>
 	<string name="downloading">Downloaden update…</string>
-	<!-- TODO: translate this string below -->
-	<string name="paused">Gepauzeerd - tap to resume</string>
+	<string name="paused">Gepauzeerd - tik om te hervatten</string>
 
 	<string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
 	<string name="download_complete">Download voltooid</string>
@@ -70,8 +64,7 @@
 	<string name="download_error_network">Er deed zich tijdens het downloaden van de update een netwerkprobleem voor. Het downloaden wordt automatisch hervat.</string>
 	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
-	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">Het bestand is gedownload, maar kon niet worden verplaatst naar de juiste map. Open een bestandsbeheerder, navigeer naar \"%1$s\" en verplaats handmatig het bestand naar de meest bovenliggende map van het interne geheugen.</string>
 	<string name="download_error_retry">OPNIEUW</string>
 	<string name="download_error_resume">HERVATTEN</string>
 	<string name="download_error_storage">Er is onvoldoende opslagruimte op je apparaat beschikbaar om de update te downloaden. Verwijder één of meer bestanden en probeer het opnieuw te downloaden.</string>
@@ -231,8 +224,7 @@
 	<string name="install_recovery_installing_update">Update installeren…</string>
 	<string name="install_recovery_thank_you">Bedankt voor het gebruiken van Oxygen Updater. Als je deze app leuk vindt, geef hem dan 5 sterren op Google Play :-)</string>
 
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_title">Kies installatie methode.</string>
 	<string name="install_method_chooser_subtitle">Hoe wil je deze update installeren?</string>
 	<string name="install_method_chooser_automatic_title">Automatische installatie*</string>
 	<string name="install_method_chooser_automatic_image">Afbeelding van de automatische installatie</string>
@@ -287,11 +279,10 @@
 	<string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
-	<string name="device_information_supported_oxygen_os">Your device is supported</string>
-	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
-	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
-	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+	<string name="device_information_supported_oxygen_os">Je apparaat wordt ondersteunt.</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Je apparaat wordt niet ondersteund, omdat het een provider-exclusief apparaat is.</string>
+	<string name="device_information_unsupported_oxygen_os">We hebben nog geen ondersteuning toegevoegd voor je nieuwe apparaat.</string>
+	<string name="device_information_unsupported_os">Je apparaat wordt niet ondersteund, omdat het niet ondersteund wordt door OxygenOS.</string>
 
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
@@ -314,13 +305,11 @@
 	<!-- About screen strings -->
 	<string name="about">Over deze app</string>
 	<string name="about_app_description">De ultieme app voor alles over OxygenOS-updates.</string>
-	<!-- TODO translate this string -->
 	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een vergelijkbare functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de gemeenschap tevreden te stellen door een goede ondersteuning &amp; te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/api/v2.3/news-content/81/EN">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>.</string>
 	<string name="about_third_party_app_notice">Onthoud dat dit geen officiële OnePlus-applicatie is.\nDe OnePlus naam, het OnePlus Logo en OxygenOS zijn eigendommen van OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.</string>
 	<string name="about_rate_button_text">Beoordeel</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>
 
@@ -353,12 +342,11 @@
 	<string name="news_date_published">Laatste update: %1$s</string>
 	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
 	<string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \"OPNIEUW\" om het artikel opnieuw te laden.</string>
-	<!-- TODO: translate these 5 strings below -->
-	<string name="news_unread_count">You have %1$d unread news articles</string>
-	<string name="news_empty_state_none_available_header">No articles yet</string>
-	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
-	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
-	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
+	<string name="news_unread_count">Je hebt %1$d ongelezen nieuwsartikelen.</string>
+	<string name="news_empty_state_none_available_header">Nog geen artikelen</string>
+	<string name="news_empty_state_all_read_header">Er is niets meer te lezen</string>
+	<string name="news_empty_state_none_available_text">Er zijn geen artikelen beschikbaar op dit moment, kom later terug.</string>
+	<string name="news_empty_state_all_read_text">Je hebt alle artikelen gelezen. Goed gedaan!\nWe hopen dat je hebt genoten van onze artikelen, en dat je er iets van hebt geleerd.\n\nTik op de banner om alle nieuwsartikelen te tonen.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Draag bij</string>
@@ -384,8 +372,7 @@
 	<string name="error_no_internet_connection">Geen verbinding.</string>
 	<string name="error_maintenance">Serveronderhoud</string>
 	<string name="error_maintenance_message">Een ogenblik geduld. De server zal zeer snel weer beschikbaar zijn.</string>
-	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry">Het kan zijn dat de server niet beschikbaar is vanwege onderhoud. Probeer het later opnieuw, of meld het aan ons via <a href="mailto:support@oxygenupdater.com">email</a> dan wel via onze <a href="https://discord.gg/5TXdhKJ">Discord server</a></string>
 	<string name="error_push_failure">Notificaties konden niet worden aangezet. Sluit de app volledig af en start hem over enkele minuten opnieuw op.</string>
 	<string name="error_reload">Opnieuw laden</string>
 	<string name="error_unable_to_rate_app">Je kunt de app niet beoordelen, omdat je de Google Play Store niet hebt geïnstalleerd.</string>
@@ -396,9 +383,8 @@
 	<string name="delete_message_delete_button">Verwijder</string>
 
 	<string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
-	<!-- TODO: translate the 2 strings below -->
-	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
-	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
+	<string name="carrier_exclusive_device_warning_message">Het lijkt erop dat je een provider-exclusief apparaat gebruikt. Zelfs als je OxygenOS draait, dan heb je alsnog niet de mogelijkheid om updates te installeren. Providers vergrendelen het apparaat zodat gebruikers geen wijzigingen kunnen aanbrengen zonder toestemming van de provider. Dit is gebruikelijk in de VS: de "Lokale Upgrade" optie is verwijderd uit de provider-exclusieve versies van OxygenOS. Deze optie is nodig om zelf-gedownloade updates te installeren, zelfs als je deze app niet gebruikt. Helaas kunnen wij hier niets aan doen, omdat we technisch en mogelijk legaal gezien hierin gelimiteerd zijn. Je kunt ons een email sturen of ons op Discord vinden voor meer informatie.</string>
+	<string name="unsupported_device_warning_message">Gefeliciteerd met je nieuwe OnePlus apparaat! Helaas hebben we nog geen ondersteuning toegevoegd voor dit apparaat. Maar geen zorgen, we zullen zo snel mogelijk ondersteuning voor dit apparaat toevoegen. We houden er niet van om fouten te maken, en het is een tijdrovend proces om de werking van de ondersteuning te kunnen garanderen voor nieuwe apparaten, dus wacht a.u.b rustig af. Stuur ons een email of neem deel aan onze Discord server als je ons wilt helpen, of om notificaties te krijgen van over app-updates die ondersteuning bieden voor jouw apparaat.</string>
 	<string name="unsupported_os_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan.\n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
 	<string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
@@ -410,8 +396,7 @@
 	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
 
 	<!-- Other strings -->
-	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
+	<string name="error">Fout</string>
 	<string name="icon">Icoon</string>
 	<string name="loading">Laden…</string>
 	<string name="processing">Verwerken…</string>
