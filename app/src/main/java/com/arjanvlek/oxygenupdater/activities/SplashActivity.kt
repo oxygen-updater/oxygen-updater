@@ -8,7 +8,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -16,16 +15,12 @@ import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var activityLauncher: ActivityLauncher
-
     private val notificationManager by inject<NotificationManager>()
     private val settingsManager by inject<SettingsManager>()
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        activityLauncher = ActivityLauncher(this)
-
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) = super.onCreate(savedInstanceState).also {
         // Support functions for Android 8.0 "Oreo" and up.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createPushNotificationChannel()
@@ -33,7 +28,6 @@ class SplashActivity : AppCompatActivity() {
         }
 
         migrateOldSettings()
-
         chooseActivityToLaunch()
     }
 

@@ -19,6 +19,7 @@ import androidx.lifecycle.observe
 import androidx.work.WorkInfo
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
@@ -49,7 +50,6 @@ import com.arjanvlek.oxygenupdater.utils.UpdateDataVersionFormatter
 import com.arjanvlek.oxygenupdater.utils.UpdateDescriptionParser
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
-import com.arjanvlek.oxygenupdater.utils.isNetworkAvailable
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_BYTES_DONE
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_ETA
@@ -123,13 +123,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                 }
             } else {
                 serverStatusTextView.isVisible = false
-            }
-
-            // banner is displayed if app version is outdated
-            if (settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES, true) && !serverStatus.checkIfAppIsUpToDate()) {
-                appUpdateBannerLayout.isVisible = true
-                appUpdateBannerLayout.setOnClickListener { ActivityLauncher(requireActivity()).openPlayStorePage(requireContext()) }
-                appUpdateBannerTextView.text = getString(R.string.new_app_version, serverStatus.latestAppVersion)
             }
 
             mainViewModel.fetchServerMessages(serverStatus) { error ->

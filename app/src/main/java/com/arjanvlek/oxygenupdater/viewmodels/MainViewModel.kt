@@ -25,6 +25,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.WorkRequest.MIN_BACKOFF_MILLIS
 import com.arjanvlek.oxygenupdater.R
+import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
 import com.arjanvlek.oxygenupdater.enums.DownloadStatus
 import com.arjanvlek.oxygenupdater.exceptions.UpdateDownloadException
@@ -50,9 +51,16 @@ import com.arjanvlek.oxygenupdater.workers.DownloadWorker
 import com.arjanvlek.oxygenupdater.workers.Md5VerificationWorker
 import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_DOWNLOAD
 import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_MD5_VERIFICATION
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.install.InstallState
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.inject
+import org.threeten.bp.LocalDate
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -98,11 +106,23 @@ class MainViewModel(
     val verificationWorkInfo
         get() = workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_MD5_VERIFICATION)
 
+    private val _appUpdateAvailable = MutableLiveData<AppUpdateInfo>()
+    private val _appUpdateInstallStatus = MutableLiveData<InstallState>()
+    val appUpdateInstallStatus: LiveData<InstallState>
+        get() = _appUpdateInstallStatus
+
     private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
+    private val appUpdateManager by inject(AppUpdateManager::class.java)
 
     private lateinit var downloadWorkRequest: OneTimeWorkRequest
     private lateinit var verificationWorkRequest: OneTimeWorkRequest
+
+    private var appUpdateType = AppUpdateType.FLEXIBLE
+
+    private val flexibleAppUpdateListener: KotlinCallback<InstallState> = {
+        _appUpdateInstallStatus.postValue(it)
+    }
 
     fun fetchAllDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.fetchDevices(DeviceRequestFilter.ALL)?.let {
@@ -365,5 +385,131 @@ class MainViewModel(
         if (_downloadStatus.shouldPruneWork()) {
             workManager.pruneWork()
         }
+    }
+
+    /**
+     * Checks that the platform will allow the specified type of update
+     */
+    fun maybeCheckForAppUpdate(): LiveData<AppUpdateInfo> = appUpdateManager.appUpdateInfo.addOnSuccessListener {
+        when (it.updateAvailability()) {
+            DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> _appUpdateAvailable.postValue(it)
+            UPDATE_AVAILABLE -> {
+                val lastAppUpdateCheckedDate = settingsManager.getPreference(
+                    SettingsManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
+                    LocalDate.MIN.toString()
+                )
+
+                val today = LocalDate.now()
+
+                // Check for app updates at most once every 2 days
+                if (LocalDate.parse(lastAppUpdateCheckedDate).plusDays(MainActivity.DAYS_FOR_APP_UPDATE_CHECK) <= today) {
+                    settingsManager.savePreference(
+                        SettingsManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
+                        today.toString()
+                    )
+
+                    _appUpdateAvailable.postValue(it)
+                }
+            }
+            // Reset ignore count
+            else -> settingsManager.savePreference(
+                SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                0
+            )
+        }
+    }.let {
+        _appUpdateAvailable
+    }
+
+    /**
+     * Checks that the platform will allow the specified type of update.
+     * Note: Value is posted to [_appUpdateAvailable] only if an immediate update was stalled.
+     * This is because the method is called in [MainActivity.onResume],
+     * and the activity can get resumed after the user accepts a flexible update too (because a dialog is shown by Google Play)
+     */
+    fun checkForStalledAppUpdate(): LiveData<AppUpdateInfo> = appUpdateManager.appUpdateInfo.addOnSuccessListener {
+        if (appUpdateType == AppUpdateType.IMMEDIATE
+            && it.updateAvailability() == DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+        ) {
+            _appUpdateAvailable.postValue(it)
+        }
+    }.let {
+        _appUpdateAvailable
+    }
+
+    fun requestImmediateAppUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo) {
+        // Reset ignore count
+        settingsManager.savePreference(
+            SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+            0
+        )
+
+        // If an in-app update is already running, resume the update.
+        appUpdateManager.startUpdateFlowForResult(
+            appUpdateInfo,
+            AppUpdateType.IMMEDIATE,
+            activity,
+            MainActivity.REQUEST_CODE_APP_UPDATE
+        )
+    }
+
+    /**
+     * Calls [AppUpdateManager.startUpdateFlowForResult]. The app update type is [AppUpdateType.FLEXIBLE] by default, if it's allowed.
+     * However, it is forced to be [AppUpdateType.IMMEDIATE] if any of the following criteria satisfy:
+     * * [AppUpdateInfo.clientVersionStalenessDays] exceeds the max threshold
+     * * The user has ignored the flexible update too many times
+     * If [AppUpdateType.FLEXIBLE] isn't allowed, then it's [AppUpdateType.IMMEDIATE]
+     *
+     * @param appUpdateInfo The update info. Note that this can not be re-used,
+     * so every call of this function requires a fresh instance of [AppUpdateInfo],
+     * which can be requested from [AppUpdateManager.getAppUpdateInfo].
+     */
+    fun requestUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo) {
+        // TODO: Implement app update priority whenever Google adds support for it in Play Developer Console and the library itself
+        //  (the library doesn't yet have an annotation interface for priority constants)
+        appUpdateType = if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+            val versionStalenessDays = appUpdateInfo.clientVersionStalenessDays() ?: 0
+            val ignoreCount = settingsManager.getPreference(
+                SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                0
+            )
+
+            // Force update if user has ignored a flexible update 7 times,
+            // or if it's been 14 days since the update arrived
+            if (versionStalenessDays >= MainActivity.MAX_APP_FLEXIBLE_UPDATE_STALE_DAYS
+                || ignoreCount >= MainActivity.MAX_APP_FLEXIBLE_UPDATE_IGNORE_COUNT
+            ) {
+                AppUpdateType.IMMEDIATE
+            } else {
+                AppUpdateType.FLEXIBLE
+            }
+        } else {
+            // Reset ignore count
+            settingsManager.savePreference(
+                SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                0
+            )
+
+            AppUpdateType.IMMEDIATE
+        }
+
+        if (appUpdateType == AppUpdateType.FLEXIBLE) {
+            appUpdateManager.registerListener(flexibleAppUpdateListener)
+        }
+
+        appUpdateManager.startUpdateFlowForResult(
+            appUpdateInfo,
+            appUpdateType,
+            activity,
+            MainActivity.REQUEST_CODE_APP_UPDATE
+        )
+    }
+
+    fun completeAppUpdate() {
+        appUpdateManager.completeUpdate()
+    }
+
+    fun unregisterAppUpdateListener() {
+        appUpdateManager.unregisterListener(flexibleAppUpdateListener)
     }
 }

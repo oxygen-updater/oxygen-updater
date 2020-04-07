@@ -43,9 +43,11 @@
 	<string name="server_status_warning">Nogle programopdateringer vil muligvis ikke virke korrekte.</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 2 strings below -->
+	<!-- TODO: translate these 4 strings below -->
 	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
 	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
+	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">kl.</string>

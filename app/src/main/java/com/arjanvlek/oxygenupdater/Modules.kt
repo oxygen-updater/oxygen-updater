@@ -19,6 +19,7 @@ import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.NewsViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.StringQualifier
@@ -73,6 +74,7 @@ private val miscellaneousSingletonModule = module {
      * A singleton [SystemVersionProperties] helps avoid unnecessary calls to the native `getprop` command.
      */
     single { SystemVersionProperties() }
+    single { AppUpdateManagerFactory.create(androidContext()) }
 }
 
 val allModules = listOf(

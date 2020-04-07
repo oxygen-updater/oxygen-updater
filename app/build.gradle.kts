@@ -15,7 +15,7 @@ keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion(AndroidSdk.COMPILE)
-    buildToolsVersion = "29.0.2"
+    buildToolsVersion = AndroidSdk.BUILD_TOOLS
 
     defaultConfig {
         applicationId = "com.arjanvlek.oxygenupdater"
@@ -23,8 +23,8 @@ android {
         minSdkVersion(AndroidSdk.MIN)
         targetSdkVersion(AndroidSdk.TARGET)
 
-        versionCode = 62
-        versionName = "3.7.0"
+        versionCode = 63
+        versionName = "3.8.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles(
@@ -233,6 +233,8 @@ dependencies {
     implementation(Libraries.FIREBASE_ADS)
     implementation(Libraries.FIREBASE_ANALYTICS)
     implementation(Libraries.FIREBASE_MESSAGING)
+
+    implementation(Libraries.PLAY_CORE)
     implementation(Libraries.PLAY_SERVICES_BASE)
 
     implementation(Libraries.KOIN)
