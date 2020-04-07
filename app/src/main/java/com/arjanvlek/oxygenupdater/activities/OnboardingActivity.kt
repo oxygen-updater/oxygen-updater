@@ -304,6 +304,21 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
             set(value) {
                 field = value
                 notifyDataSetChanged()
+
+                when (viewPager.currentItem) {
+                    0 -> {
+                        previousPageButton.isEnabled = false
+                        nextPageButton.isEnabled = true
+                    }
+                    field - 1 -> {
+                        previousPageButton.isEnabled = true
+                        nextPageButton.isEnabled = false
+                    }
+                    else -> {
+                        previousPageButton.isEnabled = true
+                        nextPageButton.isEnabled = true
+                    }
+                }
             }
 
         /**
