@@ -16,7 +16,7 @@
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: Translate this string below -->
-	<string name="update_information_download_link">Пошто се десила грешка при преузимању, преузимање се мора рестартовати, можете користити овај линк да скинете фајл из претраживача. Можда ћете морати да преместите преузету датотеку из "Преузимања" директоријум у матични директориј. Ово је исти линк који апликација користи за преузимање, он је официјални OnePlus OTA сервер линк:\n%1$s</string>
+	<string name="update_information_download_link">Пошто се десила грешка при преузимању, преузимање се мора рестартовати, можете користити овај линк да скинете фајл из претраживача. Можда ћете морати да преместите преузету датотеку из \"Преузимања\" директоријум у матични директориј. Ово је исти линк који апликација користи за преузимање, он је официјални OnePlus OTA сервер линк:\n%1$s</string>
 	<string name="update_information_for">за</string>
 	<string name="update_information_header">Ажурирај</string>
 	<string name="update_information_header_short">Ажурирај</string>
