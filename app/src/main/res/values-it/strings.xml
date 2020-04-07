@@ -102,7 +102,7 @@
 	<string name="preference_header_device">Dispositivo</string>
 	<string name="preference_header_ui">UI</string>
 	<string name="preference_header_notifications">Notifiche</string>
-	<string name="preference_header_advanced">Avanzato/string>
+	<string name="preference_header_advanced">Avanzato</string>
 	<string name="preference_header_about">Info</string>
 
 	<string name="summary_on">Attivato</string>
