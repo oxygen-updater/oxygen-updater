@@ -5,29 +5,29 @@
 	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Није могуће преузети листу подржаних уређаја</string>
 
 	<!-- Update information strings-->
 	<string name="update">Ажурирај</string>
 	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Омогући</string>
 	<string name="update_information_description_not_available">Нема званичних информација о новим могућностима овог ажурирања. Обично, овакво ажурирање поправња грешке, повећавање перформанси, и / или критична ажурирања сигурности за ваш уређај.</string>
 	<string name="update_information_file_name">Име дадотеке: %1$s</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: Translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the "Downloads" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">Пошто се десила грешка при преузимању, преузимање се мора рестартовати, можете користити овај линк да скинете фајл из претраживача. Можда ћете морати да преместите преузету датотеку из "Преузимања" директоријум у матични директориј. Ово је исти линк који апликација користи за преузимање, он је официјални OnePlus OTA сервер линк:\n%1$s</string>
 	<string name="update_information_for">за</string>
 	<string name="update_information_header">Ажурирај</string>
 	<string name="update_information_header_short">Ажурирај</string>
 	<!-- TODO: translate these 7 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_error_title">Не могу преузети најновије информације о ажурирању</string>
+	<string name="update_information_banner_server">Додирните овде да бисте видели важна обавештења</string>
+	<string name="update_information_banner_already_latest">Ви сте већ на последњј OxygenOS верзији</string>
+	<string name="update_information_banner_congrats_latest">Честитамо! Ваш уређај је на последњој OxygenOS верзији</string>
+	<string name="update_information_banner_update_available">Ново ажурирање је доступно за вас: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Пошто сте укључили напредни мод, можете преузети последњи ZIP за \"%1$s\".\n\nМожете искључити напредни мод из подешавања</string>
+	<string name="update_information_different_version_changelog_notice">Прегледавате дневник измена за најновију исправку у систему \"%1$s\" записника надоградње. Ако намеравате да инсталирате ову исправку, морате прво укључити напредни мод (у подешавањима).\n\nКако год, ако уместо тога желите да видите дневник измена за тренутну верзију, мораћете се вратити на исправан начин ажурирања.</string>
 	<string name="update_information_last_checked_on">Задња провера: %1$s</string>
 	<string name="update_information_latest_available_update">Ново ажурирање система је доступно</string>
 	<string name="update_information_no_update_data_available">Нема новости о ажурирању</string>
@@ -44,8 +44,8 @@
 
 	<!-- New app version message strings -->
 	<!-- TODO: translate these 2 strings below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">Доступно је ажурирање апликације (%1$s). Кликните овде да отворите Play продавницу и урадите ажурирање апликације.</string>
+	<string name="new_app_version_long">Доступно је ажурирање апликације (%1$s). Ажурирање апликације осигурава вам да увек добијате најновије функције и исправке грешака.\nКликните овде да отворите Play продавницу и урадите ажурирање апликације.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">у</string>
@@ -54,10 +54,10 @@
 
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
-	<string name="paused">Paused - tap to resume</string>
+	<string name="download">Преузмите ажурирање</string>
+	<string name="downloaded">Ажурирање преузето</string>
+	<string name="downloading">Преузимање ажурирања…</string>
+	<string name="paused">Паузирано - кликните да наставите</string>
 
 	<string name="download_already_downloaded">Ажурирање је већ преузето. Спремно је за инсталирање.</string>
 	<string name="download_complete">Преузимање је готово</string>
@@ -73,7 +73,7 @@
 	<string name="download_error_server">Грешка са сервером је настала приликом преузимања. Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_internal">Нажалост, техничка грешка је настала приликом преузимања ажурирања. Молимо вас покушајте да преузмете поново. Ако грешка настави да се појављује, молимо вас контактирајте нас за помоћ.</string>
 	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">Фајл је преузет, али не може бити пребачен у исправни директоријум. Отворите менаџер фајлова, идите на \"%1$s\" и ручно преместите фајл у највиши директориј интерне меморије</string>
 
 	<string name="download_error_retry">ПОНОВИ</string>
 	<string name="download_error_resume">НАСТАВИ</string>
@@ -234,7 +234,7 @@
 	<string name="install_options_explanation_reboot">Поново покрени након инсталације:\nкада изаберете ову опцију, ваш уређај ће се аутоматски поново покренути назад у OxygenOS након инсталације ажурирања.У супротном, ваш уређај ће истати у "Recovery mode", где можете инсталирати додатне пакете.</string>
 
 	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_title">Изаберите методу инсталације</string>
 	<string name="install_method_chooser_subtitle">Како желите да инсталирате ово ажурирање?</string>
 	<string name="install_method_chooser_automatic_title">Аутоматска инсталација*</string>
 	<string name="install_method_chooser_automatic_image">Аутоматска инсталација слике</string>
@@ -290,10 +290,10 @@
 
 	<!-- Device information strings -->
 	<!-- TODO: Translate these 4 strings below -->
-	<string name="device_information_supported_oxygen_os">Your device is supported</string>
-	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
-	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
-	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+	<string name="device_information_supported_oxygen_os">Ваш уређај је подржан</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Ваш уређај није подржан због тога што је уређај од оператера</string>
+	<string name="device_information_unsupported_oxygen_os">Нисмо додали подршку за ваш нови уређај још увек</string>
+	<string name="device_information_unsupported_os">Ваш уређај није подржан јер не користи OxygenOS</string>
 
 	<string name="device_information_hardware_header">Хардвер</string>
 	<string name="device_information_software_header">Софтвер</string>
@@ -322,7 +322,7 @@
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: Translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">Веб сајт</string>
 	<string name="about_email_button_text">Емаил</string>
 
 	<!-- LocalNotifications strings -->
@@ -355,11 +355,11 @@
 	<string name="news_empty">Ова вест нема садржај.</string>
 	<string name="news_load_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
 	<!-- TODO: translate these 5 strings below -->
-	<string name="news_unread_count">You have %1$d unread news articles</string>
-	<string name="news_empty_state_none_available_header">No articles yet</string>
-	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
-	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
-	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
+	<string name="news_unread_count">Имате %1$d непрочитаних вести</string>
+	<string name="news_empty_state_none_available_header">Нема вести још увек</string>
+	<string name="news_empty_state_all_read_header">Није ништа преостало за прочитати</string>
+	<string name="news_empty_state_none_available_text">У овом тренутку нема доступних вести, погледајте касније.</string>
+	<string name="news_empty_state_all_read_text">Прочитали сте све вести. Одличан посао!\nНадамо се да сте уживали читајући наше чланке и научили нешто ново из њих.\n\nДодирните банер поново да бисте приказали све вести.</string>
 
 	<!-- Contribute strings -->
 	<!-- TODO translate this block to all but Dutch / Belgian / French -->
@@ -387,7 +387,7 @@
 	<string name="error_maintenance">Одржавање сервера</string>
 	<string name="error_maintenance_message">Молимо вас сачекајте. Сервер ће ускоро бити поново доступан.</string>
 	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry">Сервер је можда искључен ради одржавања. Покушајте поново након неког времена, или нам то пријавите путем <a href="mailto:support@oxygenupdater.com">мејла</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord серверу</a>.</string>
 	<string name="error_push_failure">Грешка приликом укључивања обавештења. Потпуно затворите апликацију и покушајте поново након пар минута чекања.</string>
 	<string name="error_reload">Освежи</string>
 
@@ -413,7 +413,7 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
+	<string name="error">Грешка</string>
 	<string name="icon">Иконица</string>
 	<string name="loading">Учитавање…</string>
 	<string name="processing">Обрада…</string>
