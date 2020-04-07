@@ -30,7 +30,478 @@
 	<string name="update_information_system_is_up_to_date">"Il tuo sistema è aggiornato. "</string>
 	<string name="update_information_unknown_update_name">"Aggiornamento sconosciuto per %1$s"</string>
 	<string name="update_information_version">"versione:"</string>
+	<string name="update_information_view_update_information">"Vedi info aggiornamento"</string><?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Application title, Main activity title -->
+	<string name="app_name">"Oxygen Updater"</string>
+	<string name="launcher_app_name">"Oxygen Updater"</string>
+
+	<string name="device_chooser_error_title">Errore nel recuperare la lista dei dispositivi supportati.</string>
+
+	<!-- Update information strings -->
+	<string name="update">"Aggiorna"</string>
+	<string name="enable">Attiva</string>
+	<string name="update_information_file_name">"Nome file: %1$s"</string>
+	<string name="update_information_md5">MD5: %1$s</string>
+	<string name="update_information_download_link">In quanto si e\' verificato un errore e il download dev\'essere riavviato, puoi usare questo link per scaricare l\'aggiornamento dal browser. E\' probabile che debba spostare i file scaricate da \"Downloads\" alla cartella soprastante. Questo e\' lo stesso link usato dall\'app, il quale e\' un server OTA ufficiale:\n%1$s</string>
+	<string name="update_information_for">"per"</string>
+	<string name="update_information_header">"Aggiorna"</string>
+	<string name="update_information_header_short">"Aggiorna"</string>
+	<string name="update_information_error_title">Errore nel recuperare gli ultimi aggiornamenti.</string>
+	<string name="update_information_banner_server">Premi qui per i messaggi importanti</string>
+	<string name="update_information_banner_already_latest">Sei gia\' sull\'ultima versione di OxygenOS.</string>
+	<string name="update_information_banner_congrats_latest">Auguri! Sei sull\'ultima versione di OxygenOS.</string>
+	<string name="update_information_banner_update_available">Un nuovo aggiornamento e\' disponibile: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Grazie alla modalità avanzata, puoi scaricare l\'ultima ZIP per \"%1$s\".\n\nPuoi disattivare la modalità avanzata nelle impostazioni.</string>
+	<string name="update_information_different_version_changelog_notice">Stai visualizzando il changelog dell\'ultimo aggiornamento sulla traccia \"%1$s\". Se intendi istallare questo aggiornamento, devi abilitare la modalità avanzata (impostazioni).\n\nPer visualizzare il changelog attuale devi scegliere la modalità di aggiornamento corretta.</string>
+	<string name="update_information_last_checked_on">"Ultima verifica: %1$s"</string>
+	<string name="update_information_latest_available_update">"È disponibile un nuovo aggiornamento di sistema"</string>
+	<string name="update_information_no_update_data_available">"Non è disponibile alcuna informazione sull'aggiornamento. "</string>
+	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
+	<string name="update_information_system_is_up_to_date">"Il tuo sistema è aggiornato. "</string>
+	<string name="update_information_unknown_update_name">"Aggiornamento sconosciuto per %1$s"</string>
+	<string name="update_information_version">"versione:"</string>
 	<string name="update_information_view_update_information">"Vedi info aggiornamento"</string>
+
+	<!-- Server status warning strings -->
+	<string name="server_status_error">"Alcune funzioni non funzionano. "</string>
+	<string name="server_status_unreachable">"Il server non è raggiungibile, prova a ricaricare la pagina. "</string>
+	<string name="server_status_warning">"Alcune funzioni potrebbero non funzionare. "</string>
+
+	<!-- New app version message strings -->
+	<string name="new_app_version">Aggiornamento disponibile: (%1$s). Premi qui per aggiornare.</string>
+	<string name="new_app_version_long">Aggiornamento disponibile (%1$s). Tenere l\'lapp aggiornata garantisce un\'esperienza fluida.\nPremi qui per aggiornare.</string>
+
+	<!-- Date and time strings -->
+	<string name="time_at">"alle"</string>
+	<string name="time_today">"Oggi"</string>
+	<string name="time_yesterday">"Ieri"</string>
+
+	<!-- Downloader strings -->
+	<string name="download">Scarica aggiornamento</string>
+	<string name="downloaded">Aggiornamento scaricato</string>
+	<string name="downloading">Scaricando…</string>
+	<string name="paused">In pausa - premi per continuare</string>
+
+	<string name="download_already_downloaded">"L'aggiornamento è già stato scaricato, è pronto per l'istallazione. "</string>
+	<string name="download_complete">"Download completato"</string>
+	<string name="download_complete_notification">"Download completato. Premi su start per iniziare l'istallazione. "</string>
+	<string name="download_description">"Oxygen Updater"</string>
+	<string name="download_error">"Errore nel download"</string>
+	<string name="download_error_close">"CHIUDI"</string>
+	<string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova. "</string>
+
+	<string name="download_error_internal">"Errore interno."</string>
+	<string name="download_error_could_not_move_temp_file">Il file e\' stato scaricato ma non e\' stato possibile spostarlo. Apri un file manager, naviga a \"%1$s\" e sposta il file nella cartella più\' in alto di internal storage.</string>
+	<string name="download_error_server">"Errore nel server."</string>
+	<string name="download_error_network">"Errore di rete."</string>
+	<string name="download_error_retry">"RIPROVA"</string>
+	<string name="download_error_resume">"RIPRENDI"</string>
+	<string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta. "</string>
+	<string name="download_failed">"Download fallito"</string>
+	<string name="running_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
+	<string name="download_oxygen_os">"OxygenOS V. "</string>
+	<string name="download_pending">"Il tuo download inizierà subito… "</string>
+	<string name="download_permissions">"Premi download di nuovo per scaricare l'aggiornamento. "</string>
+
+	<string name="download_notification_error_internal">"Errore interno."</string>
+	<string name="download_notification_error_server">"Errore nel server."</string>
+	<string name="download_notification_error_network">"Errore di rete."</string>
+	<string name="download_notification_error_storage_full">"Spazio insufficiente. "</string>
+	<string name="download_notification_error_corrupt">"Verifica file fallita. Assicurati di essere connesso a internet e riprova. "</string>
+
+	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">"Circa %1$d ore rimanenti"</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"meno di un minuto… "</string>
+	<string name="download_progress_text_minutes_remaining">"circa %1$d minuti rimanenti"</string>
+	<string name="download_progress_text_one_hour_remaining">"circa un'ora rimanente"</string>
+	<string name="download_progress_text_one_minute_remaining">"circa un minuto rimanente"</string>
+	<string name="download_progress_text_seconds_remaining">"alcuni secondi… "</string>
+	<string name="download_progress_text_unknown_time_remaining">"calcolando…"</string>
+	<string name="download_progress_text_verifying">"verifica file… "</string>
+	<string name="download_progress_text_paused">"in pausa"</string>
+	<string name="download_waiting_for_network">"in attesa di una connessione… "</string>
+
+	<string name="download_size_megabyte">"%1$d MB"</string>
+	<string name="download_unknown_update_name">"OxygenOS Update"</string>
+	<string name="download_verifying">"Verificando… "</string>
+	<string name="download_verifying_error">"File danneggiato "</string>
+	<string name="download_verifying_start">"Il tuo download verrà verificato… "</string>
+
+	<!-- Settings strings -->
+	<string name="preference_header_support">Aiutaci</string>
+	<string name="preference_header_device">Dispositivo</string>
+	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_notifications">Notifiche</string>
+	<string name="preference_header_advanced">Avanzato</string>
+	<string name="preference_header_about">Info</string>
+
+	<string name="summary_on">Attivato</string>
+	<string name="summary_off">Disattivato</string>
+	<string name="summary_device">Attendi…</string>
+	<string name="summary_update_method">Seleziona un dispositivo</string>
+	<string name="summary_theme">Scegli tema</string>
+	<string name="summary_privacy_policy">Visualizza online</string>
+	<string name="summary_rate_app">Rilascia una recenzione da 5 stelle</string>
+
+	<string name="label_buy_ad_free">Rimuovi annunci</string>
+	<string name="label_theme">Tema</string>
+	<string name="label_app_update_banner">Banner per aggiornamenti</string>
+	<string name="label_news_warning_banner">News &amp; warning banners</string>
+	<string name="label_privacy_policy">Privacy policy</string>
+	<string name="label_rate_app">Valuta l\'app</string>
+
+	<string name="theme_light">Light</string>
+	<string name="theme_dark">Dark</string>
+	<string name="theme_system">System</string>
+	<string name="theme_auto">Auto</string>
+
+	<string name="theme_light_subtitle">Sfondo bianco e Rosso OnePlus come colore primario.</string>
+	<string name="theme_dark_subtitle">Rosso OnePlus mutato come colore primario, con uno sfondo quasi nero. Usa questo tema per conservare la batteria, specialmente nei pannelli AMOLED.</string>
+	<string name="theme_system_subtitle">Utilizza la modalita\' notte del sistema</string>
+	<string name="theme_auto_subtitle">Cambia tra light e dark in base all\'ora del giorno.</string>
+	<string name="theme_additional_note">Nel caso il risparmio energetico fosse attivo, il tema dark sara\' utilizzato per conservare la batteria.</string>
+
+	<string name="settings">"Impostazioni"</string>
+	<string name="settings_buy_button_buy">"Acquista(%1$s)"</string>
+	<string name="settings_buy_button_bought">"Acquistato"</string>
+	<string name="settings_buy_button_not_possible">"Non disponibile"</string>
+	<string name="settings_buy_ad_free_label">"Passa a senza annunci"</string>
+
+	<string name="settings_contribute_label">"Aiuta a migliorare l'app:"</string>
+	<string name="settings_contribute_button">"Contribuisci"</string>
+
+	<string name="settings_category_other">"Altro:"</string>
+	<string name="settings_device">"Dispositivo"</string>
+	<string name="settings_entered_incorrectly">"Errore nel salvare le impostazioni. Seleziona il tuo dispositivo / il modo d'aggiornamento e ritenta. "</string>
+	<string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale puo' essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalita' avanzata nelle impostazioni.
+
+Un aggiornamento completo puo' essere istallato sempre - indipendentemente dalla versione attuale presente sul tuo dispositivo.
+
+Un aggiornamento beta puo' essere istallato solo se ti trovi già' sul branch delle beta."</string>
+	<string name="settings_explanation_update_methods">"Spiegazione dei metodi d'aggiornamento "</string>
+	<string name="settings_header">"Seleziona il tuo dispositivo e metodo d'aggiornamento:"</string>
+	<string name="settings_push">"Inviami una notifica quando:"</string>
+	<string name="settings_push_from_server">"È disponibile un messaggio critico"</string>
+	<string name="settings_push_new_version">"È disponibile un aggiornamento di sistema"</string>
+	<string name="settings_push_new_device">"È disponibile un nuovo dispositivo"</string>
+	<string name="settings_push_news">"Vengono pubblicate delle news"</string>
+	<string name="settings_saved">"Le tue impostazioni sono salvate in automatico. "</string>
+	<string name="settings_saving">"Le tue impostazioni si stanno ancora salvando. Se questo impiega troppo tempo controlla la tua connessione, riavvia l'applicazione e ritenta. "</string>
+	<string name="settings_server_messages">"Mostra messaggi in-app quando:"</string>
+	<string name="settings_other_options">"Altre opzioni"</string>
+	<string name="settings_advanced_mode">"Modalità avanzata"</string>
+	<string name="settings_advanced_mode_button_explanation">"Premi qui per ulteriori informazioni. "</string>
+	<string name="settings_advanced_mode_explanation">"La modalita' avanzata nasconde il messaggio \"Il tuo sistema e' aggiornato\", consentendo l'istallazione di qualsiasi aggiornamento, anche se non compatibili con il tuo dispositivo.
+
+Questo puo' essere utile quando:
+- Aggiorni da un branch regolare a una beta;
+- Ritorni a un branch regolare da una beta (Non ti dimenticare di effetuare il factory reset)
+- Reinstallare la versione attuale del tuo sistema."</string>
+	<string name="settings_update_method">"Metodo d'aggiornamento"</string>
+	<string name="settings_upload_logs">Condividi uso e logs.</string>
+
+	<!-- FAQ strings -->
+	<string name="faq">"FAQ"</string>
+	<string name="faq_menu_item">"FAQ"</string>
+	<string name="faq_no_network">"Nessuna connessione. "</string>
+	<string name="faq_no_network_text">"Hai bisogno di una connessione funzionante per accedere al FAQ. "</string>
+
+	<!-- First-time setup strings -->
+	<string name="onboarding">"Benvenuto"</string>
+	<string name="onboarding_finished_button">"avvia app"</string>
+	<string name="onboarding_page_1_title">"Benvenuto su Oxygen Updater!"</string>
+	<string name="onboarding_page_1_text">"Quest app ti permetterà di:
+
+-Avere accesso più veloce a gli'ultimi aggiornamenti di Android per il tuo dispositivo OnePlus con OxygenOS
+
+-Facilmente aggiornare un dispositivo rootato
+
+-Visualizzare le notivate in aggiornamenti
+
+-Leggere le novità su OnePlus e OxygenOS
+
+Trascina verso sinistra per continuare."</string>
+	<string name="onboarding_page_1_caption">"Questa non e' un applicazione ufficiale. L'uso di questa app e' completamente a rischio proprio. Ne' OnePlus ne' lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app.
+
+Usando l'app consenti ai termini e condizioni citati sopra.
+
+Trascina verso sinistra per continuare."</string>
+	<string name="onboarding_page_2_title">"Seleziona il tuo dispositivo:"</string>
+	<string name="onboarding_page_2_caption">"Il tuo dovrebbe già essere selezionato, se non lo e', selezionalo sopra.
+
+Trascina verso sinistra per continuare"</string>
+	<string name="onboarding_page_3_title">"Seleziona il tuo metodo d'aggiornamento. "</string>
+	<string name="onboarding_page_3_caption">"Di solito, l'aggiornamento progressivo e' la scelta corretta, perche' offre download molto più facili e piccoli.
+
+Pero', non completamente comnpatibili con dispositivi rootati. Se hai un dispositivo con root, seleziona l'aggiornamento completo.
+
+Se hai una versione beta, seleziona una delle opzioni Open Beta.
+
+Trascina verso sinistra per continuare."</string>
+	<string name="onboarding_page_4_title">"Sei pronto per continuare! "</string>
+	<string name="onboarding_page_4_text">"Goditi l'app!
+
+Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i tre puntini in alto a destra e selezionando \"Impostazioni\"."</string>
+
+	<!-- Automatic install strings -->
+	<string name="install">"Installa"</string>
+	<string name="install_checking_root">"Verificando il root… "</string>
+	<string name="install_grant_root_permissions">"Per favore consenti l'accesso root quando richiesto. "</string>
+	<string name="install_going_back_not_possible">"Sfortunatamente, non puoi tornare indietro. "</string>
+	<string name="install_preparing_installation">"Preparando l'istallazione… "</string>
+	<string name="install_recovery_installer_title">"Istallazione Aggiornamento"</string>
+
+	<!-- Add 2 spaces to the end -->
+	<string name="install_recovery_backing_up">"Effettuando il backup. Questo impiegherà del tempo! "</string>
+	<string name="install_recovery_clearing_cache">"Cancellando il cache…"</string>
+	<string name="install_recovery_done">"Fine. Il tuo dispositivo si riavviaerà. "</string>
+	<string name="install_recovery_installing_additional_zip">"Installando il zip aggiuntivo… "</string>
+	<string name="install_recovery_installing_update">"Installando l'aggiornamento… "</string>
+	<string name="install_recovery_thank_you">"Grazie per aver scelto di usare Oxygen Updater! Se ti piace l'app, considera lasciare una recenzione su Google Play :-)"</string>
+	<string name="install_error_write_script_failed">"Errore nella preparazione. Hai consentito l'accesso root? "</string>
+	<string name="install_options_backup">"Effettua il backup del dispositivo. "</string>
+	<string name="install_options_header">"Puoi personalizzare il processo d'istallazione cambiando le impostazioni riportate di seguito. Premi \"Avvia Istallazione\" per avviare l'istallazione. "</string>
+	<string name="install_options_keep_root">"Mantieni root"</string>
+	<string name="install_options_reboot_after_install">"Riavvia dopo istallazione"</string>
+	<string name="install_options_select_root_package">"Selezione il pacchetto root da installare… "</string>
+	<string name="install_options_start_install">"Avvia istallazione"</string>
+	<string name="install_options_subtitle">"Seleziona le tue impostazioni d'istallazione"</string>
+	<string name="install_options_wipe_cache_partition">"Cancella cache"</string>
+	<string name="install_options_explanation_title">"Cosa indicano queste opzioni? "</string>
+	<string name="install_options_explanation_backup">"Esegui il backup del dispositivo:
+Selezionando questa opzione verrà creato un backup del tuo sistema, le app e le impostazioni automaticamente prima di un'istallazione. Utile nel caso qualcosa dovesse andare storto."</string>
+	<string name="install_options_explanation_keep_root">"Mantieni il root:
+Selezionando questa opzione, puoi specificare il pacchetto root che verrà istallato dopo l'aggiornamento. Questo assicura la permanenza del root.
+N.B. Il pacchetto dev'essere compatibile con la nuova versione di OOS che stai per installare. "</string>
+	<string name="install_options_explanation_wipe_cache">"Cancella partizione cache:
+Selezionando questa opzione, verrà eliminata la partizione cache dopo l'aggiornamento. Questo puo' tornare utile per assicurarti dell'ottimo andamento del tuo dispositivo. "</string>
+	<string name="install_options_explanation_reboot">"Riavvia dopo istallazione:
+Selezionando questa opzione, il tuo dispositivo si riavvierà in automatico al termine dell'istallazione. Altrimenti, il dispositivo rimarrà in modalità recovery."</string>
+	<string name="install_method_chooser_title">Scegli metodo di istallazione.</string>
+	<string name="install_method_chooser_subtitle">"Come vuoi installare l'aggiornamento? "</string>
+	<string name="install_method_chooser_automatic_title">"Istallazione automatica*"</string>
+	<string name="install_method_chooser_automatic_image">"Seleziona istallazione automatica"</string>
+	<string name="install_method_chooser_automatic_description">"Il modo più semplice per installare l'aggiornamento.
+Il tuo dispositivo si riavvierà.
+
+* Obbligatorio accesso root e recovery TWRP."</string>
+	<string name="install_method_chooser_manual_title">"Istallazione manuale"</string>
+	<string name="install_method_chooser_manual_image">"Immagine d'istallazione manuale"</string>
+	<string name="install_method_chooser_manual_description">"Leggi la guida per l'istallazione. Istallerai l'aggiornamento tramite la modalità recovery."</string>
+	<string name="install_temporary_error">"E' stato riscontrato un errore temporaneo. Per favore ritenta. "</string>
+	<string name="install_verify_error_title">"Istallazione fallita"</string>
+	<string name="install_verify_error_nothing_installed">"Errore nell'istallazione. Nessun cambiamento e' stato effettuato sul tuo dispostivio. Riprova."</string>
+	<string name="install_verify_error_unable_to_verify">"Verifica istallazione corretta fallita, apri Oxygen Updater per verificare manualmente."</string>
+	<string name="install_verify_error_wrong_version_installed">"Una versione diversa di OOS e' stata istallata. Non selezionare un aggiornamento mentre scegli un pacchetto root sotto l'opzione \"Mantieni il root\""</string>
+	<string name="install_verify_success_title">"Istallazione completata"</string>
+	<string name="install_verify_success_message">"OOS versione %1$s e' stata istallata con successo."</string>
+	<string name="install_zip_file_clear">"Cancella file pacchetto root."</string>
+	<string name="install_zip_file_pick">"Scegli pacchetto root"</string>
+	<string name="install_zip_file_placeholder">"Scegli pacchetto root.."</string>
+	<string name="install_zip_file_wrong_file_type">"Seleziona soltanto un file zip."</string>
+
+	<!-- Install guide strings -->
+	<string name="install_guide_no_root">"Istalla secondo le istruzioni mostrate nella guida."</string>
+	<string name="install_guide_automatic_install_disabled">"Le istallazioni automatiche sono state temporaneamente disabilitate a causa di un problema tecnico. Istalla l'aggiornamento secondo le istruzioni mostrate nella guida."</string>
+	<string name="install_guide">"Guida d'istallazione"</string>
+	<string name="install_guide_subtitle">"Guida - %1$d of %2$d"</string>
+	<string name="install_guide_image_description">"Immagine contestuale. Premi su un posto inferiore sullo schermo per ascoltare la guida."</string>
+	<string name="install_guide_tip">"&#8226; E' consigliato scriversi tutti i passaggi, giacche' e' ecessario spegnere il dispositivo durante l'istallazione."</string>
+	<string name="install_guide_page_1_title">"Scarica l'aggiornamento."</string>
+	<string name="install_guide_page_1_text">"&#8226; Premi il bottone Download per iniziare a scaricare.
+
+- Il progresso apparirà nell'app e come notifica.
+
+- Al termine del download, riceverai una notifica con il testo \"Download completato\".
+Se e' stato riscontrato un errore, apri l'app e ritenta il download. Assicurati di avere una connessione internet funzionante."</string>
+	<string name="install_guide_page_2_title">"Entra in modalità recovery."</string>
+	<string name="install_guide_page_2_text">"&#8226; Come prima cosa, spegni il tuo dispositivo.
+
+- Poi, premi il bottone di accensione e quello di volume in basso allo stesso momento.
+
+- Il tuo dispositivo ora enterà in modalità Recovery. Aspetta finche' appare il menu."</string>
+	<string name="install_guide_page_3_title">"Istalla l'aggiornamento scaricato."</string>
+	<string name="install_guide_page_3_text">"&#8226; Dentro il menu, scegli la tua lingua. Poi, premi (o usa i bottoni di volume per navigare) \"istalla da SD\".
+
+- Continua giu' finche' non giungi ad un riga con il tuo file \".zip\" mostrato all'interno dell'app. (Di solito, inizia per \"OnePlusOxygen-\").
+
+- L'istallazione partirà in automatico."</string>
+	<string name="install_guide_page_4_title">"Riavvia il tuo dispositivo."</string>
+	<string name="install_guide_page_4_text">"&#8226; Al termine dell'istallazione, tornerai alla Recovery. Dentro di essa, premi \"Reboot\".
+
+- Il tuo dispositivo ci metterà più del solito al primo avvio. "</string>
+	<string name="install_guide_page_5_title">"Fine. Buon divertimento!"</string>
+	<string name="install_guide_page_5_text"><![CDATA["- Dopo l'ottimizzazione delle app, l'aggiornamento e' stato istallato.
+Per verificare, controlla la versione attuale del tuo sistema:
+
+- Impostazioni —> Info Telefono \"Versione OxygenOS\".
+
+- Se ti piace l'app, lascia 5 stelle!"]]></string>
+	<string name="install_guide_close_button">"Chiudi guida"</string>
+	<string name="install_guide_zip_file_deleted">"Il file selezionato non esiste più."</string>
+	<string name="install_guide_zip_file_picker_title">"Seleziona pacchetto root"</string>
+	<string name="install_guide_zip_file_missing">"Se vuoi mantenere il root, seleziona il pacchetto root da usare."</string>
+
+	<!-- Device information strings -->
+	<string name="device_information_supported_oxygen_os">Dispositivo non supportato.</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Dispositivo non support, in quanto esclusivo col gestore.</string>
+	<string name="device_information_unsupported_oxygen_os">Dispositivo non ancora supportato.</string>
+	<string name="device_information_unsupported_os">Il tuo dispositivo non e\' supportato, non utilizza OxygenOS.</string>
+
+	<string name="device_information_hardware_header">Hardware</string>
+	<string name="device_information_software_header">Software</string>
+
+	<string name="device_information_amount_of_memory">"RAM:"</string>
+	<string name="device_information_cpu_frequency">"Frequenza processore:"</string>
+	<string name="device_information_header">"Dispositivo"</string>
+	<string name="device_information_header_short">"Dispositivo"</string>
+	<string name="device_information_image_description">"Immagine Dispositivo"</string>
+	<string name="device_information_incremental_os_version">"Versone di sistema incrementale:"</string>
+	<string name="device_information_os_version">"Versione Android"</string>
+	<string name="device_information_oxygen_os_version">"Versione OxygenOS:"</string>
+	<string name="device_information_oxygen_os_ota_version">"Versione OTA:"</string>
+	<string name="device_information_patch_level_version">"Data security patch:"</string>
+	<string name="device_information_serial_number">"Numero seriale:"</string>
+	<string name="device_information_system_on_a_chip">"Chip:"</string>
+	<string name="device_information_unknown">"sconosciuto"</string>
+	<string name="device_information_your_device">"Tuo dispositivo: "</string>
+
+	<!-- About screen strings -->
+	<string name="about">"Info app"</string>
+	<string name="about_app_description">"Il miglior utensile per aggiornamenti OxygenOS"</string>
+	<string name="about_background_story">Questa app e\' stata originariamente sviluppata da Arjan Vlek come supplemento di un\'altra app , chiamata <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>\n\nDopo 4 anni, Luglio 2019, Arjan decise di abbandonare entrambi i suoi progetti e affidarli ad una squadra di sviluppatori da diverse nazioni. Presero la responsabilita\' di fornire la community con un servizio eccellente &amp; per fornire aggiornamenti OnePlus in modo veloce. \nUlteriori informazioni sull\'<a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">annuncio</a>.\n\n14 Agosot 2018 segno\' il primo rilascio sotto nuove direttive, che porto\' un sacco di novita\' come dark mode e un redesign completo. \n\nPer ulteriori informazioni sul team, visualizza <a href="https://oxygenupdater.com/team/">il sito</a>.</string>
+	<string name="about_third_party_app_notice">Questa non e\' un\'applicazione ufficiale. \nIl nome OnePlus, il logo OnePlus e OxygenOS sono proprieta\' di OnePlus\nAndroid, Google, Google Play e il logo Google Play sono marchi registrati di Google Inc.\nQuesta app utilizza dati di OnePlus e l\'azienda genitore Oppo per visualizzare alcune informazioni.</string>
+	<string name="about_rate_button_text">"Vota"</string>
+	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
+	<string name="about_website_button_text">Web</string>
+	<string name="about_email_button_text">Email</string>
+
+	<!-- LocalNotifications strings -->
+	<string name="notification_new_device">"Nuovo dispositivo rilasciato! Il %1$s e' ora supportato."</string>
+	<string name="notification_new_device_short">"Apri l'app o scegli il dispositivo."</string>
+	<string name="notification_no_notification_support">"Istalla o aggiorna i servizi Google Play per abilitare le notifiche push."</string>
+	<string name="notification_version_title">"Aggiornamento sistema disponibile."</string>
+	<string name="notification_version">"%1$s e' ora disponibile per %2$s!"</string>
+	<string name="push_notification_channel_name">"Notifiche push"</string>
+	<string name="push_notification_channel_description">"Mostra tutte le notifiche importanti dell'app. Inclusi aggiornamenti di sistema e novità importanti."</string>
+	<string name="progress_notification_channel_name">"Notifiche di progresso"</string>
+	<string name="progress_notification_channel_description">"Mostra tutte le notifiche non-importanti dell'app. "</string>
+
+	<!-- Help strings -->
+	<string name="help">"Aiuto"</string>
+	<string name="help_text">"Benvenuto nella sezione aiuto di Oxygen Updater!
+
+L'aiuto copre diverse tematiche:
+
+• Aggiornare il tuo dispositivo
+• Leggere le news
+• Mostrare informazioni sul dispositivo
+• Cambiare impostazioni
+
+Continua giu' per sfogliare."</string>
+	<string name="help_updating_your_device_title">"Aggiornando il tuo dispositivo"</string>
+	<string name="help_updating_your_device_text">"Quando apri l'app, potrai vedere se e' disponibile un aggiornamento. Se lo e', puoi istallarlo.
+
+Per avviare l'istallazione, premi \"Download\". Al completamento del download, la schermata d'istallazione si aprira'. Se hai chiuso l'app, premi su \"Istalla\" che e' ora visibile accanto al bottone \"Download\".
+
+La schermata d'istallazione verifichera' prima se hai un dispositivo con root. Se si', autorizza l'app quando richiesto e scegli come installare l'aggiornamento. Altrimenti, segui le istruzioni per l'istallazione manuale.
+
+Istallazione Automatica:
+Devi soltanto scegliere le opzioni d'istallazione. Quelle predefinite sono consigliate, eccetto l'impostazione per il pacchetto root nel caso volessi mantenerlo, che va selezionato. Seleziona il paccheto (file zip) usando il bottone blu e premendo su \"Avvia Istallazione\" per avviare la istallazione.
+
+
+Istallazione Manuale:
+Ti verra' mostrata una guida sul tuo schermo. E' consigliato scriversi i passi necessari ed effettuarli come scritti per installare l'aggiornamento."</string>
+	<string name="help_reading_news_title">"Leggendo le ultime novità"</string>
+	<string name="help_reading_news_text">"Le novità sono a sinistra della schermata info aggiornamenti. Il più recente e' mostrato in alto. Premi su uno di questi per leggerlo. "</string>
+	<string name="help_device_information_title">"Visualizzando info dispositivo"</string>
+	<string name="help_device_information_text">"Puoi visualizzare alcune specifiche del tuo dispositivo usando la schermata alla destre di quella di info aggiornamenti. Questo puo' tornare utile durante un ticket di support, nei quali potresti essere interpellato su alcune specifiche. "</string>
+	<string name="help_change_settings_title">"Cambiando impostazioni"</string>
+	<string name="help_change_settings_text">"Puoi cambiare le impostazioni premendo sui 3 puntini in alto a destra seguito dall'opzione Impostazioni.
+Puoi cambiare le seguenti impostazioni:
+
+• Dispositivo e modalità d'aggiornamento
+• Notifiche push
+• Notifiche in-app
+• Impostazioni privacy.
+
+Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornamento? Verifica di avere una connessione ad internet e riprova."</string>
+
+	<!-- News strings -->
+	<string name="news">"Novità"</string>
+	<string name="news_author">"Autore: %1$s"</string>
+	<string name="news_date_published">"Ultimo aggiornamento: %1$s"</string>
+	<string name="news_empty">"Questo articolo non ha commenti."</string>
+	<string name="news_load_error">"Errore nell'aprire l'articolo. Controlla la tua connesisone e ritenta."</string>
+	<string name="news_unread_count">Hai %1$d articoli non letti.</string>
+	<string name="news_empty_state_none_available_header">Nessun articolo disponibile</string>
+	<string name="news_empty_state_all_read_header">Non c\'e\' piu\' nulla da leggere!</string>
+	<string name="news_empty_state_none_available_text">Non c\'e\' nulla da leggere, riprova piu\' tardi.</string>
+	<string name="news_empty_state_all_read_text">Hai letto tutto, congratulazioni!\nSperiamo ti piacciano i nostri articoli e che ne abbia tratto qualcosa.\n\nPremi il banner per rivedere tutti gli articoli.</string>
+
+	<string name="contribute">Diventa un contributor</string>
+	<string name="contribute_title">Migliora Oxygen Updater</string>
+	<string name="contribute_explanation">"Oxygen Updater ha bisogno di te! Per avere gli aggiornamenti più' recenti, abbiamo bisogno del nome dei file d'aggiornamento. Questi sono presenti sul tuo telefono nel momento in cui appare un aggiornamento.\n\nCome posso aiutare?\n\nOxygen Updater puo automaticamente mandare i nomi dei file agli admin to our admins. Questo processo richiedera' il trasferimento di alcuni kb e un pizzico della tua batteria!. L'unico prerequisito e' aspettare circa 15 min prima di istallare un aggiornamento finche' non appare una notifica di conferma da parte nostra. (approximataly 15 minutes) Solo la \".Ota\" directory viene controllata una volta ogni 15 minuti."</string>
+	<string name="contribute_image_description">Carica file sul server</string>
+	<string name="contribute_agree">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento."</string>
+	<string name="contribute_agree_from_setup">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento agli admin."</string>
+	<string name="contribute_save">Salva</string>
+	<string name="contribute_more_info">Ulteriori info …</string>
+	<string name="contribute_allow_storage">Abbiamo bisogno dei permessi storage per continuare</string>
+	<string name="contribute_successful_notification_title">Contribuzione avvenuta con successo!</string>
+	<string name="contribute_successful_notification_text">Grazie per aver condiviso %1$s con i nostri admin!</string>
+
+	<!-- Error strings -->
+	<string name="error_app_outdated">"Oh no!"</string>
+	<string name="error_app_outdated_message">"Questa versione e' obsoleta. Aggiorna!"</string>
+	<string name="error_app_requires_network_connection">"Nessuna connessione"</string>
+	<string name="error_app_requires_network_connection_message">"Errore nel connettere al server. Assicurati di avere una connessione stabile. L'app terminerà ora."</string>
+	<string name="error_button_retry">"Riprova"</string>
+	<string name="error_exit_button_text">"Esci"</string>
+	<string name="error_no_internet_connection">"Nessuna connesione."</string>
+	<string name="error_maintenance">"Manutenzione"</string>
+	<string name="error_maintenance_message">"Attendi. Il server tornerà disponibile presto."</string>
+	<string name="error_maintenance_retry">Il server potrebbe essere sotto manutenzione. Riprova piu\' tardi o facci sapere tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">Discord</a>.</string>
+	<string name="error_push_failure">"Abilitazione delle notifiche fallita. Chiudi l'app e rirpova."</string>
+	<string name="error_reload">"Ricarica"</string>
+	<string name="error_unable_to_rate_app">"Non puoi valutare l'app perche' Google Play Store non e' presente sul dispositivo."</string>
+
+	<!-- Message strings -->
+	<string name="delete_message_title">"Aggiornamento già scaricato"</string>
+	<string name="delete_message_contents">"Hai già scaricato questo aggiornamento, ma non lo hai istallato.
+Premi \"Installa\" per vedere il processo d'istallazione. Premi su \"Cancella\" per cancellare il file. Premi \"indietro\" per chiudere questo messaggio."</string>
+	<string name="delete_message_delete_button">"Cancella"</string>
+	<string name="unsupported_device_warning_title">"Device non supportato"</string>
+	<string name="carrier_exclusive_device_warning_message">Pare che tu stia utilizzando una versione esclusiva-gestore. Anche se utilizzi OxygenOS, non potrai istallare aggiornamenti. I gestori solitamente \"racchiudono\" il dispositivo in modo che gli utenti non possano modificare il firmware senza il loro consenso. Ahime\', non possiamo farci nulla. Per ulteriori informazioni contattaci su Discord o via email.</string>
+	<string name="unsupported_device_warning_message">Auguri per il tuo nuovo dispositivo OnePlus! Sfortunatamente non abbiamo ancora aggiunto il supporto per il dispositivo. Non ti preoccupare, lo aggiungeremo appena possibile! Non ci piace commettere errori, ed e\' un processo molto lungo il verificare i nuovi dispositivi percio\' sii paziente. Scrivici un email o contattaci su Discors se vuoi aiutarci, oppure per sapere quando aggiungeremo il supporto per il tuo dispositivo.</string>
+	<string name="unsupported_os_warning_message">"Pare che il tuo dispositivo non utilizzi OxygenOS. Nota bene che puoi soltanto aggiornare dispositivi utilizzanti OxygenOS.
+
+Altri dispositivi della OnePlus su custom ROM, non sono supportati."</string>
+	<string name="unsupported_device_warning_checkbox_title">"Non mostrare più"</string>
+	<string name="root_check_title">"Accesso root"</string>
+	<string name="root_check_message">"Oxygen Updater offre istallazioni facili e automatiche per utenti rootati. Pero', gli aggiornamenti incrementali non sono disponibili per quest ultimi. Oxygen Updater puo' verificare l'accesso root per garantirti l'istallazione più facile.
+
+Se hai effettuato il root, autorizza l'app a trarrne utilizzo dopo aver chiuso questo messaggio.
+
+Non hai il root? Premi \"Chiudi\" e continua ad utilizzare l'app."</string>
+
+	<!-- Purchasing strings -->
+	<string name="purchase_error_before_payment">"L'acquisto e' fallito a causa di un errore interno.
+Ritenta in alcuni minuti."</string>
+	<string name="purchase_error_after_payment">"Il pagamento non e' andato a buon fine a causa di un errore interno. Ritenta in alcuni minuti. Se hai già pagato, contatta Google Play Support per assistenza."</string>
+
+	<!-- Other strings -->
+	<string name="error">Error</string>
+	<string name="icon">"Icona"</string>
+	<string name="loading">"Caricando…"</string>
+	<string name="processing">"Processando…"</string>
+	<string name="choose_file">"Seleziona file"</string>
+	<string name="update_information_description_not_available">"Non esiste alcuna informazione ufficiale del changelog di questo aggiornamento. Di solito, questo include dei fix per i bug, miglioramenti di performance e / o aggiornamenti critici di sicurezza per il tuo dispositivo."</string>
+	<string name="error_google_play_button_text">"Google Play"</string>
+</resources>
 
 	<!-- Server status warning strings -->
 	<string name="server_status_error">"Alcune funzioni non funzionano. "</string>
