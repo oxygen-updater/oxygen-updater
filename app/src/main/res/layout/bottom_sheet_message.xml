@@ -29,7 +29,7 @@
 		android:paddingEnd="@dimen/spacing_default"
 		android:paddingBottom="@dimen/spacing_default"
 		android:requiresFadingEdge="vertical"
-		app:layout_constraintBottom_toTopOf="@id/positiveButton"
+		app:layout_constraintBottom_toTopOf="@id/flow"
 		app:layout_constraintTop_toBottomOf="@id/titleTextView">
 
 		<TextView
@@ -40,20 +40,17 @@
 			tools:text="Message" />
 	</androidx.core.widget.NestedScrollView>
 
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/neutralButton"
-		style="@style/Widget.MaterialComponents.Button.TextButton"
+	<androidx.constraintlayout.helper.widget.Flow
+		android:id="@+id/flow"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_default"
-		android:layout_marginEnd="@dimen/spacing_half"
-		android:textColor="?android:textColorTertiary"
-		android:visibility="gone"
+		android:layout_margin="@dimen/spacing_default"
+		app:constraint_referenced_ids="negativeButton,positiveButton"
+		app:flow_horizontalGap="@dimen/spacing_default"
+		app:flow_verticalGap="@dimen/spacing_quarter"
+		app:flow_wrapMode="chain"
 		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:rippleColor="@color/ripple_neutral"
-		tools:text="Neutral"
-		tools:visibility="visible" />
+		app:layout_constraintEnd_toEndOf="parent" />
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/negativeButton"
@@ -63,9 +60,8 @@
 		android:layout_marginEnd="@dimen/spacing_half"
 		android:textColor="?colorError"
 		android:visibility="gone"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/positiveButton"
 		app:rippleColor="@color/ripple_error"
+		tools:ignore="MissingConstraints"
 		tools:text="Negative"
 		tools:visibility="visible" />
 
@@ -78,10 +74,9 @@
 		android:textColor="@color/colorPositive"
 		android:visibility="gone"
 		app:iconTint="@color/colorPositive"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
 		app:rippleColor="@color/ripple_positive"
 		app:strokeColor="@color/colorPositive"
+		tools:ignore="MissingConstraints"
 		tools:text="Positive"
 		tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,13 +20,12 @@ import kotlin.system.exitProcess
 /**
  * Wrapper around [BottomSheetDialog]
  */
-open class MessageDialog(
+class MessageDialog(
     private val activity: Activity,
     private val title: String? = null,
     private val message: String? = null,
     private val positiveButtonText: String? = null,
     private val negativeButtonText: String? = null,
-    private val neutralButtonText: String? = null,
     @DrawableRes private val positiveButtonIcon: Int? = null,
     private val cancellable: Boolean = false,
     private val dialogListener: KotlinCallback<Int>? = null
@@ -52,11 +51,6 @@ open class MessageDialog(
         negativeButton.setup(negativeButtonText, View.OnClickListener {
             dismiss()
             dialogListener?.invoke(Dialog.BUTTON_NEGATIVE)
-        })
-
-        neutralButton.setup(neutralButtonText, View.OnClickListener {
-            dismiss()
-            dialogListener?.invoke(Dialog.BUTTON_NEUTRAL)
         })
 
         setCancelable(cancellable)
