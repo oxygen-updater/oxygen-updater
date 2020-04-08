@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.core.app.NavUtils
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commitNow
-import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.enums.PurchaseStatus
 import com.arjanvlek.oxygenupdater.enums.PurchaseType
@@ -71,7 +70,6 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
         IabHelper(this, PK1.A + "/" + PK2.B).apply {
             iabHelper = this
 
-            enableDebugLogging(BuildConfig.DEBUG)
             setupIabHelper(iabHelper)
         }
     }
@@ -254,7 +252,6 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             IabHelper(this, PK1.A + "/" + PK2.B).let {
                 iabHelper = it
 
-                it.enableDebugLogging(BuildConfig.DEBUG)
                 it.startSetup { result: IabResult ->
                     if (!result.success) {
                         logIABError("Purchase of the ad-free version failed due to an unknown error BEFORE the purchase screen was opened", result)

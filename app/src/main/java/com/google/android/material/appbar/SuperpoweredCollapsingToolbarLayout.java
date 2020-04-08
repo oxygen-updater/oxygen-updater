@@ -70,7 +70,6 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 	private boolean collapsingSubtitleEnabled;
 	private boolean drawCollapsingTitle;
 	private boolean scrimsAreShown;
-	private boolean multiline;
 
 	private long scrimAnimationDuration;
 
@@ -189,8 +188,6 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
 		setTitle(a.getText(R.styleable.SuperpoweredCollapsingToolbarLayout_title));
 		setSubtitle(a.getText(R.styleable.SuperpoweredCollapsingToolbarLayout_subtitle));
-
-		setMultiline(a.getBoolean(R.styleable.SuperpoweredCollapsingToolbarLayout_multiline, false));
 
 		// First load the default text appearances
 		collapsingTextHelper.setExpandedTitleAppearance(R.style.TextAppearance_Design_SuperpoweredCollapsingToolbar_ExpandedTitle);
@@ -311,12 +308,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
 		// Let the collapsing text helper draw its text
 		if (collapsingTitleEnabled && drawCollapsingTitle) {
-			// TODO: implement non-multiline drawing
-			if (multiline) {
-				collapsingTextHelper.draw(canvas);
-			} else {
-				collapsingTextHelper.draw(canvas);
-			}
+			collapsingTextHelper.draw(canvas);
 		}
 
 		// Now draw the status bar scrim
@@ -1340,20 +1332,6 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 	 */
 	public int getExpandedSubtitleMarginBottom() {
 		return expandedSubtitleMarginBottom;
-	}
-
-	/**
-	 * Enables support for multiple lines in the expanded state
-	 */
-	public void setMultiline(boolean multiline) {
-		this.multiline = multiline;
-	}
-
-	/**
-	 * Gets whether support for multiple lines in the expanded state is enabled
-	 */
-	public boolean isMultiline() {
-		return multiline;
 	}
 
 	/**

@@ -18,7 +18,6 @@
 			android:theme="@style/ToolbarTheme"
 			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
 			app:maxLines="3"
-			app:multiline="true"
 			app:title="@string/onboarding_page_1_title">
 
 			<ImageView

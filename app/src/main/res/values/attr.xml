@@ -79,8 +79,6 @@
 		<!-- The subtitle to show when subtitleEnabled is set to true. -->
 		<attr name="subtitle" />
 
-		<!-- Enables support for multiple lines in the expanded state -->
-		<attr name="multiline" format="boolean" />
 		<!-- The maximum number of lines of title to show in the expanded state -->
 		<attr name="maxLines" format="integer" />
 		<!-- Extra spacing between lines of title. -->

@@ -12,37 +12,37 @@ object Logger {
     private const val CRASHLYTICS_TAG_EXCEPTION_SEVERITY = "EXCEPTION_SEVERITY"
     private const val CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE = "ERROR_DETAIL_MESSAGE"
 
-    fun logVerbose(tag: String?, message: String?) {
+    fun logVerbose(tag: String?, message: String) {
         if (isDebugBuild) {
             Log.v(tag, message)
         }
     }
 
-    fun logVerbose(tag: String?, message: String?, cause: Throwable?) {
+    fun logVerbose(tag: String?, message: String, cause: Throwable?) {
         if (isDebugBuild) {
             Log.v(tag, message, cause)
         }
     }
 
-    fun logDebug(tag: String?, message: String?) {
+    fun logDebug(tag: String?, message: String) {
         if (isDebugBuild) {
             Log.d(tag, message)
         }
     }
 
-    fun logDebug(tag: String?, message: String?, cause: Throwable?) {
+    fun logDebug(tag: String?, message: String, cause: Throwable?) {
         if (isDebugBuild) {
             Log.d(tag, message, cause)
         }
     }
 
-    fun logInfo(tag: String?, message: String?) {
+    fun logInfo(tag: String?, message: String) {
         if (isDebugBuild) {
             Log.i(tag, message)
         }
     }
 
-    fun logInfo(tag: String?, message: String?, cause: Throwable?) {
+    fun logInfo(tag: String?, message: String, cause: Throwable?) {
         if (isDebugBuild) {
             Log.i(tag, message, cause)
         }
@@ -54,7 +54,7 @@ object Logger {
     fun logWarning(tag: String?, cause: OxygenUpdaterException) {
         Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.WARNING.name)
 
-        Log.w(tag, cause.message)
+        Log.w(tag, cause.message ?: "OxygenUpdaterException: unknown")
         logException(cause)
     }
 
@@ -77,7 +77,7 @@ object Logger {
     fun logError(tag: String?, cause: OxygenUpdaterException) {
         Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.ERROR.name)
 
-        Log.e(tag, cause.message)
+        Log.e(tag, cause.message ?: "OxygenUpdaterException: unknown")
         logException(cause)
     }
 

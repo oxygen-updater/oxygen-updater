@@ -20,6 +20,7 @@ import com.arjanvlek.oxygenupdater.internal.OnConsumeMultiFinishedListener
 import com.arjanvlek.oxygenupdater.internal.OnIabPurchaseFinishedListener
 import com.arjanvlek.oxygenupdater.internal.QueryInventoryFinishedListener
 import com.arjanvlek.oxygenupdater.utils.Logger
+import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import org.json.JSONException
 
 /**
@@ -57,10 +58,6 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
 
     // Ensure atomic access to mAsyncInProgress and mDisposeAfterAsync.
     private val mAsyncInProgressLock = Any()
-
-    // Is debug logging enabled?
-    var mDebugLog = false
-    var mDebugTag = "IabHelper"
 
     // Is setup done?
     var mSetupDone = false
@@ -106,20 +103,6 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
     var mPurchaseListener: OnIabPurchaseFinishedListener? = null
 
     /**
-     * Enables or disable debug logging through LogCat.
-     */
-    fun enableDebugLogging(enable: Boolean, tag: String) {
-        checkNotDisposed()
-        mDebugLog = enable
-        mDebugTag = tag
-    }
-
-    fun enableDebugLogging(enable: Boolean) {
-        checkNotDisposed()
-        mDebugLog = enable
-    }
-
-    /**
      * Starts the setup process. This will start up the setup process asynchronously. You will be
      * notified through the listener when the setup process is complete. This method is safe to call
      * from a UI thread.
@@ -131,7 +114,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         checkNotDisposed()
         check(!mSetupDone) { "IAB helper is already set up." }
 
-        logDebug("Starting in-app billing setup.")
+        logDebug(TAG, "Starting in-app billing setup.")
 
         // Connection to IAB service
         mServiceConn = object : ServiceConnection {
@@ -140,12 +123,12 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                     return
                 }
 
-                logDebug("Billing service connected.")
+                logDebug(TAG, "Billing service connected.")
                 mService = IInAppBillingService.Stub.asInterface(service)
                 val packageName = mContext!!.packageName
 
                 try {
-                    logDebug("Checking for in-app billing 3 support.")
+                    logDebug(TAG, "Checking for in-app billing 3 support.")
 
                     // check for in-app billing v3 support
                     var response = mService!!.isBillingSupported(3, packageName, ITEM_TYPE_INAPP)
@@ -158,7 +141,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                         mSubscriptionUpdateSupported = false
                         return
                     } else {
-                        logDebug("In-app billing version 3 supported for $packageName")
+                        logDebug(TAG, "In-app billing version 3 supported for $packageName")
                     }
 
                     // Check for v5 subscriptions support. This is needed for
@@ -166,10 +149,10 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                     response = mService!!.isBillingSupported(5, packageName, ITEM_TYPE_SUBS)
 
                     mSubscriptionUpdateSupported = if (response == BILLING_RESPONSE_RESULT_OK) {
-                        logDebug("Subscription re-signup AVAILABLE.")
+                        logDebug(TAG, "Subscription re-signup AVAILABLE.")
                         true
                     } else {
-                        logDebug("Subscription re-signup not available.")
+                        logDebug(TAG, "Subscription re-signup not available.")
                         false
                     }
 
@@ -179,10 +162,10 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                         // check for v3 subscriptions support
                         response = mService!!.isBillingSupported(3, packageName, ITEM_TYPE_SUBS)
                         if (response == BILLING_RESPONSE_RESULT_OK) {
-                            logDebug("Subscriptions AVAILABLE.")
+                            logDebug(TAG, "Subscriptions AVAILABLE.")
                             mSubscriptionsSupported = true
                         } else {
-                            logDebug("Subscriptions NOT AVAILABLE. Response: $response")
+                            logDebug(TAG, "Subscriptions NOT AVAILABLE. Response: $response")
                             mSubscriptionsSupported = false
                             mSubscriptionUpdateSupported = false
                         }
@@ -199,7 +182,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
             }
 
             override fun onServiceDisconnected(name: ComponentName) {
-                logDebug("Billing service disconnected.")
+                logDebug(TAG, "Billing service disconnected.")
                 mService = null
             }
         }
@@ -231,11 +214,11 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
             }
         }
 
-        logDebug("Disposing.")
+        logDebug(TAG, "Disposing.")
         mSetupDone = false
 
         if (mServiceConn != null) {
-            logDebug("Unbinding from service.")
+            logDebug(TAG, "Unbinding from service.")
             if (mContext != null) {
                 mContext!!.unbindService(mServiceConn!!)
             }
@@ -255,7 +238,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
     fun disposeWhenFinished() {
         synchronized(mAsyncInProgressLock) {
             if (mAsyncInProgress) {
-                logDebug("Will dispose after async operation finishes.")
+                logDebug(TAG, "Will dispose after async operation finishes.")
                 mDisposeAfterAsync = true
             } else {
                 try {
@@ -328,7 +311,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         }
 
         try {
-            logDebug("Constructing buy intent for $sku, item type: $itemType")
+            logDebug(TAG, "Constructing buy intent for $sku, item type: $itemType")
             val buyIntentBundle: Bundle
             buyIntentBundle = if (oldSkus == null || oldSkus.isEmpty()) {
                 // Purchasing a new item or subscription re-signup
@@ -356,7 +339,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
 
             val pendingIntent = buyIntentBundle.getParcelable<PendingIntent>(RESPONSE_BUY_INTENT)
 
-            logDebug("Launching buy intent for $sku. Request code: $requestCode")
+            logDebug(TAG, "Launching buy intent for $sku. Request code: $requestCode")
 
             mRequestCode = requestCode
             mPurchaseListener = listener
@@ -418,15 +401,15 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         val purchaseData = data.getStringExtra(RESPONSE_INAPP_PURCHASE_DATA)
         val dataSignature = data.getStringExtra(RESPONSE_INAPP_SIGNATURE)
         if (resultCode == Activity.RESULT_OK && responseCode == BILLING_RESPONSE_RESULT_OK) {
-            logDebug("Successful resultcode from purchase activity.")
-            logDebug("Purchase data: $purchaseData")
-            logDebug("Data signature: $dataSignature")
-            logDebug("Extras: " + data.extras)
-            logDebug("Expected item type: $mPurchasingItemType")
+            logDebug(TAG, "Successful resultcode from purchase activity.")
+            logDebug(TAG, "Purchase data: $purchaseData")
+            logDebug(TAG, "Data signature: $dataSignature")
+            logDebug(TAG, "Extras: " + data.extras)
+            logDebug(TAG, "Expected item type: $mPurchasingItemType")
 
             if (purchaseData == null || dataSignature == null) {
                 logError("BUG: either purchaseData or dataSignature is null.")
-                logDebug("Extras: " + data.extras?.toString())
+                logDebug(TAG, "Extras: " + data.extras?.toString())
                 result = IabResult(IABHELPER_UNKNOWN_ERROR, "IAB returned null purchaseData or dataSignature")
 
                 mPurchaseListener?.invoke(result, null)
@@ -448,7 +431,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                     return true
                 }
 
-                logDebug("Purchase signature successfully verified.")
+                logDebug(TAG, "Purchase signature successfully verified.")
             } catch (e: JSONException) {
                 logError("Failed to parse purchase data.")
                 e.printStackTrace()
@@ -461,14 +444,14 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
 
             mPurchaseListener?.invoke(IabResult(BILLING_RESPONSE_RESULT_OK, "Success"), purchase)
         } else if (resultCode == Activity.RESULT_OK) { // result code was OK, but in-app billing response was not OK.
-            logDebug("Result code was OK but in-app billing response was not OK: " + getResponseDesc(responseCode))
+            logDebug(TAG, "Result code was OK but in-app billing response was not OK: " + getResponseDesc(responseCode))
 
             if (mPurchaseListener != null) {
                 result = IabResult(responseCode, "Problem purchasing item.")
                 mPurchaseListener!!.invoke(result, null)
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
-            logDebug("Purchase canceled - Response: " + getResponseDesc(responseCode))
+            logDebug(TAG, "Purchase canceled - Response: " + getResponseDesc(responseCode))
             result = IabResult(IABHELPER_USER_CANCELLED, "User canceled.")
 
             mPurchaseListener?.invoke(result, null)
@@ -611,13 +594,13 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                 throw IabException(IABHELPER_MISSING_TOKEN, "PurchaseInfo is missing token for sku: $sku $itemInfo")
             }
 
-            logDebug("Consuming sku: $sku, token: $token")
+            logDebug(TAG, "Consuming sku: $sku, token: $token")
 
             val response = mService!!.consumePurchase(3, mContext!!.packageName, token)
             if (response == BILLING_RESPONSE_RESULT_OK) {
-                logDebug("Successfully consumed sku: $sku")
+                logDebug(TAG, "Successfully consumed sku: $sku")
             } else {
-                logDebug("Error consuming consuming sku " + sku + ". " + getResponseDesc(response))
+                logDebug(TAG, "Error consuming consuming sku " + sku + ". " + getResponseDesc(response))
                 throw IabException(response, "Error consuming sku $sku")
             }
         } catch (e: RemoteException) {
@@ -667,7 +650,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
     fun getResponseCodeFromBundle(bundle: Bundle): Int {
         return when (val o = bundle[RESPONSE_CODE]) {
             null -> {
-                logDebug("Bundle with null response code, assuming OK (known issue)")
+                logDebug(TAG, "Bundle with null response code, assuming OK (known issue)")
                 BILLING_RESPONSE_RESULT_OK
             }
             is Int -> o.toInt()
@@ -708,13 +691,13 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
 
             mAsyncOperation = operation
             mAsyncInProgress = true
-            logDebug("Starting async operation: $operation")
+            logDebug(TAG, "Starting async operation: $operation")
         }
     }
 
     fun flagEndAsync() {
         synchronized(mAsyncInProgressLock) {
-            logDebug("Ending async operation: $mAsyncOperation")
+            logDebug(TAG, "Ending async operation: $mAsyncOperation")
             mAsyncOperation = ""
             mAsyncInProgress = false
 
@@ -731,22 +714,22 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
 
     @Throws(JSONException::class, RemoteException::class)
     fun queryPurchases(inv: Inventory, itemType: String): Int { // Query purchases
-        logDebug("Querying owned items, item type: $itemType")
-        logDebug("Package name: " + mContext!!.packageName)
+        logDebug(TAG, "Querying owned items, item type: $itemType")
+        logDebug(TAG, "Package name: " + mContext!!.packageName)
 
         var verificationFailed = false
         var continueToken: String? = null
 
         do {
-            logDebug("Calling getPurchases with continuation token: $continueToken")
+            logDebug(TAG, "Calling getPurchases with continuation token: $continueToken")
 
             val ownedItems = mService!!.getPurchases(3, mContext!!.packageName, itemType, continueToken)
             val response = getResponseCodeFromBundle(ownedItems)
 
-            logDebug("Owned items response: $response")
+            logDebug(TAG, "Owned items response: $response")
 
             if (response != BILLING_RESPONSE_RESULT_OK) {
-                logDebug("getPurchases() failed: " + getResponseDesc(response))
+                logDebug(TAG, "getPurchases() failed: " + getResponseDesc(response))
                 return response
             }
 
@@ -768,7 +751,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                 val sku = ownedSkus!![index]
 
                 if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
-                    logDebug("Sku is owned: $sku")
+                    logDebug(TAG, "Sku is owned: $sku")
 
                     val purchase: Purchase? = Purchase(itemType, purchaseData, signature)
 
@@ -776,7 +759,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                     purchase?.let {
                         if (TextUtils.isEmpty(it.token)) {
                             logWarn("BUG: empty/null token!")
-                            logDebug("Purchase data: $purchaseData")
+                            logDebug(TAG, "Purchase data: $purchaseData")
                         }
 
                         // Record ownership and token
@@ -784,15 +767,15 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                     }
                 } else {
                     logWarn("Purchase signature verification **FAILED**. Not adding item.")
-                    logDebug("   Purchase data: $purchaseData")
-                    logDebug("   Signature: $signature")
+                    logDebug(TAG, "   Purchase data: $purchaseData")
+                    logDebug(TAG, "   Signature: $signature")
 
                     verificationFailed = true
                 }
             }
 
             continueToken = ownedItems.getString(INAPP_CONTINUATION_TOKEN)
-            logDebug("Continuation token: $continueToken")
+            logDebug(TAG, "Continuation token: $continueToken")
         } while (!continueToken.isNullOrBlank())
 
         return if (verificationFailed) IABHELPER_VERIFICATION_FAILED else BILLING_RESPONSE_RESULT_OK
@@ -800,7 +783,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
 
     @Throws(RemoteException::class, JSONException::class)
     fun querySkuDetails(itemType: String, inv: Inventory, moreSkus: List<String>?): Int {
-        logDebug("Querying SKU details.")
+        logDebug(TAG, "Querying SKU details.")
 
         val skuList = ArrayList<String>()
         skuList.addAll(inv.getAllOwnedSkus(itemType))
@@ -812,7 +795,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         }
 
         if (skuList.size == 0) {
-            logDebug("queryPrices: nothing to do because there are no SKUs.")
+            logDebug(TAG, "queryPrices: nothing to do because there are no SKUs.")
             return BILLING_RESPONSE_RESULT_OK
         }
 
@@ -839,7 +822,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
                 val response = getResponseCodeFromBundle(skuDetails)
 
                 return if (response != BILLING_RESPONSE_RESULT_OK) {
-                    logDebug("getSkuDetails() failed: " + getResponseDesc(response))
+                    logDebug(TAG, "getSkuDetails() failed: " + getResponseDesc(response))
                     response
                 } else {
                     logError("getSkuDetails() returned a bundle with neither an error nor a detail list.")
@@ -851,7 +834,7 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
             skuDetails.getStringArrayList(RESPONSE_GET_SKU_DETAILS_LIST)?.forEach {
                 val d = SkuDetails(itemType, it)
 
-                logDebug("Got sku details: $d")
+                logDebug(TAG, "Got sku details: $d")
 
                 inv.addSkuDetails(d)
             }
@@ -889,18 +872,12 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
         }).start()
     }
 
-    fun logDebug(msg: String?) {
-        if (mDebugLog) {
-            Logger.logDebug(mDebugTag, msg)
-        }
-    }
-
     fun logError(msg: String) {
-        Logger.logError(mDebugTag, GooglePlayBillingException("In-app billing error: $msg"))
+        Logger.logError(TAG, GooglePlayBillingException("In-app billing error: $msg"))
     }
 
     fun logWarn(msg: String) {
-        Logger.logWarning(mDebugTag, GooglePlayBillingException("In-app billing warning: $msg"))
+        Logger.logWarning(TAG, GooglePlayBillingException("In-app billing warning: $msg"))
     }
 
     /**
@@ -910,6 +887,8 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
     class IabAsyncInProgressException(message: String?) : Exception(message)
 
     companion object {
+        private const val TAG = "IabHelper"
+
         // Billing response codes
         const val BILLING_RESPONSE_RESULT_OK = 0
         const val BILLING_RESPONSE_RESULT_USER_CANCELED = 1
@@ -1009,6 +988,6 @@ class IabHelper(ctx: Context, base64PublicKey: String?) {
     init {
         mContext = ctx.applicationContext
         mSignatureBase64 = base64PublicKey
-        logDebug("IAB helper created.")
+        logDebug(TAG, "IAB helper created.")
     }
 }

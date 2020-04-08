@@ -139,6 +139,10 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
     }
 
     private fun updateBannerText(count: Int) {
+        if (!isAdded) {
+            return
+        }
+
         bannerLayout.isVisible = true
         bannerTextView.text = getString(R.string.news_unread_count, count)
 
