@@ -40,9 +40,8 @@
 	<!-- New app version message strings -->
 	<string name="new_app_version">Une mise à jour de l\'application (%1$s) est disponible.\nAppuyez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
 	<string name="new_app_version_long">Une mise à jour de l\'application (%1$s) est disponible. Maintenir l\'application à jour vous permet de bénéficier des dernières fonctionnalités et corrections de bugs.\nAppuyez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_inapp_downloaded">La mise à jour de l\'application a été téléchargée</string>
+	<string name="new_app_version_inapp_failed">La mise à jour de l\'\application n\'a pas pu être installée. Tapez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"à"</string>
