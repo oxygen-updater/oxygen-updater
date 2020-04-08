@@ -36,33 +36,6 @@
 			tools:text="@string/server_status_unreachable"
 			tools:visibility="visible" />
 
-		<LinearLayout
-			android:id="@+id/appUpdateBannerLayout"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@color/appBarBackground"
-			android:gravity="center"
-			android:padding="@dimen/spacing_default"
-			android:visibility="gone"
-			tools:visibility="visible">
-
-			<ImageView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="top"
-				android:contentDescription="@string/icon"
-				android:src="@drawable/info" />
-
-			<TextView
-				android:id="@+id/appUpdateBannerTextView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_marginStart="@dimen/spacing_half"
-				android:textColor="@color/white"
-				tools:text="@string/new_app_version" />
-		</LinearLayout>
-
 		<TextView
 			android:id="@+id/serverBannerTextView"
 			android:layout_width="match_parent"

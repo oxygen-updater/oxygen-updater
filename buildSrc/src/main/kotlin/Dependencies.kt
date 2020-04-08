@@ -5,7 +5,7 @@ const val KOTLIN_VERSION = "1.3.71"
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
-        const val BUILD_TOOLS_VERSION = "3.6.0"
+        const val BUILD_GRADLE_PLUGIN = "3.6.0"
         // Maybe https://s3.amazonaws.com/fabric-artifacts/public/io/fabric/tools/gradle/maven-metadata.xml
         const val FABRIC_GRADLE_PLUGIN = "1.31.2"
         // https://developers.google.com/android/guides/releases
@@ -13,7 +13,7 @@ object BuildPlugins {
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
-    const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:${Versions.BUILD_TOOLS_VERSION}"
+    const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:${Versions.BUILD_GRADLE_PLUGIN}"
     const val FABRIC_GRADLE_PLUGIN = "io.fabric.tools:gradle:${Versions.FABRIC_GRADLE_PLUGIN}"
     // https://developers.google.com/android/guides/releases
     const val GOOGLE_SERVICES_PLUGIN = "com.google.gms:google-services:${Versions.GOOGLE_SERVICES_PLUGIN}"
@@ -29,6 +29,7 @@ object BuildPlugins {
 }
 
 object AndroidSdk {
+    const val BUILD_TOOLS = "29.0.3"
     const val MIN = 21
     const val COMPILE = 29
     const val TARGET = COMPILE
@@ -46,7 +47,7 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/core
         const val KTX_CORE = "1.2.0"
         // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.2.3"
+        const val KTX_FRAGMENT = "1.2.4"
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
         const val KTX_LIFECYCLE = "2.2.0"
         // https://developer.android.com/jetpack/androidx/releases/preference
@@ -93,9 +94,9 @@ object Libraries {
         // https://developers.google.com/admob/android/rel-notes
         const val FIREBASE_ADS = "19.0.1"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_ANALYTICS = "17.2.3"
+        const val FIREBASE_ANALYTICS_KTX = "17.3.0"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_MESSAGING = "20.1.3"
+        const val FIREBASE_MESSAGING = "20.1.5"
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.11.0"
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
@@ -103,7 +104,7 @@ object Libraries {
         const val JACKSON_KOTLIN_MODULE = "2.10.3"
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-        const val THREE_TEN_ABP = "1.2.2"
+        const val THREE_TEN_ABP = "1.2.3"
         // https://doc.insert-koin.io/#/setup/index
         // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
         const val KOIN = "2.1.5"
@@ -112,9 +113,11 @@ object Libraries {
         // https://github.com/material-components/material-components-android/releases
         const val MATERIAL = "1.2.0-alpha05"
         // https://square.github.io/okhttp/changelog/
-        const val OKHTTP_LOGGING_INTERCEPTOR = "4.4.1"
+        const val OKHTTP_LOGGING_INTERCEPTOR = "4.5.0"
+        // https://developer.android.com/reference/com/google/android/play/core/release-notes
+        const val PLAY_CORE = "1.7.2"
         // https://developers.google.com/android/guides/releases
-        const val PLAY_SERVICES_BASE = "17.2.0"
+        const val PLAY_SERVICES_BASE = "17.2.1"
         // https://github.com/square/retrofit/releases
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
         const val RETROFIT = "2.8.1"
@@ -133,8 +136,10 @@ object Libraries {
     // https://firebase.google.com/support/release-notes/android
     const val CRASHLYTICS = "com.crashlytics.sdk.android:crashlytics:${Versions.CRASHLYTICS}"
     const val FIREBASE_ADS = "com.google.firebase:firebase-ads:${Versions.FIREBASE_ADS}"
-    const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics:${Versions.FIREBASE_ANALYTICS}"
+    const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx:${Versions.FIREBASE_ANALYTICS_KTX}"
     const val FIREBASE_MESSAGING = "com.google.firebase:firebase-messaging:${Versions.FIREBASE_MESSAGING}"
+
+    const val PLAY_CORE = "com.google.android.play:core:${Versions.PLAY_CORE}"
     // https://developers.google.com/android/guides/releases
     const val PLAY_SERVICES_BASE = "com.google.android.gms:play-services-base:${Versions.PLAY_SERVICES_BASE}"
 

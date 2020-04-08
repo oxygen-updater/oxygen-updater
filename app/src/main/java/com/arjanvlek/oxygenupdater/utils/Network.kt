@@ -1,13 +1,9 @@
 package com.arjanvlek.oxygenupdater.utils
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
 import android.os.Build
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.objectMapper
@@ -27,21 +23,6 @@ import java.util.concurrent.TimeUnit
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-
-@Suppress("ObjectPropertyName")
-private val _isNetworkAvailable = MutableLiveData<Boolean>()
-val isNetworkAvailable: LiveData<Boolean>
-    get() = _isNetworkAvailable
-
-val networkCallback = object : ConnectivityManager.NetworkCallback() {
-    override fun onLost(network: Network) {
-        _isNetworkAvailable.postValue(false)
-    }
-
-    override fun onAvailable(network: Network) {
-        _isNetworkAvailable.postValue(true)
-    }
-}
 
 private const val TAG = "OxygenUpdaterNetwork"
 private const val USER_AGENT_TAG = "User-Agent"

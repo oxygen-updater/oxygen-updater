@@ -41,6 +41,7 @@
 			android:layout_marginStart="@dimen/spacing_default"
 			android:layout_marginEnd="@dimen/spacing_default"
 			android:layout_marginBottom="@dimen/spacing_half"
+			android:checked="true"
 			android:text="@string/contribute_agree_from_setup"
 			android:textColor="?android:textColorSecondary"
 			android:textSize="@dimen/typography_caption"

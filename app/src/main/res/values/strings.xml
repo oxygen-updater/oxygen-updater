@@ -4,7 +4,6 @@
 	<string name="app_name">Oxygen Updater</string>
 	<string name="launcher_app_name">Oxygen Updater</string>
 
-	<!-- TODO: translate this string below -->
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
 	<!-- Update information strings-->
@@ -12,13 +11,11 @@
 	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
 	<string name="update_information_file_name">File name: %1$s</string>
-	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_for">for</string>
 	<string name="update_information_header">Update</string>
 	<string name="update_information_header_short">Update</string>
-	<!-- TODO: translate these 7 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
 	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
@@ -41,9 +38,10 @@
 	<string name="server_status_warning">Some features may not work properly.</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 2 strings below -->
 	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
 	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
+	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">at</string>
@@ -51,7 +49,6 @@
 	<string name="time_yesterday">Yesterday</string>
 
 	<!-- Downloader strings-->
-	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Download update</string>
 	<string name="downloaded">Update downloaded</string>
 	<string name="downloading">Downloading update…</string>
@@ -66,7 +63,6 @@
 	<string name="download_error">Download Error</string>
 	<string name="download_error_close">CLOSE</string>
 	<string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
-	<!-- TODO translate the 3 below to Russian -->
 	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
@@ -82,7 +78,6 @@
 	<string name="download_pending">Your download will start soon…</string>
 	<string name="download_permissions">Tap Download again to download the update.</string>
 
-	<!-- TODO translate the 3 below to Russian -->
 	<string name="download_notification_error_network">Download paused due to lost connection. Will resume soon.</string>
 	<string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
 	<string name="download_notification_error_internal">Technical error while downloading. Restart the download or contact support.</string>
@@ -173,7 +168,6 @@
 	<string name="settings_buy_button_not_possible">Unavailable</string>
 	<string name="settings_buy_ad_free_label">Upgrade to Ad-Free</string>
 
-	<!-- TODO translate these 2 to all but Dutch / Belgian / French -->
 	<string name="settings_contribute_label">Help improve the app</string>
 	<string name="settings_contribute_button">Contribute</string>
 
@@ -255,7 +249,6 @@
 	<string name="install_options_explanation_wipe_cache">Wipe the cache partition:\nWhen you select this option, the cache partition will be wiped after the update has been installed. This ensures your device performs optimally and also reduces the likelihood of experiencing bugs caused by the installation of the update.</string>
 	<string name="install_options_explanation_reboot">Reboot after installation:\nWhen you select this option, your device will automatically reboot back to OxygenOS after the update is installed. Otherwise, your device will stay in Recovery Mode, where you can install additional packages.</string>
 
-	<!-- TODO: translate this string below -->
 	<string name="install_method_chooser_title">Choose installation method</string>
 	<string name="install_method_chooser_subtitle">How do you want to install this update?</string>
 	<string name="install_method_chooser_automatic_title">Automatic installation*</string>
@@ -376,7 +369,6 @@
 	<string name="news_date_published">Last update: %1$s</string>
 	<string name="news_empty">This article has no contents.</string>
 	<string name="news_load_error">Failed to open article. Check your connection and press the \"RETRY\" button to open the article.</string>
-	<!-- TODO: translate these 5 strings below -->
 	<string name="news_unread_count">You have %1$d unread news articles</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
@@ -384,7 +376,6 @@
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
 
 	<!-- Contribute strings -->
-	<!-- TODO translate this block to all but Dutch / Belgian / French -->
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improve Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximately 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the \".Ota\" directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>

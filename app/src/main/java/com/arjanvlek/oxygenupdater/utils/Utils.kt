@@ -7,6 +7,7 @@ import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
+import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.SettingsActivity
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback

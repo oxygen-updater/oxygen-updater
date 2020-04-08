@@ -3,15 +3,17 @@ package com.arjanvlek.oxygenupdater
 import android.annotation.SuppressLint
 import android.app.Application
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.utils.MD5
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
-import com.arjanvlek.oxygenupdater.utils.networkCallback
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.ads.AdRequest
@@ -26,7 +28,37 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import java.util.*
 
+
 class OxygenUpdater : Application() {
+
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+
+        /**
+         * This callback is used in both [ConnectivityManager.registerDefaultNetworkCallback] and [ConnectivityManager.registerNetworkCallback].
+         *
+         * The former can be used only in API 24 and above, while the latter is recommended for API 21+.
+         * The former is more robust, as it presents an accurate network availability status for all connections,
+         * while the latter only works for the [NetworkRequest] that's passed into the function.
+         *
+         * This has the undesired effect of marking the network connection as "lost" after a period of time.
+         * To combat this on older API levels, we're using the deprecated API to confirm the network connectivity status.
+         */
+        override fun onLost(network: Network) {
+            @Suppress("DEPRECATION")
+            val networkAvailability = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                val activeNetwork = getSystemService<ConnectivityManager>()?.activeNetworkInfo
+                activeNetwork?.isConnectedOrConnecting == true
+            } else {
+                false
+            }
+
+            _isNetworkAvailable.postValue(networkAvailability)
+        }
+
+        override fun onAvailable(network: Network) {
+            _isNetworkAvailable.postValue(true)
+        }
+    }
 
     override fun onCreate() {
         setupKoin()
@@ -104,6 +136,11 @@ class OxygenUpdater : Application() {
     @Suppress("unused")
     companion object {
         private const val TAG = "OxygenUpdater"
+
+        @Suppress("ObjectPropertyName")
+        private val _isNetworkAvailable = MutableLiveData<Boolean>()
+        val isNetworkAvailable: LiveData<Boolean>
+            get() = _isNetworkAvailable
 
         // Test devices for ads.
         private val ADS_TEST_DEVICES = mutableListOf("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843")

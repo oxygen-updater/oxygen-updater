@@ -119,7 +119,6 @@ class SettingsManager {
         const val PROPERTY_SETUP_DONE = "setup_done"
         const val PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings"
         const val PROPERTY_DOWNLOAD_BYTES_DONE = "download_bytes_done"
-        const val PROPERTY_DOWNLOAD_ID = "download_id"
         const val PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs" // Value cannot be changed - is from older version where it was called 'upload_logs'
         const val PROPERTY_ADDITIONAL_ZIP_FILE_PATH = "additional_zip_file_path"
         const val PROPERTY_BACKUP_DEVICE = "backupDevice"
@@ -135,6 +134,9 @@ class SettingsManager {
         const val PROPERTY_CONTRIBUTE = "contribute"
         const val PROPERTY_CONTRIBUTION_COUNT = "contribution_count"
         const val PROPERTY_IS_EU_BUILD = "isEuBuild"
+
+        const val PROPERTY_LAST_APP_UPDATE_CHECKED_DATE = "lastAppUpdateCheckDate"
+        const val PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT = "flexibleAppUpdateIgnoreCount"
 
         // Offline cache properties
         const val PROPERTY_OFFLINE_ID = "offlineId"
