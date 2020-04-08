@@ -40,9 +40,8 @@
 	<!-- New app version message strings -->
 	<string name="new_app_version">Aggiornamento disponibile: (%1$s). Premi qui per aggiornare.</string>
 	<string name="new_app_version_long">Aggiornamento disponibile (%1$s). Tenere l\'lapp aggiornata garantisce un\'esperienza fluida.\nPremi qui per aggiornare.</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_inapp_downloaded">L\'aggiornamento e\' stato scaricato.</string>
+	<string name="new_app_version_inapp_failed">Non e\' stato possibile scaricare l\'aggiornamento. Premi qui per aprire il Play Store ed aggiornare l\'app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"alle"</string>
