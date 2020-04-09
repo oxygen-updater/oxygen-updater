@@ -6,78 +6,117 @@
 	android:layout_height="match_parent">
 
 	<com.google.android.material.appbar.AppBarLayout
-		android:id="@+id/app_bar"
+		android:id="@+id/appBar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="@dimen/size_collapsing_toolbar"
+		android:fitsSystemWindows="true"
+		android:transitionName="toolbar">
 
-		<androidx.appcompat.widget.Toolbar
-			android:id="@+id/toolbar"
+		<com.google.android.material.appbar.SuperpoweredCollapsingToolbarLayout
+			android:id="@+id/collapsingToolbarLayout"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle"
-			app:title="@string/app_name" />
+			android:layout_height="match_parent"
+			android:theme="@style/ToolbarTheme"
+			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+			app:maxLines="3"
+			tools:subtitle="Author"
+			tools:title="An unnecessarily long news title, to get an accurate understanding of how long titles are rendered">
+
+			<ImageView
+				android:id="@+id/collapsingToolbarImage"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:contentDescription="@string/icon"
+				android:fitsSystemWindows="true"
+				android:scaleType="centerCrop"
+				app:layout_collapseMode="parallax"
+				tools:src="@drawable/logo_outline" />
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:alpha=".75"
+				android:background="@color/black"
+				android:fitsSystemWindows="true" />
+
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?actionBarSize"
+				android:theme="@style/ToolbarTheme"
+				app:layout_collapseMode="pin" />
+		</com.google.android.material.appbar.SuperpoweredCollapsingToolbarLayout>
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<androidx.core.widget.NestedScrollView
+		android:id="@+id/nestedScrollView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:fadingEdge="vertical"
+		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:requiresFadingEdge="vertical"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<LinearLayout
+		<FrameLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			tools:ignore="WebViewLayout">
+			android:layout_height="wrap_content">
 
-			<TextView
-				android:id="@+id/newsTitle"
+			<LinearLayout
+				android:id="@+id/newsLayout"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/padding_default"
-				android:layout_marginTop="@dimen/padding_half"
-				android:layout_marginEnd="@dimen/padding_default"
-				android:textSize="@dimen/typography_title"
-				android:textStyle="bold" />
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:visibility="gone"
+				tools:visibility="visible">
 
-			<TextView
-				android:id="@+id/newsDatePublished"
+				<TextView
+					android:id="@+id/newsDatePublished"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_margin="@dimen/spacing_default"
+					android:text="@string/news_date_published"
+					android:textColor="?android:textColorSecondary"
+					android:textSize="@dimen/typography_caption" />
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:background="@color/backgroundVariant" />
+
+				<!-- news-content HTML already has an 8px margin -->
+				<WebView
+					android:id="@+id/webView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/spacing_half"
+					android:layout_marginEnd="@dimen/spacing_half"
+					android:layout_marginBottom="@dimen/spacing_half" />
+			</LinearLayout>
+
+			<ViewStub
+				android:id="@+id/errorLayoutStub"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/padding_default"
-				android:layout_marginTop="@dimen/padding_half"
-				android:layout_marginEnd="@dimen/padding_default"
-				android:text="@string/news_date_published"
-				android:textStyle="italic" />
+				android:layout_height="match_parent"
+				android:layout="@layout/layout_error" />
 
-			<WebView
-				android:id="@+id/newsContent"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/news_horizontal_margin"
-				android:layout_marginTop="@dimen/padding_half"
-				android:layout_marginEnd="@dimen/news_horizontal_margin" />
-
-			<com.google.android.material.button.MaterialButton
-				android:id="@+id/newsRetryButton"
-				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+			<ProgressBar
+				android:id="@+id/progressBar"
+				style="?android:progressBarStyleLarge"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center"
-				android:text="@string/download_error_retry"
-				android:visibility="gone" />
-
-			<TextView
-				android:id="@+id/newsAuthor"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/padding_default"
-				android:layout_marginTop="@dimen/padding_half"
-				android:layout_marginEnd="@dimen/padding_default"
-				android:layout_marginBottom="@dimen/padding_half"
-				android:text="@string/news_author"
-				android:textStyle="italic" />
-
-		</LinearLayout>
+				android:layout_margin="@dimen/spacing_default"
+				android:visibility="gone"
+				tools:visibility="visible" />
+		</FrameLayout>
 	</androidx.core.widget.NestedScrollView>
+
+	<com.google.android.gms.ads.AdView
+		android:id="@+id/newsArticleAdView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|center_horizontal"
+		android:layout_marginBottom="0dp"
+		app:adSize="SMART_BANNER"
+		app:adUnitId="@string/advertising_news_banner_unit_id" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

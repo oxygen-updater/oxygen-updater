@@ -5,18 +5,33 @@
 	<string name="app_name">"Oxygen Updater"</string>
 	<string name="launcher_app_name">"Oxygen Updater"</string>
 
+	<!-- TODO: translate this string below -->
+	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+
 	<!-- Update information strings -->
 	<string name="update">"Обновить"</string>
-	<string name="update_information_close">"Закрыть"</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_file_name">"Имя файла: %1$s"</string>
+	<!-- TODO: translate this line below -->
+	<string name="update_information_md5">MD5: %1$s</string>
+	<!-- TODO: Translate this string below -->
+	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_for">"для"</string>
 	<string name="update_information_header">"Обновить"</string>
 	<string name="update_information_header_short">"Обновить"</string>
-	<string name="update_information_installed_update">"Последняя версия:"</string>
+	<!-- TODO: translate these 7 strings below -->
+	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
+	<string name="update_information_banner_server">Tap here to view important notices</string>
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
 	<string name="update_information_latest_available_update">"Доступно новое обновление"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
-	<string name="update_information_oxygen_os_version">"Версия Oxygen OS: %1$s"</string>
+	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Система обновлена."</string>
 	<string name="update_information_unknown_update_name">"Обновление для %1$s"</string>
 	<string name="update_information_version">" Версия:"</string>
@@ -28,7 +43,11 @@
 	<string name="server_status_warning">"Hекоторые функции могут не работать."</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">"Доступно обновление приложения: &lt;a href=https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater&gt;%1$s&lt;/a&gt;"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
+	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"в"</string>
@@ -36,10 +55,11 @@
 	<string name="time_yesterday">"Вчера"</string>
 
 	<!-- Downloader strings -->
-	<string name="download">"Загрузить"</string>
-	<string name="downloaded">"Загружено"</string>
-	<string name="downloading">"Cкачивание…"</string>
-	<string name="paused">"помолчала"</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_already_downloaded">"Это обновление уже загружено и готово к установке."</string>
 	<string name="download_complete">"Успешная загрузка"</string>
@@ -53,13 +73,15 @@
 	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 
 	<string name="download_error_retry">"Попробовать снова"</string>
 	<string name="download_error_resume">"продолжить"</string>
 	<string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
 	<string name="download_failed">"Ошибка загрузки"</string>
-	<string name="download_in_background">"Обновление будет загружаться в фоне…"</string>
-	<string name="download_oxygen_os">"Версия Oxygen OS"</string>
+	<string name="running_in_background">"Обновление будет загружаться в фоне…"</string>
+	<string name="download_oxygen_os">"Версия OxygenOS"</string>
 	<string name="download_pending">"Загрузка скоро начнется…"</string>
 	<string name="download_permissions">"Нажмите Загрузить снова для загрузки обновления."</string>
 
@@ -70,19 +92,21 @@
 
 	<string name="download_notification_error_storage_full">"Недостаточно места."</string>
 	<string name="download_notification_error_corrupt">"Ошибка проверки файла. Проверьте подключение и попробуйте снова."</string>
-	<string name="download_progress_text_hours_remaining">"%1$d%%, осталось около %2$d часов"</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%%, осталось меньше минуты"</string>
-	<string name="download_progress_text_minutes_remaining">"%1$d%%, еще около %2$d минут"</string>
-	<string name="download_progress_text_one_hour_remaining">"%1$d%%, еще около 1 часа"</string>
-	<string name="download_progress_text_one_minute_remaining">"%1$d%%, еще около минуты"</string>
-	<string name="download_progress_text_seconds_remaining">"%1$d%%, еще несколько секунд"</string>
-	<string name="download_progress_text_unknown_time_remaining">"%1$d%%, вычисление времени…"</string>
-	<string name="download_progress_text_verifying">"100%, проверка файла…"</string>
-	<string name="download_progress_text_paused">"%1$d%%, помолчала"</string>
-	<string name="download_waiting_for_network">"%1$d%%, oжидание подключения…"</string>
+
+	<string name="download_progress">%1$d MБ / %2$d MБ (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">"осталось около %1$d часов"</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"осталось меньше минуты"</string>
+	<string name="download_progress_text_minutes_remaining">"еще около %1$d минут"</string>
+	<string name="download_progress_text_one_hour_remaining">"еще около 1 часа"</string>
+	<string name="download_progress_text_one_minute_remaining">"еще около минуты"</string>
+	<string name="download_progress_text_seconds_remaining">"еще несколько секунд"</string>
+	<string name="download_progress_text_unknown_time_remaining">"вычисление времени…"</string>
+	<string name="download_progress_text_verifying">"проверка файла…"</string>
+	<string name="download_progress_text_paused">"помолчала"</string>
+	<string name="download_waiting_for_network">"oжидание подключения…"</string>
 
 	<string name="download_size_megabyte">"%1$d МБ"</string>
-	<string name="download_unknown_update_name">"Обновить Oxygen OS"</string>
+	<string name="download_unknown_update_name">"Обновить OxygenOS"</string>
 	<string name="download_verifying">"Проверка…"</string>
 	<string name="download_verifying_error">"Файл поврежден"</string>
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
@@ -124,7 +148,7 @@
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
 	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \'Auto\' theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
+	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
 
 	<string name="settings">"Настройки"</string>
@@ -170,45 +194,44 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
-	<string name="faq_menuitem">"FAQ"</string>
+	<string name="faq_menu_item">"FAQ"</string>
 	<string name="faq_no_network">"Hет соединения."</string>
 	<string name="faq_no_network_text">"Необходимо подключение, чтобы открыть FAQ."</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">"Добро пожаловать"</string>
-	<string name="setup_close_button">"начать"</string>
-	<string name="setup_page_1_title">"Добро пожаловать в Oxygen Updater!"</string>
-	<string name="setup_page_1_text">"Данное приложение позволит вам:
+	<string name="onboarding">"Добро пожаловать"</string>
+	<string name="onboarding_finished_button">"начать"</string>
+	<string name="onboarding_page_1_title">"Добро пожаловать в Oxygen Updater!"</string>
+	<string name="onboarding_page_1_text">"Данное приложение позволит вам:
 
 - Получить мгновенный доступ к последним версиям Android для устройств под управлением OxygenOS
 
-- Легко обновить устройство с рутом 
+- Легко обновить устройство с рутом
 
 - Просмотреть, что нового в установленной прошивке
 
 - Читать последние новости о OnePlus и OxygenOS
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_2_title">"Важное замечание:"</string>
-	<string name="setup_page_2_text">"Данное приложение не является официальным приложением OnePlus. Вы используете его на свой страх и риск. OnePlus и разработчик этого приложения не несут ответственности за нанесение какого-либо вреда вашему устройству.
+	<string name="onboarding_page_1_caption">"Данное приложение не является официальным приложением OnePlus. Вы используете его на свой страх и риск. OnePlus и разработчик этого приложения не несут ответственности за нанесение какого-либо вреда вашему устройству.
 
 Используя Oxygen Updater, вы соглашаетесь с условиями, указанными выше.
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_3_title">"Выберите ваше устройство:"</string>
-	<string name="setup_page_3_text">"Обычно устройство определяется автоматически. Если нет, выберите ваше устройство выше.
+	<string name="onboarding_page_2_title">"Выберите ваше устройство:"</string>
+	<string name="onboarding_page_2_caption">"Обычно устройство определяется автоматически. Если нет, выберите ваше устройство выше.
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_4_title">"Выберите метод обновления"</string>
-	<string name="setup_page_4_text">"Обычно, частичное обновление является оптимальным решением, так как оно характеризуется быстрой загрузкой меньших по объему файлов.
+	<string name="onboarding_page_3_title">"Выберите метод обновления"</string>
+	<string name="onboarding_page_3_caption">"Обычно, частичное обновление является оптимальным решением, так как оно характеризуется быстрой загрузкой меньших по объему файлов.
 
 К сожалению его нельзя использовать с устройствами с рутом. Если у вас есть рут, используйте Полное обновление.
 
-Если вы используете бета версии прошивок, то выберите \"Community Edition\". 
+Если вы используете бета версии прошивок, то выберите \"Community Edition\".
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="setup_page_5_title">"Вы готовы! "</string>
-	<string name="setup_page_5_text">"Наслаждайтесь использованием данного приложения!
+	<string name="onboarding_page_4_title">"Вы готовы! "</string>
+	<string name="onboarding_page_4_text">"Наслаждайтесь использованием данного приложения!
 
 Вы всегда можете изменить настройки приложения. Чтобы сделать это: Нажмите на три точки в правом верхнем углу, после нажмите на \"Настройки\"."</string>
 
@@ -233,7 +256,7 @@
 	<string name="install_options_reboot_after_install">"Перезагрузить после установки"</string>
 	<string name="install_options_select_root_package">"Выберите файл установки рута"</string>
 	<string name="install_options_start_install">"Начать установку"</string>
-	<string name="install_options_title">"Выберите настройки установки"</string>
+	<string name="install_options_subtitle">"Выберите настройки установки"</string>
 	<string name="install_options_wipe_cache_partition">"Очистить кэш (cache partition)"</string>
 	<string name="install_options_explanation_title">"Что эти настройки означают?"</string>
 	<string name="install_options_explanation_backup">"Резервная копия устройства:
@@ -244,21 +267,23 @@
 При выборе этой опции, раздел кэша будет очищен после установки обновлерия. Это гарантирует стабильную работу устройства и снижает вероятность возникновения ошибок, вызванных установкой обновления."</string>
 	<string name="install_options_explanation_reboot">"Перезагрузить после установки:
 При выборе этой опции ваше устройство автоматически загрузится в систему после установки обновления. В противном случае ваше устройство останется в рекавери, где вы можете установить дополнительные архивы."</string>
-	<string name="install_select_method_title">"Как вы хотите установить обновление?"</string>
-	<string name="install_select_method_automatic_title">"Автоматическая установка*"</string>
-	<string name="install_select_method_automatic_image">"Изображение автоматической установки"</string>
-	<string name="install_select_method_automatic_description">"Самый простой способ установки.
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">"Как вы хотите установить обновление?"</string>
+	<string name="install_method_chooser_automatic_title">"Автоматическая установка*"</string>
+	<string name="install_method_chooser_automatic_image">"Изображение автоматической установки"</string>
+	<string name="install_method_chooser_automatic_description">"Самый простой способ установки.
 Устройство перезагрузится для установки обновления.
 
 * Требуются рут-права и TWRP рекавери."</string>
-	<string name="install_select_method_manual_title">"Ручная установка"</string>
-	<string name="install_select_method_manual_image">"Изображение ручной установки"</string>
-	<string name="install_select_method_manual_description">"Прочтите руководство по установке, чтобы узнать, как установить обновление. Вы установите обновление, используя режим восстановления вашего устройства."</string>
+	<string name="install_method_chooser_manual_title">"Ручная установка"</string>
+	<string name="install_method_chooser_manual_image">"Изображение ручной установки"</string>
+	<string name="install_method_chooser_manual_description">"Прочтите руководство по установке, чтобы узнать, как установить обновление. Вы установите обновление, используя режим восстановления вашего устройства."</string>
 	<string name="install_temporary_error">"При подготовке установки обновления произошла временная ошибка. Повторите попытку."</string>
 	<string name="install_verify_error_title">"Ошибка установки"</string>
 	<string name="install_verify_error_nothing_installed">"Ошибка при установке обновления. Никакие изменения не были внесены в ПО вашего устройства. Попробуйте установить обновление еще раз."</string>
 	<string name="install_verify_error_unable_to_verify">"Не удалось проверить, было ли обновление установлено успешно. Пожалуйста, откройте Oxygen Updater, чтобы убедиться, что обновление было установлено успешно."</string>
-	<string name="install_verify_error_wrong_version_installed">"Была установлена другая версия Oxygen OS. Не выбирайте файл прошивки, при выборе архива рута в опции \"Сохранить рут-права\"."</string>
+	<string name="install_verify_error_wrong_version_installed">"Была установлена другая версия OxygenOS. Не выбирайте файл прошивки, при выборе архива рута в опции \"Сохранить рут-права\"."</string>
 	<string name="install_verify_success_title">"Установка завершена"</string>
 	<string name="install_verify_success_message">"OxygenOS версии %1$s установлен успешно."</string>
 	<string name="install_zip_file_clear">"Очистить архив установки рута"</string>
@@ -270,13 +295,11 @@
 	<string name="install_guide_no_root">"Установите обновление, следуя инструкциям в руководстве по установке."</string>
 	<string name="install_guide_automatic_install_disabled">"Автоматические установки были временно отключены из-за технических проблем. Установите обновление в соответствии с инструкциями, приведенными в руководстве по установке."</string>
 	<string name="install_guide">"Руководство по установке"</string>
-	<string name="install_guide_loading">"Загрузка руководства по установке…"</string>
-	<string name="install_guide_title">"Руководство по установке - %1$d of %2$d"</string>
+	<string name="install_guide_subtitle">"Руководство по установке - %1$d of %2$d"</string>
 	<string name="install_guide_image_description">"Контекстное изображение. Нажмите на нижнюю часть экрана, чтобы услышать руководство по установке."</string>
-	<string name="install_guide_header">"Проведите &lt;- -&gt; для навигации."</string>
-	<string name="install_guide_tip">"- Рекомендуется записать все шаги установки, так как потребуется отключить устройство во время обновления."</string>
+	<string name="install_guide_tip">"&#8226; Рекомендуется записать все шаги установки, так как потребуется отключить устройство во время обновления."</string>
 	<string name="install_guide_page_1_title">"Загрузить обновление."</string>
-	<string name="install_guide_page_1_text">"- Нажмите кнопку Загрузить для скачивания обновления.
+	<string name="install_guide_page_1_text">"&#8226; Нажмите кнопку Загрузить для скачивания обновления.
 
 - Прогресс загрузки будет отображаться в приложении и в уведомлении.
 
@@ -284,28 +307,28 @@
 Если произошла ошибка загрузки, откройте приложение и попробуйте снова загрузить обновление. Если это не работает, убедитесь, что у вас работает интернет подключение.
 В противном случае обратитесь к разработчику приложения. Вы можете сделать это, посетив раздел «Мои приложения» в Google Play Mаркет."</string>
 	<string name="install_guide_page_2_title">"Зайти в режим восстановления."</string>
-	<string name="install_guide_page_2_text">"- Выключите устройство.
+	<string name="install_guide_page_2_text">"&#8226; Выключите устройство.
 
 - Зажмите одновременно кнопку выключения и громкости вниз
 
 - Ваше устройство перейдет в режим восстановления. Подождите, пока не увидите меню рекавери на экране."</string>
 	<string name="install_guide_page_3_title">"Установка загруженного обновления."</string>
-	<string name="install_guide_page_3_text">"- В меню рекавери сначала выберите нужный язык. Затем нажмите (или используйте кнопки громкости для навигации и кнопку питания для выбора) «Install from SD».
+	<string name="install_guide_page_3_text">"&#8226; В меню рекавери сначала выберите нужный язык. Затем нажмите (или используйте кнопки громкости для навигации и кнопку питания для выбора) «Install from SD».
 
 - Затем прокрутите вниз с помощью клавиши уменьшения громкости, пока не найдете строку с файлом «.zip» с именем файла, отображаемым в приложении. (Обычно название файла начинается с \"OnePlusOxygen-\").
 
 - Установка обновления начнется автоматически."</string>
 	<string name="install_guide_page_4_title">"Перезагрузите устройство."</string>
-	<string name="install_guide_page_4_text">"- Когда установка обновления будет завершена, вы вернетесь в меню рекавери. Там же нажмите \"Reboot\".
+	<string name="install_guide_page_4_text">"&#8226; Когда установка обновления будет завершена, вы вернетесь в меню рекавери. Там же нажмите \"Reboot\".
 
 - Устройство будет загружаться дольше обычного во время первого запуска.
 
 - После этого вы увидите белое сообщение с заголовком «Android обновляется», в то время как ваши приложения оптимизируются."</string>
-	<string name="install_guide_page_5_title">"Готово. Наслаждайтесь новой версией Oxygen OS!"</string>
-	<string name="install_guide_page_5_text">"- После завершения оптимизации приложений, обновление установлено успешно.
+	<string name="install_guide_page_5_title">"Готово. Наслаждайтесь новой версией OxygenOS!"</string>
+	<string name="install_guide_page_5_text">"&#8226; После завершения оптимизации приложений, обновление установлено успешно.
 Чтобы проверить это, вы можете узнать текущую версию системы следующим образом::
 
-- Go to Settings, tap on \"About Phone\", and check the Oxygen OS Version.
+- Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.
 
 - If you like this app, give it 5 stars at Google Play!"</string>
 	<string name="install_guide_close_button">"Закрыть Руководство по установке"</string>
@@ -315,6 +338,12 @@
 
 	<!-- Device information strings -->
 	<!-- TODO: Translate these lines -->
+	<!-- TODO: Translate these 4 strings below -->
+	<string name="device_information_supported_oxygen_os">Your device is supported</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
+	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
+	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
@@ -325,7 +354,7 @@
 	<string name="device_information_image_description">"Изображение устройства"</string>
 	<string name="device_information_incremental_os_version">"Номер сборки ПО:"</string>
 	<string name="device_information_os_version">"Версия Android:"</string>
-	<string name="device_information_oxygen_os_version">"Версия Oxygen OS:"</string>
+	<string name="device_information_oxygen_os_version">"Версия OxygenOS:"</string>
 	<string name="device_information_oxygen_os_ota_version">"Версия OTA:"</string>
 	<string name="device_information_patch_level_version">"Патч безопасности от:"</string>
 	<string name="device_information_serial_number">"Серийный номер:"</string>
@@ -335,11 +364,16 @@
 
 	<!-- About screen strings -->
 	<string name="about">"О приложении"</string>
-	<string name="about_app_description">"Эффективный инструмент для обновления Oxygen OS."</string>
+	<string name="about_app_description">"Эффективный инструмент для обновления OxygenOS."</string>
 	<!-- TODO translate this string -->
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.\n\n\nPlease note, this is not an official OnePlus application. \nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus. \nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc. \nThis app uses data from OnePlus and its parent company Oppo to show update information.\n\nIf you like this app, please rate it on the Play Store now:</string>
-	<string name="about_rate_app_button_text">"Оценить в Google Play"</string>
-	<string name="about_version">"Версия: %1$s"</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
+	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
+	<string name="about_rate_button_text">"Оценить"</string>
+	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
+	<!-- TODO: Translate this string below -->
+	<string name="about_website_button_text">Website</string>
+	<string name="about_email_button_text">Эл. адрес</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device">"Новое устройство! %1$s теперь поддерживается!"</string>
@@ -398,11 +432,17 @@
 	<string name="news_date_published">"Последнее обновление: %1$s"</string>
 	<string name="news_empty">"В этой статье нет содержания."</string>
 	<string name="news_load_error">"Не удалось открыть статью. Нет сетевого подключения. Нажмите «Повторить» для загрузки"</string>
+	<!-- TODO: translate these 5 strings below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
+	<string name="news_empty_state_none_available_header">No articles yet</string>
+	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
+	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
+	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
 
 	<!-- TODO translate these lines -->
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improving Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up. \n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the .ota-directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
+	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the ".Ota" directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
 	<string name="contribute_image_description">Upload files to the app server</string>
 	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
 	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
@@ -423,26 +463,28 @@
 	<string name="error_no_internet_connection">"Нет сетевого подключения"</string>
 	<string name="error_maintenance">"Обслуживание сервера"</string>
 	<string name="error_maintenance_message">"Пожалуйста, подождите. Сервер будет доступен очень скоро."</string>
+	<!-- TODO: translate this string below -->
+	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
 	<string name="error_push_failure">"Не удалось включить уведомления. Полностью закройте приложение и запустите его снова через несколько минут."</string>
 	<string name="error_reload">"Повторить попытку"</string>
 	<string name="error_unable_to_rate_app">"Невозможно оценить приложение, так как на устройстве отсутствует Google Play Mаркет."</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">"Обновление уже загружено"</string>
-	<string name="delete_message_contents">"Вы уже загрузили это обновление, но еще не установили его. Нажмите «Руководство по установке», чтобы посмотреть, как установить это обновление. Нажмите «Удалить», чтобы окончательно удалить файл. Нажмите кнопку «Назад», чтобы закрыть это сообщение."</string>
+	<string name="delete_message_contents">"Вы уже загрузили это обновление, но еще не установили его. Нажмите «Установить», чтобы посмотреть, как установить это обновление. Нажмите «Удалить», чтобы окончательно удалить файл. Нажмите кнопку «Назад», чтобы закрыть это сообщение."</string>
 	<string name="delete_message_delete_button">"Удалить"</string>
 	<string name="unsupported_device_warning_title">"Hеподдерживаемое устройство"</string>
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">"Похоже, что на вашем устройстве стоит не Oxygen OS. Обратите внимание, что вы можете устанавливать обновления системы только на устройствах с Oxygen OS.
+	<string name="unsupported_os_warning_message">"Похоже, что на вашем устройстве стоит не OxygenOS. Обратите внимание, что вы можете устанавливать обновления системы только на устройствах с OxygenOS.
 
 Другие устройства, включая устройства OnePlus, работающие на кастомных прошивках, не поддерживаются."</string>
 	<string name="unsupported_device_warning_checkbox_title">"Не показывать это предупреждение снова"</string>
 	<string name="root_check_title">"Рут-доступ"</string>
 	<string name="root_check_message">"Oxygen Updater предлагает простые автоматические установки обновлений для пользователей с рут-правами. Тем не менее, частичные обновления недоступны для устройств с рутом. Oxygen Updater может проверить, есть ли у вас рут для предоставления соответствующих методов обновления
 
-Если у вас  есть рут, крайне желательно предоставить рут-права приложению, после закрытия данного диалогового окна. 
+Если у вас есть рут, крайне желательно предоставить рут-права приложению, после закрытия данного диалогового окна.
 
 Нет рута? Тогда нажмите \"Закрыть\" и продолжите пользоваться данным приложением."</string>
 
@@ -451,13 +493,11 @@
 	<string name="purchase_error_after_payment">"Покупка версии без рекламы не удалось, поскольку произошла внутренняя ошибка. Пожалуйста, повторите попытку через несколько минут. Если деньги списались, свяжитесь с тех. поддержкой Google Play для помощи."</string>
 
 	<!-- Other strings -->
+	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Иконка"</string>
 	<string name="loading">"Загрузка…"</string>
 	<string name="processing">"Обработка…"</string>
 	<string name="choose_file">"Выберите файл"</string>
-	<string name="root_install_logger_service_name">"Обновить регистратор установки"</string>
 	<string name="update_information_description_not_available">"Официальная информация об обновлении не предоставлена. Обычно такие обновления содержат исправления мелких ошибок, улучшения производительности и/или критические обновления безопасности."</string>
-	<string name="delayed_push_notification_displayer_service_name">"Служба Push-уведомлений"</string>
-	<string name="log_uploader_service_name">"Служба отчетов об ошибках"</string>
-	<string name="download_service_name">"Служба Загрузить"</string>
 </resources>

@@ -1,45 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/coordinatorLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
 	<com.google.android.material.appbar.AppBarLayout
-		android:id="@+id/app_bar"
+		android:id="@+id/appBar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			android:theme="@style/ToolbarTheme"
 			app:layout_collapseMode="pin"
 			app:layout_scrollFlags="scroll|snap|enterAlways"
 			app:menu="@menu/menu_main"
-			app:popupTheme="@style/ToolbarPopupStyle"
 			app:title="@string/app_name" />
 
+		<ProgressBar
+			android:id="@+id/flexibleAppUpdateProgressBar"
+			style="?android:progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:indeterminateTint="@color/white"
+			android:maxHeight="@dimen/spacing_quarter"
+			android:minHeight="@dimen/spacing_quarter"
+			android:progressTint="@color/white"
+			android:visibility="gone"
+			tools:progress="50"
+			tools:visibility="visible" />
+
 		<com.google.android.material.tabs.TabLayout
-			android:id="@+id/tabs"
+			android:id="@+id/tabLayout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			app:tabGravity="fill"
 			app:tabMode="auto" />
+
+		<TextView
+			android:id="@+id/noConnectionTextView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/colorError"
+			android:gravity="center"
+			android:padding="@dimen/spacing_half"
+			android:text="@string/error_no_internet_connection"
+			android:textColor="@color/white"
+			android:visibility="gone"
+			tools:visibility="visible" />
+
+		<LinearLayout
+			android:id="@+id/appUpdateBannerLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/appBarBackground"
+			android:gravity="center"
+			android:padding="@dimen/spacing_default"
+			android:visibility="gone"
+			tools:visibility="visible">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="top"
+				android:contentDescription="@string/icon"
+				android:src="@drawable/info" />
+
+			<TextView
+				android:id="@+id/appUpdateBannerTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginStart="@dimen/spacing_half"
+				android:textColor="@color/white"
+				tools:text="@string/new_app_version" />
+		</LinearLayout>
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<androidx.viewpager.widget.ViewPager
-		android:id="@+id/viewpager"
+	<androidx.viewpager2.widget.ViewPager2
+		android:id="@+id/viewPager"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 	<com.google.android.gms.ads.AdView
-		android:id="@+id/updateInformationAdView"
-		android:layout_width="wrap_content"
+		android:id="@+id/bannerAdView"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom|center_horizontal"
-		android:layout_marginBottom="0dp"
-		app:adSize="BANNER"
-		app:adUnitId="@string/advertising_banner_unit_id" />
+		app:adSize="SMART_BANNER"
+		app:adUnitId="@string/advertising_main_banner_unit_id" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,20 +5,21 @@
 	android:layout_height="wrap_content"
 	android:background="@color/backgroundVariant"
 	android:gravity="center_vertical"
-	android:padding="@dimen/padding_half">
+	android:padding="@dimen/spacing_half">
 
 	<ImageView
 		android:id="@android:id/icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/padding_default"
+		android:contentDescription="@string/icon"
+		android:padding="@dimen/spacing_default"
 		android:tint="?colorPrimary"
-		tools:src="@drawable/oxygen_updater" />
+		tools:src="@drawable/logo_outline" />
 
 	<RelativeLayout
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/padding_half"
+		android:layout_marginStart="@dimen/spacing_half"
 		android:layout_weight="1">
 
 		<TextView
@@ -43,8 +44,8 @@
 		android:id="@android:id/widget_frame"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/padding_default"
-		android:layout_marginEnd="@dimen/padding_default"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
 		android:gravity="center_vertical"
 		android:orientation="vertical" />
 </LinearLayout>

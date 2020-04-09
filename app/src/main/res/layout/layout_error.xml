@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/errorLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center"
+	android:orientation="vertical"
+	android:padding="@dimen/spacing_default">
+
+	<TextView
+		android:id="@+id/errorTitle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/google_sans_medium"
+		android:gravity="center"
+		android:textSize="@dimen/typography_title"
+		tools:text="Error Title" />
+
+	<ImageView
+		android:id="@+id/errorImage"
+		android:layout_width="match_parent"
+		android:layout_height="150dp"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginBottom="@dimen/spacing_default"
+		android:contentDescription="@string/icon"
+		android:src="@drawable/error_outline"
+		android:tint="?colorPrimary" />
+
+	<TextView
+		android:id="@+id/errorText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:linksClickable="true"
+		android:text="@string/error_maintenance_retry"
+		android:textColorLink="?colorPrimary" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/errorActionButton"
+		style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:text="@string/download_error_retry"
+		app:strokeColor="?colorPrimary" />
+</LinearLayout>

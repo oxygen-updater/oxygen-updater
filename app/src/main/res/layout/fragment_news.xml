@@ -1,12 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/newsRefreshContainer"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/swipeRefreshLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<androidx.recyclerview.widget.RecyclerView
-		android:id="@+id/newsContainer"
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
 
+		<LinearLayout
+			android:id="@+id/bannerLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/appBarBackground"
+			android:foreground="?selectableItemBackground"
+			android:gravity="center"
+			android:padding="@dimen/spacing_default"
+			android:visibility="gone"
+			tools:visibility="visible">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="top"
+				android:contentDescription="@string/icon"
+				android:src="@drawable/info" />
+
+			<TextView
+				android:id="@+id/bannerTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginStart="@dimen/spacing_half"
+				android:textColor="@color/white"
+				tools:text="@string/news_unread_count" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/emptyStateLayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:orientation="vertical"
+			android:padding="@dimen/spacing_default"
+			android:visibility="gone"
+			tools:visibility="visible">
+
+			<TextView
+				android:id="@+id/emptyStateHeader"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/google_sans_medium"
+				android:text="@string/news_empty_state_all_read_header"
+				android:textSize="@dimen/typography_headline" />
+
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="150dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginBottom="@dimen/spacing_default"
+				android:contentDescription="@string/icon"
+				android:src="@drawable/library_book"
+				android:tint="?colorPrimary" />
+
+			<TextView
+				android:id="@+id/emptyStateText"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="@string/news_empty_state_all_read_text" />
+		</LinearLayout>
+
+		<!-- placeholders are inflated into this layout in NewsFragment -->
+		<com.facebook.shimmer.ShimmerFrameLayout
+			android:id="@+id/shimmerFrameLayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:shimmer_auto_start="true"
+			tools:visibility="gone" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/newsContainer"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:fadingEdge="vertical"
+			android:fadingEdgeLength="@dimen/spacing_4x"
+			android:requiresFadingEdge="vertical"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+	</LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

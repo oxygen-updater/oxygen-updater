@@ -1,80 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
 	<com.google.android.material.appbar.AppBarLayout
-		android:id="@+id/app_bar"
+		android:id="@+id/appBar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:transitionName="toolbar">
 
 		<androidx.appcompat.widget.Toolbar
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle"
+			android:theme="@style/ToolbarTheme"
 			app:title="@string/faq" />
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<RelativeLayout
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/swipeRefreshLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-			android:id="@+id/faq_webpage_layout"
+		<FrameLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
 			<WebView
-				android:id="@+id/faqWebView"
+				android:id="@+id/webView"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent" />
-		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+				android:layout_height="match_parent"
+				android:fadingEdge="vertical"
+				android:fadingEdgeLength="@dimen/spacing_4x"
+				android:requiresFadingEdge="vertical"
+				android:visibility="gone"
+				tools:visibility="visible" />
 
-		<LinearLayout
-			android:id="@+id/faq_no_network_view"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
-			android:gravity="center_horizontal"
-			android:orientation="vertical">
-
-			<TextView
-				android:id="@+id/faq_no_network_title"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/faq_no_network"
-				android:textStyle="bold" />
-
-			<ImageView
-				android:id="@+id/faq_no_network_image"
+			<ViewStub
+				android:id="@+id/errorLayoutStub"
 				android:layout_width="match_parent"
-				android:layout_height="150dp"
-				android:contentDescription="@string/icon"
-				android:src="@drawable/wifi_off"
-				android:tint="?colorPrimary" />
-
-			<TextView
-				android:id="@+id/faq_no_network_text"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/padding_default"
-				android:layout_marginTop="@dimen/padding_default"
-				android:layout_marginEnd="@dimen/padding_default"
-				android:text="@string/faq_no_network_text" />
-
-			<com.google.android.material.button.MaterialButton
-				style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:onClick="onRetryButtonClick"
-				android:text="@string/download_error_retry" />
-		</LinearLayout>
-	</RelativeLayout>
-
+				android:layout_height="match_parent"
+				android:layout="@layout/layout_error" />
+		</FrameLayout>
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

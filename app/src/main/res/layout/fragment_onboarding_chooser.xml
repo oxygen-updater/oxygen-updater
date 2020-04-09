@@ -1,0 +1,54 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:paddingBottom="@dimen/spacing_default">
+
+	<com.facebook.shimmer.ShimmerFrameLayout
+		android:id="@+id/shimmerFrameLayout"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toTopOf="@id/divider"
+		app:layout_constraintTop_toTopOf="parent"
+		app:shimmer_auto_start="true" />
+
+	<ViewStub
+		android:id="@+id/errorLayoutStub"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout="@layout/layout_error"
+		app:layout_constraintBottom_toTopOf="@id/divider"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/onboardingChooserRecyclerView"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:fadingEdge="vertical"
+		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:requiresFadingEdge="vertical"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:layout_constraintBottom_toTopOf="@id/divider"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_chainStyle="spread_inside" />
+
+	<View
+		android:id="@+id/divider"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_marginBottom="@dimen/spacing_default"
+		android:background="@color/backgroundVariant"
+		app:layout_constraintBottom_toTopOf="@id/onboardingChooserCaption"
+		app:layout_constraintTop_toBottomOf="@id/onboardingChooserRecyclerView" />
+
+	<TextView
+		android:id="@+id/onboardingChooserCaption"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:text="@string/onboarding_page_2_caption"
+		android:textColor="?android:textColorSecondary"
+		android:textSize="@dimen/typography_caption"
+		app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

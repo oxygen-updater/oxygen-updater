@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fadingEdge="vertical"
+	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fillViewport="true"
+	android:orientation="vertical"
+	android:requiresFadingEdge="vertical">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<LinearLayout
+			android:id="@+id/automaticInstallCard"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:background="?selectableItemBackground"
+			android:gravity="center_vertical"
+			android:orientation="vertical"
+			android:padding="@dimen/spacing_default"
+			android:stateListAnimator="@animator/clicked">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/auto"
+				android:drawablePadding="@dimen/spacing_half"
+				android:drawableTint="?colorPrimary"
+				android:fontFamily="@font/google_sans"
+				android:text="@string/install_method_chooser_automatic_title"
+				android:textSize="@dimen/typography_subheading" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_2x"
+				android:layout_marginTop="@dimen/spacing_half"
+				android:text="@string/install_method_chooser_automatic_description"
+				android:textColor="?android:textColorSecondary" />
+		</LinearLayout>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/backgroundVariant" />
+
+		<LinearLayout
+			android:id="@+id/manualInstallCard"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:background="?selectableItemBackground"
+			android:gravity="center_vertical"
+			android:orientation="vertical"
+			android:padding="@dimen/spacing_default"
+			android:stateListAnimator="@animator/clicked">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/library_book"
+				android:drawablePadding="@dimen/spacing_half"
+				android:drawableTint="?colorPrimary"
+				android:fontFamily="@font/google_sans"
+				android:text="@string/install_method_chooser_manual_title"
+				android:textSize="@dimen/typography_subheading" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_2x"
+				android:layout_marginTop="@dimen/spacing_half"
+				android:text="@string/install_method_chooser_manual_description"
+				android:textColor="?android:textColorSecondary" />
+		</LinearLayout>
+	</LinearLayout>
+</androidx.core.widget.NestedScrollView>

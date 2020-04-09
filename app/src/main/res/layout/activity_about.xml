@@ -1,117 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
 	<com.google.android.material.appbar.AppBarLayout
-		android:id="@+id/app_bar"
+		android:id="@+id/appBar"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="@dimen/size_collapsing_toolbar"
+		android:fitsSystemWindows="true"
+		android:transitionName="toolbar">
 
-		<androidx.appcompat.widget.Toolbar
-			android:id="@+id/toolbar"
+		<com.google.android.material.appbar.SuperpoweredCollapsingToolbarLayout
+			android:id="@+id/collapsingToolbarLayout"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-			app:popupTheme="@style/ToolbarPopupStyle"
-			app:title="@string/about" />
+			android:layout_height="match_parent"
+			android:theme="@style/ToolbarTheme"
+			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+			app:title="@string/app_name"
+			tools:subtitle="@string/summary_oxygen">
+
+			<ImageView
+				android:id="@+id/collapsingToolbarImage"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:contentDescription="@string/icon"
+				android:fitsSystemWindows="true"
+				android:scaleType="centerCrop"
+				android:src="@drawable/logo_outline"
+				app:layout_collapseMode="parallax" />
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:alpha=".75"
+				android:background="@color/black"
+				android:fitsSystemWindows="true" />
+
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?actionBarSize"
+				android:theme="@style/ToolbarTheme"
+				app:layout_collapseMode="pin" />
+		</com.google.android.material.appbar.SuperpoweredCollapsingToolbarLayout>
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<RelativeLayout
-		android:id="@+id/about_top_view"
+	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical"
+		android:fadingEdge="vertical"
+		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:requiresFadingEdge="vertical"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<TextView
-			android:id="@+id/aboutAppNameView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentTop="true"
-			android:layout_centerHorizontal="true"
-			android:layout_gravity="center_horizontal"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
-			android:text="@string/app_name"
-			android:textAppearance="?android:attr/textAppearanceLarge" />
-
-		<ImageView
-			android:id="@+id/aboutAppIconView"
-			android:layout_width="100dp"
-			android:layout_height="100dp"
-			android:layout_below="@+id/aboutAppNameView"
-			android:layout_centerHorizontal="true"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
-			android:contentDescription="@string/icon"
-			android:src="@mipmap/ic_launcher" />
-
-		<TextView
-			android:id="@+id/aboutVersionNumberView"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/aboutAppIconView"
-			android:layout_centerHorizontal="true"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
-			android:gravity="center_horizontal"
-			android:text="@string/about_version"
-			android:textStyle="bold" />
-
-		<TextView
-			android:id="@+id/aboutSlogan"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/aboutVersionNumberView"
-			android:layout_centerHorizontal="true"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
-			android:gravity="center_horizontal"
-			android:text="@string/about_app_description"
-			android:textAppearance="?android:textAppearanceSmall"
-			android:textStyle="italic" />
-
-		<androidx.core.widget.NestedScrollView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/aboutSlogan"
-			android:layout_marginStart="@dimen/padding_default"
-			android:layout_marginTop="@dimen/padding_default"
-			android:layout_marginEnd="@dimen/padding_default"
-			android:background="@android:color/transparent">
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
 			<LinearLayout
-				android:layout_width="wrap_content"
+				android:id="@+id/bannerLayout"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:orientation="vertical">
+				android:background="@color/appBarBackground"
+				android:foreground="?selectableItemBackground"
+				android:gravity="center"
+				android:padding="@dimen/spacing_default"
+				android:visibility="gone"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:visibility="visible">
+
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="top"
+					android:contentDescription="@string/icon"
+					android:src="@drawable/info" />
 
 				<TextView
-					android:id="@+id/aboutBackgroundStoryView"
+					android:id="@+id/bannerTextView"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:linksClickable="true"
-					android:text="@string/about_background_story"
-					android:textAppearance="?android:textAppearanceSmall"
-					android:textColorLink="?colorPrimary"
-					android:textSize="13sp" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/aboutRateButton"
-					style="@style/Widget.MaterialComponents.Button.TextButton"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center"
-					android:layout_marginStart="@dimen/padding_default"
-					android:layout_marginEnd="@dimen/padding_default"
-					android:text="@string/about_rate_app_button_text"
-					android:textColor="?colorPrimary" />
+					android:layout_gravity="center_vertical"
+					android:layout_marginStart="@dimen/spacing_half"
+					android:textColor="@color/white"
+					tools:text="@string/new_app_version_long" />
 			</LinearLayout>
-		</androidx.core.widget.NestedScrollView>
-	</RelativeLayout>
+
+			<ImageView
+				android:id="@+id/appLogo"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_default"
+				android:background="?selectableItemBackgroundBorderless"
+				android:clickable="true"
+				android:contentDescription="@string/icon"
+				android:focusable="true"
+				android:src="@mipmap/ic_launcher"
+				android:stateListAnimator="@animator/clicked"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/bannerLayout" />
+
+			<TextView
+				android:id="@+id/appTagline"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_default"
+				android:gravity="center_horizontal"
+				android:text="@string/about_app_description"
+				android:textColor="?android:textColorSecondary"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/appLogo" />
+
+			<androidx.constraintlayout.helper.widget.Flow
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_default"
+				app:constraint_referenced_ids="discordButton,githubButton,websiteButton,emailButton,rateButton"
+				app:flow_horizontalGap="@dimen/spacing_quarter"
+				app:flow_verticalGap="@dimen/spacing_quarter"
+				app:flow_wrapMode="chain"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/appTagline" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/discordButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/about_discord_button_text"
+				android:textColor="?android:textColorTertiary"
+				app:icon="@drawable/discord"
+				app:iconTint="?android:textColorTertiary"
+				app:rippleColor="@color/ripple_neutral"
+				tools:ignore="MissingConstraints" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/githubButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/about_github_button_text"
+				android:textColor="?android:textColorTertiary"
+				app:icon="@drawable/github"
+				app:iconTint="?android:textColorTertiary"
+				app:rippleColor="@color/ripple_neutral"
+				tools:ignore="MissingConstraints" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/websiteButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/about_website_button_text"
+				android:textColor="?android:textColorTertiary"
+				app:icon="@drawable/link"
+				app:iconTint="?android:textColorTertiary"
+				app:rippleColor="@color/ripple_neutral"
+				tools:ignore="MissingConstraints" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/emailButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/about_email_button_text"
+				android:textColor="?android:textColorTertiary"
+				app:icon="@drawable/email"
+				app:iconTint="?android:textColorTertiary"
+				app:rippleColor="@color/ripple_neutral"
+				tools:ignore="MissingConstraints" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/rateButton"
+				style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/about_rate_button_text"
+				android:textColor="?android:textColorTertiary"
+				app:icon="@drawable/rate"
+				app:iconTint="?android:textColorTertiary"
+				app:rippleColor="@color/ripple_neutral"
+				tools:ignore="MissingConstraints" />
+
+			<View
+				android:id="@+id/headerDivider"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:background="@color/backgroundVariant"
+				app:layout_constraintTop_toBottomOf="@id/rateButton" />
+
+			<TextView
+				android:id="@+id/backgroundStoryTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_default"
+				android:linksClickable="true"
+				android:text="@string/about_background_story"
+				android:textColorLink="?colorPrimary"
+				app:layout_constraintTop_toBottomOf="@id/headerDivider" />
+
+			<View
+				android:id="@+id/backgroundStoryDivider"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:background="@color/backgroundVariant"
+				app:layout_constraintTop_toBottomOf="@id/backgroundStoryTextView" />
+
+			<TextView
+				android:id="@+id/thirdPartyAppNoticeTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_default"
+				android:text="@string/about_third_party_app_notice"
+				android:textColor="?android:textColorSecondary"
+				android:textSize="@dimen/typography_caption"
+				app:layout_constraintTop_toBottomOf="@id/backgroundStoryDivider" />
+		</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

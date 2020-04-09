@@ -3,20 +3,52 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/device_information_scrollview"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	android:fadingEdge="vertical"
+	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:requiresFadingEdge="vertical">
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
+		<LinearLayout
+			android:id="@+id/bannerLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/appBarBackground"
+			android:foreground="?android:selectableItemBackground"
+			android:gravity="center"
+			android:padding="@dimen/spacing_default"
+			android:visibility="gone"
+			tools:visibility="visible">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="top"
+				android:contentDescription="@string/icon"
+				android:src="@drawable/info" />
+
+			<TextView
+				android:id="@+id/bannerTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginStart="@dimen/spacing_half"
+				android:textColor="@color/white"
+				tools:text="@string/device_information_supported_oxygen_os" />
+		</LinearLayout>
+
 		<TextView
 			android:id="@+id/device_information_header"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
-			android:layout_marginTop="@dimen/padding_default"
+			android:layout_marginTop="@dimen/spacing_default"
 			android:ellipsize="end"
+			android:fontFamily="@font/google_sans_medium"
 			android:maxLines="1"
 			android:text="@string/device_information_your_device"
 			android:textSize="@dimen/typography_title" />
@@ -26,7 +58,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="150dp"
 			android:layout_gravity="center_horizontal"
-			android:layout_marginTop="@dimen/padding_default"
+			android:layout_marginTop="@dimen/spacing_default"
 			android:contentDescription="@string/device_information_image_description"
 			android:src="@drawable/smartphone"
 			android:tint="?colorPrimary" />
@@ -35,32 +67,22 @@
 			android:id="@+id/device_information_hardware_container"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?android:selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/padding_default">
+			android:padding="@dimen/spacing_default">
 
-			<LinearLayout android:gravity="center_vertical">
-
-				<ImageView
-					android:id="@+id/hardware_icon"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:contentDescription="@string/icon"
-					android:src="@drawable/memory"
-					android:tint="?colorPrimary" />
-
-				<TextView
-					android:id="@+id/hardware_header"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/padding_half"
-					android:text="@string/device_information_hardware_header"
-					android:textSize="@dimen/typography_subheading" />
-			</LinearLayout>
+			<TextView
+				android:id="@+id/hardware_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/memory"
+				android:drawablePadding="@dimen/spacing_half"
+				android:drawableTint="?colorPrimary"
+				android:fontFamily="@font/google_sans"
+				android:gravity="center_vertical"
+				android:text="@string/device_information_hardware_header"
+				android:textSize="@dimen/typography_subheading" />
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -74,7 +96,7 @@
 					android:id="@+id/device_information_memory_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -83,7 +105,7 @@
 			</TableRow>
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -97,7 +119,7 @@
 					android:id="@+id/device_information_soc_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -106,7 +128,7 @@
 			</TableRow>
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -120,7 +142,7 @@
 					android:id="@+id/device_information_cpu_freq_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -129,7 +151,7 @@
 			</TableRow>
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -143,7 +165,7 @@
 					android:id="@+id/device_information_serial_number_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -156,32 +178,22 @@
 			android:id="@+id/device_information_software_container"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?android:selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="@dimen/padding_default">
+			android:padding="@dimen/spacing_default">
 
-			<LinearLayout android:gravity="center_vertical">
-
-				<ImageView
-					android:id="@+id/software_icon"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:contentDescription="@string/icon"
-					android:src="@drawable/adb"
-					android:tint="?colorPrimary" />
-
-				<TextView
-					android:id="@+id/software_header"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/padding_half"
-					android:text="@string/device_information_software_header"
-					android:textSize="@dimen/typography_subheading" />
-			</LinearLayout>
+			<TextView
+				android:id="@+id/software_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableStart="@drawable/adb"
+				android:drawablePadding="@dimen/spacing_half"
+				android:drawableTint="?colorPrimary"
+				android:fontFamily="@font/google_sans"
+				android:gravity="center_vertical"
+				android:text="@string/device_information_software_header"
+				android:textSize="@dimen/typography_subheading" />
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -195,7 +207,7 @@
 					android:id="@+id/device_information_os_ver_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -204,7 +216,7 @@
 			</TableRow>
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -218,7 +230,7 @@
 					android:id="@+id/device_information_oxygen_os_ver_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -227,7 +239,7 @@
 			</TableRow>
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -241,7 +253,7 @@
 					android:id="@+id/device_information_oxygen_os_ota_ver_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -250,7 +262,7 @@
 			</TableRow>
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -264,7 +276,7 @@
 					android:id="@+id/device_information_incremental_os_ver_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"
@@ -273,7 +285,7 @@
 			</TableRow>
 
 			<TableRow
-				android:layout_marginStart="@dimen/padding_2x"
+				android:layout_marginStart="@dimen/spacing_2x"
 				android:layout_marginTop="6dp">
 
 				<TextView
@@ -287,7 +299,7 @@
 					android:id="@+id/device_information_os_patch_level_field"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginStart="4dp"
+					android:layout_marginStart="@dimen/spacing_quarter"
 					android:layout_weight="1"
 					android:gravity="end"
 					android:textColor="?android:textColorSecondary"

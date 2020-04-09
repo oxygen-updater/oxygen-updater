@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/dialog_item_layout"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="?selectableItemBackground"
+	android:orientation="horizontal"
+	android:paddingStart="@dimen/spacing_default"
+	android:paddingTop="@dimen/spacing_default"
+	android:paddingEnd="@dimen/spacing_2x"
+	android:paddingBottom="@dimen/spacing_default"
+	android:stateListAnimator="@animator/clicked">
+
+	<ImageView
+		android:id="@+id/dialog_item_checkmark"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:contentDescription="@string/icon"
+		android:src="@drawable/checkmark"
+		android:tint="?colorPrimary"
+		android:visibility="invisible"
+		tools:visibility="visible" />
+
+	<LinearLayout
+		android:id="@+id/dialog_item_text_container"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/dialog_item_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="?android:textColorTertiary"
+			tools:text="Title" />
+
+		<TextView
+			android:id="@+id/dialog_item_subtitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="?android:textColorSecondary"
+			tools:text="Subtitle" />
+	</LinearLayout>
+</LinearLayout>

@@ -4,19 +4,34 @@
 	<string name="app_name">Oxygen Updater</string>
 	<string name="launcher_app_name">Oxygen Updater</string>
 
+	<!-- TODO: translate this string below -->
+	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+
 	<!-- Update information strings-->
 	<string name="update">تحديث</string>
-	<string name="update_information_close">إغلاق</string>
+	<!-- TODO: translate this string below -->
+	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">لا توجد بيانات رسمية عن الميزات الجديدة التي يقدمها هذا التحديث. عادتاً, تحديث كهذا يقدم إصلاحات لأخطاء برمجية, وتحسينات في الأداء, و \ أو تحديثات أمنية حرجة لجهازك.</string>
-	<string name="update_information_file_name">إسم الملف:  %1$s</string>
+	<string name="update_information_file_name">إسم الملف: %1$s</string>
+	<!-- TODO: translate this line below -->
+	<string name="update_information_md5">MD5: %1$s</string>
+	<!-- TODO: Translate this string below -->
+	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_for">إلى</string>
 	<string name="update_information_header">تحديث</string>
 	<string name="update_information_header_short">تحديث</string>
-	<string name="update_information_installed_update">آخر تحديث للنظام هو:</string>
+	<!-- TODO: translate these 7 strings below -->
+	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
+	<string name="update_information_banner_server">Tap here to view important notices</string>
+	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
+	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
+	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">أخر فحص تم في: %1$s</string>
 	<string name="update_information_latest_available_update">متاح تحديث جديد للنظام</string>
 	<string name="update_information_no_update_data_available">لا توجد بيانات متاحة عن التحديث</string>
-	<string name="update_information_oxygen_os_version">إصدار Oxygen OS: %1$s</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">نظامك محدث بالفعل</string>
 	<string name="update_information_unknown_update_name">تحديث بلا إسم لـ %1$s</string>
 	<string name="update_information_version">&#160;إصدار:</string>
@@ -28,7 +43,11 @@
 	<string name="server_status_warning">بعض الميزات قد لا تعمل بشكل صحيح.</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">تحديث جديد متاح! النسخة رقم &lt;a href="https://play.google.com/store/apps/details?id=com.arjanvlek.oxygenupdater">%1$s&lt;/a> تم إصدارها!</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
+	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">عند</string>
@@ -36,10 +55,12 @@
 	<string name="time_yesterday">أمس</string>
 
 	<!-- Downloader strings-->
-	<string name="download">تحميل</string>
-	<string name="downloaded">محمل بالفعل</string>
-	<string name="downloading">جاري التحميل…</string>
-	<string name="paused">متوقف</string>
+	<!-- TODO: translate these 4 strings below -->
+	<string name="download">Download update</string>
+	<string name="downloaded">Update downloaded</string>
+	<string name="downloading">Downloading update…</string>
+	<string name="paused">Paused - tap to resume</string>
+
 	<string name="download_already_downloaded">تم بالفعل تحميل التحديث. وهو جاهز للتثبيت.</string>
 	<string name="download_complete">تم التحميل</string>
 	<string name="download_complete_notification">تم التحميل. إضغط لبدء التثبيت.</string>
@@ -50,11 +71,13 @@
 	<string name="download_error_network">حدث خطأ في الشبكة أثناء تحميل التحديث. سيتم إستئناف التحميل تلقائياً.</string>
 	<string name="download_error_server">حدث خطأ في الخادم أثناء تحميل التحديث. من فضلك حاول التحميل مرة أخرى.</string>
 	<string name="download_error_internal">للأسف, حدث خطأ فني أثناء تحميل التحديث. حاول تحميله مجدداً. إذا إستمر حدوث ذلك, فضلاً قم بالإتصال بمطور هذا التطبيق للمساعدة.</string>
+	<!-- TODO: translate this string below -->
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
 	<string name="download_error_retry">أعد المحاولة</string>
 	<string name="download_error_resume">إستئناف</string>
 	<string name="download_error_storage">لا توجد مساحة تخزين كافية على جهازك لتحميل التحديث. فضلاً قم بحذف بعض الملفات وحاول تحميله مرة أخرى.</string>
 	<string name="download_failed">فشل التحميل</string>
-	<string name="download_in_background">Oxygen Updater يعمل في الخلفية</string>
+	<string name="running_in_background">Oxygen Updater يعمل في الخلفية</string>
 	<string name="download_oxygen_os">إصدار نظام أكسجين</string>
 	<string name="download_pending">سيبدأ التحميل قريباً…</string>
 	<string name="download_permissions">إضغط تحميل مجدداً لتحميل التحديث.</string>
@@ -63,16 +86,18 @@
 	<string name="download_notification_error_internal">حدثت مشكلة تقنية أثناء التحميل. أعد التحميل أو اتصل بالدعم الفني.</string>
 	<string name="download_notification_error_storage_full">مساحة تخزين غير كافية</string>
 	<string name="download_notification_error_corrupt">فشل التحقق من الملف. إفحص اتصالك وحاول مرة أخرى.</string>
-	<string name="download_progress_text_hours_remaining">%1$d%%, حوالي %2$d ساعات متبقية.</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">%1$d%%, متبقي أقل من دقيقة</string>
-	<string name="download_progress_text_minutes_remaining">%1$d%%, حوالي %2$d دقائق متبقية.</string>
-	<string name="download_progress_text_one_hour_remaining">%1$d%%, متبقي حوالي ساعة</string>
-	<string name="download_progress_text_one_minute_remaining">%1$d%%, متبقي حوالي دقيقة</string>
-	<string name="download_progress_text_seconds_remaining">%1$d%%, متبقي عدة ثواني</string>
-	<string name="download_progress_text_unknown_time_remaining">%1$d%%, جاري حساب الوقت المتبقي…</string>
-	<string name="download_progress_text_verifying">100%, التحقق من الملف…</string>
-	<string name="download_progress_text_paused">%1$d%%, متوقف</string>
-	<string name="download_waiting_for_network">%1$d%%, بإنتظار إتصال الشبكة…</string>
+
+	<string name="download_progress">%1$d ميجا بايت / %2$d ميجا بايت (%3$d%%)</string>
+	<string name="download_progress_text_hours_remaining">حوالي %1$d ساعات متبقية.</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">متبقي أقل من دقيقة</string>
+	<string name="download_progress_text_minutes_remaining">حوالي %1$d دقائق متبقية.</string>
+	<string name="download_progress_text_one_hour_remaining">متبقي حوالي ساعة</string>
+	<string name="download_progress_text_one_minute_remaining">متبقي حوالي دقيقة</string>
+	<string name="download_progress_text_seconds_remaining">متبقي عدة ثواني</string>
+	<string name="download_progress_text_unknown_time_remaining">جاري حساب الوقت المتبقي…</string>
+	<string name="download_progress_text_verifying">التحقق من الملف…</string>
+	<string name="download_progress_text_paused">متوقف</string>
+	<string name="download_waiting_for_network">بإنتظار إتصال الشبكة…</string>
 	<string name="download_size_megabyte">%1$d ميجا بايت</string>
 	<string name="download_unknown_update_name">حدث نظام أكسجين</string>
 	<string name="download_verifying">جاري التحقق…</string>
@@ -120,7 +145,7 @@
 	<string name="settings_category_other">آخر:</string>
 	<string name="settings_device">الجهاز</string>
 	<string name="settings_entered_incorrectly">خطأ في حفظ إعداداتك. فضلاً عد وإختر جهازك وطريقة التحديث مرة أخرى.</string>
-	<string name="settings_explanation_incremental_full_update">التحديث التدريجي يمكن تثبيته فوق أي إصدار ( ماعدا اذا قمت بفك البوت لودر; إذاً فمن الأفضل دائماً إختيار التحديث الشامل كطريقة التحديث المثلى). \n\nA التحديث التجريبي من نظام أكسجين يمكن تثبيته دائماً, حتى اذا كنت على إصدار مستقر. للإنتقال من إصدار مستقر لإصدار تجريبي, يجب عليك تفعيل الوضع المطور من داخل الإعدادات. أما للإصدارات التجريبية فالتحديثات التدريجية والكاملة تعمل بنفس الطريقة السابقة كأن جهازك يعمل فعلاً بإصدار مستقر حالي.</string>
+	<string name="settings_explanation_incremental_full_update">التحديث التدريجي يمكن تثبيته فوق أي إصدار ( ماعدا اذا قمت بفك البوت لودر; إذاً فمن الأفضل دائماً إختيار التحديث الشامل كطريقة التحديث المثلى).\n\nA التحديث التجريبي من نظام أكسجين يمكن تثبيته دائماً, حتى اذا كنت على إصدار مستقر. للإنتقال من إصدار مستقر لإصدار تجريبي, يجب عليك تفعيل الوضع المطور من داخل الإعدادات. أما للإصدارات التجريبية فالتحديثات التدريجية والكاملة تعمل بنفس الطريقة السابقة كأن جهازك يعمل فعلاً بإصدار مستقر حالي.</string>
 	<string name="settings_explanation_update_methods">توضيح طريقة التحديث</string>
 	<string name="settings_header">أختر جهازك وطريقة التحديث:</string>
 	<string name="settings_push">أرسل لي إشعار عندما يوجد:</string>
@@ -140,23 +165,22 @@
 
 	<!-- FAQ strings -->
 	<string name="faq">التعليمات</string>
-	<string name="faq_menuitem">التعليمات</string>
+	<string name="faq_menu_item">التعليمات</string>
 	<string name="faq_no_network">لا يوجد إتصال.</string>
 	<string name="faq_no_network_text">تحتاج إلى إتصال فعال لمشاهدة صفحة التعليمات.</string>
 
 	<!-- First-time setup strings -->
-	<string name="setup">مرحباً</string>
-	<string name="setup_close_button">بدء التطبيق</string>
-	<string name="setup_page_1_title">مرحباً بك في Oxygen Updater!</string>
-	<string name="setup_page_1_text">هذا التطبيق يتيح لك:\n\n- الوصول سريعاً إلى آخر تحديثات أندرويد لنظام أكسجين\n\n- التحديث بشكل مبسط للأجهزة التي تملك (روت)\n\n- مشاهدة كل ماهو جديد في النظام الذي تستعمله حالياً\n\n- قراءة أخر الأخبار حول جهاز ون بلس ونظام أكسجين\n\nإسحب إلى اليسار للإستمرار.</string>
-	<string name="setup_page_2_title">تنبيه هام:</string>
-	<string name="setup_page_2_text">هذا التطبيق لا يعتبر تطبيق رسمي من شركة ون بلس. وإستعمال هذا التطبيق على مسؤوليتك الخاصة كاملاً. لا شركة ون بلس ولا المطور مسؤولين عن أعمالك ويشتمل ذلك أي أضرار تنتج عن إستعمال هذا التطبيق.\n\nبإستعمالك هذا التطبيق فأنت تعتبر موافقاً على الأحكام والشروط التي ذكرت بالأعلى.\n\n إسحب إلى اليسار للإستمرار.</string>
-	<string name="setup_page_3_title">إختر جهازك:</string>
-	<string name="setup_page_3_text">جهازك غالباً تم إختياره بالأعلى. إذا لم يكن كذلك قم انت بإختياره من الأعلى.\n\إسحب إلى اليسار للإستمرار.</string>
-	<string name="setup_page_4_title">إختر الطريقة التي تفضلها للتحديث:</string>
-	<string name="setup_page_4_text">عادتاً, التحديث التدريجي هو الإختيار الأمثل هنا, لعرضه تحميلات أسرع وأصغر.\n\nعلى كل حال, لا يعتبر ذلك مناسباً للأجهزة التي تملك (روت). اذا كنت تملك جهاز ذو (روت) مفعل, فأختر التحديث الكامل.\n\nأما إذا كنت تملك إصدار أكسجين تجريبي مثبت بالفعل فإختر (واحدة من) طرق التحديث التجريبية.\n\إسحب إلى اليسار للإستمرار.</string>
-	<string name="setup_page_5_title">هل انت جاهز للبدء!</string>
-	<string name="setup_page_5_text">إستمتع بهذا التطبيق!\n\nيمكنك دائماً تغيير إعداداتك لاحقاً. لعمل ذلك كل ما عليك هو: الضغط على الثلاث نقاط المتواجدة في أعلى الجانب الأيمن, وأضغط على \"الإعدادات\".</string>
+	<string name="onboarding">مرحباً</string>
+	<string name="onboarding_finished_button">بدء التطبيق</string>
+	<string name="onboarding_page_1_title">مرحباً بك في Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">هذا التطبيق يتيح لك:\n\n&#8226; الوصول سريعاً إلى آخر تحديثات أندرويد لنظام أكسجين\n\n&#8226; التحديث بشكل مبسط للأجهزة التي تملك (روت)\n\n&#8226; مشاهدة كل ماهو جديد في النظام الذي تستعمله حالياً\n\n&#8226; قراءة أخر الأخبار حول جهاز ون بلس ونظام أكسجين\n\nإسحب إلى اليسار للإستمرار.</string>
+	<string name="onboarding_page_1_caption">هذا التطبيق لا يعتبر تطبيق رسمي من شركة ون بلس. وإستعمال هذا التطبيق على مسؤوليتك الخاصة كاملاً. لا شركة ون بلس ولا المطور مسؤولين عن أعمالك ويشتمل ذلك أي أضرار تنتج عن إستعمال هذا التطبيق.\n\nبإستعمالك هذا التطبيق فأنت تعتبر موافقاً على الأحكام والشروط التي ذكرت بالأعلى.</string>
+	<string name="onboarding_page_2_title">إختر جهازك</string>
+	<string name="onboarding_page_2_caption">جهازك غالباً تم إختياره بالأعلى. إذا لم يكن كذلك قم انت بإختياره من الأعلى.\n\إسحب إلى اليسار للإستمرار.</string>
+	<string name="onboarding_page_3_title">إختر الطريقة التي تفضلها للتحديث</string>
+	<string name="onboarding_page_3_caption">عادتاً, التحديث التدريجي هو الإختيار الأمثل هنا, لعرضه تحميلات أسرع وأصغر.\n\nعلى كل حال, لا يعتبر ذلك مناسباً للأجهزة التي تملك (روت). اذا كنت تملك جهاز ذو (روت) مفعل, فأختر التحديث الكامل.</string>
+	<string name="onboarding_page_4_title">هل انت جاهز للبدء!</string>
+	<string name="onboarding_page_4_text">إستمتع بهذا التطبيق!\n\nيمكنك دائماً تغيير إعداداتك لاحقاً. لعمل ذلك كل ما عليك هو: الضغط على الثلاث نقاط المتواجدة في أعلى الجانب الأيمن, وأضغط على \"الإعدادات\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">تثبيت</string>
@@ -178,20 +202,22 @@
 	<string name="install_options_reboot_after_install">إعادة التشغيل بعد التثبيت</string>
 	<string name="install_options_select_root_package">إختر حزمة (الروت) لتثبيتها…</string>
 	<string name="install_options_start_install">بدء التثبيت</string>
-	<string name="install_options_title">إختر خيارات التثبيت المفضلة إليك</string>
+	<string name="install_options_subtitle">إختر خيارات التثبيت المفضلة إليك</string>
 	<string name="install_options_wipe_cache_partition">مسح قسم ذاكرة التخزين المؤقت</string>
 	<string name="install_options_explanation_title">ماذا تعني هذه الخيارات؟</string>
 	<string name="install_options_explanation_backup">النسخ الاحتياطي لجهازي:\nعند تحديد هذا الخيار، سيتم إجراء نسخة احتياطية من النظام والتطبيقات والإعدادات قبل التثبيت. لتكون في متناول اليد في حالة حدوث خطأ.</string>
 	<string name="install_options_explanation_keep_root">الحفاظ على روت الجهاز:\nعند تحديد هذا الخيار ، يمكنك تحديد حزمة روت سيتم تثبيتها بعد إتمام تثبيت التحديث. هذا يضمن أن يبقى جهازك ذو روت. يرجى ملاحظة أن حزمة الروت هذه يجب أن تكون متوافقة مع الإصدار الجديد من إصدار أكسجين الذي ستقوم بتثبيته!</string>
 	<string name="install_options_explanation_wipe_cache">مسح قسم ذاكرة التخزين المؤقت:\nعند تحديد هذا الخيار، سيتم مسح قسم ذاكرة التخزين المؤقت بعد تثبيت التحديث. هذا يضمن أن يكون أداء جهازك على النحو الأمثل ويقلل أيضًا من إحتمال مواجهة الأخطاء الناجمة عن تثبيت التحديث.</string>
 	<string name="install_options_explanation_reboot">إعادة التشغيل بعد التثبيت:\nعند تحديد هذا الخيار ، سيقوم الجهاز تلقائيًا بإعادة التشغيل إلى نظام أكسجين بعد تثبيت التحديث. وإلا فسيظل جهازك في وضع الريكفري ، حيث يمكنك تثبيت حزم إضافية.</string>
-	<string name="install_select_method_title">كيف تريد أن يتم تثبيت هذا التحديث؟</string>
-	<string name="install_select_method_automatic_title">تثبيت تلقائي*</string>
-	<string name="install_select_method_automatic_image">تثبيت النسخة تلقائياً</string>
-	<string name="install_select_method_automatic_description">أسهل طريقة لتثبيت التحديث.\nسيتم إعادة تشغيل الجهاز لتثبيت التحديث.\n\n* يتطلب وصول إلى الروت وريكفريTWRP.</string>
-	<string name="install_select_method_manual_title">تثبيت يدوي</string>
-	<string name="install_select_method_manual_image">تثبيت النسخة يدوياً</string>
-	<string name="install_select_method_manual_description">إقرأ دليل التثبيت لتتعلم كيفية تثبيت التحديث. ستقوم بتثبيت هذا التحديث عن طريق إستخدام وضع الريكفري لجهازك.</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_subtitle">كيف تريد أن يتم تثبيت هذا التحديث؟</string>
+	<string name="install_method_chooser_automatic_title">تثبيت تلقائي*</string>
+	<string name="install_method_chooser_automatic_image">تثبيت النسخة تلقائياً</string>
+	<string name="install_method_chooser_automatic_description">أسهل طريقة لتثبيت التحديث.\nسيتم إعادة تشغيل الجهاز لتثبيت التحديث.\n\n* يتطلب وصول إلى الروت وريكفريTWRP.</string>
+	<string name="install_method_chooser_manual_title">تثبيت يدوي</string>
+	<string name="install_method_chooser_manual_image">تثبيت النسخة يدوياً</string>
+	<string name="install_method_chooser_manual_description">إقرأ دليل التثبيت لتتعلم كيفية تثبيت التحديث. ستقوم بتثبيت هذا التحديث عن طريق إستخدام وضع الريكفري لجهازك.</string>
 	<string name="install_temporary_error">حدث خطأ مؤقت أثناء التحضير لتثبيت التحديث. فضلاً حاول مرة أخرى.</string>
 	<string name="install_verify_error_title">فشل التثبيت</string>
 	<string name="install_verify_error_nothing_installed">خطأ عند تثبيت التحديث. لم يتم إجراء أي تغييرات على نظام تشغيل جهازك. حاول تثبيت التحديث مرة أخرى.</string>
@@ -208,27 +234,31 @@
 	<string name="install_guide_no_root">قم بتثبيت التحديث وفقًا للإرشادات الموضحة في دليل التثبيت.</string>
 	<string name="install_guide_automatic_install_disabled">تم تعطيل التثبيتات التلقائية مؤقتًا بسبب مشكلات فنية تم الإبلاغ عنها. قم بتثبيت التحديث وفقًا للإرشادات الموضحة في دليل التثبيت.</string>
 	<string name="install_guide">دليل التثبيت</string>
-	<string name="install_guide_loading">تحميل دليل التثبيت…</string>
-	<string name="install_guide_title">دليل التثبيت - %1$d من %2$d</string>
+	<string name="install_guide_subtitle">دليل التثبيت - %1$d من %2$d</string>
 	<string name="install_guide_image_description">نسخة محتويات. يرجى النقر على أي مكان بأسفل على الشاشة لسماع دليل التثبيت.</string>
-	<string name="install_guide_header">إسحب &lt;- -&gt; للتنقل بين الصفحات.</string>
-	<string name="install_guide_tip">- يوصى بتدوين جميع الخطوات ، حيث ستحتاج إلى إيقاف تشغيل الجهاز أثناء تثبيت التحديث.</string>
+	<string name="install_guide_tip">&#8226; يوصى بتدوين جميع الخطوات ، حيث ستحتاج إلى إيقاف تشغيل الجهاز أثناء تثبيت التحديث.</string>
 	<string name="install_guide_page_1_title">تحميل التحديث</string>
-	<string name="install_guide_page_1_text">- اضغط على زر تحميل لبدء تحميل التحديث.\n\n- سيظهر لك تقدم التحميل في التطبيق، وكإشعار في منطقة الإشعارات الخاصة بك.\n\n- عند إنتهاء التحميل، سترى إشعاراً بأنه \"تم التحميل\".\nفي حالة حدوث خطأ في التحميل، إفتح التطبيق وحاول تحميل التحديث مرة أخرى. إذا لم ينجح ذلك ، فتأكد من أن لديك إتصال إنترنت فعال. وخلافاً لذلك، إتصل بمطور التطبيق. ويمكنك القيام بذلك عن طريق زيارة قائمة \"تطبيقاتي\" في متجر بلاي.</string>
-	<string name="install_guide_page_2_title">الدخول إلى وضع الريكفري.</string>
-	<string name="install_guide_page_2_text">- أولاً ، قم بإيقاف تشغيل جهازك.\n\n- ثم، إضغط على كلاً من زري الطاقة وخفض مستوى الصوت في نفس الوقت.\n\n- سيبدأ جهازك الآن في وضع الريكفري. إنتظر حتى ترى قائمة الريكفري على الشاشة.</string>
-	<string name="install_guide_page_3_title">تثبيت التحديثات المحملة.</string>
-	<string name="install_guide_page_3_text">- ضمن قائمة الريكفري، إختر لغتك المفضلة أولاً. بعد ذلك، انقر فوق (أو استخدم أزرار الصوت للتنقل وزر الطاقة لتحديد) \"التثبيت من الذاكرة الخارجية\".\n\n- التالي، قم بالتمرير لأسفل مستخدماً مفتاح خفض الصوت إلى أن تجد صفاً به \" ملف مضغوط\" مع إسم الملف ظاهراً في التطبيق. (عادة ، هذا ملف يبدأ بكلمة \"OnePlusOxygen\").\n\n- سيبدأ تثبيت التحديث تلقائياً.</string>
-	<string name="install_guide_page_4_title">إعادة تشغيل جهازك.</string>
-	<string name="install_guide_page_4_text">- عند الإنتهاء من تثبيت التحديث ، ستيتم إعادتك إلى قائمة الريكفري. من ضمن قائمة الريكفري، انقر فوق \"إعادة التشغيل\".\n\n- سيعرض جهازك شاشة بدء التشغيل لفترة طويلة أثناء بدء التشغيل.\n\n- بعد ذلك ، سترى رسالة بيضاء مع كلمة \"جاري ترقية نظام أندرويد\"، في هذه الأثناء يتم تحسين تطبيقاتك.</string>
+	<string name="install_guide_page_1_text">&#8226; اضغط على زر تحميل لبدء تحميل التحديث.\n\n&#8226; سيظهر لك تقدم التحميل في التطبيق، وكإشعار في منطقة الإشعارات الخاصة بك.\n\n&#8226; عند إنتهاء التحميل، سترى إشعاراً بأنه \"تم التحميل\".\nفي حالة حدوث خطأ في التحميل، إفتح التطبيق وحاول تحميل التحديث مرة أخرى. إذا لم ينجح ذلك ، فتأكد من أن لديك إتصال إنترنت فعال. وخلافاً لذلك، إتصل بمطور التطبيق. ويمكنك القيام بذلك عن طريق زيارة قائمة \"تطبيقاتي\" في متجر بلاي.</string>
+	<string name="install_guide_page_2_title">الدخول إلى وضع الريكفري</string>
+	<string name="install_guide_page_2_text">&#8226; أولاً ، قم بإيقاف تشغيل جهازك.\n\n&#8226; ثم، إضغط على كلاً من زري الطاقة وخفض مستوى الصوت في نفس الوقت.\n\n&#8226; سيبدأ جهازك الآن في وضع الريكفري. إنتظر حتى ترى قائمة الريكفري على الشاشة.</string>
+	<string name="install_guide_page_3_title">تثبيت التحديثات المحملة</string>
+	<string name="install_guide_page_3_text">&#8226; ضمن قائمة الريكفري، إختر لغتك المفضلة أولاً. بعد ذلك، انقر فوق (أو استخدم أزرار الصوت للتنقل وزر الطاقة لتحديد) \"التثبيت من الذاكرة الخارجية\".\n\n&#8226; التالي، قم بالتمرير لأسفل مستخدماً مفتاح خفض الصوت إلى أن تجد صفاً به \" ملف مضغوط\" مع إسم الملف ظاهراً في التطبيق. (عادة ، هذا ملف يبدأ بكلمة \"OnePlusOxygen\").\n\n&#8226; سيبدأ تثبيت التحديث تلقائياً.</string>
+	<string name="install_guide_page_4_title">إعادة تشغيل جهازك</string>
+	<string name="install_guide_page_4_text">&#8226; عند الإنتهاء من تثبيت التحديث ، ستيتم إعادتك إلى قائمة الريكفري. من ضمن قائمة الريكفري، انقر فوق \"إعادة التشغيل\".\n\n&#8226; سيعرض جهازك شاشة بدء التشغيل لفترة طويلة أثناء بدء التشغيل.\n\n&#8226; بعد ذلك ، سترى رسالة بيضاء مع كلمة \"جاري ترقية نظام أندرويد\"، في هذه الأثناء يتم تحسين تطبيقاتك.</string>
 	<string name="install_guide_page_5_title">تم. إستمتع بإصدار نظام أكسجين الجديد!</string>
-	<string name="install_guide_page_5_text">- بعد إنتهاء جهازك من تحسين التطبيقات ، سيكون قد تم تثبيت التحديث بنجاح.\nللتحقق من ذلك، يمكنك التحقق من الإصدار الحالي من نظامك على النحو التالي: \n\n- انتقل إلى الإعدادات ، انقر فوق \"حول الهاتف\" "، وتحقق من إصدار نظام أكسجين.\n\n- إذا أعجبك هذا التطبيق ، فإمنحه خمس نجوم على متجر بلاي!</string>
+	<string name="install_guide_page_5_text">&#8226; بعد إنتهاء جهازك من تحسين التطبيقات ، سيكون قد تم تثبيت التحديث بنجاح.\nللتحقق من ذلك، يمكنك التحقق من الإصدار الحالي من نظامك على النحو التالي:\n\n&#8226; انتقل إلى الإعدادات ، انقر فوق \"حول الهاتف\" "، وتحقق من إصدار نظام أكسجين.\n\n&#8226; إذا أعجبك هذا التطبيق ، فإمنحه خمس نجوم على متجر بلاي!</string>
 	<string name="install_guide_close_button">إغلاق دليل التثبيت</string>
 	<string name="install_guide_zip_file_deleted">حزمة ملف الروت الذي حددته لم تعد موجودة. الرجاء تحديد حزمة روت جديدة أعلاه.</string>
 	<string name="install_guide_zip_file_picker_title">إختر حزمة روت</string>
 	<string name="install_guide_zip_file_missing">"إذا كنت ترغب في الحفاظ علي جهازك ممتلكاً للروت، سيكون عليك تحديد حزمة الروت أعلاه."</string>
 
 	<!-- Device information strings -->
+	<!-- TODO: Translate these 4 strings below -->
+	<string name="device_information_supported_oxygen_os">Your device is supported</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
+	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
+	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+
 	<string name="device_information_hardware_header">العتاد</string>
 	<string name="device_information_software_header">النظام</string>
 	<string name="device_information_amount_of_memory">مقدار الذاكرة العشوائية:</string>
@@ -249,9 +279,14 @@
 	<!-- About screen strings -->
 	<string name="about">حول هذا التطبيق</string>
 	<string name="about_app_description">الأداة المثالية لتحديثات نظام التشغيل أكسجين.</string>
-	<string name="about_background_story">تم تطوير هذا التطبيق في الأصل بواسطة Arjan Vlek كمتابعة لأحد تطبيقاته الأخرى ، المسمى <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (حيث أنه يوفر وظائف مماثلة لمستخدمي نظام التشغيل سيانوجين).\n\nبعد أربع سنوات في يوليو 2019 قرر Arjan التخلي عن كلا المشروعين وتحويل ملكيتهم إلى فريق من المطورين من عدة دول المشيدة بعمله. حيث أخذوا المسؤولية على عاتقهم خدمة الجماعة خدمة ممتازة &amp; وتقديم الدعم للحصول على تحديثات ون بلس بشكل أسرع.\nتستطيع أن تجد المزيد من المعلومات عن هذا الإعلان <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">هنا</a>.\n\nالرابع عشر من أغسطس 2019 كان المؤشر للإصدار الجديد تحت المَلاك الجدد للتطبيق, والذي أتى بإضافات جديدة كالوضع الداكن وتصميم جديد كلياً.\n\nللمزيد من المعلومات عن الفريق, تفحص هذا <a href="https://oxygenupdater.com/team/">الموقع الإلكتروني</a>.\n\n\n فضلاً لاحظ, أن هذا التطبيق غير رسمي من شركة ون بلس. \nإسم وشعار ونظام أكسجين هي ملكيات تخص شركة ون بلس. \nكما أن شعارات أندرويد وجوجل وسوق بلاي هي علامات مسجلة تخص شركة جوجل. \nهذا التطبيق يستخدم البيانات من شركة ون بلس وشركتها الأم شركة أوبو لعرض بيانات التحديث.\n\nإذا أحببت هذا التطبيق فضلاً يمكنك تقييمنا على متجر بلاي الآن:</string>
-	<string name="about_rate_app_button_text">قيمنا على متجر بلاي</string>
-	<string name="about_version">إصدار: %1$s</string>
+	<string name="about_background_story">تم تطوير هذا التطبيق في الأصل بواسطة Arjan Vlek كمتابعة لأحد تطبيقاته الأخرى ، المسمى <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (حيث أنه يوفر وظائف مماثلة لمستخدمي نظام التشغيل سيانوجين).\n\nبعد أربع سنوات في يوليو 2019 قرر Arjan التخلي عن كلا المشروعين وتحويل ملكيتهم إلى فريق من المطورين من عدة دول المشيدة بعمله. حيث أخذوا المسؤولية على عاتقهم خدمة الجماعة خدمة ممتازة &amp; وتقديم الدعم للحصول على تحديثات ون بلس بشكل أسرع.\nتستطيع أن تجد المزيد من المعلومات عن هذا الإعلان <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">هنا</a>.\n\nالرابع عشر من أغسطس 2019 كان المؤشر للإصدار الجديد تحت المَلاك الجدد للتطبيق, والذي أتى بإضافات جديدة كالوضع الداكن وتصميم جديد كلياً.\n\nللمزيد من المعلومات عن الفريق, تفحص هذا <a href="https://oxygenupdater.com/team/">الموقع الإلكتروني</a>.</string>
+	<string name="about_third_party_app_notice"> فضلاً لاحظ, أن هذا التطبيق غير رسمي من شركة ون بلس.\nإسم وشعار ونظام أكسجين هي ملكيات تخص شركة ون بلس.\nكما أن شعارات أندرويد وجوجل وسوق بلاي هي علامات مسجلة تخص شركة جوجل.\nهذا التطبيق يستخدم البيانات من شركة ون بلس وشركتها الأم شركة أوبو لعرض بيانات التحديث.</string>
+	<string name="about_rate_button_text">تقييم</string>
+	<string name="about_github_button_text">GitHub</string>
+	<string name="about_discord_button_text">Discord</string>
+	<!-- TODO: Translate this string below -->
+	<string name="about_website_button_text">Website</string>
+	<string name="about_email_button_text">البريد الإلكتروني</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device">تم إصدار جهاز جديد ! %1$s مدعوم الآن!</string>
@@ -268,13 +303,13 @@
 	<string name="help">مساعدة</string>
 	<string name="help_text">مرحبًا بك في قسم المساعدة في Oxygen Updater.\n\nتغطي المساعدة المواضيع التالية:\n\n• تحديث جهازكn\• قراءة آخر الأخبارn\• عرض معلومات الجهازn\• تغيير الإعدادات n\n\إسحب لأسفل لتستعرض المواضيع.</string>
 	<string name="help_updating_your_device_title">تحديث جهازك</string>
-	<string name="help_updating_your_device_text">عند فتح التطبيق ، سترى ما إذا كان هنا تحديث للنظام متاحًا أم لا. إذا كان هناك تحديث متوفر ، يمكنك تثبيته.\n\nلبدء التثبيت، أنقر فوق زر \"تحميل\" (أسفل وصف التحديث) لبدء التحميل. عند إنتهاء التحميل، ستنبثق شاشة التثبيت. إذا تركت التطبيق أو لم تظهر إليك الشاشة المنبثقة، فأنقر فوق زر \"تثبيت\"، والذي سيكون ظاهراً بجوار زر \"تحميل\". \n\nستقوم شاشة التثبيت أولاً بفحص ما إذا كان لديك روت على الجهاز. إذا كان لديك روت، فإمنح الإذن للروت عند الطلب وإختر الطريقة التي تريد تثبيت التحديث بها. أما خلاف ذلك، فإتبع الإرشادات الخاصة بالتثبيت اليدوي.\n\nالتثبيت التلقائي:\nليس عليك سوى اختيار خيارات التثبيت الخاصة بك. يوصى بإستعمال الإعدادات الإفتراضية، باستثناء أنه يتعين عليك تحديد حزمة الروت التي يجب إعادة تثبيتها. حدد حزمة الروت عبارة عن (ملف مضغوط) بإستخدام زر المجلد الأزرق وإضغط على \"بدء التثبيت\" لبدء التثبيت.\n\nالتثبيت اليدوي:\nسترى دليل التثبيت على الشاشة. دون الإرشادات وقم بتنفيذها كما هو موضح لتثبيت التحديث.</string>
+	<string name="help_updating_your_device_text">عند فتح التطبيق ، سترى ما إذا كان هنا تحديث للنظام متاحًا أم لا. إذا كان هناك تحديث متوفر ، يمكنك تثبيته.\n\nلبدء التثبيت، أنقر فوق زر \"تحميل\" (أسفل وصف التحديث) لبدء التحميل. عند إنتهاء التحميل، ستنبثق شاشة التثبيت. إذا تركت التطبيق أو لم تظهر إليك الشاشة المنبثقة، فأنقر فوق زر \"تثبيت\"، والذي سيكون ظاهراً بجوار زر \"تحميل\".\n\nستقوم شاشة التثبيت أولاً بفحص ما إذا كان لديك روت على الجهاز. إذا كان لديك روت، فإمنح الإذن للروت عند الطلب وإختر الطريقة التي تريد تثبيت التحديث بها. أما خلاف ذلك، فإتبع الإرشادات الخاصة بالتثبيت اليدوي.\n\nالتثبيت التلقائي:\nليس عليك سوى اختيار خيارات التثبيت الخاصة بك. يوصى بإستعمال الإعدادات الإفتراضية، باستثناء أنه يتعين عليك تحديد حزمة الروت التي يجب إعادة تثبيتها. حدد حزمة الروت عبارة عن (ملف مضغوط) بإستخدام زر المجلد الأزرق وإضغط على \"بدء التثبيت\" لبدء التثبيت.\n\nالتثبيت اليدوي:\nسترى دليل التثبيت على الشاشة. دون الإرشادات وقم بتنفيذها كما هو موضح لتثبيت التحديث.</string>
 	<string name="help_reading_news_title">قراءة آخر الأخبار</string>
 	<string name="help_reading_news_text">يتم عرض الأخبار على يسار شاشة التحديث. تظهر العناصر الأحدث في الأعلى. ما عليك سوى النقر على عنصر لقراءته.\nاضغط على سهم العودة للخلف أو إضغط على مفتاح الرجوع للعودة إلى شاشة عناصر الأخبار.</string>
 	<string name="help_device_information_title">مشاهدة بيانات جهازك</string>
 	<string name="help_device_information_text">يمكنك عرض البعض من مواصفات جهازك بإستخدام الشاشة على يمين شاشة التحديث. يكون هذا مفيدًا عند تقديم طلب دعم فني، والتي قد تُطلب منك الحصول على بعض مواصفات جهازك خلاله.</string>
 	<string name="help_change_settings_title">تغيير الإعدادات</string>
-	<string name="help_change_settings_text">يمكنك تغيير الإعدادات الخاصة بك عن طريق النقر على النقاط الثلاثة في أعلى اليمين تتبعها بنقرة على زر الإعدادات. \nيمكنك تغيير الإعدادات التالية:\n\n• طريقة الجهاز والتحديث\n• الإشعارات \n• إشعارات داخل التطبيق\n• إعدادات الخصوصية (رفع السجل).\n\nإستخدم رموز التبديل لتشغيل وإيقاف إعدادات الإشعارات أوالخصوصية. حدد جهازاً  و / أو طريقة التحديث بإستخدام القوائم المنسدلة الموضحة أعلى المفاتيح. القوائم المنسدلة غير مرئية؟ تحقق من اتصالك بالإنترنت وإفتح شاشة الإعدادات مرة أخرى.</string>
+	<string name="help_change_settings_text">يمكنك تغيير الإعدادات الخاصة بك عن طريق النقر على النقاط الثلاثة في أعلى اليمين تتبعها بنقرة على زر الإعدادات.\nيمكنك تغيير الإعدادات التالية:\n\n• طريقة الجهاز والتحديث\n• الإشعارات\n• إشعارات داخل التطبيق\n• إعدادات الخصوصية (رفع السجل).\n\nإستخدم رموز التبديل لتشغيل وإيقاف إعدادات الإشعارات أوالخصوصية. حدد جهازاً و / أو طريقة التحديث بإستخدام القوائم المنسدلة الموضحة أعلى المفاتيح. القوائم المنسدلة غير مرئية؟ تحقق من اتصالك بالإنترنت وإفتح شاشة الإعدادات مرة أخرى.</string>
 
 	<!-- News strings -->
 	<string name="news">أخبار</string>
@@ -282,6 +317,12 @@
 	<string name="news_date_published">آخر تحديث: %1$s</string>
 	<string name="news_empty">لا توجد محتويات داخل هذا المقال.</string>
 	<string name="news_load_error">فشل فتح المقال. تحقق من اتصالك واضغط على زر \'إعادة المحاولة\' لفتح المقال.</string>
+	<!-- TODO: translate these 5 strings below -->
+	<string name="news_unread_count">You have %1$d unread news articles</string>
+	<string name="news_empty_state_none_available_header">No articles yet</string>
+	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
+	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
+	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">كن مساهماً</string>
@@ -307,13 +348,15 @@
 	<string name="error_no_internet_connection">لا يوجد إتصال.</string>
 	<string name="error_maintenance">صيانة الخادم</string>
 	<string name="error_maintenance_message">فضلاً إنتظر. سيكون الخادم متاح قريباً جداً.</string>
+	<!-- TODO: translate this string below -->
+	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
 	<string name="error_push_failure">فشل في تفعيل الإشعارات. فضلاً أغلق التطبيق كاملاً, وإنتظر عدة دقائق ثم قم بإعادة تشغيله مرة أخرى.</string>
 	<string name="error_reload">أعد التحميل</string>
 	<string name="error_unable_to_rate_app">لا يمكنك تقييم التطبيق ، لأن متجر بلاي غير متواجد على جهازك.</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">تم تحميل التحديث بالفعل</string>
-	<string name="delete_message_contents">لقد قمت بالفعل بتنزيل هذا التحديث ، لكنك لم تقم بتثبيته بعد. اضغط على \"دليل التثبيت\" لعرض كيفية تثبيت هذا التحديث. اضغط على \"حذف\" لحذف هذا الملف نهائيًا. اضغط زر العودة لإغلاق هذه الرسالة.</string>
+	<string name="delete_message_contents">لقد قمت بالفعل بتنزيل هذا التحديث ، لكنك لم تقم بتثبيته بعد. اضغط على \"تثبيت\" لعرض كيفية تثبيت هذا التحديث. اضغط على \"حذف\" لحذف هذا الملف نهائيًا. اضغط زر العودة لإغلاق هذه الرسالة.</string>
 	<string name="delete_message_delete_button">حذف</string>
 	<string name="unsupported_device_warning_title">جهاز غير مدعوم</string>
 	<!-- TODO: translate the 2 strings below -->
@@ -329,12 +372,10 @@
 	<string name="purchase_error_after_payment">فشل شراء الإصدار الخالي من الإعلانات، نظرًا لحدوث خطأ داخلي. يرجى المحاولة مرة أخرى بعد بضع دقائق. إذا كنت قد دفعت بالفعل فيرجى الاتصال بدعم متجر بلاي للحصول على المساعدة.</string>
 
 	<!-- Other strings-->
+	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">أيقونة</string>
 	<string name="loading">جاري التحميل…</string>
 	<string name="processing">جاري المعالجة…</string>
 	<string name="choose_file">أختر ملف</string>
-	<string name="root_install_logger_service_name">تحديث مسجل التثبيت</string>
-	<string name="delayed_push_notification_displayer_service_name">خدمة الإشعارات</string>
-	<string name="download_service_name">محمل التحديثات</string>
-	<string name="log_uploader_service_name">خدمة الإبلاغ عن الأخطاء</string>
 </resources>

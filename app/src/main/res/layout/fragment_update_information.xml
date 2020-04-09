@@ -1,245 +1,75 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/updateInformationFragmentTop"
+	android:id="@+id/swipeRefreshLayout"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
+	android:layout_height="match_parent">
 
-	<!-- Loading screen -->
-	<ProgressBar
-		android:id="@+id/updateInformationLoadingScreen"
-		style="?android:attr/progressBarStyleLarge"
-		android:layout_width="@dimen/padding_4x"
-		android:layout_height="@dimen/padding_4x"
-		android:layout_centerHorizontal="true"
-		android:layout_centerVertical="true" />
-
-	<!-- Main screen -->
-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-		android:id="@+id/updateInformationRefreshLayout"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:visibility="gone"
-		tools:visibility="visible">
+		android:orientation="vertical">
 
-		<androidx.core.widget.NestedScrollView
+		<TextView
+			android:id="@+id/serverStatusTextView"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:background="@color/colorError"
+			android:drawableStart="@drawable/error_outline"
+			android:gravity="center"
+			android:padding="@dimen/spacing_default"
+			android:textColor="@color/white"
+			android:visibility="gone"
+			tools:text="@string/server_status_unreachable"
+			tools:visibility="visible" />
 
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:paddingLeft="@dimen/padding_default"
-				android:paddingTop="@dimen/padding_default"
-				android:paddingRight="@dimen/padding_default">
-
-				<TextView
-					android:id="@+id/headerLabel"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_centerHorizontal="true"
-					android:gravity="center_horizontal"
-					android:text="@string/update_information_latest_available_update"
-					android:textSize="@dimen/typography_title" />
-
-				<TextView
-					android:id="@+id/updateInformationBuildNumberView"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_below="@+id/headerLabel"
-					android:layout_centerHorizontal="true"
-					android:layout_marginTop="@dimen/padding_default"
-					android:layout_marginBottom="0dp"
-					android:ellipsize="end"
-					android:gravity="center_horizontal"
-					android:maxLines="1"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:textStyle="bold" />
-
-				<TextView
-					android:id="@+id/updateDescriptionView"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_below="@id/updateInformationBuildNumberView"
-					android:layout_marginStart="@dimen/padding_2x"
-					android:layout_marginTop="@dimen/padding_default"
-					android:layout_marginEnd="@dimen/padding_2x"
-					android:layout_marginBottom="@dimen/padding_default" />
-
-				<TextView
-					android:id="@+id/updateFileNameView"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_below="@id/updateDescriptionView"
-					android:layout_marginStart="@dimen/padding_2x"
-					android:layout_marginTop="@dimen/padding_default"
-					android:layout_marginEnd="@dimen/padding_2x"
-					android:layout_marginBottom="@dimen/padding_default" />
-
-				<TableLayout
-					android:id="@+id/downloadProgressTable"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_below="@id/updateFileNameView"
-					android:visibility="gone"
-					tools:visibility="visible">
-
-					<TableRow>
-
-						<ProgressBar
-							android:id="@+id/updateInformationDownloadProgressBar"
-							style="?android:attr/progressBarStyleHorizontal"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_gravity="center_vertical"
-							android:layout_marginStart="@dimen/padding_half"
-							android:layout_weight="1"
-							android:visibility="visible" />
-
-						<ImageButton
-							android:id="@+id/updateInformationDownloadPauseButton"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginStart="@dimen/padding_half"
-							android:layout_marginEnd="@dimen/padding_half"
-							android:background="@android:color/transparent"
-							android:contentDescription="@string/icon"
-							android:src="@drawable/pause"
-							android:tint="?android:textColorSecondary" />
-
-						<ImageButton
-							android:id="@+id/updateInformationDownloadCancelButton"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginStart="@dimen/padding_half"
-							android:layout_marginEnd="@dimen/padding_half"
-							android:background="@android:color/transparent"
-							android:contentDescription="@string/icon"
-							android:src="@drawable/close"
-							android:tint="?colorPrimary" />
-					</TableRow>
-
-					<TableRow>
-
-						<TextView
-							android:id="@+id/updateInformationDownloadDetailsView"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_gravity="center_horizontal"
-							android:layout_marginStart="@dimen/padding_half" />
-					</TableRow>
-
-				</TableLayout>
-
-				<LinearLayout
-					android:id="@+id/buttonTable"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_below="@+id/downloadProgressTable"
-					android:layout_centerHorizontal="true">
-
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/updateInformationDownloadButton"
-						style="@style/Widget.MaterialComponents.Button.TextButton"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:enabled="false"
-						android:text="@string/download"
-						android:textColor="?colorPrimary" />
-
-					<com.google.android.material.button.MaterialButton
-						android:id="@+id/updateInstallationInstructionsButton"
-						style="@style/Widget.MaterialComponents.Button.TextButton"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginStart="@dimen/padding_half"
-						android:enabled="true"
-						android:text="@string/install"
-						android:textColor="?colorPrimary" />
-
-				</LinearLayout>
-
-				<LinearLayout
-					android:id="@+id/tableHost"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_below="@id/buttonTable"
-					android:layout_centerHorizontal="true">
-
-					<ImageView
-						android:id="@+id/downloadSizeImage"
-						android:layout_width="48dp"
-						android:layout_height="48dp"
-						android:contentDescription="@string/icon"
-						android:src="@drawable/donut"
-						android:tint="?colorPrimary" />
-
-					<TextView
-						android:id="@+id/updateInformationDownloadSizeView"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_gravity="center_vertical"
-						android:layout_marginStart="@dimen/padding_half" />
-				</LinearLayout>
-			</RelativeLayout>
-		</androidx.core.widget.NestedScrollView>
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-		android:id="@+id/updateInformationSystemIsUpToDateRefreshLayout"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:visibility="gone"
-		tools:visibility="visible">
-
-		<androidx.core.widget.NestedScrollView
+		<TextView
+			android:id="@+id/serverBannerTextView"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="wrap_content"
+			android:background="@color/backgroundVariant"
+			android:drawableEnd="@drawable/open_in_browser"
+			android:drawableTint="?colorPrimary"
+			android:fontFamily="@font/google_sans"
+			android:foreground="?selectableItemBackground"
+			android:padding="@dimen/spacing_default"
+			android:stateListAnimator="@animator/clicked"
+			android:text="@string/update_information_banner_server"
+			android:textColor="?colorPrimary"
+			android:visibility="gone"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:visibility="visible" />
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:padding="@dimen/padding_default">
+		<com.facebook.shimmer.ShimmerFrameLayout
+			android:id="@+id/shimmerFrameLayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:shimmer_auto_start="true"
+			tools:visibility="gone">
 
-				<TextView
-					android:id="@+id/updateInformationSystemIsUpToDateHeader"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_gravity="center_horizontal"
-					android:text="@string/update_information_system_is_up_to_date"
-					android:textSize="@dimen/typography_title" />
+			<include layout="@layout/placeholder_update_information" />
+		</com.facebook.shimmer.ShimmerFrameLayout>
 
-				<TextView
-					android:id="@+id/updateInformationSystemIsUpToDateDateTextView"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_gravity="center_horizontal"
-					android:textColor="?android:textColorSecondary" />
+		<ViewStub
+			android:id="@+id/errorLayoutStub"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout="@layout/layout_error"
+			tools:visibility="gone" />
 
-				<TextView
-					android:id="@+id/updateInformationSystemIsUpToDateVersionTextView"
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_gravity="center_horizontal"
-					android:textColor="?android:textColorSecondary" />
+		<ViewStub
+			android:id="@+id/updateInformationLayoutStub"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout="@layout/layout_update_information"
+			tools:visibility="visible" />
 
-				<ImageView
-					android:id="@+id/updateInformationSystemIsUpToDateImage"
-					android:layout_width="192dp"
-					android:layout_height="192dp"
-					android:layout_gravity="center_horizontal"
-					android:contentDescription="@string/icon"
-					android:src="@drawable/done_circle"
-					android:tint="@color/colorPositive" />
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/updateInformationSystemIsUpToDateStatisticsButton"
-					style="@style/Widget.MaterialComponents.Button.TextButton"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_horizontal"
-					android:text="@string/update_information_view_update_information" />
-			</LinearLayout>
-		</androidx.core.widget.NestedScrollView>
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</RelativeLayout>
+		<ViewStub
+			android:id="@+id/systemIsUpToDateLayoutStub"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout="@layout/layout_system_is_up_to_date"
+			tools:visibility="visible" />
+	</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<TextView
+		android:id="@+id/titleTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/google_sans_medium"
+		android:paddingStart="@dimen/spacing_default"
+		android:paddingTop="@dimen/spacing_default"
+		android:paddingEnd="@dimen/spacing_default"
+		android:paddingBottom="@dimen/spacing_half"
+		android:textColor="?colorPrimary"
+		android:textSize="@dimen/typography_subheading"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Title" />
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fadingEdge="vertical"
+		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:paddingStart="@dimen/spacing_default"
+		android:paddingTop="@dimen/spacing_half"
+		android:paddingEnd="@dimen/spacing_default"
+		android:paddingBottom="@dimen/spacing_default"
+		android:requiresFadingEdge="vertical"
+		app:layout_constraintBottom_toTopOf="@id/flow"
+		app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+		<TextView
+			android:id="@+id/messageTextView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textIsSelectable="true"
+			tools:text="Message" />
+	</androidx.core.widget.NestedScrollView>
+
+	<androidx.constraintlayout.helper.widget.Flow
+		android:id="@+id/flow"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/spacing_default"
+		app:constraint_referenced_ids="negativeButton,positiveButton"
+		app:flow_horizontalGap="@dimen/spacing_default"
+		app:flow_verticalGap="@dimen/spacing_quarter"
+		app:flow_wrapMode="chain"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/negativeButton"
+		style="@style/Widget.MaterialComponents.Button.TextButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/spacing_half"
+		android:textColor="?colorError"
+		android:visibility="gone"
+		app:rippleColor="@color/ripple_error"
+		tools:ignore="MissingConstraints"
+		tools:text="Negative"
+		tools:visibility="visible" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/positiveButton"
+		style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:textColor="@color/colorPositive"
+		android:visibility="gone"
+		app:iconTint="@color/colorPositive"
+		app:rippleColor="@color/ripple_positive"
+		app:strokeColor="@color/colorPositive"
+		tools:ignore="MissingConstraints"
+		tools:text="Positive"
+		tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>
