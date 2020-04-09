@@ -120,6 +120,7 @@ class Md5VerificationWorker(
             return@withContext null
         }
 
+        @Suppress("DEPRECATION")
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData!!.filename!!)
 
         var retryCount = 0

@@ -154,6 +154,7 @@ class DownloadWorker(
 
     private suspend fun download(): Result = withContext(Dispatchers.IO) {
         tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
+        @Suppress("DEPRECATION")
         zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
         var startingByte = settingsManager.getPreference<Long?>(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE, null)

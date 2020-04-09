@@ -11,18 +11,6 @@
 		android:orientation="vertical">
 
 		<TextView
-			android:id="@+id/noConnectionTextView"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@color/colorError"
-			android:gravity="center"
-			android:padding="@dimen/spacing_half"
-			android:text="@string/error_no_internet_connection"
-			android:textColor="@color/white"
-			android:visibility="gone"
-			tools:visibility="visible" />
-
-		<TextView
 			android:id="@+id/serverStatusTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

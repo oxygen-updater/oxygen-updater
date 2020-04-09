@@ -46,8 +46,9 @@ class OxygenUpdater : Application() {
         override fun onLost(network: Network) {
             @Suppress("DEPRECATION")
             val networkAvailability = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                val activeNetwork = getSystemService<ConnectivityManager>()?.activeNetworkInfo
-                activeNetwork?.isConnectedOrConnecting == true
+                getSystemService<ConnectivityManager>()
+                    ?.activeNetworkInfo
+                    ?.isConnectedOrConnecting == true
             } else {
                 false
             }
@@ -84,6 +85,11 @@ class OxygenUpdater : Application() {
 
     private fun setupNetworkCallback() {
         getSystemService<ConnectivityManager>()?.apply {
+            // Posting initial value is required, as [networkCallback]'s
+            // methods get called only when network connectivity changes
+            @Suppress("DEPRECATION")
+            _isNetworkAvailable.postValue(activeNetworkInfo?.isConnectedOrConnecting == true)
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 registerDefaultNetworkCallback(networkCallback)
             } else {

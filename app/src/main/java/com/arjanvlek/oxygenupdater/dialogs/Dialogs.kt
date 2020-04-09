@@ -78,16 +78,6 @@ object Dialogs {
         }.show()
     }
 
-    fun showNoNetworkConnectionError(activity: Activity?) = checkPreconditions(activity) {
-        MessageDialog(
-            activity!!,
-            title = activity.getString(R.string.error_app_requires_network_connection),
-            message = activity.getString(R.string.error_app_requires_network_connection_message),
-            negativeButtonText = activity.getString(R.string.download_error_close),
-            cancellable = false
-        ).show()
-    }
-
     fun showServerMaintenanceError(activity: Activity?) = checkPreconditions(activity) {
         MessageDialog(
             activity!!,

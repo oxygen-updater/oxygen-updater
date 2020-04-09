@@ -123,8 +123,10 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                         settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
                         settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
 
-                        val downloadedUpdateFilePath =
-                            Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).path + File.separator + updateData.filename
+                        @Suppress("DEPRECATION")
+                        val downloadedUpdateFilePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).path +
+                                File.separator +
+                                updateData.filename
 
                         AutomaticUpdateInstaller.installUpdate(
                             requireContext(),
@@ -259,6 +261,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         val zipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 
         if (zipFilePath != null) {
+            @Suppress("DEPRECATION")
             // Remove the path prefix (/storage/emulated/xx). Only keep the local file path.
             val text = zipFilePath.replace(
                 Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath + File.separator,

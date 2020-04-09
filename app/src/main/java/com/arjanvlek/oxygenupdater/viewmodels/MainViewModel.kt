@@ -133,14 +133,12 @@ class MainViewModel(
     fun fetchUpdateData(
         deviceId: Long,
         updateMethodId: Long,
-        incrementalSystemVersion: String,
-        errorCallback: KotlinCallback<String?>
+        incrementalSystemVersion: String
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.fetchUpdateData(
             deviceId,
             updateMethodId,
-            incrementalSystemVersion,
-            errorCallback
+            incrementalSystemVersion
         ).let {
             _updateData.postValue(it)
         }
@@ -238,6 +236,7 @@ class MainViewModel(
             return false
         }
 
+        @Suppress("DEPRECATION")
         return File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.filename!!).exists()
     }
 
@@ -259,6 +258,7 @@ class MainViewModel(
         logDebug(UpdateInformationFragment.TAG, "Deleting downloaded update file " + updateData.filename)
 
         val tempFile = File(context.getExternalFilesDir(null), updateData.filename!!)
+        @Suppress("DEPRECATION")
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
 

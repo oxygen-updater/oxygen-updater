@@ -51,6 +51,7 @@ class CheckSystemUpdateFilesWorker(
 
         var anySubmitFailed = false
         UPDATE_DIRECTORIES.forEach { directoryName ->
+            @Suppress("DEPRECATION")
             val directory = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), directoryName)
 
             if (!directory.exists()) {

@@ -53,12 +53,17 @@ class MessageDialog(
             dialogListener?.invoke(Dialog.BUTTON_NEGATIVE)
         })
 
+        setupCancellableBehaviour()
+    }
+
+    private fun setupCancellableBehaviour() {
         setCancelable(cancellable)
         setCanceledOnTouchOutside(cancellable)
 
         if (!cancellable) {
             setOnKeyListener { _, keyCode, _ ->
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dismiss()
                     exit()
                 }
                 true
@@ -66,6 +71,20 @@ class MessageDialog(
 
             setOnDismissListener { exit() }
         }
+    }
+
+    /**
+     * This can be used to programmatically dismiss a dialog without triggering the dismiss listener,
+     * which is set for non-cancellable dialogs
+     */
+    fun bypassListenerAndDismiss() {
+        setOnKeyListener(null)
+        setOnDismissListener(null)
+
+        dismiss()
+
+        // Reset cancellable behaviour, to
+        setupCancellableBehaviour()
     }
 
     private fun MaterialButton.setup(string: String?, onClickListener: View.OnClickListener, @DrawableRes drawableResId: Int? = null) {
@@ -80,8 +99,7 @@ class MessageDialog(
 
     private fun exit(activity: Activity? = this.activity) {
         if (activity != null) {
-            activity.finish()
-            exit(activity.parent)
+            activity.finishAffinity()
         } else {
             Handler().postDelayed({ exitProcess(0) }, 2000)
         }

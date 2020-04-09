@@ -25,6 +25,7 @@ import androidx.lifecycle.observe
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
+import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.MessageDialog
@@ -61,6 +62,7 @@ import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuItemClickListener {
 
+    private lateinit var noNetworkDialog: MessageDialog
     private lateinit var activityLauncher: ActivityLauncher
 
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
@@ -121,6 +123,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             }
         }
 
+        // display the "No connection" banner if required
+        OxygenUpdater.isNetworkAvailable.observe(this) {
+            noConnectionTextView.isVisible = !it
+
+            // Dismiss no network dialog if needed
+            if (it && noNetworkDialog.isShowing) {
+                noNetworkDialog.bypassListenerAndDismiss()
+            }
+        }
+
         mainViewModel.serverStatus.observe(this) { serverStatus ->
             val shouldShowAppUpdateBanner = settingsManager.getPreference(
                 SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES,
@@ -168,8 +180,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             activityLauncher.Contribute()
         }
 
+        noNetworkDialog = MessageDialog(
+            this,
+            title = getString(R.string.error_app_requires_network_connection),
+            message = getString(R.string.error_app_requires_network_connection_message),
+            negativeButtonText = getString(R.string.download_error_close),
+            cancellable = false
+        )
+
         if (!Utils.checkNetworkConnection()) {
-            showNetworkError()
+            noNetworkDialog.show()
         }
     }
 
@@ -368,6 +388,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
 
     public override fun onDestroy() = super.onDestroy().also {
         bannerAdView?.destroy()
+        noNetworkDialog.bypassListenerAndDismiss()
         mainViewModel.unregisterAppUpdateListener()
     }
 
@@ -396,18 +417,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
                 dialog.dismiss()
             }
             .show()
-    }
-
-    private fun showNetworkError() {
-        if (!isFinishing) {
-            MessageDialog(
-                this,
-                title = getString(R.string.error_app_requires_network_connection),
-                message = getString(R.string.error_app_requires_network_connection_message),
-                negativeButtonText = getString(R.string.download_error_close),
-                cancellable = false
-            ).show()
-        }
     }
 
     fun requestDownloadPermissions(callback: KotlinCallback<Boolean>) {

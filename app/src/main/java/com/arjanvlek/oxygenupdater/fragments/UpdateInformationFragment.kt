@@ -19,12 +19,10 @@ import androidx.lifecycle.observe
 import androidx.work.WorkInfo
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.OxygenUpdater
-import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs.showDownloadError
-import com.arjanvlek.oxygenupdater.dialogs.Dialogs.showNoNetworkConnectionError
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs.showUpdateAlreadyDownloadedMessage
 import com.arjanvlek.oxygenupdater.dialogs.ServerMessagesDialog
 import com.arjanvlek.oxygenupdater.dialogs.UpdateChangelogDialog
@@ -102,11 +100,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     }
 
     private fun setupServerResponseObservers() {
-        // display the "No connection" banner if required
-        isNetworkAvailable.observe(viewLifecycleOwner) {
-            noConnectionTextView.isVisible = !it
-        }
-
         mainViewModel.serverMessages.observe(viewLifecycleOwner) {
             displayServerMessageBars(it)
         }
@@ -209,11 +202,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             deviceId,
             updateMethodId,
             systemVersionProperties.oxygenOSOTAVersion
-        ) { error ->
-            if (error == OxygenUpdater.NETWORK_CONNECTION_ERROR) {
-                showNoNetworkConnectionError(activity)
-            }
-        }
+        )
     }
 
     private fun inflateAndShowErrorState() {

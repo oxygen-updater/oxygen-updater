@@ -16,6 +16,8 @@ import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.utils.performServerRequest
 import com.fasterxml.jackson.core.JsonProcessingException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONException
 
 /**
@@ -37,8 +39,7 @@ class ServerRepository constructor(
     suspend fun fetchUpdateData(
         deviceId: Long,
         updateMethodId: Long,
-        incrementalSystemVersion: String,
-        errorCallback: KotlinCallback<String?>
+        incrementalSystemVersion: String
     ) = performServerRequest {
         serverApi.fetchUpdateData(deviceId, updateMethodId, incrementalSystemVersion)
     }.let { updateData: UpdateData? ->
@@ -61,7 +62,6 @@ class ServerRepository constructor(
                     systemIsUpToDate = settingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
                 )
             } else {
-                errorCallback.invoke(OxygenUpdater.NETWORK_CONNECTION_ERROR)
                 null
             }
         } else {
@@ -128,8 +128,12 @@ class ServerRepository constructor(
         val status = serverStatus.status!!
         if (status.isNonRecoverableError) {
             when (status) {
-                ServerStatus.Status.MAINTENANCE -> errorCallback.invoke(OxygenUpdater.SERVER_MAINTENANCE_ERROR)
-                ServerStatus.Status.OUTDATED -> errorCallback.invoke(OxygenUpdater.APP_OUTDATED_ERROR)
+                ServerStatus.Status.MAINTENANCE -> withContext(Dispatchers.Main) {
+                    errorCallback.invoke(OxygenUpdater.SERVER_MAINTENANCE_ERROR)
+                }
+                ServerStatus.Status.OUTDATED -> withContext(Dispatchers.Main) {
+                    errorCallback.invoke(OxygenUpdater.APP_OUTDATED_ERROR)
+                }
                 else -> {
                     // no-op
                 }
