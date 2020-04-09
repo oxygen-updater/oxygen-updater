@@ -41,7 +41,6 @@ import kotlin.math.abs
 
 class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
-    private lateinit var activityLauncher: ActivityLauncher
     private lateinit var viewPagerAdapter: OnboardingPagerAdapter
 
     private var permissionCallback: KotlinCallback<Boolean>? = null
@@ -59,8 +58,6 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
         enableEdgeToEdgeUiSupport()
-
-        activityLauncher = ActivityLauncher(this)
 
         onboardingViewModel.fetchAllDevices().observe(this) {
             val deviceOsSpec = Utils.checkDeviceOsSpec(it)
@@ -227,7 +224,8 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                         // 1st time, will save setting to true.
                         ContributorUtils(this).flushSettings(true)
                         settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
-                        activityLauncher.Main()
+                        ActivityLauncher(this).Main()
+                        finish()
                     } else {
                         Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
                     }
@@ -236,7 +234,8 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 // not signed up, saving this setting will prevent contribute popups which belong to app updates.
                 settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
                 settingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
-                activityLauncher.Main()
+                ActivityLauncher(this).Main()
+                finish()
             }
         } else {
             val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)

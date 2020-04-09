@@ -347,15 +347,13 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         )
 
         // Set "No Update Information Is Available" button if needed.
-        if (!updateData.isUpdateInformationAvailable) {
-            systemIsUpToDateStatisticsButton.isVisible = true
-            systemIsUpToDateChangelogView.isVisible = false
+        systemIsUpToDateChangelogView.text = if (!updateData.isUpdateInformationAvailable) {
+            getString(R.string.update_information_no_update_data_available)
         } else {
-            systemIsUpToDateStatisticsButton.isVisible = false
-            systemIsUpToDateChangelogView.isVisible = true
-
-            systemIsUpToDateChangelogView.setOnClickListener { updateChangelogDialog.show() }
+            getString(R.string.update_information_view_update_information)
         }
+
+        systemIsUpToDateChangelogView.setOnClickListener { updateChangelogDialog.show() }
 
         // Save last time checked if online.
         if (online) {

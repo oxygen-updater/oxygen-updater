@@ -31,7 +31,7 @@
 				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginEnd="@dimen/spacing_default"
 				android:fontFamily="@font/google_sans_medium"
-				android:gravity="center"
+				android:gravity="center_horizontal"
 				android:textIsSelectable="true"
 				android:textSize="@dimen/typography_title"
 				app:layout_constraintEnd_toEndOf="parent"

@@ -16,43 +16,39 @@
 
 		<TextView
 			android:id="@+id/systemIsUpToDateHeader"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/spacing_default"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:layout_marginEnd="@dimen/spacing_default"
 			android:layout_marginBottom="@dimen/spacing_half"
+			android:gravity="center_horizontal"
 			android:text="@string/update_information_system_is_up_to_date"
 			android:textSize="@dimen/typography_headline"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<TextView
 			android:id="@+id/systemIsUpToDateVersionTextView"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/spacing_default"
 			android:layout_marginEnd="@dimen/spacing_default"
+			android:gravity="center_horizontal"
 			android:textColor="?android:textColorSecondary"
 			android:textIsSelectable="true"
 			android:textSize="@dimen/typography_title"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateHeader"
 			tools:text="@string/update_information_oxygen_os_version" />
 
 		<TextView
 			android:id="@+id/systemIsUpToDateDateTextView"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center_horizontal"
 			android:layout_marginStart="@dimen/spacing_default"
 			android:layout_marginEnd="@dimen/spacing_default"
+			android:gravity="center_horizontal"
 			android:textColor="?android:textColorSecondary"
 			app:layout_constraintBottom_toTopOf="@id/systemIsUpToDateImage"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateVersionTextView"
 			app:layout_constraintVertical_chainStyle="spread_inside"
 			tools:text="@string/update_information_last_checked_on" />
@@ -69,19 +65,6 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateDateTextView" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/systemIsUpToDateStatisticsButton"
-			style="@style/Widget.MaterialComponents.Button.TextButton"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
-			android:layout_marginEnd="@dimen/spacing_default"
-			android:clickable="false"
-			android:text="@string/update_information_no_update_data_available"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateImage" />
 
 		<TextView
 			android:id="@+id/systemIsUpToDateChangelogView"
