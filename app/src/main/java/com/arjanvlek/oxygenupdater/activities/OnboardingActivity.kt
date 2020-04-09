@@ -16,6 +16,7 @@ import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs
 import com.arjanvlek.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
+import com.arjanvlek.oxygenupdater.extensions.reduceDragSensitivity
 import com.arjanvlek.oxygenupdater.extensions.setImageResourceWithAnimation
 import com.arjanvlek.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.arjanvlek.oxygenupdater.fragments.SimpleOnboardingFragment
@@ -89,6 +90,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
         viewPager.apply {
             // create the adapter that will return a fragment for each of the pages of the activity.
             adapter = OnboardingPagerAdapter().also { viewPagerAdapter = it }
+            reduceDragSensitivity()
 
             // attach TabLayout to ViewPager2
             TabLayoutMediator(tabLayout, this) { _, _ -> }.attach()
@@ -96,8 +98,27 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
             registerOnPageChangeCallback(pageChangeCallback)
         }
 
+        setupButtonsForViewPager()
         setupAppBarForViewPager()
         setupObserversForViewPagerAdapter()
+    }
+
+    private fun setupButtonsForViewPager() {
+        previousPageButton.setOnClickListener {
+            viewPager.currentItem = if (viewPager.currentItem == 0) {
+                0
+            } else {
+                viewPager.currentItem - 1
+            }
+        }
+
+        nextPageButton.setOnClickListener {
+            if (viewPager.currentItem == 3) {
+                onBackPressed()
+            } else {
+                viewPager.currentItem++
+            }
+        }
     }
 
     private fun setupAppBarForViewPager() {
@@ -151,47 +172,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
     }
 
     private fun handlePageChangeCallback(pageNumber: Int) {
-        when (pageNumber) {
-            1 -> {
-                previousPageButton.isEnabled = false
-                nextPageButton.isEnabled = true
-
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.logo_outline, android.R.anim.fade_in)
-            }
-            2 -> {
-                previousPageButton.isEnabled = true
-                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
-
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.smartphone, android.R.anim.fade_in)
-            }
-            3 -> {
-                previousPageButton.isEnabled = true
-                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3
-
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.cloud_download, android.R.anim.fade_in)
-            }
-            4 -> {
-                previousPageButton.isEnabled = true
-                nextPageButton.isEnabled = true
-
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.done_all, android.R.anim.fade_in)
-            }
-            else -> {
-                // no-op
-            }
-        }
-
-        previousPageButton.setOnClickListener {
-            viewPager.currentItem = if (viewPager.currentItem == 0) {
-                0
-            } else {
-                viewPager.currentItem - 1
-            }
-        }
+        previousPageButton.isEnabled = pageNumber != 1
 
         nextPageButton.apply {
             rotation = if (pageNumber == 4) {
@@ -201,17 +182,35 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 setImageResource(R.drawable.expand)
                 90f
             }
+        }
 
-            setOnClickListener {
-                if (pageNumber == 4) {
-                    onStartAppButtonClicked(it)
-                } else {
-                    viewPager.currentItem = if (viewPager.currentItem == 3) {
-                        3
-                    } else {
-                        viewPager.currentItem + 1
-                    }
-                }
+        when (pageNumber) {
+            1 -> {
+                nextPageButton.isEnabled = true
+
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.logo_outline, android.R.anim.fade_in)
+            }
+            2 -> {
+                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
+
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.smartphone, android.R.anim.fade_in)
+            }
+            3 -> {
+                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3
+
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.cloud_download, android.R.anim.fade_in)
+            }
+            4 -> {
+                nextPageButton.isEnabled = true
+
+                collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
+                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.done_all, android.R.anim.fade_in)
+            }
+            else -> {
+                // no-op
             }
         }
     }

@@ -1402,7 +1402,6 @@ public final class SuperpoweredCollapsingTextHelper {
 					.setEllipsize(TruncateAt.END)
 					.setIsRtl(isRtl)
 					.setAlignment(alignment)
-					.setIncludePad(false)
 					.setMaxLines(maxLines)
 					.build();
 		} catch (StaticLayoutBuilderCompatException e) {

@@ -77,37 +77,69 @@
 		android:layout_height="match_parent"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-	<androidx.viewpager2.widget.ViewPager2
-		android:id="@+id/viewPager"
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/viewPagerContainer"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:visibility="gone"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior"
-		tools:visibility="visible" />
-
-	<LinearLayout
-		android:id="@+id/tabLayoutContainer"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
-		android:orientation="vertical"
-		android:visibility="gone"
 		tools:visibility="visible">
 
+		<androidx.viewpager2.widget.ViewPager2
+			android:id="@+id/viewPager"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			app:layout_constraintBottom_toTopOf="@id/divider"
+			app:layout_constraintTop_toTopOf="parent" />
+
 		<View
+			android:id="@+id/divider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:background="@color/backgroundVariant" />
+			android:background="@color/backgroundVariant"
+			app:layout_constraintBottom_toTopOf="@id/tabLayout" />
+
+		<ImageButton
+			android:id="@+id/previousPageButton"
+			android:layout_width="@dimen/spacing_3x"
+			android:layout_height="0dp"
+			android:background="?selectableItemBackgroundBorderless"
+			android:contentDescription="@string/icon"
+			android:rotation="-90"
+			android:src="@drawable/expand"
+			android:stateListAnimator="@animator/clicked"
+			android:tint="@color/image_button_tint"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/tabLayout"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/divider" />
 
 		<com.google.android.material.tabs.TabLayout
 			android:id="@+id/tabLayout"
-			android:layout_width="match_parent"
+			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_gravity="bottom"
 			android:background="@android:color/transparent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/nextPageButton"
+			app:layout_constraintStart_toEndOf="@id/previousPageButton"
 			app:tabBackground="@drawable/tab_selector"
 			app:tabGravity="center"
 			app:tabIndicatorHeight="0dp" />
-	</LinearLayout>
 
+		<ImageButton
+			android:id="@+id/nextPageButton"
+			android:layout_width="@dimen/spacing_3x"
+			android:layout_height="0dp"
+			android:background="?selectableItemBackgroundBorderless"
+			android:contentDescription="@string/icon"
+			android:rotation="90"
+			android:src="@drawable/expand"
+			android:stateListAnimator="@animator/clicked"
+			android:tint="@color/image_button_tint"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/tabLayout"
+			app:layout_constraintTop_toBottomOf="@id/divider" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -29,6 +29,7 @@ import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.MessageDialog
+import com.arjanvlek.oxygenupdater.extensions.reduceDragSensitivity
 import com.arjanvlek.oxygenupdater.fragments.DeviceInformationFragment
 import com.arjanvlek.oxygenupdater.fragments.NewsFragment
 import com.arjanvlek.oxygenupdater.fragments.UpdateInformationFragment
@@ -238,6 +239,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         viewPager.apply {
             offscreenPageLimit = 2 // 3 tabs, so there can be only 2 off-screen
             adapter = MainPagerAdapter()
+            reduceDragSensitivity()
 
             // attach TabLayout to ViewPager2
             TabLayoutMediator(tabLayout, this) { tab, position ->
@@ -350,31 +352,33 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         }
 
         Utils.checkAdSupportStatus(this) { adsAreSupported ->
-            if (!isFinishing) {
-                if (adsAreSupported) {
-                    bannerAdView?.apply {
-                        isVisible = true
-                        loadAd(buildAdRequest())
-                        adListener = object : AdListener() {
-                            override fun onAdLoaded() = super.onAdLoaded().also {
-                                // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
-                                // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
-                                // which can only be calculated once the AdView has been drawn on the screen
-                                post { viewPager.updatePadding(bottom = height) }
-                            }
+            if (isFinishing) {
+                return@checkAdSupportStatus
+            }
+
+            if (adsAreSupported) {
+                bannerAdView?.apply {
+                    isVisible = true
+                    loadAd(buildAdRequest())
+                    adListener = object : AdListener() {
+                        override fun onAdLoaded() = super.onAdLoaded().also {
+                            // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
+                            // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
+                            // which can only be calculated once the AdView has been drawn on the screen
+                            post { viewPager.updatePadding(bottom = height) }
                         }
                     }
-                } else {
-                    bannerAdView?.isVisible = false
-
-                    // reset viewPager padding
-                    viewPager.setPadding(0, 0, 0, 0)
                 }
+            } else {
+                bannerAdView?.isVisible = false
+
+                // reset viewPager padding
+                viewPager.setPadding(0, 0, 0, 0)
             }
         }
     }
 
-    public override fun onResume() = super.onResume().also {
+    override fun onResume() = super.onResume().also {
         bannerAdView?.resume()
         mainViewModel.checkForStalledAppUpdate().observe(
             this,
@@ -382,11 +386,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         )
     }
 
-    public override fun onPause() = super.onPause().also {
+    override fun onPause() = super.onPause().also {
         bannerAdView?.pause()
     }
 
-    public override fun onDestroy() = super.onDestroy().also {
+    override fun onDestroy() = super.onDestroy().also {
         bannerAdView?.destroy()
         noNetworkDialog.bypassListenerAndDismiss()
         mainViewModel.unregisterAppUpdateListener()

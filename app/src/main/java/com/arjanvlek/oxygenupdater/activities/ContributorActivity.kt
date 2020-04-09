@@ -23,7 +23,7 @@ class ContributorActivity : SupportActionBarActivity() {
 
     private val settingsManager by inject<SettingsManager>()
 
-    public override fun onCreate(
+    override fun onCreate(
         savedInstanceSate: Bundle?
     ) = super.onCreate(savedInstanceSate).also {
         setContentView(R.layout.activity_contributor)

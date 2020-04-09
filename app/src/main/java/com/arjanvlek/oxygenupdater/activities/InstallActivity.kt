@@ -51,6 +51,12 @@ class InstallActivity : SupportActionBarActivity() {
         }
     }
 
+    private val appBarOffsetChangeListenerForViewPager = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+        viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+            bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
+        }
+    }
+
     private val installGuidePageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) = handleInstallGuidePageChangeCallback(position)
     }
@@ -89,6 +95,10 @@ class InstallActivity : SupportActionBarActivity() {
 
     private fun initialize() {
         RootAccessChecker.checkRootAccess { isRooted ->
+            if (isFinishing) {
+                return@checkRootAccess
+            }
+
             rootStatusCheckLayout.isVisible = false
 
             if (isRooted) {
@@ -129,33 +139,49 @@ class InstallActivity : SupportActionBarActivity() {
         }
     }
 
+    private fun setupAppBarForViewPager() {
+        appBar.post {
+            // adjust bottom margin on first load
+            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
+
+            // adjust bottom margin on scroll
+            appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
+        }
+    }
+
     fun resetAppBarForMethodChooserFragment() {
         appBar.post {
             // reset bottom margin on first load
             fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
 
-            // adjust bottom margin on scroll
+            // remove listener
             appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
         }
     }
 
-    fun openInstallGuide() {
-        resetAppBarForMethodChooserFragment()
-        setupViewPager()
+    fun resetAppBarForViewPager() {
+        appBar.post {
+            // reset bottom margin on first load
+            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
+
+            // remove listener
+            appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
+        }
     }
+
+    fun openInstallGuide() = setupViewPager()
 
     private fun hideViewPager() {
         fragmentContainer.isVisible = true
-        tabLayoutContainer.isVisible = false
-        viewPager.isVisible = false
+        viewPagerContainer.isVisible = false
+        resetAppBarForViewPager()
     }
 
     private fun setupViewPager() {
         fragmentContainer.isVisible = false
-        tabLayoutContainer.isVisible = true
+        viewPagerContainer.isVisible = true
 
         viewPager.apply {
-            isVisible = true
             offscreenPageLimit = 4 // Install guide is 5 pages max. So there can be only 4 off-screen
             adapter = InstallGuidePagerAdapter()
 
@@ -164,9 +190,39 @@ class InstallActivity : SupportActionBarActivity() {
 
             registerOnPageChangeCallback(installGuidePageChangeCallback)
         }
+
+        setupButtonsForViewPager()
+        resetAppBarForMethodChooserFragment()
+        setupAppBarForViewPager()
+    }
+
+    private fun setupButtonsForViewPager() {
+        previousPageButton.setOnClickListener {
+            viewPager.currentItem--
+        }
+
+        nextPageButton.setOnClickListener {
+            if (viewPager.currentItem == viewPager.adapter!!.itemCount - 1) {
+                onBackPressed()
+            } else {
+                viewPager.currentItem++
+            }
+        }
     }
 
     private fun handleInstallGuidePageChangeCallback(position: Int) {
+        previousPageButton.isEnabled = position != 0
+
+        nextPageButton.apply {
+            rotation = if (position == viewPager.adapter!!.itemCount - 1) {
+                setImageResource(R.drawable.checkmark)
+                0f
+            } else {
+                setImageResource(R.drawable.expand)
+                90f
+            }
+        }
+
         val pageNumber = position + if (showDownloadPage) 1 else 2
 
         installViewModel.installGuideCache[pageNumber]?.run {
@@ -239,7 +295,7 @@ class InstallActivity : SupportActionBarActivity() {
         !installViewModel.canGoBack -> Toast.makeText(this, R.string.install_going_back_not_possible, LENGTH_LONG).show()
         // if InstallGuide is being displayed, and was opened from `InstallMethodChooserFragment`, switch back to fragmentContainer
         // if it was opened directly after checking for root (meaning if the device isn't rooted), call `finish()`
-        viewPager.isVisible -> {
+        viewPagerContainer.isVisible -> {
             if (supportFragmentManager.backStackEntryCount == 0) {
                 finish()
             } else {

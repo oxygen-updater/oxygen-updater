@@ -68,6 +68,10 @@ class FAQActivity : SupportActionBarActivity() {
 
             // disable loading state once page is completely loaded
             webViewClient = WebViewClient(context) { error ->
+                if (isFinishing) {
+                    return@WebViewClient
+                }
+
                 // hide progress bar since the page has been loaded
                 swipeRefreshLayout.isRefreshing = false
 

@@ -119,6 +119,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             }
 
             mainViewModel.fetchServerMessages(serverStatus) { error ->
+                if (!isAdded) {
+                    return@fetchServerMessages
+                }
+
                 when (error) {
                     OxygenUpdater.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
                     OxygenUpdater.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)

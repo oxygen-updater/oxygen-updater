@@ -16,7 +16,7 @@ class AboutActivity : SupportActionBarActivity() {
 
     private val aboutViewModel by viewModel<AboutViewModel>()
 
-    public override fun onCreate(
+    override fun onCreate(
         savedInstanceSate: Bundle?
     ) = super.onCreate(savedInstanceSate).also {
         setContentView(R.layout.activity_about)

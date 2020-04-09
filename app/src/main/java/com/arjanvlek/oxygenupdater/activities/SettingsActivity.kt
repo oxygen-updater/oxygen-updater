@@ -225,6 +225,10 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
             price,
             PurchaseType.AD_FREE
         ) { validationResult: ServerPostResult? ->
+            if (isFinishing) {
+                return@verifyPurchase
+            }
+
             when {
                 // server can't be reached. Keep trying until it can be reached...
                 validationResult == null -> Handler().postDelayed(
@@ -305,6 +309,10 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
                     if (result.success && purchase != null) {
                         if (purchase.sku == SKU_AD_FREE) {
                             validateAdFreePurchase(purchase) { valid: Boolean ->
+                                if (isFinishing) {
+                                    return@validateAdFreePurchase
+                                }
+
                                 if (valid) {
                                     settingsFragment.setupBuyAdFreePreference(PurchaseStatus.ALREADY_BOUGHT)
                                     settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
@@ -331,7 +339,7 @@ class SettingsActivity : SupportActionBarActivity(), InAppPurchaseDelegate {
      * @param resultCode  Intent result
      * @param data        Intent data
      */
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // If the activity result can't be processed by IabHelper (because it is for something else or the IabHelper is null), let the parent activity process it.
         if (iabHelper == null || !iabHelper!!.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data)

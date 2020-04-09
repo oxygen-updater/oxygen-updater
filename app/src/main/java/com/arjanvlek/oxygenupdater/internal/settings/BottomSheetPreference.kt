@@ -294,7 +294,7 @@ class BottomSheetPreference : Preference {
         super.setTitle(title)
     }
 
-    public override fun onClick() = dialog.show()
+    override fun onClick() = dialog.show()
 
     /**
      * Sets the callback to be invoked when this preference is changed by the user (but before

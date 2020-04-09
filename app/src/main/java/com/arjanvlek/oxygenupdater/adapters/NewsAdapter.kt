@@ -46,6 +46,11 @@ class NewsAdapter(
         if (newsItem.read) {
             holder.title.alpha = 0.5f
             holder.subtitle.alpha = 0.7f
+        } else {
+            // Needs to be explicitly set because RecyclerView re-uses layouts,
+            // which causes unread articles to also sometimes have the same alpha as a read article
+            holder.title.alpha = 1f
+            holder.subtitle.alpha = 1f
         }
 
         Glide.with(holder.itemView.context)
