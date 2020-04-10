@@ -4,30 +4,25 @@
 	<string name="app_name">Oxygen Updater</string>
 	<string name="launcher_app_name">Oxygen Updater</string>
 
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Не вдалося отримати список підтримуваних пристроїв</string>
 
 	<!-- Update information strings-->
 	<string name="update">Оновлення</string>
-	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Увімкнути</string>
 	<string name="update_information_description_not_available">Немає офіційної інформації про зміни і нові функції, які містить це оновлення. Зазвичай, таке оновлення містить виправлення помилок, покращення продуктивності, та / або важливі оновлення безпеки для вашого пристрою.</string>
 	<string name="update_information_file_name">Назва файлу: %1$s</string>
-	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: Translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">Оскільки під час завантаження оновлення виникла помилка, ви можете самостійно завантажити файл оновлення через браузер, перейшовши за посиланням. Також необхідно буде перенести завантажений файл з теки \"Download\" (\"Завантаження\") в її батьківську теку. Ось це посилання використовує застосунок для завантаження оновлення (це офіційний сервер OnePlus для OTA оновлень):\n%1$s</string>
 	<string name="update_information_for">для</string>
 	<string name="update_information_header">Оновлення</string>
 	<string name="update_information_header_short">Оновлення</string>
-	<!-- TODO: translate these 7 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_error_title">Не вдалося отримати інформацію про останнє оновлення</string>
+	<string name="update_information_banner_server">Натисніть тут, щоб переглянути важливі повідомлення</string>
+	<string name="update_information_banner_already_latest">У вас остання версія OxygenOS</string>
+	<string name="update_information_banner_congrats_latest">Вітаємо! Ваш пристрій працює на останній версії OxygenOS</string>
+	<string name="update_information_banner_update_available">Доступне нове оновлення системи: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\".\n\nРозширений режим можна вимкнути в налаштуваннях</string>
+	<string name="update_information_different_version_changelog_notice">Ви переглядаєте список змін для способу оновлення \"%1$s\". Якщо ви маєте намір встановити це оновлення, спочатку необхідно увімкнути розширений режим в налаштуваннях.\n\nПроте, якщо ви хочете переглянути список змін до поточної встановленої версії, вам потрібно вибрати відповідний спосіб оновлення в налаштуваннях.</string>
 	<string name="update_information_last_checked_on">Востаннє перевірено: %1$s</string>
 	<string name="update_information_latest_available_update">Доступне оновлення системи</string>
 	<string name="update_information_no_update_data_available">Немає інформації про оновлення</string>
@@ -43,11 +38,10 @@
 	<string name="server_status_warning">Деякі функції можуть працювати неправильно.</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">Доступне оновлення (%1$s). Натисніть тут, щоб відкрити Play Маркет і оновити застосунок.</string>
+	<string name="new_app_version_long">Доступне оновлення застосунку (%1$s). Своєчасне оновлення дозволить вам завжди використовувати останні можливості і виправлення помилок.\nНатисніть тут, щоб відкрити Play Маркет і оновити застосунок.</string>
+	<string name="new_app_version_inapp_downloaded">Оновлення застосунку завантажено</string>
+	<string name="new_app_version_inapp_failed">Неможливо встановити оновлення застосунку. Натисніть тут, щоб відкрити Play Маркет і оновити застосунок.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">в</string>
@@ -55,11 +49,10 @@
 	<string name="time_yesterday">Вчора</string>
 
 	<!-- Downloader strings-->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
-	<string name="paused">Paused - tap to resume</string>
+	<string name="download">Завантажити оновлення</string>
+	<string name="downloaded">Оновлення завантажено</string>
+	<string name="downloading">Завантаження оновлення…</string>
+	<string name="paused">Призупинено - натисніть, щоб відновити</string>
 
 	<string name="download_already_downloaded">Оновлення вже завантажено і готове до встановлення.</string>
 	<string name="download_complete">Завантаження завершено</string>
@@ -73,8 +66,7 @@
 	<string name="download_error_network">Під час завантаження оновлення сталася помилка мережі. Завантаження автоматично відновиться, коли буде підключення до мережі.</string>
 	<string name="download_error_server">Під час завантаження оновлення сталася помилка на сервері. Будь ласка, спробуйте завантажити оновлення знову.</string>
 	<string name="download_error_internal">На жаль, під час завантаження оновлення виникла технічна помилка. Спробуйте завантажити його знову. Але якщо помилка не зникне, тоді зв\'яжіться з розробником застосунку для консультації.</string>
-	<!-- TODO: translate this string below -->
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">Файл завантажено, але його не вдалося перемістити в потрібну теку. Відкрийте менеджер файлів, перейдіть в \"%1$s\", і вручну перемістіть файл в теку \"topmost\" на внутрішньому сховищі</string>
 
 	<string name="download_error_retry">ПОВТОРИТИ</string>
 	<string name="download_error_resume">ПРОДОВЖИТИ</string>
@@ -143,7 +135,7 @@
 	<string name="theme_dark_subtitle">Приглушений основний червоний колір OnePlus, з майже чорним фоном. Використовуйте цю тему, щоб зберегти заряд батареї, особливо на екранах AMOLED</string>
 	<string name="theme_system_subtitle">Використовувати системний нічний режим (також цей режим можна вибрати в налаштуваннях екрану та в параметрах розробника). Залежить від пристрою</string>
 	<string name="theme_auto_subtitle">Перемикатися між світлою і темною темами залежно від часу доби, для запобігання перенапруження очей вночі</string>
-	<string name="theme_additional_note">Зверніть увагу: якщо вибрано \'Автоматично\', і увімкнено режим енергозбереження, тоді буде автоматично використовуватися темна тема, незалежно від часу доби, щоб зекономити заряд батареї</string>
+	<string name="theme_additional_note">Зверніть увагу: якщо вибрано \"Автоматично\", і увімкнено режим енергозбереження, тоді буде автоматично використовуватися темна тема, незалежно від часу доби, щоб зекономити заряд батареї</string>
 
 	<string name="settings">Налаштування</string>
 	<string name="settings_buy_button_buy">Купити (%1$s)</string>
@@ -162,9 +154,9 @@
 	<string name="settings_header">Виберіть ваш пристрій і спосіб оновлення:</string>
 
 	<string name="settings_push">Надсилати мені сповіщення, коли:</string>
-	<string name="settings_push_from_server">Інформаційні та повідомлення з попередженнями</string>
+	<string name="settings_push_from_server">Інформаційні повідомлення та попередження</string>
 	<string name="settings_push_new_version">Повідомлення про оновлення системи</string>
-	<string name="settings_push_new_device">Підтримується новий пристрій</string>
+	<string name="settings_push_new_device">Підтримка нового пристрою</string>
 	<string name="settings_push_news">Нові повідомлення</string>
 
 	<string name="settings_saved">Ваші налаштування автоматично збережено.</string>
@@ -175,7 +167,7 @@
 	<string name="settings_other_options">Інші параметри:</string>
 	<string name="settings_advanced_mode">Розширений режим</string>
 	<string name="settings_advanced_mode_button_explanation">Натисніть цю кнопку, щоб отримати детальнішу інформацію про розширений режим.</string>
-	<string name="settings_advanced_mode_explanation">Розширений режим приховує повідомлення \"Система оновлена\", дозволяючи вам завантажувати і встановлювати всі оновлення, навіть якщо вони можуть бути не сумісні з вашим пристроєм.\n\nЦей режим може бути корисним, коли потрібно:\n- Оновитися зі звичайної версії до бета версії\n- Відкотитися з бета версії до звичайної версії (не забувайте повністю очищати ваш пристрій)\n- Перевстановити вашу поточну систему.</string>
+	<string name="settings_advanced_mode_explanation">Розширений режим приховує повідомлення \"Система оновлена\", дозволяючи вам завантажувати і встановлювати всі оновлення, навіть якщо вони можуть бути не сумісні з вашим пристроєм.\n\nЦей режим може бути корисним, коли потрібно:\n- оновитися зі звичайної версії до бета версії\n- відкотитися з бета версії до звичайної версії (не забувайте повністю очищати ваш пристрій)\n- перевстановити вашу поточну систему.</string>
 
 	<string name="settings_update_method">Спосіб оновлення</string>
 	<string name="settings_upload_logs">Ділитися даними про використання та журналом помилок</string>
@@ -186,17 +178,17 @@
 	<string name="faq_no_network">Немає з\'єднання.</string>
 	<string name="faq_no_network_text">Щоб переглянути сторінку ЧаПи, потрібне робоче з\'єднання з мережею.</string>
 
-	<!-- First-time setup strings -->
+	<!-- First-time onboarding strings -->
 	<string name="onboarding">Вітання</string>
 	<string name="onboarding_finished_button">розпочати</string>
 
 	<string name="onboarding_page_1_title">Ласкаво просимо до Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Цей застосунок дозволить вам:\n\n&#8226; Отримати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n\n&#8226; Легко оновити пристрій з рутом\n\n&#8226; Переглянути, що нового на встановленій прошивці\n\n&#8226; Читати останні новини про OnePlus і OxygenOS\n\nПроведіть вліво, щоб продовжити.</string>
+	<string name="onboarding_page_1_text">Цей застосунок дозволить вам:\n\n&#8226; Отримувати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n\n&#8226; Легко оновлювати пристрій з рутом\n\n&#8226; Переглядати, що нового на встановленій прошивці\n\n&#8226; Читати останні новини про OnePlus і OxygenOS\n\nПроведіть вліво, щоб продовжити.</string>
 	<string name="onboarding_page_1_caption">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком.\n\nВикористовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
 	<string name="onboarding_page_2_title">Виберіть ваш пристрій</string>
 	<string name="onboarding_page_2_caption">Зазвичай пристрій визначається автоматично. Якщо ні, тоді виберіть його зі списку.</string>
 	<string name="onboarding_page_3_title">Виберіть спосіб оновлення</string>
-	<string name="onboarding_page_3_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що для цього потрібно завантажити менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open beta).</string>
+	<string name="onboarding_page_3_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що під час нього завантажується менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open beta).</string>
 	<string name="onboarding_page_4_title">Ви готові до оновлення!</string>
 	<string name="onboarding_page_4_text">Сподіваємося, вам буде приємно користуватися цим застосунком!\n\nВи завжди можете змінити налаштування. Щоб це зробити, натисніть на три крапки в правому верхньому куті, і виберіть \"Налаштування\".</string>
 
@@ -232,8 +224,7 @@
 	<string name="install_options_explanation_wipe_cache">Очистити розділ кеша:\nЯкщо вибрати цей параметр, після встановлення оновлення буде очищено розділ з кешами. Це гарантує, що ваш пристрій буде оптимально працювати, а також зменшує ризик виникнення помилок, викликаних встановленням оновлення.</string>
 	<string name="install_options_explanation_reboot">Перезавантажити після встановлення:\nЯкщо вибрати цей параметр, ваш пристрій автоматично перезавантажиться в нову систему OxygenOS, після встановлення оновлення. Інакше, ваш пристрій залишиться в режимі Відновлення, де ви зможете встановити додаткові архіви.</string>
 
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_title">Виберіть спосіб встановлення</string>
 	<string name="install_method_chooser_subtitle">Як ви хочете встановити це оновлення?</string>
 	<string name="install_method_chooser_automatic_title">Автоматичне встановлення*</string>
 	<string name="install_method_chooser_automatic_image">Зображення автоматичного встановлення</string>
@@ -288,11 +279,10 @@
 	<string name="install_guide_zip_file_missing">"Якщо ви хочете зберегти рут права на вашому пристрої, виберіть рут архів вище."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
-	<string name="device_information_supported_oxygen_os">Your device is supported</string>
-	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
-	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
-	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+	<string name="device_information_supported_oxygen_os">Ваш пристрій підтримується</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Ваш пристрій не підтримується, оскільки це присрій від оператора</string>
+	<string name="device_information_unsupported_oxygen_os">Ми покищо не додали підтримки вашого пристою</string>
+	<string name="device_information_unsupported_os">Ваш пристрій не підтримується, тому що він працює не на OxygenOS</string>
 
 	<string name="device_information_hardware_header">Апаратне забезпечення</string>
 	<string name="device_information_software_header">Програмне забезпечення</string>
@@ -316,13 +306,12 @@
 	<!-- About screen strings -->
 	<string name="about">Про цей застосунок</string>
 	<string name="about_app_description">Ефективний інструмент для оновлення OxygenOS</string>
-	<string name="about_background_story">Спочатку цей застосунок розроблявся Аржаном Влеком, як продовження іншого його застосунку, який називається <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (він надає схожий функціонал, але для користувачів Cyanogen OS).\n\nПісля 4 років, в липні 2019 року, Аржан вирішив піти з цих обидвох проєктів і передав право власності на застосунок команді розробників з різних країн. Вони взяли на себе відповідальність за надання спільноті відмінної сервісної підтримки для швидшого отримання оновлень OnePlus та подальшу розробку цього застосунку.\nВи можете знайти більше інформації <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">в цьому оголошенні</a>.\n\n14 серпня 2019 року відбувся перший випуск під новим керівництвом, який отримав нові функції, такі як темний режим та повний редизайн.\n\nДетальніше про нашу команду можна прочитати <a href="https://oxygenupdater.com/team/">на сайті</a>.</string>
+	<string name="about_background_story">Спочатку цей застосунок розроблявся Аржаном Влеком, як продовження іншого його застосунку, який називається <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (він надає схожий функціонал, але для користувачів Cyanogen OS).\n\nПісля 4 років, в липні 2019 року, Аржан вирішив піти з цих обидвох проєктів і передав право власності на застосунок команді розробників з різних країн. Вони взяли на себе відповідальність за подальшу розробку цього застосунку і надання спільноті відмінної сервісної підтримки.\nВи можете знайти більше інформації <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">в цьому оголошенні</a>.\n\n14 серпня 2019 року відбувся перший випуск під новим керівництвом, який отримав нові функції, такі як темний режим та повний редизайн.\n\nДетальніше про нашу команду можна прочитати <a href="https://oxygenupdater.com/team/">на сайті</a>.\n\nПереклад застосунку на українську мову — <a href="mailto:oster.ok@gmail.com">Тарас</a>.</string>
 	<string name="about_third_party_app_notice">Зверніть увагу, це не офіційний застосунок від OnePlus.\nІм\'я та бренд OnePlus, логотип OnePlus і OxygenOS є власністю компанії OnePlus.\nAndroid, Google, Google Play та логотип Google Play є зареєстрованими товарними знаками Google Inc.\nЦей застосунок використовує дані OnePlus та її материнської компанії Oppo, щоб показувати інформацію про оновлення.</string>
 	<string name="about_rate_button_text">Оцінити</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">Сайт</string>
 	<string name="about_email_button_text">Електронна пошта</string>
 
 	<!-- LocalNotifications strings -->
@@ -354,22 +343,21 @@
 	<string name="news_date_published">Останнє оновлення: %1$s</string>
 	<string name="news_empty">Ця стаття немає вмісту.</string>
 	<string name="news_load_error">Не вдалося відкрити статтю. Перевірте з\'єднання і натисніть кнопку \'ПОВТОРИТИ\', щоб відкрити статтю знову.</string>
-	<!-- TODO: translate these 5 strings below -->
-	<string name="news_unread_count">You have %1$d unread news articles</string>
-	<string name="news_empty_state_none_available_header">No articles yet</string>
-	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
-	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
-	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
+	<string name="news_unread_count">Є %1$d непрочитаних новин</string>
+	<string name="news_empty_state_none_available_header">Немає новин</string>
+	<string name="news_empty_state_all_read_header">Не залишилось нічого, що можна почитати</string>
+	<string name="news_empty_state_none_available_text">На даний момент немає новин, перевірте пізніше.</string>
+	<string name="news_empty_state_all_read_text">Ви прочитали всі новини. Чудово!\nСподіваємося, вам сподобалося читати наші новини, і надіємося що ви почерпнули щось нове для себе.\n\nНатисніть на банер, щоб знову показати всі новини.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Стати помічником</string>
 	<string name="contribute_title">Допомога в покращенні Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater потребує вашої допомоги! Для того, щоб надсилати вам останні оновлення, нам потрібні назви файлів оновлення. Вони присутні на вашому телефоні, якщо вам прийшло звичайне сповіщення про оновлення.\n\nЯк я можу допомогти?\n\nOxygen Updater може автоматично надсилати нові назви файлів нашим адміністраторам. Цей процес використовуватиме невелику кількість даних і може трішки використовувати заряд батареї. Все що потрібно зробити — це зачекати (приблизно 15 хвилин) перед встановленням офіційного оновлення, і після того як Oxygen Updater відправить назву файлу, ви побачите підтвердження.\nБуде скануватися лише тека з ".Ota" оновленнями кожні 15 хвилин. Цей застосунок перевіряє лише конкретну назву у цій конкретній теці.</string>
+	<string name="contribute_explanation">Oxygen Updater потребує вашої допомоги! Для того, щоб надсилати вам останні оновлення, нам потрібні назви файлів оновлення. Вони присутні на вашому телефоні, якщо вам прийшло звичайне сповіщення про оновлення.\n\nЯк я можу допомогти?\n\nOxygen Updater може автоматично надсилати нові назви файлів нашим адміністраторам. Цей процес використовуватиме невелику кількість даних і може трішки використовувати заряд батареї. Все що потрібно зробити — це зачекати (приблизно 15 хвилин) перед встановленням офіційного оновлення, і після того як Oxygen Updater відправить назву файлу, ви побачите підтвердження.\nБуде скануватися лише тека з OTA (Over The Air) оновленнями кожні 15 хвилин. Цей застосунок перевіряє лише конкретну назву у цій конкретній теці.</string>
 	<string name="contribute_image_description">Завантажити файли на сервер застосунку</string>
 	<string name="contribute_agree">Я хочу допомогти і погоджуюся на відправлення назв файлів оновлення адміністраторам</string>
 	<string name="contribute_agree_from_setup">Я хочу допомогти покращити застосунок і погоджуюся на відправлення назв файлів оновлення адміністраторам</string>
 	<string name="contribute_save">Зберегти налаштування</string>
-	<string name="contribute_more_info">Детальніше …</string>
+	<string name="contribute_more_info">Детальніше</string>
 	<string name="contribute_allow_storage">Будь ласка, надайте доступ до сховища, щоб допомогти покращити застосунок</string>
 	<string name="contribute_successful_notification_title">Ви дуже допомогли!</string>
 	<string name="contribute_successful_notification_text">Дякуємо за те, що поділилися файлом оновлення %1$s з нашими адміністраторами!</string>
@@ -385,8 +373,7 @@
 	<string name="error_no_internet_connection">Немає з\'єднання.</string>
 	<string name="error_maintenance">Сервер на обслуговуванні</string>
 	<string name="error_maintenance_message">Будь ласка, зачекайте. Сервер незабаром стане доступним.</string>
-	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry">Сервер може бути закритий на обслуговування. Спробуйте знову через декілька хвилин, або повідомте нам про це, через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або через <a href="https://discord.gg/5TXdhKJ">сервер на Discord</a>.</string>
 	<string name="error_push_failure">Не вдалося увімкнути сповіщення. Повністю закрийте застосунок, почекайте декілька хвилин і запустіть його знову.</string>
 	<string name="error_reload">Перезавантажити</string>
 
@@ -398,21 +385,20 @@
 	<string name="delete_message_delete_button">Видалити</string>
 
 	<string name="unsupported_device_warning_title">Пристрій не підтримується</string>
-	<string name="carrier_exclusive_device_warning_message">Схоже, ви користуєтесь ексклюзивним пристроєм від оператора. Незважаючи на те, що пристрій працює на OxygenOS, ви не зможете встановлювати оновлення. Зазвичай оператори блокують пристрій, щоб користувачі не могли оновлювати чи змінювати прошивку без дозволу самого оператора. Це звичайна практика в США: параметр \"Оновлення системи\" видаляється з налаштувань в таких ексклюзивних версіях OxygenOS. Цей параметр необхідний, щоб встановити оновлення самостійно, навіть якщо ви не користуєтеся цим застосунком. На жаль, ми не можемо нічого з цим зробити, оскільки технічно і, можливо, юридично обмежені. Зверніться до нас через електронну пошту або Discord, якщо хочете більше про це дізнатися.</string>
+	<string name="carrier_exclusive_device_warning_message">Схоже, ви користуєтесь пристроєм від оператора. Незважаючи на те, що пристрій працює на OxygenOS, ви не зможете встановлювати оновлення. Зазвичай оператори блокують пристрій, щоб користувачі не могли оновлювати чи змінювати прошивку без дозволу самого оператора. Це звичайна практика в США: параметр \"Оновлення системи\" видаляється з налаштувань в таких ексклюзивних версіях OxygenOS. Цей параметр необхідний, щоб встановити оновлення самостійно, навіть якщо ви не користуєтеся цим застосунком. На жаль, ми не можемо нічого з цим зробити, оскільки технічно і, можливо, юридично обмежені. Зверніться до нас через електронну пошту або Discord, якщо хочете більше про це дізнатися.</string>
 	<string name="unsupported_device_warning_message">Вітаємо на вашому новому пристрої OnePlus! На жаль, ми поки що не додали підтримку для цього пристрою. Не хвилюйтеся, ми додамо її якнайшвидше. Процес тестування і перевірки нового пристрою досить часозатратний і ми хочемо все зробити як слід, тому, будь ласка, будьте терплячі. Якщо хочете нам допомогти, або отримати сповіщення про випуск нової версії застосунку з підтримкою вашого пристою, тоді напишіть нам листа, або приєднайтеся до нашого сервера Discord.</string>
 	<string name="unsupported_os_warning_message">Схоже, що ваш пристрій не працює на OxygenOS. Зверніть увагу, що оновлення системи можна встановлювати лише на пристрої з OxygenOS.\n\nІнші пристрої, включаючи пристрої OnePlus з кастомними прошивками, не підтримуються.</string>
 	<string name="unsupported_device_warning_checkbox_title">Не показувати це попередження знову</string>
 
 	<string name="root_check_title">Рут права</string>
-	<string name="root_check_message">Oxygen Updater пропонує прості автоматичні оновлення для користувачів з рутованими пристроями. Проте, інкрементне оновлення не доступне для таких пристроїв. Oxygen Updater може перевірити, чи має пристрій рут права, щоб запропонувати відповідні способи оновлення.\n\nЯкщо пристрій має рут права, надайте їх Oxygen Updater після того, як закриєте це вікно.\n\nНемає рут прав? Натисніть \"Закрити\" і продовжуйте використовувати застосунок.</string>
+	<string name="root_check_message">Oxygen Updater дозволяє легко оновлювати пристої, на яких встановлені рут права. Проте, інкрементне оновлення не доступне для таких пристроїв. Oxygen Updater може перевірити, чи пристрій має рут права, щоб запропонувати відповідні способи оновлення.\n\nЯкщо пристрій має рут права, надайте їх Oxygen Updater після того, як закриєте це вікно.\n\nЯкщо рут прав немає, тоді просто натисніть \"Закрити\" і продовжуйте використовувати застосунок.</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_before_payment">Не вдалося купити видалення реклами, тому що виникла внутрішня помилка. Будь ласка, спробуйте знову через декілька хвилин.</string>
 	<string name="purchase_error_after_payment">Не вдалося купити видалення реклами, тому що виникла внутрішня помилка. Будь ласка, спробуйте знову через декілька хвилин. Якщо ви вже купляли, будь ласка, зверніться до підтримки Google Play за допомогою.</string>
 
 	<!-- Other strings-->
-	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
+	<string name="error">Помилка</string>
 	<string name="icon">Значок</string>
 	<string name="loading">Завантажується…</string>
 	<string name="processing">Опрацювання…</string>
