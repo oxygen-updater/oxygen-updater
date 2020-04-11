@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.InstallActivity
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
@@ -44,9 +43,9 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
                 deviceId,
                 updateMethodId,
                 pageNumber
-            ).observe(viewLifecycleOwner) {
+            ) {
                 // we need to clone the object, otherwise the correct object won't get reflected in
-                val page = if (it.isDefaultPage) {
+                val page = if (it == null || it.isDefaultPage) {
                     val titleResourceId = resources.getIdentifier(
                         InstallActivity.RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_TITLE,
                         RESOURCE_ID_PACKAGE_STRING,
@@ -58,10 +57,28 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
                         requireActivity().packageName
                     )
 
-                    it.cloneWithDefaultTitleAndText(
-                        getString(titleResourceId),
-                        getString(contentsResourceId)
-                    )
+                    if (it == null) {
+                        val title = getString(titleResourceId)
+                        val text = getString(contentsResourceId)
+
+                        InstallGuidePage(
+                            id = pageNumber.toLong(),
+                            deviceId = null,
+                            updateMethodId = null,
+                            pageNumber = pageNumber,
+                            fileExtension = null,
+                            imageUrl = null,
+                            englishTitle = title,
+                            dutchTitle = title,
+                            englishText = text,
+                            dutchText = text
+                        )
+                    } else {
+                        it.cloneWithDefaultTitleAndText(
+                            getString(titleResourceId),
+                            getString(contentsResourceId)
+                        )
+                    }
                 } else {
                     it.copy()
                 }
