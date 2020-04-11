@@ -18,6 +18,7 @@ import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /**
@@ -42,7 +43,11 @@ fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
  */
 fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
     context.getSystemService<StorageManager>()!!.run {
-        getCacheSizeBytes(getUuidForPath(context.cacheDir))
+        try {
+            getCacheSizeBytes(getUuidForPath(context.cacheDir))
+        } catch (e: IOException) {
+            CACHE_SIZE
+        }
     }
 } else {
     CACHE_SIZE

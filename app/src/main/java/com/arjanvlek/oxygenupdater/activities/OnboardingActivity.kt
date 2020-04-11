@@ -111,7 +111,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
         nextPageButton.setOnClickListener {
             if (viewPager.currentItem == 3) {
-                onBackPressed()
+                onStartAppButtonClicked(it)
             } else {
                 viewPager.currentItem++
             }

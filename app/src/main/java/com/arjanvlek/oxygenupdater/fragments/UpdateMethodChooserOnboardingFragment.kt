@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
@@ -60,12 +59,13 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
     }
 
     private fun fetchDataInternal(deviceId: Long) {
-        shimmerFrameLayout.isVisible = true
+        shimmerFrameLayout?.isVisible = true
 
         onboardingViewModel.fetchUpdateMethodsForDevice(deviceId).observe(
-            viewLifecycleOwner,
-            Observer { setupRecyclerView(it) }
-        )
+            viewLifecycleOwner
+        ) {
+            setupRecyclerView(it)
+        }
     }
 
     @Suppress("UNCHECKED_CAST", "NAME_SHADOWING")
