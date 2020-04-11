@@ -21,8 +21,8 @@
 	<string name="update_information_banner_already_latest">Je draait al de laatste OxygenOS versie</string>
 	<string name="update_information_banner_congrats_latest">Gefeliciteerd! Je apparaat draait de laatste OxygenOS versie</string>
 	<string name="update_information_banner_update_available">Er is een nieuwe systeemupdate beschikbaar: %1$s</string>
-	<string name="update_information_header_advanced_mode_helper">Omdat je geavanceerde modus hebt ingeschakeld, kan je de laatste ZIP voor \"%1$s\".\n\nJe kan geavanceerde modus uitzetten in de instellingen </string>
-	<string name="update_information_different_version_changelog_notice">Je bekijkt een changelog van de laatste update in het \"%1$s\" update pad. Als je deze update wilde installeren, dan moet je geavanceerde modus aanzetten (in instellingen).\n\nEchter, als je wenst de changelog van de huidig-geïnstalleerde versie wilt zien, zul je terug moeten gaan naar de correcte update methode.</string>
+	<string name="update_information_header_advanced_mode_helper">Omdat je geavanceerde modus hebt ingeschakeld, kan je de laatste ZIP voor \"%1$s\" downloaden.\n\nJe kan geavanceerde modus uitzetten in de instellingen. </string>
+	<string name="update_information_different_version_changelog_notice">Je bekijkt een changelog van de laatste update in het \"%1$s\" update pad. Als je deze update wilde installeren, dan moet je geavanceerde modus aanzetten (in instellingen).\n\nEchter, als je wenst de changelog van de huidig-geïnstalleerde versie wil zien, zul je terug moeten gaan naar de correcte update methode.</string>
 	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
 	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
@@ -50,9 +50,9 @@
 	<string name="time_yesterday">Gisteren</string>
 
 	<!-- Downloader strings -->
-	<string name="download">Downloaden update</string>
+	<string name="download">Download update</string>
 	<string name="downloaded">Gedownload</string>
-	<string name="downloading">Downloaden update…</string>
+	<string name="downloading">Downloaden van update…</string>
 	<string name="paused">Gepauzeerd - tik om te hervatten</string>
 
 	<string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
@@ -165,7 +165,7 @@
 	<string name="settings_other_options">Overige opties:</string>
 	<string name="settings_advanced_mode">Geavanceerde modus</string>
 	<string name="settings_advanced_mode_button_explanation">Tik op deze knop om meer informatie over de geavanceerde modus te krijgen.</string>
-	<string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n- Je van een reguliere versie naar een bètaversie wilt updaten\n- Je van een bètaversie terug wilt naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n - Je dezelfde versie als die je nu hebt opnieuw wilt installeren.</string>
+	<string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n- Je van een reguliere versie naar een bètaversie wil updaten\n- Je van een bètaversie terug wil naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n - Je dezelfde versie als die je nu hebt opnieuw wil installeren.</string>
 
 	<string name="settings_update_method">Update-methode</string>
 	<string name="settings_upload_logs">Deel gebruiksgegevens en -logs</string>
@@ -278,7 +278,7 @@
 	<string name="install_guide_page_5_text">&#8226; Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n&#8226; Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de OxygenOS-versie.\n\n&#8226; Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
 
 	<string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
-	<string name="install_guide_zip_file_missing">"Als je root-toegang wilt behouden, moet je hierboven een root-bestand selecteren."</string>
+	<string name="install_guide_zip_file_missing">"Als je root-toegang wil behouden, moet je hierboven een root-bestand selecteren."</string>
 	<string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
 
 	<!-- Device information strings -->
@@ -387,7 +387,7 @@
 
 	<string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
 	<string name="carrier_exclusive_device_warning_message">Het lijkt erop dat je een provider-exclusief apparaat gebruikt. Zelfs als je OxygenOS draait, dan heb je alsnog niet de mogelijkheid om updates te installeren. Providers vergrendelen het apparaat zodat gebruikers geen wijzigingen kunnen aanbrengen zonder toestemming van de provider. Dit is gebruikelijk in de VS: de "Lokale Upgrade" optie is verwijderd uit de provider-exclusieve versies van OxygenOS. Deze optie is nodig om zelf-gedownloade updates te installeren, zelfs als je deze app niet gebruikt. Helaas kunnen wij hier niets aan doen, omdat we technisch en mogelijk legaal gezien hierin gelimiteerd zijn. Je kunt ons een email sturen of ons op Discord vinden voor meer informatie.</string>
-	<string name="unsupported_device_warning_message">Gefeliciteerd met je nieuwe OnePlus apparaat! Helaas hebben we nog geen ondersteuning toegevoegd voor dit apparaat. Maar geen zorgen, we zullen zo snel mogelijk ondersteuning voor dit apparaat toevoegen. We houden er niet van om fouten te maken, en het is een tijdrovend proces om de werking van de ondersteuning te kunnen garanderen voor nieuwe apparaten, dus wacht a.u.b rustig af. Stuur ons een email of neem deel aan onze Discord server als je ons wilt helpen, of om notificaties te krijgen van over app-updates die ondersteuning bieden voor jouw apparaat.</string>
+	<string name="unsupported_device_warning_message">Gefeliciteerd met je nieuwe OnePlus apparaat! Helaas hebben we nog geen ondersteuning toegevoegd voor dit apparaat. Maar geen zorgen, we zullen zo snel mogelijk ondersteuning voor dit apparaat toevoegen. We houden er niet van om fouten te maken, en het is een tijdrovend proces om de werking van de ondersteuning te kunnen garanderen voor nieuwe apparaten, dus wacht a.u.b rustig af. Stuur ons een email of neem deel aan onze Discord server als je ons wil helpen, of om notificaties te krijgen van over app-updates die ondersteuning bieden voor jouw apparaat.</string>
 	<string name="unsupported_os_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan.\n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
 	<string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
