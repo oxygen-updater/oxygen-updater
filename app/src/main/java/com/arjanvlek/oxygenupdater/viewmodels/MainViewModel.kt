@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.viewmodels
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Build
 import android.os.Environment
 import android.os.storage.StorageManager
@@ -258,6 +259,7 @@ class MainViewModel(
         logDebug(UpdateInformationFragment.TAG, "Deleting downloaded update file " + updateData.filename)
 
         val tempFile = File(context.getExternalFilesDir(null), updateData.filename!!)
+
         @Suppress("DEPRECATION")
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
@@ -437,6 +439,10 @@ class MainViewModel(
         _appUpdateAvailable
     }
 
+    /**
+     * @throws IntentSender.SendIntentException if a stale [appUpdateInfo] is being used (probably, not sure)
+     */
+    @Throws(IntentSender.SendIntentException::class)
     fun requestImmediateAppUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo) {
         // Reset ignore count
         settingsManager.savePreference(
@@ -463,7 +469,10 @@ class MainViewModel(
      * @param appUpdateInfo The update info. Note that this can not be re-used,
      * so every call of this function requires a fresh instance of [AppUpdateInfo],
      * which can be requested from [AppUpdateManager.getAppUpdateInfo].
+     *
+     * @throws IntentSender.SendIntentException if a stale [appUpdateInfo] is being used (probably, not sure)
      */
+    @Throws(IntentSender.SendIntentException::class)
     fun requestUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo) {
         // TODO: Implement app update priority whenever Google adds support for it in Play Developer Console and the library itself
         //  (the library doesn't yet have an annotation interface for priority constants)

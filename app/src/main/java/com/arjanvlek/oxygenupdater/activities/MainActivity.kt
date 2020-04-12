@@ -2,6 +2,7 @@ package com.arjanvlek.oxygenupdater.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Color
 import android.os.Build
@@ -87,13 +88,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             mainViewModel.unregisterAppUpdateListener()
             showAppUpdateSnackbar()
         } else {
-            when (updateInfo.updateAvailability()) {
-                UPDATE_AVAILABLE -> mainViewModel.requestUpdate(this, updateInfo)
-                // If an IMMEDIATE update is in the stalled state, we should resume it
-                DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> mainViewModel.requestImmediateAppUpdate(
-                    this,
-                    updateInfo
-                )
+            try {
+                when (updateInfo.updateAvailability()) {
+                    UPDATE_AVAILABLE -> mainViewModel.requestUpdate(this, updateInfo)
+                    // If an IMMEDIATE update is in the stalled state, we should resume it
+                    DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> mainViewModel.requestImmediateAppUpdate(
+                        this,
+                        updateInfo
+                    )
+                }
+            } catch (e: IntentSender.SendIntentException) {
+                showAppUpdateBanner()
             }
         }
     }

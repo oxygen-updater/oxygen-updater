@@ -181,6 +181,11 @@
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="@string/advertising_app_id" />
 
+		<!-- Opt out of WebView usage statistics collection -->
+		<meta-data
+			android:name="android.webkit.WebView.MetricsOptOut"
+			android:value="true" />
+
 		<!--
 			Set custom default icon. This is used when no icon is set for incoming notification messages.
 			See README(https://goo.gl/l4GJaQ) for more
