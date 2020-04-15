@@ -118,7 +118,7 @@
 	<string name="summary_theme">Téma beállítása</string>
 	<string name="summary_privacy_policy">Megtekintés interneten</string>
 	<string name="summary_rate_app">Hagyj 5 csillagos értékelést</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
+	<string name="summary_oxygen">v%1$s</string>
 
 	<string name="label_buy_ad_free">Hirdetések eltávolítása</string>
 	<string name="label_theme">Téma</string>
@@ -132,28 +132,28 @@
 	<string name="theme_system">Rendszer</string>
 	<string name="theme_auto">Automatikus</string>
 
-	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
-	<string name="key_contributor" translatable="false">become_contributor</string>
-	<string name="key_category_device" translatable="false">key_category_device</string>
-	<string name="key_device" translatable="false">device</string>
-	<string name="key_device_id" translatable="false">device_id</string>
-	<string name="key_update_method" translatable="false">update_method</string>
-	<string name="key_update_method_id" translatable="false">update_method_id</string>
-	<string name="key_theme" translatable="false">theme</string>
-	<string name="key_theme_id" translatable="false">theme_id</string>
-	<string name="key_ui_app_update" translatable="false">show_app_update_messages</string>
-	<string name="key_ui_news" translatable="false">show_news_messages</string>
-	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
+	<string name="key_ad_free">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
+	<string name="key_contributor">become_contributor</string>
+	<string name="key_category_device">key_category_device</string>
+	<string name="key_device">device</string>
+	<string name="key_device_id">device_id</string>
+	<string name="key_update_method">update_method</string>
+	<string name="key_update_method_id">update_method_id</string>
+	<string name="key_theme">theme</string>
+	<string name="key_theme_id">theme_id</string>
+	<string name="key_ui_app_update">show_app_update_messages</string>
+	<string name="key_ui_news">show_news_messages</string>
+	<string name="key_advanced_mode">advanced_mode</string>
 	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
-	<string name="key_share_usage_data" translatable="false">upload_logs</string>
+	<string name="key_share_usage_data">upload_logs</string>
 	<!-- Typo can't be fixed due to older versions of the app being released with it -->
-	<string name="key_notification_critical_message" translatable="false">recive_general_notifications</string>
-	<string name="key_notification_system_update" translatable="false">receive_system_update_notifications</string>
-	<string name="key_notification_new_device_supported" translatable="false">receive_new_device_notifications</string>
-	<string name="key_notification_news_story_published" translatable="false">receive_news_notifications</string>
-	<string name="key_rate_app" translatable="false">rate</string>
-	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
-	<string name="key_oxygen" translatable="false">oxygen_updater</string>
+	<string name="key_notification_critical_message">recive_general_notifications</string>
+	<string name="key_notification_system_update">receive_system_update_notifications</string>
+	<string name="key_notification_new_device_supported">receive_new_device_notifications</string>
+	<string name="key_notification_news_story_published">receive_news_notifications</string>
+	<string name="key_rate_app">rate</string>
+	<string name="key_privacy_policy">privacy_policy</string>
+	<string name="key_oxygen">oxygen_updater</string>
 
 	<string name="theme_light_subtitle">Téma fehér háttérrel és OnePlus Red elsődleges színnel</string>
 	<string name="theme_dark_subtitle">Tompa OnePlus Red elsődleges szín, szinte fekete háttérrel. Használd ezt a témát az akkumulátor megtakarításához, különösen AMOLED képernyőkön</string>
@@ -313,8 +313,8 @@
 
 	<string name="device_information_amount_of_memory">RAM mennyisége:</string>
 	<string name="device_information_cpu_frequency">Processzor frekvenciája:</string>
-	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
-	<string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
+	<string name="device_information_device_name">%1$s %2$s</string>
+	<string name="device_information_gigahertz">%1$s GHz</string>
 	<string name="device_information_header">Az én eszközöm</string>
 	<string name="device_information_header_short">MAz én eszközöm</string>
 	<string name="device_information_image_description">Eszköz kép</string>
@@ -423,18 +423,18 @@
 	<string name="purchase_error_after_payment">A hirdetésmentes verzió megvásárlása sikertelen, mert belső hiba történt. Kérjük, próbáld újra néhány perc múlva. Ha már fizettél, vedd fel a kapcsolatot a Google Play ügyfélszolgálatával.</string>
 
 	<!-- Other strings-->
-	<string name="discord_url" translatable="false">https://discord.gg/5TXdhKJ</string>
-	<string name="github_url" translatable="false">https://github.com/oxygen-updater/oxygen-updater</string>
-	<string name="website_url" translatable="false">https://oxygenupdater.com</string>
-	<string name="email_address" translatable="false">support@oxygenupdater.com</string>
+	<string name="discord_url">https://discord.gg/5TXdhKJ</string>
+	<string name="github_url">https://github.com/oxygen-updater/oxygen-updater</string>
+	<string name="website_url">https://oxygenupdater.com</string>
+	<string name="email_address">support@oxygenupdater.com</string>
 	<string name="error">Hiba</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Betöltés…</string>
 	<string name="processing">Feldolgozás…</string>
 	<string name="choose_file">Fájl kiválasztása</string>
-	<string name="advertising_app_id" translatable="false">ca-app-pub-1816831161514116~4275332954</string>
-	<string name="advertising_main_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/9792024147</string>
-	<string name="advertising_news_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/5072283884</string>
-	<string name="advertising_interstitial_unit_id" translatable="false">ca-app-pub-1816831161514116/8641953374</string>
-	<string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
+	<string name="advertising_app_id">ca-app-pub-1816831161514116~4275332954</string>
+	<string name="advertising_main_banner_unit_id">ca-app-pub-1816831161514116/9792024147</string>
+	<string name="advertising_news_banner_unit_id">ca-app-pub-1816831161514116/5072283884</string>
+	<string name="advertising_interstitial_unit_id">ca-app-pub-1816831161514116/8641953374</string>
+	<string name="asset_statements">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
 </resources>
