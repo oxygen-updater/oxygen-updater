@@ -91,7 +91,6 @@
 	<string name="download_progress_text_verifying">"Verifikacija podatka…"</string>
 	<string name="download_waiting_for_network">"Čekanje na internet konekciju…"</string>
 
-	<string name="download_size_megabyte">"%1$d MB"</string>
 	<string name="download_unknown_update_name">"OxygenOS Update"</string>
 	<string name="download_verifying">"Verifikacija…"</string>
 	<string name="download_verifying_error">"Podatak je oštećen"</string>

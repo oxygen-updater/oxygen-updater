@@ -104,7 +104,6 @@
 	<string name="download_progress_text_paused">พัก</string>
 	<string name="download_waiting_for_network">กำลังรอการเชื่อมต่ออินเทอร์เน็ต…</string>
 
-	<string name="download_size_megabyte">%1$d MB</string>
 	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">กำลังตรวจสอบ…</string>

@@ -97,7 +97,6 @@
 	<string name="download_progress_text_paused">паузирано</string>
 	<string name="download_waiting_for_network">чекање интернет конекције…</string>
 
-	<string name="download_size_megabyte">%1$d MB</string>
 	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">Верификација…</string>

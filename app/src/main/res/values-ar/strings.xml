@@ -98,7 +98,6 @@
 	<string name="download_progress_text_verifying">التحقق من الملف…</string>
 	<string name="download_progress_text_paused">متوقف</string>
 	<string name="download_waiting_for_network">بإنتظار إتصال الشبكة…</string>
-	<string name="download_size_megabyte">%1$d ميجا بايت</string>
 	<string name="download_unknown_update_name">حدث نظام أكسجين</string>
 	<string name="download_verifying">جاري التحقق…</string>
 	<string name="download_verifying_error">الملف تالف</string>

@@ -98,7 +98,6 @@
 	<string name="download_progress_text_seconds_remaining">"några sekunder kvar"</string>
 	<string name="download_progress_text_unknown_time_remaining">"beräknar nedladdningstid…"</string>
 	<string name="download_progress_text_verifying">"Verifierar fil…"</string>
-	<string name="download_size_megabyte">"%1$d MB"</string>
 	<string name="download_unknown_update_name">"OxygenOS Uppdatering"</string>
 	<string name="download_verifying">"Verifierar…"</string>
 	<string name="download_verifying_error">"Filen är skadad"</string>

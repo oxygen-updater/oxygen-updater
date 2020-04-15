@@ -99,7 +99,6 @@
 	<string name="download_progress_text_paused">"Keskeytetty…"</string>
 	<string name="download_waiting_for_network">"Odotetaan verkkoyhteyttä…"</string>
 
-	<string name="download_size_megabyte">"%1$d MB"</string>
 	<string name="download_unknown_update_name">"OxygenOS päivitys"</string>
 	<string name="download_verifying">"Tarkistetaan…"</string>
 	<string name="download_verifying_error">"Tiedosto on vioittunut"</string>

@@ -104,7 +104,6 @@
 	<string name="download_progress_text_paused">durduruldu</string>
 	<string name="download_waiting_for_network">internet bağlantısı için bekleniyor…</string>
 
-	<string name="download_size_megabyte">%1$d MB</string>
 	<string name="download_unknown_update_name">OxygenOS Güncellemesi</string>
 
 	<string name="download_verifying">Doğrulanıyor…</string>

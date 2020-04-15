@@ -96,7 +96,6 @@
 	<string name="download_progress_text_paused">призупинено</string>
 	<string name="download_waiting_for_network">очікування мережі…</string>
 
-	<string name="download_size_megabyte">%1$d Мб</string>
 	<string name="download_unknown_update_name">Оновлення OxygenOS</string>
 
 	<string name="download_verifying">Перевірка…</string>

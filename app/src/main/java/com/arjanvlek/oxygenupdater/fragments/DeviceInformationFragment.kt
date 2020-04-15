@@ -1,7 +1,9 @@
 package com.arjanvlek.oxygenupdater.fragments
 
 import android.app.ActivityManager
+import android.os.Build
 import android.os.Bundle
+import android.text.format.Formatter
 import android.view.View
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
@@ -13,8 +15,8 @@ import com.arjanvlek.oxygenupdater.internal.DeviceInformationData
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
-import com.arjanvlek.oxygenupdater.utils.Logger
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
+import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_device_information.*
@@ -96,21 +98,28 @@ class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_info
             }
         }
 
-        val totalMemory: Long = try {
+        val totalMemoryBytes = try {
             val mi = ActivityManager.MemoryInfo()
-            val activityManager = requireContext().getSystemService<ActivityManager>()!!
+            requireContext().getSystemService<ActivityManager>()?.getMemoryInfo(mi)
 
-            activityManager.getMemoryInfo(mi)
-            mi.totalMem / 1048576L
+            // `mi.totalMem` is in bytes, but since we're using it in android.text.format.Formatter.formatFileSize,
+            // we need to make sure to use SI units across all Android versions
+            // The version check is required because `formatFileSize` uses SI units only in Oreo and above.
+            // It uses IEC units pre-Oreo.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mi.totalMem
+            } else {
+                (mi.totalMem * 1.048576).toLong()
+            }
         } catch (e: Exception) {
-            Logger.logWarning("DeviceInformationFragment", "Memory information is unavailable due to error", e)
-            0
+            logWarning(TAG, "Memory information is unavailable due to error", e)
+            0L
         }
 
         // Total amount of RAM (if available)
         device_information_memory_field.apply {
-            if (totalMemory != 0L) {
-                text = getString(R.string.download_size_megabyte, totalMemory)
+            if (totalMemoryBytes != 0L) {
+                text = Formatter.formatFileSize(context, totalMemoryBytes)
             } else {
                 device_information_memory_label.isVisible = false
                 isVisible = false

@@ -105,7 +105,6 @@
 	<string name="download_progress_text_paused">Wstrzymane</string>
 	<string name="download_waiting_for_network">Czekanie na połączenie z siecią…</string>
 
-	<string name="download_size_megabyte">%1$d MB</string>
 	<string name="download_unknown_update_name">Aktualizacja OxygenOS</string>
 
 	<string name="download_verifying">Weryfikacja…</string>

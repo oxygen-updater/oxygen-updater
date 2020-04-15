@@ -99,7 +99,6 @@
 	<string name="download_progress_text_paused">"Pausiert…"</string>
 	<string name="download_waiting_for_network">"Warten auf Netzwerk…"</string>
 
-	<string name="download_size_megabyte">"%1$d MB"</string>
 	<string name="download_unknown_update_name">"OxygenOS Update"</string>
 	<string name="download_verifying">"Verifizieren…"</string>
 	<string name="download_verifying_error">"Datei ist beschädigt"</string>

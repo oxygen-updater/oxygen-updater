@@ -104,7 +104,6 @@
 	<string name="download_progress_text_paused">中断中</string>
 	<string name="download_waiting_for_network">ネットワーク接続の待機中…</string>
 
-	<string name="download_size_megabyte">%1$d MB</string>
 	<string name="download_unknown_update_name">OxygenOS アップデート</string>
 
 	<string name="download_verifying">確認中…</string>

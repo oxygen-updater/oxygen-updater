@@ -289,7 +289,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             settingsManager.apply {
                 savePreference(SettingsManager.PROPERTY_OFFLINE_ID, updateData.id)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSizeInMegabytes)
+                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSize)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
@@ -407,7 +407,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         oxygenOsVersionTextView.text = formattedOxygenOsVersion
 
         // Display download size.
-        downloadSizeTextView.text = getString(R.string.download_size_megabyte, updateData.downloadSizeInMegabytes)
+        downloadSizeTextView.text = Formatter.formatFileSize(
+            context,
+            updateData.downloadSizeForFormatter
+        )
 
         // Display update description.
         changelogTextView.apply {
@@ -470,7 +473,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                     initDownloadActionButton(true)
 
                     downloadUpdateTextView.setText(R.string.download)
-                    downloadSizeTextView.text = Formatter.formatFileSize(context, updateData?.downloadSize ?: 0)
+                    downloadSizeTextView.text = Formatter.formatFileSize(
+                        context,
+                        updateData?.downloadSizeForFormatter ?: 0
+                    )
 
                     downloadProgressBar.isVisible = false
                     downloadActionButton.isVisible = false
@@ -583,6 +589,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                     initDownloadActionButton(false)
 
                     downloadUpdateTextView.setText(R.string.downloaded)
+                    downloadSizeTextView.text = Formatter.formatFileSize(
+                        context,
+                        updateData?.downloadSizeForFormatter ?: 0
+                    )
 
                     downloadProgressBar.isVisible = false
                     downloadDetailsTextView.isVisible = false
@@ -611,27 +621,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                             setOnClickListener(AlreadyDownloadedOnClickListener())
                         }
                     }
-                }
-                VERIFICATION_COMPLETED -> {
-                    initDownloadActionButton(false)
-
-                    downloadUpdateTextView.setText(R.string.downloaded)
-
-                    downloadProgressBar.isVisible = false
-                    downloadDetailsTextView.isVisible = false
-
-                    downloadIcon.setImageResourceWithTint(R.drawable.done_outline, R.color.colorPositive)
-
-                    downloadLayout.apply {
-                        isEnabled = true
-                        isClickable = true
-                        setOnClickListener(AlreadyDownloadedOnClickListener())
-                    }
-
-                    // Since file has been verified, we can prune the work and launch [InstallActivity]
-                    mainViewModel.maybePruneWork()
-                    Toast.makeText(context, getString(R.string.download_complete), LENGTH_LONG).show()
-                    ActivityLauncher(requireActivity()).UpdateInstallation(true, updateData)
                 }
                 DOWNLOAD_FAILED -> {
                     val outputData = workInfo?.outputData
@@ -691,6 +680,31 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                         isEnabled = true
                         isClickable = false
                     }
+                }
+                VERIFICATION_COMPLETED -> {
+                    initDownloadActionButton(false)
+
+                    downloadUpdateTextView.setText(R.string.downloaded)
+                    downloadSizeTextView.text = Formatter.formatFileSize(
+                        context,
+                        updateData?.downloadSizeForFormatter ?: 0
+                    )
+
+                    downloadProgressBar.isVisible = false
+                    downloadDetailsTextView.isVisible = false
+
+                    downloadIcon.setImageResourceWithTint(R.drawable.done_outline, R.color.colorPositive)
+
+                    downloadLayout.apply {
+                        isEnabled = true
+                        isClickable = true
+                        setOnClickListener(AlreadyDownloadedOnClickListener())
+                    }
+
+                    // Since file has been verified, we can prune the work and launch [InstallActivity]
+                    mainViewModel.maybePruneWork()
+                    Toast.makeText(context, getString(R.string.download_complete), LENGTH_LONG).show()
+                    ActivityLauncher(requireActivity()).UpdateInstallation(true, updateData)
                 }
                 VERIFICATION_FAILED -> {
                     initDownloadActionButton(false)

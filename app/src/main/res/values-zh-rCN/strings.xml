@@ -104,7 +104,6 @@
 	<string name="download_progress_text_paused">已暂停</string>
 	<string name="download_waiting_for_network">正在等待互联网连接…</string>
 
-	<string name="download_size_megabyte">%1$d 兆字节</string>
 	<string name="download_unknown_update_name">OxygenOS 更新</string>
 
 	<string name="download_verifying">正在校验中…</string>

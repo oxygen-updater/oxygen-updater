@@ -105,7 +105,6 @@
 	<string name="download_progress_text_paused">"помолчала"</string>
 	<string name="download_waiting_for_network">"oжидание подключения…"</string>
 
-	<string name="download_size_megabyte">"%1$d МБ"</string>
 	<string name="download_unknown_update_name">"Обновить OxygenOS"</string>
 	<string name="download_verifying">"Проверка…"</string>
 	<string name="download_verifying_error">"Файл поврежден"</string>
