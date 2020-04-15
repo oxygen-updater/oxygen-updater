@@ -88,6 +88,8 @@ class WebViewClient(
 
     /**
      * Just invokes the callback, nothing special
+     * Used on API 23+
+     * (see https://developer.android.com/reference/android/webkit/WebViewClient#onPageCommitVisible(android.webkit.WebView,%20java.lang.String))
      */
     override fun onPageCommitVisible(
         view: WebView?,
@@ -95,6 +97,17 @@ class WebViewClient(
     ) = super.onPageCommitVisible(view, url).also {
         logDebug(TAG, "Page commit visible for: $url")
         pageCommitVisibleCallback.invoke(error)
+    }
+
+    /**
+     * Just invokes the callback, nothing special
+     * Used on API 21 and 22
+     */
+    override fun onPageFinished(view: WebView?, url: String?) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            logDebug(TAG, "Page finished for: $url")
+            pageCommitVisibleCallback.invoke(error);
+        }
     }
 
     /**
