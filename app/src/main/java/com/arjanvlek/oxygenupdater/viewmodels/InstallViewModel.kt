@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arjanvlek.oxygenupdater.internal.KotlinCallback
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
@@ -14,6 +15,7 @@ import com.arjanvlek.oxygenupdater.models.ServerStatus
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * For [com.arjanvlek.oxygenupdater.activities.InstallActivity]
@@ -53,7 +55,6 @@ class InstallViewModel(
         get() = _toolbarImage
 
     private val _serverStatus = MutableLiveData<ServerStatus>()
-    private val _installGuidePage = MutableLiveData<InstallGuidePage>()
 
     private val _logRootInstallResult = MutableLiveData<ServerPostResult>()
     val logRootInstallResult: LiveData<ServerPostResult>
@@ -68,12 +69,15 @@ class InstallViewModel(
     fun fetchInstallGuidePage(
         deviceId: Long,
         updateMethodId: Long,
-        pageNumber: Int
-    ): LiveData<InstallGuidePage> = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber)?.let {
-            _installGuidePage.postValue(it)
+        pageNumber: Int,
+        callback: KotlinCallback<InstallGuidePage?>
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber).let {
+            withContext(Dispatchers.Main) {
+                callback.invoke(it)
+            }
         }
-    }.let { _installGuidePage }
+    }
 
     fun logRootInstall(rootInstall: RootInstall) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.logRootInstall(rootInstall)?.let {

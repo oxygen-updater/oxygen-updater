@@ -202,7 +202,13 @@ class InstallActivity : SupportActionBarActivity() {
         }
 
         nextPageButton.setOnClickListener {
-            if (viewPager.currentItem == viewPager.adapter!!.itemCount - 1) {
+            val lastPageNumber = if (showDownloadPage) {
+                NUMBER_OF_INSTALL_GUIDE_PAGES
+            } else {
+                NUMBER_OF_INSTALL_GUIDE_PAGES - 1
+            }
+
+            if (viewPager.currentItem == lastPageNumber - 1) {
                 onBackPressed()
             } else {
                 viewPager.currentItem++
@@ -214,7 +220,13 @@ class InstallActivity : SupportActionBarActivity() {
         previousPageButton.isEnabled = position != 0
 
         nextPageButton.apply {
-            rotation = if (position == viewPager.adapter!!.itemCount - 1) {
+            val lastPageNumber = if (showDownloadPage) {
+                NUMBER_OF_INSTALL_GUIDE_PAGES
+            } else {
+                NUMBER_OF_INSTALL_GUIDE_PAGES - 1
+            }
+
+            rotation = if (position == lastPageNumber - 1) {
                 setImageResource(R.drawable.checkmark)
                 0f
             } else {

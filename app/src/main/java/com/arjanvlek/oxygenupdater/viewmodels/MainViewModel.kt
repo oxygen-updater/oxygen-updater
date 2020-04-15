@@ -301,7 +301,7 @@ class MainViewModel(
             // This value is usually larger than [File.usableSpace],
             // because the system considers cached files that can be deleted
             val allocatableBytes = storageManager.getAllocatableBytes(appSpecificExternalDirUuid)
-            if (allocatableBytes + SAFE_MARGIN >= requiredFreeBytes) {
+            if (allocatableBytes >= requiredFreeBytes + SAFE_MARGIN) {
                 // Allocate bytes. The system will delete cached files if necessary, to fulfil this request
                 storageManager.allocateBytes(appSpecificExternalDirUuid, requiredFreeBytes)
 
@@ -317,7 +317,7 @@ class MainViewModel(
                     .putExtras(
                         bundleOf(
                             EXTRA_UUID to appSpecificExternalDirUuid,
-                            EXTRA_REQUESTED_BYTES to requiredFreeBytes - allocatableBytes - SAFE_MARGIN
+                            EXTRA_REQUESTED_BYTES to requiredFreeBytes + SAFE_MARGIN - allocatableBytes
                         )
                     )
 
@@ -331,7 +331,7 @@ class MainViewModel(
             // Check if there is enough free storage space before downloading
             val usableBytes = externalFilesDir.usableSpace
 
-            if (usableBytes + SAFE_MARGIN >= requiredFreeBytes) {
+            if (usableBytes >= requiredFreeBytes + SAFE_MARGIN) {
                 // Since we have enough space available, we can enqueue the download work
                 workManager.enqueueUniqueWork(
                     WORK_UNIQUE_DOWNLOAD,
