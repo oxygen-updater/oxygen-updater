@@ -21,15 +21,15 @@
 			app:subtitle="@string/contribute"
 			app:title="@string/contribute_title">
 
-			<ImageView
+			<androidx.appcompat.widget.AppCompatImageView
 				android:id="@+id/collapsingToolbarImage"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:contentDescription="@string/icon"
 				android:fitsSystemWindows="true"
 				android:scaleType="centerCrop"
-				android:src="@drawable/note_add"
-				app:layout_collapseMode="parallax" />
+				app:layout_collapseMode="parallax"
+				app:srcCompat="@drawable/note_add" />
 
 			<View
 				android:layout_width="match_parent"

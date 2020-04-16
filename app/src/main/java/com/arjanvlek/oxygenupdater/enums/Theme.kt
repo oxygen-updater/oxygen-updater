@@ -12,7 +12,7 @@ package com.arjanvlek.oxygenupdater.enums
  * Read through the comments in `integers.xml` to understand why XML values are present as well
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @see ThemeUtils.OEM_BLACK_MODE
+ * @see com.arjanvlek.oxygenupdater.utils.ThemeUtils.OEM_BLACK_MODE
  */
 internal enum class Theme(private val value: Int) {
 

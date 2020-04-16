@@ -1,35 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 	<!-- Application title, Main activity title-->
 	<string name="app_name">Oxygen Updater</string>
-	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<string name="device_chooser_error_title">Не вдалося отримати список підтримуваних пристроїв</string>
 
 	<!-- Update information strings-->
-	<string name="update">Оновлення</string>
 	<string name="enable">Увімкнути</string>
 	<string name="update_information_description_not_available">Немає офіційної інформації про зміни і нові функції, які містить це оновлення. Зазвичай, таке оновлення містить виправлення помилок, покращення продуктивності, та / або важливі оновлення безпеки для вашого пристрою.</string>
 	<string name="update_information_file_name">Назва файлу: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Оскільки під час завантаження оновлення виникла помилка, ви можете самостійно завантажити файл оновлення через браузер, перейшовши за посиланням. Також необхідно буде перенести завантажений файл з теки \"Download\" в її батьківську теку. Ось це посилання використовує застосунок для завантаження оновлення (це офіційний сервер OnePlus для OTA оновлень):\n%1$s</string>
-	<string name="update_information_for">для</string>
 	<string name="update_information_header">Оновлення</string>
-	<string name="update_information_header_short">Оновлення</string>
 	<string name="update_information_error_title">Не вдалося отримати інформацію про останнє оновлення</string>
 	<string name="update_information_banner_server">Натисніть тут, щоб переглянути важливі повідомлення</string>
-	<string name="update_information_banner_already_latest">У вас остання версія OxygenOS</string>
-	<string name="update_information_banner_congrats_latest">Вітаємо! Ваш пристрій працює на останній версії OxygenOS</string>
-	<string name="update_information_banner_update_available">Доступне нове оновлення системи: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\".\n\nРозширений режим можна вимкнути в налаштуваннях</string>
 	<string name="update_information_different_version_changelog_notice">Ви переглядаєте список змін для способу оновлення \"%1$s\". Якщо ви маєте намір встановити це оновлення, спочатку необхідно увімкнути розширений режим в налаштуваннях.\n\nПроте, якщо ви хочете переглянути список змін до поточної встановленої версії, вам потрібно вибрати відповідний спосіб оновлення в налаштуваннях.</string>
 	<string name="update_information_last_checked_on">Востаннє перевірено: %1$s</string>
-	<string name="update_information_latest_available_update">Доступне оновлення системи</string>
 	<string name="update_information_no_update_data_available">Немає інформації про оновлення</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Система оновлена</string>
 	<string name="update_information_unknown_update_name">Оновлення без назви для %1$s</string>
-	<string name="update_information_version">&#160; Версія:</string>
 	<string name="update_information_view_update_information">Інформація про оновлення</string>
 
 	<!-- Server status warning strings -->
@@ -45,7 +36,6 @@
 
 	<!-- Date and time strings -->
 	<string name="time_at">в</string>
-	<string name="time_today">Сьогодні</string>
 	<string name="time_yesterday">Вчора</string>
 
 	<!-- Downloader strings-->
@@ -54,16 +44,12 @@
 	<string name="downloading">Завантаження оновлення…</string>
 	<string name="paused">Призупинено - натисніть, щоб відновити</string>
 
-	<string name="download_already_downloaded">Оновлення вже завантажено і готове до встановлення.</string>
 	<string name="download_complete">Завантаження завершено</string>
 	<string name="download_complete_notification">Завантаження завершено. Натисніть, щоб почати встановлення.</string>
-
-	<string name="download_description">Oxygen Updater</string>
 
 	<string name="download_error">Помилка завантаження</string>
 	<string name="download_error_close">ЗАКРИТИ</string>
 	<string name="download_error_corrupt">Завантажене оновлення пошкоджене! Будь ласка, спробуйте завантажити його знову.</string>
-	<string name="download_error_network">Під час завантаження оновлення сталася помилка мережі. Завантаження автоматично відновиться, коли буде підключення до мережі.</string>
 	<string name="download_error_server">Під час завантаження оновлення сталася помилка на сервері. Будь ласка, спробуйте завантажити оновлення знову.</string>
 	<string name="download_error_internal">На жаль, під час завантаження оновлення виникла технічна помилка. Спробуйте завантажити його знову. Але якщо помилка не зникне, тоді зв\'яжіться з розробником застосунку для консультації.</string>
 	<string name="download_error_could_not_move_temp_file">Файл завантажено, але його не вдалося перемістити в потрібну теку. Відкрийте менеджер файлів, перейдіть в \"%1$s\", і вручну перемістіть файл в теку \"topmost\" на внутрішньому сховищі</string>
@@ -74,17 +60,12 @@
 
 	<string name="download_failed">Не вдалося завантажити</string>
 	<string name="running_in_background">Oxygen Updater працює в фоновому режимі</string>
-	<string name="download_oxygen_os">Версія OxygenOS</string>
 	<string name="download_pending">Завантаження незабаром розпочнеться…</string>
-	<string name="download_permissions">Натисніть Завантажити знову, щоб завантажити оновлення.</string>
-
-	<string name="download_notification_error_network">Завантаження призупинено через втрату з\'єднання. Незабаром відновиться.</string>
 	<string name="download_notification_error_server">Сталася помилка сервера під час завантаження. Будь ласка, спробуйте завантажити знову.</string>
 	<string name="download_notification_error_internal">Сталася технічна помилка під час завантаження. Перезапустіть завантаження або зверніться до підтримки.</string>
 	<string name="download_notification_error_storage_full">Недостатньо вільного місця.</string>
 	<string name="download_notification_error_corrupt">Помилка перевірки файлу. Перевірте підключення та спробуйте ще раз.</string>
 
-	<string name="download_progress">%1$d Mб / %2$d Mб (%3$d%%)</string>
 	<string name="download_progress_text_hours_remaining">залишилося приблизно %1$d години</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">залишилося менше хвилини</string>
 	<string name="download_progress_text_minutes_remaining">залишилося приблизно %1$d хвилин</string>
@@ -95,8 +76,6 @@
 	<string name="download_progress_text_verifying">перевірка файлу…</string>
 	<string name="download_progress_text_paused">призупинено</string>
 	<string name="download_waiting_for_network">очікування мережі…</string>
-
-	<string name="download_unknown_update_name">Оновлення OxygenOS</string>
 
 	<string name="download_verifying">Перевірка…</string>
 	<string name="download_verifying_error">Файл пошкоджено</string>
@@ -143,29 +122,19 @@
 	<string name="settings_buy_ad_free_label">Видалити рекламу із застосунку</string>
 
 	<string name="settings_contribute_label">Допомогти покращити застосунок</string>
-	<string name="settings_contribute_button">Посприяти</string>
 
-	<string name="settings_category_other">Інші:</string>
 	<string name="settings_device">Вибрати пристрій</string>
 	<string name="settings_entered_incorrectly">Помилка під час збереження налаштувань. Будь ласка, верніться назад і виберіть ваш пристрій / спосіб оновлення знову.</string>
 	<string name="settings_explanation_incremental_full_update">Інкрементне оновлення (Incremental update) можна встановлювати з будь-якої версії, якщо у вас заблокований завантажувач. Інакше, якщо завантажувач розблоковано — слід вибрати \"Повне оновлення\" (Full update).\n\nБета оновлення (Open beta) для OxygenOS можна встановлювати, якщо у вас стабільна версія. Щоб встановити бета версію, потрібно увімкнути \"Розширений режим\" в налаштуваннях. Для бета версій, способи Повного та Інкрементного оновлення працюють так само, як і у стабільних версіях.</string>
-	<string name="settings_explanation_update_methods">Пояснення способів оновлення</string>
-	<string name="settings_header">Виберіть ваш пристрій і спосіб оновлення:</string>
 
-	<string name="settings_push">Надсилати мені сповіщення, коли:</string>
 	<string name="settings_push_from_server">Інформаційні повідомлення та попередження</string>
 	<string name="settings_push_new_version">Повідомлення про оновлення системи</string>
 	<string name="settings_push_new_device">Підтримка нового пристрою</string>
 	<string name="settings_push_news">Нові повідомлення</string>
 
-	<string name="settings_saved">Ваші налаштування автоматично збережено.</string>
 	<string name="settings_saving">Ваші налаштування досі зберігаються. Якщо це триває занадто довго: перевірте з\'єднання з мережею, вийдіть із застосунку і запустіть його знову.</string>
 
-	<string name="settings_server_messages">Показувати повідомлення в застосунку, коли:</string>
-
-	<string name="settings_other_options">Інші параметри:</string>
 	<string name="settings_advanced_mode">Розширений режим</string>
-	<string name="settings_advanced_mode_button_explanation">Натисніть цю кнопку, щоб отримати детальнішу інформацію про розширений режим.</string>
 	<string name="settings_advanced_mode_explanation">Розширений режим приховує повідомлення \"Система оновлена\", дозволяючи вам завантажувати і встановлювати всі оновлення, навіть якщо вони можуть бути не сумісні з вашим пристроєм.\n\nЦей режим може бути корисним, коли потрібно:\n- оновитися зі звичайної версії до бета версії\n- відкотитися з бета версії до звичайної версії (не забувайте повністю очищати ваш пристрій)\n- перевстановити вашу поточну систему.</string>
 
 	<string name="settings_update_method">Спосіб оновлення</string>
@@ -174,7 +143,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">ЧаПи</string>
 	<string name="faq_menu_item">ЧаПи</string>
-	<string name="faq_no_network">Немає з\'єднання.</string>
 	<string name="faq_no_network_text">Щоб переглянути сторінку ЧаПи, потрібне робоче з\'єднання з мережею.</string>
 
 	<!-- First-time onboarding strings -->
@@ -226,11 +194,9 @@
 	<string name="install_method_chooser_title">Виберіть спосіб встановлення</string>
 	<string name="install_method_chooser_subtitle">Як ви хочете встановити це оновлення?</string>
 	<string name="install_method_chooser_automatic_title">Автоматичне встановлення*</string>
-	<string name="install_method_chooser_automatic_image">Зображення автоматичного встановлення</string>
 	<string name="install_method_chooser_automatic_description">Найлегший спосіб встановити оновлення.\nВаш пристрій перезавантажиться, щоб встановити оновлення.\n\n* Потрібні рут права і відновлювач TWRP.</string>
 
 	<string name="install_method_chooser_manual_title">Ручне встановлення</string>
-	<string name="install_method_chooser_manual_image">Зображення ручного встановлення</string>
 	<string name="install_method_chooser_manual_description">Прочитати інструкцію, щоб дізнатися як встановити оновлення. В цьому способі, для встановлення оновлення, потрібно використовувати режим Відновлення, який має бути на вашому пристрої.</string>
 
 	<string name="install_temporary_error">Виникла тимчасова помилка під час підготовки до встановлення. Будь ласка, спробуйте знову.</string>
@@ -253,7 +219,6 @@
 	<string name="install_guide_automatic_install_disabled">Автоматичні встановлення тимчасово вимкнені через технічні неполадки. Встановіть оновлення відповідно до інструкції.</string>
 	<string name="install_guide">Інструкція по встановленню</string>
 	<string name="install_guide_subtitle">Інструкція - етап %1$d з %2$d</string>
-	<string name="install_guide_image_description">Контекстуальне зображення. Будь ласка, натисніть внизу екрану, щоб прослухати інструкцію.</string>
 	<string name="install_guide_tip">&#8226; Рекомендується записати всі етапи, тому що вам потрібно буде вимкнути пристрій, щоб встановити оновлення.</string>
 
 	<string name="install_guide_page_1_title">Завантаження оновлення</string>
@@ -274,7 +239,6 @@
 	<string name="install_guide_close_button">Закрити інструкцію</string>
 
 	<string name="install_guide_zip_file_deleted">Архіву з рутом, який ви обрали, більше немає. Будь ласка, виберіть новий архів вище.</string>
-	<string name="install_guide_zip_file_picker_title">Вибрати рут архів</string>
 	<string name="install_guide_zip_file_missing">"Якщо ви хочете зберегти рут права на вашому пристрої, виберіть рут архів вище."</string>
 
 	<!-- Device information strings -->
@@ -289,8 +253,7 @@
 	<string name="device_information_amount_of_memory">Обсяг оперативної пам\'яті:</string>
 	<string name="device_information_cpu_frequency">Частота процесора:</string>
 	<string name="device_information_gigahertz">%1$s ГГц</string>
-	<string name="device_information_header">Мій пристрій</string>
-	<string name="device_information_header_short">Пристрій</string>
+	<string name="device_information_header">Пристрій</string>
 	<string name="device_information_image_description">Зображення пристрою</string>
 	<string name="device_information_incremental_os_version">Номер складання:</string>
 	<string name="device_information_os_version">Версія Android:</string>
@@ -338,7 +301,6 @@
 
 	<!-- News strings -->
 	<string name="news">Новини</string>
-	<string name="news_author">Автор: %1$s</string>
 	<string name="news_date_published">Останнє оновлення: %1$s</string>
 	<string name="news_empty">Ця стаття немає вмісту.</string>
 	<string name="news_load_error">Не вдалося відкрити статтю. Перевірте з\'єднання і натисніть кнопку \'ПОВТОРИТИ\', щоб відкрити статтю знову.</string>
@@ -352,7 +314,6 @@
 	<string name="contribute">Стати помічником</string>
 	<string name="contribute_title">Допомога в покращенні Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater потребує вашої допомоги! Для того, щоб надсилати вам останні оновлення, нам потрібні назви файлів оновлення. Вони присутні на вашому телефоні, якщо вам прийшло звичайне сповіщення про оновлення.\n\nЯк я можу допомогти?\n\nOxygen Updater може автоматично надсилати нові назви файлів нашим адміністраторам. Цей процес використовуватиме невелику кількість даних і може трішки використовувати заряд батареї. Все що потрібно зробити — це зачекати (приблизно 15 хвилин) перед встановленням офіційного оновлення, і після того як Oxygen Updater відправить назву файлу, ви побачите підтвердження.\nБуде скануватися лише тека \".Ota\" кожні 15 хвилин. Цей застосунок перевіряє лише конкретну назву у цій конкретній теці.</string>
-	<string name="contribute_image_description">Завантажити файли на сервер застосунку</string>
 	<string name="contribute_agree">Я хочу допомогти і погоджуюся на відправлення назв файлів оновлення адміністраторам</string>
 	<string name="contribute_agree_from_setup">Я хочу допомогти покращити застосунок і погоджуюся на відправлення назв файлів оновлення адміністраторам</string>
 	<string name="contribute_save">Зберегти налаштування</string>
@@ -366,14 +327,11 @@
 	<string name="error_app_outdated_message">Цей застосунок застарів. Час його оновити! Натисніть на \"Google Play\" нижче. В Google Play, виберіть \"Оновлення\".</string>
 	<string name="error_app_requires_network_connection">Немає з\'єднання</string>
 	<string name="error_app_requires_network_connection_message">Не вдалося з\'єднатися з сервером. Будь ласка, переконайтеся, що у вас є доступ до мережі. Застосунок зараз закриється.</string>
-	<string name="error_button_retry">Повторити</string>
-	<string name="error_exit_button_text">Вийти</string>
 	<string name="error_google_play_button_text">Google Play</string>
 	<string name="error_no_internet_connection">Немає з\'єднання.</string>
 	<string name="error_maintenance">Сервер на обслуговуванні</string>
 	<string name="error_maintenance_message">Будь ласка, зачекайте. Сервер незабаром стане доступним.</string>
 	<string name="error_maintenance_retry">Сервер може бути закритий на обслуговування. Спробуйте знову через декілька хвилин, або повідомте нам про це, через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або через <a href="https://discord.gg/5TXdhKJ">сервер на Discord</a>.</string>
-	<string name="error_push_failure">Не вдалося увімкнути сповіщення. Повністю закрийте застосунок, почекайте декілька хвилин і запустіть його знову.</string>
 	<string name="error_reload">Перезавантажити</string>
 
 	<string name="error_unable_to_rate_app">Ви не можете оцінити застосунок, тому що магазин Google Play відсутній на вашому пристрої.</string>
@@ -397,7 +355,6 @@
 	<string name="purchase_error_after_payment">Не вдалося купити видалення реклами, тому що виникла внутрішня помилка. Будь ласка, спробуйте знову через декілька хвилин. Якщо ви вже купляли, будь ласка, зверніться до підтримки Google Play за допомогою.</string>
 
 	<!-- Other strings-->
-	<string name="error">Помилка</string>
 	<string name="icon">Значок</string>
 	<string name="loading">Завантажується…</string>
 	<string name="processing">Опрацювання…</string>

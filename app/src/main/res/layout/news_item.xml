@@ -9,7 +9,7 @@
 	android:padding="@dimen/spacing_default"
 	android:stateListAnimator="@animator/clicked">
 
-	<ImageView
+	<com.google.android.material.imageview.ShapeableImageView
 		android:id="@+id/newsItemImage"
 		android:layout_width="@dimen/spacing_4x"
 		android:layout_height="@dimen/spacing_4x"
@@ -17,7 +17,8 @@
 		android:scaleType="centerCrop"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:src="@drawable/image" />
+		app:shapeAppearance="?shapeAppearanceMediumComponent"
+		tools:srcCompat="@drawable/image" />
 
 	<TextView
 		android:id="@+id/newsItemTitle"

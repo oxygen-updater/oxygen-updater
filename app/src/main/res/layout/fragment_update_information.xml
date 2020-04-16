@@ -10,27 +10,25 @@
 		android:layout_height="match_parent"
 		android:orientation="vertical">
 
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/serverStatusTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:background="@color/colorError"
-			android:drawableStart="@drawable/error_outline"
 			android:gravity="center"
 			android:padding="@dimen/spacing_default"
 			android:textColor="@color/white"
 			android:visibility="gone"
+			app:drawableStartCompat="@drawable/error_outline"
 			tools:text="@string/server_status_unreachable"
 			tools:visibility="visible" />
 
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/serverBannerTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="@color/backgroundVariant"
-			android:drawableEnd="@drawable/open_in_browser"
-			android:drawableTint="?colorPrimary"
 			android:fontFamily="@font/google_sans"
 			android:foreground="?selectableItemBackground"
 			android:padding="@dimen/spacing_default"
@@ -38,6 +36,8 @@
 			android:text="@string/update_information_banner_server"
 			android:textColor="?colorPrimary"
 			android:visibility="gone"
+			app:drawableEndCompat="@drawable/open_in_browser"
+			app:drawableTint="?colorPrimary"
 			app:layout_constraintTop_toTopOf="parent"
 			tools:visibility="visible" />
 

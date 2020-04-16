@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+	This layout is used only on API 21 & 22 (Lollipop) because on these API levels,
+	Android doesn't scale SVGs very well - we noticed the logo stretched across the
+	screen and looked ugly.
+	In SplashActivity, setContentView(R.layout.activity_splash) is called only for API 21 & 22.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/rootLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center">
+
+	<androidx.appcompat.widget.AppCompatImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:srcCompat="@drawable/logo_outline_shadow" />
+
+</LinearLayout>

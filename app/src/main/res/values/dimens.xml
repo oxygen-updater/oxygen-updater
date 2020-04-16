@@ -17,7 +17,4 @@
 	<dimen name="typography_body">14sp</dimen>
 	<dimen name="typography_caption">12sp</dimen>
 	<dimen name="typography_button">14sp</dimen>
-
-	<!-- Custom screen margins -->
-	<dimen name="news_horizontal_margin">10dp</dimen>
 </resources>

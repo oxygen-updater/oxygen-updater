@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 	<!-- Application title, Main activity title-->
 	<string name="app_name">Oxygen Updater</string>
-	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<!-- TODO: translate this string below -->
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
 	<!-- Update information strings-->
-	<string name="update">Opdatér</string>
 	<!-- TODO: translate this string below -->
 	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">Der er ingen officiel information om nye egenskaber, som denne opdaterring indeholder. Normalt tilbyder denne slags opdatering fejlretninger, forbedringer af ydeevnen, og/eller kritiske sikkerhedsopdateringer til din egen enhed.</string>
@@ -17,24 +15,17 @@
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
-	<string name="update_information_for">for</string>
 	<string name="update_information_header">Opdatér</string>
-	<string name="update_information_header_short">Opdatér</string>
 	<!-- TODO: translate these 7 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Senest checket den: %1$s</string>
-	<string name="update_information_latest_available_update">Ny system opdatering tilgængelig</string>
 	<string name="update_information_no_update_data_available">Ingen opdatering information tilgængelig</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Dit system er opdateret</string>
 	<string name="update_information_unknown_update_name">Unavngiven opdatering for %1$s</string>
-	<string name="update_information_version">&#160;version:</string>
 	<string name="update_information_view_update_information">Se opdaterings information</string>
 
 	<!-- Server status warning strings -->
@@ -51,7 +42,6 @@
 
 	<!-- Date and time strings -->
 	<string name="time_at">kl.</string>
-	<string name="time_today">i dag</string>
 	<string name="time_yesterday">i går</string>
 
 	<!-- Downloader strings-->
@@ -61,17 +51,13 @@
 	<string name="downloading">Downloading update…</string>
 	<string name="paused">Paused - tap to resume</string>
 
-	<string name="download_already_downloaded">Opdateringen er allerede downloaded. Den er klar til at blive installeret.</string>
 	<string name="download_complete">Download færdig</string>
 	<string name="download_complete_notification">Download færdig. Tryk på: start nstallation.</string>
-
-	<string name="download_description">Oxygen Updater</string>
 
 	<string name="download_error">Fejl i download</string>
 	<string name="download_error_close">LUK</string>
 	<string name="download_error_corrupt">Den downloadede fil er beskadiget! Forsøg at downloade den igen.</string>
 	<!-- TODO translate the 3 below to Russian -->
-	<string name="download_error_network">En netværksfejl opstod under forsøget på at downloade opdateringen. Download vil forsætte automatisk.</string>
 	<string name="download_error_server">En netværksfejl opstod under forsøget på at downloade opdateringen. Forsøg at downloade opdateringen igen.</string>
 	<string name="download_error_internal">Desværre opstod der en teknisk fejl, i forsøget på at downloade opdateringen. Forsøg at downloade igen. Kontakt udvikleren af denne app, hvis problemet gentager sig.</string>
 	<!-- TODO: translate this string below -->
@@ -83,18 +69,13 @@
 
 	<string name="download_failed">Download fejlede</string>
 	<string name="running_in_background">Oxygen Updater kører i baggruunden</string>
-	<string name="download_oxygen_os">OxygenOS version</string>
 	<string name="download_pending">Din download vil starte om et øjeblik …</string>
-	<string name="download_permissions">Tryk på: Download igen for at downloade opdateringen.</string>
-
 	<!-- TODO translate the 3 below to Russian -->
-	<string name="download_notification_error_network">Download er sat på pause på grund af manglende netværksforbindelse. Vil fortsætte snarrest.</string>
 	<string name="download_notification_error_server">Serverfejl under download.forsøg. Genstart download.</string>
 	<string name="download_notification_error_internal">Teknisk fejl er hændt under download. Genstart download eller kontakt supporten.</string>
 	<string name="download_notification_error_storage_full">Manglende ledig plads lagerplads.</string>
 	<string name="download_notification_error_corrupt">Fil-undersøgelse fejlede. Check din forbindelse, og prøv igen.</string>
 
-	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
 	<string name="download_progress_text_hours_remaining">Af %1$d timer mangler</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">Mindre end et minute mangler</string>
 	<string name="download_progress_text_minutes_remaining">Omtrent %1$d minutter mangler</string>
@@ -105,8 +86,6 @@
 	<string name="download_progress_text_verifying">Undersøger fil…</string>
 	<string name="download_progress_text_paused">Pauset</string>
 	<string name="download_waiting_for_network">Venter på en netværks tilutning…</string>
-
-	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">Undersøger .…</string>
 	<string name="download_verifying_error">Fil er beskadiget</string>
@@ -153,29 +132,19 @@
 	<string name="settings_buy_ad_free_label">Opgrader til reklame-fri</string>
 
 	<string name="settings_contribute_label">Hjælp med at forbedre denne app</string>
-	<string name="settings_contribute_button">Bidrag</string>
 
-	<string name="settings_category_other">Andet:</string>
 	<string name="settings_device">Enhed</string>
 	<string name="settings_entered_incorrectly">Vi kan ikke gemme dine indstillinger. Gå tilbage, og vælg din enhed / opdateringsmetode igen.</string>
 	<string name="settings_explanation_incremental_full_update">En trinvis opdatering kan installeres fra en hvilken som helst version (undtagen hvis du har en ulåst bootloader; da skal du altid vælge fuld opdateringsmetode).\n\nA beta opdatering af OxygenOS kan altid installeres, lige så vel, som når det er en stabil version. For at skifte fra stabil til beta, så skal du aktivere avanceret tilstand, i indstillingerne. Vedrørende beta, den fulde og de trinvise opdaterings-metode, gør det på samme måde som ved den stabile versions.</string>
-	<string name="settings_explanation_update_methods">Forklaring af opdaterings metoder</string>]
-	<string name="settings_header">Vælg din enhed og opdateringsmetode:</string>
 
-	<string name="settings_push">Send mig en notifikation med:</string>
 	<string name="settings_push_from_server">Information og -advarsels beskeder</string>
 	<string name="settings_push_new_version">System-opdaterings beskeder</string>
 	<string name="settings_push_new_device">Nye enheder der understøttes</string>
 	<string name="settings_push_news">Nyheds beskeder</string>
 
-	<string name="settings_saved">Dine indstillinger er automatisk blevet gemt.</string>
 	<string name="settings_saving">Dine indstillinger gemmes. Tager det for lang tid: Check forbindelse til netværketet, afslut app\'en, og start den igen.</string>
 
-	<string name="settings_server_messages">Vis beskeder i appen når:</string>
-
-	<string name="settings_other_options">Andre indstillinger:</string>
 	<string name="settings_advanced_mode">Avanceret tilstand</string>
-	<string name="settings_advanced_mode_button_explanation">Tryk på: denne knap, for at få mere information om avanceret tilstand.</string>
 	<string name="settings_advanced_mode_explanation">Avanceret tilstand skjuler beskeden: \"Dit system er opdateret\", hvilket tillader dig at downloade og installere alle opdateringer, selvom de måske ikke er op kompatible med din enhed.\n\nDette kan være nyttigt når:\n- der opdateres fra en regulær stabil version til en beta version\n- eller at gå fra en beta til en stabil version. (glem ikke at nulstille enheden til fabriksstandard)\n- Genindstallerer din nuværende system version.</string>
 
 	<string name="settings_update_method">Odaterings metode</string>
@@ -184,7 +153,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network">Ingen forbindelse.</string>
 	<string name="faq_no_network_text">Der kræves en fungerende netværksforbindelse, for at kunne se FAQ-siden.</string>
 
 	<!-- First-time setup strings -->
@@ -237,11 +205,9 @@
 	<string name="install_method_chooser_title">Choose installation method</string>
 	<string name="install_method_chooser_subtitle">Hvordan ønsker du at installere denne opdatering?</string>
 	<string name="install_method_chooser_automatic_title">Automatisk installation*</string>
-	<string name="install_method_chooser_automatic_image">Automatisk installation image</string>
 	<string name="install_method_chooser_automatic_description">Den letteste måde at installere en opdatering.\nDin enhed vil genstarte og installere opdateringen.\n\n* Der kræves rod-adgang og TWRP adgang.</string>
 
 	<string name="install_method_chooser_manual_title">Manuel installation</string>
-	<string name="install_method_chooser_manual_image">Manuel installation image</string>
 	<string name="install_method_chooser_manual_description">Læs installations-guiden, for at lære hvordan en opdatering installeres. Du vil installere opdateringen ved at anvende Fejlsikret tilstand, på din enhed.</string>
 
 	<string name="install_temporary_error">En midlertidig fejl opstod, men forberedelsen af installationen foregik. Forsøg venligst igen.</string>
@@ -264,7 +230,6 @@
 	<string name="install_guide_automatic_install_disabled">Automatisk installation er midlertidigt blevet deaktiveret, da der er rapporteret tekniske udfordringer. Installer opdatering efter de instruktioner der vises i installations-guiden.</string>
 	<string name="install_guide">Installations guide</string>
 	<string name="install_guide_subtitle">Installations guide - %1$d af %2$d</string>
-	<string name="install_guide_image_description">Kontelstafhængig image. Tryk på et lavere sted på skærmen, for at høre installations-guiden..</string>
 	<string name="install_guide_tip">&#8226; Det er anbefalelsesværdigt at notere sig alle punkter ned. da du vil blive bedt om at slukke enheden under selve installationen af opdateringen.</string>
 
 	<string name="install_guide_page_1_title">Download opdateringen</string>
@@ -285,7 +250,6 @@
 	<string name="install_guide_close_button">Luk Installations- Guide</string>
 
 	<string name="install_guide_zip_file_deleted">Rod-pakke-filen du specificerede, eksisterer ikke. Vælg en ny rod-pakke ovenfor.</string>
-	<string name="install_guide_zip_file_picker_title">Vælg en rod-pakke</string>
 	<string name="install_guide_zip_file_missing">"Ønsker du at holde din enhed root'ed, så skal du specificere en rod-pakke ovenfor."</string>
 
 	<!-- Device information strings -->
@@ -301,7 +265,6 @@
 	<string name="device_information_amount_of_memory">Mængde af RAM:</string>
 	<string name="device_information_cpu_frequency">Processor frekvens:</string>
 	<string name="device_information_header">Min enhed</string>
-	<string name="device_information_header_short">Min enhed</string>
 	<string name="device_information_image_description">Enheds billede</string>
 	<string name="device_information_incremental_os_version">Trinvis OS version:</string>
 	<string name="device_information_os_version">Android version:</string>
@@ -350,7 +313,6 @@
 
 	<!-- News strings -->
 	<string name="news">Nyheder</string>
-	<string name="news_author">Forfatter: %1$s</string>
 	<string name="news_date_published">Sidst opdateret: %1$s</string>
 	<string name="news_empty">Ingen kommentarer, til denne artikkel.</string>
 	<string name="news_load_error">Kan ikke åbne denne artikkel. Check din forbindelse og tryk på \'FORSØG IGEN\' -knappen for at åbne artikllen.</string>
@@ -365,7 +327,6 @@
 	<string name="contribute">Bliv bidragsyder</string>
 	<string name="contribute_title">Bidrag med at gøre Oxygen Updater endnu bedre</string>
 	<string name="contribute_explanation">Oxygen Updater har brug for din hjælp! For at kunne give dig de seneste opdateringer, har vi behov for at få navne på opdateringsfiler. Disse er tilgængelige på din telefon, når en regulær vises.\n\nHvordan kan jeg hjælpe?\n\nOxygen Updater kan automatisk tilføje nye opdaterings filnavne til vores administratorer. Dette vil bruge en lille smule data, og lidt af batteriet. Alt du behøver at gøre er at vente (omtrent 15 minutter) før du installerer officielle system opdateringer indtil du ser en bekræftelse fra Oxygen Updater at, filen er blevet tilføjet. Kun ".Ota" mappen på din telefon bliver scannet en gang per 15. minut. Der checkes kun for et specifict navn i denne ene mappe.</string>
-	<string name="contribute_image_description">Upload filer til app-serveren</string>
 	<string name="contribute_agree">Jeg ønsker at hjælpe, og acceptere at tilføje en opdaterings-fil til vores administratorer</string>
 	<string name="contribute_agree_from_setup">Jeg vil gerne bidrage med hjælp til at forbedre denne app, og accepterer at tilføje file-navne til administratorene.</string>
 	<string name="contribute_save">Gem indstillinger</string>
@@ -379,15 +340,12 @@
 	<string name="error_app_outdated_message">Appens version er forældet. Det er nu tid til at opdatere den. Tryk på \"Google Play\" herunder. Via Google Play, tryk på \"Opdatér\".</string>
 	<string name="error_app_requires_network_connection">Ingen netværksforbindelse</string>
 	<string name="error_app_requires_network_connection_message">Det lykkedes ikke at forbinde til serveren. Værk sikker på at du har en fungerende internet forbindelse. App\'en vil nu lukke.</string>
-	<string name="error_button_retry">Prøv igen</string>
-	<string name="error_exit_button_text">Afslut</string>
 	<string name="error_google_play_button_text">Google Play</string>
 	<string name="error_no_internet_connection">Ingen netværksforbindelse.</string>
 	<string name="error_maintenance">Server vedligeholdelse</string>
 	<string name="error_maintenance_message">Vent venligst. Serveren vil være tilgængelig meget snart.</string>
 	<!-- TODO: translate this string below -->
 	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
-	<string name="error_push_failure">Kunne ikke aktivere underretninger. Luk app\'en helt, og start den igen efter at have ventet et par minutter.</string>
 	<string name="error_reload">Reload</string>
 
 	<string name="error_unable_to_rate_app">Du kan ikke bedømme appen fordi Google Play Store mangler på din enhed.</string>
@@ -413,7 +371,6 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Indlæser…</string>
 	<string name="processing">Arbejder…</string>

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/dialog_layout"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:orientation="vertical">
 
-	<ImageView
+	<androidx.appcompat.widget.AppCompatImageView
 		android:layout_width="@dimen/spacing_2x"
 		android:layout_height="@dimen/spacing_quarter"
 		android:layout_gravity="center"
 		android:layout_marginTop="@dimen/spacing_half"
 		android:contentDescription="@string/icon"
-		android:src="@drawable/rounded"
-		android:tint="@color/backgroundVariant" />
+		app:srcCompat="@drawable/rounded"
+		app:tint="@color/backgroundVariant" />
 
 	<TextView
 		android:id="@+id/dialog_title"

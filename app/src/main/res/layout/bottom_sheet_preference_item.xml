@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/dialog_item_layout"
 	android:layout_width="match_parent"
@@ -11,15 +12,15 @@
 	android:paddingBottom="@dimen/spacing_default"
 	android:stateListAnimator="@animator/clicked">
 
-	<ImageView
+	<androidx.appcompat.widget.AppCompatImageView
 		android:id="@+id/dialog_item_checkmark"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:contentDescription="@string/icon"
-		android:src="@drawable/checkmark"
-		android:tint="?colorPrimary"
 		android:visibility="invisible"
+		app:srcCompat="@drawable/checkmark"
+		app:tint="?colorPrimary"
 		tools:visibility="visible" />
 
 	<LinearLayout
@@ -35,7 +36,6 @@
 			android:id="@+id/dialog_item_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textColor="?android:textColorTertiary"
 			tools:text="Title" />
 
 		<TextView

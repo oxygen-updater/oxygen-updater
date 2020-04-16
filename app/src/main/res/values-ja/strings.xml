@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 	<!-- Application title, Main activity title-->
 	<string name="app_name">Oxygen Updater</string>
-	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<!-- TODO: translate this string below -->
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
 	<!-- Update information strings-->
-	<string name="update">更新</string>
 	<!-- TODO: translate this string below -->
 	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグfix、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
@@ -17,24 +15,17 @@
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
-	<string name="update_information_for">for</string>
 	<string name="update_information_header">アップデート</string>
-	<string name="update_information_header_short">アップデート</string>
 	<!-- TODO: translate these 7 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
-	<string name="update_information_latest_available_update">新たなシステムアップデートが存在します</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">あなたのシステムは最新です</string>
 	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
-	<string name="update_information_version">&#160;バージョン:</string>
 	<string name="update_information_view_update_information">アップデート情報を表示</string>
 
 	<!-- Server status warning strings -->
@@ -51,7 +42,6 @@
 
 	<!-- Date and time strings -->
 	<string name="time_at">at</string>
-	<string name="time_today">今日</string>
 	<string name="time_yesterday">昨日</string>
 
 	<!-- Downloader strings-->
@@ -61,16 +51,12 @@
 	<string name="downloading">Downloading update…</string>
 	<string name="paused">Paused - tap to resume</string>
 
-	<string name="download_already_downloaded">アップデートは既にダウンロード済みで、インストール可能です。</string>
 	<string name="download_complete">ダウンロード完了</string>
 	<string name="download_complete_notification">ダウンロードが完了しました。タップでインストール出来ます。</string>
-
-	<string name="download_description">Oxygen Updater</string>
 
 	<string name="download_error">ダウンロードエラー</string>
 	<string name="download_error_close">閉じる</string>
 	<string name="download_error_corrupt">ダウンロード済アップデートファイルは損傷しています。再度ダウンロードして下さい。</string>
-	<string name="download_error_network">アップデートのダウンロード中にネットワークエラーが発生しました。ダウンロードは自動的に再開します。</string>
 	<string name="download_error_server">アップデートのダウンロード中にサーバエラーが発生しました。再度ダウンロードを試行して下さい。</string>
 	<string name="download_error_internal">アップロードのダウンロード中に技術的なエラーが発生しました。このエラーが継続している場合、アプリの開発者に連絡してサポートを受けて下さい。</string>
 	<!-- TODO: translate this string below -->
@@ -82,17 +68,12 @@
 
 	<string name="download_failed">ダウンロードに失敗</string>
 	<string name="running_in_background">Oxygen Updater がバックグラウンドで実行中です</string>
-	<string name="download_oxygen_os">OxygenOS バージョン</string>
 	<string name="download_pending">ダウンロードは間もなく開始されます…</string>
-	<string name="download_permissions">「再ダウンロード」をタップしアップデートをダウンロード</string>
-
-	<string name="download_notification_error_network">接続断のためダウンロードが中断されました。間もなく再開されます。</string>
 	<string name="download_notification_error_server">ダウンロード中にサーバーエラーが発生しました。再ダウンロードして下さい。</string>
 	<string name="download_notification_error_internal">ダウンロード中に技術的なエラーが発生しました。再ダウンロードするかサポートに連絡して下さい。</string>
 	<string name="download_notification_error_storage_full">十分なストレージ容量がありません。</string>
 	<string name="download_notification_error_corrupt">ファイルの確認に失敗しました。ネットワーク接続を確認し再試行して下さい。</string>
 
-	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
 	<string name="download_progress_text_hours_remaining">残り時間 約 %1$d 時間</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">残り時間１分未満</string>
 	<string name="download_progress_text_minutes_remaining">残り時間 約 %1$d 分</string>
@@ -103,8 +84,6 @@
 	<string name="download_progress_text_verifying">ファイルを確認中…</string>
 	<string name="download_progress_text_paused">中断中</string>
 	<string name="download_waiting_for_network">ネットワーク接続の待機中…</string>
-
-	<string name="download_unknown_update_name">OxygenOS アップデート</string>
 
 	<string name="download_verifying">確認中…</string>
 	<string name="download_verifying_error">ファイルが損傷しています</string>
@@ -151,29 +130,19 @@
 	<string name="settings_buy_ad_free_label">広告消去のためアップグレード</string>
 
 	<string name="settings_contribute_label">アプリの改善にご協力ください</string>
-	<string name="settings_contribute_button">協力</string>
 
-	<string name="settings_category_other">その他:</string>
 	<string name="settings_device">デバイス</string>
 	<string name="settings_entered_incorrectly">設定の保存に失敗しました。デバイス / 更新方法を再選択して下さい。</string>
 	<string name="settings_explanation_incremental_full_update">増分アップデートはどのバージョンからでもインストール可能です（ブートローダーをアンロックしていない場合; アンロック済みの場合はフルアップデートをアップデート方法から選択する必要があります）。\n\nOxygenOS のベータアップデートは安定バージョンを使用している場合でも常にインストールできます。安定版からベータ版に切り替えるには、設定で詳細モードを有効にする必要があります。ベータ版では、フル・増分アップデートは安定版と同じように機能します。</string>
-	<string name="settings_explanation_update_methods">アップデート方法の説明</string>
-	<string name="settings_header">デバイス・アップデート方法を選択:</string>
 
-	<string name="settings_push">受信時に通知を送信:</string>
 	<string name="settings_push_from_server">通知と警告メッセージ</string>
 	<string name="settings_push_new_version">システムアップデートメッセージ</string>
 	<string name="settings_push_new_device">新規デバイスのサポート開始</string>
 	<string name="settings_push_news">ニュースメッセージ</string>
 
-	<string name="settings_saved">設定は自動的に保存されました。</string>
 	<string name="settings_saving">設定を保存中です。長時間この状態が続く場合、ネットワーク接続を確認し、アプリをいったん終了し再起動して下さい。</string>
 
-	<string name="settings_server_messages">アプリ内でメッセージを表示：</string>
-
-	<string name="settings_other_options">その他のモード:</string>
 	<string name="settings_advanced_mode">拡張モード</string>
-	<string name="settings_advanced_mode_button_explanation">ボタンをタップし拡張モードに関する追加情報を表示</string>
 	<string name="settings_advanced_mode_explanation">拡張モードでは \"お使いのシステムは最新です\"というメッセージが非表示となり、デバイスと互換性がない場合でも全てのアップデートをダウンロードしインストール可能となります。\n\n以下の場合に役立ちます:\n- 通常版からベータ版へのアップデート\n- ベータ版から通常版への復帰(デバイスの工場出荷時設定へのリセットをお忘れずに)\n- 現在のシステムバージョンの再インストール 。</string>
 
 	<string name="settings_update_method">アップデート方法</string>
@@ -182,7 +151,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network">接続なし</string>
 	<string name="faq_no_network_text">FAQページを表示するには、有効な接続が必要です。</string>
 
 	<!-- First-time setup strings -->
@@ -235,11 +203,9 @@
 	<string name="install_method_chooser_title">Choose installation method</string>
 	<string name="install_method_chooser_subtitle">このアップデートをインストールする必要はありますか?</string>
 	<string name="install_method_chooser_automatic_title">自動インストール*</string>
-	<string name="install_method_chooser_automatic_image">イメージの自動インストール</string>
 	<string name="install_method_chooser_automatic_description">アップデートをインストールする最も簡単な方法。\nデバイスを再起動してアップデートをインストールします。\n\n*ルートアクセスとTWRP リカバリが必要です。</string>
 
 	<string name="install_method_chooser_manual_title">手動インストール</string>
-	<string name="install_method_chooser_manual_image">イメージの手動インストール</string>
 	<string name="install_method_chooser_manual_description">ガイドを読み、アップデートをインストール方法について理解して下さい。デバイスのリカバリモードを使用してアップデートをインストールできます。</string>
 
 	<string name="install_temporary_error">アップデートのインストール準備中に一時的なエラーが発生しました。再試行して下さい。</string>
@@ -262,7 +228,6 @@
 	<string name="install_guide_automatic_install_disabled">技術的な問題により自動インストールは一時的に無効にされました。インストールガイドに示されている指示に従い、アップデートをインストールして下さい。</string>
 	<string name="install_guide">インストールガイド</string>
 	<string name="install_guide_subtitle">インストールガイド - %1$d of %2$d</string>
-	<string name="install_guide_image_description">コンテキスト画像。 画面の下部をタップして、インストールガイドを聞いてください。</string>
 	<string name="install_guide_tip">&#8226; 更新プログラムのインストール中にデバイスの電源を切る必要があるため、すべての手順を書き留めておくことをお勧めします。</string>
 
 	<string name="install_guide_page_1_title">アップデートのダウンロード</string>
@@ -283,7 +248,6 @@
 	<string name="install_guide_close_button">インストールガイドを閉じる</string>
 
 	<string name="install_guide_zip_file_deleted">指定したrootパッケージは既に存在しません。上からrootパッケージを選択して下さい。</string>
-	<string name="install_guide_zip_file_picker_title">ルートパッケージの選択</string>
 	<string name="install_guide_zip_file_missing">"デバイスのroot化を維持する場合、上からrootパッケージを指定して下さい"</string>
 
 	<!-- Device information strings -->
@@ -299,7 +263,6 @@
 	<string name="device_information_amount_of_memory">RAMの合計量:</string>
 	<string name="device_information_cpu_frequency">プロセッサ周波数:</string>
 	<string name="device_information_header">マイデバイス</string>
-	<string name="device_information_header_short">マイデバイス</string>
 	<string name="device_information_image_description">デバイスイメージ</string>
 	<string name="device_information_incremental_os_version">インクリメンタルOS バージョン:</string>
 	<string name="device_information_os_version">Android バージョン:</string>
@@ -348,7 +311,6 @@
 
 	<!-- News strings -->
 	<string name="news">ニュース</string>
-	<string name="news_author">筆者: %1$s</string>
 	<string name="news_date_published">最終更新日: %1$s</string>
 	<string name="news_empty">この記事には内容がありません。</string>
 	<string name="news_load_error">記事を開けませんでした。 接続を確認し、\'再試行\'ボタンを押して記事を開きます。</string>
@@ -363,7 +325,6 @@
 	<string name="contribute">貢献者になる</string>
 	<string name="contribute_title">Oxygen Updaterの改善に協力する</string>
 	<string name="contribute_explanation">Oxygen Updaterはあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。\n\nどうすればよいですか？\n\nOxygen Updaterは、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたというOxygen Updaterの確認が表示されるまで、公式のシステムアップデートをインストールする前に（約15分）待つことです。 電話機の".Ota" directoryのみが15分ごとに1回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
-	<string name="contribute_image_description">アプリケーションサーバへファイルをアップロード</string>
 	<string name="contribute_agree">更新ファイル名を管理者へ送信することを同意</string>
 	<string name="contribute_agree_from_setup">アプリの改善に協力し、更新ファイル名を管理者に送信することに同意する。</string>
 	<string name="contribute_save">設定を保存</string>
@@ -377,15 +338,12 @@
 	<string name="error_app_outdated_message">このバージョンのアプリは古くなっています。 更新する時が来ました！ 下の\"Google Play\"をタップし、 Google Play内で、\"更新\"をタップします。</string>
 	<string name="error_app_requires_network_connection">接続なし</string>
 	<string name="error_app_requires_network_connection_message">サーバへの接続に失敗しました。ネットワーク接続が正常であるか確認して下さい。アプリケーションを閉じます。</string>
-	<string name="error_button_retry">再試行</string>
-	<string name="error_exit_button_text">閉じる</string>
 	<string name="error_google_play_button_text">Google Play</string>
 	<string name="error_no_internet_connection">接続なし</string>
 	<string name="error_maintenance">サーバメンテナンス</string>
 	<string name="error_maintenance_message">お待ちください。 サーバーはまもなく利用可能になります。</string>
 	<!-- TODO: translate this string below -->
 	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
-	<string name="error_push_failure">通知の有効化に失敗しました。アプリを完全に閉じ、数分待ってからもう一度起動して下さい。</string>
 	<string name="error_reload">再読込</string>
 
 	<string name="error_unable_to_rate_app">Google Playストアがデバイスにないため、アプリを評価できません。</string>
@@ -411,7 +369,6 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
 	<string name="icon">アイコン</string>
 	<string name="loading">読み込中…</string>
 	<string name="processing">処理中…</string>

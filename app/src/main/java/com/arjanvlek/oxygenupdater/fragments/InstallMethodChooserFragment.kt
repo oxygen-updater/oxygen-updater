@@ -20,7 +20,7 @@ class InstallMethodChooserFragment : Fragment(R.layout.fragment_install_method_c
     private val installViewModel by sharedViewModel<InstallViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
-        updateData = arguments!!.getParcelable(InstallActivity.INTENT_UPDATE_DATA)!!
+        updateData = requireArguments().getParcelable(InstallActivity.INTENT_UPDATE_DATA)!!
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

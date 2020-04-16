@@ -1,7 +1,7 @@
 package com.arjanvlek.oxygenupdater.models
 
 /**
- * Used primarily in [com.arjanvlek.oxygenupdater.internal.Utils.checkDeviceOsSpec]
+ * Used primarily in [com.arjanvlek.oxygenupdater.utils.Utils.checkDeviceOsSpec]
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */

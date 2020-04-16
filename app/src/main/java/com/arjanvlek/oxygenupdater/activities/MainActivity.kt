@@ -250,8 +250,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             TabLayoutMediator(tabLayout, this) { tab, position ->
                 tab.text = when (position) {
                     PAGE_NEWS -> getString(R.string.news)
-                    PAGE_UPDATE_INFORMATION -> getString(R.string.update_information_header_short)
-                    PAGE_DEVICE_INFORMATION -> getString(R.string.device_information_header_short)
+                    PAGE_UPDATE_INFORMATION -> getString(R.string.update_information_header)
+                    PAGE_DEVICE_INFORMATION -> getString(R.string.device_information_header)
                     else -> null
                 }
             }.attach()

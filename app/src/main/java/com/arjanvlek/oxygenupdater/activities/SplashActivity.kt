@@ -8,9 +8,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
+import kotlinx.android.synthetic.main.activity_splash.*
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
@@ -21,6 +23,14 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
+        // API 21 & 22 don't draw SVGs properly, so we override the theme on these APIs to draw a normal background,
+        // and use setContentView(R.layout.splash_activity) only on those API levels.
+        // On API 23 and above, we use the recommended way to display splash screens - using a static windowBackground
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            setContentView(R.layout.activity_splash)
+            rootLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.splashBackgroundColor))
+        }
+
         // Support functions for Android 8.0 "Oreo" and up.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createPushNotificationChannel()
