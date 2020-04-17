@@ -32,7 +32,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
     override fun fetchData() {
         if (!rootMessageShown) {
             try {
-                MaterialAlertDialogBuilder(activity)
+                MaterialAlertDialogBuilder(requireContext())
                     .setTitle(getString(R.string.root_check_title))
                     .setMessage(getString(R.string.root_check_message))
                     .setOnDismissListener {

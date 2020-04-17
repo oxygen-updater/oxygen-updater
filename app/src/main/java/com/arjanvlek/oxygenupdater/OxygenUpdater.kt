@@ -114,7 +114,7 @@ class OxygenUpdater : Application() {
             .setTestDeviceIds(ADS_TEST_DEVICES)
             .build()
 
-        MobileAds.initialize(this, getString(R.string.advertising_app_id))
+        MobileAds.initialize(this) {}
         MobileAds.setRequestConfiguration(requestConfiguration)
     }
 

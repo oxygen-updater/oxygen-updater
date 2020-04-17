@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
-	<!-- Application title, Main activity title -->
-	<string name="app_name">Oxygen Updater</string>
-
 	<string name="device_chooser_error_title">Kon lijst van ondersteunde apparaten niet ophalen.</string>
 
 	<!-- Update information strings-->

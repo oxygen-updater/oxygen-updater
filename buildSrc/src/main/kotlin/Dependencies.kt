@@ -1,6 +1,6 @@
 // https://blog.jetbrains.com/kotlin/category/releases/
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-const val KOTLIN_VERSION = "1.3.71"
+const val KOTLIN_VERSION = "1.3.72"
 
 object BuildPlugins {
     private object Versions {
@@ -29,6 +29,7 @@ object BuildPlugins {
 }
 
 object AndroidSdk {
+    // https://developer.android.com/studio/releases/build-tools
     const val BUILD_TOOLS = "29.0.3"
     const val MIN = 21
     const val COMPILE = 29
@@ -51,7 +52,7 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
         const val KTX_LIFECYCLE = "2.2.0"
         // https://developer.android.com/jetpack/androidx/releases/preference
-        const val KTX_PREFERENCE = "1.1.0"
+        const val KTX_PREFERENCE = "1.1.1"
         // https://developer.android.com/jetpack/androidx/releases/work
         const val KTX_WORK = "2.3.4"
         // https://developer.android.com/jetpack/androidx/releases/recyclerview
@@ -92,7 +93,7 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
         // https://firebase.google.com/support/release-notes/android
         // https://developers.google.com/admob/android/rel-notes
-        const val FIREBASE_ADS = "19.0.1"
+        const val FIREBASE_ADS = "19.1.0"
         // https://firebase.google.com/support/release-notes/android
         const val FIREBASE_ANALYTICS_KTX = "17.3.0"
         // https://firebase.google.com/support/release-notes/android
@@ -111,7 +112,7 @@ object Libraries {
         // https://github.com/Kotlin/kotlinx.coroutines/releases
         const val KOTLIN_COROUTINES = "1.3.5"
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.2.0-alpha05"
+        const val MATERIAL = "1.2.0-alpha06"
         // https://square.github.io/okhttp/changelog/
         const val OKHTTP_LOGGING_INTERCEPTOR = "4.5.0"
         // https://developer.android.com/reference/com/google/android/play/core/release-notes

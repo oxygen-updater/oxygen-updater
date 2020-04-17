@@ -64,20 +64,12 @@ android {
             // Latter one is only used on very old OOS versions
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
             buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"")
-            // Only devices using a properly signed (a.k.a. official) version of OxygenOS are supported
-            buildConfigField("Boolean", "ADS_ARE_SUPPORTED", "true")
 
             signingConfig = signingConfigs.getByName("release")
 
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false
-
-            // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
-            manifestPlaceholders = mapOf(
-                "appName" to "Oxygen Updater",
-                "fullPackageName" to defaultConfig.applicationId
-            )
         }
         // Config for use during debugging and testing on an emulator
         // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
@@ -91,20 +83,10 @@ android {
             buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
             buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
-            // During debugging, all devices are supported
-            buildConfigField("Boolean", "ADS_ARE_SUPPORTED", "true") // Ads also need to be tested
 
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = true
-
-            // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
-            versionNameSuffix = "-debug"
-            applicationIdSuffix = ".debug"
-            manifestPlaceholders = mapOf(
-                "appName" to "Oxygen Updater (debug)",
-                "fullPackageName" to defaultConfig.applicationId + ".debug"
-            )
         }
         // Config for use during debugging locally on an emulator
         // Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device/emulator
@@ -118,18 +100,10 @@ android {
             buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
             buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
-            // During debugging, all devices are supported
-            buildConfigField("Boolean", "ADS_ARE_SUPPORTED", "true") // Ads also need to be tested
 
+            isMinifyEnabled = true
+            isShrinkResources = true
             isDebuggable = true
-
-            // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
-            versionNameSuffix = "-localDebug"
-            applicationIdSuffix = ".localDebug"
-            manifestPlaceholders = mapOf(
-                "appName" to "Oxygen Updater (localDebug)",
-                "fullPackageName" to defaultConfig.applicationId + ".localDebug"
-            )
         }
         // Config for use during screenshot taking
         // Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device/emulator
@@ -143,20 +117,10 @@ android {
             buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
             buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
-            // During taking screenshots, all devices are supported
-            buildConfigField("Boolean", "ADS_ARE_SUPPORTED", "false") // On screenshots no ads!
 
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = true
-
-            // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
-            applicationIdSuffix = ".screenshot"
-            versionNameSuffix = "-screenshot"
-            manifestPlaceholders = mapOf(
-                "appName" to "Oxygen Updater (screenshot)",
-                "fullPackageName" to defaultConfig.applicationId + ".screenshot"
-            )
         }
         // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop
         create("device") {
@@ -169,20 +133,21 @@ android {
             buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
             buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
-            // On test device all build types are supported
-            buildConfigField("Boolean", "ADS_ARE_SUPPORTED", "true") // On test device use ads!
 
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = true
+        }
 
-            // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
-            versionNameSuffix = "-device"
-            applicationIdSuffix = ".device"
-            manifestPlaceholders = mapOf(
-                "appName" to "Oxygen Updater (device)",
-                "fullPackageName" to defaultConfig.applicationId + ".device"
-            )
+        // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
+        buildTypes.forEach {
+            if (it.name != "release") {
+                it.versionNameSuffix = "-${it.name}"
+                it.applicationIdSuffix = ".${it.name}"
+                it.resValue("string", "app_name", "Oxygen Updater (${it.name})")
+            } else {
+                it.resValue("string", "app_name", "Oxygen Updater")
+            }
         }
     }
 

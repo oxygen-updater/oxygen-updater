@@ -23,4 +23,4 @@ jobs:
       - name: Create dummy keystore.properties
         run: echo "storeFile=keyStore.jks" > keystore.properties
       - name: Build with Gradle
-        run: ./gradlew assembleDebug -x crashlyticsUploadDeobsDebug
+        run: ./gradlew clean assembleDebug -x crashlyticsUploadDeobsDebug
