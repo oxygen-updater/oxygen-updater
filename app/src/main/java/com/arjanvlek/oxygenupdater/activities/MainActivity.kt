@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater.activities
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
@@ -513,9 +514,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         private const val PAGE_DEVICE_INFORMATION = 2
 
         // Permissions constants
-        private const val DOWNLOAD_FILE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE"
+        private const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
         const val PERMISSION_REQUEST_CODE = 200
-        const val VERIFY_FILE_PERMISSION = "android.permission.READ_EXTERNAL_STORAGE"
+        const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
         const val REQUEST_CODE_APP_UPDATE = 1000
         const val DAYS_FOR_APP_UPDATE_CHECK = 2L

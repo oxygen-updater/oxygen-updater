@@ -29,6 +29,7 @@
 		android:fullBackupContent="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="${appName}"
+		android:requestLegacyExternalStorage="true"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.Oxygen"
 		android:usesCleartextTraffic="true"
