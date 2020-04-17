@@ -57,12 +57,20 @@ class DisplayDelayedNotificationWorker(
         )
 
         val builder = when (notificationType) {
-            NotificationType.NEW_DEVICE -> if (!settingsManager.getPreference(SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS, true)) {
+            NotificationType.NEW_DEVICE -> if (!settingsManager.getPreference(
+                    SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS,
+                    true
+                )
+            ) {
                 return Result.success()
             } else {
                 getNewDeviceNotificationBuilder(messageContents[NotificationElement.NEW_DEVICE_NAME.name])
             }
-            NotificationType.NEW_VERSION -> if (!settingsManager.getPreference(SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS, true)) {
+            NotificationType.NEW_VERSION -> if (!settingsManager.getPreference(
+                    SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS,
+                    true
+                )
+            ) {
                 return Result.success()
             } else {
                 getNewVersionNotificationBuilder(
@@ -70,7 +78,11 @@ class DisplayDelayedNotificationWorker(
                     messageContents[NotificationElement.NEW_VERSION_NUMBER.name]
                 )
             }
-            NotificationType.GENERAL_NOTIFICATION -> if (!settingsManager.getPreference(SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS, true)) {
+            NotificationType.GENERAL_NOTIFICATION -> if (!settingsManager.getPreference(
+                    SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS,
+                    true
+                )
+            ) {
                 // Don't show notification if user has opted out
                 return Result.success()
             } else {
@@ -82,16 +94,26 @@ class DisplayDelayedNotificationWorker(
 
                 getGeneralServerOrNewsNotificationBuilder(message)
             }
-            NotificationType.NEWS -> if (!settingsManager.getPreference(SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS, true)
-                && newsDatabaseHelper.getNewsItem(messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong())?.read == true
+            NotificationType.NEWS -> if (!settingsManager.getPreference(
+                    SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS,
+                    true
+                )
             ) {
-                // Don't show notification if user has opted out, or if
-                // user has already read this article
-                // This is useful when we want to bump a news article in admin portal
-                // However, only app versions from v4.0.0 onwards (Kotlin rebuild) support this,
-                // so use the "bump" feature on admin portal with care - the notification will still be shown on older app versions
                 return Result.success()
             } else {
+                // If this is a "dump" notification, show it only to people who haven't yet read the article
+                // A "bump" is defined as re-sending the notification so that people who haven't yet read the article can read it
+                // However, only app versions from v4.1.0 onwards properly support this,
+                // even though a broken implementation was added in v4.0.0 (Kotlin rebuild).
+                // So use the "bump" feature on admin portal with care - the notification will still be shown on older app versions
+                if (messageContents[NotificationElement.NEWS_ITEM_IS_BUMP.name]?.toBoolean() == true
+                    && newsDatabaseHelper.getNewsItem(
+                        messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
+                    )?.read == true
+                ) {
+                    return Result.success()
+                }
+
                 val newsMessage = if (AppLocale.get() == AppLocale.NL) {
                     messageContents[NotificationElement.DUTCH_MESSAGE.name]
                 } else {
