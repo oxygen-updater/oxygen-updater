@@ -64,12 +64,12 @@
 			android:visibility="gone"
 			tools:visibility="visible">
 
-			<ImageView
+			<androidx.appcompat.widget.AppCompatImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="top"
 				android:contentDescription="@string/icon"
-				android:src="@drawable/info" />
+				app:srcCompat="@drawable/info" />
 
 			<TextView
 				android:id="@+id/appUpdateBannerTextView"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/device_information_scrollview"
 	android:layout_width="match_parent"
@@ -24,12 +25,12 @@
 			android:visibility="gone"
 			tools:visibility="visible">
 
-			<ImageView
+			<androidx.appcompat.widget.AppCompatImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="top"
 				android:contentDescription="@string/icon"
-				android:src="@drawable/info" />
+				app:srcCompat="@drawable/info" />
 
 			<TextView
 				android:id="@+id/bannerTextView"
@@ -53,15 +54,15 @@
 			android:text="@string/device_information_your_device"
 			android:textSize="@dimen/typography_title" />
 
-		<ImageView
+		<androidx.appcompat.widget.AppCompatImageView
 			android:id="@+id/device_information_device_image"
 			android:layout_width="match_parent"
 			android:layout_height="150dp"
 			android:layout_gravity="center_horizontal"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:contentDescription="@string/device_information_image_description"
-			android:src="@drawable/smartphone"
-			android:tint="?colorPrimary" />
+			app:srcCompat="@drawable/smartphone"
+			app:tint="?colorPrimary" />
 
 		<TableLayout
 			android:id="@+id/device_information_hardware_container"
@@ -69,17 +70,17 @@
 			android:layout_height="wrap_content"
 			android:padding="@dimen/spacing_default">
 
-			<TextView
+			<androidx.appcompat.widget.AppCompatTextView
 				android:id="@+id/hardware_header"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:drawableStart="@drawable/memory"
 				android:drawablePadding="@dimen/spacing_half"
-				android:drawableTint="?colorPrimary"
 				android:fontFamily="@font/google_sans"
 				android:gravity="center_vertical"
 				android:text="@string/device_information_hardware_header"
-				android:textSize="@dimen/typography_subheading" />
+				android:textSize="@dimen/typography_subheading"
+				app:drawableStartCompat="@drawable/memory"
+				app:drawableTint="?colorPrimary" />
 
 			<TableRow
 				android:layout_marginStart="@dimen/spacing_2x"
@@ -180,17 +181,17 @@
 			android:layout_height="wrap_content"
 			android:padding="@dimen/spacing_default">
 
-			<TextView
+			<androidx.appcompat.widget.AppCompatTextView
 				android:id="@+id/software_header"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:drawableStart="@drawable/adb"
 				android:drawablePadding="@dimen/spacing_half"
-				android:drawableTint="?colorPrimary"
 				android:fontFamily="@font/google_sans"
 				android:gravity="center_vertical"
 				android:text="@string/device_information_software_header"
-				android:textSize="@dimen/typography_subheading" />
+				android:textSize="@dimen/typography_subheading"
+				app:drawableStartCompat="@drawable/adb"
+				app:drawableTint="?colorPrimary" />
 
 			<TableRow
 				android:layout_marginStart="@dimen/spacing_2x"

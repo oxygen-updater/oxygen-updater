@@ -8,21 +8,9 @@
 	<color name="colorWarn">@color/orange_500</color>
 	<color name="colorPositive">@color/green_500</color>
 	<color name="foreground">#212121</color>
-	<color name="divider">#1f000000</color>
-	<color name="overlay">#deffffff</color>
 	<color name="appBarBackground">@color/colorPrimary</color>
 	<color name="statusBarColor">@color/appBarBackground</color>
-
-	<color name="dark_theme_divider">#1fffffff</color>
-	<color name="dark_theme_overlay">#de121212</color>
-	<color name="grey_900_transparent">#33212121</color>
-	<color name="indicator_unselected">#4dffffff</color>
-	<color name="light_theme_divider">#1f000000</color>
-	<color name="light_theme_overlay">#deffffff</color>
-	<color name="white_transparent">#33ffffff</color>
-	<color name="white_secondary">#b3ffffff</color>
-
-	<color name="blue_500">#2196f3</color>
+	<color name="splashBackgroundColor">@color/colorPrimary</color>
 
 	<color name="red_400">#ef5350</color>
 	<color name="red_500">#f44336</color>
@@ -41,7 +29,4 @@
 	<!-- Calculated palette from https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
 	<color name="oneplus_red_600">#ea0029</color>
 	<color name="oneplus_red_400">#f43b46</color>
-
-	<!-- Color used on disabled buttons -->
-	<color name="dark_grey">#ee999999</color>
 </resources>

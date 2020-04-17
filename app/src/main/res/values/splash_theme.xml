@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!--
+		API 21 & 22 don't draw SVGs properly, so we override the theme on these APIs to draw a normal background,
+		and use setContentView(R.layout.splash_activity) only on those API levels.
+		On API 23 and above, we use the recommended way to display splash screens - using a static windowBackground
+	-->
+	<style name="SplashTheme.Oxygen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+		<item name="colorPrimary">@color/splashBackgroundColor</item>
+
+		<item name="android:windowBackground">?colorPrimary</item>
+
+		<!-- Make the theme appear "fullscreen" -->
+		<item name="android:navigationBarColor">?colorPrimary</item>
+		<item name="android:statusBarColor">?colorPrimary</item>
+	</style>
+
+</resources>

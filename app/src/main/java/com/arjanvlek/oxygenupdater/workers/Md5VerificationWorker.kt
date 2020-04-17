@@ -51,9 +51,9 @@ class Md5VerificationWorker(
     }
 
     private fun createVerificationForegroundInfo() = NotificationCompat.Builder(
-            context,
-            OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID
-        )
+        context,
+        OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID
+    )
         .setContentTitle(context.getString(R.string.download_verifying))
         .setProgress(100, 50, true)
         .setSmallIcon(R.drawable.logo_outline)

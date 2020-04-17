@@ -21,15 +21,15 @@
 			app:title="@string/app_name"
 			tools:subtitle="@string/summary_oxygen">
 
-			<ImageView
+			<androidx.appcompat.widget.AppCompatImageView
 				android:id="@+id/collapsingToolbarImage"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:contentDescription="@string/icon"
 				android:fitsSystemWindows="true"
 				android:scaleType="centerCrop"
-				android:src="@drawable/logo_outline"
-				app:layout_collapseMode="parallax" />
+				app:layout_collapseMode="parallax"
+				app:srcCompat="@drawable/logo_outline" />
 
 			<View
 				android:layout_width="match_parent"
@@ -71,12 +71,12 @@
 				app:layout_constraintTop_toTopOf="parent"
 				tools:visibility="visible">
 
-				<ImageView
+				<androidx.appcompat.widget.AppCompatImageView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_gravity="top"
 					android:contentDescription="@string/icon"
-					android:src="@drawable/info" />
+					app:srcCompat="@drawable/info" />
 
 				<TextView
 					android:id="@+id/bannerTextView"
@@ -88,7 +88,7 @@
 					tools:text="@string/new_app_version_long" />
 			</LinearLayout>
 
-			<ImageView
+			<androidx.appcompat.widget.AppCompatImageView
 				android:id="@+id/appLogo"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -97,11 +97,11 @@
 				android:clickable="true"
 				android:contentDescription="@string/icon"
 				android:focusable="true"
-				android:src="@mipmap/ic_launcher"
 				android:stateListAnimator="@animator/clicked"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/bannerLayout" />
+				app:layout_constraintTop_toBottomOf="@id/bannerLayout"
+				app:srcCompat="@mipmap/ic_launcher" />
 
 			<TextView
 				android:id="@+id/appTagline"
@@ -133,9 +133,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/about_discord_button_text"
-				android:textColor="?android:textColorTertiary"
+				android:textColor="?android:textColorPrimary"
 				app:icon="@drawable/discord"
-				app:iconTint="?android:textColorTertiary"
+				app:iconTint="?android:textColorPrimary"
 				app:rippleColor="@color/ripple_neutral"
 				tools:ignore="MissingConstraints" />
 
@@ -145,9 +145,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/about_github_button_text"
-				android:textColor="?android:textColorTertiary"
+				android:textColor="?android:textColorPrimary"
 				app:icon="@drawable/github"
-				app:iconTint="?android:textColorTertiary"
+				app:iconTint="?android:textColorPrimary"
 				app:rippleColor="@color/ripple_neutral"
 				tools:ignore="MissingConstraints" />
 
@@ -157,9 +157,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/about_website_button_text"
-				android:textColor="?android:textColorTertiary"
+				android:textColor="?android:textColorPrimary"
 				app:icon="@drawable/link"
-				app:iconTint="?android:textColorTertiary"
+				app:iconTint="?android:textColorPrimary"
 				app:rippleColor="@color/ripple_neutral"
 				tools:ignore="MissingConstraints" />
 
@@ -169,9 +169,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/about_email_button_text"
-				android:textColor="?android:textColorTertiary"
+				android:textColor="?android:textColorPrimary"
 				app:icon="@drawable/email"
-				app:iconTint="?android:textColorTertiary"
+				app:iconTint="?android:textColorPrimary"
 				app:rippleColor="@color/ripple_neutral"
 				tools:ignore="MissingConstraints" />
 
@@ -181,9 +181,9 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/about_rate_button_text"
-				android:textColor="?android:textColorTertiary"
+				android:textColor="?android:textColorPrimary"
 				app:icon="@drawable/rate"
-				app:iconTint="?android:textColorTertiary"
+				app:iconTint="?android:textColorPrimary"
 				app:rippleColor="@color/ripple_neutral"
 				tools:ignore="MissingConstraints" />
 

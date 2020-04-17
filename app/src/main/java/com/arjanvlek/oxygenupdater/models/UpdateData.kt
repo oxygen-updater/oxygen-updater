@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater.models
 
+import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseBooleanArray
@@ -26,7 +27,21 @@ data class UpdateData(
     var systemIsUpToDate: Boolean = false
 ) : Parcelable, FormattableUpdateData {
 
-    val downloadSizeInMegabytes = downloadSize / 1048576L
+    /**
+     * This value is used in [android.text.format.Formatter.formatFileSize],
+     * which formats differently on different API levels.
+     * Pre-Oreo (API Level 26), the IEC format is used, while SI units are used on Oreo and above.
+     *
+     * Our admin portal calculates everything in IEC units (mebibyte instead of megabyte, for example).
+     * Using this value guarantees consistency with admin portal values.
+     *
+     * Note: 1 MiB =  1048576 bytes, while 1 MB = 1000000 bytes
+     */
+    val downloadSizeForFormatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        (downloadSize / 1.048576).toLong()
+    } else {
+        downloadSize
+    }
 
     val isUpdateInformationAvailable = updateInformationAvailable || versionNumber != null
 

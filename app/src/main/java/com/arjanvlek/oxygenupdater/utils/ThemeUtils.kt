@@ -67,6 +67,7 @@ object ThemeUtils {
     ).let { translateThemeToNightMode(context, Theme[it]) }
 
     @Suppress("REDUNDANT_ELSE_IN_WHEN")
+    @NightMode
     private fun translateThemeToNightMode(context: Context, theme: Theme) = when (theme) {
         LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
         DARK -> AppCompatDelegate.MODE_NIGHT_YES

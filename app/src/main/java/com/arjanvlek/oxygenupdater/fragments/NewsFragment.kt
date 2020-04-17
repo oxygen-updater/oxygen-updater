@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -153,6 +154,7 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
 
     private fun displayEmptyState(isAllReadEmptyState: Boolean = false) {
         emptyStateLayout.isVisible = true
+        emptyStateLayout.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
 
         emptyStateHeader.text = if (isAllReadEmptyState) {
             getString(R.string.news_empty_state_all_read_header)

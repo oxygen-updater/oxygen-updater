@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 	<!-- Application title, Main activity title-->
 	<string name="app_name">Oxygen Updater</string>
-	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<!-- TODO: translate this string below -->
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
 	<!-- Update information strings-->
-	<string name="update">อัพเดท</string>
 	<!-- TODO: translate this string below -->
 	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">ยังไม่มีข้อมูลอย่างเป็นทางการเกี่ยวกับคุณสมบัติใหม่ของการอัพเดทครั้งนี้ ซึ่งโดยปกติแล้วมันคือการแก้ไขบัคต่างๆ, ปรับปรุงประสิทธิภาพของระบบ, อัพเดทความปลอดภัย</string>
@@ -17,24 +15,17 @@
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
-	<string name="update_information_for">สำหรับ</string>
 	<string name="update_information_header">อัพเดท</string>
-	<string name="update_information_header_short">อัพเดท</string>
 	<!-- TODO: translate these 7 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">ตรวจสอบครั้งสุดท้ายเมื่อ: %1$s</string>
-	<string name="update_information_latest_available_update">มีการอัพเดทใหม่</string>
 	<string name="update_information_no_update_data_available">ยังไม่มีการอัพเดทถูกปล่อยออกมา</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">ระบบของคุณเป็นเวอร์ชั่นล่าสุดแล้ว</string>
 	<string name="update_information_unknown_update_name">มีอัพเดทจากแหล่งที่มาที่ไม่รู้จักสำหรับ %1$s</string>
-	<string name="update_information_version">&#160;เวอร์ชั่น:</string>
 	<string name="update_information_view_update_information">ดูรายละเอียดการอัพเดท</string>
 
 	<!-- Server status warning strings -->
@@ -51,7 +42,6 @@
 
 	<!-- Date and time strings -->
 	<string name="time_at">ณ</string>
-	<string name="time_today">วันนี้</string>
 	<string name="time_yesterday">เมื่อวาน</string>
 
 	<!-- Downloader strings-->
@@ -61,16 +51,12 @@
 	<string name="downloading">Downloading update…</string>
 	<string name="paused">Paused - tap to resume</string>
 
-	<string name="download_already_downloaded">ตัวอัพเดทใหม่ได้ถูกดาวน์โหลดแล้ว สามารถติดตั้งได้ทันที</string>
 	<string name="download_complete">ดาวน์โหลดเสร็จสิ้น</string>
 	<string name="download_complete_notification">ดาวน์โหลดเสร็จสิ้น กดเริ่มต้นเพื่อติดตั้ง</string>
-
-	<string name="download_description">Oxygen Updater</string>
 
 	<string name="download_error">การดาวน์โหลดเกิดข้อผิดพลาด</string>
 	<string name="download_error_close">ปิด</string>
 	<string name="download_error_corrupt">ไฟล์ที่ดาวน์โหลดมาได้รับความเสียหาย! กรุณาดาวน์โหลดใหม่อีกครั้ง</string>
-	<string name="download_error_network">ขณะดาวน์โหลดการอัพเดตได้เกิดข้อผิดพลาดระหว่างเครือข่าย การดาวน์โหลดจะกลับมาทำงานต่อโดยอัตโนมัติ</string>
 	<string name="download_error_server">เซิร์ฟเวอร์เกิดขัดข้องระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง</string>
 	<string name="download_error_internal">ขออภัยในความไม่สะดวก เกิดปัญหาทางเทคนิคระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง ถ้าปัญหานี้ยังคงเกิดขึ้นกรุณาติดต่อนักพัฒนา</string>
 	<!-- TODO: translate this string below -->
@@ -82,17 +68,12 @@
 
 	<string name="download_failed">การดาวน์โหลดล้มเหลว</string>
 	<string name="running_in_background">Oxygen Updater กำลังทำงานในพื้นหลัง</string>
-	<string name="download_oxygen_os">เวอร์ชั่น OxygenOS</string>
 	<string name="download_pending">การดาวน์โหลดของคุณจะเริ่มขึ้นเร็วๆนี้…</string>
-	<string name="download_permissions">แตะที่ดาวน์โหลดอีกครั้งเพื่อดาวน์โหลดการอัพเดท</string>
-
-	<string name="download_notification_error_network">การดาวน์โหลดหยุดชั่วคราวเพราะขาดการเชื่อมต่อและจะดาวน์โหลดต่อเร็วๆนี้</string>
 	<string name="download_notification_error_server">เกิดข้อผิดพลาดจากเซิฟเวอร์ระหว่างดาวน์โหลด กรุณาดาวน์โหลดใหม่อีกครั้ง</string>
 	<string name="download_notification_error_internal">เกิดปัญหาทางเทคนิคระหว่างดาวน์โหลด กรุณาเริ่มใหม่หรือติดต่อนักพัฒนา</string>
 	<string name="download_notification_error_storage_full">พื้นที่บนอุปกรณ์ไม่เพียงพอ.</string>
 	<string name="download_notification_error_corrupt">การตรวจสอบไฟล์ล้มเหลว กรุณาเช็คการเชื่อมต่อ</string>
 
-	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
 	<string name="download_progress_text_hours_remaining">เหลืออีก %1$d ชั่วโมง</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">เหลือน้อยกว่าหนึ่งนาที</string>
 	<string name="download_progress_text_minutes_remaining">เหลืออีก %1$d นาที</string>
@@ -103,9 +84,6 @@
 	<string name="download_progress_text_verifying">ตรวจสอบไฟล์…</string>
 	<string name="download_progress_text_paused">พัก</string>
 	<string name="download_waiting_for_network">กำลังรอการเชื่อมต่ออินเทอร์เน็ต…</string>
-
-	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">กำลังตรวจสอบ…</string>
 	<string name="download_verifying_error">ไฟล์ได้รับความเสียหาย</string>
@@ -152,29 +130,19 @@
 	<string name="settings_buy_ad_free_label">อัพเกรดเป็นเวอร์ชั่นไม่มีโฆษณา</string>
 
 	<string name="settings_contribute_label">ช่วยพวกเราพัฒนาแอพพลิเคชั่น</string>
-	<string name="settings_contribute_button">สนับสนุน</string>
 
-	<string name="settings_category_other">อื่นๆ:</string>
 	<string name="settings_device">อุปกรณ์</string>
 	<string name="settings_entered_incorrectly">เกิดข้อผิดพลาดระหว่างบันทึกการตั้งค่า กรุณากลับไปเลือกอุปกรณ์หรือวิธีติดตั้งใหม่</string>
 	<string name="settings_explanation_incremental_full_update">การอัพเดทแบบปกติสามารถอัพเดทจากเวอร์ชั่นไหนก็ได้ (ยกเว้นคุณจะปลดล็อค bootloader แล้ว คุณควรเลือกวิธีติดตั้งแบบเต็มรูปแบบ)\n\nOxygenOS เวอร์ชั่นทดลองสามารถติดตั้งได้ตลอดเวลาตราบใดที่คุณอยู่บนเวอร์ชั่นสเถียร การที่คุณจะเปลี่ยนไปใช้เวอร์ชั่นทดลองนั้น คุณต้องเปิดขั้นสูงในตั้งค่าก่อนและสำหรับเวอร์ชั่นทดลองนั้น การติดตั้งแบบเต็มรูปแบบกับธรรมดาสามารถใช้แทนกันได้</string>
-	<string name="settings_explanation_update_methods">อธิบายวิธีการติดตั้ง</string>]
-	<string name="settings_header">เลือกอุปกรณ์ของคุณและวิธีการติดตั้ง:</string>
 
-	<string name="settings_push">ส่งการแจ้งเตือนมาให้ฉันเมื่อ:</string>
 	<string name="settings_push_from_server">แจ้งเตือนข้อมูลและข้อควรระวัง</string>
 	<string name="settings_push_new_version">แจ้งเตือนการอัพเดทของระบบ</string>
 	<string name="settings_push_new_device">มีการรองรับอุปกรณ์ใหม่</string>
 	<string name="settings_push_news">แจ้งเตือนของข่าวต่างๆ</string>
 
-	<string name="settings_saved">การตั้งค่าของคุณจะถูกบันทึกอัตโนมัติ</string>
 	<string name="settings_saving">การตั้งค่าของคุณกำลังถูกบันทึก ถ้ากระบวนการนี้ใช้เวลานานเกินไป กรุณาเช็คการเชื่อมต่อของคุณและเริ่มต้นแอพพลิเคชั่น</string>
 
-	<string name="settings_server_messages">โชว์ข้อความในแอพพลิเคชั่นเมื่อ:</string>
-
-	<string name="settings_other_options">การตั้งค่าอื่นๆ:</string>
 	<string name="settings_advanced_mode">โหมดขั้นสูง</string>
-	<string name="settings_advanced_mode_button_explanation">แตะปุ่มนี้เพื่อดูข้อมูลเพิ่มเติมเกี่ยวกับโหมดขั้นสูง</string>
 	<string name="settings_advanced_mode_explanation">โหมดขั้นสูงจะข้อความ \"ระบบของคุณใหม่ล่าสุดแล้ว\", และอนุญาตให้คุณดาวน์โหลดและติดตั้งทุกเวอร์ชั่นของระบบถึงแม้ว่าระบบจะไม่สามารถติดตั้งได้\n\n การทำแบบนี้จะมีประโยชน์อย่างมากเมื่อ:\n- อัพเดทจากเวอร์ชั่นธรรมดาไปเวอร์ชั่นทดลอง\n- วิธีการกลับจากเวอร์ชั่นทดลองมาเวอร์ชั่นธรรมดา(อย่าลืมคืนค่าโรงงานก่อน)\n- คือติดตั้งระบบเวอร์ชั่นธรรมดาใหม่อีกครั้ง</string>
 
 	<string name="settings_update_method">วิธีการอัพเดท</string>
@@ -183,7 +151,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network">ไม่มีการเชื่อมต่อ.</string>
 	<string name="faq_no_network_text">คุณต้องเชื่อมต่ออินเทอร์เน็ตก่อน</string>
 
 	<!-- First-time setup strings -->
@@ -236,11 +203,9 @@
 	<string name="install_method_chooser_title">Choose installation method</string>
 	<string name="install_method_chooser_subtitle">คุณต้องการติดตั้งการอัพเดทนี้อย่างไร?</string>
 	<string name="install_method_chooser_automatic_title">ติดตั้งอัตโนมัติ*</string>
-	<string name="install_method_chooser_automatic_image">รูปติดตั้งอัตโนมัติ</string>
 	<string name="install_method_chooser_automatic_description">วิธีที่ง่ายที่สุดในการติดตั้งการอัปเดต\n อุปกรณ์ของคุณจะรีสตาร์ทเพื่อติดตั้งการอัปเดต\n\n * ต้องการการเข้าถึงรูทและการกู้คืน TWRP</string>
 
 	<string name="install_method_chooser_manual_title">การติดตั้งด้วยตนเอง</string>
-	<string name="install_method_chooser_manual_image">รูปการติดตั้งด้วยตนเอง</string>
 	<string name="install_method_chooser_manual_description">อ่านคู่มือการติดตั้งเพื่อเรียนรู้วิธีติดตั้งการอัพเดท คุณจะติดตั้งการอัปเดตโดยใช้โหมดการกู้คืนของอุปกรณ์ของคุณ</string>
 
 	<string name="install_temporary_error">เกิดข้อผิดพลาดชั่วคราวขณะเตรียมการติดตั้งอัพเดต โปรดลองอีกครั้ง</string>
@@ -263,7 +228,6 @@
 	<string name="install_guide_automatic_install_disabled">การติดตั้งอัตโนมัติถูกปิดใช้งานชั่วคราวเนื่องจากรายงานปัญหาทางเทคนิค ติดตั้งการอัปเดตตามคำแนะนำที่แสดงในคู่มือการติดตั้ง</string>
 	<string name="install_guide">คู่มือการติดตั้ง</string>
 	<string name="install_guide_subtitle">คู่มือการติดตั้ง - %1$d จาก %2$d</string>
-	<string name="install_guide_image_description">ภาพตามบริบท โปรดแตะที่ส่วนล่างของหน้าจอเพื่อฟังคำแนะนำในการติดตั้ง</string>
 	<string name="install_guide_tip">&#8226; แนะนำให้จดหรือจำขั้นตอนทั้งหมดลงเนื่องจากคุณจะต้องปิดอุปกรณ์ในระหว่างการติดตั้งการอัปเดต</string>
 
 	<string name="install_guide_page_1_title">ดาวน์โหลดการอัพเดต</string>
@@ -284,7 +248,6 @@
 	<string name="install_guide_close_button">ปิดคู่มือการติดตั้ง</string>
 
 	<string name="install_guide_zip_file_deleted">ไฟล์รูทแพ็คเกจที่คุณระบุไม่มีอยู่อีกต่อไป โปรดเลือกแพ็คเกจรูทใหม่ด้านบน</string>
-	<string name="install_guide_zip_file_picker_title">เลือกรูทแพ็คเกจ</string>
 	<string name="install_guide_zip_file_missing">"หากคุณต้องการให้อุปกรณ์ของคุณรูทคุณจะต้องระบุแพ็คเกจด้านบน"</string>
 
 	<!-- Device information strings -->
@@ -300,7 +263,6 @@
 	<string name="device_information_amount_of_memory">Amount of RAM:</string>
 	<string name="device_information_cpu_frequency">Processor Frequency:</string>
 	<string name="device_information_header">อุปกรณ์ของฉัน</string>
-	<string name="device_information_header_short">อุปกรณ์ของฉัน</string>
 	<string name="device_information_image_description">รูปภาพอุปกรณ์</string>
 	<string name="device_information_incremental_os_version">Incremental OS version:</string>
 	<string name="device_information_os_version">Android version:</string>
@@ -349,7 +311,6 @@
 
 	<!-- News strings -->
 	<string name="news">ข่าว</string>
-	<string name="news_author">ผู้เขียน: %1$s</string>
 	<string name="news_date_published">การอัพเดทครั้งล่าสุด: %1$s</string>
 	<string name="news_empty">บทความนี้ไม่มีเนื้อหา</string>
 	<string name="news_load_error">ไม่สามารถเปิดบทความ ตรวจสอบการเชื่อมต่อของคุณและกดปุ่ม \'ลองอีกครั้ง \' เพื่อเปิดบทความ</string>
@@ -364,7 +325,6 @@
 	<string name="contribute">เป็นผู้มีส่วนร่วม</string>
 	<string name="contribute_title">ช่วยปรับปรุง Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater ต้องการความช่วยเหลือของคุณ! เพื่อให้การอัปเดตล่าสุดแก่คุณเราต้องได้รับชื่อไฟล์การอัพเดท สิ่งเหล่านี้จะปรากฏบนโทรศัพท์ของคุณเมื่อมีการอัพเดทปกติปรากฏขึ้น\n\n ฉันจะช่วยได้อย่างไร\n\nOxygen Updater สามารถส่งชื่อไฟล์อัปเดตใหม่ไปยังผู้ดูแลระบบของเราโดยอัตโนมัติ การดำเนินการนี้จะใช้ข้อมูลจำนวนเล็กน้อยและอาจใช้แบตเตอรี่เล็กน้อย สิ่งที่คุณต้องทำคือรอ (ประมาณ 15 นาที) ก่อนที่จะติดตั้งการอัปเดตระบบอย่างเป็นทางการจนกว่าคุณจะเห็นการยืนยันของ Oxygen Updater ว่าไฟล์ได้ถูกส่งเรียบร้อยแล้ว สแกนเฉพาะไฟล์. ota ในโทรศัพท์ของคุณเพียงครั้งเดียวต่อ 15 นาที มันจะตรวจสอบชื่อเฉพาะในโฟลเดอร์นั้นเท่านั้น</string>
-	<string name="contribute_image_description">อัปโหลดไฟล์ไปยังแอพพลิเคชั่นเซิร์ฟเวอร์</string>
 	<string name="contribute_agree">ฉันต้องการความช่วยเหลือและตกลงที่จะส่งชื่อไฟล์อัปเดตไปยังผู้ดูแลระบบของเรา</string>
 	<string name="contribute_agree_from_setup">ฉันต้องการช่วยปรับปรุงแอพพลิเคชั่นและตกลงที่จะส่งชื่อไฟล์อัปเดตไปยังผู้ดูแลระบบของเรา</string>
 	<string name="contribute_save">บันทึกการตั้งค่า</string>
@@ -378,15 +338,12 @@
 	<string name="error_app_outdated_message">แอพเวอร์ชันนี้ล้าสมัยแล้ว ได้เวลาอัปเดตแล้ว! แตะที่ \"Google Play \" ด้านล่าง ภายใน Google Play ให้แตะที่ \"อัปเดต \"</string>
 	<string name="error_app_requires_network_connection">ไม่มีการเชื่อมต่อ</string>
 	<string name="error_app_requires_network_connection_message">ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ โปรดตรวจสอบให้แน่ใจว่าคุณมีการเชื่อมต่อที่ใช้งานได้ แอพพลิเคชั่นจะปิดลง</string>
-	<string name="error_button_retry">ลองอีกครั้ง</string>
-	<string name="error_exit_button_text">ออก</string>
 	<string name="error_google_play_button_text">Google Play</string>
 	<string name="error_no_internet_connection">ไม่มีการเชื่อมต่อ</string>
 	<string name="error_maintenance">การบำรุงรักษาเซิร์ฟเวอร์</string>
 	<string name="error_maintenance_message">โปรดรอ. เซิร์ฟเวอร์จะพร้อมใช้งานในไม่ช้า</string>
 	<!-- TODO: translate this string below -->
 	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
-	<string name="error_push_failure">ไม่สามารถเปิดใช้งานการแจ้งเตือน ปิดแอปทั้งหมดแล้วเริ่มใหม่อีกครั้งหลังจากรอสักครู่</string>
 	<string name="error_reload">โหลดใหม่</string>
 
 	<string name="error_unable_to_rate_app">คุณไม่สามารถให้คะแนนแอพพลิเคชั่นได้ เนื่องจาก Google Play Store ไม่มีอยู่ในอุปกรณ์ของคุณ</string>
@@ -412,7 +369,6 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">กำลังโหลด…</string>
 	<string name="processing">กำลังประมวลผล…</string>

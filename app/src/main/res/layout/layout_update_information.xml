@@ -154,16 +154,16 @@
 			app:layout_constraintTop_toBottomOf="@id/downloadLayoutDivider"
 			tools:progress="50" />
 
-		<ImageView
+		<androidx.appcompat.widget.AppCompatImageView
 			android:id="@+id/downloadIcon"
 			android:layout_width="56dp"
 			android:layout_height="wrap_content"
 			android:contentDescription="@string/icon"
-			android:src="@drawable/download"
-			android:tint="?colorPrimary"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/downloadLayoutDivider" />
+			app:layout_constraintTop_toBottomOf="@id/downloadLayoutDivider"
+			app:srcCompat="@drawable/download"
+			app:tint="?colorPrimary" />
 
 		<TextView
 			android:id="@+id/downloadUpdateTextView"

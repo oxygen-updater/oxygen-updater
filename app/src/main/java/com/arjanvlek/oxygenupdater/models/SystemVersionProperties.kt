@@ -90,7 +90,7 @@ class SystemVersionProperties {
 
             logVerbose(TAG, "Finished fetching device properties using 'getprop' command...")
         } catch (e: Exception) {
-            logError(TAG, e.localizedMessage, e)
+            logError(TAG, e.localizedMessage ?: "$e", e)
         }
 
         this.oxygenDeviceName = oxygenDeviceName

@@ -2,34 +2,25 @@
 <resources>
 	<!-- Application title, Main activity title-->
 	<string name="app_name">Oxygen Updater</string>
-	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
 	<!-- Update information strings-->
-	<string name="update">Update</string>
 	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
 	<string name="update_information_file_name">File name: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
-	<string name="update_information_for">for</string>
 	<string name="update_information_header">Update</string>
-	<string name="update_information_header_short">Update</string>
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" update track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
-	<string name="update_information_latest_available_update">New system update available</string>
 	<string name="update_information_no_update_data_available">No update information is available</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Your system is up to date</string>
 	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
-	<string name="update_information_version">&#160;version:</string>
 	<string name="update_information_view_update_information">View update information</string>
 
 	<!-- Server status warning strings -->
@@ -45,7 +36,6 @@
 
 	<!-- Date and time strings -->
 	<string name="time_at">at</string>
-	<string name="time_today">Today</string>
 	<string name="time_yesterday">Yesterday</string>
 
 	<!-- Downloader strings-->
@@ -54,16 +44,12 @@
 	<string name="downloading">Downloading update…</string>
 	<string name="paused">Paused - tap to resume</string>
 
-	<string name="download_already_downloaded">The update was already downloaded. It is ready to get installed.</string>
 	<string name="download_complete">Download complete</string>
 	<string name="download_complete_notification">Download complete. Tap to start the installation.</string>
-
-	<string name="download_description">Oxygen Updater</string>
 
 	<string name="download_error">Download Error</string>
 	<string name="download_error_close">CLOSE</string>
 	<string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
-	<string name="download_error_network">A network error occurred while downloading the update. The download will resume automatically.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
@@ -74,17 +60,12 @@
 
 	<string name="download_failed">Download failed</string>
 	<string name="running_in_background">Oxygen Updater is running in the background</string>
-	<string name="download_oxygen_os">OxygenOS Version</string>
 	<string name="download_pending">Your download will start soon…</string>
-	<string name="download_permissions">Tap Download again to download the update.</string>
-
-	<string name="download_notification_error_network">Download paused due to lost connection. Will resume soon.</string>
 	<string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
 	<string name="download_notification_error_internal">Technical error while downloading. Restart the download or contact support.</string>
 	<string name="download_notification_error_storage_full">Insufficient storage space.</string>
 	<string name="download_notification_error_corrupt">File verification failed. Check your connection and try again.</string>
 
-	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
 	<string name="download_progress_text_hours_remaining">About %1$d hours remaining</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">Less than a minute remaining</string>
 	<string name="download_progress_text_minutes_remaining">About %1$d minutes remaining</string>
@@ -95,9 +76,6 @@
 	<string name="download_progress_text_verifying">Verifying file…</string>
 	<string name="download_progress_text_paused">Paused</string>
 	<string name="download_waiting_for_network">Waiting for a network connection…</string>
-
-	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">OxygenOS Update</string>
 
 	<string name="download_verifying">Verifying…</string>
 	<string name="download_verifying_error">File is damaged</string>
@@ -169,29 +147,19 @@
 	<string name="settings_buy_ad_free_label">Upgrade to Ad-Free</string>
 
 	<string name="settings_contribute_label">Help improve the app</string>
-	<string name="settings_contribute_button">Contribute</string>
 
-	<string name="settings_category_other">Other:</string>
 	<string name="settings_device">Device</string>
 	<string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
 	<string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method).\n\nA beta update of OxygenOS can always be installed, as well when you\'re on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. For the betas, the full and incremental update methods work the same way as on the stable versions.</string>
-	<string name="settings_explanation_update_methods">Explanation of the update methods</string>]
-	<string name="settings_header">Choose your device and update method:</string>
 
-	<string name="settings_push">Send me a notification when a:</string>
 	<string name="settings_push_from_server">Informational and warning messages</string>
 	<string name="settings_push_new_version">System update messages</string>
 	<string name="settings_push_new_device">New device is supported</string>
 	<string name="settings_push_news">News messages</string>
 
-	<string name="settings_saved">Your settings are automatically saved.</string>
 	<string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
 
-	<string name="settings_server_messages">Show messages in the app when:</string>
-
-	<string name="settings_other_options">Other options:</string>
 	<string name="settings_advanced_mode">Advanced mode</string>
-	<string name="settings_advanced_mode_button_explanation">Tap this button to get more information about the advanced mode.</string>
 	<string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n- Updating from a regular version to a beta version\n- Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n- Reinstalling your current system version.</string>
 
 	<string name="settings_update_method">Update method</string>
@@ -200,7 +168,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network">No connection.</string>
 	<string name="faq_no_network_text">You\'ll need a working connection to view the FAQ page.</string>
 
 	<!-- First-time onboarding strings -->
@@ -252,11 +219,9 @@
 	<string name="install_method_chooser_title">Choose installation method</string>
 	<string name="install_method_chooser_subtitle">How do you want to install this update?</string>
 	<string name="install_method_chooser_automatic_title">Automatic installation*</string>
-	<string name="install_method_chooser_automatic_image">Automatic installation image</string>
 	<string name="install_method_chooser_automatic_description">The easiest way to install the update.\nYour device will restart to install the update.\n\n* Requires root access and TWRP recovery.</string>
 
 	<string name="install_method_chooser_manual_title">Manual installation</string>
-	<string name="install_method_chooser_manual_image">Manual installation image</string>
 	<string name="install_method_chooser_manual_description">Read the install guide to learn how to install the update. You will install the update using the Recovery Mode of your device.</string>
 
 	<string name="install_temporary_error">A temporary error occurred while preparing the installation of the update. Please try it again.</string>
@@ -279,7 +244,6 @@
 	<string name="install_guide_automatic_install_disabled">Automatic installations have been temporarily disabled due to reported technical issues. Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide">Install guide</string>
 	<string name="install_guide_subtitle">Install guide - %1$d of %2$d</string>
-	<string name="install_guide_image_description">Contextual image. Please tap on a lower place on the screen to hear the install guide.</string>
 	<string name="install_guide_tip">&#8226; It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
 
 	<string name="install_guide_page_1_title">Download the update</string>
@@ -300,7 +264,6 @@
 	<string name="install_guide_close_button">Close Installation Guide</string>
 
 	<string name="install_guide_zip_file_deleted">The root package file you specified no longer exists. Please select a new root package above.</string>
-	<string name="install_guide_zip_file_picker_title">Select a root package</string>
 	<string name="install_guide_zip_file_missing">"If you want to keep your device rooted, you'll have to specify a root package above."</string>
 
 	<!-- Device information strings -->
@@ -317,7 +280,6 @@
 	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
 	<string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
 	<string name="device_information_header">My device</string>
-	<string name="device_information_header_short">My device</string>
 	<string name="device_information_image_description">Device image</string>
 	<string name="device_information_incremental_os_version">Incremental OS version:</string>
 	<string name="device_information_os_version">Android version:</string>
@@ -365,7 +327,6 @@
 
 	<!-- News strings -->
 	<string name="news">News</string>
-	<string name="news_author">Author: %1$s</string>
 	<string name="news_date_published">Last update: %1$s</string>
 	<string name="news_empty">This article has no contents.</string>
 	<string name="news_load_error">Failed to open article. Check your connection and press the \"RETRY\" button to open the article.</string>
@@ -379,7 +340,6 @@
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improve Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximately 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the \".Ota\" directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
-	<string name="contribute_image_description">Upload files to the app server</string>
 	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
 	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
 	<string name="contribute_save">Save settings</string>
@@ -393,14 +353,11 @@
 	<string name="error_app_outdated_message">This version of the app is outdated. It\'s time to update it! Tap on \"Google Play\" below. Within Google Play, tap on \"Update\".</string>
 	<string name="error_app_requires_network_connection">No connection</string>
 	<string name="error_app_requires_network_connection_message">Failed to connect to the server. Please make sure you have a working connection. The app will now close.</string>
-	<string name="error_button_retry">Retry</string>
-	<string name="error_exit_button_text">Exit</string>
 	<string name="error_google_play_button_text">Google Play</string>
 	<string name="error_no_internet_connection">No connection.</string>
 	<string name="error_maintenance">Server maintenance</string>
 	<string name="error_maintenance_message">Please wait. The server will be available very soon.</string>
 	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
-	<string name="error_push_failure">Failed to enable notifications. Fully close the app, and start it again after waiting a few minutes.</string>
 	<string name="error_reload">Reload</string>
 
 	<string name="error_unable_to_rate_app">You can\'t rate the app, because the Google Play Store is missing on your device.</string>
@@ -428,7 +385,6 @@
 	<string name="github_url" translatable="false">https://github.com/oxygen-updater/oxygen-updater</string>
 	<string name="website_url" translatable="false">https://oxygenupdater.com</string>
 	<string name="email_address" translatable="false">support@oxygenupdater.com</string>
-	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>
 	<string name="processing">Processing…</string>

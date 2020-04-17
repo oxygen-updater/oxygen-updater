@@ -1,7 +1,9 @@
 package com.arjanvlek.oxygenupdater.activities
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.graphics.Color
 import android.os.Build
@@ -87,13 +89,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             mainViewModel.unregisterAppUpdateListener()
             showAppUpdateSnackbar()
         } else {
-            when (updateInfo.updateAvailability()) {
-                UPDATE_AVAILABLE -> mainViewModel.requestUpdate(this, updateInfo)
-                // If an IMMEDIATE update is in the stalled state, we should resume it
-                DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> mainViewModel.requestImmediateAppUpdate(
-                    this,
-                    updateInfo
-                )
+            try {
+                when (updateInfo.updateAvailability()) {
+                    UPDATE_AVAILABLE -> mainViewModel.requestUpdate(this, updateInfo)
+                    // If an IMMEDIATE update is in the stalled state, we should resume it
+                    DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> mainViewModel.requestImmediateAppUpdate(
+                        this,
+                        updateInfo
+                    )
+                }
+            } catch (e: IntentSender.SendIntentException) {
+                showAppUpdateBanner()
             }
         }
     }
@@ -245,8 +251,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             TabLayoutMediator(tabLayout, this) { tab, position ->
                 tab.text = when (position) {
                     PAGE_NEWS -> getString(R.string.news)
-                    PAGE_UPDATE_INFORMATION -> getString(R.string.update_information_header_short)
-                    PAGE_DEVICE_INFORMATION -> getString(R.string.device_information_header_short)
+                    PAGE_UPDATE_INFORMATION -> getString(R.string.update_information_header)
+                    PAGE_DEVICE_INFORMATION -> getString(R.string.device_information_header)
                     else -> null
                 }
             }.attach()
@@ -508,9 +514,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         private const val PAGE_DEVICE_INFORMATION = 2
 
         // Permissions constants
-        private const val DOWNLOAD_FILE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE"
+        private const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
         const val PERMISSION_REQUEST_CODE = 200
-        const val VERIFY_FILE_PERMISSION = "android.permission.READ_EXTERNAL_STORAGE"
+        const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
         const val REQUEST_CODE_APP_UPDATE = 1000
         const val DAYS_FOR_APP_UPDATE_CHECK = 2L

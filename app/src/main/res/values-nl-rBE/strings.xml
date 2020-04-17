@@ -1,35 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 	<!-- Application title, Main activity title -->
 	<string name="app_name">Oxygen Updater</string>
-	<string name="launcher_app_name">Oxygen Updater</string>
 
 	<string name="device_chooser_error_title">Kon lijst van ondersteunde apparaten niet ophalen.</string>
 
 	<!-- Update information strings-->
-	<string name="update">Update</string>
 	<string name="enable">Inschakelen</string>
 	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
 	<string name="update_information_file_name">Bestandsnaam: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Omdat de download is mislukt, en de download opnieuw moet worden gestart, kan je deze link gebruiken om de update vanuit de browser te downloaden. Het kan zijn dat je het gedownloade bestand bestand vanuit je \"Downloads\" moet verplaatsen naar de hoofdmap. Dit is dezelfde link als wat de app normaal gezien download, wat een officiële link is van de OnePlus OTA server:\n%1$s</string>
-	<string name="update_information_for">voor</string>
 	<string name="update_information_header">Updaten</string>
-	<string name="update_information_header_short">Updaten</string>
 	<string name="update_information_error_title">Kon laatste update data niet ophalen</string>
 	<string name="update_information_banner_server">Tik hier om belangrijke mededelingen te bekijken</string>
-	<string name="update_information_banner_already_latest">Je draait al de laatste OxygenOS versie</string>
-	<string name="update_information_banner_congrats_latest">Gefeliciteerd! Je apparaat draait de laatste OxygenOS versie</string>
-	<string name="update_information_banner_update_available">Er is een nieuwe systeemupdate beschikbaar: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Omdat je geavanceerde modus hebt ingeschakeld, kan je de laatste ZIP voor \"%1$s\" downloaden.\n\nJe kan geavanceerde modus uitzetten in de instellingen. </string>
 	<string name="update_information_different_version_changelog_notice">Je bekijkt een changelog van de laatste update in het \"%1$s\" update pad. Als je deze update wilde installeren, dan moet je geavanceerde modus aanzetten (in instellingen).\n\nEchter, als je wenst de changelog van de huidig-geïnstalleerde versie wil zien, zul je terug moeten gaan naar de correcte update methode.</string>
 	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
-	<string name="update_information_latest_available_update">Er is een nieuwe systeemupdate beschikbaar</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
 	<string name="update_information_unknown_update_name">Naamloze update voor %1$s</string>
-	<string name="update_information_version">&#8226;versie:</string>
 	<string name="update_information_view_update_information">Bekijk update-informatie</string>
 
 	<!-- Server status warning strings -->
@@ -46,7 +37,6 @@
 
 	<!-- Date and time strings -->
 	<string name="time_at">om</string>
-	<string name="time_today">Vandaag</string>
 	<string name="time_yesterday">Gisteren</string>
 
 	<!-- Downloader strings -->
@@ -55,16 +45,12 @@
 	<string name="downloading">Downloaden van update…</string>
 	<string name="paused">Gepauzeerd - tik om te hervatten</string>
 
-	<string name="download_already_downloaded">De update was al gedownload. Het staat klaar om geïnstalleerd te worden.</string>
 	<string name="download_complete">Download voltooid</string>
 	<string name="download_complete_notification">Download voltooid. Tik om te beginnen met de installatie.</string>
-
-	<string name="download_description">Oxygen Updater</string>
 
 	<string name="download_error">Fout tijdens downloaden</string>
 	<string name="download_error_close">SLUITEN</string>
 	<string name="download_error_corrupt">De gedownloade update is beschadigd! Probeer de update opnieuw te downloaden.</string>
-	<string name="download_error_network">Er deed zich tijdens het downloaden van de update een netwerkprobleem voor. Het downloaden wordt automatisch hervat.</string>
 	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
 	<string name="download_error_could_not_move_temp_file">Het bestand is gedownload, maar kon niet worden verplaatst naar de juiste map. Open een bestandsbeheerder, navigeer naar \"%1$s\" en verplaats handmatig het bestand naar de meest bovenliggende map van het interne geheugen.</string>
@@ -74,17 +60,12 @@
 
 	<string name="download_failed">Downloaden mislukt</string>
 	<string name="running_in_background">Oxygen Updater wordt op de achtergrond uitgevoerd</string>
-	<string name="download_oxygen_os">OxygenOS-versie</string>
 	<string name="download_pending">Je download begint zometeen…</string>
-	<string name="download_permissions">Tik nogmaals op Downloaden om de update te downloaden.</string>
-
-	<string name="download_notification_error_network">Downloaden gepauzeerd omdat de verbinding is verbroken. Wordt zometeen hervat.</string>
 	<string name="download_notification_error_server">Serverfout bij downloaden. Controleer je verbinding en probeer het opnieuw.</string>
 	<string name="download_notification_error_internal">App-fout bij downloaden. Controleer je verbinding en probeer het opnieuw, of neem contact op met de ontwikkelaar.</string>
 	<string name="download_notification_error_storage_full">Onvoldoende opslagruimte.</string>
 	<string name="download_notification_error_corrupt">Bestandscontrole mislukt. Controleer je verbinding en probeer het opnieuw.</string>
 
-	<string name="download_progress">%1$d MB / %2$d MB (%3$d%%)</string>
 	<string name="download_progress_text_hours_remaining">Ongeveer %1$d uur resterend</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">minder dan een minuut resterend</string>
 	<string name="download_progress_text_minutes_remaining">ongeveer %1$d minuten resterend</string>
@@ -95,9 +76,6 @@
 	<string name="download_progress_text_verifying">100%%, controleren op fouten…</string>
 	<string name="download_progress_text_paused">gepauzeerd…</string>
 	<string name="download_waiting_for_network">wachten op een netwerkverbinding…</string>
-
-	<string name="download_size_megabyte">%1$d MB</string>
-	<string name="download_unknown_update_name">OxygenOS-update</string>
 
 	<string name="download_verifying">Controleren…</string>
 	<string name="download_verifying_error">Bestand is beschadigd</string>
@@ -143,28 +121,18 @@
 	<string name="settings_buy_button_not_possible">Niet beschikbaar</string>
 	<string name="settings_buy_ad_free_label">Verwijder advertenties</string>
 	<string name="settings_contribute_label">Verbeter de app voor anderen</string>
-	<string name="settings_contribute_button">Draag bij</string>
-	<string name="settings_category_other">Overig:</string>
 	<string name="settings_device">Apparaat</string>
 	<string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
 	<string name="settings_explanation_incremental_full_update">"Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode \"volledige update\" kiezen).\n\nEen bèta-versie kan te allen tijde geïnstalleerd worden. Ook als je een stabiele versie draait. Om te wisselen van de stabiele versies naar bèta's, moet je \"geavanceerde modus\" aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie."</string>
-	<string name="settings_explanation_update_methods">Toelichting op de update-methodes</string>
-	<string name="settings_header">Kies je apparaat en update-methode</string>
 
-	<string name="settings_push">Stuur mij meldingen wanneer een:</string>
 	<string name="settings_push_from_server">Informatie- en waarschuwingsberichten</string>
 	<string name="settings_push_new_version">Systeemupdate-meldingen</string>
 	<string name="settings_push_new_device">Ondersteuning voor een nieuw apparaat</string>
 	<string name="settings_push_news">Nieuwsberichten</string>
 
-	<string name="settings_saved">Je instellingen worden automatisch opgeslagen.</string>
 	<string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een internetverbinding hebt en open je de app opnieuw.</string>
 
-	<string name="settings_server_messages">Toon meldingen in de app wanneer er:</string>
-
-	<string name="settings_other_options">Overige opties:</string>
 	<string name="settings_advanced_mode">Geavanceerde modus</string>
-	<string name="settings_advanced_mode_button_explanation">Tik op deze knop om meer informatie over de geavanceerde modus te krijgen.</string>
 	<string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n- Je van een reguliere versie naar een bètaversie wil updaten\n- Je van een bètaversie terug wil naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n - Je dezelfde versie als die je nu hebt opnieuw wil installeren.</string>
 
 	<string name="settings_update_method">Update-methode</string>
@@ -174,7 +142,6 @@
 	<string name="faq">Veelgestelde vragen</string>
 	<string name="faq_menu_item">Veelgest. vragen</string>
 
-	<string name="faq_no_network">Geen verbinding.</string>
 	<string name="faq_no_network_text">Je hebt een internetverbinding nodig om de pagina met veelgestelde vragen te bekijken.</string>
 
 	<!-- First-time setup screen strings -->
@@ -230,11 +197,9 @@
 	<string name="install_method_chooser_title">Kies installatie methode.</string>
 	<string name="install_method_chooser_subtitle">Hoe wil je deze update installeren?</string>
 	<string name="install_method_chooser_automatic_title">Automatische installatie*</string>
-	<string name="install_method_chooser_automatic_image">Afbeelding van de automatische installatie</string>
 	<string name="install_method_chooser_automatic_description">De eenvoudigste manier om de update te installeren.\nJe apparaat start opnieuw op en installeert de update vervolgens vanzelf.\n\n* Vereist root-toegang en TWRP-recovery.</string>
 
 	<string name="install_method_chooser_manual_title">Handmatige installatie</string>
-	<string name="install_method_chooser_manual_image">Afbeelding van de handmatige installatie</string>
 	<string name="install_method_chooser_manual_description">Lees de installatie-handleiding om te leren hoe je de update zelf kunt installeren. Je installeert de update via de herstelmodus van je apparaat.</string>
 
 	<string name="install_temporary_error">Er heeft zich een tijdelijke fout voorgedaan bij het voorbereiden van de installatie van de update. Probeer het opnieuw.</string>
@@ -260,8 +225,6 @@
 	<string name="install_guide_close_button">Sluit de installatiehandleiding</string>
 	<string name="install_guide_tip">&#8226; Het is aanbevolen om alle stappen op te schrijven, omdat je apparaat tijdens de installatie van de update opnieuw moet worden opgestart.</string>
 
-	<string name="install_guide_image_description">Extra afbeelding voor de duidelijkheid. Tik lager op het scherm voor de installatiehandleiding.</string>
-
 	<string name="install_guide_page_1_title">Download de update</string>
 	<string name="install_guide_page_1_text">&#8226;Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n&#8226; Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play-store doen, onder het tabblad \"Mijn apps\".</string>
 
@@ -279,8 +242,6 @@
 
 	<string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
 	<string name="install_guide_zip_file_missing">"Als je root-toegang wil behouden, moet je hierboven een root-bestand selecteren."</string>
-	<string name="install_guide_zip_file_picker_title">Kies een root-bestand</string>
-
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Je apparaat wordt ondersteunt.</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Je apparaat wordt niet ondersteund, omdat het een provider-exclusief apparaat is.</string>
@@ -293,7 +254,6 @@
 	<string name="device_information_amount_of_memory">Hoeveelheid werkgeheugen:</string>
 	<string name="device_information_cpu_frequency">Processorsnelheid:</string>
 	<string name="device_information_header">Mijn apparaat</string>
-	<string name="device_information_header_short">Mijn apparaat</string>
 	<string name="device_information_image_description">Afbeelding van jouw apparaat</string>
 	<string name="device_information_incremental_os_version">Incrementele OS-versie:</string>
 	<string name="device_information_os_version">Android-versie:</string>
@@ -341,7 +301,6 @@
 
 	<!-- News strings -->
 	<string name="news">Nieuws</string>
-	<string name="news_author">Geschreven door: %1$s</string>
 	<string name="news_date_published">Laatste update: %1$s</string>
 	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
 	<string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \"OPNIEUW\" om het artikel opnieuw te laden.</string>
@@ -355,7 +314,6 @@
 	<string name="contribute">Draag bij</string>
 	<string name="contribute_title">Maak Oxygen Updater nóg beter</string>
 	<string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon.\n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend. Alleen de ".Ota" map op uw telefoon wordt eenmaal per 15 minuten gescand. Het controleert alleen voor een specifieke naam in die bepaalde map.</string>
-	<string name="contribute_image_description">Upload bestandsnamen naar de app-server</string>
 	<string name="contribute_agree">Ik help mee en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
 	<string name="contribute_agree_from_setup">Ik wil helpen om de app nog beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
 	<string name="contribute_save">Bewaar keuze</string>
@@ -369,14 +327,11 @@
 	<string name="error_app_outdated_message">Deze versie van de app is wel erg oud. Het is tijd om hem bij te werken! Dit kan door hieronder op \"Play Store\" te tikken. Tik vervolgens in Google Play op \"Bijwerken\".</string>
 	<string name="error_app_requires_network_connection">Geen verbinding</string>
 	<string name="error_app_requires_network_connection_message">Kan geen verbinding met de server maken. Zorg ervoor dat je een werkende internetverbinding hebt. De app zal nu afsluiten.</string>
-	<string name="error_button_retry">Opnieuw</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_exit_button_text">Afsluiten</string>
 	<string name="error_no_internet_connection">Geen verbinding.</string>
 	<string name="error_maintenance">Serveronderhoud</string>
 	<string name="error_maintenance_message">Een ogenblik geduld. De server zal zeer snel weer beschikbaar zijn.</string>
 	<string name="error_maintenance_retry">Het kan zijn dat de server niet beschikbaar is vanwege onderhoud. Probeer het later opnieuw, of meld het aan ons via <a href="mailto:support@oxygenupdater.com">email</a> dan wel via onze <a href="https://discord.gg/5TXdhKJ">Discord server</a></string>
-	<string name="error_push_failure">Notificaties konden niet worden aangezet. Sluit de app volledig af en start hem over enkele minuten opnieuw op.</string>
 	<string name="error_reload">Opnieuw laden</string>
 	<string name="error_unable_to_rate_app">Je kunt de app niet beoordelen, omdat je de Google Play Store niet hebt geïnstalleerd.</string>
 
@@ -399,7 +354,6 @@
 	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
 
 	<!-- Other strings -->
-	<string name="error">Fout</string>
 	<string name="icon">Icoon</string>
 	<string name="loading">Laden…</string>
 	<string name="processing">Verwerken…</string>

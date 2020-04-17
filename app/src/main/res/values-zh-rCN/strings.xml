@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 	<!-- Application title, Main activity title-->
 	<string name="app_name">Oxygen 更新器</string>
-	<string name="launcher_app_name">Oxygen 更新器</string>
 
 	<!-- TODO: translate this string below -->
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
 	<!-- Update information strings-->
-	<string name="update">更新</string>
 	<!-- TODO: translate this string below -->
 	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">没有关于此更新的新功能亮点的官方信息。一般情况下，此类更新会为您的设备提供错误修复，性能增强或关键安全更新。</string>
@@ -17,24 +15,17 @@
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
-	<string name="update_information_for">适用于</string>
 	<string name="update_information_header">更新</string>
-	<string name="update_information_header_short">更新</string>
 	<!-- TODO: translate these 7 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_already_latest">You\'re already on the latest OxygenOS version</string>
-	<string name="update_information_banner_congrats_latest">Congrats! Your device is on the latest OxygenOS version</string>
-	<string name="update_information_banner_update_available">A new system update is available: %1$s</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
-	<string name="update_information_latest_available_update">检测到新的系统更新</string>
 	<string name="update_information_no_update_data_available">没有可用的更新亮点</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">您的系统已是最新版本</string>
 	<string name="update_information_unknown_update_name">适用于 %1$s 的未知更新</string>
-	<string name="update_information_version">&#160;版本:</string>
 	<string name="update_information_view_update_information">查看更新亮点</string>
 
 	<!-- Server status warning strings -->
@@ -51,7 +42,6 @@
 
 	<!-- Date and time strings -->
 	<string name="time_at">在</string>
-	<string name="time_today">今天</string>
 	<string name="time_yesterday">昨天</string>
 
 	<!-- Downloader strings-->
@@ -61,16 +51,12 @@
 	<string name="downloading">Downloading update…</string>
 	<string name="paused">Paused - tap to resume</string>
 
-	<string name="download_already_downloaded">更新已下载，安装准备就绪！</string>
 	<string name="download_complete">下载完成！</string>
 	<string name="download_complete_notification">下载已完成，只需轻触即可安装</string>
-
-	<string name="download_description">Oxygen 安装器</string>
 
 	<string name="download_error">下载出错</string>
 	<string name="download_error_close">关闭</string>
 	<string name="download_error_corrupt">下载的文件已损坏！请尝试重新下载</string>
-	<string name="download_error_network">下载更新时发生网络错误，下载将自动恢复。</string>
 	<string name="download_error_server">下载更新时服务器发生错误，请尝试重新下载更新。</string>
 	<string name="download_error_internal">抱歉，下载更新时发生了技术故障，请尝试再次下载。如果这种情况不断发生，请联系此应用开发者以获取帮助。</string>
 	<!-- TODO: translate this string below -->
@@ -82,17 +68,12 @@
 
 	<string name="download_failed">下载失败</string>
 	<string name="running_in_background">Oxygen 更新器正在后台运行</string>
-	<string name="download_oxygen_os">OxygenOS 版本</string>
 	<string name="download_pending">您的下载即将开始…</string>
-	<string name="download_permissions">请再次点击“下载”，以开始您的下载任务</string>
-
-	<string name="download_notification_error_network">由于连接丢失，下载暂停。即将恢复下载</string>
 	<string name="download_notification_error_server">下载时服务器错误。请重新开始下载。</string>
 	<string name="download_notification_error_internal">下载时出现技术错误。请尝试重新下载，或联系开发者获取支持。</string>
 	<string name="download_notification_error_storage_full">存储空间不足</string>
 	<string name="download_notification_error_corrupt">文件校验失败。检查您的互联网连接，然后重试。</string>
 
-	<string name="download_progress">%1$d 兆字节 / %2$d 兆字节 (%3$d%%)</string>
 	<string name="download_progress_text_hours_remaining">大约还剩 %1$d 小时</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">1 分钟之内即可完成</string>
 	<string name="download_progress_text_minutes_remaining">大约还有 %1$d 分钟</string>
@@ -103,9 +84,6 @@
 	<string name="download_progress_text_verifying">正在校验文件是否完整…</string>
 	<string name="download_progress_text_paused">已暂停</string>
 	<string name="download_waiting_for_network">正在等待互联网连接…</string>
-
-	<string name="download_size_megabyte">%1$d 兆字节</string>
-	<string name="download_unknown_update_name">OxygenOS 更新</string>
 
 	<string name="download_verifying">正在校验中…</string>
 	<string name="download_verifying_error">文件损坏！</string>
@@ -151,29 +129,19 @@
 	<string name="settings_buy_button_not_possible">暂不提供</string>
 	<string name="settings_buy_ad_free_label">移除广告服务</string>
 	<string name="settings_contribute_label">帮助改进更新器</string>
-	<string name="settings_contribute_button">参与共研</string>
 
-	<string name="settings_category_other">其它：</string>
 	<string name="settings_device">设备</string>
 	<string name="settings_entered_incorrectly">保存设置时出错。请返回并重新选择您的设备 / 更新方法。</string>
 	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安装（但是如果您解锁了 Bootloader，那么您只能选择安装完整包）。\n\nOxygenOS 的公开测试版可以在任何版本中（包括正式版）安装。如果您想从正式版转到测试版，请在设置中打开高级模式。测试版和正式版一样，都会要求您在解锁了 BootLoader 的情况下下载全量包。</string>
-	<string name="settings_explanation_update_methods">对不同更新方式的解释</string>]
-	<string name="settings_header">您的设备 / 更新方式是？</string>
 
-	<string name="settings_push">何时为您推送消息？</string>
 	<string name="settings_push_from_server">重要消息</string>
 	<string name="settings_push_new_version">系统更新</string>
 	<string name="settings_push_new_device">新设备支持</string>
 	<string name="settings_push_news">新闻 / 故事发布</string>
 
-	<string name="settings_saved">您对设置的更改已自动保存</string>
 	<string name="settings_saving">您的设置仍在保存中。如果时间过长，请检查您的网络连接，或尝试重新启动更新器。</string>
 
-	<string name="settings_server_messages">何时在 App 中显示提示？</string>
-
-	<string name="settings_other_options">其它选项</string>
 	<string name="settings_advanced_mode">高级模式</string>
-	<string name="settings_advanced_mode_button_explanation">轻点此按钮，获取更多关于高级模式的信息</string>
 	<string name="settings_advanced_mode_explanation">开启高级模式后，将隐藏“您的设备已是最新版本”的消息，使得您可以下载与安装任何设备的新版本系统，哪怕下载的文件与您的设备并不兼容。\n\n在如下情况下，该功能会很有用：\n- 您想从正式版更新为测试版系统\n- 从测试版恢复成正式版（需要您进行双清！）\n- 重新安装当前版本的系统</string>
 	<string name="settings_update_method">更新方式</string>
 	<string name="settings_upload_logs">分享使用数据与日志</string>
@@ -181,7 +149,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">常见问题</string>
 	<string name="faq_menu_item">常见问题</string>
-	<string name="faq_no_network">无互联网连接</string>
 	<string name="faq_no_network_text">您需要连接至互联网来查看常见的问题</string>
 
 	<!-- First-time setup strings -->
@@ -234,11 +201,9 @@
 	<string name="install_method_chooser_title">Choose installation method</string>
 	<string name="install_method_chooser_subtitle">您想用哪种方式安装？</string>
 	<string name="install_method_chooser_automatic_title">自动安装</string>
-	<string name="install_method_chooser_automatic_image">自动安装图片</string>
 	<string name="install_method_chooser_automatic_description">最简单的更新方式，下载，安装，重启，一气呵成。\n\n* 需要 Root 权限与 TWRP</string>
 
 	<string name="install_method_chooser_manual_title">手动安装</string>
-	<string name="install_method_chooser_manual_image">手动安装图片</string>
 	<string name="install_method_chooser_manual_description">阅读安装指南以了解如何安装更新。 您将使用设备的恢复模式安装更新。</string>
 
 	<string name="install_temporary_error">准备安装时发生了临时性的错误，请稍候重试。</string>
@@ -261,7 +226,6 @@
 	<string name="install_guide_automatic_install_disabled">由于收到了用户的反馈，自动安装已暂时停用。请根据安装指南中显示的说明安装更新。</string>
 	<string name="install_guide">安装指南</string>
 	<string name="install_guide_subtitle">安装指南 - 第 %1$d 页，共 %2$d 页</string>
-	<string name="install_guide_image_description">请轻点屏幕下方以获取安装指南</string>
 	<string name="install_guide_tip">&#8226; 推荐您把全部步骤都用纸笔写下来，因为在安装过程中，您的设备会关机。</string>
 
 	<string name="install_guide_page_1_title">下载更新包</string>
@@ -282,7 +246,6 @@
 	<string name="install_guide_close_button">关闭安装指南</string>
 
 	<string name="install_guide_zip_file_deleted">您指定的 Root 包文件不再存在，请在上方选择一个新的 Root 包。</string>
-	<string name="install_guide_zip_file_picker_title">选择一个 Root 包</string>
 	<string name="install_guide_zip_file_missing">如果您想设备保持 Root 状态，请在上方指定一个 Root 包。</string>
 
 	<!-- Device information strings -->
@@ -298,7 +261,6 @@
 	<string name="device_information_amount_of_memory">内存大小：</string>
 	<string name="device_information_cpu_frequency">处理器频率：</string>
 	<string name="device_information_header">我的设备</string>
-	<string name="device_information_header_short">我的设备</string>
 	<string name="device_information_image_description">设备图片</string>
 	<string name="device_information_incremental_os_version">增量更新版本：</string>
 	<string name="device_information_os_version">Android 版本：</string>
@@ -347,7 +309,6 @@
 
 	<!-- News strings -->
 	<string name="news">新闻</string>
-	<string name="news_author">作者：%1$s</string>
 	<string name="news_date_published">上次更新：%1$s</string>
 	<string name="news_empty">此文章还没有评论</string>
 	<string name="news_load_error">无法打开文章。 请检查您的互联网连接并点击“重试”按钮重新打开。</string>
@@ -362,7 +323,6 @@
 	<string name="contribute">成为共研者</string>
 	<string name="contribute_title">参与 Oxygen 更新器共研行动</string>
 	<string name="contribute_explanation">Oxygen 更新器需要您的帮助！为了提供最新的更新包，我们需要获取更新文件的名称。 在系统推送常规更新时，这些信息会出现在手机上。\n\n我该如何帮助呢？\nOxygen 更新器可以自动向我们的管理员提交最新更新包的文件名。 这将使用微量的数据流量，也可能会使用微量的电池。 您需要做的，就是在安装官方系统更新之前稍微等候，直到您看到 Oxygen 更新器确认文件已成功提交为止。</string>
-	<string name="contribute_image_description">上传更新包给更新器的服务器</string>
 	<string name="contribute_agree">我同意将更新文件名提交给应用的管理员</string>
 	<string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用程序的管理员提交更新包文件名</string>
 	<string name="contribute_save">保存设置</string>
@@ -376,15 +336,12 @@
 	<string name="error_app_outdated_message">更新器不是最新版本，请前往 Google Play 商店进行更新。</string>
 	<string name="error_app_requires_network_connection">无互联网连接</string>
 	<string name="error_app_requires_network_connection_message">无法连接服务器，请您确保您已经连接到了互联网！应用即将关闭。</string>
-	<string name="error_button_retry">重试</string>
-	<string name="error_exit_button_text">退出</string>
 	<string name="error_google_play_button_text">Google Play</string>
 	<string name="error_no_internet_connection">无互联网连接</string>
 	<string name="error_maintenance">服务器维护中…</string>
 	<string name="error_maintenance_message">服务器马上就好，请待会儿再来吧~</string>
 	<!-- TODO: translate this string below -->
 	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
-	<string name="error_push_failure">开启消息推送失败，请完全关闭应用，待会儿再来试试吧</string>
 	<string name="error_reload">重新加载</string>
 
 	<string name="error_unable_to_rate_app">非常感谢您的好意，但是非常抱歉，您的设备缺少 Google Play 组件，无法为本应用做出评价。</string>
@@ -410,7 +367,6 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
 	<string name="icon">图标</string>
 	<string name="loading">加载中…</string>
 	<string name="processing">正在处理…</string>

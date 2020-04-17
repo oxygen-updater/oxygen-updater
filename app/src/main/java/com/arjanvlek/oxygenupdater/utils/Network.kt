@@ -44,7 +44,10 @@ fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
 fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
     context.getSystemService<StorageManager>()!!.run {
         try {
-            getCacheSizeBytes(getUuidForPath(context.cacheDir))
+            getCacheQuotaBytes(getUuidForPath(context.cacheDir)).let {
+                if (it != 0L) it
+                else CACHE_SIZE
+            }
         } catch (e: IOException) {
             CACHE_SIZE
         }

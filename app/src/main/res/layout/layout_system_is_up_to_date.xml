@@ -53,25 +53,24 @@
 			app:layout_constraintVertical_chainStyle="spread_inside"
 			tools:text="@string/update_information_last_checked_on" />
 
-		<ImageView
+		<androidx.appcompat.widget.AppCompatImageView
 			android:id="@+id/systemIsUpToDateImage"
 			android:layout_width="@dimen/size_collapsing_toolbar"
 			android:layout_height="@dimen/size_collapsing_toolbar"
 			android:layout_margin="@dimen/spacing_default"
 			android:contentDescription="@string/icon"
-			android:src="@drawable/done_outline"
-			android:tint="@color/colorPositive"
 			app:layout_constraintBottom_toTopOf="@id/systemIsUpToDateChangelogView"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateDateTextView" />
+			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateDateTextView"
+			app:srcCompat="@drawable/done_outline"
+			app:tint="@color/colorPositive" />
 
-		<TextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/systemIsUpToDateChangelogView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="@drawable/rounded_overlay_top"
-			android:drawableEnd="@drawable/expand"
 			android:fontFamily="@font/google_sans_medium"
 			android:foreground="?selectableItemBackground"
 			android:gravity="center_vertical"
@@ -80,6 +79,7 @@
 			android:text="@string/update_information_view_update_information"
 			android:textColor="?colorPrimary"
 			android:textSize="@dimen/typography_subheading"
+			app:drawableEndCompat="@drawable/expand"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
