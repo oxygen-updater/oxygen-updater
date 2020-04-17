@@ -148,16 +148,16 @@
 	<string name="onboarding">Welkom</string>
 	<string name="onboarding_finished_button">start de app</string>
 
-	<string name="onboarding_page_1_title">Welkom bij Oxygen updater!</string>
+	<string name="onboarding_page_1_title">Welkom bij Oxygen Updater!</string>
 	<string name="onboarding_page_1_text">Met deze app kun je:\n\n&#8226; De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n\n&#8226; Een \"rooted\" apparaat eenvoudig bijwerken\n\n&#8226; Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n\n&#8226; Nieuwsberichten over OxygenOS en OnePlus lezen\n\nVeeg naar links om verder te gaan.</string>
 
 	<string name="onboarding_page_1_caption">Dit is geen officiële app van OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app.\n\nDoor deze app te gebruiken, ga je hiermee akkoord.</string>
 
 	<string name="onboarding_page_2_title">Kies je apparaat</string>
-	<string name="onboarding_page_2_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? kies het dan hierboven.</string>
+	<string name="onboarding_page_2_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? Kies dan hierboven je apparaat.</string>
 
 	<string name="onboarding_page_3_title">Kies je update-methode</string>
-	<string name="onboarding_page_3_caption">De Incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een beta-versie van OxygenOS? Kies dan voor de Community-Editie.</string>
+	<string name="onboarding_page_3_caption">De Incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een bèta-versie van OxygenOS? Kies dan voor de Community-Editie.</string>
 
 	<string name="onboarding_page_4_title">Klaar!</string>
 	<string name="onboarding_page_4_text">Veel plezier met het gebruik van Oxygen Updater!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\". </string>
