@@ -225,7 +225,9 @@ class SystemVersionProperties {
             "OnePlus 7 Pro",
             "OnePlus 7 Pro 5G",
             "OnePlus 7T",
-            "OnePlus 7T Pro"
+            "OnePlus 7T Pro",
+            "OnePlus 8",
+            "OnePlus 8 Pro"
         )
 
         // @GitHub contributors, add ro.product.name values of new OP devices *HERE*
@@ -235,7 +237,9 @@ class SystemVersionProperties {
         // Only workaround is to read ro.build.version.ota
         private val RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES = listOf(
             "OnePlus7T",
-            "OnePlus7TPro"
+            "OnePlus7TPro",
+            "OnePlus8",
+            "OnePlus8Pro"
         )
     }
 }
