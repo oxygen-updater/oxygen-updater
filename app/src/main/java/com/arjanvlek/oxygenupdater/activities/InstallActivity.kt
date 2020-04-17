@@ -19,7 +19,6 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.extensions.setImageResourceWithAnimation
 import com.arjanvlek.oxygenupdater.fragments.InstallGuideFragment
 import com.arjanvlek.oxygenupdater.fragments.InstallMethodChooserFragment
-import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
 import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
@@ -233,7 +232,7 @@ class InstallActivity : SupportActionBarActivity() {
         val pageNumber = position + if (showDownloadPage) 1 else 2
 
         installViewModel.installGuideCache[pageNumber]?.run {
-            collapsingToolbarLayout.title = if (AppLocale.get() == AppLocale.NL) dutchTitle else englishTitle
+            collapsingToolbarLayout.title = title
             collapsingToolbarLayout.subtitle = getString(
                 R.string.install_guide_subtitle,
                 position + 1,

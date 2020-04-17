@@ -1,5 +1,6 @@
 package com.arjanvlek.oxygenupdater.models
 
+import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -26,6 +27,9 @@ data class InstallGuidePage(
     var dutchText: String?
 ) {
     val isDefaultPage = deviceId == null || updateMethodId == null
+
+    val title = if (AppLocale.get() == NL) dutchTitle else englishTitle
+    val text = if (AppLocale.get() == NL) dutchText else englishText
 
     fun cloneWithDefaultTitleAndText(
         title: String,

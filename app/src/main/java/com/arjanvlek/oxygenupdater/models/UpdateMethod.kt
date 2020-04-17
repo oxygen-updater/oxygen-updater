@@ -12,7 +12,7 @@ data class UpdateMethod(
     val supportsRootedDevice: Boolean = false
 ) : SelectableModel {
 
-    override val name = englishName
+    override val name = if (AppLocale.get() == AppLocale.NL) dutchName else englishName
 
     @JsonProperty("recommended")
     fun setRecommended(recommended: String?): UpdateMethod {

@@ -14,7 +14,6 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.NewsActivity
 import com.arjanvlek.oxygenupdater.adapters.NewsAdapter.NewsItemViewHolder
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.NewsItem
 import com.bumptech.glide.Glide
 
@@ -36,11 +35,10 @@ class NewsAdapter(
 
     override fun onBindViewHolder(holder: NewsItemViewHolder, position: Int) {
         // Logic to set the title, subtitle and image of each individual news item.
-        val locale = AppLocale.get()
         val newsItem = newsItemList[position]
 
-        holder.title.text = newsItem.getTitle(locale)
-        holder.subtitle.text = newsItem.getSubtitle(locale)
+        holder.title.text = newsItem.title
+        holder.subtitle.text = newsItem.subtitle
         holder.container.setOnClickListener { openNewsItem(newsItem) }
 
         if (newsItem.read) {

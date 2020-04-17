@@ -76,7 +76,7 @@ class NewsActivity : SupportActionBarActivity() {
         val locale = AppLocale.get()
 
         // Display the title of the article.
-        collapsingToolbarLayout.title = newsItem.getTitle(locale)
+        collapsingToolbarLayout.title = newsItem.title
         // Display the name of the author of the article
         collapsingToolbarLayout.subtitle = newsItem.authorName
 
@@ -92,7 +92,7 @@ class NewsActivity : SupportActionBarActivity() {
             isVisible = true
             settings.javaScriptEnabled = true
 
-            if (newsItem.getText(locale).isNullOrEmpty()) {
+            if (newsItem.text.isNullOrEmpty()) {
                 loadDataWithBaseURL("", getString(R.string.news_empty), "text/html", "UTF-8", "")
             } else {
                 val newsLanguage = if (locale == NL) "NL" else "EN"

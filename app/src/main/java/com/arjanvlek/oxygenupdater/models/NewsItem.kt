@@ -23,18 +23,9 @@ data class NewsItem(
     var read: Boolean = false
 ) : Serializable {
 
-    /* Custom methods */
-    fun getTitle(appLocale: AppLocale): String? {
-        return if (appLocale == NL) dutchTitle else englishTitle
-    }
-
-    fun getSubtitle(appLocale: AppLocale): String? {
-        return if (appLocale == NL) dutchSubtitle else englishSubtitle
-    }
-
-    fun getText(appLocale: AppLocale): String? {
-        return if (appLocale == NL) dutchText else englishText
-    }
+    val title = if (AppLocale.get() == NL) dutchTitle else englishTitle
+    val subtitle = if (AppLocale.get() == NL) dutchSubtitle else englishSubtitle
+    val text = if (AppLocale.get() == NL) dutchText else englishText
 
     val isFullyLoaded: Boolean
         get() = id != null && dutchTitle != null && englishTitle != null && dutchText != null && englishText != null

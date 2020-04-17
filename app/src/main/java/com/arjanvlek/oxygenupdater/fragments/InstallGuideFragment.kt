@@ -9,8 +9,6 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.InstallActivity
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
-import com.arjanvlek.oxygenupdater.models.AppLocale
-import com.arjanvlek.oxygenupdater.models.AppLocale.NL
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
@@ -115,7 +113,7 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
         shimmerFrameLayout.isVisible = false
         installGuideText.apply {
             isVisible = true
-            text = if (AppLocale.get() == NL) installGuidePage.dutchText else installGuidePage.englishText
+            text = installGuidePage.text
         }
 
         // Display the "Close" button on the last page.
