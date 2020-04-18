@@ -24,6 +24,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.arjanvlek.oxygenupdater.ActivityLauncher
@@ -31,7 +32,6 @@ import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.MessageDialog
-import com.arjanvlek.oxygenupdater.extensions.reduceDragSensitivity
 import com.arjanvlek.oxygenupdater.fragments.DeviceInformationFragment
 import com.arjanvlek.oxygenupdater.fragments.NewsFragment
 import com.arjanvlek.oxygenupdater.fragments.UpdateInformationFragment
@@ -270,9 +270,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             } catch (ignored: IndexOutOfBoundsException) {
                 // no-op
             }
+            reduceDragSensitivity()
         }
 
         setupAppBarForViewPager()
+    }
+
+    fun ViewPager2.reduceDragSensitivity() {
+        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
+        recyclerViewField.isAccessible = true
+        val recyclerView = recyclerViewField.get(this) as RecyclerView
+
+        val touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
+        touchSlopField.isAccessible = true
+        val touchSlop = touchSlopField.get(recyclerView) as Int
+        touchSlopField.set(recyclerView, touchSlop*2)       // "2  " was obtained experimentally, you can adjust the number
     }
 
     private fun setupAppBarForViewPager() {
