@@ -274,8 +274,8 @@
 	<string name="about_email_button_text">Електронна пошта</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">Випущено новий пристрій! %1$s тепер доступний!</string>
-	<string name="notification_new_device_short">Відкрити застосунок, щоб вибрати цей пристрій.</string>
+	<string name="notification_new_device">Додано підтримку нового пристою — %1$s!</string>
+	<string name="notification_new_device_short">Відкрити застосунок</string>
 	<string name="notification_no_notification_support">Встановіть або оновіть Сервіси Google Play, щоб увімкнути пуш-сповіщення.</string>
 	<string name="notification_version_title">Доступне оновлення системи</string>
 	<string name="notification_version">%1$s доступне для %2$s!</string>
@@ -334,7 +334,7 @@
 	<string name="error_unable_to_rate_app">Ви не можете оцінити застосунок, тому що магазин Google Play відсутній на вашому пристрої.</string>
 
 	<!-- Message strings -->
-	<string name="delete_message_title">Оновлення вже завантажено</string>
+	<string name="delete_message_title">Оновлення завантажено</string>
 	<string name="delete_message_contents">Ви вже завантажили це оновлення, але ще його не встановлювали. Натисніть \"Встановлення\", щоб перейти до вікна вибору режиму встановлення цього оновлення. Натисніть \"Видалити\", щоб видалити файл оновлення зі сховища. Натисніть кнопку Назад, щоб закрити це повідомлення.</string>
 	<string name="delete_message_delete_button">Видалити</string>
 
