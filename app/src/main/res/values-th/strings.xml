@@ -366,6 +366,7 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">กำลังโหลด…</string>
 	<string name="processing">กำลังประมวลผล…</string>

@@ -133,7 +133,22 @@
 			android:label="@string/news"
 			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.Oxygen.FullScreen" />
+			android:theme="@style/Theme.Oxygen.FullScreen">
+
+			<intent-filter
+				android:autoVerify="true"
+				tools:targetApi="m">
+				<action android:name="android.intent.action.VIEW" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+
+				<data
+					android:host="oxygenupdater.com"
+					android:pathPattern="/api/.*/news-content/..*"
+					android:scheme="https" />
+			</intent-filter>
+		</activity>
 
 		<!-- File picker -->
 		<activity

@@ -366,6 +366,7 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">アイコン</string>
 	<string name="loading">読み込中…</string>
 	<string name="processing">処理中…</string>

@@ -451,6 +451,7 @@
 
 	<!-- Other strings -->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Иконка"</string>
 	<string name="loading">"Загрузка…"</string>
 	<string name="processing">"Обработка…"</string>

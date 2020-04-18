@@ -352,6 +352,7 @@
 	<string name="purchase_error_after_payment">A hirdetésmentes verzió megvásárlása sikertelen, mert belső hiba történt. Kérjük, próbáld újra néhány perc múlva. Ha már fizettél, vedd fel a kapcsolatot a Google Play ügyfélszolgálatával.</string>
 
 	<!-- Other strings-->
+	<string name="error">Hiba</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Betöltés…</string>
 	<string name="processing">Feldolgozás…</string>

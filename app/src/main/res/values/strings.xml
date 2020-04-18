@@ -382,6 +382,7 @@
 	<string name="github_url" translatable="false">https://github.com/oxygen-updater/oxygen-updater</string>
 	<string name="website_url" translatable="false">https://oxygenupdater.com</string>
 	<string name="email_address" translatable="false">support@oxygenupdater.com</string>
+	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>
 	<string name="processing">Processing…</string>

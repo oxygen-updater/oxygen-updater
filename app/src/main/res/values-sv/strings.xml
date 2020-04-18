@@ -434,6 +434,7 @@ Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du st
 
 	<!-- Other strings -->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Ikon"</string>
 	<string name="loading">"Laddar…"</string>
 	<string name="processing">"Bearbetar…"</string>
