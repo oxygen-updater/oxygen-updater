@@ -365,6 +365,7 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">İkon</string>
 	<string name="loading">Yükleniyor…</string>
 	<string name="processing">İşleniyor…</string>

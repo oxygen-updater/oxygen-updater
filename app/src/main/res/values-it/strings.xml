@@ -421,6 +421,7 @@ Ritenta in alcuni minuti."</string>
 	<string name="purchase_error_after_payment">"Il pagamento non e' andato a buon fine a causa di un errore interno. Ritenta in alcuni minuti. Se hai già pagato, contatta Google Play Support per assistenza."</string>
 
 	<!-- Other strings -->
+	<string name="error">Error</string>
 	<string name="icon">"Icona"</string>
 	<string name="loading">"Caricando…"</string>
 	<string name="processing">"Processando…"</string>

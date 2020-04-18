@@ -352,6 +352,7 @@
 	<string name="purchase_error_after_payment">Куповина апликације без реклама није успела због интерне грешке. Молимо вас покушајте за неколико минута. Ако сте већ платили, молимо вас контактирајте Google Play подршку.</string>
 
 	<!-- Other strings-->
+	<string name="error">Грешка</string>
 	<string name="icon">Иконица</string>
 	<string name="loading">Учитавање…</string>
 	<string name="processing">Обрада…</string>

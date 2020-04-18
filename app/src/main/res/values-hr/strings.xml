@@ -416,6 +416,7 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 
 	<!-- Other strings -->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Ikona"</string>
 	<string name="loading">"Učitavanje…"</string>
 	<string name="processing">"Procesiranje…"</string>

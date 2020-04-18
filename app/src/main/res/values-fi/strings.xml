@@ -433,6 +433,7 @@ Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käytt
 
 	<!-- Other strings -->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Ikoni"</string>
 	<string name="loading">"Ladataan…"</string>
 	<string name="processing">"Prosessoidaan…"</string>

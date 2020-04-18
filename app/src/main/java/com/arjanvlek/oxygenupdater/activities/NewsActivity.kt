@@ -1,6 +1,7 @@
 package com.arjanvlek.oxygenupdater.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -41,6 +42,9 @@ class NewsActivity : SupportActionBarActivity() {
     private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val newsViewModel by viewModel<NewsViewModel>()
     private val settingsManager by inject<SettingsManager>()
+
+    private var shouldDelayAdStart = false
+    private var newsItemId = -1L
 
     /**
      * Re-use the same observer to avoid duplicated callbacks
@@ -118,10 +122,7 @@ class NewsActivity : SupportActionBarActivity() {
 
                     hideErrorStateIfInflated()
                 } else {
-                    // Hide newsLayout, which contains the WebView
-                    newsLayout.isVisible = false
-
-                    inflateAndShowErrorState(error)
+                    showErrorState(error)
                 }
             }
         }
@@ -157,12 +158,12 @@ class NewsActivity : SupportActionBarActivity() {
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
-        if (intent?.extras == null) {
+        setContentView(R.layout.activity_news)
+
+        if (!handleIntent(intent)) {
             finish()
             return
         }
-
-        setContentView(R.layout.activity_news)
 
         setupAds()
         loadNewsItem()
@@ -184,11 +185,43 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
+    private fun handleIntent(intent: Intent?) = when {
+        intent == null -> false
+        intent.extras != null -> {
+            shouldDelayAdStart = intent.getBooleanExtra(
+                INTENT_DELAY_AD_START,
+                false
+            )
+            newsItemId = intent.getLongExtra(
+                INTENT_NEWS_ITEM_ID,
+                -1L
+            )
+            true
+        }
+        Intent.ACTION_VIEW == intent.action -> intent.data.let {
+            if (it == null) {
+                false
+            } else {
+                // https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
+                val index = it.pathSegments.indexOf("news-content") + 1
+
+                if (index != 0 && index < it.pathSegments.size) {
+                    shouldDelayAdStart = true
+                    newsItemId = it.pathSegments[index].toLong()
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+        else -> false
+    }
+
     private fun setupAds() {
         if (newsViewModel.mayShowAds) {
             setupBannerAd()
 
-            if (intent.getBooleanExtra(INTENT_DELAY_AD_START, false)) {
+            if (shouldDelayAdStart) {
                 logDebug(TAG, "Setting up interstitial ad in 5s")
 
                 Handler().postDelayed(
@@ -273,9 +306,10 @@ class NewsActivity : SupportActionBarActivity() {
 
         // Obtain the contents of the news item
         // (to save data when loading the entire list of news items, only title & subtitle are returned there)
-        newsViewModel.fetchNewsItem(
-            intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)
-        ).observe(this, fetchNewsItemObserver)
+        newsViewModel.fetchNewsItem(newsItemId).observe(
+            this,
+            fetchNewsItemObserver
+        )
     }
 
     private fun showLoadingState() {
@@ -284,7 +318,6 @@ class NewsActivity : SupportActionBarActivity() {
 
         hideErrorStateIfInflated()
 
-        // Display the title of the article.
         collapsingToolbarLayout.title = getString(R.string.loading)
     }
 
@@ -293,15 +326,17 @@ class NewsActivity : SupportActionBarActivity() {
         newsLayout.isVisible = true
     }
 
-    private fun showErrorState() {
+    private fun showErrorState(error: WebViewError? = null) {
         // hide progress bar since the page failed to load
         progressBar.isVisible = false
         newsLayout.isVisible = false
 
-        inflateAndShowErrorState()
+        inflateAndShowErrorState(error)
     }
 
-    private fun inflateAndShowErrorState(error: WebViewError? = null) {
+    private fun inflateAndShowErrorState(error: WebViewError?) {
+        collapsingToolbarLayout.title = getString(R.string.error)
+
         // Show error layout
         errorLayoutStub?.inflate()
         errorLayout.isVisible = true

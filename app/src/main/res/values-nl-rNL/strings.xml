@@ -351,6 +351,7 @@
 	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
 
 	<!-- Other strings -->
+	<string name="error">Fout</string>
 	<string name="icon">Icoon</string>
 	<string name="loading">Laden…</string>
 	<string name="processing">Verwerken…</string>

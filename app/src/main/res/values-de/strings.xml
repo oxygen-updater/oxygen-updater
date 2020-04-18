@@ -461,6 +461,7 @@ No root access? Press \"Close\" and continue using the app."</string>
 
 	<!-- Other strings -->
 	<!-- TODO: translate this string below -->
+	<string name="error">Error</string>
 	<string name="icon">"Icon"</string>
 	<string name="loading">"Laden…"</string>
 	<string name="processing">"Bearbeiten…"</string>
