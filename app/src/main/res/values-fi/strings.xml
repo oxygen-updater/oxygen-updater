@@ -282,15 +282,8 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="device_information_carrier_exclusive_oxygen_os">Laitteesi ei ole tuettu, se on operaattori eksklusiivinen laite</string>
 	<string name="device_information_unsupported_oxygen_os">Emme ole vielä lisänneet tukea uudelle laitteellesi</string>
 	<string name="device_information_unsupported_os">Laitteesi ei ole tuettu, koska laitteellasi ei ole OxygenOS:ää</string>
-
-	<string name="device_information_supported_oxygen_os"></string>
-	<string name="device_information_carrier_exclusive_oxygen_os"></string>
-	<string name="device_information_unsupported_oxygen_os"></string>
-	<string name="device_information_unsupported_os"></string>
-
 	<string name="device_information_hardware_header">Laitteisto</string>
 	<string name="device_information_software_header">Ohjelmisto</string>
-
 	<string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
 	<string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
 	<string name="device_information_header">"Laitteeni"</string>
