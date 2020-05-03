@@ -204,12 +204,36 @@
 	<string name="install_guide_tip">&#8226; يوصى بتدوين جميع الخطوات ، حيث ستحتاج إلى إيقاف تشغيل الجهاز أثناء تثبيت التحديث.</string>
 	<string name="install_guide_page_1_title">تحميل التحديث</string>
 	<string name="install_guide_page_1_text">&#8226; اضغط على زر تحميل لبدء تحميل التحديث.\n\n&#8226; سيظهر لك تقدم التحميل في التطبيق، وكإشعار في منطقة الإشعارات الخاصة بك.\n\n&#8226; عند إنتهاء التحميل، سترى إشعاراً بأنه \"تم التحميل\".\nفي حالة حدوث خطأ في التحميل، إفتح التطبيق وحاول تحميل التحديث مرة أخرى. إذا لم ينجح ذلك ، فتأكد من أن لديك إتصال إنترنت فعال. وخلافاً لذلك، إتصل بمطور التطبيق. ويمكنك القيام بذلك عن طريق زيارة قائمة \"تطبيقاتي\" في متجر بلاي.</string>
-	<string name="install_guide_page_2_title">الدخول إلى وضع الريكفري</string>
-	<string name="install_guide_page_2_text">&#8226; أولاً ، قم بإيقاف تشغيل جهازك.\n\n&#8226; ثم، إضغط على كلاً من زري الطاقة وخفض مستوى الصوت في نفس الوقت.\n\n&#8226; سيبدأ جهازك الآن في وضع الريكفري. إنتظر حتى ترى قائمة الريكفري على الشاشة.</string>
-	<string name="install_guide_page_3_title">تثبيت التحديثات المحملة</string>
-	<string name="install_guide_page_3_text">&#8226; ضمن قائمة الريكفري، إختر لغتك المفضلة أولاً. بعد ذلك، انقر فوق (أو استخدم أزرار الصوت للتنقل وزر الطاقة لتحديد) \"التثبيت من الذاكرة الخارجية\".\n\n&#8226; التالي، قم بالتمرير لأسفل مستخدماً مفتاح خفض الصوت إلى أن تجد صفاً به \" ملف مضغوط\" مع إسم الملف ظاهراً في التطبيق. (عادة ، هذا ملف يبدأ بكلمة \"OnePlusOxygen\").\n\n&#8226; سيبدأ تثبيت التحديث تلقائياً.</string>
-	<string name="install_guide_page_4_title">إعادة تشغيل جهازك</string>
-	<string name="install_guide_page_4_text">&#8226; عند الإنتهاء من تثبيت التحديث ، ستيتم إعادتك إلى قائمة الريكفري. من ضمن قائمة الريكفري، انقر فوق \"إعادة التشغيل\".\n\n&#8226; سيعرض جهازك شاشة بدء التشغيل لفترة طويلة أثناء بدء التشغيل.\n\n&#8226; بعد ذلك ، سترى رسالة بيضاء مع كلمة \"جاري ترقية نظام أندرويد\"، في هذه الأثناء يتم تحسين تطبيقاتك.</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
+
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
+
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
+
 	<string name="install_guide_page_5_title">تم. إستمتع بإصدار نظام أكسجين الجديد!</string>
 	<string name="install_guide_page_5_text">&#8226; بعد إنتهاء جهازك من تحسين التطبيقات ، سيكون قد تم تثبيت التحديث بنجاح.\nللتحقق من ذلك، يمكنك التحقق من الإصدار الحالي من نظامك على النحو التالي:\n\n&#8226; انتقل إلى الإعدادات ، انقر فوق \"حول الهاتف\" "، وتحقق من إصدار نظام أكسجين.\n\n&#8226; إذا أعجبك هذا التطبيق ، فإمنحه خمس نجوم على متجر بلاي!</string>
 	<string name="install_guide_close_button">إغلاق دليل التثبيت</string>

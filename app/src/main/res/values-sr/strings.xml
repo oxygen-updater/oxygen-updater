@@ -222,14 +222,34 @@
 	<string name="install_guide_page_1_title">Преузмите ажурирање</string>
 	<string name="install_guide_page_1_text">&#8226; Притисните дугме за преузимање да започнете преузимање ажурирања.\n\n&#8226; Прогрес преузимања ће се појавити у апликацији, такође и као обавештење.\n\n&#8226; Када је преузимање завршено, видећете обавештење са текстом \"Преузимање завшено\".\nАко је дошло до грешке приликом преузимања, отворите апликацију и покушајте поново са преузимањем. Ако то не ради, проверите да ли имате интернет конекцију. У супротном, контактирајте нас. То можете учинити одласком на \" Моје апликације \" секцију на Goole Play продавници.</string>
 
-	<string name="install_guide_page_2_title">Уђите у Recovery Mode</string>
-	<string name="install_guide_page_2_text">&#8226; Прво искључите уређај.\n\n&#8226; Затим притисните у исто време дугме за гашење и дугме за смањивање звука.\n\n&#8226; Ваш уређај ће ући у Recovery mode. Сачекајте док не видите мени recovery mode-a.</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-	<string name="install_guide_page_3_title">Инсталирајте преузето ажурирање</string>
-	<string name="install_guide_page_3_text">&#8226; У recovery менију, изаберите језик по избору. Следеће кликните на (или користите дугме за звук за навођење и дугме за гашење за селектовање) \"Install from SD\" .\n\n&#8226; Следеће листајте помоћу дугмета за смањивање звука док не дођете до реда где пише \".zip\" фајл са именом приказаним у апликацији. (Обично је то фај који почиње са \"OnePlusOxygen-\").\n\n&#8226; Инсталација ажурирања ће кренути аутоматски.</string>
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-	<string name="install_guide_page_4_title">Поново покрените ваш уређај</string>
-	<string name="install_guide_page_4_text">&#8226; Када инсталација ажурирања буде готова бићете враћени у Recovery Menu. У recovery менију, притисните на \"Reboot\".\n\n&#8226; Ваш уређај ће показати екран укључивања мало дуже.\n\n&#8226; Након тога видећете белу поруку са текстом \"Android is upgrading\", док ваше апликације буду опримизоване.</string>
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
 
 	<string name="install_guide_page_5_title">Завршено. Уживајте у новој OxygenOS верзији!</string>
 	<string name="install_guide_page_5_text">&#8226; Након што уређај заврши са оптимизовањем ваших апликација ажурирање ће бити успешно инсталирано.\nДа бисте проверили ово, можете проверити тренутну верзију система на следећи начин:\n\n&#8226; Идите у подешавања, кликните на \"About phone\", и проверите OxygenOS верзију.\n\n&#8226; Ако вам се свиђа апликација, молимо вас оцените нас са 5 звездица на Google Play продавници!</string>

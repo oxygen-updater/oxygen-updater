@@ -229,14 +229,34 @@
 	<string name="install_guide_page_1_title">Güncellemeyi indirmek</string>
 	<string name="install_guide_page_1_text">&#8226; Güncellemeyi indirmeyi başlatmak için butona basınız.\n\n&#8226; İndirme işlemi uygulama içinde gözükecektir, ayrıca bildirim olarakta gösterilecektir.\n\n&#8226; İndirme bittiğinde, Bu bildirimi göreceksiniz \"İndirme tamamlandı\".\nEğer indirmede sorun oluşutuysa, Uygulamayı tekrar açın ve indirmeyi birdaha başlatın. Eğer çalışmazsa, internet bağlantınız olduğundan emin olun. Aksi takdirde, uygulama geliştiricileriyle iletişime geçiniz. Google Play\'de \"Uygulamalarım\" bölümünden bakabilirsiniz.</string>
 
-	<string name="install_guide_page_2_title">Kurtarma moduna geçiş yapın</string>
-	<string name="install_guide_page_2_text">&#8226; Cihazınızı kapatın.\n\n&#8226; Sonra, ses kısma ve güç tuşuna aynı anda basılı tutun.\n\n&#8226; Cihazınız kurtarma moduna başlatılacak. Kurtarma menüsünü görene kadar bekleyiniz.</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-	<string name="install_guide_page_3_title">İndirilmiş güncellemeyi yüklemek</string>
-	<string name="install_guide_page_3_text">&#8226; Kurtarma modu bölümünde, öncelikle İngilizce dilini seçiniz. Sonra, \"Install from SD\" yi seçiniz.\n\n&#8226; Sonra, indirililen \".zip\" dosyasını uygulamada belirtilen versiyonunu seçiniz. (Genellikle, bu dosya \"OnePlusOxygen-\" ismiyle başlar).\n\n&#8226; Güncelleme yüklemesi otomatik olarak başlayacktır.</string>
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-	<string name="install_guide_page_4_title">Cihazınızı yeniden başlatın</string>
-	<string name="install_guide_page_4_text">&#8226; Güncelleme yüklemesi bittiğinde, Kurtarma modu\'na geri gideceksiniz. Kurtarma modu bölümünde,\"Reboot\" bölümüne basınız.\n\n&#8226;Cihazınız uzun süre başlatılma ekranını gösterecektir.\n\n&#8226; Daha sonra, beyaz bir yazıyla \"Android is upgrading\" yazısını göreceksiniz, bu sırada uygulamalarınız optimize edilecektir.</string>
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
 
 	<string name="install_guide_page_5_title">Bitti. OxygenOS un yeni sürümünün tadını çıkarın!</string>
 	<string name="install_guide_page_5_text">&#8226; Optimize edilme bittiğinde, güncelleme de başarılı şekilde olmuş demektir.\n Sistem ayarlarınızdan bunu görüntüleyebilirsiniz.\n\n&#8226; Uygulamayı beğendiyseniz, lütfen Google Play\'de 5 yıldız vermeyi unutmayınız!</string>

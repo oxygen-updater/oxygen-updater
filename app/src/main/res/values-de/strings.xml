@@ -266,24 +266,36 @@ Dein Gerät wird neustarten um das Update zu installieren.
 
 -Wenn der Download abgeschlossen ist, wirst du eine Nachricht sehen mit dem Text \"Download abgeschlossen\".
 Falls es einen Download Error gibt, öffne die App und versuche das Update erneut zu downloaden.wenn das nicht funktioniert, kontrolliere ob du eine funktionierende Internet Verbindung hast. Ansonsten kontaktiere den Entwickler dieser App. Du kannst das wenn du auf \"Meine Apps\" im Google Play Store gehst."</string>
-	<string name="install_guide_page_2_title">"Recovery Modus wird geöffnet."</string>
-	<string name="install_guide_page_2_text">"&#8226;Als erstes schalte dein Gerät aus.
 
--dann drücke gleichzeitig die Power Taste und die leiser Taste gleichzeitig.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
--Dein Gerät startet jetzt in den Recovery Modus. Warte bis du das Recovery Menü auf deinem Bildschirm siehst."</string>
-	<string name="install_guide_page_3_title">"Instaliere das gedownloadete Update."</string>
-	<string name="install_guide_page_3_text">"I'm recovery Menü, wähle als erstes deine gewünschte Sprache. Als nächstes, tippe auf (oder benutze die Lautstärke Tasten zum navigieren und die Power Taste zum Auswählen) \"Install from SD\"
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
--Als nächstes scroll mit der leiser Tasten nach unten bis du eine Reihe von \".zip\" Dateien mit dem Dateinamen der in der App gezeigt wurde siehst. (Normalerweise, startet der Name mit \"OnePlusOxygen-\").
+&#8226; Open the Settings app. It should be located in your app drawer.
 
--Fie Installation des Updates startet automatisch."</string>
-	<string name="install_guide_page_4_title">"Starte dein Gerät neu."</string>
-	<string name="install_guide_page_4_text">"Wenn die Installation des Updates abgeschlossen ist, bist du wieder im Recovery Menü. Im Recovery Menü tippe auf \"Reboot\".
+&#8226; Scroll down until you see System updates. Tap on it."</string>
 
--Du siehst auf deinem Gerät den Ladebildschirm für eine längere Zeit.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
 
--Danach wirst du eine Nachricht sehen mit dem Titel \" Android is upgrading\", während deine Apps optimiert werden."</string>
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
+
 	<string name="install_guide_page_5_title">"Fertig. Viel Spaß mit der neues OxygenOS version!"</string>
 	<string name="install_guide_page_5_text">"&#8226;Wenn dein Gerät fertig ist mit dem optimieren der Apps, würde das Update erfolgreich installiert.
 Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrollieren:

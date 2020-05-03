@@ -255,24 +255,36 @@ Din enhet kommer starta om för att installera uppdateringen.
 - Nedladdningens status kommer visas i appen och som en notifikation på din enhet.
 
 - När nedladdningen är klar visas en notifikation med texten \"Nedladdning klar\". Om ett nedladdningsfel inträffat öppnar du appen och försöker hämta uppdateringen igen. Om det inte fungerar, se till att du har en fungerande anslutning. Annars kontakta utvecklaren av appen. Du kan göra det genom att besöka sektionen \"Mina appar\" i Google Play Butik."</string>
-	<string name="install_guide_page_2_title">"Starta återställningsläge."</string>
-	<string name="install_guide_page_2_text">"&#8226; Stäng först av din enhet.
 
-- Tryck sedan på både strömknappen och knappen för att sänka volymen samtidigt.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-- Din enhet startar nu i Återställningsläge. Vänta tills du ser återställningsmenyn på skärmen."</string>
-	<string name="install_guide_page_3_title">"Installera den nedladdade uppdateringen."</string>
-	<string name="install_guide_page_3_text">"&#8226; Inuti återstänningsxenyn, välj ditt önskade språk först. Tryck sedan på (Eller använd volymknapparna och startknappen för att navigera och välja) \"Installera från SD kort\".
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-- Scrolla sedan med hjälp av volymknapparna ner till en \".zip\" fil som delat filnamnet som visas i appen. (Detta är vanligtvis en fil som börjar med \"OnePlusOxygen-\").
+&#8226; Open the Settings app. It should be located in your app drawer.
 
-- Installationen av uppdateringen påbörjas automatiskt."</string>
-	<string name="install_guide_page_4_title">"Starta om enheten."</string>
-	<string name="install_guide_page_4_text">"&#8226; När installationen av uppdateringen är klar kommer du tillbaka till Återställningsmenyn. Inom återställningsmenyn trycker du på \"Starta om\".
+&#8226; Scroll down until you see System updates. Tap on it."</string>
 
-- Din enhet kommer att visa startskärmen under en lång tid vid uppstarten.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
 
-- Efteråt ser du ett vitt meddelande med titeln \"Android uppgraderar\", under tiden dina appar optimeras."</string>
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
+
 	<string name="install_guide_page_5_title">"Klar. Njut av den nya versionen av OxygenOS!"</string>
 	<string name="install_guide_page_5_text">"&#8226; När enheten har slutfört optimeringen av apparna har uppdateringen installerats.
 För att verifiera detta kan du kontrollera nuvarande version av ditt system enligt följande instruktioner:

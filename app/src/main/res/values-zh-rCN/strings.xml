@@ -228,14 +228,34 @@
 	<string name="install_guide_page_1_title">下载更新包</string>
 	<string name="install_guide_page_1_text">&#8226; 轻触“下载”按钮以开始下载。\n\n&#8226; 下载进度会在 App 中显示，同时，它也会在通知中心里实时显示。\n\n&#8226; 当下载结束时，您将会看到“下载完成”的通知。\n如果下载中出现错误，请尝试前往 App 中重试一遍。如果仍出现错误，请您检查您的互联网连接。或者您也可以尝试通过 Google Play 中该应用留下的联系方式联系该应用的开发者。</string>
 
-	<string name="install_guide_page_2_title">进入恢复模式</string>
-	<string name="install_guide_page_2_text">&#8226; 首先，将您的设备关机\n\n&#8226; 然后，同时长按 *音量减* 以及 *电源键*\n\n&#8226; 接着，您的设备便会进入恢复模式。 请等待您的屏幕上显示恢复模式的菜单。</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-	<string name="install_guide_page_3_title">安装下载好的更新包</string>
-	<string name="install_guide_page_3_text">&#8226; 在恢复模式中，请先选择您的语言， 然后点击"从 SD 卡安装"。\n\n&#8226; 接下来，使用 *音量减小键* 向下滚动，直到找到包含应用程序中显示的文件后缀名为“.zip”文件（一般情况下，它以“OnePlusOxygen-”开头）。\n\n&#8226; 然后安装将会自动进行。</string>
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-	<string name="install_guide_page_4_title">重启您的设备</string>
-	<string name="install_guide_page_4_text">&#8226; 更新安装完成后，您将返回恢复模式菜单。在恢复模式菜单中，点击“重新启动”。\n\n&#8226; 然后，您就能看到熟悉的开机动画了！通常更新后的第一次开机会花费很长的时间。\n\n&#8226; 开机之后，您会看到一条标题为“正在完成系统更新”的通知，它的意思是指您的应用正在进行优化。</string>
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
 
 	<string name="install_guide_page_5_title">大功告成！在全新的 OxygenOS 中尽情探索吧！</string>
 	<string name="install_guide_page_5_text">&#8226; 等您的设备优化完应用程序，那么这次更新就算是大功告成了！\n为了验证是否完成，您可以参见以下步骤来查看当前系统版本：\n\n&#8226; 打开设置，轻触“关于手机”，这里您就可以看到您的 OxygenOS 版本。\n\n&#8226; 如果您喜欢这个 App，别忘了去 Google Play 给个 5 星好评哦~</string>
@@ -354,7 +374,7 @@
 	<!-- TODO: translate the 2 strings below -->
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
-	<string name="unsupported_os_warning_message">您的设备好像并没有使用 Oxygen OS。请注意，您只能在运行 Oxygen OS 的设备上安装系统更新。\n不支持其他非 OnePlus 设备，以及运行第三方 ROM 的 OnePlus 设备。</string>
+	<string name="unsupported_os_warning_message">您的设备好像并没有使用 OxygenOS。请注意，您只能在运行 OxygenOS 的设备上安装系统更新。\n不支持其他非 OnePlus 设备，以及运行第三方 ROM 的 OnePlus 设备。</string>
 	<string name="unsupported_device_warning_checkbox_title">不再显示此警告</string>
 
 	<string name="root_check_title">Root 权限</string>

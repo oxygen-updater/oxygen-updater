@@ -203,7 +203,8 @@ class SystemVersionProperties {
 
         // @hack #2 (OS_VERSION_NUMBER_LOOKUP_KEY): OnePlus 7 and later store hardcoded "Oxygen OS " in their version number of the firmware.
         // As the app only shows the number or ads custom formatting, remove this prefix
-        private const val RO_ROM_VERSION_OXYGENOS_PREFIX = "Oxygen OS " // @GitHub contributors, change this value if ro.oxygen.version contains another prefix than "Oxygen OS ".
+        // @GitHub contributors, change this value if ro.oxygen.version contains another prefix than "Oxygen OS ".
+        private val RO_ROM_VERSION_OXYGENOS_PREFIX = "Oxygen ?OS ?".toRegex()
 
         // @hack #3 (DEVICE_NAME_LOOKUP_KEY / OnePlus 7 Pro Support): OnePlus 7 Pro and newer come in regional variants which cannot be detected by ro.display.series.
         // However, its alternative (ro.product.name) does not play nice with values present on older devices.

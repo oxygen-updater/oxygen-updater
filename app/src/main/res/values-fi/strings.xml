@@ -247,25 +247,36 @@ Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
 
 - Kun lataus on valmistunut näet ilmoituksen \"Lataus valmis\".
 Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudelleen. Jos tämä ei toimi varmista, että sinulla on toimiva yhteys. Muutoin olen yhteydessä sovelluksen kehittäjään. Voit tehdä tämän myös vierailemalla \"Omat sovellukset\" osiossa Play Kaupassa."</string>
-	<string name="install_guide_page_2_title">"Siirry palautustilaan (Recovery Mode)"</string>
-	<string name="install_guide_page_2_text">"&#8226; Ensin katkaise laitttesta virta.
 
-- Paina virta- ja äänenvoimakkuus alas painikkkeita yhtä aikaa
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-- Laitteesi käynnistyy nyt palautustilassa. Odota että palautustilan valikon näytölläsi."</string>
-	<string name="install_guide_page_3_title">"Asenna ladattu päivitys."</string>
-	<string name="install_guide_page_3_text">"&#8226; Palautustilassa valitse ensin haluamasi kieli
-Seuraavaksi napsauta (tai käytä äänenvoimakkuus näppäimiä navigoimiseen ja virtanäppäintä valitsemiseen) \"Install from SD\".
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-- Seuraavaksi rullaa alas äänenvoimakkuus alas näppäimellä kunnes löydät .\"zip\" tiedoston jonka nimi on sama sovelluksessa näytetyn kanssa. (Yleensä tiedoston nimi alkaa \"OnePlusOxygen-\").
+&#8226; Open the Settings app. It should be located in your app drawer.
 
-- Päivityksen asennus alkaa automaattisesti."</string>
-	<string name="install_guide_page_4_title">"Käynnistä laitteesi uudelleen."</string>
-	<string name="install_guide_page_4_text">"&#8226; Kun päivityksen asennus on valmistunut, palaat takaisin palautustilan valikon alkuun. Valikosta valitse \"Reboot\".
+&#8226; Scroll down until you see System updates. Tap on it."</string>
 
-- Laitteesi näyttää käynnistyksen kuvaa pitkään käynnistyksen yhteydessä.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
 
-- Tämän jälkeen näet valkoisen viestit otsikolla \"Android is upgrading\", kun sovelluksiasi optimoidaan."</string>
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
+
 	<string name="install_guide_page_5_title">"Valmis. Nauti uudesta OxygenOS versiosta!"</string>
 	<string name="install_guide_page_5_text">"&#8226; Kun laitteesi on viimeistellyt sovellusten optimoinnin, asennus on onnistuneesti suoritettu.
 Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavasti:

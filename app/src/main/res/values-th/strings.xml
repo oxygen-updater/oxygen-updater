@@ -230,14 +230,34 @@
 	<string name="install_guide_page_1_title">ดาวน์โหลดการอัพเดต</string>
 	<string name="install_guide_page_1_text">&#8226; กดปุ่มดาวน์โหลดเพื่อเริ่มดาวน์โหลดการอัปเดต\n\n&#8226; ความคืบหน้าการดาวน์โหลดจะปรากฏในแอปและเป็นการแจ้งเตือนในหน้าจอการแจ้งเตือนของคุณ\n\n&#8226; เมื่อการดาวน์โหลดเสร็จสิ้นคุณจะเห็น การแจ้งเตือนด้วยข้อความ \"ดาวน์โหลดเสร็จสมบูรณ์ \".\n หากเกิดข้อผิดพลาดในการดาวน์โหลดให้เปิดแอปแล้วลองดาวน์โหลดการอัปเดตอีกครั้ง หากไม่สามารถใช้งานได้ให้ตรวจสอบว่าคุณมีการเชื่อมต่อที่ใช้งานได้ มิฉะนั้นติดต่อผู้พัฒนาแอป คุณสามารถทำได้โดยไปที่ส่วน \"แอพของฉัน \" ของ Google Play Store</string>
 
-	<string name="install_guide_page_2_title">เข้าสู่โหมดการกู้คืน</string>
-	<string name="install_guide_page_2_text">&#8226; ก่อนอื่นให้ปิดอุปกรณ์ของคุณ\n\n&#8226; จากนั้นกดทั้งปุ่มเปิดปิดและลดระดับเสียงพร้อมกัน\n\n&#8226; อุปกรณ์ของคุณจะเริ่มทำงานในโหมดการกู้คืน รอจนกว่าคุณจะเห็นเมนูการกู้คืนบนหน้าจอของคุณ</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-	<string name="install_guide_page_3_title">ติดตั้งการการอัพเดตที่ดาวน์โหลดมา</string>
-	<string name="install_guide_page_3_text">&#8226; ภายในเมนูการกู้คืนเลือกภาษาที่คุณต้องการก่อน ถัดไปแตะที่ (หรือใช้ปุ่มปรับระดับเสียงเพื่อนำทางและปุ่มเปิด / ปิดเพื่อเลือก) \"ติดตั้งจาก SD \".\n\n&#8226; ถัดไปเลื่อนลงโดยใช้ปุ่มลดระดับเสียงจนกว่าคุณจะพบแถวที่มี \" .zip \"ไฟล์พร้อมชื่อไฟล์ที่แสดงในแอพ (โดยปกตินี่เป็นไฟล์ที่เริ่มต้นด้วย \"OnePlusOxygen - \")\n\n&#8226; การติดตั้งการอัปเดตจะเริ่มขึ้นโดยอัตโนมัติ</string>
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-	<string name="install_guide_page_4_title">รีสตาร์ทอุปกรณ์ของคุณ</string>
-	<string name="install_guide_page_4_text">&#8226; เมื่อการติดตั้งการอัปเดตเสร็จสิ้นคุณจะกลับมาที่เมนูการกู้คืน ภายในเมนูการกู้คืนให้แตะที่ \"Reboot \"\n\n&#8226; อุปกรณ์ของคุณจะแสดงหน้าจอเริ่มต้นเป็นเวลานานในระหว่างการเริ่มต้นการติดตั้ง\n\n&#8226; หลังจากนั้นคุณจะเห็นข้อความสีขาวพร้อม ชื่อ \"Android กำลังอัปเกรด \" ในขณะที่แอปของคุณกำลังได้รับการปรับปรุง</string>
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
 
 	<string name="install_guide_page_5_title">เสร็จสิ้น ขอสนุกกับ OxygenOS เวอร์ชั่นใหม่!</string>
 	<string name="install_guide_page_5_text">&#8226; หลังจากอุปกรณ์ของคุณเพิ่มประสิทธิภาพแอปเรียบร้อยแล้วและการอัปเดตได้รับการติดตั้งเรียบร้อยแล้ว\n หากต้องการตรวจสอบความถูกต้องของไฟล์คุณสามารถตรวจสอบเวอร์ชั่นปัจจุบันของระบบของคุณดังต่อไปนี้:\n\n&#8226; ไปที่การตั้งค่า และตรวจสอบเวอร์ชัน OxygenOS\n\n&#8226; หากคุณชอบแอพนี้โปรดให้คะแนน 5 ดาวที่ Google Play!</string>

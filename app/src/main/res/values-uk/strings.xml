@@ -221,14 +221,34 @@
 	<string name="install_guide_page_1_title">Завантаження оновлення</string>
 	<string name="install_guide_page_1_text">&#8226; Натисніть кнопку \"Завантажити\", щоб розпочати завантаження оновлення.\n\n&#8226; Внизу застосунку з\'явиться прогрес завантаження, який буде продубльовано в системному сповіщенні.\n\n&#8226; Коли завантаження завершиться, ви побачите сповіщення з текстом \"Завантаження завершено\".\nЯкщо під час завантаження трапиться помилка, відкрийте застосунок і спробуйте завантажити оновлення ще раз. Якщо і це на спрацює, тоді перевірте з\'єднання з інтернетом. Інакше, зв\'яжіться з розробником застосунку: знайдіть застосунок Oxygen Updater в Google Play > \"Контактні дані розробника\".</string>
 
-	<string name="install_guide_page_2_title">Вхід в режим Відновлення</string>
-	<string name="install_guide_page_2_text">&#8226; Спочатку, вимкнуть ваш пристрій.\n\n&#8226; Потім, одночасно затисніть кнопку живлення і кнопку зменшення гучності на декілька секунд.\n\n&#8226; Ваш пристрій перезавантажиться в режим Відновлення. Зачекайте, доки не з\'явиться меню на екрані.</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-	<string name="install_guide_page_3_title">Встановлення завантаженого оновлення</string>
-	<string name="install_guide_page_3_text">&#8226; В режимі Відновлення, спочатку виберіть бажану мову, і введіть пароль, якщо буде запитувати. Далі, натисніть \"Встановити\" (Install).\n\n&#8226; Серед списку файлів, виберіть завантажений \".zip\" файл, який містить оновлення (зазвичай, його назва починається з \"OnePlusOxygen-\").\n\n&#8226; Проведіть пальцем праворуч, щоб розпочати встановлення.</string>
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-	<string name="install_guide_page_4_title">Перезавантаження пристрою</string>
-	<string name="install_guide_page_4_text">&#8226; Коли встановлення оновлення завершиться, перейдіть назад в меню Відновлення. З цього меню, натисніть \"Перезавантажити\" (Reboot) -> \"Система\" (System).\n\n&#8226; Ваш пристрій перезавантажиться і показуватиме екран загрузки протягом тривалого часу.\n\n&#8226; Після цього, коли система загрузиться, ви побачите повідомлення \"Оновлення Android\", під час оптимізації ваших застосунків.</string>
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
 
 	<string name="install_guide_page_5_title">Готово. Насолоджуйтеся новою версією OxygenOS!</string>
 	<string name="install_guide_page_5_text">&#8226; Після того, як пристрій завершить оптимізацію застосунків, оновлення успішно завершиться.\nЩоб це перевірити, ви можете переглянути поточну версію OxygenOS наступним чином:\n\n&#8226; Зайдіть в Налаштування, в самому низу виберіть \"Про телефон\", і погляньте на номер складання.\n\n&#8226; Якщо вам сподобався цей застосунок, поставте йому 5 зірочок в Google Play!</string>

@@ -235,14 +235,34 @@
 	<string name="install_guide_page_1_title">Pobierz aktualizację</string>
 	<string name="install_guide_page_1_text">&#8226; Naciśnij przycisk Pobierz aby zacząć pobieranie aktualizacji.\n\n&#8226; Postęp pobierania pojawi się w aplikacji, jako powiadomienie na ekranie.\n\n&#8226; Kiedy pobieranie się zakończy, zobaczysz powiadomienie z komunikatem \"Pobieranie zakończone\".\nJeśli nastąpił błąd pobierania, otwórz aplikację i spróbuj pobrać aktualizację ponownie. Jeśli to nie zadziała, upewnij się że masz połączenie z internetem. W przeciwnym wypadku, skontaktuj się z deweloperem aplikacji. Możesz to zrobić odwiedzając sekcję \"Moje aplikacje\" w Sklepie Play.</string>
 
-	<string name="install_guide_page_2_title">Wejdź do trybu Recovery</string>
-	<string name="install_guide_page_2_text">&#8226; Najpierw, wyłącz urządzenie.\n\n&#8226; Potem, naciśnij równocześnie przycisk zasilania oraz głośności w dół.\n\n&#8226; Twoje urządzenie powinno się teraz uruchomić w trybie Recovery. Poczekaj aż zobaczysz menu recovery na ekranie.</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-	<string name="install_guide_page_3_title">Zainstaluj pobraną aktualizację</string>
-	<string name="install_guide_page_3_text">&#8226; Z poziomu menu recovery, wybierz twój pożądany język. Nastepnie, naciśnij na (albo użyj przycisków głośności do nawigowania i przycisku zasilania do wybierania) \"Zainstaluj z karty SD.\n\n&#8226; Następnie, przewiń w dół używając przycisku głośności w dół dopóki nie znajdziesz rzędu z plikiem \".zip\" z nazwą pliku pokazaną w aplikacji.(Zazwyczaj, jest to plik zaczynający się na \"OnePlusOxygen-\").\n\n&#8226; Instalacja aktualizacji rozpocznie się automatycznie.</string>
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-	<string name="install_guide_page_4_title">Zrestartuj twoje urządzenie</string>
-	<string name="install_guide_page_4_text">&#8226; Kiedy instalacja aktualizacji zostanie zakończona, będziesz z powrotem w menu recovery. Z poziomu menu recovery, naciśnij na \"Uruchom ponownie\".\n\n&#8226; Twoje urządzenie pokaże ekran włączania przez długi czas podczas uruchamiania.\n\n&#8226; Potem, zobaczysz białą wiadomość z tytułem \"Android się aktualizuje\", kiedy twoje aplikacje są optymalizowane.</string>
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
 
 	<string name="install_guide_page_5_title">Zrobione. Ciesz się z nowej wersji OxygenOS !</string>
 	<string name="install_guide_page_5_text">&#8226; Gdy twoje urządzenie zakończy optymalizację aplikacji, aktualizacja zostanie pomyślnie zainstalowana.\nAby to zweryfikować, możesz sprawdzić obecną wersję systemu następująco:\n\n&#8226; Idź do Ustawień, naciśnij na \"Informacje o telefonie\" oraz sprawdź wersję OxygenOS.\n\n&#8226; Jeśli lubisz tę aplikację, daj jej 5 gwiazdek w Sklepie Play !</string>

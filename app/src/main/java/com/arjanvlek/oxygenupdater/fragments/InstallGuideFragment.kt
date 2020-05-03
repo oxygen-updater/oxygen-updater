@@ -10,6 +10,7 @@ import com.arjanvlek.oxygenupdater.activities.InstallActivity
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.InstallGuidePage
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
@@ -22,6 +23,7 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
     private var pageNumber = 1
     private var isFirstPage = false
 
+    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val settingsManager by inject<SettingsManager>()
     private val installViewModel by sharedViewModel<InstallViewModel>()
 
@@ -55,28 +57,36 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
                         requireActivity().packageName
                     )
 
-                    if (it == null) {
-                        val title = getString(titleResourceId)
-                        val text = getString(contentsResourceId)
+                    // This is used to format the `install_guide_page_3_text` string
+                    val deviceName = systemVersionProperties.oxygenDeviceName
+                        // Ignore variant codes
+                        .split("_")[0]
+                        // Some old devices have spaces in the name.
+                        // Since the filename obviously doesn't have spaces, remove them.
+                        .replace(" ", "")
 
-                        InstallGuidePage(
-                            id = pageNumber.toLong(),
-                            deviceId = null,
-                            updateMethodId = null,
-                            pageNumber = pageNumber,
-                            fileExtension = null,
-                            imageUrl = null,
-                            englishTitle = title,
-                            dutchTitle = title,
-                            englishText = text,
-                            dutchText = text
-                        )
-                    } else {
-                        it.cloneWithDefaultTitleAndText(
-                            getString(titleResourceId),
-                            getString(contentsResourceId)
-                        )
-                    }
+                    val title = getString(titleResourceId)
+                    // Format "%1$sOxygen" with the correct device name
+                    val text = getString(
+                        contentsResourceId,
+                        deviceName
+                    )
+
+                    it?.cloneWithDefaultTitleAndText(
+                        title,
+                        text
+                    ) ?: InstallGuidePage(
+                        id = pageNumber.toLong(),
+                        deviceId = null,
+                        updateMethodId = null,
+                        pageNumber = pageNumber,
+                        fileExtension = null,
+                        imageUrl = null,
+                        englishTitle = title,
+                        dutchTitle = title,
+                        englishText = text,
+                        dutchText = text
+                    )
                 } else {
                     it.copy()
                 }

@@ -222,14 +222,34 @@
 	<string name="install_guide_page_1_title">Töltsd le a frissítést</string>
 	<string name="install_guide_page_1_text">&#8226; A frissítés letöltésének megkezdéséhez nyomd meg a Letöltés gombot.\n\n&#8226; A letöltési folyamat az alkalmazásban jelenik meg, és értesítésként az értesítési sávban.\n\n&#8226; Amikor a letöltés befejeződött, egy értesítést fogsz látni, amelynek szövege: \"Letöltés kész\" lesz.\nHa letöltési hiba történt, nyisd meg az alkalmazást, és próbáld meg újra letölteni a frissítést. Ha ez nem működik, ellenőrizd, hogy működőképes-e a kapcsolat. Ellenkező esetben vedd fel a kapcsolatot az alkalmazás fejlesztőjével. Ezt megteheted a Google Play Áruház \"Saját alkalmazások\" szekciójában.</string>
 
-	<string name="install_guide_page_2_title">Lépj a Helyreállítási Módba</string>
-	<string name="install_guide_page_2_text">&#8226; Először kapcsold ki a készüléket.\n\n&#8226; Ezután nyomd meg egyszerre a bekapcsoló és a hangerő csökkentő gombokat.\n\n&#8226; Az eszköz most Helyreállítási Módban indul. Várd meg, amíg a képernyőn megjelenik a helyreállítási menü.</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-	<string name="install_guide_page_3_title">Telepítd a letöltött frissítést</string>
-	<string name="install_guide_page_3_text">&#8226; A helyreállítási menüben válaszd ki először a kívánt nyelvet. Ezután érintsd meg (vagy használd a hangerőszabályzó gombokat a navigáláshoz, és a bekapcsológombot a kiválasztáshoz) a \"Telepítés SD-ről\" gombot.\n\n&#8226; Ezután görgess lefelé a hangerő csökkentő gombbal, amíg nem találsz egy \".Zip\" sort az alkalmazásban megjelenő fájlnévvel. (Általában ez az \"OnePlusOxygen-\" -szel kezdődő fájl).\n\n&#8226; A frissítés telepítése automatikusan el fog indulni.</string>
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-	<string name="install_guide_page_4_title">Indítsd újra a készüléket</string>
-	<string name="install_guide_page_4_text">&#8226; Amikor a frissítés telepítése befejeződött, visszatrést a Helyreállítási menübe. Itt érintsd meg az \"Újraindítás\" elemet.\n\n&#8226; Az eszköz indítás közben hosszú ideig megmutatja majd a kezdőképernyőjét.\n\n&#8226; Ezután egy fehér üzenetet fog látni \"Az Android frissül\" címmel, amíg az alkalmazások optimalizálódnak.</string>
+&#8226; Open the Settings app. It should be located in your app drawer.
+
+&#8226; Scroll down until you see System updates. Tap on it."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
 
 	<string name="install_guide_page_5_title">Kész. Élvezd az új OxygenOS verziót!</string>
 	<string name="install_guide_page_5_text">&#8226; Miután az eszköz optimalizálta alkalmazásokat, a frissítés sikeresen telepítve lett.\nEnnek ellenőrzéséhez ellenőrizze a rendszer jelenlegi verzióját a következők szerint:\n\n&#8226; Lépj a Beállítások menübe, érintsd meg az \"A telefonról\" gombot, és ellenőrizd az OxygenOS verziót.\n\n&#8226; Ha tetszik ez az alkalmazás, adj neki 5 csillagot a Google Playen!</string>

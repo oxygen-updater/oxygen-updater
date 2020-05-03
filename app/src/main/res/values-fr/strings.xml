@@ -245,25 +245,36 @@ Votre appareil va redémarrer afin d'installer la mise à jour.
 — Quand le téléchargement sera fini, vous verrez une notification avec le texte « Téléchargement fini ».
 Si une erreur de téléchargement s'est produite, ouvrez l'application et réessayez de télécharger l'application. Si cela ne fonctionne pas vérifiez que votre connexion Internet fonctionne. Autrement, contactez le développeur de l'application.
 Vous pouvez faire cela en visitant la section « Mes applications » dans le Play Store."</string>
-	<string name="install_guide_page_2_title">"Entrez dans le mode Recovery."</string>
-	<string name="install_guide_page_2_text">"— Premièrement, éteignez votre appareil.
 
-— Ensuite, pressez simultanément les boutons power et volume bas.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-— Votre appareil va maintenant démarrer en mode Recovery. Patientez jusqu'à ce que vous voyez le menu du mode Recovery sur votre écran."</string>
-	<string name="install_guide_page_3_title">"Installez la mise à jour téléchargée."</string>
-	<string name="install_guide_page_3_text">"— Choisissez votre langue préférée dans le menu recovery
-Sélectionnez ensuite « Install from SD » (ou utilisez les boutons de volume pour naviguer et power pour cela)
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-— Ensuite, en utilisant la touche volume bas, descendez jusqu'à atteindre un fichier « .Zip » portant le même nom que dans l'application (commençant habituellement par OnePlusOxygen-).
+&#8226; Open the Settings app. It should be located in your app drawer.
 
-— L'installation de la mise à jour va débuter automatiquement."</string>
-	<string name="install_guide_page_4_title">"Redémarrez votre appareil."</string>
-	<string name="install_guide_page_4_text">"— Quand l'installation de la mise à jour sera terminée vous serez de retour sur le menu Recovery. À partir de là sélectionnez « Reboot ».
+&#8226; Scroll down until you see System updates. Tap on it."</string>
 
-— Votre appareil va prendre un peu de temps à redémarrer à cause de l'installation de la mise à jour.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
 
-— Après cela, vous verrez une notification intitulée « Finalisation de la mise à jour Android » pendant que vos applications seront en cours d'optimisation."</string>
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
+
 	<string name="install_guide_page_5_title">"Fait. Profitez de la nouvelle version d'OxygenOS !"</string>
 	<string name="install_guide_page_5_text">"Une fois que votre appareil a fini d'optimiser les applications la mise à jour s'est correctement installée.
 Afin de le vérifier vous pouvez effectuer la manipulation suivante :

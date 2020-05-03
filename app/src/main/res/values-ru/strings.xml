@@ -270,24 +270,36 @@
 - Когда загрузка завершится, вы увидите уведомление о завершении загрузки.
 Если произошла ошибка загрузки, откройте приложение и попробуйте снова загрузить обновление. Если это не работает, убедитесь, что у вас работает интернет подключение.
 В противном случае обратитесь к разработчику приложения. Вы можете сделать это, посетив раздел «Мои приложения» в Google Play Mаркет."</string>
-	<string name="install_guide_page_2_title">"Зайти в режим восстановления."</string>
-	<string name="install_guide_page_2_text">"&#8226; Выключите устройство.
 
-- Зажмите одновременно кнопку выключения и громкости вниз
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
-- Ваше устройство перейдет в режим восстановления. Подождите, пока не увидите меню рекавери на экране."</string>
-	<string name="install_guide_page_3_title">"Установка загруженного обновления."</string>
-	<string name="install_guide_page_3_text">"&#8226; В меню рекавери сначала выберите нужный язык. Затем нажмите (или используйте кнопки громкости для навигации и кнопку питания для выбора) «Install from SD».
+Instructions:
+&#8226; Close Oxygen Updater by pressing the home button.
 
-- Затем прокрутите вниз с помощью клавиши уменьшения громкости, пока не найдете строку с файлом «.zip» с именем файла, отображаемым в приложении. (Обычно название файла начинается с \"OnePlusOxygen-\").
+&#8226; Open the Settings app. It should be located in your app drawer.
 
-- Установка обновления начнется автоматически."</string>
-	<string name="install_guide_page_4_title">"Перезагрузите устройство."</string>
-	<string name="install_guide_page_4_text">"&#8226; Когда установка обновления будет завершена, вы вернетесь в меню рекавери. Там же нажмите \"Reboot\".
+&#8226; Scroll down until you see System updates. Tap on it."</string>
 
-- Устройство будет загружаться дольше обычного во время первого запуска.
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
 
-- После этого вы увидите белое сообщение с заголовком «Android обновляется», в то время как ваши приложения оптимизируются."</string>
+&#8226; Within the System Updates section, tap the gear icon in the top right
+
+&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+
+&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+
+&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="install_guide_page_4_title">Wait until the installation completes</string>
+	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+
+&#8226; Afterwards, your phone will restart to complete the update."</string>
+
 	<string name="install_guide_page_5_title">"Готово. Наслаждайтесь новой версией OxygenOS!"</string>
 	<string name="install_guide_page_5_text">"&#8226; После завершения оптимизации приложений, обновление установлено успешно.
 Чтобы проверить это, вы можете узнать текущую версию системы следующим образом::
