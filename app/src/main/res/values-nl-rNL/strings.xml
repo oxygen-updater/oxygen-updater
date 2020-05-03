@@ -301,7 +301,10 @@
 	<string name="news_date_published">Laatste update: %1$s</string>
 	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
 	<string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \"OPNIEUW\" om het artikel opnieuw te laden.</string>
-	<string name="news_unread_count">Je hebt %1$d ongelezen nieuwsartikelen.</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="news_unread_count_1">Je hebt %1$d ongelezen nieuwsartikelen. Tap here to view them.</string>
+	<string name="news_unread_count_2">Je hebt %1$d ongelezen nieuwsartikelen. Tap to show all articles.</string>
+	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">Nog geen artikelen</string>
 	<string name="news_empty_state_all_read_header">Er is niets meer te lezen</string>
 	<string name="news_empty_state_none_available_text">Er zijn geen artikelen beschikbaar op dit moment, kom later terug.</string>

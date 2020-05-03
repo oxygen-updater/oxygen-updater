@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/mark_as_read"
+		android:icon="@drawable/list_select"
+		android:title="@string/news_mark_all_read" />
+</menu>

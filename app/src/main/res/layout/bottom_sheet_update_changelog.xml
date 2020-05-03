@@ -13,6 +13,7 @@
 		android:background="@drawable/rounded_overlay_top"
 		android:fontFamily="@font/google_sans_medium"
 		android:foreground="?selectableItemBackground"
+		android:gravity="center_vertical"
 		android:padding="@dimen/spacing_default"
 		android:stateListAnimator="@animator/clicked"
 		android:textColor="?colorPrimary"

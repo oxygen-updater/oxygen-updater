@@ -367,7 +367,10 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_date_published">"Dernière mise à jour : %1$s"</string>
 	<string name="news_empty">"Cet article n'a pas de contenu."</string>
 	<string name="news_load_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton « Réessayer » pour ouvrir l'article."</string>
-	<string name="news_unread_count">Vous avez %1$d articles non lus</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="news_unread_count_1">Vous avez %1$d articles non lus. Tap here to view them.</string>
+	<string name="news_unread_count_2">Vous avez %1$d articles non lus. Tap to show all articles.</string>
+	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">Aucun article n\'est présent</string>
 	<string name="news_empty_state_all_read_header">Aucun article non lu</string>
 	<string name="news_empty_state_none_available_text">Aucun article n\'est disponible pour l\'instant, veuillez réessayez plus tard.</string>

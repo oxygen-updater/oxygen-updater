@@ -11,33 +11,21 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
-		<LinearLayout
-			android:id="@+id/bannerLayout"
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/bannerTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
 			android:background="@color/appBarBackground"
+			android:drawablePadding="@dimen/spacing_quarter"
 			android:foreground="?selectableItemBackground"
 			android:gravity="center"
 			android:padding="@dimen/spacing_default"
+			android:textColor="@color/white"
 			android:visibility="gone"
-			tools:visibility="visible">
-
-			<androidx.appcompat.widget.AppCompatImageView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="top"
-				android:contentDescription="@string/icon"
-				app:srcCompat="@drawable/info" />
-
-			<TextView
-				android:id="@+id/bannerTextView"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_marginStart="@dimen/spacing_half"
-				android:textColor="@color/white"
-				tools:text="@string/news_unread_count" />
-		</LinearLayout>
+			app:drawableStartCompat="@drawable/info"
+			tools:text="@string/news_unread_count_1"
+			tools:visibility="visible" />
 
 		<LinearLayout
 			android:id="@+id/emptyStateLayout"

@@ -88,8 +88,10 @@ class WebViewClient(
 
     /**
      * Just invokes the callback, nothing special
-     * Used on API 23+
-     * (see https://developer.android.com/reference/android/webkit/WebViewClient#onPageCommitVisible(android.webkit.WebView,%20java.lang.String))
+     * This API was added in API 23, which is why [onPageFinished] is also implemented,
+     * so that the callback is invoked on API 21 & 22 too.
+     *
+     * See [PR#108](https://github.com/oxygen-updater/oxygen-updater/pull/108)
      */
     override fun onPageCommitVisible(
         view: WebView?,
@@ -101,12 +103,15 @@ class WebViewClient(
 
     /**
      * Just invokes the callback, nothing special
-     * Used on API 21 and 22
+     * Used on API 22 and below
      */
-    override fun onPageFinished(view: WebView?, url: String?) {
+    override fun onPageFinished(
+        view: WebView?,
+        url: String?
+    ) = super.onPageFinished(view, url).also {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             logDebug(TAG, "Page finished for: $url")
-            pageCommitVisibleCallback.invoke(error);
+            pageCommitVisibleCallback.invoke(error)
         }
     }
 

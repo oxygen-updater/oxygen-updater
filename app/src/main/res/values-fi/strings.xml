@@ -38,7 +38,7 @@
 	<!-- Downloader strings -->
 	<string name="download">Lataa päivitys</string>
 	<string name="downloaded">Päivitys ladattu</string>
-	<string name="downloading">Ladataan päivitystä...</string>
+	<string name="downloading">Ladataan päivitystä…</string>
 	<string name="paused">Pysäytetty - paina jatkaaksesi</string>
 
 	<string name="download_complete">"Lataus on valmistunut"</string>
@@ -49,8 +49,8 @@
 	<string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
 	<string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>
 	<string name="download_error_could_not_move_temp_file">Tiedosto ladattu, mutta sitä ei voitu siirtää oikeaan kansioon. Avaa tiedostonhallinta, navigoi \"%1$s\" polkuun ja siirrä tiedosto sisäisen tallennustilan juureen.</string>
-	
-    <string name="download_error_retry">"Uudelleen"</string>
+
+	<string name="download_error_retry">"Uudelleen"</string>
 	<string name="download_error_resume">"Jatkaa"</string>
 	<string name="download_error_storage">"Laitteessasi ei ole tarpeeksi vapaata tallennustilaa päivityksen lataamiseksi. Vapauta tilaa laittteestasi poistamalla tiedostoja ja yritä ladata päivitys uudelleen."</string>
 	<string name="download_failed">"Lataus epäonnistui"</string>
@@ -364,7 +364,10 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="news_date_published">"Viimeisin päivitys: %1$s"</string>
 	<string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
 	<string name="news_load_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
-    <string name="news_unread_count">Sinulla on %1$d lukematonta artikkelia</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="news_unread_count_1">Sinulla on %1$d lukematonta artikkelia. Tap here to view them.</string>
+	<string name="news_unread_count_2">Sinulla on %1$d lukematonta artikkelia. Tap to show all articles.</string>
+	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">Ei artikkeleita</string>
 	<string name="news_empty_state_all_read_header">Ei luettavaa jäljellä</string>
 	<string name="news_empty_state_none_available_text">Ei artikkeleita. Tule takaisin myöhemmin.</string>
@@ -390,7 +393,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="error_maintenance">"Palvelimella huoltokatko"</string>
 	<string name="error_maintenance_message">"Ole hyvä ja odota. Palvelin on hyvin pian taas käytettävissä."</string>
 	<string name="error_maintenance_retry">Palvelimella saattaa olla huoltokatko. Yritä uudestaan pian, tai ilmoita siitä meille joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord palvelimella</a>.</string>
-    <string name="error_reload">"Lataa uudelleen"</string>
+	<string name="error_reload">"Lataa uudelleen"</string>
 	<string name="error_unable_to_rate_app">"Ei voi arvostella sovellusta, sillä Play Kauppa puuttuu laitteeltasi."</string>
 
 	<!-- Message strings -->
@@ -398,9 +401,9 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="delete_message_contents">"Olet jo ladannut tämän päivityksen, mutta et vielä asentanut sitä. Napsauta \"Asenna\" nähdäksesi kuinka päivitys asennetaan. Napsauta \"Poista\" painiketta poistaaksesi tiedosto. Paina takaisin painiketta sulkeaksi tämä viesti."</string>
 	<string name="delete_message_delete_button">"Poista"</string>
 	<string name="unsupported_device_warning_title">"Laitetta ei tueta"</string>
-    <string name="carrier_exclusive_device_warning_message">Näyttäisi siltä, että käytät operaattori eksklusiivista laitetta. vaikka käytössäsi on OxygenOS, et voi asentaa päivityksiä. Yleensä operaattorit lukitsevat laitteensa, jotta käyttäjä ei pysty päivittämään tai muokkaamaan laitteen ohjelmistoa ilman operaattorin lupaa. Tämä on yleinen tapa Amerikassa: "Paikallinen Päivitys" vaihtoehto on poistettu operaattori eksklusiivisista OxygenOS versioista. Tämä asetus on välttämätön, jotta voit asentaa päivityksiä manuaalisesti, vaikka et käyttäisi tätä sovellusta. Valitettavasti emme voi tehdä tälle mitään, olemme teknisesti ja mahdollisesti laillisesti rajoitettuja. Ota yhteyttä sähköpostilla tai Discordissa asian selkeyttämiseksi.</string>
+	<string name="carrier_exclusive_device_warning_message">Näyttäisi siltä, että käytät operaattori eksklusiivista laitetta. vaikka käytössäsi on OxygenOS, et voi asentaa päivityksiä. Yleensä operaattorit lukitsevat laitteensa, jotta käyttäjä ei pysty päivittämään tai muokkaamaan laitteen ohjelmistoa ilman operaattorin lupaa. Tämä on yleinen tapa Amerikassa: "Paikallinen Päivitys" vaihtoehto on poistettu operaattori eksklusiivisista OxygenOS versioista. Tämä asetus on välttämätön, jotta voit asentaa päivityksiä manuaalisesti, vaikka et käyttäisi tätä sovellusta. Valitettavasti emme voi tehdä tälle mitään, olemme teknisesti ja mahdollisesti laillisesti rajoitettuja. Ota yhteyttä sähköpostilla tai Discordissa asian selkeyttämiseksi.</string>
 	<string name="unsupported_device_warning_message">Onnittelut uudesta OnePlus laitteesta! Valitettavasti emme ole vielä lisänneet tukea tälle laitteelle. Älä huoli, lisäämme sen mahdollisimman nopeasti. Emme halua tehdä virheitä ja laitteen testaus ja tuen lisääminen on aikaa vievää. Ole kärsivällinen. Lähetä sähköpostia tai liity Discord palvelimelle, jos haluat auttaa tai saada ilmoituksen, kun uusi versio sovelluksesta tukee laitettasi.</string>
-    <string name="unsupported_os_warning_message">"Näyttäisi siltä, että laiteellasi ei ole asennettuna OxygenOS. Huomioithan, että voit asentaa päivityksiä vain laitteille joilla on asennettuna OxygenOS.
+	<string name="unsupported_os_warning_message">"Näyttäisi siltä, että laiteellasi ei ole asennettuna OxygenOS. Huomioithan, että voit asentaa päivityksiä vain laitteille joilla on asennettuna OxygenOS.
 
 Muut laitteet, mukaan lukien OnePlus laitteet joille on asennettu kustomoitu käyttöjärjestelmä, eivät ole tuettuja"</string>
 	<string name="unsupported_device_warning_checkbox_title">"Älä näytä tätä varoitusta uudelleen"</string>

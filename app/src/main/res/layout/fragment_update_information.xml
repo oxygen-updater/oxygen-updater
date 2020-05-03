@@ -31,6 +31,7 @@
 			android:background="@color/backgroundVariant"
 			android:fontFamily="@font/google_sans"
 			android:foreground="?selectableItemBackground"
+			android:gravity="center_vertical"
 			android:padding="@dimen/spacing_default"
 			android:stateListAnimator="@animator/clicked"
 			android:text="@string/update_information_banner_server"

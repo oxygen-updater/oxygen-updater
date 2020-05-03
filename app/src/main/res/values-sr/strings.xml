@@ -300,7 +300,10 @@
 	<string name="news_date_published">Последње ажурирање: %1$s</string>
 	<string name="news_empty">Ова вест нема садржај.</string>
 	<string name="news_load_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
-	<string name="news_unread_count">Имате %1$d непрочитаних вести</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="news_unread_count_1">Имате %1$d непрочитаних вести. Tap here to view them.</string>
+	<string name="news_unread_count_2">Имате %1$d непрочитаних вести. Tap to show all articles.</string>
+	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">Нема вести још увек</string>
 	<string name="news_empty_state_all_read_header">Није ништа преостало за прочитати</string>
 	<string name="news_empty_state_none_available_text">У овом тренутку нема доступних вести, погледајте касније.</string>

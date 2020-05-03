@@ -313,8 +313,10 @@
 	<string name="news_date_published">Última actualización: %1$s</string>
 	<string name="news_empty">El artículo no tiene contenido.</string>
 	<string name="news_load_error">Error al abrir el artículo. Comprueba tu conexión y pulsa el botón \"REINTENTAR\" para abrir el artículo.</string>
-	<!-- TODO: translate these 5 strings below -->
-	<string name="news_unread_count">You have %1$d unread news articles</string>
+	<!-- TODO: translate these 7 strings below -->
+	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
+	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>

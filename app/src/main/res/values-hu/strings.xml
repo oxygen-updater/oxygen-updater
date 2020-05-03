@@ -301,7 +301,10 @@
 	<string name="news_date_published">Utolsó frissítés: %1$s</string>
 	<string name="news_empty">Ennek a cikknek nincs tartalma.</string>
 	<string name="news_load_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"ÚJRA\" gombot a cikk megnyitásához.</string>
-	<string name="news_unread_count">%1$d olvasatlan híred van</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="news_unread_count_1">%1$d olvasatlan híred van. Tap here to view them.</string>
+	<string name="news_unread_count_2">%1$d olvasatlan híred van. Tap to show all articles.</string>
+	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">Még nincsenek cikkek</string>
 	<string name="news_empty_state_all_read_header">Nincs mit elolvasni</string>
 	<string name="news_empty_state_none_available_text">Jelenleg nincs elérhető cikk, ellenőrizd később.</string>

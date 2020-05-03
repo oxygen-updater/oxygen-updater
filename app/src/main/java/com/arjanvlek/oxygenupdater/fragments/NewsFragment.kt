@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.activities.MainActivity
 import com.arjanvlek.oxygenupdater.adapters.AlphaInAnimationAdapter
 import com.arjanvlek.oxygenupdater.adapters.NewsAdapter
+import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.extensions.addPlaceholderItemsForShimmer
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -21,6 +23,7 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_news.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class NewsFragment : AbstractFragment(R.layout.fragment_news) {
@@ -30,6 +33,7 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
 
     private lateinit var newsAdapter: NewsAdapter
 
+    private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
     /**
@@ -98,6 +102,13 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
             newsAdapter = NewsAdapter(context, itemList) { newsItemId ->
                 newsAdapter.markItemAsRead(newsItemId)
                 updateBannerText(newsAdapter.itemList.count { !it.read })
+
+                if (isShowingOnlyUnreadArticles) {
+                    // Remove the item if the user is seeing only unread articles
+                    newsAdapter.updateList(
+                        newsAdapter.itemList.filter { !it.read }
+                    )
+                }
             }
 
             // animate items when they load
@@ -108,22 +119,33 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
             }
 
             // toggle between showing only reading articles and showing all articles
-            bannerLayout.setOnClickListener {
-                newsAdapter.updateList(
-                    if (isShowingOnlyUnreadArticles) newsItems
-                    else newsItems.filter { !it.read }
-                )
+            bannerTextView.apply {
+                setOnClickListener {
+                    newsAdapter.updateList(
+                        if (isShowingOnlyUnreadArticles) newsItems
+                        else newsItems.filter { !it.read }
+                    )
 
-                isShowingOnlyUnreadArticles = !isShowingOnlyUnreadArticles
+                    isShowingOnlyUnreadArticles = !isShowingOnlyUnreadArticles
 
-                if (newsAdapter.itemList.isEmpty()) {
-                    if (isShowingOnlyUnreadArticles) {
-                        displayEmptyState(true)
+                    text = getString(
+                        if (isShowingOnlyUnreadArticles) {
+                            R.string.news_unread_count_2
+                        } else {
+                            R.string.news_unread_count_1
+                        },
+                        newsAdapter.itemList.count { !it.read }
+                    )
+
+                    if (newsAdapter.itemList.isEmpty()) {
+                        if (isShowingOnlyUnreadArticles) {
+                            displayEmptyState(true)
+                        } else {
+                            displayEmptyState()
+                        }
                     } else {
-                        displayEmptyState()
+                        emptyStateLayout.isVisible = false
                     }
-                } else {
-                    emptyStateLayout.isVisible = false
                 }
             }
         }
@@ -144,8 +166,51 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
             return
         }
 
-        bannerLayout.isVisible = true
-        bannerTextView.text = getString(R.string.news_unread_count, count)
+        bannerTextView.apply {
+            isVisible = true
+            text = getString(
+                if (isShowingOnlyUnreadArticles) {
+                    R.string.news_unread_count_2
+                } else {
+                    R.string.news_unread_count_1
+                },
+                count
+            )
+
+            if (count != 0) {
+                setOnLongClickListener { view ->
+                    if (isAdded && context != null) {
+                        PopupMenu(requireContext(), view).apply {
+                            inflate(R.menu.menu_mark_articles_read)
+                            show()
+
+                            setOnMenuItemClickListener {
+                                newsAdapter.itemList.filter {
+                                    !it.read
+                                }.forEach { newsItem ->
+                                    if (newsItem.id != null) {
+                                        // Mark the item as read on the device.
+                                        newsDatabaseHelper.markNewsItemRead(newsItem)
+                                        newsAdapter.markItemAsRead(newsItem.id)
+                                    }
+                                }
+
+                                updateBannerText(0)
+
+                                if (isShowingOnlyUnreadArticles) {
+                                    displayEmptyState(true)
+                                }
+
+                                true
+                            }
+                        }
+                    }
+                    true
+                }
+            } else {
+                setOnLongClickListener(null)
+            }
+        }
 
         // display badge with the number of unread news articles
         // if there aren't any unread articles, the badge is hidden
@@ -153,20 +218,26 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
     }
 
     private fun displayEmptyState(isAllReadEmptyState: Boolean = false) {
-        emptyStateLayout.isVisible = true
-        emptyStateLayout.startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
-
-        emptyStateHeader.text = if (isAllReadEmptyState) {
-            getString(R.string.news_empty_state_all_read_header)
-        } else {
-            getString(R.string.news_empty_state_none_available_header)
+        emptyStateLayout.apply {
+            isVisible = true
+            startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
         }
 
-        emptyStateText.text = if (isAllReadEmptyState) {
-            getString(R.string.news_empty_state_all_read_text)
-        } else {
-            getString(R.string.news_empty_state_none_available_text)
-        }
+        emptyStateHeader.text = getString(
+            if (isAllReadEmptyState) {
+                R.string.news_empty_state_all_read_header
+            } else {
+                R.string.news_empty_state_none_available_header
+            }
+        )
+
+        emptyStateText.text = getString(
+            if (isAllReadEmptyState) {
+                R.string.news_empty_state_all_read_text
+            } else {
+                R.string.news_empty_state_none_available_text
+            }
+        )
     }
 
     private val loadDelayMilliseconds = if (!hasBeenLoadedOnce) {

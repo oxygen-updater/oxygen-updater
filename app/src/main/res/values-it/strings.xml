@@ -234,7 +234,7 @@ Il tuo dispositivo si riavvierà.
 	<string name="install_verify_success_message">"OOS versione %1$s e' stata istallata con successo."</string>
 	<string name="install_zip_file_clear">"Cancella file pacchetto root."</string>
 	<string name="install_zip_file_pick">"Scegli pacchetto root"</string>
-	<string name="install_zip_file_placeholder">"Scegli pacchetto root.."</string>
+	<string name="install_zip_file_placeholder">"Scegli pacchetto root…"</string>
 	<string name="install_zip_file_wrong_file_type">"Seleziona soltanto un file zip."</string>
 
 	<!-- Install guide strings -->
@@ -367,7 +367,10 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="news_date_published">"Ultimo aggiornamento: %1$s"</string>
 	<string name="news_empty">"Questo articolo non ha commenti."</string>
 	<string name="news_load_error">"Errore nell'aprire l'articolo. Controlla la tua connesisone e ritenta."</string>
-	<string name="news_unread_count">Hai %1$d articoli non letti.</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="news_unread_count_1">Hai %1$d articoli non letti. Tap here to view them.</string>
+	<string name="news_unread_count_2">Hai %1$d articoli non letti. Tap to show all articles.</string>
+	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">Nessun articolo disponibile</string>
 	<string name="news_empty_state_all_read_header">Non c\'e\' piu\' nulla da leggere!</string>
 	<string name="news_empty_state_none_available_text">Non c\'e\' nulla da leggere, riprova piu\' tardi.</string>
