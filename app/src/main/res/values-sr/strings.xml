@@ -319,7 +319,9 @@ Instructions:
 	<string name="news">Вести</string>
 	<string name="news_date_published">Последње ажурирање: %1$s</string>
 	<string name="news_empty">Ова вест нема садржај.</string>
-	<string name="news_load_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
+	<string name="news_load_network_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<!-- TODO: translate these 3 strings below -->
 	<string name="news_unread_count_1">Имате %1$d непрочитаних вести. Tap here to view them.</string>
 	<string name="news_unread_count_2">Имате %1$d непрочитаних вести. Tap to show all articles.</string>

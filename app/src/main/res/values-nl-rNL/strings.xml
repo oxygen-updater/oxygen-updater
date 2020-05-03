@@ -319,7 +319,9 @@ Instructies:
 	<string name="news">Nieuws</string>
 	<string name="news_date_published">Laatste update: %1$s</string>
 	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
-	<string name="news_load_error">Kan artikel niet laden. Controleer je verbinding en tik op \"OPNIEUW\" om het artikel opnieuw te laden.</string>
+	<string name="news_load_network_error">Kan artikel niet laden. Controleer je verbinding en tik op \"OPNIEUW\" om het artikel opnieuw te laden.</string>
+	<!-- TODO: translate this string below -->
+	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<!-- TODO: translate these 3 strings below -->
 	<string name="news_unread_count_1">Je hebt %1$d ongelezen nieuwsartikelen. Tap here to view them.</string>
 	<string name="news_unread_count_2">Je hebt %1$d ongelezen nieuwsartikelen. Tap to show all articles.</string>

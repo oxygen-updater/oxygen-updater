@@ -5,7 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.text.method.LinkMovementMethod
 import android.view.MenuItem
+import android.webkit.WebViewClient.ERROR_BAD_URL
+import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
@@ -45,6 +48,8 @@ class NewsActivity : SupportActionBarActivity() {
 
     private var shouldDelayAdStart = false
     private var newsItemId = -1L
+
+    private var fullUrl = ""
 
     /**
      * Re-use the same observer to avoid duplicated callbacks
@@ -103,9 +108,10 @@ class NewsActivity : SupportActionBarActivity() {
                 var newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.id + "/" + newsLanguage + "/"
 
                 // since we can't edit CSS in WebViews,
-                // append 'Light' or 'Dark' to newContentUrl to get the corresponding themed version
+                // append 'Light' or 'Dark' to newsContentUrl to get the corresponding themed version
                 // backend handles CSS according to material spec
                 newsContentUrl += if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
+                fullUrl = newsContentUrl
 
                 settings.userAgentString = OxygenUpdater.APP_USER_AGENT
                 loadUrl(newsContentUrl)
@@ -199,18 +205,41 @@ class NewsActivity : SupportActionBarActivity() {
             true
         }
         Intent.ACTION_VIEW == intent.action -> intent.data.let {
+            shouldDelayAdStart = true
+            fullUrl = it.toString()
+
             if (it == null) {
                 false
             } else {
-                // https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
-                val index = it.pathSegments.indexOf("news-content") + 1
+                when (it.scheme) {
+                    "http", "https" -> {
+                        // https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
+                        val index = it.pathSegments.indexOf("news-content") + 1
 
-                if (index != 0 && index < it.pathSegments.size) {
-                    shouldDelayAdStart = true
-                    newsItemId = it.pathSegments[index].toLong()
-                    true
-                } else {
-                    false
+                        if (index != 0 && index < it.pathSegments.size) {
+                            newsItemId = try {
+                                it.pathSegments[index].toLong()
+                            } catch (e: NumberFormatException) {
+                                -1L
+                            }
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                    "oxygenupdater" -> {
+                        // oxygenupdater://news/<id>
+
+                        newsItemId = try {
+                            it.lastPathSegment?.toLong() ?: -1L
+                        } catch (e: NumberFormatException) {
+                            -1L
+                        }
+
+                        newsItemId >= 0L
+                        true
+                    }
+                    else -> false
                 }
             }
         }
@@ -304,12 +333,16 @@ class NewsActivity : SupportActionBarActivity() {
     private fun loadNewsItem() {
         showLoadingState()
 
-        // Obtain the contents of the news item
-        // (to save data when loading the entire list of news items, only title & subtitle are returned there)
-        newsViewModel.fetchNewsItem(newsItemId).observe(
-            this,
-            fetchNewsItemObserver
-        )
+        if (newsItemId <= 0L) {
+            showErrorState(WebViewError(ERROR_BAD_URL), true)
+        } else {
+            // Obtain the contents of the news item
+            // (to save data when loading the entire list of news items, only title & subtitle are returned there)
+            newsViewModel.fetchNewsItem(newsItemId).observe(
+                this,
+                fetchNewsItemObserver
+            )
+        }
     }
 
     private fun showLoadingState() {
@@ -326,28 +359,58 @@ class NewsActivity : SupportActionBarActivity() {
         newsLayout.isVisible = true
     }
 
-    private fun showErrorState(error: WebViewError? = null) {
+    private fun showErrorState(
+        error: WebViewError? = null,
+        isInvalidId: Boolean = false
+    ) {
         // hide progress bar since the page failed to load
         progressBar.isVisible = false
         newsLayout.isVisible = false
 
-        inflateAndShowErrorState(error)
+        inflateAndShowErrorState(error, isInvalidId)
     }
 
-    private fun inflateAndShowErrorState(error: WebViewError?) {
+    private fun inflateAndShowErrorState(
+        error: WebViewError?,
+        isInvalidId: Boolean
+    ) {
         collapsingToolbarLayout.title = getString(R.string.error)
 
         // Show error layout
         errorLayoutStub?.inflate()
         errorLayout.isVisible = true
-        errorText.text = getString(R.string.news_load_error)
-        errorActionButton.setOnClickListener { loadNewsItem() }
 
         if (error != null) {
-            errorTitle.text = error.errorCodeString
-            errorTitle.isVisible = true
+            errorTitle.apply {
+                isVisible = true
+                text = error.errorCodeString
+            }
         } else {
             errorTitle.isVisible = false
+        }
+
+        if (isInvalidId) {
+            errorText.apply {
+                text = HtmlCompat.fromHtml(
+                    getString(R.string.news_load_id_error, fullUrl),
+                    HtmlCompat.FROM_HTML_MODE_COMPACT
+                )
+                // Make the links clickable
+                movementMethod = LinkMovementMethod.getInstance()
+            }
+            errorActionButton.apply {
+                isVisible = false
+                setOnClickListener(null)
+            }
+        } else {
+            errorText.apply {
+                text = getString(R.string.news_load_network_error)
+                movementMethod = null
+            }
+            errorActionButton.apply {
+                isVisible = true
+                setOnClickListener { loadNewsItem() }
+            }
         }
     }
 

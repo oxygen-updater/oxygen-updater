@@ -55,7 +55,7 @@
 			android:screenOrientation="portrait"
 			android:theme="@style/SplashTheme.Oxygen">
 
-			<tools:validation testUrl="https://oxygenupdater.com/inapp" />
+			<tools:validation testUrl="https://${hostName}/inapp" />
 
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -70,10 +70,11 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data
-					android:host="oxygenupdater.com"
-					android:path="/inapp"
-					android:scheme="https" />
+				<data android:scheme="http" />
+				<data android:scheme="https" />
+				<data android:host="${hostName}" />
+				<data android:host="www.${hostName}" />
+				<data android:path="/inapp" />
 			</intent-filter>
 		</activity>
 
@@ -143,10 +144,23 @@
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
+				<data android:scheme="http" />
+				<data android:scheme="https" />
+				<data android:host="${hostName}" />
+				<data android:host="www.${hostName}" />
+				<data android:pathPattern="/api/.*/news-content/..*" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+
+				<!-- Accepts URIs that begin with "oxygenupdater://news” -->
 				<data
-					android:host="oxygenupdater.com"
-					android:pathPattern="/api/.*/news-content/..*"
-					android:scheme="https" />
+					android:host="news"
+					android:pathPattern="/..*"
+					android:scheme="oxygenupdater" />
 			</intent-filter>
 		</activity>
 

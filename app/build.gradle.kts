@@ -105,39 +105,6 @@ android {
             isShrinkResources = true
             isDebuggable = true
         }
-        // Config for use during screenshot taking
-        // Uses the real server, disables ads and reads system properties using the default build.prop values present on any Android device/emulator
-        create("screenshot") {
-            buildConfigField("String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.4/\"")
-            buildConfigField("String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"")
-            buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
-            buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\"")
-            buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\"")
-            buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\"")
-            buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
-            buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
-            buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
-
-            isMinifyEnabled = true
-            isShrinkResources = true
-            isDebuggable = true
-        }
-        // Config for use on test devices. Uses the test server, and reads system properties using the LineageOS values from build.prop
-        create("device") {
-            buildConfigField("String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.4/\"")
-            buildConfigField("String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"")
-            buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
-            buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.cm.device\"")
-            buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\"")
-            buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.cm.display.version\"")
-            buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
-            buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
-            buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
-
-            isMinifyEnabled = true
-            isShrinkResources = true
-            isDebuggable = true
-        }
 
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
         buildTypes.forEach {
@@ -145,8 +112,18 @@ android {
                 it.versionNameSuffix = "-${it.name}"
                 it.applicationIdSuffix = ".${it.name}"
                 it.resValue("string", "app_name", "Oxygen Updater (${it.name})")
+                it.addManifestPlaceholders(
+                    mapOf(
+                        "hostName" to "test.oxygenupdater.com"
+                    )
+                )
             } else {
                 it.resValue("string", "app_name", "Oxygen Updater")
+                it.addManifestPlaceholders(
+                    mapOf(
+                        "hostName" to "oxygenupdater.com"
+                    )
+                )
             }
         }
     }
