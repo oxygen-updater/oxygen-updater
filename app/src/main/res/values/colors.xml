@@ -27,6 +27,6 @@
 	<color name="orange_500">#ff9800</color>
 
 	<!-- Calculated palette from https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
-	<color name="oneplus_red_600">#ea0029</color>
-	<color name="oneplus_red_400">#f43b46</color>
+	<color name="oneplus_red_600">#f50514</color>
+	<color name="oneplus_red_400">#ff3d39</color>
 </resources>
