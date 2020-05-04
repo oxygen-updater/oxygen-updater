@@ -23,7 +23,7 @@ import kotlin.system.exitProcess
 class MessageDialog(
     private val activity: Activity,
     private val title: String? = null,
-    private val message: String? = null,
+    private val message: CharSequence? = null,
     private val positiveButtonText: String? = null,
     private val negativeButtonText: String? = null,
     @DrawableRes private val positiveButtonIcon: Int? = null,

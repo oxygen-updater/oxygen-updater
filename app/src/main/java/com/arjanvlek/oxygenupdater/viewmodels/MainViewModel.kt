@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
+import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
@@ -50,6 +51,12 @@ import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.workers.DIRECTORY_ROOT
 import com.arjanvlek.oxygenupdater.workers.DownloadWorker
 import com.arjanvlek.oxygenupdater.workers.Md5VerificationWorker
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL
+import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION
 import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_DOWNLOAD
 import com.arjanvlek.oxygenupdater.workers.WORK_UNIQUE_MD5_VERIFICATION
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -387,6 +394,17 @@ class MainViewModel(
         if (_downloadStatus.shouldPruneWork()) {
             workManager.pruneWork()
         }
+    }
+
+    fun logDownloadError(data: Data) = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.logDownloadError(
+            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL),
+            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME),
+            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION),
+            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION),
+            data.getInt(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE, -1),
+            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE)
+        )
     }
 
     /**

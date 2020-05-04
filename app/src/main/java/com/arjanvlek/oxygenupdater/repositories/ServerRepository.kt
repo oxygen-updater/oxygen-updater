@@ -215,6 +215,28 @@ class ServerRepository constructor(
         )
     }
 
+    suspend fun logDownloadError(
+        url: String?,
+        filename: String?,
+        version: String?,
+        otaVersion: String?,
+        httpCode: Int,
+        httpMessage: String?
+    ) = performServerRequest {
+        serverApi.logDownloadError(
+            hashMapOf(
+                "url" to url,
+                "filename" to filename,
+                "version" to version,
+                "otaVersion" to otaVersion,
+                "httpCode" to httpCode,
+                "httpMessage" to httpMessage,
+                "appVersion" to BuildConfig.VERSION_NAME,
+                "deviceName" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+            )
+        )
+    }
+
     suspend fun logRootInstall(rootInstall: RootInstall) = try {
         performServerRequest { serverApi.logRootInstall(rootInstall) }
     } catch (e: JSONException) {

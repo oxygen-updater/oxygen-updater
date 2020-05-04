@@ -179,11 +179,28 @@ class DownloadWorker(
             }
         }
 
-        val body = downloadApi.downloadZip(
+        val response = downloadApi.downloadZip(
             updateData.downloadUrl!!,
             rangeHeader
-        ).body()
-        body?.byteStream()?.use { stream ->
+        )
+
+        val body = response.body()
+
+        if (!response.isSuccessful || body == null) {
+            return@withContext Result.failure(
+                workDataOf(
+                    WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.UNSUCCESSFUL_RESPONSE.name,
+                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL to updateData.downloadUrl,
+                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME to updateData.filename,
+                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION to updateData.versionNumber,
+                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION to updateData.otaVersionNumber,
+                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE to response.code(),
+                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE to response.message()
+                )
+            )
+        }
+
+        body.byteStream().use { stream ->
             logInfo(TAG, "Downloading ZIP from ${startingByte ?: 0} bytes")
 
             // Copy stream to file

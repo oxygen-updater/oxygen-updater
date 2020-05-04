@@ -292,7 +292,7 @@ Instructions:
 	<!-- About screen strings -->
 	<string name="about">关于</string>
 	<string name="about_app_description">获取 OxygenOS 更新的终极神器！</string>
-	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用，<a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n距离发布四年后，2019 年 6 月，Arjan 决定停止支持这两款应用，并将它的所有权转让给其它团队。而他们，则担负起了为整个 OnePlus 社区提供优质的服务支持的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.4/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新主人发布了他所负责以来的第一个版本。该版本为用户们带来了耳目一新深色模式，全新界面设计，以及其它的新功能。\n\n如果您想了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。</string>
+	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用，<a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n距离发布四年后，2019 年 6 月，Arjan 决定停止支持这两款应用，并将它的所有权转让给其它团队。而他们，则担负起了为整个 OnePlus 社区提供优质的服务支持的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新主人发布了他所负责以来的第一个版本。该版本为用户们带来了耳目一新深色模式，全新界面设计，以及其它的新功能。\n\n如果您想了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。</string>
 	<string name="about_third_party_app_notice">请注意，这并不是 OnePlus 出品的官方应用！\nOnePlus 的名称，Logo，以及 OxygenOS 都由 OnePlus 所有！\nAndroid，Google，Google Play 以及 Google Play Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。</string>
 	<string name="about_rate_button_text">评分</string>
 	<string name="about_github_button_text">GitHub</string>

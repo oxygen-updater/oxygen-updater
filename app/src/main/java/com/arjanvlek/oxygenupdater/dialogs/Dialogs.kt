@@ -45,7 +45,7 @@ object Dialogs {
         activity: Activity?,
         isResumable: Boolean,
         title: String?,
-        message: String?,
+        message: CharSequence?,
         callback: KotlinCallback<Boolean>? = null
     ) = checkPreconditions(activity) {
         MessageDialog(

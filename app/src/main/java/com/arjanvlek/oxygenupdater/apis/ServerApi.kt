@@ -92,6 +92,18 @@ interface ServerApi {
         @Body body: HashMap<String, Any>
     ): Response<ServerPostResult>
 
+    /**
+     * @param body includes the following fields:
+     * * `url: String`
+     * * `otaVersion: String`,
+     * * `httpCode: Int`,
+     * * `httpMessage: String`
+     */
+    @POST("log-download-error")
+    suspend fun logDownloadError(
+        @Body body: HashMap<String, Any?>
+    ): Response<ServerPostResult>
+
     @POST("log-update-installation")
     suspend fun logRootInstall(
         @Body rootInstall: RootInstall

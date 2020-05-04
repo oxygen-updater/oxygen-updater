@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
+import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import androidx.work.WorkInfo
@@ -457,6 +458,16 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
     }
 
+    private fun showDownloadErrorForUnsuccessfulResponse() = showDownloadError(
+        requireActivity(),
+        false,
+        getString(R.string.download_error),
+        HtmlCompat.fromHtml(
+            getString(R.string.download_error_unsuccessful_response),
+            HtmlCompat.FROM_HTML_MODE_COMPACT
+        )
+    )
+
     private fun showDownloadError(
         @StringRes message: Int,
         isResumable: Boolean = false,
@@ -655,6 +666,11 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                                     mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
                                 }
                             }
+                            DownloadFailure.UNSUCCESSFUL_RESPONSE -> {
+                                showDownloadLink()
+                                showDownloadErrorForUnsuccessfulResponse()
+                                mainViewModel.logDownloadError(outputData)
+                            }
                             DownloadFailure.NULL_UPDATE_DATA_OR_DOWNLOAD_URL,
                             DownloadFailure.DOWNLOAD_URL_INVALID_SCHEME,
                             DownloadFailure.UNKNOWN -> {
@@ -739,7 +755,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                         }
                     }
 
-                    // Show error message
+                    showDownloadLink()
                     showDownloadError(
                         R.string.download_error_corrupt,
                         false

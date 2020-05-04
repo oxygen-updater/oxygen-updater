@@ -31,6 +31,13 @@ enum class DownloadFailure {
     CONNECTION_ERROR,
 
     /**
+     * If the Retrofit response returns unsuccessfully, i.e. an HTTP code that does not lie between 200 and 300.
+     * Most of the times this would be because of an invalid link
+     * (e.g. when OnePlus pulls an update, or a human error while adding update data)
+     */
+    UNSUCCESSFUL_RESPONSE,
+
+    /**
      * If the temporary downloaded file can't be copied to the root directory of internal storage
      */
     COULD_NOT_MOVE_TEMP_FILE,
