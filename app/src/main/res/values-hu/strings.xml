@@ -49,7 +49,10 @@
 	<string name="download_error_corrupt">A letöltött frissítés fájl sérült! Próbáld meg újra letölteni.</string>
 	<string name="download_error_server">Szerverhiba történt a frissítés letöltése közben. Próbáld újra letölteni a frissítést.</string>
 	<string name="download_error_internal">Sajnos technikai hiba történt a frissítés letöltése közben. Próbáld meg újra letölteni. Ha ez továbbra is fennáll, kérjük, fordulj segítségért az alkalmazás fejlesztőjéhez.</string>
-	<string name="download_error_could_not_move_temp_file">A fájl letöltésre került, de nem sikerült áthelyezni a megfelelő könyvtárba. Nyiss meg egy fájlkezelőt, keresd meg a \"%1$s\" helyet, és kézzel helyezd át a fájlt a belső tárolóhely legfelső könyvtárába.</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[Úgy tűnik, hogy a letöltési link érvénytelen. Ez jelentheti azt, hogy hibát követtünk el a frissítési adatok hozzáadása közben, vagy pedig a OnePlus visszavonta/eltávolította a frissítési fájlt a kiszolgálóikról. Értesítést küldtünk a csapatnak, és minél hamarabb megvizsgáljuk ezt.
+
+Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
+    <string name="download_error_could_not_move_temp_file">A fájl letöltésre került, de nem sikerült áthelyezni a megfelelő könyvtárba. Nyiss meg egy fájlkezelőt, keresd meg a \"%1$s\" helyet, és kézzel helyezd át a fájlt a belső tárolóhely legfelső könyvtárába.</string>
 
 	<string name="download_error_retry">ÚJRA</string>
 	<string name="download_error_resume">FOLYTATÁS</string>
