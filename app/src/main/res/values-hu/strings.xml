@@ -225,7 +225,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="install_guide_page_1_title">Töltsd le a frissítést</string>
 	<string name="install_guide_page_1_text">&#8226; A frissítés letöltésének megkezdéséhez nyomd meg a Letöltés gombot.\n\n&#8226; A letöltési folyamat az alkalmazásban jelenik meg, és értesítésként az értesítési sávban.\n\n&#8226; Amikor a letöltés befejeződött, egy értesítést fogsz látni, amelynek szövege: \"Letöltés kész\" lesz.\nHa letöltési hiba történt, nyisd meg az alkalmazást, és próbáld meg újra letölteni a frissítést. Ha ez nem működik, ellenőrizd, hogy működőképes-e a kapcsolat. Ellenkező esetben vedd fel a kapcsolatot az alkalmazás fejlesztőjével. Ezt megteheted a Google Play Áruház \"Saját alkalmazások\" szekciójában.</string>
 
-	<!-- TODO: translate these 2 strings below -->
 	<string name="install_guide_page_2_title">Felkészülés a telepítésre</string>
 	<string name="install_guide_page_2_text">"Megjegyzés: A frissítés telepítésére a készülék szabványos rendszerfrissítések részének speciális oldaláról kerül sor. Ha valamilyen oknál fogva megjelenik egy rendszerfrissítés a szakasz megnyitásakor, akkor dönthet az első frissítés telepítéséről is. Ezután nyissa meg újra az Oxygen Updater készüléket, hogy megnézze, teljesen naprakész-e.
 
@@ -236,7 +235,6 @@ Instrukciók:
 
 &#8226; Görgess lefelé, amíg meg nem jelenik a Rendszerfrissítések. Érintsd meg."</string>
 
-	<!-- TODO: translate these 2 strings below -->
 	<string name="install_guide_page_3_title">Telepítsd a frissítést</string>
 	<string name="install_guide_page_3_text">"Most, hogy a Rendszerfrissítések alkalmazásban vagy, ideje telepíteni a frissítést.
 
@@ -248,7 +246,6 @@ Instrukciók:
 
 &#8226; Érintsd meg a \"Frissítés most\" elemet. A telepítésnek automatikusan el kell indulnia."</string>
 
-	<!-- TODO: translate these 2 strings below -->
 	<string name="install_guide_page_4_title">Várj, amíg a telepítés befejeződik</string>
 	<string name="install_guide_page_4_text">"&#8226; A telefon most telepíti a frissítést, és megjelenik egy folyamatjelző sáv. Várj, amíg a telepítés befejeződik. A telepítés néhány perctől 15 percig is eltarthat.
 
@@ -324,9 +321,7 @@ Instrukciók:
 	<string name="news_date_published">Utolsó frissítés: %1$s</string>
 	<string name="news_empty">Ennek a cikknek nincs tartalma.</string>
 	<string name="news_load_network_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"ÚJRA\" gombot a cikk megnyitásához.</string>
-	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Nem sikerült megnyitni a cikket érvénytelen URL-ről: %1$s. Ellenőrizd az URL-t, vagy jelentsd nekünk ezt <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
-	<!-- TODO: translate these 3 strings below -->
 	<string name="news_unread_count_1">%1$d olvasatlan híred van. Érints meg a megtekintésükhöz.</string>
 	<string name="news_unread_count_2">%1$d olvasatlan híred van. Érints meg az összes megtekintéséhez.</string>
 	<string name="news_mark_all_read">Összes cikk megjelölése olvasottként</string>
