@@ -10,7 +10,7 @@
 	<string name="update_information_download_link">Оскільки під час завантаження оновлення виникла помилка, ви можете самостійно завантажити файл оновлення через браузер, перейшовши за посиланням. Також необхідно буде перенести завантажений файл з теки \"Download\" в її батьківську теку. Ось це посилання використовує застосунок для завантаження оновлення (це офіційний сервер OnePlus для OTA оновлень):\n%1$s</string>
 	<string name="update_information_header">Оновлення</string>
 	<string name="update_information_error_title">Не вдалося отримати інформацію про останнє оновлення</string>
-	<string name="update_information_banner_server">Натисніть тут, щоб переглянути важливі повідомлення</string>
+	<string name="update_information_banner_server">Натисніть, щоб переглянути важливі повідомлення</string>
 	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\".\n\nРозширений режим можна вимкнути в налаштуваннях</string>
 	<string name="update_information_different_version_changelog_notice">Ви переглядаєте список змін для способу оновлення \"%1$s\". Якщо ви маєте намір встановити це оновлення, спочатку необхідно увімкнути розширений режим в налаштуваннях.\n\nПроте, якщо ви хочете переглянути список змін до поточної встановленої версії, вам потрібно вибрати відповідний спосіб оновлення в налаштуваннях.</string>
 	<string name="update_information_last_checked_on">Востаннє перевірено: %1$s</string>
@@ -26,10 +26,10 @@
 	<string name="server_status_warning">Деякі функції можуть працювати неправильно.</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">Доступне оновлення (%1$s). Натисніть тут, щоб відкрити Play Маркет і оновити застосунок.</string>
-	<string name="new_app_version_long">Доступне оновлення застосунку (%1$s). Своєчасне оновлення дозволить вам завжди використовувати останні можливості і виправлення помилок.\nНатисніть тут, щоб відкрити Play Маркет і оновити застосунок.</string>
+	<string name="new_app_version">Доступне оновлення (%1$s). Натисніть, щоб відкрити Play Маркет і оновити застосунок.</string>
+	<string name="new_app_version_long">Доступне оновлення застосунку (%1$s). Своєчасне оновлення дозволить вам завжди використовувати останні можливості і виправлення помилок.\nНатисніть, щоб відкрити Play Маркет і оновити застосунок.</string>
 	<string name="new_app_version_inapp_downloaded">Оновлення застосунку завантажено</string>
-	<string name="new_app_version_inapp_failed">Неможливо встановити оновлення застосунку. Натисніть тут, щоб відкрити Play Маркет і оновити застосунок.</string>
+	<string name="new_app_version_inapp_failed">Неможливо встановити оновлення застосунку. Натисніть, щоб відкрити Play Маркет і оновити застосунок.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">в</string>
@@ -42,13 +42,16 @@
 	<string name="paused">Призупинено - натисніть, щоб відновити</string>
 
 	<string name="download_complete">Завантаження завершено</string>
-	<string name="download_complete_notification">Завантаження завершено. Натисніть, щоб почати встановлення.</string>
+	<string name="download_complete_notification">Завантаження завершено. Натисніть, щоб встановити</string>
 
 	<string name="download_error">Помилка завантаження</string>
 	<string name="download_error_close">ЗАКРИТИ</string>
 	<string name="download_error_corrupt">Завантажене оновлення пошкоджене! Будь ласка, спробуйте завантажити його знову.</string>
 	<string name="download_error_server">Під час завантаження оновлення сталася помилка на сервері. Будь ласка, спробуйте завантажити оновлення знову.</string>
 	<string name="download_error_internal">На жаль, під час завантаження оновлення виникла технічна помилка. Спробуйте завантажити його знову. Але якщо помилка не зникне, тоді зв\'яжіться з розробником застосунку для консультації.</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[Схоже, що посилання для завантаження не вірне. Це може означати що ми припустилися помилки, коли додавали нові дані, або хтось з OnePlus перемістив/видалив файл оновлення з серверів. До нас вже надійшло сповіщення, і ми вирішимо цю проблему якнайшвидше.
+
+Якщо хочете дізнатися більше, можете зв\'язатися з нами через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або написати в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Файл завантажено, але його не вдалося перемістити в потрібну теку. Відкрийте менеджер файлів, перейдіть в \"%1$s\", і вручну перемістіть файл в теку \"topmost\" на внутрішньому сховищі</string>
 
 	<string name="download_error_retry">ПОВТОРИТИ</string>
@@ -63,11 +66,11 @@
 	<string name="download_notification_error_storage_full">Недостатньо вільного місця.</string>
 	<string name="download_notification_error_corrupt">Помилка перевірки файлу. Перевірте підключення та спробуйте ще раз.</string>
 
-	<string name="download_progress_text_hours_remaining">залишилося приблизно %1$d години</string>
+	<string name="download_progress_text_hours_remaining">залишилося ≈ %1$d години</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">залишилося менше хвилини</string>
-	<string name="download_progress_text_minutes_remaining">залишилося приблизно %1$d хвилин</string>
-	<string name="download_progress_text_one_hour_remaining">залишилося приблизно година</string>
-	<string name="download_progress_text_one_minute_remaining">залишилося приблизно хвилина</string>
+	<string name="download_progress_text_minutes_remaining">залишилося ≈ %1$d хв.</string>
+	<string name="download_progress_text_one_hour_remaining">залишилося ≈ 1 година</string>
+	<string name="download_progress_text_one_minute_remaining">залишилася 1 хвилина</string>
 	<string name="download_progress_text_seconds_remaining">залишилося декілька секунд</string>
 	<string name="download_progress_text_unknown_time_remaining">підрахунок часу…</string>
 	<string name="download_progress_text_verifying">перевірка файлу…</string>
@@ -132,7 +135,7 @@
 	<string name="settings_saving">Ваші налаштування досі зберігаються. Якщо це триває занадто довго: перевірте з\'єднання з мережею, вийдіть із застосунку і запустіть його знову.</string>
 
 	<string name="settings_advanced_mode">Розширений режим</string>
-	<string name="settings_advanced_mode_explanation">Розширений режим приховує повідомлення \"Система оновлена\", дозволяючи вам завантажувати і встановлювати всі оновлення, навіть якщо вони можуть бути не сумісні з вашим пристроєм.\n\nЦей режим може бути корисним, коли потрібно:\n- оновитися зі звичайної версії до бета версії\n- відкотитися з бета версії до звичайної версії (не забувайте повністю очищати ваш пристрій)\n- перевстановити вашу поточну систему.</string>
+	<string name="settings_advanced_mode_explanation">Розширений режим приховує повідомлення \"Система оновлена\", дозволяючи вам завантажувати і встановлювати всі оновлення, навіть якщо вони можуть бути не сумісні з вашим пристроєм.\n\nЦей режим може бути корисним, коли потрібно:\n- оновитися зі звичайної версії до бета версії;\n- відкотитися з бета версії до звичайної версії (не забувайте повністю очищати ваш пристрій);\n- перевстановити вашу поточну систему.</string>
 
 	<string name="settings_update_method">Спосіб оновлення</string>
 	<string name="settings_upload_logs">Ділитися даними про використання та журналом помилок</string>
@@ -183,10 +186,10 @@
 	<string name="install_options_wipe_cache_partition">Очистити розділ кеша</string>
 
 	<string name="install_options_explanation_title">Що означають ці параметри?</string>
-	<string name="install_options_explanation_backup">Зробити резервну копію:\nЯкщо вибрати цей параметр, до встановлення буде створено резервну копію вашої системи, застосунків і налаштувань. Завжди потрібно мати під рукою, якщо щось піде не так.</string>
-	<string name="install_options_explanation_keep_root">Зберегти рут права:\nЯкщо вибрати цей параметр, вам буде запропоновано вибрати архів, в якому міститься рут. Цей архів буде встановлено після успішного встановлення оновлення. Таким чином, ваш пристрій матиме рут права після встановлення. Будь ласка, майте на увазі, що рут архів може бути не сумісний з НОВОЮ версією OxygenOS, яку ви збираєтеся встановити!</string>
-	<string name="install_options_explanation_wipe_cache">Очистити розділ кеша:\nЯкщо вибрати цей параметр, після встановлення оновлення буде очищено розділ з кешами. Це гарантує, що ваш пристрій буде оптимально працювати, а також зменшує ризик виникнення помилок, викликаних встановленням оновлення.</string>
-	<string name="install_options_explanation_reboot">Перезавантажити після встановлення:\nЯкщо вибрати цей параметр, ваш пристрій автоматично перезавантажиться в нову систему OxygenOS, після встановлення оновлення. Інакше, ваш пристрій залишиться в режимі Відновлення, де ви зможете встановити додаткові архіви.</string>
+	<string name="install_options_explanation_backup">Зробити резервну копію:\nДо початку встановлення буде створено резервну копію вашої системи, застосунків і налаштувань. Таку копію завжди потрібно мати під рукою, якщо щось піде не так.</string>
+	<string name="install_options_explanation_keep_root">Зберегти рут права:\nВам буде запропоновано вибрати архів, в якому міститься рут. Цей архів буде встановлено після успішного встановлення оновлення. Таким чином, ваш пристрій матиме рут права після встановлення. Будь ласка, майте на увазі, що рут архів може бути не сумісний з НОВОЮ версією OxygenOS, яку ви збираєтеся встановити!</string>
+	<string name="install_options_explanation_wipe_cache">Очистити розділ кеша:\nПісля встановлення оновлення буде очищено розділ з кешами. Це гарантує, що ваш пристрій буде оптимально працювати, а також зменшує ризик виникнення помилок, викликаних встановленням оновлення.</string>
+	<string name="install_options_explanation_reboot">Перезавантажити після встановлення:\nВаш пристрій автоматично перезавантажиться в нову систему OxygenOS, після встановлення оновлення. Інакше, ваш пристрій залишиться в режимі Відновлення, де ви зможете встановити додаткові архіви.</string>
 
 	<string name="install_method_chooser_title">Виберіть спосіб встановлення</string>
 	<string name="install_method_chooser_subtitle">Як ви хочете встановити це оновлення?</string>
@@ -194,7 +197,7 @@
 	<string name="install_method_chooser_automatic_description">Найлегший спосіб встановити оновлення.\nВаш пристрій перезавантажиться, щоб встановити оновлення.\n\n* Потрібні рут права і відновлювач TWRP.</string>
 
 	<string name="install_method_chooser_manual_title">Ручне встановлення</string>
-	<string name="install_method_chooser_manual_description">Прочитати інструкцію, щоб дізнатися як встановити оновлення. В цьому способі, для встановлення оновлення, потрібно використовувати режим Відновлення, який має бути на вашому пристрої.</string>
+	<string name="install_method_chooser_manual_description">Прочитайте інструкцію, щоб дізнатися як встановити оновлення. В цьому способі використовується режим Відновлення (Recovery), який має бути на вашому пристрої.</string>
 
 	<string name="install_temporary_error">Виникла тимчасова помилка під час підготовки до встановлення. Будь ласка, спробуйте знову.</string>
 
@@ -215,40 +218,37 @@
 	<string name="install_guide_no_root">Встановіть оновлення відповідно до інструкції</string>
 	<string name="install_guide_automatic_install_disabled">Автоматичні встановлення тимчасово вимкнені через технічні неполадки. Встановіть оновлення відповідно до інструкції.</string>
 	<string name="install_guide">Інструкція по встановленню</string>
-	<string name="install_guide_subtitle">Інструкція - етап %1$d з %2$d</string>
-	<string name="install_guide_tip">&#8226; Рекомендується записати всі етапи, тому що вам потрібно буде вимкнути пристрій, щоб встановити оновлення.</string>
+	<string name="install_guide_subtitle">Інструкція — крок %1$d з %2$d</string>
+	<string name="install_guide_tip">&#8226; Рекомендується записати всі кроки, тому що вам потрібно буде вимкнути пристрій, щоб встановити оновлення.</string>
 
 	<string name="install_guide_page_1_title">Завантаження оновлення</string>
 	<string name="install_guide_page_1_text">&#8226; Натисніть кнопку \"Завантажити\", щоб розпочати завантаження оновлення.\n\n&#8226; Внизу застосунку з\'явиться прогрес завантаження, який буде продубльовано в системному сповіщенні.\n\n&#8226; Коли завантаження завершиться, ви побачите сповіщення з текстом \"Завантаження завершено\".\nЯкщо під час завантаження трапиться помилка, відкрийте застосунок і спробуйте завантажити оновлення ще раз. Якщо і це на спрацює, тоді перевірте з\'єднання з інтернетом. Інакше, зв\'яжіться з розробником застосунку: знайдіть застосунок Oxygen Updater в Google Play > \"Контактні дані розробника\".</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
+	<string name="install_guide_page_2_title">Підготовка до встановлення</string>
+	<string name="install_guide_page_2_text">"Увага: встановлення оновлення відбувається через спеціальний розділ в системних налаштуваннях вашого пристою. Якщо з якихось причин вам з\'явилося системне вікно оновлення, ви можете встановити це оновлення. Після цього вікрийте Oxygen Updater і перевірте, чи систему оновлено.
 
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
+Інструкція:
+&#8226; Закрийте Oxygen Updater, натиснувши кнопку \"Головний екран\".
 
-&#8226; Open the Settings app. It should be located in your app drawer.
+&#8226; Відкрийте Параметри (або Налаштування). Має бути в панелі застосунків.
 
-&#8226; Scroll down until you see System updates. Tap on it."</string>
+&#8226; Прогорніть вниз і виберіть пункт \"Система\". Далі виберіть \"Оновлення системи\"."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+	<string name="install_guide_page_3_title">Встановлення оновлення</string>
+	<string name="install_guide_page_3_text">"Час встановити оновлення. Не виходячи з вікна Оновлення системи:
 
-&#8226; Within the System Updates section, tap the gear icon in the top right
+&#8226; Натисніть на значок зубчастого колеса в правому верхньому куті.
 
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+&#8226; Виберіть пункт \"Локальне оновлення\". Має з\'явитися вікно вибору файлу.
 
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+&#8226; В цьому вікні виберіть файл оновлення, який було завантажено через застосунок Oxygen Updater. Назва файлу повинна починатися з \"%1$sOxygen\".
 
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+&#8226; Натисніть \"Встановити зараз\". Після цього розпочнеться встановлення оновлення."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+	<string name="install_guide_page_4_title">Дочекайтеся завершення встановлення</string>
+	<string name="install_guide_page_4_text">"&#8226; Під час встановлення оновлення буде показуватися його перебіг. Будь ласка, дочекайтеся завершення цього процесу. Встановлення може зайняти до 15 хвилин. Під час цього бажано якомога менше користуватися пристроєм і не закривати Оновлення системи.
 
-&#8226; Afterwards, your phone will restart to complete the update."</string>
+&#8226; Після того, як перебіг дійде до кінця, з\'явиться кнопка \"Перезавантаження\". Натисніть її, щоб перезавантажити пристрій і завершити оновлення."</string>
 
 	<string name="install_guide_page_5_title">Готово. Насолоджуйтеся новою версією OxygenOS!</string>
 	<string name="install_guide_page_5_text">&#8226; Після того, як пристрій завершить оптимізацію застосунків, оновлення успішно завершиться.\nЩоб це перевірити, ви можете переглянути поточну версію OxygenOS наступним чином:\n\n&#8226; Зайдіть в Налаштування, в самому низу виберіть \"Про телефон\", і погляньте на номер складання.\n\n&#8226; Якщо вам сподобався цей застосунок, поставте йому 5 зірочок в Google Play!</string>
@@ -308,7 +308,7 @@ Instructions:
 	<string name="help">Допомога</string>
 	<string name="help_text">Вітаємо на сторінці допомоги по Oxygen Updater.\n\nЦя сторінка містить такі розділи:\n\n• Оновлення вашого пристрою\n• Читання останніх новин\n• Перегляд інформації про пристрій\n• Змінення налаштувань\n\nПрогорніть нижче, щоб перейти до цих розділів.</string>
 	<string name="help_updating_your_device_title">Оновлення вашого пристрою</string>
-	<string name="help_updating_your_device_text">Коли відкриєте застосунок, ви побачите, чи є доступне оновлення. Якщо оновлення доступне, ви зможете його встановити.\n\nЩоб завантажити оновлення, натисніть кнопку \"Завантажити\" (нижче опису оновлення). Після завершення завантаження, з\'явиться вікно встановлення. Якщо ви закрили застосунок, або вікно не з\'явилося, тоді натисніть кнопку \"Встановити\", яка буде розміщена біля кнопки \"Завантажити\".\n\nСпочатку застосунок перевірить, чи ваш пристрій має рут права. Якщо у вас рутований пристрій, надайте рут права застосункові і виберіть як ви хочете встановити оновлення. Інакше, дотримуйтесь інструкції для Ручного встановлення.\n\nАвтоматичне встановлення:\nВам лише потрібно вибрати параметри встановлення. Рекомендуються усталені параметри, однак ви також можете додати рут архів, щоб (пере)встановити рут права. Виберіть рут архів (zip файл), використовуючи зелену кнопку з текою і натисніть \"Почати встановлення\", щоб розпочати встановлення.\n\nРучне встановлення:\nВи побачите інструкцію по встановленню. Випишіть собі етапи встановлення з інструкції, перед тим як почнете встановлення.</string>
+	<string name="help_updating_your_device_text">Коли відкриєте застосунок, ви побачите, чи є доступне оновлення. Якщо оновлення доступне, ви зможете його встановити.\n\nЩоб завантажити оновлення, натисніть кнопку \"Завантажити\" (нижче опису оновлення). Після завершення завантаження, з\'явиться вікно встановлення. Якщо ви закрили застосунок, або вікно не з\'явилося, тоді натисніть кнопку \"Встановити\", яка буде розміщена біля кнопки \"Завантажити\".\n\nСпочатку застосунок перевірить, чи ваш пристрій має рут права. Якщо у вас рутований пристрій, надайте рут права застосункові і виберіть як ви хочете встановити оновлення. Інакше, дотримуйтесь інструкції для Ручного встановлення.\n\nАвтоматичне встановлення:\nВам лише потрібно вибрати параметри встановлення. Рекомендуються усталені параметри, однак ви також можете додати рут архів, щоб (пере)встановити рут права. Виберіть рут архів (zip файл), використовуючи зелену кнопку з текою і натисніть \"Почати встановлення\", щоб розпочати встановлення.\n\nРучне встановлення:\nВи побачите інструкцію по встановленню. Випишіть собі кроки встановлення з інструкції, перед тим як почнете встановлення.</string>
 	<string name="help_reading_news_title">Читання останніх новин</string>
 	<string name="help_reading_news_text">Новини відображаються ліворуч від екрану Оновлення. Найновіші елементи розміщуються зверху списку. Щоб його прочитати, просто натисніть на цей елемент.\nНатисніть стрілку назад, або кнопку Назад, щоб повернутися до екрану з новинами.</string>
 	<string name="help_device_information_title">Перегляд інформації про пристрій</string>
@@ -321,12 +321,10 @@ Instructions:
 	<string name="news_date_published">Останнє оновлення: %1$s</string>
 	<string name="news_empty">Ця стаття немає вмісту.</string>
 	<string name="news_load_network_error">Не вдалося відкрити статтю. Перевірте з\'єднання і натисніть кнопку \'ПОВТОРИТИ\', щоб відкрити статтю знову.</string>
-	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="news_unread_count_1">Є %1$d непрочитаних новин. Tap here to view them.</string>
-	<string name="news_unread_count_2">Є %1$d непрочитаних новин. Tap to show all articles.</string>
-	<string name="news_mark_all_read">Mark all articles as read</string>
+	<string name="news_load_id_error"><![CDATA[Не вдалося відкрити новину з недійсного URL: %1$s. Перевірте URL, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
+	<string name="news_unread_count_1">Є %1$d непрочитаних новин.\nНатисніть, щоб показати непрочитані новини</string>
+	<string name="news_unread_count_2">Є %1$d непрочитаних новин.\nНатисніть, щоб показати всі новини</string>
+	<string name="news_mark_all_read">Позначити всі новини як прочитані</string>
 	<string name="news_empty_state_none_available_header">Немає новин</string>
 	<string name="news_empty_state_all_read_header">Не залишилось нічого, що можна почитати</string>
 	<string name="news_empty_state_none_available_text">На даний момент немає новин, перевірте пізніше.</string>
@@ -342,7 +340,7 @@ Instructions:
 	<string name="contribute_more_info">Детальніше</string>
 	<string name="contribute_allow_storage">Будь ласка, надайте доступ до сховища, щоб допомогти покращити застосунок</string>
 	<string name="contribute_successful_notification_title">Ви дуже допомогли!</string>
-	<string name="contribute_successful_notification_text">Дякуємо за те, що поділилися файлом оновлення %1$s з нашими адміністраторами!</string>
+	<string name="contribute_successful_notification_text">Дякуємо, що поділилися файлом оновлення!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">От халепа!</string>
@@ -353,14 +351,14 @@ Instructions:
 	<string name="error_no_internet_connection">Немає з\'єднання.</string>
 	<string name="error_maintenance">Сервер на обслуговуванні</string>
 	<string name="error_maintenance_message">Будь ласка, зачекайте. Сервер незабаром стане доступним.</string>
-	<string name="error_maintenance_retry">Сервер може бути закритий на обслуговування. Спробуйте знову через декілька хвилин, або повідомте нам про це, через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або через <a href="https://discord.gg/5TXdhKJ">сервер на Discord</a>.</string>
+	<string name="error_maintenance_retry">Сервер може бути закритий на обслуговування. Спробуйте знову через декілька хвилин, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.</string>
 	<string name="error_reload">Перезавантажити</string>
 
 	<string name="error_unable_to_rate_app">Ви не можете оцінити застосунок, тому що магазин Google Play відсутній на вашому пристрої.</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Оновлення завантажено</string>
-	<string name="delete_message_contents">Ви вже завантажили це оновлення, але ще його не встановлювали. Натисніть \"Встановлення\", щоб перейти до вікна вибору режиму встановлення цього оновлення. Натисніть \"Видалити\", щоб видалити файл оновлення зі сховища. Натисніть кнопку Назад, щоб закрити це повідомлення.</string>
+	<string name="delete_message_contents">Ви вже завантажили оновлення, але ще його не встановлювали. Натисніть \"Встановлення\", щоб перейти до вікна вибору режиму встановлення цього оновлення. Натисніть \"Видалити\", щоб видалити файл оновлення зі сховища. Натисніть кнопку Назад, щоб закрити це повідомлення.</string>
 	<string name="delete_message_delete_button">Видалити</string>
 
 	<string name="unsupported_device_warning_title">Пристрій не підтримується</string>
