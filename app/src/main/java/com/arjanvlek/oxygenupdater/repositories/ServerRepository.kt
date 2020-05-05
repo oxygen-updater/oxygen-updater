@@ -41,7 +41,13 @@ class ServerRepository constructor(
         updateMethodId: Long,
         incrementalSystemVersion: String
     ) = performServerRequest {
-        serverApi.fetchUpdateData(deviceId, updateMethodId, incrementalSystemVersion)
+        serverApi.fetchUpdateData(
+            deviceId,
+            updateMethodId,
+            incrementalSystemVersion,
+            settingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false),
+            BuildConfig.VERSION_NAME
+        )
     }.let { updateData: UpdateData? ->
         if (updateData?.information != null
             && updateData.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
@@ -210,7 +216,9 @@ class ServerRepository constructor(
         serverApi.submitUpdateFile(
             hashMapOf(
                 "filename" to filename,
-                "isEuBuild" to settingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, true)
+                "isEuBuild" to settingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false),
+                "appVersion" to BuildConfig.VERSION_NAME,
+                "deviceName" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
             )
         )
     }

@@ -16,6 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * Used to communicate with the Oxygen Updater backend
@@ -33,7 +34,9 @@ interface ServerApi {
     suspend fun fetchUpdateData(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
-        @Path("incrementalSystemVersion") incrementalSystemVersion: String
+        @Path("incrementalSystemVersion") incrementalSystemVersion: String,
+        @Query("isEuBuild") isEuBuild: Boolean,
+        @Query("appVersion") appVersion: String
     ): Response<UpdateData>
 
     @GET("mostRecentUpdateData/{deviceId}/{updateMethodId}")
@@ -85,7 +88,9 @@ interface ServerApi {
     /**
      * @param body includes the following fields:
      * * `filename: String`
-     * * `isEuBuild: Boolean`
+     * * `isEuBuild: Boolean`,
+     * * `appVersion: String`,
+     * * `deviceName: String`
      */
     @POST("submit-update-file")
     suspend fun submitUpdateFile(
@@ -97,7 +102,9 @@ interface ServerApi {
      * * `url: String`
      * * `otaVersion: String`,
      * * `httpCode: Int`,
-     * * `httpMessage: String`
+     * * `httpMessage: String`,
+     * * `appVersion: String`,
+     * * `deviceName: String`
      */
     @POST("log-download-error")
     suspend fun logDownloadError(
