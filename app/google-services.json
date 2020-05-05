@@ -83,43 +83,6 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1001657004975:android:5a7aa428cba1b408",
-        "android_client_info": {
-          "package_name": "com.arjanvlek.oxygenupdater.device"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1001657004975-14i9ss7asd5eo1fb869d32cppju9j5ng.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.arjanvlek.oxygenupdater.device",
-            "certificate_hash": "f955475f97259517a820f0caafb6adbf9a612bf3"
-          }
-        },
-        {
-          "client_id": "1001657004975-pknrr0lh6ujura1445gure3co4nl7lg5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBXJ8hFaIflJkIevO-JhQQUCse0k1Yrj7g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1001657004975-pknrr0lh6ujura1445gure3co4nl7lg5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1001657004975:android:69563948cde5aabe",
         "android_client_info": {
           "package_name": "com.arjanvlek.oxygenupdater.localDebug"
@@ -131,43 +94,6 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.arjanvlek.oxygenupdater.localDebug",
-            "certificate_hash": "f955475f97259517a820f0caafb6adbf9a612bf3"
-          }
-        },
-        {
-          "client_id": "1001657004975-pknrr0lh6ujura1445gure3co4nl7lg5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBXJ8hFaIflJkIevO-JhQQUCse0k1Yrj7g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1001657004975-pknrr0lh6ujura1445gure3co4nl7lg5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1001657004975:android:be39987202b51979",
-        "android_client_info": {
-          "package_name": "com.arjanvlek.oxygenupdater.screenshot"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1001657004975-vk9k2tsb2t16tb4fs11ktum1nqeiqljf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.arjanvlek.oxygenupdater.screenshot",
             "certificate_hash": "f955475f97259517a820f0caafb6adbf9a612bf3"
           }
         },

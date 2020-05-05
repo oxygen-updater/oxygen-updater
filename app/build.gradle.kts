@@ -23,8 +23,8 @@ android {
         minSdkVersion(AndroidSdk.MIN)
         targetSdkVersion(AndroidSdk.TARGET)
 
-        versionCode = 66
-        versionName = "4.1.0"
+        versionCode = 67
+        versionName = "4.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles(
