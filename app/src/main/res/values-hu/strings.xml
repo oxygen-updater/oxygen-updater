@@ -49,7 +49,10 @@
 	<string name="download_error_corrupt">A letöltött frissítés fájl sérült! Próbáld meg újra letölteni.</string>
 	<string name="download_error_server">Szerverhiba történt a frissítés letöltése közben. Próbáld újra letölteni a frissítést.</string>
 	<string name="download_error_internal">Sajnos technikai hiba történt a frissítés letöltése közben. Próbáld meg újra letölteni. Ha ez továbbra is fennáll, kérjük, fordulj segítségért az alkalmazás fejlesztőjéhez.</string>
-	<string name="download_error_could_not_move_temp_file">A fájl letöltésre került, de nem sikerült áthelyezni a megfelelő könyvtárba. Nyiss meg egy fájlkezelőt, keresd meg a \"%1$s\" helyet, és kézzel helyezd át a fájlt a belső tárolóhely legfelső könyvtárába.</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[Úgy tűnik, hogy a letöltési link érvénytelen. Ez jelentheti azt, hogy hibát követtünk el a frissítési adatok hozzáadása közben, vagy pedig a OnePlus visszavonta/eltávolította a frissítési fájlt a kiszolgálóikról. Értesítést küldtünk a csapatnak, és minél hamarabb megvizsgáljuk ezt.
+
+Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
+    <string name="download_error_could_not_move_temp_file">A fájl letöltésre került, de nem sikerült áthelyezni a megfelelő könyvtárba. Nyiss meg egy fájlkezelőt, keresd meg a \"%1$s\" helyet, és kézzel helyezd át a fájlt a belső tárolóhely legfelső könyvtárába.</string>
 
 	<string name="download_error_retry">ÚJRA</string>
 	<string name="download_error_resume">FOLYTATÁS</string>
@@ -222,34 +225,31 @@
 	<string name="install_guide_page_1_title">Töltsd le a frissítést</string>
 	<string name="install_guide_page_1_text">&#8226; A frissítés letöltésének megkezdéséhez nyomd meg a Letöltés gombot.\n\n&#8226; A letöltési folyamat az alkalmazásban jelenik meg, és értesítésként az értesítési sávban.\n\n&#8226; Amikor a letöltés befejeződött, egy értesítést fogsz látni, amelynek szövege: \"Letöltés kész\" lesz.\nHa letöltési hiba történt, nyisd meg az alkalmazást, és próbáld meg újra letölteni a frissítést. Ha ez nem működik, ellenőrizd, hogy működőképes-e a kapcsolat. Ellenkező esetben vedd fel a kapcsolatot az alkalmazás fejlesztőjével. Ezt megteheted a Google Play Áruház \"Saját alkalmazások\" szekciójában.</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
+	<string name="install_guide_page_2_title">Felkészülés a telepítésre</string>
+	<string name="install_guide_page_2_text">"Megjegyzés: A frissítés telepítésére a készülék szabványos rendszerfrissítések részének speciális oldaláról kerül sor. Ha valamilyen oknál fogva megjelenik egy rendszerfrissítés a szakasz megnyitásakor, akkor dönthet az első frissítés telepítéséről is. Ezután nyissa meg újra az Oxygen Updater készüléket, hogy megnézze, teljesen naprakész-e.
 
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
+Instrukciók:
+&#8226; Zárd be az Oxigén Frissítőt a középső gomb megnyomásával.
 
-&#8226; Open the Settings app. It should be located in your app drawer.
+&#8226; Nyisd meg a Beállítások alkalmazást. Ennek az alkalmazástárban kell lennie.
 
-&#8226; Scroll down until you see System updates. Tap on it."</string>
+&#8226; Görgess lefelé, amíg meg nem jelenik a Rendszerfrissítések. Érintsd meg."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+	<string name="install_guide_page_3_title">Telepítsd a frissítést</string>
+	<string name="install_guide_page_3_text">"Most, hogy a Rendszerfrissítések alkalmazásban vagy, ideje telepíteni a frissítést.
 
-&#8226; Within the System Updates section, tap the gear icon in the top right
+&#8226; A Rendszerfrissítések részben érintse meg a fogaskerék ikont a jobb felső sarokban
 
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+&#8226; Most válaszd ki a \"Helyi frissítés\" lehetőséget. Megjelenik egy fájlkiválasztási képernyő.
 
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+&#8226; Ezen a képernyőn érintsd meg az Oxygen Updater használatával letöltött frissítési fájlt. A nevének \"%1$sOxygen\" -nel kell kezdődnie.
 
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+&#8226; Érintsd meg a \"Frissítés most\" elemet. A telepítésnek automatikusan el kell indulnia."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+	<string name="install_guide_page_4_title">Várj, amíg a telepítés befejeződik</string>
+	<string name="install_guide_page_4_text">"&#8226; A telefon most telepíti a frissítést, és megjelenik egy folyamatjelző sáv. Várj, amíg a telepítés befejeződik. A telepítés néhány perctől 15 percig is eltarthat.
 
-&#8226; Afterwards, your phone will restart to complete the update."</string>
+&#8226; Ezután a telefon újraindul a frissítés befejezéséhez."</string>
 
 	<string name="install_guide_page_5_title">Kész. Élvezd az új OxygenOS verziót!</string>
 	<string name="install_guide_page_5_text">&#8226; Miután az eszköz optimalizálta alkalmazásokat, a frissítés sikeresen telepítve lett.\nEnnek ellenőrzéséhez ellenőrizze a rendszer jelenlegi verzióját a következők szerint:\n\n&#8226; Lépj a Beállítások menübe, érintsd meg az \"A telefonról\" gombot, és ellenőrizd az OxygenOS verziót.\n\n&#8226; Ha tetszik ez az alkalmazás, adj neki 5 csillagot a Google Playen!</string>
@@ -321,12 +321,10 @@ Instructions:
 	<string name="news_date_published">Utolsó frissítés: %1$s</string>
 	<string name="news_empty">Ennek a cikknek nincs tartalma.</string>
 	<string name="news_load_network_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"ÚJRA\" gombot a cikk megnyitásához.</string>
-	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="news_unread_count_1">%1$d olvasatlan híred van. Tap here to view them.</string>
-	<string name="news_unread_count_2">%1$d olvasatlan híred van. Tap to show all articles.</string>
-	<string name="news_mark_all_read">Mark all articles as read</string>
+	<string name="news_load_id_error"><![CDATA[Nem sikerült megnyitni a cikket érvénytelen URL-ről: %1$s. Ellenőrizd az URL-t, vagy jelentsd nekünk ezt <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
+	<string name="news_unread_count_1">%1$d olvasatlan híred van. Érints meg a megtekintésükhöz.</string>
+	<string name="news_unread_count_2">%1$d olvasatlan híred van. Érints meg az összes megtekintéséhez.</string>
+	<string name="news_mark_all_read">Összes cikk megjelölése olvasottként</string>
 	<string name="news_empty_state_none_available_header">Még nincsenek cikkek</string>
 	<string name="news_empty_state_all_read_header">Nincs mit elolvasni</string>
 	<string name="news_empty_state_none_available_text">Jelenleg nincs elérhető cikk, ellenőrizd később.</string>
