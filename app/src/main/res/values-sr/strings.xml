@@ -50,6 +50,9 @@
 	<string name="download_error_corrupt">Преузети фајл је оштећен! Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_server">Грешка са сервером је настала приликом преузимања. Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_internal">Нажалост, техничка грешка је настала приликом преузимања ажурирања. Молимо вас покушајте да преузмете поново. Ако грешка настави да се појављује, молимо вас контактирајте нас за помоћ.</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[Чини се да је линк за преузимање неважећи. То може значити да смо направили грешку током додавања података за ажурирање, или је OnePlus повукао/избрисао ажурирање са њихових сервера. Обавештење је послато тиму и ми ћемо погледати о ћему се ради што брже могуће.
+
+Ако желите да сазнате више, осећајте се слободно да нас контактирате путем <a href="mailto:support@oxygenupdater.com">email</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Фајл је преузет, али не може бити пребачен у исправни директоријум. Отворите менаџер фајлова, идите на \"%1$s\" и ручно преместите фајл у највиши директориј интерне меморије</string>
 
 	<string name="download_error_retry">ПОНОВИ</string>
@@ -222,34 +225,34 @@
 	<string name="install_guide_page_1_title">Преузмите ажурирање</string>
 	<string name="install_guide_page_1_text">&#8226; Притисните дугме за преузимање да започнете преузимање ажурирања.\n\n&#8226; Прогрес преузимања ће се појавити у апликацији, такође и као обавештење.\n\n&#8226; Када је преузимање завршено, видећете обавештење са текстом \"Преузимање завшено\".\nАко је дошло до грешке приликом преузимања, отворите апликацију и покушајте поново са преузимањем. Ако то не ради, проверите да ли имате интернет конекцију. У супротном, контактирајте нас. То можете учинити одласком на \" Моје апликације \" секцију на Goole Play продавници.</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
+	
+	<string name="install_guide_page_2_title">Припремите се за инталацију</string>
+	<string name="install_guide_page_2_text">"Белешка: Инсталација ажурирања врши се са посебне странице стандардног одељка Ажурирања система на вашем уређају. Ако се из неког разлога појављује ажурирање система приликом отварања овог одељка, можете  прво изабрати да њега инсталирате. Након тога поново отворите програм "Oxgen Updater" да видите да ли сте ажурирани на последњу верзију.
 
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
+Инструкције:
+&#8226; Затворите Oxygen Updater притиском на Хоме дугме.
 
-&#8226; Open the Settings app. It should be located in your app drawer.
+&#8226; Отворите подешавања телефона. Требало би да се налазе у менију са апликацијама.
 
-&#8226; Scroll down until you see System updates. Tap on it."</string>
+&#8226; Листајте доле док не дођете до Ажурирања система. Кликните на то."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+	
+	<string name="install_guide_page_3_title">Инсталирајте ажурирање</string>
+	<string name="install_guide_page_3_text">"Сада када сте у апликацији Ажурирање система, време је да инсталирате ажурирање.
 
-&#8226; Within the System Updates section, tap the gear icon in the top right
+&#8226; У одељку „Ажурирања система“ кликните на икону зупчаника у горњем десном углу
 
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+&#8226; Сада, одаберите \"Локално ажурирање\". Требало би да се појави екран за избор датотека.
 
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+&#8226; На овом екрану, кликните на датотеку за ажурирање коју сте преузели помоћу Oxygen Updater-а. Име дадотеке би требало да почне са \"%1$sOxygen\".
 
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+&#8226; Кликните на \"Ажурирај сада\". Инсталација би требала да почне аутоматски."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+	
+	<string name="install_guide_page_4_title">Сачекајте да се заврши инсталација</string>
+	<string name="install_guide_page_4_text">"&#8226; Телефон ће сада инсталирати ажурирање и приказати траку напретка. Молимо причекајте док се инсталација не заврши. Инсталација може трајати од неколико минута до 15 минута.
 
-&#8226; Afterwards, your phone will restart to complete the update."</string>
+&#8226; Након тога Ваш телефон ће се угасити и упалити да би завршио унсталацију ажурирања."</string>
 
 	<string name="install_guide_page_5_title">Завршено. Уживајте у новој OxygenOS верзији!</string>
 	<string name="install_guide_page_5_text">&#8226; Након што уређај заврши са оптимизовањем ваших апликација ажурирање ће бити успешно инсталирано.\nДа бисте проверили ово, можете проверити тренутну верзију система на следећи начин:\n\n&#8226; Идите у подешавања, кликните на \"About phone\", и проверите OxygenOS верзију.\n\n&#8226; Ако вам се свиђа апликација, молимо вас оцените нас са 5 звездица на Google Play продавници!</string>
@@ -320,12 +323,12 @@ Instructions:
 	<string name="news_date_published">Последње ажурирање: %1$s</string>
 	<string name="news_empty">Ова вест нема садржај.</string>
 	<string name="news_load_network_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
-	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="news_unread_count_1">Имате %1$d непрочитаних вести. Tap here to view them.</string>
-	<string name="news_unread_count_2">Имате %1$d непрочитаних вести. Tap to show all articles.</string>
-	<string name="news_mark_all_read">Mark all articles as read</string>
+	
+	<string name="news_load_id_error"><![CDATA[Није успео отварање чланка са неважеће УРЛ адресе: %1$s. Проверите УРЛ или нам то пријавите или путем <a href="mailto:support@oxygenupdater.com">email</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	
+	<string name="news_unread_count_1">Имате %1$d непрочитаних вести. Кликните овде да их погледате.</string>
+	<string name="news_unread_count_2">Имате %1$d непрочитаних вести. Кликните овде да видите све непрочитане вести.</string>
+	<string name="news_mark_all_read">Означите све вести као прочитане</string>
 	<string name="news_empty_state_none_available_header">Нема вести још увек</string>
 	<string name="news_empty_state_all_read_header">Није ништа преостало за прочитати</string>
 	<string name="news_empty_state_none_available_text">У овом тренутку нема доступних вести, погледајте касније.</string>
