@@ -48,7 +48,7 @@
 	<string name="download_error_corrupt">"Ladatattu päivitystiedosto on vahingoittunut! Ole hyvä ja yritä ladata se uudelleen."</string>
 	<string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
 	<string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Näyttäisi siltä, että <string name="download_error_unsuccessful_response"><![CDATA[Näyttäisi siltä, että latauslinkki on viallinen. Tämä tarkoittaa sitä, että joko me teimme virheen päivitystietojen lisäämisessä, tai OnePlus on poistanut päivitystiedoston palvelimiltaan. Ilmoitus on lähetetty tiimille ja tutkimme tätä mahdollisimman pian.
+	<string name="download_error_unsuccessful_response"><![CDATA[Näyttäisi siltä, että latauslinkki on viallinen. Tämä tarkoittaa sitä, että joko me teimme virheen päivitystietojen lisäämisessä, tai OnePlus on poistanut päivitystiedoston palvelimiltaan. Ilmoitus on lähetetty tiimille ja tutkimme tätä mahdollisimman pian.
 
 Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord palvelimella</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Tiedosto ladattu, mutta sitä ei voitu siirtää oikeaan kansioon. Avaa tiedostonhallinta, navigoi \"%1$s\" polkuun ja siirrä tiedosto sisäisen tallennustilan juureen.</string>
