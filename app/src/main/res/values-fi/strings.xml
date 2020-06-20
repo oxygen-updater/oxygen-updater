@@ -48,10 +48,9 @@
 	<string name="download_error_corrupt">"Ladatattu päivitystiedosto on vahingoittunut! Ole hyvä ja yritä ladata se uudelleen."</string>
 	<string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
 	<string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>
-	<!-- TODO: translate this string below -->
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
+	<string name="download_error_unsuccessful_response"><![CDATA[Näyttäisi siltä, että <string name="download_error_unsuccessful_response"><![CDATA[Näyttäisi siltä, että latauslinkki on viallinen. Tämä tarkoittaa sitä, että joko me teimme virheen päivitystietojen lisäämisessä, tai OnePlus on poistanut päivitystiedoston palvelimiltaan. Ilmoitus on lähetetty tiimille ja tutkimme tätä mahdollisimman pian.
 
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord palvelimella</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Tiedosto ladattu, mutta sitä ei voitu siirtää oikeaan kansioon. Avaa tiedostonhallinta, navigoi \"%1$s\" polkuun ja siirrä tiedosto sisäisen tallennustilan juureen.</string>
 
 	<string name="download_error_retry">"Uudelleen"</string>
@@ -252,35 +251,31 @@ Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
 - Kun lataus on valmistunut näet ilmoituksen \"Lataus valmis\".
 Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudelleen. Jos tämä ei toimi varmista, että sinulla on toimiva yhteys. Muutoin olen yhteydessä sovelluksen kehittäjään. Voit tehdä tämän myös vierailemalla \"Omat sovellukset\" osiossa Play Kaupassa."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
+	<string name="install_guide_page_2_title">Valmistaudu asennukseen</string>
+	<string name="install_guide_page_2_text">"Huomio: Päivityksen asentaminen tapahtuu Järjestelmäpäivitys kohdassa laitteellasi. Jos jostain syystä järjestelmäpäivitys löytyy, kun avaat Järjestelmäpäivitys kohdan, voit asentaa sen päivityksen ensin ja avata Oxygen Updater:in varmistaaksesi että olet viimeisimmässä versiossa.
 
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
+Ohje:
+&#8226; Sulje Oxygen Updater painamalla kotinappia.
 
-&#8226; Open the Settings app. It should be located in your app drawer.
+&#8226; Avaa Asetukset sovellus. Sen pitäisi löytyä sovellusvalikosta.
 
-&#8226; Scroll down until you see System updates. Tap on it."</string>
+&#8226; Vieritä kunnes näet Järjestelmäpäivitykset kohdan. Paina sitä."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+	<string name="install_guide_page_3_title">Asenna päivitys</string>
+	<string name="install_guide_page_3_text">"Nyt kun olet Järjestelmäpäivitys-osiossa, on aika asentaa päivitys.
 
-&#8226; Within the System Updates section, tap the gear icon in the top right
+&#8226; Järjestelmäpäivitykset-osiossa paina hammasratas-ikonia oikeassa yläkulmassa.
 
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+&#8226; Valitse \"Paikallinen päivitys\". Tiedostonvalintaruutu pitäisi aueta.
 
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+&#8226; Paina päivitystiedostoa, jonka latasit Oxygen Updaterin avulla. Sen nimi tulisi alkaa \"%1$sOxygen\".
 
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+&#8226; Paina \"Päivitä Nyt\". Asennuksen pitäisi alkaa automaattisesti."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+	<string name="install_guide_page_4_title">Odota kunnes asennus on valmis</string>
+	<string name="install_guide_page_4_text">"&#8226; Puhelin asentaa päivityksen ja näyttää sen edistymisen. Odota kunnes asennus on valmis. Asennus voi kestää jopa 15 minuuttia.
 
-&#8226; Afterwards, your phone will restart to complete the update."</string>
-
+&#8226; Sen jälkeen puhelin käynnistyy uudestaan päivityksen viimeistelemiseksi."</string>
 	<string name="install_guide_page_5_title">"Valmis. Nauti uudesta OxygenOS versiosta!"</string>
 	<string name="install_guide_page_5_text">"&#8226; Kun laitteesi on viimeistellyt sovellusten optimoinnin, asennus on onnistuneesti suoritettu.
 Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavasti:
@@ -379,12 +374,12 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="news_date_published">"Viimeisin päivitys: %1$s"</string>
 	<string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
 	<string name="news_load_network_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
-	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="news_unread_count_1">Sinulla on %1$d lukematonta artikkelia. Tap here to view them.</string>
-	<string name="news_unread_count_2">Sinulla on %1$d lukematonta artikkelia. Tap to show all articles.</string>
-	<string name="news_mark_all_read">Mark all articles as read</string>
+	<string name="news_load_id_error"><![CDATA[Artikkelin avaaminen viallisesta URL epäonnistui: %1$s. Tarkista URL tai kerro tästä meille joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord serverillä</a>.]]></string>
+
+	<string name="news_unread_count_1">Sinulla on %1$d lukematonta artikkelia. Paina tästä nähdäksesi ne.</string>
+	<string name="news_unread_count_2">Sinulla on %1$d lukematonta artikkelia. Paina nähdäksesi kaikki artikkelit.</string>
+	<string name="news_mark_all_read">Merkitse kaikki artikkelit luetuksi</string>
+
 	<string name="news_empty_state_none_available_header">Ei artikkeleita</string>
 	<string name="news_empty_state_all_read_header">Ei luettavaa jäljellä</string>
 	<string name="news_empty_state_none_available_text">Ei artikkeleita. Tule takaisin myöhemmin.</string>
