@@ -427,7 +427,8 @@ Jos sinulla on root oikeus asennettuna, annan Oxygen Updaterinlle root oikeus su
 Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käyttöä."</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">"Mainosvapaan version ostaminen epäonnistui, koska sattui sisäinen virhe. Ole hyvä ja yritä uudelleen muutaman minuutin kuluttua."</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">"Mainosvapaan version ostaminen epäonnistui, koska sattui sisäinen virhe. Ole hyvä ja yritä uudelleen muutaman minuutin kuluttua. Jos olet jo maksanut, ole hyvä ja ota yhteyttä Play Kaupan tukeen saadaksesi apua."</string>
 
 	<!-- Other strings -->

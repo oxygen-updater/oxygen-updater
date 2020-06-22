@@ -3,6 +3,7 @@ package com.arjanvlek.oxygenupdater.fragments
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,12 +16,16 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.android.billingclient.api.BillingClient.BillingResponseCode
+import com.android.billingclient.api.Purchase
 import com.arjanvlek.oxygenupdater.ActivityLauncher
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.dialogs.Dialogs.showAdvancedModeExplanation
 import com.arjanvlek.oxygenupdater.enums.PurchaseStatus
+import com.arjanvlek.oxygenupdater.enums.PurchaseType
+import com.arjanvlek.oxygenupdater.exceptions.GooglePlayBillingException
 import com.arjanvlek.oxygenupdater.internal.settings.BottomSheetItem
 import com.arjanvlek.oxygenupdater.internal.settings.BottomSheetPreference
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
@@ -28,11 +33,17 @@ import com.arjanvlek.oxygenupdater.models.AppLocale
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
+import com.arjanvlek.oxygenupdater.models.billing.AugmentedSkuDetails
+import com.arjanvlek.oxygenupdater.repositories.BillingRepository.Companion.DEVELOPER_PAYLOAD_PREFIX
+import com.arjanvlek.oxygenupdater.repositories.BillingRepository.Sku
+import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
+import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils.checkPlayServices
+import com.arjanvlek.oxygenupdater.viewmodels.BillingViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
@@ -46,18 +57,47 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private lateinit var activity: AppCompatActivity
     private lateinit var application: OxygenUpdater
     private lateinit var activityLauncher: ActivityLauncher
+    private lateinit var adFreePreference: Preference
     private lateinit var devicePreference: BottomSheetPreference
     private lateinit var updateMethodPreference: BottomSheetPreference
 
-    private lateinit var delegate: InAppPurchaseDelegate
+    private val inappSkuDetailsListObserver = Observer<List<AugmentedSkuDetails>> { list ->
+        list.find {
+            it.sku == Sku.AD_FREE
+        }.let { augmentedSkuDetails ->
+            val purchaseStatus = when {
+                augmentedSkuDetails == null -> PurchaseStatus.UNAVAILABLE
+                augmentedSkuDetails.canPurchase -> PurchaseStatus.AVAILABLE
+                !augmentedSkuDetails.canPurchase -> PurchaseStatus.ALREADY_BOUGHT
+                else -> PurchaseStatus.UNAVAILABLE
+            }
+
+            setupBuyAdFreePreference(purchaseStatus, augmentedSkuDetails)
+        }
+    }
+
+    private val pendingPurchasesObserver = Observer<Set<Purchase>> {pendingPurchases ->
+        val isAdFreeUnlockPending = pendingPurchases.any {
+            it.sku == Sku.AD_FREE
+        }
+
+        if (isAdFreeUnlockPending) {
+            Toast.makeText(mContext, getString(R.string.purchase_error_pending_payment), Toast.LENGTH_LONG).show()
+
+            // Disable the Purchase button and set its text to "Processing..."
+            // This can conflict with summary updates from [inappSkuDetailsListObserver], but eh. It's harmless.
+            adFreePreference.apply {
+                isEnabled = false
+                summary = mContext.getString(R.string.processing)
+            }
+        }
+    }
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
+    private val crashlytics by inject<FirebaseCrashlytics>()
     private val settingsManager by inject<SettingsManager>()
     private val settingsViewModel by sharedViewModel<SettingsViewModel>()
-
-    fun setInAppPurchaseDelegate(delegate: InAppPurchaseDelegate) {
-        this.delegate = delegate
-    }
+    private val billingViewModel by sharedViewModel<BillingViewModel>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         init()
@@ -76,6 +116,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         setupAboutPreferences()
     }
 
+    override fun onResume() = super.onResume().also {
+        init()
+    }
+
     /**
      * Initialises context, activity, application, and their relevant references
      */
@@ -89,19 +133,136 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        init()
-    }
-
     /**
      * Sets up buy ad-free and contribute preferences
      */
     private fun setupSupportPreferences() {
-        val contribute = findPreference<Preference>(mContext.getString(R.string.key_contributor))
-        contribute?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+        setupBuyAdFreePreference()
+
+        findPreference<Preference>(
+            mContext.getString(R.string.key_contributor)
+        )?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             activityLauncher.Contribute()
             true
+        }
+    }
+
+    private fun logIABError(errorMessage: String) = logError(
+        TAG,
+        GooglePlayBillingException(errorMessage)
+    )
+
+    /**
+     * Validate the in app purchase on the app's server
+     *
+     * @param purchase Purchase which must be validated
+     * @param amount Localized price
+     * @param purchaseType the purchase type
+     */
+    private fun validateAdFreePurchase(
+        purchase: Purchase,
+        amount: String?,
+        purchaseType: PurchaseType
+    ) {
+        if (purchase.developerPayload?.startsWith(DEVELOPER_PAYLOAD_PREFIX) == false) {
+            logError(
+                TAG,
+                GooglePlayBillingException(
+                    "Purchase of the ad-free version failed. The returned developer payload was incorrect (${purchase.developerPayload})"
+                )
+            )
+        }
+
+        billingViewModel.verifyPurchase(
+            purchase,
+            amount,
+            purchaseType
+        ) { validationResult ->
+            if (!isAdded) {
+                return@verifyPurchase
+            }
+
+            when {
+                // If server can't be reached, keep trying until it can
+                validationResult == null -> Handler().postDelayed(
+                    {
+                        validateAdFreePurchase(
+                            purchase,
+                            amount,
+                            purchaseType
+                        )
+                    },
+                    2000
+                )
+                !validationResult.success -> logError(
+                    TAG,
+                    GooglePlayBillingException(
+                        "Purchase of the ad-free version failed. Failed to verify purchase on the server. Error message: "
+                                + validationResult.errorMessage
+                    )
+                )
+            }
+        }
+    }
+
+    /**
+     * Set summary and enable/disable the buy preference depending on purchased status
+     */
+    private fun setupBuyAdFreePreference() {
+        adFreePreference = findPreference(mContext.getString(R.string.key_ad_free))!!
+
+        billingViewModel.inappSkuDetailsListLiveData.observe(
+            viewLifecycleOwner,
+            inappSkuDetailsListObserver
+        )
+
+        billingViewModel.pendingPurchasesLiveData.observe(
+            viewLifecycleOwner,
+            pendingPurchasesObserver
+        )
+    }
+
+    /**
+     * @param augmentedSkuDetails is never null if [purchaseStatus] is [PurchaseStatus.AVAILABLE]
+     */
+    private fun setupBuyAdFreePreference(
+        purchaseStatus: PurchaseStatus,
+        augmentedSkuDetails: AugmentedSkuDetails?
+    ) {
+        when (purchaseStatus) {
+            PurchaseStatus.UNAVAILABLE -> {
+                logIABError("IAB: SKU ${Sku.AD_FREE} is not available")
+
+                // Unavailable
+                adFreePreference.isEnabled = false
+                adFreePreference.summary = mContext.getString(R.string.settings_buy_button_not_possible)
+                adFreePreference.onPreferenceClickListener = null
+            }
+            PurchaseStatus.AVAILABLE -> {
+                logDebug(TAG, "IAB: Product has not yet been purchased")
+
+                // Save, because we can guarantee that the device is online and that the purchase check has succeeded
+                settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
+
+                // Available
+                adFreePreference.isEnabled = true
+                adFreePreference.summary = mContext.getString(R.string.settings_buy_button_buy, augmentedSkuDetails!!.price)
+                adFreePreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                    onBuyAdFreePreferenceClicked(augmentedSkuDetails)
+                    true
+                }
+            }
+            PurchaseStatus.ALREADY_BOUGHT -> {
+                logDebug(TAG, "IAB: Product has already been purchased")
+
+                // Save, because we can guarantee that the device is online and that the purchase check has succeeded
+                settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
+
+                // Already bought
+                adFreePreference.isEnabled = false
+                adFreePreference.summary = mContext.getString(R.string.settings_buy_button_bought)
+                adFreePreference.onPreferenceClickListener = null
+            }
         }
     }
 
@@ -124,24 +285,25 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     private fun setupThemePreference() {
-        findPreference<Preference>(mContext.getString(R.string.key_theme))?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
+        findPreference<Preference>(mContext.getString(R.string.key_theme))?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
             AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(mContext))
             true
         }
     }
 
     private fun setupAdvancedModePreference() {
-        val advancedMode = findPreference<SwitchPreference>(SettingsManager.PROPERTY_ADVANCED_MODE)
-        advancedMode?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val isAdvancedMode = settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
-            if (isAdvancedMode) {
-                advancedMode?.isChecked = false
-                showAdvancedModeExplanation(activity) {
-                    advancedMode?.isChecked = it
+        findPreference<SwitchPreference>(SettingsManager.PROPERTY_ADVANCED_MODE)?.apply {
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                val isAdvancedMode = settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
+                if (isAdvancedMode) {
+                    isChecked = false
+                    showAdvancedModeExplanation(activity) {
+                        isChecked = it
+                    }
                 }
-            }
 
-            true
+                true
+            }
         }
     }
 
@@ -235,7 +397,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             // listen for preference change so that we can save the corresponding device ID,
             // and populate update methods
-            devicePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, value: Any ->
+            devicePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, value ->
                 // disable the update method preference since device has changed
                 updateMethodPreference.isEnabled = false
 
@@ -253,7 +415,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     /**
-     * Populates [.updateMethodPreference] and calls [Crashlytics.setUserIdentifier]
+     * Populates [.updateMethodPreference] and calls [FirebaseCrashlytics.setUserId]
      *
      * @param updateMethods retrieved from the server
      */
@@ -302,8 +464,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 }
             }
 
-            updateMethodPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _: Preference?, _: Any? ->
-                Crashlytics.setUserIdentifier(
+            updateMethodPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+                crashlytics.setUserId(
                     "Device: " + settingsManager.getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
                             + ", Update Method: " + settingsManager.getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
                 )
@@ -334,54 +496,59 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     /**
      * Handler which is called when the Buy button is clicked
      *
-     *
      * Starts the purchase process or initializes a new IabHelper if the current one was disposed early
-     *
-     * @param preference the buy ad free preference
      */
-    private fun onBuyAdFreePreferenceClicked(preference: Preference) {
+    private fun onBuyAdFreePreferenceClicked(
+        augmentedSkuDetails: AugmentedSkuDetails
+    ) {
         // Disable the Purchase button and set its text to "Processing...".
-        preference.apply {
+        adFreePreference.apply {
             isEnabled = false
             summary = mContext.getString(R.string.processing)
         }
 
-        delegate.performInAppPurchase()
-    }
+        billingViewModel.makePurchase(
+            activity,
+            augmentedSkuDetails
+        ) { responseCode, purchase ->
+            if (!isAdded) {
+                return@makePurchase
+            }
 
-    /**
-     * Set summary and enable/disable the buy preference depending on purchased status
-     *
-     * @param status      purchase status
-     * @param adFreePrice price to display if the product can be bought
-     */
-    fun setupBuyAdFreePreference(status: PurchaseStatus?, adFreePrice: String? = null) {
-        findPreference<Preference>(mContext.getString(R.string.key_ad_free))?.apply {
-            when (status) {
-                PurchaseStatus.UNAVAILABLE -> {
-                    isEnabled = false
-                    summary = mContext.getString(R.string.settings_buy_button_not_possible)
-                    onPreferenceClickListener = null
+            when (responseCode) {
+                BillingResponseCode.OK -> if (purchase != null) {
+                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
+
+                    validateAdFreePurchase(
+                        purchase,
+                        augmentedSkuDetails.price,
+                        PurchaseType.AD_FREE
+                    )
+                } else {
+                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
-                PurchaseStatus.AVAILABLE -> {
-                    isEnabled = true
-                    summary = mContext.getString(R.string.settings_buy_button_buy, adFreePrice)
-                    onPreferenceClickListener = Preference.OnPreferenceClickListener { preference: Preference ->
-                        onBuyAdFreePreferenceClicked(preference)
-                        true
-                    }
+                // TODO: Think about showing a toast message informing the user that they already own it
+                BillingResponseCode.ITEM_ALREADY_OWNED -> {
+                    // This is tricky to deal with. Even pending purchases show up as "items already owned",
+                    // so we can't grant entitlement i.e. set [SettingsManager.PROPERTY_AD_FREE] to `true`.
+                    // A message should be shown to the user informing them they may have pending purchases.
+                    // This case will be handled by observing the pending purchases LiveData.
+                    // Entitlement is being granted by observing to the in-app SKU details list LiveData anyway.
                 }
-                PurchaseStatus.ALREADY_BOUGHT -> {
-                    isEnabled = false
-                    summary = mContext.getString(R.string.settings_buy_button_bought)
-                    onPreferenceClickListener = null
+                BillingResponseCode.USER_CANCELED -> {
+                    logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
+                    setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
                 }
-                else -> throw IllegalStateException("ShowBuyAdFreeButton: Invalid PurchaseStatus $status!")
+                else -> {
+                    logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow: $responseCode")
+                    Toast.makeText(mContext, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
+                    setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
+                }
             }
         }
     }
 
-    interface InAppPurchaseDelegate {
-        fun performInAppPurchase()
+    companion object {
+        private const val TAG = "SettingsFragment"
     }
 }

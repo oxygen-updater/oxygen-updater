@@ -388,7 +388,8 @@ Instructions:
 	<string name="root_check_message">Oxygen Updater เสนอการติดตั้งการอัพเดทอัตโนมัติที่ง่ายดายสำหรับผู้ใช้ที่มีอุปกรณ์รูท อย่างไรก็ตามการอัพเดตแบบธรรมดาไม่พร้อมใช้งานสำหรับอุปกรณ์ที่ถูกรูท Oxygen Updater สามารถตรวจสอบว่าคุณมีการเข้าถึงรูทเพื่อเสนอวิธีการอัพเดทที่เหมาะสม\n\n หากคุณมีการเข้าถึงรูทกรุณาอนุญาตให้ Oxygen Updater รับสิทธิ์การเข้าถึงรูทหลังจากปิดข้อความนี้\n\n ไม่มีการเข้าถึงรูทหรือไม่ กด \"ปิด \" และใช้แอปต่อไป</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">การซื้อเวอร์ชันที่ไม่มีโฆษณาล้มเหลวเนื่องจากเกิดข้อผิดพลาดภายใน โปรดลองอีกครั้งในไม่กี่นาที.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">การซื้อเวอร์ชันที่ที่ไม่มีโฆษณาล้มเหลวเนื่องจากเกิดข้อผิดพลาดภายใน โปรดลองอีกครั้งในไม่กี่นาที. หากคุณได้ชำระเงินแล้วโปรดติดต่อฝ่ายสนับสนุนของ Google Play เพื่อขอความช่วยเหลือ</string>
 
 	<!-- Other strings-->

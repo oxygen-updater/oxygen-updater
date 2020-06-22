@@ -3,7 +3,7 @@ import java.util.*
 
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
-    id(BuildPlugins.FABRIC)
+    id(BuildPlugins.FIREBASE_CRASHLYTICS)
     id(BuildPlugins.KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
     id(BuildPlugins.KOTLIN_KAPT)
@@ -27,6 +27,21 @@ android {
         versionName = "4.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                // Add Room-specific arguments
+                // https://developer.android.com/jetpack/androidx/releases/room#compiler-options
+                arguments(
+                    mapOf(
+                        "room.schemaLocation" to "$projectDir/schemas",
+                        "room.incremental" to "true",
+                        "room.expandProjection" to "true"
+                    )
+                )
+            }
+        }
+
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),
             "proguard-rules.pro",
@@ -87,6 +102,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = true
+
+            firebaseCrashlytics {
+                mappingFileUploadEnabled = false
+            }
         }
         // Config for use during debugging locally on an emulator
         // Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device/emulator
@@ -104,6 +123,10 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = true
+
+            firebaseCrashlytics {
+                mappingFileUploadEnabled = false
+            }
         }
 
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
@@ -176,8 +199,14 @@ dependencies {
     implementation(Libraries.FIREBASE_ANALYTICS)
     implementation(Libraries.FIREBASE_MESSAGING)
 
+    implementation(Libraries.GOOGLE_PLAY_BILLING)
+    implementation(Libraries.GOOGLE_PLAY_BILLING_KTX)
     implementation(Libraries.PLAY_CORE)
     implementation(Libraries.PLAY_SERVICES_BASE)
+
+    implementation(Libraries.ROOM_KTX)
+    implementation(Libraries.ROOM_RUNTIME)
+    kapt(Libraries.ROOM_COMPILER)
 
     implementation(Libraries.KOIN)
     implementation(Libraries.KOIN_FRAGMENT)

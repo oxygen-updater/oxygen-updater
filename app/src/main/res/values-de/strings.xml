@@ -475,7 +475,8 @@ If you have root access, allow Oxygen Updater to obtain root access after closin
 No root access? Press \"Close\" and continue using the app."</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">"Der Kauf der Werbe-freien Version ist fehlgeschlagen, durch einen internen fehler. Bitte Versuche es in ein paar Minuten nochmal."</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">"Der Kauf der Werbe-freien Version ist fehlgeschlagen, durch einen internen fehler. Bitte Versuche es in ein paar Minuten nochmal. Wenn du bereits bezahlt hast, kontaktiere bitte den Google Play Support für Hilfe."</string>
 
 	<!-- Other strings -->

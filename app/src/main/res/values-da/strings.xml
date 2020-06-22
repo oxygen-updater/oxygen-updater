@@ -390,7 +390,8 @@ Instructions:
 	<string name="root_check_message">Oxygen Updater tilbyder let, automatiseret opdaterings -installationer, for brugere med en root\'ed enhed. Dog, så er trinsvise opdateringer ikke tilgængelige for root\'ede enheder. Oxygen Updater kan checke hvis du har rod-adgang, for at kunne tilbyde den korrekte opdateringsmetode.\n\nHvis du har rod-adgang, så tiv tilladelse til at Oxygen Updater kan få adgang, efter du lukker denne besked.\n\nIngen rod-adgang? Tryk på \"Luk\" og fortsæt med at bruger denne app.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">Købet af den reklamefri version fejlede, på grund af en intern internal fejl. Prøv igen om et par minutter.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">Købet af den reklamefri version fejlede, på grund af en intern internal fejl. Prøv igen om et par minutter. Har du allerede betalt, kontakt Google Play support for at få hjælp.</string>
 
 	<!-- Other strings-->

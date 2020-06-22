@@ -1,12 +1,12 @@
 package com.arjanvlek.oxygenupdater.repositories
 
+import com.android.billingclient.api.Purchase
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.apis.ServerApi
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.enums.PurchaseType
 import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.internal.iab.Purchase
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.RootInstall
@@ -265,7 +265,21 @@ class ServerRepository constructor(
         purchaseType: PurchaseType
     ) = performServerRequest {
         serverApi.verifyPurchase(
-            purchase.createHashMapForVerificationRequest(amount, purchaseType)
+            hashMapOf(
+                "orderId" to purchase.orderId,
+                "packageName" to purchase.packageName,
+                "productId" to purchase.sku,
+                "purchaseTime" to purchase.purchaseTime,
+                "purchaseState" to purchase.purchaseState,
+                "developerPayload" to purchase.developerPayload,
+                "token" to purchase.purchaseToken,
+                "purchaseToken" to purchase.purchaseToken,
+                "autoRenewing" to purchase.isAutoRenewing,
+                "purchaseType" to purchaseType.name,
+                "itemType" to purchaseType.type,
+                "signature" to purchase.signature,
+                "amount" to amount
+            )
         )
     }
 

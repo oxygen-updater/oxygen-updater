@@ -397,7 +397,8 @@ Instructions:
 	<string name="root_check_message">Oxygen Updater offers easy, automated update installations for users with a rooted devices. However, incremental updates are not available for rooted devices. Oxygen Updater can check if you have root access to only offer appropriate update methods.\n\nIf you have root access, allow Oxygen Updater to obtain root access after closing this message.\n\nNo root access? Press \"Close\" and continue using the app.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
 
 	<!-- Other strings-->

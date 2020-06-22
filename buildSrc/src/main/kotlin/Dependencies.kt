@@ -5,23 +5,24 @@ const val KOTLIN_VERSION = "1.3.72"
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
-        const val BUILD_GRADLE_PLUGIN = "3.6.0"
-        // Maybe https://s3.amazonaws.com/fabric-artifacts/public/io/fabric/tools/gradle/maven-metadata.xml
-        const val FABRIC_GRADLE_PLUGIN = "1.31.2"
+        const val BUILD_GRADLE_PLUGIN = "4.0.0"
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.3"
+        // https://firebase.google.com/support/release-notes/android
+        const val FIREBASE_GRADLE_PLUGIN = "2.2.0"
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
     const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:${Versions.BUILD_GRADLE_PLUGIN}"
-    const val FABRIC_GRADLE_PLUGIN = "io.fabric.tools:gradle:${Versions.FABRIC_GRADLE_PLUGIN}"
     // https://developers.google.com/android/guides/releases
     const val GOOGLE_SERVICES_PLUGIN = "com.google.gms:google-services:${Versions.GOOGLE_SERVICES_PLUGIN}"
+    // https://firebase.google.com/support/release-notes/android
+    const val FIREBASE_GRADLE_PLUGIN = "com.google.firebase:firebase-crashlytics-gradle:${Versions.FIREBASE_GRADLE_PLUGIN}"
     const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
 
     const val ANDROID_APPLICATION = "com.android.application"
-    const val FABRIC = "io.fabric"
     const val GOOGLE_SERVICES = "com.google.gms.google-services"
+    const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
 
     const val KOTLIN_ANDROID = "kotlin-android"
     const val KOTLIN_ANDROID_EXTENSIONS = "kotlin-android-extensions"
@@ -44,11 +45,11 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/browser
         const val BROWSER = "1.2.0"
         // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        const val CONSTRAINT_LAYOUT = "2.0.0-beta4"
+        const val CONSTRAINT_LAYOUT = "2.0.0-beta7"
         // https://developer.android.com/jetpack/androidx/releases/core
-        const val KTX_CORE = "1.2.0"
+        const val KTX_CORE = "1.3.0"
         // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.2.4"
+        const val KTX_FRAGMENT = "1.2.5"
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
         const val KTX_LIFECYCLE = "2.2.0"
         // https://developer.android.com/jetpack/androidx/releases/preference
@@ -87,19 +88,21 @@ object Libraries {
         const val A_FILE_CHOOSER = "1.0.1"
         // https://github.com/Chainfire/libsuperuser/releases
         const val CHAINFIRE_LIBSUPERUSER = "1.1.0.201907261845"
-        // https://firebase.google.com/support/release-notes/android
-        const val CRASHLYTICS = "2.10.1"
         // https://github.com/facebook/shimmer-android/releases
         const val FACEBOOK_SHIMMER = "0.5.0"
         // https://firebase.google.com/support/release-notes/android
         // https://developers.google.com/admob/android/rel-notes
-        const val FIREBASE_ADS = "19.1.0"
+        const val FIREBASE_ADS = "19.2.0"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_ANALYTICS_KTX = "17.4.0"
+        const val FIREBASE_ANALYTICS_KTX = "17.4.3"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_MESSAGING = "20.1.6"
+        const val FIREBASE_CRASHLYTICS = "17.1.0"
+        // https://firebase.google.com/support/release-notes/android
+        const val FIREBASE_MESSAGING = "20.2.1"
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.11.0"
+        // https://developer.android.com/google/play/billing/release-notes
+        const val GOOGLE_PLAY_BILLING = "3.0.0"
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
         const val JACKSON_KOTLIN_MODULE = "2.11.0"
@@ -108,20 +111,22 @@ object Libraries {
         const val THREE_TEN_ABP = "1.2.4"
         // https://doc.insert-koin.io/#/setup/index
         // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-        const val KOIN = "2.1.5"
+        const val KOIN = "2.1.6"
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.3.5"
+        const val KOTLIN_COROUTINES = "1.3.7"
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.2.0-alpha06"
+        const val MATERIAL = "1.2.0-beta01"
         // https://square.github.io/okhttp/changelog/
-        const val OKHTTP_LOGGING_INTERCEPTOR = "4.6.0"
+        const val OKHTTP_LOGGING_INTERCEPTOR = "4.7.2"
         // https://developer.android.com/reference/com/google/android/play/core/release-notes
-        const val PLAY_CORE = "1.7.2"
+        const val PLAY_CORE = "1.7.3"
         // https://developers.google.com/android/guides/releases
-        const val PLAY_SERVICES_BASE = "17.2.1"
+        const val PLAY_SERVICES_BASE = "17.3.0"
         // https://github.com/square/retrofit/releases
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
-        const val RETROFIT = "2.8.1"
+        const val RETROFIT = "2.9.0"
+        // https://developer.android.com/jetpack/androidx/releases/room
+        const val ROOM = "2.2.5"
     }
 
     const val KOTLIN_STDLIB_JDK8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VERSION"
@@ -135,14 +140,25 @@ object Libraries {
 
     // Google Firebase
     // https://firebase.google.com/support/release-notes/android
-    const val CRASHLYTICS = "com.crashlytics.sdk.android:crashlytics:${Versions.CRASHLYTICS}"
+    const val CRASHLYTICS = "com.google.firebase:firebase-crashlytics:${Versions.FIREBASE_CRASHLYTICS}"
     const val FIREBASE_ADS = "com.google.firebase:firebase-ads:${Versions.FIREBASE_ADS}"
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx:${Versions.FIREBASE_ANALYTICS_KTX}"
     const val FIREBASE_MESSAGING = "com.google.firebase:firebase-messaging:${Versions.FIREBASE_MESSAGING}"
 
+    // Google Play stuff
+    // https://developer.android.com/google/play/billing/release-notes
+    const val GOOGLE_PLAY_BILLING = "com.android.billingclient:billing:${Versions.GOOGLE_PLAY_BILLING}"
+    const val GOOGLE_PLAY_BILLING_KTX = "com.android.billingclient:billing-ktx:${Versions.GOOGLE_PLAY_BILLING}"
+    // https://developer.android.com/reference/com/google/android/play/core/release-notes
     const val PLAY_CORE = "com.google.android.play:core:${Versions.PLAY_CORE}"
     // https://developers.google.com/android/guides/releases
     const val PLAY_SERVICES_BASE = "com.google.android.gms:play-services-base:${Versions.PLAY_SERVICES_BASE}"
+
+    // Room
+    // https://developer.android.com/jetpack/androidx/releases/room
+    const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
+    const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
+    const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
 
     // Koin for Android
     // https://doc.insert-koin.io/#/setup/index
@@ -192,7 +208,7 @@ object TestLibraries {
         const val JUNIT4 = "4.13"
         // https://doc.insert-koin.io/#/setup/index
         // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-        const val KOIN = "2.1.5"
+        const val KOIN = "2.1.6"
         // https://developer.android.com/jetpack/androidx/releases/test
         const val RULES = "1.2.0"
         const val RUNNER = "1.2.0"

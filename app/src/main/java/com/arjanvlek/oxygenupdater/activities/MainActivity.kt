@@ -42,6 +42,7 @@ import com.arjanvlek.oxygenupdater.models.ServerStatus
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.utils.Utils.checkPlayServices
+import com.arjanvlek.oxygenupdater.viewmodels.BillingViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.MobileAds
@@ -72,6 +73,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
 
     private val settingsManager by inject<SettingsManager>()
     private val mainViewModel by viewModel<MainViewModel>()
+    private val billingViewModel by viewModel<BillingViewModel>()
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
@@ -109,10 +111,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
     ) = super.onCreate(savedInstanceState).also {
         activityLauncher = ActivityLauncher(this)
 
+        billingViewModel.adFreeUnlockLiveData.observe(this) {
+            // If it's null, user has not bought the ad-free unlock
+            // Thus, ads should be shown
+            setupAds(it == null)
+        }
+
         mainViewModel.maybeCheckForAppUpdate().observe(
             this,
             appUpdateAvailableObserver
         )
+
         mainViewModel.fetchAllDevices().observe(this) { deviceList ->
             val deviceOsSpec = Utils.checkDeviceOsSpec(deviceList)
 
@@ -178,7 +187,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         toolbar.setOnMenuItemClickListener(this)
 
         setupViewPager()
-        setupAds()
 
         // Offer contribution to users from app versions below 2.4.0
         if (!settingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
@@ -352,35 +360,29 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
     /**
      * Checks for Play Services and initialises [MobileAds] if found
      */
-    private fun setupAds() {
+    private fun setupAds(shouldShowAds: Boolean) {
         if (!checkPlayServices(this, false)) {
             Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
         }
 
-        Utils.checkAdSupportStatus(this) { adsAreSupported ->
-            if (isFinishing) {
-                return@checkAdSupportStatus
-            }
-
-            if (adsAreSupported) {
-                bannerAdView?.apply {
-                    isVisible = true
-                    loadAd(buildAdRequest())
-                    adListener = object : AdListener() {
-                        override fun onAdLoaded() = super.onAdLoaded().also {
-                            // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
-                            // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
-                            // which can only be calculated once the AdView has been drawn on the screen
-                            post { viewPager.updatePadding(bottom = height) }
-                        }
+        if (shouldShowAds) {
+            bannerAdView?.apply {
+                isVisible = true
+                loadAd(buildAdRequest())
+                adListener = object : AdListener() {
+                    override fun onAdLoaded() = super.onAdLoaded().also {
+                        // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
+                        // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
+                        // which can only be calculated once the AdView has been drawn on the screen
+                        post { viewPager.updatePadding(bottom = height) }
                     }
                 }
-            } else {
-                bannerAdView?.isVisible = false
-
-                // reset viewPager padding
-                viewPager.setPadding(0, 0, 0, 0)
             }
+        } else {
+            bannerAdView?.isVisible = false
+
+            // reset viewPager padding
+            viewPager.setPadding(0, 0, 0, 0)
         }
     }
 

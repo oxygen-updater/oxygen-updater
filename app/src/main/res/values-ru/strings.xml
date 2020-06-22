@@ -465,7 +465,8 @@ Instructions:
 Нет рута? Тогда нажмите \"Закрыть\" и продолжите пользоваться данным приложением."</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">"Покупка версии без рекламы не удалось, поскольку произошла внутренняя ошибка. Пожалуйста, повторите попытку через несколько минут."</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">"Покупка версии без рекламы не удалось, поскольку произошла внутренняя ошибка. Пожалуйста, повторите попытку через несколько минут. Если деньги списались, свяжитесь с тех. поддержкой Google Play для помощи."</string>
 
 	<!-- Other strings -->

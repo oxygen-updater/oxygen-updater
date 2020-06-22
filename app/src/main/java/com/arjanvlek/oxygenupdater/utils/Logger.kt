@@ -4,13 +4,16 @@ import android.util.Log
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.utils.ExceptionUtils.isNetworkError
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import org.koin.java.KoinJavaComponent.inject
 
 @Suppress("unused")
 object Logger {
 
     private const val CRASHLYTICS_TAG_EXCEPTION_SEVERITY = "EXCEPTION_SEVERITY"
     private const val CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE = "ERROR_DETAIL_MESSAGE"
+
+    private val crashlytics by inject(FirebaseCrashlytics::class.java)
 
     fun logVerbose(tag: String?, message: String) {
         if (isDebugBuild) {
@@ -52,7 +55,7 @@ object Logger {
      * Log a warning message. Must be wrapped in OxygenUpdaterException before so Firebase reads the correct line number.
      */
     fun logWarning(tag: String?, cause: OxygenUpdaterException) {
-        Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.WARNING.name)
+        crashlytics.setCustomKey(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.WARNING.name)
 
         Log.w(tag, cause.message ?: "OxygenUpdaterException: unknown")
         logException(cause)
@@ -62,8 +65,8 @@ object Logger {
      * Log a recoverable exception at warning level
      */
     fun logWarning(tag: String, message: String, cause: Throwable? = null) {
-        Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.WARNING.name)
-        Crashlytics.setString(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, "$tag: $message") // Human readable error description
+        crashlytics.setCustomKey(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.WARNING.name)
+        crashlytics.setCustomKey(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, "$tag: $message") // Human readable error description
 
         Log.w(tag, cause?.message ?: message, cause)
         if (cause != null) {
@@ -75,7 +78,7 @@ object Logger {
      * Log an error message. Must be wrapped in OxygenUpdaterException before so Firebase reads the correct line number.
      */
     fun logError(tag: String?, cause: OxygenUpdaterException) {
-        Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.ERROR.name)
+        crashlytics.setCustomKey(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.ERROR.name)
 
         Log.e(tag, cause.message ?: "OxygenUpdaterException: unknown")
         logException(cause)
@@ -85,8 +88,8 @@ object Logger {
      * Log a recoverable exception at error level
      */
     fun logError(tag: String, message: String, cause: Throwable) {
-        Crashlytics.setString(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.ERROR.name)
-        Crashlytics.setString(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, "$tag: $message") // Human readable error description
+        crashlytics.setCustomKey(CRASHLYTICS_TAG_EXCEPTION_SEVERITY, LogLevel.ERROR.name)
+        crashlytics.setCustomKey(CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE, "$tag: $message") // Human readable error description
 
         Log.e(tag, cause.message, cause)
         logException(cause)
@@ -94,9 +97,9 @@ object Logger {
 
     private fun logException(cause: Throwable) {
         if (isNetworkError(cause)) {
-            Crashlytics.setBool("IS_NETWORK_ERROR", true)
+            crashlytics.setCustomKey("IS_NETWORK_ERROR", true)
         }
-        Crashlytics.logException(cause)
+        crashlytics.recordException(cause)
     }
 
     private val isDebugBuild = BuildConfig.DEBUG
