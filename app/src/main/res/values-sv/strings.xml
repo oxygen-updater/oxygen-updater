@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Det gick inte att hämta en lista över enheter som stöds</string>
 
 	<!-- Update information strings -->
-	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Aktivera</string>
 	<string name="update_information_file_name">"Filnamn: %1$s"</string>
-	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: Translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_header">"Uppdatering"</string>
-	<!-- TODO: translate these 7 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_error_title">Det gick inte att hämta den senaste informationen om uppdateringen</string>
+	<string name="update_information_banner_server">Tryck här för att visa viktiga notiser</string>
+	<string name="update_information_header_advanced_mode_helper">Eftersom du har aktiverat avancerat läge kan du ladda ner den senaste ZIP-filen för \"%1$s\".\n\nDu kan avaktivera avancerat läge i inställningarna.</string>
+	<string name="update_information_different_version_changelog_notice">Du tittar på en ändringslogg för den senaste uppdateringen för \"%1$s\". Om du istället vill installera uppdateringen måste du aktivera avancerat läge (i inställningarna).\n\nOm du istället vill se ändringsloggen för den senaste versionen kommer du behöva byta tillbaka till den rätta uppdateringsmetoden.</string>
 	<string name="update_information_last_checked_on">"Kollade senast den: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Ingen uppdateringsinformation är tillgänglig."</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -31,22 +27,20 @@
 	<string name="server_status_warning">"Vissa funktioner kanske inte funkar som de ska."</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">Det finns en uppdatering för appen (%1$s). Tryck här för att öppna Play Store och uppdatera appen.</string>
+	<string name="new_app_version_long">Det finns en tillgänglig uppdatering för appen (%1$s). Att hålla appen uppdaterad till den senaste versionen ger dig tillgång till de senaste funktionerna och buggfixar.\nTryck här för att öppna Play Store och uppdatera appen.</string>
+	<string name="new_app_version_inapp_downloaded">Appens uppdatering har laddats ner.</string>
+	<string name="new_app_version_inapp_failed">Appens uppdatering kunde inte installeras. Tryck här för att öppna Play Store och uppdatera appen.</string>
 
 	<!-- Date and time strings -->
 	<string name="time_at">"klockan"</string>
 	<string name="time_yesterday">"Igår"</string>
 
 	<!-- Downloader strings -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
-	<string name="paused">Paused - tap to resume</string>
+	<string name="download">Ladda ner uppdatering</string>
+	<string name="downloaded">Uppdatering har nedladdats</string>
+	<string name="downloading">Laddar ner uppdatering…</string>
+	<string name="paused">Pausad - Tryck för att återuppta</string>
 
 	<string name="download_complete">"Nedladdning klar"</string>
 	<string name="download_complete_notification">"Nedladdning klar. Tryck här för att starta installation."</string>
@@ -55,11 +49,10 @@
 	<string name="download_error_corrupt">"Uppdateringsfilen är skadad! Försök ladda ner den igen."</string>
 	<string name="download_error_server">"Ett server fel uppstod under nedladdningen av uppdateringen. Försök ladda ner den igen-"</string>
 	<string name="download_error_internal">"Oturligt nog uppstod det ett tekniskt fel under nedladdningen av uppdateringen. Försök att ladda ner den igen. Om detta fel upprepar sig, vänligen kontakta utvecklaren av denna app."</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
+	<string name="download_error_unsuccessful_response"><![CDATA[Det verkar som att nedladdningslänken är ogiltig. Detta kan betyda att vi antingen har gjort ett misstag när vi lade till uppdateringsdata, eller så har OnePlus tagit bort uppdateringen från deras servrar. En notis har skickats till teamet och vi kommer att kolla på detta så snart som möjligt.
 
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@oxygenupdater.com">e-post</a> eller i vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<string name="download_error_could_not_move_temp_file">Filen har laddats ner men kunde inte flyttas till den rätta katalogen. Öppna en filhanterare, navigera till \"%1$s\" och flytta filen manuellt till den översta katalogen med intern lagring</string>
 
 	<string name="download_error_retry">"FÖRSÖK IGEN"</string>
 	<string name="download_error_resume">"ÅTERUPPTA"</string>
@@ -200,14 +193,14 @@ Du kan alltid ändra inställningar senare. För att göra det: Tryck på de tre
 	<string name="install_preparing_installation">"Förbereder installation…"</string>
 	<string name="install_recovery_installer_title">"Uppdatera installationsprogrammet"</string>
 
-	<string name="install_recovery_backing_up">"Backar upp din enhet, det här kan ta en stund!"</string>
+	<string name="install_recovery_backing_up">"Säkerhetskopierar din enhet, det här kan ta en stund!"</string>
 	<string name="install_recovery_clearing_cache">"Rensar cachen…"</string>
 	<string name="install_recovery_done">"Klar. Din enhet startar om"</string>
 	<string name="install_recovery_installing_additional_zip">"Installerar den tillvalda ZIP filen…"</string>
 	<string name="install_recovery_installing_update">"Installerar uppdateringen…"</string>
 	<string name="install_recovery_thank_you">"Tack för att du använder Oxygen Updater. Om du tycker om appen så får du gärna ge den 5 stjärnor på Google Play :-)"</string>
 	<string name="install_error_write_script_failed">"Misslyckades med att förbereda installation av uppdateringen. Tillät du root tillkomst?"</string>
-	<string name="install_options_backup">"Backa upp min enhet"</string>
+	<string name="install_options_backup">"Säkerhetskopiera upp min enhet"</string>
 	<string name="install_options_header">"Du kan anpassa installationsprocessen genom att ändra inställningarna nedanför. Tryck på 'Starta installationen' för att starta installationen av uppdateringen."</string>
 	<string name="install_options_keep_root">"Behåll root på min enhet"</string>
 	<string name="install_options_reboot_after_install">"Starta om efter installation"</string>
@@ -216,7 +209,7 @@ Du kan alltid ändra inställningar senare. För att göra det: Tryck på de tre
 	<string name="install_options_subtitle">"Välj installationsinställningar"</string>
 	<string name="install_options_wipe_cache_partition">"Rensa cache partition"</string>
 	<string name="install_options_explanation_title">"Vad betyder dessa inställningar?"</string>
-	<string name="install_options_explanation_backup">"Backa upp min enhet:
+	<string name="install_options_explanation_backup">"Säkerhetskopiera min enhet:
 När du väljer detta alternativ kommer en backup göras av ditt system, appar och inställningar innan installationen. Det är alltid bra att ha ifall något går hemskt fel."</string>
 	<string name="install_options_explanation_keep_root">"Behåll root på min enhet:
 När du väljer detta alternativ kommer du få välja ett rootpaket som kommer installeras efter uppdateringen. Detta säkerställer att din enhet behåller root. Notera att detta rootpaket måste vara kompatibelt med den NYA OxygenOS versionen du installerar!"</string>
@@ -224,8 +217,7 @@ När du väljer detta alternativ kommer du få välja ett rootpaket som kommer i
 När du väljer detta alternativ kommer cachepartitionen bli rensad efter uppdateringen har installerats. Det ser till att din enhet behåller bra prestanda och minskar chansen för buggar orsakade av installationen."</string>
 	<string name="install_options_explanation_reboot">"Starta om efter installationen:
 När du väljer detta alternativ kommer din enhet att startas om automatiskt till OxygenOS efter uppdateringen har installerat. Annars kommer din enhet stanna i återställningsläget där du kan installera ytterligare paket."</string>
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_title">Välj installationsmetod</string>
 	<string name="install_method_chooser_subtitle">"Hur vill du installera denna uppdatering?"</string>
 	<string name="install_method_chooser_automatic_title">"Automatisk Installation\""</string>
 	<string name="install_method_chooser_automatic_description">"Det enklaste sättet att installera uppdateringen.
@@ -259,8 +251,8 @@ Din enhet kommer starta om för att installera uppdateringen.
 
 - När nedladdningen är klar visas en notifikation med texten \"Nedladdning klar\". Om ett nedladdningsfel inträffat öppnar du appen och försöker hämta uppdateringen igen. Om det inte fungerar, se till att du har en fungerande anslutning. Annars kontakta utvecklaren av appen. Du kan göra det genom att besöka sektionen \"Mina appar\" i Google Play Butik."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_title">Förberedelse inför installation</string>
+	<!-- TODO: translate this string below -->
 	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
 Instructions:
@@ -270,8 +262,8 @@ Instructions:
 
 &#8226; Scroll down until you see System updates. Tap on it."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
+	<string name="install_guide_page_3_title">Installera uppdateringen</string>
+    <!-- TODO: translate this string below -->
 	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
 
 &#8226; Within the System Updates section, tap the gear icon in the top right
@@ -282,11 +274,10 @@ Instructions:
 
 &#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+	<string name="install_guide_page_4_title">Vänta tills installationen slutförs</string>
+	<string name="install_guide_page_4_text">"&#8226; Telefonen kommer nu att installera uppdateringen och visa ett framstegsfält. Var god vänta tills installationen är slutförd. Installationen kan ta upp till 15 minuter.
 
-&#8226; Afterwards, your phone will restart to complete the update."</string>
+&#8226; Efter det kommer din telefon att startas om för att tillämpa uppdateringen."</string>
 
 	<string name="install_guide_page_5_title">"Klar. Njut av den nya versionen av OxygenOS!"</string>
 	<string name="install_guide_page_5_text">"&#8226; När enheten har slutfört optimeringen av apparna har uppdateringen installerats.
@@ -300,11 +291,10 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="install_guide_zip_file_missing">"Om du vill behålla root så måste du välja ett rootpaket ovan."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
-	<string name="device_information_supported_oxygen_os">Your device is supported</string>
-	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
-	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
-	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+	<string name="device_information_supported_oxygen_os">Vi har stöd flr din enhet</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Vi har inte stöd för din enhet därför att den är låst till en operatör.</string>
+	<string name="device_information_unsupported_oxygen_os">Vi har inte stöd för din nya enhet än.</string>
+	<string name="device_information_unsupported_os">Vi har inte stöd för din enhet därför att den inte kör OxygenOS.</string>
 
 	<string name="device_information_hardware_header">Hårdvara</string>
 	<string name="device_information_software_header">Mjukvara</string>
@@ -326,14 +316,12 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<!-- About screen strings -->
 	<string name="about">"Om appen"</string>
 	<string name="about_app_description">"Det ultimata verktyget för OxygenOS uppdateringar."</string>
-	<!-- TODO translate this string -->
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
-	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
+	<string name="about_background_story">Appen utveklades från början av Arjan Vlek som en uppföljning av en annan av hans appar som heter <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den ger liknande funktionalitet för Cyanogen OS-användare).\n\nEfter 4 år (juli 2019) bestämde Arjan sig för att inte längre delta i båda projekten och överförde ägandet till en grupp utvecklare från olika länder. De tog ansvaret att ge samhället en utmärkt tjänst &amp; stöd för att få OnePlus uppdateringar tidigare.\nDu kan hitta mer information om meddelandet <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">här</a>.\n\n14e Augusti 2019 släpptes den första uppdateringen under nytt ägande som kom med nya funktioner som mörkt tema och en helt ny design.\n\nFör mer information om gruppen kan du kolla <a href="https://oxygenupdater.com/team/">vår webbsida</a>.</string>
+	<string name="about_third_party_app_notice">OBS, Denna appen är inte en officiel applikation från OnePlus.\nOnePlus namn, OnePlus logga och OxygenOS tillhör OnePlus.\nAndroid, Google, Google Play och Google Plays logga är registrerade varumärken som tillhör Google.\nAppen använder data från oneplus och oneplus moderbolag Oppo för att visa uppdateringsinformation.</string>
 	<string name="about_rate_button_text">"Betygsätt"</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">Webbsida</string>
 	<string name="about_email_button_text">E-post</string>
 
 	<!-- LocalNotifications strings -->
@@ -392,15 +380,13 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_date_published">"Senaste uppdatering: %1$s"</string>
 	<string name="news_empty">"Denna artikel har inget innehåll."</string>
 	<string name="news_load_network_error">"Misslyckades att öppna artikeln. Kontrollera din anslutning och tryck sedan på 'FÖRSÖK IGEN' knappen för att öppna artikeln."</string>
-	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 7 strings below -->
-	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
-	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
-	<string name="news_mark_all_read">Mark all articles as read</string>
-	<string name="news_empty_state_none_available_header">No articles yet</string>
-	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
-	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
+	<string name="news_load_id_error"><![CDATA[Misslyckades att öppna artikel från ogiltig länk: %1$s. Kolla länken eller rapportera detta till oss genom att antingen <a href="mailto:support@oxygenupdater.com">maila oss</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<string name="news_unread_count_1">Du har %1$d olästa nyhetsartiklar. Tryck här för att se dem.</string>
+	<string name="news_unread_count_2">Du har %1$d olästa nyhetsartiklar. Tryck för att visa alla artiklar.</string>
+	<string name="news_mark_all_read">Marera alla artiklar som lästa.</string>
+	<string name="news_empty_state_none_available_header">Inga artiklar än.</string>
+	<string name="news_empty_state_all_read_header">Det finns inget mer att läsa.</string>
+	<string name="news_empty_state_none_available_text">Det finns inga artiklar tillgängliga just nu, kom tillbaka senare.</string>
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
 
 	<string name="contribute">Bli en bidragare</string>
@@ -411,7 +397,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="contribute_save">Spara inställningar</string>
 	<string name="contribute_more_info">Mer info …</string>
 	<string name="contribute_allow_storage">Var god att tillåta lagringsåtkomst för att hjälpa till med att förbättra appen</string>
-	<string name="contribute_successful_notification_title">Contribution successful</string>
+	<string name="contribute_successful_notification_title">Bidrag lyckades</string>
 	<string name="contribute_successful_notification_text">Tack för att du delade uppdateringsfilen %1$s med våra admins!</string>
 
 	<!-- Error strings -->
@@ -423,8 +409,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="error_no_internet_connection">"Ingen anslutning."</string>
 	<string name="error_maintenance">"Serverunderhåll"</string>
 	<string name="error_maintenance_message">"Var god vänta. Servern är strax tillgänglig."</string>
-	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry">Servern kan vara nere för underhåll. Försök igen om en stund eller rapportera det via <a href="mailto:support@oxygenupdater.com">e-post</a> eller i vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
 	<string name="error_reload">"Ladda om"</string>
 	<string name="error_unable_to_rate_app">"Du kan inte rösta på appen eftersom Google Play Butik saknas på din enhet"</string>
 
@@ -452,8 +437,7 @@ Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du st
 	<string name="purchase_error_after_payment">"Köpet av den reklamfria utgåvan misslyckades på grund av ett internt fel. Vänligen försök igen om några minuter. Har du redan betalat kan du kontakta Google Play supporten för assistans."</string>
 
 	<!-- Other strings -->
-	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
+	<string name="error">Fel</string>
 	<string name="icon">"Ikon"</string>
 	<string name="loading">"Laddar…"</string>
 	<string name="processing">"Bearbetar…"</string>
