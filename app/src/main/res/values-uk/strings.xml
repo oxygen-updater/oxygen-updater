@@ -371,8 +371,7 @@
 	<string name="root_check_message">Oxygen Updater дозволяє легко оновлювати пристої, на яких встановлені рут права. Проте, інкрементне оновлення не доступне для таких пристроїв. Oxygen Updater може перевірити, чи пристрій має рут права, щоб запропонувати відповідні способи оновлення.\n\nЯкщо пристрій має рут права, надайте їх Oxygen Updater після того, як закриєте це вікно.\n\nЯкщо рут прав немає, тоді просто натисніть \"Закрити\" і продовжуйте використовувати застосунок.</string>
 
 	<!-- Purchasing strings -->
-	<!-- TODO: translate this string below -->
-	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
+	<string name="purchase_error_pending_payment">Ваша покупка знаходиться в статусі \"очікування платежу\". Після надходження платежу, вам будуть доступні всі переваги платної версії.</string>
 	<string name="purchase_error_after_payment">Не вдалося купити видалення реклами, тому що виникла внутрішня помилка. Будь ласка, спробуйте знову через декілька хвилин. Якщо ви вже купляли, будь ласка, зверніться до підтримки Google Play за допомогою.</string>
 
 	<!-- Other strings-->
