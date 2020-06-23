@@ -432,8 +432,7 @@ Si vous avez un accès root, autorisez Oxygen Updater à obtenir les droits root
 Si vous n'avez pas un accès root pressez « Fermer » et continuez à utiliser l'application."</string>
 
 	<!-- Purchasing strings -->
-	<!-- TODO: translate this string below -->
-	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
+	<string name="purchase_error_pending_payment">Votre achat est en attente de confirmation par le PlayStore. Vous aurez accès à tous les avantages auxquels vous avez droit une fois que le paiement sera complété.</string>
 	<string name="purchase_error_after_payment">"L'achat de la version sans publicités a échoué en raison d'une erreur interne. Veuillez réessayer dans quelques minutes. Si vous avez déjà payé, veuillez contacter le support du Play Store."</string>
 
 	<!-- Other strings -->
