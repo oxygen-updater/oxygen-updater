@@ -39,7 +39,7 @@
 	<!-- Downloader strings -->
 	<string name="download">Ladda ner uppdatering</string>
 	<string name="downloaded">Uppdatering har nedladdats</string>
-	<string name="downloading">Laddar ner uppdatering...</string>
+	<string name="downloading">Laddar ner uppdatering…</string>
 	<string name="paused">Pausad - Tryck för att återuppta</string>
 
 	<string name="download_complete">"Nedladdning klar"</string>
@@ -381,7 +381,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_empty">"Denna artikel har inget innehåll."</string>
 	<string name="news_load_network_error">"Misslyckades att öppna artikeln. Kontrollera din anslutning och tryck sedan på 'FÖRSÖK IGEN' knappen för att öppna artikeln."</string>
 	<string name="news_load_id_error"><![CDATA[Misslyckades att öppna artikel från ogiltig länk: %1$s. Kolla länken eller rapportera detta till oss genom att antingen <a href="mailto:support@oxygenupdater.com">maila oss</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="news_unread_count_1">´Du har %1$d olästa nyhetsartiklar. Tryck här för att se dem.</string>
+	<string name="news_unread_count_1">Du har %1$d olästa nyhetsartiklar. Tryck här för att se dem.</string>
 	<string name="news_unread_count_2">Du har %1$d olästa nyhetsartiklar. Tryck för att visa alla artiklar.</string>
 	<string name="news_mark_all_read">Marera alla artiklar som lästa.</string>
 	<string name="news_empty_state_none_available_header">Inga artiklar än.</string>
