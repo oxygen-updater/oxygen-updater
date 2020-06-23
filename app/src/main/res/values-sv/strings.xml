@@ -433,7 +433,8 @@ Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du st
 Är din enhet inte rootad? Tryck på \"Stäng\" och fortsätt använda appen."</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">"Köpet av den reklamfria utgåvan misslyckades på grund av ett internt fel. Vänligen försök igen om några minuter."</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">"Köpet av den reklamfria utgåvan misslyckades på grund av ett internt fel. Vänligen försök igen om några minuter. Har du redan betalat kan du kontakta Google Play supporten för assistans."</string>
 
 	<!-- Other strings -->

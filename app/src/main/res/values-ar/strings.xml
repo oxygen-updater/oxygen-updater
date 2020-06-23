@@ -357,7 +357,8 @@ Instructions:
 	<string name="root_check_message">يوفر Oxygen Updater عمليات تثبيت سهلة وآلية للمستخدمين الذين لديهم أجهزة ذات روت. ومع ذلك، لا تتوفر تحديثات تدريجية للأجهزة التي تم إجراء روت لها. يستطيع Oxygen Updater التحقق مما إذا كان لديك روت لتقديم طرق التحديث المناسبة فقط.\n\n إذا كان لديك روت، فإسمح لـ Oxygen Updater بالحصول على تصريح للوصول إلى الروت بعد إغلاق هذه الرسالة.\n\nلا تملك روت؟ إذاً إضغط على \"إغلاق\" وتابع إستخدام التطبيق.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">فشل شراء الإصدار الخالي من الإعلانات، نظرًا لحدوث خطأ داخلي. يرجى المحاولة مرة أخرى بعد بضع دقائق.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">فشل شراء الإصدار الخالي من الإعلانات، نظرًا لحدوث خطأ داخلي. يرجى المحاولة مرة أخرى بعد بضع دقائق. إذا كنت قد دفعت بالفعل فيرجى الاتصال بدعم متجر بلاي للحصول على المساعدة.</string>
 
 	<!-- Other strings-->

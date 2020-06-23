@@ -388,7 +388,8 @@ Instructions:
 	<string name="root_check_message">Oxygen Updaterは、ルート化されたデバイスを持つユーザー向けに、簡単で自動化されたアップデートインストールを提供します。 ただし、ルート化されたデバイスの増分更新は使用できません。 Oxygen Updaterは、適切な更新方法のみを提供するルートアクセス権があるかどうかを確認できます。\n\nルートアクセスがある場合は、このメッセージを閉じた後、Oxygen Updaterがルートアクセスを取得できるようにします。\n\nルートアクセスなし？ \"閉じる\"を押して、アプリの使用を続けます</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">内部エラーが発生したため、広告なしバージョンの購入に失敗しました。 数分後にもう一度お試しください。</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">内部エラーが発生したため、広告なしバージョンの購入に失敗しました。 数分後にもう一度お試しください。 既に支払いを済ませている場合は、Google Playサポートにお問い合わせください。</string>
 
 	<!-- Other strings-->

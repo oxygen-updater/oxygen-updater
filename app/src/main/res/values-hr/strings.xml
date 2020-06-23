@@ -429,7 +429,8 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 	<string name="root_check_message">"@"</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">"Kupnja verzije bez ad-ova nije uspjela jer nema internetske veze. Molimo pokušajte ponovno za nekoliko minuta"</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">"Kupnja verzije bez ad-ova nije uspjela jer nema internetske veze. Molimo pokušajte ponovno za nekoliko minuta. Ako ste već platili molimo kontaktirajte Google play podršku za pomoć"</string>
 
 	<!-- Other strings -->

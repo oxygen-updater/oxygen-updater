@@ -376,7 +376,8 @@
 	<string name="root_check_message">Oxygen Updater омогућава лаку и сигурну инсталацију ажурирања за кориснике са рутованим уређајима. Како год, инкрементална ажурирања нису доступна за рутоване уређаје. Oxygen Updater може да провери да ли је ваш уређај рутован само ради давања праве верзије ажурирања.\n\nАко имате приступ руту, омогућите Oxygen Updater-у рут приступ након затвања ове поруке.\n\nНемате рут приступ? Притисните \"Затвори\" и наставите коришћење апликације.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">Куповина апликације без реклама није успела због интерне грешке. Молимо вас покушајте за неколико минута.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">Куповина апликације без реклама није успела због интерне грешке. Молимо вас покушајте за неколико минута. Ако сте већ платили, молимо вас контактирајте Google Play подршку.</string>
 
 	<!-- Other strings-->

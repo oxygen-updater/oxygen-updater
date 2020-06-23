@@ -439,8 +439,8 @@ Se hai effettuato il root, autorizza l'app a trarrne utilizzo dopo aver chiuso q
 Non hai il root? Premi \"Chiudi\" e continua ad utilizzare l'app."</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">"L'acquisto e' fallito a causa di un errore interno.
-Ritenta in alcuni minuti."</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">"Il pagamento non e' andato a buon fine a causa di un errore interno. Ritenta in alcuni minuti. Se hai già pagato, contatta Google Play Support per assistenza."</string>
 
 	<!-- Other strings -->

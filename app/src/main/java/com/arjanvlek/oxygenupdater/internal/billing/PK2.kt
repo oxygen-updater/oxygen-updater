@@ -1,4 +1,4 @@
-package com.arjanvlek.oxygenupdater.internal.iab
+package com.arjanvlek.oxygenupdater.internal.billing
 
 object PK2 {
     const val B =

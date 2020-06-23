@@ -2,18 +2,12 @@ package com.arjanvlek.oxygenupdater.utils
 
 import android.app.Activity
 import android.content.Context
-import android.os.Handler
 import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.arjanvlek.oxygenupdater.BuildConfig
 import com.arjanvlek.oxygenupdater.OxygenUpdater
 import com.arjanvlek.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
 import com.arjanvlek.oxygenupdater.R
-import com.arjanvlek.oxygenupdater.activities.SettingsActivity
-import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.internal.iab.IabHelper
-import com.arjanvlek.oxygenupdater.internal.iab.PK1
-import com.arjanvlek.oxygenupdater.internal.iab.PK2
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceOsSpec
@@ -106,44 +100,6 @@ object Utils {
             }
 
             result
-        }
-    }
-
-    /**
-     * Checks if ads should be shown
-     *
-     * @param callback the callback that receives the result: false if user has purchased ad-free, true otherwise
-     */
-    fun checkAdSupportStatus(activity: Activity, callback: KotlinCallback<Boolean>) {
-        val helper = IabHelper(activity, PK1.A + "/" + PK2.B)
-
-        helper.startSetup { setupResult ->
-            if (!setupResult.success) {
-                // Failed to setup IAB, so we might be offline or the device does not support IAB. Return the last stored value of the ad-free status.
-                callback.invoke(!settingsManager.getPreference(SettingsManager.PROPERTY_AD_FREE, false))
-                return@startSetup
-            }
-
-            try {
-                helper.queryInventoryAsync(true, listOf(SettingsActivity.SKU_AD_FREE), null) { queryResult, inventory ->
-                    if (!queryResult.success) {
-                        // Failed to check inventory, so we might be offline. Return the last stored value of the ad-free status.
-                        callback.invoke(!settingsManager.getPreference(SettingsManager.PROPERTY_AD_FREE, false))
-                    } else {
-                        if (inventory != null && inventory.hasPurchase(SettingsActivity.SKU_AD_FREE)) {
-                            // User has bought the upgrade. Save this to the app's settings and return that ads may not be shown.
-                            settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
-                            callback.invoke(false)
-                        } else {
-                            // User has not bought the item and we're online, so ads are definitely supported
-                            callback.invoke(true)
-                        }
-                    }
-                }
-            } catch (e: IabHelper.IabAsyncInProgressException) {
-                // A check is already in progress, so wait 3 secs and try to check again.
-                Handler().postDelayed({ checkAdSupportStatus(activity, callback) }, 3000)
-            }
         }
     }
 

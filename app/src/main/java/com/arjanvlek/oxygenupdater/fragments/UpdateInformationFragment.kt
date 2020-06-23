@@ -55,8 +55,8 @@ import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_ETA
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_TYPE
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_PROGRESS
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_TOTAL_BYTES
-import com.crashlytics.android.Crashlytics
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.fragment_update_information.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
@@ -71,6 +71,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     private var isLoadedOnce = false
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
+    private val crashlytics by inject<FirebaseCrashlytics>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -197,7 +198,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         // show the loading shimmer
         shimmerFrameLayout.isVisible = true
 
-        Crashlytics.setUserIdentifier(
+        crashlytics.setUserId(
             "Device: "
                     + settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
                     + ", Update Method: "

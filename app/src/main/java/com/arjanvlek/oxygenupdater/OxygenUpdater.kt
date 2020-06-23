@@ -14,14 +14,12 @@ import androidx.lifecycle.MutableLiveData
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.utils.MD5
 import com.arjanvlek.oxygenupdater.utils.ThemeUtils
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
-import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -120,6 +118,7 @@ class OxygenUpdater : Application() {
 
     private fun setupCrashReporting() {
         val settingsManager by inject<SettingsManager>()
+        val crashlytics by inject<FirebaseCrashlytics>()
 
         // Do not upload crash logs if we are on a debug build or if the user has turned off analytics in the Settings screen.
         val shareAnalytics = settingsManager.getPreference(SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
@@ -128,15 +127,7 @@ class OxygenUpdater : Application() {
         // Do not share analytics data if the user has turned it off in the Settings screen
         FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(shareAnalytics)
 
-        val crashlyticsCore = CrashlyticsCore.Builder()
-            .disabled(disableCrashCollection)
-            .build()
-
-        val crashlytics = Crashlytics.Builder()
-            .core(crashlyticsCore)
-            .build()
-
-        Fabric.with(this, crashlytics)
+        crashlytics.setCrashlyticsCollectionEnabled(disableCrashCollection)
     }
 
     @Suppress("unused")

@@ -371,7 +371,8 @@ Instrukciók:
 	<string name="root_check_message">Az Oxygen Frissítő egyszerű, automatizált frissítési telepítést kínál a rootolt eszközökkel rendelkező felhasználók számára. Az inkrementális frissítések azonban nem érhetők el a rootolt eszközökön. Az Oxygen Frissítő ellenőrizheti, hogy rendelkezel-e root hozzáféréssel, és csak a megfelelő frissítési módszereket fogja felajánlani.\n\nHa root hozzáféréssel rendelkezel, hagyd, hogy az Oxygen Frissítő root hozzáférést szerezzen az üzenet bezárását követően.\n\nNincs root hozzáférésed? Nyomd meg a \"Bezárás\" gombot, és folytasd az alkalmazás használatát.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">A hirdetésmentes verzió megvásárlása sikertelen, mert belső hiba történt. Kérjük, próbáld újra néhány perc múlva.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">A hirdetésmentes verzió megvásárlása sikertelen, mert belső hiba történt. Kérjük, próbáld újra néhány perc múlva. Ha már fizettél, vedd fel a kapcsolatot a Google Play ügyfélszolgálatával.</string>
 
 	<!-- Other strings-->

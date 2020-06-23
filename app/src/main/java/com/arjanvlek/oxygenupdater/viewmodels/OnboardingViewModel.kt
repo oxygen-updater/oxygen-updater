@@ -11,7 +11,7 @@ import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -22,7 +22,8 @@ import kotlinx.coroutines.launch
  */
 class OnboardingViewModel(
     private val serverRepository: ServerRepository,
-    private val settingsManager: SettingsManager
+    private val settingsManager: SettingsManager,
+    private val crashlytics: FirebaseCrashlytics
 ) : ViewModel() {
 
     private val _allDevices = MutableLiveData<List<Device>?>()
@@ -73,7 +74,7 @@ class OnboardingViewModel(
 
     /**
      * Post [_selectedUpdateMethod] and save the ID & name in [android.content.SharedPreferences].
-     * Additionally, update [Crashlytics]' user identifier
+     * Additionally, update [FirebaseCrashlytics]' user identifier
      */
     fun updateSelectedUpdateMethod(updateMethod: UpdateMethod) = settingsManager.let {
         _selectedUpdateMethod.postValue(updateMethod)
@@ -83,7 +84,7 @@ class OnboardingViewModel(
 
         // since both device and update method have been selected,
         // we can safely update Crashlytics' user identifier
-        Crashlytics.setUserIdentifier(
+        crashlytics.setUserId(
             "Device: " + it.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
                     + ", Update Method: " + it.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )

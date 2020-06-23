@@ -386,7 +386,8 @@ Instructions:
 	<string name="root_check_message">Oxygen 更新器为具有 Root 权限的用户提供简单，自动的更新安装方式。\n但是，增量更新不适用于有 Root 的设备。Oxygen 更新器可以检查您是否具有 Root 权限，以提供适当的更新方法。\n如果您的设备拥有 Root 权限，请在关闭此消息后允许 Oxygen 更新器获取 Root 权限。\n没有 Root 权限？那么请直接点击关闭继续安装。</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">由于内部错误，购买移除广告服务失败。请稍后重试。</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">由于内部错误，购买移除广告服务失败。请稍候重试。 如果您已付款，请与 Google Play 支持小组联系以获取帮助。</string>
 
 	<!-- Other strings-->

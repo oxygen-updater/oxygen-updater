@@ -393,7 +393,8 @@ Instructions:
 	<string name="root_check_message">Oxygen Updater oferuje prosty, zautomatyzowany proces instalacji dla użytkowników ze zrootowanymi urządzeniami. Jednakże, częściowe aktualizacje nie są dostępne dla zrootowanych urządzeń. Oxygen Updater może sprawdzić czy masz dostęp do roota tylko po to aby zaoferować odpowiednie metody aktualizacji.\n\nJeśli masz dostęp do roota, zezwól Oxygen Updater na uprawnienia roota po zamknięciu tej wiadomości.\n\nNie masz dostępu do roota ? Naciśnij \"Zamknij\" i kontynuuj używanie aplikacji.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">Zakup wersji wolnej od reklam zakończony niepowodzeniem, ponieważ wystąpił błąd wewnętrzny. Proszę spróbuj ponownie w ciągu kilku minut.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">Zakup wersji wolnej od reklam zakończony niepowodzeniem, ponieważ wystąpił błąd wewnętrzny. Proszę spróbuj ponownie w ciągu kilku minut. Jeżeli już zapłaciłeś, skontaktuj się ze wsparciem technicznym Sklepu Play w celu dalszej pomocy.</string>
 
 	<!-- Other strings-->

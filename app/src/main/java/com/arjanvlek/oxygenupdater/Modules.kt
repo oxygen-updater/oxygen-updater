@@ -9,17 +9,21 @@ import com.arjanvlek.oxygenupdater.apis.ServerApi
 import com.arjanvlek.oxygenupdater.database.NewsDatabaseHelper
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
+import com.arjanvlek.oxygenupdater.repositories.BillingRepository
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
+import com.arjanvlek.oxygenupdater.utils.Database.buildLocalBillingDatabase
 import com.arjanvlek.oxygenupdater.utils.createDownloadClient
 import com.arjanvlek.oxygenupdater.utils.createNetworkClient
 import com.arjanvlek.oxygenupdater.utils.createOkHttpCache
 import com.arjanvlek.oxygenupdater.viewmodels.AboutViewModel
+import com.arjanvlek.oxygenupdater.viewmodels.BillingViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.InstallViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.MainViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.NewsViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.OnboardingViewModel
 import com.arjanvlek.oxygenupdater.viewmodels.SettingsViewModel
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.StringQualifier
@@ -46,27 +50,26 @@ private val preferencesModule = module {
 
 private val repositoryModule = module {
     single { ServerRepository(get(), get(), get()) }
+    single { BillingRepository(get(), get()) }
 }
 
 private val viewModelModule = module {
-    viewModel { OnboardingViewModel(get(), get()) }
+    viewModel { OnboardingViewModel(get(), get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { NewsViewModel(get()) }
     viewModel { InstallViewModel(get()) }
     viewModel { AboutViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
+    viewModel { BillingViewModel(get(), get(), get()) }
 }
 
-private val databaseHelperModule = module {
+private val databaseModule = module {
     single { NewsDatabaseHelper(androidContext()) }
+    single { buildLocalBillingDatabase(androidContext()) }
 }
 
-private val notificationModule = module {
+private val systemServiceModule = module {
     single { androidContext().getSystemService<NotificationManager>() }
-}
-
-private val workManagerModule = module {
-    single { WorkManager.getInstance(androidContext()) }
 }
 
 private val miscellaneousSingletonModule = module {
@@ -74,7 +77,10 @@ private val miscellaneousSingletonModule = module {
      * A singleton [SystemVersionProperties] helps avoid unnecessary calls to the native `getprop` command.
      */
     single { SystemVersionProperties() }
+
     single { AppUpdateManagerFactory.create(androidContext()) }
+    single { FirebaseCrashlytics.getInstance() }
+    single { WorkManager.getInstance(androidContext()) }
 }
 
 val allModules = listOf(
@@ -83,8 +89,7 @@ val allModules = listOf(
     preferencesModule,
     repositoryModule,
     viewModelModule,
-    databaseHelperModule,
-    notificationModule,
-    workManagerModule,
+    databaseModule,
+    systemServiceModule,
     miscellaneousSingletonModule
 )

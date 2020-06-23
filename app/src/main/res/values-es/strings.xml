@@ -390,7 +390,8 @@ Instructions:
 	<string name="root_check_message">Oxygen Updater ofrece de forma fácil y automática actualizaciones del sistema para usuarios con acceso root. Sin embargo, las actualizaciones incrementales no están disponibles para usuarios rooteados. Oxygen Updater puede comprobar si tienes acceso root para ofrecerte los métodos de actualización ideales.\n\nSi tienes acceso root, otorga a Oxygen Updater permisos root después de cerrar este mensaje.\n\n¿No tienes acceso root? Pulsa \"Cerrar\" y continúa usando la app.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">La compra de la versión sin anuncios ha fallado a causa de un error interno. Por favor, inténtalo de nuevo en unos minutos.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">La compra de la versión sin anuncios ha fallado a causa de un error interno. Por favor, inténtalo de nuevo en unos minutos. Si ya has hecho el pago, por favor, contacta con el soporte de Google Play para que lo resuelvan.</string>
 
 	<!-- Other strings-->

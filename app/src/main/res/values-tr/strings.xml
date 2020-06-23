@@ -387,7 +387,8 @@ Instructions:
 	<string name="root_check_message">Oxygen Updater, rootlu cihazlarda bile size kolay, otomatik güncelleme yükleme imkanı sunar. Ancak, artımlı güncellemeler rootlu cihazlar için kullanılamaz. Oxygen Updater root izni ister, bu sayede size seçebileceğiniz güncelleme yöntemlerini gösterir.\n\nEğer root izniniz varsa, Oxygen Updater\'a izin verin, bu uyarıdan sonra sizden izin istenecektir.\n\nRoot iznin yokmu? \"Kapat\" butonuna tıklayın ve uygulamayı kullanmaya devam edin.</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_before_payment">Reklamsız versiyon için satın alma başarısız oldu, bir hata ile karşılaşıldı. Birkaç dakika sonra tekrar deneyiniz.</string>
+	<!-- TODO: translate this string below -->
+	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">Reklamsız versiyon için satın alma başarısız oldu, bir hata ile karşılaşıldı. Birkaç dakika sonra tekrar deneyiniz. Zaten satın aldıysanız ve Google Play size içeriği sunamadıysa onlarla iletişime geçiniz.</string>
 
 	<!-- Other strings-->

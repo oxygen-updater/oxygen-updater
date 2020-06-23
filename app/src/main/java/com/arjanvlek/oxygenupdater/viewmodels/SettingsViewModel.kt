@@ -4,18 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arjanvlek.oxygenupdater.enums.PurchaseType
-import com.arjanvlek.oxygenupdater.internal.KotlinCallback
-import com.arjanvlek.oxygenupdater.internal.iab.Purchase
 import com.arjanvlek.oxygenupdater.models.Device
 import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
-import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.UpdateMethod
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import com.arjanvlek.oxygenupdater.utils.RootAccessChecker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * For [com.arjanvlek.oxygenupdater.activities.SettingsActivity] and its child fragment
@@ -45,17 +40,4 @@ class SettingsViewModel(
             }
         }
     }.let { _updateMethodsForDevice }
-
-    fun verifyPurchase(
-        purchase: Purchase,
-        amount: String?,
-        purchaseType: PurchaseType,
-        callback: KotlinCallback<ServerPostResult?>
-    ) = viewModelScope.launch(Dispatchers.IO) {
-        val result = serverRepository.verifyPurchase(purchase, amount, purchaseType)
-
-        withContext(Dispatchers.Main) {
-            callback.invoke(result)
-        }
-    }
 }
