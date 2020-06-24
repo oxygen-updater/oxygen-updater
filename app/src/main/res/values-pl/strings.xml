@@ -49,7 +49,7 @@
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">Pobieranie zakończone</string>
-	<string name="download_complete_notification">Pobieranie zakończone. Naciśnij, aby rozpocząć instalację.</string>
+	<string name="download_complete_notification">Naciśnij, aby rozpocząć instalację</string>
 
 	<string name="download_error">Błąd pobierania</string>
 	<string name="download_error_close">ZAMKNIJ</string>
@@ -68,7 +68,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_storage">Na twoim urządzeniu nie jest wystarczająco wolnego miejsca na pobranie aktualizacji. Proszę usunąć jakieś pliki i spróbować pobrać ją ponownie.</string>
 
 	<string name="download_failed">Pobieranie nieudane</string>
-	<string name="running_in_background">Oxygen Updater działa w tle</string>
 	<string name="download_pending">Twoje pobieranie zacznie się niedługo…</string>
 	<string name="download_notification_error_server">Błąd serwera podczas pobierania. Proszę ponowić pobieranie.</string>
 	<string name="download_notification_error_internal">Błąd techniczny podczas pobierania. Ponów pobieranie lub skontaktuj się z pomocą.</string>
@@ -84,7 +83,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">Obliczanie pozostałego czasu…</string>
 	<string name="download_progress_text_verifying">Weryfikacja pliku…</string>
 	<string name="download_progress_text_paused">Wstrzymane</string>
-	<string name="download_waiting_for_network">Czekanie na połączenie z siecią…</string>
 
 	<string name="download_verifying">Weryfikacja…</string>
 	<string name="download_verifying_error">Plik jest uszkodzony</string>
@@ -312,8 +310,8 @@ Instructions:
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">Nowa urządzenie wydane! %1$s jest teraz wspierany !</string>
-	<string name="notification_new_device_short">Otwórz aplikację aby wybrać to urządzenie.</string>
+	<string name="notification_new_device_title">Nowa urządzenie wydane</string>
+	<string name="notification_new_device_text">%1$s jest teraz wspierany . Otwórz aplikację aby wybrać to urządzenie.</string>
 	<string name="notification_no_notification_support">Zainstaluj albo zaktualizuj Usługi Google Play aby odblokować powiadomienia push.</string>
 	<string name="notification_version_title">Aktualizacja systemu dostępna</string>
 	<string name="notification_version">%1$s jest teraz dostępne dla %2$s!</string>
@@ -360,7 +358,7 @@ Instructions:
 	<string name="contribute_more_info">Więcej informacji …</string>
 	<string name="contribute_allow_storage">Proszę przyznaj uprawnienia dla zapisywania i odczytywania plików w celu ulepszania aplikacji</string>
 	<string name="contribute_successful_notification_title">Wkład pomyślny</string>
-	<string name="contribute_successful_notification_text">Dziękuję za udostępnienie pliku aktualizacji%1$s naszym adminom !</string>
+	<string name="contribute_successful_notification_text">Dziękujemy za udostępnienie nam nazwy pliku aktualizacji!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">O nie !</string>

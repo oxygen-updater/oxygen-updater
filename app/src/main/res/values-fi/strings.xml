@@ -42,7 +42,7 @@
 	<string name="paused">Pysäytetty - paina jatkaaksesi</string>
 
 	<string name="download_complete">"Lataus on valmistunut"</string>
-	<string name="download_complete_notification">"Lataus on valmistunut. Napsauta käynnistääksesi asennus."</string>
+	<string name="download_complete_notification">"Napsauta käynnistääksesi asennus"</string>
 	<string name="download_error">"Virhe ladattaessa"</string>
 	<string name="download_error_close">"Sulje"</string>
 	<string name="download_error_corrupt">"Ladatattu päivitystiedosto on vahingoittunut! Ole hyvä ja yritä ladata se uudelleen."</string>
@@ -57,7 +57,6 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="download_error_resume">"Jatkaa"</string>
 	<string name="download_error_storage">"Laitteessasi ei ole tarpeeksi vapaata tallennustilaa päivityksen lataamiseksi. Vapauta tilaa laittteestasi poistamalla tiedostoja ja yritä ladata päivitys uudelleen."</string>
 	<string name="download_failed">"Lataus epäonnistui"</string>
-	<string name="running_in_background">Oxygen Updater on käynnissä taustalla</string>
 	<string name="download_pending">"Latauksesi alkaa pian…"</string>
 	<string name="download_notification_error_server">Palvelinvirhe tapahtui latauksen aikana. Käynnistä lataus uudelleen.</string>
 	<string name="download_notification_error_internal">Tekninen virhe tapahtui latauksen aikana. Käynnistä lataus uudelleen tai ota yhteyttä tukeen.</string>
@@ -73,7 +72,6 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="download_progress_text_unknown_time_remaining">"Lasketaan jäljellä olevaa aikaa…"</string>
 	<string name="download_progress_text_verifying">"Tarkistetaan tiedostoa…"</string>
 	<string name="download_progress_text_paused">"Keskeytetty…"</string>
-	<string name="download_waiting_for_network">"Odotetaan verkkoyhteyttä…"</string>
 
 	<string name="download_verifying">"Tarkistetaan…"</string>
 	<string name="download_verifying_error">"Tiedosto on vioittunut"</string>
@@ -320,8 +318,8 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="about_email_button_text">Sähköposti</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">"Uusi laite on julkaistu! %1$s on nyt tuettu!"</string>
-	<string name="notification_new_device_short">"Avaa sovellus valitaksesi tämä laite."</string>
+	<string name="notification_new_device_title">"Uusi laite on julkaistu"</string>
+	<string name="notification_new_device_text">"%1$s on nyt tuettu. Avaa sovellus valitaksesi tämä laite."</string>
 	<string name="notification_no_notification_support">"Asenna tai päivitä Google Play palvelut mahdollistaaksesi push ilmoitukset"</string>
 	<string name="notification_version_title">"Järjestelmäpäivitys saatavilla"</string>
 	<string name="notification_version">"%1$s on nyt saatavissa laitteelle %2$s!"</string>
@@ -394,7 +392,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="contribute_more_info">Lisätietoja…</string>
 	<string name="contribute_allow_storage">Ole hyvä ja anna tallennustilan käyttöoikeus auttaaksesi parantamaan sovellusta</string>
 	<string name="contribute_successful_notification_title">Osallistuminen onnistui</string>
-	<string name="contribute_successful_notification_text">Kiitos että jaoit päivitystiedoston %1$s ylläpitäjiemme kanssa!</string>
+	<string name="contribute_successful_notification_text">Kiitos, että jaoit päivitystiedostonimet kanssamme!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Voi ei!"</string>

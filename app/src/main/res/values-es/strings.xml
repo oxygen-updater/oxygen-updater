@@ -49,7 +49,7 @@
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">Descarga completa</string>
-	<string name="download_complete_notification">Descarga completa. Pulsa para comenzar la instalación.</string>
+	<string name="download_complete_notification">Pulsa para comenzar la instalación</string>
 
 	<string name="download_error">Error de Descarga</string>
 	<string name="download_error_close">CERRAR</string>
@@ -67,7 +67,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_storage">No hay suficiente espacio en el dispositivo para descargar la actualización. Por favor, elimina algunos archivos e inténtalo de nuevo.</string>
 
 	<string name="download_failed">Descarga fallida</string>
-	<string name="running_in_background">Oxygen Updater se está ejecuando en segundo plano</string>
 	<string name="download_pending">La descarga comenzará pronto…</string>
 	<!-- TODO translate the 3 below to Russian -->
 	<string name="download_notification_error_server">Error en el servidor mientras se descargaba. Por favor, reinicia la descarga.</string>
@@ -84,7 +83,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">Calculando el timepo restante…</string>
 	<string name="download_progress_text_verifying">Verificando archivo…</string>
 	<string name="download_progress_text_paused">Pausado</string>
-	<string name="download_waiting_for_network">Esperando a una conexión a Internet…</string>
 
 	<string name="download_verifying">Verificando…</string>
 	<string name="download_verifying_error">El archivo está dañado</string>
@@ -309,8 +307,8 @@ Instructions:
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">¡Un nuevo dispositivo ha sido lanzado! El %1$s está ya soportado!</string>
-	<string name="notification_new_device_short">Abre la app para eslegir este dispositivo.</string>
+	<string name="notification_new_device_title">¡Un nuevo dispositivo ha sido lanzado</string>
+	<string name="notification_new_device_text">El %1$s está ya soportado. Abre la app para eslegir este dispositivo.</string>
 	<string name="notification_no_notification_support">Instala o actualiza los servicios de Google Play para activar las notificaciones push.</string>
 	<string name="notification_version_title">Actualización del sistema disponible</string>
 	<string name="notification_version">%1$s está ahora disponible para el %2$s!</string>
@@ -357,7 +355,7 @@ Instructions:
 	<string name="contribute_more_info">Más información…</string>
 	<string name="contribute_allow_storage">Por favor, permite los permisos de almacenamiento para mejorar esta app</string>
 	<string name="contribute_successful_notification_title">Contribución completa</string>
-	<string name="contribute_successful_notification_text">¡Gracias por compartir el paquete de actualización %1$s con nuestros administradores!</string>
+	<string name="contribute_successful_notification_text">¡Gracias por compartir los nombres de los archivos de actualización con nosotros!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">¡Oh no!</string>

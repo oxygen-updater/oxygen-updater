@@ -43,7 +43,7 @@
 	<string name="paused">Pausad - Tryck för att återuppta</string>
 
 	<string name="download_complete">"Nedladdning klar"</string>
-	<string name="download_complete_notification">"Nedladdning klar. Tryck här för att starta installation."</string>
+	<string name="download_complete_notification">"Tryck här för att starta installation"</string>
 	<string name="download_error">"Nedladdningsfel"</string>
 	<string name="download_error_close">"STÄNG"</string>
 	<string name="download_error_corrupt">"Uppdateringsfilen är skadad! Försök ladda ner den igen."</string>
@@ -58,7 +58,6 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="download_error_resume">"ÅTERUPPTA"</string>
 	<string name="download_error_storage">"Det finns inte tillräckligt med lagringskapacitet på din enhet. Ta bort filer och försök sedan ladda ned på nytt."</string>
 	<string name="download_failed">"Nerladdningen misslyckades"</string>
-	<string name="running_in_background">"Oxygen Updater kör i bakgrunden"</string>
 	<string name="download_pending">"Din nedladdning påbörjas snart…"</string>
 	<string name="download_notification_error_server">"Serverfel under nedladdningen. Starta om nedladdningen."</string>
 	<string name="download_notification_error_internal">"Tekniskt fel under nedladdningen. Starta om nedladdningen eller kontakta support."</string>
@@ -77,7 +76,6 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="download_verifying_error">"Filen är skadad"</string>
 	<string name="download_verifying_start">"Din nedladdning blir nu verifierad…"</string>
 	<string name="download_progress_text_paused">"pausad"</string>
-	<string name="download_waiting_for_network">"Väntar på nätverksanslutning…"</string>
 
 	<!-- Settings strings -->
 	<string name="preference_header_support">Stöd oss</string>
@@ -325,8 +323,8 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="about_email_button_text">E-post</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">"Ny enhet släppt! %1$s har nu våran support!"</string>
-	<string name="notification_new_device_short">"Öppna appen för att välja denna enhet."</string>
+	<string name="notification_new_device_title">"Ny enhet släppt"</string>
+	<string name="notification_new_device_text">"%1$s har nu våran support. Öppna appen för att välja denna enhet."</string>
 	<string name="notification_no_notification_support">"Installera eller uppdatera Google Play services för att slå på push-notifikationer."</string>
 	<string name="notification_version_title">"Systemuppdatering tillgänglig"</string>
 	<string name="notification_version">"%1$s är nu tillgänglig för %2$s!"</string>
@@ -398,7 +396,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="contribute_more_info">Mer info …</string>
 	<string name="contribute_allow_storage">Var god att tillåta lagringsåtkomst för att hjälpa till med att förbättra appen</string>
 	<string name="contribute_successful_notification_title">Bidrag lyckades</string>
-	<string name="contribute_successful_notification_text">Tack för att du delade uppdateringsfilen %1$s med våra admins!</string>
+	<string name="contribute_successful_notification_text">Tack för att du delade uppdateringsfilnamnet med oss!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Åh nej!"</string>

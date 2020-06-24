@@ -6,8 +6,10 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.CATEGORY_ERROR
 import androidx.core.app.NotificationCompat.CATEGORY_STATUS
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
+import androidx.core.content.ContextCompat
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.Data
@@ -26,6 +28,7 @@ import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.P
 import com.arjanvlek.oxygenupdater.models.InstallationStatus
 import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
+import com.arjanvlek.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_INSTALLATION_STATUS
 import com.arjanvlek.oxygenupdater.workers.UploadRootInstallLogWorker
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS
@@ -82,46 +85,70 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
     }
 
     private fun displaySuccessNotification(context: Context, oxygenOSVersion: String) {
-        val contentIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0)
+        val contentIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MainActivity::class.java),
+            0
+        )
 
-        val builder = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.done_circle)
-            .setOngoing(false)
-            .setContentIntent(contentIntent)
-            .setAutoCancel(true)
-            .setPriority(PRIORITY_HIGH)
             .setContentTitle(context.getString(R.string.install_verify_success_title))
-            .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.install_verify_success_message, oxygenOSVersion)))
             .setContentText(context.getString(R.string.install_verify_success_message, oxygenOSVersion))
+            .setContentIntent(contentIntent)
+            .setOngoing(false)
+            .setAutoCancel(true)
             .setCategory(CATEGORY_STATUS)
             .setPriority(PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.install_verify_success_message, oxygenOSVersion)))
+            .setColor(ContextCompat.getColor(context, R.color.colorPositive))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .build()
 
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
+        notificationManager.notify(
+            LOCAL_NOTIFICATION_INSTALLATION_STATUS,
+            notification
+        )
     }
 
     private fun displayFailureNotification(context: Context, errorMessage: String) {
-        val contentIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0)
+        val contentIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, MainActivity::class.java),
+            0
+        )
 
-        val builder = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.error_outline)
-            .setOngoing(false)
-            .setContentIntent(contentIntent)
-            .setAutoCancel(true)
-            .setPriority(PRIORITY_HIGH)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(errorMessage))
             .setContentTitle(context.getString(R.string.install_verify_error_title))
             .setContentText(errorMessage)
-            .setCategory(CATEGORY_STATUS)
+            .setContentIntent(contentIntent)
+            .setOngoing(false)
+            .setAutoCancel(true)
+            .setCategory(CATEGORY_ERROR)
             .setPriority(PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(errorMessage))
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .build()
 
-        notificationManager.notify(NOTIFICATION_ID, builder.build())
+        notificationManager.notify(
+            LOCAL_NOTIFICATION_INSTALLATION_STATUS,
+            notification
+        )
     }
 
     private fun logSuccess(
         startOs: String,
         destinationOs: String,
         currentOs: String
-    ) = buildLogData(startOs, destinationOs, currentOs).apply {
+    ) = buildLogData(
+        startOs,
+        destinationOs,
+        currentOs
+    ).apply {
         add(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_STATUS to InstallationStatus.FINISHED.toString())
 
         scheduleLogUploadTask(workDataOf(*toTypedArray()))
@@ -132,14 +159,22 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         destinationOs: String,
         currentOs: String,
         reason: String
-    ) = buildLogData(startOs, destinationOs, currentOs).apply {
+    ) = buildLogData(
+        startOs,
+        destinationOs,
+        currentOs
+    ).apply {
         add(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_STATUS to InstallationStatus.FAILED.toString())
         add(WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_FAILURE_REASON to reason)
 
         scheduleLogUploadTask(workDataOf(*toTypedArray()))
     }
 
-    private fun buildLogData(startOs: String, destinationOs: String, currentOs: String) = arrayListOf(
+    private fun buildLogData(
+        startOs: String,
+        destinationOs: String,
+        currentOs: String
+    ) = arrayListOf(
         WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_INSTALL_ID to settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
         WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_START_OS to startOs,
         WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS to destinationOs,
@@ -161,7 +196,6 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private const val NOTIFICATION_ID = 79243095
         private const val TAG = "VerifyInstallationReceiver"
     }
 }

@@ -1,15 +1,10 @@
 package com.arjanvlek.oxygenupdater.workers
 
-import android.app.Notification
 import android.content.Context
 import android.os.Environment
-import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
-import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.arjanvlek.oxygenupdater.OxygenUpdater
-import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.enums.Md5VerificationFailure
 import com.arjanvlek.oxygenupdater.exceptions.UpdateVerificationException
 import com.arjanvlek.oxygenupdater.extensions.createFromWorkData
@@ -18,7 +13,6 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logVerbose
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
-import com.arjanvlek.oxygenupdater.utils.NotificationIds.FOREGROUND_NOTIFICATION_DOWNLOAD
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -44,25 +38,10 @@ class Md5VerificationWorker(
     private val updateData = createFromWorkData(parameters.inputData)
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        // Mark the Worker as important
-        setForeground(createVerificationForegroundInfo())
+        LocalNotifications.showVerifyingNotification(context)
 
         verify()
     }
-
-    private fun createVerificationForegroundInfo() = NotificationCompat.Builder(
-        context,
-        OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID
-    )
-        .setContentTitle(context.getString(R.string.download_verifying))
-        .setProgress(100, 50, true)
-        .setSmallIcon(R.drawable.logo_outline)
-        .setOngoing(true)
-        .setCategory(Notification.CATEGORY_PROGRESS)
-        .setPriority(NotificationCompat.PRIORITY_LOW)
-        .build().let {
-            ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, it)
-        }
 
     private suspend fun verify(): Result = withContext(Dispatchers.IO) {
         if (updateData == null) {

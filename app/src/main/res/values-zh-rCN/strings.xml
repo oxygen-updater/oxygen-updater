@@ -49,7 +49,7 @@
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">下载完成！</string>
-	<string name="download_complete_notification">下载已完成，只需轻触即可安装</string>
+	<string name="download_complete_notification">只需轻触即可安装</string>
 
 	<string name="download_error">下载出错</string>
 	<string name="download_error_close">关闭</string>
@@ -67,7 +67,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_storage">您的设备上没有足够的存储空间来下载更新。请清理一下空间，然后再次尝试下载吧。</string>
 
 	<string name="download_failed">下载失败</string>
-	<string name="running_in_background">Oxygen 更新器正在后台运行</string>
 	<string name="download_pending">您的下载即将开始…</string>
 	<string name="download_notification_error_server">下载时服务器错误。请重新开始下载。</string>
 	<string name="download_notification_error_internal">下载时出现技术错误。请尝试重新下载，或联系开发者获取支持。</string>
@@ -83,7 +82,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">正在计算剩余时间…</string>
 	<string name="download_progress_text_verifying">正在校验文件是否完整…</string>
 	<string name="download_progress_text_paused">已暂停</string>
-	<string name="download_waiting_for_network">正在等待互联网连接…</string>
 
 	<string name="download_verifying">正在校验中…</string>
 	<string name="download_verifying_error">文件损坏！</string>
@@ -305,8 +303,8 @@ Instructions:
 	<string name="about_email_button_text">電子郵件</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">新设备发布！现已支持 %1$s ！</string>
-	<string name="notification_new_device_short">打开 App 来选择您的设备</string>
+	<string name="notification_new_device_title">新设备发布</string>
+	<string name="notification_new_device_text">现已支持 %1$s。 打开 App 来选择您的设备。</string>
 	<string name="notification_no_notification_support">安装或升级您的 Google Play 服务来开启推送服务</string>
 	<string name="notification_version_title">系统可更新！</string>
 	<string name="notification_version">恭喜 %2$s! 喜提 %1$s ！</string>
@@ -353,7 +351,7 @@ Instructions:
 	<string name="contribute_more_info">了解更多…</string>
 	<string name="contribute_allow_storage">请给予内部存储文件读取权限，以开启共研帮助我们</string>
 	<string name="contribute_successful_notification_title">共研完成</string>
-	<string name="contribute_successful_notification_text">感谢您愿意分享最新的更新包 %1$s 给我们的管理员！您的举手之劳将造福数以千计的 OnePlus 用户！</string>
+	<string name="contribute_successful_notification_text">感謝您與我們共享更新文件名！</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">糟糕！</string>

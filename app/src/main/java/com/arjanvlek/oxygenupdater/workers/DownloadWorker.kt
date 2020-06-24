@@ -1,14 +1,23 @@
 package com.arjanvlek.oxygenupdater.workers
 
-import android.app.Notification
+import android.app.Notification.CATEGORY_PROGRESS
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.text.format.Formatter
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.PRIORITY_LOW
+import androidx.core.content.ContextCompat
+import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
+import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.arjanvlek.oxygenupdater.OxygenUpdater
@@ -17,6 +26,7 @@ import com.arjanvlek.oxygenupdater.apis.DownloadApi
 import com.arjanvlek.oxygenupdater.enums.DownloadFailure
 import com.arjanvlek.oxygenupdater.exceptions.OxygenUpdaterException
 import com.arjanvlek.oxygenupdater.extensions.createFromWorkData
+import com.arjanvlek.oxygenupdater.extensions.toWorkData
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
 import com.arjanvlek.oxygenupdater.models.DownloadProgressData
 import com.arjanvlek.oxygenupdater.utils.ExceptionUtils
@@ -96,17 +106,21 @@ class DownloadWorker(
         val text = context.getString(R.string.download_pending)
 
         val notification = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
-            .setTicker(text)
             .setContentText(text)
             .setProgress(100, 50, true)
-            .setSmallIcon(R.drawable.logo_outline)
             .setOngoing(true)
-            .setCategory(Notification.CATEGORY_PROGRESS)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setCategory(CATEGORY_PROGRESS)
+            .setPriority(PRIORITY_LOW)
             // Add the cancel action to the notification which can
             // be used to cancel the worker
-            .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)
+            .addAction(
+                android.R.drawable.ic_delete,
+                context.getString(android.R.string.cancel),
+                cancelPendingIntent
+            )
+            .setColor(ContextCompat.getColor(context, R.color.colorPositive))
             .build()
 
         return ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, notification)
@@ -127,21 +141,25 @@ class DownloadWorker(
         val text = "$bytesDoneStr / $totalBytesStr ($progress%)"
 
         val notification = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.stat_sys_download)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
-            .setTicker(text)
             .setContentText(text)
+            .setProgress(100, progress, false)
+            .setOngoing(true)
+            .setCategory(CATEGORY_PROGRESS)
+            .setPriority(PRIORITY_LOW)
+            // Add the cancel action to the notification which can
+            // be used to cancel the worker
+            .addAction(
+                android.R.drawable.ic_delete,
+                context.getString(android.R.string.cancel),
+                cancelPendingIntent
+            )
             .setStyle(
                 NotificationCompat.BigTextStyle()
                     .setSummaryText(downloadEta ?: "")
             )
-            .setProgress(100, progress, false)
-            .setSmallIcon(android.R.drawable.stat_sys_download)
-            .setOngoing(true)
-            .setCategory(Notification.CATEGORY_PROGRESS)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            // Add the cancel action to the notification which can
-            // be used to cancel the worker
-            .addAction(android.R.drawable.ic_delete, context.getString(android.R.string.cancel), cancelPendingIntent)
+            .setColor(ContextCompat.getColor(context, R.color.colorPositive))
             .build()
 
         notificationManager.apply {
@@ -324,7 +342,34 @@ class DownloadWorker(
             }
         }
 
+        enqueueVerificationWork()
+
         Result.success()
+    }
+
+    private fun enqueueVerificationWork() {
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Since download has completed successfully, we can start the verification work immediately
+            Toast.makeText(
+                context,
+                context.getString(R.string.download_verifying_start),
+                Toast.LENGTH_LONG
+            ).show()
+        }, 0)
+
+        val verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
+            .setInputData(updateData!!.toWorkData())
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                WorkRequest.MIN_BACKOFF_MILLIS,
+                TimeUnit.MILLISECONDS
+            ).build()
+
+        workManager.enqueueUniqueWork(
+            WORK_UNIQUE_MD5_VERIFICATION,
+            ExistingWorkPolicy.REPLACE,
+            verificationWorkRequest
+        )
     }
 
     /**
@@ -334,7 +379,7 @@ class DownloadWorker(
      * @see File.renameTo
      */
     @Throws(IOException::class)
-    fun moveTempFileToCorrectLocation() {
+    private fun moveTempFileToCorrectLocation() {
         if (zipFile.exists() && !zipFile.delete()) {
             throw IOException("Deletion Failed")
         }

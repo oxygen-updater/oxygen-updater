@@ -1,18 +1,14 @@
 package com.arjanvlek.oxygenupdater.workers
 
-import android.app.Notification
 import android.content.Context
 import android.os.Environment
-import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
 import androidx.work.CoroutineWorker
-import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
-import com.arjanvlek.oxygenupdater.OxygenUpdater
-import com.arjanvlek.oxygenupdater.R
 import com.arjanvlek.oxygenupdater.database.SubmittedUpdateFileRepository
 import com.arjanvlek.oxygenupdater.exceptions.NetworkException
 import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
+import com.arjanvlek.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_CONTRIBUTION_COUNT
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.repositories.ServerRepository
 import com.arjanvlek.oxygenupdater.utils.LocalNotifications
@@ -20,7 +16,6 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 import com.arjanvlek.oxygenupdater.utils.Logger.logError
 import com.arjanvlek.oxygenupdater.utils.Logger.logInfo
 import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
-import com.arjanvlek.oxygenupdater.utils.NotificationIds.FOREGROUND_NOTIFICATION_CONTRIBUTION
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -44,12 +39,11 @@ class CheckSystemUpdateFilesWorker(
     private val settingsManager by inject(SettingsManager::class.java)
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
-        // Mark the Worker as important
-        setForeground(createInitialForegroundInfo())
-
         logDebug(TAG, "Started update file check")
 
         var anySubmitFailed = false
+        val validSubmittedFileNames = HashSet<String>()
+
         UPDATE_DIRECTORIES.forEach { directoryName ->
             @Suppress("DEPRECATION")
             val directory = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), directoryName)
@@ -105,13 +99,7 @@ class CheckSystemUpdateFilesWorker(
 
                         // Inform user of successful contribution (only if the file is not a "bogus" temporary file)
                         if (fileName.contains(".zip")) {
-                            LocalNotifications.showContributionSuccessfulNotification(context, fileName)
-
-                            // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
-                            settingsManager.savePreference(
-                                SettingsManager.PROPERTY_CONTRIBUTION_COUNT,
-                                settingsManager.getPreference(SettingsManager.PROPERTY_CONTRIBUTION_COUNT, 0) + 1
-                            )
+                            validSubmittedFileNames.add(fileName)
 
                             // Log successful contribution
                             FirebaseAnalytics.getInstance(context).logEvent(
@@ -131,25 +119,22 @@ class CheckSystemUpdateFilesWorker(
             logDebug(TAG, "Finished checking for update files in directory: ${directory.absolutePath}")
         }
 
+        val count = validSubmittedFileNames.size
+        if (count != 0) {
+            LocalNotifications.showContributionSuccessfulNotification(
+                context,
+                validSubmittedFileNames
+            )
+
+            // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
+            settingsManager.savePreference(
+                PROPERTY_CONTRIBUTION_COUNT,
+                settingsManager.getPreference(PROPERTY_CONTRIBUTION_COUNT, 0) + count
+            )
+        }
+
         repository.close()
         if (anySubmitFailed) Result.failure() else Result.success()
-    }
-
-    private fun createInitialForegroundInfo(): ForegroundInfo {
-        // This PendingIntent can be used to cancel the worker
-        val text = context.getString(R.string.running_in_background)
-
-        val notification = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
-            .setContentTitle(context.getString(R.string.app_name))
-            .setTicker(text)
-            .setContentText(text)
-            .setSmallIcon(R.drawable.logo_outline)
-            .setOngoing(true)
-            .setCategory(Notification.CATEGORY_PROGRESS)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .build()
-
-        return ForegroundInfo(FOREGROUND_NOTIFICATION_CONTRIBUTION, notification)
     }
 
     private fun getAllFileNames(folder: File, result: MutableList<String>) {

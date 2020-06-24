@@ -169,7 +169,7 @@
 			android:title="@string/label_rate_app" />
 
 		<Preference
-			android:icon="@drawable/logo_outline"
+			android:icon="@drawable/logo_notification"
 			android:key="@string/key_oxygen"
 			android:layout="@layout/custom_preference"
 			android:summary="@string/summary_oxygen"

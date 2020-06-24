@@ -49,7 +49,7 @@
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">Download færdig</string>
-	<string name="download_complete_notification">Download færdig. Tryk på: start nstallation.</string>
+	<string name="download_complete_notification">Tryk på: start nstallation</string>
 
 	<string name="download_error">Fejl i download</string>
 	<string name="download_error_close">LUK</string>
@@ -68,7 +68,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_storage">Der er ikke nok ledig plads tilgængelig på din enhed, til at downloade opdateringene. Frigør plads og forsøg at downloade igen.</string>
 
 	<string name="download_failed">Download fejlede</string>
-	<string name="running_in_background">Oxygen Updater kører i baggruunden</string>
 	<string name="download_pending">Din download vil starte om et øjeblik …</string>
 	<!-- TODO translate the 3 below to Russian -->
 	<string name="download_notification_error_server">Serverfejl under download.forsøg. Genstart download.</string>
@@ -85,7 +84,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">Beregner den manglende tid der mangler…</string>
 	<string name="download_progress_text_verifying">Undersøger fil…</string>
 	<string name="download_progress_text_paused">Pauset</string>
-	<string name="download_waiting_for_network">Venter på en netværks tilutning…</string>
 
 	<string name="download_verifying">Undersøger .…</string>
 	<string name="download_verifying_error">Fil er beskadiget</string>
@@ -309,8 +307,8 @@ Instructions:
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">Ny enhed er tilføjet! Enheden %1$s undertstøttes nu!</string>
-	<string name="notification_new_device_short">Åben appen, for at vælge denne enhed.</string>
+	<string name="notification_new_device_title">Ny enhed er tilføjet</string>
+	<string name="notification_new_device_text">Enheden %1$s undertstøttes nu. Åben appen, for at vælge denne enhed.</string>
 	<string name="notification_no_notification_support">Installer eller opdatér Google Play tjenester, for at aktivere push-meddelelser.</string>
 	<string name="notification_version_title">System opdatering tilgængelig</string>
 	<string name="notification_version">%1$s er nu tilgængelig til enheden %2$s!</string>
@@ -357,7 +355,7 @@ Instructions:
 	<string name="contribute_more_info">Mere info …</string>
 	<string name="contribute_allow_storage">Giv venligst lager-adgangs tilladelse, for at kunne forbedre denne app.</string>
 	<string name="contribute_successful_notification_title">Bidrag er vellykket</string>
-	<string name="contribute_successful_notification_text">Tak for at du delte denne opdaterings-fil %1$s med vores administratorer!</string>
+	<string name="contribute_successful_notification_text">Tak for at dele opdateringsfilnavnene med os!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Åh nej!</string>

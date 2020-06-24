@@ -50,7 +50,6 @@ import com.arjanvlek.oxygenupdater.utils.Logger.logWarning
 import com.arjanvlek.oxygenupdater.utils.NotificationTopicSubscriber
 import com.arjanvlek.oxygenupdater.workers.DIRECTORY_ROOT
 import com.arjanvlek.oxygenupdater.workers.DownloadWorker
-import com.arjanvlek.oxygenupdater.workers.Md5VerificationWorker
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE
 import com.arjanvlek.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE
@@ -124,7 +123,6 @@ class MainViewModel(
     private val appUpdateManager by inject(AppUpdateManager::class.java)
 
     private lateinit var downloadWorkRequest: OneTimeWorkRequest
-    private lateinit var verificationWorkRequest: OneTimeWorkRequest
 
     private var appUpdateType = AppUpdateType.FLEXIBLE
 
@@ -285,16 +283,11 @@ class MainViewModel(
         return deleted
     }
 
-    fun setupWorkRequests(updateData: UpdateData) {
+    fun setupDownloadWorkRequest(updateData: UpdateData) {
         downloadWorkRequest = OneTimeWorkRequestBuilder<DownloadWorker>()
             .setInputData(updateData.toWorkData())
             .setBackoffCriteria(BackoffPolicy.LINEAR, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
-            .build()
-
-        verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
-            .setInputData(updateData.toWorkData())
-            .setBackoffCriteria(BackoffPolicy.LINEAR, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .build()
     }
 
@@ -364,14 +357,6 @@ class MainViewModel(
                 )
             }
         }
-    }
-
-    fun enqueueVerificationWork() {
-        workManager.enqueueUniqueWork(
-            WORK_UNIQUE_MD5_VERIFICATION,
-            ExistingWorkPolicy.REPLACE,
-            verificationWorkRequest
-        )
     }
 
     fun cancelDownloadWork(context: Context, updateData: UpdateData?) {
