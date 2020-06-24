@@ -49,7 +49,6 @@
 	<string name="download_error_corrupt">De gedownloade update is beschadigd! Probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
-	<!-- TODO: translate this string below -->
 	<string name="download_error_unsuccessful_response"><![CDATA[Het lijkt erop dat de download link niet geldig is. Dit komt omdat we een fout gemaakt hebben met het toevoegen van de update, of omdat OnePlus de update heeft teruggetrokken van hun servers. Er is een notificatie verzonden naar het team, en we zullen er zo snel mogelijk naar kijken.
 
 Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a href="mailto:support@oxygenupdater.com">email</a> of op onze <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
@@ -372,8 +371,7 @@ Instructies:
 	<string name="root_check_message">Oxygen Updater biedt eenvoudige, automatische update-installaties voor gebruikers met root-toegang. Maar: de incrementele updates werken niet als je root-toegang hebt. Oxygen Updater kan op root-toegang controleren om de juiste-update-methode(s) aan te bieden.\n\nAls je root-toegang hebt, geef dan na het sluiten van deze melding toestemming voor het gebruik van root-toegang.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>
 
 	<!-- Purchase strings -->
-	<!-- TODO: translate this string below -->
-	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
+	<string name="purchase_error_pending_payment">Je aankoop bevindt zich in de \"betaling in behandeling\" status. Zodra de betaling voltooid is, zul je alle voordelen krijgen waar je recht op hebt.</string>
 	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
 
 	<!-- Other strings -->
