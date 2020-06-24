@@ -430,7 +430,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         fileNameTextView.text = getString(R.string.update_information_file_name, updateData.filename)
         md5TextView.text = getString(R.string.update_information_md5, updateData.mD5Sum)
 
-        mainViewModel.setupWorkRequests(updateData)
+        mainViewModel.setupDownloadWorkRequest(updateData)
 
         if (mainViewModel.checkDownloadCompletionByFile(updateData)) {
             mainViewModel.updateDownloadStatus(DOWNLOAD_COMPLETED)
@@ -625,13 +625,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                             isClickable = false
                             setOnClickListener { }
                         }
-
-                        // Since download has completed successfully, we can start the verification work immediately
-                        Toast.makeText(
-                            context,
-                            getString(R.string.download_verifying_start), LENGTH_LONG
-                        ).show()
-                        mainViewModel.enqueueVerificationWork()
                     } else {
                         downloadLayout.apply {
                             isEnabled = true

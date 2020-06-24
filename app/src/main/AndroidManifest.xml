@@ -219,7 +219,7 @@
         -->
 		<meta-data
 			android:name="com.google.firebase.messaging.default_notification_icon"
-			android:resource="@drawable/logo_outline" />
+			android:resource="@drawable/logo_notification" />
 
 		<!--
 			Set color used with incoming notification messages. This is used when no color is set for the incoming

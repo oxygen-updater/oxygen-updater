@@ -42,7 +42,7 @@
 	<string name="paused">Szüneteltetve - érintsd meg a folytatáshoz</string>
 
 	<string name="download_complete">A letöltés kész</string>
-	<string name="download_complete_notification">A letöltés kész. Érintsd meg a telepítés elindításához.</string>
+	<string name="download_complete_notification">Érintsd meg a telepítés elindításához</string>
 
 	<string name="download_error">letöltési Hiba</string>
 	<string name="download_error_close">BEZÁRÁS</string>
@@ -59,7 +59,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="download_error_storage">Nincs elegendő tárhely a készüléken a frissítés letöltéséhez. Távolíts el néhány fájlt, és próbáld meg újra letölteni.</string>
 
 	<string name="download_failed">Sikertelen letöltés</string>
-	<string name="running_in_background">Az Oxygen Frissítő a háttérben fut</string>
 	<string name="download_pending">A letöltés hamarosan megkezdődik…</string>
 
 	<string name="download_notification_error_server">Szerverhiba letöltés közben. Indítsd újra a letöltést.</string>
@@ -76,7 +75,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="download_progress_text_unknown_time_remaining">Hátralévő idő kiszámítása…</string>
 	<string name="download_progress_text_verifying">Fájl ellenőrzése…</string>
 	<string name="download_progress_text_paused">Szüneteltetve</string>
-	<string name="download_waiting_for_network">Várakozás a hálózati kapcsolatra…</string>
 
 	<string name="download_verifying">Ellenőrzés…</string>
 	<string name="download_verifying_error">A fájl sérült</string>
@@ -294,8 +292,8 @@ Instrukciók:
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">Új eszköz jelent meg! A %1$s már támogatott!</string>
-	<string name="notification_new_device_short">Nyisd meg az alkalmazást ahhoz hogy kiválaszd ezt az eszközt.</string>
+	<string name="notification_new_device_title">Új eszköz jelent meg</string>
+	<string name="notification_new_device_text">A %1$s már támogatott. Nyisd meg az alkalmazást ahhoz hogy kiválaszd ezt az eszközt.</string>
 	<string name="notification_no_notification_support">Telepíts vagy frissítsd a Google Play szolgáltatásokat a push értesítések engedélyezéséhez.</string>
 	<string name="notification_version_title">Rendszerfrissítés elérhető</string>
 	<string name="notification_version">%1$s már elérhető a %2$s számára!</string>
@@ -340,7 +338,7 @@ Instrukciók:
 	<string name="contribute_more_info">Bővebb információ …</string>
 	<string name="contribute_allow_storage">Kérjük, add meg a tárhely engedélyeket az alkalmazás fejlesztésének elősegítése érdekében</string>
 	<string name="contribute_successful_notification_title">Közreműködés sikeres</string>
-	<string name="contribute_successful_notification_text">Köszönjük, hogy megosztottad a %1$s frissítési fájlt a rendszergazdákkal!</string>
+	<string name="contribute_successful_notification_text">Köszönjük, hogy megosztotta velünk a frissítési fájlneveket!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Jajj ne!</string>

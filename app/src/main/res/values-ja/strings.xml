@@ -49,7 +49,7 @@
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">ダウンロード完了</string>
-	<string name="download_complete_notification">ダウンロードが完了しました。タップでインストール出来ます。</string>
+	<string name="download_complete_notification">タップでインストール出来ます</string>
 
 	<string name="download_error">ダウンロードエラー</string>
 	<string name="download_error_close">閉じる</string>
@@ -67,7 +67,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_storage">更新をダウンロードするには、デバイスに十分なストレージ容量がありません。 いくつかのファイルを削除して、もう一度ダウンロードしてください。</string>
 
 	<string name="download_failed">ダウンロードに失敗</string>
-	<string name="running_in_background">Oxygen Updater がバックグラウンドで実行中です</string>
 	<string name="download_pending">ダウンロードは間もなく開始されます…</string>
 	<string name="download_notification_error_server">ダウンロード中にサーバーエラーが発生しました。再ダウンロードして下さい。</string>
 	<string name="download_notification_error_internal">ダウンロード中に技術的なエラーが発生しました。再ダウンロードするかサポートに連絡して下さい。</string>
@@ -83,7 +82,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">残り時間を計算中…</string>
 	<string name="download_progress_text_verifying">ファイルを確認中…</string>
 	<string name="download_progress_text_paused">中断中</string>
-	<string name="download_waiting_for_network">ネットワーク接続の待機中…</string>
 
 	<string name="download_verifying">確認中…</string>
 	<string name="download_verifying_error">ファイルが損傷しています</string>
@@ -307,8 +305,8 @@ Instructions:
 	<string name="about_email_button_text">Eメール</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">新デバイスがリリースされました! %1$s がサポートされました!</string>
-	<string name="notification_new_device_short">アプリを開き、このデバイスを選択</string>
+	<string name="notification_new_device_title">新デバイスがリリースされました</string>
+	<string name="notification_new_device_text">%1$s がサポートされました。 アプリを開き、このデバイスを選択。</string>
 	<string name="notification_no_notification_support">Google Play サービスをインストール/アップデートしプッシュ通知を有効化する</string>
 	<string name="notification_version_title">システムアップデートが利用可能です</string>
 	<string name="notification_version"> %2$s 向けの %1$s が利用可能です!</string>
@@ -355,7 +353,7 @@ Instructions:
 	<string name="contribute_more_info">詳細情報…</string>
 	<string name="contribute_allow_storage">アプリの改善を支援するために、ストレージのアクセス許可を付与してください</string>
 	<string name="contribute_successful_notification_title">貢献に成功</string>
-	<string name="contribute_successful_notification_text">更新ファイル %1$s を管理者と共有して頂き有難うございます!</string>
+	<string name="contribute_successful_notification_text">更新ファイル名を共有していただきありがとうございます!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Oh no!</string>

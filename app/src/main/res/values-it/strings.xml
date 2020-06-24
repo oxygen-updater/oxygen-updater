@@ -42,7 +42,7 @@
 	<string name="paused">In pausa - premi per continuare</string>
 
 	<string name="download_complete">"Download completato"</string>
-	<string name="download_complete_notification">"Download completato. Premi su start per iniziare l'istallazione. "</string>
+	<string name="download_complete_notification">"Premi su start per iniziare l'istallazione"</string>
 	<string name="download_error">"Errore nel download"</string>
 	<string name="download_error_close">"CHIUDI"</string>
 	<string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova. "</string>
@@ -58,7 +58,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_resume">"RIPRENDI"</string>
 	<string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta. "</string>
 	<string name="download_failed">"Download fallito"</string>
-	<string name="running_in_background">"Il tuo download sarà scaricato in sottofondo… "</string>
 	<string name="download_pending">"Il tuo download inizierà subito… "</string>
 	<string name="download_notification_error_internal">"Errore interno."</string>
 	<string name="download_notification_error_server">"Errore nel server."</string>
@@ -74,7 +73,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">"calcolando…"</string>
 	<string name="download_progress_text_verifying">"verifica file… "</string>
 	<string name="download_progress_text_paused">"in pausa"</string>
-	<string name="download_waiting_for_network">"in attesa di una connessione… "</string>
 
 	<string name="download_verifying">"Verificando… "</string>
 	<string name="download_verifying_error">"File danneggiato "</string>
@@ -330,8 +328,8 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">"Nuovo dispositivo rilasciato! Il %1$s e' ora supportato."</string>
-	<string name="notification_new_device_short">"Apri l'app o scegli il dispositivo."</string>
+	<string name="notification_new_device_title">"Nuovo dispositivo rilasciato"</string>
+	<string name="notification_new_device_text">"Il %1$s e' ora supportato. Apri l'app o scegli il dispositivo."</string>
 	<string name="notification_no_notification_support">"Istalla o aggiorna i servizi Google Play per abilitare le notifiche push."</string>
 	<string name="notification_version_title">"Aggiornamento sistema disponibile."</string>
 	<string name="notification_version">"%1$s e' ora disponibile per %2$s!"</string>
@@ -405,7 +403,7 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="contribute_more_info">Ulteriori info …</string>
 	<string name="contribute_allow_storage">Abbiamo bisogno dei permessi storage per continuare</string>
 	<string name="contribute_successful_notification_title">Contribuzione avvenuta con successo!</string>
-	<string name="contribute_successful_notification_text">Grazie per aver condiviso %1$s con i nostri admin!</string>
+	<string name="contribute_successful_notification_text">Grazie per aver condiviso con noi i nomi dei file di aggiornamento!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh no!"</string>

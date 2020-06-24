@@ -42,7 +42,7 @@
 	<string name="paused">Téléchargement en pause - appuyez pour le reprendre</string>
 
 	<string name="download_complete">"Téléchargement terminé"</string>
-	<string name="download_complete_notification">"Téléchargement terminé. Appuyez pour commencer l'installation."</string>
+	<string name="download_complete_notification">"Appuyez pour commencer l'installation"</string>
 	<string name="download_error">"Erreur de téléchargement"</string>
 	<string name="download_error_close">"Fermer"</string>
 	<string name="download_error_corrupt">"Le fichier de mise à jour est endommagé ! Veuillez essayer de le télécharger à nouveau."</string>
@@ -58,7 +58,6 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="download_error_resume">"Reprendre"</string>
 	<string name="download_error_storage">"Pas assez d'espace disponible sur votre appareil pour télécharger la mise à jour. Veuillez supprimer quelques fichiers et réessayer."</string>
 	<string name="download_failed">"Le téléchargement a échoué"</string>
-	<string name="running_in_background">Oxygen Updater fonctionne en arrière-plan</string>
 	<string name="download_pending">"Le téléchargement va bientôt commencer…"</string>
 	    
 	    
@@ -77,7 +76,6 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="download_progress_text_unknown_time_remaining">"Estimation du temps restant en cours…"</string>
 	<string name="download_progress_text_verifying">"100 %, Vérification du fichier en cours…"</string>
 	<string name="download_progress_text_paused">En pause</string>
-	<string name="download_waiting_for_network">"En attente d'une connexion réseau…"</string>
 
 	<string name="download_verifying">"Vérification…"</string>
 	<string name="download_verifying_error">"Le fichier est endommagé"</string>
@@ -321,8 +319,8 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">"Nouvel appareil ajouté ! Le %1$s est maintenant disponible !"</string>
-	<string name="notification_new_device_short">"Ouvrez l'application pour choisir cet appareil."</string>
+	<string name="notification_new_device_title">"Nouvel appareil ajouté "</string>
+	<string name="notification_new_device_text">"Le %1$s est maintenant disponible. Ouvrez l'application pour choisir cet appareil."</string>
 	<string name="notification_no_notification_support">"Installez ou mettez à jour les services Google Play pour activer les notifications push."</string>
 	<string name="notification_version_title">"Mise à jour système disponible"</string>
 	<string name="notification_version">"%1$s est maintenant disponible pour le %2$s !"</string>
@@ -397,7 +395,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="contribute_more_info">Plus d\'informations…</string>
 	<string name="contribute_allow_storage">Veuillez accorder la permission d\'accéder au stockage afin de contribuer à l\'amélioration de l\'application</string>
 	<string name="contribute_successful_notification_title">Contribution effectuée</string>
-	<string name="contribute_successful_notification_text">Merci d\'avoir partagé le fichier de mise à jour %1$s avec nos administrateurs d\'Oxygen Updater !</string>
+	<string name="contribute_successful_notification_text">Merci d\'avoir partagé les noms de fichiers de mise à jour avec nous!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh non !"</string>

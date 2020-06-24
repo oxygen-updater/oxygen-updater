@@ -43,7 +43,7 @@
 	<string name="paused">Паузирано - кликните да наставите</string>
 
 	<string name="download_complete">Преузимање је готово</string>
-	<string name="download_complete_notification">Преузимање је готово. Притисните за почетак инсталације.</string>
+	<string name="download_complete_notification">Притисните за почетак инсталације</string>
 
 	<string name="download_error">Грешка при преузимању</string>
 	<string name="download_error_close">ЗАТВОРИ</string>
@@ -60,7 +60,6 @@
 	<string name="download_error_storage">Немате довољно простора на уређају за ажурирање. Молимо вас уклоните неке податке и покушајте поново.</string>
 
 	<string name="download_failed">Недовољно простора</string>
-	<string name="running_in_background">Oxygen Updater ради у позадини</string>
 	<string name="download_pending">Ваше преузимање ће ускоро почети…</string>
 	<string name="download_notification_error_server">Грешка са сервером приликом преузимања. Молимо вас покушајте поново.</string>
 	<string name="download_notification_error_internal">Техничка грешка приликом преузимања. Покушајте поново са преузимањем или нас контактирајте.</string>
@@ -76,7 +75,6 @@
 	<string name="download_progress_text_unknown_time_remaining">израчунавање преосталог времена…</string>
 	<string name="download_progress_text_verifying">верификација фајла…</string>
 	<string name="download_progress_text_paused">паузирано</string>
-	<string name="download_waiting_for_network">чекање интернет конекције…</string>
 
 	<string name="download_verifying">Верификација…</string>
 	<string name="download_verifying_error">Фајл је оштећен</string>
@@ -296,8 +294,8 @@
 	<string name="about_email_button_text">Емаил</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">Нови уређај је доступан! %1$s је сада доступан!</string>
-	<string name="notification_new_device_short">Отвори апликацију да изабереш овај уређај.</string>
+	<string name="notification_new_device_title">Нови уређај је доступан</string>
+	<string name="notification_new_device_text">%1$s је сада доступан. Отвори апликацију да изабереш овај уређај.</string>
 	<string name="notification_no_notification_support">Инсталирај или ажурирај Google Play сервисе да омогућиш обавештења.</string>
 	<string name="notification_version_title">Ажурирање система доступно</string>
 	<string name="notification_version">%1$s је сада доступан за %2$s!</string>
@@ -344,7 +342,7 @@
 	<string name="contribute_more_info">Више информација …</string>
 	<string name="contribute_allow_storage">Молимо вас допустите апликацији притуп фајловима ако желите да помогнете апликацији</string>
 	<string name="contribute_successful_notification_title">Учествовање успешно</string>
-	<string name="contribute_successful_notification_text">Хвала вам што сте поделили фајл за ажурирање %1$s са нашим админима!</string>
+	<string name="contribute_successful_notification_text">Хвала вам што делите ажурирано име датотеке са нама!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">О не!</string>

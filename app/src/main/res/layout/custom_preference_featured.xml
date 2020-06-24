@@ -15,7 +15,7 @@
 		android:contentDescription="@string/icon"
 		android:padding="@dimen/spacing_default"
 		app:tint="?colorPrimary"
-		tools:srcCompat="@drawable/logo_outline" />
+		tools:srcCompat="@drawable/logo_notification" />
 
 	<RelativeLayout
 		android:layout_width="0dp"

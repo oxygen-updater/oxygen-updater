@@ -49,7 +49,7 @@
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">İndirme tamamlandı.</string>
-	<string name="download_complete_notification">İndirme tamamlandı. Yüklemeyi başlatmak için dokunun.</string>
+	<string name="download_complete_notification">Yüklemeyi başlatmak için dokunun</string>
 
 	<string name="download_error">İndirilemedi</string>
 	<string name="download_error_close">KAPAT</string>
@@ -67,7 +67,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
 
 	<string name="download_failed">Download failed</string>
-	<string name="running_in_background">Oxygen Updater is running in the background</string>
 	<string name="download_pending">Your download will start soon…</string>
 	<string name="download_notification_error_server">İndirme sırasında sunucu sorunu. Lütfen indirmeyi tekrar başlatın.</string>
 	<string name="download_notification_error_internal">İndirme sırasında teknik sorun oldu. Lütfen tekrar indirin veya destek ile iletişime geçin.</string>
@@ -83,7 +82,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">kalan zaman hesaplanıyor…</string>
 	<string name="download_progress_text_verifying">dosya doğrulanıyor…</string>
 	<string name="download_progress_text_paused">durduruldu</string>
-	<string name="download_waiting_for_network">internet bağlantısı için bekleniyor…</string>
 
 	<string name="download_verifying">Doğrulanıyor…</string>
 	<string name="download_verifying_error">Dosya zarar görmüş.</string>
@@ -306,8 +304,8 @@ Instructions:
 	<string name="about_email_button_text">E-posta</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">Yeni cihaz yayınlandı! Artık bu cihazda destekleniyor %1$s </string>
-	<string name="notification_new_device_short">Cihazı seçmek için uygulamayı açın.</string>
+	<string name="notification_new_device_title">"Yeni cihaz yayınlandı"</string>
+	<string name="notification_new_device_text">"Artık bu cihazda destekleniyor %1$s. Cihazı seçmek için uygulamayı açın."</string>
 	<string name="notification_no_notification_support">Bildirimler için uygulamayı güncel tutmayı unutmayın.</string>
 	<string name="notification_version_title">Sistem güncellemesi mevcut.</string>
 	<string name="notification_version">%1$s artık mevcut %2$s bu cihazlar için!</string>
@@ -354,7 +352,7 @@ Instructions:
 	<string name="contribute_more_info">Daha fazla bilgi…</string>
 	<string name="contribute_allow_storage">Uygulamayı geliştirmek için depolama iznini kabul edin.</string>
 	<string name="contribute_successful_notification_title">Katkıda bulunma işi başarılı!</string>
-	<string name="contribute_successful_notification_text">Güncelleme dosyası %1$s \'yı yöneticilerle paylaştığınız için teşekkürler!</string>
+	<string name="contribute_successful_notification_text">Güncelleme dosya adını bizimle paylaştığınız için teşekkür ederiz!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Oh olamaz!</string>

@@ -6,6 +6,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.PRIORITY_HIGH
+import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.arjanvlek.oxygenupdater.OxygenUpdater
@@ -132,13 +134,18 @@ class DisplayDelayedNotificationWorker(
             return Result.failure()
         }
 
-        builder.setContentIntent(getNotificationIntent(notificationType))
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setDefaults(Notification.DEFAULT_ALL)
+        builder.setSmallIcon(R.drawable.logo_notification)
+            .setContentIntent(getNotificationIntent(notificationType))
             .setAutoCancel(true)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setPriority(PRIORITY_HIGH)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
-        notificationManager.notify(getNotificationId(notificationType), builder.build())
+        notificationManager.notify(
+            getNotificationId(notificationType),
+            builder.build()
+        )
 
         return Result.success()
     }
@@ -153,24 +160,20 @@ class DisplayDelayedNotificationWorker(
     }
 
     private fun getGeneralServerOrNewsNotificationBuilder(message: String?) = notificationBuilder
-        .setSmallIcon(R.drawable.logo_outline)
-        .setStyle(NotificationCompat.BigTextStyle().bigText(message))
         .setContentTitle(context.getString(R.string.app_name))
         .setContentText(message)
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setStyle(NotificationCompat.BigTextStyle().bigText(message))
 
     private fun getNewDeviceNotificationBuilder(
         newDeviceName: String?
     ) = context.getString(
-        R.string.notification_new_device,
+        R.string.notification_new_device_text,
         newDeviceName
     ).let {
         notificationBuilder
-            .setSmallIcon(R.drawable.new_text)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(it).setSummaryText(context.getString(R.string.notification_new_device_short)))
-            .setContentTitle(context.getString(R.string.app_name))
+            .setContentTitle(context.getString(R.string.notification_new_device_title))
             .setContentText(it)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(it))
     }
 
     private fun getNewVersionNotificationBuilder(
@@ -182,12 +185,10 @@ class DisplayDelayedNotificationWorker(
         deviceName
     ).let {
         notificationBuilder
-            .setSmallIcon(R.drawable.new_text)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(it))
             .setWhen(System.currentTimeMillis())
             .setContentTitle(context.getString(R.string.notification_version_title))
             .setContentText(it)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(it))
     }
 
     private fun getNotificationIntent(
@@ -197,7 +198,10 @@ class DisplayDelayedNotificationWorker(
             .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
         val newsIntent = Intent(context, NewsActivity::class.java)
-            .putExtra(NewsActivity.INTENT_NEWS_ITEM_ID, messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong())
+            .putExtra(
+                NewsActivity.INTENT_NEWS_ITEM_ID,
+                messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
+            )
             .putExtra(NewsActivity.INTENT_DELAY_AD_START, true)
 
         PendingIntent.getActivities(

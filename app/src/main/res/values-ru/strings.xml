@@ -49,7 +49,7 @@
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">"Успешная загрузка"</string>
-	<string name="download_complete_notification">"Загрузка завершена. Нажмите для установки."</string>
+	<string name="download_complete_notification">"Нажмите для установки"</string>
 	<string name="download_error">"Ошибка загрузки"</string>
 	<string name="download_error_close">"Закрыть"</string>
 	<string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
@@ -67,7 +67,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_resume">"продолжить"</string>
 	<string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
 	<string name="download_failed">"Ошибка загрузки"</string>
-	<string name="running_in_background">"Обновление будет загружаться в фоне…"</string>
 	<string name="download_pending">"Загрузка скоро начнется…"</string>
 	<!-- TODO translate these lines -->
 	<string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
@@ -85,7 +84,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">"вычисление времени…"</string>
 	<string name="download_progress_text_verifying">"проверка файла…"</string>
 	<string name="download_progress_text_paused">"помолчала"</string>
-	<string name="download_waiting_for_network">"oжидание подключения…"</string>
 
 	<string name="download_verifying">"Проверка…"</string>
 	<string name="download_verifying_error">"Файл поврежден"</string>
@@ -353,8 +351,8 @@ Instructions:
 	<string name="about_email_button_text">Эл. адрес</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">"Новое устройство! %1$s теперь поддерживается!"</string>
-	<string name="notification_new_device_short">"Откройте приложение, чтобы выбрать это устройство."</string>
+	<string name="notification_new_device_title">"Новое устройство"</string>
+	<string name="notification_new_device_text">"%1$s теперь поддерживается. Откройте приложение, чтобы выбрать это устройство."</string>
 	<string name="notification_no_notification_support">"Установите или обновите службы Google Play, чтобы включить push-уведомления."</string>
 	<string name="notification_version_title">"Доступно обновление"</string>
 	<string name="notification_version">"%1$s доступен для %2$s!"</string>
@@ -429,7 +427,7 @@ Instructions:
 	<string name="contribute_more_info">More info …</string>
 	<string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
 	<string name="contribute_successful_notification_title">Contribution successful</string>
-	<string name="contribute_successful_notification_text">Thanks for sharing the update file %1$s with our admins!</string>
+	<string name="contribute_successful_notification_text">Thanks for sharing the update filenames with us!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"О нет!"</string>

@@ -49,7 +49,7 @@
 	<string name="paused">"Pausiert - tap to resume"</string>
 
 	<string name="download_complete">"Download abgeschlossen"</string>
-	<string name="download_complete_notification">"Download abgeschlossen. Tippe um die Installation zu starten."</string>
+	<string name="download_complete_notification">"Tippe um die Installation zu starten"</string>
 	<string name="download_error">"Download Fehler"</string>
 	<string name="download_error_close">"SCHLIEẞEN"</string>
 	<string name="download_error_corrupt">"Die heruntergeladene Update Datei ist beschädigt! Versuche sie erneut herunterzuladen."</string>
@@ -64,7 +64,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_error_resume">"FORTSETZEN"</string>
 	<string name="download_error_storage">"Auf deinem Gerät ist nicht genügend Speicherplatz verfügbar um das Update herunterzuladen. Entferne ein paar Dateien und Versuche erneut es herunterzuladen."</string>
 	<string name="download_failed">"Download fehlgeschlagen"</string>
-	<string name="running_in_background">"Oxygen Updater läuft im Hintergrund…"</string>
 	<string name="download_pending">"Der Download wird startet später…"</string>
 	<string name="download_notification_error_server">"Netzwerk Fehler. Überprüfe deine Verbindung und versuche es erneut."</string>
 	<string name="download_notification_error_internal">"App-Fehler. Versuche es erneut oder schicke ein Support-Versuch."</string>
@@ -80,7 +79,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_unknown_time_remaining">"Download Zeit wird berechnet…"</string>
 	<string name="download_progress_text_verifying">"Dateiverifizierung…"</string>
 	<string name="download_progress_text_paused">"Pausiert…"</string>
-	<string name="download_waiting_for_network">"Warten auf Netzwerk…"</string>
 
 	<string name="download_verifying">"Verifizieren…"</string>
 	<string name="download_verifying_error">"Datei ist beschädigt"</string>
@@ -349,8 +347,8 @@ Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device">"Neues Gerät veröffentlicht! Das %1$s wird jetzt unterstützt!"</string>
-	<string name="notification_new_device_short">"Öffne die App und dieses Gerät auszuwählen."</string>
+	<string name="notification_new_device_title">"Neues Gerät veröffentlicht"</string>
+	<string name="notification_new_device_text">"Das %1$s wird jetzt unterstützt. Öffne die App und dieses Gerät auszuwählen."</string>
 	<string name="notification_no_notification_support">"Installiere oder Update die Google Play Dienste um Push Nachrichten zu erlauben."</string>
 	<string name="notification_version_title">"System Update verfügbar"</string>
 	<string name="notification_version">"%1$s ist jetzt verfügbar für das %2$s!"</string>
@@ -425,7 +423,7 @@ Benutzen sie den Schälter zum eins-oder ausschalten des Mitteilung- und Privacy
 	<string name="contribute_more_info">More info …</string>
 	<string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
 	<string name="contribute_successful_notification_title">Contribution successful</string>
-	<string name="contribute_successful_notification_text">Thanks for sharing the update file %1$s with our admins!</string>
+	<string name="contribute_successful_notification_text">Thanks for sharing the update filenames with us!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh nein!"</string>
