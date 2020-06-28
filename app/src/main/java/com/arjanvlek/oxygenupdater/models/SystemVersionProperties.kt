@@ -47,6 +47,15 @@ class SystemVersionProperties {
     val oemFingerprint: String
 
     /**
+     * This prop is present only on 7-series and above. Possible values:
+     * 1. Stable: if property is present, but has no value
+     * 2. Beta: if property is present and has "Beta" as its value
+     * 3. Alpha: if property is present and has "Alpha" as its value
+     * 4. <blank>: if property isn't present at all (i.e. unknown OS type)
+     */
+    val osType: String
+
+    /**
      * Whether or not the device has an A/B partition layout. Required to generate a proper install
      * script for Automatic Update Installations (root feature)
      */
@@ -55,11 +64,12 @@ class SystemVersionProperties {
     private val settingsManager by inject(SettingsManager::class.java)
 
     constructor() {
+        var oxygenDeviceName = NO_OXYGEN_OS
         var oxygenOSVersion = NO_OXYGEN_OS
         var oxygenOSOTAVersion = NO_OXYGEN_OS
-        var oxygenDeviceName = NO_OXYGEN_OS
-        var oemFingerprint = NO_OXYGEN_OS
         var securityPatchDate = NO_OXYGEN_OS
+        var oemFingerprint = NO_OXYGEN_OS
+        var osType = NO_OXYGEN_OS
         var abPartitionLayout = false
 
         try {
@@ -76,8 +86,16 @@ class SystemVersionProperties {
             oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with version: %s ...")
             oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with OTA version: %s ...")
             oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s ...")
+            osType = readBuildPropItem(RO_BUILD_OS_TYPE_LOOKUP_KEY, properties, "Detected OS Type: %s ...")
             abPartitionLayout = parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s ..."))
             val isEuBuild = parseBoolean(readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s ..."))
+
+            // This prop is present only on 7-series and above
+            if (osType.isBlank()) {
+                osType = "Stable"
+            } else if (osType == NO_OXYGEN_OS) {
+                osType = ""
+            }
 
             settingsManager.savePreference(SettingsManager.PROPERTY_IS_EU_BUILD, isEuBuild)
 
@@ -96,15 +114,24 @@ class SystemVersionProperties {
         this.oxygenDeviceName = oxygenDeviceName
         this.oxygenOSVersion = oxygenOSVersion
         this.oxygenOSOTAVersion = oxygenOSOTAVersion
-        this.oemFingerprint = oemFingerprint
         this.securityPatchDate = securityPatchDate
+        this.oemFingerprint = oemFingerprint
+        this.osType = osType
         this.isABPartitionLayout = abPartitionLayout
     }
 
     /**
      * Only called from within the tests, as we do not want to call the real `getprop` command from there.
      */
-    constructor(oxygenDeviceName: String?, oxygenOSVersion: String?, oxygenOSOTAVersion: String?, securityPatchDate: String?, oemFingerprint: String?, ABPartitionLayout: Boolean) {
+    constructor(
+        oxygenDeviceName: String?,
+        oxygenOSVersion: String?,
+        oxygenOSOTAVersion: String?,
+        securityPatchDate: String?,
+        oemFingerprint: String?,
+        osType: String?,
+        ABPartitionLayout: Boolean
+    ) {
         println("Warning: SystemVersionProperties was constructed using a debug constructor. This should only happen during unit tests!")
 
         this.oxygenDeviceName = oxygenDeviceName ?: ""
@@ -112,6 +139,7 @@ class SystemVersionProperties {
         this.oxygenOSOTAVersion = oxygenOSOTAVersion ?: ""
         this.securityPatchDate = securityPatchDate ?: ""
         this.oemFingerprint = oemFingerprint ?: ""
+        this.osType = osType ?: ""
         this.isABPartitionLayout = ABPartitionLayout
     }
 
@@ -219,6 +247,10 @@ class SystemVersionProperties {
         // so that it's easy for contributors on Discord to figure out which build is for which region
         // (backend will take this into account while firing the webhook)
         private const val RO_BUILD_EU_LOOKUP_KEYS = "ro.build.eu, ro.vendor.build.eu"
+
+        // Easy way to quickly check if the current build is stable, beta, or alpha.
+        // Supported only in 7-series and above.
+        private const val RO_BUILD_OS_TYPE_LOOKUP_KEY = "ro.build.os_type"
 
         // @GitHub contributors, add ro.display.series values of new OP devices *HERE*
         private val RO_PRODUCT_NAME_LOOKUP_DEVICES = listOf(

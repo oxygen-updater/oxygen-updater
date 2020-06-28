@@ -11,7 +11,15 @@ import kotlin.test.assertTrue
 
 abstract class SystemVersionPropertiesTest {
 
-    private val systemVersionProperties = SystemVersionProperties(null, null, null, null, null, false)
+    private val systemVersionProperties = SystemVersionProperties(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        false
+    )
 
     /**
      * Test if a device is supported in the app

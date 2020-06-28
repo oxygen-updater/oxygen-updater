@@ -49,7 +49,7 @@ private val preferencesModule = module {
 }
 
 private val repositoryModule = module {
-    single { ServerRepository(get(), get(), get()) }
+    single { ServerRepository(get(), get(), get(), get()) }
     single { BillingRepository(get(), get()) }
 }
 

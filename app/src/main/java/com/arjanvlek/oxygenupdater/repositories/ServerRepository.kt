@@ -12,6 +12,7 @@ import com.arjanvlek.oxygenupdater.models.DeviceRequestFilter
 import com.arjanvlek.oxygenupdater.models.RootInstall
 import com.arjanvlek.oxygenupdater.models.ServerPostResult
 import com.arjanvlek.oxygenupdater.models.ServerStatus
+import com.arjanvlek.oxygenupdater.models.SystemVersionProperties
 import com.arjanvlek.oxygenupdater.models.UpdateData
 import com.arjanvlek.oxygenupdater.utils.Utils
 import com.arjanvlek.oxygenupdater.utils.performServerRequest
@@ -27,6 +28,7 @@ import org.json.JSONException
 class ServerRepository constructor(
     private val serverApi: ServerApi,
     private val settingsManager: SettingsManager,
+    private val systemVersionProperties: SystemVersionProperties,
     private val newsDatabaseHelper: NewsDatabaseHelper
 ) {
 
@@ -45,6 +47,8 @@ class ServerRepository constructor(
             deviceId,
             updateMethodId,
             incrementalSystemVersion,
+            systemVersionProperties.oxygenOSVersion,
+            systemVersionProperties.osType,
             settingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false),
             BuildConfig.VERSION_NAME
         )
@@ -218,7 +222,8 @@ class ServerRepository constructor(
                 "filename" to filename,
                 "isEuBuild" to settingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false),
                 "appVersion" to BuildConfig.VERSION_NAME,
-                "deviceName" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                "deviceName" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>"),
+                "actualDeviceName" to systemVersionProperties.oxygenDeviceName
             )
         )
     }
@@ -240,7 +245,8 @@ class ServerRepository constructor(
                 "httpCode" to httpCode,
                 "httpMessage" to httpMessage,
                 "appVersion" to BuildConfig.VERSION_NAME,
-                "deviceName" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                "deviceName" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>"),
+                "actualDeviceName" to systemVersionProperties.oxygenDeviceName
             )
         )
     }

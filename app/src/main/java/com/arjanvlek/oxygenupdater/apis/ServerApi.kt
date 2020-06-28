@@ -35,6 +35,8 @@ interface ServerApi {
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
         @Path("incrementalSystemVersion") incrementalSystemVersion: String,
+        @Query("osVersion") osVersion: String,
+        @Query("osType") osType: String,
         @Query("isEuBuild") isEuBuild: Boolean,
         @Query("appVersion") appVersion: String
     ): Response<UpdateData>
