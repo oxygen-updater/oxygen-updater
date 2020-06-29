@@ -1,6 +1,0 @@
-package com.arjanvlek.oxygenupdater.internal.billing
-
-object PK2 {
-    const val B =
-        "4qVqnxYbaTksx7IzG9YCE6ZBXXWmdl+F6kZ1SRdtn2pq30SGHY2M0rr1ufmJUOzOcgZFVCbZMxG6CSYVSuHqESLw2xvFeZLM8NHy1ZiJ5Ze9c5FkkQX9ime2Lxxxck9G48ohyJoV7IJ7mwMMjRzIhV25TQOeFV6Vsh9II9HMLHSe4ZAXAsMU9b9CIePuwoIYzStenWDpZ94fLAD1CYEcTboH1otizQFvWRhyfIakIUE1CX8vFDY19AVGIp1vT8vxo5HaGpDFjDePuIlGy1GbjD8zwIDAQAB"
-}

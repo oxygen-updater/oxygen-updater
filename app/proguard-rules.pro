@@ -27,10 +27,10 @@
 -keep class kotlin.reflect.** { *; }
 
 # We need to keep the method names of all getters and setters to allow Jackson to find them.
--keep class com.arjanvlek.oxygenupdater.models.** { *; }
+-keep class com.oxygenupdater.models.** { *; }
 
-# Removing this results in `java.lang.ClassNotFoundException: Didn't find class "com.arjanvlek.oxygenupdater.internal.settings.SettingsManager"`
--keepnames class com.arjanvlek.oxygenupdater.internal.settings.SettingsManager
+# Removing this results in `java.lang.ClassNotFoundException: Didn't find class "com.oxygenupdater.internal.settings.SettingsManager"`
+-keepnames class com.oxygenupdater.internal.settings.SettingsManager
 
 # Disable the annoying "Parameter specified as non-null is null" exceptions
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {

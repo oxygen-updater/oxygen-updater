@@ -34,11 +34,11 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.arjanvlek.oxygenupdater.R;
 import com.google.android.material.animation.AnimationUtils;
 import com.google.android.material.internal.DescendantOffsetUtils;
 import com.google.android.material.internal.SuperpoweredCollapsingTextHelper;
 import com.google.android.material.internal.ThemeEnforcement;
+import com.oxygenupdater.R;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="com.arjanvlek.oxygenupdater">
+	package="com.oxygenupdater">
 
 	<!-- Networking permissions for fetching update data -->
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -194,7 +194,7 @@
 		</service>
 
 		<!-- Receiver to check auto update installation status at device startup -->
-		<receiver android:name="com.arjanvlek.oxygenupdater.receivers.VerifyInstallationReceiver">
+		<receiver android:name="com.oxygenupdater.receivers.VerifyInstallationReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
