@@ -69,11 +69,7 @@ class NewsActivity : SupportActionBarActivity() {
      * Note: JS is required to load videos and other dynamic content
      */
     @SuppressLint("SetJavaScriptEnabled")
-    private val fetchNewsItemObserver = Observer<NewsItem> { newsItem ->
-        if (isFinishing) {
-            return@Observer
-        }
-
+    private val fetchNewsItemObserver = Observer<NewsItem?> { newsItem ->
         if (newsItem == null || !newsItem.isFullyLoaded) {
             showErrorState()
 
@@ -193,7 +189,11 @@ class NewsActivity : SupportActionBarActivity() {
 
     private fun handleIntent(intent: Intent?) = when {
         intent == null -> false
-        intent.extras != null -> {
+        // This used to be a simple intent.extras != null check.
+        // However, if the URL is clicked outside of the app, Android adds a "browser_id" extra,
+        // which is set to the app's package name. So we need to explicitly check if the extras
+        // we want (NEWS_ITEM_ID) or (DELAY_AD_START) are present.
+        intent.hasExtra(INTENT_NEWS_ITEM_ID) || intent.hasExtra(INTENT_DELAY_AD_START) -> {
             shouldDelayAdStart = intent.getBooleanExtra(
                 INTENT_DELAY_AD_START,
                 false

@@ -11,6 +11,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import com.arjanvlek.oxygenupdater.utils.Logger.logDebug
 
 /**
@@ -30,13 +31,39 @@ class WebViewClient(
     /**
      * [Intent.ACTION_VIEW] should be enough to handle cases of opening page links in the browser,
      * as well as handle custom URL schemes (apps register themselves to handle URIs: e.g. `mailto://`, `reddit://`, `tel://`, etc)
+     *
+     * This API was added in API 23, which is why [shouldOverrideUrlLoading] is also implemented,
+     * so that behaviour remains the same across all API levels.
+     *
+     * See [Issue#129](https://github.com/oxygen-updater/oxygen-updater/issues/129)
      */
     override fun shouldOverrideUrlLoading(
         view: WebView?,
         request: WebResourceRequest?
-    ) = request?.let {
-        context.startActivity(Intent(Intent.ACTION_VIEW, request.url)).let { true }
+    ) = request?.run {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                url
+            )
+        ).let { true }
     } ?: super.shouldOverrideUrlLoading(view, request)
+
+    /**
+     * Used on API 22 and below
+     */
+    @Suppress("DEPRECATION")
+    override fun shouldOverrideUrlLoading(
+        view: WebView?,
+        url: String?
+    ) = url?.run {
+        context.startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                toUri()
+            )
+        ).let { true }
+    } ?: super.shouldOverrideUrlLoading(view, url)
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onReceivedError(

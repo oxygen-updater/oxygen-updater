@@ -23,7 +23,7 @@ class NewsViewModel(
     private val serverRepository: ServerRepository
 ) : ViewModel() {
 
-    private val _newsItem = MutableLiveData<NewsItem>()
+    private val _newsItem = MutableLiveData<NewsItem?>()
     private val _markNewsItemReadResult = MutableLiveData<ServerPostResult>()
 
     private val settingsManager by inject(SettingsManager::class.java)
@@ -46,8 +46,8 @@ class NewsViewModel(
 
     fun fetchNewsItem(
         newsItemId: Long
-    ): LiveData<NewsItem> = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.fetchNewsItem(newsItemId)?.let {
+    ): LiveData<NewsItem?> = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchNewsItem(newsItemId).let {
             _newsItem.postValue(it)
         }
     }.let { _newsItem }
