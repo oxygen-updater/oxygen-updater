@@ -2,12 +2,12 @@ name: Android CI
 on:
   push:
     paths:
-      - '*.gradle'
+      - '*.gradle.kts'
       - '*.properties'
       - app/**
   pull_request:
     paths:
-      - '*.gradle'
+      - '*.gradle.kts'
       - '*.properties'
       - app/**
 
