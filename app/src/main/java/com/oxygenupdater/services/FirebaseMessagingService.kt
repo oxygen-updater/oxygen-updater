@@ -33,15 +33,15 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
                 1800
             ).let {
-                // random.nextInt(from, until) throws an exception if until and from have the same value
+                // random.nextLong(from, until) throws an exception if until and from have the same value
                 if (it == 1) 2 else it
             }
 
             // Receive the notification contents but build/show the actual notification
             // with a small random delay to avoid overloading the server.
-            val displayDelayInSeconds = random.nextInt(
+            val displayDelayInSeconds = random.nextLong(
                 1,
-                serverSpecifiedDelay
+                serverSpecifiedDelay.toLong()
             )
 
             logDebug(TAG, "Displaying push notification in $displayDelayInSeconds second(s)")
@@ -51,6 +51,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             }.toTypedArray()
 
             val oneTimeWorkRequest = OneTimeWorkRequestBuilder<DisplayDelayedNotificationWorker>()
+                .setInitialDelay(displayDelayInSeconds, TimeUnit.SECONDS)
                 .setInputData(workDataOf(*pairs))
                 .setBackoffCriteria(BackoffPolicy.LINEAR, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
                 .build()
