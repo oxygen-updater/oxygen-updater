@@ -339,7 +339,7 @@
 	<string name="news_empty_state_none_available_header">暂时没有文章</string>
 	<string name="news_empty_state_all_read_header">全部读完了</string>
 	<string name="news_empty_state_none_available_text">暂时没有可读的文章，请稍候尝试</string>
-	<string name="news_empty_state_all_read_text"您已阅读所有文章，干得漂亮！\n我们希望您喜欢阅读我们的文章并且能够从中学习到新的知识。\n\n 再次点击横幅即可显示所有新闻文章。</string>
+	<string name="news_empty_state_all_read_text">您已阅读所有文章，干得漂亮！\n我们希望您喜欢阅读我们的文章并且能够从中学习到新的知识。\n\n 再次点击横幅即可显示所有新闻文章。</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">参与共研</string>
