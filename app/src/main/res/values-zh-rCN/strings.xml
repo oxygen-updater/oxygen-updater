@@ -390,7 +390,7 @@
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error"错误</string>
+	<string name="error">错误</string>
 	<string name="icon">图标</string>
 	<string name="loading">加载中…</string>
 	<string name="processing">正在处理…</string>
