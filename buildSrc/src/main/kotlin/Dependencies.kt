@@ -5,7 +5,7 @@ const val KOTLIN_VERSION = "1.3.72"
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
-        const val BUILD_GRADLE_PLUGIN = "4.0.0"
+        const val BUILD_GRADLE_PLUGIN = "4.0.1"
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.3"
         // https://firebase.google.com/support/release-notes/android
@@ -45,7 +45,7 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/browser
         const val BROWSER = "1.2.0"
         // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        const val CONSTRAINT_LAYOUT = "2.0.0-beta7"
+        const val CONSTRAINT_LAYOUT = "2.0.0-beta8"
         // https://developer.android.com/jetpack/androidx/releases/core
         const val KTX_CORE = "1.3.0"
         // https://developer.android.com/jetpack/androidx/releases/fragment
@@ -92,20 +92,20 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
         // https://firebase.google.com/support/release-notes/android
         // https://developers.google.com/admob/android/rel-notes
-        const val FIREBASE_ADS = "19.2.0"
+        const val FIREBASE_ADS = "19.3.0"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_ANALYTICS_KTX = "17.4.3"
+        const val FIREBASE_ANALYTICS_KTX = "17.4.4"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_CRASHLYTICS = "17.1.0"
+        const val FIREBASE_CRASHLYTICS = "17.1.1"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_MESSAGING = "20.2.1"
+        const val FIREBASE_MESSAGING = "20.2.3"
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.11.0"
         // https://developer.android.com/google/play/billing/release-notes
         const val GOOGLE_PLAY_BILLING = "3.0.0"
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.11.0"
+        const val JACKSON_KOTLIN_MODULE = "2.11.1"
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
         const val THREE_TEN_ABP = "1.2.4"
@@ -113,11 +113,11 @@ object Libraries {
         // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
         const val KOIN = "2.1.6"
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.3.7"
+        const val KOTLIN_COROUTINES = "1.3.8"
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.2.0-beta01"
+        const val MATERIAL = "1.2.0-rc01"
         // https://square.github.io/okhttp/changelog/
-        const val OKHTTP_LOGGING_INTERCEPTOR = "4.7.2"
+        const val OKHTTP_LOGGING_INTERCEPTOR = "4.8.0"
         // https://developer.android.com/reference/com/google/android/play/core/release-notes
         const val PLAY_CORE = "1.7.3"
         // https://developers.google.com/android/guides/releases
