@@ -47,7 +47,7 @@
 	<string name="download_error">Fout tijdens downloaden</string>
 	<string name="download_error_close">SLUITEN</string>
 	<string name="download_error_corrupt">De gedownloade update is beschadigd! Probeer de update opnieuw te downloaden.</string>
-	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controlleer je verbinding en probeer de update opnieuw te downloaden.</string>
+	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controleer je verbinding en probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
 	<string name="download_error_unsuccessful_response"><![CDATA[Het lijkt erop dat de download link niet geldig is. Dit komt omdat we een fout gemaakt hebben met het toevoegen van de update, of omdat OnePlus de update heeft teruggetrokken van hun servers. Er is een notificatie verzonden naar het team, en we zullen er zo snel mogelijk naar kijken.
 
