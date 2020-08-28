@@ -421,7 +421,12 @@ Cliquez sur « Installation » afin de savoir comment faire. Appuyez sur « S
 	<string name="unsupported_os_warning_message">"Il semblerait que votre appareil ne fonctionne pas sous OxygenOS. Veuillez noter que vous pouvez installer les mises à jour systèmes seulement sur les appareils fonctionnant sous OxygenOS.
 
 Les autres appareils, incluant les appareils OnePlus fonctionnant sous des roms custom ne sont pas compatibles."</string>
-	<string name="unsupported_device_warning_checkbox_title">"Ne plus montrer ce message"</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="incorrect_device_warning_title">Selected device mismatch</string>
+	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+
+	<string name="device_warning_checkbox_title">"Ne plus montrer ce message"</string>
 	<string name="root_check_title">"Accès root"</string>
 	<string name="root_check_message">"Oxygen Updater offre la possibilité d'installer automatiquement les mise à jour d'OxygenOS pour les utilisateurs ayant un appareil rooté. Cependant, les mises à jour incrémentales ne sont pas disponibles pour ces derniers. Oxygen Updater peut vérifier si vous avez un accès root afin d'offrir une méthode de mise à jour appropriée.
 

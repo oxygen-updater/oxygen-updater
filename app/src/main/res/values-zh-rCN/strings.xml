@@ -362,7 +362,12 @@
 	<string name="carrier_exclusive_device_warning_message">似乎您正在使用运营商合约机。尽管您使用的依然是 OxygenOS，但您并不能安装更新。运营商通常会锁定设备，以防用户在未经运营商允许的情况下更新或修改固件。对于美国的运营商来说这十分正常，并且“系统更新”中的“本地升级”也被移除了。如果您想要自行安装更新，这个选项是十分重要的，哪怕您不使用这个应用。不幸的是，我们对此也无能为力，无论是从技术上还是法律上都不可能做到。但是您可以通过邮件或 Discord 与我们联系以获取更多信息。</string>
 	<string name="unsupported_device_warning_message">恭喜您您使用全新的 OnePlus 设备！ 不幸的是，我们尚未添加对此设备的支持。 不过请放心，我们会尽快添加它。 我们不喜欢犯错误，所以验证和测试对新设备的支持是一个很耗时的过程，请您耐心等待。 如果您想为我们提供帮助，请向我们发送邮件或加入我们的 Discord 服务器，亦或是在我们发布包含您的设备支持的新版应用程序时得到通知。</string>
 	<string name="unsupported_os_warning_message">您的设备好像并没有使用 OxygenOS。请注意，您只能在运行 OxygenOS 的设备上安装系统更新。\n不仅不支持其他非 OnePlus 设备，也不支持运行第三方 ROM 的 OnePlus 设备。</string>
-	<string name="unsupported_device_warning_checkbox_title">不再显示此警告</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="incorrect_device_warning_title">Selected device mismatch</string>
+	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+
+	<string name="device_warning_checkbox_title">不再显示此警告</string>
 
 	<string name="root_check_title">Root 权限</string>
 	<string name="root_check_message">Oxygen 更新器为具有 Root 权限的用户提供简单，自动的更新安装方式。\n但是，增量更新不适用于有 Root 的设备。Oxygen 更新器可以检查您是否具有 Root 权限，以提供适当的更新方法。\n如果您的设备拥有 Root 权限，请在关闭此消息后允许 Oxygen 更新器获取 Root 权限。\n没有 Root 权限？那么请直接点击关闭继续安装。</string>

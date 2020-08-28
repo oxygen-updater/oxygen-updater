@@ -422,7 +422,12 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 	<string name="unsupported_os_warning_message">"Čini se da vaš uređaj ne koristi OxygenOS. Molimo zapamtite da ažuriranja možete instalirati jedino na uređajima koji koriste OxygenOS.
 
 Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."</string>
-	<string name="unsupported_device_warning_checkbox_title">"Nemoj više pokazivati ovo upozorenje"</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="incorrect_device_warning_title">Selected device mismatch</string>
+	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+
+	<string name="device_warning_checkbox_title">"Nemoj više pokazivati ovo upozorenje"</string>
 	<string name="root_check_title">"Root pristup"</string>
 	<string name="root_check_message">"@"</string>
 

@@ -91,7 +91,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
         super.setupRecyclerView(data, initialSelectedIndex) {
             onboardingViewModel.updateSelectedUpdateMethod(it as UpdateMethod)
 
-            if (checkPlayServices(activity, false)) {
+            if (checkPlayServices(requireActivity(), false)) {
                 // Subscribe to notifications for the newly selected device and update method
                 onboardingViewModel.subscribeToNotificationTopics()
             } else {

@@ -118,6 +118,7 @@ class SettingsManager {
         const val PROPERTY_ADVANCED_MODE = "advanced_mode"
         const val PROPERTY_SETUP_DONE = "setup_done"
         const val PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings"
+        const val PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS = "ignore_incorrect_device_warnings"
         const val PROPERTY_DOWNLOAD_BYTES_DONE = "download_bytes_done"
         const val PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs" // Value cannot be changed - is from older version where it was called 'upload_logs'
         const val PROPERTY_ADDITIONAL_ZIP_FILE_PATH = "additional_zip_file_path"

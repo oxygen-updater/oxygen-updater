@@ -129,6 +129,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
 
             if (showDeviceWarningDialog && !deviceOsSpec.isDeviceOsSpecSupported) {
                 displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
+            } else {
+                val (isMismatch, savedDeviceName, actualDeviceName) = Utils.checkDeviceMismatch(this, deviceList)
+                if (isMismatch) {
+                    displayIncorrectDeviceSelectedMessage(savedDeviceName, actualDeviceName)
+                }
             }
 
             // subscribe to notification topics
@@ -424,11 +429,29 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             .setTitle(getString(R.string.unsupported_device_warning_title))
             .setMessage(getString(resourceId))
             .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
-                val checkbox = checkBoxView.findViewById<CheckBox>(R.id.unsupported_device_warning_checkbox)
+                val checkbox = checkBoxView.findViewById<CheckBox>(R.id.device_warning_checkbox)
                 settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkbox.isChecked)
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
+    }
+
+    fun displayIncorrectDeviceSelectedMessage(savedDeviceName: String, actualDeviceName: String) {
+        // Do not show dialog if app was already exited upon receiving of devices from the server.
+        if (isFinishing) {
+            return
+        }
+
+        val checkBoxView = View.inflate(this@MainActivity, R.layout.message_dialog_checkbox, null)
+
+        MaterialAlertDialogBuilder(this)
+            .setView(checkBoxView)
+            .setTitle(getString(R.string.incorrect_device_warning_title))
+            .setMessage(getString(R.string.incorrect_device_warning_message, savedDeviceName, actualDeviceName))
+            .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
+                val checkbox = checkBoxView.findViewById<CheckBox>(R.id.device_warning_checkbox)
+                settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, checkbox.isChecked)
+                dialog.dismiss()
+            }.show()
     }
 
     fun requestDownloadPermissions(callback: KotlinCallback<Boolean>) {

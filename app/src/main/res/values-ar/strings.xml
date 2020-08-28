@@ -350,7 +350,12 @@ Instructions:
 	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
 	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
 	<string name="unsupported_os_warning_message">يبدو أن جهازك لا يعمل بنظام التشغيل أكسجين. يرجى ملاحظة أنه يمكنك فقط تثبيت تحديثات النظام على الأجهزة التي تعمل بنظام التشغيل أكسجين.\n\nأي أجهزة أخرى، بما في ذلك أجهزة ون بلس التي تقوم بتشغيل أنظمة معدلة غير مدعومة.</string>
-	<string name="unsupported_device_warning_checkbox_title">لا تظهر هذا التحذير مرة أخرى</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="incorrect_device_warning_title">Selected device mismatch</string>
+	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+
+	<string name="device_warning_checkbox_title">لا تظهر هذا التحذير مرة أخرى</string>
 	<string name="root_check_title">الوصول إلى الروت</string>
 	<string name="root_check_message">يوفر Oxygen Updater عمليات تثبيت سهلة وآلية للمستخدمين الذين لديهم أجهزة ذات روت. ومع ذلك، لا تتوفر تحديثات تدريجية للأجهزة التي تم إجراء روت لها. يستطيع Oxygen Updater التحقق مما إذا كان لديك روت لتقديم طرق التحديث المناسبة فقط.\n\n إذا كان لديك روت، فإسمح لـ Oxygen Updater بالحصول على تصريح للوصول إلى الروت بعد إغلاق هذه الرسالة.\n\nلا تملك روت؟ إذاً إضغط على \"إغلاق\" وتابع إستخدام التطبيق.</string>
 

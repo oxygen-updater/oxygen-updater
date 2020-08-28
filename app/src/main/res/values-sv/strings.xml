@@ -422,7 +422,12 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="unsupported_os_warning_message">"Det verkar som din enhet inte har OxygenOS installerat. Du kan enbart installera system uppdateringar på enheter som har OxygenOS installerat.
 
 Andra enheter samt OnePlus enheter som har \"Custom ROMs\" installerade är inte stöttade av appen."</string>
-	<string name="unsupported_device_warning_checkbox_title">"Visa inte denna varning igen"</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="incorrect_device_warning_title">Selected device mismatch</string>
+	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+
+	<string name="device_warning_checkbox_title">"Visa inte denna varning igen"</string>
 	<string name="root_check_title">"Rootåtkomst"</string>
 	<string name="root_check_message">"Oxygen Updater erbjuder enkla, automatiska uppdateringsinstallationer för användare med rootade enheter. inkrementella uppdateringar är emellertid inte tillgängliga för rootade enheter. Oxygen Updater kan kontrollera om du har root-åtkomst för att bara erbjuda lämpliga uppdateringsmetoder.
 

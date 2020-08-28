@@ -260,8 +260,8 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
         MaterialAlertDialogBuilder(this)
             .setTitle(getString(R.string.unsupported_device_warning_title))
-            .setPositiveButton(getString(R.string.download_error_close)) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
             .setMessage(getString(resourceId))
+            .setPositiveButton(getString(R.string.download_error_close)) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
             .show()
     }
 

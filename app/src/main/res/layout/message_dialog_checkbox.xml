@@ -6,8 +6,8 @@
 	android:padding="@dimen/spacing_default">
 
 	<CheckBox
-		android:id="@+id/unsupported_device_warning_checkbox"
+		android:id="@+id/device_warning_checkbox"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/unsupported_device_warning_checkbox_title" />
+		android:text="@string/device_warning_checkbox_title" />
 </LinearLayout>

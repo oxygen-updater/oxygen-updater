@@ -462,7 +462,12 @@ Wahlen sie \"Installieren\" zum Installieren des Update. Wahlen sie \"Löschen\"
 	<string name="unsupported_os_warning_message">"It looks like your device is not running OxygenOS. Please note that you can only install system updates on devices running OxygenOS.
 
 Other devices, including OnePlus devices running Custom ROMs, are not supported."</string>
-	<string name="unsupported_device_warning_checkbox_title">"Zeige diesen Warnhinweis nicht mehr "</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="incorrect_device_warning_title">Selected device mismatch</string>
+	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+
+	<string name="device_warning_checkbox_title">"Zeige diesen Warnhinweis nicht mehr "</string>
 	<string name="root_check_title">"Root Zugriff"</string>
 
 	<!-- Fuzzy -->

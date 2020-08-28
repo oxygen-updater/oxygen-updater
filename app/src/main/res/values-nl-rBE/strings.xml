@@ -154,7 +154,7 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="onboarding_page_2_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? Kies dan hierboven je apparaat.</string>
 
 	<string name="onboarding_page_3_title">Kies je update-methode</string>
-	<string name="onboarding_page_3_caption">De Incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een bèta-versie van OxygenOS? Kies dan voor de Open bèta.</string>
+	<string name="onboarding_page_3_caption">De Incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een bèta-versie van OxygenOS? Kies dan voor de Open Bèta.</string>
 
 	<string name="onboarding_page_4_title">Klaar!</string>
 	<string name="onboarding_page_4_text">Veel plezier met het gebruik van Oxygen Updater!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\". </string>
@@ -363,7 +363,12 @@ Instructies:
 	<string name="carrier_exclusive_device_warning_message">Het lijkt erop dat je een provider-exclusief apparaat gebruikt. Zelfs als je OxygenOS draait, dan heb je alsnog niet de mogelijkheid om updates te installeren. Providers vergrendelen het apparaat zodat gebruikers geen wijzigingen kunnen aanbrengen zonder toestemming van de provider. Dit is gebruikelijk in de VS: de "Lokale Upgrade" optie is verwijderd uit de provider-exclusieve versies van OxygenOS. Deze optie is nodig om zelf-gedownloade updates te installeren, zelfs als je deze app niet gebruikt. Helaas kunnen wij hier niets aan doen, omdat we technisch en mogelijk legaal gezien hierin gelimiteerd zijn. Je kunt ons een email sturen of ons op Discord vinden voor meer informatie.</string>
 	<string name="unsupported_device_warning_message">Gefeliciteerd met je nieuwe OnePlus apparaat! Helaas hebben we nog geen ondersteuning toegevoegd voor dit apparaat. Maar geen zorgen, we zullen zo snel mogelijk ondersteuning voor dit apparaat toevoegen. We houden er niet van om fouten te maken, en het is een tijdrovend proces om de werking van de ondersteuning te kunnen garanderen voor nieuwe apparaten, dus wacht a.u.b rustig af. Stuur ons een email of neem deel aan onze Discord server als je ons wil helpen, of om notificaties te krijgen van over app-updates die ondersteuning bieden voor jouw apparaat.</string>
 	<string name="unsupported_os_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan.\n\nAndere apparaten, waaronder OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
-	<string name="unsupported_device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
+
+	<!-- TODO: translate these 2 strings below -->
+	<string name="incorrect_device_warning_title">Selected device mismatch</string>
+	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+
+	<string name="device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
 
 	<string name="root_check_title">Root-toegang</string>
 	<string name="root_check_message">Oxygen Updater biedt eenvoudige, automatische update-installaties voor gebruikers met root-toegang. Maar: de incrementele updates werken niet als je root-toegang hebt. Oxygen Updater kan op root-toegang controleren om de juiste-update-methode(s) aan te bieden.\n\nAls je root-toegang hebt, geef dan na het sluiten van deze melding toestemming voor het gebruik van root-toegang.\n\nGeen root-toegang? Druk dan op \"Sluiten\" om verder te gaan met het instellen van de app.</string>

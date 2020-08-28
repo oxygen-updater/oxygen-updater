@@ -71,7 +71,7 @@ object Utils {
      *
      * @return Returns if the Google Play Services are installed.
      */
-    fun checkPlayServices(activity: Activity?, showErrorIfMissing: Boolean): Boolean {
+    fun checkPlayServices(activity: Activity, showErrorIfMissing: Boolean): Boolean {
         logVerbose(TAG, "Executing Google Play Services check...")
 
         val googleApiAvailability = GoogleApiAvailability.getInstance()
@@ -83,7 +83,7 @@ object Utils {
                     activity,
                     resultCode,
                     PLAY_SERVICES_RESOLUTION_REQUEST
-                ).show()
+                )?.show()
             } else {
                 exitProcess(0)
             }
@@ -148,6 +148,22 @@ object Utils {
             // note: the device may very well be a OnePlus device, but in this case it's running a custom ROM, which we don't support duh
             UNSUPPORTED_OS
         }
+    }
+
+    fun checkDeviceMismatch(context: Context, devices: List<Device>?): Triple<Boolean, String, String> {
+        var actualDeviceName = context.getString(R.string.device_information_unknown)
+        val savedDeviceName = settingsManager.getPreference(
+            SettingsManager.PROPERTY_DEVICE,
+            actualDeviceName
+        )
+
+        val matchedDevice = devices?.find {
+            it.productNames.contains(systemVersionProperties.oxygenDeviceName)
+        }
+
+        actualDeviceName = matchedDevice?.name ?: actualDeviceName
+
+        return Triple(savedDeviceName != actualDeviceName, savedDeviceName, actualDeviceName)
     }
 
     fun formatDateTime(context: Context, dateTimeString: String?): String? {
