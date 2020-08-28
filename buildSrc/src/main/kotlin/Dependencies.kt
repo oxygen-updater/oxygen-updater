@@ -1,6 +1,9 @@
 // https://blog.jetbrains.com/kotlin/category/releases/
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-const val KOTLIN_VERSION = "1.3.72"
+const val KOTLIN_VERSION = "1.4.0"
+// https://doc.insert-koin.io/#/setup/index
+// https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
+const val KOIN_VERSION = "2.1.6"
 
 object BuildPlugins {
     private object Versions {
@@ -9,7 +12,7 @@ object BuildPlugins {
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.3"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_GRADLE_PLUGIN = "2.2.0"
+        const val FIREBASE_GRADLE_PLUGIN = "2.2.1"
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
@@ -41,13 +44,13 @@ object AndroidSdk {
 object AndroidXLibraries {
     private object Versions {
         // https://developer.android.com/jetpack/androidx/releases/appcompat
-        const val APP_COMPAT = "1.1.0"
+        const val APP_COMPAT = "1.2.0"
         // https://developer.android.com/jetpack/androidx/releases/browser
         const val BROWSER = "1.2.0"
         // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        const val CONSTRAINT_LAYOUT = "2.0.0-beta8"
+        const val CONSTRAINT_LAYOUT = "2.0.0"
         // https://developer.android.com/jetpack/androidx/releases/core
-        const val KTX_CORE = "1.3.0"
+        const val KTX_CORE = "1.3.1"
         // https://developer.android.com/jetpack/androidx/releases/fragment
         const val KTX_FRAGMENT = "1.2.5"
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
@@ -55,7 +58,7 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/preference
         const val KTX_PREFERENCE = "1.1.1"
         // https://developer.android.com/jetpack/androidx/releases/work
-        const val KTX_WORK = "2.3.4"
+        const val KTX_WORK = "2.4.0"
         // https://developer.android.com/jetpack/androidx/releases/recyclerview
         const val RECYCLER_VIEW = "1.1.0"
     }
@@ -94,34 +97,31 @@ object Libraries {
         // https://developers.google.com/admob/android/rel-notes
         const val FIREBASE_ADS = "19.3.0"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_ANALYTICS_KTX = "17.4.4"
+        const val FIREBASE_ANALYTICS_KTX = "17.5.0"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_CRASHLYTICS = "17.1.1"
+        const val FIREBASE_CRASHLYTICS = "17.2.1"
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_MESSAGING = "20.2.3"
+        const val FIREBASE_MESSAGING = "20.2.4"
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.11.0"
         // https://developer.android.com/google/play/billing/release-notes
         const val GOOGLE_PLAY_BILLING = "3.0.0"
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.11.1"
+        const val JACKSON_KOTLIN_MODULE = "2.11.2"
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
         const val THREE_TEN_ABP = "1.2.4"
-        // https://doc.insert-koin.io/#/setup/index
-        // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-        const val KOIN = "2.1.6"
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.3.8"
+        const val KOTLIN_COROUTINES = "1.3.9"
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.2.0-rc01"
+        const val MATERIAL = "1.2.0"
         // https://square.github.io/okhttp/changelog/
-        const val OKHTTP_LOGGING_INTERCEPTOR = "4.8.0"
+        const val OKHTTP_LOGGING_INTERCEPTOR = "4.8.1"
         // https://developer.android.com/reference/com/google/android/play/core/release-notes
-        const val PLAY_CORE = "1.7.3"
+        const val PLAY_CORE = "1.8.0"
         // https://developers.google.com/android/guides/releases
-        const val PLAY_SERVICES_BASE = "17.3.0"
+        const val PLAY_SERVICES_BASE = "17.4.0"
         // https://github.com/square/retrofit/releases
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
         const val RETROFIT = "2.9.0"
@@ -129,7 +129,6 @@ object Libraries {
         const val ROOM = "2.2.5"
     }
 
-    const val KOTLIN_STDLIB_JDK8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$KOTLIN_VERSION"
     // https://github.com/Kotlin/kotlinx.coroutines/releases
     const val KOTLIN_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
     const val KOTLIN_COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES}"
@@ -163,10 +162,10 @@ object Libraries {
     // Koin for Android
     // https://doc.insert-koin.io/#/setup/index
     // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-    const val KOIN = "org.koin:koin-android:${Versions.KOIN}"
-    const val KOIN_FRAGMENT = "org.koin:koin-androidx-fragment:${Versions.KOIN}"
-    const val KOIN_SCOPE = "org.koin:koin-androidx-scope:${Versions.KOIN}"
-    const val KOIN_VIEWMODEL = "org.koin:koin-androidx-viewmodel:${Versions.KOIN}"
+    const val KOIN = "org.koin:koin-android:${KOIN_VERSION}"
+    const val KOIN_FRAGMENT = "org.koin:koin-androidx-fragment:${KOIN_VERSION}"
+    const val KOIN_SCOPE = "org.koin:koin-androidx-scope:${KOIN_VERSION}"
+    const val KOIN_VIEWMODEL = "org.koin:koin-androidx-viewmodel:${KOIN_VERSION}"
 
     // https://square.github.io/okhttp/changelog/
     const val OKHTTP_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_LOGGING_INTERCEPTOR}"
@@ -206,9 +205,6 @@ object TestLibraries {
         const val JUNIT_EXT = "1.1.1"
         // https://github.com/junit-team/junit4/releases
         const val JUNIT4 = "4.13"
-        // https://doc.insert-koin.io/#/setup/index
-        // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-        const val KOIN = "2.1.6"
         // https://developer.android.com/jetpack/androidx/releases/test
         const val RULES = "1.2.0"
         const val RUNNER = "1.2.0"
@@ -223,7 +219,7 @@ object TestLibraries {
 
     // https://doc.insert-koin.io/#/setup/index
     // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-    const val KOIN_TEST = "org.koin:koin-test:${Versions.KOIN}"
+    const val KOIN_TEST = "org.koin:koin-test:${KOIN_VERSION}"
 
     // https://developer.android.com/jetpack/androidx/releases/annotation
     const val ANNOTATION = "androidx.annotation:annotation:${Versions.ANNOTATION}"

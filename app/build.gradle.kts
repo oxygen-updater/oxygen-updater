@@ -176,7 +176,6 @@ repositories {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    implementation(Libraries.KOTLIN_STDLIB_JDK8)
     implementation(Libraries.KOTLIN_COROUTINES_CORE)
     implementation(Libraries.KOTLIN_COROUTINES_ANDROID)
 
