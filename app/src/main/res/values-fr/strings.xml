@@ -422,9 +422,8 @@ Cliquez sur « Installation » afin de savoir comment faire. Appuyez sur « S
 
 Les autres appareils, incluant les appareils OnePlus fonctionnant sous des roms custom ne sont pas compatibles."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="incorrect_device_warning_title">Selected device mismatch</string>
-	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+	<string name="incorrect_device_warning_title">Appareil incorrect sélectionné</string>
+	<string name="incorrect_device_warning_message">Il semblerait que vous ayez sélectionné le mauvais appareil : \"%1$s\" au lieu de \"%2$s\". Changez votre sélection dans les réglages de l\'application afin de pouvoir continuer à recevoir des mises à jour et notifications pour le bon appareil.</string>
 
 	<string name="device_warning_checkbox_title">"Ne plus montrer ce message"</string>
 	<string name="root_check_title">"Accès root"</string>
