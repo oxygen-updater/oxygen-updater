@@ -11,6 +11,7 @@ import com.android.billingclient.api.Purchase
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.OnPurchaseFinishedListener
+import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.billing.AdFreeUnlock
 import com.oxygenupdater.models.billing.AugmentedSkuDetails
@@ -19,6 +20,7 @@ import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.java.KoinJavaComponent
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -29,21 +31,35 @@ class BillingViewModel(
     private val serverRepository: ServerRepository
 ) : AndroidViewModel(application) {
 
-    val adFreeUnlockLiveData: LiveData<AdFreeUnlock?>
-    val inappSkuDetailsListLiveData: LiveData<List<AugmentedSkuDetails>>
-    val pendingPurchasesLiveData: LiveData<Purchase>
+    private val settingsManager by KoinJavaComponent.inject(SettingsManager::class.java)
+
     val purchaseStateChangeLiveData: LiveData<Unit>
+    val pendingPurchasesLiveData: LiveData<Purchase>
+    val inappSkuDetailsListLiveData: LiveData<List<AugmentedSkuDetails>>
+    val adFreeUnlockLiveData: LiveData<AdFreeUnlock?>
 
     init {
         billingRepository.startDataSourceConnections()
 
-        adFreeUnlockLiveData = billingRepository.adFreeUnlockLiveData
         inappSkuDetailsListLiveData = billingRepository.inappSkuDetailsListLiveData
 
+        // Clients need to observe this LiveData so that internal logic is guaranteed to run
+        adFreeUnlockLiveData = Transformations.map(
+            billingRepository.adFreeUnlockLiveData
+        ) {
+            // Save, because we can guarantee that the device is online and that the purchase check has succeeded
+            settingsManager.savePreference(
+                SettingsManager.PROPERTY_AD_FREE,
+                it?.entitled == true
+            ).run { it }
+        }
+
+        // Clients need to observe this LiveData so that internal logic is guaranteed to run
         pendingPurchasesLiveData = Transformations.map(
             billingRepository.pendingPurchasesLiveData
         ) { purchases -> logPendingPurchase(purchases) }
 
+        // Clients need to observe this LiveData so that internal logic is guaranteed to run
         purchaseStateChangeLiveData = Transformations.map(
             billingRepository.purchaseStateChangeLiveData
         ) { logPurchaseStateChange(it) }

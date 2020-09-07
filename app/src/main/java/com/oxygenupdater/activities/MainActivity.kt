@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         billingViewModel.adFreeUnlockLiveData.observe(this) {
             // If it's null, user has not bought the ad-free unlock
             // Thus, ads should be shown
-            setupAds(it == null)
+            setupAds(it?.entitled == false)
         }
 
         mainViewModel.maybeCheckForAppUpdate().observe(

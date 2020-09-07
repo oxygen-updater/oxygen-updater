@@ -208,6 +208,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         )
 
         // no-op observe because the actual work is being done in BillingViewModel
+        billingViewModel.adFreeUnlockLiveData.observe(viewLifecycleOwner) { }
+
+        // no-op observe because the actual work is being done in BillingViewModel
         billingViewModel.purchaseStateChangeLiveData.observe(viewLifecycleOwner) { }
     }
 
@@ -230,9 +233,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             PurchaseStatus.AVAILABLE -> {
                 logDebug(TAG, "IAB: Product has not yet been purchased")
 
-                // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-                settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
-
                 // Available
                 adFreePreference.isEnabled = true
                 adFreePreference.summary = mContext.getString(R.string.settings_buy_button_buy, augmentedSkuDetails!!.price)
@@ -243,9 +243,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             }
             PurchaseStatus.ALREADY_BOUGHT -> {
                 logDebug(TAG, "IAB: Product has already been purchased")
-
-                // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-                settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
 
                 // Already bought
                 adFreePreference.isEnabled = false
@@ -526,11 +523,13 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 BillingResponseCode.USER_CANCELED -> {
                     logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
                     setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
+                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
                 else -> {
                     logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow: $responseCode")
                     Toast.makeText(mContext, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
                     setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
+                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
             }
         }
