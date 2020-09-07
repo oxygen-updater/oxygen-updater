@@ -5,10 +5,10 @@ import android.app.Application
 import androidx.annotation.UiThread
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.enums.PurchaseType
-import com.oxygenupdater.extensions.getDistinct
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.OnPurchaseFinishedListener
 import com.oxygenupdater.models.ServerPostResult
@@ -31,14 +31,22 @@ class BillingViewModel(
 
     val adFreeUnlockLiveData: LiveData<AdFreeUnlock?>
     val inappSkuDetailsListLiveData: LiveData<List<AugmentedSkuDetails>>
-    val pendingPurchasesLiveData: LiveData<Set<Purchase>>
+    val pendingPurchasesLiveData: LiveData<Purchase>
+    val purchaseStateChangeLiveData: LiveData<Unit>
 
     init {
         billingRepository.startDataSourceConnections()
 
-        adFreeUnlockLiveData = billingRepository.adFreeUnlockLiveData.getDistinct()
-        inappSkuDetailsListLiveData = billingRepository.inappSkuDetailsListLiveData.getDistinct()
-        pendingPurchasesLiveData = billingRepository.pendingPurchasesLiveData.getDistinct()
+        adFreeUnlockLiveData = billingRepository.adFreeUnlockLiveData
+        inappSkuDetailsListLiveData = billingRepository.inappSkuDetailsListLiveData
+
+        pendingPurchasesLiveData = Transformations.map(
+            billingRepository.pendingPurchasesLiveData
+        ) { purchases -> logPendingPurchase(purchases) }
+
+        purchaseStateChangeLiveData = Transformations.map(
+            billingRepository.purchaseStateChangeLiveData
+        ) { logPurchaseStateChange(it) }
     }
 
     /**
@@ -86,6 +94,43 @@ class BillingViewModel(
         ).let {
             withContext(Dispatchers.Main) {
                 callback.invoke(it)
+            }
+        }
+    }
+
+    /**
+     * Updates the server with information about the pending purchase, and returns
+     * the pending purchase object so that other LiveData observers can act on it
+     */
+    private fun logPendingPurchase(purchases: Set<Purchase>): Purchase? {
+        val pendingAdFreeUnlockPurchase = purchases.find {
+            it.sku == BillingRepository.Sku.AD_FREE
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            purchases.forEach {
+                serverRepository.verifyPurchase(
+                    it,
+                    null,
+                    PurchaseType.AD_FREE
+                )
+            }
+        }
+
+        return pendingAdFreeUnlockPurchase
+    }
+
+    /**
+     * Updates the server with information about any purchase state changes
+     */
+    private fun logPurchaseStateChange(purchases: Set<Purchase>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            purchases.forEach {
+                serverRepository.verifyPurchase(
+                    it,
+                    null,
+                    PurchaseType.AD_FREE
+                )
             }
         }
     }

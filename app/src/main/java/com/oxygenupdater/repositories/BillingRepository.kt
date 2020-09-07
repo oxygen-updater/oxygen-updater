@@ -1,13 +1,12 @@
 package com.oxygenupdater.repositories
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
-import android.os.Build
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -35,6 +34,7 @@ import com.oxygenupdater.internal.billing.Security
 import com.oxygenupdater.internal.billing.Security.verifyPurchase
 import com.oxygenupdater.models.billing.AdFreeUnlock
 import com.oxygenupdater.models.billing.AugmentedSkuDetails
+import com.oxygenupdater.models.billing.CachedPurchase
 import com.oxygenupdater.models.billing.Entitlement
 import com.oxygenupdater.repositories.BillingRepository.Sku.ALL_SKUS
 import com.oxygenupdater.repositories.BillingRepository.Sku.CONSUMABLE_SKUS
@@ -92,18 +92,32 @@ class BillingRepository constructor(
      */
     private lateinit var playStoreBillingClient: BillingClient
 
+    private val purchaseDao by lazy {
+        localCacheBillingClient.purchaseDao()
+    }
+
+    private val entitlementsDao by lazy {
+        localCacheBillingClient.entitlementsDao()
+    }
+
+    private val skuDetailsDao by lazy {
+        localCacheBillingClient.skuDetailsDao()
+    }
+
+    private val _purchaseStateChangeLiveData = MutableLiveData<Set<Purchase>>()
+    val purchaseStateChangeLiveData: LiveData<Set<Purchase>>
+        get() = Transformations.distinctUntilChanged(_purchaseStateChangeLiveData)
+
+    private val _pendingPurchasesLiveData = MutableLiveData<Set<Purchase>>()
+    val pendingPurchasesLiveData: LiveData<Set<Purchase>>
+        get() = Transformations.distinctUntilChanged(_pendingPurchasesLiveData)
+
     /**
      * This list tells clients what in-app products are available for sale
      */
     val inappSkuDetailsListLiveData by lazy {
-        localCacheBillingClient.skuDetailsDao().getInappSkuDetails()
+        Transformations.distinctUntilChanged(skuDetailsDao.getInappSkuDetails())
     }
-
-    private val _pendingPurchasesLiveData = MutableLiveData<Set<Purchase>>()
-    val pendingPurchasesLiveData: LiveData<Set<Purchase>>
-        get() = _pendingPurchasesLiveData
-
-    var purchaseFinishedCallback: OnPurchaseFinishedListener? = null
 
     // START list of each distinct item user may own (i.e. entitlements)
 
@@ -122,7 +136,7 @@ class BillingRepository constructor(
      *    val purchasesLiveData: LiveData<Set<CachedPurchase>>
      *        by lazy {
      *            queryPurchases()
-     *             return localCacheBillingClient.purchaseDao().getPurchases()//assuming liveData
+     *             return purchaseDao.getPurchases()//assuming liveData
      *       }
      * ```
      *
@@ -144,8 +158,10 @@ class BillingRepository constructor(
      * [queryPurchases] for you; so no need.
      */
     val adFreeUnlockLiveData by lazy {
-        localCacheBillingClient.entitlementsDao().getAdFreeUnlock()
+        Transformations.distinctUntilChanged(entitlementsDao.getAdFreeUnlock())
     }
+
+    var purchaseFinishedCallback: OnPurchaseFinishedListener? = null
 
     // END list of each distinct item user may own (i.e. entitlements)
 
@@ -254,7 +270,7 @@ class BillingRepository constructor(
      * the [BillingViewModel] successfully establishes connection with the Play [BillingClient]:
      * the call comes through [onBillingSetupFinished]. Recall also from Figure 4 that this method
      * gets called from inside [onPurchasesUpdated] in the event that a purchase is "already
-     * owned," which can happen if a user buys the item around the same time
+     * owned", which can happen if a user buys the item around the same time
      * on a different device.
      */
     @UiThread
@@ -274,7 +290,6 @@ class BillingRepository constructor(
         processPurchases(purchasesResult)
     }
 
-
     /**
      * Can be called either from the [queryPurchases] or the [onPurchasesUpdated] chain.
      *
@@ -286,22 +301,64 @@ class BillingRepository constructor(
         logDebug(TAG, "[processPurchases] purchasesResult: $purchases")
 
         val validPurchases = HashSet<Purchase>(purchases.size)
-        val pendingPurchases = HashSet<Purchase>()
+        val pendingPurchases = HashSet<Purchase>(purchases.size)
         purchases.forEach {
-            if (it.purchaseState == PurchaseState.PURCHASED) {
-                if (isSignatureValid(it)) {
+            when (it.purchaseState) {
+                PurchaseState.PURCHASED -> if (isSignatureValid(it)) {
                     validPurchases.add(it)
                 }
-            } else if (it.purchaseState == PurchaseState.PENDING) {
-                logDebug(
-                    TAG,
-                    "[processPurchases] received a pending purchase of SKU: ${it.sku}"
-                )
+                PurchaseState.PENDING -> {
+                    logDebug(
+                        TAG,
+                        "[processPurchases] received a pending purchase of SKU: ${it.sku}"
+                    )
 
-                if (isSignatureValid(it)) {
-                    pendingPurchases.add(it)
+                    if (isSignatureValid(it)) {
+                        pendingPurchases.add(it)
+                    }
                 }
             }
+        }
+
+        if (validPurchases.isNotEmpty() || pendingPurchases.isNotEmpty()) {
+            /**
+             * As is being done in this sample, for extra reliability you may store the
+             * receipts/purchases to a your own remote/local database for until after you
+             * disburse entitlements. That way if the Google Play Billing library fails at any
+             * given point, you can independently verify whether entitlements were accurately
+             * disbursed. In this sample, the receipts are then removed upon entitlement
+             * disbursement.
+             */
+
+            val existingPurchases = purchaseDao.getPurchases()
+            val updatedPurchases = HashSet<Purchase>(purchases.size)
+            logDebug(TAG, "[processPurchases] ${existingPurchases.size} purchases in the local db")
+
+            /**
+             * Inserts multiple [Purchases][Purchase], if they don't already exist in the DB.
+             * This is done to avoid any potential bugs due to duplicate purchases being stored. Even if the app
+             * supports consumable products in the future (i.e. the user can buy the same product multiple times),
+             * no two [Purchase] objects can ever be the exact same unless they're the exact same purchase.
+             */
+            (validPurchases + pendingPurchases).forEach { purchase ->
+                val existingPurchase = existingPurchases.find {
+                    it.data.orderId == purchase.orderId
+                }
+
+                if (existingPurchase != null) {
+                    // If the purchase already exists in the database but with a different state, we need to update it
+                    if (existingPurchase.data.purchaseState != purchase.purchaseState) {
+                        logDebug(TAG, "[processPurchases] state change: ${existingPurchase.data.purchaseState} -> ${purchase.purchaseState}")
+                        purchaseDao.update(CachedPurchase(purchase).apply { id = existingPurchase.id })
+                        updatedPurchases.add(purchase)
+                    }
+                } else {
+                    // Insert into DB only if the same purchase hasn't already been inserted
+                    purchaseDao.insert(CachedPurchase(purchase))
+                }
+            }
+
+            _purchaseStateChangeLiveData.postValue(updatedPurchases)
         }
 
         // Handle pending purchases, e.g. confirm with users about the pending
@@ -319,19 +376,6 @@ class BillingRepository constructor(
 
             logDebug(TAG, "[processPurchases] consumables content $consumables")
             logDebug(TAG, "[processPurchases] non-consumables content $nonConsumables")
-
-            /**
-             * As is being done in this sample, for extra reliability you may store the
-             * receipts/purchases to a your own remote/local database for until after you
-             * disburse entitlements. That way if the Google Play Billing library fails at any
-             * given point, you can independently verify whether entitlements were accurately
-             * disbursed. In this sample, the receipts are then removed upon entitlement
-             * disbursement.
-             */
-            val testing = localCacheBillingClient.purchaseDao().getPurchases()
-            logDebug(TAG, "[processPurchases] ${testing.size} purchases in the local db")
-
-            localCacheBillingClient.purchaseDao().insert(*validPurchases.toTypedArray())
 
             consumeConsumablePurchases(consumables)
             acknowledgeNonConsumablePurchases(nonConsumables)
@@ -353,12 +397,12 @@ class BillingRepository constructor(
         logDebug(TAG, "[handleNoValidPurchases] clearing all tables")
 
         // Clear AdFreeUnlock table
-        localCacheBillingClient.entitlementsDao().clearAdFreeUnlockTable()
+        entitlementsDao.clearAdFreeUnlockTable()
 
         ALL_SKUS.forEach {
             // Since the user no longer owns any valid, acknowledged purchases,
             // mark all AugmentedSkuDetails rows as purchasable
-            localCacheBillingClient.skuDetailsDao().update(it, true)
+            skuDetailsDao.update(it, true)
         }
     }
 
@@ -398,7 +442,7 @@ class BillingRepository constructor(
                  * So if you think of a Purchase as a receipt, you no longer need to keep a copy of
                  * the receipt in the local cache since the user has just consumed the product.
                  */
-                true -> localCacheBillingClient.purchaseDao().delete(it)
+                true -> purchaseDao.delete(it)
             }
             else -> logWarning(
                 TAG,
@@ -416,7 +460,7 @@ class BillingRepository constructor(
         nonConsumables: List<Purchase>
     ) = nonConsumables.forEach {
         if (it.isAcknowledged) {
-            handleAlreadyAcknowledgedEntitlement(it)
+            handleAcknowledgment(it, true)
         } else {
             val result = playStoreBillingClient.acknowledgePurchase(
                 AcknowledgePurchaseParams.newBuilder()
@@ -425,9 +469,9 @@ class BillingRepository constructor(
             )
 
             when (result.responseCode) {
-                BillingResponseCode.OK -> handleSuccessfulAcknowledgment(it)
+                BillingResponseCode.OK -> handleAcknowledgment(it)
                 // DEVELOPER_ERROR could be because the purchase is already acknowledged
-                BillingResponseCode.DEVELOPER_ERROR -> handleAlreadyAcknowledgedEntitlement(it)
+                BillingResponseCode.DEVELOPER_ERROR -> handleAcknowledgment(it, true)
                 else -> logWarning(
                     TAG,
                     "[acknowledgeNonConsumablePurchases] error responseCode: ${result.responseCode}, debugMessage: ${result.debugMessage}"
@@ -443,30 +487,16 @@ class BillingRepository constructor(
      *
      * In this sample, once the entitlement is disbursed the receipt is thrown out.
      */
-    private suspend fun handleSuccessfulAcknowledgment(
-        purchase: Purchase
+    private suspend fun handleAcknowledgment(
+        purchase: Purchase,
+        alreadyAcknowledged: Boolean = false
     ) = withContext(Dispatchers.IO) {
-        if (disburseNonConsumableEntitlement(purchase.sku)) {
+        if (disburseNonConsumableEntitlement(purchase.sku) && !alreadyAcknowledged) {
             // Isn't null only in the case of a billing flow being launched
             purchaseFinishedCallback?.invoke(BillingResponseCode.OK, purchase)
         }
 
-        localCacheBillingClient.purchaseDao().delete(purchase)
-    }
-
-    /**
-     * This is the final step, where already acknowledged purchases/receipts are converted to premium contents.
-     *
-     * Can be called from the [queryPurchases] chain only (inventory refreshed, or item already owned).
-     *
-     * In this sample, once the entitlement is disbursed the receipt is thrown out.
-     */
-    private suspend fun handleAlreadyAcknowledgedEntitlement(
-        purchase: Purchase
-    ) = withContext(Dispatchers.IO) {
-        disburseNonConsumableEntitlement(purchase.sku)
-
-        localCacheBillingClient.purchaseDao().delete(purchase)
+        purchaseDao.delete(purchase)
     }
 
     private suspend fun disburseConsumableEntitlements(
@@ -483,16 +513,16 @@ class BillingRepository constructor(
         sku: String
     ) = withContext(Dispatchers.IO) {
         return@withContext when (sku) {
-            // TODO: handle additional cases when app supports more non-consumable purchases
             Sku.AD_FREE -> AdFreeUnlock(true).let {
                 insert(it)
 
-                localCacheBillingClient.skuDetailsDao().insertOrUpdate(
+                skuDetailsDao.insertOrUpdate(
                     sku,
                     it.mayPurchase()
                 )
                 true
             }
+            // TODO: handle additional cases when app supports more non-consumable purchases
             else -> false
         }
     }
@@ -562,7 +592,7 @@ class BillingRepository constructor(
                 logDebug(TAG, "[querySkuDetails] success: ${skuDetailsList ?: "[]"}")
 
                 skuDetailsList?.let {
-                    localCacheBillingClient.skuDetailsDao().refreshSkuDetails(it)
+                    skuDetailsDao.refreshSkuDetails(it)
                 }
             }
             else -> logError(
@@ -659,7 +689,7 @@ class BillingRepository constructor(
     private suspend fun insert(
         entitlement: Entitlement
     ) = withContext(Dispatchers.IO) {
-        localCacheBillingClient.entitlementsDao().insert(entitlement)
+        entitlementsDao.insert(entitlement)
     }
 
     /**
@@ -687,10 +717,6 @@ class BillingRepository constructor(
 
     companion object {
         private const val TAG = "BillingRepository"
-
-        @Suppress("DEPRECATION")
-        @SuppressLint("HardwareIds")
-        val DEVELOPER_PAYLOAD_PREFIX = "OxygenUpdater-AdFree-" + if (Build.SERIAL != "unknown") Build.SERIAL + "-" else ""
     }
 }
 

@@ -35,7 +35,6 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.models.billing.AugmentedSkuDetails
-import com.oxygenupdater.repositories.BillingRepository.Companion.DEVELOPER_PAYLOAD_PREFIX
 import com.oxygenupdater.repositories.BillingRepository.Sku
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
@@ -76,12 +75,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
     }
 
-    private val pendingPurchasesObserver = Observer<Set<Purchase>> { pendingPurchases ->
-        val isAdFreeUnlockPending = pendingPurchases.any {
-            it.sku == Sku.AD_FREE
-        }
-
-        if (isAdFreeUnlockPending) {
+    private val pendingPurchasesObserver = Observer<Purchase> { pendingAdFreeUnlockPurchase ->
+        if (pendingAdFreeUnlockPurchase != null) {
             Toast.makeText(mContext, getString(R.string.purchase_error_pending_payment), Toast.LENGTH_LONG).show()
 
             // Disable the Purchase button and set its text to "Processing..."
@@ -164,15 +159,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         amount: String?,
         purchaseType: PurchaseType
     ) {
-        if (purchase.developerPayload?.startsWith(DEVELOPER_PAYLOAD_PREFIX) == false) {
-            logError(
-                TAG,
-                GooglePlayBillingException(
-                    "Purchase of the ad-free version failed. The returned developer payload was incorrect (${purchase.developerPayload})"
-                )
-            )
-        }
-
         billingViewModel.verifyPurchase(
             purchase,
             amount,
@@ -220,6 +206,9 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             viewLifecycleOwner,
             pendingPurchasesObserver
         )
+
+        // no-op observe because the actual work is being done in BillingViewModel
+        billingViewModel.purchaseStateChangeLiveData.observe(viewLifecycleOwner) { }
     }
 
     /**
@@ -527,7 +516,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 } else {
                     settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
-                // TODO: Think about showing a toast message informing the user that they already own it
                 BillingResponseCode.ITEM_ALREADY_OWNED -> {
                     // This is tricky to deal with. Even pending purchases show up as "items already owned",
                     // so we can't grant entitlement i.e. set [SettingsManager.PROPERTY_AD_FREE] to `true`.
