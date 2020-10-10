@@ -222,7 +222,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 requestContributorStoragePermissions { granted: Boolean ->
                     if (granted) {
                         // 1st time, will save setting to true.
-                        ContributorUtils(this).flushSettings(true)
+                        ContributorUtils.flushSettings(true)
                         settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
                         ActivityLauncher(this).Main()
                         finish()

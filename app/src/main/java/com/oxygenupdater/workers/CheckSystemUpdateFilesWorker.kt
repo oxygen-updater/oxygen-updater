@@ -35,6 +35,7 @@ class CheckSystemUpdateFilesWorker(
 
     private val repository = SubmittedUpdateFileRepository(context)
 
+    private val analytics by inject(FirebaseAnalytics::class.java)
     private val serverRepository by inject(ServerRepository::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
@@ -82,7 +83,7 @@ class CheckSystemUpdateFilesWorker(
                             repository.store(fileName)
 
                             // Log failed contribution
-                            FirebaseAnalytics.getInstance(context).logEvent(
+                            analytics.logEvent(
                                 "CONTRIBUTION_NOT_NEEDED",
                                 bundleOf("CONTRIBUTION_FILENAME" to fileName)
                             )
@@ -102,7 +103,7 @@ class CheckSystemUpdateFilesWorker(
                             validSubmittedFileNames.add(fileName)
 
                             // Log successful contribution
-                            FirebaseAnalytics.getInstance(context).logEvent(
+                            analytics.logEvent(
                                 "CONTRIBUTION_SUCCESSFUL",
                                 bundleOf("CONTRIBUTION_FILENAME" to fileName)
                             )

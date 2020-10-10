@@ -1,6 +1,5 @@
 package com.oxygenupdater.utils
 
-import android.content.Context
 import androidx.core.os.bundleOf
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -20,8 +19,9 @@ import java.util.concurrent.TimeUnit
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
-class ContributorUtils(private val context: Context) {
+object ContributorUtils {
 
+    private val analytics by inject(FirebaseAnalytics::class.java)
     private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
 
@@ -31,8 +31,6 @@ class ContributorUtils(private val context: Context) {
 
         if (isFirstTime || wasContributing != isContributing) {
             settingsManager.savePreference(PROPERTY_CONTRIBUTE, isContributing)
-
-            val analytics = FirebaseAnalytics.getInstance(context)
 
             val analyticsEventData = bundleOf(
                 "CONTRIBUTOR_DEVICE" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<<UNKNOWN>>"),

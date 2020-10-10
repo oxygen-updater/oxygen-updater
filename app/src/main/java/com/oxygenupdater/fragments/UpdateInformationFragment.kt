@@ -76,12 +76,14 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+            val analytics by inject<FirebaseAnalytics>()
+
             swipeRefreshLayout.apply {
                 setOnRefreshListener { load() }
                 setColorSchemeResources(R.color.colorPrimary)
             }
 
-            FirebaseAnalytics.getInstance(requireContext()).setUserProperty(
+            analytics.setUserProperty(
                 "device_name",
                 systemVersionProperties.oxygenDeviceName
             )

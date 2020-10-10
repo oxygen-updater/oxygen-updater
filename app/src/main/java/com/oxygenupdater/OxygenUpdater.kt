@@ -24,7 +24,6 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
 import java.util.*
 
 
@@ -74,7 +73,7 @@ class OxygenUpdater : Application() {
     private fun setupKoin() {
         startKoin {
             // use AndroidLogger as Koin Logger - default Level.INFO
-            androidLogger(Level.ERROR)
+            androidLogger()
             // use the Android context given there
             androidContext(this@OxygenUpdater)
             // module list
@@ -119,6 +118,7 @@ class OxygenUpdater : Application() {
 
     private fun setupCrashReporting() {
         val settingsManager by inject<SettingsManager>()
+        val analytics by inject<FirebaseAnalytics>()
         val crashlytics by inject<FirebaseCrashlytics>()
 
         // Do not upload crash logs if we are on a debug build or if the user has turned off analytics in the Settings screen.
@@ -126,8 +126,7 @@ class OxygenUpdater : Application() {
         val disableCrashCollection = BuildConfig.DEBUG || !shareAnalytics
 
         // Do not share analytics data if the user has turned it off in the Settings screen
-        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(shareAnalytics)
-
+        analytics.setAnalyticsCollectionEnabled(shareAnalytics)
         crashlytics.setCrashlyticsCollectionEnabled(disableCrashCollection)
     }
 

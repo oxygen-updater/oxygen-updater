@@ -193,10 +193,11 @@ dependencies {
 
     implementation(Libraries.MATERIAL)
 
-    implementation(Libraries.CRASHLYTICS)
+    implementation(platform(Libraries.FIREBASE_BOM))
     implementation(Libraries.FIREBASE_ADS)
-    implementation(Libraries.FIREBASE_ANALYTICS)
-    implementation(Libraries.FIREBASE_MESSAGING)
+    implementation(Libraries.FIREBASE_ANALYTICS_KTX)
+    implementation(Libraries.FIREBASE_CRASHLYTICS_KTX)
+    implementation(Libraries.FIREBASE_MESSAGING_KTX)
 
     implementation(Libraries.GOOGLE_PLAY_BILLING)
     implementation(Libraries.GOOGLE_PLAY_BILLING_KTX)

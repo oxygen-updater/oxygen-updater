@@ -5,7 +5,9 @@ import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import androidx.work.WorkManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.database.NewsDatabaseHelper
@@ -79,7 +81,8 @@ private val miscellaneousSingletonModule = module {
     single { SystemVersionProperties() }
 
     single { AppUpdateManagerFactory.create(androidContext()) }
-    single { FirebaseCrashlytics.getInstance() }
+    single { Firebase.analytics }
+    single { Firebase.crashlytics }
     single { WorkManager.getInstance(androidContext()) }
 }
 

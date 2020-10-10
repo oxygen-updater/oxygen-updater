@@ -1,6 +1,7 @@
 package com.oxygenupdater.utils
 
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import com.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_NOTIFICATION_TOPIC
@@ -15,6 +16,7 @@ object NotificationTopicSubscriber {
     private const val DEVICE_TOPIC_PREFIX = "device_"
     private const val UPDATE_METHOD_TOPIC_PREFIX = "_update-method_"
 
+    private val messaging = Firebase.messaging
     private val settingsManager by inject(SettingsManager::class.java)
 
     fun subscribe(deviceList: List<Device>, updateMethodList: List<UpdateMethod>) {
@@ -25,13 +27,13 @@ object NotificationTopicSubscriber {
             // unsubscribe from all possible topics first to prevent duplicate/wrong notifications.
             updateMethodList.forEach { (id) ->
                 deviceList.forEach { device ->
-                    FirebaseMessaging.getInstance().unsubscribeFromTopic(
+                    messaging.unsubscribeFromTopic(
                         NOTIFICATIONS_PREFIX + DEVICE_TOPIC_PREFIX + device.id + UPDATE_METHOD_TOPIC_PREFIX + id
                     )
                 }
             }
         } else {
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(oldTopic)
+            messaging.unsubscribeFromTopic(oldTopic)
         }
 
         val newTopic = (NOTIFICATIONS_PREFIX + DEVICE_TOPIC_PREFIX
@@ -40,7 +42,7 @@ object NotificationTopicSubscriber {
                 + settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L))
 
         // Subscribe to the new topic to start receiving notifications.
-        FirebaseMessaging.getInstance().subscribeToTopic(newTopic)
+        messaging.subscribeToTopic(newTopic)
 
         logVerbose(TAG, "Subscribed to notifications on topic $newTopic ...")
 
