@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.lifecycle.observe
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager

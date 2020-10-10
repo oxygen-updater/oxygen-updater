@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.MenuItem
 import androidx.core.view.isVisible
-import androidx.lifecycle.observe
 import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R

@@ -16,7 +16,6 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.observe
 import androidx.work.WorkInfo
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics

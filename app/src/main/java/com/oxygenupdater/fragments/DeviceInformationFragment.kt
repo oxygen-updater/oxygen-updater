@@ -7,7 +7,6 @@ import android.text.format.Formatter
 import android.view.View
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
-import androidx.lifecycle.observe
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity

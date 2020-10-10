@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
 import com.ipaulpro.afilechooser.FileChooserActivity
 import com.ipaulpro.afilechooser.utils.FileUtils
 import com.oxygenupdater.R
