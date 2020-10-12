@@ -183,6 +183,9 @@ dependencies {
     implementation(AndroidXLibraries.BROWSER)
     implementation(AndroidXLibraries.CONSTRAINT_LAYOUT)
     implementation(AndroidXLibraries.RECYCLER_VIEW)
+    implementation(AndroidXLibraries.ROOM_KTX)
+    implementation(AndroidXLibraries.ROOM_RUNTIME)
+    kapt(AndroidXLibraries.ROOM_COMPILER)
 
     implementation(AndroidXLibraries.KTX_CORE)
     implementation(AndroidXLibraries.KTX_FRAGMENT)
@@ -203,10 +206,6 @@ dependencies {
     implementation(Libraries.GOOGLE_PLAY_BILLING_KTX)
     implementation(Libraries.PLAY_CORE)
     implementation(Libraries.PLAY_SERVICES_BASE)
-
-    implementation(Libraries.ROOM_KTX)
-    implementation(Libraries.ROOM_RUNTIME)
-    kapt(Libraries.ROOM_COMPILER)
 
     implementation(Libraries.KOIN)
     implementation(Libraries.KOIN_FRAGMENT)
