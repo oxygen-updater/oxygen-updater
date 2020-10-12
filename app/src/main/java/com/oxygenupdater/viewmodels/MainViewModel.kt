@@ -128,7 +128,6 @@ class MainViewModel(
     val pageToolbarSubtitle = SparseArray<CharSequence?>()
 
     private val workManager by inject(WorkManager::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
     private val appUpdateManager by inject(AppUpdateManager::class.java)
 
     private lateinit var downloadWorkRequest: OneTimeWorkRequest
@@ -271,7 +270,7 @@ class MainViewModel(
         }
 
         logDebug(UpdateInformationFragment.TAG, "Deleting any associated tracker preferences for downloaded file")
-        settingsManager.deletePreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE)
+        SettingsManager.removePreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE)
 
         logDebug(UpdateInformationFragment.TAG, "Deleting downloaded update file " + updateData.filename)
 
@@ -411,7 +410,7 @@ class MainViewModel(
         when (it.updateAvailability()) {
             DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> _appUpdateAvailable.postValue(it)
             UPDATE_AVAILABLE -> {
-                val lastAppUpdateCheckedDate = settingsManager.getPreference(
+                val lastAppUpdateCheckedDate = SettingsManager.getPreference(
                     SettingsManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
                     LocalDate.MIN.toString()
                 )
@@ -420,7 +419,7 @@ class MainViewModel(
 
                 // Check for app updates at most once every 2 days
                 if (LocalDate.parse(lastAppUpdateCheckedDate).plusDays(MainActivity.DAYS_FOR_APP_UPDATE_CHECK) <= today) {
-                    settingsManager.savePreference(
+                    SettingsManager.savePreference(
                         SettingsManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
                         today.toString()
                     )
@@ -429,7 +428,7 @@ class MainViewModel(
                 }
             }
             // Reset ignore count
-            else -> settingsManager.savePreference(
+            else -> SettingsManager.savePreference(
                 SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                 0
             )
@@ -460,7 +459,7 @@ class MainViewModel(
     @Throws(IntentSender.SendIntentException::class)
     fun requestImmediateAppUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo) {
         // Reset ignore count
-        settingsManager.savePreference(
+        SettingsManager.savePreference(
             SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
             0
         )
@@ -493,7 +492,7 @@ class MainViewModel(
         //  (the library doesn't yet have an annotation interface for priority constants)
         appUpdateType = if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
             val versionStalenessDays = appUpdateInfo.clientVersionStalenessDays() ?: 0
-            val ignoreCount = settingsManager.getPreference(
+            val ignoreCount = SettingsManager.getPreference(
                 SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                 0
             )
@@ -509,7 +508,7 @@ class MainViewModel(
             }
         } else {
             // Reset ignore count
-            settingsManager.savePreference(
+            SettingsManager.savePreference(
                 SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                 0
             )

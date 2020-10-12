@@ -14,7 +14,6 @@ import com.oxygenupdater.enums.Theme.AUTO
 import com.oxygenupdater.enums.Theme.DARK
 import com.oxygenupdater.enums.Theme.LIGHT
 import com.oxygenupdater.internal.settings.SettingsManager
-import org.koin.java.KoinJavaComponent.inject
 import java.util.*
 
 /**
@@ -23,8 +22,6 @@ import java.util.*
 object ThemeUtils {
 
     private const val OEM_BLACK_MODE = "oem_black_mode"
-
-    private val settingsManager by inject(SettingsManager::class.java)
 
     /**
      * Checks night mode flags and returns true if night mode is active
@@ -55,7 +52,7 @@ object ThemeUtils {
      * @return the [NightMode] to apply using [AppCompatDelegate.setDefaultNightMode]
      */
     @NightMode
-    fun translateThemeToNightMode(context: Context) = settingsManager.getPreference(
+    fun translateThemeToNightMode(context: Context) = SettingsManager.getPreference(
         context.getString(R.string.key_theme_id),
         context.resources.getInteger(R.integer.theme_system_id)
     ).let { translateThemeToNightMode(context, Theme[it]) }

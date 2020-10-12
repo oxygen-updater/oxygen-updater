@@ -59,6 +59,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private lateinit var adFreePreference: Preference
     private lateinit var devicePreference: BottomSheetPreference
     private lateinit var updateMethodPreference: BottomSheetPreference
+    private lateinit var themePreference: BottomSheetPreference
 
     private val inappSkuDetailsListObserver = Observer<List<AugmentedSkuDetails>> { list ->
         list.find {
@@ -90,7 +91,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
     private val crashlytics by inject<FirebaseCrashlytics>()
-    private val settingsManager by inject<SettingsManager>()
     private val settingsViewModel by sharedViewModel<SettingsViewModel>()
     private val billingViewModel by sharedViewModel<BillingViewModel>()
 
@@ -271,7 +271,13 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     private fun setupThemePreference() {
-        findPreference<Preference>(mContext.getString(R.string.key_theme))?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+        themePreference = findPreference(mContext.getString(R.string.key_theme))!!
+
+        if (themePreference.value == null) {
+            themePreference.setValueIndex(resources.getInteger(R.integer.theme_system_id))
+        }
+
+        themePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
             AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(mContext))
             true
         }
@@ -280,7 +286,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private fun setupAdvancedModePreference() {
         findPreference<SwitchPreference>(SettingsManager.PROPERTY_ADVANCED_MODE)?.apply {
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val isAdvancedMode = settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
+                val isAdvancedMode = SettingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
                 if (isAdvancedMode) {
                     isChecked = false
                     showAdvancedModeExplanation(activity) {
@@ -330,7 +336,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     /**
-     * Populates [.devicePreference] and sets up a preference change listener to re-populate [.updateMethodPreference]
+     * Populates [devicePreference] and sets up a preference change listener to re-populate [updateMethodPreference]
      *
      * @param devices retrieved from the server
      */
@@ -342,7 +348,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             var recommendedPosition = -1
             var selectedPosition = -1
 
-            val deviceId = settingsManager.getPreference(mContext.getString(R.string.key_device_id), -1L)
+            val deviceId = SettingsManager.getPreference(mContext.getString(R.string.key_device_id), -1L)
 
             val itemList: MutableList<BottomSheetItem> = ArrayList()
             val deviceMap = HashMap<CharSequence, Long>()
@@ -401,7 +407,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     }
 
     /**
-     * Populates [.updateMethodPreference] and calls [FirebaseCrashlytics.setUserId]
+     * Populates [updateMethodPreference] and calls [FirebaseCrashlytics.setUserId]
      *
      * @param updateMethods retrieved from the server
      */
@@ -412,7 +418,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         if (!updateMethods.isNullOrEmpty()) {
             updateMethodPreference.isEnabled = true
 
-            val currentUpdateMethodId = settingsManager.getPreference(mContext.getString(R.string.key_update_method_id), -1L)
+            val currentUpdateMethodId = SettingsManager.getPreference(mContext.getString(R.string.key_update_method_id), -1L)
 
             val recommendedPositions: MutableList<Int> = ArrayList()
             var selectedPosition = -1
@@ -452,8 +458,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             updateMethodPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
                 crashlytics.setUserId(
-                    "Device: " + settingsManager.getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
-                            + ", Update Method: " + settingsManager.getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
+                    "Device: " + SettingsManager.getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
+                            + ", Update Method: " + SettingsManager.getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
                 )
 
                 // Google Play services are not required if the user doesn't use notifications
@@ -503,7 +509,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             when (responseCode) {
                 BillingResponseCode.OK -> if (purchase != null) {
-                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
+                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
 
                     validateAdFreePurchase(
                         purchase,
@@ -511,7 +517,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         PurchaseType.AD_FREE
                     )
                 } else {
-                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
+                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
                 BillingResponseCode.ITEM_ALREADY_OWNED -> {
                     // This is tricky to deal with. Even pending purchases show up as "items already owned",
@@ -523,13 +529,13 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 BillingResponseCode.USER_CANCELED -> {
                     logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
                     setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
-                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
+                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
                 else -> {
                     logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow: $responseCode")
                     Toast.makeText(mContext, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
                     setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
-                    settingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
+                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
             }
         }

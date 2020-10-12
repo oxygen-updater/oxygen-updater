@@ -117,12 +117,11 @@ class OxygenUpdater : Application() {
     }
 
     private fun setupCrashReporting() {
-        val settingsManager by inject<SettingsManager>()
         val analytics by inject<FirebaseAnalytics>()
         val crashlytics by inject<FirebaseCrashlytics>()
 
         // Do not upload crash logs if we are on a debug build or if the user has turned off analytics in the Settings screen.
-        val shareAnalytics = settingsManager.getPreference(SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
+        val shareAnalytics = SettingsManager.getPreference(SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
         val disableCrashCollection = BuildConfig.DEBUG || !shareAnalytics
 
         // Do not share analytics data if the user has turned it off in the Settings screen

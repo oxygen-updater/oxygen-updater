@@ -9,7 +9,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.database.SubmittedUpdateFileRepository
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_CONTRIBUTION_COUNT
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTION_COUNT
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.LocalNotifications
@@ -37,7 +37,6 @@ class CheckSystemUpdateFilesWorker(
 
     private val analytics by inject(FirebaseAnalytics::class.java)
     private val serverRepository by inject(ServerRepository::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         logDebug(TAG, "Started update file check")
@@ -128,9 +127,9 @@ class CheckSystemUpdateFilesWorker(
             )
 
             // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
-            settingsManager.savePreference(
+            SettingsManager.savePreference(
                 PROPERTY_CONTRIBUTION_COUNT,
-                settingsManager.getPreference(PROPERTY_CONTRIBUTION_COUNT, 0) + count
+                SettingsManager.getPreference(PROPERTY_CONTRIBUTION_COUNT, 0) + count
             )
         }
 

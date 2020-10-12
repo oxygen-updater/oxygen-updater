@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.ChooserOnboardingAdapter
 import com.oxygenupdater.extensions.addPlaceholderItemsForShimmer
@@ -13,7 +14,7 @@ import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.models.SelectableModel
 import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
 
-abstract class ChooserOnboardingFragment : AbstractFragment(R.layout.fragment_onboarding_chooser) {
+abstract class ChooserOnboardingFragment : Fragment(R.layout.fragment_onboarding_chooser) {
 
     override fun onCreateView(
         inflater: LayoutInflater,

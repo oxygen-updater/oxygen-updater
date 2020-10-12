@@ -24,7 +24,6 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
     private var isFirstPage = false
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
-    private val settingsManager by inject<SettingsManager>()
     private val installViewModel by sharedViewModel<InstallViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
@@ -35,8 +34,8 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         if (installViewModel.installGuideCache[pageNumber] == null) {
             installViewModel.fetchInstallGuidePage(

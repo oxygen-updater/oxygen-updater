@@ -47,7 +47,6 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
     private var permissionCallback: KotlinCallback<Boolean>? = null
 
-    private val settingsManager by inject<SettingsManager>()
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
     private val systemVersionProperties by inject<SystemVersionProperties>()
 
@@ -255,13 +254,13 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
     @Suppress("UNUSED_PARAMETER")
     fun onStartAppButtonClicked(view: View) {
-        if (settingsManager.checkIfSetupScreenIsFilledIn()) {
+        if (SettingsManager.checkIfSetupScreenIsFilledIn()) {
             if (onboardingPage4ContributeCheckbox.isChecked) {
                 requestContributorStoragePermissions { granted: Boolean ->
                     if (granted) {
                         // 1st time, will save setting to true.
                         ContributorUtils.flushSettings(true)
-                        settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
+                        SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
                         ActivityLauncher(this).Main()
                         finish()
                     } else {
@@ -270,14 +269,14 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 }
             } else {
                 // not signed up, saving this setting will prevent contribute popups which belong to app updates.
-                settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
-                settingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
+                SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
+                SettingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
                 ActivityLauncher(this).Main()
                 finish()
             }
         } else {
-            val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-            val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+            val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+            val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
             logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId))
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
         }

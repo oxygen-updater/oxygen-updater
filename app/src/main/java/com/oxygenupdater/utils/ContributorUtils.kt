@@ -9,7 +9,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_CONTRIBUTE
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTE
 import com.oxygenupdater.workers.CheckSystemUpdateFilesWorker
 import com.oxygenupdater.workers.WORK_UNIQUE_CHECK_SYSTEM_UPDATE_FILES
 import org.koin.java.KoinJavaComponent.inject
@@ -23,18 +23,17 @@ object ContributorUtils {
 
     private val analytics by inject(FirebaseAnalytics::class.java)
     private val workManager by inject(WorkManager::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
 
     fun flushSettings(isContributing: Boolean) {
-        val isFirstTime = !settingsManager.containsPreference(PROPERTY_CONTRIBUTE)
-        val wasContributing = settingsManager.getPreference(PROPERTY_CONTRIBUTE, false)
+        val isFirstTime = !SettingsManager.containsPreference(PROPERTY_CONTRIBUTE)
+        val wasContributing = SettingsManager.getPreference(PROPERTY_CONTRIBUTE, false)
 
         if (isFirstTime || wasContributing != isContributing) {
-            settingsManager.savePreference(PROPERTY_CONTRIBUTE, isContributing)
+            SettingsManager.savePreference(PROPERTY_CONTRIBUTE, isContributing)
 
             val analyticsEventData = bundleOf(
-                "CONTRIBUTOR_DEVICE" to settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<<UNKNOWN>>"),
-                "CONTRIBUTOR_UPDATEMETHOD" to settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>")
+                "CONTRIBUTOR_DEVICE" to SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<<UNKNOWN>>"),
+                "CONTRIBUTOR_UPDATEMETHOD" to SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>")
             )
 
             if (isContributing) {

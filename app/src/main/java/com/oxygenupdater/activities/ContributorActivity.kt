@@ -12,7 +12,6 @@ import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.utils.ContributorUtils
 import kotlinx.android.synthetic.main.activity_contributor.*
-import org.koin.android.ext.android.inject
 import java.util.concurrent.atomic.AtomicBoolean
 
 class ContributorActivity : SupportActionBarActivity() {
@@ -20,8 +19,6 @@ class ContributorActivity : SupportActionBarActivity() {
     private val localContributeSetting = AtomicBoolean(false)
     private val saveOptionsHidden = AtomicBoolean(false)
     private var permissionCallback: KotlinCallback<Boolean>? = null
-
-    private val settingsManager by inject<SettingsManager>()
 
     override fun onCreate(
         savedInstanceSate: Bundle?
@@ -70,7 +67,7 @@ class ContributorActivity : SupportActionBarActivity() {
     }
 
     private fun setInitialCheckboxState() {
-        val isContributing = settingsManager.getPreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
+        val isContributing = SettingsManager.getPreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
 
         localContributeSetting.set(isContributing)
         contributeCheckbox.isChecked = isContributing

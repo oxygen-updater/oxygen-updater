@@ -40,7 +40,6 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
     private lateinit var updateData: UpdateData
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
-    private val settingsManager by inject<SettingsManager>()
     private val installViewModel by sharedViewModel<InstallViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
@@ -64,13 +63,13 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         preparingInstallationProgressLayout.isVisible = false
         installOptionsLayout.isVisible = true
 
-        additionalZipContainer.isVisible = settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)
+        additionalZipContainer.isVisible = SettingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false)
 
         displayZipFilePath()
 
-        val backup = settingsManager.getPreference(SettingsManager.PROPERTY_BACKUP_DEVICE, true)
-        val wipeCachePartition = settingsManager.getPreference(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true)
-        val rebootDevice = settingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true)
+        val backup = SettingsManager.getPreference(SettingsManager.PROPERTY_BACKUP_DEVICE, true)
+        val wipeCachePartition = SettingsManager.getPreference(SettingsManager.PROPERTY_WIPE_CACHE_PARTITION, true)
+        val rebootDevice = SettingsManager.getPreference(SettingsManager.PROPERTY_REBOOT_AFTER_INSTALL, true)
 
         // Plan install verification on reboot.
         val currentOSVersion = systemVersionProperties.oxygenOSOTAVersion
@@ -99,7 +98,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         isAbPartitionLayout: Boolean,
         targetOSVersion: String
     ) {
-        val additionalZipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+        val additionalZipFilePath = SettingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 
         if (!installViewModel.logRootInstallResult.hasActiveObservers()) {
             installViewModel.logRootInstallResult.observe(viewLifecycleOwner) { result: ServerPostResult? ->
@@ -118,9 +117,9 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                 // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
                 FunctionalAsyncTask<Void?, Void, String?>({}, {
                     try {
-                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
-                        settingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
-                        settingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
+                        SettingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
+                        SettingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
+                        SettingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
 
                         @Suppress("DEPRECATION")
                         val downloadedUpdateFilePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).path +
@@ -146,7 +145,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                 }, { errorMessage: String? ->
                     if (errorMessage != null) {
                         // Cancel the verification planned on reboot.
-                        settingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
+                        SettingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
 
                         if (isAdded) {
                             init()
@@ -174,14 +173,14 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         }
 
         additionalZipFileClearButton.setOnClickListener {
-            settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+            SettingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
             displayZipFilePath()
         }
 
         startInstallButton.setOnClickListener {
-            val additionalZipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+            val additionalZipFilePath = SettingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 
-            if (settingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
+            if (SettingsManager.getPreference(SettingsManager.PROPERTY_KEEP_DEVICE_ROOTED, false) && additionalZipFilePath == null) {
                 Toast.makeText(context, R.string.install_guide_zip_file_missing, Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
@@ -235,10 +234,10 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         // Create installation ID.
         val installationId = UUID.randomUUID().toString()
 
-        settingsManager.savePreference(SettingsManager.PROPERTY_INSTALLATION_ID, installationId)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_INSTALLATION_ID, installationId)
 
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         val timestamp = LocalDateTime.now(SERVER_TIME_ZONE).toString()
 
         val installation = RootInstall(
@@ -257,7 +256,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
     }
 
     private fun displayZipFilePath() {
-        val zipFilePath = settingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+        val zipFilePath = SettingsManager.getPreference<String?>(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
 
         if (zipFilePath != null) {
             @Suppress("DEPRECATION")
@@ -290,12 +289,12 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                 val uri = data?.data
 
                 // Get the zip file path from the Uri
-                settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, FileUtils.getPath(context, uri))
+                SettingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, FileUtils.getPath(context, uri))
                 displayZipFilePath()
             } catch (e: Throwable) {
                 logError(TAG, "Error handling root package ZIP selection", e)
 
-                settingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
+                SettingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
                 displayZipFilePath()
             }
         }

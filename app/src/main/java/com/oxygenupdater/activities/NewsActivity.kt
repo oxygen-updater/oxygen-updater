@@ -44,7 +44,6 @@ class NewsActivity : SupportActionBarActivity() {
 
     private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val newsViewModel by viewModel<NewsViewModel>()
-    private val settingsManager by inject<SettingsManager>()
 
     private var shouldDelayAdStart = false
     private var newsItemId = -1L
@@ -301,7 +300,7 @@ class NewsActivity : SupportActionBarActivity() {
                         logDebug(TAG, "Interstitial ad failed to load: $errorCode")
 
                         // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                        settingsManager.savePreference(
+                        SettingsManager.savePreference(
                             SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
                             LocalDateTime.now().toString()
                         )
@@ -311,7 +310,7 @@ class NewsActivity : SupportActionBarActivity() {
                         logDebug(TAG, "Interstitial ad closed")
 
                         // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                        settingsManager.savePreference(
+                        SettingsManager.savePreference(
                             SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
                             LocalDateTime.now().toString()
                         )

@@ -75,7 +75,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
     ) {
         val data = data as List<UpdateMethod>
 
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         val recommendedPositions = ArrayList<Int>()
         data.mapIndexedTo(recommendedPositions) { index, updateMethod -> if (updateMethod.recommended) index else -1 }

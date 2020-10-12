@@ -38,7 +38,6 @@ object Utils {
     private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
     private val systemVersionProperties by inject(SystemVersionProperties::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
 
     /**
      * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later versions
@@ -152,7 +151,7 @@ object Utils {
 
     fun checkDeviceMismatch(context: Context, devices: List<Device>?): Triple<Boolean, String, String> {
         var actualDeviceName = context.getString(R.string.device_information_unknown)
-        val savedDeviceName = settingsManager.getPreference(
+        val savedDeviceName = SettingsManager.getPreference(
             SettingsManager.PROPERTY_DEVICE,
             actualDeviceName
         )
@@ -171,7 +170,7 @@ object Utils {
         var dateTimeString = dateTimeString
 
         return try {
-            if (dateTimeString == null || dateTimeString.isEmpty()) {
+            if (dateTimeString.isNullOrEmpty()) {
                 return context.getString(R.string.device_information_unknown)
             }
 

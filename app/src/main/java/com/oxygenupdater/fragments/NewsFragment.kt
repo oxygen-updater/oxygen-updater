@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.oxygenupdater.R
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_news.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class NewsFragment : AbstractFragment(R.layout.fragment_news) {
+class NewsFragment : Fragment(R.layout.fragment_news) {
 
     private var hasBeenLoadedOnce = false
     private var isShowingOnlyUnreadArticles = false
@@ -75,8 +76,8 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
 
         shimmerFrameLayout.isVisible = true
 
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         mainViewModel.fetchNews(deviceId, updateMethodId).observe(viewLifecycleOwner, fetchNewsObserver)
     }

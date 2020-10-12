@@ -3,6 +3,7 @@ package com.oxygenupdater.fragments
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
@@ -10,7 +11,7 @@ import com.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_about.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class AboutFragment : AbstractFragment(R.layout.fragment_about) {
+class AboutFragment : Fragment(R.layout.fragment_about) {
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
 

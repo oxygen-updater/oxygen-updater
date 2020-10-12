@@ -47,7 +47,6 @@ class DisplayDelayedNotificationWorker(
 
     private val newsDatabaseHelper by inject(NewsDatabaseHelper::class.java)
     private val notificationManager by inject(NotificationManager::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
 
     override suspend fun doWork(): Result {
         if (messageContents.isNullOrEmpty()) {
@@ -59,7 +58,7 @@ class DisplayDelayedNotificationWorker(
         )
 
         val builder = when (notificationType) {
-            NotificationType.NEW_DEVICE -> if (!settingsManager.getPreference(
+            NotificationType.NEW_DEVICE -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS,
                     true
                 )
@@ -68,7 +67,7 @@ class DisplayDelayedNotificationWorker(
             } else {
                 getNewDeviceNotificationBuilder(messageContents[NotificationElement.NEW_DEVICE_NAME.name])
             }
-            NotificationType.NEW_VERSION -> if (!settingsManager.getPreference(
+            NotificationType.NEW_VERSION -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS,
                     true
                 )
@@ -80,7 +79,7 @@ class DisplayDelayedNotificationWorker(
                     messageContents[NotificationElement.NEW_VERSION_NUMBER.name]
                 )
             }
-            NotificationType.GENERAL_NOTIFICATION -> if (!settingsManager.getPreference(
+            NotificationType.GENERAL_NOTIFICATION -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS,
                     true
                 )
@@ -96,7 +95,7 @@ class DisplayDelayedNotificationWorker(
 
                 getGeneralServerOrNewsNotificationBuilder(message)
             }
-            NotificationType.NEWS -> if (!settingsManager.getPreference(
+            NotificationType.NEWS -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS,
                     true
                 )

@@ -6,7 +6,6 @@ import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logVerbose
-import org.koin.java.KoinJavaComponent.inject
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader
@@ -61,8 +60,6 @@ class SystemVersionProperties {
      */
     val isABPartitionLayout: Boolean
 
-    private val settingsManager by inject(SettingsManager::class.java)
-
     constructor() {
         var oxygenDeviceName = NO_OXYGEN_OS
         var oxygenOSVersion = NO_OXYGEN_OS
@@ -98,7 +95,7 @@ class SystemVersionProperties {
                 osType = ""
             }
 
-            settingsManager.savePreference(SettingsManager.PROPERTY_IS_EU_BUILD, isEuBuild)
+            SettingsManager.savePreference(SettingsManager.PROPERTY_IS_EU_BUILD, isEuBuild)
 
             securityPatchDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // Already available using Android API since Android 6.0

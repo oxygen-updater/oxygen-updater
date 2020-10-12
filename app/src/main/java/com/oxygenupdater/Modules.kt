@@ -11,7 +11,6 @@ import com.google.firebase.ktx.Firebase
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.database.NewsDatabaseHelper
-import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
@@ -46,16 +45,15 @@ private val networkModule = module {
 
 private val preferencesModule = module {
     single { PreferenceManager.getDefaultSharedPreferences(androidContext()) }
-    single { SettingsManager() }
 }
 
 private val repositoryModule = module {
-    single { ServerRepository(get(), get(), get(), get()) }
+    single { ServerRepository(get(), get(), get()) }
     single { BillingRepository(get(), get()) }
 }
 
 private val viewModelModule = module {
-    viewModel { OnboardingViewModel(get(), get(), get()) }
+    viewModel { OnboardingViewModel(get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { NewsViewModel(get()) }
     viewModel { InstallViewModel(get()) }

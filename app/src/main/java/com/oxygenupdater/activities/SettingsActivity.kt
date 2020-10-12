@@ -11,15 +11,12 @@ import com.oxygenupdater.fragments.SettingsFragment
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.SetupUtils
-import org.koin.android.ext.android.inject
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
 class SettingsActivity : SupportActionBarActivity() {
-
-    private val settingsManager by inject<SettingsManager>()
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -33,8 +30,8 @@ class SettingsActivity : SupportActionBarActivity() {
     }
 
     private fun showSettingsWarning() {
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         if (deviceId == -1L || updateMethodId == -1L) {
             logWarning(TAG, SetupUtils.getAsError("Settings screen", deviceId, updateMethodId))
@@ -44,7 +41,7 @@ class SettingsActivity : SupportActionBarActivity() {
         }
     }
 
-    override fun onBackPressed() = if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+    override fun onBackPressed() = if (SettingsManager.checkIfSetupScreenHasBeenCompleted()) {
         NavUtils.navigateUpFromSameTask(this)
     } else {
         showSettingsWarning()

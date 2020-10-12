@@ -18,6 +18,7 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.work.WorkInfo
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -70,7 +71,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDateTime
 
-class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_information) {
+class UpdateInformationFragment : Fragment(R.layout.fragment_update_information) {
 
     private var updateData: UpdateData? = null
     private var isLoadedOnce = false
@@ -134,7 +135,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
+        if (SettingsManager.checkIfSetupScreenHasBeenCompleted()) {
             val analytics by inject<FirebaseAnalytics>()
 
             swipeRefreshLayout.apply {
@@ -273,13 +274,13 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
         crashlytics.setUserId(
             "Device: "
-                    + settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                    + SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
                     + ", Update Method: "
-                    + settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+                    + SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
 
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         mainViewModel.fetchServerStatus()
 
@@ -360,8 +361,13 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         // Hide the refreshing icon if it is present
         swipeRefreshLayout.isRefreshing = false
 
+        val systemIsUpToDate = updateData.systemIsUpToDate && !SettingsManager.getPreference(
+            SettingsManager.PROPERTY_ADVANCED_MODE,
+            false
+        )
+
         if (updateData.id == null
-            || updateData.isSystemIsUpToDateCheck(settingsManager)
+            || systemIsUpToDate
             || !updateData.isUpdateInformationAvailable
         ) {
             propagateTitleAndSubtitleChanges(
@@ -391,7 +397,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
         if (online) {
             // Save update data for offline viewing
-            settingsManager.apply {
+            SettingsManager.apply {
                 savePreference(SettingsManager.PROPERTY_OFFLINE_ID, updateData.id)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
                 savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSize)
@@ -423,12 +429,12 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         } else {
             getString(
                 R.string.update_information_unknown_update_name,
-                settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
+                SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
             )
         }
 
         if (updateData.systemIsUpToDate) {
-            val updateMethod = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+            val updateMethod = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
 
             // Format footer based on system version installed.
             footerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)
@@ -489,13 +495,13 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
             text = getString(
                 R.string.update_information_banner_advanced_mode_tip,
-                settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+                SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
             )
         }
 
         // Save last time checked if online.
         if (online) {
-            settingsManager.savePreference(
+            SettingsManager.savePreference(
                 SettingsManager.PROPERTY_UPDATE_CHECKED_DATE,
                 LocalDateTime.now(SERVER_TIME_ZONE).toString()
             )
@@ -504,7 +510,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         // Show last time checked.
         updateLastCheckedField.text = getString(
             R.string.update_information_last_checked_on,
-            Utils.formatDateTime(requireContext(), settingsManager.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
+            Utils.formatDateTime(requireContext(), SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, ""))
         )
 
         displaySoftwareInfo()
@@ -566,7 +572,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         changelogField.text = getUpdateChangelog(updateData?.description)
         differentVersionChangelogNotice.text = getString(
             R.string.update_information_different_version_changelog_notice,
-            settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+            SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
         )
 
         changelogLabel.run {

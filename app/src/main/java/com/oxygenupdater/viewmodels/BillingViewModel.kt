@@ -20,7 +20,6 @@ import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -30,8 +29,6 @@ class BillingViewModel(
     private val billingRepository: BillingRepository,
     private val serverRepository: ServerRepository
 ) : AndroidViewModel(application) {
-
-    private val settingsManager by KoinJavaComponent.inject(SettingsManager::class.java)
 
     val purchaseStateChangeLiveData: LiveData<Unit>
     val pendingPurchasesLiveData: LiveData<Purchase>
@@ -48,7 +45,7 @@ class BillingViewModel(
             billingRepository.adFreeUnlockLiveData
         ) {
             // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-            settingsManager.savePreference(
+            SettingsManager.savePreference(
                 SettingsManager.PROPERTY_AD_FREE,
                 it?.entitled == true
             ).run { it }

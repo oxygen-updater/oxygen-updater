@@ -28,6 +28,7 @@ import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.createFromWorkData
 import com.oxygenupdater.extensions.toWorkData
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE
 import com.oxygenupdater.models.DownloadProgressData
 import com.oxygenupdater.utils.ExceptionUtils
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
@@ -70,7 +71,6 @@ class DownloadWorker(
     private val downloadApi by inject(DownloadApi::class.java)
     private val workManager by inject(WorkManager::class.java)
     private val notificationManager by inject(NotificationManager::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important
@@ -175,7 +175,7 @@ class DownloadWorker(
         @Suppress("DEPRECATION")
         zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
-        var startingByte = settingsManager.getPreference<Long?>(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE, null)
+        var startingByte = SettingsManager.getPreference<Long?>(PROPERTY_DOWNLOAD_BYTES_DONE, null)
         var rangeHeader = if (startingByte != null) "bytes=$startingByte-" else null
 
         if (startingByte != null) {
@@ -297,7 +297,7 @@ class DownloadWorker(
                             }
                             else -> {
                                 // Delete any associated tracker preferences to allow retrying this work with a fresh state
-                                settingsManager.deletePreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE)
+                                SettingsManager.removePreference(PROPERTY_DOWNLOAD_BYTES_DONE)
 
                                 // Try deleting the file to allow retrying this work with a fresh state
                                 // Even if it doesn't get deleted, we can overwrite data to the same file
@@ -316,7 +316,7 @@ class DownloadWorker(
                 }
 
                 logDebug(TAG, "Download completed. Deleting any associated tracker preferences")
-                settingsManager.deletePreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE)
+                SettingsManager.removePreference(PROPERTY_DOWNLOAD_BYTES_DONE)
 
                 setProgress(
                     workDataOf(
@@ -410,9 +410,9 @@ class DownloadWorker(
             val currentTimestamp = System.currentTimeMillis()
             if (isFirstPublish || currentTimestamp - previousProgressTimestamp > THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED) {
                 val progress = (bytesDone * 100 / totalBytes).toInt()
-                val previousBytesDone = settingsManager.getPreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
+                val previousBytesDone = SettingsManager.getPreference(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
 
-                settingsManager.savePreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE, bytesDone)
+                SettingsManager.savePreference(PROPERTY_DOWNLOAD_BYTES_DONE, bytesDone)
 
                 val downloadEta = calculateDownloadEta(
                     currentTimestamp,

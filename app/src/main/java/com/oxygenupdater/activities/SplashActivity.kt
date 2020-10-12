@@ -16,7 +16,6 @@ import org.koin.android.ext.android.inject
 class SplashActivity : AppCompatActivity() {
 
     private val notificationManager by inject<NotificationManager>()
-    private val settingsManager by inject<SettingsManager>()
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -97,9 +96,15 @@ class SplashActivity : AppCompatActivity() {
      */
     private fun migrateOldSettings() {
         // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
-        if (settingsManager.containsPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
-            settingsManager.savePreference(SettingsManager.PROPERTY_ADVANCED_MODE, !settingsManager.getPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE, true))
-            settingsManager.deletePreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
+        if (SettingsManager.containsPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
+            SettingsManager.savePreference(
+                SettingsManager.PROPERTY_ADVANCED_MODE,
+                !SettingsManager.getPreference(
+                    SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE,
+                    true
+                )
+            )
+            SettingsManager.removePreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
         }
     }
 
@@ -107,13 +112,13 @@ class SplashActivity : AppCompatActivity() {
         // Mark the welcome tutorial as finished if the user is moving from older app version.
         // This is checked by either having stored update information for offline viewing,
         // or if the last update checked date is set (if user always had up to date system and never viewed update information before)
-        if (!settingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)
-            && (settingsManager.checkIfOfflineUpdateDataIsAvailable() || settingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE))
+        if (!SettingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)
+            && (SettingsManager.checkIfOfflineUpdateDataIsAvailable() || SettingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE))
         ) {
-            settingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
+            SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
         }
 
-        if (!settingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)) {
+        if (!SettingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)) {
             // launch OnboardingActivity since the app hasn't been setup yet
             startActivity(Intent(this, OnboardingActivity::class.java))
         } else {

@@ -6,7 +6,6 @@ import android.os.Parcelable
 import android.util.SparseBooleanArray
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.oxygenupdater.internal.settings.SettingsManager
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class UpdateData(
@@ -53,11 +52,6 @@ data class UpdateData(
     fun setIsUpdateInformationAvailable(updateInformationAvailable: Boolean) {
         this.updateInformationAvailable = updateInformationAvailable
     }
-
-    fun isSystemIsUpToDateCheck(settingsManager: SettingsManager?) = if (settingsManager != null
-        && settingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
-    ) false
-    else systemIsUpToDate
 
     override fun describeContents() = 0
 

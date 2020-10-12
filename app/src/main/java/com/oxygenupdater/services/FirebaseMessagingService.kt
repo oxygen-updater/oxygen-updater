@@ -20,16 +20,15 @@ class FirebaseMessagingService : FirebaseMessagingService() {
     private val random = Random.Default
 
     private val workManager by inject<WorkManager>()
-    private val settingsManager by inject<SettingsManager>()
 
     override fun onNewToken(token: String) {
         logDebug(TAG, "Received new Firebase token: $token")
-        settingsManager.savePreference(SettingsManager.PROPERTY_FIREBASE_TOKEN, token)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_FIREBASE_TOKEN, token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
-            val serverSpecifiedDelay = settingsManager.getPreference(
+            val serverSpecifiedDelay = SettingsManager.getPreference(
                 SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
                 1800
             ).let {

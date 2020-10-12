@@ -28,11 +28,10 @@ class UploadRootInstallLogWorker(
 ) : CoroutineWorker(context, parameters) {
 
     private val serverRepository by inject(ServerRepository::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        val deviceId = settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         val timestamp = LocalDateTime.now(SERVER_TIME_ZONE).toString()
 
         if (deviceId == -1L || updateMethodId == -1L) {
@@ -89,7 +88,7 @@ class UploadRootInstallLogWorker(
             && installation.installationStatus == InstallationStatus.FAILED
             || installation.installationStatus == InstallationStatus.FINISHED
         ) {
-            settingsManager.deletePreference(SettingsManager.PROPERTY_INSTALLATION_ID)
+            SettingsManager.removePreference(SettingsManager.PROPERTY_INSTALLATION_ID)
             Result.success()
         } else {
             Result.failure()

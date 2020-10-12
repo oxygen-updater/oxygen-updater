@@ -58,7 +58,6 @@ import kotlinx.android.synthetic.main.activity_main.appBar
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_main.viewPager
 import kotlinx.android.synthetic.main.activity_onboarding.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
@@ -70,7 +69,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
 
-    private val settingsManager by inject<SettingsManager>()
     private val mainViewModel by viewModel<MainViewModel>()
     private val billingViewModel by viewModel<BillingViewModel>()
 
@@ -104,6 +102,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         this,
                         updateInfo
                     )
+                    else -> {
+                        // no-op
+                    }
                 }
             } catch (e: IntentSender.SendIntentException) {
                 showAppUpdateBanner()
@@ -119,8 +120,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setupViewPager()
 
         // Offer contribution to users from app versions below 2.4.0
-        if (!settingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
-            && settingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)
+        if (!SettingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
+            && SettingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)
         ) {
             activityLauncher.Contribute()
         }
@@ -202,16 +203,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (requestCode == REQUEST_CODE_APP_UPDATE) {
             when (resultCode) {
                 // Reset ignore count
-                Activity.RESULT_OK -> settingsManager.savePreference(
+                Activity.RESULT_OK -> SettingsManager.savePreference(
                     SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                     0
                 )
                 // Increment ignore count and show app update banner
-                Activity.RESULT_CANCELED -> settingsManager.getPreference(
+                Activity.RESULT_CANCELED -> SettingsManager.getPreference(
                     SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                     0
                 ).let { ignoreCount ->
-                    settingsManager.savePreference(
+                    SettingsManager.savePreference(
                         SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                         ignoreCount + 1
                     )
@@ -252,7 +253,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         mainViewModel.fetchAllDevices().observe(this) { deviceList ->
             mainViewModel.deviceOsSpec = Utils.checkDeviceOsSpec(deviceList)
 
-            val showDeviceWarningDialog = !settingsManager.getPreference(
+            val showDeviceWarningDialog = !SettingsManager.getPreference(
                 SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
                 false
             )
@@ -262,7 +263,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             } else {
                 mainViewModel.deviceMismatchStatus = Utils.checkDeviceMismatch(this, deviceList)
 
-                val showIncorrectDeviceDialog = !settingsManager.getPreference(
+                val showIncorrectDeviceDialog = !SettingsManager.getPreference(
                     SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
                     false
                 )
@@ -279,13 +280,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             // subscribe to notification topics
             // we're doing it here, instead of [SplashActivity], because it requires the app to be setup first
             // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences])
-            if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
+            if (!SettingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
                 mainViewModel.subscribeToNotificationTopics(deviceList.filter { it.enabled })
             }
         }
 
         mainViewModel.serverStatus.observe(this) { serverStatus ->
-            val shouldShowAppUpdateBanner = settingsManager.getPreference(
+            val shouldShowAppUpdateBanner = SettingsManager.getPreference(
                 SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES,
                 true
             )
@@ -504,7 +505,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .setMessage(getString(resourceId))
             .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
                 val checkbox = checkBoxView.findViewById<CheckBox>(R.id.device_warning_checkbox)
-                settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, checkbox.isChecked)
+                SettingsManager.savePreference(
+                    SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
+                    checkbox.isChecked
+                )
                 dialog.dismiss()
             }.show()
     }
@@ -529,7 +533,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             )
             .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
                 val checkbox = checkBoxView.findViewById<CheckBox>(R.id.device_warning_checkbox)
-                settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, checkbox.isChecked)
+                SettingsManager.savePreference(
+                    SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
+                    checkbox.isChecked
+                )
                 dialog.dismiss()
             }.show()
     }

@@ -3,9 +3,6 @@ package com.oxygenupdater.extensions
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
-import org.koin.java.KoinJavaComponent.inject
-
-private val settingsManager by inject(SettingsManager::class.java)
 
 /**
  * Sync a [SwitchMaterial]'s UI state with [android.content.SharedPreferences]
@@ -17,10 +14,10 @@ fun SwitchMaterial.syncWithSharedPreferences(
     defaultValue: Boolean,
     checkedChangeCallback: KotlinCallback<Boolean>? = null
 ) {
-    isChecked = settingsManager.getPreference(settingName, defaultValue)
+    isChecked = SettingsManager.getPreference(settingName, defaultValue)
 
     setOnCheckedChangeListener { _, isChecked ->
-        settingsManager.savePreference(settingName, isChecked)
+        SettingsManager.savePreference(settingName, isChecked)
 
         checkedChangeCallback?.invoke(isChecked)
     }

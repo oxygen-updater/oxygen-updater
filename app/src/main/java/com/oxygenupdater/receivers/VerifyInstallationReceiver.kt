@@ -24,7 +24,7 @@ import com.oxygenupdater.OxygenUpdater.Companion.PUSH_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.Companion.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT
 import com.oxygenupdater.models.InstallationStatus
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logError
@@ -45,14 +45,13 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
     private val systemVersionProperties by inject(SystemVersionProperties::class.java)
     private val notificationManager by inject(NotificationManager::class.java)
     private val workManager by inject(WorkManager::class.java)
-    private val settingsManager by inject(SettingsManager::class.java)
 
     override fun onReceive(context: Context, intent: Intent) {
         try {
-            if (settingsManager.getPreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
+            if (SettingsManager.getPreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
                 && intent.action == Intent.ACTION_BOOT_COMPLETED
             ) {
-                settingsManager.savePreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
+                SettingsManager.savePreference(PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
 
                 // Don't check on unsupported devices.
                 if (systemVersionProperties.oxygenOSVersion == NO_OXYGEN_OS
@@ -61,8 +60,8 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
                     return
                 }
 
-                val oldOxygenOSVersion = settingsManager.getPreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, "")
-                val targetOxygenOSVersion = settingsManager.getPreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, "")
+                val oldOxygenOSVersion = SettingsManager.getPreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, "")
+                val targetOxygenOSVersion = SettingsManager.getPreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, "")
                 val currentOxygenOSVersion = systemVersionProperties.oxygenOSOTAVersion
 
                 if (oldOxygenOSVersion.isEmpty() || targetOxygenOSVersion.isEmpty() || currentOxygenOSVersion.isEmpty()) {
@@ -175,7 +174,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         destinationOs: String,
         currentOs: String
     ) = arrayListOf(
-        WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_INSTALL_ID to settingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
+        WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_INSTALL_ID to SettingsManager.getPreference(SettingsManager.PROPERTY_INSTALLATION_ID, "<INVALID>"),
         WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_START_OS to startOs,
         WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS to destinationOs,
         WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS to currentOs

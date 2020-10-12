@@ -8,6 +8,7 @@ import android.text.format.Formatter
 import android.view.View
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
@@ -26,7 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 import kotlin.math.roundToLong
 
-class DeviceInformationFragment : AbstractFragment(R.layout.fragment_device_information) {
+class DeviceInformationFragment : Fragment(R.layout.fragment_device_information) {
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
     private val mainViewModel by sharedViewModel<MainViewModel>()

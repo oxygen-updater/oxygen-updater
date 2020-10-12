@@ -19,7 +19,6 @@ import com.oxygenupdater.R
 import com.oxygenupdater.extensions.getString
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logVerbose
-import org.koin.java.KoinJavaComponent.inject
 import java.util.*
 import kotlin.math.min
 
@@ -48,17 +47,27 @@ class BottomSheetPreference : Preference {
     var secondaryValue: Any? = null
         private set
 
-    private val settingsManager by inject(SettingsManager::class.java)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    private constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) : super(context, attrs, defStyleAttr, defStyleRes) {
         init(context, attrs, defStyleAttr, defStyleRes)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int
+    ) : super(context, attrs, defStyleAttr) {
         init(context, attrs, defStyleAttr, 0)
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(
+        context: Context,
+        attrs: AttributeSet?
+    ) : super(context, attrs) {
         init(context, attrs, 0, 0)
     }
 
@@ -74,7 +83,12 @@ class BottomSheetPreference : Preference {
      * @param defStyleAttr default style attributes
      * @param defStyleRes  default style resource
      */
-    private fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
+    private fun init(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) {
         this.mContext = context
 
         readAttrs(attrs, defStyleAttr, defStyleRes)
@@ -144,8 +158,8 @@ class BottomSheetPreference : Preference {
 
         dialogItemLayout.setOnClickListener { setValueIndex(index) }
 
-        val currentValue = settingsManager.getPreference<Any?>(key, null)
-        val currentSecondaryValue = settingsManager.getPreference<Any?>(secondaryKey, null)
+        val currentValue = SettingsManager.getPreference<Any?>(key, null)
+        val currentSecondaryValue = SettingsManager.getPreference<Any?>(secondaryKey, null)
         val secondaryValue = item.secondaryValue
 
         // value is mandatory, secondary value is optional
@@ -225,7 +239,7 @@ class BottomSheetPreference : Preference {
     }
 
     /**
-     * Finds index of item with newValue or newSecondaryValue and calls [.setValueIndex]
+     * Finds index of item with newValue or newSecondaryValue and calls [setValueIndex]
      *
      * @param newValue          the new value
      * @param newSecondaryValue the new integer value
@@ -268,10 +282,10 @@ class BottomSheetPreference : Preference {
             value = newValue
             secondaryValue = newSecondaryValue
             valueSet = true
-            settingsManager.savePreference(key, newValue)
+            SettingsManager.savePreference(key, newValue)
 
             if (newSecondaryValue != null) {
-                settingsManager.savePreference(secondaryKey, newSecondaryValue)
+                SettingsManager.savePreference(secondaryKey, newSecondaryValue)
             }
 
             if (changed) {
@@ -283,12 +297,12 @@ class BottomSheetPreference : Preference {
     }
 
     fun setSecondaryKey(secondaryKey: String?) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating secondaryKey: %s", secondaryKey))
+        logInfo(TAG, "Updating secondaryKey: $secondaryKey")
         this.secondaryKey = secondaryKey
     }
 
     override fun setTitle(title: CharSequence) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating dialog title: %s", title))
+        logInfo(TAG, "Updating dialog title: $title")
         this.title = title.toString()
         setText(dialogLayout.findViewById(R.id.dialog_title), title.toString())
         super.setTitle(title)
@@ -309,8 +323,8 @@ class BottomSheetPreference : Preference {
     }
 
     override fun onSetInitialValue(defaultValue: Any?) {
-        val newValue = settingsManager.getPreference<Any?>(key, null)
-        val newSecondaryValue = settingsManager.getPreference<Any?>(secondaryKey, null)
+        val newValue = SettingsManager.getPreference<Any?>(key, null)
+        val newSecondaryValue = SettingsManager.getPreference<Any?>(secondaryKey, null)
         setValues(newValue, newSecondaryValue)
     }
 
@@ -339,13 +353,13 @@ class BottomSheetPreference : Preference {
     }
 
     fun setCaption(caption: String?) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating dialog caption: %s", caption))
+        logInfo(TAG, "Updating dialog caption: $caption")
         this.caption = caption
         setText(dialogLayout.findViewById(R.id.dialog_caption), caption)
     }
 
     fun setEntries(entries: Array<CharSequence>) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating titles for %d items", entries.size))
+        logInfo(TAG, "Updating titles for ${entries.size} items")
 
         // don't care if items and entries aren't equal in length
         // replace title for all indices that are common
@@ -359,7 +373,7 @@ class BottomSheetPreference : Preference {
     }
 
     fun setTitleEntries(titles: Array<CharSequence>) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating titles for %d items", titles.size))
+        logInfo(TAG, "Updating titles for ${titles.size} items")
 
         // don't care if items and titles aren't equal in length
         // replace title for all indices that are common
@@ -373,7 +387,7 @@ class BottomSheetPreference : Preference {
     }
 
     fun setSubtitleEntries(subtitles: Array<CharSequence>) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating subtitles for %d items", subtitles.size))
+        logInfo(TAG, "Updating subtitles for ${subtitles.size} items")
 
         // don't care if items and subtitles aren't equal in length
         // replace subtitle for all indices that are common
@@ -385,7 +399,7 @@ class BottomSheetPreference : Preference {
     }
 
     fun setEntryValues(entryValues: Array<CharSequence>) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating entryValues for %d items", entryValues.size))
+        logInfo(TAG, "Updating entryValues for ${entryValues.size} items")
 
         // don't care if items and entryValues aren't equal in length
         // replace value for all indices that are common
@@ -395,8 +409,8 @@ class BottomSheetPreference : Preference {
         }
     }
 
-    fun setSecondaryEntryValues(objectEntryValues: Array<Any?>) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Updating secondaryValues for %d items", objectEntryValues.size))
+    fun setSecondaryEntryValues(objectEntryValues: Array<Long?>) {
+        logInfo(TAG, "Updating secondaryValues for ${objectEntryValues.size} items")
 
         // don't care if items and objectEntryValues aren't equal in length
         // replace secondaryValue for all indices that are common
@@ -407,7 +421,7 @@ class BottomSheetPreference : Preference {
     }
 
     fun setItemList(itemList: List<BottomSheetItem>) {
-        logInfo(TAG, String.format(Locale.getDefault(), "Populating itemList with %d items", itemList.size))
+        logInfo(TAG, "Populating itemList with ${itemList.size} items")
 
         // copy list instead of shallow-referencing it
         this.itemList = ArrayList()
@@ -418,7 +432,7 @@ class BottomSheetPreference : Preference {
     }
 
     /**
-     * Iterates over [.itemList] to remark items as selected/unselected
+     * Iterates over [itemList] to remark items as selected/unselected
      *
      * @param value the new value
      */
@@ -453,7 +467,7 @@ class BottomSheetPreference : Preference {
                 dialogItemLayout.setBackgroundResource(resourceId)
             }
 
-            logVerbose(TAG, String.format(Locale.getDefault(), "Item #%d marked unselected with title='%s', and subtitle='%s'", selectedIndex, title, caption))
+            logVerbose(TAG, "Item #$selectedIndex marked unselected with title='$title', and subtitle='$caption'")
         }
     }
 
@@ -470,21 +484,19 @@ class BottomSheetPreference : Preference {
             checkmarkView.isVisible = true
             dialogItemLayout.setBackgroundResource(R.drawable.rounded_overlay)
 
-            logVerbose(TAG, String.format(Locale.getDefault(), "Item #%d marked selected with title='%s', and subtitle='%s'", selectedIndex, title, caption))
+            logVerbose(TAG, "Item #$selectedIndex marked selected with title='$title', and subtitle='$caption'")
         }
     }
 
     /**
-     * Called when value changes. Updates summary, closes the [.dialog], an notifies on change listeners
+     * Called when value changes. Updates summary, closes the [dialog], an notifies on change listeners
      */
     private fun onChange() {
         summary = value.toString()
 
         dialog.cancel()
 
-        if (mOnChangeListener != null) {
-            mOnChangeListener!!.onPreferenceChange(this, value)
-        }
+        mOnChangeListener?.onPreferenceChange(this, value)
     }
 
     private class SavedState : BaseSavedState {
@@ -492,12 +504,12 @@ class BottomSheetPreference : Preference {
         var value: Any? = null
         var secondaryValue: Any? = null
 
-        internal constructor(source: Parcel) : super(source) {
+        constructor(source: Parcel) : super(source) {
             value = source.readString()
             secondaryValue = source.readLong()
         }
 
-        internal constructor(superState: Parcelable?) : super(superState)
+        constructor(superState: Parcelable?) : super(superState)
 
         override fun writeToParcel(dest: Parcel, flags: Int) = super.writeToParcel(dest, flags).let {
             dest.writeString(value.toString())

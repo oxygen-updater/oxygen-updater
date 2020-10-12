@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
  */
 class OnboardingViewModel(
     private val serverRepository: ServerRepository,
-    private val settingsManager: SettingsManager,
     private val crashlytics: FirebaseCrashlytics
 ) : ViewModel() {
 
@@ -65,28 +64,28 @@ class OnboardingViewModel(
     /**
      * Post [_selectedDevice] and save the ID & name in [android.content.SharedPreferences]
      */
-    fun updateSelectedDevice(device: Device) = settingsManager.let {
+    fun updateSelectedDevice(device: Device) {
         _selectedDevice.postValue(device)
 
-        it.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.id)
-        it.savePreference(SettingsManager.PROPERTY_DEVICE, device.name)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.id)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.name)
     }
 
     /**
      * Post [_selectedUpdateMethod] and save the ID & name in [android.content.SharedPreferences].
      * Additionally, update [FirebaseCrashlytics]' user identifier
      */
-    fun updateSelectedUpdateMethod(updateMethod: UpdateMethod) = settingsManager.let {
+    fun updateSelectedUpdateMethod(updateMethod: UpdateMethod) {
         _selectedUpdateMethod.postValue(updateMethod)
 
-        it.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.id)
-        it.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.name)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.id)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.name)
 
         // since both device and update method have been selected,
         // we can safely update Crashlytics' user identifier
         crashlytics.setUserId(
-            "Device: " + it.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
-                    + ", Update Method: " + it.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+            "Device: " + SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                    + ", Update Method: " + SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
     }
 
