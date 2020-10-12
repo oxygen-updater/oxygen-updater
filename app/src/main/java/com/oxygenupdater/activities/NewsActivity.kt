@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.LoadAdError
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
@@ -295,31 +296,25 @@ class NewsActivity : SupportActionBarActivity() {
 
                 adListener = object : AdListener() {
                     override fun onAdFailedToLoad(
-                        errorCode: Int
-                    ) = super.onAdFailedToLoad(errorCode).also {
-                        logDebug(TAG, "Interstitial ad failed to load: $errorCode")
-
-                        // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                        SettingsManager.savePreference(
-                            SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
-                            LocalDateTime.now().toString()
-                        )
+                        loadAdError: LoadAdError?
+                    ) = super.onAdFailedToLoad(loadAdError).also {
+                        logDebug(TAG, "Interstitial ad failed to load: $loadAdError")
                     }
 
                     override fun onAdClosed() = super.onAdClosed().also {
                         logDebug(TAG, "Interstitial ad closed")
-
-                        // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                        SettingsManager.savePreference(
-                            SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
-                            LocalDateTime.now().toString()
-                        )
                     }
 
                     override fun onAdLoaded() = super.onAdLoaded().also {
                         logDebug(TAG, "Interstitial ad loaded")
 
                         if (!isFinishing) {
+                            // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
+                            SettingsManager.savePreference(
+                                SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
+                                LocalDateTime.now().toString()
+                            )
+
                             show()
                         }
                     }
