@@ -12,14 +12,14 @@
 	android:paddingBottom="@dimen/spacing_default"
 	android:stateListAnimator="@animator/clicked">
 
-	<androidx.appcompat.widget.AppCompatImageView
+	<ImageView
 		android:id="@+id/dialog_item_checkmark"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:contentDescription="@string/icon"
 		android:visibility="invisible"
-		app:srcCompat="@drawable/checkmark"
+		app:srcCompat="@drawable/done"
 		app:tint="?colorPrimary"
 		tools:visibility="visible" />
 

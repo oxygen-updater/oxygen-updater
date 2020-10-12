@@ -11,6 +11,8 @@ import android.text.format.Formatter
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
@@ -21,13 +23,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.OxygenUpdater
+import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.dialogs.Dialogs.showDownloadError
 import com.oxygenupdater.dialogs.Dialogs.showUpdateAlreadyDownloadedMessage
 import com.oxygenupdater.dialogs.ServerMessagesDialog
-import com.oxygenupdater.dialogs.UpdateChangelogDialog
 import com.oxygenupdater.enums.DownloadFailure
 import com.oxygenupdater.enums.DownloadStatus
 import com.oxygenupdater.enums.DownloadStatus.DOWNLOADING
@@ -40,13 +42,16 @@ import com.oxygenupdater.enums.DownloadStatus.VERIFICATION_COMPLETED
 import com.oxygenupdater.enums.DownloadStatus.VERIFICATION_FAILED
 import com.oxygenupdater.enums.DownloadStatus.VERIFYING
 import com.oxygenupdater.extensions.setImageResourceWithTint
+import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.Banner
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.UpdateDataVersionFormatter
+import com.oxygenupdater.utils.UpdateDataVersionFormatter.canVersionInfoBeFormatted
+import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedOxygenOsVersion
+import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedVersionNumber
 import com.oxygenupdater.utils.UpdateDescriptionParser
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
@@ -57,6 +62,7 @@ import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_TYPE
 import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_PROGRESS
 import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_TOTAL_BYTES
 import kotlinx.android.synthetic.main.fragment_update_information.*
+import kotlinx.android.synthetic.main.layout_device_information_software.*
 import kotlinx.android.synthetic.main.layout_error.*
 import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
 import kotlinx.android.synthetic.main.layout_update_information.*
@@ -72,6 +78,60 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     private val systemVersionProperties by inject<SystemVersionProperties>()
     private val crashlytics by inject<FirebaseCrashlytics>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
+
+    /**
+     * Allows an already downloaded update file to be deleted to save storage space.
+     */
+    private val alreadyDownloadedOnClickListener = View.OnClickListener {
+        showUpdateAlreadyDownloadedMessage(updateData, activity) {
+            if (updateData != null) {
+                val mainActivity = activity as MainActivity? ?: return@showUpdateAlreadyDownloadedMessage
+
+                if (mainActivity.hasDownloadPermissions()) {
+                    val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+
+                    if (deleted) {
+                        mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                    }
+                } else {
+                    mainActivity.requestDownloadPermissions { granted ->
+                        if (granted) {
+                            val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+
+                            if (deleted) {
+                                mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Download button click listener. Performs these actions when the button is clicked.
+     */
+    private val downloadNotStartedOnClickListener = View.OnClickListener {
+        if (isAdded && updateInformationLayout != null) {
+            val mainActivity = activity as MainActivity? ?: return@OnClickListener
+
+            if (mainActivity.hasDownloadPermissions()) {
+                mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
+
+                downloadProgressBar.isIndeterminate = true
+                downloadDetailsTextView.setText(R.string.download_pending)
+
+                // Pause is possible on first progress update
+                downloadLayout.setOnClickListener { }
+            } else {
+                mainActivity.requestDownloadPermissions { granted ->
+                    if (granted) {
+                        mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
+                    }
+                }
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (settingsManager.checkIfSetupScreenHasBeenCompleted()) {
@@ -106,6 +166,18 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
 
     override fun onDestroy() = super.onDestroy().also {
         mainViewModel.maybePruneWork()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == MANAGE_STORAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+            } else if (requestCode == Activity.RESULT_CANCELED) {
+                showDownloadError(R.string.download_error_storage)
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun setupServerResponseObservers() {
@@ -227,6 +299,10 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         // Show error layout
         errorLayoutStub?.inflate()
         errorLayout.isVisible = true
+        // Hide "System update available" view
+        updateInformationLayout?.visibility = GONE
+        // Hide "System is up to date" view
+        systemIsUpToDateLayout?.visibility = GONE
 
         errorTitle.text = getString(R.string.update_information_error_title)
         // Make the links clickable
@@ -270,7 +346,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     /**
      * Displays the update information from a [UpdateData] with update information.
      *
-     * @param updateData              Update information to display
+     * @param updateData Update information to display
      */
     private fun displayUpdateInformation(updateData: UpdateData) {
         if (!isAdded) {
@@ -288,8 +364,28 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             || updateData.isSystemIsUpToDateCheck(settingsManager)
             || !updateData.isUpdateInformationAvailable
         ) {
+            propagateTitleAndSubtitleChanges(
+                getString(
+                    if (updateData.isUpdateInformationAvailable) {
+                        R.string.update_information_system_is_up_to_date
+                    } else {
+                        R.string.update_information_no_update_data_available
+                    }
+                )
+            )
+
             displayUpdateInformationWhenUpToDate(updateData, online)
         } else {
+            propagateTitleAndSubtitleChanges(
+                getString(
+                    if (updateData.systemIsUpToDate) {
+                        R.string.update_information_header_advanced_mode_hint
+                    } else {
+                        R.string.notification_version_title
+                    }
+                )
+            )
+
             displayUpdateInformationWhenNotUpToDate(updateData)
         }
 
@@ -309,83 +405,18 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         }
     }
 
-    private fun displayUpdateInformationWhenUpToDate(updateData: UpdateData, online: Boolean) {
-        // Show "System is up to date" view.
-        systemIsUpToDateLayoutStub?.inflate()
-
-        // Set the current OxygenOS version if available.
-        systemIsUpToDateVersionTextView.apply {
-            val oxygenOSVersion = systemVersionProperties.oxygenOSVersion
-
-            if (oxygenOSVersion != OxygenUpdater.NO_OXYGEN_OS) {
-                isVisible = true
-                text = getString(R.string.update_information_oxygen_os_version, oxygenOSVersion)
-            } else {
-                isVisible = false
-            }
-        }
-
-        val formattedOxygenOsVersion = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
-            if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {
-                UpdateDataVersionFormatter.getFormattedVersionNumber(updateData)
-            } else {
-                updateData.versionNumber
-            }
-        } else {
-            getString(
-                R.string.update_information_unknown_update_name,
-                settingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
-            )
-        }
-
-        // display a notice in the dialog if the user's currently installed version doesn't match the version this changelog is meant for
-        val differentVersionChangelogNoticeText = if (updateData.otaVersionNumber != systemVersionProperties.oxygenOSOTAVersion) {
-            getString(
-                R.string.update_information_different_version_changelog_notice,
-                settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
-            )
-        } else {
-            null
-        }
-
-        val updateChangelogDialog = UpdateChangelogDialog(
-            requireContext(),
-            formattedOxygenOsVersion,
-            getUpdateChangelog(updateData.description),
-            differentVersionChangelogNoticeText
-        )
-
-        // Set "No Update Information Is Available" button if needed.
-        systemIsUpToDateChangelogView.text = if (!updateData.isUpdateInformationAvailable) {
-            getString(R.string.update_information_no_update_data_available)
-        } else {
-            getString(R.string.update_information_view_update_information)
-        }
-
-        systemIsUpToDateChangelogView.setOnClickListener { updateChangelogDialog.show() }
-
-        // Save last time checked if online.
-        if (online) {
-            settingsManager.savePreference(
-                SettingsManager.PROPERTY_UPDATE_CHECKED_DATE,
-                LocalDateTime.now(SERVER_TIME_ZONE).toString()
-            )
-        }
-
-        // Show last time checked.
-        systemIsUpToDateDateTextView.text = getString(
-            R.string.update_information_last_checked_on,
-            Utils.formatDateTime(requireContext(), settingsManager.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
-        )
-    }
-
-    private fun displayUpdateInformationWhenNotUpToDate(updateData: UpdateData) {
+    private fun displayUpdateInformationWhenNotUpToDate(
+        updateData: UpdateData
+    ) {
         // Show "System update available" view.
         updateInformationLayoutStub?.inflate()
+        updateInformationLayout?.visibility = VISIBLE
+        // Hide "System is up to date" view
+        systemIsUpToDateLayout?.visibility = GONE
 
-        val formattedOxygenOsVersion = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
-            if (UpdateDataVersionFormatter.canVersionInfoBeFormatted(updateData)) {
-                UpdateDataVersionFormatter.getFormattedVersionNumber(updateData)
+        oxygenOsVersionTextView.text = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
+            if (canVersionInfoBeFormatted(updateData)) {
+                getFormattedVersionNumber(updateData)
             } else {
                 updateData.versionNumber
             }
@@ -406,14 +437,11 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             footerDivider.isVisible = true
         } else {
             // display badge to indicate a new system update is available
-            (activity as MainActivity?)?.updateTabBadge(1)
+            (activity as MainActivity?)?.updateTabBadge(R.id.page_update)
 
             footerTextView.isVisible = false
             footerDivider.isVisible = false
         }
-
-        // Display available update version number.
-        oxygenOsVersionTextView.text = formattedOxygenOsVersion
 
         // Display download size.
         downloadSizeTextView.text = Formatter.formatFileSize(
@@ -438,6 +466,149 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
         } else {
             mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
         }
+    }
+
+    private fun displayUpdateInformationWhenUpToDate(
+        updateData: UpdateData,
+        online: Boolean
+    ) {
+        // Show "System is up to date" view.
+        systemIsUpToDateLayoutStub?.inflate()
+        systemIsUpToDateLayout?.visibility = VISIBLE
+        // Hide "System update available" view
+        updateInformationLayout?.visibility = GONE
+
+        // https://stackoverflow.com/a/60542345
+        systemIsUpToDateLayoutChild?.layoutTransition?.setAnimateParentHierarchy(false)
+
+        val isDifferentVersion = updateData.otaVersionNumber != systemVersionProperties.oxygenOSOTAVersion
+
+        advancedModeTipTextView.run {
+            isVisible = isDifferentVersion
+            advancedModeTipDivider.isVisible = isDifferentVersion
+
+            text = getString(
+                R.string.update_information_banner_advanced_mode_tip,
+                settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+            )
+        }
+
+        // Save last time checked if online.
+        if (online) {
+            settingsManager.savePreference(
+                SettingsManager.PROPERTY_UPDATE_CHECKED_DATE,
+                LocalDateTime.now(SERVER_TIME_ZONE).toString()
+            )
+        }
+
+        // Show last time checked.
+        updateLastCheckedField.text = getString(
+            R.string.update_information_last_checked_on,
+            Utils.formatDateTime(requireContext(), settingsManager.getPreference<String?>(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, null))
+        )
+
+        displaySoftwareInfo()
+        setupChangelogViews(isDifferentVersion)
+    }
+
+    private fun displaySoftwareInfo() {
+        if (!isAdded) {
+            logDebug(TAG, "Fragment not added. Can not display software information!")
+            return
+        }
+
+        softwareHeader.isVisible = false
+
+        // Android version
+        osVersionField.text = DeviceInformationData.osVersion
+
+        // OxygenOS version (if available)
+        oxygenOsVersionField.run {
+            val oxygenOSVersion = getFormattedOxygenOsVersion(systemVersionProperties.oxygenOSVersion)
+
+            if (oxygenOSVersion != NO_OXYGEN_OS) {
+                text = oxygenOSVersion
+            } else {
+                oxygenOsVersionLabel.isVisible = false
+                isVisible = false
+            }
+        }
+
+        // OxygenOS OTA version (if available)
+        otaVersionField.run {
+            val oxygenOSOTAVersion = systemVersionProperties.oxygenOSOTAVersion
+
+            if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
+                text = oxygenOSOTAVersion
+            } else {
+                otaVersionLabel.isVisible = false
+                isVisible = false
+            }
+        }
+
+        // Incremental OS version
+        incrementalOsVersionField.text = DeviceInformationData.incrementalOsVersion
+
+        // Security Patch Date (if available)
+        securityPatchField.run {
+            val securityPatchDate = systemVersionProperties.securityPatchDate
+
+            if (securityPatchDate != NO_OXYGEN_OS) {
+                text = securityPatchDate
+            } else {
+                securityPatchLabel.isVisible = false
+                isVisible = false
+            }
+        }
+    }
+
+    private fun setupChangelogViews(isDifferentVersion: Boolean) {
+        changelogField.text = getUpdateChangelog(updateData?.description)
+        differentVersionChangelogNotice.text = getString(
+            R.string.update_information_different_version_changelog_notice,
+            settingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+        )
+
+        changelogLabel.run {
+            // Set text to "No update information is available" if needed
+            text = getString(
+                if (updateData?.isUpdateInformationAvailable == false) {
+                    R.string.update_information_no_update_data_available
+                } else {
+                    R.string.update_information_view_update_information
+                }
+            )
+
+            setOnClickListener {
+                val visible = !changelogField.isVisible
+
+                // Show the changelog
+                changelogField.isVisible = visible
+                // Display a notice above the changelog if the user's currently installed
+                // version doesn't match the version this changelog is meant for
+                differentVersionChangelogNotice.isVisible = visible && isDifferentVersion
+
+                // Toggle expand/collapse icons
+                setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    if (visible) {
+                        R.drawable.expand
+                    } else {
+                        R.drawable.collapse
+                    }, 0, 0, 0
+                )
+            }
+        }
+    }
+
+    private fun propagateTitleAndSubtitleChanges(subtitle: CharSequence?) {
+        mainViewModel.saveSubtitleForPage(
+            R.id.page_update,
+            subtitle
+        )
+
+        // Since this is the first/default page, the page change callback isn't fired
+        // So we need to manually update toolbar text
+        (activity as MainActivity?)?.updateToolbarForPage(R.id.page_update)
     }
 
     private fun getUpdateChangelog(description: String?) = if (!description.isNullOrBlank() && description != "null") {
@@ -509,7 +680,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                         isClickable = shouldEnable
 
                         if (shouldEnable) {
-                            setOnClickListener(DownloadNotStartedOnClickListener())
+                            setOnClickListener(downloadNotStartedOnClickListener)
                         }
                     }
 
@@ -630,7 +801,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                         downloadLayout.apply {
                             isEnabled = true
                             isClickable = true
-                            setOnClickListener(AlreadyDownloadedOnClickListener())
+                            setOnClickListener(alreadyDownloadedOnClickListener)
                         }
                     }
                 }
@@ -715,7 +886,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
                     downloadLayout.apply {
                         isEnabled = true
                         isClickable = true
-                        setOnClickListener(AlreadyDownloadedOnClickListener())
+                        setOnClickListener(alreadyDownloadedOnClickListener)
                     }
 
                     // Since file has been verified, we can prune the work and launch [InstallActivity]
@@ -767,13 +938,12 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
     private fun initDownloadActionButton(isCancelAction: Boolean) {
         val drawableResId: Int
         val colorResId: Int
-        val onClickListener: View.OnClickListener
 
-        if (isCancelAction) {
+        val onClickListener = if (isCancelAction) {
             drawableResId = R.drawable.close
             colorResId = R.color.colorError
 
-            onClickListener = View.OnClickListener {
+            View.OnClickListener {
                 mainViewModel.cancelDownloadWork(requireContext(), updateData)
 
                 Handler().postDelayed(
@@ -785,7 +955,7 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             drawableResId = R.drawable.install
             colorResId = R.color.colorPositive
 
-            onClickListener = View.OnClickListener {
+            View.OnClickListener {
                 ActivityLauncher(requireActivity()).UpdateInstallation(true, updateData)
             }
         }
@@ -795,76 +965,6 @@ class UpdateInformationFragment : AbstractFragment(R.layout.fragment_update_info
             setImageResourceWithTint(drawableResId, colorResId)
             setOnClickListener(onClickListener)
         }
-    }
-
-    /**
-     * Download button click listener. Performs these actions when the button is clicked.
-     */
-    private inner class DownloadNotStartedOnClickListener : View.OnClickListener {
-        override fun onClick(view: View) {
-            if (isAdded && updateInformationLayout != null) {
-                val mainActivity = activity as MainActivity? ?: return
-
-                if (mainActivity.hasDownloadPermissions()) {
-                    mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
-
-                    downloadProgressBar.isIndeterminate = true
-                    downloadDetailsTextView.setText(R.string.download_pending)
-
-                    // Pause is possible on first progress update
-                    downloadLayout.setOnClickListener { }
-                } else {
-                    mainActivity.requestDownloadPermissions { granted ->
-                        if (granted) {
-                            mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Allows an already downloaded update file to be deleted to save storage space.
-     */
-    private inner class AlreadyDownloadedOnClickListener internal constructor() : View.OnClickListener {
-        override fun onClick(view: View) {
-            showUpdateAlreadyDownloadedMessage(updateData, this@UpdateInformationFragment.activity) {
-                if (updateData != null) {
-                    val mainActivity = activity as MainActivity? ?: return@showUpdateAlreadyDownloadedMessage
-
-                    if (mainActivity.hasDownloadPermissions()) {
-                        val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
-
-                        if (deleted) {
-                            mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
-                        }
-                    } else {
-                        mainActivity.requestDownloadPermissions { granted ->
-                            if (granted) {
-                                val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
-
-                                if (deleted) {
-                                    mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == MANAGE_STORAGE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
-            } else if (requestCode == Activity.RESULT_CANCELED) {
-                showDownloadError(R.string.download_error_storage)
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {

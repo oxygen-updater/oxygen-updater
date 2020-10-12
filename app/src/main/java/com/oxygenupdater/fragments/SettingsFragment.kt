@@ -22,6 +22,7 @@ import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
+import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.dialogs.Dialogs.showAdvancedModeExplanation
 import com.oxygenupdater.enums.PurchaseStatus
 import com.oxygenupdater.enums.PurchaseType
@@ -304,7 +305,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         val privacyPolicyUri = Uri.parse("https://oxygenupdater.com/legal")
         val customTabsIntent = CustomTabsIntent.Builder()
             .setColorScheme(if (ThemeUtils.isNightModeActive(mContext)) CustomTabsIntent.COLOR_SCHEME_DARK else CustomTabsIntent.COLOR_SCHEME_LIGHT)
-            .setToolbarColor(ContextCompat.getColor(mContext, R.color.appBarBackground))
+            .setToolbarColor(ContextCompat.getColor(mContext, R.color.background))
             .setNavigationBarColor(ContextCompat.getColor(mContext, R.color.background))
             .build()
 
@@ -322,7 +323,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         oxygenUpdater?.apply {
             summary = resources.getString(R.string.summary_oxygen, BuildConfig.VERSION_NAME)
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                activityLauncher.About()
+                (activity as MainActivity?)?.showAboutPage()
                 true
             }
         }

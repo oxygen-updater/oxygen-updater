@@ -11,7 +11,10 @@
 	<string name="update_information_header">Frissítés</string>
 	<string name="update_information_error_title">Nem sikerült lekérni a legfrissebb frissítési adatokat</string>
 	<string name="update_information_banner_server">Koppints ide a fontos értesítések megtekintéséhez</string>
-	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára.\n\nA haladó módot a beállításokban kapcsolhatod ki</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable haladó mód if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">A Speciális mód engedélyezve van</string>
+	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára.\n\nA haladó módot a beállításokban kapcsolhatod ki.</string>
 	<string name="update_information_different_version_changelog_notice">A legfrissebb frissítés módosítási naplóját nézi a \"%1$s\" frissítési sávon. Ha telepíteni szeretnéd ezt a frissítést, előbb be kell kapcsolnod a haladó módot (a beállításokban).\n\nHa azonban inkább az aktuálisan telepített verzió módosítási naplóját szeretnéd látni, akkor vissza kell váltanod a helyes frissítési módszerre.</string>
 	<string name="update_information_last_checked_on">Utoljára ellenőrizve: %1$s</string>
 	<string name="update_information_no_update_data_available">Nem állnak rendelkezésre frissítési információk</string>
@@ -266,19 +269,19 @@ Instrukciók:
 	<string name="device_information_hardware_header">Hardver</string>
 	<string name="device_information_software_header">Szoftver</string>
 
-	<string name="device_information_amount_of_memory">RAM mennyisége:</string>
-	<string name="device_information_cpu_frequency">Processzor frekvenciája:</string>
+	<string name="device_information_amount_of_memory">RAM mennyisége</string>
+	<string name="device_information_cpu_frequency">Processzor frekvenciája</string>
 	<string name="device_information_header">Az én eszközöm</string>
 	<string name="device_information_image_description">Eszköz kép</string>
-	<string name="device_information_incremental_os_version">Inkrementális OS verzió:</string>
-	<string name="device_information_os_version">Android verzió:</string>
-	<string name="device_information_oxygen_os_version">OxygenOS verzió:</string>
-	<string name="device_information_oxygen_os_ota_version">OTA verzió:</string>
-	<string name="device_information_patch_level_version">Biztonsági javítás dátuma:</string>
-	<string name="device_information_serial_number">Sorozatszám:</string>
-	<string name="device_information_system_on_a_chip">Rendszerchip:</string>
+	<string name="device_information_incremental_os_version">Inkrementális OS verzió</string>
+	<string name="device_information_os_version">Android verzió</string>
+	<string name="device_information_oxygen_os_version">OxygenOS verzió</string>
+	<string name="device_information_oxygen_os_ota_version">OTA verzió</string>
+	<string name="device_information_patch_level_version">Biztonsági javítás dátuma</string>
+	<string name="device_information_serial_number">Sorozatszám</string>
+	<string name="device_information_system_on_a_chip">Rendszerchip</string>
 	<string name="device_information_unknown">ismeretlen</string>
-	<string name="device_information_your_device">A Te eszközöd: </string>
+	<string name="device_information_your_device">A Te eszközöd</string>
 
 	<!-- About screen strings -->
 	<string name="about">Az alkalmazásról</string>
@@ -335,7 +338,7 @@ Instrukciók:
 	<string name="contribute_agree">Segíteni szeretnék és egyetértek azzal, hogy frissítési fájlneveket küldjek az adminisztrátoroknak</string>
 	<string name="contribute_agree_from_setup">Szeretnék segíteni az alkalmazás fejlesztésében, és egyetértek azzal, hogy frissítési fájlneveket küldjek az adminisztrátoroknak</string>
 	<string name="contribute_save">Beállítások mentése</string>
-	<string name="contribute_more_info">Bővebb információ …</string>
+	<string name="contribute_more_info">Bővebb információ</string>
 	<string name="contribute_allow_storage">Kérjük, add meg a tárhely engedélyeket az alkalmazás fejlesztésének elősegítése érdekében</string>
 	<string name="contribute_successful_notification_title">Közreműködés sikeres</string>
 	<string name="contribute_successful_notification_text">Köszönjük, hogy megosztottad velünk a frissítési fájlneveket!</string>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:showIn="@layout/fragment_device_information">
+
+	<!-- Hardware information -->
+	<TextView
+		android:id="@+id/hardwareHeader"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:fontFamily="@font/google_sans_medium"
+		android:text="@string/device_information_hardware_header"
+		android:textColor="?colorPrimary"
+		app:layout_constraintTop_toBottomOf="@id/softwareDivider" />
+
+	<TextView
+		android:id="@+id/ramLabel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:drawablePadding="@dimen/spacing_default"
+		android:gravity="center_vertical"
+		android:text="@string/device_information_amount_of_memory"
+		android:textSize="@dimen/typography_subheading"
+		app:drawableStartCompat="@drawable/memory"
+		app:drawableTint="?colorPrimary"
+		app:layout_constraintTop_toBottomOf="@id/hardwareHeader" />
+
+	<TextView
+		android:id="@+id/ramField"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_3x"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:paddingStart="@dimen/spacing_half"
+		android:textColor="?android:textColorSecondary"
+		android:textIsSelectable="true"
+		app:layout_constraintTop_toBottomOf="@id/ramLabel"
+		tools:ignore="RtlSymmetry"
+		tools:text="6GB" />
+
+	<TextView
+		android:id="@+id/socLabel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:drawablePadding="@dimen/spacing_default"
+		android:gravity="center_vertical"
+		android:text="@string/device_information_system_on_a_chip"
+		android:textSize="@dimen/typography_subheading"
+		app:drawableStartCompat="@drawable/soc"
+		app:drawableTint="?colorPrimary"
+		app:layout_constraintTop_toBottomOf="@id/ramField" />
+
+	<TextView
+		android:id="@+id/socField"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_3x"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:paddingStart="@dimen/spacing_half"
+		android:textColor="?android:textColorSecondary"
+		android:textIsSelectable="true"
+		app:layout_constraintTop_toBottomOf="@id/socLabel"
+		tools:ignore="RtlSymmetry"
+		tools:text="msmnile" />
+
+	<TextView
+		android:id="@+id/freqLabel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:drawablePadding="@dimen/spacing_default"
+		android:gravity="center_vertical"
+		android:text="@string/device_information_cpu_frequency"
+		android:textSize="@dimen/typography_subheading"
+		app:drawableStartCompat="@drawable/speed"
+		app:drawableTint="?colorPrimary"
+		app:layout_constraintTop_toBottomOf="@id/socField" />
+
+	<TextView
+		android:id="@+id/freqField"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_3x"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:paddingStart="@dimen/spacing_half"
+		android:textColor="?android:textColorSecondary"
+		android:textIsSelectable="true"
+		app:layout_constraintTop_toBottomOf="@id/freqLabel"
+		tools:ignore="RtlSymmetry"
+		tools:text="1.785 GHz" />
+
+	<TextView
+		android:id="@+id/serialLabel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:drawablePadding="@dimen/spacing_default"
+		android:gravity="center_vertical"
+		android:text="@string/device_information_serial_number"
+		android:textSize="@dimen/typography_subheading"
+		app:drawableStartCompat="@drawable/device_info"
+		app:drawableTint="?colorPrimary"
+		app:layout_constraintTop_toBottomOf="@id/freqField" />
+
+	<TextView
+		android:id="@+id/serialField"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_3x"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:paddingStart="@dimen/spacing_half"
+		android:textColor="?android:textColorSecondary"
+		android:textIsSelectable="true"
+		app:layout_constraintTop_toBottomOf="@id/serialLabel"
+		tools:ignore="RtlSymmetry"
+		tools:text="UNKNOWN" />
+</merge>

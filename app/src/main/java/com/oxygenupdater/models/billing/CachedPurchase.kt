@@ -33,7 +33,7 @@ import com.oxygenupdater.repositories.BillingRepository
  * reading the code easier.
  */
 
-//TODO: This is the preferred implementation. Blocked on issue with ignoreColumns.
+//TODO: this is the preferred implementation. Blocked on issue with ignoreColumns.
 //@Entity(tableName = "purchase_table", ignoredColumns = arrayOf("mParsedJson"))
 //class CachedPurchase(mOriginalJson: String, mSignature: String) : Purchase(mOriginalJson, mSignature) {
 //    @PrimaryKey(autoGenerate = true)

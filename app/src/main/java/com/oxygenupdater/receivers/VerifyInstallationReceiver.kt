@@ -121,7 +121,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
         )
 
         val notification = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.error_outline)
+            .setSmallIcon(R.drawable.error)
             .setContentTitle(context.getString(R.string.install_verify_error_title))
             .setContentText(errorMessage)
             .setContentIntent(contentIntent)

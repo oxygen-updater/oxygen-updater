@@ -4,16 +4,18 @@
 	screen and looked ugly.
 	In SplashActivity, setContentView(R.layout.activity_splash) is called only for API 21 & 22.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/rootLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:gravity="center">
+	android:background="@color/splashBackgroundColor">
 
-	<androidx.appcompat.widget.AppCompatImageView
+	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:contentDescription="@string/icon"
 		app:srcCompat="@drawable/logo_outline_shadow" />
 
-</LinearLayout>
+</FrameLayout>

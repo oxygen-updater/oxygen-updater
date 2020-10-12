@@ -119,33 +119,31 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
             }
 
             // toggle between showing only reading articles and showing all articles
-            bannerTextView.apply {
-                setOnClickListener {
-                    newsAdapter.updateList(
-                        if (isShowingOnlyUnreadArticles) newsItems
-                        else newsItems.filter { !it.read }
-                    )
+            bannerLayout.setOnClickListener {
+                newsAdapter.updateList(
+                    if (isShowingOnlyUnreadArticles) newsItems
+                    else newsItems.filter { !it.read }
+                )
 
-                    isShowingOnlyUnreadArticles = !isShowingOnlyUnreadArticles
+                isShowingOnlyUnreadArticles = !isShowingOnlyUnreadArticles
 
-                    text = getString(
-                        if (isShowingOnlyUnreadArticles) {
-                            R.string.news_unread_count_2
-                        } else {
-                            R.string.news_unread_count_1
-                        },
-                        newsAdapter.itemList.count { !it.read }
-                    )
-
-                    if (newsAdapter.itemList.isEmpty()) {
-                        if (isShowingOnlyUnreadArticles) {
-                            displayEmptyState(true)
-                        } else {
-                            displayEmptyState()
-                        }
+                bannerTextView.text = getString(
+                    if (isShowingOnlyUnreadArticles) {
+                        R.string.news_unread_count_2
                     } else {
-                        emptyStateLayout.isVisible = false
+                        R.string.news_unread_count_1
+                    },
+                    newsAdapter.itemList.count { !it.read }
+                )
+
+                if (newsAdapter.itemList.isEmpty()) {
+                    if (isShowingOnlyUnreadArticles) {
+                        displayEmptyState(true)
+                    } else {
+                        displayEmptyState()
                     }
+                } else {
+                    emptyStateLayout.isVisible = false
                 }
             }
         }
@@ -166,16 +164,8 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
             return
         }
 
-        bannerTextView.apply {
+        bannerLayout.apply {
             isVisible = true
-            text = getString(
-                if (isShowingOnlyUnreadArticles) {
-                    R.string.news_unread_count_2
-                } else {
-                    R.string.news_unread_count_1
-                },
-                count
-            )
 
             if (count != 0) {
                 setOnLongClickListener { view ->
@@ -212,9 +202,18 @@ class NewsFragment : AbstractFragment(R.layout.fragment_news) {
             }
         }
 
+        bannerTextView.text = getString(
+            if (isShowingOnlyUnreadArticles) {
+                R.string.news_unread_count_2
+            } else {
+                R.string.news_unread_count_1
+            },
+            count
+        )
+
         // display badge with the number of unread news articles
         // if there aren't any unread articles, the badge is hidden
-        (activity as MainActivity?)?.updateTabBadge(0, count != 0, count)
+        (activity as MainActivity?)?.updateTabBadge(R.id.page_news, count != 0, count)
     }
 
     private fun displayEmptyState(isAllReadEmptyState: Boolean = false) {

@@ -10,14 +10,16 @@
 	<string name="update_information_file_name">"Имя файла: %1$s"</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_header">"Обновить"</string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable pасширенный режим if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Расширенный режим включен</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled pасширенный режим, you can download the latest ZIP for \"%1$s\".\n\nYou can turn pасширенный режим off from settings.</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn pасширенный режим on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -90,7 +92,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
 
 	<!-- Settings strings -->
-	<!-- TODO: Translate these lines -->
+	<!-- TODO: translate these lines -->
 	<string name="preference_header_support">Support us</string>
 	<string name="preference_header_device">Device</string>
 	<string name="preference_header_ui">UI</string>
@@ -98,7 +100,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="preference_header_advanced">Advanced</string>
 	<string name="preference_header_about">About</string>
 
-	<!-- TODO: Translate these lines -->
+	<!-- TODO: translate these lines -->
 	<string name="summary_on">Enabled</string>
 	<string name="summary_off">Disabled</string>
 	<string name="summary_device">Please wait…</string>
@@ -107,7 +109,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
 
-	<!-- TODO: Translate these lines -->
+	<!-- TODO: translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
 	<string name="label_app_update_banner">App update banners</string>
@@ -115,13 +117,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Rate this app</string>
 
-	<!-- TODO: Translate these lines -->
+	<!-- TODO: translate these lines -->
 	<string name="theme_light">Light</string>
 	<string name="theme_dark">Dark</string>
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<!-- TODO: Translate these lines -->
+	<!-- TODO: translate these lines -->
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
@@ -136,7 +138,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
 
 	<!-- TODO translate these lines -->
-	<string name="settings_contribute_label">Help improving the app:</string>
+	<string name="settings_contribute_label">Help improving the app</string>
 
 	<string name="settings_device">"Устройство"</string>
 	<string name="settings_entered_incorrectly">"Ошибка сохранения настроек. Пожалуйста, выберите снова ваше устройство / вариант обновления."</string>
@@ -313,8 +315,8 @@ Instructions:
 	<string name="install_guide_zip_file_missing">"Если вы хотите сохранить рут-права на устройстве, выберите архив для установки выше."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these lines -->
-	<!-- TODO: Translate these 4 strings below -->
+	<!-- TODO: translate these lines -->
+	<!-- TODO: translate these 4 strings below -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
 	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
@@ -346,7 +348,7 @@ Instructions:
 	<string name="about_rate_button_text">"Оценить"</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Эл. адрес</string>
 
@@ -424,7 +426,7 @@ Instructions:
 	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
 	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
 	<string name="contribute_save">Save settings</string>
-	<string name="contribute_more_info">More info …</string>
+	<string name="contribute_more_info">More info</string>
 	<string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
 	<string name="contribute_successful_notification_title">Contribution successful</string>
 	<string name="contribute_successful_notification_text">Thanks for sharing the update filenames with us!</string>

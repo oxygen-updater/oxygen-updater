@@ -10,14 +10,16 @@
 	<string name="update_information_file_name">ファイル名: %1$s</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_header">アップデート</string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable 拡張モード if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">詳細モードが有効になっている</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled 拡張モード, you can download the latest ZIP for \"%1$s\".\n\nYou can turn 拡張モード off from settings.</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn 拡張モード on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -269,7 +271,7 @@ Instructions:
 	<string name="install_guide_zip_file_missing">"デバイスのroot化を維持する場合、上からrootパッケージを指定して下さい"</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
+	<!-- TODO: translate these 4 strings below -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
 	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
@@ -278,19 +280,19 @@ Instructions:
 	<string name="device_information_hardware_header">ハードウェア</string>
 	<string name="device_information_software_header">ソフトウェア</string>
 
-	<string name="device_information_amount_of_memory">RAMの合計量:</string>
-	<string name="device_information_cpu_frequency">プロセッサ周波数:</string>
+	<string name="device_information_amount_of_memory">RAMの合計量</string>
+	<string name="device_information_cpu_frequency">プロセッサ周波数</string>
 	<string name="device_information_header">マイデバイス</string>
 	<string name="device_information_image_description">デバイスイメージ</string>
-	<string name="device_information_incremental_os_version">インクリメンタルOS バージョン:</string>
-	<string name="device_information_os_version">Android バージョン:</string>
-	<string name="device_information_oxygen_os_version">OxygenOS バージョン:</string>
-	<string name="device_information_oxygen_os_ota_version">OTA バージョン:</string>
-	<string name="device_information_patch_level_version">セキュリティパッチ日時:</string>
-	<string name="device_information_serial_number">シリアル番号:</string>
-	<string name="device_information_system_on_a_chip">搭載SoC:</string>
+	<string name="device_information_incremental_os_version">インクリメンタルOS バージョン</string>
+	<string name="device_information_os_version">Android バージョン</string>
+	<string name="device_information_oxygen_os_version">OxygenOS バージョン</string>
+	<string name="device_information_oxygen_os_ota_version">OTA バージョン</string>
+	<string name="device_information_patch_level_version">セキュリティパッチ日時</string>
+	<string name="device_information_serial_number">シリアル番号</string>
+	<string name="device_information_system_on_a_chip">搭載SoC</string>
 	<string name="device_information_unknown">不明</string>
-	<string name="device_information_your_device">あなたのデバイス: </string>
+	<string name="device_information_your_device">あなたのデバイス</string>
 
 	<!-- About screen strings -->
 	<string name="about">このアプリについて</string>
@@ -300,7 +302,7 @@ Instructions:
 	<string name="about_rate_button_text">評価</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Eメール</string>
 
@@ -350,7 +352,7 @@ Instructions:
 	<string name="contribute_agree">更新ファイル名を管理者へ送信することを同意</string>
 	<string name="contribute_agree_from_setup">アプリの改善に協力し、更新ファイル名を管理者に送信することに同意する。</string>
 	<string name="contribute_save">設定を保存</string>
-	<string name="contribute_more_info">詳細情報…</string>
+	<string name="contribute_more_info">詳細情報</string>
 	<string name="contribute_allow_storage">アプリの改善を支援するために、ストレージのアクセス許可を付与してください</string>
 	<string name="contribute_successful_notification_title">貢献に成功</string>
 	<string name="contribute_successful_notification_text">更新ファイル名を共有していただきありがとうございます!</string>

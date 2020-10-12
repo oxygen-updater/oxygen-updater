@@ -220,7 +220,7 @@ class InstallActivity : SupportActionBarActivity() {
             }
 
             rotation = if (position == lastPageNumber - 1) {
-                setImageResource(R.drawable.checkmark)
+                setImageResource(R.drawable.done)
                 0f
             } else {
                 setImageResource(R.drawable.expand)
@@ -243,7 +243,7 @@ class InstallActivity : SupportActionBarActivity() {
                 Glide.with(this@InstallActivity)
                     .load(completeImageUrl(imageUrl, fileExtension))
                     // Load a "no entry" sign to show that the image failed to load.
-                    .error(R.drawable.error_image)
+                    .error(R.drawable.no_entry)
                     .into(collapsingToolbarImage)
             } else {
                 val imageResourceId = resources.getIdentifier(

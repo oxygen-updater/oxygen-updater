@@ -7,11 +7,14 @@
 	<string name="enable">Aktivera</string>
 	<string name="update_information_file_name">"Filnamn: %1$s"</string>
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_header">"Uppdatering"</string>
 	<string name="update_information_error_title">Det gick inte att hämta den senaste informationen om uppdateringen</string>
 	<string name="update_information_banner_server">Tryck här för att visa viktiga notiser</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable avancerat läge if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Avancerat läge är aktiverat</string>
 	<string name="update_information_header_advanced_mode_helper">Eftersom du har aktiverat avancerat läge kan du ladda ner den senaste ZIP-filen för \"%1$s\".\n\nDu kan avaktivera avancerat läge i inställningarna.</string>
 	<string name="update_information_different_version_changelog_notice">Du tittar på en ändringslogg för den senaste uppdateringen för \"%1$s\". Om du istället vill installera uppdateringen måste du aktivera avancerat läge (i inställningarna).\n\nOm du istället vill se ändringsloggen för den senaste versionen kommer du behöva byta tillbaka till den rätta uppdateringsmetoden.</string>
 	<string name="update_information_last_checked_on">"Kollade senast den: %1$s"</string>
@@ -124,7 +127,7 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 
 En fullständig uppdatering kan alltid installeras - oavsett vilken systemversion som körs på din enhet.
 
-En betauppdatering av OxygenOS kan alltid installeras, även när du har den stabila versionen av OxygenOS installerad. För att göra detta måste du aktivera avancerat läge i inställningarna. Uppdateringsmetoden är densamma som för de stabila uppdateringarna. </string>
+En betauppdatering av OxygenOS kan alltid installeras, även när du har den stabila versionen av OxygenOS installerad. För att göra detta måste du aktivera avancerat läge i inställningarna. Uppdateringsmetoden är densamma som för de stabila uppdateringarna.</string>
 	<string name="settings_push_from_server">"Viktigt meddelande är tillgängligt"</string>
 	<string name="settings_push_new_version">"Systemuppdatering är tillgänglig"</string>
 	<string name="settings_push_new_device">"Ny enhet stöds"</string>
@@ -301,10 +304,10 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="device_information_cpu_frequency">"Processorfrekvens:"</string>
 	<string name="device_information_header">"Min enhet"</string>
 	<string name="device_information_image_description">"Enhetsbild"</string>
-	<string name="device_information_incremental_os_version">Inkrementell OS-version:</string>
-	<string name="device_information_os_version">Android-version:</string>
-	<string name="device_information_oxygen_os_version">OxygenOS-version:</string>
-	<string name="device_information_oxygen_os_ota_version">OTA-version:</string>
+	<string name="device_information_incremental_os_version">Inkrementell OS-version</string>
+	<string name="device_information_os_version">Android-version</string>
+	<string name="device_information_oxygen_os_version">OxygenOS-version</string>
+	<string name="device_information_oxygen_os_ota_version">OTA-version</string>
 	<string name="device_information_patch_level_version">"Version av säkerhetsuppdatering:"</string>
 	<string name="device_information_serial_number">"Serienummer:"</string>
 	<string name="device_information_system_on_a_chip">"System on a Chip:"</string>
@@ -393,7 +396,7 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="contribute_agree">Jag skulle vilja hjälpa till med att förbättra appen och godkänner att skicka filnamn på uppdateringar till våra admins</string>
 	<string name="contribute_agree_from_setup">Jag skulle vilja hjälpa till med att förbättra appen och jag godkänner att jag skickar filnamn på uppdateringar till våra admins</string>
 	<string name="contribute_save">Spara inställningar</string>
-	<string name="contribute_more_info">Mer info …</string>
+	<string name="contribute_more_info">Mer info</string>
 	<string name="contribute_allow_storage">Var god att tillåta lagringsåtkomst för att hjälpa till med att förbättra appen</string>
 	<string name="contribute_successful_notification_title">Bidrag lyckades</string>
 	<string name="contribute_successful_notification_text">Tack för att du delade uppdateringsfilnamnet med oss!</string>

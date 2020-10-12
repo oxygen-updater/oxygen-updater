@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView.ScaleType
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,13 +20,14 @@ import com.oxygenupdater.R
 import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.oxygenupdater.extensions.reduceDragSensitivity
-import com.oxygenupdater.extensions.setImageResourceWithAnimation
+import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
 import com.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.oxygenupdater.fragments.SimpleOnboardingFragment
 import com.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.DeviceOsSpec
+import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
@@ -36,6 +38,7 @@ import kotlinx.android.synthetic.main.activity_onboarding.*
 import kotlinx.android.synthetic.main.fragment_onboarding_complete.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 import kotlin.math.abs
 
 class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
@@ -46,6 +49,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
     private val settingsManager by inject<SettingsManager>()
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
+    private val systemVersionProperties by inject<SystemVersionProperties>()
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(
@@ -172,7 +176,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
 
         nextPageButton.apply {
             rotation = if (pageNumber == 4) {
-                setImageResource(R.drawable.checkmark)
+                setImageResource(R.drawable.done)
                 0f
             } else {
                 setImageResource(R.drawable.expand)
@@ -185,25 +189,60 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 nextPageButton.isEnabled = true
 
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.logo_outline, android.R.anim.fade_in)
+                collapsingToolbarImage.scaleType = ScaleType.CENTER_CROP
+                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                    R.drawable.logo_notification,
+                    android.R.anim.fade_in,
+                    R.color.colorPrimary
+                )
             }
             2 -> {
                 nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
 
+                val resourceName = systemVersionProperties.oxygenDeviceName.replace(
+                    "(?:^OnePlus|^OP|Single\$|NR(?:Spr)?\$|TMO\$|VZW\$|_\\w+\$| )".toRegex(RegexOption.IGNORE_CASE),
+                    ""
+                ).toLowerCase(Locale.ROOT)
+
+                var imageResId = resources.getIdentifier(
+                    "oneplus$resourceName",
+                    "drawable",
+                    packageName
+                )
+
+                // If no image was found default to the latest device image
+                if (imageResId == 0) {
+                    imageResId = R.drawable.oneplus8t
+                }
+
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.smartphone, android.R.anim.fade_in)
+                collapsingToolbarImage.scaleType = ScaleType.FIT_CENTER
+                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                    imageResId,
+                    android.R.anim.fade_in
+                )
             }
             3 -> {
                 nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3
 
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.cloud_download, android.R.anim.fade_in)
+                collapsingToolbarImage.scaleType = ScaleType.CENTER_CROP
+                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                    R.drawable.cloud_download,
+                    android.R.anim.fade_in,
+                    R.color.colorPrimary
+                )
             }
             4 -> {
                 nextPageButton.isEnabled = true
 
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
-                collapsingToolbarImage.setImageResourceWithAnimation(R.drawable.done_all, android.R.anim.fade_in)
+                collapsingToolbarImage.scaleType = ScaleType.CENTER_CROP
+                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                    R.drawable.done_all,
+                    android.R.anim.fade_in,
+                    R.color.colorPrimary
+                )
             }
             else -> {
                 // no-op

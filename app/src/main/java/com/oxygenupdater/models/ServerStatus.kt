@@ -43,7 +43,7 @@ data class ServerStatus(
 
     override fun getDrawableRes(context: Context) = when (status) {
         Status.WARNING -> R.drawable.warning
-        Status.ERROR -> R.drawable.error_outline
+        Status.ERROR -> R.drawable.error
         Status.MAINTENANCE -> 0
         Status.OUTDATED -> 0
         Status.UNREACHABLE -> R.drawable.info

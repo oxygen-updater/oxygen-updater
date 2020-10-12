@@ -9,11 +9,10 @@
 		android:layout_height="wrap_content"
 		android:transitionName="toolbar">
 
-		<androidx.appcompat.widget.Toolbar
+		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:theme="@style/ToolbarTheme"
 			app:title="@string/help" />
 	</com.google.android.material.appbar.AppBarLayout>
 

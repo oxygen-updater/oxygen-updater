@@ -8,7 +8,6 @@ import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.widget.Toast
-import com.oxygenupdater.activities.AboutActivity
 import com.oxygenupdater.activities.ContributorActivity
 import com.oxygenupdater.activities.FAQActivity
 import com.oxygenupdater.activities.HelpActivity
@@ -64,11 +63,6 @@ class ActivityLauncher(baseActivity: Activity) {
      * Opens the main page.
      */
     fun Main() = startActivity(MainActivity::class.java, false)
-
-    /**
-     * Opens the about page.
-     */
-    fun About() = startActivity(AboutActivity::class.java)
 
     /**
      * Opens the help page.

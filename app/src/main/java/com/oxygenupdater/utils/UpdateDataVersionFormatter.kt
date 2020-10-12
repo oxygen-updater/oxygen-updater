@@ -1,5 +1,7 @@
 package com.oxygenupdater.utils
 
+import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
+import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.models.FormattableUpdateData
 import java.io.BufferedReader
 import java.io.IOException
@@ -15,25 +17,44 @@ object UpdateDataVersionFormatter {
     private const val OS_VERSION_LINE_HEADING = "#"
 
     /**
-     * Expression which is used to obtain the version number from a regular update of OxygenOS
+     * Basic semver (`major.minor.patch` only), but modified to include an optional build tag at the end.
+     * e.g. `IN21DA` for OP8 (IND)
+     *
+     * @see <a href="https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string">semver.org</a>
      */
-    private val REGULAR_PATTERN = Pattern.compile("(\\d+\\.\\d+(\\.\\d+)*)$")
+    private val STABLE_PATTERN = Pattern.compile(
+        "((?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:\\.(?:[A-Z]{2}\\d{2}[A-Z]{2}))?)$",
+        Pattern.CASE_INSENSITIVE
+    )
 
     /**
      * Expression which indicates that this update is a beta update of OxygenOS.
      * `_\\w`: because sometimes a date string is appended to the version number
      */
-    private val BETA_PATTERN = Pattern.compile("(open|beta)_(\\w+)$")
+    private val ALPHA_BETA_DP_PATTERN = Pattern.compile(
+        "(open|beta|alpha|dp)_(\\w+)$",
+        Pattern.CASE_INSENSITIVE
+    )
 
     /**
      * User-readable name for regular versions of OxygenOS
      */
-    private const val OXYGEN_OS_REGULAR_DISPLAY_PREFIX = "OxygenOS "
+    const val OXYGEN_OS_PREFIX = "OxygenOS"
 
     /**
      * User-readable name for beta versions of OxygenOS
      */
-    private const val OXYGEN_OS_BETA_DISPLAY_PREFIX = "OxygenOS Open Beta "
+    const val BETA_PREFIX = "Open Beta"
+
+    /**
+     * User-readable name for alpha versions of OxygenOS
+     */
+    const val ALPHA_PREFIX = "Closed Beta"
+
+    /**
+     * User-readable name for developer preview versions of OxygenOS
+     */
+    const val DP_PREFIX = "DP"
 
     /**
      * Checks if the passed update version information contains a version number which can be
@@ -73,15 +94,38 @@ object UpdateDataVersionFormatter {
             if (!versionInfo?.internalVersionNumber.isNullOrBlank()) "V. " + versionInfo!!.internalVersionNumber
             else "OxygenOS System Update"
         } else {
-            val firstLineLowerCase = firstLine.toLowerCase(Locale.getDefault())
-            val betaMatcher = BETA_PATTERN.matcher(firstLineLowerCase)
-            val regularMatcher = REGULAR_PATTERN.matcher(firstLineLowerCase)
+            val alphaBetaMatcher = ALPHA_BETA_DP_PATTERN.matcher(firstLine)
+            val regularMatcher = STABLE_PATTERN.matcher(firstLine)
 
             when {
-                betaMatcher.find() -> OXYGEN_OS_BETA_DISPLAY_PREFIX + betaMatcher.group(2)
-                regularMatcher.find() -> OXYGEN_OS_REGULAR_DISPLAY_PREFIX + regularMatcher.group()
+                alphaBetaMatcher.find() -> if (alphaBetaMatcher.group(1)?.toLowerCase(Locale.ROOT) == "alpha") {
+                    "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaMatcher.group(2)}"
+                } else {
+                    "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaMatcher.group(2)}"
+                }
+                regularMatcher.find() -> "$OXYGEN_OS_PREFIX ${regularMatcher.group()}"
                 else -> firstLine.replace(OS_VERSION_LINE_HEADING, "")
             }
+        }
+    }
+
+    /**
+     * Used for formatting [com.oxygenupdater.models.SystemVersionProperties.oxygenOSVersion]
+     */
+    fun getFormattedOxygenOsVersion(version: String): String {
+        val alphaBetaDpMatcher = ALPHA_BETA_DP_PATTERN.matcher(version)
+        val regularMatcher = STABLE_PATTERN.matcher(version)
+
+        return when {
+            version == NO_OXYGEN_OS || version.isBlank() -> NO_OXYGEN_OS
+            alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.toLowerCase(Locale.ROOT) ?: "") {
+                "alpha" -> "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                "beta" -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                else -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+            }
+            regularMatcher.find() -> "$OXYGEN_OS_PREFIX ${regularMatcher.group()}"
+            else -> "$OXYGEN_OS_PREFIX $version"
         }
     }
 

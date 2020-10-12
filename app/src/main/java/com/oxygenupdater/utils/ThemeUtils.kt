@@ -6,7 +6,6 @@ import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.provider.Settings
 import android.provider.Settings.SettingNotFoundException
-import android.util.TypedValue
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.NightMode
 import com.oxygenupdater.R
@@ -38,11 +37,6 @@ object ThemeUtils {
         Configuration.UI_MODE_NIGHT_YES -> true
         Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> false
         else -> false
-    }
-
-    fun getTextColorTertiary(context: Context) = TypedValue().let {
-        context.theme.resolveAttribute(android.R.attr.textColorTertiary, it, true)
-        it.data
     }
 
     /**

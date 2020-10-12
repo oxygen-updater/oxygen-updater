@@ -11,7 +11,9 @@
 	<string name="update_information_header">Update</string>
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable advanced mode if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Advanced mode is enabled</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings.</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" update track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
 	<string name="update_information_no_update_data_available">No update information is available</string>
@@ -290,21 +292,21 @@ Instructions:
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
-	<string name="device_information_amount_of_memory">Amount of RAM:</string>
-	<string name="device_information_cpu_frequency">Processor Frequency:</string>
+	<string name="device_information_amount_of_memory">Amount of RAM</string>
+	<string name="device_information_cpu_frequency">Processor Frequency</string>
 	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
 	<string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
 	<string name="device_information_header">My device</string>
 	<string name="device_information_image_description">Device image</string>
-	<string name="device_information_incremental_os_version">Incremental OS version:</string>
-	<string name="device_information_os_version">Android version:</string>
-	<string name="device_information_oxygen_os_version">OxygenOS version:</string>
-	<string name="device_information_oxygen_os_ota_version">OTA version:</string>
-	<string name="device_information_patch_level_version">Security patch date:</string>
-	<string name="device_information_serial_number">Serial number:</string>
-	<string name="device_information_system_on_a_chip">System on a Chip:</string>
+	<string name="device_information_incremental_os_version">Incremental OS version</string>
+	<string name="device_information_os_version">Android version</string>
+	<string name="device_information_oxygen_os_version">OxygenOS version</string>
+	<string name="device_information_oxygen_os_ota_version">OTA version</string>
+	<string name="device_information_patch_level_version">Security patch date</string>
+	<string name="device_information_serial_number">Serial number</string>
+	<string name="device_information_system_on_a_chip">System on a Chip</string>
 	<string name="device_information_unknown">unknown</string>
-	<string name="device_information_your_device">Your device: </string>
+	<string name="device_information_your_device">Your device</string>
 
 	<!-- About screen strings -->
 	<string name="about">About this app</string>
@@ -361,7 +363,7 @@ Instructions:
 	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
 	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
 	<string name="contribute_save">Save settings</string>
-	<string name="contribute_more_info">More info …</string>
+	<string name="contribute_more_info">More info</string>
 	<string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
 	<string name="contribute_successful_notification_title">Contribution successful</string>
 	<string name="contribute_successful_notification_text">Thanks for sharing update filenames with us!</string>
@@ -399,7 +401,6 @@ Instructions:
 	<string name="root_check_message">Oxygen Updater offers easy, automated update installations for users with a rooted devices. However, incremental updates are not available for rooted devices. Oxygen Updater can check if you have root access to only offer appropriate update methods.\n\nIf you have root access, allow Oxygen Updater to obtain root access after closing this message.\n\nNo root access? Press \"Close\" and continue using the app.</string>
 
 	<!-- Purchasing strings -->
-	<!-- TODO: translate this string below -->
 	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
 

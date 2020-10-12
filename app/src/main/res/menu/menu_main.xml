@@ -6,6 +6,7 @@
 		android:icon="@drawable/faq"
 		android:orderInCategory="30"
 		android:title="@string/faq_menu_item"
+		app:iconTint="?android:textColorSecondary"
 		app:showAsAction="ifRoom" />
 
 	<item
@@ -13,21 +14,28 @@
 		android:icon="@drawable/help"
 		android:orderInCategory="50"
 		android:title="@string/help"
+		app:iconTint="?android:textColorSecondary"
 		app:showAsAction="ifRoom" />
 
 	<item
 		android:id="@+id/action_settings"
+		android:icon="@drawable/settings"
 		android:orderInCategory="0"
 		android:title="@string/settings"
+		app:iconTint="?android:textColorSecondary"
 		app:showAsAction="never" />
 
 	<item
 		android:id="@+id/action_contribute"
+		android:icon="@drawable/note_add"
 		android:orderInCategory="100"
-		android:title="@string/contribute" />
+		android:title="@string/contribute"
+		app:iconTint="?android:textColorSecondary" />
 
 	<item
 		android:id="@+id/action_about"
+		android:icon="@drawable/faq"
 		android:orderInCategory="150"
-		android:title="@string/about" />
+		android:title="@string/about"
+		app:iconTint="?android:textColorSecondary" />
 </menu>

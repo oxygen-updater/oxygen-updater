@@ -3,7 +3,6 @@ package com.oxygenupdater.models
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.R
-import com.oxygenupdater.utils.ThemeUtils
 
 data class ServerMessage(
     var id: Long = 0,
@@ -20,13 +19,13 @@ data class ServerMessage(
         ServerMessagePriority.LOW -> ContextCompat.getColor(context, R.color.colorPositive)
         ServerMessagePriority.MEDIUM -> ContextCompat.getColor(context, R.color.colorWarn)
         ServerMessagePriority.HIGH -> ContextCompat.getColor(context, R.color.colorError)
-        else -> ThemeUtils.getTextColorTertiary(context)
+        else -> ContextCompat.getColor(context, R.color.foreground)
     }
 
     override fun getDrawableRes(context: Context) = when (priority) {
         ServerMessagePriority.LOW -> R.drawable.info
         ServerMessagePriority.MEDIUM -> R.drawable.warning
-        ServerMessagePriority.HIGH -> R.drawable.error_outline
+        ServerMessagePriority.HIGH -> R.drawable.error
         else -> R.drawable.info
     }
 

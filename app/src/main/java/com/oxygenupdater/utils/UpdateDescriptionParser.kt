@@ -4,15 +4,22 @@ import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
+import android.text.style.TextAppearanceSpan
 import android.text.style.URLSpan
-import androidx.core.graphics.ColorUtils
+import com.oxygenupdater.R
+import com.oxygenupdater.internal.GoogleSansMediumTypefaceSpan
 import com.oxygenupdater.models.FormattableUpdateData
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logVerbose
+import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.HEADING_1
+import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.HEADING_2
+import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.HEADING_3
+import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.LINE_SEPARATORS
+import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.LINK
+import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.LIST_ITEM
+import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.TEXT
 import java.util.*
 
 object UpdateDescriptionParser {
@@ -38,18 +45,24 @@ object UpdateDescriptionParser {
                         LineDetectingUpdateInfo(
                             currentLine
                         )
-                    ) && element == UpdateDescriptionElement.HEADING_1
+                    ) && element == HEADING_1
                 ) {
                     // skip this line, continue to the next line
                     return@forEach
                 }
 
                 when (element) {
-                    UpdateDescriptionElement.HEADING_3 -> modifiedLine = StringBuilder(currentLine.replace("###", ""))
-                    UpdateDescriptionElement.HEADING_2 -> modifiedLine = StringBuilder(currentLine.replace("##", ""))
-                    UpdateDescriptionElement.HEADING_1 -> modifiedLine = StringBuilder(currentLine.replace("#", ""))
-                    UpdateDescriptionElement.LIST_ITEM -> {
-                        modifiedLine = StringBuilder(currentLine.replace("*", "•"))
+                    HEADING_3 -> modifiedLine = StringBuilder(
+                        currentLine.replace("^ *###".toRegex(), "")
+                    )
+                    HEADING_2 -> modifiedLine = StringBuilder(
+                        currentLine.replace("^ *##([^#])".toRegex(), "$1")
+                    )
+                    HEADING_1 -> modifiedLine = StringBuilder(
+                        currentLine.replace("^ *#([^#])".toRegex(), "$1")
+                    )
+                    LIST_ITEM -> {
+                        modifiedLine = StringBuilder(currentLine.replace("^ *[*•]".toRegex(), "  •"))
 
                         // There could also be multiple OnePlus line separators in this line.
                         // Replace each OnePlus line separator with an actual line separator.
@@ -59,20 +72,27 @@ object UpdateDescriptionParser {
                             }
                         }
                     }
-                    UpdateDescriptionElement.LINE_SEPARATORS -> {
-                        currentLine.forEach {
-                            if (it == '\\') {
-                                modifiedLine.append("\n")
-                            }
+                    LINE_SEPARATORS -> currentLine.forEach {
+                        if (it == '\\') {
+                            modifiedLine.append("\n")
                         }
                     }
-                    UpdateDescriptionElement.LINK -> {
-                        val linkTitle = currentLine.substring(currentLine.indexOf("[") + 1, currentLine.lastIndexOf("]"))
+                    LINK -> {
+                        val linkTitle = currentLine.substring(
+                            currentLine.indexOf("[") + 1,
+                            currentLine.lastIndexOf("]")
+                        )
 
                         val linkAddress = if (currentLine.contains("(") && currentLine.contains(")")) {
-                            currentLine.substring(currentLine.indexOf("(") + 1, currentLine.lastIndexOf(")"))
+                            currentLine.substring(
+                                currentLine.indexOf("(") + 1,
+                                currentLine.lastIndexOf(")")
+                            )
                         } else if (currentLine.contains("{") && currentLine.contains("}")) {
-                            currentLine.substring(currentLine.indexOf("{") + 1, currentLine.lastIndexOf("}"))
+                            currentLine.substring(
+                                currentLine.indexOf("{") + 1,
+                                currentLine.lastIndexOf("}")
+                            )
                         } else {
                             ""
                         }
@@ -86,7 +106,9 @@ object UpdateDescriptionParser {
                     else -> modifiedLine = StringBuilder(currentLine)
                 }
 
-                modifiedUpdateDescription = modifiedUpdateDescription + modifiedLine.toString() + if (element == UpdateDescriptionElement.LINE_SEPARATORS) "" else "\n"
+                modifiedUpdateDescription = modifiedUpdateDescription +
+                        modifiedLine.toString() +
+                        if (element == LINE_SEPARATORS) "" else "\n"
             }
 
             result = SpannableString(modifiedUpdateDescription)
@@ -104,27 +126,39 @@ object UpdateDescriptionParser {
 
                 when (element) {
                     // Heading 1 should be made bold and pretty large.
-                    UpdateDescriptionElement.HEADING_1 -> {
-                        result.setSpan(RelativeSizeSpan(1.3f), startPosition, endPosition, 0)
-                        result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
+                    HEADING_1 -> if (context != null) {
+                        result.setSpan(
+                            TextAppearanceSpan(
+                                context,
+                                R.style.TextAppearance_MaterialComponents_Headline6
+                            ), startPosition, endPosition, 0
+                        )
+                        result.setSpan(GoogleSansMediumTypefaceSpan(context), startPosition, endPosition, 0)
                     }
                     // Heading 2 should be made bold and a bit larger than normal, but smaller than heading 1.
-                    UpdateDescriptionElement.HEADING_2 -> {
-                        result.setSpan(RelativeSizeSpan(1.1f), startPosition, endPosition, 0)
-                        result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
+                    HEADING_2 -> if (context != null) {
+                        result.setSpan(
+                            TextAppearanceSpan(
+                                context,
+                                R.style.TextAppearance_MaterialComponents_Body1
+                            ), startPosition, endPosition, 0
+                        )
+                        result.setSpan(GoogleSansMediumTypefaceSpan(context), startPosition, endPosition, 0)
                     }
                     // Heading 3 is the same size as normal text but will be displayed in bold.
-                    UpdateDescriptionElement.HEADING_3 -> result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
+                    HEADING_3 -> result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     // Decrease opacity of list items and text
-                    UpdateDescriptionElement.LIST_ITEM, UpdateDescriptionElement.TEXT -> if (context != null) {
+                    LIST_ITEM,
+                    TEXT -> if (context != null) {
                         result.setSpan(
-                            ForegroundColorSpan(
-                                ColorUtils.setAlphaComponent(ThemeUtils.getTextColorTertiary(context), 192)
+                            TextAppearanceSpan(
+                                context,
+                                R.style.TextAppearance_Changelog
                             ), startPosition, endPosition, 0
                         )
                     }
                     // A link should be made clickable and must be displayed as a hyperlink.
-                    UpdateDescriptionElement.LINK -> result.setSpan(URLSpan(links[currentLine]), startPosition, endPosition, 0)
+                    LINK -> result.setSpan(URLSpan(links[currentLine]), startPosition, endPosition, 0)
                     else -> logInfo(TAG, "Case not implemented: $element")
                 }
             }
@@ -156,19 +190,19 @@ object UpdateDescriptionParser {
                 return if (inputLine.isNullOrEmpty()) {
                     logVerbose(TAG, "Matched type: EMPTY")
                     EMPTY
-                } else if (inputLine.contains("###")) {
+                } else if ("^ *###".toRegex().containsMatchIn(inputLine)) {
                     logVerbose(TAG, "Matched type: HEADING_3")
                     HEADING_3
-                } else if (inputLine.contains("##")) {
+                } else if ("^ *##[^#]".toRegex().containsMatchIn(inputLine)) {
                     logVerbose(TAG, "Matched type: HEADING_2")
                     HEADING_2
-                } else if (inputLine.contains("#")) {
+                } else if ("^ *#[^#]".toRegex().containsMatchIn(inputLine)) {
                     logVerbose(TAG, "Matched type: HEADING_1")
                     HEADING_1
-                } else if (inputLine.contains("*") || inputLine.contains("•")) {
+                } else if ("^ *[*•]".toRegex().containsMatchIn(inputLine)) {
                     logVerbose(TAG, "Matched type: LIST_ITEM")
                     LIST_ITEM
-                } else if (inputLine.contains("\\")) {
+                } else if (inputLine.startsWith("\\")) {
                     logVerbose(TAG, "Matched type: LINE_SEPARATORS")
                     LINE_SEPARATORS
                 } else if (inputLine.contains("[")

@@ -5,32 +5,26 @@ import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
-import androidx.annotation.IntRange
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
-import androidx.core.view.updatePadding
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.install.model.AppUpdateType
@@ -46,26 +40,32 @@ import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.dialogs.MessageDialog
 import com.oxygenupdater.extensions.reduceDragSensitivity
+import com.oxygenupdater.fragments.AboutFragment
 import com.oxygenupdater.fragments.DeviceInformationFragment
 import com.oxygenupdater.fragments.NewsFragment
+import com.oxygenupdater.fragments.SettingsFragment
 import com.oxygenupdater.fragments.UpdateInformationFragment
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.ServerStatus
-import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.appBar
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.activity_main.viewPager
+import kotlinx.android.synthetic.main.activity_onboarding.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuItemClickListener {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var noNetworkDialog: MessageDialog
+    private lateinit var noConnectionSnackbar: Snackbar
     private lateinit var activityLauncher: ActivityLauncher
 
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
@@ -76,11 +76,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            when (position) {
-                0, 1 -> hideTabBadge(position, 1000)
-                else -> {
-                    // no-op
+            bottomNavigationView.menu.getItem(position)?.run {
+                bottomNavigationView.selectedItemId = itemId
+
+                when (position) {
+                    PAGE_UPDATE, PAGE_NEWS, PAGE_DEVICE -> hideTabBadge(itemId, 1000)
+                    else -> {
+                        // no-op
+                    }
                 }
+
+                updateToolbarForPage(itemId, title)
             }
         }
     }
@@ -110,10 +116,132 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
     ) = super.onCreate(savedInstanceState).also {
         activityLauncher = ActivityLauncher(this)
 
+        setupViewPager()
+
+        // Offer contribution to users from app versions below 2.4.0
+        if (!settingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
+            && settingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)
+        ) {
+            activityLauncher.Contribute()
+        }
+
+        noConnectionSnackbar = Snackbar.make(
+            coordinatorLayout,
+            R.string.error_no_internet_connection,
+            Snackbar.LENGTH_INDEFINITE
+        ).apply {
+            anchorView = bannerAdView
+            setBackgroundTint(ContextCompat.getColor(this@MainActivity, R.color.colorError))
+            setAction(getString(android.R.string.ok)) {
+                dismiss()
+            }
+        }
+
+        noNetworkDialog = MessageDialog(
+            this,
+            title = getString(R.string.error_app_requires_network_connection),
+            message = getString(R.string.error_app_requires_network_connection_message),
+            negativeButtonText = getString(R.string.download_error_close),
+            cancellable = false
+        )
+
+        if (!Utils.checkNetworkConnection()) {
+            noNetworkDialog.show()
+        }
+
+        setupLiveDataObservers()
+    }
+
+    override fun onResume() = super.onResume().also {
+        bannerAdView?.resume()
+        mainViewModel.checkForStalledAppUpdate().observe(
+            this,
+            appUpdateAvailableObserver
+        )
+    }
+
+    override fun onPause() = super.onPause().also {
+        bannerAdView?.pause()
+    }
+
+    override fun onDestroy() = super.onDestroy().also {
+        bannerAdView?.destroy()
+        noNetworkDialog.bypassListenerAndDismiss()
+        mainViewModel.unregisterAppUpdateListener()
+    }
+
+    override fun onBackPressed() = if (viewPager.currentItem == 0) {
+        // If the user is currently looking at the first step, allow the system to handle the
+        // Back button. This calls finish() on this activity and pops the back stack.
+        super.onBackPressed()
+    } else {
+        // Otherwise, reset to first page
+        viewPager.currentItem = 0
+    }
+
+    override fun onRequestPermissionsResult(
+        permsRequestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (permsRequestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
+            downloadPermissionCallback?.invoke(grantResults[0] == PERMISSION_GRANTED)
+        }
+    }
+
+    /**
+     * Control comes back to the activity in the form of a result only for a [AppUpdateType.FLEXIBLE] update request,
+     * since an [AppUpdateType.IMMEDIATE] update is entirely handled by Google Play, with the exception of resuming an installation.
+     * Check [onResume] for more info on how this is handled.
+     */
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) = super.onActivityResult(requestCode, resultCode, data).also {
+        if (requestCode == REQUEST_CODE_APP_UPDATE) {
+            when (resultCode) {
+                // Reset ignore count
+                Activity.RESULT_OK -> settingsManager.savePreference(
+                    SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                    0
+                )
+                // Increment ignore count and show app update banner
+                Activity.RESULT_CANCELED -> settingsManager.getPreference(
+                    SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                    0
+                ).let { ignoreCount ->
+                    settingsManager.savePreference(
+                        SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                        ignoreCount + 1
+                    )
+                    showAppUpdateBanner()
+                }
+                // Show app update banner
+                ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showAppUpdateBanner()
+            }
+        }
+    }
+
+    private fun setupLiveDataObservers() {
+        // display the "No connection" banner if required
+        OxygenUpdater.isNetworkAvailable.observe(this) {
+            if (it) {
+                noConnectionSnackbar.dismiss()
+
+                // Dismiss no network dialog if needed
+                if (noNetworkDialog.isShowing) {
+                    noNetworkDialog.bypassListenerAndDismiss()
+                }
+            } else {
+                noConnectionSnackbar.show()
+            }
+        }
+
         billingViewModel.adFreeUnlockLiveData.observe(this) {
             // If it's null, user has not bought the ad-free unlock
             // Thus, ads should be shown
-            setupAds(it?.entitled == false)
+            setupAds(it == null || !it.entitled)
         }
 
         mainViewModel.maybeCheckForAppUpdate().observe(
@@ -122,17 +250,30 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         )
 
         mainViewModel.fetchAllDevices().observe(this) { deviceList ->
-            val deviceOsSpec = Utils.checkDeviceOsSpec(deviceList)
+            mainViewModel.deviceOsSpec = Utils.checkDeviceOsSpec(deviceList)
 
-            val showDeviceWarningDialog = !settingsManager.getPreference(SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
+            val showDeviceWarningDialog = !settingsManager.getPreference(
+                SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
+                false
+            )
 
-            if (showDeviceWarningDialog && !deviceOsSpec.isDeviceOsSpecSupported) {
-                displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
+            if (showDeviceWarningDialog && !mainViewModel.deviceOsSpec!!.isDeviceOsSpecSupported) {
+                displayUnsupportedDeviceOsSpecMessage()
             } else {
-                val (isMismatch, savedDeviceName, actualDeviceName) = Utils.checkDeviceMismatch(this, deviceList)
-                if (isMismatch) {
-                    displayIncorrectDeviceSelectedMessage(savedDeviceName, actualDeviceName)
+                mainViewModel.deviceMismatchStatus = Utils.checkDeviceMismatch(this, deviceList)
+
+                val showIncorrectDeviceDialog = !settingsManager.getPreference(
+                    SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
+                    false
+                )
+
+                if (showIncorrectDeviceDialog && mainViewModel.deviceMismatchStatus!!.first) {
+                    displayIncorrectDeviceSelectedMessage()
                 }
+            }
+
+            if (!mainViewModel.deviceOsSpec!!.isDeviceOsSpecSupported || mainViewModel.deviceMismatchStatus!!.first) {
+                updateTabBadge(R.id.page_device)
             }
 
             // subscribe to notification topics
@@ -140,16 +281,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences])
             if (!settingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
                 mainViewModel.subscribeToNotificationTopics(deviceList.filter { it.enabled })
-            }
-        }
-
-        // display the "No connection" banner if required
-        OxygenUpdater.isNetworkAvailable.observe(this) {
-            noConnectionTextView.isVisible = !it
-
-            // Dismiss no network dialog if needed
-            if (it && noNetworkDialog.isShowing) {
-                noNetworkDialog.bypassListenerAndDismiss()
             }
         }
 
@@ -188,39 +319,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             }
         }
 
-        toolbar.setOnMenuItemClickListener(this)
-
-        setupViewPager()
-
-        // Offer contribution to users from app versions below 2.4.0
-        if (!settingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
-            && settingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)
-        ) {
-            activityLauncher.Contribute()
-        }
-
-        noNetworkDialog = MessageDialog(
-            this,
-            title = getString(R.string.error_app_requires_network_connection),
-            message = getString(R.string.error_app_requires_network_connection_message),
-            negativeButtonText = getString(R.string.download_error_close),
-            cancellable = false
-        )
-
-        if (!Utils.checkNetworkConnection()) {
-            noNetworkDialog.show()
+        mainViewModel.pageToolbarTextUpdated.observe(this) {
+            if (it.first == bottomNavigationView.selectedItemId) {
+                toolbar.subtitle = it.second
+            }
         }
     }
 
-    private fun showAppUpdateBanner(serverStatus: ServerStatus? = null) {
-        appUpdateBannerLayout.isVisible = true
-        appUpdateBannerLayout.setOnClickListener {
-            ActivityLauncher(this).openPlayStorePage(this)
-        }
-        appUpdateBannerTextView.text = if (serverStatus == null) {
+    private fun showAppUpdateBanner(
+        serverStatus: ServerStatus? = null
+    ) = appUpdateBannerTextView.run {
+        isVisible = true
+        appUpdateBannerDivider.isVisible = true
+        text = if (serverStatus == null) {
             getString(R.string.new_app_version_inapp_failed)
         } else {
             getString(R.string.new_app_version, serverStatus.latestAppVersion)
+        }
+
+        setOnClickListener {
+            activityLauncher.openPlayStorePage(this@MainActivity)
         }
     }
 
@@ -230,6 +348,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             R.string.new_app_version_inapp_downloaded,
             Snackbar.LENGTH_INDEFINITE
         ).apply {
+            anchorView = viewPager
             setAction(getString(R.string.error_reload)) {
                 mainViewModel.completeAppUpdate()
             }
@@ -237,128 +356,110 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         }
     }
 
-    /**
-     * Handles toolbar menu clicks
-     *
-     * @param item the menu item
-     *
-     * @return true if clicked
-     */
-    override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
-        R.id.action_faq -> activityLauncher.FAQ().let { true }
-        R.id.action_help -> activityLauncher.Help().let { true }
-        R.id.action_settings -> activityLauncher.Settings().let { true }
-        R.id.action_contribute -> activityLauncher.Contribute().let { true }
-        R.id.action_about -> activityLauncher.About().let { true }
-        else -> super.onOptionsItemSelected(item)
-    }
-
     private fun setupViewPager() {
         viewPager.apply {
-            offscreenPageLimit = 2 // 3 tabs, so there can be only 2 off-screen
+            offscreenPageLimit = 1 // Enough to preload the "News" page
             adapter = MainPagerAdapter()
             reduceDragSensitivity()
 
-            // attach TabLayout to ViewPager2
-            TabLayoutMediator(tabLayout, this) { tab, position ->
-                tab.text = when (position) {
-                    PAGE_NEWS -> getString(R.string.news)
-                    PAGE_UPDATE_INFORMATION -> getString(R.string.update_information_header)
-                    PAGE_DEVICE_INFORMATION -> getString(R.string.device_information_header)
-                    else -> null
-                }
-            }.attach()
-
             registerOnPageChangeCallback(pageChangeCallback)
 
-            // Set start page to Update Information Screen (middle page)
-            try {
-                var startPage = PAGE_UPDATE_INFORMATION
-                intent?.extras?.getInt(INTENT_START_PAGE)?.let {
-                    startPage = it
-                }
-
-                currentItem = startPage
+            currentItem = try {
+                intent?.extras?.getInt(INTENT_START_PAGE) ?: PAGE_UPDATE
             } catch (ignored: IndexOutOfBoundsException) {
-                // no-op
+                PAGE_UPDATE
             }
         }
 
+        setupBottomNavigation()
         setupAppBarForViewPager()
+        toolbar.setNavigationOnClickListener { showAboutPage() }
     }
 
     private fun setupAppBarForViewPager() {
         appBar.post {
             val totalScrollRange = appBar.totalScrollRange
 
-            // adjust bottom margin on first load
-            viewPager.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = totalScrollRange }
+            // Adjust bottom margin on first load
+            contentLayout.updateLayoutParams<LayoutParams> {
+                bottomMargin = totalScrollRange
+            }
 
-            // adjust bottom margin on scroll
+            // Adjust bottom margin on scroll
             appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-                viewPager.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                contentLayout.updateLayoutParams<LayoutParams> {
                     bottomMargin = totalScrollRange - abs(verticalOffset)
                 }
             })
         }
     }
 
+    private fun setupBottomNavigation() = bottomNavigationView.setOnNavigationItemSelectedListener {
+        viewPager.currentItem = when (it.itemId) {
+            R.id.page_update -> 0
+            R.id.page_news -> 1
+            R.id.page_device -> 2
+            R.id.page_about -> 3
+            R.id.page_settings -> 4
+            else -> 0
+        }
+        true
+    }
+
+    fun showAboutPage() {
+        viewPager.currentItem = PAGE_ABOUT
+    }
+
+    fun updateToolbarForPage(@IdRes pageId: Int, subtitle: CharSequence? = null) {
+        if (pageId == bottomNavigationView.selectedItemId) {
+            toolbar.subtitle = mainViewModel.pageToolbarSubtitle[pageId] ?: subtitle
+        }
+    }
+
     /**
-     * Update the state of a [Tab](com.google.android.material.tabs.TabLayout.Tab)'s [BadgeDrawable](com.google.android.material.badge.BadgeDrawable)
+     * Update the state of a [com.google.android.material.bottomnavigation.BottomNavigationView]'s [com.google.android.material.badge.BadgeDrawable]
      *
-     * @param position position of the tab/fragment
+     * @param pageId pageId of the tab/fragment
      * @param show flag to control the badge's visibility
      * @param count optional number to display in the badge
      *
      * @see hideTabBadge
      */
     fun updateTabBadge(
-        @IntRange(from = 0, to = 2) position: Int,
+        @IdRes pageId: Int,
         show: Boolean = true,
         count: Int? = null
-    ) = tabLayout.getTabAt(position)?.orCreateBadge?.apply {
+    ) = bottomNavigationView.getOrCreateBadge(pageId)?.apply {
         isVisible = show
 
-        if (isVisible) {
-            backgroundColor = if (ThemeUtils.isNightModeActive(this@MainActivity)) {
-                ContextCompat.getColor(this@MainActivity, R.color.colorPrimary)
-            } else {
-                Color.WHITE
-            }
-
-            if (count != null /*&& count != 0*/) {
-                badgeTextColor = ContextCompat.getColor(this@MainActivity, R.color.foreground)
-                number = count
-                maxCharacterCount = 3
-            }
+        if (isVisible && count != null /*&& count != 0*/) {
+            number = count
+            maxCharacterCount = 3
         }
     }
 
     /**
-     * Hide the [com.google.android.material.tabs.TabLayout.Tab]'s [com.google.android.material.badge.BadgeDrawable] after a specified delay
+     * Hide the [com.google.android.material.bottomnavigation.BottomNavigationView]'s [com.google.android.material.badge.BadgeDrawable] after a specified delay
      *
      * Even though [updateTabBadge] can be used to hide a badge, this function is different because it only hides an existing badge, after a specified delay.
      * It's meant to be called from the [viewPager]'s `onPageSelected` callback, within this class.
      * [updateTabBadge] can be called from child fragments to hide the badge immediately, for example, if required after refreshing
      *
-     * @param position position of the tab/fragment
+     * @param pageId pageId of the tab/fragment
      * @param delayMillis the delay, in milliseconds
      *
      * @see updateTabBadge
      */
     @Suppress("SameParameterValue")
     private fun hideTabBadge(
-        @IntRange(from = 0, to = 2)
-        position: Int,
+        @IdRes pageId: Int,
         delayMillis: Long = 0
-    ) = tabLayout.getTabAt(position)?.let { tab ->
-        tab.badge?.apply {
-            Handler().postDelayed({
-                if (tab.isSelected) {
-                    isVisible = false
-                }
-            }, delayMillis)
-        }
+    ) = bottomNavigationView.getBadge(pageId)?.apply {
+        Handler().postDelayed({
+            if (bottomNavigationView.selectedItemId == pageId) {
+                isVisible = false
+            }
+        }, delayMillis)
     }
 
     /**
@@ -369,52 +470,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
         }
 
-        if (shouldShowAds) {
-            bannerAdView?.apply {
+        bannerAdView?.apply {
+            if (shouldShowAds) {
                 isVisible = true
                 loadAd(buildAdRequest())
-                adListener = object : AdListener() {
-                    override fun onAdLoaded() = super.onAdLoaded().also {
-                        // need to add spacing between ViewPager contents and the AdView to avoid overlapping the last item
-                        // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
-                        // which can only be calculated once the AdView has been drawn on the screen
-                        post { viewPager.updatePadding(bottom = height) }
-                    }
-                }
-            }
-        } else {
-            bannerAdView?.isVisible = false
 
-            // reset viewPager padding
-            viewPager.setPadding(0, 0, 0, 0)
+                bannerAdDivider.isVisible = true
+            } else {
+                isVisible = false
+                bannerAdDivider.isVisible = false
+            }
         }
     }
 
-    override fun onResume() = super.onResume().also {
-        bannerAdView?.resume()
-        mainViewModel.checkForStalledAppUpdate().observe(
-            this,
-            appUpdateAvailableObserver
-        )
-    }
-
-    override fun onPause() = super.onPause().also {
-        bannerAdView?.pause()
-    }
-
-    override fun onDestroy() = super.onDestroy().also {
-        bannerAdView?.destroy()
-        noNetworkDialog.bypassListenerAndDismiss()
-        mainViewModel.unregisterAppUpdateListener()
-    }
-
-    fun displayUnsupportedDeviceOsSpecMessage(deviceOsSpec: DeviceOsSpec) {
+    fun displayUnsupportedDeviceOsSpecMessage() {
         // Do not show dialog if app was already exited upon receiving of devices from the server.
         if (isFinishing) {
             return
         }
 
-        val resourceId = when (deviceOsSpec) {
+        val resourceId = when (mainViewModel.deviceOsSpec) {
             DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS -> R.string.carrier_exclusive_device_warning_message
             DeviceOsSpec.UNSUPPORTED_OXYGEN_OS -> R.string.unsupported_device_warning_message
             DeviceOsSpec.UNSUPPORTED_OS -> R.string.unsupported_os_warning_message
@@ -434,7 +509,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             }.show()
     }
 
-    fun displayIncorrectDeviceSelectedMessage(savedDeviceName: String, actualDeviceName: String) {
+    fun displayIncorrectDeviceSelectedMessage() {
         // Do not show dialog if app was already exited upon receiving of devices from the server.
         if (isFinishing) {
             return
@@ -445,7 +520,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         MaterialAlertDialogBuilder(this)
             .setView(checkBoxView)
             .setTitle(getString(R.string.incorrect_device_warning_title))
-            .setMessage(getString(R.string.incorrect_device_warning_message, savedDeviceName, actualDeviceName))
+            .setMessage(
+                getString(
+                    R.string.incorrect_device_warning_message,
+                    mainViewModel.deviceMismatchStatus!!.second,
+                    mainViewModel.deviceMismatchStatus!!.third
+                )
+            )
             .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
                 val checkbox = checkBoxView.findViewById<CheckBox>(R.id.device_warning_checkbox)
                 settingsManager.savePreference(SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, checkbox.isChecked)
@@ -462,12 +543,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         }
     }
 
-    override fun onRequestPermissionsResult(permsRequestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (permsRequestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
-            downloadPermissionCallback?.invoke(grantResults[0] == PERMISSION_GRANTED)
-        }
-    }
-
     // Android 6.0 Run-time permissions
     fun hasDownloadPermissions() = ContextCompat.checkSelfPermission(this, VERIFY_FILE_PERMISSION) == PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(this, DOWNLOAD_FILE_PERMISSION) == PERMISSION_GRANTED
@@ -480,62 +555,35 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         /**
          * This is called to instantiate the fragment for the given page.
          * Return one of:
-         * * [NewsFragment]
          * * [UpdateInformationFragment]
+         * * [NewsFragment]
          * * [DeviceInformationFragment]
+         * * [SettingsFragment]
+         * * [SettingsFragment]
          */
         override fun createFragment(position: Int) = when (position) {
+            PAGE_UPDATE -> UpdateInformationFragment()
             PAGE_NEWS -> NewsFragment()
-            PAGE_UPDATE_INFORMATION -> UpdateInformationFragment()
-            PAGE_DEVICE_INFORMATION -> DeviceInformationFragment()
+            PAGE_DEVICE -> DeviceInformationFragment()
+            PAGE_ABOUT -> AboutFragment()
+            PAGE_SETTINGS -> SettingsFragment()
             else -> TODO()
         }
 
         /**
-         * Show 3 total pages: News, Update Information, and Device Information
+         * Show 5 total pages: Update, News, Device, About, and Settings
          */
-        override fun getItemCount() = 3
-    }
-
-    /**
-     * Control comes back to the activity in the form of a result only for a [AppUpdateType.FLEXIBLE] update request,
-     * since an [AppUpdateType.IMMEDIATE] update is entirely handled by Google Play, with the exception of resuming an installation.
-     * Check [onResume] for more info on how this is handled.
-     */
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) = super.onActivityResult(requestCode, resultCode, data).also {
-        if (requestCode == REQUEST_CODE_APP_UPDATE) {
-            when (resultCode) {
-                // Reset ignore count
-                Activity.RESULT_OK -> settingsManager.savePreference(
-                    SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
-                    0
-                )
-                // Increment ignore count and show app update banner
-                Activity.RESULT_CANCELED -> settingsManager.getPreference(
-                    SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
-                    0
-                ).let { ignoreCount ->
-                    settingsManager.savePreference(
-                        SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
-                        ignoreCount + 1
-                    )
-                    showAppUpdateBanner()
-                }
-                // Show app update banner
-                ActivityResult.RESULT_IN_APP_UPDATE_FAILED -> showAppUpdateBanner()
-            }
-        }
+        override fun getItemCount() = 5
     }
 
     companion object {
         private const val INTENT_START_PAGE = "start_page"
-        private const val PAGE_NEWS = 0
-        private const val PAGE_UPDATE_INFORMATION = 1
-        private const val PAGE_DEVICE_INFORMATION = 2
+
+        private const val PAGE_UPDATE = 0
+        private const val PAGE_NEWS = 1
+        private const val PAGE_DEVICE = 2
+        private const val PAGE_ABOUT = 3
+        private const val PAGE_SETTINGS = 4
 
         // Permissions constants
         private const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE

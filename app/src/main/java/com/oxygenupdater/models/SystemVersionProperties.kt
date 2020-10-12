@@ -75,20 +75,21 @@ class SystemVersionProperties {
         try {
             val getBuildPropProcess = Runtime.getRuntime().exec("getprop")
 
-            logVerbose(TAG, "Started fetching device properties using 'getprop' command...")
+            logVerbose(TAG, "Started fetching device properties using 'getprop' command")
 
             val scanner = Scanner(getBuildPropProcess.inputStream).useDelimiter("\\A")
             val properties = if (scanner.hasNext()) scanner.next() else ""
 
             getBuildPropProcess.destroy()
 
-            oxygenDeviceName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEY, properties, "Detected device: %s ...")
-            oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with version: %s ...")
-            oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with OTA version: %s ...")
-            oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s ...")
-            osType = readBuildPropItem(RO_BUILD_OS_TYPE_LOOKUP_KEY, properties, "Detected OS Type: %s ...")
-            abPartitionLayout = parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s ..."))
-            val isEuBuild = parseBoolean(readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s ..."))
+            oxygenDeviceName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEY, properties, "Detected device: %s")
+            oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with version: %s")
+            oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with OTA version: %s")
+            oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s")
+            osType = readBuildPropItem(RO_BUILD_OS_TYPE_LOOKUP_KEY, properties, "Detected OS Type: %s")
+
+            abPartitionLayout = parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s"))
+            val isEuBuild = parseBoolean(readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s"))
 
             // This prop is present only on 7-series and above
             if (osType.isBlank()) {
@@ -103,10 +104,10 @@ class SystemVersionProperties {
                 // Already available using Android API since Android 6.0
                 Build.VERSION.SECURITY_PATCH
             } else {
-                readBuildPropItem(SECURITY_PATCH_LOOKUP_KEY, properties, "Detected security patch level: %s ...")
+                readBuildPropItem(SECURITY_PATCH_LOOKUP_KEY, properties, "Detected security patch level: %s")
             }
 
-            logVerbose(TAG, "Finished fetching device properties using 'getprop' command...")
+            logVerbose(TAG, "Finished fetching device properties using 'getprop' command")
         } catch (e: Exception) {
             logError(TAG, e.localizedMessage ?: "$e", e)
         }

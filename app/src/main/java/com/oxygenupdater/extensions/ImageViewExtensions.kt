@@ -13,7 +13,10 @@ import androidx.core.content.ContextCompat
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-fun ImageView.setImageResourceWithTint(@DrawableRes drawableResId: Int, @ColorRes colorResId: Int) {
+fun ImageView.setImageResourceWithTint(
+    @DrawableRes drawableResId: Int,
+    @ColorRes colorResId: Int
+) {
     setImageResource(drawableResId)
     imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, colorResId))
 }
@@ -23,7 +26,29 @@ fun ImageView.setImageResourceWithTint(@DrawableRes drawableResId: Int, @ColorRe
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-fun ImageView.setImageResourceWithAnimation(@DrawableRes drawableResId: Int, @AnimRes animResId: Int) {
+fun ImageView.setImageResourceWithAnimation(
+    @DrawableRes drawableResId: Int,
+    @AnimRes animResId: Int
+) {
     startAnimation(AnimationUtils.loadAnimation(context, animResId))
     setImageResource(drawableResId)
+}
+
+/**
+ * Convenient extension to set a drawable after an animation for an [ImageView],
+ * as well as apply a tint
+ *
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
+ */
+fun ImageView.setImageResourceWithAnimationAndTint(
+    @DrawableRes drawableResId: Int,
+    @AnimRes animResId: Int,
+    @ColorRes colorResId: Int? = null
+) {
+    setImageResourceWithAnimation(drawableResId, animResId)
+    imageTintList = if (colorResId == null) {
+        null
+    } else {
+        ColorStateList.valueOf(ContextCompat.getColor(context!!, colorResId))
+    }
 }

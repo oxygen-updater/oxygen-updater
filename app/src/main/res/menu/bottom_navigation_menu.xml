@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item
+		android:id="@+id/page_update"
+		android:icon="@drawable/system_update_alt"
+		android:title="@string/update_information_header" />
+
+	<item
+		android:id="@+id/page_news"
+		android:icon="@drawable/news"
+		android:title="@string/news" />
+
+	<item
+		android:id="@+id/page_device"
+		android:icon="@drawable/smartphone"
+		android:title="@string/device_information_header" />
+
+	<item
+		android:id="@+id/page_about"
+		android:icon="@drawable/faq"
+		android:title="@string/about" />
+
+	<item
+		android:id="@+id/page_settings"
+		android:icon="@drawable/settings"
+		android:title="@string/settings" />
+</menu>

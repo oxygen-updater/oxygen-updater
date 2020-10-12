@@ -26,4 +26,9 @@
 		<item name="cornerSize">@dimen/spacing_default</item>
 	</style>
 
+	<style name="DeviceImageOverlayShapeAppearance" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+		<item name="cornerSizeTopLeft">@dimen/spacing_default</item>
+		<item name="cornerSizeTopRight">@dimen/spacing_default</item>
+	</style>
+
 </resources>

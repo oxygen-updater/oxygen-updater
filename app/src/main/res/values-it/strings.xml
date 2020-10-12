@@ -11,6 +11,9 @@
 	<string name="update_information_header">"Aggiorna"</string>
 	<string name="update_information_error_title">Errore nel recuperare gli ultimi aggiornamenti.</string>
 	<string name="update_information_banner_server">Premi qui per i messaggi importanti</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable modalità avanzata if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">La modalità avanzata è abilitata</string>
 	<string name="update_information_header_advanced_mode_helper">Grazie alla modalità avanzata, puoi scaricare l\'ultima ZIP per \"%1$s\".\n\nPuoi disattivare la modalità avanzata nelle impostazioni.</string>
 	<string name="update_information_different_version_changelog_notice">Stai visualizzando il changelog dell\'ultimo aggiornamento sulla traccia \"%1$s\". Se intendi installare questo aggiornamento, devi abilitare la modalità avanzata (impostazioni).\n\nPer visualizzare il changelog attuale devi scegliere la modalità di aggiornamento corretta.</string>
 	<string name="update_information_last_checked_on">"Ultima verifica: %1$s"</string>
@@ -394,7 +397,7 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="contribute_agree">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento."</string>
 	<string name="contribute_agree_from_setup">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento agli admin."</string>
 	<string name="contribute_save">Salva</string>
-	<string name="contribute_more_info">Ulteriori info …</string>
+	<string name="contribute_more_info">Ulteriori info</string>
 	<string name="contribute_allow_storage">Abbiamo bisogno dei permessi storage per continuare</string>
 	<string name="contribute_successful_notification_title">Contribuzione avvenuta con successo!</string>
 	<string name="contribute_successful_notification_text">Grazie per aver condiviso con noi i nomi dei file di aggiornamento!</string>

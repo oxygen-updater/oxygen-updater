@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/systemIsUpToDateLayout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fadingEdge="vertical"
@@ -10,79 +11,143 @@
 	android:requiresFadingEdge="vertical">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/systemIsUpToDateLayoutChild"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:showIn="@layout/fragment_update_information">
+		android:animateLayoutChanges="true">
 
 		<TextView
-			android:id="@+id/systemIsUpToDateHeader"
+			android:id="@+id/advancedModeTipTextView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="?selectableItemBackground"
+			android:drawablePadding="@dimen/spacing_default"
+			android:gravity="center_vertical"
+			android:padding="@dimen/spacing_default"
+			android:text="@string/update_information_banner_advanced_mode_tip"
+			android:textColor="?android:textColorPrimary"
+			android:visibility="gone"
+			app:drawableStartCompat="@drawable/info"
+			app:drawableTint="?android:textColorPrimary"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:visibility="visible" />
+
+		<View
+			android:id="@+id/advancedModeTipDivider"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/backgroundVariant"
+			android:visibility="gone"
+			app:layout_constraintTop_toBottomOf="@id/advancedModeTipTextView"
+			tools:visibility="visible" />
+
+		<ImageView
+			android:layout_width="@dimen/spacing_4x"
+			android:layout_height="@dimen/spacing_4x"
+			android:alpha=".1"
+			android:contentDescription="@string/icon"
+			android:scaleX="2"
+			android:scaleY="2"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/advancedModeTipDivider"
+			app:srcCompat="@drawable/done_all"
+			app:tint="?android:textColorPrimary" />
+
+		<TextView
+			android:id="@+id/systemIsUpToDateLabel"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/spacing_default"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:layout_marginEnd="@dimen/spacing_default"
-			android:layout_marginBottom="@dimen/spacing_half"
-			android:gravity="center_horizontal"
+			android:drawablePadding="@dimen/spacing_default"
+			android:fontFamily="@font/google_sans"
+			android:gravity="center_vertical"
 			android:text="@string/update_information_system_is_up_to_date"
-			android:textSize="@dimen/typography_headline"
-			app:layout_constraintTop_toTopOf="parent" />
+			android:textColor="@color/colorPositive"
+			android:textSize="@dimen/typography_subheading"
+			app:drawableStartCompat="@drawable/done_outline"
+			app:drawableTint="@color/colorPositive"
+			app:layout_constraintTop_toBottomOf="@id/advancedModeTipDivider" />
 
 		<TextView
-			android:id="@+id/systemIsUpToDateVersionTextView"
+			android:id="@+id/updateLastCheckedField"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginStart="@dimen/spacing_3x"
 			android:layout_marginEnd="@dimen/spacing_default"
-			android:gravity="center_horizontal"
+			android:paddingStart="@dimen/spacing_half"
 			android:textColor="?android:textColorSecondary"
 			android:textIsSelectable="true"
-			android:textSize="@dimen/typography_title"
-			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateHeader"
-			tools:text="@string/update_information_oxygen_os_version" />
-
-		<TextView
-			android:id="@+id/systemIsUpToDateDateTextView"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
-			android:layout_marginEnd="@dimen/spacing_default"
-			android:gravity="center_horizontal"
-			android:textColor="?android:textColorSecondary"
-			app:layout_constraintBottom_toTopOf="@id/systemIsUpToDateImage"
-			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateVersionTextView"
-			app:layout_constraintVertical_chainStyle="spread_inside"
+			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateLabel"
+			tools:ignore="RtlSymmetry"
 			tools:text="@string/update_information_last_checked_on" />
 
-		<androidx.appcompat.widget.AppCompatImageView
-			android:id="@+id/systemIsUpToDateImage"
-			android:layout_width="@dimen/size_collapsing_toolbar"
-			android:layout_height="@dimen/size_collapsing_toolbar"
-			android:layout_margin="@dimen/spacing_default"
-			android:contentDescription="@string/icon"
-			app:layout_constraintBottom_toTopOf="@id/systemIsUpToDateChangelogView"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateDateTextView"
-			app:srcCompat="@drawable/done_outline"
-			app:tint="@color/colorPositive" />
+		<View
+			android:id="@+id/contentDivider"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:background="@color/backgroundVariant"
+			app:layout_constraintTop_toBottomOf="@id/updateLastCheckedField" />
 
-		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/systemIsUpToDateChangelogView"
+		<include layout="@layout/layout_device_information_software" />
+
+		<TextView
+			android:id="@+id/changelogLabel"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="@drawable/rounded_overlay_top"
+			android:background="?selectableItemBackground"
+			android:drawablePadding="@dimen/spacing_default"
 			android:fontFamily="@font/google_sans_medium"
-			android:foreground="?selectableItemBackground"
 			android:gravity="center_vertical"
 			android:padding="@dimen/spacing_default"
 			android:stateListAnimator="@animator/clicked"
 			android:text="@string/update_information_view_update_information"
 			android:textColor="?colorPrimary"
 			android:textSize="@dimen/typography_subheading"
-			app:drawableEndCompat="@drawable/expand"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/systemIsUpToDateImage" />
+			app:drawableStartCompat="@drawable/collapse"
+			app:drawableTint="?colorPrimary"
+			app:layout_constraintTop_toBottomOf="@id/softwareDivider" />
+
+		<TextView
+			android:id="@+id/differentVersionChangelogNotice"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:paddingStart="@dimen/spacing_quarter"
+			android:textColor="?android:textColorSecondary"
+			android:textIsSelectable="true"
+			android:textSize="@dimen/typography_caption"
+			android:visibility="gone"
+			app:layout_constraintTop_toBottomOf="@id/changelogLabel"
+			tools:ignore="RtlSymmetry"
+			tools:text="@string/update_information_different_version_changelog_notice"
+			tools:visibility="visible" />
+
+		<TextView
+			android:id="@+id/changelogField"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginTop="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:paddingStart="@dimen/spacing_quarter"
+			android:paddingBottom="@dimen/spacing_default"
+			android:textIsSelectable="true"
+			android:visibility="gone"
+			app:layout_constraintTop_toBottomOf="@id/differentVersionChangelogNotice"
+			app:layout_goneMarginTop="0dp"
+			tools:ignore="RtlSymmetry"
+			tools:text="System\n  • Fixed known issues with screen recorder\n  • Improved system stability and fixed general bugs\n  • Updated Android security patch to 2020.09\n  • Updated GMS package to 2020.09\n\nCamera\n  • Optimized shooting effect with front camera\n  • Improved 4k 60 FPS video stabilization of front camera\n  • Improved image clarity of macro camera\n\nNetwork\n  • Fixed the wrong display of names of inserted SIM cards from different carriers\n  • Improved voice call stability\n\nPower\n  • Improved general power consumption"
+			tools:visibility="visible" />
+
+		<View
+			android:id="@+id/changelogDivider"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/backgroundVariant"
+			app:layout_constraintTop_toBottomOf="@id/changelogField" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

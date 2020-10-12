@@ -15,7 +15,7 @@ import com.oxygenupdater.R
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun Activity.enableEdgeToEdgeUiSupport() {
-    if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_Oxygen_FullScreen) {
+    if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_OxygenUpdater_DayNight_FullScreen) {
         findViewById<ViewGroup>(android.R.id.content).getChildAt(0).apply {
             systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 

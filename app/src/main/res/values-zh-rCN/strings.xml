@@ -12,6 +12,9 @@
 	<string name="update_information_header">更新</string>
 	<string name="update_information_error_title">无法检索最新的更新数据信息</string>
 	<string name="update_information_banner_server">轻触此处以查看重要消息</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable 高级模式 if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">启用高级模式</string>
 	<string name="update_information_header_advanced_mode_helper">由于您开启了高级模式，您可以手动下载 \"%1$s\" 的 zip 包。\n\n 您可以在设置中关闭高级模式。</string>
 	<string name="update_information_different_version_changelog_notice">您正在查看 \"%1$s\" 更新通道中最新版本的更新亮点。如果您要安装此更新，请在设置中打开高级模式 \n\n但是，如果您希望查看当前安装版本的更新亮点，则需要切换回正确的更新方法。</string>
 	<string name="update_information_last_checked_on">上一次检查更新在： %1$s</string>
@@ -270,7 +273,7 @@
 	<string name="device_information_incremental_os_version">增量更新版本：</string>
 	<string name="device_information_os_version">Android 版本：</string>
 	<string name="device_information_oxygen_os_version">OxygenOS 版本：</string>
-	<string name="device_information_oxygen_os_ota_version">OTA 版本:</string>
+	<string name="device_information_oxygen_os_ota_version">OTA 版本</string>
 	<string name="device_information_patch_level_version">安全更新：</string>
 	<string name="device_information_serial_number">序列号：</string>
 	<string name="device_information_system_on_a_chip">SoC：</string>
@@ -318,7 +321,7 @@
 	<string name="news_load_network_error">无法打开文章。 请检查您的互联网连接并点击“重试”按钮重新打开。</string>
 
 	<string name="news_load_id_error"><![CDATA[无法从该链接打开文章： %1$s，请检查链接。 您也可以通过我们的 <a href="mailto:support@oxygenupdater.com">邮件</a> 或者我们的 <a href="https://discord.gg/5TXdhKJ">Discord 服务器</a> 发送反馈]]></string>
-	
+
 	<string name="news_unread_count_1">您有 %1$d 未读文章，轻触即可浏览</string>
 	<string name="news_unread_count_2">您有 %1$d 未读文章，轻触即可全部显示</string>
 	<string name="news_mark_all_read">标记所有文章为已读</string>
@@ -334,7 +337,7 @@
 	<string name="contribute_agree">我同意将更新文件名提交给应用的管理员</string>
 	<string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用程序的管理员提交更新包文件名</string>
 	<string name="contribute_save">保存设置</string>
-	<string name="contribute_more_info">了解更多…</string>
+	<string name="contribute_more_info">了解更多</string>
 	<string name="contribute_allow_storage">请给予内部存储文件读取权限以开启共研帮助我们</string>
 	<string name="contribute_successful_notification_title">共研完成</string>
 	<string name="contribute_successful_notification_text">感谢您将文件名分享给我们！</string>

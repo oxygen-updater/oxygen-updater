@@ -28,10 +28,8 @@
 				android:id="@+id/oxygenOsVersionTextView"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginEnd="@dimen/spacing_default"
+				android:layout_marginHorizontal="@dimen/spacing_default"
 				android:fontFamily="@font/google_sans_medium"
-				android:gravity="center_horizontal"
 				android:textIsSelectable="true"
 				android:textSize="@dimen/typography_title"
 				app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +48,7 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/oxygenOsVersionTextView"
 				app:layout_constraintVertical_chainStyle="spread_inside"
-				tools:text="Changelog" />
+				tools:text="System\n  • Fixed known issues with screen recorder\n  • Improved system stability and fixed general bugs\n  • Updated Android security patch to 2020.09\n  • Updated GMS package to 2020.09\n\nCamera\n  • Optimized shooting effect with front camera\n  • Improved 4k 60 FPS video stabilization of front camera\n  • Improved image clarity of macro camera\n\nNetwork\n  • Fixed the wrong display of names of inserted SIM cards from different carriers\n  • Improved voice call stability\n\nPower\n  • Improved general power consumption" />
 
 			<View
 				android:id="@+id/changelogDivider"
@@ -154,7 +152,7 @@
 			app:layout_constraintTop_toBottomOf="@id/downloadLayoutDivider"
 			tools:progress="50" />
 
-		<androidx.appcompat.widget.AppCompatImageView
+		<ImageView
 			android:id="@+id/downloadIcon"
 			android:layout_width="56dp"
 			android:layout_height="wrap_content"

@@ -11,6 +11,9 @@
 	<string name="update_information_header">"Päivitys"</string>
 	<string name="update_information_error_title">Ei voitu hakea uusia päivitystietoja</string>
 	<string name="update_information_banner_server">Paina tästä nähdäksesi tärkeät ilmoitukset</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable kehittynyt tila if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Edistynyt tila on käytössä</string>
 	<string name="update_information_header_advanced_mode_helper">Edistynyt tila on käytössä, voit ladata viimeisimmän \"%1$s\" ZIP:in.\n\nEdistyneen tilan saat pois käytöstä asetuksista.</string>
 	<string name="update_information_different_version_changelog_notice">Katsot viimeisimmän \"%1$s\" päivityksen muutoslokia. Jos aiot asentaa tämän päivityksen, sinun täytyy ottaa käyttöön edistynyt tila asetuksista.\n\nJos haluat nähdä muutoslokin tällä hetkellä asennettuna olevasta versiosta, sinun täytyy vaihtaa takaisin oikeaan päivitystapaan.</string>
 	<string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
@@ -117,7 +120,7 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="settings_buy_button_not_possible">"Ei saatavilla"</string>
 	<string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen"</string>
 
-	<string name="settings_contribute_label">Auta parantamaan sovellusta:</string>
+	<string name="settings_contribute_label">Auta parantamaan sovellusta</string>
 
 	<string name="settings_device">"Laite"</string>
 	<string name="settings_entered_incorrectly">"Virhe tallennettaessa asetuksia. Ole hyvä mene takaisin ja valitse laite / päivitystapa uudelleen."</string>
@@ -389,7 +392,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="contribute_agree">Haluan auttaa ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
 	<string name="contribute_agree_from_setup">Haluan auttaa parantamaan sovellusta ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
 	<string name="contribute_save">Tallenna asetukset</string>
-	<string name="contribute_more_info">Lisätietoja…</string>
+	<string name="contribute_more_info">Lisätietoja</string>
 	<string name="contribute_allow_storage">Ole hyvä ja anna tallennustilan käyttöoikeus auttaaksesi parantamaan sovellusta</string>
 	<string name="contribute_successful_notification_title">Osallistuminen onnistui</string>
 	<string name="contribute_successful_notification_text">Kiitos, että jaoit päivitystiedostonimet kanssamme!</string>

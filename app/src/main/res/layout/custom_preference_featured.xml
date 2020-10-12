@@ -8,7 +8,7 @@
 	android:gravity="center_vertical"
 	android:padding="@dimen/spacing_half">
 
-	<androidx.appcompat.widget.AppCompatImageView
+	<ImageView
 		android:id="@android:id/icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

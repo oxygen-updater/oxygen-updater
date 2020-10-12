@@ -11,7 +11,10 @@
 	<string name="update_information_header">Оновлення</string>
 	<string name="update_information_error_title">Не вдалося отримати інформацію про останнє оновлення</string>
 	<string name="update_information_banner_server">Натисніть, щоб переглянути важливі повідомлення</string>
-	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\".\n\nРозширений режим можна вимкнути в налаштуваннях</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable розширений режим if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Увімкнено розширений режим</string>
+	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\".\n\nРозширений режим можна вимкнути в налаштуваннях.</string>
 	<string name="update_information_different_version_changelog_notice">Ви переглядаєте список змін для способу оновлення \"%1$s\". Якщо ви маєте намір встановити це оновлення, спочатку необхідно увімкнути розширений режим в налаштуваннях.\n\nПроте, якщо ви хочете переглянути список змін до поточної встановленої версії, вам потрібно вибрати відповідний спосіб оновлення в налаштуваннях.</string>
 	<string name="update_information_last_checked_on">Востаннє перевірено: %1$s</string>
 	<string name="update_information_no_update_data_available">Немає інформації про оновлення</string>
@@ -265,20 +268,20 @@
 	<string name="device_information_hardware_header">Апаратне забезпечення</string>
 	<string name="device_information_software_header">Програмне забезпечення</string>
 
-	<string name="device_information_amount_of_memory">Обсяг оперативної пам\'яті:</string>
-	<string name="device_information_cpu_frequency">Частота процесора:</string>
+	<string name="device_information_amount_of_memory">Обсяг оперативної пам\'яті</string>
+	<string name="device_information_cpu_frequency">Частота процесора</string>
 	<string name="device_information_gigahertz">%1$s ГГц</string>
 	<string name="device_information_header">Пристрій</string>
 	<string name="device_information_image_description">Зображення пристрою</string>
-	<string name="device_information_incremental_os_version">Номер складання:</string>
-	<string name="device_information_os_version">Версія Android:</string>
-	<string name="device_information_oxygen_os_version">Версія OxygenOS:</string>
-	<string name="device_information_oxygen_os_ota_version">Версія ПЗ:</string>
-	<string name="device_information_patch_level_version">Дата патчу безпеки:</string>
-	<string name="device_information_serial_number">Серійний номер:</string>
-	<string name="device_information_system_on_a_chip">Система на кристалі:</string>
+	<string name="device_information_incremental_os_version">Номер складання</string>
+	<string name="device_information_os_version">Версія Android</string>
+	<string name="device_information_oxygen_os_version">Версія OxygenOS</string>
+	<string name="device_information_oxygen_os_ota_version">Версія ПЗ</string>
+	<string name="device_information_patch_level_version">Дата патчу безпеки</string>
+	<string name="device_information_serial_number">Серійний номер</string>
+	<string name="device_information_system_on_a_chip">Система на кристалі</string>
 	<string name="device_information_unknown">невідомо</string>
-	<string name="device_information_your_device">Ваш пристрій: </string>
+	<string name="device_information_your_device">Ваш пристрій</string>
 
 	<!-- About screen strings -->
 	<string name="about">Про цей застосунок</string>

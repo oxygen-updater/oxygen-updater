@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-	<style name="Theme.Oxygen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+	<style name="Theme.OxygenUpdater" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryVariant">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimary</item>
@@ -11,18 +11,20 @@
 		<item name="android:colorAccent">@color/colorSecondary</item>
 		<item name="colorError">@color/colorError</item>
 
-		<item name="appBarLayoutStyle">@style/AppBarLayout</item>
+		<item name="appBarLayoutStyle">@style/Widget.MaterialComponents.AppBarLayout.Surface</item>
+		<item name="toolbarStyle">@style/Toolbar</item>
 		<item name="materialAlertDialogTheme">@style/MaterialAlertDialog</item>
-		<item name="tabStyle">@style/TabLayout</item>
 		<item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
 
 		<item name="colorOnBackground">?colorOnSurface</item>
 
 		<item name="android:windowBackground">?colorSurface</item>
 
-		<!-- For visual continuity between the app and the navigation bar, set to the window background -->
-		<item name="android:navigationBarColor">?colorSurface</item>
-		<item name="android:statusBarColor">@color/statusBarColor</item>
+		<!-- For visual continuity between the app and the navigation bar, set to bottom nav colour -->
+		<item name="android:navigationBarColor">@color/backgroundVariant</item>
+		<!-- For visual continuity between the app and the status bar, set to the window background -->
+		<item name="android:statusBarColor">?colorSurface</item>
+		<item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
 		<item name="android:textColorTertiary">@color/foreground</item>
 		<item name="android:textColorTertiaryInverse">?android:windowBackground</item>
@@ -36,8 +38,14 @@
 		<item name="android:windowSharedElementExitTransition">@transition/toolbar</item>
 	</style>
 
+	<style name="Theme.OxygenUpdater.Light" parent="Theme.OxygenUpdater">
+		<item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+	</style>
+
+	<style name="Theme.OxygenUpdater.DayNight" parent="Theme.OxygenUpdater.Light" />
+
 	<!-- Used in activities that support edge-to-edge UI -->
-	<style name="Theme.Oxygen.FullScreen">
+	<style name="Theme.OxygenUpdater.DayNight.FullScreen">
 		<item name="android:statusBarColor">@android:color/transparent</item>
 	</style>
 

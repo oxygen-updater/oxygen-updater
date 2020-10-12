@@ -101,4 +101,59 @@
 			 If you do not set this, the first direct Toolbar child found will be used. -->
 		<attr name="toolbarId" />
 	</declare-styleable>
+
+	<attr name="topSheetStyle" format="reference" />
+
+	<!-- Exactly matches `BottomSheetBehavior_Layout`, but without redefining flags
+		 (`behavior_peekHeight` and `behavior_saveFlags`) -->
+	<declare-styleable name="TopSheetBehavior_Layout">
+		<!-- The height of the top sheet when it is collapsed.
+			 Default value is -1: auto - peek at the 16:9 ratio keyline of its parent -->
+		<attr name="behavior_peekHeight" />
+		<!-- Behavior properties will be saved and restored by evaluating each flag.
+			  usage: app:behavior_saveFlags=”hideable|skipCollapsed”
+			  Possible values:
+			  -1: all
+			   0: none (default) - the only value preserved will be the positional state, e.g. collapsed, hidden, expanded, etc
+			   1: peekHeight
+			   2: fitToContents
+			   4: hideable
+			   8: skipCollapsed
+			  -->
+		<attr name="behavior_saveFlags" />
+		<!-- Whether this top sheet can be hidden by dragging it further downwards -->
+		<attr name="behavior_hideable" format="boolean" />
+		<!-- Skip the collapsed state once expanded; no effect unless it is hideable -->
+		<attr name="behavior_skipCollapsed" format="boolean" />
+		<!-- Whether height of expanded sheet wraps content or not -->
+		<attr name="behavior_fitToContents" format="boolean" />
+		<!-- Whether this top sheet is draggable. If not, the app will have to supply different
+			 means to expand and collapse the sheet -->
+		<attr name="behavior_draggable" format="boolean" />
+		<!-- The ratio to be used to set the height of half-expanded state in proportion to parent, when
+			 fitToContents is false. Defaults to true half, 0.5, if not explicitly set. Ratio must be a
+			 float value between 0 and 1 and produce a half-expanded state height larger than the
+			 peek height for the half-expanded state to be operational -->
+		<attr name="behavior_halfExpandedRatio" format="reference|float" />
+		<!-- The top offset of the TopSheet in the expanded-state when fitsToContent is false.
+			 The default value is 0, which results in the sheet matching the parent's top. -->
+		<attr name="behavior_expandedOffset" format="reference|dimension" />
+
+		<!-- Shape appearance style reference for TopSheet. Attribute declaration is in the shape
+			 package. -->
+		<attr name="shapeAppearance" format="reference" />
+		<!-- Shape appearance overlay style reference for TopSheet. To be used to augment attributes
+			 declared in the shapeAppearance. Attribute declaration is in the shape package. -->
+		<attr name="shapeAppearanceOverlay" format="reference" />
+
+		<!-- Background color used by the TopSheetBehavior background drawable when shape theming is
+			 enabled. Accepts a ColorStateList or ColorInt. If shape theming is not enabled,
+			 android:background should instead be utilized to set the background resource. -->
+		<attr name="backgroundTint" format="color" />
+		<!-- Sets whether this top sheet should adjust it's position based on the system gesture area
+			 on Android Q and above. Value is false (insets respected) by default. -->
+		<attr name="gestureInsetBottomIgnored" format="boolean" />
+		<attr name="android:elevation" />
+
+	</declare-styleable>
 </resources>

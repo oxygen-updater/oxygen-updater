@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<style name="AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
-		<item name="android:background">@color/appBarBackground</item>
+	<style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
+		<item name="titleMarginStart">0dp</item>
+		<item name="contentInsetStartWithNavigation">0dp</item>
+
+		<item name="titleTextAppearance">@style/TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedTitle</item>
+		<item name="subtitleTextAppearance">@style/TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedSubtitle</item>
+		<item name="android:elevation">0dp</item>
+
+		<!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
+		<item name="android:theme">@style/ToolbarTheme</item>
 	</style>
 
-	<style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
-		<item name="popupTheme">@style/ToolbarPopupTheme</item>
-		<item name="fontFamily">@font/google_sans_medium</item>
-		<item name="android:fontFamily">@font/google_sans_medium</item>
+	<style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+		<item name="titleTextAppearance">@style/TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedTitle</item>
+		<item name="subtitleTextAppearance">@style/TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedSubtitle</item>
 	</style>
 
 	<style name="ToolbarPopupTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
@@ -18,11 +25,24 @@
 	</style>
 
 	<style name="Widget.Design.SuperpoweredCollapsingToolbar" parent="Widget.Design.CollapsingToolbar">
+		<item name="maxLines">3</item>
+
 		<!-- Same as expandedTitleMargin, defined in Widget.Design.CollapsingToolbar -->
-		<item name="expandedSubtitleMargin">32dp</item>
-		<!-- Custom scrims to match @color/appBarBackground -->
-		<item name="contentScrim">@color/appBarBackground</item>
-		<item name="statusBarScrim">@color/appBarBackground</item>
+		<item name="expandedSubtitleMargin">@dimen/spacing_2x</item>
+		<!-- Default is 32dp (spacing_2x). Adding an additional 4dp that matches lineSpacingExtra. -->
+		<item name="expandedTitleMarginBottom">36dp</item>
+
+		<!-- Custom scrims to match @color/background -->
+		<item name="contentScrim">@color/background</item>
+		<item name="statusBarScrim">@color/background</item>
+
+		<!-- Note: this theme overlay will only work if the style is applied directly to a Toolbar. -->
+		<item name="android:theme">@style/SuperpoweredCollapsingToolbarTheme</item>
+	</style>
+
+	<style name="SuperpoweredCollapsingToolbarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar.Surface">
+		<item name="fontFamily">@font/google_sans_medium</item>
+		<item name="android:fontFamily">@font/google_sans_medium</item>
 	</style>
 
 	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.ExpandedTitle" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
@@ -37,9 +57,14 @@
 
 	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.ExpandedSubtitle.Inverse" parent="android:TextAppearance.Material.Widget.ActionBar.Subtitle.Inverse" />
 
-	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedTitle" parent="android:TextAppearance.Material.Widget.ActionBar.Title" />
+	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedTitle" parent="android:TextAppearance.Material.Widget.ActionBar.Title">
+		<item name="fontFamily">@font/google_sans_medium</item>
+		<item name="android:fontFamily">@font/google_sans_medium</item>
+	</style>
 
 	<style name="TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedSubtitle" parent="android:TextAppearance.Material.Widget.ActionBar.Subtitle">
+		<item name="fontFamily">sans-serif</item>
+		<item name="android:fontFamily">sans-serif</item>
 		<item name="android:textSize">@dimen/typography_body</item>
 	</style>
 

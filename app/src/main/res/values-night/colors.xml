@@ -9,6 +9,6 @@
 	<color name="foreground">@color/white</color>
 	<!-- Calculated by overlaying 8% primary colour (#f50514 with 8% opacity) over default dark background (#121212) -->
 	<!--<color name="appBarBackground">#241113</color>-->
-	<color name="appBarBackground">@color/backgroundVariant</color>
+	<!--<color name="appBarBackground">@color/backgroundVariant</color>-->
 	<color name="splashBackgroundColor">@color/background</color>
 </resources>

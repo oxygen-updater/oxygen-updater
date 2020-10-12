@@ -206,6 +206,9 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
 		if (a.hasValue(R.styleable.SuperpoweredCollapsingToolbarLayout_collapsedTitleTextAppearance)) {
 			collapsingTextHelper.setCollapsedTitleAppearance(a.getResourceId(R.styleable.SuperpoweredCollapsingToolbarLayout_collapsedTitleTextAppearance, 0));
+		} else {
+			// Not sure why this is necessary, but it doesn't seem to work without duplicating L#195 here
+			collapsingTextHelper.setCollapsedTitleAppearance(R.style.TextAppearance_Design_SuperpoweredCollapsingToolbar_CollapsedTitle);
 		}
 
 		if (a.hasValue(R.styleable.SuperpoweredCollapsingToolbarLayout_collapsedSubtitleTextAppearance)) {

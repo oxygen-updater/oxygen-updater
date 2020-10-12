@@ -12,7 +12,10 @@
 
 	<string name="update_information_error_title">Не могу преузети најновије информације о ажурирању</string>
 	<string name="update_information_banner_server">Додирните овде да бисте видели важна обавештења</string>
-	<string name="update_information_header_advanced_mode_helper">Пошто сте укључили напредни мод, можете преузети последњи ZIP за \"%1$s\".\n\nМожете искључити напредни мод из подешавања</string>
+	<!-- TODO: translate these 2 strings below -->
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable напредни мод if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Омогућен је напредни режим</string>
+	<string name="update_information_header_advanced_mode_helper">Пошто сте укључили напредни мод, можете преузети последњи ZIP за \"%1$s\".\n\nМожете искључити напредни мод из подешавања.</string>
 	<string name="update_information_different_version_changelog_notice">Прегледавате дневник измена за најновију исправку у систему \"%1$s\" записника надоградње. Ако намеравате да инсталирате ову исправку, морате прво укључити напредни мод (у подешавањима).\n\nКако год, ако уместо тога желите да видите дневник измена за тренутну верзију, мораћете се вратити на исправан начин ажурирања.</string>
 	<string name="update_information_last_checked_on">Задња провера: %1$s</string>
 	<string name="update_information_no_update_data_available">Нема новости о ажурирању</string>
@@ -156,7 +159,7 @@
 	<string name="onboarding_page_3_title">Изаберите методу ажурирањ</string>
 	<string name="onboarding_page_3_caption">Обично је делимично ажурирање прави избор, зато што омогућава мања и бржа преузимања.\n\nАли тај метод ажурирања није компатибилан са рутованим уређајима. Ако имате рутован уређај изаберите пуно ажурирање.\n\nАко имате beta верзију OxgenOS-a, изаберите једну од Open Beta метода ажурирања.</string>
 	<string name="onboarding_page_4_title">Спремни сте за коришћење!</string>
-	<string name="onboarding_page_4_text">Уживајте у коришћењу апликације!\n\nМожете увек променити поставке у подешавањима касније. Да урадите то: кликните на три тачке у горњем десном углу, и притисните на \"Settings\". </string>
+	<string name="onboarding_page_4_text">Уживајте у коришћењу апликације!\n\nМожете увек променити поставке у подешавањима касније. Да урадите то: кликните на три тачке у горњем десном углу, и притисните на \"Settings\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Инсталирај</string>
@@ -223,7 +226,7 @@
 	<string name="install_guide_page_1_title">Преузмите ажурирање</string>
 	<string name="install_guide_page_1_text">&#8226; Притисните дугме за преузимање да започнете преузимање ажурирања.\n\n&#8226; Прогрес преузимања ће се појавити у апликацији, такође и као обавештење.\n\n&#8226; Када је преузимање завршено, видећете обавештење са текстом \"Преузимање завшено\".\nАко је дошло до грешке приликом преузимања, отворите апликацију и покушајте поново са преузимањем. Ако то не ради, проверите да ли имате интернет конекцију. У супротном, контактирајте нас. То можете учинити одласком на \" Моје апликације \" секцију на Goole Play продавници.</string>
 
-	
+
 	<string name="install_guide_page_2_title">Припремите се за инталацију</string>
 	<string name="install_guide_page_2_text">"Белешка: Инсталација ажурирања врши се са посебне странице стандардног одељка Ажурирања система на вашем уређају. Ако се из неког разлога појављује ажурирање система приликом отварања овог одељка, можете  прво изабрати да њега инсталирате. Након тога поново отворите програм "Oxgen Updater" да видите да ли сте ажурирани на последњу верзију.
 
@@ -234,7 +237,7 @@
 
 &#8226; Листајте доле док не дођете до Ажурирања система. Кликните на то."</string>
 
-	
+
 	<string name="install_guide_page_3_title">Инсталирајте ажурирање</string>
 	<string name="install_guide_page_3_text">"Сада када сте у апликацији Ажурирање система, време је да инсталирате ажурирање.
 
@@ -246,7 +249,7 @@
 
 &#8226; Кликните на \"Ажурирај сада\". Инсталација би требала да почне аутоматски."</string>
 
-	
+
 	<string name="install_guide_page_4_title">Сачекајте да се заврши инсталација</string>
 	<string name="install_guide_page_4_text">"&#8226; Телефон ће сада инсталирати ажурирање и приказати траку напретка. Молимо причекајте док се инсталација не заврши. Инсталација може трајати од неколико минута до 15 минута.
 
@@ -268,19 +271,19 @@
 	<string name="device_information_hardware_header">Хардвер</string>
 	<string name="device_information_software_header">Софтвер</string>
 
-	<string name="device_information_amount_of_memory">Количина RAM-а:</string>
-	<string name="device_information_cpu_frequency">Френквенција процесора:</string>
+	<string name="device_information_amount_of_memory">Количина RAM-а</string>
+	<string name="device_information_cpu_frequency">Френквенција процесора</string>
 	<string name="device_information_header">Мој уређај</string>
 	<string name="device_information_image_description">Слика уређаја</string>
-	<string name="device_information_incremental_os_version">Инкрементална OS верзија:</string>
-	<string name="device_information_os_version">Верзија андроида:</string>
-	<string name="device_information_oxygen_os_version">OxygenOS верзија:</string>
-	<string name="device_information_oxygen_os_ota_version">OTA верзија:</string>
-	<string name="device_information_patch_level_version">Датум сигурносне закрпе:</string>
-	<string name="device_information_serial_number">Серијски број:</string>
-	<string name="device_information_system_on_a_chip">Систем на чипу:</string>
+	<string name="device_information_incremental_os_version">Инкрементална OS верзија</string>
+	<string name="device_information_os_version">Верзија андроида</string>
+	<string name="device_information_oxygen_os_version">OxygenOS верзија</string>
+	<string name="device_information_oxygen_os_ota_version">OTA верзија</string>
+	<string name="device_information_patch_level_version">Датум сигурносне закрпе</string>
+	<string name="device_information_serial_number">Серијски број</string>
+	<string name="device_information_system_on_a_chip">Систем на чипу</string>
 	<string name="device_information_unknown">непознато</string>
-	<string name="device_information_your_device">Ваш уређај: </string>
+	<string name="device_information_your_device">Ваш уређај</string>
 
 	<!-- About screen strings -->
 	<string name="about">О овој апликацији</string>
@@ -321,9 +324,9 @@
 	<string name="news_date_published">Последње ажурирање: %1$s</string>
 	<string name="news_empty">Ова вест нема садржај.</string>
 	<string name="news_load_network_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
-	
+
 	<string name="news_load_id_error"><![CDATA[Није успео отварање чланка са неважеће УРЛ адресе: %1$s. Проверите УРЛ или нам то пријавите или путем <a href="mailto:support@oxygenupdater.com">email</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	
+
 	<string name="news_unread_count_1">Имате %1$d непрочитаних вести. Кликните овде да их погледате.</string>
 	<string name="news_unread_count_2">Имате %1$d непрочитаних вести. Кликните овде да видите све непрочитане вести.</string>
 	<string name="news_mark_all_read">Означите све вести као прочитане</string>
@@ -339,7 +342,7 @@
 	<string name="contribute_agree">Волео бих да помогнем и пошаљем имена фајлова админима</string>
 	<string name="contribute_agree_from_setup">Желим да помогнем развијању апликације и да пошаљем имена фајлова админима</string>
 	<string name="contribute_save">Сачувај подешавања</string>
-	<string name="contribute_more_info">Више информација …</string>
+	<string name="contribute_more_info">Више информација</string>
 	<string name="contribute_allow_storage">Молимо вас допустите апликацији притуп фајловима ако желите да помогнете апликацији</string>
 	<string name="contribute_successful_notification_title">Учествовање успешно</string>
 	<string name="contribute_successful_notification_text">Хвала вам што делите ажурирано име датотеке са нама!</string>

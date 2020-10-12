@@ -101,7 +101,7 @@
 
 		<SwitchPreference
 			android:defaultValue="true"
-			android:icon="@drawable/system_update"
+			android:icon="@drawable/system_update_alt"
 			android:key="@string/key_notification_system_update"
 			android:layout="@layout/custom_preference"
 			android:summaryOff="@string/summary_off"
@@ -110,7 +110,7 @@
 
 		<SwitchPreference
 			android:defaultValue="true"
-			android:icon="@drawable/android"
+			android:icon="@drawable/device_info"
 			android:key="@string/key_notification_new_device_supported"
 			android:layout="@layout/custom_preference"
 			android:summaryOff="@string/summary_off"
@@ -119,7 +119,7 @@
 
 		<SwitchPreference
 			android:defaultValue="true"
-			android:icon="@drawable/art_track"
+			android:icon="@drawable/news"
 			android:key="@string/key_notification_news_story_published"
 			android:layout="@layout/custom_preference"
 			android:summaryOff="@string/summary_off"

@@ -14,6 +14,7 @@ object DeviceInformationData {
 
     val deviceManufacturer: String = Build.MANUFACTURER
     val deviceName: String = Build.DEVICE
+    val model: String = Build.MODEL
     val soc: String = Build.BOARD
     val osVersion: String = Build.VERSION.RELEASE
     val incrementalOsVersion: String = Build.VERSION.INCREMENTAL

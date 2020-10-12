@@ -10,14 +10,16 @@
 	<string name="update_information_file_name">Filnavn: %1$s</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_header">Opdatér</string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable avanceret tilstand if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Avanceret tilstand er aktiveret</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled avanceret tilstand, you can download the latest ZIP for \"%1$s\".\n\nYou can turn avanceret tilstand off from settings.</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn avanceret tilstand on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Senest checket den: %1$s</string>
 	<string name="update_information_no_update_data_available">Ingen opdatering information tilgængelig</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -271,7 +273,7 @@ Instructions:
 	<string name="install_guide_zip_file_missing">"Ønsker du at holde din enhed root'ed, så skal du specificere en rod-pakke ovenfor."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
+	<!-- TODO: translate these 4 strings below -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
 	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
@@ -280,19 +282,19 @@ Instructions:
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
-	<string name="device_information_amount_of_memory">Mængde af RAM:</string>
-	<string name="device_information_cpu_frequency">Processor frekvens:</string>
+	<string name="device_information_amount_of_memory">Mængde af RAM</string>
+	<string name="device_information_cpu_frequency">Processor frekvens</string>
 	<string name="device_information_header">Min enhed</string>
 	<string name="device_information_image_description">Enheds billede</string>
-	<string name="device_information_incremental_os_version">Trinvis OS version:</string>
-	<string name="device_information_os_version">Android version:</string>
-	<string name="device_information_oxygen_os_version">OxygenOS version:</string>
-	<string name="device_information_oxygen_os_ota_version">OTA version:</string>
-	<string name="device_information_patch_level_version">Sikkerheds-snipplet dato:</string>
-	<string name="device_information_serial_number">Serie nummer:</string>
-	<string name="device_information_system_on_a_chip">System på en chip:</string>
+	<string name="device_information_incremental_os_version">Trinvis OS version</string>
+	<string name="device_information_os_version">Android version</string>
+	<string name="device_information_oxygen_os_version">OxygenOS version</string>
+	<string name="device_information_oxygen_os_ota_version">OTA version</string>
+	<string name="device_information_patch_level_version">Sikkerheds-snipplet dato</string>
+	<string name="device_information_serial_number">Serie nummer</string>
+	<string name="device_information_system_on_a_chip">System på en chip</string>
 	<string name="device_information_unknown">ukendt</string>
-	<string name="device_information_your_device">Din enhed: </string>
+	<string name="device_information_your_device">Din enhed</string>
 
 	<!-- About screen strings -->
 	<string name="about">Om denne app</string>
@@ -302,7 +304,7 @@ Instructions:
 	<string name="about_rate_button_text">Bedøm</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>
 
@@ -352,7 +354,7 @@ Instructions:
 	<string name="contribute_agree">Jeg ønsker at hjælpe, og acceptere at tilføje en opdaterings-fil til vores administratorer</string>
 	<string name="contribute_agree_from_setup">Jeg vil gerne bidrage med hjælp til at forbedre denne app, og accepterer at tilføje file-navne til administratorene.</string>
 	<string name="contribute_save">Gem indstillinger</string>
-	<string name="contribute_more_info">Mere info …</string>
+	<string name="contribute_more_info">Mere info</string>
 	<string name="contribute_allow_storage">Giv venligst lager-adgangs tilladelse, for at kunne forbedre denne app.</string>
 	<string name="contribute_successful_notification_title">Bidrag er vellykket</string>
 	<string name="contribute_successful_notification_text">Tak for at dele opdateringsfilnavnene med os!</string>

@@ -10,14 +10,16 @@
 	<string name="update_information_file_name">Nazwa pliku: %1$s</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_header">Aktualizacja</string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable tryb zaawansowany if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">Tryb zaawansowany jest włączony</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled tryb zaawansowany, you can download the latest ZIP for \"%1$s\".\n\nYou can turn tryb zaawansowany off from settings.</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn tryb zaawansowany on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">Ostatnio sprawdzono: %1$s</string>
 	<string name="update_information_no_update_data_available">Brak dostępnych informacji o aktualizacjach</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -274,7 +276,7 @@ Instructions:
 	<string name="install_guide_zip_file_missing">"Jeśli chcesz zachować roota na swoim urządzeniu, musisz wybrać paczkę z rootem powyżej."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
+	<!-- TODO: translate these 4 strings below -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
 	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
@@ -283,29 +285,29 @@ Instructions:
 	<string name="device_information_hardware_header">Sprzęt</string>
 	<string name="device_information_software_header">Oprogramowanie</string>
 
-	<string name="device_information_amount_of_memory">Ilość pamięci RAM:</string>
-	<string name="device_information_cpu_frequency">Taktowanie procesora:</string>
+	<string name="device_information_amount_of_memory">Ilość pamięci RAM</string>
+	<string name="device_information_cpu_frequency">Taktowanie procesora</string>
 	<string name="device_information_header">Moje urządzenie</string>
 	<string name="device_information_image_description">Obraz urządzenia</string>
-	<string name="device_information_incremental_os_version">Częściowa wersja systemu operacyjnego:</string>
-	<string name="device_information_os_version">Wersja Androida:</string>
-	<string name="device_information_oxygen_os_version">Wersja OxygenOS:</string>
-	<string name="device_information_oxygen_os_ota_version">Wersja OTA:</string>
-	<string name="device_information_patch_level_version">Poziom poprawek zabezpieczeń Android:</string>
-	<string name="device_information_serial_number">Numer seryjny:</string>
-	<string name="device_information_system_on_a_chip">System na Chipie:</string>
+	<string name="device_information_incremental_os_version">Częściowa wersja systemu operacyjnego</string>
+	<string name="device_information_os_version">Wersja Androida</string>
+	<string name="device_information_oxygen_os_version">Wersja OxygenOS</string>
+	<string name="device_information_oxygen_os_ota_version">Wersja OTA</string>
+	<string name="device_information_patch_level_version">Poziom poprawek zabezpieczeń Android</string>
+	<string name="device_information_serial_number">Numer seryjny</string>
+	<string name="device_information_system_on_a_chip">System na Chipie</string>
 	<string name="device_information_unknown">nieznane</string>
-	<string name="device_information_your_device">Twoje urządzenie: </string>
+	<string name="device_information_your_device">Twoje urządzenie</string>
 
 	<!-- About screen strings -->
 	<string name="about">O tej aplikacji</string>
 	<string name="about_app_description">Najlepsza aplikacja do aktualizacji OxygenOS.</string>
 	<string name="about_background_story">Ta aplikacja została oryginalnie napisana przez Arjana Vleka jako kontynuacja innej z jego aplikacji, <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (Ma ona podobną funkcjonalność dla urządzeń z CyanogenOS).\n\nPo upływie 4 lat, w czerwcu 2019, Arjan zdecydował się odejść od swoich obu projektów i przekazał własność aplikacji dla drużyny deweloperów pochodzących z róznych krajów Podjęli się oni rozwijania aplikacji i ponoszenia odpowiedzialności, dostarczając społeczności niesamowitą pomoc w szybszym uzyskiwaniu aktualizacji OnePlus.\nMożesz znaleźć więcej informacji o ogłoszeniu <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">here</a>.\n\n14 sierpnia 2019 roku została wydana nowa aktualizacja od nowych właścicieli, wprowadzając wiele nowości chociażby takie jak ciemny motyw oraz kompletne przeprojektowanie wyglądu.\n\nAby uzyskać więcej informacji o zespole, sprawdź <a href="https://oxygenupdater.com/team/">tę stronę</a>.</string>
-	<string name="about_third_party_app_notice">Proszę pamiętaj, to nie jest oficjalna aplikacja OnePlusa.\nNazwa OnePlus, logo OnePlus oraz OxygenOS są własnością OnePlusa.\n Logo Android, Google oraz Google Play są zarejestrowanymi znakami towarowymi Google Inc.\nTa aplikacja używa danych od OnePlusa oraz ich firmy-matki Oppo aby pokazuwać informacje o aktualizacjach. </string>
+	<string name="about_third_party_app_notice">Proszę pamiętaj, to nie jest oficjalna aplikacja OnePlusa.\nNazwa OnePlus, logo OnePlus oraz OxygenOS są własnością OnePlusa.\n Logo Android, Google oraz Google Play są zarejestrowanymi znakami towarowymi Google Inc.\nTa aplikacja używa danych od OnePlusa oraz ich firmy-matki Oppo aby pokazuwać informacje o aktualizacjach.</string>
 	<string name="about_rate_button_text">Oceń</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>
 
@@ -355,7 +357,7 @@ Instructions:
 	<string name="contribute_agree">Chciałbym pomóc i zgadzam się na wysłanie plików aktualizacji do naszych adminów</string>
 	<string name="contribute_agree_from_setup">Chciałbym pomóc i zgadzam się na wysłanie plików aktualizacji do naszych adminów</string>
 	<string name="contribute_save">Zapisz ustawienia</string>
-	<string name="contribute_more_info">Więcej informacji …</string>
+	<string name="contribute_more_info">Więcej informacji</string>
 	<string name="contribute_allow_storage">Proszę przyznaj uprawnienia dla zapisywania i odczytywania plików w celu ulepszania aplikacji</string>
 	<string name="contribute_successful_notification_title">Wkład pomyślny</string>
 	<string name="contribute_successful_notification_text">Dziękujemy za udostępnienie nam nazwy pliku aktualizacji!</string>

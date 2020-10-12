@@ -10,14 +10,16 @@
 	<string name="update_information_file_name">إسم الملف: %1$s</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
 	<string name="update_information_header">تحديث</string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable الوضع المطور if you plan to switch to this update track.</string>
+	<string name="update_information_header_advanced_mode_hint">الوضع المتقدم ممكّن</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled الوضع المطور, you can download the latest ZIP for \"%1$s\".\n\nYou can turn الوضع المطور off from settings.</string>
+	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn الوضع المطور on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">أخر فحص تم في: %1$s</string>
 	<string name="update_information_no_update_data_available">لا توجد بيانات متاحة عن التحديث</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -242,7 +244,7 @@ Instructions:
 	<string name="install_guide_zip_file_missing">"إذا كنت ترغب في الحفاظ علي جهازك ممتلكاً للروت، سيكون عليك تحديد حزمة الروت أعلاه."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: Translate these 4 strings below -->
+	<!-- TODO: translate these 4 strings below -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
 	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
@@ -250,19 +252,19 @@ Instructions:
 
 	<string name="device_information_hardware_header">العتاد</string>
 	<string name="device_information_software_header">النظام</string>
-	<string name="device_information_amount_of_memory">مقدار الذاكرة العشوائية:</string>
-	<string name="device_information_cpu_frequency">تردد المعالج:</string>
+	<string name="device_information_amount_of_memory">مقدار الذاكرة العشوائية</string>
+	<string name="device_information_cpu_frequency">تردد المعالج</string>
 	<string name="device_information_header">جهازي</string>
 	<string name="device_information_image_description">نسخة الجهاز</string>
-	<string name="device_information_incremental_os_version">إصدار نظام التشغيل التدريجي:</string>
-	<string name="device_information_os_version">إصدار أندرويد:</string>
-	<string name="device_information_oxygen_os_version">إصدار نظام التشغيل أكسجين:</string>
-	<string name="device_information_oxygen_os_ota_version">إصدار التحديث الهوائي:</string>
-	<string name="device_information_patch_level_version">تاريخ التصحيح الأمني:</string>
-	<string name="device_information_serial_number">الرقم التسلسلي:</string>
-	<string name="device_information_system_on_a_chip">النظام على الرقاقة:</string>
+	<string name="device_information_incremental_os_version">إصدار نظام التشغيل التدريجي</string>
+	<string name="device_information_os_version">إصدار أندرويد</string>
+	<string name="device_information_oxygen_os_version">إصدار نظام التشغيل أكسجين</string>
+	<string name="device_information_oxygen_os_ota_version">إصدار التحديث الهوائي</string>
+	<string name="device_information_patch_level_version">تاريخ التصحيح الأمني</string>
+	<string name="device_information_serial_number">الرقم التسلسلي</string>
+	<string name="device_information_system_on_a_chip">النظام على الرقاقة</string>
 	<string name="device_information_unknown">غير معروف</string>
-	<string name="device_information_your_device">جهازك: </string>
+	<string name="device_information_your_device">جهازك</string>
 
 	<!-- About screen strings -->
 	<string name="about">حول هذا التطبيق</string>
@@ -272,12 +274,12 @@ Instructions:
 	<string name="about_rate_button_text">تقييم</string>
 	<string name="about_github_button_text">GitHub</string>
 	<string name="about_discord_button_text">Discord</string>
-	<!-- TODO: Translate this string below -->
+	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">البريد الإلكتروني</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device_title">تم إصدار جهاز جديد </string>
+	<string name="notification_new_device_title">تم إصدار جهاز جديد</string>
 	<string name="notification_new_device_text">%1$s مدعوم الآن. إفتح التطبيق لإختيار هذا الجهاز.</string>
 	<string name="notification_no_notification_support">ثبت أو حدث خدمات متجر بلاي لتمكين الإشعارات.</string>
 	<string name="notification_version_title">متاح تحديث للنظام</string>
@@ -322,7 +324,7 @@ Instructions:
 	<string name="contribute_agree">أرغب في المساعدة وأوافق على إرسال أسماء ملفات التحديث إلى مسؤولينا</string>
 	<string name="contribute_agree_from_setup">أرغب بالمساعدة في تحسين التطبيق وأوافق على إرسال أسماء ملفات التحديث إلى مسؤولينا</string>
 	<string name="contribute_save">حفظ الإعدادات</string>
-	<string name="contribute_more_info">معلومات إضافية…</string>
+	<string name="contribute_more_info">معلومات إضافية</string>
 	<string name="contribute_allow_storage">فضلاً إمنح الأذونات للوصول إلى ذاكرة التخزين من أجل المساعدة في تحسين التطبيق</string>
 	<string name="contribute_successful_notification_title">مساهمة ناجحة</string>
 	<string name="contribute_successful_notification_text">شكرًا لمشاركة أسماء ملفات التحديث معنا!</string>

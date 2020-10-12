@@ -10,8 +10,11 @@ import android.os.storage.StorageManager
 import android.os.storage.StorageManager.ACTION_MANAGE_STORAGE
 import android.os.storage.StorageManager.EXTRA_REQUESTED_BYTES
 import android.os.storage.StorageManager.EXTRA_UUID
+import android.util.SparseArray
+import androidx.annotation.IdRes
 import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
+import androidx.core.util.set
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,6 +46,7 @@ import com.oxygenupdater.fragments.UpdateInformationFragment.Companion.SAFE_MARG
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.Device
+import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerMessage
@@ -118,6 +122,11 @@ class MainViewModel(
     val appUpdateInstallStatus: LiveData<InstallState>
         get() = _appUpdateInstallStatus
 
+    private val _pageToolbarTextUpdated = MutableLiveData<Pair<Int, CharSequence?>>()
+    val pageToolbarTextUpdated: LiveData<Pair<Int, CharSequence?>>
+        get() = _pageToolbarTextUpdated
+    val pageToolbarSubtitle = SparseArray<CharSequence?>()
+
     private val workManager by inject(WorkManager::class.java)
     private val settingsManager by inject(SettingsManager::class.java)
     private val appUpdateManager by inject(AppUpdateManager::class.java)
@@ -129,6 +138,9 @@ class MainViewModel(
     private val flexibleAppUpdateListener: KotlinCallback<InstallState> = {
         _appUpdateInstallStatus.postValue(it)
     }
+
+    var deviceOsSpec: DeviceOsSpec? = null
+    var deviceMismatchStatus: Triple<Boolean, String, String>? = null
 
     fun fetchAllDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.fetchDevices(DeviceRequestFilter.ALL)?.let {
@@ -477,7 +489,7 @@ class MainViewModel(
      */
     @Throws(IntentSender.SendIntentException::class)
     fun requestUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo) {
-        // TODO: Implement app update priority whenever Google adds support for it in Play Developer Console and the library itself
+        // TODO: implement app update priority whenever Google adds support for it in Play Developer Console and the library itself
         //  (the library doesn't yet have an annotation interface for priority constants)
         appUpdateType = if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
             val versionStalenessDays = appUpdateInfo.clientVersionStalenessDays() ?: 0
@@ -523,5 +535,16 @@ class MainViewModel(
 
     fun unregisterAppUpdateListener() {
         appUpdateManager.unregisterListener(flexibleAppUpdateListener)
+    }
+
+    /**
+     * Updates the corresponding page's toolbar subtitle
+     */
+    fun saveSubtitleForPage(
+        @IdRes pageId: Int,
+        subtitle: CharSequence? = null
+    ) {
+        pageToolbarSubtitle[pageId] = subtitle
+        _pageToolbarTextUpdated.postValue(Pair(pageId, subtitle))
     }
 }

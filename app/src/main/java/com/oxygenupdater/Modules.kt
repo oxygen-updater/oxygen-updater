@@ -19,7 +19,6 @@ import com.oxygenupdater.utils.Database.buildLocalBillingDatabase
 import com.oxygenupdater.utils.createDownloadClient
 import com.oxygenupdater.utils.createNetworkClient
 import com.oxygenupdater.utils.createOkHttpCache
-import com.oxygenupdater.viewmodels.AboutViewModel
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.InstallViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
@@ -60,7 +59,6 @@ private val viewModelModule = module {
     viewModel { MainViewModel(get()) }
     viewModel { NewsViewModel(get()) }
     viewModel { InstallViewModel(get()) }
-    viewModel { AboutViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { BillingViewModel(get(), get(), get()) }
 }

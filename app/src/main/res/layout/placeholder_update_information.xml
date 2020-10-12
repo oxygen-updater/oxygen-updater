@@ -6,28 +6,71 @@
 	android:padding="@dimen/spacing_default">
 
 	<View
-		android:id="@+id/oxygenOsVersionPlaceholder"
-		android:layout_width="200dp"
-		android:layout_height="@dimen/spacing_default"
-		android:layout_marginTop="@dimen/spacing_half"
-		android:alpha=".2"
+		android:id="@+id/changelogPlaceholderSubheading1"
+		android:layout_width="@dimen/spacing_4x"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_quarter"
+		android:alpha=".25"
 		android:background="@drawable/placeholder_text"
-		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
 	<View
-		android:id="@+id/changelogPlaceholder1"
+		android:id="@+id/changelogPlaceholderList1Item1"
+		android:layout_width="200dp"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:alpha=".1"
+		android:background="@drawable/placeholder_text"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderSubheading1" />
+
+	<View
+		android:id="@+id/changelogPlaceholderList1Item2"
+		android:layout_width="200dp"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_half"
+		android:alpha=".1"
+		android:background="@drawable/placeholder_text"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList1Item1" />
+
+	<View
+		android:id="@+id/changelogPlaceholderList1Item3"
+		android:layout_width="200dp"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_half"
+		android:alpha=".1"
+		android:background="@drawable/placeholder_text"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList1Item2" />
+
+	<View
+		android:id="@+id/changelogPlaceholderList1Item4"
+		android:layout_width="200dp"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_half"
+		android:alpha=".1"
+		android:background="@drawable/placeholder_text"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList1Item3" />
+
+	<View
+		android:id="@+id/changelogPlaceholderSubheading2"
 		android:layout_width="@dimen/spacing_4x"
 		android:layout_height="@dimen/spacing_half"
 		android:layout_marginTop="@dimen/spacing_1_5x"
-		android:alpha=".15"
+		android:alpha=".25"
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/oxygenOsVersionPlaceholder" />
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList1Item4" />
 
 	<View
-		android:id="@+id/changelogPlaceholder2"
+		android:id="@+id/changelogPlaceholderList2Item1"
 		android:layout_width="200dp"
 		android:layout_height="@dimen/spacing_half"
 		android:layout_marginStart="@dimen/spacing_half"
@@ -35,42 +78,42 @@
 		android:alpha=".1"
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholder1" />
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderSubheading2" />
 
 	<View
-		android:id="@+id/changelogPlaceholder3"
+		android:id="@+id/changelogPlaceholderList2Item2"
 		android:layout_width="200dp"
 		android:layout_height="@dimen/spacing_half"
 		android:layout_marginStart="@dimen/spacing_half"
-		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginTop="@dimen/spacing_half"
 		android:alpha=".1"
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholder2" />
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList2Item1" />
 
 	<View
-		android:id="@+id/changelogPlaceholder4"
+		android:id="@+id/changelogPlaceholderList2Item3"
 		android:layout_width="200dp"
 		android:layout_height="@dimen/spacing_half"
 		android:layout_marginStart="@dimen/spacing_half"
-		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginTop="@dimen/spacing_half"
 		android:alpha=".1"
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholder3" />
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList2Item2" />
 
 	<View
-		android:id="@+id/changelogPlaceholder5"
+		android:id="@+id/changelogPlaceholderSubheading3"
 		android:layout_width="@dimen/spacing_4x"
 		android:layout_height="@dimen/spacing_half"
-		android:layout_marginTop="@dimen/spacing_default"
-		android:alpha=".15"
+		android:layout_marginTop="@dimen/spacing_1_5x"
+		android:alpha=".25"
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholder4" />
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList2Item3" />
 
 	<View
-		android:id="@+id/changelogPlaceholder6"
+		android:id="@+id/changelogPlaceholderList3Item1"
 		android:layout_width="200dp"
 		android:layout_height="@dimen/spacing_half"
 		android:layout_marginStart="@dimen/spacing_half"
@@ -78,5 +121,37 @@
 		android:alpha=".1"
 		android:background="@drawable/placeholder_text"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholder5" />
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderSubheading3" />
+
+	<View
+		android:id="@+id/changelogPlaceholderList3Item2"
+		android:layout_width="200dp"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_half"
+		android:alpha=".1"
+		android:background="@drawable/placeholder_text"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList3Item1" />
+
+	<View
+		android:id="@+id/changelogPlaceholderSubheading4"
+		android:layout_width="@dimen/spacing_4x"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_1_5x"
+		android:alpha=".25"
+		android:background="@drawable/placeholder_text"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderList3Item2" />
+
+	<View
+		android:id="@+id/changelogPlaceholderList4Item1"
+		android:layout_width="200dp"
+		android:layout_height="@dimen/spacing_half"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:alpha=".1"
+		android:background="@drawable/placeholder_text"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/changelogPlaceholderSubheading4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

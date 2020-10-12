@@ -7,7 +7,7 @@
 	android:layout_height="wrap_content"
 	android:orientation="vertical">
 
-	<androidx.appcompat.widget.AppCompatImageView
+	<ImageView
 		android:layout_width="@dimen/spacing_2x"
 		android:layout_height="@dimen/spacing_quarter"
 		android:layout_gravity="center"

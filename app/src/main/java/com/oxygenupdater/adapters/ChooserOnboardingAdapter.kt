@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.models.SelectableModel
-import com.oxygenupdater.utils.ThemeUtils
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -81,7 +80,7 @@ class ChooserOnboardingAdapter(
 
         private fun markUnselected() = textView.let {
             TextViewCompat.setCompoundDrawableTintList(it, ColorStateList.valueOf(0))
-            it.setTextColor(ThemeUtils.getTextColorTertiary(context!!))
+            it.setTextColor(ContextCompat.getColor(context!!, R.color.foreground))
 
             TypedValue().let { outValue ->
                 context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)

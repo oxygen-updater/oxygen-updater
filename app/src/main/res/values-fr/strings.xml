@@ -11,6 +11,8 @@
 	<string name="update_information_header">"Mise à jour"</string>
 	<string name="update_information_error_title">Impossible de récupérer les dernières données de mise à jour</string>
 	<string name="update_information_banner_server">Appuyez ici afin de voir des informations importantes</string>
+	<string name="update_information_banner_advanced_mode_tip">Vous avez sélectionné la piste de mise à jour \"%1$s\". Activez le mode avancé si vous prévoyez de passer à cette piste de mise à jour.</string>
+	<string name="update_information_header_advanced_mode_hint">Mode avancé est activé</string>
 	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier ZIP pour la méthode de mise à jour \"%1$s\".\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
 	<string name="update_information_different_version_changelog_notice">Vous regardez un changelog conçu pour la dernière mise à jour disponible dans la méthode de mise à jour \"%1$s\". Si vous souhaitez installer cette mise à jour, vous devez d\'abord activer le mode avancé dans les réglages de l\'application.\n\nCependant, si vous souhaitez voir le changelog pour la version actuellement installée sur votre appareil vous devez resélectionner la précédente méthode de mise à jour.</string>
 	<string name="update_information_last_checked_on">"Dernière vérification : %1$s"</string>
@@ -392,7 +394,7 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="contribute_agree">J\'aimerais aider et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
 	<string name="contribute_agree_from_setup">J\'aimerais contribuer à améliorer l\'application et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
 	<string name="contribute_save">Enregistrer</string>
-	<string name="contribute_more_info">Plus d\'informations…</string>
+	<string name="contribute_more_info">Plus d\'informations</string>
 	<string name="contribute_allow_storage">Veuillez accorder la permission d\'accéder au stockage afin de contribuer à l\'amélioration de l\'application</string>
 	<string name="contribute_successful_notification_title">Contribution effectuée</string>
 	<string name="contribute_successful_notification_text">Merci d\'avoir partagé les noms de fichiers de mise à jour avec nous!</string>

@@ -8,8 +8,7 @@
 	<color name="colorWarn">@color/orange_500</color>
 	<color name="colorPositive">@color/green_500</color>
 	<color name="foreground">#212121</color>
-	<color name="appBarBackground">@color/colorPrimary</color>
-	<color name="statusBarColor">@color/appBarBackground</color>
+	<!--<color name="appBarBackground">@color/colorPrimary</color>-->
 	<color name="splashBackgroundColor">@color/colorPrimary</color>
 
 	<color name="red_400">#ef5350</color>
