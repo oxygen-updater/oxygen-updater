@@ -63,7 +63,7 @@
 	<string name="download_notification_error_corrupt">"Verifikacija podatka neuspjela. Provjerite svoju internet konekciju i pokušajte ponovno."</string>
 
 	<string name="download_progress_text_hours_remaining">"Od %1$d sati preostalo"</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">"%1$d%% Minuta preostalo."</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">"1 Minuta preostalo."</string>
 	<string name="download_progress_text_minutes_remaining">"%1$d%% Od %1$d Minuta preostalo."</string>
 	<string name="download_progress_text_one_hour_remaining">"Oko jedan sat preostao"</string>
 	<string name="download_progress_text_one_minute_remaining">"Oko minuta ostala"</string>

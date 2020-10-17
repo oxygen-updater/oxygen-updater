@@ -29,7 +29,7 @@ import com.oxygenupdater.extensions.createFromWorkData
 import com.oxygenupdater.extensions.toWorkData
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE
-import com.oxygenupdater.models.DownloadProgressData
+import com.oxygenupdater.models.TimeRemaining
 import com.oxygenupdater.utils.ExceptionUtils
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
 import com.oxygenupdater.utils.Logger.logDebug
@@ -452,7 +452,7 @@ class DownloadWorker(
         previousBytesDone: Long,
         bytesDone: Long,
         totalBytes: Long
-    ): DownloadProgressData.TimeRemaining? {
+    ): TimeRemaining? {
         val bytesDonePerSecond: Double
         var secondsRemaining = NOT_SET
 
@@ -497,11 +497,7 @@ class DownloadWorker(
         }
 
         return if (secondsRemaining != NOT_SET) {
-            DownloadProgressData.TimeRemaining(
-                secondsRemaining / 3600,
-                secondsRemaining / 60,
-                secondsRemaining % 60
-            )
+            TimeRemaining(secondsRemaining)
         } else {
             null
         }

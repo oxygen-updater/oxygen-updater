@@ -75,6 +75,7 @@ data class UpdateData(
     }
 
     companion object {
+        @JvmField
         val CREATOR = object : Parcelable.Creator<UpdateData> {
             override fun createFromParcel(parcel: Parcel): UpdateData? {
                 val data = UpdateData(

@@ -398,15 +398,15 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         if (online) {
             // Save update data for offline viewing
             SettingsManager.apply {
-                savePreference(SettingsManager.PROPERTY_OFFLINE_ID, updateData.id)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSize)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
-                savePreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable)
-                savePreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now(SERVER_TIME_ZONE).toString())
-                savePreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
+                savePreference(PROPERTY_OFFLINE_ID, updateData.id)
+                savePreference(PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
+                savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSize)
+                savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
+                savePreference(PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
+                savePreference(PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
+                savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable)
+                savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now(SERVER_TIME_ZONE).toString())
+                savePreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
             }
         }
     }

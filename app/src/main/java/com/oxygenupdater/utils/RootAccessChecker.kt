@@ -23,7 +23,7 @@ object RootAccessChecker {
         }
     }
 
-    private class RootCheckerImpl internal constructor(
+    private class RootCheckerImpl(
         private val callback: KotlinCallback<Boolean>
     ) : AsyncTask<Void?, Void?, Boolean>() {
 
