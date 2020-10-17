@@ -106,13 +106,6 @@
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".activities.ContributorActivity"
-			android:label="@string/contribute"
-			android:parentActivityName=".activities.MainActivity"
-			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen" />
-
-		<activity
 			android:name=".activities.FAQActivity"
 			android:label="@string/faq"
 			android:parentActivityName=".activities.MainActivity"

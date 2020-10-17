@@ -155,15 +155,6 @@ object Dialogs {
         }.show()
     }
 
-    fun showContributorExplanation(activity: Activity?) = checkPreconditions(activity) {
-        MessageDialog(
-            activity!!,
-            title = activity.getString(R.string.contribute_title),
-            message = activity.getString(R.string.contribute) + "\n\n" + activity.getString(R.string.contribute_explanation),
-            cancellable = true
-        ).show()
-    }
-
     private fun checkPreconditions(activity: Activity?, callback: () -> Unit) {
         if (activity?.isFinishing == false) {
             callback.invoke()

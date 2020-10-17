@@ -17,7 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.R
-import com.oxygenupdater.dialogs.Dialogs
+import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
@@ -46,6 +46,10 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
     private lateinit var viewPagerAdapter: OnboardingPagerAdapter
 
     private var permissionCallback: KotlinCallback<Boolean>? = null
+
+    private val contributorDialog by lazy {
+        ContributorDialogFragment()
+    }
 
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
     private val systemVersionProperties by inject<SystemVersionProperties>()
@@ -250,7 +254,10 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun onMoreInfoButtonClicked(view: View) = Dialogs.showContributorExplanation(this)
+    fun onMoreInfoButtonClicked(view: View) = contributorDialog.show(
+        supportFragmentManager,
+        ContributorDialogFragment.TAG
+    )
 
     @Suppress("UNUSED_PARAMETER")
     fun onStartAppButtonClicked(view: View) {

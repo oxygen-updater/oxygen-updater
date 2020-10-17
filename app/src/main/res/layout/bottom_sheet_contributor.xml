@@ -5,16 +5,28 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 
+	<ImageView
+		android:id="@+id/dragIndicator"
+		android:layout_width="@dimen/spacing_2x"
+		android:layout_height="@dimen/spacing_quarter"
+		android:layout_marginTop="@dimen/spacing_half"
+		android:contentDescription="@string/icon"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/rounded"
+		app:tint="@color/backgroundVariant" />
+
 	<TextView
-		android:id="@+id/titleTextView"
+		android:id="@+id/contributeTitle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:fontFamily="@font/google_sans_medium"
 		android:padding="@dimen/spacing_default"
+		android:text="@string/contribute_title"
 		android:textColor="?colorPrimary"
 		android:textSize="@dimen/typography_subheading"
-		app:layout_constraintTop_toTopOf="parent"
-		tools:text="Title" />
+		app:layout_constraintTop_toBottomOf="@+id/dragIndicator" />
 
 	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
@@ -23,18 +35,30 @@
 		android:fadingEdge="vertical"
 		android:fadingEdgeLength="@dimen/spacing_4x"
 		android:requiresFadingEdge="vertical"
-		app:layout_constraintBottom_toTopOf="@id/flow"
+		app:layout_constraintBottom_toTopOf="@id/contributeCheckbox"
 		app:layout_constraintHeight_default="wrap"
-		app:layout_constraintTop_toBottomOf="@id/titleTextView">
+		app:layout_constraintTop_toBottomOf="@id/contributeTitle">
 
 		<TextView
-			android:id="@+id/messageTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:paddingHorizontal="@dimen/spacing_default"
-			android:textIsSelectable="true"
-			tools:text="Message" />
+			android:text="@string/contribute_explanation"
+			android:textIsSelectable="true" />
 	</androidx.core.widget.NestedScrollView>
+
+	<CheckBox
+		android:id="@+id/contributeCheckbox"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginHorizontal="@dimen/spacing_default"
+		android:layout_marginBottom="@dimen/spacing_half"
+		android:text="@string/contribute_agree"
+		android:textColor="?android:textColorSecondary"
+		android:visibility="gone"
+		app:layout_constraintBottom_toTopOf="@id/flow"
+		tools:visibility="visible" />
 
 	<androidx.constraintlayout.helper.widget.Flow
 		android:id="@+id/flow"
@@ -54,11 +78,10 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginEnd="@dimen/spacing_half"
+		android:text="@android:string/cancel"
 		android:textColor="?colorError"
 		android:visibility="gone"
 		app:rippleColor="@color/ripple_error"
-		tools:ignore="MissingConstraints"
-		tools:text="Negative"
 		tools:visibility="visible" />
 
 	<com.google.android.material.button.MaterialButton
@@ -67,12 +90,12 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginEnd="@dimen/spacing_default"
+		android:text="@string/contribute_save"
 		android:textColor="@color/colorPositive"
 		android:visibility="gone"
+		app:icon="@drawable/done_outline"
 		app:iconTint="@color/colorPositive"
 		app:rippleColor="@color/ripple_positive"
 		app:strokeColor="@color/colorPositive"
-		tools:ignore="MissingConstraints"
-		tools:text="Positive"
 		tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

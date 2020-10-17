@@ -38,6 +38,7 @@ import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
+import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.dialogs.MessageDialog
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.fragments.AboutFragment
@@ -63,11 +64,37 @@ import kotlin.math.abs
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private lateinit var noNetworkDialog: MessageDialog
-    private lateinit var noConnectionSnackbar: Snackbar
     private lateinit var activityLauncher: ActivityLauncher
 
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
+
+    private val noNetworkDialog by lazy {
+        MessageDialog(
+            this,
+            title = getString(R.string.error_app_requires_network_connection),
+            message = getString(R.string.error_app_requires_network_connection_message),
+            negativeButtonText = getString(R.string.download_error_close),
+            cancellable = false
+        )
+    }
+
+    private val contributorDialog by lazy {
+        ContributorDialogFragment(true)
+    }
+
+    private val noConnectionSnackbar by lazy {
+        Snackbar.make(
+            coordinatorLayout,
+            R.string.error_no_internet_connection,
+            Snackbar.LENGTH_INDEFINITE
+        ).apply {
+            anchorView = bannerAdView
+            setBackgroundTint(ContextCompat.getColor(this@MainActivity, R.color.colorError))
+            setAction(getString(android.R.string.ok)) {
+                dismiss()
+            }
+        }
+    }
 
     private val mainViewModel by viewModel<MainViewModel>()
     private val billingViewModel by viewModel<BillingViewModel>()
@@ -123,28 +150,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (!SettingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
             && SettingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)
         ) {
-            activityLauncher.Contribute()
+            contributorDialog.show(
+                supportFragmentManager,
+                ContributorDialogFragment.TAG
+            )
         }
-
-        noConnectionSnackbar = Snackbar.make(
-            coordinatorLayout,
-            R.string.error_no_internet_connection,
-            Snackbar.LENGTH_INDEFINITE
-        ).apply {
-            anchorView = bannerAdView
-            setBackgroundTint(ContextCompat.getColor(this@MainActivity, R.color.colorError))
-            setAction(getString(android.R.string.ok)) {
-                dismiss()
-            }
-        }
-
-        noNetworkDialog = MessageDialog(
-            this,
-            title = getString(R.string.error_app_requires_network_connection),
-            message = getString(R.string.error_app_requires_network_connection_message),
-            negativeButtonText = getString(R.string.download_error_close),
-            cancellable = false
-        )
 
         if (!Utils.checkNetworkConnection()) {
             noNetworkDialog.show()
@@ -181,11 +191,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     override fun onRequestPermissionsResult(
-        permsRequestCode: Int,
+        requestCode: Int,
         permissions: Array<String>,
         grantResults: IntArray
-    ) {
-        if (permsRequestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
+    ) = super.onRequestPermissionsResult(
+        requestCode,
+        permissions,
+        grantResults
+    ).also {
+        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
             downloadPermissionCallback?.invoke(grantResults[0] == PERMISSION_GRANTED)
         }
     }

@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -32,8 +33,9 @@ class MessageDialog(
 ) : BottomSheetDialog(activity) {
 
     @SuppressLint("InflateParams")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) = super.onCreate(savedInstanceState).also {
 
         setContentView(LayoutInflater.from(activity).inflate(R.layout.bottom_sheet_message, null, false))
         setupViews()
@@ -43,12 +45,12 @@ class MessageDialog(
         titleTextView.text = title
         messageTextView.text = message
 
-        positiveButton.setup(positiveButtonText, View.OnClickListener {
+        positiveButton.setup(positiveButtonText, {
             dismiss()
             dialogListener?.invoke(Dialog.BUTTON_POSITIVE)
         }, positiveButtonIcon)
 
-        negativeButton.setup(negativeButtonText, View.OnClickListener {
+        negativeButton.setup(negativeButtonText, {
             dismiss()
             dialogListener?.invoke(Dialog.BUTTON_NEGATIVE)
         })
@@ -61,6 +63,7 @@ class MessageDialog(
         setCanceledOnTouchOutside(cancellable)
 
         if (!cancellable) {
+            onBackPressed()
             setOnKeyListener { _, keyCode, _ ->
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     dismiss()
@@ -94,7 +97,7 @@ class MessageDialog(
             setOnClickListener(onClickListener)
         }
 
-        drawableResId?.let { icon = activity.getDrawable(it) }
+        drawableResId?.let { icon = ContextCompat.getDrawable(activity, it) }
     }
 
     private fun exit(activity: Activity? = this.activity) {

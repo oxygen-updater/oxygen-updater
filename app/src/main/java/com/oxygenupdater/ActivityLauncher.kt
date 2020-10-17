@@ -8,7 +8,6 @@ import android.content.Intent.ACTION_VIEW
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.widget.Toast
-import com.oxygenupdater.activities.ContributorActivity
 import com.oxygenupdater.activities.FAQActivity
 import com.oxygenupdater.activities.HelpActivity
 import com.oxygenupdater.activities.InstallActivity
@@ -73,11 +72,6 @@ class ActivityLauncher(baseActivity: Activity) {
      * Opens the faq page.
      */
     fun FAQ() = startActivity(FAQActivity::class.java)
-
-    /**
-     * Opens the contribution popup.
-     */
-    fun Contribute() = startActivity(ContributorActivity::class.java)
 
     /**
      * Opens the update installation page.

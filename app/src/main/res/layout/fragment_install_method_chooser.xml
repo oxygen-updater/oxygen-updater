@@ -6,7 +6,6 @@
 	android:fadingEdge="vertical"
 	android:fadingEdgeLength="@dimen/spacing_4x"
 	android:fillViewport="true"
-	android:orientation="vertical"
 	android:requiresFadingEdge="vertical">
 
 	<LinearLayout

@@ -23,6 +23,7 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.dialogs.Dialogs.showAdvancedModeExplanation
 import com.oxygenupdater.enums.PurchaseStatus
 import com.oxygenupdater.enums.PurchaseType
@@ -60,6 +61,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private lateinit var devicePreference: BottomSheetPreference
     private lateinit var updateMethodPreference: BottomSheetPreference
     private lateinit var themePreference: BottomSheetPreference
+
+    private val contributorDialog by lazy {
+        ContributorDialogFragment(true)
+    }
 
     private val inappSkuDetailsListObserver = Observer<List<AugmentedSkuDetails>> { list ->
         list.find {
@@ -137,7 +142,10 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         findPreference<Preference>(
             mContext.getString(R.string.key_contributor)
         )?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            activityLauncher.Contribute()
+            contributorDialog.show(
+                parentFragmentManager,
+                ContributorDialogFragment.TAG
+            )
             true
         }
     }
