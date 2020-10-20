@@ -17,13 +17,14 @@ object UpdateDataVersionFormatter {
     private const val OS_VERSION_LINE_HEADING = "#"
 
     /**
-     * Basic semver (`major.minor.patch` only), but modified to include an optional build tag at the end.
-     * e.g. `IN21DA` for OP8 (IND)
+     * Basic semver (`major.minor.patch` only), but modified to include:
+     * * an optional "count" number after the "patch" (this is present in 8T builds)
+     * * an optional build tag at the end (e.g. `IN21DA` for OP8_IND)
      *
      * @see <a href="https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string">semver.org</a>
      */
     private val STABLE_PATTERN = Pattern.compile(
-        "((?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:\\.(?:[A-Z]{2}\\d{2}[A-Z]{2}))?)$",
+        "((?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:\\.(?:0|[1-9]\\d*))?(?:\\.(?:[A-Z]{2}\\d{2}[A-Z]{2}))?)$",
         Pattern.CASE_INSENSITIVE
     )
 
