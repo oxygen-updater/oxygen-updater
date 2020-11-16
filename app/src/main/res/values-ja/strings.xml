@@ -39,10 +39,6 @@
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">at</string>
-	<string name="time_yesterday">昨日</string>
-
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Download update</string>
@@ -62,7 +58,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
 
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">再試行</string>
 	<string name="download_error_resume">再開</string>
@@ -99,7 +95,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="summary_on">有効化</string>
 	<string name="summary_off">無効化</string>
-	<string name="summary_device">お待ち下さい…</string>
+	<string name="summary_please_wait">お待ち下さい…</string>
 	<string name="summary_update_method">まずデバイスを選択して下さい</string>
 	<string name="summary_theme">テーマの設定</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
@@ -107,8 +103,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="label_buy_ad_free">広告の除去</string>
 	<string name="label_theme">テーマ</string>
-	<string name="label_app_update_banner">アプリの更新バナー</string>
-	<string name="label_news_warning_banner">ニュース &amp; 警告バナー</string>
 	<string name="label_privacy_policy">プライバシーポリシー</string>
 	<string name="label_rate_app">アプリの評価</string>
 
@@ -143,7 +137,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_saving">設定を保存中です。長時間この状態が続く場合、ネットワーク接続を確認し、アプリをいったん終了し再起動して下さい。</string>
 
 	<string name="settings_advanced_mode">拡張モード</string>
-	<string name="settings_advanced_mode_explanation">拡張モードでは \"お使いのシステムは最新です\"というメッセージが非表示となり、デバイスと互換性がない場合でも全てのアップデートをダウンロードしインストール可能となります。\n\n以下の場合に役立ちます:\n- 通常版からベータ版へのアップデート\n- ベータ版から通常版への復帰(デバイスの工場出荷時設定へのリセットをお忘れずに)\n- 現在のシステムバージョンの再インストール 。</string>
+	<string name="settings_advanced_mode_explanation">拡張モードでは \"お使いのシステムは最新です\"というメッセージが非表示となり、デバイスと互換性がない場合でも全てのアップデートをダウンロードしインストール可能となります。\n\n以下の場合に役立ちます:\n&#8226; 通常版からベータ版へのアップデート\n&#8226; ベータ版から通常版への復帰(デバイスの工場出荷時設定へのリセットをお忘れずに)\n&#8226; 現在のシステムバージョンの再インストール 。</string>
 
 	<string name="settings_update_method">アップデート方法</string>
 	<string name="settings_upload_logs">利用データとログを共有</string>
@@ -292,16 +286,16 @@ Instructions:
 	<string name="device_information_serial_number">シリアル番号</string>
 	<string name="device_information_system_on_a_chip">搭載SoC</string>
 	<string name="device_information_unknown">不明</string>
-	<string name="device_information_your_device">あなたのデバイス</string>
 
 	<!-- About screen strings -->
-	<string name="about">このアプリについて</string>
-	<string name="about_app_description">OxygenOS アップデートのための究極のツール</string>
-	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
+	<string name="about">約</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
 	<string name="about_third_party_app_notice">注意、これはOnePlus の公式アプリケーションではありません。\nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
 	<string name="about_rate_button_text">評価</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Eメール</string>
@@ -336,9 +330,12 @@ Instructions:
 	<string name="news_load_network_error">記事を開けませんでした。 接続を確認し、\'再試行\'ボタンを押して記事を開きます。</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_mark_read">既読にする</string>
+	<string name="news_mark_unread">未読としてマーク</string>
+	<!-- TODO: translate these 5 strings below -->
 	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>

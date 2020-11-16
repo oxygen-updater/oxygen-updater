@@ -24,25 +24,6 @@
 			tools:text="@string/server_status_unreachable"
 			tools:visibility="visible" />
 
-		<TextView
-			android:id="@+id/serverBannerTextView"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@color/backgroundVariant"
-			android:drawablePadding="@dimen/spacing_default"
-			android:fontFamily="@font/google_sans"
-			android:foreground="?selectableItemBackground"
-			android:gravity="center_vertical"
-			android:padding="@dimen/spacing_default"
-			android:stateListAnimator="@animator/clicked"
-			android:text="@string/update_information_banner_server"
-			android:textColor="?colorPrimary"
-			android:visibility="gone"
-			app:drawableStartCompat="@drawable/open_in_browser"
-			app:drawableTint="?colorPrimary"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:visibility="visible" />
-
 		<com.facebook.shimmer.ShimmerFrameLayout
 			android:id="@+id/shimmerFrameLayout"
 			android:layout_width="match_parent"

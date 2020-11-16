@@ -1,6 +1,7 @@
 package com.oxygenupdater.apis
 
 import com.oxygenupdater.models.Device
+import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuidePage
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.RootInstall
@@ -24,6 +25,9 @@ import retrofit2.http.Query
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 interface ServerApi {
+
+    @GET("flattenedFaq")
+    suspend fun fetchFaq(): Response<List<InAppFaq>>
 
     @GET("devices/{filter}")
     suspend fun fetchDevices(

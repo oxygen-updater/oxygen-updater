@@ -39,10 +39,6 @@
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">zamanında</string>
-	<string name="time_yesterday">Dün</string>
-
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Download update</string>
@@ -62,7 +58,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
 
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">RETRY</string>
 	<string name="download_error_resume">RESUME</string>
@@ -99,15 +95,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="summary_on">Açık</string>
 	<string name="summary_off">Kapalı</string>
-	<string name="summary_device">Lütfen bekleyin…</string>
+	<string name="summary_please_wait">Lütfen bekleyin…</string>
 	<string name="summary_update_method">Lütfen öncelikle cihazınızı belirtin.</string>
 	<string name="summary_theme">Temayı seçiniz</string>
 	<string name="summary_privacy_policy">Online görüntüleyiniz.</string>
 	<string name="summary_rate_app">5 yıldızlı yorum bırakınız.</string>
 	<string name="label_buy_ad_free">Reklamları kaldırın</string>
 	<string name="label_theme">Tema</string>
-	<string name="label_app_update_banner">Uygulama güncelleme bannerları</string>
-	<string name="label_news_warning_banner">Yeni &amp; uyarı bannerları</string>
 	<string name="label_privacy_policy">Gizlilik Politesi</string>
 	<string name="label_rate_app">Uygulamayı değerlendirin</string>
 
@@ -117,8 +111,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="theme_auto">Otomatik</string>
 
 	<string name="theme_light_subtitle">Beyaz bir tema.</string>
-	<string name="theme_dark_subtitle">Koyu tema, pili daha da az kullanmak için işinize yarayabilir.(Özellikle AMOLED ekranlarda)</string>
-	<string name="theme_system_subtitle">Sisteminizin karanlık modu. (Telefonunuzun ayarlarındaki tema rengi)</string>
+	<string name="theme_dark_subtitle">Koyu tema, pili daha da az kullanmak için işinize yarayabilir. Özellikle AMOLED ekranlarda.</string>
+	<string name="theme_system_subtitle">Sisteminizin karanlık modu. Telefonunuzun ayarlarındaki tema rengi.</string>
 	<string name="theme_auto_subtitle">Saate göre koyu ve açık tema arasında geçiş yapar.</string>
 	<string name="theme_additional_note">Not: Eğer "otomatik" geçiş seçiliyse ve pil tasarrufu açıksa, otomatik olarak koyu temaya geçilir.</string>
 
@@ -281,7 +275,7 @@ Instructions:
 
 	<string name="device_information_amount_of_memory">RAM miktarı</string>
 	<string name="device_information_cpu_frequency">İşlemci frekansı</string>
-	<string name="device_information_header">Cihazım</string>
+	<string name="device_information_header">Cihaz</string>
 	<string name="device_information_image_description">Cihaz imajı</string>
 	<string name="device_information_incremental_os_version">OS versiyonu</string>
 	<string name="device_information_os_version">Android versiyonu</string>
@@ -291,16 +285,16 @@ Instructions:
 	<string name="device_information_serial_number">Seri numarası</string>
 	<string name="device_information_system_on_a_chip">Çipteki sistem</string>
 	<string name="device_information_unknown">bilinmiyor</string>
-	<string name="device_information_your_device">Cihazınız</string>
 
 	<!-- About screen strings -->
-	<string name="about">Uygulama hakkında</string>
-	<string name="about_app_description">Oxygen güncellemeleri için en iyi uygulama.</string>
-	<string name="about_background_story">Bu uygulama ilk olarak Arjan Vlek tarafından <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (Cyanogen OS kullanıcıları için benzer bir işlevsellik sağlar) adlı diğer bir uygulamasının devamı olarak geliştirilmiştir.\n\n4 yıl sonra, Temmuz 2019\'da Arjan, her iki projeden de vazgeçmeye ve uygulamanın sahipliğini farklı ülkelerden gelen bir geliştiriciler ekibine aktarmaya karar verdi. Topluma mükemmel hizmet sağlama sorumluluğunu üstlendiler &amp; OnePlus güncellemelerini daha hızlı alma desteği.\nDuyuru ile ilgili daha fazla bilgiyi <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">burada</a> bulabilirsiniz.\n\n14 Ağustos 2019, karanlık mod ve tam bir yeniden tasarım gibi yeni özelliklerle gelen yeni mülkiyet altındaki ilk sürümü işaretledi.\n\nTakım hakkında daha fazla bilgi için <a href="https://oxygenupdater.com/team/">web sitesini</a> kontrol edin.</string>
+	<string name="about">Hakkında</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">Bu uygulama ilk olarak Arjan Vlek tarafından <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (Cyanogen OS kullanıcıları için benzer bir işlevsellik sağlar) adlı diğer bir uygulamasının devamı olarak geliştirilmiştir.\n\n4 yıl sonra, Temmuz 2019\'da Arjan, her iki projeden de vazgeçmeye ve uygulamanın sahipliğini farklı ülkelerden gelen bir geliştiriciler ekibine aktarmaya karar verdi. Topluma mükemmel hizmet sağlama sorumluluğunu üstlendiler &amp; OnePlus güncellemelerini daha hızlı alma desteği.\nDuyuru ile ilgili daha fazla bilgiyi <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">burada</a> bulabilirsiniz.\n\n14 Ağustos 2019, karanlık mod ve tam bir yeniden tasarım gibi yeni özelliklerle gelen yeni mülkiyet altındaki ilk sürümü işaretledi.\n\nTakım hakkında daha fazla bilgi için <a href="https://oxygenupdater.com/team/">web sitesini</a> kontrol edin.</string>
 	<string name="about_third_party_app_notice">Lütfen dikkat edin, bu resmi bir OnePlus uygulaması değildir.\n OnePlus adı, OnePlus Logosu ve OxygenOS, OnePlusa aittir.\n Android, Google, Google Play ve Google Play logosunun mülkiyetindedir Google Inc. in tescilli ticari markalarıdır.\nBu uygulama güncelleme bilgilerini göstermek için "OnePlus" ve ana şirketi "Oppo" \'ya ait verileri kullanır.</string>
 	<string name="about_rate_button_text">Derecelendir</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">E-posta</string>
@@ -335,9 +329,12 @@ Instructions:
 	<string name="news_load_network_error">İçerik açılamadı. İnternet bağlantınızı kontrol edin ve \"Tekrar\" tuşuna basınız.</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_mark_read">Okundu olarak işaretle</string>
+	<string name="news_mark_unread">Okunmamış olarak işaretle</string>
+	<!-- TODO: translate these 5 strings below -->
 	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>

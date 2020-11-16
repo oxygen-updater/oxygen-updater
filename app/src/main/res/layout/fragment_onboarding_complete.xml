@@ -1,10 +1,9 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fadingEdge="vertical"
-	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fadingEdgeLength="@dimen/spacing_2x"
 	android:fillViewport="true"
 	android:requiresFadingEdge="vertical">
 
@@ -31,9 +30,22 @@
 			android:layout_height="1dp"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:layout_marginBottom="@dimen/spacing_default"
-			android:background="@color/backgroundVariant"
-			app:layout_constraintBottom_toTopOf="@id/onboardingPage4ContributeCheckbox"
+			android:background="@drawable/divider"
+			app:layout_constraintBottom_toTopOf="@id/onboardingPage4LogsCheckbox"
 			app:layout_constraintTop_toBottomOf="@id/onboardingPage4TextView" />
+
+		<CheckBox
+			android:id="@+id/onboardingPage4LogsCheckbox"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginEnd="@dimen/spacing_default"
+			android:layout_marginBottom="@dimen/spacing_half"
+			android:checked="true"
+			android:text="@string/settings_upload_logs"
+			android:textColor="?android:textColorSecondary"
+			android:textSize="@dimen/typography_caption"
+			app:layout_constraintBottom_toTopOf="@id/onboardingPage4ContributeCheckbox" />
 
 		<CheckBox
 			android:id="@+id/onboardingPage4ContributeCheckbox"
@@ -66,8 +78,7 @@
 			android:layout_height="wrap_content"
 			android:onClick="onMoreInfoButtonClicked"
 			android:text="@string/contribute_more_info"
-			app:strokeColor="?colorPrimary"
-			tools:ignore="MissingConstraints" />
+			app:strokeColor="?colorPrimary" />
 
 		<com.google.android.material.button.MaterialButton
 			android:id="@+id/onboardingPage4StartAppButton"
@@ -76,7 +87,6 @@
 			android:layout_height="wrap_content"
 			android:onClick="onStartAppButtonClicked"
 			android:text="@string/onboarding_finished_button"
-			app:strokeColor="?colorPrimary"
-			tools:ignore="MissingConstraints" />
+			app:strokeColor="?colorPrimary" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

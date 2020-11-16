@@ -33,10 +33,6 @@
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">at</string>
-	<string name="time_yesterday">Yesterday</string>
-
 	<!-- Downloader strings-->
 	<string name="download">Download update</string>
 	<string name="downloaded">Update downloaded</string>
@@ -54,7 +50,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
 
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">RETRY</string>
 	<string name="download_error_resume">RESUME</string>
@@ -91,7 +87,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="summary_on">Enabled</string>
 	<string name="summary_off">Disabled</string>
-	<string name="summary_device">Please wait…</string>
+	<string name="summary_please_wait">Please wait…</string>
 	<string name="summary_update_method">Select a device first</string>
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_privacy_policy">View online</string>
@@ -100,8 +96,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
-	<string name="label_app_update_banner">App update banners</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Rate this app</string>
 
@@ -119,8 +113,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="key_update_method_id" translatable="false">update_method_id</string>
 	<string name="key_theme" translatable="false">theme</string>
 	<string name="key_theme_id" translatable="false">theme_id</string>
-	<string name="key_ui_app_update" translatable="false">show_app_update_messages</string>
-	<string name="key_ui_news" translatable="false">show_news_messages</string>
 	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
 	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
 	<string name="key_share_usage_data" translatable="false">upload_logs</string>
@@ -134,8 +126,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="key_oxygen" translatable="false">oxygen_updater</string>
 
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
+	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
+	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device.</string>
 	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
 	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
@@ -160,7 +152,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
 
 	<string name="settings_advanced_mode">Advanced mode</string>
-	<string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n- Updating from a regular version to a beta version\n- Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n- Reinstalling your current system version.</string>
+	<string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n&#8226; Updating from a regular version to a beta version\n&#8226; Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n&#8226; Reinstalling your current system version.</string>
 
 	<string name="settings_update_method">Update method</string>
 	<string name="settings_upload_logs">Share usage data and logs</string>
@@ -296,7 +288,7 @@ Instructions:
 	<string name="device_information_cpu_frequency">Processor Frequency</string>
 	<string name="device_information_device_name" translatable="false">%1$s %2$s</string>
 	<string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
-	<string name="device_information_header">My device</string>
+	<string name="device_information_header">Device</string>
 	<string name="device_information_image_description">Device image</string>
 	<string name="device_information_incremental_os_version">Incremental OS version</string>
 	<string name="device_information_os_version">Android version</string>
@@ -306,18 +298,20 @@ Instructions:
 	<string name="device_information_serial_number">Serial number</string>
 	<string name="device_information_system_on_a_chip">System on a Chip</string>
 	<string name="device_information_unknown">unknown</string>
-	<string name="device_information_your_device">Your device</string>
 
 	<!-- About screen strings -->
-	<string name="about">About this app</string>
-	<string name="about_app_description">The ultimate tool for OxygenOS updates.</string>
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
+	<string name="about">About</string>
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
 	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
 	<string name="about_rate_button_text">Rate</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>
+	<string name="about_github_button_text" translatable="false">GitHub</string>
+	<string name="about_discord_button_text" translatable="false">Discord</string>
+	<string name="about_patreon_button_text" translatable="false">Patreon</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device_title">New device released</string>
@@ -350,6 +344,8 @@ Instructions:
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_mark_read">Mark as read</string>
+	<string name="news_mark_unread">Mark as unread</string>
 	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
@@ -405,8 +401,14 @@ Instructions:
 	<string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
 
 	<!-- Other strings-->
+	<string name="install_guide_transition_name" translatable="false">INSTALL_GUIDE_TRANSITION</string>
+	<string name="help_transition_name" translatable="false">HELP_TRANSITION</string>
+	<string name="faq_transition_name" translatable="false">FAQ_TRANSITION</string>
+	<string name="news_item_transition_name" translatable="false">NEWS_ITEM_TRANSITION_%d</string>
+
 	<string name="discord_url" translatable="false">https://discord.gg/5TXdhKJ</string>
 	<string name="github_url" translatable="false">https://github.com/oxygen-updater/oxygen-updater</string>
+	<string name="patreon_url" translatable="false">https://patreon.com/oxygenupdater</string>
 	<string name="website_url" translatable="false">https://oxygenupdater.com</string>
 	<string name="email_address" translatable="false">support@oxygenupdater.com</string>
 	<string name="error">Error</string>

@@ -59,17 +59,26 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             return
         }
 
-        deviceNameTextView.text = deviceName
-        modelTextView.text = DeviceInformationData.model
-        deviceSupportStatus.text = getString(
-            when (mainViewModel.deviceOsSpec) {
-                DeviceOsSpec.SUPPORTED_OXYGEN_OS -> R.string.device_information_supported_oxygen_os
-                DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS -> R.string.device_information_carrier_exclusive_oxygen_os
-                DeviceOsSpec.UNSUPPORTED_OXYGEN_OS -> R.string.device_information_unsupported_oxygen_os
-                DeviceOsSpec.UNSUPPORTED_OS -> R.string.device_information_unsupported_os
-                else -> R.string.device_information_unsupported_os
-            }
-        )
+        deviceNameTextView.apply {
+            isVisible = true
+            text = deviceName
+        }
+        modelTextView.apply {
+            isVisible = true
+            text = DeviceInformationData.model
+        }
+        deviceSupportStatus.apply {
+            isVisible = true
+            text = getString(
+                when (mainViewModel.deviceOsSpec) {
+                    DeviceOsSpec.SUPPORTED_OXYGEN_OS -> R.string.device_information_supported_oxygen_os
+                    DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS -> R.string.device_information_carrier_exclusive_oxygen_os
+                    DeviceOsSpec.UNSUPPORTED_OXYGEN_OS -> R.string.device_information_unsupported_oxygen_os
+                    DeviceOsSpec.UNSUPPORTED_OS -> R.string.device_information_unsupported_os
+                    else -> R.string.device_information_unsupported_os
+                }
+            )
+        }
 
         deviceMismatchStatus.run {
             if (mainViewModel.deviceMismatchStatus?.first == true) {
@@ -87,6 +96,7 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
         }
 
         deviceImageLayout.run {
+            isVisible = true
             val resourceName = systemVersionProperties.oxygenDeviceName.replace(
                 "(?:^OnePlus|^OP|Single\$|NR(?:Spr)?\$|TMO\$|VZW\$|_\\w+\$| )".toRegex(RegexOption.IGNORE_CASE),
                 ""

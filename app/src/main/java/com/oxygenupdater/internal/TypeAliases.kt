@@ -22,4 +22,14 @@ typealias KotlinCallback<E> = (E) -> Unit
  */
 typealias KotlinFunction<T, R> = (T) -> R
 
+typealias NewsItemReadStatusChangedListener = (
+    newsItemId: Long,
+    isRead: Boolean
+) -> Unit
+
+typealias NewsListChangedListener = (
+    unreadCount: Int,
+    isEmpty: Boolean
+) -> Unit
+
 typealias OnPurchaseFinishedListener = (responseCode: Int, purchase: com.android.billingclient.api.Purchase?) -> Unit

@@ -1,5 +1,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
@@ -7,20 +8,27 @@
 		android:id="@+id/appBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:transitionName="toolbar">
+		app:elevation="0dp">
 
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:title="@string/help" />
+			app:layout_scrollFlags="scroll|enterAlways|snap"
+			app:subtitle="@string/help"
+			app:title="@string/app_name" />
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="?android:dividerVertical" />
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:fadingEdgeLength="@dimen/spacing_2x"
 		android:requiresFadingEdge="vertical"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -28,24 +36,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			android:paddingTop="@dimen/spacing_default"
-			android:paddingBottom="@dimen/spacing_default">
-
-			<!-- Help -->
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="start"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginEnd="@dimen/spacing_default"
-				android:text="@string/help_text" />
-
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_marginTop="@dimen/spacing_default"
-				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant" />
+			android:paddingVertical="@dimen/spacing_default">
 
 			<!-- Updating your device -->
 			<TextView
@@ -53,24 +44,30 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:fontFamily="@font/google_sans_medium"
+				android:drawablePadding="@dimen/spacing_default"
+				android:gravity="center_vertical"
 				android:text="@string/help_updating_your_device_title"
-				android:textSize="@dimen/typography_subheading" />
+				android:textSize="@dimen/typography_subheading"
+				app:drawableStartCompat="@drawable/system_update_alt"
+				app:drawableTint="?colorPrimary" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_3x"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:text="@string/help_updating_your_device_text" />
+				android:paddingStart="@dimen/spacing_half"
+				android:text="@string/help_updating_your_device_text"
+				android:textColor="?android:textColorSecondary"
+				android:textIsSelectable="true"
+				tools:ignore="RtlSymmetry" />
 
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
 				android:layout_marginTop="@dimen/spacing_default"
 				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant" />
+				android:background="@drawable/divider" />
 
 			<!-- Reading news -->
 			<TextView
@@ -78,24 +75,30 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:fontFamily="@font/google_sans_medium"
+				android:drawablePadding="@dimen/spacing_default"
+				android:gravity="center_vertical"
 				android:text="@string/help_reading_news_title"
-				android:textSize="@dimen/typography_subheading" />
+				android:textSize="@dimen/typography_subheading"
+				app:drawableStartCompat="@drawable/news"
+				app:drawableTint="?colorPrimary" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_3x"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:text="@string/help_reading_news_text" />
+				android:paddingStart="@dimen/spacing_half"
+				android:text="@string/help_reading_news_text"
+				android:textColor="?android:textColorSecondary"
+				android:textIsSelectable="true"
+				tools:ignore="RtlSymmetry" />
 
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
 				android:layout_marginTop="@dimen/spacing_default"
 				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant" />
+				android:background="@drawable/divider" />
 
 			<!-- Viewing device information -->
 			<TextView
@@ -103,24 +106,30 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:fontFamily="@font/google_sans_medium"
+				android:drawablePadding="@dimen/spacing_default"
+				android:gravity="center_vertical"
 				android:text="@string/help_device_information_title"
-				android:textSize="@dimen/typography_subheading" />
+				android:textSize="@dimen/typography_subheading"
+				app:drawableStartCompat="@drawable/smartphone"
+				app:drawableTint="?colorPrimary" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_3x"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:text="@string/help_device_information_text" />
+				android:paddingStart="@dimen/spacing_half"
+				android:text="@string/help_device_information_text"
+				android:textColor="?android:textColorSecondary"
+				android:textIsSelectable="true"
+				tools:ignore="RtlSymmetry" />
 
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
 				android:layout_marginTop="@dimen/spacing_default"
 				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant" />
+				android:background="@drawable/divider" />
 
 			<!-- Changing settings -->
 			<TextView
@@ -128,17 +137,23 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/spacing_default"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:fontFamily="@font/google_sans_medium"
+				android:drawablePadding="@dimen/spacing_default"
+				android:gravity="center_vertical"
 				android:text="@string/help_change_settings_title"
-				android:textSize="@dimen/typography_subheading" />
+				android:textSize="@dimen/typography_subheading"
+				app:drawableStartCompat="@drawable/settings"
+				app:drawableTint="?colorPrimary" />
 
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/spacing_default"
-				android:layout_marginTop="@dimen/spacing_default"
+				android:layout_marginStart="@dimen/spacing_3x"
 				android:layout_marginEnd="@dimen/spacing_default"
-				android:text="@string/help_change_settings_text" />
+				android:paddingStart="@dimen/spacing_half"
+				android:text="@string/help_change_settings_text"
+				android:textColor="?android:textColorSecondary"
+				android:textIsSelectable="true"
+				tools:ignore="RtlSymmetry" />
 		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

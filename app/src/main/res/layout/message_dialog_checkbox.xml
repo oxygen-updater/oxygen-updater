@@ -1,13 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/layout_root"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="horizontal"
-	android:padding="@dimen/spacing_default">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:paddingHorizontal="@dimen/spacing_default"
+	android:paddingTop="@dimen/spacing_half">
 
 	<CheckBox
 		android:id="@+id/device_warning_checkbox"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/device_warning_checkbox_title" />
-</LinearLayout>
+		android:text="@string/device_warning_checkbox_title"
+		android:textColor="?android:textColorSecondary"
+		android:textSize="@dimen/typography_caption" />
+</FrameLayout>

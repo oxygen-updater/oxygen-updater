@@ -2,6 +2,7 @@ package com.oxygenupdater.receivers
 
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -88,11 +89,11 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             context,
             0,
             Intent(context, MainActivity::class.java),
-            0
+            FLAG_UPDATE_CURRENT
         )
 
         val notification = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
-            .setSmallIcon(R.drawable.done_circle)
+            .setSmallIcon(R.drawable.done_outline)
             .setContentTitle(context.getString(R.string.install_verify_success_title))
             .setContentText(context.getString(R.string.install_verify_success_message, oxygenOSVersion))
             .setContentIntent(contentIntent)
@@ -101,7 +102,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             .setCategory(CATEGORY_STATUS)
             .setPriority(PRIORITY_HIGH)
             .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.install_verify_success_message, oxygenOSVersion)))
-            .setColor(ContextCompat.getColor(context, R.color.colorPositive))
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
 
@@ -116,7 +117,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             context,
             0,
             Intent(context, MainActivity::class.java),
-            0
+            FLAG_UPDATE_CURRENT
         )
 
         val notification = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)

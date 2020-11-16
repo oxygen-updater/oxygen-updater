@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:background="?selectableItemBackground"
-	android:gravity="center_vertical"
-	android:padding="@dimen/spacing_half"
+	android:clipToPadding="false"
+	android:minHeight="?listPreferredItemHeightSmall"
+	android:padding="@dimen/spacing_default"
 	android:stateListAnimator="@animator/clicked">
 
 	<ImageView
@@ -14,39 +15,52 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:contentDescription="@string/icon"
-		android:padding="@dimen/spacing_default"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
 		app:tint="?colorPrimary"
 		tools:srcCompat="@drawable/logo_notification" />
 
-	<RelativeLayout
+	<TextView
+		android:id="@android:id/title"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_half"
-		android:layout_weight="1">
+		android:layout_marginStart="@dimen/spacing_default"
+		android:ellipsize="marquee"
+		android:singleLine="true"
+		android:textAppearance="?android:textAppearanceListItem"
+		app:layout_constraintBottom_toTopOf="@android:id/summary"
+		app:layout_constraintEnd_toStartOf="@android:id/widget_frame"
+		app:layout_constraintStart_toEndOf="@android:id/icon"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_chainStyle="packed"
+		tools:text="Title" />
 
-		<TextView
-			android:id="@android:id/title"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:textAppearanceListItem"
-			tools:text="Title" />
-
-		<TextView
-			android:id="@android:id/summary"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@android:id/title"
-			android:textColor="?android:textColorSecondary"
-			tools:text="Summary" />
-	</RelativeLayout>
+	<TextView
+		android:id="@android:id/summary"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_below="@android:id/title"
+		android:ellipsize="end"
+		android:maxLines="10"
+		android:textAppearance="?textAppearanceListItemSecondary"
+		android:textColor="?android:textColorSecondary"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="@android:id/title"
+		app:layout_constraintStart_toStartOf="@android:id/title"
+		app:layout_constraintTop_toBottomOf="@android:id/title"
+		tools:text="Summary" />
 
 	<!-- Preference places its actual preference widget here -->
-	<LinearLayout
+	<FrameLayout
 		android:id="@android:id/widget_frame"
 		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_default"
-		android:layout_marginEnd="@dimen/spacing_default"
+		android:layout_height="match_parent"
 		android:gravity="center_vertical"
-		android:orientation="vertical" />
-</LinearLayout>
+		android:orientation="vertical"
+		android:paddingStart="@dimen/spacing_default"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:ignore="RtlSymmetry" />
+</androidx.constraintlayout.widget.ConstraintLayout>

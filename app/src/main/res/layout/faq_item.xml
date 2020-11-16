@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	tools:animateLayoutChanges="true">
+
+	<TextView
+		android:id="@+id/faqCategoryTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fontFamily="@font/google_sans_medium"
+		android:paddingHorizontal="@dimen/spacing_default"
+		android:paddingTop="@dimen/spacing_1_5x"
+		android:textSize="@dimen/typography_subheading"
+		android:visibility="gone"
+		tools:text="An unnecessarily long FAQ category title, to get an accurate understanding of how long titles are rendered"
+		tools:visibility="visible" />
+
+	<TextView
+		android:id="@+id/faqItemTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="?selectableItemBackground"
+		android:drawablePadding="@dimen/spacing_default"
+		android:gravity="center_vertical"
+		android:padding="@dimen/spacing_default"
+		android:stateListAnimator="@animator/clicked"
+		android:visibility="gone"
+		app:drawableStartCompat="@drawable/collapse"
+		app:drawableTint="?colorPrimary"
+		tools:text="An unnecessarily long FAQ item title, to get an accurate understanding of how long titles are rendered"
+		tools:visibility="visible" />
+
+	<TextView
+		android:id="@+id/faqItemBody"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_2x"
+		android:paddingStart="@dimen/spacing_1_5x"
+		android:paddingEnd="@dimen/spacing_default"
+		android:paddingBottom="@dimen/spacing_default"
+		android:textColor="?android:textColorSecondary"
+		android:textIsSelectable="true"
+		android:visibility="gone"
+		tools:text="An unnecessarily long FAQ body, to get an accurate understanding of how long titles are rendered"
+		tools:visibility="visible" />
+
+	<View
+		android:id="@+id/divider"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@drawable/divider"
+		android:visibility="gone"
+		tools:visibility="visible" />
+</LinearLayout>

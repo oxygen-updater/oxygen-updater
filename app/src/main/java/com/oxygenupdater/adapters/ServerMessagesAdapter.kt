@@ -1,6 +1,5 @@
 package com.oxygenupdater.adapters
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
@@ -9,42 +8,81 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.widget.TextViewCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.ServerMessagesAdapter.ServerMessageViewHolder
 import com.oxygenupdater.models.Banner
+import com.oxygenupdater.models.ServerMessage
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class ServerMessagesAdapter(
-    private val context: Context?,
-    private var bannerList: List<Banner>
-) : RecyclerView.Adapter<ServerMessageViewHolder>() {
+class ServerMessagesAdapter : ListAdapter<ServerMessage, ServerMessageViewHolder>(DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ServerMessageViewHolder = ServerMessageViewHolder(
-        LayoutInflater.from(context).inflate(R.layout.server_message, parent, false)
+    init {
+        // Performance optimization, useful if `notifyDataSetChanged` is called
+        setHasStableIds(true)
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ) = ServerMessageViewHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.server_message,
+            parent,
+            false
+        )
     )
 
-    override fun onBindViewHolder(holder: ServerMessageViewHolder, position: Int) = holder.setItem(bannerList[position])
+    override fun onBindViewHolder(
+        holder: ServerMessageViewHolder,
+        position: Int
+    ) = holder.bindTo(getItem(position))
 
-    override fun getItemCount() = bannerList.size
+    override fun getItemId(position: Int) = getItem(position).id
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ServerMessage>() {
+            override fun areItemsTheSame(
+                oldItem: ServerMessage,
+                newItem: ServerMessage
+            ) = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(
+                oldItem: ServerMessage,
+                newItem: ServerMessage
+            ) = oldItem.englishMessage == newItem.englishMessage
+                    && oldItem.dutchMessage == newItem.dutchMessage
+                    && oldItem.priority == newItem.priority
+        }
+    }
 
     inner class ServerMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val message: TextView = itemView.findViewById(R.id.bannerTextView)
 
-        fun setItem(banner: Banner) {
-            banner.getBannerText(context!!).let {
-                message.text = it
+        fun bindTo(banner: Banner) = message.run {
+            banner.getBannerText(context).let {
+                text = it
 
                 if (it is Spanned) {
-                    message.movementMethod = LinkMovementMethod.getInstance()
+                    movementMethod = LinkMovementMethod.getInstance()
                 }
             }
 
-            message.setTextColor(banner.getColor(context))
-            message.setCompoundDrawablesRelativeWithIntrinsicBounds(banner.getDrawableRes(context), 0, 0, 0)
-            TextViewCompat.setCompoundDrawableTintList(message, ColorStateList.valueOf(banner.getColor(context)))
+            val color = banner.getColor(context)
+
+            setTextColor(color)
+            setCompoundDrawablesRelativeWithIntrinsicBounds(
+                banner.getDrawableRes(context),
+                0,
+                0,
+                0
+            )
+            TextViewCompat.setCompoundDrawableTintList(this, ColorStateList.valueOf(color))
         }
     }
 }

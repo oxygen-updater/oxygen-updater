@@ -39,8 +39,6 @@ import com.oxygenupdater.repositories.BillingRepository
 //    @PrimaryKey(autoGenerate = true)
 //    var id: Int = 0
 //}
-
-
 @Entity(tableName = "purchase_table")
 @TypeConverters(PurchaseTypeConverter::class)
 class CachedPurchase(val data: Purchase) {

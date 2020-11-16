@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fadingEdge="vertical"
-	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fadingEdgeLength="@dimen/spacing_2x"
 	android:fillViewport="true"
 	android:requiresFadingEdge="vertical">
 
@@ -20,15 +20,13 @@
 			android:id="@+id/advancedModeTipTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?selectableItemBackground"
 			android:drawablePadding="@dimen/spacing_default"
 			android:gravity="center_vertical"
 			android:padding="@dimen/spacing_default"
 			android:text="@string/update_information_banner_advanced_mode_tip"
-			android:textColor="?android:textColorPrimary"
 			android:visibility="gone"
 			app:drawableStartCompat="@drawable/info"
-			app:drawableTint="?android:textColorPrimary"
+			app:drawableTint="?colorPrimary"
 			app:layout_constraintTop_toTopOf="parent"
 			tools:visibility="visible" />
 
@@ -36,7 +34,7 @@
 			android:id="@+id/advancedModeTipDivider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:background="@color/backgroundVariant"
+			android:background="@drawable/divider"
 			android:visibility="gone"
 			app:layout_constraintTop_toBottomOf="@id/advancedModeTipTextView"
 			tools:visibility="visible" />
@@ -57,11 +55,10 @@
 			android:id="@+id/systemIsUpToDateLabel"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginHorizontal="@dimen/spacing_default"
 			android:layout_marginTop="@dimen/spacing_default"
-			android:layout_marginEnd="@dimen/spacing_default"
 			android:drawablePadding="@dimen/spacing_default"
-			android:fontFamily="@font/google_sans"
+			android:fontFamily="@font/google_sans_medium"
 			android:gravity="center_vertical"
 			android:text="@string/update_information_system_is_up_to_date"
 			android:textColor="@color/colorPositive"
@@ -88,7 +85,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
 			android:layout_marginTop="@dimen/spacing_default"
-			android:background="@color/backgroundVariant"
+			android:background="@drawable/divider"
 			app:layout_constraintTop_toBottomOf="@id/updateLastCheckedField" />
 
 		<include layout="@layout/layout_device_information_software" />
@@ -114,8 +111,7 @@
 			android:id="@+id/differentVersionChangelogNotice"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
-			android:layout_marginEnd="@dimen/spacing_default"
+			android:layout_marginHorizontal="@dimen/spacing_default"
 			android:paddingStart="@dimen/spacing_quarter"
 			android:textColor="?android:textColorSecondary"
 			android:textIsSelectable="true"
@@ -130,9 +126,8 @@
 			android:id="@+id/changelogField"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
+			android:layout_marginHorizontal="@dimen/spacing_default"
 			android:layout_marginTop="@dimen/spacing_default"
-			android:layout_marginEnd="@dimen/spacing_default"
 			android:paddingStart="@dimen/spacing_quarter"
 			android:paddingBottom="@dimen/spacing_default"
 			android:textIsSelectable="true"
@@ -147,7 +142,7 @@
 			android:id="@+id/changelogDivider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:background="@color/backgroundVariant"
+			android:background="@drawable/divider"
 			app:layout_constraintTop_toBottomOf="@id/changelogField" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

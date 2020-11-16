@@ -32,15 +32,13 @@
 		android:layout="@layout/custom_preference_header"
 		android:title="@string/preference_header_device">
 
-		<!--suppress AndroidElementNotAllowed -->
 		<com.oxygenupdater.internal.settings.BottomSheetPreference
 			android:icon="@drawable/smartphone"
 			android:key="@string/key_device"
 			android:layout="@layout/custom_preference"
-			android:summary="@string/summary_device"
+			android:summary="@string/summary_please_wait"
 			android:title="@string/settings_device" />
 
-		<!--suppress AndroidElementNotAllowed -->
 		<com.oxygenupdater.internal.settings.BottomSheetPreference
 			android:icon="@drawable/cloud_download"
 			android:key="@string/key_update_method"
@@ -53,7 +51,6 @@
 		android:layout="@layout/custom_preference_header"
 		android:title="@string/preference_header_ui">
 
-		<!--suppress AndroidElementNotAllowed -->
 		<com.oxygenupdater.internal.settings.BottomSheetPreference
 			android:entries="@array/themeList"
 			android:entryValues="@array/themeList"
@@ -66,24 +63,6 @@
 			app:secondaryEntryValues="@array/themeValues"
 			app:subtitleEntries="@array/themeSubtitles"
 			app:title="@string/label_theme" />
-
-		<SwitchPreference
-			android:defaultValue="true"
-			android:icon="@drawable/system_update"
-			android:key="@string/key_ui_app_update"
-			android:layout="@layout/custom_preference"
-			android:summaryOff="@string/summary_off"
-			android:summaryOn="@string/summary_on"
-			android:title="@string/label_app_update_banner" />
-
-		<SwitchPreference
-			android:defaultValue="true"
-			android:icon="@drawable/subject"
-			android:key="@string/key_ui_news"
-			android:layout="@layout/custom_preference"
-			android:summaryOff="@string/summary_off"
-			android:summaryOn="@string/summary_on"
-			android:title="@string/label_news_warning_banner" />
 	</PreferenceCategory>
 
 	<PreferenceCategory

@@ -5,42 +5,93 @@
 	android:id="@+id/newsItemContainer"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="?selectableItemBackground"
-	android:padding="@dimen/spacing_default"
-	android:stateListAnimator="@animator/clicked">
+	android:background="?selectableItemBackground">
 
-	<com.google.android.material.imageview.ShapeableImageView
-		android:id="@+id/newsItemImage"
-		android:layout_width="@dimen/spacing_4x"
-		android:layout_height="@dimen/spacing_4x"
+	<ImageView
+		android:id="@+id/newsUnreadIndicator"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/spacing_half"
+		android:layout_marginTop="@dimen/spacing_default"
 		android:contentDescription="@string/icon"
-		android:scaleType="centerCrop"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:shapeAppearance="?shapeAppearanceMediumComponent"
-		tools:srcCompat="@drawable/image" />
+		app:srcCompat="@drawable/badge_unread"
+		app:tint="?colorPrimary" />
 
 	<TextView
 		android:id="@+id/newsItemTitle"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_half"
-		android:fontFamily="@font/google_sans"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_half"
+		android:ellipsize="end"
+		android:fontFamily="@font/google_sans_medium"
+		android:maxLines="2"
 		android:textSize="@dimen/typography_subheading"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/newsItemImage"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/newsItemImage"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@id/newsItemImage"
 		tools:text="An unnecessarily long news title, to get an accurate understanding of how long titles are rendered" />
 
 	<TextView
-		android:id="@+id/newsItemSubTitle"
+		android:id="@+id/newsItemSubtitle"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginTop="@dimen/spacing_quarter"
+		android:ellipsize="end"
+		android:textColor="?android:textColorSecondary"
+		app:autoSizeMaxTextSize="@dimen/typography_body"
+		app:autoSizeMinTextSize="@dimen/typography_caption"
+		app:autoSizeTextType="uniform"
+		app:layout_constraintBottom_toBottomOf="@id/newsItemImage"
+		app:layout_constraintEnd_toEndOf="@id/newsItemTitle"
+		app:layout_constraintStart_toStartOf="@id/newsItemTitle"
+		app:layout_constraintTop_toBottomOf="@id/newsItemTitle"
+		tools:maxLines="2"
+		tools:text="An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered" />
+
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/newsItemImage"
+		android:layout_width="80dp"
+		android:layout_height="80dp"
+		android:layout_marginTop="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_default"
+		android:contentDescription="@string/icon"
+		android:scaleType="centerCrop"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:shapeAppearance="@style/ShapeAppearance.NewsImage"
+		tools:shapeAppearance="?shapeAppearanceMediumComponent"
+		tools:srcCompat="@drawable/image" />
+
+	<TextView
+		android:id="@+id/newsItemTimestampAndAuthor"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
-		android:layout_marginStart="@dimen/spacing_half"
-		android:layout_marginTop="6dp"
+		android:layout_marginStart="@dimen/spacing_default"
+		android:layout_marginEnd="@dimen/spacing_half"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+		android:singleLine="true"
 		android:textColor="?android:textColorSecondary"
+		android:textSize="@dimen/typography_caption"
+		app:layout_constraintBottom_toBottomOf="@id/newsItemOptions"
+		app:layout_constraintEnd_toStartOf="@id/newsItemOptions"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="@id/newsItemOptions"
+		tools:text="8 hr. ago &#8226; Author Name" />
+
+	<ImageButton
+		android:id="@+id/newsItemOptions"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="?selectableItemBackgroundBorderless"
+		android:contentDescription="@string/icon"
+		android:paddingHorizontal="@dimen/spacing_half"
+		android:paddingVertical="@dimen/spacing_default"
+		android:src="@drawable/more_vertical"
+		android:tint="?android:textColorSecondary"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toEndOf="@id/newsItemImage"
-		app:layout_constraintTop_toBottomOf="@id/newsItemTitle"
-		tools:text="An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered" />
+		app:layout_constraintTop_toBottomOf="@id/newsItemImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

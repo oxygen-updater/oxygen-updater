@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oxygenupdater.R
+import com.oxygenupdater.adapters.ChooserOnboardingAdapter.ItemSelectionViewHolder
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.models.SelectableModel
 
@@ -19,39 +22,66 @@ import com.oxygenupdater.models.SelectableModel
  */
 class ChooserOnboardingAdapter(
     private val context: Context?,
-    private val data: List<SelectableModel>,
-    initialSelectedIndex: Int,
+    private val initialSelectedIndex: Int,
     private val onItemSelectedCallback: KotlinCallback<SelectableModel>
-) : RecyclerView.Adapter<ChooserOnboardingAdapter.ItemSelectionViewHolder>() {
+) : ListAdapter<SelectableModel, ItemSelectionViewHolder>(DIFF_CALLBACK) {
 
-    private var selectedItem: SelectableModel
+    private lateinit var selectedItem: SelectableModel
+    private val selectedColor = ContextCompat.getColor(context!!, R.color.colorPositive)
+    private val unselectedColor = ContextCompat.getColor(context!!, R.color.foreground)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemSelectionViewHolder = ItemSelectionViewHolder(
-        LayoutInflater.from(context).inflate(R.layout.onboarding_chooser, parent, false)
+    init {
+        // Performance optimization, useful if `notifyDataSetChanged` is called
+        setHasStableIds(true)
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ) = ItemSelectionViewHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.onboarding_chooser,
+            parent,
+            false
+        )
     )
 
-    override fun onBindViewHolder(holder: ItemSelectionViewHolder, position: Int) = holder.setItem(data[position])
+    override fun onBindViewHolder(
+        holder: ItemSelectionViewHolder,
+        position: Int
+    ) = holder.bindTo(getItem(position))
 
-    override fun getItemCount() = data.size
+    override fun getItemId(position: Int) = getItem(position).id
 
-    fun setSelection(position: Int) {
-        val previousId = selectedItem.id
+    override fun onCurrentListChanged(
+        previousList: List<SelectableModel>,
+        currentList: List<SelectableModel>
+    ) {
+        /**
+         * [previousList] will be empty only if it's the first change
+         */
+        if (previousList.isEmpty()) {
+            selectedItem = getItem(
+                if (initialSelectedIndex != -1) initialSelectedIndex
+                else 0
+            )
 
-        selectedItem = if (position != -1) {
-            data[position]
-        } else {
-            data[0]
-        }
-
-        // invoke callback if selection has changed
-        if (previousId != selectedItem.id) {
+            // invoke callback for auto-selection
             onItemSelectedCallback.invoke(selectedItem)
+        }
+    }
 
-            // update UI for previous selection
-            notifyItemChanged(data.indexOfFirst { it.id == previousId })
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<SelectableModel>() {
+            override fun areItemsTheSame(
+                oldItem: SelectableModel,
+                newItem: SelectableModel
+            ) = oldItem.id == newItem.id
 
-            // update UI for current selection
-            notifyItemChanged(position)
+            override fun areContentsTheSame(
+                oldItem: SelectableModel,
+                newItem: SelectableModel
+            ) = oldItem.name == newItem.name
         }
     }
 
@@ -59,7 +89,7 @@ class ChooserOnboardingAdapter(
 
         val textView: AppCompatTextView = itemView.findViewById(R.id.textView)
 
-        fun setItem(item: SelectableModel) = textView.let {
+        fun bindTo(item: SelectableModel) = textView.let {
             it.text = item.name
             it.setOnClickListener { setSelection(adapterPosition) }
 
@@ -70,9 +100,27 @@ class ChooserOnboardingAdapter(
             }
         }
 
-        private fun markSelected() = textView.let {
-            val selectedColor = ContextCompat.getColor(context!!, R.color.colorPositive)
+        private fun setSelection(position: Int) {
+            val previousId = selectedItem.id
 
+            selectedItem = getItem(
+                if (position != -1) position
+                else 0
+            )
+
+            // invoke callback if selection has changed
+            if (previousId != selectedItem.id) {
+                onItemSelectedCallback.invoke(selectedItem)
+
+                // update UI for previous selection
+                notifyItemChanged(currentList.indexOfFirst { it.id == previousId })
+
+                // update UI for current selection
+                notifyItemChanged(position)
+            }
+        }
+
+        private fun markSelected() = textView.let {
             TextViewCompat.setCompoundDrawableTintList(it, ColorStateList.valueOf(selectedColor))
             it.setTextColor(selectedColor)
             it.setBackgroundResource(R.drawable.rounded_overlay)
@@ -80,23 +128,12 @@ class ChooserOnboardingAdapter(
 
         private fun markUnselected() = textView.let {
             TextViewCompat.setCompoundDrawableTintList(it, ColorStateList.valueOf(0))
-            it.setTextColor(ContextCompat.getColor(context!!, R.color.foreground))
+            it.setTextColor(unselectedColor)
 
             TypedValue().let { outValue ->
-                context.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
+                context!!.theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true)
                 it.setBackgroundResource(outValue.resourceId)
             }
         }
-    }
-
-    init {
-        selectedItem = if (initialSelectedIndex != -1) {
-            data[initialSelectedIndex]
-        } else {
-            data[0]
-        }
-
-        // invoke callback for auto-selection
-        onItemSelectedCallback.invoke(selectedItem)
     }
 }

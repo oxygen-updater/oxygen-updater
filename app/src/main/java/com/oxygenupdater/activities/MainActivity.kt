@@ -8,11 +8,13 @@ import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -25,6 +27,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.install.model.AppUpdateType
@@ -34,37 +37,37 @@ import com.google.android.play.core.install.model.InstallStatus.FAILED
 import com.google.android.play.core.install.model.InstallStatus.PENDING
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
-import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.dialogs.ContributorDialogFragment
+import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.dialogs.MessageDialog
+import com.oxygenupdater.dialogs.ServerMessagesDialogFragment
+import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.fragments.AboutFragment
 import com.oxygenupdater.fragments.DeviceInformationFragment
-import com.oxygenupdater.fragments.NewsFragment
+import com.oxygenupdater.fragments.NewsListFragment
 import com.oxygenupdater.fragments.SettingsFragment
 import com.oxygenupdater.fragments.UpdateInformationFragment
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
+import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
+import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.appBar
-import kotlinx.android.synthetic.main.activity_main.toolbar
-import kotlinx.android.synthetic.main.activity_main.viewPager
-import kotlinx.android.synthetic.main.activity_onboarding.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
-    private lateinit var activityLauncher: ActivityLauncher
+class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuItemClickListener {
 
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
 
@@ -76,6 +79,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             negativeButtonText = getString(R.string.download_error_close),
             cancellable = false
         )
+    }
+
+    private val serverMessagesDialog by lazy {
+        ServerMessagesDialogFragment()
     }
 
     private val contributorDialog by lazy {
@@ -102,7 +109,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             bottomNavigationView.menu.getItem(position)?.run {
-                bottomNavigationView.selectedItemId = itemId
+                isChecked = true
 
                 when (position) {
                     PAGE_UPDATE, PAGE_NEWS, PAGE_DEVICE -> hideTabBadge(itemId, 1000)
@@ -142,18 +149,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
-        activityLauncher = ActivityLauncher(this)
+        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
 
+        toolbar.setOnMenuItemClickListener(this)
         setupViewPager()
 
         // Offer contribution to users from app versions below 2.4.0
         if (!SettingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
             && SettingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)
         ) {
-            contributorDialog.show(
-                supportFragmentManager,
-                ContributorDialogFragment.TAG
-            )
+            showContributorDialog()
         }
 
         if (!Utils.checkNetworkConnection()) {
@@ -177,17 +182,25 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onDestroy() = super.onDestroy().also {
         bannerAdView?.destroy()
+        viewPager?.unregisterOnPageChangeCallback(pageChangeCallback)
         noNetworkDialog.bypassListenerAndDismiss()
         mainViewModel.unregisterAppUpdateListener()
     }
 
-    override fun onBackPressed() = if (viewPager.currentItem == 0) {
+    override fun onBackPressed() = when {
         // If the user is currently looking at the first step, allow the system to handle the
         // Back button. This calls finish() on this activity and pops the back stack.
-        super.onBackPressed()
-    } else {
+        viewPager.currentItem == 0 -> super.onBackPressed()
+        // If user's settings haven't been saved yet, don't reset to the first page
+        shouldStopNavigateAwayFromSettings() -> showSettingsWarning()
         // Otherwise, reset to first page
-        viewPager.currentItem = 0
+        else -> viewPager.currentItem = 0
+    }
+
+    override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
+        R.id.action_announcements -> showServerMessagesDialog().let { true }
+        R.id.action_contribute -> showContributorDialog().let { true }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onRequestPermissionsResult(
@@ -275,16 +288,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             if (showDeviceWarningDialog && !mainViewModel.deviceOsSpec!!.isDeviceOsSpecSupported) {
                 displayUnsupportedDeviceOsSpecMessage()
             } else {
-                mainViewModel.deviceMismatchStatus = Utils.checkDeviceMismatch(this, deviceList)
-
-                val showIncorrectDeviceDialog = !SettingsManager.getPreference(
-                    SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
-                    false
-                )
-
-                if (showIncorrectDeviceDialog && mainViewModel.deviceMismatchStatus!!.first) {
-                    displayIncorrectDeviceSelectedMessage()
-                }
+                updateDeviceMismatchStatus(deviceList)
             }
 
             if (!mainViewModel.deviceOsSpec!!.isDeviceOsSpecSupported || mainViewModel.deviceMismatchStatus!!.first) {
@@ -300,15 +304,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         mainViewModel.serverStatus.observe(this) { serverStatus ->
-            val shouldShowAppUpdateBanner = SettingsManager.getPreference(
-                SettingsManager.PROPERTY_SHOW_APP_UPDATE_MESSAGES,
-                true
-            )
-
             // Banner is displayed if app version is outdated
-            if (shouldShowAppUpdateBanner && !serverStatus.checkIfAppIsUpToDate()) {
+            if (!serverStatus.checkIfAppIsUpToDate()) {
                 showAppUpdateBanner(serverStatus)
             }
+
+            fetchServerMessagesInternal(serverStatus)
+        }
+
+        mainViewModel.serverMessages.observe(this) {
+            displayServerMessageBars(it)
         }
 
         mainViewModel.appUpdateInstallStatus.observe(this) {
@@ -339,6 +344,61 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 toolbar.subtitle = it.second
             }
         }
+
+        mainViewModel.settingsChanged.observe(this) {
+            val allDevices = mainViewModel.allDevices.value
+            if (it == SettingsManager.PROPERTY_DEVICE_ID && allDevices != null) {
+                updateDeviceMismatchStatus(allDevices)
+            }
+        }
+    }
+
+    /**
+     * Configures the [R.id.action_announcements] menu item's visibility.
+     * Also submits [banners] to [serverMessagesDialog] so that its adapter can display them.
+     */
+    private fun displayServerMessageBars(banners: List<ServerMessage>) {
+        val announcementsItem = toolbar.menu.findItem(R.id.action_announcements)
+
+        // Select only the banners that have a non-empty text (`ServerStatus.kt` has empty text in some cases)
+        val bannerList = banners.filter {
+            !it.getBannerText(this).isNullOrBlank()
+        }
+
+        if (isFinishing || bannerList.isEmpty()) {
+            announcementsItem?.isVisible = false
+        } else {
+            announcementsItem?.isVisible = true
+            serverMessagesDialog.submitList(bannerList)
+        }
+    }
+
+    private fun fetchServerMessagesInternal(
+        serverStatus: ServerStatus
+    ) {
+        mainViewModel.fetchServerMessages(serverStatus) { error ->
+            if (isFinishing) {
+                return@fetchServerMessages
+            }
+
+            when (error) {
+                OxygenUpdater.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(this)
+                OxygenUpdater.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(this)
+            }
+        }
+    }
+
+    private fun updateDeviceMismatchStatus(deviceList: List<Device>) {
+        mainViewModel.deviceMismatchStatus = Utils.checkDeviceMismatch(this, deviceList)
+
+        val showIncorrectDeviceDialog = !SettingsManager.getPreference(
+            SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
+            false
+        )
+
+        if (showIncorrectDeviceDialog && mainViewModel.deviceMismatchStatus!!.first) {
+            displayIncorrectDeviceSelectedMessage()
+        }
     }
 
     private fun showAppUpdateBanner(
@@ -353,7 +413,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         setOnClickListener {
-            activityLauncher.openPlayStorePage(this@MainActivity)
+            openPlayStorePage()
         }
     }
 
@@ -410,19 +470,81 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupBottomNavigation() = bottomNavigationView.setOnNavigationItemSelectedListener {
-        viewPager.currentItem = when (it.itemId) {
+        when (it.itemId) {
             R.id.page_update -> 0
             R.id.page_news -> 1
             R.id.page_device -> 2
             R.id.page_about -> 3
             R.id.page_settings -> 4
             else -> 0
+        }.let { pageIndex ->
+            if (shouldStopNavigateAwayFromSettings(pageIndex)) {
+                // If user's settings haven't been saved yet, don't navigate to PAGE_ABOUT
+                showSettingsWarning()
+                false
+            } else {
+                viewPager.currentItem = pageIndex
+                true
+            }
         }
-        true
+    }
+
+    /**
+     * Checks if the user can navigate away from [PAGE_SETTINGS].
+     *
+     * @param currentPageIndex an optional parameter to pass a different pageIndex (e.g. when BottomNav's menu is clicked).
+     * Defaults to [ViewPager2.getCurrentItem].
+     */
+    private fun shouldStopNavigateAwayFromSettings(currentPageIndex: Int = viewPager.currentItem) =
+        currentPageIndex == PAGE_SETTINGS && !SettingsManager.checkIfSetupScreenHasBeenCompleted()
+
+    private fun showSettingsWarning() {
+        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+
+        if (deviceId == -1L || updateMethodId == -1L) {
+            logWarning(TAG, SetupUtils.getAsError("Settings screen", deviceId, updateMethodId))
+            Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this, getString(R.string.settings_saving), Toast.LENGTH_LONG).show()
+        }
     }
 
     fun showAboutPage() {
-        viewPager.currentItem = PAGE_ABOUT
+        if (shouldStopNavigateAwayFromSettings()) {
+            // If user's settings haven't been saved yet, don't navigate to PAGE_ABOUT
+            showSettingsWarning()
+        } else {
+            viewPager.currentItem = PAGE_ABOUT
+        }
+    }
+
+    /**
+     * Show the dialog fragment only if it hasn't been added already. This
+     * can happen if the user clicks in rapid succession, which can cause
+     * the `java.lang.IllegalStateException: Fragment already added` error
+     */
+    fun showServerMessagesDialog() {
+        if (!serverMessagesDialog.isAdded) {
+            serverMessagesDialog.show(
+                supportFragmentManager,
+                ServerMessagesDialogFragment.TAG
+            )
+        }
+    }
+
+    /**
+     * Show the dialog fragment only if it hasn't been added already. This
+     * can happen if the user clicks in rapid succession, which can cause
+     * the `java.lang.IllegalStateException: Fragment already added` error
+     */
+    fun showContributorDialog() {
+        if (!contributorDialog.isAdded) {
+            contributorDialog.show(
+                supportFragmentManager,
+                ContributorDialogFragment.TAG
+            )
+        }
     }
 
     fun updateToolbarForPage(@IdRes pageId: Int, subtitle: CharSequence? = null) {
@@ -577,14 +699,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
          * This is called to instantiate the fragment for the given page.
          * Return one of:
          * * [UpdateInformationFragment]
-         * * [NewsFragment]
+         * * [NewsListFragment]
          * * [DeviceInformationFragment]
          * * [SettingsFragment]
          * * [SettingsFragment]
          */
         override fun createFragment(position: Int) = when (position) {
             PAGE_UPDATE -> UpdateInformationFragment()
-            PAGE_NEWS -> NewsFragment()
+            PAGE_NEWS -> NewsListFragment()
             PAGE_DEVICE -> DeviceInformationFragment()
             PAGE_ABOUT -> AboutFragment()
             PAGE_SETTINGS -> SettingsFragment()
@@ -598,6 +720,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     companion object {
+        private const val TAG = "MainActivity"
         private const val INTENT_START_PAGE = "start_page"
 
         private const val PAGE_UPDATE = 0

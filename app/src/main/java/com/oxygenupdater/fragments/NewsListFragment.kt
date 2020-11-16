@@ -14,28 +14,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.adapters.AlphaInAnimationAdapter
-import com.oxygenupdater.adapters.NewsAdapter
-import com.oxygenupdater.database.NewsDatabaseHelper
+import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.addPlaceholderItemsForShimmer
+import com.oxygenupdater.internal.NewsListChangedListener
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_DEVICE_ID
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.viewmodels.MainViewModel
-import kotlinx.android.synthetic.main.fragment_news.*
-import org.koin.android.ext.android.inject
+import com.oxygenupdater.viewmodels.NewsViewModel
+import kotlinx.android.synthetic.main.fragment_news_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class NewsFragment : Fragment(R.layout.fragment_news) {
+class NewsListFragment : Fragment(R.layout.fragment_news_list) {
 
     private var hasBeenLoadedOnce = false
     private var isShowingOnlyUnreadArticles = false
 
-    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsListAdapter: NewsListAdapter
 
-    private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
+    private val newsViewModel by sharedViewModel<NewsViewModel>()
 
     /**
      * Re-use the same observer to avoid duplicated callbacks
@@ -44,6 +46,33 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
         displayNewsItems(newsItems)
 
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    /**
+     * Update banner text and empty states when the adapter reports that the list
+     * has changed. The lambda param is a pair of `(unreadCount, isEmpty)`.
+     */
+    private val adapterListChangedListener: NewsListChangedListener = { unreadCount, isEmpty ->
+        if (isAdded) {
+            bannerTextView.text = getString(
+                if (isShowingOnlyUnreadArticles) {
+                    R.string.news_unread_count_2
+                } else {
+                    R.string.news_unread_count_1
+                },
+                unreadCount
+            )
+
+            if (isEmpty) {
+                if (isShowingOnlyUnreadArticles) {
+                    displayEmptyState(true)
+                } else {
+                    displayEmptyState()
+                }
+            } else {
+                emptyStateLayout.isVisible = false
+            }
+        }
     }
 
     override fun onCreateView(
@@ -58,13 +87,47 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupRecyclerView()
+        updateBannerText(0)
+
         // Load the news after up to 3 seconds to allow the update info screen to load first
         // This way, the app feels a lot faster. Also, it doesn't affect users that much, as they will always see the update info screen first.
         Handler().postDelayed({ refreshNews() }, loadDelayMilliseconds.toLong())
 
+        mainViewModel.settingsChanged.observe(viewLifecycleOwner) {
+            if (it == PROPERTY_DEVICE_ID || it == PROPERTY_UPDATE_METHOD_ID) {
+                refreshNews()
+            }
+        }
+
         swipeRefreshLayout.apply {
             setOnRefreshListener { refreshNews() }
             setColorSchemeResources(R.color.colorPrimary)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        newsContainer.let { recyclerView ->
+            newsListAdapter = NewsListAdapter(requireActivity(), adapterListChangedListener) { newsItemId, isRead ->
+                newsListAdapter.changeItemReadStatus(newsItemId, isRead)
+                updateBannerText(newsListAdapter.currentList.count { !it.read })
+
+                if (isShowingOnlyUnreadArticles) {
+                    // Remove the item if the user is seeing only unread articles
+                    newsListAdapter.submitList(
+                        newsListAdapter.currentList.filter { !it.read }
+                    )
+                }
+            }
+
+            // animate items when they load
+            @Suppress("UNCHECKED_CAST")
+            AlphaInAnimationAdapter(newsListAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>).apply {
+                setFirstOnly(false)
+                // Performance optimization
+                recyclerView.setHasFixedSize(true)
+                recyclerView.adapter = this
+            }
         }
     }
 
@@ -76,13 +139,23 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
 
         shimmerFrameLayout.isVisible = true
 
-        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = SettingsManager.getPreference(PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = SettingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        mainViewModel.fetchNews(deviceId, updateMethodId).observe(viewLifecycleOwner, fetchNewsObserver)
+        newsViewModel.fetchNewsList(deviceId, updateMethodId).observe(viewLifecycleOwner, fetchNewsObserver)
     }
 
     private fun displayNewsItems(newsItems: List<NewsItem>) {
+        if (!isAdded) {
+            logDebug(TAG, "isAdded() returned false (displayNewsItems)")
+            return
+        }
+
+        if (activity == null) {
+            logError(TAG, OxygenUpdaterException("getActivity() returned null (displayNewsItems)"))
+            return
+        }
+
         shimmerFrameLayout.isVisible = false
 
         if (newsItems.isNullOrEmpty()) {
@@ -92,71 +165,23 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
 
         updateBannerText(newsItems.count { !it.read })
 
-        newsContainer.let { recyclerView ->
-            // respect unread articles filtering
-            val itemList = if (isShowingOnlyUnreadArticles) {
-                newsItems.filter { !it.read }
-            } else {
-                newsItems
-            }
-
-            newsAdapter = NewsAdapter(context, itemList) { newsItemId ->
-                newsAdapter.markItemAsRead(newsItemId)
-                updateBannerText(newsAdapter.itemList.count { !it.read })
-
-                if (isShowingOnlyUnreadArticles) {
-                    // Remove the item if the user is seeing only unread articles
-                    newsAdapter.updateList(
-                        newsAdapter.itemList.filter { !it.read }
-                    )
-                }
-            }
-
-            // animate items when they load
-            @Suppress("UNCHECKED_CAST")
-            AlphaInAnimationAdapter(newsAdapter as RecyclerView.Adapter<RecyclerView.ViewHolder>).apply {
-                setFirstOnly(false)
-                recyclerView.adapter = this
-            }
-
-            // toggle between showing only reading articles and showing all articles
-            bannerLayout.setOnClickListener {
-                newsAdapter.updateList(
-                    if (isShowingOnlyUnreadArticles) newsItems
-                    else newsItems.filter { !it.read }
-                )
-
-                isShowingOnlyUnreadArticles = !isShowingOnlyUnreadArticles
-
-                bannerTextView.text = getString(
-                    if (isShowingOnlyUnreadArticles) {
-                        R.string.news_unread_count_2
-                    } else {
-                        R.string.news_unread_count_1
-                    },
-                    newsAdapter.itemList.count { !it.read }
-                )
-
-                if (newsAdapter.itemList.isEmpty()) {
-                    if (isShowingOnlyUnreadArticles) {
-                        displayEmptyState(true)
-                    } else {
-                        displayEmptyState()
-                    }
-                } else {
-                    emptyStateLayout.isVisible = false
-                }
-            }
+        // respect unread articles filtering
+        val itemList = if (isShowingOnlyUnreadArticles) {
+            newsItems.filter { !it.read }
+        } else {
+            newsItems
         }
 
-        if (!isAdded) {
-            logDebug(TAG, "isAdded() returned false (displayNewsItems)")
-            return
-        }
+        newsListAdapter.submitList(itemList)
 
-        if (activity == null) {
-            logError(TAG, OxygenUpdaterException("getActivity() returned null (displayNewsItems)"))
-            return
+        // toggle between showing only reading articles and showing all articles
+        bannerLayout.setOnClickListener {
+            newsListAdapter.submitList(
+                if (isShowingOnlyUnreadArticles) newsItems
+                else newsItems.filter { !it.read }
+            )
+
+            isShowingOnlyUnreadArticles = !isShowingOnlyUnreadArticles
         }
     }
 
@@ -176,13 +201,12 @@ class NewsFragment : Fragment(R.layout.fragment_news) {
                             show()
 
                             setOnMenuItemClickListener {
-                                newsAdapter.itemList.filter {
+                                newsListAdapter.currentList.filter {
                                     !it.read
                                 }.forEach { newsItem ->
                                     if (newsItem.id != null) {
-                                        // Mark the item as read on the device.
-                                        newsDatabaseHelper.markNewsItemRead(newsItem)
-                                        newsAdapter.markItemAsRead(newsItem.id)
+                                        newsViewModel.toggleReadStatus(newsItem, true)
+                                        newsListAdapter.changeItemReadStatus(newsItem.id, true)
                                     }
                                 }
 

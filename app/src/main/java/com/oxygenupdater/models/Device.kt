@@ -12,6 +12,10 @@ data class Device(
     private val productName: String
 ) : SelectableModel {
 
+    init {
+        setProductName(productName)
+    }
+
     lateinit var productNames: List<String>
 
     /**
@@ -32,9 +36,5 @@ data class Device(
         return productNameTemplate.trim { it <= ' ' }.split(",")
             // Remove spaces after comma separation.
             .map { productName -> productName.trim { it <= ' ' } }
-    }
-
-    init {
-        setProductName(productName)
     }
 }

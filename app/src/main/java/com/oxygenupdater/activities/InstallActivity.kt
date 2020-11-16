@@ -2,7 +2,6 @@ package com.oxygenupdater.activities
 
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,7 +30,7 @@ import kotlin.math.abs
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class InstallActivity : SupportActionBarActivity() {
+class InstallActivity : SupportActionBarActivity(R.layout.activity_install) {
 
     private var showDownloadPage = true
     private var updateData: UpdateData? = null
@@ -57,8 +56,6 @@ class InstallActivity : SupportActionBarActivity() {
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
-        setContentView(R.layout.activity_install)
-
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
 
         if (intent != null) {
@@ -280,18 +277,18 @@ class InstallActivity : SupportActionBarActivity() {
      * Handles the following cases:
      * * Once the installation is being started, there is no way out => do nothing
      * * If [InstallGuideFragment] is being displayed, and was opened from [InstallMethodChooserFragment], switch back to [fragmentContainer]
-     * * If [InstallGuideFragment] was opened directly after checking for root (meaning if the device isn't rooted), call [finish]
-     * * If [InstallMethodChooserFragment] is the only fragment being displayed (meaning [FragmentManager.getBackStackEntryCount] returns `1`, call [finish]
+     * * If [InstallGuideFragment] was opened directly after checking for root (meaning if the device isn't rooted), delegate to `super`
+     * * If [InstallMethodChooserFragment] is the only fragment being displayed (meaning [FragmentManager.getBackStackEntryCount] returns `1`, delegate to `super`
      * * Otherwise just call `super`, which respects [FragmentManager]'s back stack
      */
     override fun onBackPressed() = when {
         // Once the installation is being started, there is no way out.
         !installViewModel.canGoBack -> Toast.makeText(this, R.string.install_going_back_not_possible, LENGTH_LONG).show()
         // if InstallGuide is being displayed, and was opened from `InstallMethodChooserFragment`, switch back to fragmentContainer
-        // if it was opened directly after checking for root (meaning if the device isn't rooted), call `finish()`
+        // if it was opened directly after checking for root (meaning if the device isn't rooted), delegate to `super`
         viewPagerContainer.isVisible -> {
             if (supportFragmentManager.backStackEntryCount == 0) {
-                finish()
+                super.onBackPressed()
             } else {
                 hideViewPager()
 
@@ -305,17 +302,8 @@ class InstallActivity : SupportActionBarActivity() {
                 viewPager.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
             }
         }
-        supportFragmentManager.backStackEntryCount == 1 -> finish()
+        supportFragmentManager.backStackEntryCount == 1 -> super.onBackPressed()
         else -> super.onBackPressed()
-    }
-
-    /**
-     * Respond to the action bar's Up/Home button.
-     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
-     */
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        android.R.id.home -> onBackPressed().let { true }
-        else -> super.onOptionsItemSelected(item)
     }
 
     companion object {

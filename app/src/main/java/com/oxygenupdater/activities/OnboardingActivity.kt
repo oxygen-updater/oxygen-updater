@@ -15,12 +15,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
-import com.oxygenupdater.ActivityLauncher
+import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
+import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.oxygenupdater.fragments.SimpleOnboardingFragment
 import com.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
@@ -253,22 +254,40 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
         }
     }
 
+    /**
+     * Show the dialog fragment only if it hasn't been added already. This
+     * can happen if the user clicks in rapid succession, which can cause
+     * the `java.lang.IllegalStateException: Fragment already added` error
+     */
     @Suppress("UNUSED_PARAMETER")
-    fun onMoreInfoButtonClicked(view: View) = contributorDialog.show(
-        supportFragmentManager,
-        ContributorDialogFragment.TAG
-    )
+    fun onMoreInfoButtonClicked(view: View) {
+        if (!contributorDialog.isAdded) {
+            contributorDialog.show(
+                supportFragmentManager,
+                ContributorDialogFragment.TAG
+            )
+        }
+    }
 
     @Suppress("UNUSED_PARAMETER")
     fun onStartAppButtonClicked(view: View) {
         if (SettingsManager.checkIfSetupScreenIsFilledIn()) {
+            onboardingPage4LogsCheckbox.isChecked.let {
+                SettingsManager.savePreference(
+                    SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
+                    it
+                )
+
+                (application as OxygenUpdater?)?.setupCrashReporting(it)
+            }
+
             if (onboardingPage4ContributeCheckbox.isChecked) {
                 requestContributorStoragePermissions { granted: Boolean ->
                     if (granted) {
                         // 1st time, will save setting to true.
                         ContributorUtils.flushSettings(true)
                         SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
-                        ActivityLauncher(this).Main()
+                        startMainActivity()
                         finish()
                     } else {
                         Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
@@ -278,7 +297,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 // not signed up, saving this setting will prevent contribute popups which belong to app updates.
                 SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
                 SettingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
-                ActivityLauncher(this).Main()
+                startMainActivity()
                 finish()
             }
         } else {

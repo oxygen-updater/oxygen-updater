@@ -4,6 +4,7 @@ import android.app.Notification.CATEGORY_ERROR
 import android.app.Notification.CATEGORY_PROGRESS
 import android.app.Notification.CATEGORY_STATUS
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
@@ -11,7 +12,6 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
-import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.OxygenUpdater.Companion.PROGRESS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.R
@@ -39,16 +39,14 @@ object LocalNotifications {
         fileNameSet: Set<String>
     ) {
         try {
-            val resultIntent = Intent(context, MainActivity::class.java)
-
-            val stackBuilder = TaskStackBuilder.create(context)
-                // Adds the back stack
-                .addParentStack(MainActivity::class.java)
-                // Adds the Intent to the top of the stack
-                .addNextIntent(resultIntent)
-
-            // Gets a PendingIntent containing the entire back stack
-            val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
+            val contentIntent = PendingIntent.getActivity(
+                context,
+                0,
+                // Since MainActivity's `launchMode` is `singleTask`, we don't
+                // need to add any flags to avoid creating multiple instances
+                Intent(context, MainActivity::class.java),
+                FLAG_UPDATE_CURRENT
+            )
 
             val title = context.getString(R.string.contribute_successful_notification_title)
             val text = context.getString(R.string.contribute_successful_notification_text)
@@ -63,7 +61,7 @@ object LocalNotifications {
                 .setSmallIcon(R.drawable.logo_notification)
                 .setContentTitle(title)
                 .setContentText(text)
-                .setContentIntent(resultPendingIntent)
+                .setContentIntent(contentIntent)
                 .setOngoing(false)
                 .setAutoCancel(true)
                 .setCategory(CATEGORY_STATUS)
@@ -88,19 +86,19 @@ object LocalNotifications {
         updateData: UpdateData?
     ) {
         try {
-            // If the download complete notification is clicked, hide the first page of the install guide.
-            val resultIntent = Intent(context, InstallActivity::class.java)
+            val intent = Intent(context, InstallActivity::class.java)
+                // Hide the first page of the install guide because that page
+                // contains download instructions, which will be redundant because
+                // the download has already completed
                 .putExtra(InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE, false)
                 .putExtra(InstallActivity.INTENT_UPDATE_DATA, updateData)
 
-            val stackBuilder = TaskStackBuilder.create(context)
-                // Adds the back stack
-                .addParentStack(MainActivity::class.java)
-                // Adds the Intent to the top of the stack
-                .addNextIntent(resultIntent)
-
-            // Gets a PendingIntent containing the entire back stack
-            val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
+            val contentIntent = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                FLAG_UPDATE_CURRENT
+            )
 
             val title = context.getString(R.string.download_complete)
             val text = context.getString(R.string.download_complete_notification)
@@ -109,12 +107,12 @@ object LocalNotifications {
                 .setSmallIcon(R.drawable.download)
                 .setContentTitle(title)
                 .setContentText(text)
-                .setContentIntent(resultPendingIntent)
+                .setContentIntent(contentIntent)
                 .setOngoing(false)
                 .setAutoCancel(true)
                 .setCategory(CATEGORY_PROGRESS)
                 .setPriority(PRIORITY_LOW)
-                .setColor(ContextCompat.getColor(context, R.color.colorPositive))
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .setVisibility(VISIBILITY_PUBLIC)
                 .build()
 
@@ -133,21 +131,22 @@ object LocalNotifications {
         @StringRes message: Int,
         @StringRes notificationMessage: Int
     ) {
-        try { // If the download complete notification is clicked, hide the first page of the install guide.
-            val resultIntent = Intent(context, MainActivity::class.java)
+        try {
+            // Since MainActivity's `launchMode` is `singleTask`, we don't
+            // need to add any flags to avoid creating multiple instances
+            val intent = Intent(context, MainActivity::class.java)
+                // Show a dialog detailing the download failure
                 .putExtra(UpdateInformationFragment.KEY_HAS_DOWNLOAD_ERROR, true)
                 .putExtra(UpdateInformationFragment.KEY_DOWNLOAD_ERROR_TITLE, context.getString(R.string.download_error))
                 .putExtra(UpdateInformationFragment.KEY_DOWNLOAD_ERROR_MESSAGE, context.getString(message))
                 .putExtra(UpdateInformationFragment.KEY_DOWNLOAD_ERROR_RESUMABLE, resumable)
 
-            val stackBuilder = TaskStackBuilder.create(context)
-                // Adds the back stack
-                .addParentStack(MainActivity::class.java)
-                // Adds the Intent to the top of the stack
-                .addNextIntent(resultIntent)
-
-            // Gets a PendingIntent containing the entire back stack
-            val resultPendingIntent = stackBuilder.getPendingIntent(0, FLAG_UPDATE_CURRENT)
+            val contentIntent = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                FLAG_UPDATE_CURRENT
+            )
 
             val title = context.getString(R.string.download_failed)
             val text = context.getString(notificationMessage)
@@ -157,7 +156,7 @@ object LocalNotifications {
                 .setSmallIcon(R.drawable.download)
                 .setContentTitle(title)
                 .setContentText(text)
-                .setContentIntent(resultPendingIntent)
+                .setContentIntent(contentIntent)
                 .setOngoing(false)
                 .setAutoCancel(true)
                 .setCategory(CATEGORY_ERROR)
@@ -211,7 +210,7 @@ object LocalNotifications {
                 .setOngoing(true)
                 .setCategory(CATEGORY_PROGRESS)
                 .setPriority(PRIORITY_LOW)
-                .setColor(ContextCompat.getColor(context, R.color.colorPositive))
+                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .setVisibility(VISIBILITY_PUBLIC)
                 .build()
 

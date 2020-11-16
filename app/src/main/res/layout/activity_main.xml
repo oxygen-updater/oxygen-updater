@@ -10,7 +10,6 @@
 		android:id="@+id/appBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:transitionName="toolbar"
 		app:elevation="0dp">
 
 		<com.google.android.material.appbar.MaterialToolbar
@@ -50,7 +49,7 @@
 			android:padding="@dimen/spacing_default"
 			android:visibility="gone"
 			app:drawableStartCompat="@drawable/info"
-			app:drawableTint="?android:textColorPrimary"
+			app:drawableTint="?colorPrimary"
 			tools:text="@string/new_app_version"
 			tools:visibility="visible" />
 
@@ -58,7 +57,7 @@
 			android:id="@+id/appUpdateBannerDivider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:background="@color/backgroundVariant"
+			android:background="@drawable/divider"
 			android:visibility="gone"
 			tools:visibility="visible" />
 	</com.google.android.material.appbar.AppBarLayout>
@@ -100,7 +99,7 @@
 			android:layout_height="wrap_content"
 			app:backgroundTint="@color/backgroundVariant"
 			app:elevation="0dp"
-			app:labelVisibilityMode="unlabeled"
+			app:labelVisibilityMode="auto"
 			app:menu="@menu/bottom_navigation_menu" />
 	</LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

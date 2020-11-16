@@ -5,8 +5,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.text.format.DateUtils
+import android.text.format.DateUtils.FORMAT_SHOW_DATE
+import android.text.format.DateUtils.FORMAT_SHOW_TIME
+import android.text.format.DateUtils.FORMAT_SHOW_YEAR
 import android.text.method.LinkMovementMethod
-import android.view.MenuItem
 import android.webkit.WebViewClient.ERROR_BAD_URL
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
@@ -16,18 +19,14 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.LoadAdError
-import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
-import com.oxygenupdater.adapters.NewsAdapter
-import com.oxygenupdater.database.NewsDatabaseHelper
+import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.internal.WebViewClient
 import com.oxygenupdater.internal.WebViewError
 import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.models.AppLocale
-import com.oxygenupdater.models.AppLocale.NL
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.utils.Logger.logDebug
@@ -35,15 +34,13 @@ import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.NewsViewModel
-import kotlinx.android.synthetic.main.activity_news.*
+import kotlinx.android.synthetic.main.activity_news_item.*
 import kotlinx.android.synthetic.main.layout_error.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDateTime
 
-class NewsActivity : SupportActionBarActivity() {
+class NewsItemActivity : SupportActionBarActivity(R.layout.activity_news_item) {
 
-    private val newsDatabaseHelper by inject<NewsDatabaseHelper>()
     private val newsViewModel by viewModel<NewsViewModel>()
 
     private var shouldDelayAdStart = false
@@ -78,8 +75,6 @@ class NewsActivity : SupportActionBarActivity() {
 
         hideErrorStateIfInflated()
 
-        val locale = AppLocale.get()
-
         // Display the title of the article.
         collapsingToolbarLayout.title = newsItem.title
         // Display the name of the author of the article
@@ -87,6 +82,8 @@ class NewsActivity : SupportActionBarActivity() {
 
         Glide.with(this)
             .load(newsItem.imageUrl)
+            .placeholder(R.drawable.image)
+            .error(R.drawable.logo_notification)
             .into(collapsingToolbarImage)
 
         // Display the contents of the article.
@@ -100,28 +97,20 @@ class NewsActivity : SupportActionBarActivity() {
             if (newsItem.text.isNullOrEmpty()) {
                 loadDataWithBaseURL("", getString(R.string.news_empty), "text/html", "UTF-8", "")
             } else {
-                val newsLanguage = if (locale == NL) "NL" else "EN"
-                var newsContentUrl = BuildConfig.SERVER_BASE_URL + "news-content/" + newsItem.id + "/" + newsLanguage + "/"
-
                 // since we can't edit CSS in WebViews,
                 // append 'Light' or 'Dark' to newsContentUrl to get the corresponding themed version
                 // backend handles CSS according to material spec
-                newsContentUrl += if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
-                fullUrl = newsContentUrl
+                fullUrl = newsItem.url + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
 
                 settings.userAgentString = OxygenUpdater.APP_USER_AGENT
-                loadUrl(newsContentUrl)
+                loadUrl(fullUrl)
             }
 
             // disable loading state once page is completely loaded
             webViewClient = WebViewClient(context) { error ->
-                // hide progress bar since the page has been loaded
                 hideLoadingState()
 
                 if (error == null) {
-                    // Show newsLayout, which contains the WebView
-                    newsLayout.isVisible = true
-
                     hideErrorStateIfInflated()
                 } else {
                     showErrorState(error)
@@ -129,41 +118,46 @@ class NewsActivity : SupportActionBarActivity() {
             }
         }
 
-        // Display the last update time of the article.
-        newsDatePublished.apply {
-            if (newsItem.dateLastEdited == null && newsItem.datePublished != null) {
-                isVisible = true
-                text = getString(
-                    R.string.news_date_published,
-                    Utils.formatDateTime(this@NewsActivity, newsItem.datePublished)
-                )
-            } else if (newsItem.dateLastEdited != null) {
-                isVisible = true
-                text = getString(
-                    R.string.news_date_published,
-                    Utils.formatDateTime(this@NewsActivity, newsItem.dateLastEdited)
-                )
-            } else {
-                isVisible = false
+        // Display the subtitle of the article.
+        newsItemSubtitle.apply {
+            newsItem.subtitle.let {
+                isVisible = it != null
+                text = it
             }
         }
 
-        // Mark the item as read on the device.
-        newsDatabaseHelper.markNewsItemRead(newsItem)
+        // Display the last update time of the article.
+        newsDatePublished.apply {
+            val dateTimePrefix = if (newsItem.dateLastEdited == null && newsItem.datePublished != null) {
+                newsItem.datePublished
+            } else {
+                newsItem.dateLastEdited
+            }?.let {
+                val userDateTime = LocalDateTime.parse(it.replace(" ", "T"))
+                    .atZone(Utils.SERVER_TIME_ZONE)
 
-        NewsAdapter.newsItemReadListener?.invoke(newsItem.id!!)
+                text = DateUtils.getRelativeTimeSpanString(
+                    userDateTime.toInstant().toEpochMilli(),
+                    System.currentTimeMillis(),
+                    DateUtils.SECOND_IN_MILLIS,
+                    FORMAT_SHOW_TIME or FORMAT_SHOW_DATE or FORMAT_SHOW_YEAR
+                )
+            }
+
+            isVisible = dateTimePrefix != null
+        }
+
+        NewsListAdapter.itemReadStatusChangedListener?.invoke(newsItem.id!!, true)
 
         // Mark the item as read on the server (to increase times read counter)
-        newsViewModel.markNewsItemRead(newsItem.id!!).observe(this, markNewsItemReadObserver)
+        newsViewModel.markNewsItemRead(newsItem).observe(this, markNewsItemReadObserver)
     }
 
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
-        setContentView(R.layout.activity_news)
-
         if (!handleIntent(intent)) {
-            finish()
+            onBackPressed()
             return
         }
 
@@ -341,15 +335,35 @@ class NewsActivity : SupportActionBarActivity() {
 
     private fun showLoadingState() {
         progressBar.isVisible = true
-        newsLayout.isVisible = false
+        newsLayout.isVisible = true
 
         hideErrorStateIfInflated()
 
-        collapsingToolbarLayout.title = getString(R.string.loading)
+        val imageUrl = intent.getStringExtra(INTENT_NEWS_ITEM_IMAGE_URL)
+        val title = intent.getStringExtra(INTENT_NEWS_ITEM_TITLE)
+        val subtitle = intent.getStringExtra(INTENT_NEWS_ITEM_SUBTITLE)
+
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(R.drawable.image)
+            .error(R.drawable.logo_notification)
+            .into(collapsingToolbarImage)
+
+        collapsingToolbarLayout.title = title ?: getString(R.string.loading)
+        collapsingToolbarLayout.subtitle = getString(R.string.summary_please_wait)
+        newsItemSubtitle.apply {
+            subtitle.let {
+                isVisible = it != null
+                text = it
+            }
+        }
+        newsDatePublished.text = getString(R.string.loading)
     }
 
     private fun hideLoadingState() {
+        // hide progress bar since the page has been loaded
         progressBar.isVisible = false
+        // Show newsLayout, which contains the WebView
         newsLayout.isVisible = true
     }
 
@@ -417,21 +431,13 @@ class NewsActivity : SupportActionBarActivity() {
         }
     }
 
-    override fun onBackPressed() = finish()
-
-    /**
-     * Respond to the action bar's Up/Home button.
-     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`
-     */
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        android.R.id.home -> onBackPressed().let { true }
-        else -> super.onOptionsItemSelected(item)
-    }
-
     companion object {
         private const val TAG = "NewsActivity"
 
         const val INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID"
+        const val INTENT_NEWS_ITEM_IMAGE_URL = "NEWS_ITEM_IMAGE_URL"
+        const val INTENT_NEWS_ITEM_TITLE = "NEWS_ITEM_TITLE"
+        const val INTENT_NEWS_ITEM_SUBTITLE = "NEWS_ITEM_SUBTITLE"
         const val INTENT_DELAY_AD_START = "DELAY_AD_START"
     }
 }

@@ -69,8 +69,7 @@ android {
         // Config for releases and testing on a real device
         // Uses the production server, and reads system properties using the OnePlus/OxygenOS specific build.prop values
         getByName("release") {
-            buildConfigField("String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.5/\"")
-            buildConfigField("String", "FAQ_SERVER_URL", "\"https://oxygenupdater.com/inappfaq\"")
+            buildConfigField("String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.6/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
             buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series, ro.build.product\"")
             buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.rom.version, ro.oxygen.version, ro.build.ota.versionname\"")
@@ -89,8 +88,7 @@ android {
         // Config for use during debugging and testing on an emulator
         // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
         getByName("debug") {
-            buildConfigField("String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.5/\"")
-            buildConfigField("String", "FAQ_SERVER_URL", "\"https://test.oxygenupdater.com/inappfaq\"")
+            buildConfigField("String", "SERVER_BASE_URL", "\"https://test.oxygenupdater.com/api/v2.6/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
             buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\"")
             buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\"")
@@ -110,8 +108,7 @@ android {
         // Config for use during debugging locally on an emulator
         // Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device/emulator
         create("localDebug") {
-            buildConfigField("String", "SERVER_BASE_URL", "\"http://10.0.2.2:8000/api/v2.5/\"")
-            buildConfigField("String", "FAQ_SERVER_URL", "\"http://10.0.2.2:8000/inappfaq\"")
+            buildConfigField("String", "SERVER_BASE_URL", "\"http://10.0.2.2:8000/api/v2.6/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
             buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\"")
             buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\"")

@@ -48,7 +48,6 @@ import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.DeviceRequestFilter
-import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.UpdateData
@@ -78,7 +77,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Shared between [com.oxygenupdater.activities.MainActivity] and its three child fragments
  * (as part of [androidx.viewpager2.widget.ViewPager2]):
- * 1. [com.oxygenupdater.fragments.NewsFragment]
+ * 1. [com.oxygenupdater.fragments.NewsListFragment]
  * 2. [com.oxygenupdater.fragments.UpdateInformationFragment]
  * 3. [com.oxygenupdater.fragments.DeviceInformationFragment]
  *
@@ -95,8 +94,6 @@ class MainViewModel(
     private val _updateData = MutableLiveData<UpdateData?>()
     val updateData: LiveData<UpdateData?>
         get() = _updateData
-
-    private val _newsList = MutableLiveData<List<NewsItem>>()
 
     private val _serverStatus = MutableLiveData<ServerStatus>()
     val serverStatus: LiveData<ServerStatus>
@@ -126,6 +123,10 @@ class MainViewModel(
     val pageToolbarTextUpdated: LiveData<Pair<Int, CharSequence?>>
         get() = _pageToolbarTextUpdated
     val pageToolbarSubtitle = SparseArray<CharSequence?>()
+
+    private val _settingsChanged = MutableLiveData<String>()
+    val settingsChanged: LiveData<String>
+        get() = _settingsChanged
 
     private val workManager by inject(WorkManager::class.java)
     private val appUpdateManager by inject(AppUpdateManager::class.java)
@@ -160,15 +161,6 @@ class MainViewModel(
             _updateData.postValue(it)
         }
     }
-
-    fun fetchNews(
-        deviceId: Long,
-        updateMethodId: Long
-    ): LiveData<List<NewsItem>> = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.fetchNews(deviceId, updateMethodId).let {
-            _newsList.postValue(it)
-        }
-    }.let { _newsList }
 
     fun fetchServerStatus() = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.fetchServerStatus().let {
@@ -278,7 +270,6 @@ class MainViewModel(
 
         @Suppress("DEPRECATION")
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
-
 
         if (tempFile.exists() && !tempFile.delete()) {
             logWarning(UpdateInformationFragment.TAG, UpdateDownloadException("Could not delete temporary file ${updateData.filename}"))
@@ -536,6 +527,10 @@ class MainViewModel(
         appUpdateManager.unregisterListener(flexibleAppUpdateListener)
     }
 
+    override fun onCleared() = super.onCleared().also {
+        unregisterAppUpdateListener()
+    }
+
     /**
      * Updates the corresponding page's toolbar subtitle
      */
@@ -546,4 +541,6 @@ class MainViewModel(
         pageToolbarSubtitle[pageId] = subtitle
         _pageToolbarTextUpdated.postValue(Pair(pageId, subtitle))
     }
+
+    fun notifySettingsChanged(key: String) = _settingsChanged.postValue(key)
 }

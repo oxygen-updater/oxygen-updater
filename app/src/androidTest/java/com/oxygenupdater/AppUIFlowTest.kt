@@ -9,9 +9,8 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import com.oxygenupdater.activities.MainActivity
-import com.oxygenupdater.activities.NewsActivity
+import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.activities.OnboardingActivity
-import com.oxygenupdater.activities.SettingsActivity
 import org.hamcrest.Matchers
 import org.junit.Before
 import org.junit.Rule
@@ -34,10 +33,7 @@ class AppUIFlowTest {
     var mainActivityRule = ActivityTestRule(MainActivity::class.java, false, false)
 
     @Rule
-    var newsActivityRule = ActivityTestRule(NewsActivity::class.java, false, false)
-
-    @Rule
-    var settingsActivityRule = ActivityTestRule(SettingsActivity::class.java, false, false)
+    var newsActivityRule = ActivityTestRule(NewsItemActivity::class.java, false, false)
 
     @Before
     fun clearAppState() {

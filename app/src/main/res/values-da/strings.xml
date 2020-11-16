@@ -39,10 +39,6 @@
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">kl.</string>
-	<string name="time_yesterday">i går</string>
-
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Download update</string>
@@ -63,7 +59,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
 
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">PRØV IGEN</string>
 	<string name="download_error_resume">GENIOTAG</string>
@@ -101,7 +97,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="summary_on">Aktiveret</string>
 	<string name="summary_off">Deaktiveret</string>
-	<string name="summary_device">Vent venligst.…</string>
+	<string name="summary_please_wait">Vent venligst.…</string>
 	<string name="summary_update_method">vælg en enhed først</string>
 	<string name="summary_theme">Vælg et tema</string>
 	<string name="summary_privacy_policy">Se online</string>
@@ -109,8 +105,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="label_buy_ad_free">Fjern reklamer</string>
 	<string name="label_theme">Tema</string>
-	<string name="label_app_update_banner">App opdater bannere</string>
-	<string name="label_news_warning_banner">Nyheder &amp; advarsel bannere</string>
 	<string name="label_privacy_policy">Privatlivspolitik</string>
 	<string name="label_rate_app">Bedøm denne app</string>
 
@@ -120,7 +114,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="theme_auto">Auto</string>
 
 	<string name="theme_light_subtitle">Tema med en hvid baggrund, og OnePlus\' røde primære farve</string>
-	<string name="theme_dark_subtitle">Dæmpet OnePlus rød primær farve, med en næsten sort baggrund. Anvend dette tema og spar på batteri, især hvis du anvender AMOLED skærme</string>
+	<string name="theme_dark_subtitle">Dæmpet OnePlus rød primær farve, med en næsten sort baggrund. Anvend dette tema og spar på batteri, især hvis du anvender AMOLED skærme.</string>
 	<string name="theme_system_subtitle">Anvend systemets nat-indstilling (du kan indstille dette via Skærmindstillinger, eller i enhedens Udvikller-menu). Dette varierer afhængigt af hvilken enhed du har.</string>
 	<string name="theme_auto_subtitle">Skift mellem lyst og mærk tema, afhængig af hvad klokken er, for day, to at undgå trætte øjne, om natten</string>
 	<string name="theme_additional_note">Hint: Hvis \"Auto\" tema er aktiveret og batterisparefunktionen er aktivertet, så vil det mørke tema automatisk blive anvendt, uanset hvad klokken er, for at spare batteri</string>
@@ -145,7 +139,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_saving">Dine indstillinger gemmes. Tager det for lang tid: Check forbindelse til netværketet, afslut app\'en, og start den igen.</string>
 
 	<string name="settings_advanced_mode">Avanceret tilstand</string>
-	<string name="settings_advanced_mode_explanation">Avanceret tilstand skjuler beskeden: \"Dit system er opdateret\", hvilket tillader dig at downloade og installere alle opdateringer, selvom de måske ikke er op kompatible med din enhed.\n\nDette kan være nyttigt når:\n- der opdateres fra en regulær stabil version til en beta version\n- eller at gå fra en beta til en stabil version. (glem ikke at nulstille enheden til fabriksstandard)\n- Genindstallerer din nuværende system version.</string>
+	<string name="settings_advanced_mode_explanation">Avanceret tilstand skjuler beskeden: \"Dit system er opdateret\", hvilket tillader dig at downloade og installere alle opdateringer, selvom de måske ikke er op kompatible med din enhed.\n\nDette kan være nyttigt når:\n&#8226; der opdateres fra en regulær stabil version til en beta version\n&#8226; eller at gå fra en beta til en stabil version. (glem ikke at nulstille enheden til fabriksstandard)\n&#8226; Genindstallerer din nuværende system version.</string>
 
 	<string name="settings_update_method">Odaterings metode</string>
 	<string name="settings_upload_logs">Del bruger data og logs</string>
@@ -284,7 +278,7 @@ Instructions:
 
 	<string name="device_information_amount_of_memory">Mængde af RAM</string>
 	<string name="device_information_cpu_frequency">Processor frekvens</string>
-	<string name="device_information_header">Min enhed</string>
+	<string name="device_information_header">Enhed</string>
 	<string name="device_information_image_description">Enheds billede</string>
 	<string name="device_information_incremental_os_version">Trinvis OS version</string>
 	<string name="device_information_os_version">Android version</string>
@@ -294,16 +288,16 @@ Instructions:
 	<string name="device_information_serial_number">Serie nummer</string>
 	<string name="device_information_system_on_a_chip">System på en chip</string>
 	<string name="device_information_unknown">ukendt</string>
-	<string name="device_information_your_device">Din enhed</string>
 
 	<!-- About screen strings -->
-	<string name="about">Om denne app</string>
-	<string name="about_app_description">Det ultimative værktøj til OxygenOS opdateringer.</string>
-	<string name="about_background_story">Denne app blev oprindeligt udviklet af Arjan Vlek, som opfølgning af en af hans andre apps, med navnet <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den tilbyder samme funktionalitet til Oyanogen OS brugere).\n\nEfter 4 år, i juli 2019, besluttede Arjan sig for trappe ned på sine projekter og vidergav ejerskabet af denne app til et hold af udviklere, fra forskellige lande. De tog så ansvaret for, at tilvejebringe et fællesskab med fantastisk service og give support til og af OnePlus opdateringer hurtigere.\nDu kan finde mere information om dette via <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">&#8226;linket</a>.\n\nDen 14. august 2019 blev den første opdatering offentliggjort og markerede ejerskiftet; den kom med muligheder som mørkt tema, et komplet re-design af appen.\n\nFor more information omkring holdet, besøg linket <a href="https://oxygenupdater.com/team/"> her</a>.</string>
+	<string name="about">Om</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">Denne app blev oprindeligt udviklet af Arjan Vlek, som opfølgning af en af hans andre apps, med navnet <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den tilbyder samme funktionalitet til Oyanogen OS brugere).\n\nEfter 4 år, i juli 2019, besluttede Arjan sig for trappe ned på sine projekter og vidergav ejerskabet af denne app til et hold af udviklere, fra forskellige lande. De tog så ansvaret for, at tilvejebringe et fællesskab med fantastisk service og give support til og af OnePlus opdateringer hurtigere.\nDu kan finde mere information om dette via <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">&#8226;linket</a>.\n\nDen 14. august 2019 blev den første opdatering offentliggjort og markerede ejerskiftet; den kom med muligheder som mørkt tema, et komplet re-design af appen.\n\nFor more information omkring holdet, besøg linket <a href="https://oxygenupdater.com/team/"> her</a>.</string>
 	<string name="about_third_party_app_notice">Bemærk venligst, at dette IKKE er en officiel OnePlus applikation.\nOnePlus mavmet, OnePlus logo\'et og OxygenOS er ejendele af OnePlus.\nAndroid, Google, Google Play og Google Play logo\'er er registrerede varemærker tilhørende Google Inc.\nDenne app amvemder data fra OnePlus og dets moderselskab Oppo, til at vise opdateringsinformation.</string>
 	<string name="about_rate_button_text">Bedøm</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>
@@ -338,9 +332,12 @@ Instructions:
 	<string name="news_load_network_error">Kan ikke åbne denne artikkel. Check din forbindelse og tryk på \'FORSØG IGEN\' -knappen for at åbne artikllen.</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_mark_read">Marker som læst</string>
+	<string name="news_mark_unread">Marker som ulæst</string>
+	<!-- TODO: translate these 5 strings below -->
 	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>

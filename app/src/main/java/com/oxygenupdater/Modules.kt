@@ -10,15 +10,16 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
-import com.oxygenupdater.database.NewsDatabaseHelper
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.utils.Database.buildLocalBillingDatabase
+import com.oxygenupdater.utils.DatabaseBuilders.buildLocalAppDatabase
+import com.oxygenupdater.utils.DatabaseBuilders.buildLocalBillingDatabase
 import com.oxygenupdater.utils.createDownloadClient
 import com.oxygenupdater.utils.createNetworkClient
 import com.oxygenupdater.utils.createOkHttpCache
 import com.oxygenupdater.viewmodels.BillingViewModel
+import com.oxygenupdater.viewmodels.FaqViewModel
 import com.oxygenupdater.viewmodels.InstallViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import com.oxygenupdater.viewmodels.NewsViewModel
@@ -53,16 +54,18 @@ private val repositoryModule = module {
 }
 
 private val viewModelModule = module {
+    viewModel { BillingViewModel(get(), get(), get()) }
     viewModel { OnboardingViewModel(get(), get()) }
     viewModel { MainViewModel(get()) }
-    viewModel { NewsViewModel(get()) }
     viewModel { InstallViewModel(get()) }
+    viewModel { NewsViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
-    viewModel { BillingViewModel(get(), get(), get()) }
+    viewModel { FaqViewModel(get()) }
+
 }
 
 private val databaseModule = module {
-    single { NewsDatabaseHelper(androidContext()) }
+    single { buildLocalAppDatabase(androidContext()) }
     single { buildLocalBillingDatabase(androidContext()) }
 }
 

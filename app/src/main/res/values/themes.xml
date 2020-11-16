@@ -34,8 +34,8 @@
 		<item name="android:windowActivityTransitions">true</item>
 		<item name="android:windowContentTransitions">true</item>
 		<item name="android:windowSharedElementsUseOverlay">false</item>
-		<item name="android:windowSharedElementEnterTransition">@transition/toolbar</item>
-		<item name="android:windowSharedElementExitTransition">@transition/toolbar</item>
+		<item name="android:windowAllowEnterTransitionOverlap">true</item>
+		<!--<item name="android:windowExitTransition">@transition/explode</item>-->
 	</style>
 
 	<style name="Theme.OxygenUpdater.Light" parent="Theme.OxygenUpdater">

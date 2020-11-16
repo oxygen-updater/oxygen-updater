@@ -54,11 +54,17 @@ abstract class ChooserOnboardingFragment : Fragment(R.layout.fragment_onboarding
         }
 
         onboardingChooserRecyclerView.let {
-            it.adapter = ChooserOnboardingAdapter(context, data, initialSelectedIndex, onItemSelectedListener)
+            // Performance optimization
+            it.setHasFixedSize(true)
+            it.adapter = ChooserOnboardingAdapter(
+                context,
+                initialSelectedIndex,
+                onItemSelectedListener
+            ).apply { submitList(data) }
 
             // for better UX, scroll down to selection, if any
             if (initialSelectedIndex != -1) {
-                it.layoutManager?.scrollToPosition(initialSelectedIndex)
+                it.smoothScrollToPosition(initialSelectedIndex)
             }
         }
 

@@ -39,10 +39,6 @@
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">ณ</string>
-	<string name="time_yesterday">เมื่อวาน</string>
-
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Download update</string>
@@ -62,7 +58,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
 
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">ลองอีกครั้ง</string>
 	<string name="download_error_resume">เริ่มต้นใหม่</string>
@@ -99,7 +95,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="summary_on">เปิด</string>
 	<string name="summary_off">ปิด</string>
-	<string name="summary_device">รอสักครู่…</string>
+	<string name="summary_please_wait">รอสักครู่…</string>
 	<string name="summary_update_method">เลือกอุปกรณ์</string>
 	<string name="summary_theme">ตั้งค่าธีม</string>
 	<string name="summary_privacy_policy">ดูออนไลน์</string>
@@ -107,8 +103,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="label_buy_ad_free">ลบโฆษณา</string>
 	<string name="label_theme">ธีม</string>
-	<string name="label_app_update_banner">แถบแจ้งเตือน</string>
-	<string name="label_news_warning_banner">ข่าว &amp; แถบแจ้งเตือนการเตือน</string>
 	<string name="label_privacy_policy">นโยบายความเป็นส่วนตัว</string>
 	<string name="label_rate_app">ประเมินแอพ</string>
 
@@ -143,7 +137,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_saving">การตั้งค่าของคุณกำลังถูกบันทึก ถ้ากระบวนการนี้ใช้เวลานานเกินไป กรุณาเช็คการเชื่อมต่อของคุณและเริ่มต้นแอพพลิเคชั่น</string>
 
 	<string name="settings_advanced_mode">โหมดขั้นสูง</string>
-	<string name="settings_advanced_mode_explanation">โหมดขั้นสูงจะข้อความ \"ระบบของคุณใหม่ล่าสุดแล้ว\", และอนุญาตให้คุณดาวน์โหลดและติดตั้งทุกเวอร์ชั่นของระบบถึงแม้ว่าระบบจะไม่สามารถติดตั้งได้\n\n การทำแบบนี้จะมีประโยชน์อย่างมากเมื่อ:\n- อัพเดทจากเวอร์ชั่นธรรมดาไปเวอร์ชั่นทดลอง\n- วิธีการกลับจากเวอร์ชั่นทดลองมาเวอร์ชั่นธรรมดา(อย่าลืมคืนค่าโรงงานก่อน)\n- คือติดตั้งระบบเวอร์ชั่นธรรมดาใหม่อีกครั้ง</string>
+	<string name="settings_advanced_mode_explanation">โหมดขั้นสูงจะข้อความ \"ระบบของคุณใหม่ล่าสุดแล้ว\", และอนุญาตให้คุณดาวน์โหลดและติดตั้งทุกเวอร์ชั่นของระบบถึงแม้ว่าระบบจะไม่สามารถติดตั้งได้\n\n การทำแบบนี้จะมีประโยชน์อย่างมากเมื่อ:\n&#8226; อัพเดทจากเวอร์ชั่นธรรมดาไปเวอร์ชั่นทดลอง\n&#8226; วิธีการกลับจากเวอร์ชั่นทดลองมาเวอร์ชั่นธรรมดา(อย่าลืมคืนค่าโรงงานก่อน)\n&#8226; คือติดตั้งระบบเวอร์ชั่นธรรมดาใหม่อีกครั้ง</string>
 
 	<string name="settings_update_method">วิธีการอัพเดท</string>
 	<string name="settings_upload_logs">แบ่งปันข้อมูลการใช้และล็อก</string>
@@ -292,16 +286,16 @@ Instructions:
 	<string name="device_information_serial_number">Serial number</string>
 	<string name="device_information_system_on_a_chip">System on a Chip</string>
 	<string name="device_information_unknown">unknown</string>
-	<string name="device_information_your_device">อุปกรณ์ของคุณ</string>
 
 	<!-- About screen strings -->
 	<string name="about">เกี่ยวกับแอพนี้</string>
-	<string name="about_app_description">เครื่องมือที่ดีที่สุดสำหรับการอัพเดท OxygenOS</string>
-	<string name="about_background_story">แอพนี้พัฒนาโดย Arjan Vlek เพื่อติดตามแอพตัวอื่นของเขา <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (มันมีฟังก์ชั่นการทำงานที่คล้ายกันสำหรับผู้ใช้ Cyanogen OS)\n\n หลังจาก 4 ปีในเดือนกรกฎาคม 2019 Arjan ตัดสินใจที่จะลดระดับจากทั้งสองโครงการและโอนสิทธิ์การเป็นเจ้าของแอพให้กับทีมนักพัฒนาที่มาจากประเทศต่างๆ พวกเขารับผิดชอบในการให้บริการชุมชนที่ยอดเยี่ยม &amp; สนับสนุนการอัปเดต OnePlus เร็วขึ้น\n คุณสามารถค้นหาข้อมูลเพิ่มเติมเกี่ยวกับประกาศ <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">here</a>.\n\n14 สิงหาคม 2019 ทำเครื่องหมายรุ่นแรกภายใต้ความเป็นเจ้าของใหม่ซึ่งมาพร้อมกับคุณสมบัติใหม่เช่นโหมดมืดและการออกแบบใหม่อย่างสมบูรณ์\n\n สำหรับข้อมูลเพิ่มเติมเกี่ยวกับทีมตรวจสอบ <a href="https://oxygenupdater.com/team/">the website</a>.</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">แอพนี้พัฒนาโดย Arjan Vlek เพื่อติดตามแอพตัวอื่นของเขา <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (มันมีฟังก์ชั่นการทำงานที่คล้ายกันสำหรับผู้ใช้ Cyanogen OS)\n\n หลังจาก 4 ปีในเดือนกรกฎาคม 2019 Arjan ตัดสินใจที่จะลดระดับจากทั้งสองโครงการและโอนสิทธิ์การเป็นเจ้าของแอพให้กับทีมนักพัฒนาที่มาจากประเทศต่างๆ พวกเขารับผิดชอบในการให้บริการชุมชนที่ยอดเยี่ยม &amp; สนับสนุนการอัปเดต OnePlus เร็วขึ้น\n คุณสามารถค้นหาข้อมูลเพิ่มเติมเกี่ยวกับประกาศ <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">here</a>.\n\n14 สิงหาคม 2019 ทำเครื่องหมายรุ่นแรกภายใต้ความเป็นเจ้าของใหม่ซึ่งมาพร้อมกับคุณสมบัติใหม่เช่นโหมดมืดและการออกแบบใหม่อย่างสมบูรณ์\n\n สำหรับข้อมูลเพิ่มเติมเกี่ยวกับทีมตรวจสอบ <a href="https://oxygenupdater.com/team/">the website</a>.</string>
 	<string name="about_third_party_app_notice">โปรดทราบว่านี่ไม่ใช่แอปพลิเคชัน OnePlus อย่างเป็นทางการ\n ชื่อ OnePlus, โลโก้ OnePlus และ OxygenOS เป็นทรัพย์สินของ OnePlus\nAndroid, Google, Google Play และโลโก้ Google Play เป็นเครื่องหมายการค้าจดทะเบียนของ Google Inc.\n แอพนี้ใช้ข้อมูลจาก OnePlus และ Oppo บริษัท แม่เพื่อแสดงข้อมูลอัปเดต</string>
 	<string name="about_rate_button_text">ให้คะแนนบน</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">อีเมล์</string>
@@ -336,9 +330,12 @@ Instructions:
 	<string name="news_load_network_error">ไม่สามารถเปิดบทความ ตรวจสอบการเชื่อมต่อของคุณและกดปุ่ม \'ลองอีกครั้ง \' เพื่อเปิดบทความ</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_mark_read">ทำเครื่องหมายว่าอ่านแล้ว</string>
+	<string name="news_mark_unread">ทำเครื่องหมายว่ายังไม่ได้อ่าน</string>
+	<!-- TODO: translate these 5 strings below -->
 	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>

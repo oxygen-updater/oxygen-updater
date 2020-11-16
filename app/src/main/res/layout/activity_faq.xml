@@ -9,40 +9,53 @@
 		android:id="@+id/appBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:transitionName="toolbar">
+		app:elevation="0dp">
 
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:title="@string/faq" />
+			app:layout_scrollFlags="scroll|enterAlways|snap"
+			app:subtitle="@string/faq"
+			app:title="@string/app_name" />
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="?android:dividerVertical" />
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 		android:id="@+id/swipeRefreshLayout"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<FrameLayout
+		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="wrap_content"
+			android:clipChildren="false"
+			android:orientation="vertical">
 
-			<WebView
-				android:id="@+id/webView"
+			<com.facebook.shimmer.ShimmerFrameLayout
+				android:id="@+id/shimmerFrameLayout"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				app:shimmer_auto_start="true"
+				tools:visibility="gone">
+
+				<include layout="@layout/placeholder_faq" />
+			</com.facebook.shimmer.ShimmerFrameLayout>
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/faqRecyclerView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="-8dp"
 				android:fadingEdge="vertical"
-				android:fadingEdgeLength="@dimen/spacing_4x"
+				android:fadingEdgeLength="@dimen/spacing_2x"
 				android:requiresFadingEdge="vertical"
-				android:visibility="gone"
-				tools:visibility="visible" />
-
-			<ViewStub
-				android:id="@+id/errorLayoutStub"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout="@layout/layout_error" />
-		</FrameLayout>
+				app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+		</LinearLayout>
 	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

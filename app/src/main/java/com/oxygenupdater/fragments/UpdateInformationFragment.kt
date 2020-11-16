@@ -2,17 +2,19 @@ package com.oxygenupdater.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.DialogInterface.BUTTON_NEGATIVE
+import android.content.DialogInterface.BUTTON_NEUTRAL
+import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.text.SpannableString
+import android.text.format.DateUtils
 import android.text.format.Formatter
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.StringRes
@@ -22,15 +24,11 @@ import androidx.fragment.app.Fragment
 import androidx.work.WorkInfo
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.oxygenupdater.ActivityLauncher
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
-import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.dialogs.Dialogs.showDownloadError
-import com.oxygenupdater.dialogs.Dialogs.showUpdateAlreadyDownloadedMessage
-import com.oxygenupdater.dialogs.ServerMessagesDialog
+import com.oxygenupdater.dialogs.MessageDialog
 import com.oxygenupdater.enums.DownloadFailure
 import com.oxygenupdater.enums.DownloadStatus
 import com.oxygenupdater.enums.DownloadStatus.DOWNLOADING
@@ -43,10 +41,11 @@ import com.oxygenupdater.enums.DownloadStatus.VERIFICATION_COMPLETED
 import com.oxygenupdater.enums.DownloadStatus.VERIFICATION_FAILED
 import com.oxygenupdater.enums.DownloadStatus.VERIFYING
 import com.oxygenupdater.extensions.setImageResourceWithTint
+import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.models.Banner
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.Logger.logDebug
@@ -83,27 +82,51 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     /**
      * Allows an already downloaded update file to be deleted to save storage space.
      */
-    private val alreadyDownloadedOnClickListener = View.OnClickListener {
-        showUpdateAlreadyDownloadedMessage(updateData, activity) {
-            if (updateData != null) {
-                val mainActivity = activity as MainActivity? ?: return@showUpdateAlreadyDownloadedMessage
-
-                if (mainActivity.hasDownloadPermissions()) {
-                    val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
-
-                    if (deleted) {
-                        mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+    private val updateAlreadyDownloadedDialog by lazy {
+        MessageDialog(
+            requireActivity(),
+            title = getString(R.string.delete_message_title),
+            message = getString(R.string.delete_message_contents),
+            positiveButtonText = getString(R.string.install),
+            negativeButtonText = getString(R.string.delete_message_delete_button),
+            positiveButtonIcon = R.drawable.install,
+            cancellable = true
+        ) {
+            when (it) {
+                BUTTON_POSITIVE -> {
+                    if (!isAdded) {
+                        return@MessageDialog
                     }
-                } else {
-                    mainActivity.requestDownloadPermissions { granted ->
-                        if (granted) {
-                            val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
 
-                            if (deleted) {
-                                mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                    activity?.startInstallActivity(
+                        true,
+                        updateData,
+                        downloadActionButton
+                    )
+                }
+                BUTTON_NEGATIVE -> if (updateData != null) {
+                    val mainActivity = activity as MainActivity? ?: return@MessageDialog
+
+                    if (mainActivity.hasDownloadPermissions()) {
+                        val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+
+                        if (deleted) {
+                            mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                        }
+                    } else {
+                        mainActivity.requestDownloadPermissions { granted ->
+                            if (granted) {
+                                val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+
+                                if (deleted) {
+                                    mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                                }
                             }
                         }
                     }
+                }
+                BUTTON_NEUTRAL -> {
+                    // no-op
                 }
             }
         }
@@ -151,6 +174,10 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
             setupServerResponseObservers()
             setupWorkObservers()
 
+            mainViewModel.settingsChanged.observe(viewLifecycleOwner) {
+                load()
+            }
+
             load()
         }
     }
@@ -182,10 +209,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     }
 
     private fun setupServerResponseObservers() {
-        mainViewModel.serverMessages.observe(viewLifecycleOwner) {
-            displayServerMessageBars(it)
-        }
-
         mainViewModel.serverStatus.observe(viewLifecycleOwner) { serverStatus ->
             // display server status banner if required
             val status = serverStatus.status
@@ -198,17 +221,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                 }
             } else {
                 serverStatusTextView.isVisible = false
-            }
-
-            mainViewModel.fetchServerMessages(serverStatus) { error ->
-                if (!isAdded) {
-                    return@fetchServerMessages
-                }
-
-                when (error) {
-                    OxygenUpdater.SERVER_MAINTENANCE_ERROR -> Dialogs.showServerMaintenanceError(activity)
-                    OxygenUpdater.APP_OUTDATED_ERROR -> Dialogs.showAppOutdatedError(activity)
-                }
             }
         }
 
@@ -301,9 +313,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         errorLayoutStub?.inflate()
         errorLayout.isVisible = true
         // Hide "System update available" view
-        updateInformationLayout?.visibility = GONE
+        updateInformationLayout?.isVisible = false
         // Hide "System is up to date" view
-        systemIsUpToDateLayout?.visibility = GONE
+        systemIsUpToDateLayout?.isVisible = false
 
         errorTitle.text = getString(R.string.update_information_error_title)
         // Make the links clickable
@@ -318,29 +330,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         if (errorLayoutStub == null) {
             errorLayout.isVisible = false
             errorActionButton.setOnClickListener { }
-        }
-    }
-
-    /**
-     * Makes [serverBannerTextView] visible.
-     *
-     * If there are banners that have non-empty text, clicking [serverBannerTextView] will show a [ServerMessagesDialog]
-     */
-    private fun displayServerMessageBars(banners: List<Banner>) {
-        // select only the banners that have a non-empty text (`ServerStatus.kt` has empty text in some cases)
-        val bannerList = banners.filter { !it.getBannerText(requireContext()).isNullOrBlank() }
-
-        if (!isAdded || bannerList.isEmpty()) {
-            return
-        }
-
-        val dialog = ServerMessagesDialog(requireContext(), bannerList)
-
-        serverBannerTextView.apply {
-            isVisible = true
-
-            // show dialog
-            setOnClickListener { dialog.show() }
         }
     }
 
@@ -416,9 +405,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     ) {
         // Show "System update available" view.
         updateInformationLayoutStub?.inflate()
-        updateInformationLayout?.visibility = VISIBLE
+        updateInformationLayout?.isVisible = true
         // Hide "System is up to date" view
-        systemIsUpToDateLayout?.visibility = GONE
+        systemIsUpToDateLayout?.isVisible = false
 
         oxygenOsVersionTextView.text = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
             if (canVersionInfoBeFormatted(updateData)) {
@@ -480,9 +469,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     ) {
         // Show "System is up to date" view.
         systemIsUpToDateLayoutStub?.inflate()
-        systemIsUpToDateLayout?.visibility = VISIBLE
+        systemIsUpToDateLayout?.isVisible = true
         // Hide "System update available" view
-        updateInformationLayout?.visibility = GONE
+        updateInformationLayout?.isVisible = false
 
         // https://stackoverflow.com/a/60542345
         systemIsUpToDateLayoutChild?.layoutTransition?.setAnimateParentHierarchy(false)
@@ -502,15 +491,27 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         // Save last time checked if online.
         if (online) {
             SettingsManager.savePreference(
-                SettingsManager.PROPERTY_UPDATE_CHECKED_DATE,
+                PROPERTY_UPDATE_CHECKED_DATE,
                 LocalDateTime.now(SERVER_TIME_ZONE).toString()
             )
         }
 
         // Show last time checked.
+        val updateCheckedDateStr = SettingsManager.getPreference(
+            PROPERTY_UPDATE_CHECKED_DATE,
+            ""
+        ).replace(" ", "T")
+        val userDateTime = LocalDateTime.parse(updateCheckedDateStr)
+            .atZone(SERVER_TIME_ZONE)
+
         updateLastCheckedField.text = getString(
             R.string.update_information_last_checked_on,
-            Utils.formatDateTime(requireContext(), SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE, ""))
+            DateUtils.getRelativeTimeSpanString(
+                userDateTime.toInstant().toEpochMilli(),
+                System.currentTimeMillis(),
+                DateUtils.SECOND_IN_MILLIS,
+                DateUtils.FORMAT_ABBREV_ALL
+            )
         )
 
         displaySoftwareInfo()
@@ -576,32 +577,37 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         )
 
         changelogLabel.run {
-            // Set text to "No update information is available" if needed
-            text = getString(
-                if (updateData?.isUpdateInformationAvailable == false) {
-                    R.string.update_information_no_update_data_available
-                } else {
-                    R.string.update_information_view_update_information
-                }
-            )
-
-            setOnClickListener {
-                val visible = !changelogField.isVisible
-
-                // Show the changelog
-                changelogField.isVisible = visible
-                // Display a notice above the changelog if the user's currently installed
-                // version doesn't match the version this changelog is meant for
-                differentVersionChangelogNotice.isVisible = visible && isDifferentVersion
-
-                // Toggle expand/collapse icons
+            // Set text to "No update information is available" if needed,
+            // and disallow clicking
+            text = if (updateData?.isUpdateInformationAvailable == false) {
+                isClickable = false
                 setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    if (visible) {
-                        R.drawable.expand
-                    } else {
-                        R.drawable.collapse
-                    }, 0, 0, 0
+                    R.drawable.error, 0, 0, 0
                 )
+                getString(R.string.update_information_no_update_data_available)
+            } else {
+                setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    R.drawable.collapse, 0, 0, 0
+                )
+                setOnClickListener {
+                    val visible = !changelogField.isVisible
+
+                    // Display a notice above the changelog if the user's currently installed
+                    // version doesn't match the version this changelog is meant for
+                    differentVersionChangelogNotice.isVisible = visible && isDifferentVersion
+                    // Show the changelog
+                    changelogField.isVisible = visible
+
+                    // Toggle expand/collapse icons
+                    setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        if (visible) {
+                            R.drawable.expand
+                        } else {
+                            R.drawable.collapse
+                        }, 0, 0, 0
+                    )
+                }
+                getString(R.string.update_information_view_update_information)
             }
         }
     }
@@ -708,9 +714,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
                     downloadDetailsTextView.apply {
                         isVisible = true
-                        if (downloadEta != null) {
-                            text = downloadEta
-                        }
+                        text = downloadEta ?: getString(R.string.summary_please_wait)
                     }
 
                     downloadProgressBar.apply {
@@ -807,7 +811,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                         downloadLayout.apply {
                             isEnabled = true
                             isClickable = true
-                            setOnClickListener(alreadyDownloadedOnClickListener)
+                            setOnClickListener {
+                                updateAlreadyDownloadedDialog.show()
+                            }
                         }
                     }
                 }
@@ -892,13 +898,19 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     downloadLayout.apply {
                         isEnabled = true
                         isClickable = true
-                        setOnClickListener(alreadyDownloadedOnClickListener)
+                        setOnClickListener {
+                            updateAlreadyDownloadedDialog.show()
+                        }
                     }
 
                     // Since file has been verified, we can prune the work and launch [InstallActivity]
                     mainViewModel.maybePruneWork()
                     Toast.makeText(context, getString(R.string.download_complete), LENGTH_LONG).show()
-                    ActivityLauncher(requireActivity()).UpdateInstallation(true, updateData)
+                    activity?.startInstallActivity(
+                        true,
+                        updateData,
+                        downloadActionButton
+                    )
                 }
                 VERIFICATION_FAILED -> {
                     initDownloadActionButton(false)
@@ -962,7 +974,11 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
             colorResId = R.color.colorPositive
 
             View.OnClickListener {
-                ActivityLauncher(requireActivity()).UpdateInstallation(true, updateData)
+                activity?.startInstallActivity(
+                    true,
+                    updateData,
+                    downloadActionButton
+                )
             }
         }
 

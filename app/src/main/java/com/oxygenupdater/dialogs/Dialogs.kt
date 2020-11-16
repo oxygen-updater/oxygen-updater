@@ -5,10 +5,9 @@ import android.content.DialogInterface.BUTTON_NEGATIVE
 import android.content.DialogInterface.BUTTON_NEUTRAL
 import android.content.DialogInterface.BUTTON_POSITIVE
 import androidx.annotation.StringRes
-import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.R
+import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.LocalNotifications
 
 object Dialogs {
@@ -98,36 +97,10 @@ object Dialogs {
             cancellable = false
         ) {
             when (it) {
-                BUTTON_POSITIVE -> ActivityLauncher(activity).openPlayStorePage(activity)
+                BUTTON_POSITIVE -> activity.openPlayStorePage()
                 BUTTON_NEGATIVE -> {
                     // no-op
                 }
-                BUTTON_NEUTRAL -> {
-                    // no-op
-                }
-            }
-        }.show()
-    }
-
-    fun showUpdateAlreadyDownloadedMessage(updateData: UpdateData?, activity: Activity?, callback: KotlinCallback<Void?>) = checkPreconditions(activity) {
-        MessageDialog(
-            activity!!,
-            title = activity.getString(R.string.delete_message_title),
-            message = activity.getString(R.string.delete_message_contents),
-            positiveButtonText = activity.getString(R.string.install),
-            negativeButtonText = activity.getString(R.string.delete_message_delete_button),
-            positiveButtonIcon = R.drawable.install,
-            cancellable = true
-        ) {
-            when (it) {
-                BUTTON_POSITIVE -> {
-                    if (activity.application == null) {
-                        return@MessageDialog
-                    }
-
-                    ActivityLauncher(activity).UpdateInstallation(true, updateData)
-                }
-                BUTTON_NEGATIVE -> callback.invoke(null)
                 BUTTON_NEUTRAL -> {
                     // no-op
                 }

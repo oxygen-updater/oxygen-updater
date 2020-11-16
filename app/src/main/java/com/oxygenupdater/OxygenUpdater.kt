@@ -26,7 +26,6 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import java.util.*
 
-
 class OxygenUpdater : Application() {
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
@@ -116,17 +115,28 @@ class OxygenUpdater : Application() {
         MobileAds.setRequestConfiguration(requestConfiguration)
     }
 
-    private fun setupCrashReporting() {
+    /**
+     * Syncs analytics and crashlytics collection to user's preference.
+     *
+     * @param shouldShareLogs user's preference for log sharing. Note that if
+     * it's set to false, it does not take effect until the next app launch.
+     *
+     * @see [FirebaseAnalytics.setAnalyticsCollectionEnabled]
+     * @see [FirebaseCrashlytics.setCrashlyticsCollectionEnabled]
+     */
+    fun setupCrashReporting(
+        shouldShareLogs: Boolean = SettingsManager.getPreference(
+            SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
+            true
+        )
+    ) {
         val analytics by inject<FirebaseAnalytics>()
         val crashlytics by inject<FirebaseCrashlytics>()
 
-        // Do not upload crash logs if we are on a debug build or if the user has turned off analytics in the Settings screen.
-        val shareAnalytics = SettingsManager.getPreference(SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
-        val disableCrashCollection = BuildConfig.DEBUG || !shareAnalytics
-
-        // Do not share analytics data if the user has turned it off in the Settings screen
-        analytics.setAnalyticsCollectionEnabled(shareAnalytics)
-        crashlytics.setCrashlyticsCollectionEnabled(disableCrashCollection)
+        // Sync analytics collection to user's preference
+        analytics.setAnalyticsCollectionEnabled(shouldShareLogs)
+        // Sync crashlytics collection to user's preference, but only if we're on a release build
+        crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
     }
 
     @Suppress("unused")

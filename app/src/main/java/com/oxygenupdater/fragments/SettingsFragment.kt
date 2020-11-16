@@ -1,14 +1,12 @@
 package com.oxygenupdater.fragments
 
 import android.content.Context
-import android.net.Uri
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.preference.Preference
@@ -18,19 +16,20 @@ import androidx.preference.SwitchPreference
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.Purchase
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.oxygenupdater.ActivityLauncher
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
-import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.dialogs.Dialogs.showAdvancedModeExplanation
 import com.oxygenupdater.enums.PurchaseStatus
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.exceptions.GooglePlayBillingException
+import com.oxygenupdater.extensions.openInCustomTab
+import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.internal.settings.BottomSheetItem
 import com.oxygenupdater.internal.settings.BottomSheetPreference
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.SettingsManager.getPreference
+import com.oxygenupdater.internal.settings.SettingsManager.savePreference
 import com.oxygenupdater.models.AppLocale
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SystemVersionProperties
@@ -43,6 +42,7 @@ import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.viewmodels.BillingViewModel
+import com.oxygenupdater.viewmodels.MainViewModel
 import com.oxygenupdater.viewmodels.SettingsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -51,20 +51,13 @@ import java.util.*
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+class SettingsFragment : PreferenceFragmentCompat() {
 
     private lateinit var mContext: Context
-    private lateinit var activity: AppCompatActivity
-    private lateinit var application: OxygenUpdater
-    private lateinit var activityLauncher: ActivityLauncher
     private lateinit var adFreePreference: Preference
     private lateinit var devicePreference: BottomSheetPreference
     private lateinit var updateMethodPreference: BottomSheetPreference
     private lateinit var themePreference: BottomSheetPreference
-
-    private val contributorDialog by lazy {
-        ContributorDialogFragment(true)
-    }
 
     private val inappSkuDetailsListObserver = Observer<List<AugmentedSkuDetails>> { list ->
         list.find {
@@ -94,8 +87,17 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
     }
 
+    private val onSharedPreferenceChangedListener = OnSharedPreferenceChangeListener { _, key ->
+        settingsViewModel.hasPreferenceChanged(key) {
+            if (isAdded && it) {
+                mainViewModel.notifySettingsChanged(key)
+            }
+        }
+    }
+
     private val systemVersionProperties by inject<SystemVersionProperties>()
     private val crashlytics by inject<FirebaseCrashlytics>()
+    private val mainViewModel by sharedViewModel<MainViewModel>()
     private val settingsViewModel by sharedViewModel<SettingsViewModel>()
     private val billingViewModel by sharedViewModel<BillingViewModel>()
 
@@ -109,6 +111,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         view: View,
         savedInstanceState: Bundle?
     ) = super.onViewCreated(view, savedInstanceState).also {
+        setDivider(ContextCompat.getDrawable(requireContext(), R.drawable.divider))
+
         setupSupportPreferences()
         setupDevicePreferences()
         setupThemePreference()
@@ -120,17 +124,21 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         init()
     }
 
+    override fun onDestroy() = super.onDestroy().also {
+        SettingsManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(
+            onSharedPreferenceChangedListener
+        )
+    }
+
     /**
      * Initialises context, activity, application, and their relevant references
      */
     private fun init() {
         mContext = requireContext()
 
-        (getActivity() as AppCompatActivity).let {
-            activity = it
-            application = it.application as OxygenUpdater
-            activityLauncher = ActivityLauncher(it)
-        }
+        SettingsManager.sharedPreferences.registerOnSharedPreferenceChangeListener(
+            onSharedPreferenceChangedListener
+        )
     }
 
     /**
@@ -142,10 +150,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         findPreference<Preference>(
             mContext.getString(R.string.key_contributor)
         )?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            contributorDialog.show(
-                parentFragmentManager,
-                ContributorDialogFragment.TAG
-            )
+            (activity as MainActivity?)?.showContributorDialog()
             true
         }
     }
@@ -203,7 +208,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
      * Set summary and enable/disable the buy preference depending on purchased status
      */
     private fun setupBuyAdFreePreference() {
-        adFreePreference = findPreference(mContext.getString(R.string.key_ad_free))!!
+        adFreePreference = findPreference(SettingsManager.PROPERTY_AD_FREE)!!
 
         billingViewModel.inappSkuDetailsListLiveData.observe(
             viewLifecycleOwner,
@@ -263,12 +268,11 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     /**
      * Sets up device and update method list preferences.
      *
-     *
      * Entries are retrieved from the server, which calls for dynamically setting `entries` and `entryValues`
      */
     private fun setupDevicePreferences() {
-        devicePreference = findPreference(mContext.getString(R.string.key_device))!!
-        updateMethodPreference = findPreference(mContext.getString(R.string.key_update_method))!!
+        devicePreference = findPreference(SettingsManager.PROPERTY_DEVICE)!!
+        updateMethodPreference = findPreference(SettingsManager.PROPERTY_UPDATE_METHOD)!!
 
         devicePreference.isEnabled = false
         updateMethodPreference.isEnabled = false
@@ -294,7 +298,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private fun setupAdvancedModePreference() {
         findPreference<SwitchPreference>(SettingsManager.PROPERTY_ADVANCED_MODE)?.apply {
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val isAdvancedMode = SettingsManager.getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
+                val isAdvancedMode = getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
                 if (isAdvancedMode) {
                     isChecked = false
                     showAdvancedModeExplanation(activity) {
@@ -315,22 +319,15 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         val rateApp = findPreference<Preference>(mContext.getString(R.string.key_rate_app))
         val oxygenUpdater = findPreference<Preference>(mContext.getString(R.string.key_oxygen))
 
-        // Use Chrome Custom Tabs to open the privacy policy link
-        val privacyPolicyUri = Uri.parse("https://oxygenupdater.com/legal")
-        val customTabsIntent = CustomTabsIntent.Builder()
-            .setColorScheme(if (ThemeUtils.isNightModeActive(mContext)) CustomTabsIntent.COLOR_SCHEME_DARK else CustomTabsIntent.COLOR_SCHEME_LIGHT)
-            .setToolbarColor(ContextCompat.getColor(mContext, R.color.background))
-            .setNavigationBarColor(ContextCompat.getColor(mContext, R.color.background))
-            .build()
-
         privacyPolicy?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            customTabsIntent.launchUrl(mContext, privacyPolicyUri)
+            // Use Chrome Custom Tabs to open the privacy policy link
+            mContext.openInCustomTab("https://oxygenupdater.com/legal")
             true
         }
 
         // Open the app's Play Store page
         rateApp?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            activityLauncher.openPlayStorePage(mContext)
+            context?.openPlayStorePage()
             true
         }
 
@@ -356,7 +353,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
             var recommendedPosition = -1
             var selectedPosition = -1
 
-            val deviceId = SettingsManager.getPreference(mContext.getString(R.string.key_device_id), -1L)
+            val deviceId = getPreference(mContext.getString(R.string.key_device_id), -1L)
 
             val itemList: MutableList<BottomSheetItem> = ArrayList()
             val deviceMap = HashMap<CharSequence, Long>()
@@ -426,7 +423,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         if (!updateMethods.isNullOrEmpty()) {
             updateMethodPreference.isEnabled = true
 
-            val currentUpdateMethodId = SettingsManager.getPreference(mContext.getString(R.string.key_update_method_id), -1L)
+            val currentUpdateMethodId = getPreference(mContext.getString(R.string.key_update_method_id), -1L)
 
             val recommendedPositions: MutableList<Int> = ArrayList()
             var selectedPosition = -1
@@ -466,12 +463,12 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             updateMethodPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
                 crashlytics.setUserId(
-                    "Device: " + SettingsManager.getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
-                            + ", Update Method: " + SettingsManager.getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
+                    "Device: " + getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
+                            + ", Update Method: " + getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
                 )
 
                 // Google Play services are not required if the user doesn't use notifications
-                if (checkPlayServices(activity, false)) {
+                if (checkPlayServices(requireActivity(), false)) {
                     // Subscribe to notifications for the newly selected device and update method
                     NotificationTopicSubscriber.subscribe(devices, updateMethods)
                 } else {
@@ -483,14 +480,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         } else {
             updateMethodPreference.isVisible = false
         }
-    }
-
-    override fun onPreferenceChange(preference: Preference, value: Any?): Boolean {
-        if (value != null) {
-            preference.summary = value.toString()
-        }
-
-        return true
     }
 
     /**
@@ -508,7 +497,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         }
 
         billingViewModel.makePurchase(
-            activity,
+            requireActivity(),
             augmentedSkuDetails
         ) { responseCode, purchase ->
             if (!isAdded) {
@@ -517,7 +506,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
 
             when (responseCode) {
                 BillingResponseCode.OK -> if (purchase != null) {
-                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, true)
+                    savePreference(SettingsManager.PROPERTY_AD_FREE, true)
 
                     validateAdFreePurchase(
                         purchase,
@@ -525,7 +514,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                         PurchaseType.AD_FREE
                     )
                 } else {
-                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
+                    savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
                 BillingResponseCode.ITEM_ALREADY_OWNED -> {
                     // This is tricky to deal with. Even pending purchases show up as "items already owned",
@@ -537,13 +526,13 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
                 BillingResponseCode.USER_CANCELED -> {
                     logDebug(TAG, "Purchase of ad-free version was cancelled by the user.")
                     setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
-                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
+                    savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
                 else -> {
                     logIABError("Purchase of the ad-free version failed due to an unknown error DURING the purchase flow: $responseCode")
                     Toast.makeText(mContext, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
                     setupBuyAdFreePreference(PurchaseStatus.AVAILABLE, augmentedSkuDetails)
-                    SettingsManager.savePreference(SettingsManager.PROPERTY_AD_FREE, false)
+                    savePreference(SettingsManager.PROPERTY_AD_FREE, false)
                 }
             }
         }

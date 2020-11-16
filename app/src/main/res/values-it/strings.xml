@@ -34,10 +34,6 @@
 	<string name="new_app_version_inapp_downloaded">L\'aggiornamento è stato scaricato.</string>
 	<string name="new_app_version_inapp_failed">Non è stato possibile scaricare l\'aggiornamento. Premi qui per aprire il Play Store ed aggiornare l\'app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">"alle"</string>
-	<string name="time_yesterday">"Ieri"</string>
-
 	<!-- Downloader strings -->
 	<string name="download">Scarica aggiornamento</string>
 	<string name="downloaded">Aggiornamento scaricato</string>
@@ -90,7 +86,7 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 
 	<string name="summary_on">Attivato</string>
 	<string name="summary_off">Disattivato</string>
-	<string name="summary_device">Attendi…</string>
+	<string name="summary_please_wait">Attendi…</string>
 	<string name="summary_update_method">Seleziona un dispositivo</string>
 	<string name="summary_theme">Scegli tema</string>
 	<string name="summary_privacy_policy">Visualizza online</string>
@@ -98,8 +94,6 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 
 	<string name="label_buy_ad_free">Rimuovi annunci</string>
 	<string name="label_theme">Tema</string>
-	<string name="label_app_update_banner">Banner per aggiornamenti</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Valuta l\'app</string>
 
@@ -313,16 +307,15 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="device_information_serial_number">"Numero seriale:"</string>
 	<string name="device_information_system_on_a_chip">"Chip:"</string>
 	<string name="device_information_unknown">"sconosciuto"</string>
-	<string name="device_information_your_device">"Tuo dispositivo: "</string>
 
 	<!-- About screen strings -->
 	<string name="about">"Info app"</string>
-	<string name="about_app_description">"Il miglior utensile per aggiornamenti OxygenOS"</string>
+	<string name="about_description">Questa app scarica gli aggiornamenti ufficiali direttamente dai server di OnePlus e verifica anche l\'integrità dello ZIP scaricato prima di consentirti l\'installazione. In questo modo, l\'applicazione consente di saltare la coda di rollout e installare gli aggiornamenti ufficiali il prima possibile. Se riscontri bug nel SO, segnalali direttamente a OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Potresti voler unirti al nostro <a href="https://discord.gg/5TXdhKJ">server Discord</a>, in modo da poter parlare con altri utenti degli ultimi aggiornamenti. Altrimenti, non esitare a inviarci un\'e-mail all\'indirizzo <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> con i tuoi suggerimenti/feedback.</string>
+	<string name="about_support">Se desideri sostenerci, puoi acquistare lo sblocco Ad-free (impostazioni dell\'app), o consultare la nostra <a href="https://patreon.com/oxygenupdater">pagina Patreon</a>.</string>
+	<string name="about_background_story_header">Storia di fondo</string>
 	<string name="about_background_story">Questa app è stata originariamente sviluppata da Arjan Vlek come supplemento di un\'altra app , chiamata <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>\n\nDopo 4 anni, Luglio 2019, Arjan decise di abbandonare entrambi i suoi progetti e affidarli ad una squadra di sviluppatori da diverse nazioni. Presero la responsabilità di fornire la community con un servizio eccellente &amp; per fornire aggiornamenti OnePlus in modo veloce. \nUlteriori informazioni sull\'<a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">annuncio</a>.\n\n14 Agosot 2018 segnò il primo rilascio sotto nuove direttive, che portò un sacco di novità come dark mode e un redesign completo. \n\nPer ulteriori informazioni sul team, visualizza <a href="https://oxygenupdater.com/team/">il sito</a>.</string>
 	<string name="about_third_party_app_notice">Questa non è un\'applicazione ufficiale. \nIl nome OnePlus, il logo OnePlus e OxygenOS sono proprietà di OnePlus\nAndroid, Google, Google Play e il logo Google Play sono marchi registrati di Google Inc.\nQuesta app utilizza dati di OnePlus e l\'azienda genitore Oppo per visualizzare alcune informazioni.</string>
 	<string name="about_rate_button_text">"Vota"</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<string name="about_website_button_text">Web</string>
 	<string name="about_email_button_text">Email</string>
 
@@ -385,6 +378,8 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="news_load_id_error"><![CDATA[Impossibile aprire l\'articolo da un URL non valido:: %1$s. Controlla l\'URL o segnalacelo tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">server Discord</a>.]]></string>
 	<string name="news_unread_count_1">Hai %1$d articoli non letti. Premi qui per visualizzarli.</string>
 	<string name="news_unread_count_2">Hai %1$d articoli non letti. Premi per mostrare tutti gli articoli.</string>
+	<string name="news_mark_read">Segna come letto</string>
+	<string name="news_mark_unread">Segna come non letto</string>
 	<string name="news_mark_all_read">Segna tutti gli articoli come letti</string>
 	<string name="news_empty_state_none_available_header">Nessun articolo disponibile</string>
 	<string name="news_empty_state_all_read_header">Non c\'è più nulla da leggere!</string>

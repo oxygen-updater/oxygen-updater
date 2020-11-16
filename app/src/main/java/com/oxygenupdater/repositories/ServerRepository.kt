@@ -5,11 +5,12 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
-import com.oxygenupdater.database.NewsDatabaseHelper
+import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.DeviceRequestFilter
+import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.RootInstall
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.ServerStatus
@@ -28,10 +29,16 @@ import org.json.JSONException
 class ServerRepository constructor(
     private val serverApi: ServerApi,
     private val systemVersionProperties: SystemVersionProperties,
-    private val newsDatabaseHelper: NewsDatabaseHelper
+    localAppDb: LocalAppDb
 ) {
 
     private var serverStatus: ServerStatus? = null
+
+    private val newsItemDao by lazy {
+        localAppDb.newsItemDao()
+    }
+
+    suspend fun fetchFaq() = performServerRequest { serverApi.fetchFaq() }
 
     suspend fun fetchDevices(
         filter: DeviceRequestFilter
@@ -99,7 +106,7 @@ class ServerRepository constructor(
             )
             val pushNotificationsDelaySeconds = SettingsManager.getPreference(
                 SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
-                1800
+                300
             )
 
             val response = if (status == null && Utils.checkNetworkConnection()) {
@@ -155,12 +162,7 @@ class ServerRepository constructor(
             }
         }
 
-        val showServerMessages = SettingsManager.getPreference(SettingsManager.PROPERTY_SHOW_NEWS_MESSAGES, true)
-        if (showServerMessages) {
-            serverMessages
-        } else {
-            ArrayList()
-        }
+        serverMessages
     }
 
     suspend fun fetchNews(
@@ -170,23 +172,38 @@ class ServerRepository constructor(
         serverApi.fetchNews(deviceId, updateMethodId)
     }.let {
         if (!it.isNullOrEmpty()) {
-            newsDatabaseHelper.saveNewsItems(it)
+            newsItemDao.refreshNewsItems(it)
         }
 
-        newsDatabaseHelper.allNewsItems
+        newsItemDao.getAll()
     }
 
     suspend fun fetchNewsItem(
         newsItemId: Long
     ) = performServerRequest {
         serverApi.fetchNewsItem(newsItemId)
-    }.let { newsItem ->
-        if (newsItem != null) {
-            newsDatabaseHelper.saveNewsItem(newsItem)
+    }.let {
+        if (it != null) {
+            newsItemDao.insertOrUpdate(it)
         }
 
-        newsDatabaseHelper.getNewsItem(newsItemId)
+        newsItemDao.getById(newsItemId)
     }
+
+    fun toggleNewsItemReadStatusLocally(
+        newsItem: NewsItem,
+        newReadStatus: Boolean = !newsItem.read
+    ) = newsItemDao.toggleReadStatus(
+        newsItem,
+        newReadStatus
+    )
+
+    fun markNewsItemReadLocally(
+        newsItemId: Long
+    ) = newsItemDao.toggleReadStatus(
+        newsItemId,
+        true
+    )
 
     suspend fun markNewsItemRead(
         newsItemId: Long

@@ -5,18 +5,18 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.view.View
 import android.widget.TextView
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.preference.Preference
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.oxygenupdater.R
+import com.oxygenupdater.adapters.BottomSheetItemAdapter
 import com.oxygenupdater.extensions.getString
+import com.oxygenupdater.internal.settings.SettingsManager.getPreference
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logVerbose
 import java.util.*
@@ -31,8 +31,8 @@ import kotlin.math.min
 class BottomSheetPreference : Preference {
 
     private lateinit var mContext: Context
-    private lateinit var dialogLayout: LinearLayout
-    private lateinit var itemListContainer: LinearLayout
+    private lateinit var dialogLayout: View
+    private lateinit var adapter: BottomSheetItemAdapter
     private lateinit var dialog: BottomSheetDialog
 
     private var mOnChangeListener: OnPreferenceChangeListener? = null
@@ -104,76 +104,35 @@ class BottomSheetPreference : Preference {
      * Setup the internal [BottomSheetDialog]
      */
     @SuppressLint("InflateParams")
-    private fun setupDialog() = BottomSheetDialog(mContext).let {
-        dialog = it
-
-        val inflater = LayoutInflater.from(mContext)
-
-        (inflater.inflate(R.layout.bottom_sheet_preference, null, false) as LinearLayout).apply {
+    private fun setupDialog() = BottomSheetDialog(mContext).apply {
+        val contentView = LayoutInflater.from(mContext).inflate(
+            R.layout.bottom_sheet_preference,
+            null, false
+        ).apply {
             dialogLayout = this
-
-            itemListContainer = findViewById(R.id.dialog_item_list_container)
 
             setText(findViewById(R.id.dialog_title), title)
             setText(findViewById(R.id.dialog_caption), caption)
 
-            logVerbose(TAG, "Setup dialog with title='$title', subtitle='$caption', and '${itemList.size}' items")
-
-            itemList.indices.forEach { index ->
-                val dialogItemLayout = inflater.inflate(
-                    R.layout.bottom_sheet_preference_item,
-                    itemListContainer,
-                    false
-                ) as LinearLayout
-
-                // add the item's view at the specified index
-                itemListContainer.addView(dialogItemLayout, index)
-
-                setupItemView(dialogItemLayout, index)
+            adapter = BottomSheetItemAdapter(mContext, key, secondaryKey) {
+                setValueItem(it)
+            }.apply {
+                submitList(itemList)
+                findViewById<RecyclerView>(R.id.bottomSheetRecyclerView).let { recyclerView ->
+                    // Performance optimization
+                    recyclerView.setHasFixedSize(true)
+                    recyclerView.adapter = this
+                }
             }
 
-            dialog.setContentView(this)
-
-            // Open up the dialog fully by default
-            dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            logVerbose(TAG, "Setup dialog with title='$title', subtitle='$caption', and '${itemList.size}' items")
         }
+
+        setContentView(contentView)
+        // Open up the dialog fully by default
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        dialog = this
     }
-
-    /**
-     * Initialises an item layout. Sets text if needed, and marks selected/unselected as well
-     *
-     * @param dialogItemLayout parent linear layout
-     * @param index            item index
-     */
-    private fun setupItemView(dialogItemLayout: LinearLayout, index: Int) {
-        val item = itemList[index]
-
-        val titleView = dialogItemLayout.findViewById<TextView>(R.id.dialog_item_title)
-        val subtitleView = dialogItemLayout.findViewById<TextView>(R.id.dialog_item_subtitle)
-
-        setText(titleView, item.title)
-        setText(subtitleView, item.subtitle)
-
-        logVerbose(TAG, "Setup item with title='$title', and subtitle='$caption'")
-
-        dialogItemLayout.setOnClickListener { setValueIndex(index) }
-
-        val currentValue = SettingsManager.getPreference<Any?>(key, null)
-        val currentSecondaryValue = SettingsManager.getPreference<Any?>(secondaryKey, null)
-        val secondaryValue = item.secondaryValue
-
-        // value is mandatory, secondary value is optional
-        if (item.value == currentValue || secondaryValue != null && secondaryValue == currentSecondaryValue) {
-            markItemSelected(index)
-        } else {
-            markItemUnselected(index)
-        }
-    }
-
-    private fun redrawItemView(index: Int) = setupItemView(
-        itemListContainer.getChildAt(index) as LinearLayout,
-        index
-    )
 
     /**
      * Reads attributes defined in XML and sets relevant fields
@@ -247,14 +206,13 @@ class BottomSheetPreference : Preference {
     private fun setValues(newValue: Any?, newSecondaryValue: Any?) {
         var selectedIndex = -1
 
-        for (i in itemList.indices) {
-            val item = itemList[i]
+        itemList.forEachIndexed { index, item ->
             val value = item.value
             val secondaryValue = item.secondaryValue
 
             if (value != null && value == newValue || secondaryValue != null && secondaryValue == newSecondaryValue) {
-                selectedIndex = i
-                break
+                selectedIndex = index
+                return@forEachIndexed
             }
         }
 
@@ -263,16 +221,16 @@ class BottomSheetPreference : Preference {
         }
     }
 
+    fun setValueIndex(selectedIndex: Int) = setValueItem(itemList[selectedIndex])
+
     /**
      * Sets the value of the key. secondaryValue is optional.
      *
-     *
      * Also marks previous item as unselected and new item as selected
      *
-     * @param selectedIndex the selected index
+     * @param item the selected item
      */
-    fun setValueIndex(selectedIndex: Int) {
-        val item = itemList[selectedIndex]
+    fun setValueItem(item: BottomSheetItem) {
         val newValue = item.value
         val newSecondaryValue = item.secondaryValue
 
@@ -290,7 +248,7 @@ class BottomSheetPreference : Preference {
 
             if (changed) {
                 // redraw previous selected and new selected layouts
-                remarkItems(newValue)
+                adapter.notifyDataSetChanged()
                 onChange()
             }
         }
@@ -316,15 +274,15 @@ class BottomSheetPreference : Preference {
      *
      * @param onPreferenceChangeListener The callback to be invoked
      */
-    override fun setOnPreferenceChangeListener(onPreferenceChangeListener: OnPreferenceChangeListener) = super.setOnPreferenceChangeListener(
-        onPreferenceChangeListener
-    ).let {
+    override fun setOnPreferenceChangeListener(
+        onPreferenceChangeListener: OnPreferenceChangeListener
+    ) = super.setOnPreferenceChangeListener(onPreferenceChangeListener).also {
         mOnChangeListener = onPreferenceChangeListener
     }
 
     override fun onSetInitialValue(defaultValue: Any?) {
-        val newValue = SettingsManager.getPreference<Any?>(key, null)
-        val newSecondaryValue = SettingsManager.getPreference<Any?>(secondaryKey, null)
+        val newValue = getPreference<Any?>(key, null)
+        val newSecondaryValue = getPreference<Any?>(secondaryKey, null)
         setValues(newValue, newSecondaryValue)
     }
 
@@ -366,8 +324,9 @@ class BottomSheetPreference : Preference {
         val length = min(itemList.size, entries.size)
         for (i in 0 until length) {
             itemList[i].title = entries[i].toString()
-            redrawItemView(i)
         }
+
+        adapter.submitList(itemList)
 
         onSetInitialValue(null)
     }
@@ -380,8 +339,9 @@ class BottomSheetPreference : Preference {
         val length = min(itemList.size, titles.size)
         for (i in 0 until length) {
             itemList[i].title = titles[i].toString()
-            redrawItemView(i)
         }
+
+        adapter.submitList(itemList)
 
         onSetInitialValue(null)
     }
@@ -394,8 +354,9 @@ class BottomSheetPreference : Preference {
         val length = min(itemList.size, subtitles.size)
         for (i in 0 until length) {
             itemList[i].subtitle = subtitles[i].toString()
-            redrawItemView(i)
         }
+
+        adapter.submitList(itemList)
     }
 
     fun setEntryValues(entryValues: Array<CharSequence>) {
@@ -407,6 +368,8 @@ class BottomSheetPreference : Preference {
         for (i in 0 until length) {
             itemList[i].value = entryValues[i].toString()
         }
+
+        adapter.submitList(itemList)
     }
 
     fun setSecondaryEntryValues(objectEntryValues: Array<Long?>) {
@@ -418,6 +381,8 @@ class BottomSheetPreference : Preference {
         for (i in 0 until length) {
             itemList[i].secondaryValue = objectEntryValues[i]
         }
+
+        adapter.submitList(itemList)
     }
 
     fun setItemList(itemList: List<BottomSheetItem>) {
@@ -427,75 +392,18 @@ class BottomSheetPreference : Preference {
         this.itemList = ArrayList()
         this.itemList.addAll(itemList)
 
-        setupDialog()
+        adapter.submitList(this.itemList)
+
         onSetInitialValue(null)
     }
 
     /**
-     * Iterates over [itemList] to remark items as selected/unselected
-     *
-     * @param value the new value
-     */
-    private fun remarkItems(value: Any?) {
-        logVerbose(TAG, "Remarking items as selected/unselected")
-
-        for (i in itemList.indices) {
-            val item = itemList[i]
-
-            if (item.value == value) {
-                markItemSelected(i)
-            } else {
-                markItemUnselected(i)
-            }
-        }
-    }
-
-    /**
-     * Hides the checkmark icon and resets background to [android.R.attr.selectableItemBackground]
-     *
-     * @param selectedIndex index of the selected item
-     */
-    private fun markItemUnselected(selectedIndex: Int) {
-        if (selectedIndex != -1) {
-            val dialogItemLayout = itemListContainer.getChildAt(selectedIndex) as LinearLayout
-            val checkmarkView = dialogItemLayout.findViewById<ImageView>(R.id.dialog_item_checkmark)
-
-            checkmarkView.isInvisible = true
-
-            TypedValue().apply {
-                mContext.theme.resolveAttribute(android.R.attr.selectableItemBackground, this, true)
-                dialogItemLayout.setBackgroundResource(resourceId)
-            }
-
-            logVerbose(TAG, "Item #$selectedIndex marked unselected with title='$title', and subtitle='$caption'")
-        }
-    }
-
-    /**
-     * Shows the checkmark icon and sets background to [R.drawable.rounded_overlay]
-     *
-     * @param selectedIndex index of the selected item
-     */
-    private fun markItemSelected(selectedIndex: Int) {
-        if (selectedIndex != -1) {
-            val dialogItemLayout = itemListContainer.getChildAt(selectedIndex) as LinearLayout
-            val checkmarkView = dialogItemLayout.findViewById<ImageView>(R.id.dialog_item_checkmark)
-
-            checkmarkView.isVisible = true
-            dialogItemLayout.setBackgroundResource(R.drawable.rounded_overlay)
-
-            logVerbose(TAG, "Item #$selectedIndex marked selected with title='$title', and subtitle='$caption'")
-        }
-    }
-
-    /**
-     * Called when value changes. Updates summary, closes the [dialog], an notifies on change listeners
+     * Called when value changes. Updates summary, closes the [dialog], and notifies on change listeners
      */
     private fun onChange() {
         summary = value.toString()
 
         dialog.cancel()
-
         mOnChangeListener?.onPreferenceChange(this, value)
     }
 

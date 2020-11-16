@@ -11,8 +11,8 @@
 	<string name="update_information_header">"Mise à jour"</string>
 	<string name="update_information_error_title">Impossible de récupérer les dernières données de mise à jour</string>
 	<string name="update_information_banner_server">Appuyez ici afin de voir des informations importantes</string>
-	<string name="update_information_banner_advanced_mode_tip">Vous avez sélectionné la piste de mise à jour \"%1$s\". Activez le mode avancé si vous prévoyez de passer à cette piste de mise à jour.</string>
-	<string name="update_information_header_advanced_mode_hint">Mode avancé est activé</string>
+	<string name="update_information_banner_advanced_mode_tip">Vous avez sélectionné la méthode de mise à jour \"%1$s\". Activez le mode avancé si vous souhaitez passer à cette méthode de mise à jour.</string>
+	<string name="update_information_header_advanced_mode_hint">Le mode avancé est activé</string>
 	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier ZIP pour la méthode de mise à jour \"%1$s\".\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
 	<string name="update_information_different_version_changelog_notice">Vous regardez un changelog conçu pour la dernière mise à jour disponible dans la méthode de mise à jour \"%1$s\". Si vous souhaitez installer cette mise à jour, vous devez d\'abord activer le mode avancé dans les réglages de l\'application.\n\nCependant, si vous souhaitez voir le changelog pour la version actuellement installée sur votre appareil vous devez resélectionner la précédente méthode de mise à jour.</string>
 	<string name="update_information_last_checked_on">"Dernière vérification : %1$s"</string>
@@ -32,10 +32,6 @@
 	<string name="new_app_version_long">Une mise à jour de l\'application (%1$s) est disponible. Maintenir l\'application à jour vous permet de bénéficier des dernières fonctionnalités et corrections de bugs.\nAppuyez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
 	<string name="new_app_version_inapp_downloaded">La mise à jour de l\'application a été téléchargée</string>
 	<string name="new_app_version_inapp_failed">La mise à jour de l\'\application n\'a pas pu être installée. Tapez ici pour ouvrir le PlayStore et mettre à jour l\'application.</string>
-
-	<!-- Date and time strings -->
-	<string name="time_at">"à"</string>
-	<string name="time_yesterday">"Hier"</string>
 
 	<!-- Downloader strings -->
 	<string name="download">Télécharger la mise à jour</string>
@@ -93,7 +89,7 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 
 	<string name="summary_on">Activé</string>
 	<string name="summary_off">Désactivé</string>
-	<string name="summary_device">Veuillez patienter…</string>
+	<string name="summary_please_wait">Veuillez patienter…</string>
 	<string name="summary_update_method">Veuillez sélectionner un appareil</string>
 	<string name="summary_theme">Choisissez un thème</string>
 	<string name="summary_privacy_policy">Voir en ligne</string>
@@ -101,8 +97,6 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 
 	<string name="label_buy_ad_free">Supprimer les publicités</string>
 	<string name="label_theme">Thème</string>
-	<string name="label_app_update_banner">Bannière signalant la disponibilité d\'une mise à jour de l\'application</string>
-	<string name="label_news_warning_banner">Bannières d\'articles et d\'avertissements</string>
 	<string name="label_privacy_policy">Politique de confidentialité</string>
 	<string name="label_rate_app">Évaluez cette application</string>
 
@@ -112,7 +106,7 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="theme_auto">Automatique</string>
 
 	<string name="theme_light_subtitle">Thème avec un fond blanc et un filet de rouge</string>
-	<string name="theme_dark_subtitle">Thème avec un fond noir et un filet de rouge. Utilisez ce thème si vous souhaitez économiser de la batterie, plus précisément sur les appareils avec un écran AMOLED</string>
+	<string name="theme_dark_subtitle">Thème avec un fond noir et un filet de rouge. Utilisez ce thème si vous souhaitez économiser de la batterie, plus précisément sur les appareils avec un écran AMOLED.</string>
 	<string name="theme_system_subtitle">Utilise le thème système (vous pouvez le modifier dans les paramètres d\'affichage ou les options de développement). Dépend de l\'appareil.</string>
 	<string name="theme_auto_subtitle">Bascule entre les thèmes lumineux et sombres en fonction de l\'heure afin d\'empêcher la fatigue des yeux pendant la nuit</string>
 	<string name="theme_additional_note">Note : si le thème choisi est « Automatique » et l\'économiseur de batterie activé, le thème sombre sera automatiquement utilisé quelle que soit l\'heure afin d\'économiser de la batterie.</string>
@@ -144,8 +138,8 @@ Cela peut être utile quand vous :
 	<string name="settings_upload_logs">Envoyer les données d\'utilisation et de crash au développeur</string>
 
 	<!-- FAQ strings -->
-	<string name="faq">"FAQ"</string>
-	<string name="faq_menu_item">"Foire aux Questions"</string>
+	<string name="faq">"Foire aux Questions"</string>
+	<string name="faq_menu_item">"FAQ"</string>
 	<string name="faq_no_network_text">"Vous avez besoin d'être connecté à Internet pour voir la FAQ"</string>
 
 	<!-- First-time setup strings -->
@@ -297,7 +291,7 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 
 	<string name="device_information_amount_of_memory">"Quantité de RAM :"</string>
 	<string name="device_information_cpu_frequency">"Fréquence du processeur :"</string>
-	<string name="device_information_header">"Mon appareil"</string>
+	<string name="device_information_header">"Appareil"</string>
 	<string name="device_information_image_description">"Image de l'appareil"</string>
 	<string name="device_information_incremental_os_version">"Version incrémentale de l'OS :"</string>
 	<string name="device_information_os_version">"Version d'Android :"</string>
@@ -307,16 +301,15 @@ Afin de le vérifier vous pouvez effectuer la manipulation suivante :
 	<string name="device_information_serial_number">"Numéro de série :"</string>
 	<string name="device_information_system_on_a_chip">"Système sur une puce (SoC) :"</string>
 	<string name="device_information_unknown">"Inconnu"</string>
-	<string name="device_information_your_device">"Votre appareil :"</string>
 
 	<!-- About screen strings -->
-	<string name="about">" À propos de l'application"</string>
-	<string name="about_app_description">"L'outil ultime pour les mises à jour d'OxygenOS"</string>
-	<string name="about_background_story">Cette application a été initialement développée par Arjan Vlek à la suite d\'une autre de ses applications appelée <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (qui fournit des fonctionnalités similaires pour les utilisateurs de Cyanogen OS).\n\nAprès 4 ans, en Juillet 2019, Arjan a décidé de se retirer des deux projets et a transféré les applications à une équipe de développeurs venant chacun de différents pays. Ils ont pris la responsabilité de continuer à rendre à la communauté le service d\'obtenir les mises à jour réalisées par OnePlus plus rapidement.\nVous pouvez trouver plus d\'informations à propos de l\'annonce <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">ici</a>.\n\nLe 14 Août 2019 a marqué la première publication d\'une nouvelle version de l\'application par la nouvelle équipe, qui a introduit de nouvelles fonctionnalités (thème sombre et redesign).\n\nPour plus d\'information à propos de l\'équipe, consultez <a href="https://oxygenupdater.com/team/">le site</a>.</string>
+	<string name="about">"À propos"</string>
+	<string name="about_description">Cette application télécharge les mises à jour officielles directement depuis les serveurs de OnePlus et vérifie l\'intégrité des fichiers ZIPs téléchargés avant de vous permettre de les installer. Ce faisant, vous n\'aurez pas à attendre le déploiement progressif afin d\'installer les mises à jour officielles dès que possible. Si vous rencontrez des errurs dans le système d\'exploitation, veuillez les signalez directement à OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Vous souhaiterez peut être joindre notre<a href="https://discord.gg/5TXdhKJ">serveur Discord</a> afin de pouvoir échanger avec les autres utilisateurs de l\'application à propos des dernières mises à jour. Autrement n\'hésitez pas à nous envoyer un email à <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> si vous avez des suggestions ou des commentaires.</string>
+	<string name="about_support">Si vous souhaitez nous supporter, vous pouvez acheter la version sans publicités (à partir des réglages de l\'application) ou vous rendre sur notre <a href="https://patreon.com/oxygenupdater">page Patreon</a>.</string>
+	<string name="about_background_story_header">Histoire</string>
+	<string name="about_background_story">Cette application a été initialement développée par Arjan Vlek à la suite d\'une autre de ses applications appelée <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (qui fournit des fonctionnalités similaires pour les utilisateurs de Cyanogen OS).\n\nAprès 4 ans, en Juillet 2019, Arjan a décidé de se retirer des deux projets et a transféré les applications à une équipe de développeurs venant chacun de différents pays. Ils ont pris la responsabilité de continuer à rendre à la communauté le service d\'obtenir les mises à jour réalisées par OnePlus plus rapidement.\nVous pouvez trouver plus d\'informations à propos de l\'annonce <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">ici</a>.\n\nLe 14 Août 2019 a marqué la première publication d\'une nouvelle version de l\'application par la nouvelle équipe, qui a introduit de nouvelles fonctionnalités (thème sombre et redesign).\n\nPour plus d\'information à propos de l\'équipe, consultez <a href="https://oxygenupdater.com/team/">le site</a>.</string>
 	<string name="about_third_party_app_notice">Veuillez noter que cette application n\'est pas une application officielle de OnePlus.\nLe nom OnePlus, le logo OnePlus et OxygenOS sont propriétés de OnePlus.\nAndroid, Google, Google Play et le logo Google Play sont des marques déposées de Google Inc.\nCette application utilise des données de OnePlus et d\'OPPO pour montrer les informations de mise à jour.</string>
 	<string name="about_rate_button_text">"Noter"</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<string name="about_website_button_text">Site</string>
 	<string name="about_email_button_text">Email</string>
 
@@ -381,6 +374,8 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_load_id_error"><![CDATA[Échec de l\'ouverture de l\'article à partir d\'une URL invalide: %1$s. Vérifiez l\'URL ou signalez-le nous par <a href="mailto:support@oxygenupdater.com">email</a> ou par <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
 	<string name="news_unread_count_1">Vous avez %1$d articles non lus. Appuyez ici pour les voir.</string>
 	<string name="news_unread_count_2">Vous avez %1$d articles non lus. Appuyez ici pour voir tous les articles.</string>
+	<string name="news_mark_read">Marquer comme lu</string>
+	<string name="news_mark_unread">Marquer comme non lu</string>
 	<string name="news_mark_all_read">Marquer tous les articles comme lus</string>
 	<string name="news_empty_state_none_available_header">Aucun article n\'est présent</string>
 	<string name="news_empty_state_all_read_header">Aucun article non lu</string>

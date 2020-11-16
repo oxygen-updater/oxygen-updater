@@ -6,11 +6,12 @@ import androidx.core.os.bundleOf
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.oxygenupdater.database.SubmittedUpdateFileRepository
+import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTION_COUNT
 import com.oxygenupdater.models.ServerPostResult
+import com.oxygenupdater.models.SubmittedUpdateFile
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
@@ -33,16 +34,19 @@ class CheckSystemUpdateFilesWorker(
     parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
 
-    private val repository = SubmittedUpdateFileRepository(context)
-
+    private val database by inject(LocalAppDb::class.java)
     private val analytics by inject(FirebaseAnalytics::class.java)
     private val serverRepository by inject(ServerRepository::class.java)
+
+    private val submittedUpdateFilesDao by lazy {
+        database.submittedUpdateFileDao()
+    }
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         logDebug(TAG, "Started update file check")
 
         var anySubmitFailed = false
-        val validSubmittedFileNames = HashSet<String>()
+        val validSubmittedFilenames = HashSet<String>()
 
         UPDATE_DIRECTORIES.forEach { directoryName ->
             @Suppress("DEPRECATION")
@@ -55,21 +59,21 @@ class CheckSystemUpdateFilesWorker(
 
             logDebug(TAG, "Started checking for update files in directory: " + directory.absolutePath)
 
-            val fileNamesInDirectory = ArrayList<String>()
-            getAllFileNames(directory, fileNamesInDirectory)
+            val filenamesInDirectory = ArrayList<String>()
+            getAllFilenames(directory, filenamesInDirectory)
 
-            fileNamesInDirectory.forEach { fileName ->
-                logDebug(TAG, "Found update file: $fileName")
+            filenamesInDirectory.forEach { filename ->
+                logDebug(TAG, "Found update file: $filename")
 
-                if (!repository.isFileAlreadySubmitted(fileName)) {
-                    logDebug(TAG, "Submitting update file $fileName")
+                if (!submittedUpdateFilesDao.isFileAlreadySubmitted(filename)) {
+                    logDebug(TAG, "Submitting update file $filename")
 
-                    val serverPostResult: ServerPostResult? = serverRepository.submitUpdateFile(fileName)
+                    val serverPostResult: ServerPostResult? = serverRepository.submitUpdateFile(filename)
                     if (serverPostResult == null) {
                         // network error, try again later
                         logWarning(
                             TAG,
-                            NetworkException("Error submitting update file $fileName: No network connection or empty response")
+                            NetworkException("Error submitting update file $filename: No network connection or empty response")
                         )
                         anySubmitFailed = true
                     } else if (!serverPostResult.success) {
@@ -78,52 +82,52 @@ class CheckSystemUpdateFilesWorker(
                         // If file is already in our database or if file is an invalid temporary file (server decides when this is the case),
                         // mark this file as submitted but don't inform the user about it.
                         if (errorMessage != null && (errorMessage == FILE_ALREADY_IN_DATABASE || errorMessage == FILENAME_INVALID)) {
-                            logInfo(TAG, "Ignoring submitted update file $fileName, already in database or not relevant")
-                            repository.store(fileName)
+                            logInfo(TAG, "Ignoring submitted update file $filename, already in database or not relevant")
+                            submittedUpdateFilesDao.insert(SubmittedUpdateFile(name = filename))
 
                             // Log failed contribution
                             analytics.logEvent(
                                 "CONTRIBUTION_NOT_NEEDED",
-                                bundleOf("CONTRIBUTION_FILENAME" to fileName)
+                                bundleOf("CONTRIBUTION_FILENAME" to filename)
                             )
                         } else {
                             // server error, try again later
                             logError(
                                 TAG,
-                                NetworkException("Error submitting update file $fileName: ${serverPostResult.errorMessage}")
+                                NetworkException("Error submitting update file $filename: ${serverPostResult.errorMessage}")
                             )
                             anySubmitFailed = true
                         }
                     } else {
-                        logInfo(TAG, "Successfully submitted update file $fileName")
+                        logInfo(TAG, "Successfully submitted update file $filename")
 
                         // Inform user of successful contribution (only if the file is not a "bogus" temporary file)
-                        if (fileName.contains(".zip")) {
-                            validSubmittedFileNames.add(fileName)
+                        if (filename.contains(".zip")) {
+                            validSubmittedFilenames.add(filename)
 
                             // Log successful contribution
                             analytics.logEvent(
                                 "CONTRIBUTION_SUCCESSFUL",
-                                bundleOf("CONTRIBUTION_FILENAME" to fileName)
+                                bundleOf("CONTRIBUTION_FILENAME" to filename)
                             )
                         }
 
                         // Store the filename in a local database to prevent re-submission until it gets installed or removed by the user.
-                        repository.store(fileName)
+                        submittedUpdateFilesDao.insert(SubmittedUpdateFile(name = filename))
                     }
                 } else {
-                    logDebug(TAG, "Update file $fileName has already been submitted. Ignoring...")
+                    logDebug(TAG, "Update file $filename has already been submitted. Ignoring...")
                 }
             }
 
             logDebug(TAG, "Finished checking for update files in directory: ${directory.absolutePath}")
         }
 
-        val count = validSubmittedFileNames.size
+        val count = validSubmittedFilenames.size
         if (count != 0) {
             LocalNotifications.showContributionSuccessfulNotification(
                 context,
-                validSubmittedFileNames
+                validSubmittedFilenames
             )
 
             // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
@@ -133,11 +137,11 @@ class CheckSystemUpdateFilesWorker(
             )
         }
 
-        repository.close()
+        // repository.close()
         if (anySubmitFailed) Result.failure() else Result.success()
     }
 
-    private fun getAllFileNames(folder: File, result: MutableList<String>) {
+    private fun getAllFilenames(folder: File, result: MutableList<String>) {
         // Can be null if the user has revoked the "read external storage" permission of the app
         val files = folder.listFiles() ?: return
 
@@ -145,7 +149,7 @@ class CheckSystemUpdateFilesWorker(
 
         files.forEach {
             if (it.isDirectory) {
-                getAllFileNames(it, result)
+                getAllFilenames(it, result)
             }
 
             if (it.isFile) {

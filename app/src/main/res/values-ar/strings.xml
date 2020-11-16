@@ -39,10 +39,6 @@
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">عند</string>
-	<string name="time_yesterday">أمس</string>
-
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Download update</string>
@@ -61,7 +57,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
 
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 	<string name="download_error_retry">أعد المحاولة</string>
 	<string name="download_error_resume">إستئناف</string>
 	<string name="download_error_storage">لا توجد مساحة تخزين كافية على جهازك لتحميل التحديث. فضلاً قم بحذف بعض الملفات وحاول تحميله مرة أخرى.</string>
@@ -94,15 +90,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="preference_header_about">حول</string>
 	<string name="summary_on">مفعل</string>
 	<string name="summary_off">معطل</string>
-	<string name="summary_device">فضلاً إنتظر…</string>
+	<string name="summary_please_wait">فضلاً إنتظر…</string>
 	<string name="summary_update_method">إختر جهازاً أولاً</string>
 	<string name="summary_theme">تعيين شكل</string>
 	<string name="summary_privacy_policy">مشاهدة حية</string>
 	<string name="summary_rate_app">أترك مراجعة من خمس نجوم</string>
 	<string name="label_buy_ad_free">إزالة الإعلانات</string>
 	<string name="label_theme">الشكل</string>
-	<string name="label_app_update_banner">لافتات تحديث التطبيق</string>
-	<string name="label_news_warning_banner">أخبار &amp; لافتات تحذيرية</string>
 	<string name="label_privacy_policy">سياسة الخصوصية</string>
 	<string name="label_rate_app">قيم هذا التطبيق</string>
 	<string name="theme_light">فاتح</string>
@@ -254,7 +248,7 @@ Instructions:
 	<string name="device_information_software_header">النظام</string>
 	<string name="device_information_amount_of_memory">مقدار الذاكرة العشوائية</string>
 	<string name="device_information_cpu_frequency">تردد المعالج</string>
-	<string name="device_information_header">جهازي</string>
+	<string name="device_information_header">جهاز</string>
 	<string name="device_information_image_description">نسخة الجهاز</string>
 	<string name="device_information_incremental_os_version">إصدار نظام التشغيل التدريجي</string>
 	<string name="device_information_os_version">إصدار أندرويد</string>
@@ -264,16 +258,16 @@ Instructions:
 	<string name="device_information_serial_number">الرقم التسلسلي</string>
 	<string name="device_information_system_on_a_chip">النظام على الرقاقة</string>
 	<string name="device_information_unknown">غير معروف</string>
-	<string name="device_information_your_device">جهازك</string>
 
 	<!-- About screen strings -->
-	<string name="about">حول هذا التطبيق</string>
-	<string name="about_app_description">الأداة المثالية لتحديثات نظام التشغيل أكسجين.</string>
-	<string name="about_background_story">تم تطوير هذا التطبيق في الأصل بواسطة Arjan Vlek كمتابعة لأحد تطبيقاته الأخرى ، المسمى <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (حيث أنه يوفر وظائف مماثلة لمستخدمي نظام التشغيل سيانوجين).\n\nبعد أربع سنوات في يوليو 2019 قرر Arjan التخلي عن كلا المشروعين وتحويل ملكيتهم إلى فريق من المطورين من عدة دول المشيدة بعمله. حيث أخذوا المسؤولية على عاتقهم خدمة الجماعة خدمة ممتازة &amp; وتقديم الدعم للحصول على تحديثات ون بلس بشكل أسرع.\nتستطيع أن تجد المزيد من المعلومات عن هذا الإعلان <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">هنا</a>.\n\nالرابع عشر من أغسطس 2019 كان المؤشر للإصدار الجديد تحت المَلاك الجدد للتطبيق, والذي أتى بإضافات جديدة كالوضع الداكن وتصميم جديد كلياً.\n\nللمزيد من المعلومات عن الفريق, تفحص هذا <a href="https://oxygenupdater.com/team/">الموقع الإلكتروني</a>.</string>
+	<string name="about">حول</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">تم تطوير هذا التطبيق في الأصل بواسطة Arjan Vlek كمتابعة لأحد تطبيقاته الأخرى ، المسمى <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (حيث أنه يوفر وظائف مماثلة لمستخدمي نظام التشغيل سيانوجين).\n\nبعد أربع سنوات في يوليو 2019 قرر Arjan التخلي عن كلا المشروعين وتحويل ملكيتهم إلى فريق من المطورين من عدة دول المشيدة بعمله. حيث أخذوا المسؤولية على عاتقهم خدمة الجماعة خدمة ممتازة &amp; وتقديم الدعم للحصول على تحديثات ون بلس بشكل أسرع.\nتستطيع أن تجد المزيد من المعلومات عن هذا الإعلان <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">هنا</a>.\n\nالرابع عشر من أغسطس 2019 كان المؤشر للإصدار الجديد تحت المَلاك الجدد للتطبيق, والذي أتى بإضافات جديدة كالوضع الداكن وتصميم جديد كلياً.\n\nللمزيد من المعلومات عن الفريق, تفحص هذا <a href="https://oxygenupdater.com/team/">الموقع الإلكتروني</a>.</string>
 	<string name="about_third_party_app_notice"> فضلاً لاحظ, أن هذا التطبيق غير رسمي من شركة ون بلس.\nإسم وشعار ونظام أكسجين هي ملكيات تخص شركة ون بلس.\nكما أن شعارات أندرويد وجوجل وسوق بلاي هي علامات مسجلة تخص شركة جوجل.\nهذا التطبيق يستخدم البيانات من شركة ون بلس وشركتها الأم شركة أوبو لعرض بيانات التحديث.</string>
 	<string name="about_rate_button_text">تقييم</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">البريد الإلكتروني</string>
@@ -308,9 +302,12 @@ Instructions:
 	<string name="news_load_network_error">فشل فتح المقال. تحقق من اتصالك واضغط على زر \'إعادة المحاولة\' لفتح المقال.</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_mark_read">ضع إشارة مقروء</string>
+	<string name="news_mark_unread">وضع علامة كغير مقروءة</string>
+	<!-- TODO: translate these 5 strings below -->
 	<string name="news_mark_all_read">Mark all articles as read</string>
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>

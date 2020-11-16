@@ -29,26 +29,15 @@
 		android:textSize="@dimen/typography_subheading"
 		tools:text="Header" />
 
-	<androidx.core.widget.NestedScrollView
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/bottomSheetRecyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_4x"
-		android:requiresFadingEdge="vertical">
-
-		<LinearLayout
-			android:id="@+id/dialog_item_list_container"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
-			<!--
-				Items will be inflated from `bottom_sheet_item.xml` and inserted here.
-				Logic is in `BottomSheetPreference.java`
-			-->
-		</LinearLayout>
-
-	</androidx.core.widget.NestedScrollView>
+		android:fadingEdgeLength="@dimen/spacing_2x"
+		android:requiresFadingEdge="vertical"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 	<TextView
 		android:id="@+id/dialog_caption"

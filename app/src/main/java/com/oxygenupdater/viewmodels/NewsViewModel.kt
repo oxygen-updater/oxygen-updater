@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDateTime
 
 /**
- * For [com.oxygenupdater.activities.NewsActivity]
+ * For [com.oxygenupdater.activities.NewsItemActivity]
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
@@ -22,6 +22,7 @@ class NewsViewModel(
     private val serverRepository: ServerRepository
 ) : ViewModel() {
 
+    private val _newsList = MutableLiveData<List<NewsItem>>()
     private val _newsItem = MutableLiveData<NewsItem?>()
     private val _markNewsItemReadResult = MutableLiveData<ServerPostResult>()
 
@@ -41,6 +42,15 @@ class NewsViewModel(
         mayShowAds && haveFiveMinutesPassed
     }
 
+    fun fetchNewsList(
+        deviceId: Long,
+        updateMethodId: Long
+    ): LiveData<List<NewsItem>> = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchNews(deviceId, updateMethodId).let {
+            _newsList.postValue(it)
+        }
+    }.let { _newsList }
+
     fun fetchNewsItem(
         newsItemId: Long
     ): LiveData<NewsItem?> = viewModelScope.launch(Dispatchers.IO) {
@@ -49,8 +59,19 @@ class NewsViewModel(
         }
     }.let { _newsItem }
 
-    fun markNewsItemRead(newsItemId: Long): LiveData<ServerPostResult> = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.markNewsItemRead(newsItemId)?.let {
+    fun toggleReadStatus(
+        newsItem: NewsItem,
+        newReadStatus: Boolean = !newsItem.read
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.toggleNewsItemReadStatusLocally(
+            newsItem,
+            newReadStatus
+        )
+    }
+
+    fun markNewsItemRead(newsItem: NewsItem): LiveData<ServerPostResult> = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.toggleNewsItemReadStatusLocally(newsItem, true)
+        serverRepository.markNewsItemRead(newsItem.id!!)?.let {
             _markNewsItemReadResult.postValue(it)
         }
     }.let { _markNewsItemReadResult }

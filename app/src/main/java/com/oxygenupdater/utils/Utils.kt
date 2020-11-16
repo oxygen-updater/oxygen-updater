@@ -18,21 +18,15 @@ import com.oxygenupdater.models.DeviceOsSpec.SUPPORTED_OXYGEN_OS
 import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
 import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logVerbose
 import org.koin.java.KoinJavaComponent.inject
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.FormatStyle
 import kotlin.system.exitProcess
 
 @Suppress("unused")
 object Utils {
 
     val SERVER_TIME_ZONE: ZoneId = ZoneId.of("Europe/Amsterdam")
-    val USER_TIME_ZONE: ZoneId = ZoneId.systemDefault()
 
     private const val TAG = "Utils"
     private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
@@ -156,48 +150,60 @@ object Utils {
             actualDeviceName
         )
 
-        val matchedDevice = devices?.find {
-            it.productNames.contains(systemVersionProperties.oxygenDeviceName)
+        val productName = systemVersionProperties.oxygenDeviceName
+        val (deviceCode, regionCode) = productName.split("_", limit = 2).run {
+            Pair(this[0], if (size > 1) this[1] else null)
+        }
+
+        val isStableTrack = systemVersionProperties.osType.equals(
+            "stable",
+            true
+        )
+
+        var chosenDevice: Device? = null
+        var matchedDevice: Device? = null
+        devices?.forEach {
+            if (it.name == savedDeviceName) {
+                chosenDevice = it
+            }
+
+            // Filter out disabled devices, because that's handled
+            // by [checkDeviceOsSpec] already.
+            if (it.enabled && it.productNames.contains(productName)) {
+                matchedDevice = it
+            }
+
+            // Break out if we found what we're looking for
+            if (chosenDevice != null && matchedDevice != null) {
+                return@forEach
+            }
+        }
+
+        var isChosenDeviceIncorrect = false
+        chosenDevice?.productNames?.forEach {
+            val (chosenDeviceCode, chosenRegionCode) = it.split("_", limit = 2).run {
+                Pair(this[0], if (size > 1) this[1] else null)
+            }
+
+            // If the currently installed OS track is "Stable", `productName` should match exactly.
+            // Otherwise we should check `deviceCode` and `regionCode` individually, because other
+            // tracks (Alpha, Beta, Developer Preview, etc.) may not have any regional builds.
+            // In such cases, `regionCode` defaults to global (i.e. `null` instead of EEA/IND).
+            // So we must check if `deviceCode` and `regionCode` match (or if `regionCode` is `null`)
+            // Otherwise we assume the user is responsible enough to choose the correct device
+            // according to their region.
+            isChosenDeviceIncorrect = if (isStableTrack) {
+                productName != it
+            } else {
+                deviceCode != chosenDeviceCode || (regionCode != null && regionCode != chosenRegionCode)
+            }
+
+            // Break only if we've found a match
+            if (isChosenDeviceIncorrect) return@forEach
         }
 
         actualDeviceName = matchedDevice?.name ?: actualDeviceName
 
-        return Triple(savedDeviceName != actualDeviceName, savedDeviceName, actualDeviceName)
-    }
-
-    fun formatDateTime(context: Context, dateTimeString: String?): String? {
-        @Suppress("NAME_SHADOWING")
-        var dateTimeString = dateTimeString
-
-        return try {
-            if (dateTimeString.isNullOrEmpty()) {
-                return context.getString(R.string.device_information_unknown)
-            }
-
-            dateTimeString = dateTimeString.replace(" ", "T")
-
-            val serverDateTime = LocalDateTime.parse(dateTimeString)
-                .atZone(SERVER_TIME_ZONE)
-                .withSecond(0)
-                .withNano(0)
-
-            val serverLocalDate = serverDateTime.toLocalDate()
-            val userDateTime = serverDateTime.withZoneSameInstant(USER_TIME_ZONE)
-            val formattedTime = userDateTime.toLocalTime().toString()
-            val today = LocalDate.now()
-
-            when {
-                serverLocalDate.isEqual(today) -> formattedTime
-                serverLocalDate.isEqual(today.minusDays(1)) -> context.getString(R.string.time_yesterday) + " " +
-                        context.getString(R.string.time_at) + " " +
-                        formattedTime
-                else -> userDateTime.toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)) + " " +
-                        context.getString(R.string.time_at) + " " +
-                        formattedTime
-            }
-        } catch (e: Exception) {
-            logError("DateTimeFormatter", String.format("Unable to parse date from input '%s'", dateTimeString), e)
-            dateTimeString
-        }
+        return Triple(isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
     }
 }

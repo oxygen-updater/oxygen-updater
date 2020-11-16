@@ -3,7 +3,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fadingEdge="vertical"
-	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fadingEdgeLength="@dimen/spacing_2x"
 	android:requiresFadingEdge="vertical">
 
 	<FrameLayout
@@ -164,7 +164,7 @@
 				android:layout_height="1dp"
 				android:layout_marginTop="@dimen/spacing_default"
 				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant" />
+				android:background="@drawable/divider" />
 
 			<LinearLayout
 				android:id="@+id/settingsExplanationContainer"

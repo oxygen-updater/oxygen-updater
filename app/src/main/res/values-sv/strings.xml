@@ -35,10 +35,6 @@
 	<string name="new_app_version_inapp_downloaded">Appuppdateringen har laddats ner.</string>
 	<string name="new_app_version_inapp_failed">Appuppdateringen kunde inte installeras. Tryck här för att öppna Play Store och uppdatera appen.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">"klockan"</string>
-	<string name="time_yesterday">"Igår"</string>
-
 	<!-- Downloader strings -->
 	<string name="download">Ladda ner uppdatering</string>
 	<string name="downloaded">Uppdatering har nedladdats</string>
@@ -55,7 +51,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[Det verkar som att nedladdningslänken är ogiltig. Detta kan betyda att vi antingen har gjort ett misstag när vi lade till uppdateringsdata, eller så har OnePlus tagit bort uppdateringen från deras servrar. En notis har skickats till teamet och vi kommer att kolla på detta så snart som möjligt.
 
 Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@oxygenupdater.com">e-post</a> eller i vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">Filen har laddats ner men kunde inte flyttas till den rätta katalogen. Öppna en filhanterare, navigera till \"%1$s\" och flytta filen manuellt till den översta katalogen med intern lagring</string>
+	<string name="download_error_could_not_move_temp_file">Filen har laddats ner men kunde inte flyttas till den rätta katalogen. Öppna en filhanterare, navigera till \"%1$s\" och flytta filen manuellt till den översta katalogen med intern lagring.</string>
 
 	<string name="download_error_retry">"FÖRSÖK IGEN"</string>
 	<string name="download_error_resume">"ÅTERUPPTA"</string>
@@ -90,7 +86,7 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 
 	<string name="summary_on">På</string>
 	<string name="summary_off">Av</string>
-	<string name="summary_device">Var god vänta…</string>
+	<string name="summary_please_wait">Var god vänta…</string>
 	<string name="summary_update_method">Välj en enhet först</string>
 	<string name="summary_theme">Välj tema</string>
 	<string name="summary_privacy_policy">Visa online</string>
@@ -98,8 +94,6 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 
 	<string name="label_buy_ad_free">Ta bort reklam</string>
 	<string name="label_theme">Tema</string>
-	<string name="label_app_update_banner">Appuppdaterings-banners</string>
-	<string name="label_news_warning_banner">Nyhets- och varningsbanners</string>
 	<string name="label_privacy_policy">Integritetspolicy</string>
 	<string name="label_rate_app">Ge appen ett omdöme</string>
 
@@ -108,8 +102,8 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="theme_dark_subtitle">Nedtonad OnePlus-röd primär färg, med en nästan svart bakgrund. Använd detta tema för att spara batteri, framför allt på AMOLED-skärmar</string>
-	<string name="theme_system_subtitle">Använd systemets nattläge (du kan ställa in det i antingen skärminställningar eller utvecklarinställningar). Beror på enhet</string>
+	<string name="theme_dark_subtitle">Nedtonad OnePlus-röd primär färg, med en nästan svart bakgrund. Använd detta tema för att spara batteri, framför allt på AMOLED-skärmar.</string>
+	<string name="theme_system_subtitle">Använd systemets nattläge (du kan ställa in det i antingen skärminställningar eller utvecklarinställningar). Beror på enhet.</string>
 	<string name="theme_auto_subtitle">Byt mellan ljusa och mörka teman baserat på tid på dagen, för att undvika ansträngning för ögonen på natten</string>
 	<string name="theme_additional_note">Obs. om \"Auto\" är aktivt och batterispararläget är på kommer det mörka temat användas oavsett tid på dygnet för att spara batteri</string>
 
@@ -302,7 +296,7 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 
 	<string name="device_information_amount_of_memory">"Mängd av RAM:"</string>
 	<string name="device_information_cpu_frequency">"Processorfrekvens:"</string>
-	<string name="device_information_header">"Min enhet"</string>
+	<string name="device_information_header">"Enhet"</string>
 	<string name="device_information_image_description">"Enhetsbild"</string>
 	<string name="device_information_incremental_os_version">Inkrementell OS-version</string>
 	<string name="device_information_os_version">Android-version</string>
@@ -312,16 +306,16 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="device_information_serial_number">"Serienummer:"</string>
 	<string name="device_information_system_on_a_chip">"System on a Chip:"</string>
 	<string name="device_information_unknown">"okänt"</string>
-	<string name="device_information_your_device">"Din enhet:"</string>
 
 	<!-- About screen strings -->
 	<string name="about">"Om appen"</string>
-	<string name="about_app_description">"Det ultimata verktyget för OxygenOS uppdateringar."</string>
-	<string name="about_background_story">Appen utvecklades från början av Arjan Vlek som en uppföljning av en annan av hans appar, <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den ger liknande funktionalitet för Cyanogen OS-användare).\n\nEfter 4 år (juli 2019) bestämde Arjan sig för att inte längre delta i något av projekten och överförde ägandet till en grupp utvecklare från olika länder. De tog ansvaret att ge communityt en utmärkt tjänst &amp; stöd för att få OnePlus uppdateringar tidigare.\nDu kan hitta mer information om meddelandet <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">här</a>.\n\n14e Augusti 2019 släpptes den första uppdateringen under nytt ägande som kom med nya funktioner, t.ex mörkt tema och en helt ny design.\n\nFör mer information om gruppen kan du kolla <a href="https://oxygenupdater.com/team/">vår webbsida</a>.</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">Appen utvecklades från början av Arjan Vlek som en uppföljning av en annan av hans appar, <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (den ger liknande funktionalitet för Cyanogen OS-användare).\n\nEfter 4 år (juli 2019) bestämde Arjan sig för att inte längre delta i något av projekten och överförde ägandet till en grupp utvecklare från olika länder. De tog ansvaret att ge communityt en utmärkt tjänst &amp; stöd för att få OnePlus uppdateringar tidigare.\nDu kan hitta mer information om meddelandet <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">här</a>.\n\n14e Augusti 2019 släpptes den första uppdateringen under nytt ägande som kom med nya funktioner, t.ex mörkt tema och en helt ny design.\n\nFör mer information om gruppen kan du kolla <a href="https://oxygenupdater.com/team/">vår webbsida</a>.</string>
 	<string name="about_third_party_app_notice">Obs. Denna appen är inte en officiel applikation från OnePlus.\nOnePlus namn, OnePlus logga och OxygenOS tillhör OnePlus.\nAndroid, Google, Google Play och Google Plays logga är registrerade varumärken som tillhör Google.\nAppen använder data från oneplus och oneplus moderbolag Oppo för att visa uppdateringsinformation.</string>
 	<string name="about_rate_button_text">"Betygsätt"</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<string name="about_website_button_text">Webbsida</string>
 	<string name="about_email_button_text">E-post</string>
 
@@ -384,6 +378,8 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_load_id_error"><![CDATA[Misslyckades att öppna artikel från ogiltig länk: %1$s. Kolla länken eller rapportera detta till oss genom att antingen <a href="mailto:support@oxygenupdater.com">maila oss</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">Du har %1$d olästa nyhetsartiklar. Tryck här för att se dem.</string>
 	<string name="news_unread_count_2">Du har %1$d olästa nyhetsartiklar. Tryck för att visa alla artiklar.</string>
+	<string name="news_mark_read">Markera som läst</string>
+	<string name="news_mark_unread">Markera som oläst</string>
 	<string name="news_mark_all_read">Marera alla artiklar som lästa.</string>
 	<string name="news_empty_state_none_available_header">Inga artiklar än</string>
 	<string name="news_empty_state_all_read_header">Det finns inget mer att läsa.</string>

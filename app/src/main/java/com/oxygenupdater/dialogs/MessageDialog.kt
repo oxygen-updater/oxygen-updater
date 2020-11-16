@@ -7,13 +7,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
 import com.oxygenupdater.R
+import com.oxygenupdater.extensions.setup
 import com.oxygenupdater.internal.KotlinCallback
 import kotlinx.android.synthetic.main.bottom_sheet_message.*
 import kotlin.system.exitProcess
@@ -88,16 +85,6 @@ class MessageDialog(
 
         // Reset cancellable behaviour, to
         setupCancellableBehaviour()
-    }
-
-    private fun MaterialButton.setup(string: String?, onClickListener: View.OnClickListener, @DrawableRes drawableResId: Int? = null) {
-        string?.let {
-            isVisible = true
-            text = it
-            setOnClickListener(onClickListener)
-        }
-
-        drawableResId?.let { icon = ContextCompat.getDrawable(activity, it) }
     }
 
     private fun exit(activity: Activity? = this.activity) {

@@ -1,22 +1,108 @@
 package com.oxygenupdater.extensions
 
 import android.app.Activity
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.core.view.updatePadding
-import com.google.android.material.appbar.AppBarLayout
 import com.oxygenupdater.R
+import com.oxygenupdater.activities.FaqActivity
+import com.oxygenupdater.activities.HelpActivity
+import com.oxygenupdater.activities.InstallActivity
+import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.activities.NewsItemActivity
+import com.oxygenupdater.activities.OnboardingActivity
+import com.oxygenupdater.activities.SupportActionBarActivity
+import com.oxygenupdater.models.NewsItem
+import com.oxygenupdater.models.UpdateData
+
+/**
+ * Starts an activity with a shared element transition
+ */
+private fun Activity.startActivityWithSharedTransition(
+    intent: Intent,
+    sharedElement: View,
+    transitionName: String = sharedElement.transitionName
+) {
+    sharedElement.transitionName = transitionName
+    intent.putExtra(
+        SupportActionBarActivity.INTENT_TRANSITION_NAME,
+        transitionName
+    )
+
+    val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+        this,
+        sharedElement,
+        transitionName
+    ).toBundle()
+
+    startActivity(intent, bundle)
+}
+
+fun Activity.startOnboardingActivity() = startActivity(
+    Intent(this, OnboardingActivity::class.java)
+)
+
+fun Activity.startMainActivity() = startActivity(
+    Intent(this, MainActivity::class.java)
+)
+
+fun Activity.startHelpActivity(
+    sharedElement: View
+) = startActivityWithSharedTransition(
+    Intent(this, HelpActivity::class.java),
+    sharedElement,
+    HelpActivity.TRANSITION_NAME
+)
+
+fun Activity.startFaqActivity(
+    sharedElement: View
+) = startActivityWithSharedTransition(
+    Intent(this, FaqActivity::class.java),
+    sharedElement,
+    FaqActivity.TRANSITION_NAME
+)
+
+fun Activity.startInstallActivity(
+    isDownloaded: Boolean,
+    updateData: UpdateData?,
+    sharedElement: View
+) {
+    val intent = Intent(this, InstallActivity::class.java)
+        .putExtra(InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE, !isDownloaded)
+        .putExtra(InstallActivity.INTENT_UPDATE_DATA, updateData)
+
+    startActivityWithSharedTransition(
+        intent,
+        sharedElement
+    )
+}
+
+fun Activity.startNewsActivity(
+    newsItem: NewsItem,
+    sharedElement: View
+) {
+    val intent = Intent(this, NewsItemActivity::class.java)
+        .putExtra(NewsItemActivity.INTENT_NEWS_ITEM_ID, newsItem.id)
+        .putExtra(NewsItemActivity.INTENT_NEWS_ITEM_IMAGE_URL, newsItem.imageUrl)
+        .putExtra(NewsItemActivity.INTENT_NEWS_ITEM_TITLE, newsItem.title)
+        .putExtra(NewsItemActivity.INTENT_NEWS_ITEM_SUBTITLE, newsItem.subtitle)
+
+    startActivityWithSharedTransition(
+        intent,
+        sharedElement
+    )
+}
 
 /**
  * Allow activity to draw itself full screen
+ *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun Activity.enableEdgeToEdgeUiSupport() {
     if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_OxygenUpdater_DayNight_FullScreen) {
-        findViewById<ViewGroup>(android.R.id.content).getChildAt(0).apply {
+        findViewById<ViewGroup>(android.R.id.content).getChildAt(0)?.apply {
             systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
             doOnApplyWindowInsets { view, insets, initialPadding ->
@@ -24,28 +110,5 @@ fun Activity.enableEdgeToEdgeUiSupport() {
                 view.updatePadding(bottom = initialPadding.bottom + insets.systemWindowInsetBottom)
             }
         }
-    }
-}
-
-fun Activity.makeSceneTransitionAnimationBundle() = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *createTransitionPairs().toTypedArray()).toBundle()
-
-/**
- * Creates transition pairs for status bar, navigation bar, and app bar
- */
-fun Activity.createTransitionPairs(): List<Pair<View, String>> = arrayListOf<Pair<View, String>>().apply {
-    val appBarLayout = findViewById<AppBarLayout>(R.id.appBar)
-    val statusBar = findViewById<View>(android.R.id.statusBarBackground)
-    val navigationBar = findViewById<View>(android.R.id.navigationBarBackground)
-
-    if (statusBar != null) {
-        add(Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME))
-    }
-
-    if (navigationBar != null) {
-        add(Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME))
-    }
-
-    if (appBarLayout != null) {
-        add(Pair.create(appBarLayout, "toolbar"))
     }
 }

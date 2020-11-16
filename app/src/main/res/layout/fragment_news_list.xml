@@ -15,9 +15,7 @@
 			android:id="@+id/bannerLayout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:visibility="gone"
-			tools:visibility="visible">
+			android:orientation="vertical">
 
 			<TextView
 				android:id="@+id/bannerTextView"
@@ -29,13 +27,13 @@
 				android:gravity="center_vertical"
 				android:padding="@dimen/spacing_default"
 				app:drawableStartCompat="@drawable/info"
-				app:drawableTint="?android:textColorPrimary"
+				app:drawableTint="?colorPrimary"
 				tools:text="@string/news_unread_count_1" />
 
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="1dp"
-				android:background="@color/backgroundVariant" />
+				android:background="@drawable/divider" />
 		</LinearLayout>
 
 		<LinearLayout
@@ -86,7 +84,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:fadingEdge="vertical"
-			android:fadingEdgeLength="@dimen/spacing_4x"
+			android:fadingEdgeLength="@dimen/spacing_2x"
 			android:requiresFadingEdge="vertical"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 	</LinearLayout>

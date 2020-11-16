@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<TextView
+		android:id="@+id/markAsReadTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="?selectableItemBackground"
+		android:drawablePadding="@dimen/spacing_default"
+		android:fontFamily="@font/google_sans_medium"
+		android:gravity="center_vertical"
+		android:padding="@dimen/spacing_default"
+		android:stateListAnimator="@animator/clicked"
+		app:drawableTint="?colorPrimary"
+		tools:drawableStartCompat="@drawable/done_outline"
+		tools:text="@string/news_mark_read" />
+
+	<TextView
+		android:id="@+id/openInBrowserTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="?selectableItemBackground"
+		android:drawablePadding="@dimen/spacing_default"
+		android:fontFamily="@font/google_sans_medium"
+		android:gravity="center_vertical"
+		android:padding="@dimen/spacing_default"
+		android:stateListAnimator="@animator/clicked"
+		android:text="@string/fallback_menu_item_open_in_browser"
+		android:visibility="gone"
+		app:drawableStartCompat="@drawable/open_in_browser"
+		app:drawableTint="?colorPrimary" />
+
+	<TextView
+		android:id="@+id/shareLinkTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="?selectableItemBackground"
+		android:drawablePadding="@dimen/spacing_default"
+		android:fontFamily="@font/google_sans_medium"
+		android:gravity="center_vertical"
+		android:padding="@dimen/spacing_default"
+		android:stateListAnimator="@animator/clicked"
+		android:text="@string/fallback_menu_item_share_link"
+		app:drawableStartCompat="@drawable/share"
+		app:drawableTint="?colorPrimary" />
+
+	<TextView
+		android:id="@+id/copyLinkTextView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="?selectableItemBackground"
+		android:drawablePadding="@dimen/spacing_default"
+		android:fontFamily="@font/google_sans_medium"
+		android:gravity="center_vertical"
+		android:padding="@dimen/spacing_default"
+		android:stateListAnimator="@animator/clicked"
+		android:text="@string/fallback_menu_item_copy_link"
+		app:drawableStartCompat="@drawable/link"
+		app:drawableTint="?colorPrimary" />
+</LinearLayout>

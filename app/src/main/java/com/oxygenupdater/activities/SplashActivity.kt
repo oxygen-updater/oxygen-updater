@@ -3,13 +3,14 @@ package com.oxygenupdater.activities
 import android.annotation.TargetApi
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
+import com.oxygenupdater.extensions.startMainActivity
+import com.oxygenupdater.extensions.startOnboardingActivity
 import com.oxygenupdater.internal.settings.SettingsManager
 import org.koin.android.ext.android.inject
 
@@ -94,6 +95,7 @@ class SplashActivity : AppCompatActivity() {
     /**
      * Migrate settings from old versions of the app, if any
      */
+    @Suppress("DEPRECATION")
     private fun migrateOldSettings() {
         // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
         if (SettingsManager.containsPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
@@ -120,10 +122,10 @@ class SplashActivity : AppCompatActivity() {
 
         if (!SettingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)) {
             // launch OnboardingActivity since the app hasn't been setup yet
-            startActivity(Intent(this, OnboardingActivity::class.java))
+            startOnboardingActivity()
         } else {
             // setup is complete, launch MainActivity
-            startActivity(Intent(this, MainActivity::class.java))
+            startMainActivity()
         }
 
         finish()

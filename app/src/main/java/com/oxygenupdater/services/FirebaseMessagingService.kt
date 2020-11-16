@@ -7,6 +7,8 @@ import androidx.work.WorkRequest
 import androidx.work.workDataOf
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.oxygenupdater.enums.NotificationElement
+import com.oxygenupdater.enums.NotificationType
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
@@ -30,10 +32,17 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         try {
             val serverSpecifiedDelay = SettingsManager.getPreference(
                 SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
-                1800
+                300
             ).let {
-                // random.nextLong(from, until) throws an exception if until and from have the same value
-                if (it == 1) 2 else it
+                val isNewVersionNotification = NotificationType.valueOf(
+                    remoteMessage.data[NotificationElement.TYPE.name] ?: ""
+                ) == NotificationType.NEW_VERSION
+
+                // The app should notify people about new versions ASAP, so bypass the server-specified
+                // delay if the notification is a "system update available" one.
+                // Also, `random.nextLong(from, until)` throws an exception if `until` and `from` have
+                // the same value. So make sure they're never the same.
+                if (it == 1 || isNewVersionNotification) 2 else it
             }
 
             // Receive the notification contents but build/show the actual notification

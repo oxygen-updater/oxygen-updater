@@ -17,7 +17,7 @@
 
 	<item
 		android:id="@+id/page_about"
-		android:icon="@drawable/faq"
+		android:icon="@drawable/help"
 		android:title="@string/about" />
 
 	<item

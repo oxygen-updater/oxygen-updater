@@ -9,7 +9,6 @@
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/size_collapsing_toolbar"
 		android:fitsSystemWindows="true"
-		android:transitionName="toolbar"
 		app:elevation="0dp">
 
 		<com.google.android.material.appbar.SuperpoweredCollapsingToolbarLayout
@@ -70,7 +69,7 @@
 			android:id="@+id/divider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:background="@color/backgroundVariant"
+			android:background="@drawable/divider"
 			app:layout_constraintBottom_toTopOf="@id/tabLayout" />
 
 		<ImageButton

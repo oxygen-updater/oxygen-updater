@@ -1,141 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fadingEdge="vertical"
-	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fadingEdgeLength="@dimen/spacing_2x"
 	android:requiresFadingEdge="vertical">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 
-		<ImageView
-			android:id="@+id/appLogo"
-			android:layout_width="wrap_content"
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/buttonRecyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+			app:spanCount="2" />
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/appDescriptionTextView"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/spacing_default"
-			android:background="?selectableItemBackgroundBorderless"
-			android:clickable="true"
-			android:contentDescription="@string/icon"
-			android:focusable="true"
-			android:stateListAnimator="@animator/clicked"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:srcCompat="@mipmap/ic_launcher" />
+			android:text="@string/about_description" />
 
 		<TextView
-			android:id="@+id/appTagline"
-			android:layout_width="wrap_content"
+			android:id="@+id/appSupportTextView"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/spacing_default"
-			android:gravity="center_horizontal"
-			android:text="@string/about_app_description"
-			android:textColor="?android:textColorSecondary"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/appLogo" />
+			android:layout_marginHorizontal="@dimen/spacing_default"
+			android:text="@string/about_support" />
 
-		<androidx.constraintlayout.helper.widget.Flow
+		<TextView
+			android:id="@+id/backgroundStoryHeader"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/spacing_default"
-			app:constraint_referenced_ids="discordButton,githubButton,websiteButton,emailButton,rateButton"
-			app:flow_horizontalGap="@dimen/spacing_quarter"
-			app:flow_verticalGap="@dimen/spacing_quarter"
-			app:flow_wrapMode="chain"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/appTagline" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/discordButton"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/about_discord_button_text"
-			android:textColor="?android:textColorPrimary"
-			app:icon="@drawable/discord"
-			app:iconTint="?android:textColorPrimary"
-			app:rippleColor="@color/ripple_neutral"
-			tools:ignore="MissingConstraints" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/githubButton"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/about_github_button_text"
-			android:textColor="?android:textColorPrimary"
-			app:icon="@drawable/github"
-			app:iconTint="?android:textColorPrimary"
-			app:rippleColor="@color/ripple_neutral"
-			tools:ignore="MissingConstraints" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/websiteButton"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/about_website_button_text"
-			android:textColor="?android:textColorPrimary"
-			app:icon="@drawable/link"
-			app:iconTint="?android:textColorPrimary"
-			app:rippleColor="@color/ripple_neutral"
-			tools:ignore="MissingConstraints" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/emailButton"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/about_email_button_text"
-			android:textColor="?android:textColorPrimary"
-			app:icon="@drawable/email"
-			app:iconTint="?android:textColorPrimary"
-			app:rippleColor="@color/ripple_neutral"
-			tools:ignore="MissingConstraints" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/rateButton"
-			style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/about_rate_button_text"
-			android:textColor="?android:textColorPrimary"
-			app:icon="@drawable/rate"
-			app:iconTint="?android:textColorPrimary"
-			app:rippleColor="@color/ripple_neutral"
-			tools:ignore="MissingConstraints" />
-
-		<View
-			android:id="@+id/headerDivider"
-			android:layout_width="match_parent"
-			android:layout_height="1dp"
-			android:layout_marginTop="@dimen/spacing_default"
-			android:background="@color/backgroundVariant"
-			app:layout_constraintTop_toBottomOf="@id/rateButton" />
+			android:fontFamily="@font/google_sans_medium"
+			android:text="@string/about_background_story_header"
+			android:textSize="@dimen/typography_subheading" />
 
 		<TextView
 			android:id="@+id/backgroundStoryTextView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/spacing_default"
+			android:layout_marginHorizontal="@dimen/spacing_default"
 			android:linksClickable="true"
 			android:text="@string/about_background_story"
-			android:textColorLink="?colorPrimary"
-			app:layout_constraintTop_toBottomOf="@id/headerDivider" />
+			android:textColorLink="?colorPrimary" />
 
 		<View
 			android:id="@+id/backgroundStoryDivider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
 			android:layout_marginTop="@dimen/spacing_default"
-			android:background="@color/backgroundVariant"
-			app:layout_constraintTop_toBottomOf="@id/backgroundStoryTextView" />
+			android:background="@drawable/divider" />
 
 		<TextView
 			android:id="@+id/thirdPartyAppNoticeTextView"
@@ -144,7 +65,6 @@
 			android:layout_margin="@dimen/spacing_default"
 			android:text="@string/about_third_party_app_notice"
 			android:textColor="?android:textColorSecondary"
-			android:textSize="@dimen/typography_caption"
-			app:layout_constraintTop_toBottomOf="@id/backgroundStoryDivider" />
-	</androidx.constraintlayout.widget.ConstraintLayout>
+			android:textSize="@dimen/typography_caption" />
+	</LinearLayout>
 </androidx.core.widget.NestedScrollView>

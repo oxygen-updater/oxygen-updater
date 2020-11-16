@@ -18,13 +18,13 @@
 
 	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
+		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/spacing_default"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:fadingEdgeLength="@dimen/spacing_2x"
 		android:requiresFadingEdge="vertical"
+		app:layout_constrainedHeight="true"
 		app:layout_constraintBottom_toTopOf="@id/flow"
-		app:layout_constraintHeight_default="wrap"
 		app:layout_constraintTop_toBottomOf="@id/titleTextView">
 
 		<TextView
@@ -57,7 +57,6 @@
 		android:textColor="?colorError"
 		android:visibility="gone"
 		app:rippleColor="@color/ripple_error"
-		tools:ignore="MissingConstraints"
 		tools:text="Negative"
 		tools:visibility="visible" />
 
@@ -72,7 +71,6 @@
 		app:iconTint="@color/colorPositive"
 		app:rippleColor="@color/ripple_positive"
 		app:strokeColor="@color/colorPositive"
-		tools:ignore="MissingConstraints"
 		tools:text="Positive"
 		tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

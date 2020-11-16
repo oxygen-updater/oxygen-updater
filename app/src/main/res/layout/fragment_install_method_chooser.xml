@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fadingEdge="vertical"
-	android:fadingEdgeLength="@dimen/spacing_4x"
+	android:fadingEdgeLength="@dimen/spacing_2x"
 	android:fillViewport="true"
 	android:requiresFadingEdge="vertical">
 
@@ -27,8 +28,8 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:drawablePadding="@dimen/spacing_half"
-				android:fontFamily="@font/google_sans"
+				android:drawablePadding="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:gravity="center_vertical"
 				android:text="@string/install_method_chooser_automatic_title"
 				android:textSize="@dimen/typography_subheading"
@@ -39,15 +40,16 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/spacing_2x"
-				android:layout_marginTop="@dimen/spacing_half"
+				android:paddingStart="@dimen/spacing_half"
 				android:text="@string/install_method_chooser_automatic_description"
-				android:textColor="?android:textColorSecondary" />
+				android:textColor="?android:textColorSecondary"
+				tools:ignore="RtlSymmetry" />
 		</LinearLayout>
 
 		<View
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:background="@color/backgroundVariant" />
+			android:background="@drawable/divider" />
 
 		<LinearLayout
 			android:id="@+id/manualInstallCard"
@@ -63,8 +65,8 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:drawablePadding="@dimen/spacing_half"
-				android:fontFamily="@font/google_sans"
+				android:drawablePadding="@dimen/spacing_default"
+				android:fontFamily="@font/google_sans_medium"
 				android:gravity="center_vertical"
 				android:text="@string/install_method_chooser_manual_title"
 				android:textSize="@dimen/typography_subheading"
@@ -75,9 +77,10 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/spacing_2x"
-				android:layout_marginTop="@dimen/spacing_half"
+				android:paddingStart="@dimen/spacing_half"
 				android:text="@string/install_method_chooser_manual_description"
-				android:textColor="?android:textColorSecondary" />
+				android:textColor="?android:textColorSecondary"
+				tools:ignore="RtlSymmetry" />
 		</LinearLayout>
 	</LinearLayout>
 </androidx.core.widget.NestedScrollView>

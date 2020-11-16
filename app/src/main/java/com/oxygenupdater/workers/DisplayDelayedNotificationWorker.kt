@@ -3,6 +3,7 @@ package com.oxygenupdater.workers
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
@@ -13,8 +14,8 @@ import androidx.work.WorkerParameters
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
-import com.oxygenupdater.activities.NewsActivity
-import com.oxygenupdater.database.NewsDatabaseHelper
+import com.oxygenupdater.activities.NewsItemActivity
+import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
 import com.oxygenupdater.exceptions.OxygenUpdaterException
@@ -23,7 +24,6 @@ import com.oxygenupdater.models.AppLocale
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationIds
 import org.koin.java.KoinJavaComponent.inject
-
 
 /**
  * Enqueued from [com.oxygenupdater.services.FirebaseMessagingService]
@@ -45,8 +45,12 @@ class DisplayDelayedNotificationWorker(
         OxygenUpdater.PUSH_NOTIFICATION_CHANNEL_ID
     )
 
-    private val newsDatabaseHelper by inject(NewsDatabaseHelper::class.java)
+    private val localAppDb by inject(LocalAppDb::class.java)
     private val notificationManager by inject(NotificationManager::class.java)
+
+    private val newsItemDao by lazy {
+        localAppDb.newsItemDao()
+    }
 
     override suspend fun doWork(): Result {
         if (messageContents.isNullOrEmpty()) {
@@ -108,7 +112,7 @@ class DisplayDelayedNotificationWorker(
                 // even though a broken implementation was added in v4.0.0 (Kotlin rebuild).
                 // So use the "bump" feature on admin portal with care - the notification will still be shown on older app versions
                 if (messageContents[NotificationElement.NEWS_ITEM_IS_BUMP.name]?.toBoolean() == true
-                    && newsDatabaseHelper.getNewsItem(
+                    && newsItemDao.getById(
                         messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
                     )?.read == true
                 ) {
@@ -193,28 +197,25 @@ class DisplayDelayedNotificationWorker(
     private fun getNotificationIntent(
         notificationType: NotificationType
     ) = if (notificationType == NotificationType.NEWS) {
-        val backIntent = Intent(context, MainActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-
-        val newsIntent = Intent(context, NewsActivity::class.java)
+        val intent = Intent(context, NewsItemActivity::class.java)
             .putExtra(
-                NewsActivity.INTENT_NEWS_ITEM_ID,
+                NewsItemActivity.INTENT_NEWS_ITEM_ID,
                 messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
             )
-            .putExtra(NewsActivity.INTENT_DELAY_AD_START, true)
+            .putExtra(NewsItemActivity.INTENT_DELAY_AD_START, true)
 
-        PendingIntent.getActivities(
+        PendingIntent.getActivity(
             context,
             0,
-            arrayOf(backIntent, newsIntent),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            intent,
+            FLAG_UPDATE_CURRENT
         )
     } else {
         PendingIntent.getActivity(
             context,
             0,
             Intent(context, MainActivity::class.java),
-            0
+            FLAG_UPDATE_CURRENT
         )
     }
 

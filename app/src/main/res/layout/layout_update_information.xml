@@ -14,7 +14,7 @@
 		android:layout_height="0dp"
 		android:layout_weight="1"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_4x"
+		android:fadingEdgeLength="@dimen/spacing_2x"
 		android:fillViewport="true"
 		android:requiresFadingEdge="vertical">
 
@@ -56,7 +56,7 @@
 				android:layout_height="1dp"
 				android:layout_marginTop="@dimen/spacing_default"
 				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant"
+				android:background="@drawable/divider"
 				app:layout_constraintBottom_toTopOf="@id/footerTextView"
 				app:layout_constraintTop_toBottomOf="@id/changelogTextView" />
 
@@ -78,7 +78,7 @@
 				android:layout_height="1dp"
 				android:layout_marginTop="@dimen/spacing_default"
 				android:layout_marginBottom="@dimen/spacing_default"
-				android:background="@color/backgroundVariant"
+				android:background="@drawable/divider"
 				app:layout_constraintBottom_toTopOf="@id/fileNameTextView" />
 
 			<TextView
@@ -138,7 +138,7 @@
 			android:id="@+id/downloadLayoutDivider"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
-			android:background="@color/backgroundVariant"
+			android:background="@drawable/divider"
 			app:layout_constraintTop_toTopOf="parent" />
 
 		<ProgressBar
@@ -208,6 +208,7 @@
 			android:src="@drawable/close"
 			android:stateListAnimator="@animator/clicked"
 			android:tint="?colorPrimary"
+			android:transitionName="@string/install_guide_transition_name"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/downloadLayoutDivider" />

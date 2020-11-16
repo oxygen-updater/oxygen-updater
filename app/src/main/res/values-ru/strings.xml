@@ -39,10 +39,6 @@
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">"в"</string>
-	<string name="time_yesterday">"Вчера"</string>
-
 	<!-- Downloader strings -->
 	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Download update</string>
@@ -63,7 +59,7 @@
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
 
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage</string>
+	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">"Попробовать снова"</string>
 	<string name="download_error_resume">"продолжить"</string>
@@ -103,7 +99,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<!-- TODO: translate these lines -->
 	<string name="summary_on">Enabled</string>
 	<string name="summary_off">Disabled</string>
-	<string name="summary_device">Please wait…</string>
+	<string name="summary_please_wait">Please wait…</string>
 	<string name="summary_update_method">Select a device first</string>
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_privacy_policy">View online</string>
@@ -112,8 +108,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<!-- TODO: translate these lines -->
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
-	<string name="label_app_update_banner">App update banners</string>
-	<string name="label_news_warning_banner">News &amp; warning banners</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Rate this app</string>
 
@@ -125,8 +119,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- TODO: translate these lines -->
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device</string>
+	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
+	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device.</string>
 	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
 	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
 		conserve battery</string>
@@ -337,17 +331,16 @@ Instructions:
 	<string name="device_information_serial_number">"Серийный номер:"</string>
 	<string name="device_information_system_on_a_chip">"SoC:"</string>
 	<string name="device_information_unknown">"неизвестно"</string>
-	<string name="device_information_your_device">"Ваше устройство: "</string>
 
 	<!-- About screen strings -->
 	<string name="about">"О приложении"</string>
-	<string name="about_app_description">"Эффективный инструмент для обновления OxygenOS."</string>
-	<!-- TODO translate this string -->
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
+	<!-- TODO: translate these 5 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
 	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
 	<string name="about_rate_button_text">"Оценить"</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Эл. адрес</string>
@@ -410,10 +403,13 @@ Instructions:
 	<string name="news_load_network_error">"Не удалось открыть статью. Нет сетевого подключения. Нажмите «Повторить» для загрузки"</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 7 strings below -->
+	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
-	<string name="news_mark_all_read">Mark all articles as read</string>
+	<string name="news_mark_read">пометить, как прочитанное</string>
+	<string name="news_mark_unread">Отметить как непрочитанное</string>
+	<string name="news_mark_all_read">отметить все как прочитанное</string>
+	<!-- TODO: translate these 4 strings below -->
 	<string name="news_empty_state_none_available_header">No articles yet</string>
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>

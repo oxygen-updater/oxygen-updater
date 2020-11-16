@@ -35,10 +35,6 @@
 	<string name="new_app_version_inapp_downloaded">应用更新已下载</string>
 	<string name="new_app_version_inapp_failed">无法安装应用更新。轻触此处即可打开 Play Store 更新应用</string>
 
-	<!-- Date and time strings -->
-	<string name="time_at">于</string>
-	<string name="time_yesterday">昨天</string>
-
 	<!-- Downloader strings-->
 	<string name="download">下载更新</string>
 	<string name="downloaded">更新已下载</string>
@@ -93,7 +89,7 @@
 
 	<string name="summary_on">已启用</string>
 	<string name="summary_off">已禁用</string>
-	<string name="summary_device">请稍等…</string>
+	<string name="summary_please_wait">请稍等…</string>
 	<string name="summary_update_method">请先选择一个设备</string>
 	<string name="summary_theme">设定主题</string>
 	<string name="summary_privacy_policy">在线查看</string>
@@ -101,8 +97,6 @@
 
 	<string name="label_buy_ad_free">移除广告</string>
 	<string name="label_theme">主题</string>
-	<string name="label_app_update_banner">应用更新栏</string>
-	<string name="label_news_warning_banner">新闻与警告栏</string>
 	<string name="label_privacy_policy">隐私政策</string>
 	<string name="label_rate_app">评分</string>
 
@@ -136,7 +130,7 @@
 	<string name="settings_saving">您的设置仍在保存中。如果时间过长，请检查您的网络连接，或尝试重新启动更新器。</string>
 
 	<string name="settings_advanced_mode">高级模式</string>
-	<string name="settings_advanced_mode_explanation">开启高级模式后，将隐藏“您的设备已是最新版本”的消息，使得您可以下载与安装任何设备的新版本系统，哪怕下载的文件与您的设备并不兼容。\n\n在如下情况下，该功能会很有用：\n- 您想从正式版更新为测试版系统\n- 从测试版恢复成正式版（需要您进行双清！）\n- 重新安装当前版本的系统</string>
+	<string name="settings_advanced_mode_explanation">开启高级模式后，将隐藏“您的设备已是最新版本”的消息，使得您可以下载与安装任何设备的新版本系统，哪怕下载的文件与您的设备并不兼容。\n\n在如下情况下，该功能会很有用：\n&#8226; 您想从正式版更新为测试版系统\n&#8226; 从测试版恢复成正式版（需要您进行双清！）\n&#8226; 重新安装当前版本的系统</string>
 	<string name="settings_update_method">更新方式</string>
 	<string name="settings_upload_logs">分享使用数据与日志</string>
 
@@ -150,7 +144,7 @@
 	<string name="onboarding_finished_button">开始吧！</string>
 
 	<string name="onboarding_page_1_title">欢迎使用 Oxygen 更新器！</string>
-	<string name="onboarding_page_1_text">这款 App 可以帮助您：\n\n- 更快地接收 OxygenOS 的最新更新\n- 更轻松地升级 Root 过的设备\n- 查看当前系统版本的更新亮点\n- 了解关于 OnePlus 与 OxygenOS 的最新消息\n\n向左轻扫以继续</string>
+	<string name="onboarding_page_1_text">这款 App 可以帮助您：\n\n&#8226; 更快地接收 OxygenOS 的最新更新\n&#8226; 更轻松地升级 Root 过的设备\n&#8226; 查看当前系统版本的更新亮点\n&#8226; 了解关于 OnePlus 与 OxygenOS 的最新消息\n\n向左轻扫以继续</string>
 	<string name="onboarding_page_1_caption">并不是官方的 OnePlus 应用程序，使用此应用程序完全由您自己承担风险。OnePlus 和应用开发者都不对您的行为负责，包括使用此应用程序造成的任何损害。\n\n使用此应用程序即表示您同意上述条款。</string>
 	<string name="onboarding_page_2_title">选择您的设备：</string>
 	<string name="onboarding_page_2_caption">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。</string>
@@ -278,16 +272,16 @@
 	<string name="device_information_serial_number">序列号：</string>
 	<string name="device_information_system_on_a_chip">SoC：</string>
 	<string name="device_information_unknown">未知</string>
-	<string name="device_information_your_device">您的设备：</string>
 
 	<!-- About screen strings -->
 	<string name="about">关于</string>
-	<string name="about_app_description">获取 OxygenOS 更新的终极神器！</string>
-	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用 <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n2019 年 6 月，距离发布四年之后，Arjan 决定停止支持这两款应用，并将它们的所有权转让给其它团队。而这个团队，则担负起了为整个 OnePlus 社区提供优质的支持服务的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.5/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新团队发布了他所负责以来的第一个版本。该版本为用户们带来了深色模式的支持，令人耳目一新的界面设计，以及其它的新功能。\n\n如果您想更深入了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。</string>
+	<!-- TODO: translate these 3 strings below -->
+	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Background story</string>
+	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用 <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n2019 年 6 月，距离发布四年之后，Arjan 决定停止支持这两款应用，并将它们的所有权转让给其它团队。而这个团队，则担负起了为整个 OnePlus 社区提供优质的支持服务的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新团队发布了他所负责以来的第一个版本。该版本为用户们带来了深色模式的支持，令人耳目一新的界面设计，以及其它的新功能。\n\n如果您想更深入了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。</string>
 	<string name="about_third_party_app_notice">请注意，这并不是 OnePlus 出品的官方应用！\nOnePlus 的名称、Logo、以及 OxygenOS 都由 OnePlus 所有！\nAndroid、Google、Google Play 以及 Google Play 的 Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。</string>
 	<string name="about_rate_button_text">评分</string>
-	<string name="about_github_button_text">GitHub</string>
-	<string name="about_discord_button_text">Discord</string>
 	<string name="about_website_button_text">网站</string>
 	<string name="about_email_button_text">邮箱</string>
 
@@ -324,6 +318,8 @@
 
 	<string name="news_unread_count_1">您有 %1$d 未读文章，轻触即可浏览</string>
 	<string name="news_unread_count_2">您有 %1$d 未读文章，轻触即可全部显示</string>
+	<string name="news_mark_read">标记为已读</string>
+	<string name="news_mark_unread">标记为未读</string>
 	<string name="news_mark_all_read">标记所有文章为已读</string>
 	<string name="news_empty_state_none_available_header">暂时没有文章</string>
 	<string name="news_empty_state_all_read_header">全部读完了</string>

@@ -120,7 +120,7 @@ class DownloadWorker(
                 context.getString(android.R.string.cancel),
                 cancelPendingIntent
             )
-            .setColor(ContextCompat.getColor(context, R.color.colorPositive))
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
         return ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, notification)
@@ -159,7 +159,7 @@ class DownloadWorker(
                 NotificationCompat.BigTextStyle()
                     .setSummaryText(downloadEta ?: "")
             )
-            .setColor(ContextCompat.getColor(context, R.color.colorPositive))
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
         notificationManager.apply {

@@ -13,19 +13,24 @@ import com.oxygenupdater.internal.ViewHelper
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Suppress("unused")
-abstract class AnimationAdapter internal constructor(val wrappedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class AnimationAdapter internal constructor(
+    val wrappedAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mDuration = 225
     private var mInterpolator: Interpolator = LinearInterpolator()
     private var mLastPosition = -1
     private var isFirstOnly = true
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return wrappedAdapter.onCreateViewHolder(parent, viewType)
-    }
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ) = wrappedAdapter.onCreateViewHolder(parent, viewType)
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        wrappedAdapter.onBindViewHolder(holder, position)
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int
+    ) = wrappedAdapter.onBindViewHolder(holder, position).also {
         val adapterPosition = holder.adapterPosition
 
         if (!isFirstOnly || adapterPosition > mLastPosition) {
@@ -40,30 +45,27 @@ abstract class AnimationAdapter internal constructor(val wrappedAdapter: Recycle
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return wrappedAdapter.getItemViewType(position)
-    }
+    override fun getItemViewType(position: Int) = wrappedAdapter.getItemViewType(position)
 
-    override fun getItemId(position: Int): Long {
-        return wrappedAdapter.getItemId(position)
-    }
+    override fun getItemId(position: Int) = wrappedAdapter.getItemId(position)
 
-    override fun getItemCount(): Int {
-        return wrappedAdapter.itemCount
-    }
+    override fun getItemCount() = wrappedAdapter.itemCount
 
-    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
-        wrappedAdapter.onViewRecycled(holder)
+    override fun onViewRecycled(
+        holder: RecyclerView.ViewHolder
+    ) = wrappedAdapter.onViewRecycled(holder).also {
         super.onViewRecycled(holder)
     }
 
-    override fun registerAdapterDataObserver(observer: AdapterDataObserver) {
-        super.registerAdapterDataObserver(observer)
+    override fun registerAdapterDataObserver(
+        observer: AdapterDataObserver
+    ) = super.registerAdapterDataObserver(observer).also {
         wrappedAdapter.registerAdapterDataObserver(observer)
     }
 
-    override fun unregisterAdapterDataObserver(observer: AdapterDataObserver) {
-        super.unregisterAdapterDataObserver(observer)
+    override fun unregisterAdapterDataObserver(
+        observer: AdapterDataObserver
+    ) = super.unregisterAdapterDataObserver(observer).also {
         wrappedAdapter.unregisterAdapterDataObserver(observer)
     }
 
