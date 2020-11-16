@@ -6,7 +6,7 @@
 
 	<!-- Update information strings -->
 	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Aktivieren</string>
 	<string name="update_information_file_name">"Datei Name: %1$s"</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
@@ -84,31 +84,31 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Settings strings -->
 	<!-- TODO: translate these lines -->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
+	<string name="preference_header_support">Unterstütze uns</string>
+	<string name="preference_header_device">Gerät</string>
 	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
+	<string name="preference_header_notifications">Benachrichtigungen</string>
 	<string name="preference_header_advanced">Advanced</string>
-	<string name="preference_header_about">About</string>
+	<string name="preference_header_about">Über</string>
 
 	<!-- TODO: translate these lines -->
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_please_wait">Please wait…</string>
+	<string name="summary_on">Aktiviert</string>
+	<string name="summary_off">Behindert</string>
+	<string name="summary_please_wait">Warten Sie mal…</string>
 	<string name="summary_update_method">Select a device first</string>
 	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">View online</string>
+	<string name="summary_privacy_policy">Online ansehen</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
 
 	<!-- TODO: translate these lines -->
-	<string name="label_buy_ad_free">Remove ads</string>
+	<string name="label_buy_ad_free">Anzeigen entfernen</string>
 	<string name="label_theme">Theme</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_privacy_policy">Datenschutz-Bestimmungen</string>
+	<string name="label_rate_app">Bewerte diese App</string>
 
 	<!-- TODO: translate these lines -->
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
+	<string name="theme_light">Licht</string>
+	<string name="theme_dark">Dunkel</string>
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
@@ -338,7 +338,7 @@ Um das zu verifizieren, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
 	<string name="about_rate_button_text">Bewerten</string>
 	<!-- TODO: translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">Webseite</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
@@ -481,7 +481,6 @@ No root access? Press \"Close\" and continue using the app."</string>
 	<string name="purchase_error_after_payment">"Der Kauf der Werbe-freien Version ist fehlgeschlagen, durch einen internen fehler. Bitte Versuche es in ein paar Minuten nochmal. Wenn du bereits bezahlt hast, kontaktiere bitte den Google Play Support für Hilfe."</string>
 
 	<!-- Other strings -->
-	<!-- TODO: translate this string below -->
 	<string name="error">Error</string>
 	<string name="icon">"Icon"</string>
 	<string name="loading">"Laden…"</string>

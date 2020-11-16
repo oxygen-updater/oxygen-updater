@@ -5,7 +5,7 @@
 
 	<!-- Update information strings-->
 	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Aktiver</string>
 	<string name="update_information_description_not_available">Der er ingen officiel information om nye egenskaber, som denne opdaterring indeholder. Normalt tilbyder denne slags opdatering fejlretninger, forbedringer af ydeevnen, og/eller kritiske sikkerhedsopdateringer til din egen enhed.</string>
 	<string name="update_information_file_name">Filnavn: %1$s</string>
 	<!-- TODO: translate this line below -->
@@ -41,9 +41,9 @@
 
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
+	<string name="download">Download opdatering</string>
+	<string name="downloaded">Opdatering downloadet</string>
+	<string name="downloading">Downloader opdatering…</string>
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">Download færdig</string>
@@ -299,7 +299,7 @@ Instructions:
 	<string name="about_third_party_app_notice">Bemærk venligst, at dette IKKE er en officiel OnePlus applikation.\nOnePlus mavmet, OnePlus logo\'et og OxygenOS er ejendele af OnePlus.\nAndroid, Google, Google Play og Google Play logo\'er er registrerede varemærker tilhørende Google Inc.\nDenne app amvemder data fra OnePlus og dets moderselskab Oppo, til at vise opdateringsinformation.</string>
 	<string name="about_rate_button_text">Bedøm</string>
 	<!-- TODO: translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">Internet side</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
@@ -398,7 +398,7 @@ Instructions:
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
+	<string name="error">Fejl</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Indlæser…</string>
 	<string name="processing">Arbejder…</string>

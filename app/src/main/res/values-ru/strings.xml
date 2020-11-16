@@ -6,7 +6,7 @@
 
 	<!-- Update information strings -->
 	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">включить</string>
 	<string name="update_information_file_name">"Имя файла: %1$s"</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
@@ -41,9 +41,9 @@
 
 	<!-- Downloader strings -->
 	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
+	<string name="download">Скачать обновление</string>
+	<string name="downloaded">Обновление загружено</string>
+	<string name="downloading">Скачивание обновления…</string>
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">"Успешная загрузка"</string>
@@ -89,33 +89,33 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Settings strings -->
 	<!-- TODO: translate these lines -->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
+	<string name="preference_header_support">Поддерживать нас</string>
+	<string name="preference_header_device">Устройство</string>
 	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
-	<string name="preference_header_advanced">Advanced</string>
-	<string name="preference_header_about">About</string>
+	<string name="preference_header_notifications">Уведомления</string>
+	<string name="preference_header_advanced">Продвинутый</string>
+	<string name="preference_header_about">O</string>
 
 	<!-- TODO: translate these lines -->
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_please_wait">Please wait…</string>
-	<string name="summary_update_method">Select a device first</string>
+	<string name="summary_on">Включено</string>
+	<string name="summary_off">инвалид</string>
+	<string name="summary_please_wait">пожалуйста, подождите…</string>
+	<string name="summary_update_method">Сначала выберите свое устройство</string>
 	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">View online</string>
+	<string name="summary_privacy_policy">Смотреть онлайн</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
 
 	<!-- TODO: translate these lines -->
-	<string name="label_buy_ad_free">Remove ads</string>
+	<string name="label_buy_ad_free">Удалить объявления</string>
 	<string name="label_theme">Theme</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_privacy_policy">Политика конфиденциальности</string>
+	<string name="label_rate_app">Оцени это приложение</string>
 
 	<!-- TODO: translate these lines -->
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
-	<string name="theme_system">System</string>
-	<string name="theme_auto">Auto</string>
+	<string name="theme_light">Легкий</string>
+	<string name="theme_dark">Темно</string>
+	<string name="theme_system">Система</string>
+	<string name="theme_auto">Авто</string>
 
 	<!-- TODO: translate these lines -->
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
@@ -342,7 +342,7 @@ Instructions:
 	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
 	<string name="about_rate_button_text">"Оценить"</string>
 	<!-- TODO: translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">Веб-сайт</string>
 	<string name="about_email_button_text">Эл. адрес</string>
 
 	<!-- LocalNotifications strings -->
@@ -472,7 +472,7 @@ Instructions:
 
 	<!-- Other strings -->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
+	<string name="error">ошибка</string>
 	<string name="icon">"Иконка"</string>
 	<string name="loading">"Загрузка…"</string>
 	<string name="processing">"Обработка…"</string>

@@ -4,7 +4,7 @@
 	<string name="device_chooser_error_title">无法检索支持的设备列表</string>
 
 	<!-- Update information strings-->
-	<string name="enable">Enable</string>
+	<string name="enable">启用</string>
 	<string name="update_information_description_not_available">没有关于此更新的新功能亮点的官方信息。一般情况下，此类更新会为您的设备提供错误修复，性能增强或关键安全更新。</string>
 	<string name="update_information_file_name">文件名称： %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>

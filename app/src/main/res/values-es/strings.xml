@@ -5,7 +5,7 @@
 
 	<!-- Update information strings-->
 	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">Habilitar</string>
 	<string name="update_information_description_not_available">No hay ninguna información oficial sobre las nuevas caracterísicas que esta actualización ofrece. Normalmente, tal actualización proporciona correcciones de errores, mejoras de rendimiento, y / o actualizaciones de seguridad para tu dispositivo.</string>
 	<string name="update_information_file_name">Nombre del archivo: %1$s</string>
 	<!-- TODO: translate this line below -->
@@ -41,9 +41,9 @@
 
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
+	<string name="download">Descarga de la actualización</string>
+	<string name="downloaded">Actualización descargada</string>
+	<string name="downloading">Descargando actualización…</string>
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">Descarga completa</string>
@@ -298,8 +298,8 @@ Instructions:
 	<string name="about_third_party_app_notice">Por favor,en cuenta que esta no es una aplicación oficial de OnePlus.\nLa marca OnePlus, el Logo de OnePlus y OxygenOS son propiedad de OnePlus.\nAndroid, Google, Google Play y el logo de Google Play son marcas registradas de Google Inc.\nEsta app usa datos de OnePlus y OPPO para mostrar la información de las actualizaciones.</string>
 	<string name="about_rate_button_text">Puntuar</string>
 	<!-- TODO: translate this string below -->
-	<string name="about_website_button_text">Website</string>
-	<string name="about_email_button_text">Email</string>
+	<string name="about_website_button_text">Sitio web</string>
+	<string name="about_email_button_text">Correo electrónico</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device_title">¡Un nuevo dispositivo ha sido lanzado</string>
@@ -396,7 +396,6 @@ Instructions:
 	<string name="purchase_error_after_payment">La compra de la versión sin anuncios ha fallado a causa de un error interno. Por favor, inténtalo de nuevo en unos minutos. Si ya has hecho el pago, por favor, contacta con el soporte de Google Play para que lo resuelvan.</string>
 
 	<!-- Other strings-->
-	<!-- TODO: translate this string below -->
 	<string name="error">Error</string>
 	<string name="icon">Icono</string>
 	<string name="loading">Cargando…</string>

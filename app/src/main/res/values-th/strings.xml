@@ -5,7 +5,7 @@
 
 	<!-- Update information strings-->
 	<!-- TODO: translate this string below -->
-	<string name="enable">Enable</string>
+	<string name="enable">เปิดใช้งาน</string>
 	<string name="update_information_description_not_available">ยังไม่มีข้อมูลอย่างเป็นทางการเกี่ยวกับคุณสมบัติใหม่ของการอัพเดทครั้งนี้ ซึ่งโดยปกติแล้วมันคือการแก้ไขบัคต่างๆ, ปรับปรุงประสิทธิภาพของระบบ, อัพเดทความปลอดภัย</string>
 	<string name="update_information_file_name">ชื่อไฟล์: %1$s</string>
 	<!-- TODO: translate this line below -->
@@ -41,9 +41,9 @@
 
 	<!-- Downloader strings-->
 	<!-- TODO: translate these 4 strings below -->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
+	<string name="download">ดาวน์โหลดอัปเดต</string>
+	<string name="downloaded">ดาวน์โหลดอัปเดตแล้ว</string>
+	<string name="downloading">กำลังดาวน์โหลดอัปเดต…</string>
 	<string name="paused">Paused - tap to resume</string>
 
 	<string name="download_complete">ดาวน์โหลดเสร็จสิ้น</string>
@@ -297,7 +297,7 @@ Instructions:
 	<string name="about_third_party_app_notice">โปรดทราบว่านี่ไม่ใช่แอปพลิเคชัน OnePlus อย่างเป็นทางการ\n ชื่อ OnePlus, โลโก้ OnePlus และ OxygenOS เป็นทรัพย์สินของ OnePlus\nAndroid, Google, Google Play และโลโก้ Google Play เป็นเครื่องหมายการค้าจดทะเบียนของ Google Inc.\n แอพนี้ใช้ข้อมูลจาก OnePlus และ Oppo บริษัท แม่เพื่อแสดงข้อมูลอัปเดต</string>
 	<string name="about_rate_button_text">ให้คะแนนบน</string>
 	<!-- TODO: translate this string below -->
-	<string name="about_website_button_text">Website</string>
+	<string name="about_website_button_text">เว็บไซต์</string>
 	<string name="about_email_button_text">อีเมล์</string>
 
 	<!-- LocalNotifications strings -->
@@ -396,8 +396,8 @@ Instructions:
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Error</string>
-	<string name="icon">Icon</string>
+	<string name="error">ข้อผิดพลาด</string>
+	<string name="icon">ไอคอน</string>
 	<string name="loading">กำลังโหลด…</string>
 	<string name="processing">กำลังประมวลผล…</string>
 	<string name="choose_file">เลือกไฟล์</string>
