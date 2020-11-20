@@ -1,7 +1,6 @@
 package com.oxygenupdater.workers
 
 import android.app.Notification.CATEGORY_PROGRESS
-import android.app.NotificationManager
 import android.content.Context
 import android.os.Environment
 import android.os.Handler
@@ -10,6 +9,7 @@ import android.text.format.Formatter
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
@@ -20,7 +20,6 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.enums.DownloadFailure
@@ -36,6 +35,7 @@ import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationIds.FOREGROUND_NOTIFICATION_DOWNLOAD
 import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_DOWNLOAD
 import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_MD5_VERIFICATION
@@ -70,7 +70,7 @@ class DownloadWorker(
 
     private val downloadApi by inject(DownloadApi::class.java)
     private val workManager by inject(WorkManager::class.java)
-    private val notificationManager by inject(NotificationManager::class.java)
+    private val notificationManager by inject(NotificationManagerCompat::class.java)
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important
@@ -105,7 +105,7 @@ class DownloadWorker(
 
         val text = context.getString(R.string.download_pending)
 
-        val notification = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
             .setContentText(text)
@@ -140,7 +140,7 @@ class DownloadWorker(
 
         val text = "$bytesDoneStr / $totalBytesStr ($progress%)"
 
-        val notification = NotificationCompat.Builder(context, OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.stat_sys_download)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
             .setContentText(text)

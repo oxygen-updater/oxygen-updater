@@ -1,6 +1,5 @@
 package com.oxygenupdater.receivers
 
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.BroadcastReceiver
@@ -10,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.CATEGORY_ERROR
 import androidx.core.app.NotificationCompat.CATEGORY_STATUS
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -21,14 +21,15 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import androidx.work.workDataOf
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
-import com.oxygenupdater.OxygenUpdater.Companion.PUSH_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT
 import com.oxygenupdater.models.InstallationStatus
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_INSTALLATION_STATUS
 import com.oxygenupdater.workers.UploadRootInstallLogWorker
 import com.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS
@@ -44,7 +45,7 @@ import java.util.concurrent.TimeUnit
 class VerifyInstallationReceiver : BroadcastReceiver() {
 
     private val systemVersionProperties by inject(SystemVersionProperties::class.java)
-    private val notificationManager by inject(NotificationManager::class.java)
+    private val notificationManager by inject(NotificationManagerCompat::class.java)
     private val workManager by inject(WorkManager::class.java)
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -92,16 +93,15 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             FLAG_UPDATE_CURRENT
         )
 
-        val notification = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.done_outline)
             .setContentTitle(context.getString(R.string.install_verify_success_title))
-            .setContentText(context.getString(R.string.install_verify_success_message, oxygenOSVersion))
+            .setBigTextStyle(context.getString(R.string.install_verify_success_message, oxygenOSVersion))
             .setContentIntent(contentIntent)
             .setOngoing(false)
             .setAutoCancel(true)
             .setCategory(CATEGORY_STATUS)
             .setPriority(PRIORITY_HIGH)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.install_verify_success_message, oxygenOSVersion)))
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
@@ -120,16 +120,15 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             FLAG_UPDATE_CURRENT
         )
 
-        val notification = NotificationCompat.Builder(context, PUSH_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.error)
             .setContentTitle(context.getString(R.string.install_verify_error_title))
-            .setContentText(errorMessage)
+            .setBigTextStyle(errorMessage)
             .setContentIntent(contentIntent)
             .setOngoing(false)
             .setAutoCancel(true)
             .setCategory(CATEGORY_ERROR)
             .setPriority(PRIORITY_HIGH)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(errorMessage))
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()

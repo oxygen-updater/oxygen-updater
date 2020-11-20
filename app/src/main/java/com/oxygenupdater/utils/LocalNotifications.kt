@@ -3,7 +3,6 @@ package com.oxygenupdater.utils
 import android.app.Notification.CATEGORY_ERROR
 import android.app.Notification.CATEGORY_PROGRESS
 import android.app.Notification.CATEGORY_STATUS
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
@@ -12,14 +11,18 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.oxygenupdater.OxygenUpdater.Companion.PROGRESS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.InstallActivity
 import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.fragments.UpdateInformationFragment
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_CONTRIBUTION
 import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_DOWNLOAD
 import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_MD5_VERIFICATION
@@ -29,7 +32,7 @@ object LocalNotifications {
 
     private const val TAG = "LocalNotifications"
 
-    private val notificationManager by inject(NotificationManager::class.java)
+    private val notificationManager by inject(NotificationManagerCompat::class.java)
 
     /**
      * Contribute: shows a notification that a update file has been submitted successfully.
@@ -57,7 +60,7 @@ object LocalNotifications {
                 inboxStyle = inboxStyle.addLine("\u2022 $it")
             }
 
-            val notification = NotificationCompat.Builder(context, PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val notification = NotificationCompat.Builder(context, OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo_notification)
                 .setContentTitle(title)
                 .setContentText(text)
@@ -103,7 +106,7 @@ object LocalNotifications {
             val title = context.getString(R.string.download_complete)
             val text = context.getString(R.string.download_complete_notification)
 
-            val notification = NotificationCompat.Builder(context, PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.download)
                 .setContentTitle(title)
                 .setContentText(text)
@@ -148,20 +151,15 @@ object LocalNotifications {
                 FLAG_UPDATE_CURRENT
             )
 
-            val title = context.getString(R.string.download_failed)
-            val text = context.getString(notificationMessage)
-            val bigTextStyle = NotificationCompat.BigTextStyle().bigText(text)
-
-            val notification = NotificationCompat.Builder(context, PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.download)
-                .setContentTitle(title)
-                .setContentText(text)
+                .setContentTitle(context.getString(R.string.download_failed))
+                .setBigTextStyle(context.getString(notificationMessage))
                 .setContentIntent(contentIntent)
                 .setOngoing(false)
                 .setAutoCancel(true)
                 .setCategory(CATEGORY_ERROR)
                 .setPriority(PRIORITY_LOW)
-                .setStyle(bigTextStyle)
                 .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 .setVisibility(VISIBILITY_PUBLIC)
                 .build()
@@ -178,16 +176,14 @@ object LocalNotifications {
     fun showVerificationFailedNotification(context: Context) {
         val title = context.getString(R.string.download_verifying_error)
         val text = context.getString(R.string.download_notification_error_corrupt)
-        val bigTextStyle = NotificationCompat.BigTextStyle().bigText(text)
 
-        val notification = NotificationCompat.Builder(context, PROGRESS_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(title)
-            .setContentText(text)
+            .setBigTextStyle(text)
             .setOngoing(false)
             .setCategory(CATEGORY_ERROR)
             .setPriority(PRIORITY_LOW)
-            .setStyle(bigTextStyle)
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
@@ -203,7 +199,7 @@ object LocalNotifications {
      */
     fun showVerifyingNotification(context: Context) {
         try {
-            val notification = NotificationCompat.Builder(context, PROGRESS_NOTIFICATION_CHANNEL_ID)
+            val notification = NotificationCompat.Builder(context, VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo_notification)
                 .setContentTitle(context.getString(R.string.download_verifying))
                 .setProgress(100, 50, true)

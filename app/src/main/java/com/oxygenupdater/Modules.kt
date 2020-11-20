@@ -1,7 +1,6 @@
 package com.oxygenupdater
 
-import android.app.NotificationManager
-import androidx.core.content.getSystemService
+import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
 import androidx.work.WorkManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -15,6 +14,7 @@ import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.DatabaseBuilders.buildLocalAppDatabase
 import com.oxygenupdater.utils.DatabaseBuilders.buildLocalBillingDatabase
+import com.oxygenupdater.utils.NotificationUtils
 import com.oxygenupdater.utils.createDownloadClient
 import com.oxygenupdater.utils.createNetworkClient
 import com.oxygenupdater.utils.createOkHttpCache
@@ -69,8 +69,9 @@ private val databaseModule = module {
     single { buildLocalBillingDatabase(androidContext()) }
 }
 
-private val systemServiceModule = module {
-    single { androidContext().getSystemService<NotificationManager>() }
+private val notificationModule = module {
+    single { NotificationManagerCompat.from(androidContext()) }
+    single { NotificationUtils(androidContext()) }
 }
 
 private val miscellaneousSingletonModule = module {
@@ -92,6 +93,6 @@ val allModules = listOf(
     repositoryModule,
     viewModelModule,
     databaseModule,
-    systemServiceModule,
+    notificationModule,
     miscellaneousSingletonModule
 )

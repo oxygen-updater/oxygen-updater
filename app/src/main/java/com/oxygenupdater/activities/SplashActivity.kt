@@ -1,22 +1,18 @@
 package com.oxygenupdater.activities
 
-import android.annotation.TargetApi
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.utils.NotificationUtils
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
 
-    private val notificationManager by inject<NotificationManager>()
+    private val notificationUtils by inject<NotificationUtils>()
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -30,66 +26,12 @@ class SplashActivity : AppCompatActivity() {
 
         // Support functions for Android 8.0 "Oreo" and up.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createPushNotificationChannel()
-            createProgressNotificationChannel()
+            notificationUtils.deleteOldNotificationChannels()
+            notificationUtils.createNewNotificationGroupsAndChannels()
         }
 
         migrateOldSettings()
         chooseActivityToLaunch()
-    }
-
-    /**
-     * Create a notification channel for push notifications (update data, news, etc.)
-     *
-     * Only supported in Oreo (26) and above
-     */
-    @TargetApi(26)
-    private fun createPushNotificationChannel() {
-        // The id of the channel.
-        val id = OxygenUpdater.PUSH_NOTIFICATION_CHANNEL_ID
-
-        // The user-visible name of the channel.
-        val name = getString(R.string.push_notification_channel_name)
-
-        // The user-visible description of the channel.
-        NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH).apply {
-            // Configure the notification channel.
-            description = getString(R.string.push_notification_channel_description)
-            enableLights(true)
-
-            // Sets the notification light color for notifications posted to this
-            // channel, if the device supports this feature.
-            lightColor = Color.RED
-            enableVibration(true)
-            vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
-
-            notificationManager.createNotificationChannel(this)
-        }
-    }
-
-    /**
-     * Create a notification channel for download progress notifications
-     *
-     * Only supported in Oreo (26) and above
-     */
-    @TargetApi(26)
-    private fun createProgressNotificationChannel() {
-        // The id of the channel.
-        val id = OxygenUpdater.PROGRESS_NOTIFICATION_CHANNEL_ID
-
-        // The user-visible name of the channel.
-        val name = getString(R.string.progress_notification_channel_name)
-
-        // The user-visible description of the channel.
-        NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW).apply {
-            // Configure the notification channel.
-            description = getString(R.string.progress_notification_channel_description)
-
-            enableLights(false)
-            enableVibration(false)
-
-            notificationManager.createNotificationChannel(this)
-        }
     }
 
     /**

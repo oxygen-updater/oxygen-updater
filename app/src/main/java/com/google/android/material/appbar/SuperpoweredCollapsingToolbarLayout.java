@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -1483,7 +1484,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 			super(source);
 		}
 
-		@RequiresApi(19)
+		@RequiresApi(Build.VERSION_CODES.KITKAT)
 		public LayoutParams(FrameLayout.LayoutParams source) {
 			super(source);
 		}

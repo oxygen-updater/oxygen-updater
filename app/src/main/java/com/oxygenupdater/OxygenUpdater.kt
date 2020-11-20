@@ -158,8 +158,6 @@ class OxygenUpdater : Application() {
         const val NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR"
         const val SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR"
         const val APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR"
-        const val PUSH_NOTIFICATION_CHANNEL_ID = "com.oxygenupdater.internal.notifications"
-        const val PROGRESS_NOTIFICATION_CHANNEL_ID = "com.oxygenupdater.progress"
 
         fun buildAdRequest(): AdRequest = AdRequest.Builder().build()
     }

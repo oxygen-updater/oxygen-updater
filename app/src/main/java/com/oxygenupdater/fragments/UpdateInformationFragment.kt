@@ -376,7 +376,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     if (updateData.systemIsUpToDate) {
                         R.string.update_information_header_advanced_mode_hint
                     } else {
-                        R.string.notification_version_title
+                        R.string.update_notification_channel_name
                     }
                 )
             )

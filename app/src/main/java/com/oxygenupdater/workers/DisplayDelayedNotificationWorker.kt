@@ -1,17 +1,17 @@
 package com.oxygenupdater.workers
 
 import android.app.Notification
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.activities.NewsItemActivity
@@ -19,9 +19,14 @@ import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
 import com.oxygenupdater.exceptions.OxygenUpdaterException
+import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.AppLocale
 import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DEVICE_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENERAL_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationIds
 import org.koin.java.KoinJavaComponent.inject
 
@@ -40,13 +45,8 @@ class DisplayDelayedNotificationWorker(
         .entries
         .associate { it.key to it.value.toString() }
 
-    private val notificationBuilder = NotificationCompat.Builder(
-        context,
-        OxygenUpdater.PUSH_NOTIFICATION_CHANNEL_ID
-    )
-
     private val localAppDb by inject(LocalAppDb::class.java)
-    private val notificationManager by inject(NotificationManager::class.java)
+    private val notificationManager by inject(NotificationManagerCompat::class.java)
 
     private val newsItemDao by lazy {
         localAppDb.newsItemDao()
@@ -91,13 +91,13 @@ class DisplayDelayedNotificationWorker(
                 // Don't show notification if user has opted out
                 return Result.success()
             } else {
-                val message = if (AppLocale.get() == AppLocale.NL) {
-                    messageContents[NotificationElement.DUTCH_MESSAGE.name]
-                } else {
-                    messageContents[NotificationElement.ENGLISH_MESSAGE.name]
-                }
-
-                getGeneralServerOrNewsNotificationBuilder(message)
+                getGeneralNotificationBuilder(
+                    if (AppLocale.get() == AppLocale.NL) {
+                        messageContents[NotificationElement.DUTCH_MESSAGE.name]
+                    } else {
+                        messageContents[NotificationElement.ENGLISH_MESSAGE.name]
+                    }
+                )
             }
             NotificationType.NEWS -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS,
@@ -119,13 +119,13 @@ class DisplayDelayedNotificationWorker(
                     return Result.success()
                 }
 
-                val newsMessage = if (AppLocale.get() == AppLocale.NL) {
-                    messageContents[NotificationElement.DUTCH_MESSAGE.name]
-                } else {
-                    messageContents[NotificationElement.ENGLISH_MESSAGE.name]
-                }
-
-                getGeneralServerOrNewsNotificationBuilder(newsMessage)
+                getNewsArticleNotificationBuilder(
+                    if (AppLocale.get() == AppLocale.NL) {
+                        messageContents[NotificationElement.DUTCH_MESSAGE.name]
+                    } else {
+                        messageContents[NotificationElement.ENGLISH_MESSAGE.name]
+                    }
+                )
             }
         }
 
@@ -141,7 +141,6 @@ class DisplayDelayedNotificationWorker(
             .setContentIntent(getNotificationIntent(notificationType))
             .setAutoCancel(true)
             .setDefaults(Notification.DEFAULT_ALL)
-            .setPriority(PRIORITY_HIGH)
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
@@ -155,69 +154,70 @@ class DisplayDelayedNotificationWorker(
 
     @Suppress("REDUNDANT_ELSE_IN_WHEN")
     private fun getNotificationId(type: NotificationType) = when (type) {
-        NotificationType.NEW_DEVICE -> NotificationIds.REMOTE_NOTIFICATION_NEW_DEVICE
         NotificationType.NEW_VERSION -> NotificationIds.REMOTE_NOTIFICATION_NEW_UPDATE
-        NotificationType.GENERAL_NOTIFICATION -> NotificationIds.REMOTE_NOTIFICATION_GENERIC
         NotificationType.NEWS -> NotificationIds.REMOTE_NOTIFICATION_NEWS
+        NotificationType.NEW_DEVICE -> NotificationIds.REMOTE_NOTIFICATION_NEW_DEVICE
+        NotificationType.GENERAL_NOTIFICATION -> NotificationIds.REMOTE_NOTIFICATION_GENERIC
         else -> NotificationIds.REMOTE_NOTIFICATION_UNKNOWN
-    }
-
-    private fun getGeneralServerOrNewsNotificationBuilder(message: String?) = notificationBuilder
-        .setContentTitle(context.getString(R.string.app_name))
-        .setContentText(message)
-        .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-
-    private fun getNewDeviceNotificationBuilder(
-        newDeviceName: String?
-    ) = context.getString(
-        R.string.notification_new_device_text,
-        newDeviceName
-    ).let {
-        notificationBuilder
-            .setContentTitle(context.getString(R.string.notification_new_device_title))
-            .setContentText(it)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(it))
     }
 
     private fun getNewVersionNotificationBuilder(
         deviceName: String?,
         versionNumber: String?
-    ) = context.getString(
-        R.string.notification_version,
-        versionNumber,
-        deviceName
-    ).let {
-        notificationBuilder
-            .setWhen(System.currentTimeMillis())
-            .setContentTitle(context.getString(R.string.notification_version_title))
-            .setContentText(it)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(it))
-    }
+    ) = NotificationCompat.Builder(context, UPDATE_NOTIFICATION_CHANNEL_ID)
+        .setPriority(PRIORITY_HIGH)
+        .setContentTitle(context.getString(R.string.update_notification_channel_name))
+        .setBigTextStyle(
+            context.getString(
+                R.string.notification_version,
+                versionNumber,
+                deviceName ?: context.getString(R.string.device_information_unknown)
+            )
+        )
+
+    private fun getNewsArticleNotificationBuilder(
+        message: String?
+    ) = NotificationCompat.Builder(context, NEWS_NOTIFICATION_CHANNEL_ID)
+        .setPriority(PRIORITY_HIGH)
+        .setContentTitle(context.getString(R.string.news_notification_channel_name))
+        .setBigTextStyle(message)
+
+    private fun getNewDeviceNotificationBuilder(
+        newDeviceName: String?
+    ) = NotificationCompat.Builder(context, DEVICE_NOTIFICATION_CHANNEL_ID)
+        .setPriority(PRIORITY_DEFAULT)
+        .setContentTitle(context.getString(R.string.device_notification_channel_name))
+        .setBigTextStyle(
+            context.getString(
+                R.string.notification_new_device_text,
+                newDeviceName ?: context.getString(R.string.device_information_unknown)
+            )
+        )
+
+    private fun getGeneralNotificationBuilder(
+        message: String?
+    ) = NotificationCompat.Builder(context, GENERAL_NOTIFICATION_CHANNEL_ID)
+        .setPriority(PRIORITY_DEFAULT)
+        .setContentTitle(context.getString(R.string.general_notification_channel_name))
+        .setBigTextStyle(message)
 
     private fun getNotificationIntent(
         notificationType: NotificationType
-    ) = if (notificationType == NotificationType.NEWS) {
-        val intent = Intent(context, NewsItemActivity::class.java)
-            .putExtra(
-                NewsItemActivity.INTENT_NEWS_ITEM_ID,
-                messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
-            )
-            .putExtra(NewsItemActivity.INTENT_DELAY_AD_START, true)
-
-        PendingIntent.getActivity(
-            context,
-            0,
-            intent,
-            FLAG_UPDATE_CURRENT
-        )
-    } else {
-        PendingIntent.getActivity(
-            context,
-            0,
-            Intent(context, MainActivity::class.java),
-            FLAG_UPDATE_CURRENT
-        )
-    }
+    ) = PendingIntent.getActivity(
+        context,
+        0,
+        if (notificationType == NotificationType.NEWS) {
+            Intent(context, NewsItemActivity::class.java)
+                .putExtra(
+                    NewsItemActivity.INTENT_NEWS_ITEM_ID,
+                    messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
+                )
+                .putExtra(NewsItemActivity.INTENT_DELAY_AD_START, true)
+        } else {
+            Intent(context, MainActivity::class.java)
+        },
+        FLAG_UPDATE_CURRENT
+    )
 
     companion object {
         private const val TAG = "DisplayDelayedNotificationWorker"

@@ -288,15 +288,31 @@
 	<string name="about_email_button_text">Емаил</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device_title">Нови уређај је доступан</string>
 	<string name="notification_new_device_text">%1$s је сада доступан. Отвори апликацију да изабереш овај уређај.</string>
 	<string name="notification_no_notification_support">Инсталирај или ажурирај Google Play сервисе да омогућиш обавештења.</string>
-	<string name="notification_version_title">Ажурирање система доступно</string>
 	<string name="notification_version">%1$s је сада доступан за %2$s!</string>
-	<string name="push_notification_channel_name">Обавештења</string>
-	<string name="push_notification_channel_description">Прикажи сва битна обавештења Oxygen Updater апликације. Ово подразумева обавештења о ажурирању система и битне вести.</string>
-	<string name="progress_notification_channel_name">Обавештење о прогресу</string>
-	<string name="progress_notification_channel_description">Прикажи сва мање битна обавештења о Oxygen Updater апликацији. То садржи обавештења о статусу преузимања и слично.</string>
+	<!-- TODO: translate these 19 strings below -->
+	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="push_notifications_group_name">Обавештења</string>
+	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
+	<string name="download_and_installation_notifications_group_description">Прикажи сва мање битна обавештења о Oxygen Updater апликацији. То садржи обавештења о статусу преузимања и слично.</string>
+	<string name="push_notifications_group_description">Прикажи сва битна обавештења Oxygen Updater апликације. Ово подразумева обавештења о ажурирању система и битне вести.</string>
+	<string name="download_status_notification_channel_name">Download status</string>
+	<string name="verification_status_notification_channel_name">Verification status</string>
+	<string name="installation_status_notification_channel_name">Installation status</string>
+	<string name="update_notification_channel_name">Ажурирање система доступно</string>
+	<string name="news_notification_channel_name">News article published</string>
+	<string name="device_notification_channel_name">Нови уређај подржан</string>
+	<string name="general_notification_channel_name">General</string>
+	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
+	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
+	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
+	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
+	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
+	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
+	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
+	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">Помоћ</string>
