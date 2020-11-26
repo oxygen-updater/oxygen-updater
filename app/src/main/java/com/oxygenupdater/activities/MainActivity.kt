@@ -440,7 +440,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
             registerOnPageChangeCallback(pageChangeCallback)
 
             currentItem = try {
-                intent?.extras?.getInt(INTENT_START_PAGE) ?: PAGE_UPDATE
+                intent?.getIntExtra(
+                    INTENT_START_PAGE,
+                    PAGE_UPDATE
+                ) ?: PAGE_UPDATE
             } catch (ignored: IndexOutOfBoundsException) {
                 PAGE_UPDATE
             }
@@ -721,13 +724,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
 
     companion object {
         private const val TAG = "MainActivity"
-        private const val INTENT_START_PAGE = "start_page"
 
-        private const val PAGE_UPDATE = 0
-        private const val PAGE_NEWS = 1
-        private const val PAGE_DEVICE = 2
-        private const val PAGE_ABOUT = 3
-        private const val PAGE_SETTINGS = 4
+        const val PAGE_UPDATE = 0
+        const val PAGE_NEWS = 1
+        const val PAGE_DEVICE = 2
+        const val PAGE_ABOUT = 3
+        const val PAGE_SETTINGS = 4
+        const val INTENT_START_PAGE = "start_page"
 
         // Permissions constants
         private const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:targetApi="n_mr1">
+	<shortcut
+		android:enabled="true"
+		android:icon="@mipmap/ic_shortcut_update"
+		android:shortcutId="shortcut_update"
+		android:shortcutLongLabel="@string/update_information_header"
+		android:shortcutShortLabel="@string/update_information_header">
+		<intent
+			android:action="com.oxygenupdater.action.page_update"
+			android:targetClass="com.oxygenupdater.activities.SplashActivity"
+			android:targetPackage="com.arjanvlek.oxygenupdater.debug" />
+		<categories android:name="android.shortcut.conversation" />
+	</shortcut>
+
+	<shortcut
+		android:enabled="true"
+		android:icon="@mipmap/ic_shortcut_news"
+		android:shortcutId="shortcut_news"
+		android:shortcutLongLabel="@string/news"
+		android:shortcutShortLabel="@string/news">
+		<intent
+			android:action="com.oxygenupdater.action.page_news"
+			android:targetClass="com.oxygenupdater.activities.SplashActivity"
+			android:targetPackage="com.arjanvlek.oxygenupdater.debug" />
+		<categories android:name="android.shortcut.conversation" />
+	</shortcut>
+
+	<shortcut
+		android:enabled="true"
+		android:icon="@mipmap/ic_shortcut_device"
+		android:shortcutId="shortcut_device"
+		android:shortcutLongLabel="@string/device_information_header"
+		android:shortcutShortLabel="@string/device_information_header">
+		<intent
+			android:action="com.oxygenupdater.action.page_device"
+			android:targetClass="com.oxygenupdater.activities.SplashActivity"
+			android:targetPackage="com.arjanvlek.oxygenupdater.debug" />
+		<categories android:name="android.shortcut.conversation" />
+	</shortcut>
+</shortcuts>

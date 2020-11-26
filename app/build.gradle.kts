@@ -145,6 +145,12 @@ android {
                     )
                 )
             }
+
+            it.addManifestPlaceholders(
+                mapOf(
+                    "shortcutXml" to "@xml/shortcuts_${it.name.toLowerCase()}"
+                )
+            )
         }
     }
 

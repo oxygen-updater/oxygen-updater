@@ -40,12 +40,18 @@ private fun Activity.startActivityWithSharedTransition(
     startActivity(intent, bundle)
 }
 
-fun Activity.startOnboardingActivity() = startActivity(
+fun Activity.startOnboardingActivity(startPage: Int) = startActivity(
     Intent(this, OnboardingActivity::class.java)
+        .putExtra(MainActivity.INTENT_START_PAGE, startPage)
 )
 
 fun Activity.startMainActivity() = startActivity(
     Intent(this, MainActivity::class.java)
+)
+
+fun Activity.startMainActivity(startPage: Int) = startActivity(
+    Intent(this, MainActivity::class.java)
+        .putExtra(MainActivity.INTENT_START_PAGE, startPage)
 )
 
 fun Activity.startHelpActivity(

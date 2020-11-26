@@ -73,6 +73,10 @@
 				<data android:host="www.${hostName}" />
 				<data android:path="/inapp" />
 			</intent-filter>
+
+			<meta-data
+				android:name="android.app.shortcuts"
+				android:resource="${shortcutXml}" />
 		</activity>
 
 		<!-- All screens -->

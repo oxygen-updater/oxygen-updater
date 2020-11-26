@@ -18,11 +18,9 @@ import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
-import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.AppLocale
-import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DEVICE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENERAL_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
@@ -127,14 +125,6 @@ class DisplayDelayedNotificationWorker(
                     }
                 )
             }
-        }
-
-        if (builder == null) {
-            logError(
-                TAG,
-                OxygenUpdaterException("Failed to instantiate notificationBuilder. Can not display push notification!")
-            )
-            return Result.failure()
         }
 
         builder.setSmallIcon(R.drawable.logo_notification)

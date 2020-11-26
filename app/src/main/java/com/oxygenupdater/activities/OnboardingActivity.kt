@@ -281,13 +281,18 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 (application as OxygenUpdater?)?.setupCrashReporting(it)
             }
 
+            val startPage = intent?.getIntExtra(
+                MainActivity.INTENT_START_PAGE,
+                MainActivity.PAGE_UPDATE
+            ) ?: MainActivity.PAGE_UPDATE
+
             if (onboardingPage4ContributeCheckbox.isChecked) {
                 requestContributorStoragePermissions { granted: Boolean ->
                     if (granted) {
                         // 1st time, will save setting to true.
                         ContributorUtils.flushSettings(true)
                         SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
-                        startMainActivity()
+                        startMainActivity(startPage)
                         finish()
                     } else {
                         Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
@@ -297,7 +302,7 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
                 // not signed up, saving this setting will prevent contribute popups which belong to app updates.
                 SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
                 SettingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
-                startMainActivity()
+                startMainActivity(startPage)
                 finish()
             }
         } else {
