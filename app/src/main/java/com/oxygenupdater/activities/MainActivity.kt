@@ -637,18 +637,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         }
 
         val checkBoxView = View.inflate(this@MainActivity, R.layout.message_dialog_checkbox, null)
+        var userIgnoreWarningsPref = false
+        checkBoxView?.findViewById<CheckBox>(R.id.device_warning_checkbox)?.setOnCheckedChangeListener { _, isChecked ->
+            userIgnoreWarningsPref = isChecked
+        }
 
         MaterialAlertDialogBuilder(this)
             .setView(checkBoxView)
             .setTitle(getString(R.string.unsupported_device_warning_title))
             .setMessage(getString(resourceId))
-            .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
-                val checkbox = checkBoxView.findViewById<CheckBox>(R.id.device_warning_checkbox)
+            .setPositiveButton(getString(R.string.download_error_close), null)
+            .setOnDismissListener {
                 SettingsManager.savePreference(
                     SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
-                    checkbox.isChecked
+                    userIgnoreWarningsPref
                 )
-                dialog.dismiss()
             }.show()
     }
 
@@ -659,6 +662,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
         }
 
         val checkBoxView = View.inflate(this@MainActivity, R.layout.message_dialog_checkbox, null)
+        var userIgnoreWarningsPref = false
+        checkBoxView?.findViewById<CheckBox>(R.id.device_warning_checkbox)?.setOnCheckedChangeListener { _, isChecked ->
+            userIgnoreWarningsPref = isChecked
+        }
 
         MaterialAlertDialogBuilder(this)
             .setView(checkBoxView)
@@ -670,13 +677,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
                     mainViewModel.deviceMismatchStatus!!.third
                 )
             )
-            .setPositiveButton(getString(R.string.download_error_close)) { dialog, _ ->
-                val checkbox = checkBoxView.findViewById<CheckBox>(R.id.device_warning_checkbox)
+            .setPositiveButton(getString(R.string.download_error_close), null)
+            .setOnDismissListener {
                 SettingsManager.savePreference(
                     SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
-                    checkbox.isChecked
+                    userIgnoreWarningsPref
                 )
-                dialog.dismiss()
             }.show()
     }
 
