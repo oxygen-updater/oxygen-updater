@@ -50,8 +50,8 @@ class InstallViewModel(
     val toolbarSubtitle: LiveData<Int?>
         get() = _toolbarSubtitle
 
-    private val _toolbarImage = MutableLiveData<Int>()
-    val toolbarImage: LiveData<Int>
+    private val _toolbarImage = MutableLiveData<Pair<Int, Boolean>>()
+    val toolbarImage: LiveData<Pair<Int, Boolean>>
         get() = _toolbarImage
 
     private val _serverStatus = MutableLiveData<ServerStatus>()
@@ -89,7 +89,10 @@ class InstallViewModel(
 
     fun updateToolbarSubtitle(@StringRes resId: Int?) = _toolbarSubtitle.postValue(resId)
 
-    fun updateToolbarImage(@DrawableRes resId: Int) = _toolbarImage.postValue(resId)
+    fun updateToolbarImage(
+        @DrawableRes resId: Int,
+        applyTint: Boolean = false
+    ) = _toolbarImage.postValue(Pair(resId, applyTint))
 
     fun markFirstInstallGuidePageLoaded() = _firstInstallGuidePageLoaded.postValue(true)
 }

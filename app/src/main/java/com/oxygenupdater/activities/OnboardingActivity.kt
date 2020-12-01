@@ -9,6 +9,7 @@ import android.widget.ImageView.ScaleType
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -65,6 +66,10 @@ class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
         enableEdgeToEdgeUiSupport()
+        window.navigationBarColor = ContextCompat.getColor(
+            this,
+            R.color.backgroundVariant
+        )
 
         onboardingViewModel.fetchAllDevices().observe(this) {
             val deviceOsSpec = Utils.checkDeviceOsSpec(it)

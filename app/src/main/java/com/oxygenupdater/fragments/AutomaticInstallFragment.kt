@@ -49,7 +49,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         installViewModel.updateToolbarTitle(R.string.install_method_chooser_automatic_title)
         installViewModel.updateToolbarSubtitle(R.string.install_options_subtitle)
-        installViewModel.updateToolbarImage(R.drawable.auto)
+        installViewModel.updateToolbarImage(R.drawable.auto, true)
 
         (activity as InstallActivity?)?.resetAppBarForMethodChooserFragment()
 

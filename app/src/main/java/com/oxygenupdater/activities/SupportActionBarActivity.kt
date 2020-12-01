@@ -33,6 +33,9 @@ abstract class SupportActionBarActivity(
         setupTransitions()
         setupToolbar()
 
+        // allow activity to draw itself full screen
+        enableEdgeToEdgeUiSupport()
+
         // Add a lifecycle-aware callback that handles hierarchy properly
         // This is the preferred way to handle a custom back pressed behaviour
         // Callbacks are called in reverse order, meaning the last callback added
@@ -90,11 +93,21 @@ abstract class SupportActionBarActivity(
         // We must use `findViewById` because
         // neither ViewBinding nor Kotlin View Extensions will correctly resolve an individual activity's toolbar
         setSupportActionBar(findViewById(R.id.toolbar))
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
-        // allow activity to draw itself full screen
-        enableEdgeToEdgeUiSupport()
+    fun setNavBarColorToBackground() {
+        window.navigationBarColor = ContextCompat.getColor(
+            this,
+            R.color.background
+        )
+    }
+
+    fun setNavBarColorToBackgroundVariant() {
+        window.navigationBarColor = ContextCompat.getColor(
+            this,
+            R.color.backgroundVariant
+        )
     }
 
     companion object {

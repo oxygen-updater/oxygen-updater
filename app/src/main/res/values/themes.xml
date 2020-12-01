@@ -20,8 +20,8 @@
 
 		<item name="android:windowBackground">?colorSurface</item>
 
-		<!-- For visual continuity between the app and the navigation bar, set to bottom nav colour -->
-		<item name="android:navigationBarColor">@color/backgroundVariant</item>
+		<!-- For visual continuity between the app and the navigation bar, set to the window background -->
+		<item name="android:navigationBarColor">?colorSurface</item>
 		<!-- For visual continuity between the app and the status bar, set to the window background -->
 		<item name="android:statusBarColor">?colorSurface</item>
 		<item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
@@ -43,6 +43,11 @@
 	</style>
 
 	<style name="Theme.OxygenUpdater.DayNight" parent="Theme.OxygenUpdater.Light" />
+
+	<style name="Theme.OxygenUpdater.DayNight.Main">
+		<!-- For visual continuity between the app and the navigation bar, set to bottom nav colour -->
+		<item name="android:navigationBarColor">@color/backgroundVariant</item>
+	</style>
 
 	<!-- Used in activities that support edge-to-edge UI -->
 	<style name="Theme.OxygenUpdater.DayNight.FullScreen">

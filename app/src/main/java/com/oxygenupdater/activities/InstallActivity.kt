@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.R
-import com.oxygenupdater.extensions.setImageResourceWithAnimation
+import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
 import com.oxygenupdater.fragments.InstallGuideFragment
 import com.oxygenupdater.fragments.InstallMethodChooserFragment
 import com.oxygenupdater.models.UpdateData
@@ -77,7 +77,11 @@ class InstallActivity : SupportActionBarActivity(R.layout.activity_install) {
         }
 
         installViewModel.toolbarImage.observe(this) {
-            collapsingToolbarImage.setImageResourceWithAnimation(it, android.R.anim.fade_in)
+            collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                it.first,
+                android.R.anim.fade_in,
+                if (it.second) R.color.colorPrimary else null
+            )
         }
 
         initialize()
@@ -119,44 +123,40 @@ class InstallActivity : SupportActionBarActivity(R.layout.activity_install) {
         addToBackStack(INSTALL_METHOD_CHOOSER_FRAGMENT_TAG)
     }
 
-    fun setupAppBarForMethodChooserFragment() {
-        appBar.post {
-            // adjust bottom margin on first load
-            fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
+    fun setupAppBarForMethodChooserFragment() = appBar.post {
+        // adjust bottom margin on first load
+        fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
 
-            // adjust bottom margin on scroll
-            appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
-        }
+        // adjust bottom margin on scroll
+        appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
+    }.also {
+        setNavBarColorToBackground()
     }
 
-    private fun setupAppBarForViewPager() {
-        appBar.post {
-            // adjust bottom margin on first load
-            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
+    private fun setupAppBarForViewPager() = appBar.post {
+        // adjust bottom margin on first load
+        viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
 
-            // adjust bottom margin on scroll
-            appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
-        }
+        // adjust bottom margin on scroll
+        appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
+    }.also {
+        setNavBarColorToBackgroundVariant()
     }
 
-    fun resetAppBarForMethodChooserFragment() {
-        appBar.post {
-            // reset bottom margin on first load
-            fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
+    fun resetAppBarForMethodChooserFragment() = appBar.post {
+        // reset bottom margin on first load
+        fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
 
-            // remove listener
-            appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
-        }
+        // remove listener
+        appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
     }
 
-    fun resetAppBarForViewPager() {
-        appBar.post {
-            // reset bottom margin on first load
-            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
+    fun resetAppBarForViewPager() = appBar.post {
+        // reset bottom margin on first load
+        viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
 
-            // remove listener
-            appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
-        }
+        // remove listener
+        appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
     }
 
     fun openInstallGuide() = setupViewPager()
@@ -242,14 +242,18 @@ class InstallActivity : SupportActionBarActivity(R.layout.activity_install) {
                     // Load a "no entry" sign to show that the image failed to load.
                     .error(R.drawable.no_entry)
                     .into(collapsingToolbarImage)
-            } else {
-                val imageResourceId = resources.getIdentifier(
-                    RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_IMAGE,
-                    RESOURCE_ID_PACKAGE_DRAWABLE,
-                    packageName
-                )
 
-                collapsingToolbarImage.setImageResourceWithAnimation(imageResourceId, android.R.anim.fade_in)
+                collapsingToolbarImage.apply {
+                    imageTintList = null
+                }
+            } else {
+                installViewModel.updateToolbarImage(
+                    resources.getIdentifier(
+                        RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_IMAGE,
+                        RESOURCE_ID_PACKAGE_DRAWABLE,
+                        packageName
+                    )
+                )
             }
         }
     }
@@ -295,7 +299,7 @@ class InstallActivity : SupportActionBarActivity(R.layout.activity_install) {
                 // update toolbar state to reflect values set in `InstallMethodChooserFragment`
                 installViewModel.updateToolbarTitle(R.string.install_method_chooser_title)
                 installViewModel.updateToolbarSubtitle(R.string.install_method_chooser_subtitle)
-                installViewModel.updateToolbarImage(R.drawable.list_select)
+                installViewModel.updateToolbarImage(R.drawable.list_select, true)
 
                 setupAppBarForMethodChooserFragment()
 
