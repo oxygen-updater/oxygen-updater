@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.R
@@ -86,10 +87,14 @@ fun Context.openInCustomTab(url: String) = customTabIntent().launchUrl(
 )
 
 private fun Context.customTabIntent() = CustomTabsIntent.Builder()
-    .setToolbarColor(ContextCompat.getColor(this, R.color.background))
-    .setNavigationBarColor(ContextCompat.getColor(this, R.color.background))
     .setShowTitle(true)
-    .enableUrlBarHiding()
+    .setUrlBarHidingEnabled(true)
+    .setDefaultColorSchemeParams(
+        CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(ContextCompat.getColor(this, R.color.background))
+            .setNavigationBarColor(ContextCompat.getColor(this, R.color.background))
+            .build()
+    )
     .setColorScheme(
         if (ThemeUtils.isNightModeActive(this)) {
             CustomTabsIntent.COLOR_SCHEME_DARK
