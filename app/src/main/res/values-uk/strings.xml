@@ -11,8 +11,7 @@
 	<string name="update_information_header">Оновлення</string>
 	<string name="update_information_error_title">Не вдалося отримати інформацію про останнє оновлення</string>
 	<string name="update_information_banner_server">Натисніть, щоб переглянути важливі повідомлення</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable розширений режим if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">Ви вибрали режим оновлення \"%1$s\". Увімкніть розширений режим якщо плануєте використовувати цей режим.</string>
 	<string name="update_information_header_advanced_mode_hint">Увімкнено розширений режим</string>
 	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\".\n\nРозширений режим можна вимкнути в налаштуваннях.</string>
 	<string name="update_information_different_version_changelog_notice">Ви переглядаєте список змін для способу оновлення \"%1$s\". Якщо ви маєте намір встановити це оновлення, спочатку необхідно увімкнути розширений режим в налаштуваннях.\n\nПроте, якщо ви хочете переглянути список змін до поточної встановленої версії, вам потрібно вибрати відповідний спосіб оновлення в налаштуваннях.</string>
@@ -278,10 +277,9 @@
 
 	<!-- About screen strings -->
 	<string name="about">Про</string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
-	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
-	<string name="about_background_story_header">Background story</string>
+	<string name="about_description">Цей застосунок завантажує офіційні оновлення напряму із серверів OnePlus, потім перевіряє цілісність завантаженого ZIP-файлу перед встановленням. Таким чином, застосунок дозволяє встановлювати офіційні оновлення якнайшвидше. Якщо ви помітили помилки в операційній системі, повідомте про це напряму в OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Також ви можете приєднатися до нашого <a href="https://discord.gg/5TXdhKJ">серверу Discord</a>, де зможете поспілкуватися з іншими користувачами про оновлення. Щоб зв\'язатися з нами, напишіть листа на цю пошту: <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> (для побажань/відгуку тощо).</string>
+	<string name="about_support">Якщо бажаєте нас підтримати, ви можете купити видалення реклами (в налаштуваннях застосунку), або внести пожертву на <a href="https://patreon.com/oxygenupdater">сторінці Patreon</a>.</string>
+	<string name="about_background_story_header">Історія застосунку</string>
 	<string name="about_background_story">Спочатку цей застосунок розроблявся Аржаном Влеком, як продовження іншого його застосунку, який називається <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (він надає схожий функціонал, але для користувачів Cyanogen OS).\n\nПісля 4 років, в липні 2019 року, Аржан вирішив піти з цих обидвох проєктів і передав право власності на застосунок команді розробників з різних країн. Вони взяли на себе відповідальність за подальшу розробку цього застосунку і надання спільноті відмінної сервісної підтримки.\nВи можете знайти більше інформації <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">в цьому оголошенні</a>.\n\n14 серпня 2019 року відбувся перший випуск під новим керівництвом, який отримав нові функції, такі як темний режим та повний редизайн.\n\nДетальніше про нашу команду можна прочитати <a href="https://oxygenupdater.com/team/">на сайті</a>.</string>
 	<string name="about_third_party_app_notice">Зверніть увагу, це не офіційний застосунок від OnePlus.\nІм\'я та бренд OnePlus, логотип OnePlus і OxygenOS є власністю компанії OnePlus.\nAndroid, Google, Google Play та логотип Google Play є зареєстрованими товарними знаками Google Inc.\nЦей застосунок використовує дані OnePlus та її материнської компанії Oppo, щоб показувати інформацію про оновлення.</string>
 	<string name="about_rate_button_text">Оцінити</string>
@@ -292,28 +290,27 @@
 	<string name="notification_new_device_text">Додано підтримку нового пристою — %1$s! Відкрити застосунок.</string>
 	<string name="notification_no_notification_support">Встановіть або оновіть Сервіси Google Play, щоб увімкнути пуш-сповіщення.</string>
 	<string name="notification_version">%1$s доступне для %2$s!</string>
-	<!-- TODO: translate these 19 strings below -->
-	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="download_and_installation_notifications_group_name">Завантаження і встановлення</string>
 	<string name="push_notifications_group_name">Пуш-сповіщення</string>
-	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
+	<string name="miscellaneous_notifications_group_name">Вирішення проблем</string>
 	<string name="download_and_installation_notifications_group_description">Показує всі не важливі сповіщення застосунку Oxygen Updater. Включає індикатор завантаження.</string>
 	<string name="push_notifications_group_description">Показує всі важливі сповіщення застосунку Oxygen Updater. Включає сповіщення про оновлення системи і сповіщення про важливі новини.</string>
-	<string name="download_status_notification_channel_name">Download status</string>
-	<string name="verification_status_notification_channel_name">Verification status</string>
-	<string name="installation_status_notification_channel_name">Installation status</string>
+	<string name="download_status_notification_channel_name">Стан завантаження</string>
+	<string name="verification_status_notification_channel_name">Стан перевірки</string>
+	<string name="installation_status_notification_channel_name">Стан встановлення</string>
 	<string name="update_notification_channel_name">Доступне оновлення системи</string>
-	<string name="news_notification_channel_name">News article published</string>
+	<string name="news_notification_channel_name">Опубліковано нову новину</string>
 	<string name="device_notification_channel_name">Підтримується новий пристрій</string>
-	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
-	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
-	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
-	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
-	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
-	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
-	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
-	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
+	<string name="general_notification_channel_name">Загальні</string>
+	<string name="filename_submitted_notification_channel_name">Назву оновлення надіслано</string>
+	<string name="download_status_notification_channel_description">Сповіщення, які показують поточний стан завантаження: очікування, активний, завершено чи помилка</string>
+	<string name="verification_status_notification_channel_description">Сповіщення, які показують поточний стан перевірки файлу: в процесі, завершено чи помилка.\nДля завантаженого файлу обчислюється хешсума MD5 і перевіряється із завантаженою хешсумою, щоб переконатися що файл оновлення коректний і не пошкоджений.</string>
+	<string name="installation_status_notification_channel_description">Отримувати сповіщення коли оновлення успішно встановиться (або сповіщення про помилку)</string>
+	<string name="update_notification_channel_description">Отримувати сповіщення, якщо буде доступне оновлення для вибраного пристою та для вибраного методу оновлення</string>
+	<string name="news_notification_channel_description">Отримувати сповіщення, коли публікують нову новину</string>
+	<string name="device_notification_channel_description">Отримувати сповіщення, коли до застосунку додають підтримку нового пристрою</string>
+	<string name="general_notification_channel_description">Загальні сповіщення, які не підпадають ні під одну категорію</string>
+	<string name="filename_submitted_notification_channel_description">Отримувати сповіщення коли наша команда отримує надіслані вами назви файлів оновлення.\nВи можете вимкнути автоматичне надсилання назви файлів оновлення в налаштуваннях застосунку.</string>
 
 	<!-- Help strings -->
 	<string name="help">Допомога</string>
