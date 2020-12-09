@@ -1,7 +1,7 @@
 // https://blog.jetbrains.com/kotlin/category/releases/
 // https://kotlinlang.org/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-const val KOTLIN_VERSION = "1.4.20"
+const val KOTLIN_VERSION = "1.4.21"
 
 // https://doc.insert-koin.io/#/setup/index
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
