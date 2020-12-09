@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IntRange
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.updatePadding
 import com.oxygenupdater.R
@@ -11,6 +12,8 @@ import com.oxygenupdater.activities.FaqActivity
 import com.oxygenupdater.activities.HelpActivity
 import com.oxygenupdater.activities.InstallActivity
 import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.activities.MainActivity.Companion.PAGE_SETTINGS
+import com.oxygenupdater.activities.MainActivity.Companion.PAGE_UPDATE
 import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.activities.OnboardingActivity
 import com.oxygenupdater.activities.SupportActionBarActivity
@@ -40,16 +43,22 @@ private fun Activity.startActivityWithSharedTransition(
     startActivity(intent, bundle)
 }
 
-fun Activity.startOnboardingActivity(startPage: Int) = startActivity(
+fun Activity.startOnboardingActivity(
+    @IntRange(
+        from = PAGE_UPDATE.toLong(),
+        to = PAGE_SETTINGS.toLong()
+    ) startPage: Int
+) = startActivity(
     Intent(this, OnboardingActivity::class.java)
         .putExtra(MainActivity.INTENT_START_PAGE, startPage)
 )
 
-fun Activity.startMainActivity() = startActivity(
-    Intent(this, MainActivity::class.java)
-)
-
-fun Activity.startMainActivity(startPage: Int) = startActivity(
+fun Activity.startMainActivity(
+    @IntRange(
+        from = PAGE_UPDATE.toLong(),
+        to = PAGE_SETTINGS.toLong()
+    ) startPage: Int
+) = startActivity(
     Intent(this, MainActivity::class.java)
         .putExtra(MainActivity.INTENT_START_PAGE, startPage)
 )

@@ -30,7 +30,10 @@ import kotlin.math.abs
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class InstallActivity : SupportActionBarActivity(R.layout.activity_install) {
+class InstallActivity : SupportActionBarActivity(
+    R.layout.activity_install,
+    MainActivity.PAGE_UPDATE
+) {
 
     private var showDownloadPage = true
     private var updateData: UpdateData? = null

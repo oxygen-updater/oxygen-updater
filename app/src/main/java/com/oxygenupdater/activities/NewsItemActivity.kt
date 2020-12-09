@@ -39,7 +39,10 @@ import kotlinx.android.synthetic.main.layout_error.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDateTime
 
-class NewsItemActivity : SupportActionBarActivity(R.layout.activity_news_item) {
+class NewsItemActivity : SupportActionBarActivity(
+    R.layout.activity_news_item,
+    MainActivity.PAGE_NEWS
+) {
 
     private val newsViewModel by viewModel<NewsViewModel>()
 

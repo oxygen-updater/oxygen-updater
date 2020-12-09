@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuIt
     override fun onBackPressed() = when {
         // If the user is currently looking at the first step, allow the system to handle the
         // Back button. This calls finish() on this activity and pops the back stack.
-        viewPager.currentItem == 0 -> super.onBackPressed()
+        viewPager.currentItem == 0 -> finishAffinity()
         // If user's settings haven't been saved yet, don't reset to the first page
         shouldStopNavigateAwayFromSettings() -> showSettingsWarning()
         // Otherwise, reset to first page

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
+import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -24,7 +25,20 @@ import com.oxygenupdater.extensions.startMainActivity
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 abstract class SupportActionBarActivity(
-    @LayoutRes contentLayoutId: Int
+    @LayoutRes contentLayoutId: Int,
+
+    /**
+     * Used in the `onBackPressed` callback, only if this is the task root and
+     * we need to reroute to [MainActivity].
+     *
+     * Certain activities (e.g. install, news) can take advantage of this to
+     * tie back to the correct tab, if opened from a notification for example.
+     */
+    @IntRange(
+        from = MainActivity.PAGE_UPDATE.toLong(),
+        to = MainActivity.PAGE_SETTINGS.toLong()
+    )
+    private val startPage: Int
 ) : AppCompatActivity(contentLayoutId) {
 
     override fun onCreate(
@@ -45,7 +59,7 @@ abstract class SupportActionBarActivity(
         onBackPressedDispatcher.addCallback(this) {
             if (isTaskRoot) {
                 // If this is the only activity left in the stack, call [MainActivity].
-                startMainActivity()
+                startMainActivity(startPage)
             } else {
                 // Otherwise call [finishAfterTransition].
                 finishAfterTransition()

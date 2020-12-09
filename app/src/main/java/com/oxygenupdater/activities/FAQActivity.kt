@@ -8,7 +8,10 @@ import com.oxygenupdater.viewmodels.FaqViewModel
 import kotlinx.android.synthetic.main.activity_faq.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FaqActivity : SupportActionBarActivity(R.layout.activity_faq) {
+class FaqActivity : SupportActionBarActivity(
+    R.layout.activity_faq,
+    MainActivity.PAGE_ABOUT
+) {
 
     private val faqViewModel by viewModel<FaqViewModel>()
     private val adapter = FaqAdapter()
