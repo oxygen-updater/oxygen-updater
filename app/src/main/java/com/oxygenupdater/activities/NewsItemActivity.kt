@@ -47,6 +47,7 @@ class NewsItemActivity : SupportActionBarActivity(
     private val newsViewModel by viewModel<NewsViewModel>()
 
     private var shouldDelayAdStart = false
+    private var hasReadArticle = false
     private var newsItemId = -1L
 
     private var fullUrl = ""
@@ -150,8 +151,7 @@ class NewsItemActivity : SupportActionBarActivity(
             isVisible = dateTimePrefix != null
         }
 
-        NewsListAdapter.itemReadStatusChangedListener?.invoke(newsItem.id!!, true)
-
+        hasReadArticle = true
         // Mark the item as read on the server (to increase times read counter)
         newsViewModel.markNewsItemRead(newsItem).observe(this, markNewsItemReadObserver)
     }
@@ -177,6 +177,20 @@ class NewsItemActivity : SupportActionBarActivity(
     }
 
     override fun onDestroy() = super.onDestroy().also {
+        // We're invoking the listener here so that RecyclerView's standard item change/remove
+        // animations run just after leaving the activity. This has two advantages:
+        // 1. Better for UX, since the user can see the animations play out, which may
+        //    serve as a hint that read status has changed. Change animations (opacity fade)
+        //    run if the list is in "view all articles" mode, while fade+slide animations
+        //    run if the list is in "view only unread" mode, since once the item is marked
+        //    read it needs to be removed from the list.
+        // 2. Prevents a UI bug where MaterialContainerTransform has a hard time figuring
+        //    out what to draw, since the shared element either has changed its opacity,
+        //    or doesn't exist at all anymore.
+        if (hasReadArticle) {
+            NewsListAdapter.itemReadStatusChangedListener?.invoke(newsItemId, true)
+        }
+
         webView.apply {
             loadUrl("")
             stopLoading()
