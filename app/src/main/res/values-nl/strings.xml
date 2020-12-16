@@ -104,7 +104,7 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 
 	<string name="theme_light_subtitle">Thema met lichte achtergronden en een helderrode bovenbalk. Dit is het standaard thema.</string>
 	<string name="theme_dark_subtitle">Thema met bijna-zwarte achtergronden en een vleugje donkerrrood. Je kunt dit thema ook gebruiken om de batterij te sparen (alleen op AMOLED-schermen).</string>
-	<string name="theme_system_subtitle">Licht of donker thema op bassis van de systeeminstellingen (instelbaar in de weergave- of ontwikkelaarsopties van het apparaat). Beshikbaarheid varieert per apparaat.</string>
+	<string name="theme_system_subtitle">Licht of donker thema op bassis van de systeeminstellingen (instelbaar in de weergave- of ontwikkelaarsopties van het apparaat). Beschikbaarheid varieert per apparaat.</string>
 	<string name="theme_auto_subtitle">Wisselt automatisch tussen het lichte en donkere thema op basis van de huidige tijd.</string>
 	<string name="theme_additional_note">Opmerking: Als het automatische thema actief is en de modus "Energiebesparing" actief is, zal het donkere thema worden getoond om de batterij te sparen</string>
 
@@ -255,7 +255,7 @@ Instructies:
 	<string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
 	<string name="install_guide_zip_file_missing">"Als je root-toegang wil behouden, moet je hierboven een root-bestand selecteren."</string>
 	<!-- Device information strings -->
-	<string name="device_information_supported_oxygen_os">Je apparaat wordt ondersteunt.</string>
+	<string name="device_information_supported_oxygen_os">Je apparaat wordt ondersteund.</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Je apparaat wordt niet ondersteund, omdat het een provider-exclusief apparaat is.</string>
 	<string name="device_information_unsupported_oxygen_os">We hebben nog geen ondersteuning toegevoegd voor je nieuwe apparaat.</string>
 	<string name="device_information_unsupported_os">Je apparaat wordt niet ondersteund, omdat het niet ondersteund wordt door OxygenOS.</string>
@@ -289,30 +289,29 @@ Instructies:
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device_text">De %1$s wordt nu ondersteund. Open de app om dit apparaat te kiezen.</string>
-	<string name="notification_no_notification_support">Installeer Google Play services of werk deze bij om pushnotificaties te kunnen ontvangen.</string>
+	<string name="notification_no_notification_support">Installeer Google Play Services of werk deze bij om pushnotificaties te kunnen ontvangen.</string>
 	<string name="notification_version">%1$s is nu beschikbaar voor de %2$s!</string>
-	<!-- TODO: translate these 19 strings below -->
-	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="download_and_installation_notifications_group_name">Download &amp; Installatie</string>
 	<string name="push_notifications_group_name">Pushberichten</string>
-	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
+	<string name="miscellaneous_notifications_group_name">Overige</string>
 	<string name="download_and_installation_notifications_group_description">Toont alle voortgangsindicatoren van de Oxygen Updater-app. Dit zijn o.a. de meldingen die tijdens het downloaden van updates verschijnen.</string>
 	<string name="push_notifications_group_description">Toont alle pushberichten van de Oxygen Updater-app. Dit zijn o.a. de systeemupdate-meldingen en de meldingen die verschijnen wanneer er belangrijk nieuws is.</string>
 	<string name="download_status_notification_channel_name">Download status</string>
-	<string name="verification_status_notification_channel_name">Verification status</string>
-	<string name="installation_status_notification_channel_name">Installation status</string>
+	<string name="verification_status_notification_channel_name">Verificatie status</string>
+	<string name="installation_status_notification_channel_name">Installatie status</string>
 	<string name="update_notification_channel_name">Systeemupdate beschikbaar</string>
-	<string name="news_notification_channel_name">News article published</string>
+	<string name="news_notification_channel_name">Nieuwsartikel gepubliceerd</string>
 	<string name="device_notification_channel_name">Nieuw apparaat ondersteund</string>
-	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
-	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
-	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
-	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
-	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
-	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
-	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
-	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
+	<string name="general_notification_channel_name">Algemeen</string>
+	<string name="filename_submitted_notification_channel_name">OTA-bestandsnaam ingediend</string>
+	<string name="download_status_notification_channel_description">Notificaties welke de huidige status van een download weergeven: in afwachting, actief, voltooid, mislukt.</string>
+	<string name="verification_status_notification_channel_description">Notificaties welke de huidige status van een bestandsverificatie weergeven: in behandeling, voltooid, mislukt.\nMD5 checksums voor gedownloade bestanden worden geverifieerd om er zeker van te zijn dat er niet met het bestand is geknoeid, en het daarom een geldig bestand is.</string>
+	<string name="installation_status_notification_channel_description">Wordt genotificeerd als er een update succesvol is geïnstalleerd of niet.</string>
+	<string name="update_notification_channel_description">Wordt genotificeerd wanneer er een nieuwe update beschikbaar is voor het door jouw geselecteerde apparaat &amp; update methode.</string>
+	<string name="news_notification_channel_description">Wordt genotificeerd wanneer we een nieuwsartikel hebben gepubliceerd</string>
+	<string name="device_notification_channel_description">Wordt genotificeerd wanneer er ondersteuning voor een nieuw apparaat is toegevoegd</string>
+	<string name="general_notification_channel_description">Algemene notificaties welke niet passen in andere categorieën</string>
+	<string name="filename_submitted_notification_channel_description">Wordt genotificeerd wanneer je OTA-bestandsnamen succesvol hebt ingediend bij ons team.\nJe kan je het automatisch indienen van bestandsnamen uitzetten in de instellingen van de app.</string>
 
 	<!-- Help strings -->
 	<string name="help">Help</string>
