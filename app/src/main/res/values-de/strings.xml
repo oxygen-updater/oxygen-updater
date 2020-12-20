@@ -28,10 +28,10 @@
 	<string name="server_status_warning">Ein paar Funktionen funktionieren möglicherweiße nicht richtig.</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">Es ist ein Update verfügbar (%1$s). Tippen Sie hier um in den Play Store zu gelangen.</string>
-	<string name="new_app_version_long">Es ist ein Update verfügbar (%1$s). Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Bug Fixes bekommst.\nTippen Sie hier um in den Play Store zu gelangen.</string>
+	<string name="new_app_version">Es ist ein Update verfügbar (%1$s). Tippen Sie hier, um in den Play Store zu gelangen.</string>
+	<string name="new_app_version_long">Es ist ein Update verfügbar (%1$s). Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Bugfixes bekommst.\nTippen Sie hier um in den Play Store zu gelangen.</string>
 	<string name="new_app_version_inapp_downloaded">Das App Update wurde heruntergeladen</string>
-	<string name="new_app_version_inapp_failed">Das App Update konnte nicht installiert werden. Tippen Sie hier um in den Play Store zu gelangen.</string>
+	<string name="new_app_version_inapp_failed">Das App Update konnte nicht installiert werden. Tippen Sie hier, um in den Play Store zu gelangen.</string>
 
 	<!-- Downloader strings -->
 	<string name="download">"Update herunterladen"</string>
@@ -90,7 +90,7 @@ Wenn du  mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <
 	<string name="summary_privacy_policy">Online ansehen</string>
 	<string name="summary_rate_app">Hinterlasse eine 5 Sterne Bewertung</string>
 
-	<string name="label_buy_ad_free">Anzeigen entfernen</string>
+	<string name="label_buy_ad_free">Werbung entfernen</string>
 	<string name="label_theme">Theme</string>
 	<string name="label_privacy_policy">Datenschutz-Bestimmungen</string>
 	<string name="label_rate_app">Bewerte diese App</string>
@@ -281,7 +281,7 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 -Wenn dir die App gefällt, dann gibt ihr doch 5 Sterne im Play Store!"</string>
 	<string name="install_guide_close_button">"Installationsanleitung schließen"</string>
 	<string name="install_guide_zip_file_deleted">"Das Root Paket das du ausgewählt hast existiert nicht mehr. Bitte wähle oben ein neues aus."</string>
-	<string name="install_guide_zip_file_missing">"Wenn du möchtest das dein Gerät gerootet bleibt, dann musst du oben ein Root Paket angeben."</string>
+	<string name="install_guide_zip_file_missing">"Wenn du möchtest, dass dein Gerät gerootet bleibt, dann musst du oben ein Root Paket angeben."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Dein Gerät wird unterstützt</string>
@@ -325,7 +325,7 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="push_notifications_group_name">"Push Nachrichten"</string>
 	<string name="miscellaneous_notifications_group_name">Verschiedenes</string>
 	<string name="download_and_installation_notifications_group_description">"Zeigt alle unwichtigen Nachrichten von der Oxygen Updater App. Beinhaltet den Status Indikator der während des Downloads angezeigt wird."</string>
-	<string name="push_notifications_group_description">"Zeigt alle wichtigen Nachrichten von der Oxygen Updater App. Das beinhaltet System Update Nachrichten und Neuigkeiten."</string>
+	<string name="push_notifications_group_description">"Zeigt alle wichtigen Nachrichten von der Oxygen Updater App. Dies beinhaltet System Update Nachrichten und Neuigkeiten."</string>
 	<string name="download_status_notification_channel_name">Download Status</string>
 	<string name="verification_status_notification_channel_name">Verifikations Status</string>
 	<string name="installation_status_notification_channel_name">Installations Status</string>
@@ -365,9 +365,9 @@ Der Installationsbildschirm überprüft als erstes ob du ein gerootetes Gerät h
 Automatisch Installieren:
 Du musst nur deine Installationsoption wählen."</string>
 	<string name="help_reading_news_title">"Lese die neusten Nachrichten"</string>
-	<string name="help_reading_news_text">"Neuigkeiten sind auf der linken Seite des Update Info Screens. Die neusten Neuigkeiten werden oben angezeigt. Tippe einfach drauf zum Anzeigen.
-Tippe auf die Zurück taste um zum Neuigkeiten Screen zu kommen."</string>
-	<string name="help_device_information_title">"Informationen über dein Gerät anzeigen"</string>
+	<string name="help_reading_news_text">"Neuigkeiten findest du rechts von der Update Seite. Die neusten Neuigkeiten werden oben angezeigt. Tippe einfach darauf zum Anzeigen.
+Tippe auf die Zurück Taste um zurück zu den Neuigkeiten zu kommen."</string>
+	<string name="help_device_information_title">"Informationen über das Gerät anzeigen"</string>
 	<string name="help_device_information_text">"Sie können einige der Spezifikationen ihres Gerätes anschauen indem Sie die Seite rechts neben der \"Update\" Seite benutzen. Dieser Spezifikationen könnten zum Beispiel nützlich sein wenn Sie eine Supportanfrage einreichen."</string>
 	<string name="help_change_settings_title">"Einstellungen ändern"</string>
 	<string name="help_change_settings_text">"Sie können ihre Einstellungen durch das Menü oben rechts (mit der Option \"Einstellungen\") ändern:
@@ -404,15 +404,15 @@ Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphär
 	<string name="contribute_more_info">Mehr Informationen</string>
 	<string name="contribute_allow_storage">Bitte erlaube die Speicher Berechtigung um zu helfen die App zu verbessern</string>
 	<string name="contribute_successful_notification_title">Du hast erfolgreich beigetragen</string>
-	<string name="contribute_successful_notification_text">Danke für das Teilen der Update Dateinamen mit uns!</string>
+	<string name="contribute_successful_notification_text">Vielen Dank, dass Sie mit uns die Dateinamen der Updates übermittelt haben!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh nein!"</string>
-	<string name="error_app_outdated_message">"Diese Version der App ist veraltet. Es ist Zeit sie zu aktualisierne! Tippe Sie auf \"Google Play\" unten. Im Google Play, tippen Sie dann auf \"Update\"."</string>
+	<string name="error_app_outdated_message">"Diese Version der App ist veraltet. Es ist Zeit, sie zu aktualisieren! Tippe Sie unten auf \"Google Play\". Tippen Sie im Google Play Store auf \"Aktualisieren\"."</string>
 	<string name="error_app_requires_network_connection">"Keine Verbindung"</string>
 	<string name="error_app_requires_network_connection_message">"Verbindung zum Server fehlgeschlagen. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut. Die App wird nun beendet."</string>
 	<string name="error_no_internet_connection">"Keine Verbindung"</string>
-	<string name="error_maintenance">"Server Wartunsarbeiten"</string>
+	<string name="error_maintenance">"Server Wartungsarbeiten"</string>
 
 	<string name="error_maintenance_message">"Bitte haben Sie Geduld. Der Server wird bald wieder erreichbar sein."</string>
 	<string name="error_maintenance_retry">Möglicherweiße sind die Server gerade wegen Wartungsarbeiten heruntergefahren. Versuchen Sie es später noch einmal oder melden es und entweder über <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder auf unserem <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.</string>
@@ -448,13 +448,13 @@ Kein Root-Zugriff? Drücken Sie \"Schließen\" und fahren Sie fort."</string>
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ihr Kauf befindet sich im Status "Zahlung ausstehend". Sobald die Zahlung abgeschlossen ist, erhalten Sie alle Leistungen, auf die Sie Anspruch haben.</string>
 	<string name="purchase_error_after_payment">"Der Kauf der Werbe-freien Version ist durch einen internen Fehler fehlgeschlagen. Bitte versuche es in ein paar Minuten nochmal. Wenn du bereits bezahlt hast, kontaktiere bitte den Google Play Support für Hilfe."</string>
-
+Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Bugfixes bekommst
 	<!-- Other strings -->
 	<string name="error">Fehler</string>
 	<string name="icon">"Icon"</string>
 	<string name="loading">"Laden…"</string>
 	<string name="processing">"Bearbeiten…"</string>
 	<string name="choose_file">"Datei auswählen"</string>
-	<string name="update_information_description_not_available">"Es gibt keine offiziellen Informationen über die Neuerungen in diesem Update. Normalerweise beinhaltet solch ein Update Bug Fixes, Performance Verbesserungen, und / oder wichtige Sicherheitsupdates für dein Gerät."</string>
+	<string name="update_information_description_not_available">"Es gibt keine offiziellen Informationen über die Neuerungen in diesem Update. Normalerweise beinhaltet solch ein Update Bugfixes, Performance Verbesserungen, und / oder wichtige Sicherheitsupdates für dein Gerät."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
 </resources>
