@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 
 	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Не удалось получить список поддерживаемых устройств</string>
 
 	<!-- Update information strings -->
 	<!-- TODO: translate this string below -->
@@ -11,12 +11,12 @@
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">Поскольку произошла ошибка загрузки, и загрузку необходимо перезапустить, вы можете использовать эту ссылку, чтобы загрузить файл обновления из браузера. Возможно, вам придется переместить загруженный файл из каталога \"Downloads\" в его родительский каталог.  Это та же ссылка, которую приложение использует для загрузки, которая является официальной ссылкой на сервер OnePlus OTA:\n%1$s</string>
 	<string name="update_information_header">"Обновить"</string>
 	<!-- TODO: translate these 6 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable pасширенный режим if you plan to switch to this update track.</string>
+	<string name="update_information_error_title">Не удалось получить информацию о последних обновлениях</string>
+	<string name="update_information_banner_server">Нажмите здесь, чтобы просмотреть важные уведомления</string>
+	<string name="update_information_banner_advanced_mode_tip">Вы выбрали ветку обновлений \"%1$s\". Включите pасширенный режим, если вы планируете перейти на эту ветку обновлений.</string>
 	<string name="update_information_header_advanced_mode_hint">Расширенный режим включен</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled pасширенный режим, you can download the latest ZIP for \"%1$s\".\n\nYou can turn pасширенный режим off from settings.</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn pасширенный режим on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
