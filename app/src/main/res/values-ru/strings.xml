@@ -18,8 +18,8 @@
 	<string name="update_information_banner_server">Нажмите здесь, чтобы просмотреть важные уведомления</string>
 	<string name="update_information_banner_advanced_mode_tip">Вы выбрали ветку обновлений \"%1$s\". Включите pасширенный режим, если вы планируете перейти на эту ветку обновлений.</string>
 	<string name="update_information_header_advanced_mode_hint">Расширенный режим включен</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled pасширенный режим, you can download the latest ZIP for \"%1$s\".\n\nYou can turn pасширенный режим off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn pасширенный режим on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Поскольку вы включили расширенный режим, вы можете загрузить последнюю версию ZIP для \"%1$s\". Вы можете выключить pасширенный режим в настройках.</string>
+	<string name="update_information_different_version_changelog_notice">Вы просматриваете журнал изменений для последнего обновления в разделе обновлений \"%1$s\". Если вы собираетесь установить это обновление, вы должны сначала включить pасширенный режим (в настройках).  Однако, если вы хотите вместо этого увидеть журнал изменений для текущей установленной версии, вам нужно будет вернуться к правильному методу обновления.</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -34,17 +34,17 @@
 
 	<!-- New app version message strings -->
 	<!-- TODO: translate these 4 strings below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">Доступно обновление приложения (%1$s). Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
+	<string name="new_app_version_long">Доступно обновление приложения (%1$s). Постоянное обновление приложения гарантирует, что вы всегда будете получать новейшие функции и исправления ошибок. Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
+	<string name="new_app_version_inapp_downloaded">Обновление приложения загружено</string>
+	<string name="new_app_version_inapp_failed">Не удалось установить обновление приложения. Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
 
 	<!-- Downloader strings -->
 	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Скачать обновление</string>
 	<string name="downloaded">Обновление загружено</string>
 	<string name="downloading">Скачивание обновления…</string>
-	<string name="paused">Paused - tap to resume</string>
+	<string name="paused">Приостановлено - нажмите, чтобы возобновить</string>
 
 	<string name="download_complete">"Успешная загрузка"</string>
 	<string name="download_complete_notification">"Нажмите для установки"</string>
@@ -53,12 +53,12 @@
 	<string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
 
 	<!-- TODO translate these lines -->
-	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
-	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
+	<string name="download_error_server">Ошибка сервера при загрузке обновления. Пожалуйста, попробуйте загрузить обновление еще раз.</string>
+	<string name="download_error_internal">К сожалению, при загрузке обновления произошла техническая ошибка.12 Попробуйте скачать его еще раз. Если это повторяется, обратитесь за помощью к разработчику этого приложения.</string>
 	<!-- TODO: translate these 2 strings below -->
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
+	<string name="download_error_unsuccessful_response"><![CDATA[Похоже, ссылка для скачивания недействительна. Это может означать, что мы допустили ошибку при добавлении данных обновления, или OnePlus извлек/удалил файл обновления со своих серверов. Уведомление было отправлено команде, и мы рассмотрим его как можно скорее.
 
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+Если вы хотите узнать больше, не стесняйтесь обращаться к нам через <a href="mailto:support@oxygenupdater.com">email</a> или на наш <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">"Попробовать снова"</string>
