@@ -269,11 +269,11 @@
 В противном случае обратитесь к разработчику приложения. Вы можете сделать это, посетив раздел «Мои приложения» в Google Play Mаркет."</string>
 
 	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Подготовьтесь к установке</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
+	<string name="install_guide_page_2_title">Подготовка к установке</string>
+	<string name="install_guide_page_2_text">"Примечание: Установка обновления происходит со специальной страницы стандартного раздела «Обновления системы» вашего устройства. Если по какой-либо причине при открытии этого раздела появляется обновление системы, вы также можете сначала установить это обновление. После этого снова откройте Oxygen Updater, чтобы убедиться, что вы полностью обновились.
 
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
+Инструкции:
+&#8226; Закройте Oxygen Updater, нажав кнопку «Домой».
 
 &#8226; Open the Settings app. It should be located in your app drawer.
 
