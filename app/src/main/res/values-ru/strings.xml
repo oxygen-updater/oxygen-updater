@@ -13,8 +13,8 @@
 	<string name="update_information_banner_server">Нажмите здесь, чтобы просмотреть важные уведомления</string>
 	<string name="update_information_banner_advanced_mode_tip">Вы выбрали ветку обновлений \"%1$s\". Включите pасширенный режим, если вы планируете перейти на эту ветку обновлений.</string>
 	<string name="update_information_header_advanced_mode_hint">Расширенный режим включен</string>
-	<string name="update_information_header_advanced_mode_helper">Поскольку вы включили расширенный режим, вы можете загрузить последнюю версию ZIP для \"%1$s\". Вы можете выключить pасширенный режим в настройках.</string>
-	<string name="update_information_different_version_changelog_notice">Вы просматриваете журнал изменений для последнего обновления в разделе обновлений \"%1$s\". Если вы собираетесь установить это обновление, вы должны сначала включить pасширенный режим (в настройках).  Однако, если вы хотите вместо этого увидеть журнал изменений для текущей установленной версии, вам нужно будет вернуться к правильному методу обновления.</string>
+	<string name="update_information_header_advanced_mode_helper">Поскольку вы включили расширенный режим, вы можете загрузить последнюю версию ZIP для \"%1$s\". \n\nВы можете выключить pасширенный режим в настройках.</string>
+	<string name="update_information_different_version_changelog_notice">Вы просматриваете журнал изменений для последнего обновления в разделе обновлений \"%1$s\". Если вы собираетесь установить это обновление, вы должны сначала включить pасширенный режим (в настройках). \n\nОднако, если вы хотите вместо этого увидеть журнал изменений для текущей установленной версии, вам нужно будет вернуться к правильному методу обновления.</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -49,7 +49,6 @@
 
 Если вы хотите узнать больше, не стесняйтесь обращаться к нам через <a href="mailto:support@oxygenupdater.com">email</a> или на наш <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Файл был загружен, но не может быть перемещен в правильный каталог. Откройте файловый менеджер, перейдите к \"%1$s\" и вручную переместите файл в самый верхний каталог внутреннего хранилища.</string>
-
 	<string name="download_error_retry">"Попробовать снова"</string>
 	<string name="download_error_resume">"Продолжить"</string>
 	<string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
@@ -57,10 +56,8 @@
 	<string name="download_pending">"Загрузка скоро начнется…"</string>
 	<string name="download_notification_error_server">Ошибка сервера при загрузке. Пожалуйста, перезапустите загрузку.</string>
 	<string name="download_notification_error_internal">Техническая ошибка при загрузке. Перезапустите загрузку или свяжитесь с техподдержкой.</string>
-
 	<string name="download_notification_error_storage_full">"Недостаточно места."</string>
 	<string name="download_notification_error_corrupt">"Ошибка проверки файла. Проверьте подключение и попробуйте снова."</string>
-
 	<string name="download_progress_text_hours_remaining">"осталось около %1$d часов"</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">"осталось меньше минуты"</string>
 	<string name="download_progress_text_minutes_remaining">"еще около %1$d минут"</string>
@@ -70,7 +67,6 @@
 	<string name="download_progress_text_unknown_time_remaining">"вычисление времени…"</string>
 	<string name="download_progress_text_verifying">"проверка файла…"</string>
 	<string name="download_progress_text_paused">"приостановлено"</string>
-
 	<string name="download_verifying">"Проверка…"</string>
 	<string name="download_verifying_error">"Файл поврежден"</string>
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
@@ -101,7 +97,7 @@
 	<string name="theme_dark_subtitle">Приглушенный основной цвет OnePlus Red с почти черным фоном. Используйте эту тему для экономии заряда батареи, особенно на экранах AMOLED.</string>
 	<string name="theme_system_subtitle">Используйте ночной режим системы (вы можете установить его в настройках дисплея или в настройках разработчика). Зависит от устройства.</string>
 	<string name="theme_auto_subtitle">Переключайтесь между светлыми и темными темами в зависимости от времени дня, чтобы не утомлять глаза ночью.</string>
-	<string name="theme_additional_note">Примечание: если активна тема \"Auto\" и включена экономия заряда, темная тема будет автоматически использоваться независимо от времени суток
+	<string name="theme_additional_note">Примечание: если активна тема \"Авто\" и включена экономия заряда, темная тема будет автоматически использоваться независимо от времени суток
                для экономии батареи</string>
 
 	<string name="settings">"Настройки"</string>
