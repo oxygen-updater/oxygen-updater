@@ -98,7 +98,7 @@
 	<string name="theme_system_subtitle">Используйте ночной режим системы (вы можете установить его в настройках дисплея или в настройках разработчика). Зависит от устройства.</string>
 	<string name="theme_auto_subtitle">Переключайтесь между светлыми и темными темами в зависимости от времени дня, чтобы не утомлять глаза ночью.</string>
 	<string name="theme_additional_note">Примечание: если активна тема \"Авто\" и включена экономия заряда, темная тема будет автоматически использоваться независимо от времени суток
-               для экономии батареи</string>
+        для экономии батареи</string>
 
 	<string name="settings">"Настройки"</string>
 	<string name="settings_buy_button_buy">"Купить (%1$s)"</string>
@@ -177,7 +177,6 @@
 	<string name="install_going_back_not_possible">"К сожалению, вернуться уже нельзя"</string>
 	<string name="install_preparing_installation">"Подготовка установки…"</string>
 	<string name="install_recovery_installer_title">"Установщик обновления"</string>
-
 	<string name="install_recovery_backing_up">"Резервное копирование устройства. Это займет некоторое время!"</string>
 	<string name="install_recovery_clearing_cache">"Очистка кэша (cache partition)…"</string>
 	<string name="install_recovery_done">"Готово. Устройство перезагрузится."</string>
@@ -280,10 +279,8 @@
 	<string name="device_information_carrier_exclusive_oxygen_os">Ваше устройство не поддерживается, так как это эксклюзивное устройство оператора связи.</string>
 	<string name="device_information_unsupported_oxygen_os">Мы еще не добавили поддержку для вашего нового устройства</string>
 	<string name="device_information_unsupported_os">Ваше устройство не поддерживается, так как на нем не работает OxygenOS</string>
-
 	<string name="device_information_hardware_header">Оборудование</string>
 	<string name="device_information_software_header">ПО</string>
-
 	<string name="device_information_amount_of_memory">"Объем ОЗУ:"</string>
 	<string name="device_information_cpu_frequency">"Частота процессора:"</string>
 	<string name="device_information_header">"Устройство"</string>
@@ -389,7 +386,6 @@
 	<string name="news_empty_state_all_read_header">Больше нечего читать</string>
 	<string name="news_empty_state_none_available_text">В данный момент нет доступных статей, проверьте позже.</string>
 	<string name="news_empty_state_all_read_text">Вы прочитали все статьи. Хорошая работа! \nМы надеемся, что вам понравилось читать наши статьи, и вы узнали из них что-то новое. \n\nСнова нажмите на баннер, чтобы показать все новостные статьи.</string>
-
 	<string name="contribute">Стать участником</string>
 	<string name="contribute_title">Помогите улучшить Oxygen Updater</string>
 	<string name="contribute_explanation">Oxygen Updater нужна ваша помощь! Чтобы предоставлять вам последние обновления, нам нужно получить имена файлов обновлений. Они присутствуют на вашем телефоне, когда появляется обычное обновление. \n\nКак я могу помочь? \n\nOxygen Updater может автоматически отправлять новые имена файлов обновлений нашим администраторам. Это будет использовать небольшой объем данных и может потреблять немного заряда батареи. Все, что вам нужно сделать, это подождать (примерно 15 минут) перед установкой официальных обновлений системы, пока вы не увидите подтверждение Oxygen Updater, что файл был успешно отправлен. Только каталог «.Ota» на вашем телефоне сканируется один раз в 15 минут. Он проверяет только конкретное имя в этой конкретной папке.</string>
