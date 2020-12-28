@@ -44,7 +44,7 @@
 	<string name="download_error_close">"Закрыть"</string>
 	<string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
 	<string name="download_error_server">Ошибка сервера при загрузке обновления. Пожалуйста, попробуйте загрузить обновление еще раз.</string>
-	<string name="download_error_internal">К сожалению, при загрузке обновления произошла техническая ошибка.12 Попробуйте скачать его еще раз. Если это повторяется, обратитесь за помощью к разработчику этого приложения.</string>
+	<string name="download_error_internal">К сожалению, при загрузке обновления произошла техническая ошибка. Попробуйте скачать его еще раз. Если это повторяется, обратитесь за помощью к разработчику этого приложения.</string>
 	<string name="download_error_unsuccessful_response"><![CDATA[Похоже, ссылка для скачивания недействительна. Это может означать, что мы допустили ошибку при добавлении данных обновления, или OnePlus извлек/удалил файл обновления со своих серверов. Уведомление было отправлено команде, и мы рассмотрим его как можно скорее.
 
 Если вы хотите узнать больше, не стесняйтесь обращаться к нам через <a href="mailto:support@oxygenupdater.com">email</a> или на наш <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
@@ -377,7 +377,7 @@
 	<string name="news_empty">"В этой статье нет содержания."</string>
 	<string name="news_load_network_error">"Не удалось открыть статью. Нет сетевого подключения. Нажмите «Повторить» для загрузки"</string>
 	<string name="news_load_id_error"><![CDATA[Не удалось открыть статью с недопустимого URL-адреса: %1$s. Проверьте URL-адрес или сообщите нам об этом через <a href="mailto:support@oxygenupdater.com">email</a> или на наш <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="news_unread_count_1"> У вас %1$d непрочитанных новостных статей. Нажмите здесь, чтобы просмотреть их.</string>
+	<string name="news_unread_count_1">У вас %1$d непрочитанных новостных статей. Нажмите здесь, чтобы просмотреть их.</string>
 	<string name="news_unread_count_2">У вас %1$d непрочитанных новостных статей. Нажмите, чтобы показать все статьи.</string>
 	<string name="news_mark_read">Пометить, как прочитанное</string>
 	<string name="news_mark_unread">Отметить как непрочитанное</string>
