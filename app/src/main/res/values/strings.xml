@@ -247,9 +247,9 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 Instructions:
 &#8226; Close Oxygen Updater by pressing the home button.
 
-&#8226; Open the Settings app. It should be in the Applications folder under "OnePlus". Scroll down to the System tab and tap it.
+&#8226; Open the Settings app. It should be located in your app drawer.
 
-&#8226; Scroll down until you see the System Update tab. Tap on it."</string>
+&#8226; Scroll down until you see the System updates. Tap on it."</string>
 
 	<string name="install_guide_page_3_title">Install the update</string>
 	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
