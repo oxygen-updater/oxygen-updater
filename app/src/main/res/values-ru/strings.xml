@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Не удалось получить список поддерживаемых устройств</string>
 
 	<!-- Update information strings -->
-	<!-- TODO: translate this string below -->
 	<string name="enable">включить</string>
 	<string name="update_information_file_name">"Имя файла: %1$s"</string>
-	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">Поскольку произошла ошибка загрузки, и загрузку необходимо перезапустить, вы можете использовать эту ссылку, чтобы загрузить файл обновления из браузера. Возможно, вам придется переместить загруженный файл из каталога \"Downloads\" в его родительский каталог.  Это та же ссылка, которую приложение использует для загрузки, которая является официальной ссылкой на сервер OnePlus OTA:\n%1$s</string>
 	<string name="update_information_header">"Обновить"</string>
-	<!-- TODO: translate these 6 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable pасширенный режим if you plan to switch to this update track.</string>
+	<string name="update_information_error_title">Не удалось получить информацию о последних обновлениях</string>
+	<string name="update_information_banner_server">Нажмите здесь, чтобы просмотреть важные уведомления</string>
+	<string name="update_information_banner_advanced_mode_tip">Вы выбрали ветку обновлений \"%1$s\". Включите pасширенный режим, если вы планируете перейти на эту ветку обновлений.</string>
 	<string name="update_information_header_advanced_mode_hint">Расширенный режим включен</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled pасширенный режим, you can download the latest ZIP for \"%1$s\".\n\nYou can turn pасширенный режим off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn pасширенный режим on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Поскольку вы включили расширенный режим, вы можете загрузить последнюю версию ZIP для \"%1$s\". \n\nВы можете выключить pасширенный режим в настройках.</string>
+	<string name="update_information_different_version_changelog_notice">Вы просматриваете журнал изменений для последнего обновления в разделе обновлений \"%1$s\". Если вы собираетесь установить это обновление, вы должны сначала включить pасширенный режим (в настройках). \n\nОднако, если вы хотите вместо этого увидеть журнал изменений для текущей установленной версии, вам нужно будет вернуться к правильному методу обновления.</string>
 	<string name="update_information_last_checked_on">"Последняя проверка: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Информация об обновлении недоступна."</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -33,46 +28,36 @@
 	<string name="server_status_warning">"Hекоторые функции могут не работать."</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">Доступно обновление приложения (%1$s). Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
+	<string name="new_app_version_long">Доступно обновление приложения (%1$s). Постоянное обновление приложения гарантирует, что вы всегда будете получать новейшие функции и исправления ошибок. Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
+	<string name="new_app_version_inapp_downloaded">Обновление приложения загружено</string>
+	<string name="new_app_version_inapp_failed">Не удалось установить обновление приложения. Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
 
 	<!-- Downloader strings -->
-	<!-- TODO: translate these 4 strings below -->
 	<string name="download">Скачать обновление</string>
 	<string name="downloaded">Обновление загружено</string>
 	<string name="downloading">Скачивание обновления…</string>
-	<string name="paused">Paused - tap to resume</string>
-
+	<string name="paused">Приостановлено - нажмите, чтобы возобновить</string>
 	<string name="download_complete">"Успешная загрузка"</string>
 	<string name="download_complete_notification">"Нажмите для установки"</string>
 	<string name="download_error">"Ошибка загрузки"</string>
 	<string name="download_error_close">"Закрыть"</string>
 	<string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
+	<string name="download_error_server">Ошибка сервера при загрузке обновления. Пожалуйста, попробуйте загрузить обновление еще раз.</string>
+	<string name="download_error_internal">К сожалению, при загрузке обновления произошла техническая ошибка. Попробуйте скачать его еще раз. Если это повторяется, обратитесь за помощью к разработчику этого приложения.</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[Похоже, ссылка для скачивания недействительна. Это может означать, что мы допустили ошибку при добавлении данных обновления, или OnePlus извлек/удалил файл обновления со своих серверов. Уведомление было отправлено команде, и мы рассмотрим его как можно скорее.
 
-	<!-- TODO translate these lines -->
-	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
-	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
-
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
-
+Если вы хотите узнать больше, не стесняйтесь обращаться к нам через <a href="mailto:support@oxygenupdater.com">email</a> или на наш <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<string name="download_error_could_not_move_temp_file">Файл был загружен, но не может быть перемещен в правильный каталог. Откройте файловый менеджер, перейдите к \"%1$s\" и вручную переместите файл в самый верхний каталог внутреннего хранилища.</string>
 	<string name="download_error_retry">"Попробовать снова"</string>
-	<string name="download_error_resume">"продолжить"</string>
+	<string name="download_error_resume">"Продолжить"</string>
 	<string name="download_error_storage">"Недостаточно места на устройстве для файла обновления. Пожалуйста, освободите немного места и попробуйте загрузить еще раз."</string>
 	<string name="download_failed">"Ошибка загрузки"</string>
 	<string name="download_pending">"Загрузка скоро начнется…"</string>
-	<!-- TODO translate these lines -->
-	<string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
-	<string name="download_notification_error_internal">Technical error while downloading. Restart the download or contact support.</string>
-
+	<string name="download_notification_error_server">Ошибка сервера при загрузке. Пожалуйста, перезапустите загрузку.</string>
+	<string name="download_notification_error_internal">Техническая ошибка при загрузке. Перезапустите загрузку или свяжитесь с техподдержкой.</string>
 	<string name="download_notification_error_storage_full">"Недостаточно места."</string>
 	<string name="download_notification_error_corrupt">"Ошибка проверки файла. Проверьте подключение и попробуйте снова."</string>
-
 	<string name="download_progress_text_hours_remaining">"осталось около %1$d часов"</string>
 	<string name="download_progress_text_less_than_a_minute_remaining">"осталось меньше минуты"</string>
 	<string name="download_progress_text_minutes_remaining">"еще около %1$d минут"</string>
@@ -81,64 +66,51 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_progress_text_seconds_remaining">"еще несколько секунд"</string>
 	<string name="download_progress_text_unknown_time_remaining">"вычисление времени…"</string>
 	<string name="download_progress_text_verifying">"проверка файла…"</string>
-	<string name="download_progress_text_paused">"помолчала"</string>
-
+	<string name="download_progress_text_paused">"приостановлено"</string>
 	<string name="download_verifying">"Проверка…"</string>
 	<string name="download_verifying_error">"Файл поврежден"</string>
 	<string name="download_verifying_start">"Проверка загруженного файла…"</string>
 
 	<!-- Settings strings -->
-	<!-- TODO: translate these lines -->
-	<string name="preference_header_support">Поддерживать нас</string>
+	<string name="preference_header_support">Поддержите нас</string>
 	<string name="preference_header_device">Устройство</string>
-	<string name="preference_header_ui">UI</string>
+	<string name="preference_header_ui">Интерфейс</string>
 	<string name="preference_header_notifications">Уведомления</string>
-	<string name="preference_header_advanced">Продвинутый</string>
-	<string name="preference_header_about">O</string>
-
-	<!-- TODO: translate these lines -->
+	<string name="preference_header_advanced">Расширенные</string>
+	<string name="preference_header_about">O нас</string>
 	<string name="summary_on">Включено</string>
-	<string name="summary_off">инвалид</string>
+	<string name="summary_off">Выключено</string>
 	<string name="summary_please_wait">пожалуйста, подождите…</string>
-	<string name="summary_update_method">Сначала выберите свое устройство</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_privacy_policy">Смотреть онлайн</string>
-	<string name="summary_rate_app">Leave a 5 star review</string>
-
-	<!-- TODO: translate these lines -->
-	<string name="label_buy_ad_free">Удалить объявления</string>
-	<string name="label_theme">Theme</string>
+	<string name="summary_update_method">Сначала выберите устройство</string>
+	<string name="summary_theme">Выберите тему</string>
+	<string name="summary_privacy_policy">Просмотреть онлайн</string>
+	<string name="summary_rate_app">Поставьте нам 5 звёзд</string>
+	<string name="label_buy_ad_free">Удалить рекламу</string>
+	<string name="label_theme">Тема</string>
 	<string name="label_privacy_policy">Политика конфиденциальности</string>
-	<string name="label_rate_app">Оцени это приложение</string>
-
-	<!-- TODO: translate these lines -->
-	<string name="theme_light">Легкий</string>
-	<string name="theme_dark">Темно</string>
-	<string name="theme_system">Система</string>
+	<string name="label_rate_app">Оцените это приложение</string>
+	<string name="theme_light">Светлая</string>
+	<string name="theme_dark">Темная</string>
+	<string name="theme_system">Системная</string>
 	<string name="theme_auto">Авто</string>
-
-	<!-- TODO: translate these lines -->
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device.</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_light_subtitle">Тема с белым фоном и основным цветом OnePlus Red.</string>
+	<string name="theme_dark_subtitle">Приглушенный основной цвет OnePlus Red с почти черным фоном. Используйте эту тему для экономии заряда батареи, особенно на экранах AMOLED.</string>
+	<string name="theme_system_subtitle">Используйте ночной режим системы (вы можете установить его в настройках дисплея или в настройках разработчика). Зависит от устройства.</string>
+	<string name="theme_auto_subtitle">Переключайтесь между светлыми и темными темами в зависимости от времени дня, чтобы не утомлять глаза ночью.</string>
+	<string name="theme_additional_note">Примечание: если активна тема \"Авто\" и включена экономия заряда, темная тема будет автоматически использоваться независимо от времени суток
+        для экономии батареи</string>
 
 	<string name="settings">"Настройки"</string>
 	<string name="settings_buy_button_buy">"Купить (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Куплено"</string>
 	<string name="settings_buy_button_not_possible">"Недоступно"</string>
 	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
-
-	<!-- TODO translate these lines -->
-	<string name="settings_contribute_label">Help improving the app</string>
-
+	<string name="settings_contribute_label">Помогите улучшить приложение</string>
 	<string name="settings_device">"Устройство"</string>
 	<string name="settings_entered_incorrectly">"Ошибка сохранения настроек. Пожалуйста, выберите снова ваше устройство / вариант обновления."</string>
 	<string name="settings_explanation_incremental_full_update">"Частичное обновление системы возможно только в случае, когда на момент выпуска обновления у вас уже была установлена последняя версия прошивки.
 
-Полное обновление системы может быть установлено всегда, независимо от установленной на данной момент версии прошивки.
+Полное обновление системы может быть установлено всегда, независимо от установленной на данный момент версии прошивки.
 
 Бета обновление прошивки OxygenOS возможно только в том случае, когда вы уже используете Бета версию прошивки."</string>
 	<string name="settings_push_from_server">"Если какое-либо критическое предупреждение"</string>
@@ -154,8 +126,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 - При возврате с беты на стабильную прошивку (не забудьте сделать сброс устройства);
 - При переустановке текущей версии прошивки."</string>
 	<string name="settings_update_method">"Вариант обновления"</string>
-	<!-- TODO translate -->
-	<string name="settings_upload_logs">Share usage data and logs</string>
+	<string name="settings_upload_logs">Делитесь данными об использовании и журналами</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
@@ -164,7 +135,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Добро пожаловать"</string>
-	<string name="onboarding_finished_button">"начать"</string>
+	<string name="onboarding_finished_button">"Начать"</string>
 	<string name="onboarding_page_1_title">"Добро пожаловать в Oxygen Updater!"</string>
 	<string name="onboarding_page_1_text">"Данное приложение позволит вам:
 
@@ -194,7 +165,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 Если вы используете бета версии прошивок, то выберите \"Community Edition\".
 
 Проведите влево, чтобы продолжить."</string>
-	<string name="onboarding_page_4_title">"Вы готовы! "</string>
+	<string name="onboarding_page_4_title">"Вы готовы!"</string>
 	<string name="onboarding_page_4_text">"Наслаждайтесь использованием данного приложения!
 
 Вы всегда можете изменить настройки приложения. Чтобы сделать это: Нажмите на три точки в правом верхнем углу, после нажмите на \"Настройки\"."</string>
@@ -206,14 +177,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="install_going_back_not_possible">"К сожалению, вернуться уже нельзя"</string>
 	<string name="install_preparing_installation">"Подготовка установки…"</string>
 	<string name="install_recovery_installer_title">"Установщик обновления"</string>
-
 	<string name="install_recovery_backing_up">"Резервное копирование устройства. Это займет некоторое время!"</string>
 	<string name="install_recovery_clearing_cache">"Очистка кэша (cache partition)…"</string>
 	<string name="install_recovery_done">"Готово. Устройство перезагрузится."</string>
 	<string name="install_recovery_installing_additional_zip">"Установка дополнительного ZIP архива…"</string>
 	<string name="install_recovery_installing_update">"Установка обновления…"</string>
 	<string name="install_recovery_thank_you">"Спасибо за использование Oxygen Updater. Если вам нравится приложение, пожалуйста оцените его на 5 звезд в Google Play :-)"</string>
-	<string name="install_error_write_script_failed">"Не удалось подготовить установку обновление. Проверьте, предоставлен ли рут-доступ."</string>
+	<string name="install_error_write_script_failed">"Не удалось подготовить установку обновления. Проверьте, предоставлен ли рут-доступ."</string>
 	<string name="install_options_backup">"Резервное копирование устройства"</string>
 	<string name="install_options_header">"Вы можете настроить процесс установки изменяя опции снизу. Нажмите \"Начать установку\" для установки обновления."</string>
 	<string name="install_options_keep_root">"Сохранить рут-права на устройстве"</string>
@@ -226,13 +196,12 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="install_options_explanation_backup">"Резервная копия устройства:
 При выборе этой опции, перед установкой будет сделана резервная копия вашей системы, приложений и настроек. Не помешает, если произойдет что-то ужасное."</string>
 	<string name="install_options_explanation_keep_root">"Сохранить рут-права на устройстве:
-При выборе этой опции, вы можете выбрать файл установки рута,, который будет установлен после обновления системы. Это гарантирует сохранение рута на устройстве. Заметьте, что рут должен быть совместим с новой версией OxygenOS, которую вы собираетесь установить."</string>
+При выборе этой опции, вы можете выбрать файл установки рута, который будет установлен после обновления системы. Это гарантирует сохранение рута на устройстве. Заметьте, что рут должен быть совместим с новой версией OxygenOS, которую вы собираетесь установить."</string>
 	<string name="install_options_explanation_wipe_cache">"Очистка кэша (cache partition):
-При выборе этой опции, раздел кэша будет очищен после установки обновлерия. Это гарантирует стабильную работу устройства и снижает вероятность возникновения ошибок, вызванных установкой обновления."</string>
+При выборе этой опции, раздел кэша будет очищен после установки обновления. Это гарантирует стабильную работу устройства и снижает вероятность возникновения ошибок, вызванных установкой обновления."</string>
 	<string name="install_options_explanation_reboot">"Перезагрузить после установки:
 При выборе этой опции ваше устройство автоматически загрузится в систему после установки обновления. В противном случае ваше устройство останется в рекавери, где вы можете установить дополнительные архивы."</string>
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_title">Выберите способ установки</string>
 	<string name="install_method_chooser_subtitle">"Как вы хотите установить обновление?"</string>
 	<string name="install_method_chooser_automatic_title">"Автоматическая установка*"</string>
 	<string name="install_method_chooser_automatic_description">"Самый простой способ установки.
@@ -268,57 +237,50 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 Если произошла ошибка загрузки, откройте приложение и попробуйте снова загрузить обновление. Если это не работает, убедитесь, что у вас работает интернет подключение.
 В противном случае обратитесь к разработчику приложения. Вы можете сделать это, посетив раздел «Мои приложения» в Google Play Mаркет."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
+	<string name="install_guide_page_2_title">Подготовка к установке</string>
+	<string name="install_guide_page_2_text">"Примечание: Установка обновления происходит со специальной страницы стандартного раздела «Обновления системы» вашего устройства. Если по какой-либо причине при открытии этого раздела появляется обновление системы, вы также можете сначала установить это обновление. После этого снова откройте Oxygen Updater, чтобы убедиться, что вы полностью обновились.
 
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
+Инструкции:
+&#8226; Закройте Oxygen Updater, нажав кнопку «Домой».
 
-&#8226; Open the Settings app. It should be located in your app drawer.
+&#8226; Откройте приложение Настройки. Оно должно находиться в ящике вашего приложения.
 
-&#8226; Scroll down until you see System updates. Tap on it."</string>
+&#8226; Прокрутите вниз до тех пор, пока не увидите "Обновление системы". Нажмите на это."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
+	<string name="install_guide_page_3_title">Установить обновление</string>
+	<string name="install_guide_page_3_text">"Теперь, когда вы находитесь в приложении «Обновления системы», пришло время установить обновление.
 
-&#8226; Within the System Updates section, tap the gear icon in the top right
+&#8226; В разделе «Обновления системы» коснитесь значка шестеренки в правом верхнем углу.
 
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
+&#8226; Теперь выберите \"Локальное обновление\".  Должен появиться экран выбора файла.
 
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
+&#8226; На этом экране нажмите на файл обновления, который вы загрузили, используя Oxygen Updater. Его имя должно начинаться с \"%1$sOxygen\".
 
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
+&#8226; Нажмите на \"Обновить сейчас\". Установка должна начаться автоматически."</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
+	<string name="install_guide_page_4_title">Дождитесь завершения установки</string>
+	<string name="install_guide_page_4_text">"&#8226; Теперь телефон установит обновление и отобразит индикатор выполнения. Подождите, пока установка не будет завершена. Установка может занять от нескольких минут до 15 минут.
 
-&#8226; Afterwards, your phone will restart to complete the update."</string>
+&#8226; После этого ваш телефон перезагрузится, чтобы завершить обновление."</string>
 
 	<string name="install_guide_page_5_title">"Готово. Наслаждайтесь новой версией OxygenOS!"</string>
 	<string name="install_guide_page_5_text">"&#8226; После завершения оптимизации приложений, обновление установлено успешно.
-Чтобы проверить это, вы можете узнать текущую версию системы следующим образом::
+Чтобы проверить это, вы можете узнать текущую версию системы следующим образом:
 
-- Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.
+- Зайдите в «Настройки», нажмите \"О телефоне\" и проверьте версию OxygenOS.
 
-- If you like this app, give it 5 stars at Google Play!"</string>
+- Если вам нравится это приложение, поставьте 5 звезд в Google Play!"</string>
 	<string name="install_guide_close_button">"Закрыть Руководство по установке"</string>
 	<string name="install_guide_zip_file_deleted">"Выбранный архив установки рут-прав больше не существует. Выберите новый архив выше."</string>
 	<string name="install_guide_zip_file_missing">"Если вы хотите сохранить рут-права на устройстве, выберите архив для установки выше."</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: translate these lines -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="device_information_supported_oxygen_os">Your device is supported</string>
-	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
-	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
-	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
-
-	<string name="device_information_hardware_header">Hardware</string>
-	<string name="device_information_software_header">Software</string>
-
+        <string name="device_information_supported_oxygen_os">Ваше устройство поддерживается</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Ваше устройство не поддерживается, так как это эксклюзивное устройство оператора связи.</string>
+	<string name="device_information_unsupported_oxygen_os">Мы еще не добавили поддержку для вашего нового устройства</string>
+	<string name="device_information_unsupported_os">Ваше устройство не поддерживается, так как на нем не работает OxygenOS</string>
+	<string name="device_information_hardware_header">Оборудование</string>
+	<string name="device_information_software_header">ПО</string>
 	<string name="device_information_amount_of_memory">"Объем ОЗУ:"</string>
 	<string name="device_information_cpu_frequency">"Частота процессора:"</string>
 	<string name="device_information_header">"Устройство"</string>
@@ -334,14 +296,12 @@ Instructions:
 
 	<!-- About screen strings -->
 	<string name="about">"О приложении"</string>
-	<!-- TODO: translate these 5 strings below -->
-	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
-	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
-	<string name="about_background_story_header">Background story</string>
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
-	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
+	<string name="about_description">Это приложение загружает официальные обновления прямо с серверов OnePlus и даже проверяет целостность загруженного ZIP-файла перед установкой.  Таким образом приложение позволяет пропустить очередь развертывания и как можно скорее установить официальные обновления. Если вы обнаружите ошибки в ОС, сообщите о них в OnePlus напрямую: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Вы можете присоединиться к нашему <a href="https://discord.gg/5TXdhKJ">Discord server</a>, чтобы вы могли общаться с другими пользователями о последних обновлениях. В противном случае напишите нам по адресу <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> со своими предложениями/отзывами.</string>
+	<string name="about_support">Если вы хотите поддержать нас, вы можете либо купить разблокировку без рекламы (настройки приложения), либо проверить наш <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">Предыстория</string>
+	<string name="about_background_story">Это приложение было первоначально разработано Арьяном Влеком как продолжение другого его приложения, которое называется <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (он предоставляет аналогичные функции для пользователей Cyanogen OS). \n\nЧерез 4 года, в июле 2019 года, Арьян решил уйти из обоих проектов и передал право владения приложением команде разработчиков из разных стран. Они взяли на себя ответственность предоставить сообществу отличный сервис и поддержку для более быстрого получения обновлений OnePlus. \nВы можете найти дополнительную информацию об объявлении <a href="https://oxygenupdater.com/api/v2.6/news-content/81/RU">здесь</a>. \n\n14 августа 2019 года был выпущен первый выпуск под новым владельцем, который включал в себя новые функции, такие как темный режим и полностью переработанный дизайн. \n\nДля получения дополнительной информации о команде, проверьте <a href="https://oxygenupdater.com/team/">веб-сайт</a>.</string>
+	<string name="about_third_party_app_notice">Обратите внимание, что это не официальное приложение OnePlus. \nНазвание OnePlus, логотип OnePlus и OxygenOS являются собственностью OnePlus. \nAndroid, Google, Google Play и логотип Google Play являются зарегистрированными товарными знаками Google Inc. \nЭто приложение использует данные от OnePlus и его материнской компании Oppo для отображения информации об обновлениях.</string>
 	<string name="about_rate_button_text">"Оценить"</string>
-	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">Веб-сайт</string>
 	<string name="about_email_button_text">Эл. адрес</string>
 
@@ -349,28 +309,27 @@ Instructions:
 	<string name="notification_new_device_text">"%1$s теперь поддерживается. Откройте приложение, чтобы выбрать это устройство."</string>
 	<string name="notification_no_notification_support">"Установите или обновите службы Google Play, чтобы включить push-уведомления."</string>
 	<string name="notification_version">"%1$s доступен для %2$s!"</string>
-	<!-- TODO: translate these 19 strings below -->
-	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="download_and_installation_notifications_group_name">Загрузка и установка</string>
 	<string name="push_notifications_group_name">"Push-уведомления"</string>
-	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">"Отображает все не важные уведомления приложения Oxygen Updater. Содержит индикаторы состояния, отображаемые во время загрузки."</string>
+	<string name="miscellaneous_notifications_group_name">Разное</string>
+	<string name="download_and_installation_notifications_group_description">"Отображает все неважные уведомления приложения Oxygen Updater. Содержит индикаторы состояния, отображаемые во время загрузки."</string>
 	<string name="push_notifications_group_description">"Отображает все важные уведомления приложения Oxygen Updater. К ним относятся уведомления об обновлении системы и уведомления о новостях."</string>
-	<string name="download_status_notification_channel_name">Download status</string>
-	<string name="verification_status_notification_channel_name">Verification status</string>
-	<string name="installation_status_notification_channel_name">Installation status</string>
+	<string name="download_status_notification_channel_name">Статус загрузки</string>
+	<string name="verification_status_notification_channel_name">Статус проверки</string>
+	<string name="installation_status_notification_channel_name">Статус установки</string>
 	<string name="update_notification_channel_name">"Доступно обновление"</string>
-	<string name="news_notification_channel_name">News article published</string>
+	<string name="news_notification_channel_name">Опубликована новостная статья</string>
 	<string name="device_notification_channel_name">"Новое поддерживаемое устройство"</string>
-	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
-	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
-	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
-	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
-	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
-	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
-	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
-	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
+	<string name="general_notification_channel_name">Основной</string>
+	<string name="filename_submitted_notification_channel_name">OTA имя файла отправлено</string>
+	<string name="download_status_notification_channel_description">Уведомления, отражающие текущее состояние загрузки: ожидающая, активная, завершенная или неудачная.</string>
+	<string name="verification_status_notification_channel_description">Уведомления, которые отражают текущее состояние задачи проверки файлов: выполняется, завершено или не удалось. \nПроверяются контрольные суммы MD5 для загруженных файлов, чтобы убедиться, что файл не был подделан и является допустимым файлом обновления.</string>
+	<string name="installation_status_notification_channel_description">Получайте уведомления об успешной установке обновления</string>
+	<string name="update_notification_channel_description">Получайте уведомления, когда для выбранного устройства и метода обновления доступно новое обновление</string>
+	<string name="news_notification_channel_description">Получайте уведомления, когда мы публикуем новостную статью</string>
+	<string name="device_notification_channel_description">Получайте уведомления, когда в приложение добавлена поддержка нового устройства</string>
+	<string name="general_notification_channel_description">Общие уведомления, не относящиеся к другим категориям</string>
+	<string name="filename_submitted_notification_channel_description">Получите уведомление, когда вы успешно отправили имена файлов OTA своей команде. \nВы можете отказаться от автоматической отправки имен файлов в настройках приложения.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Помощь"</string>
@@ -410,38 +369,33 @@ Instructions:
 • Уведомления приложения;
 • Настройки приватности (отправка log-файлов).
 
-Используйте переключатели для включения и выключения настроек уведомлений / конфиденциальности. Выберите устройство и/или способ обновления, используя раскрывающиеся меню, показанные выше переключателей. Выпадающие меню не видны? Проверьте подключение к Интернету и снова откройте настрйки."</string>
+Используйте переключатели для включения и выключения настроек уведомлений / конфиденциальности. Выберите устройство и/или способ обновления, используя раскрывающиеся меню, показанные выше переключателей. Выпадающие меню не видны? Проверьте подключение к Интернету и снова откройте настройки."</string>
 
 	<!-- News strings -->
 	<string name="news">"Новости"</string>
 	<string name="news_date_published">"Последнее обновление: %1$s"</string>
 	<string name="news_empty">"В этой статье нет содержания."</string>
 	<string name="news_load_network_error">"Не удалось открыть статью. Нет сетевого подключения. Нажмите «Повторить» для загрузки"</string>
-	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
-	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
-	<string name="news_mark_read">пометить, как прочитанное</string>
+	<string name="news_load_id_error"><![CDATA[Не удалось открыть статью с недопустимого URL-адреса: %1$s. Проверьте URL-адрес или сообщите нам об этом через <a href="mailto:support@oxygenupdater.com">email</a> или на наш <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<string name="news_unread_count_1">У вас %1$d непрочитанных новостных статей. Нажмите здесь, чтобы просмотреть их.</string>
+	<string name="news_unread_count_2">У вас %1$d непрочитанных новостных статей. Нажмите, чтобы показать все статьи.</string>
+	<string name="news_mark_read">Пометить, как прочитанное</string>
 	<string name="news_mark_unread">Отметить как непрочитанное</string>
-	<string name="news_mark_all_read">отметить все как прочитанное</string>
-	<!-- TODO: translate these 4 strings below -->
-	<string name="news_empty_state_none_available_header">No articles yet</string>
-	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
-	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
-	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
-
-	<!-- TODO translate these lines -->
-	<string name="contribute">Become a contributor</string>
-	<string name="contribute_title">Help improving Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the ".Ota" directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
-	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
-	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
-	<string name="contribute_save">Save settings</string>
-	<string name="contribute_more_info">More info</string>
-	<string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
-	<string name="contribute_successful_notification_title">Contribution successful</string>
-	<string name="contribute_successful_notification_text">Thanks for sharing the update filenames with us!</string>
+	<string name="news_mark_all_read">Отметить все как прочитанное</string>
+	<string name="news_empty_state_none_available_header">Еще нет статей</string>
+	<string name="news_empty_state_all_read_header">Больше нечего читать</string>
+	<string name="news_empty_state_none_available_text">В данный момент нет доступных статей, проверьте позже.</string>
+	<string name="news_empty_state_all_read_text">Вы прочитали все статьи. Хорошая работа! \nМы надеемся, что вам понравилось читать наши статьи, и вы узнали из них что-то новое. \n\nСнова нажмите на баннер, чтобы показать все новостные статьи.</string>
+	<string name="contribute">Стать участником</string>
+	<string name="contribute_title">Помогите улучшить Oxygen Updater</string>
+	<string name="contribute_explanation">Oxygen Updater нужна ваша помощь! Чтобы предоставлять вам последние обновления, нам нужно получить имена файлов обновлений. Они присутствуют на вашем телефоне, когда появляется обычное обновление. \n\nКак я могу помочь? \n\nOxygen Updater может автоматически отправлять новые имена файлов обновлений нашим администраторам. Это будет использовать небольшой объем данных и может потреблять немного заряда батареи. Все, что вам нужно сделать, это подождать (примерно 15 минут) перед установкой официальных обновлений системы, пока вы не увидите подтверждение Oxygen Updater, что файл был успешно отправлен. Только каталог «.Ota» на вашем телефоне сканируется один раз в 15 минут. Он проверяет только конкретное имя в этой конкретной папке.</string>
+	<string name="contribute_agree">Я хотел бы помочь и согласен отправить имена файлов обновлений вашим администраторам</string>
+	<string name="contribute_agree_from_setup">Я хотел бы помочь улучшить приложение и согласен отправлять имена файлов обновлений вашим администраторам.</string>
+	<string name="contribute_save">Сохранить настройки</string>
+	<string name="contribute_more_info">Больше инфо</string>
+	<string name="contribute_allow_storage">Пожалуйста, предоставьте разрешения на доступ к хранилищу, чтобы помочь улучшить приложение</string>
+	<string name="contribute_successful_notification_title">Вклад успешен</string>
+	<string name="contribute_successful_notification_text">Спасибо, что поделились с нами именами файлов обновлений!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"О нет!"</string>
@@ -452,8 +406,7 @@ Instructions:
 	<string name="error_no_internet_connection">"Нет сетевого подключения"</string>
 	<string name="error_maintenance">"Обслуживание сервера"</string>
 	<string name="error_maintenance_message">"Пожалуйста, подождите. Сервер будет доступен очень скоро."</string>
-	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry">Сервер может быть отключен для обслуживания. Повторите попытку через некоторое время или сообщите нам об этом по <a href="mailto:support@oxygenupdater.com">электронной почте</a> или на наш <a href="https://discord.gg/5TXdhKJ">Сервер Discord</a>.</string>
 	<string name="error_reload">"Повторить попытку"</string>
 	<string name="error_unable_to_rate_app">"Невозможно оценить приложение, так как на устройстве отсутствует Google Play Mаркет."</string>
 
@@ -462,32 +415,27 @@ Instructions:
 	<string name="delete_message_contents">"Вы уже загрузили это обновление, но еще не установили его. Нажмите «Установить», чтобы посмотреть, как установить это обновление. Нажмите «Удалить», чтобы окончательно удалить файл. Нажмите кнопку «Назад», чтобы закрыть это сообщение."</string>
 	<string name="delete_message_delete_button">"Удалить"</string>
 	<string name="unsupported_device_warning_title">"Hеподдерживаемое устройство"</string>
-	<!-- TODO: translate the 2 strings below -->
-	<string name="carrier_exclusive_device_warning_message">It looks like you\'re using a carrier-exclusive device. Even though you\'re running OxygenOS, you won\'t be able to install updates. Carriers usually lock down the device so that users can\'t update or modify the firmware without permission from the carrier itself. This is a common practice in the USA: the "Local Upgrade" option is removed from carrier-exclusive versions of OxygenOS. This option is necessary to install updates by yourself, even if you don\'t use this app. Unfortunately, we can\'t do anything about this, as we\'re technically, and possibly, legally limited. Reach out to us via email or Discord for more clarity.</string>
-	<string name="unsupported_device_warning_message">Congratulations on your new OnePlus device! Unfortunately, we haven\'t added support for this device yet. Don\'t worry though, we\'ll add it as soon as we can. We don\'t like making mistakes, and it\'s a time-consuming process to verify and test support for new devices, so please be patient. Email us or join our Discord server if you\'d like to help us, or to get notified when we release a new version of the app that includes support for your device.</string>
+	<string name="carrier_exclusive_device_warning_message">Похоже, вы используете эксклюзивное устройство оператора связи. Даже если вы используете OxygenOS, вы не сможете устанавливать обновления. Операторы обычно блокируют устройство, чтобы пользователи не могли обновлять или изменять прошивку без разрешения самого оператора. Это обычная практика в США: опция «Локальное обновление» удалена из эксклюзивных для оператора версий OxygenOS. Эта опция необходима для самостоятельной установки обновлений, даже если вы не используете это приложение. К сожалению, мы ничего не можем с этим поделать, так как мы технически и, возможно, юридически ограничены. Свяжитесь с нами по электронной почте или в Discord для большей ясности.</string>
+	<string name="unsupported_device_warning_message">Поздравляем с приобретением нового устройства OnePlus! К сожалению, мы еще не добавили поддержку для этого устройства. Не волнуйтесь, мы добавим его, как только сможем. Мы не любим делать ошибки, и проверка и тестирование поддержки новых устройств требует много времени, поэтому проявите терпение. Напишите нам или присоединитесь к нашему серверу Discord, если вы хотите помочь нам, или чтобы получить уведомление, когда мы выпускаем новую версию приложения, которая включает поддержку вашего устройства.</string>
 	<string name="unsupported_os_warning_message">"Похоже, что на вашем устройстве стоит не OxygenOS. Обратите внимание, что вы можете устанавливать обновления системы только на устройствах с OxygenOS.
 
 Другие устройства, включая устройства OnePlus, работающие на кастомных прошивках, не поддерживаются."</string>
-
-	<!-- TODO: translate these 2 strings below -->
-	<string name="incorrect_device_warning_title">Selected device mismatch</string>
-	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+	<string name="incorrect_device_warning_title">Несоответствие выбранного устройства</string>
+	<string name="incorrect_device_warning_message">Похоже, вы выбрали не то устройство: \"%1$s\" вместо \"%2$s\". Измените свой выбор в настройках приложения, чтобы получать обновления и уведомления для правильного устройства.</string>
 
 	<string name="device_warning_checkbox_title">"Не показывать это предупреждение снова"</string>
 	<string name="root_check_title">"Рут-доступ"</string>
-	<string name="root_check_message">"Oxygen Updater предлагает простые автоматические установки обновлений для пользователей с рут-правами. Тем не менее, частичные обновления недоступны для устройств с рутом. Oxygen Updater может проверить, есть ли у вас рут для предоставления соответствующих методов обновления
+	<string name="root_check_message">"Oxygen Updater предлагает простые автоматические установки обновлений для пользователей с рут-правами. Тем не менее, частичные обновления недоступны для устройств с рутом. Oxygen Updater может проверить, есть ли у вас рут для предоставления соответствующих методов обновления.
 
 Если у вас есть рут, крайне желательно предоставить рут-права приложению, после закрытия данного диалогового окна.
 
 Нет рута? Тогда нажмите \"Закрыть\" и продолжите пользоваться данным приложением."</string>
 
 	<!-- Purchasing strings -->
-	<!-- TODO: translate this string below -->
-	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
+	<string name="purchase_error_pending_payment">Ваша покупка находится в состоянии «ожидание оплаты». Как только оплата будет завершена, вам будут предоставлены все льготы, на которые вы имеете право.</string>
 	<string name="purchase_error_after_payment">"Покупка версии без рекламы не удалось, поскольку произошла внутренняя ошибка. Пожалуйста, повторите попытку через несколько минут. Если деньги списались, свяжитесь с тех. поддержкой Google Play для помощи."</string>
 
 	<!-- Other strings -->
-	<!-- TODO: translate this string below -->
 	<string name="error">ошибка</string>
 	<string name="icon">"Иконка"</string>
 	<string name="loading">"Загрузка…"</string>
