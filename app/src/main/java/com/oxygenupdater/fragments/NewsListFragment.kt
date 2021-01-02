@@ -82,7 +82,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
     ) = super.onCreateView(inflater, container, savedInstanceState).also {
         it?.post {
             // placeholderItem's height is 2x 16dp padding + 64dp image = 96dp
-            addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_news_item, 96f)
+            addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_item_news, 96f)
         }
     }
 

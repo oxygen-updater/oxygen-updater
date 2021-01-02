@@ -40,7 +40,7 @@ class ChooserOnboardingAdapter(
         viewType: Int
     ) = ItemSelectionViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.onboarding_chooser,
+            R.layout.item_onboarding_chooser,
             parent,
             false
         )

@@ -23,7 +23,7 @@ abstract class ChooserOnboardingFragment : Fragment(R.layout.fragment_onboarding
     ) = super.onCreateView(inflater, container, savedInstanceState).also {
         it?.post {
             // placeholderItem's height is 2x 16dp padding + 24dp icon = 56dp
-            addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_onboarding_chooser, 56f)
+            addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_item_onboarding_chooser, 56f)
         }
     }
 

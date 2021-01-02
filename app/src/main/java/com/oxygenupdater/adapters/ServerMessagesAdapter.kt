@@ -31,7 +31,7 @@ class ServerMessagesAdapter : ListAdapter<ServerMessage, ServerMessageViewHolder
         viewType: Int
     ) = ServerMessageViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.server_message,
+            R.layout.item_server_message,
             parent,
             false
         )

@@ -44,7 +44,7 @@
 				app:shimmer_auto_start="true"
 				tools:visibility="gone">
 
-				<include layout="@layout/placeholder_faq" />
+				<include layout="@layout/placeholder_item_faq" />
 			</com.facebook.shimmer.ShimmerFrameLayout>
 
 			<androidx.recyclerview.widget.RecyclerView

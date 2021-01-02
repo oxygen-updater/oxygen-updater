@@ -53,7 +53,7 @@ class NewsListAdapter(
         viewType: Int
     ) = NewsItemViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.news_item,
+            R.layout.item_news,
             parent,
             false
         )

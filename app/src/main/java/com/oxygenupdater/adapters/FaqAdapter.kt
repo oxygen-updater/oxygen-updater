@@ -33,7 +33,7 @@ class FaqAdapter : ListAdapter<InAppFaq, FaqCategoryViewHolder>(DIFF_CALLBACK) {
         viewType: Int
     ) = FaqCategoryViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.faq_item,
+            R.layout.item_faq,
             parent,
             false
         ),

@@ -37,7 +37,7 @@ class BottomSheetItemAdapter(
         viewType: Int
     ) = BottomSheetItemViewHolder(
         LayoutInflater.from(parent.context).inflate(
-            R.layout.bottom_sheet_preference_item,
+            R.layout.item_bottom_sheet_preference,
             parent,
             false
         )
