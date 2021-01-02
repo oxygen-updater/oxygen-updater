@@ -2,7 +2,7 @@ package com.oxygenupdater.models
 
 import androidx.annotation.DrawableRes
 
-data class AboutButton(
+data class GridButton(
     val text: String,
     @DrawableRes val drawableResId: Int
 )

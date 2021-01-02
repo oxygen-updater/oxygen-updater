@@ -1,9 +1,11 @@
 package com.oxygenupdater.internal
 
+import android.view.View
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.oxygenupdater.models.GridButton
 
 val objectMapper: ObjectMapper = jacksonObjectMapper().registerModule(
     // coerce strings to booleans
@@ -22,6 +24,11 @@ typealias KotlinCallback<E> = (E) -> Unit
  */
 typealias KotlinFunction<T, R> = (T) -> R
 
+typealias GridButtonClickedListener = (
+    view: View,
+    item: GridButton
+) -> Unit
+
 typealias NewsItemReadStatusChangedListener = (
     newsItemId: Long,
     isRead: Boolean
@@ -32,4 +39,7 @@ typealias NewsListChangedListener = (
     isEmpty: Boolean
 ) -> Unit
 
-typealias OnPurchaseFinishedListener = (responseCode: Int, purchase: com.android.billingclient.api.Purchase?) -> Unit
+typealias OnPurchaseFinishedListener = (
+    responseCode: Int,
+    purchase: com.android.billingclient.api.Purchase?
+) -> Unit

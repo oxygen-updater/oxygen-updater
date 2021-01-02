@@ -11,10 +11,12 @@ import android.text.format.DateUtils.FORMAT_SHOW_TIME
 import android.text.format.DateUtils.FORMAT_SHOW_YEAR
 import android.text.method.LinkMovementMethod
 import android.webkit.WebViewClient.ERROR_BAD_URL
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.InterstitialAd
@@ -22,6 +24,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
+import com.oxygenupdater.adapters.NewsItemButtonAdapter
 import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.internal.WebViewClient
@@ -35,6 +38,8 @@ import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news_item.*
+import kotlinx.android.synthetic.main.activity_news_item.buttonRecyclerView
+import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.layout_error.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDateTime
@@ -149,6 +154,23 @@ class NewsItemActivity : SupportActionBarActivity(
             }
 
             isVisible = dateTimePrefix != null
+        }
+
+        buttonRecyclerView.let { recyclerView ->
+            val verticalDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+            val horizontalDecorator = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
+
+            ContextCompat.getDrawable(this, R.drawable.divider)?.let {
+                verticalDecorator.setDrawable(it)
+                horizontalDecorator.setDrawable(it)
+
+                recyclerView.addItemDecoration(verticalDecorator)
+                recyclerView.addItemDecoration(horizontalDecorator)
+            }
+
+            // Performance optimization
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = NewsItemButtonAdapter(this, newsItem)
         }
 
         hasReadArticle = true
