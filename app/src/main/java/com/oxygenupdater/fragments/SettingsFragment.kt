@@ -2,6 +2,8 @@ package com.oxygenupdater.fragments
 
 import android.content.Context
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -25,6 +27,7 @@ import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.exceptions.GooglePlayBillingException
 import com.oxygenupdater.extensions.openInCustomTab
 import com.oxygenupdater.extensions.openPlayStorePage
+import com.oxygenupdater.extensions.setLocale
 import com.oxygenupdater.internal.settings.BottomSheetItem
 import com.oxygenupdater.internal.settings.BottomSheetPreference
 import com.oxygenupdater.internal.settings.SettingsManager
@@ -57,7 +60,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var adFreePreference: Preference
     private lateinit var devicePreference: BottomSheetPreference
     private lateinit var updateMethodPreference: BottomSheetPreference
-    private lateinit var themePreference: BottomSheetPreference
 
     private val inappSkuDetailsListObserver = Observer<List<AugmentedSkuDetails>> { list ->
         list.find {
@@ -116,6 +118,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setupSupportPreferences()
         setupDevicePreferences()
         setupThemePreference()
+        setupLanguagePreference()
         setupAdvancedModePreference()
         setupAboutPreferences()
     }
@@ -282,15 +285,84 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun setupThemePreference() {
-        themePreference = findPreference(mContext.getString(R.string.key_theme))!!
-
-        if (themePreference.value == null) {
-            themePreference.setValueIndex(resources.getInteger(R.integer.theme_system_id))
+    private fun setupThemePreference() = findPreference<BottomSheetPreference>(
+        mContext.getString(R.string.key_theme)
+    )!!.apply {
+        if (value == null) {
+            setValueIndex(resources.getInteger(R.integer.theme_system_id))
         }
 
-        themePreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+        onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
             AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(mContext))
+            true
+        }
+    }
+
+    private fun setupLanguagePreference() = findPreference<BottomSheetPreference>(
+        mContext.getString(R.string.key_language)
+    )!!.apply {
+        val defaultLanguageCode = Locale.getDefault().language
+        val savedLanguageCode = getPreference(
+            SettingsManager.PROPERTY_LANGUAGE_ID,
+            ""
+        )
+
+        val systemConfig = Resources.getSystem().configuration
+        val systemLocale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            systemConfig.locales[0]
+        } else {
+            @Suppress("DEPRECATION")
+            systemConfig.locale
+        }
+
+        // Set the spinner to the previously selected device.
+        var recommendedPosition = -1
+        var selectedPosition = -1
+
+        setItemList(
+            BuildConfig.SUPPORTED_LANGUAGES.mapIndexed { i, languageCode ->
+                val locale = Locale(languageCode)
+                // App-level localized name, which is displayed both as a title and summary
+                val appLocalizedName = locale.displayName.capitalize(locale)
+                // System-level localized name, which is displayed as a fallback for better
+                // UX (e.g. if user mistakenly clicked some other language, they should still
+                // be able to re-select the correct one because we've provided a localization
+                // based on their system language). The language code is also shown, which
+                // could help translators.
+                val systemLocalizedName = locale.getDisplayName(
+                    systemLocale
+                ).capitalize(systemLocale)
+
+                if (languageCode == systemLocale.language) {
+                    recommendedPosition = i
+                }
+
+                if (languageCode == savedLanguageCode) {
+                    selectedPosition = i
+                }
+
+                BottomSheetItem(
+                    title = appLocalizedName,
+                    subtitle = "$systemLocalizedName ($languageCode)",
+                    value = appLocalizedName,
+                    secondaryValue = languageCode
+                )
+            }
+        )
+
+        // If there's there no language saved in preferences, auto select the recommended language
+        if (selectedPosition == -1 && recommendedPosition != -1) {
+            setValueIndex(recommendedPosition)
+        }
+
+        onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+            context.setLocale(
+                getPreference(
+                    SettingsManager.PROPERTY_LANGUAGE_ID,
+                    defaultLanguageCode
+                )
+            )
+            activity?.recreate()
             true
         }
     }

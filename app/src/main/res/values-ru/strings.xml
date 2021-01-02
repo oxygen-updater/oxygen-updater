@@ -83,10 +83,12 @@
 	<string name="summary_please_wait">пожалуйста, подождите…</string>
 	<string name="summary_update_method">Сначала выберите устройство</string>
 	<string name="summary_theme">Выберите тему</string>
+	<string name="summary_language">Установить язык</string>
 	<string name="summary_privacy_policy">Просмотреть онлайн</string>
 	<string name="summary_rate_app">Поставьте нам 5 звёзд</string>
 	<string name="label_buy_ad_free">Удалить рекламу</string>
 	<string name="label_theme">Тема</string>
+	<string name="label_language">Язык</string>
 	<string name="label_privacy_policy">Политика конфиденциальности</string>
 	<string name="label_rate_app">Оцените это приложение</string>
 	<string name="theme_light">Светлая</string>
@@ -275,7 +277,7 @@
 	<string name="install_guide_zip_file_missing">"Если вы хотите сохранить рут-права на устройстве, выберите архив для установки выше."</string>
 
 	<!-- Device information strings -->
-        <string name="device_information_supported_oxygen_os">Ваше устройство поддерживается</string>
+	<string name="device_information_supported_oxygen_os">Ваше устройство поддерживается</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Ваше устройство не поддерживается, так как это эксклюзивное устройство оператора связи.</string>
 	<string name="device_information_unsupported_oxygen_os">Мы еще не добавили поддержку для вашего нового устройства</string>
 	<string name="device_information_unsupported_os">Ваше устройство не поддерживается, так как на нем не работает OxygenOS</string>

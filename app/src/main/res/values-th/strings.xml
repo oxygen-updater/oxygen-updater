@@ -98,11 +98,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">รอสักครู่…</string>
 	<string name="summary_update_method">เลือกอุปกรณ์</string>
 	<string name="summary_theme">ตั้งค่าธีม</string>
+	<string name="summary_language">ตั้งค่าภาษา</string>
 	<string name="summary_privacy_policy">ดูออนไลน์</string>
 	<string name="summary_rate_app">ถ้าชอบพวกเรากรุณาให้ 5 ดาว</string>
 
 	<string name="label_buy_ad_free">ลบโฆษณา</string>
 	<string name="label_theme">ธีม</string>
+	<string name="label_language">ภาษา</string>
 	<string name="label_privacy_policy">นโยบายความเป็นส่วนตัว</string>
 	<string name="label_rate_app">ประเมินแอพ</string>
 

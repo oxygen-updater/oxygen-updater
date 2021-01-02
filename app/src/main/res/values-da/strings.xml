@@ -100,11 +100,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Vent venligst.…</string>
 	<string name="summary_update_method">vælg en enhed først</string>
 	<string name="summary_theme">Vælg et tema</string>
+	<string name="summary_language">Indstil sprog</string>
 	<string name="summary_privacy_policy">Se online</string>
 	<string name="summary_rate_app">Giv os en 5-stjernet anmeldelse</string>
 
 	<string name="label_buy_ad_free">Fjern reklamer</string>
 	<string name="label_theme">Tema</string>
+	<string name="label_language">Sprog</string>
 	<string name="label_privacy_policy">Privatlivspolitik</string>
 	<string name="label_rate_app">Bedøm denne app</string>
 

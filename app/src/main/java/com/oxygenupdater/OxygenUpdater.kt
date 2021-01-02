@@ -2,6 +2,7 @@ package com.oxygenupdater
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
@@ -17,6 +18,7 @@ import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.utils.MD5
 import com.oxygenupdater.utils.ThemeUtils
@@ -57,6 +59,10 @@ class OxygenUpdater : Application() {
             _isNetworkAvailable.postValue(true)
         }
     }
+
+    override fun attachBaseContext(
+        base: Context
+    ) = super.attachBaseContext(base.attachWithLocale())
 
     override fun onCreate() {
         setupKoin()

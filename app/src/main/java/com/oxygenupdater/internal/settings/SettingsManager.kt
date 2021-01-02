@@ -161,6 +161,7 @@ object SettingsManager {
     )
     const val PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE = "show_if_system_is_up_to_date"
 
+    const val PROPERTY_LANGUAGE_ID = "language_id"
     const val PROPERTY_ADVANCED_MODE = "advanced_mode"
     const val PROPERTY_SETUP_DONE = "setup_done"
     const val PROPERTY_SQL_TO_ROOM_MIGRATION_DONE = "sql_to_room_migration_done"

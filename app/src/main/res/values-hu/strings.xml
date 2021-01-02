@@ -92,11 +92,13 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="summary_please_wait">Kérlek várj…</string>
 	<string name="summary_update_method">Először válassz ki egy eszközt</string>
 	<string name="summary_theme">Téma beállítása</string>
+	<string name="summary_language">Állítsa be a nyelvet</string>
 	<string name="summary_privacy_policy">Megtekintés interneten</string>
 	<string name="summary_rate_app">Hagyj 5 csillagos értékelést</string>
 
 	<string name="label_buy_ad_free">Hirdetések eltávolítása</string>
 	<string name="label_theme">Téma</string>
+	<string name="label_language">Nyelv</string>
 	<string name="label_privacy_policy">Adatvédelmi irányelvek</string>
 	<string name="label_rate_app">Értékeld ezt az alkalmazást</string>
 

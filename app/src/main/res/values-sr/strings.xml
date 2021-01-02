@@ -92,11 +92,13 @@
 	<string name="summary_please_wait">Молимо сачекајте…</string>
 	<string name="summary_update_method">Прво селектујте уређај</string>
 	<string name="summary_theme">Поставите тему</string>
+	<string name="summary_language">Поставите језик</string>
 	<string name="summary_privacy_policy">Погледајте на интернету</string>
 	<string name="summary_rate_app">Оставите нам 5 звездица</string>
 
 	<string name="label_buy_ad_free">Уклоните рекламе</string>
 	<string name="label_theme">Тема</string>
+	<string name="label_language">Језик</string>
 	<string name="label_privacy_policy">Политика приватности</string>
 	<string name="label_rate_app">Rate this app</string>
 

@@ -6,7 +6,6 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.annotation.IntRange
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import com.google.android.material.transition.platform.MaterialArcMotion
@@ -39,7 +38,7 @@ abstract class SupportActionBarActivity(
         to = MainActivity.PAGE_SETTINGS.toLong()
     )
     private val startPage: Int
-) : AppCompatActivity(contentLayoutId) {
+) : BaseActivity(contentLayoutId) {
 
     override fun onCreate(
         savedInstanceState: Bundle?

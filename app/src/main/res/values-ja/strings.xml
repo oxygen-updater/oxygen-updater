@@ -98,11 +98,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">お待ち下さい…</string>
 	<string name="summary_update_method">まずデバイスを選択して下さい</string>
 	<string name="summary_theme">テーマの設定</string>
+	<string name="summary_language">言語を設定する</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
 	<string name="summary_rate_app">レビューに５つ星を残す</string>
 
 	<string name="label_buy_ad_free">広告の除去</string>
 	<string name="label_theme">テーマ</string>
+	<string name="label_language">言語</string>
 	<string name="label_privacy_policy">プライバシーポリシー</string>
 	<string name="label_rate_app">アプリの評価</string>
 

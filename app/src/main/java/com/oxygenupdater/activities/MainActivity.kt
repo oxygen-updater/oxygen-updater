@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.annotation.IdRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
 import androidx.core.content.ContextCompat
@@ -67,7 +66,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity(R.layout.activity_main), Toolbar.OnMenuItemClickListener {
+class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemClickListener {
 
     private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
 

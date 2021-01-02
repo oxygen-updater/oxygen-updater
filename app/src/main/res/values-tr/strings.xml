@@ -98,10 +98,12 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Lütfen bekleyin…</string>
 	<string name="summary_update_method">Lütfen öncelikle cihazınızı belirtin.</string>
 	<string name="summary_theme">Temayı seçiniz</string>
+	<string name="summary_language">Dili ayarla</string>
 	<string name="summary_privacy_policy">Online görüntüleyiniz.</string>
 	<string name="summary_rate_app">5 yıldızlı yorum bırakınız.</string>
 	<string name="label_buy_ad_free">Reklamları kaldırın</string>
 	<string name="label_theme">Tema</string>
+	<string name="label_language">Dil</string>
 	<string name="label_privacy_policy">Gizlilik Politesi</string>
 	<string name="label_rate_app">Uygulamayı değerlendirin</string>
 

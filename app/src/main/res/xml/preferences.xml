@@ -63,6 +63,13 @@
 			app:secondaryEntryValues="@array/themeValues"
 			app:subtitleEntries="@array/themeSubtitles"
 			app:title="@string/label_theme" />
+
+		<com.oxygenupdater.internal.settings.BottomSheetPreference
+			android:icon="@drawable/language"
+			android:key="@string/key_language"
+			android:layout="@layout/custom_preference"
+			android:summary="@string/summary_language"
+			android:title="@string/label_language" />
 	</PreferenceCategory>
 
 	<PreferenceCategory

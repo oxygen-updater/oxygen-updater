@@ -87,11 +87,13 @@ Wenn du  mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <
 	<string name="summary_please_wait">Bitte warten…</string>
 	<string name="summary_update_method">Bitte wähle zuerst dein Gerät aus</string>
 	<string name="summary_theme">Theme einstellen</string>
+	<string name="summary_language">Sprache einstellen</string>
 	<string name="summary_privacy_policy">Online ansehen</string>
 	<string name="summary_rate_app">Hinterlasse eine 5 Sterne Bewertung</string>
 
 	<string name="label_buy_ad_free">Werbung entfernen</string>
 	<string name="label_theme">Theme</string>
+	<string name="label_language">Sprache</string>
 	<string name="label_privacy_policy">Datenschutz-Bestimmungen</string>
 	<string name="label_rate_app">Bewerte diese App</string>
 
@@ -185,7 +187,7 @@ Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf d
 	<string name="install_grant_root_permissions">"Bitte erlaube den Root Zugriff falls du gefragt wirst"</string>
 	<string name="install_going_back_not_possible">"Leider, kannst du jetzt nicht zurückgehen"</string>
 	<string name="install_preparing_installation">"Installation wird vorbereitet"</string>
-	<string name="install_recovery_installer_title">"Update Installer&#160;&#160;"</string>	<!-- Add 2 spaces to the end -->
+	<string name="install_recovery_installer_title">"Update Installer&#160;&#160;"</string>    <!-- Add 2 spaces to the end -->
 
 	<string name="install_recovery_backing_up">"Ein Backup wird erstellt. Dies kann etwas dauern!"</string>
 	<string name="install_recovery_clearing_cache">"Cache Partition wird gelöscht…"</string>
@@ -448,7 +450,7 @@ Kein Root-Zugriff? Drücken Sie \"Schließen\" und fahren Sie fort."</string>
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ihr Kauf befindet sich im Status "Zahlung ausstehend". Sobald die Zahlung abgeschlossen ist, erhalten Sie alle Leistungen, auf die Sie Anspruch haben.</string>
 	<string name="purchase_error_after_payment">"Der Kauf der Werbe-freien Version ist durch einen internen Fehler fehlgeschlagen. Bitte versuche es in ein paar Minuten nochmal. Wenn du bereits bezahlt hast, kontaktiere bitte den Google Play Support für Hilfe."</string>
-Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Bugfixes bekommst
+	Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Bugfixes bekommst
 	<!-- Other strings -->
 	<string name="error">Fehler</string>
 	<string name="icon">"Icon"</string>

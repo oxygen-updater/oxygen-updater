@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView.ScaleType
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
@@ -43,7 +42,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.abs
 
-class OnboardingActivity : AppCompatActivity(R.layout.activity_onboarding) {
+class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
     private lateinit var viewPagerAdapter: OnboardingPagerAdapter
 

@@ -89,11 +89,13 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="summary_please_wait">Ole hyvä ja odota…</string>
 	<string name="summary_update_method">Valitse laite ensin</string>
 	<string name="summary_theme">Aseta teema</string>
+	<string name="summary_language">Aseta kieli</string>
 	<string name="summary_privacy_policy">Katso verkkosivuilta</string>
 	<string name="summary_rate_app">Anna 5 tähden arvostelu</string>
 
 	<string name="label_buy_ad_free">Poista mainokset</string>
 	<string name="label_theme">Teema</string>
+	<string name="label_language">Kieli</string>
 	<string name="label_privacy_policy">Yksityisyyskäytäntö</string>
 	<string name="label_rate_app">Arvioi tämä sovellus</string>
 

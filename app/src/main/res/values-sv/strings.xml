@@ -89,11 +89,13 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="summary_please_wait">Var god vänta…</string>
 	<string name="summary_update_method">Välj en enhet först</string>
 	<string name="summary_theme">Välj tema</string>
+	<string name="summary_language">Ställ in språk</string>
 	<string name="summary_privacy_policy">Visa online</string>
 	<string name="summary_rate_app">Ge ett femstjärnigt omdöme</string>
 
 	<string name="label_buy_ad_free">Ta bort reklam</string>
 	<string name="label_theme">Tema</string>
+	<string name="label_language">Språk</string>
 	<string name="label_privacy_policy">Integritetspolicy</string>
 	<string name="label_rate_app">Ge appen ett omdöme</string>
 

@@ -49,6 +49,17 @@ android {
         )
     }
 
+    bundle {
+        language {
+            // Because the app has an in-app language switch feature, we need
+            // to disable splitting configuration APKs for language resources.
+            // This ensures that the app won't crash if the user selects a
+            // language that isn't in their device language list.
+            // This'll obviously increase APK size significantly.
+            enableSplit = false
+        }
+    }
+
     packagingOptions {
         exclude("META-INF/NOTICE.txt")
         exclude("META-INF/LICENSE.txt")
@@ -126,8 +137,24 @@ android {
             }
         }
 
+        val languages = fileTree("src/main/res") {
+            include("values-*/strings.xml")
+        }.files.map { file ->
+            file.parentFile.name.replace(
+                "values-",
+                ""
+            )
+        }.joinToString { str ->
+            "\"$str\""
+        }
+
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
         buildTypes.forEach {
+            it.buildConfigField(
+                "String[]",
+                "SUPPORTED_LANGUAGES",
+                "{\"en\", $languages}"
+            )
             if (it.name != "release") {
                 it.versionNameSuffix = "-${it.name}"
                 it.applicationIdSuffix = ".${it.name}"

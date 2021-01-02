@@ -90,11 +90,13 @@
 	<string name="summary_please_wait">Будь ласка, зачекайте…</string>
 	<string name="summary_update_method">Спершу виберіть пристрій</string>
 	<string name="summary_theme">Вибрати тему оформлення</string>
+	<string name="summary_language">Встановити мову</string>
 	<string name="summary_privacy_policy">Переглянути онлайн</string>
 	<string name="summary_rate_app">Зилишіть відгук з 5-ма зірочками</string>
 
 	<string name="label_buy_ad_free">Видалити рекламу</string>
 	<string name="label_theme">Тема</string>
+	<string name="label_language">Мова</string>
 	<string name="label_privacy_policy">Політика приватності</string>
 	<string name="label_rate_app">Оцінити цей застосунок</string>
 

@@ -90,12 +90,14 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Please wait…</string>
 	<string name="summary_update_method">Select a device first</string>
 	<string name="summary_theme">Set theme</string>
+	<string name="summary_language">Set language</string>
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
 	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
+	<string name="label_language">Language</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Rate this app</string>
 
@@ -113,6 +115,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="key_update_method_id" translatable="false">update_method_id</string>
 	<string name="key_theme" translatable="false">theme</string>
 	<string name="key_theme_id" translatable="false">theme_id</string>
+	<string name="key_language" translatable="false">language</string>
+	<string name="key_language_id" translatable="false">language_id</string>
 	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
 	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
 	<string name="key_share_usage_data" translatable="false">upload_logs</string>

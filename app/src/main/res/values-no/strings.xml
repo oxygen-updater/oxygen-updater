@@ -91,11 +91,13 @@ Hvis du ønsker å vite mer, ta gjerne kontakt med oss enten via <a href="mailto
 	<string name="summary_please_wait">Vennligst vent…</string>
 	<string name="summary_update_method">Velg en enhet først</string>
 	<string name="summary_theme">Sett tema</string>
+	<string name="summary_language">Sett språk</string>
 	<string name="summary_privacy_policy">Se på nettet</string>
 	<string name="summary_rate_app">Legg igjen en 5-stjerners anmeldelse</string>
 
 	<string name="label_buy_ad_free">Fjern ads</string>
 	<string name="label_theme">Tema</string>
+	<string name="label_language">Språk</string>
 	<string name="label_privacy_policy">Personvern</string>
 	<string name="label_rate_app">Rate this app</string>
 

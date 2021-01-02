@@ -92,11 +92,13 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="summary_please_wait">Veuillez patienter…</string>
 	<string name="summary_update_method">Veuillez sélectionner un appareil</string>
 	<string name="summary_theme">Choisissez un thème</string>
+	<string name="summary_language">Définir la langue</string>
 	<string name="summary_privacy_policy">Voir en ligne</string>
 	<string name="summary_rate_app">Donner 5 étoiles</string>
 
 	<string name="label_buy_ad_free">Supprimer les publicités</string>
 	<string name="label_theme">Thème</string>
+	<string name="label_language">Langue</string>
 	<string name="label_privacy_policy">Politique de confidentialité</string>
 	<string name="label_rate_app">Évaluez cette application</string>
 

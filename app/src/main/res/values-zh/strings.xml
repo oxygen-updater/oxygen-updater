@@ -92,11 +92,13 @@
 	<string name="summary_please_wait">请稍等…</string>
 	<string name="summary_update_method">请先选择一个设备</string>
 	<string name="summary_theme">设定主题</string>
+	<string name="summary_language">设定语言</string>
 	<string name="summary_privacy_policy">在线查看</string>
 	<string name="summary_rate_app">留个 5 星好评</string>
 
 	<string name="label_buy_ad_free">移除广告</string>
 	<string name="label_theme">主题</string>
+	<string name="label_language">语言</string>
 	<string name="label_privacy_policy">隐私政策</string>
 	<string name="label_rate_app">评分</string>
 

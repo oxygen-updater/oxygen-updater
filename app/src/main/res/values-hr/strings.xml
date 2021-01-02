@@ -86,12 +86,14 @@
 	<string name="summary_please_wait">Molim te pričekaj…</string>
 	<string name="summary_update_method">Select a device first</string>
 	<string name="summary_theme">Set theme</string>
+	<string name="summary_language">Postavite jezik</string>
 	<string name="summary_privacy_policy">Pogledajte na mreži</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
 
 	<!-- TODO: translate these lines -->
 	<string name="label_buy_ad_free">Makni reklame</string>
 	<string name="label_theme">Theme</string>
+	<string name="label_language">Jezik</string>
 	<string name="label_privacy_policy">Pravila o privatnosti</string>
 	<string name="label_rate_app">Rate this app</string>
 

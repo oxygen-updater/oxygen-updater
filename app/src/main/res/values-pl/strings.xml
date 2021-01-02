@@ -99,11 +99,13 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Proszę czekać…</string>
 	<string name="summary_update_method">Wybierz najpierw urządzenie</string>
 	<string name="summary_theme">Wybierz motyw</string>
+	<string name="summary_language">Ustaw język</string>
 	<string name="summary_privacy_policy">Zobacz online</string>
 	<string name="summary_rate_app">Zostaw recenzję na 5 gwiazdek</string>
 
 	<string name="label_buy_ad_free">Usuń reklamy</string>
 	<string name="label_theme">Motyw</string>
+	<string name="label_language">Język</string>
 	<string name="label_privacy_policy">Polityka prywatności</string>
 	<string name="label_rate_app">Oceń tę aplikację</string>
 

@@ -89,11 +89,13 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 	<string name="summary_please_wait">Attendi…</string>
 	<string name="summary_update_method">Seleziona un dispositivo</string>
 	<string name="summary_theme">Scegli tema</string>
+	<string name="summary_language">Imposta la lingua</string>
 	<string name="summary_privacy_policy">Visualizza online</string>
 	<string name="summary_rate_app">Rilascia una recenzione da 5 stelle</string>
 
 	<string name="label_buy_ad_free">Rimuovi annunci</string>
 	<string name="label_theme">Tema</string>
+	<string name="label_language">Linguaggio</string>
 	<string name="label_privacy_policy">Privacy policy</string>
 	<string name="label_rate_app">Valuta l\'app</string>
 

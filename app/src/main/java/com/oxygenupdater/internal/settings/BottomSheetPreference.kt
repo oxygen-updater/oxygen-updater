@@ -424,7 +424,7 @@ class BottomSheetPreference : Preference {
         }
 
         companion object CREATOR : Parcelable.Creator<SavedState> {
-            override fun createFromParcel(parcel: Parcel): SavedState? = SavedState(parcel)
+            override fun createFromParcel(parcel: Parcel) = SavedState(parcel)
 
             override fun newArray(size: Int) = arrayOfNulls<SavedState?>(size)
         }
