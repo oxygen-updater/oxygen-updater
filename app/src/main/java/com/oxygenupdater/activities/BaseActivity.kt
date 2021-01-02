@@ -3,7 +3,9 @@ package com.oxygenupdater.activities
 import android.content.Context
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.oxygenupdater.extensions.attachWithLocale
+import com.oxygenupdater.utils.ThemeUtils
 
 /**
  * Single responsibility: correctly update context based on Locale preference
@@ -17,4 +19,10 @@ abstract class BaseActivity(
     override fun attachBaseContext(
         base: Context
     ) = super.attachBaseContext(base.attachWithLocale())
+
+    override fun onResume() = super.onResume().also {
+        AppCompatDelegate.setDefaultNightMode(
+            ThemeUtils.translateThemeToNightMode(this)
+        )
+    }
 }
