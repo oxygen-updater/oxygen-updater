@@ -103,7 +103,7 @@ class OxygenUpdater : Application() {
         if (BuildConfig.DEBUG) {
             @SuppressLint("HardwareIds")
             val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-            val deviceId: String = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
+            val deviceId = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
             ADS_TEST_DEVICES.add(deviceId)
         }
 
@@ -113,6 +113,13 @@ class OxygenUpdater : Application() {
 
         MobileAds.initialize(this) {}
         MobileAds.setRequestConfiguration(requestConfiguration)
+
+        // By default video ads run at device volume, which could be annoying
+        // to some users. We're reducing ad volume to be 10% of device volume.
+        // Note that this doesn't always guarantee that ads will run at a
+        // reduced volume. This is either a longstanding SDK bug or due to
+        // an undocumented behaviour.
+        MobileAds.setAppVolume(0.1f)
     }
 
     /**
