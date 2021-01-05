@@ -5,7 +5,7 @@ const val KOTLIN_VERSION = "1.4.21"
 
 // https://doc.insert-koin.io/#/setup/index
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-const val KOIN_VERSION = "2.2.1"
+const val KOIN_VERSION = "2.2.2"
 
 object BuildPlugins {
     private object Versions {
@@ -77,7 +77,7 @@ object AndroidXLibraries {
         const val RECYCLER_VIEW = "1.1.0"
 
         // https://developer.android.com/jetpack/androidx/releases/room
-        const val ROOM = "2.2.5"
+        const val ROOM = "2.2.6"
     }
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -126,7 +126,7 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "26.1.1"
+        const val FIREBASE_BOM = "26.2.0"
 
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.11.0"
