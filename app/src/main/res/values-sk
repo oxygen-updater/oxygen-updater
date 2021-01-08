@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Nepodarilo sa načítať zoznam podporovaných zariadení</string>
 
 	<!-- Update information strings-->
-	<string name="enable">Enable</string>
-	<string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
-	<string name="update_information_file_name">File name: %1$s</string>
+	<string name="enable">P</string>
+	<string name="update_information_description_not_available">Neexistujú žiadne oficiálne informácie o nových funkciách, ktoré táto aktualizácia poskytuje. Aktualizácia zvyčajne poskytuje opravy chýb, vylepšenia výkonu a/alebo dôležité bezpečnostné aktualizácie vášho zariadenia.</string>
+	<string name="update_information_file_name">Názov súbru: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
-	<string name="update_information_header">Update</string>
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable advanced mode if you plan to switch to this update track.</string>
+	<string name="update_information_download_link">Pretože sa vyskytla chyba pri sťahovaní a sťahovanie musí byť reštartované, môžete pomocou tohto odkazu stiahnuť aktualizačný súbor z prehliadača. Možno budete musieť presunúť stiahnutý súbor z adresára \"Downloads\" do nadradeného adresára. Toto je ten istý odkaz, ktorý používa aplikácia na stiahnutie, čo je oficiálny odkaz na server OnePlus OTA:\n%1$s</string>
+	<string name="update_information_header">Aktualizácia</string>
+	<string name="update_information_error_title">Nepodarilo sa načítať informácie o najnovších aktualizáciách</string>
+	<string name="update_information_banner_server">Klepnutím tu zobrazíte dôležité oznámenia</string>
+	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na túto stopu aktualizácií, povoľte rozšírený režim.</string>
 	<string name="update_information_header_advanced_mode_hint">Advanced mode is enabled</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings.</string>
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" update track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
@@ -48,7 +48,6 @@
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
 	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
-
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
