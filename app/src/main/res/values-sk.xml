@@ -34,9 +34,9 @@
 	<string name="new_app_version_inapp_failed">Aktualizáciu aplikácie sa nepodarilo nainštalovať. Klepnutím tu otvoríte Obchod Play a aktualizujete aplikáciu.</string>
 
 	<!-- Downloader strings-->
-	<string name="download">Stiahnuť aktualuzáciu</string>
+	<string name="download">Stiahnuť aktualizáciu</string>
 	<string name="downloaded">Aktualizácia stiahnutá</string>
-	<string name="downloading">Sťahujem aktualuzáciu…</string>
+	<string name="downloading">Sťahujem aktualizáciu…</string>
 	<string name="paused">Pozastavené - klepnutím obnovíte</string>
 
 	<string name="download_complete">Sťahovanie dokončené</string>
