@@ -18,7 +18,7 @@
 	<string name="update_information_last_checked_on">Naposledy kontrolované: %1$s</string>
 	<string name="update_information_no_update_data_available">Nie sú k dispozícii žiadne informácie o aktualizácii</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
-	<string name="update_information_system_is_up_to_date">YVáš systém je aktuálny</string>
+	<string name="update_information_system_is_up_to_date">Váš systém je aktuálny</string>
 	<string name="update_information_unknown_update_name">Nepomenovaná aktualizácia pre %1$s</string>
 	<string name="update_information_view_update_information">Zobraziť informácie o aktualizácii</string>
 
