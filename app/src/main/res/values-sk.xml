@@ -98,7 +98,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="label_theme">Motívy</string>
 	<string name="label_language">Jazyk</string>
 	<string name="label_privacy_policy">Zásady ochrany osobných údajov</string>
-	<string name="label_rate_app">Ohodnoť túto aplikáciu</string>
+	<string name="label_rate_app">Ohodnoťte túto aplikáciu</string>
 
 	<string name="theme_light">Svetlý</string>
 	<string name="theme_dark">Tmavý</string>
@@ -154,9 +154,9 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="settings_saving">Vaše nastavenia sa stále ukladajú. Ak to trvá príliš dlho: Skontrolujte sieťové pripojenie, ukončite aplikáciu a spustite ju znova.</string>
 
 	<string name="settings_advanced_mode">Pokročilý mód</string>
-	<string name="settings_advanced_mode_explanation">APokročilý režim skryje správu \"Váš systém je aktuálny\", ktorá vám umožní stiahnuť a nainštalovať všetky aktualizácie, aj keď nemusia byť kompatibilné s vaším zariadením.\n\nTTo môže byť užitočné, keď:\n&#8226; Aktualizujete z bežnej verzie na beta verziu\n&#8226; Vraciate sa z beta verzie na bežnú verziu (nezabudnite na obnovenie továrenských nastavení zariadenia)\n&#8226; Preinštalovávate aktuálnu verziu systému.</string>
+	<string name="settings_advanced_mode_explanation">Pokročilý režim skryje správu \"Váš systém je aktuálny\", ktorá vám umožní stiahnuť a nainštalovať všetky aktualizácie, aj keď nemusia byť kompatibilné s vaším zariadením.\n\nTTo môže byť užitočné, keď:\n&#8226; Aktualizujete z bežnej verzie na beta verziu\n&#8226; Vraciate sa z beta verzie na bežnú verziu (nezabudnite na obnovenie továrenských nastavení zariadenia)\n&#8226; Preinštalovávate aktuálnu verziu systému.</string>
 
-	<string name="settings_update_method">Update method</string>
+	<string name="settings_update_method">Spôsob aktualizácie</string>
 	<string name="settings_upload_logs">Zdieľajte údaje o používaní a logy</string>
 
 	<!-- FAQ strings -->
