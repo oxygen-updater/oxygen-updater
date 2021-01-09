@@ -31,7 +31,7 @@
 	<string name="new_app_version">K dispozícii je aktualizácia aplikácie (%1$s). Klepnutím tu otvoríte Obchod Play a aktualizujete aplikáciu.</string>
 	<string name="new_app_version_long">K dispozícii je aktualizácia aplikácie (%1$s). Vďaka aktualizácii aplikácie budete mať vždy k dispozícii najnovšie funkcie a opravy chýb.\nKlepnutím sem otvoríte Obchod Play a aktualizujete aplikáciu.</string>
 	<string name="new_app_version_inapp_downloaded">Aktualizácia aplikácie bola stiahnutá</string>
-	<string name="new_app_version_inapp_failed">TAktualizáciu aplikácie sa nepodarilo nainštalovať. Klepnutím tu otvoríte Obchod Play a aktualizujete aplikáciu.</string>
+	<string name="new_app_version_inapp_failed">Aktualizáciu aplikácie sa nepodarilo nainštalovať. Klepnutím tu otvoríte Obchod Play a aktualizujete aplikáciu.</string>
 
 	<!-- Downloader strings-->
 	<string name="download">Stiahnuť aktualuzáciu</string>
