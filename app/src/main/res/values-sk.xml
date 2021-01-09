@@ -4,7 +4,7 @@
 
 	<!-- Update information strings-->
 	<string name="enable">Prijať</string>
-	<string name="update_information_description_not_available">Neexistujú žiadne oficiálne informácie o nových funkciách, ktoré táto aktualizácia poskytuje. Aktualizácia zvyčajne poskytuje opravy chýb, vylepšenia výkonu a/alebo dôležité bezpečnostné aktualizácie vášho zariadenia.</string>
+	<string name="update_information_description_not_available">Nie sú žiadne oficiálne informácie o nových funkciách, ktoré táto aktualizácia poskytuje. Aktualizácia zvyčajne poskytuje opravy chýb, vylepšenia výkonu a/alebo dôležité bezpečnostné aktualizácie vášho zariadenia.</string>
 	<string name="update_information_file_name">Názov súboru: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Pretože sa vyskytla chyba pri sťahovaní a sťahovanie musí byť reštartované, môžete pomocou tohto odkazu stiahnuť aktualizačný súbor z prehliadača. Možno budete musieť presunúť stiahnutý súbor z adresára \"Downloads\" do nadradeného adresára. Toto je ten istý odkaz, ktorý používa aplikácia na stiahnutie, čo je oficiálny odkaz na server OnePlus OTA:\n%1$s</string>
