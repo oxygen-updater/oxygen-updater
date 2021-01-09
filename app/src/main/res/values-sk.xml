@@ -11,9 +11,9 @@
 	<string name="update_information_header">Aktualizácia</string>
 	<string name="update_information_error_title">Nepodarilo sa načítať informácie o najnovších aktualizáciách</string>
 	<string name="update_information_banner_server">Klepnutím tu zobrazíte dôležité oznámenia</string>
-	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na túto stopu aktualizácií, povoľte rozšírený režim.</string>
+	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na túto stopu aktualizácií, povoľte pokročilý režim.</string>
 	<string name="update_information_header_advanced_mode_hint">Pokročilý režim je povolený</string>
-	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili rozšírený režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\".\n\nRozšírený režim môžete vypnúť v nastaveniach.</string>
+	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili pokročilý režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\".\n\nPokročilý režim môžete vypnúť v nastaveniach.</string>
 	<string name="update_information_different_version_changelog_notice">Prezeráte si zoznam zmien najnovšej aktualizácie v stope aktualizácií \"%1$s\". Ak chcete nainštalovať túto aktualizáciu, musíte najskôr povoliť pokročilý režim (v nastaveniach).\n\nAk chcete však namiesto toho zobraziť zoznam zmien aktuálne nainštalovanej verzie, budete musieť prepnúť späť na správnu metódu aktualizácie.</string>
 	<string name="update_information_last_checked_on">Naposledy kontrolované: %1$s</string>
 	<string name="update_information_no_update_data_available">Nie sú k dispozícii žiadne informácie o aktualizácii</string>
