@@ -12,97 +12,97 @@
 	<string name="update_information_error_title">Nepodarilo sa načítať informácie o najnovších aktualizáciách</string>
 	<string name="update_information_banner_server">Klepnutím tu zobrazíte dôležité oznámenia</string>
 	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na túto stopu aktualizácií, povoľte rozšírený režim.</string>
-	<string name="update_information_header_advanced_mode_hint">Advanced mode is enabled</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" update track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
-	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
-	<string name="update_information_no_update_data_available">No update information is available</string>
+	<string name="update_information_header_advanced_mode_hint">Pokročilý režim je povolený</string>
+	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili rozšírený režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\".\n\nRozšírený režim môžete vypnúť v nastaveniach.</string>
+	<string name="update_information_different_version_changelog_notice">Prezeráte si zoznam zmien najnovšej aktualizácie v stope aktualizácií \"%1$s\". Ak chcete nainštalovať túto aktualizáciu, musíte najskôr povoliť pokročilý režim (v nastaveniach).\n\nAk chcete však namiesto toho zobraziť zoznam zmien aktuálne nainštalovanej verzie, budete musieť prepnúť späť na správnu metódu aktualizácie.</string>
+	<string name="update_information_last_checked_on">Naposledy kontrolované: %1$s</string>
+	<string name="update_information_no_update_data_available">Nie sú k dispozícii žiadne informácie o aktualizácii</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
-	<string name="update_information_system_is_up_to_date">Your system is up to date</string>
-	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
-	<string name="update_information_view_update_information">View update information</string>
+	<string name="update_information_system_is_up_to_date">YVáš systém je aktuálny</string>
+	<string name="update_information_unknown_update_name">Nepomenovaná aktualizácia pre %1$s</string>
+	<string name="update_information_view_update_information">Zobraziť informácie o aktualizácii</string>
 
 	<!-- Server status warning strings -->
-	<string name="server_status_error">Some features do not work.</string>
-	<string name="server_status_unreachable">The server can\'t be reached. Try refreshing the page.</string>
-	<string name="server_status_warning">Some features may not work properly.</string>
+	<string name="server_status_error">Niektoré funkcie nefungujú.</string>
+	<string name="server_status_unreachable">Server nie je dostupný. Skúste stránku obnoviť.</string>
+	<string name="server_status_warning">Niektoré funkcie nemusia fungovať správne.</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">K dispozícii je aktualizácia aplikácie (%1$s). Klepnutím tu otvoríte Obchod Play a aktualizujete aplikáciu.</string>
+	<string name="new_app_version_long">K dispozícii je aktualizácia aplikácie (%1$s). Vďaka aktualizácii aplikácie budete mať vždy k dispozícii najnovšie funkcie a opravy chýb.\nKlepnutím sem otvoríte Obchod Play a aktualizujete aplikáciu.</string>
+	<string name="new_app_version_inapp_downloaded">Aktualizácia aplikácie bola stiahnutá</string>
+	<string name="new_app_version_inapp_failed">TAktualizáciu aplikácie sa nepodarilo nainštalovať. Klepnutím tu otvoríte Obchod Play a aktualizujete aplikáciu.</string>
 
 	<!-- Downloader strings-->
-	<string name="download">Download update</string>
-	<string name="downloaded">Update downloaded</string>
-	<string name="downloading">Downloading update…</string>
-	<string name="paused">Paused - tap to resume</string>
+	<string name="download">Stiahnuť aktualuzáciu</string>
+	<string name="downloaded">Aktualizácia stiahnutá</string>
+	<string name="downloading">Sťahujem aktualuzáciu…</string>
+	<string name="paused">Pozastavené - klepnutím obnovíte</string>
 
-	<string name="download_complete">Download complete</string>
-	<string name="download_complete_notification">Tap to start the installation</string>
+	<string name="download_complete">Sťahovanie dokončené</string>
+	<string name="download_complete_notification">Klepnutím spustíte inštaláciu</string>
 
-	<string name="download_error">Download Error</string>
-	<string name="download_error_close">CLOSE</string>
-	<string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
-	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
-	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
+	<string name="download_error">Chyba pri sťahovaní</string>
+	<string name="download_error_close">ZAVRIEŤ</string>
+	<string name="download_error_corrupt">Stiahnutý aktualizačný súbor je poškodený! Skúste ho stiahnuť znova.</string>
+	<string name="download_error_server">Počas sťahovania aktualizácie sa vyskytla chyba servera. Skúste aktualizáciu stiahnuť znova.</string>
+	<string name="download_error_internal">Počas sťahovania aktualizácie sa, bohužiaľ, vyskytla technická chyba. Skúste ju stiahnuť znova. Ak sa to bude opakovať, obráťte sa so žiadosťou o pomoc na vývojára tejto aplikácie.</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[Zdá sa, že odkaz na stiahnutie je neplatný. To by mohlo znamenať, že sme pri pridávaní aktualizačných údajov urobili chybu, alebo OnePlus stiahol/odstránil aktualizačný súbor zo svojich serverov. Nášmu tímu bolo odoslané oznámenie a budeme sa snažiť tento problém vyriešiť čo najskôr.
+Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
+	<string name="download_error_could_not_move_temp_file">TSúbor bol stiahnutý, ale nepodarilo sa ho presunúť do správneho adresára. Otvorte správcu súborov, prejdite do \"%1$s\" a ručne presuňte súbor do najvyššieho adresára interného úložiska.</string>
 
-	<string name="download_error_retry">RETRY</string>
-	<string name="download_error_resume">RESUME</string>
-	<string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
+	<string name="download_error_retry">SKÚSIŤ ZNOVA</string>
+	<string name="download_error_resume">POKRAČOVAŤ</string>
+	<string name="download_error_storage">Vo vašom zariadení nie je k dispozícii dostatok úložného priestoru na stiahnutie aktualizácie. Odstráňte niektoré súbory a skúste aktualizáciu znovu stiahnuť.</string>
 
-	<string name="download_failed">Download failed</string>
-	<string name="download_pending">Your download will start soon…</string>
-	<string name="download_notification_error_server">Server error while downloading. Please restart the download.</string>
-	<string name="download_notification_error_internal">Technical error while downloading. Restart the download or contact support.</string>
-	<string name="download_notification_error_storage_full">Insufficient storage space.</string>
-	<string name="download_notification_error_corrupt">File verification failed. Check your connection and try again.</string>
+	<string name="download_failed">Sťahovanie zlyhalo</string>
+	<string name="download_pending">Sťahovanie sa začne čoskoro…</string>
+	<string name="download_notification_error_server">Chyba servera počas sťahovania. Reštartujte sťahovanie.</string>
+	<string name="download_notification_error_internal">Technická chyba pri sťahovaní. Reštartujte sťahovanie alebo kontaktujte podporu.</string>
+	<string name="download_notification_error_storage_full">Nedostatok úložného priestoru.</string>
+	<string name="download_notification_error_corrupt">Overenie súboru zlyhalo. Skontrolujte pripojenie a skúste to znova.</string>
 
-	<string name="download_progress_text_hours_remaining">About %1$d hours remaining</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">Less than a minute remaining</string>
-	<string name="download_progress_text_minutes_remaining">About %1$d minutes remaining</string>
-	<string name="download_progress_text_one_hour_remaining">About 1 hour remaining</string>
-	<string name="download_progress_text_one_minute_remaining">About a minute remaining</string>
-	<string name="download_progress_text_seconds_remaining">A few seconds remaining</string>
-	<string name="download_progress_text_unknown_time_remaining">Calculating time remaining…</string>
-	<string name="download_progress_text_verifying">Verifying file…</string>
-	<string name="download_progress_text_paused">Paused</string>
+	<string name="download_progress_text_hours_remaining">Zostáva asi %1$d hodín</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">Zostáva menej ako minúta</string>
+	<string name="download_progress_text_minutes_remaining">Zostáva asi %1$d minút</string>
+	<string name="download_progress_text_one_hour_remaining">Zostáva asi 1 hodina</string>
+	<string name="download_progress_text_one_minute_remaining">Zostáva asi minúta</string>
+	<string name="download_progress_text_seconds_remaining">Zostáva pár sekúnd</string>
+	<string name="download_progress_text_unknown_time_remaining">Počítam zostávajúci čas…</string>
+	<string name="download_progress_text_verifying">Overujem súbor…</string>
+	<string name="download_progress_text_paused">Pozastavené</string>
 
-	<string name="download_verifying">Verifying…</string>
-	<string name="download_verifying_error">File is damaged</string>
-	<string name="download_verifying_start">Your download will now be verified…</string>
+	<string name="download_verifying">Overujem…</string>
+	<string name="download_verifying_error">Súbor je poškodený</string>
+	<string name="download_verifying_start">YVaše stiahnutie bude teraz overené…</string>
 
 	<!-- Settings strings-->
-	<string name="preference_header_support">Support us</string>
-	<string name="preference_header_device">Device</string>
+	<string name="preference_header_support">Podpor nás</string>
+	<string name="preference_header_device">Zariadenie</string>
 	<string name="preference_header_ui">UI</string>
-	<string name="preference_header_notifications">Notifications</string>
-	<string name="preference_header_advanced">Advanced</string>
-	<string name="preference_header_about">About</string>
+	<string name="preference_header_notifications">Notifikácie</string>
+	<string name="preference_header_advanced">Pokročilé</string>
+	<string name="preference_header_about">O nás</string>
 
-	<string name="summary_on">Enabled</string>
-	<string name="summary_off">Disabled</string>
-	<string name="summary_please_wait">Please wait…</string>
-	<string name="summary_update_method">Select a device first</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_language">Set language</string>
-	<string name="summary_privacy_policy">View online</string>
-	<string name="summary_rate_app">Leave a 5 star review</string>
+	<string name="summary_on">Povolené</string>
+	<string name="summary_off">Zakázané</string>
+	<string name="summary_please_wait">Prosím počajte…</string>
+	<string name="summary_update_method">Najskôr vyberte zariadenie</string>
+	<string name="summary_theme">Nastaviť tému</string>
+	<string name="summary_language">Nastaviť jazyk</string>
+	<string name="summary_privacy_policy">Zobraziť online</string>
+	<string name="summary_rate_app">Zanechajte hodnotenie 5 hviezdičiek</string>
 	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
-	<string name="label_buy_ad_free">Remove ads</string>
-	<string name="label_theme">Theme</string>
-	<string name="label_language">Language</string>
-	<string name="label_privacy_policy">Privacy policy</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_buy_ad_free">Odstrániť reklamy</string>
+	<string name="label_theme">Motívy</string>
+	<string name="label_language">Jazyk</string>
+	<string name="label_privacy_policy">Zásady ochrany osobných údajov</string>
+	<string name="label_rate_app">Ohodnoť túto aplikáciu</string>
 
-	<string name="theme_light">Light</string>
-	<string name="theme_dark">Dark</string>
-	<string name="theme_system">System</string>
+	<string name="theme_light">Svetlý</string>
+	<string name="theme_dark">Tmavý</string>
+	<string name="theme_system">Systémový</string>
 	<string name="theme_auto">Auto</string>
 
 	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
@@ -128,123 +128,122 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
 	<string name="key_oxygen" translatable="false">oxygen_updater</string>
 
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device.</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_light_subtitle">Motív s bielym pozadím a primárnou farbou OnePlus Red.</string>
+	<string name="theme_dark_subtitle">Tlmená základná farba OnePlus Red s takmer čiernym pozadím. Tento motív použite na šetrenie batérie, najmä na obrazovkách AMOLED.</string>
+	<string name="theme_system_subtitle">Použite nočný režim systému (môžete ho nastaviť v nastaveniach displeja alebo v možnostiach pre vývojárov). Líši sa podľa zariadenia.</string>
+	<string name="theme_auto_subtitle">Prepínajte medzi svetlými a tmavými motívmi podľa dennej doby, aby ste zabránili namáhaniu očí v noci.</string>
+	<string name="theme_additional_note">Poznámka: ak je aktívny motív \"Auto\" a je povolený šetrič batérie, tmavý motív sa automaticky použije bez ohľadu na dennú dobu na šetrenie batérie.</string>
 
-	<string name="settings">Settings</string>
-	<string name="settings_buy_button_buy">Buy (%1$s)</string>
-	<string name="settings_buy_button_bought">Purchased</string>
-	<string name="settings_buy_button_not_possible">Unavailable</string>
-	<string name="settings_buy_ad_free_label">Upgrade to Ad-Free</string>
+	<string name="settings">Nastavenia</string>
+	<string name="settings_buy_button_buy">Kúpiť (%1$s)</string>
+	<string name="settings_buy_button_bought">Kúpené</string>
+	<string name="settings_buy_button_not_possible">Nedostupné</string>
+	<string name="settings_buy_ad_free_label">Prejdite na verziu bez reklamy</string>
 
-	<string name="settings_contribute_label">Help improve the app</string>
+	<string name="settings_contribute_label">Pomôžte vylepšiť aplikáciu</string>
 
-	<string name="settings_device">Device</string>
-	<string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
-	<string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method).\n\nA beta update of OxygenOS can always be installed, as well when you\'re on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. For the betas, the full and incremental update methods work the same way as on the stable versions.</string>
+	<string name="settings_device">Zariadenie</string>
+	<string name="settings_entered_incorrectly">Pri ukladaní nastavení sa vyskytla chyba. Vráťte sa späť a znova vyberte zariadenie/spôsob aktualizácie.</string>
+	<string name="settings_explanation_incremental_full_update">Inkrementálnu aktualizáciu je možné nainštalovať z ktorejkoľvek verzie (okrem prípadov, keď máte odomknutý bootloader; ako spôsob aktualizácie by ste si mali vždy zvoliť úplnú aktualizáciu).\n\nBeta aktualizáciu systému OxygenOS je možné nainštalovať vždy, aj keď ste na stabilnej verzii. Ak chcete prejsť zo stabilnej verzie na beta, musíte v nastaveniach povoliť pokročilý režim. V prípade beta verzií fungujú metódy úplnej a inkrementálnej aktualizácie rovnakým spôsobom ako v prípade stabilných verzií.</string>
 
-	<string name="settings_push_from_server">Informational and warning messages</string>
-	<string name="settings_push_new_version">System update messages</string>
-	<string name="settings_push_new_device">New device is supported</string>
-	<string name="settings_push_news">News messages</string>
+	<string name="settings_push_from_server">Informačné a varovné správy</string>
+	<string name="settings_push_new_version">Správy o aktualizácii systému</string>
+	<string name="settings_push_new_device">Nové zariadenie je podporované</string>
+	<string name="settings_push_news">Novinky</string>
 
-	<string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
+	<string name="settings_saving">Vaše nastavenia sa stále ukladajú. Ak to trvá príliš dlho: Skontrolujte sieťové pripojenie, ukončite aplikáciu a spustite ju znova.</string>
 
-	<string name="settings_advanced_mode">Advanced mode</string>
-	<string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n&#8226; Updating from a regular version to a beta version\n&#8226; Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n&#8226; Reinstalling your current system version.</string>
+	<string name="settings_advanced_mode">Pokročilý mód</string>
+	<string name="settings_advanced_mode_explanation">APokročilý režim skryje správu \"Váš systém je aktuálny\", ktorá vám umožní stiahnuť a nainštalovať všetky aktualizácie, aj keď nemusia byť kompatibilné s vaším zariadením.\n\nTTo môže byť užitočné, keď:\n&#8226; Aktualizujete z bežnej verzie na beta verziu\n&#8226; Vraciate sa z beta verzie na bežnú verziu (nezabudnite na obnovenie továrenských nastavení zariadenia)\n&#8226; Preinštalovávate aktuálnu verziu systému.</string>
 
 	<string name="settings_update_method">Update method</string>
-	<string name="settings_upload_logs">Share usage data and logs</string>
+	<string name="settings_upload_logs">Zdieľajte údaje o používaní a logy</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">You\'ll need a working connection to view the FAQ page.</string>
+	<string name="faq_no_network_text">Na prezeranie stránky s často kladenými otázkami budete potrebovať funkčné pripojenie.</string>
 
 	<!-- First-time onboarding strings -->
-	<string name="onboarding">Welcome</string>
-	<string name="onboarding_finished_button">Start app</string>
+	<string name="onboarding">Vitajte</string>
+	<string name="onboarding_finished_button">Spustiť aplikáciu</string>
 
-	<string name="onboarding_page_1_title">Welcome to Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS powered device\n\n&#8226; Easily update a rooted device\n\n&#8226; View what\'s new in the system software you are currently using\n\n&#8226; Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
-	<string name="onboarding_page_1_caption">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app.\n\nBy using this app, you agree to the terms and conditions as stated above.</string>
-	<string name="onboarding_page_2_title">Choose your device</string>
-	<string name="onboarding_page_2_caption">Your device is usually already selected above. If not, select your device above.</string>
-	<string name="onboarding_page_3_title">Choose your update method</string>
-	<string name="onboarding_page_3_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
-	<string name="onboarding_page_4_title">You are ready to go!</string>
-	<string name="onboarding_page_4_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
+	<string name="onboarding_page_1_title">Vitajte v Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n\n&#8226; Ľahko aktualizujte rootované zariadenie\n\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n\n&#8226; Prečítajte si najnovšie správy o OnePlus a OxygenOS\n\nPokračujte prejdením doľava.</string>
+	<string name="onboarding_page_1_caption">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojár aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie.\n\nPoužívaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
+	<string name="onboarding_page_2_title">Vyberte svoje zariadenie</string>
+	<string name="onboarding_page_2_caption">Vaše zariadenie by malo byť vybrané vyššie. Ak nie, vyberte svoje zariadenie vyššie.</string>
+	<string name="onboarding_page_3_title">Vyberte spôsob aktualizácie</string>
+	<string name="onboarding_page_3_caption">Tu je zvyčajne čiastková aktualizácia správnou voľbou, pretože ponúka oveľa rýchlejšie a menšie sťahovanie.\n\nNie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie.\n\nAk máte beta verziu systému OxygenOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
+	<string name="onboarding_page_4_title">Ste pripravení začať!</string>
+	<string name="onboarding_page_4_text">Želáme príjemné používanie aplikácie!\n\nNeskôr môžete svoje nastavenia kedykoľvek zmeniť. Urobíte to takto: Klepnite na tri bodky v pravom hornom rohu a klepnite na \"Nastavenia\".</string>
 
 	<!-- Automatic install strings -->
-	<string name="install">Install</string>
-	<string name="install_checking_root">Checking if your device is rooted…</string>
-	<string name="install_grant_root_permissions">Please allow root access when asked.</string>
-	<string name="install_going_back_not_possible">Unfortunately, you can\'t go back now</string>
-	<string name="install_preparing_installation">Preparing installation…</string>
+	<string name="install">Inštalovať</string>
+	<string name="install_checking_root">Kontrola, či je vaše zariadenie rootnuté…</string>
+	<string name="install_grant_root_permissions">Na požiadanie povoľte root prístup.</string>
+	<string name="install_going_back_not_possible">UTeraz sa bohužiaľ nemôžete vrátiť späť</string>
+	<string name="install_preparing_installation">Pripravujem inštaláciu…</string>
 
-	<string name="install_recovery_installer_title">Update Installer&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Backing up your device. This will take a while!</string>
-	<string name="install_recovery_clearing_cache">Clearing the cache partition…</string>
-	<string name="install_recovery_done">Done. Your device will restart.</string>
-	<string name="install_recovery_installing_additional_zip">Installing the additional ZIP file…</string>
-	<string name="install_recovery_installing_update">Installing the update…</string>
-	<string name="install_recovery_thank_you">Thank you for using Oxygen Updater. If you like this app, please rate it 5 stars at Google Play :-)</string>
+	<string name="install_recovery_installer_title">Aktualizácia inštalátora&#160;&#160;</string> <!-- Add 2 spaces to the end -->
+	<string name="install_recovery_backing_up">Vaše zariadenie sa zálohuje. Bude to chvíľu trvať!</string>
+	<string name="install_recovery_clearing_cache">Čistím cache partíciu…</string>
+	<string name="install_recovery_done">Hotovo. Vaše zariadenie sa reštartuje.</string>
+	<string name="install_recovery_installing_additional_zip">Inštalujem dodatočný ZIP súbor…</string>
+	<string name="install_recovery_installing_update">Inštaluje sa aktualizácia…</string>
+	<string name="install_recovery_thank_you">Ďakujeme, že používate Oxygen Updater. Ak sa vám táto aplikácia páči, Ohodnoťte ju prosím v službe Google Play 5 hviezdičkami :-)</string>
 
-	<string name="install_error_write_script_failed">"Failed to prepare the installation of the update. Did you allow root access?"</string>
+	<string name="install_error_write_script_failed">"Nepodarilo sa pripraviť inštaláciu aktualizácie. Povolili ste root prístup?"</string>
 
-	<string name="install_options_backup">Backup my device</string>
-	<string name="install_options_header">You may customize the installation process by changing the options shown below. Tap on \"Start installation\" to start the installation of the update.</string>
-	<string name="install_options_keep_root">Keep my device rooted</string>
-	<string name="install_options_reboot_after_install">Reboot after installation</string>
-	<string name="install_options_select_root_package">Select the root package to install…</string>
-	<string name="install_options_start_install">Start installation</string>
-	<string name="install_options_subtitle">Choose your install options</string>
-	<string name="install_options_wipe_cache_partition">Wipe the cache partition</string>
+	<string name="install_options_backup">Zálohovať moje zariadenie</string>
+	<string name="install_options_header">Proces inštalácie si môžete prispôsobiť zmenou možností nižšie. Klepnutím na \"Spustiť inštaláciu\" spustíte inštaláciu aktualizácie.</string>
+	<string name="install_options_keep_root">Ponechať moje zariadenie rootované</string>
+	<string name="install_options_reboot_after_install">Reštartovať po inštalácii</string>
+	<string name="install_options_select_root_package">Vyberte root balík, ktorý chcete nainštalovať…</string>
+	<string name="install_options_start_install">Spustiť inštaláciu</string>
+	<string name="install_options_subtitle">Vyberte možnosti inštalácie</string>
+	<string name="install_options_wipe_cache_partition">Vymazať cache partíciu</string>
 
-	<string name="install_options_explanation_title">What do these options mean?</string>
-	<string name="install_options_explanation_backup">Backup my device:\nWhen you select this option, a backup of your system, apps and settings will be made prior to the installation. Always handy to have, in case something goes horribly wrong.</string>
-	<string name="install_options_explanation_keep_root">Keep my device rooted:\nWhen you select this option, you may specify a root package which will be installed after the update is installed. This ensures that your device stays rooted. Please note that this root package must be compatible with the NEW OxygenOS version you are going to install!</string>
-	<string name="install_options_explanation_wipe_cache">Wipe the cache partition:\nWhen you select this option, the cache partition will be wiped after the update has been installed. This ensures your device performs optimally and also reduces the likelihood of experiencing bugs caused by the installation of the update.</string>
-	<string name="install_options_explanation_reboot">Reboot after installation:\nWhen you select this option, your device will automatically reboot back to OxygenOS after the update is installed. Otherwise, your device will stay in Recovery Mode, where you can install additional packages.</string>
+	<string name="install_options_explanation_title">Čo znamenajú tieto možnosti?</string>
+	<string name="install_options_explanation_backup">Zálohovať moje zariadenie:\nAk vyberiete túto možnosť, pred inštaláciou sa vykoná zálohovanie vášho systému, aplikácií a nastavení. Vždy užitočné, ak sa niečo pokazí.</string>
+	<string name="install_options_explanation_keep_root">Ponechať moje zariadenie rootované:\nKeď vyberiete túto možnosť, môžete určiť root balík, ktorý sa nainštaluje po nainštalovaní aktualizácie. To zaisťuje, že vaše zariadenie zostane rootované. Upozorňujeme, že tento root balík musí byť kompatibilný s NOVOU verziou OxygenOS, ktorú sa chystáte nainštalovať!</string>
+	<string name="install_options_explanation_wipe_cache">Premazať cache partíciu:\nAk vyberiete túto možnosť, cache partícia sa po nainštalovaní aktualizácie premaže. To zaisťuje optimálne fungovanie vášho zariadenia a tiež sa znižuje pravdepodobnosť výskytu chýb spôsobených inštaláciou aktualizácie.</string>
+	<string name="install_options_explanation_reboot">Reštartovať po inštalácii:\nKeď vyberiete túto možnosť, vaše zariadenie sa po nainštalovaní aktualizácie automaticky reštartuje späť na OxygenOS. V opačnom prípade vaše zariadenie zostane v režime obnovenia, kde môžete nainštalovať ďalšie balíky.</string>
 
-	<string name="install_method_chooser_title">Choose installation method</string>
-	<string name="install_method_chooser_subtitle">How do you want to install this update?</string>
-	<string name="install_method_chooser_automatic_title">Automatic installation*</string>
-	<string name="install_method_chooser_automatic_description">The easiest way to install the update.\nYour device will restart to install the update.\n\n* Requires root access and TWRP recovery.</string>
+	<string name="install_method_chooser_title">Vyberte metódu inštalácie</string>
+	<string name="install_method_chooser_subtitle">Ako chcete nainštalovať túto aktualizáciu?</string>
+	<string name="install_method_chooser_automatic_title">Automatická inštalácia*</string>
+	<string name="install_method_chooser_automatic_description">Najjednoduchší spôsob inštalácie aktualizácie.\nVaše zariadenie sa reštartuje, aby sa nainštalovala aktualizácia.\n\n* Vyžaduje root prístup a TWRP recovery.</string>
 
-	<string name="install_method_chooser_manual_title">Manual installation</string>
-	<string name="install_method_chooser_manual_description">Read the install guide to learn how to install the update. You will install the update using the Recovery Mode of your device.</string>
+	<string name="install_method_chooser_manual_title">Manuálna inštalácia</string>
+	<string name="install_method_chooser_manual_description">V príručke na inštaláciu sa dozviete, ako nainštalovať aktualizáciu. Aktualizáciu nainštalujete pomocou Recovery módu vášho zariadenia.</string>
 
-	<string name="install_temporary_error">A temporary error occurred while preparing the installation of the update. Please try it again.</string>
+	<string name="install_temporary_error">Počas prípravy inštalácie aktualizácie sa vyskytla dočasná chyba. Skúste to znova.</string>
 
-	<string name="install_verify_error_title">Installation failed</string>
-	<string name="install_verify_error_nothing_installed">Error when installing the update. No changes were made to the software of your device. Try installing the update again.</string>
-	<string name="install_verify_error_unable_to_verify">Failed to check if the update was installed successfully. Please open Oxygen Updater to see if the update was installed successfully.</string>
-	<string name="install_verify_error_wrong_version_installed">A different version of OxygenOS was installed. Don\'t select an OxygenOS update file when choosing a root package under the \"Keep my device rooted\" option.</string>
+	<string name="install_verify_error_title">Inštalácia zlyhala</string>
+	<string name="install_verify_error_nothing_installed">Chyba pri inštalácii aktualizácie. V softvéri vášho zariadenia neboli urobené žiadne zmeny. Skúste aktualizáciu nainštalovať znova.</string>
+	<string name="install_verify_error_unable_to_verify">Nepodarilo sa skontrolovať, či bola aktualizácia úspešne nainštalovaná. Otvorte Oxygen Updater a zistite, či sa aktualizácia úspešne nainštalovala.</string>
+	<string name="install_verify_error_wrong_version_installed">Bola nainštalovaná iná verzia systému OxygenOS. Nevyberajte aktualizačný súbor OxygenOS pri výbere root balíka pod možnosťou \"Ponechať zariadenie rootované\".</string>
 
-	<string name="install_verify_success_title">Installation complete</string>
-	<string name="install_verify_success_message">OxygenOS version %1$s has been installed successfully.</string>
+	<string name="install_verify_success_title">Inštalácia dokončená</string>
+	<string name="install_verify_success_message">Verzia OxygenOS %1$s bola úspešne nainštalovaná.</string>
 
-	<string name="install_zip_file_clear">Clear root package file</string>
-	<string name="install_zip_file_pick">Choose root package file</string>
-	<string name="install_zip_file_placeholder">Select a root package…</string>
-	<string name="install_zip_file_wrong_file_type">You may only select a zip file. Please select the right file.</string>
+	<string name="install_zip_file_clear">Vyčistiť súbor root balíka</string>
+	<string name="install_zip_file_pick">Vyberte súbor root balíka</string>
+	<string name="install_zip_file_placeholder">Vyberte root balík…</string>
+	<string name="install_zip_file_wrong_file_type">Môžete zvoliť iba súbor zip. Vyberte správny súbor.</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
-	<string name="install_guide_automatic_install_disabled">Automatic installations have been temporarily disabled due to reported technical issues. Install the update according to the instructions shown in the install guide.</string>
-	<string name="install_guide">Install guide</string>
-	<string name="install_guide_subtitle">Install guide - %1$d of %2$d</string>
-	<string name="install_guide_tip">&#8226; It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
+	<string name="install_guide_no_root">Nainštalujte aktualizáciu podľa pokynov v sprievodcovi inštaláciou.</string>
+	<string name="install_guide_automatic_install_disabled">Automatické inštalácie boli dočasne deaktivované z dôvodu nahlásených technických problémov. Nainštalujte aktualizáciu podľa pokynov v sprievodcovi inštaláciou.</string>
+	<string name="install_guide">Sprievodca inštaláciou</string>
+	<string name="install_guide_subtitle">Sprievodca inštaláciou - %1$d z %2$d</string>
+	<string name="install_guide_tip">&#8226; Odporúča sa zapísať si všetky kroky, pretože počas inštalácie aktualizácie budete musieť zariadenie vypnúť.</string>
 
-	<string name="install_guide_page_1_title">Download the update</string>
-	<string name="install_guide_page_1_text">&#8226; Press the Download button to start downloading the update.\n\n&#8226; The download progress will appear in the app, and as a notification in your notifications screen.\n\n&#8226; When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
+	<string name="install_guide_page_1_title">Stiahnuť aktualizáciu</string>
+	<string name="install_guide_page_1_text">&#8226; Stlačením tlačidla Stiahnuť spustíte sťahovanie aktualizácie.\n\n&#8226; Priebeh sťahovania sa zobrazí v aplikácii a ako upozornenie na obrazovke s upozorneniami.\n\n&#8226; Po dokončení sťahovania sa zobrazí upozornenie s textom \"Sťahovanie dokončené\".\nAk sa vyskytla chyba pri sťahovaní, otvorte aplikáciu a skúste znova stiahnuť aktualizáciu. Ak to nefunguje, skontrolujte funkčnosť vášho pripojenia. V opačnom prípade kontaktujte vývojára aplikácie. Môžete to urobiť tak, že v obchode Google Play navštívite sekciu \"Moje aplikácie\".</string>
 
-	<string name="install_guide_page_2_title">Prepare for installation</string>
+	<string name="install_guide_page_2_title">Príprava na inštaláciu</string>
 	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
 
 Instructions:
