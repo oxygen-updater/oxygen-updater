@@ -82,7 +82,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="preference_header_ui">UI</string>
 	<string name="preference_header_notifications">Notifikácie</string>
 	<string name="preference_header_advanced">Pokročilé</string>
-	<string name="preference_header_about">O nás</string>
+	<string name="preference_header_about">O aplikácii</string>
 
 	<string name="summary_on">Povolené</string>
 	<string name="summary_off">Zakázané</string>
