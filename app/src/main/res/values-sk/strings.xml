@@ -9,12 +9,12 @@
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Pretože sa vyskytla chyba pri sťahovaní a sťahovanie musí byť reštartované, môžete pomocou tohto odkazu stiahnuť aktualizačný súbor z prehliadača. Možno budete musieť presunúť stiahnutý súbor z adresára \"Downloads\" do nadradeného adresára. Toto je ten istý odkaz, ktorý používa aplikácia na stiahnutie, čo je oficiálny odkaz na server OnePlus OTA:\n%1$s</string>
 	<string name="update_information_header">Aktualizácia</string>
-	<string name="update_information_error_title">Nepodarilo sa načítať informácie o najnovších aktualizáciách</string>
+	<string name="update_information_error_title">Nepodarilo sa načítať informácie o najnovšej aktualizácii</string>
 	<string name="update_information_banner_server">Klepnutím tu zobrazíte dôležité oznámenia</string>
-	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na túto stopu aktualizácií, povoľte pokročilý režim.</string>
+	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na tento kanál aktualizácií, povoľte pokročilý režim.</string>
 	<string name="update_information_header_advanced_mode_hint">Pokročilý režim je povolený</string>
 	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili pokročilý režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\".\n\nPokročilý režim môžete vypnúť v nastaveniach.</string>
-	<string name="update_information_different_version_changelog_notice">Prezeráte si zoznam zmien najnovšej aktualizácie v stope aktualizácií \"%1$s\". Ak chcete nainštalovať túto aktualizáciu, musíte najskôr povoliť pokročilý režim (v nastaveniach).\n\nAk chcete však namiesto toho zobraziť zoznam zmien aktuálne nainštalovanej verzie, budete musieť prepnúť späť na správnu metódu aktualizácie.</string>
+	<string name="update_information_different_version_changelog_notice">Prezeráte si zoznam zmien najnovšej aktualizácie v \"%1$s\" kanále aktualizácií. Ak chcete nainštalovať túto aktualizáciu, musíte najskôr povoliť pokročilý režim (v nastaveniach).\n\nAk chcete však namiesto toho zobraziť zoznam zmien aktuálne nainštalovanej verzie, budete musieť prepnúť späť na správnu metódu aktualizácie.</string>
 	<string name="update_information_last_checked_on">Naposledy kontrolované: %1$s</string>
 	<string name="update_information_no_update_data_available">Nie sú k dispozícii žiadne informácie o aktualizácii</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -49,14 +49,14 @@
 	<string name="download_error_internal">Počas sťahovania aktualizácie sa, bohužiaľ, vyskytla technická chyba. Skúste ju stiahnuť znova. Ak sa to bude opakovať, obráťte sa so žiadosťou o pomoc na vývojára tejto aplikácie.</string>
 	<string name="download_error_unsuccessful_response"><![CDATA[Zdá sa, že odkaz na stiahnutie je neplatný. To by mohlo znamenať, že sme pri pridávaní aktualizačných údajov urobili chybu, alebo OnePlus stiahol/odstránil aktualizačný súbor zo svojich serverov. Nášmu tímu bolo odoslané oznámenie a budeme sa snažiť tento problém vyriešiť čo najskôr.
 Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">TSúbor bol stiahnutý, ale nepodarilo sa ho presunúť do správneho adresára. Otvorte správcu súborov, prejdite do \"%1$s\" a ručne presuňte súbor do najvyššieho adresára interného úložiska.</string>
+	<string name="download_error_could_not_move_temp_file">Súbor bol stiahnutý, ale nepodarilo sa ho presunúť do správneho adresára. Otvorte správcu súborov, prejdite do \"%1$s\" a ručne presuňte súbor do najvyššieho adresára interného úložiska.</string>
 
 	<string name="download_error_retry">SKÚSIŤ ZNOVA</string>
 	<string name="download_error_resume">POKRAČOVAŤ</string>
 	<string name="download_error_storage">Vo vašom zariadení nie je k dispozícii dostatok úložného priestoru na stiahnutie aktualizácie. Odstráňte niektoré súbory a skúste aktualizáciu znovu stiahnuť.</string>
 
 	<string name="download_failed">Sťahovanie zlyhalo</string>
-	<string name="download_pending">Sťahovanie sa začne čoskoro…</string>
+	<string name="download_pending">Sťahovanie sa čoskoro začne…</string>
 	<string name="download_notification_error_server">Chyba servera počas sťahovania. Reštartujte sťahovanie.</string>
 	<string name="download_notification_error_internal">Technická chyba pri sťahovaní. Reštartujte sťahovanie alebo kontaktujte podporu.</string>
 	<string name="download_notification_error_storage_full">Nedostatok úložného priestoru.</string>
@@ -77,7 +77,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="download_verifying_start">YVaše stiahnutie bude teraz overené…</string>
 
 	<!-- Settings strings-->
-	<string name="preference_header_support">Podpor nás</string>
+	<string name="preference_header_support">Podporte nás</string>
 	<string name="preference_header_device">Zariadenie</string>
 	<string name="preference_header_ui">UI</string>
 	<string name="preference_header_notifications">Notifikácie</string>
@@ -91,11 +91,11 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="summary_theme">Nastaviť tému</string>
 	<string name="summary_language">Nastaviť jazyk</string>
 	<string name="summary_privacy_policy">Zobraziť online</string>
-	<string name="summary_rate_app">Zanechajte hodnotenie 5 hviezdičiek</string>
+	<string name="summary_rate_app">Ohodnoťte nás 5 hviezdičkami</string>
 	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">Odstrániť reklamy</string>
-	<string name="label_theme">Motívy</string>
+	<string name="label_theme">Motív</string>
 	<string name="label_language">Jazyk</string>
 	<string name="label_privacy_policy">Zásady ochrany osobných údajov</string>
 	<string name="label_rate_app">Ohodnoťte túto aplikáciu</string>
@@ -153,7 +153,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 
 	<string name="settings_saving">Vaše nastavenia sa stále ukladajú. Ak to trvá príliš dlho: Skontrolujte sieťové pripojenie, ukončite aplikáciu a spustite ju znova.</string>
 
-	<string name="settings_advanced_mode">Pokročilý mód</string>
+	<string name="settings_advanced_mode">Pokročilý režim</string>
 	<string name="settings_advanced_mode_explanation">Pokročilý režim skryje správu \"Váš systém je aktuálny\", ktorá vám umožní stiahnuť a nainštalovať všetky aktualizácie, aj keď nemusia byť kompatibilné s vaším zariadením.\n\nTTo môže byť užitočné, keď:\n&#8226; Aktualizujete z bežnej verzie na beta verziu\n&#8226; Vraciate sa z beta verzie na bežnú verziu (nezabudnite na obnovenie továrenských nastavení zariadenia)\n&#8226; Preinštalovávate aktuálnu verziu systému.</string>
 
 	<string name="settings_update_method">Spôsob aktualizácie</string>
@@ -162,7 +162,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">Na prezeranie stránky s často kladenými otázkami budete potrebovať funkčné pripojenie.</string>
+	<string name="faq_no_network_text">Na prezeranie stránky s často kladenými otázkami potrebujete funkčné pripojenie.</string>
 
 	<!-- First-time onboarding strings -->
 	<string name="onboarding">Vitajte</string>
@@ -170,7 +170,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 
 	<string name="onboarding_page_1_title">Vitajte v Oxygen Updater!</string>
 	<string name="onboarding_page_1_text">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n\n&#8226; Ľahko aktualizujte rootované zariadenie\n\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n\n&#8226; Prečítajte si najnovšie správy o OnePlus a OxygenOS\n\nPokračujte prejdením doľava.</string>
-	<string name="onboarding_page_1_caption">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojár aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie.\n\nPoužívaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
+	<string name="onboarding_page_1_caption">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojári aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie.\n\nPoužívaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
 	<string name="onboarding_page_2_title">Vyberte svoje zariadenie</string>
 	<string name="onboarding_page_2_caption">Vaše zariadenie by malo byť vybrané vyššie. Ak nie, vyberte svoje zariadenie vyššie.</string>
 	<string name="onboarding_page_3_title">Vyberte spôsob aktualizácie</string>
@@ -180,9 +180,9 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 
 	<!-- Automatic install strings -->
 	<string name="install">Inštalovať</string>
-	<string name="install_checking_root">Kontrola, či je vaše zariadenie rootnuté…</string>
+	<string name="install_checking_root">Kontrola, či je vaše zariadenie rootované…</string>
 	<string name="install_grant_root_permissions">Na požiadanie povoľte root prístup.</string>
-	<string name="install_going_back_not_possible">UTeraz sa bohužiaľ nemôžete vrátiť späť</string>
+	<string name="install_going_back_not_possible">Teraz sa bohužiaľ nemôžete vrátiť späť</string>
 	<string name="install_preparing_installation">Pripravujem inštaláciu…</string>
 
 	<string name="install_recovery_installer_title">Aktualizácia inštalátora&#160;&#160;</string> <!-- Add 2 spaces to the end -->
@@ -205,7 +205,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="install_options_wipe_cache_partition">Vymazať cache partíciu</string>
 
 	<string name="install_options_explanation_title">Čo znamenajú tieto možnosti?</string>
-	<string name="install_options_explanation_backup">Zálohovať moje zariadenie:\nAk vyberiete túto možnosť, pred inštaláciou sa vykoná zálohovanie vášho systému, aplikácií a nastavení. Vždy užitočné, ak sa niečo pokazí.</string>
+	<string name="install_options_explanation_backup">Zálohovať moje zariadenie:\nAk vyberiete túto možnosť, pred inštaláciou sa vykoná zálohovanie vášho systému, aplikácií a nastavení. Užitočné, ak sa niečo pokazí.</string>
 	<string name="install_options_explanation_keep_root">Ponechať moje zariadenie rootované:\nKeď vyberiete túto možnosť, môžete určiť root balík, ktorý sa nainštaluje po nainštalovaní aktualizácie. To zaisťuje, že vaše zariadenie zostane rootované. Upozorňujeme, že tento root balík musí byť kompatibilný s NOVOU verziou OxygenOS, ktorú sa chystáte nainštalovať!</string>
 	<string name="install_options_explanation_wipe_cache">Premazať cache partíciu:\nAk vyberiete túto možnosť, cache partícia sa po nainštalovaní aktualizácie premaže. To zaisťuje optimálne fungovanie vášho zariadenia a tiež sa znižuje pravdepodobnosť výskytu chýb spôsobených inštaláciou aktualizácie.</string>
 	<string name="install_options_explanation_reboot">Reštartovať po inštalácii:\nKeď vyberiete túto možnosť, vaše zariadenie sa po nainštalovaní aktualizácie automaticky reštartuje späť na OxygenOS. V opačnom prípade vaše zariadenie zostane v režime obnovenia, kde môžete nainštalovať ďalšie balíky.</string>
@@ -293,13 +293,13 @@ Inštrukcie:
 	<string name="device_information_header">Zariadenie</string>
 	<string name="device_information_image_description">Snímka zariadenia</string>
 	<string name="device_information_incremental_os_version">Inkrementálna verzia OS</string>
-	<string name="device_information_os_version">verzia Androidu</string>
-	<string name="device_information_oxygen_os_version">verzia OxygenOS</string>
-	<string name="device_information_oxygen_os_ota_version">verzia OTA</string>
+	<string name="device_information_os_version">Verzia Androidu</string>
+	<string name="device_information_oxygen_os_version">Verzia OxygenOS</string>
+	<string name="device_information_oxygen_os_ota_version">Verzia OTA</string>
 	<string name="device_information_patch_level_version">Dátum bezpečnostnej opravy</string>
 	<string name="device_information_serial_number">Sériové číslo</string>
-	<string name="device_information_system_on_a_chip">Systém na čipe</string>
-	<string name="device_information_unknown">neznáme</string>
+	<string name="device_information_system_on_a_chip">SoC</string>
+	<string name="device_information_unknown">Neznáme</string>
 
 	<!-- About screen strings -->
 	<string name="about">Informácie</string>
@@ -372,8 +372,8 @@ Inštrukcie:
 	<!-- Contribute strings -->
 	<string name="contribute">Staňte sa prispievateľom</string>
 	<string name="contribute_title">Pomôžte vylepšiť Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater potrebuje vašu pomoc! Aby sme vám mohli poskytnúť najnovšie aktualizácie, musíme získať názvy súborov s aktualizáciami. Tieto sa nachádzajú v telefóne, keď sa objaví pravidelná aktualizácia.\n\nAko môžem pomôcť?\n\nOxygen Updater môže našim správcom automaticky odosielať nové názvy aktualizačných súborov. Toto spotrebuje malé množstvo dát a môže spotrebovať trochu vašej batérie. Všetko, čo musíte urobiť, je čakať (približne 15 minút) pred inštaláciou oficiálnych aktualizácií systému, kým neuvidíte potvrdenie nástroja Oxygen Updater, že súbor bol úspešne odoslaný. Raz za 15 minút sa prehľadá sa iba adresár \".Ota\". Kontroluje iba konkrétny názov v tomto konkrétnom priečinku.</string>
-	<string name="contribute_agree">Rád by som pomohol a súhlasil s odoslaním názvov aktualizačných súborov našim správcom</string>
+	<string name="contribute_explanation">Oxygen Updater potrebuje vašu pomoc! Aby sme vám mohli poskytnúť najnovšie aktualizácie, musíme získať názvy súborov s aktualizáciami. Tieto sa nachádzajú v telefóne, keď sa objaví pravidelná aktualizácia.\n\nAko môžem pomôcť?\n\nOxygen Updater môže našim správcom automaticky odosielať nové názvy aktualizačných súborov. Toto spotrebuje malé množstvo dát a môže spotrebovať trochu vašej batérie. Všetko, čo musíte urobiť, je čakať (približne 15 minút) pred inštaláciou oficiálnych aktualizácií systému, kým neuvidíte potvrdenie nástroja Oxygen Updater, že súbor bol úspešne odoslaný. Raz za 15 minút sa prehľadá iba adresár \".Ota\". Kontroluje iba konkrétny názov v tomto konkrétnom priečinku.</string>
+	<string name="contribute_agree">Rád by som pomohol a súhlasím s odoslaním názvov aktualizačných súborov našim správcom</string>
 	<string name="contribute_agree_from_setup">Rád by som pomohol vylepšiť aplikáciu a súhlasím s odosielaním názvov aktualizačných súborov našim správcom</string>
 	<string name="contribute_save">Uložiť nastavenia</string>
 	<string name="contribute_more_info">Viac informácií</string>
