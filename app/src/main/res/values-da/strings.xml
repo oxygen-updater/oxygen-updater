@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
 	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">Liste af supporterede enheder kunne ikke udhentes</string>
 
 	<!-- Update information strings-->
 	<!-- TODO: translate this string below -->
 	<string name="enable">Aktiver</string>
-	<string name="update_information_description_not_available">Der er ingen officiel information om nye egenskaber, som denne opdaterring indeholder. Normalt tilbyder denne slags opdatering fejlretninger, forbedringer af ydeevnen, og/eller kritiske sikkerhedsopdateringer til din egen enhed.</string>
+	<string name="update_information_description_not_available">Der er ingen officiel information om nye egenskaber, som denne opdatering indeholder. Normalt tilbyder denne slags opdatering eks. fejlretninger, forbedringer af ydeevnen, og/eller kritiske sikkerhedsopdateringer til din egen enhed.</string>
 	<string name="update_information_file_name">Filnavn: %1$s</string>
 	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
 	<!-- TODO: translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">Pga. downloadfejlen skal downloaden genstartes. Du kan bruge dette link til at downloade filen via en browser i stedet. Du skal (måske) efterfølgende flytte filen fra \Downloads\ til hovedfolderen. Linket er det samme som programmet bruger til at downloade fra dvs. en officiel OnePlus OTA server:\n%1$s</string>
 	<string name="update_information_header">Opdatér</string>
 	<!-- TODO: translate these 6 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
+	<string name="update_information_error_title">De seneste update data kunne ikke udhentes</string>
+	<string name="update_information_banner_server">Tryk her for at vise vigtige bemærkninger</string>
 	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable avanceret tilstand if you plan to switch to this update track.</string>
 	<string name="update_information_header_advanced_mode_hint">Avanceret tilstand er aktiveret</string>
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled avanceret tilstand, you can download the latest ZIP for \"%1$s\".\n\nYou can turn avanceret tilstand off from settings.</string>
@@ -143,8 +143,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_advanced_mode">Avanceret tilstand</string>
 	<string name="settings_advanced_mode_explanation">Avanceret tilstand skjuler beskeden: \"Dit system er opdateret\", hvilket tillader dig at downloade og installere alle opdateringer, selvom de måske ikke er op kompatible med din enhed.\n\nDette kan være nyttigt når:\n&#8226; der opdateres fra en regulær stabil version til en beta version\n&#8226; eller at gå fra en beta til en stabil version. (glem ikke at nulstille enheden til fabriksstandard)\n&#8226; Genindstallerer din nuværende system version.</string>
 
-	<string name="settings_update_method">Odaterings metode</string>
-	<string name="settings_upload_logs">Del bruger data og logs</string>
+	<string name="settings_update_method">Opdateringsmetode</string>
+	<string name="settings_upload_logs">Del brugerdata og logs</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
@@ -157,11 +157,11 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="onboarding_page_1_title">Velkommen til Oxygen Updater!</string>
 	<string name="onboarding_page_1_text">Denne app vil tillade dig at:\n\n&#8226; Få hurtigere adgang til de seneste Android opdateringer til din OxygenOS styrede enhed\n\n&#8226; Nem opdatering en root\'et enhed\n\n&#8226; Se hvad der er nyt, i det syste,-software du allerede anvender\n\n&#8226; Læs seneste nyt om OnePlus og OxygenOS\n\nSwipe til venstre, for at fortsætte.</string>
-	<string name="onboarding_page_1_caption">Dette er ikke en officel OnePlus aaplikation. Brug af denne app, er ene og alene på eget ansvar. Hverken OnePlus eller denne apps udvikler kan drages til ansvar, hverken for dine handlinger, eller eventuelle skader denne app måtte foresage.\n\nVed at anvende denne app, så accepterer du dens vilkår og betingelser, som er angivet herover.</string>
+	<string name="onboarding_page_1_caption">Dette er ikke en officel OnePlus applikation. Brug af denne app, er ene og alene på eget ansvar. Hverken OnePlus eller denne apps udvikler kan drages til ansvar, hverken for dine handlinger, eller eventuelle skader denne app måtte foresage.\n\nVed at anvende denne app, så accepterer du dens vilkår og betingelser, som er angivet herover.</string>
 	<string name="onboarding_page_2_title">Vælg din enhed</string>
-	<string name="onboarding_page_2_caption">Din enhed er normalt allerede valgt ovenfor. Hvis ikke, vælg da din enhged ovenfor.</string>
+	<string name="onboarding_page_2_caption">Din enhed er normalt allerede valgt ovenfor. Hvis ikke, vælg da din enhed ovenfor.</string>
 	<string name="onboarding_page_3_title">Vælg opdateringsmetode</string>
-	<string name="onboarding_page_3_caption">Normalt, er den trinevise opdatering, det rigtige valg her, fordi den tilbyder hurtigere og mindre downloads.\n\nDog er den ikke kompatibel med root\'ede enheder. Hvis du har en root\'et enhed, så vælæg da en fuld opdatering.\n\nHvis du har en beta version af OxygenOS, vælg (en af) de åbne beta -opdateringsmetoder.</string>
+	<string name="onboarding_page_3_caption">Normalt, er den trinvise opdatering, det rigtige valg her, fordi den tilbyder hurtigere og mindre downloads.\n\nDog er den ikke kompatibel med root\'ede enheder. Hvis du har en root\'et enhed, så vælg, da en fuld opdatering.\n\nHvis du har en beta version af OxygenOS, vælg (en af) de åbne beta -opdateringsmetoder.</string>
 	<string name="onboarding_page_4_title">Du er nu klar til at fortsætte!</string>
 	<string name="onboarding_page_4_text">Held og lykke med denne app!\n\nDu kan altid ændre dine indstillinger senere. Gør det ved at: Tryk på de tre prikker i øverste højre hjørne, og vælg da\"Indstillinger\".</string>
 
