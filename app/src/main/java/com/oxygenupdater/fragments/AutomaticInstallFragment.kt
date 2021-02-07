@@ -74,7 +74,7 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         // Plan install verification on reboot.
         val currentOSVersion = systemVersionProperties.oxygenOSOTAVersion
         val isAbPartitionLayout = systemVersionProperties.isABPartitionLayout
-        val targetOSVersion = updateData.otaVersionNumber!!
+        val targetOSVersion = updateData.otaVersionNumber ?: "-"
 
         setupLogRootInstallObserver(
             backup,
