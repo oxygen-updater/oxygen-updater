@@ -1,22 +1,23 @@
 // https://blog.jetbrains.com/kotlin/category/releases/
 // https://kotlinlang.org/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-const val KOTLIN_VERSION = "1.4.21"
+const val KOTLIN_VERSION = "1.4.31"
 
-// https://doc.insert-koin.io/#/setup/index
+// https://insert-koin.io/docs/setup/stable
+// https://github.com/InsertKoinIO/koin/releases
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
 const val KOIN_VERSION = "2.2.2"
 
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
-        const val BUILD_GRADLE_PLUGIN = "4.1.1"
+        const val BUILD_GRADLE_PLUGIN = "4.1.2"
 
         // https://developers.google.com/android/guides/releases
-        const val GOOGLE_SERVICES_PLUGIN = "4.3.4"
+        const val GOOGLE_SERVICES_PLUGIN = "4.3.5"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_GRADLE_PLUGIN = "2.4.1"
+        const val FIREBASE_GRADLE_PLUGIN = "2.5.1"
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
@@ -62,16 +63,16 @@ object AndroidXLibraries {
         const val KTX_CORE = "1.3.2"
 
         // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.2.5"
+        const val KTX_FRAGMENT = "1.3.1"
 
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        const val KTX_LIFECYCLE = "2.2.0"
+        const val KTX_LIFECYCLE = "2.3.0"
 
         // https://developer.android.com/jetpack/androidx/releases/preference
         const val KTX_PREFERENCE = "1.1.1"
 
         // https://developer.android.com/jetpack/androidx/releases/work
-        const val KTX_WORK = "2.4.0"
+        const val KTX_WORK = "2.5.0"
 
         // https://developer.android.com/jetpack/androidx/releases/recyclerview
         const val RECYCLER_VIEW = "1.1.0"
@@ -126,36 +127,36 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "26.2.0"
+        const val FIREBASE_BOM = "26.7.0"
 
         // https://github.com/bumptech/glide/releases
-        const val GLIDE = "4.11.0"
+        const val GLIDE = "4.12.0"
 
         // https://developer.android.com/google/play/billing/release-notes
         const val GOOGLE_PLAY_BILLING = "3.0.2"
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.12.0"
+        const val JACKSON_KOTLIN_MODULE = "2.12.2"
 
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
         const val THREE_TEN_ABP = "1.3.0"
 
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.4.2"
+        const val KOTLIN_COROUTINES = "1.4.3"
 
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.2.1"
+        const val MATERIAL = "1.3.0"
 
         // https://square.github.io/okhttp/changelog/
-        const val OKHTTP_LOGGING_INTERCEPTOR = "4.9.0"
+        const val OKHTTP_LOGGING_INTERCEPTOR = "4.9.1"
 
         // https://developer.android.com/reference/com/google/android/play/core/release-notes
-        const val PLAY_CORE = "1.9.0"
+        const val PLAY_CORE = "1.10.0"
 
         // https://developers.google.com/android/guides/releases
-        const val PLAY_SERVICES_BASE = "17.5.0"
+        const val PLAY_SERVICES_BASE = "17.6.0"
 
         // https://github.com/square/retrofit/releases
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
@@ -239,7 +240,7 @@ object TestLibraries {
         const val JUNIT_EXT = "1.1.2"
 
         // https://github.com/junit-team/junit4/releases
-        const val JUNIT4 = "4.13.1"
+        const val JUNIT4 = "4.13.2"
 
         // https://developer.android.com/jetpack/androidx/releases/test
         const val RULES = "1.3.0"
