@@ -11,9 +11,8 @@
 	<string name="update_information_header">Frissítés</string>
 	<string name="update_information_error_title">Nem sikerült lekérni a legfrissebb frissítési adatokat</string>
 	<string name="update_information_banner_server">Koppints ide a fontos értesítések megtekintéséhez</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable haladó mód if you plan to switch to this update track.</string>
-	<string name="update_information_header_advanced_mode_hint">A Speciális mód engedélyezve van</string>
+	<string name="update_information_banner_advanced_mode_tip">A(z) \"%1$s\" frissítési módot választottad. Engedélyezd a haladó módot ha erre a frissítési módra szeretnél váltani.</string>
+	<string name="update_information_header_advanced_mode_hint">A Haladó mód engedélyezve van</string>
 	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára.\n\nA haladó módot a beállításokban kapcsolhatod ki.</string>
 	<string name="update_information_different_version_changelog_notice">A legfrissebb frissítés módosítási naplóját nézi a \"%1$s\" frissítési sávon. Ha telepíteni szeretnéd ezt a frissítést, előbb be kell kapcsolnod a haladó módot (a beállításokban).\n\nHa azonban inkább az aktuálisan telepített verzió módosítási naplóját szeretnéd látni, akkor vissza kell váltanod a helyes frissítési módszerre.</string>
 	<string name="update_information_last_checked_on">Utoljára ellenőrizve: %1$s</string>
@@ -147,7 +146,7 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="onboarding">Üdvözölünk</string>
 	<string name="onboarding_finished_button">Alkalmazás elindítása</string>
 
-	<string name="onboarding_page_1_title">Üdvözlünk az Oxygen Frissítő-ben!</string>
+	<string name="onboarding_page_1_title">Üdvözlünk az Oxygen Updater-ben!</string>
 	<string name="onboarding_page_1_text">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n\n&#8226; Rootolt eszközök egyszerű frissítését\n\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban\n\nHúzd balra a folytatáshoz.</string>
 	<string name="onboarding_page_1_caption">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is.\n\nAz alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
 	<string name="onboarding_page_2_title">Válaszd ki a készüléked</string>
@@ -170,7 +169,7 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="install_recovery_done">Kész. Az eszköz újraindul.</string>
 	<string name="install_recovery_installing_additional_zip">Kiegészítő ZIP fájl telepítése…</string>
 	<string name="install_recovery_installing_update">Frissítés telepítése…</string>
-	<string name="install_recovery_thank_you">Köszönjük, hogy az Oxygen Frissítőt használtad. Ha tetszik ez az alkalmazás, kérjük értékeld 5 csillagra a Google Playen :-)</string>
+	<string name="install_recovery_thank_you">Köszönjük, hogy az Oxygen Updater-t használtad. Ha tetszik ez az alkalmazás, kérjük értékeld 5 csillagra a Google Playen :-)</string>
 
 	<string name="install_error_write_script_failed">"A frissítés telepítésének előkészítése nem sikerült. Engedélyezted a root hozzáférést?"</string>
 
@@ -201,7 +200,7 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 
 	<string name="install_verify_error_title">Sikertelen telepítés</string>
 	<string name="install_verify_error_nothing_installed">Hiba a frissítés telepítésekor. Az eszköz szoftverében nem történt változás. Próbáld meg újra telepíteni a frissítést.</string>
-	<string name="install_verify_error_unable_to_verify">Nem sikerült ellenőrizni, hogy a frissítés telepítése sikeres-e. Kérjük, nyisd meg az Oxygen Frissítő alkalmazást, és ellenőrizd, hogy a frissítés telepítése sikeres-e.</string>
+	<string name="install_verify_error_unable_to_verify">Nem sikerült ellenőrizni, hogy a frissítés telepítése sikeres-e. Kérjük, nyisd meg az Oxygen Updater alkalmazást, és ellenőrizd, hogy a frissítés telepítése sikeres-e.</string>
 	<string name="install_verify_error_wrong_version_installed">Az OxygenOS egy másik verziója került telepítésre. Ne válaszd ki az OxygenOS frissítési fájlt, amikor egy root csomagot választasz a \"Root megtartása\" opció alatt.</string>
 
 	<string name="install_verify_success_title">Telepítés befejezve</string>
@@ -226,7 +225,7 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="install_guide_page_2_text">"Megjegyzés: A frissítés telepítésére a készülék szabványos rendszerfrissítések részének speciális oldaláról kerül sor. Ha valamilyen oknál fogva megjelenik egy rendszerfrissítés a szakasz megnyitásakor, akkor dönthet az első frissítés telepítéséről is. Ezután nyissa meg újra az Oxygen Updater készüléket, hogy megnézze, teljesen naprakész-e.
 
 Instrukciók:
-&#8226; Zárd be az Oxigén Frissítőt a középső gomb megnyomásával.
+&#8226; Zárd be az Oxygen Updater-t a középső gomb megnyomásával.
 
 &#8226; Nyisd meg a Beállítások alkalmazást. Ennek az alkalmazástárban kell lennie.
 
@@ -280,10 +279,9 @@ Instrukciók:
 
 	<!-- About screen strings -->
 	<string name="about">Az alkalmazásról</string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
-	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
-	<string name="about_background_story_header">Background story</string>
+	<string name="about_description">Ez az alkalmazás közvetlenül a OnePlus szerverekről tölti le a hivatalos frissítéseket, és még a telepítés engedélyezése előtt ellenőrzi a letöltött ZIP integritását. Ezzel az alkalmazás lehetővé teszi, hogy kihagyd a frissítési sorrendet, és minél előbb telepítsd a hivatalos frissítéseket. Ha hibákat tapasztalsz az operációs rendszerben, jelentsd őket közvetlenül a OnePlus-nak: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Csatlakozhatsz a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkre</a> is, hogy más felhasználokkal beszélj a legújabb frissítésekről. Egyéb bátran írj emailt a <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> címre ha javaslatod/észrevételed van.</string>
+	<string name="about_support">Ha szeretnél minket támogatni, megveheted a reklám mentes verziót (a beállításokban), vagy megnézheted a <a href="https://patreon.com/oxygenupdater">Patreon oldalunkat</a>.</string>
+	<string name="about_background_story_header">Háttértörténet</string>
 	<string name="about_background_story">Ezt az alkalmazást eredetileg Arjan Vlek fejlesztette ki egy másik alkalmazásának, a <a href="https://cyanogenupdatetracker.com/">Cyanogen Frissítés Követő</a> folytatásaként (hasonló funkciókat kínál a Cyanogen OS rendszer felhasználói számára).\n\n4 év elteltével, 2019 júliusában, Arjan úgy döntött, hogy kilép mindkét projektből, és az alkalmazás tulajdonjogát átruházta a különböző országokból származó fejlesztői csapatra. Ők vállalták a felelősséget a kitűnő szoláltatás nyújtásáért a közösség számára &amp; támogatás a OnePlus frissítéseinek gyorsabb eléréséhez.\nTovábbi információk a bejelentésről: <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">itt</a>.\n\n2019. augusztus 14-én jelent meg az első kiadás új tulajdonjog alatt, amely olyan új funkciókkal rendelkezett, mint a sötét mód és az alkalmazás teljes újratervezése.\n\nTovábbi információ a csapatról a <a href="https://oxygenupdater.com/team/">weboldalon</a>.</string>
 	<string name="about_third_party_app_notice">Felhívjuk a figyelmedet, hogy ez nem egy hivatalos OnePlus alkalmazás.\nA OnePlus név, a OnePlus embléma és az OxygenOS a OnePlus tulajdonát képezik.\nAz Android, a Google, a Google Play és a Google Play logó a Google Inc. bejegyzett védjegye.\nEz az alkalmazás a OnePlus és az anyavállalata, az Oppo adatait használja a frissítési információk megjelenítéséhez.</string>
 	<string name="about_rate_button_text">Értékelj</string>
@@ -292,34 +290,33 @@ Instrukciók:
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device_text">A %1$s már támogatott. Nyisd meg az alkalmazást ahhoz hogy kiválaszd ezt az eszközt.</string>
-	<string name="notification_no_notification_support">Telepíts vagy frissítsd a Google Play szolgáltatásokat a push értesítések engedélyezéséhez.</string>
+	<string name="notification_no_notification_support">Telepítsd vagy frissítsd a Google Play szolgáltatásokat a push értesítések engedélyezéséhez.</string>
 	<string name="notification_version">%1$s már elérhető a %2$s számára!</string>
-	<!-- TODO: translate these 19 strings below -->
-	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="download_and_installation_notifications_group_name">Letöltés &amp; Telepítés</string>
 	<string name="push_notifications_group_name">Push értesítések</string>
-	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">Megjeleníti az Oxygen Frissítő alkalmazás összes nem fontos értesítését. A letöltés során megjelenített állapotjelzőket tartalmazza.</string>
-	<string name="push_notifications_group_description">Megjeleníti az Oxygen Frissítő alkalmazás összes fontos értesítését. Ide tartoznak a rendszerfrissítési értesítések és a friss hírekről szóló értesítések.</string>
-	<string name="download_status_notification_channel_name">Download status</string>
-	<string name="verification_status_notification_channel_name">Verification status</string>
-	<string name="installation_status_notification_channel_name">Installation status</string>
+	<string name="miscellaneous_notifications_group_name">Egyéb</string>
+	<string name="download_and_installation_notifications_group_description">Megjeleníti az Oxygen Updater alkalmazás összes nem fontos értesítését. A letöltés során megjelenített állapotjelzőket tartalmazza.</string>
+	<string name="push_notifications_group_description">Megjeleníti az Oxygen Updater alkalmazás összes fontos értesítését. Ide tartoznak a rendszerfrissítési értesítések és a friss hírekről szóló értesítések.</string>
+	<string name="download_status_notification_channel_name">Letöltés állapota</string>
+	<string name="verification_status_notification_channel_name">Ellenőrzés állapota</string>
+	<string name="installation_status_notification_channel_name">Telepítés állapota</string>
 	<string name="update_notification_channel_name">Rendszerfrissítés elérhető</string>
-	<string name="news_notification_channel_name">News article published</string>
+	<string name="news_notification_channel_name">Hírcikk közzétéve</string>
 	<string name="device_notification_channel_name">Új eszköz támogatott</string>
-	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
-	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
-	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
-	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
-	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
-	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
-	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
-	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
+	<string name="general_notification_channel_name">Általános</string>
+	<string name="filename_submitted_notification_channel_name">OTA fájlnév beküldve</string>
+	<string name="download_status_notification_channel_description">Értesítések, amelyek tükrözik a letöltés pillanatnyi állapotát: függőben lévő, aktív, befejezett vagy sikertelen</string>
+	<string name="verification_status_notification_channel_description">Értesítések, amelyek tükrözik a fájlellenőrzési feladat aktuális állapotát: folyamatban lévő, befejezett vagy sikertelen.\nA letöltött fájlok MD5 ellenőrző összegei ellenőrizve vannak, hogy megbizonyosodjon arról, hogy a fájlt nem hamisították meg, és hogy ez egy érvényes frissítési fájl.</string>
+	<string name="installation_status_notification_channel_description">Értesítést kapsz, hogy egy frissítést sikeresen telepítetve lett-e, vagy sem</string>
+	<string name="update_notification_channel_description">Értesítést kapsz, ha új frissítés érhető el a kiválasztott eszközödön &amp; frissítési módszer</string>
+	<string name="news_notification_channel_description">Értesítést kapsz, ha hírcikket teszünk közzé</string>
+	<string name="device_notification_channel_description">Értesítést kapsz, ha az alkalmazás támogat egy új eszközt</string>
+	<string name="general_notification_channel_description">Általános értesítések, amelyek nem illenek más kategóriákba</string>
+	<string name="filename_submitted_notification_channel_description">Értesítést kapsz, ha sikeresen elküldted nekünk az OTA fájlneveket.\nAz alkalmazás beállításaiban kikapcsolhatod a fájlnevek automatikus beküldését.</string>
 
 	<!-- Help strings -->
 	<string name="help">Súgó</string>
-	<string name="help_text">Üdvözölünk az Oxygen Frissítő súgójában.\n\nA súgó a következő témákat tartalmazza:\n\n• Az eszközöd frissítése\n• A legújabb hírek elolvasása\n• Eszközinformációk megtekintése\n• Beállítások módosítása\n\nGörgess le a témák közötti böngészéshez.</string>
+	<string name="help_text">Üdvözölünk az Oxygen Updater súgójában.\n\nA súgó a következő témákat tartalmazza:\n\n• Az eszközöd frissítése\n• A legújabb hírek elolvasása\n• Eszközinformációk megtekintése\n• Beállítások módosítása\n\nGörgess le a témák közötti böngészéshez.</string>
 	<string name="help_updating_your_device_title">Az eszközöd frissítése</string>
 	<string name="help_updating_your_device_text">Az alkalmazás megnyitásakor megnézheted, hogy elérhető-e rendszerfrissítés. Ha elérhető frissítés, telepítheted azt.\n\nA telepítés megkezdéséhez érintsd meg a \"Letöltés\" gombot (a frissítés leírása alatt) a letöltés megkezdéséhez. Amikor a letöltés befejeződött, megjelenik a telepítési képernyő. Ha elhagytad az alkalmazást, vagy a képernyő nem jelenik meg, koppints a \"Telepítés\" gombra, amely a \"Letöltés\" gomb mellett látható.\n\nA telepítő először ellenőrzi, hogy rootolt-e az eszközöd. Ha rootolt eszközöd van, add meg a root engedélyt, amikor a rendszer kéri, és válaszd ki a frissítés telepítésének módját. Ellenkező esetben kövesd a Kézi telepítés utasításait.\n\nAutomatikus telepítés:\nCsak a telepítési lehetőségeket kell kiválasztanod. Az alapértelmezett beállítások ajánlottak, azzal a különbséggel, hogy meg kell adni a root csomagot, amelyet (újra) telepíteni kell. Válaszd ki a root csomagot (zip fájl) a kék mappa gombbal, és érintsd meg a \"Telepítés indítása\" gombot a telepítés megkezdéséhez.\n\nKézi telepítés:\nLátsz egy telepítési útmutatót a képernyőn. Írd le az utasításokat, és hajtsd végre azokat a frissítés telepítéséhez szükséges módon.</string>
 	<string name="help_reading_news_title">A legújabb hírek elolvasása</string>
@@ -347,8 +344,8 @@ Instrukciók:
 
 	<!-- Contribute strings -->
 	<string name="contribute">Közreműködés</string>
-	<string name="contribute_title">Segíts az Oxigén Frissítő javításában</string>
-	<string name="contribute_explanation">Az Oxigén Frissítőnek a te segítségre van szüksége! A legfrissebb frissítések megszerzéséhez be kell szereznünk a frissítési fájlok nevét. Ezek jelen vannak a telefonodon, amikor egy rendszerfrissítés megjelenik.\n\nHogyan segíthetek?\n\nAz Oxygen Frissítő automatikusan új frissítési fájlneveket küldhet a rendszergazdáknak. Ez kis mennyiségű adatot igényel, és kevés akkumulátort használ. Csak annyit kell tenned, hogy várj (kb. 15 percet) a hivatalos rendszerfrissítések telepítése előtt, amíg nem látsz egy megerősítést az Oxygen Frissítőtől a fájl sikeres benyújtásáról. A telefonnak csak az \".Ota\" könyvtára van szkennelve 15 percenként egyszer. Csak egy adott nevet keres az adott mappában.</string>
+	<string name="contribute_title">Segíts az Oxygen Updater javításában</string>
+	<string name="contribute_explanation">Az Oxygen Updater-nek a te segítségre van szüksége! A legfrissebb frissítések megszerzéséhez be kell szereznünk a frissítési fájlok nevét. Ezek jelen vannak a telefonodon, amikor egy rendszerfrissítés megjelenik.\n\nHogyan segíthetek?\n\nAz Oxygen Updater automatikusan új frissítési fájlneveket küldhet a rendszergazdáknak. Ez kis mennyiségű adatot igényel, és kevés akkumulátort használ. Csak annyit kell tenned, hogy várj (kb. 15 percet) a hivatalos rendszerfrissítések telepítése előtt, amíg nem látsz egy megerősítést az Oxygen Updater-től a fájl sikeres benyújtásáról. A telefonnak csak az \".Ota\" könyvtára van szkennelve 15 percenként egyszer. Csak egy adott nevet keres az adott mappában.</string>
 	<string name="contribute_agree">Segíteni szeretnék és egyetértek azzal, hogy frissítési fájlneveket küldjek az adminisztrátoroknak</string>
 	<string name="contribute_agree_from_setup">Szeretnék segíteni az alkalmazás fejlesztésében, és egyetértek azzal, hogy frissítési fájlneveket küldjek az adminisztrátoroknak</string>
 	<string name="contribute_save">Beállítások mentése</string>
@@ -381,14 +378,13 @@ Instrukciók:
 	<string name="unsupported_device_warning_message">Gratulálunk az új OnePlus készülékedhez! Sajnos még nem nyújtunk támogatást ehhez az eszközhöz. De ne aggódj, a lehető leghamarabb hozzáadjuk. Nem szeretünk hibázni, és időigényes folyamat az új eszközök támogatásának ellenőrzése és tesztelése, ezért kérjük, légy türelmes. Írj nekünk e-mailt, vagy csatlakozz a Discord szerverünkhöz, ha szeretnél segíteni vagy értesítést kapni, arról ha kiadjuk az alkalmazás egy új verzióját, amely támogatja az eszközödet.</string>
 	<string name="unsupported_os_warning_message">Úgy tűnik, hogy az eszközödön nem OxygenOS fut. Felhívjuk a figyelmedet, hogy a rendszerfrissítéseket csak az OxygenOS rendszert futtató eszközökre telepítheted.\n\nEgyéb eszközök, beleértve az egyéni ROM-okat futtató OnePlus eszközöket, nem támogatottak.</string>
 
-	<!-- TODO: translate these 2 strings below -->
-	<string name="incorrect_device_warning_title">Selected device mismatch</string>
-	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+	<string name="incorrect_device_warning_title">A kiválasztott eszköz nem egyezik</string>
+	<string name="incorrect_device_warning_message">Úgy tűnik, hogy rossz eszközt választottál: \"%2$s\" helyett \"%1$s\"-t. Módosítsd a választást az alkalmazás beállításaiban, hogy biztosan a megfelelő eszközhöz kapj frissítéseket és értesítéseket.</string>
 
 	<string name="device_warning_checkbox_title">Ne jelenítse meg újra ezt a figyelmeztetést</string>
 
 	<string name="root_check_title">Root hozzáférés</string>
-	<string name="root_check_message">Az Oxygen Frissítő egyszerű, automatizált frissítési telepítést kínál a rootolt eszközökkel rendelkező felhasználók számára. Az inkrementális frissítések azonban nem érhetők el a rootolt eszközökön. Az Oxygen Frissítő ellenőrizheti, hogy rendelkezel-e root hozzáféréssel, és csak a megfelelő frissítési módszereket fogja felajánlani.\n\nHa root hozzáféréssel rendelkezel, hagyd, hogy az Oxygen Frissítő root hozzáférést szerezzen az üzenet bezárását követően.\n\nNincs root hozzáférésed? Nyomd meg a \"Bezárás\" gombot, és folytasd az alkalmazás használatát.</string>
+	<string name="root_check_message">Az Oxygen Updater egyszerű, automatizált frissítési telepítést kínál a rootolt eszközökkel rendelkező felhasználók számára. Az inkrementális frissítések azonban nem érhetők el a rootolt eszközökön. Az Oxygen Updater ellenőrizheti, hogy rendelkezel-e root hozzáféréssel, és csak a megfelelő frissítési módszereket fogja felajánlani.\n\nHa root hozzáféréssel rendelkezel, hagyd, hogy az Oxygen Updater root hozzáférést szerezzen az üzenet bezárását követően.\n\nNincs root hozzáférésed? Nyomd meg a \"Bezárás\" gombot, és folytasd az alkalmazás használatát.</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">A vásárlás \"fizetés függőben\" állapotban van. A fizetés befejezése után minden olyan juttatást megkapsz, amelyre jogosult vagy.</string>
