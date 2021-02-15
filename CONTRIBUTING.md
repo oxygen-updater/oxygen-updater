@@ -1,6 +1,6 @@
 ## Contributing
 
-Thanks for contributing to Oxygen Updater, the largest community-driven OnePlus app.
+Thanks for contributing to Oxygen Updater, the largest community-driven app for OnePlus devices.
 To help things stay organized, there are some rules that you'll have to follow:
 
 - Make sure your code works on an actual OnePlus device, not just the Android Emulator
