@@ -125,10 +125,10 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 Täydellinen päivitys voidaan asentaa aina - huolimatta nykyisestä järjestelmäversiosta joka on asennettuna.
 
 Beta päivitys voidaan asentaa vain jos sinulla on jo käytössäsi OxygenOS beta versio."</string>
-	<string name="settings_push_from_server">"Kriittinen viesti on saatavilla"</string>
-	<string name="settings_push_new_version">"Järjestelmäpäivitys on saatavilla"</string>
-	<string name="settings_push_new_device">"Tuki uudelle laitteelle lisätty"</string>
-	<string name="settings_push_news">"Uutinen on julkaistu"</string>
+	<string name="settings_push_from_server">"Tiedotus- ja varoitusviestit"</string>
+	<string name="settings_push_new_version">"Järjestelmän päivitysviestit"</string>
+	<string name="settings_push_new_device">"Uutta laitetta tuetaan"</string>
+	<string name="settings_push_news">"Uutiset"</string>
 	<string name="settings_saving">"Asetuksiasi tallennetaan edelleen. Jos tämä tuntuu vievän liian pitkään varmista verkkoyhteytesi, sulje sovellus ja käynnistä se uudelleen."</string>
 	<string name="settings_advanced_mode">"Kehittynyt tila"</string>
 	<string name="settings_advanced_mode_explanation">"Kehittynyt tila piilottaa viestin \"Järjestelmäsi on ajantasalla\", antaa sinun ladata ja asentaa kaikki päivitykset, vaikka ne eivät olisikaan yhteensopiva laitteesi kanssa.
