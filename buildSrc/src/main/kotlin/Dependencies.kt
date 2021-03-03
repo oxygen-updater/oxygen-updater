@@ -1,7 +1,7 @@
 // https://blog.jetbrains.com/kotlin/category/releases/
 // https://kotlinlang.org/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-const val KOTLIN_VERSION = "1.4.21"
+const val KOTLIN_VERSION = "1.4.31"
 
 // https://doc.insert-koin.io/#/setup/index
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
@@ -10,7 +10,7 @@ const val KOIN_VERSION = "2.2.2"
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
-        const val BUILD_GRADLE_PLUGIN = "4.1.1"
+        const val BUILD_GRADLE_PLUGIN = "4.1.2"
 
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.4"
