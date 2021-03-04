@@ -533,24 +533,50 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
             }
 
-            updateMethodPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
-                crashlytics.setUserId(
-                    "Device: " + getPreference(mContext.getString(R.string.key_device), "<UNKNOWN>")
-                            + ", Update Method: " + getPreference(mContext.getString(R.string.key_update_method), "<UNKNOWN>")
-                )
+            // This method is re-called after a device is changed, so we need
+            // to update Firebase Crashlytics & Messaging stuff here as well
+            updateCrashlyticsUserId()
+            updateNotificationTopic(devices, updateMethods)
 
-                // Google Play services are not required if the user doesn't use notifications
-                if (checkPlayServices(requireActivity(), false)) {
-                    // Subscribe to notifications for the newly selected device and update method
-                    NotificationTopicSubscriber.subscribe(devices, updateMethods)
-                } else {
-                    Toast.makeText(mContext, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
-                }
+            updateMethodPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
+                // Update Firebase Crashlytics & Messaging stuff
+                updateCrashlyticsUserId()
+                updateNotificationTopic(devices, updateMethods)
 
                 true
             }
         } else {
             updateMethodPreference.isVisible = false
+        }
+    }
+
+    private fun updateCrashlyticsUserId() {
+        val deviceName = getPreference(
+            mContext.getString(R.string.key_device),
+            "<UNKNOWN>"
+        )
+        val updateMethodName = getPreference(
+            mContext.getString(R.string.key_update_method),
+            "<UNKNOWN>"
+        )
+
+        crashlytics.setUserId("Device: $deviceName, Update Method: $updateMethodName")
+    }
+
+    private fun updateNotificationTopic(
+        devices: List<Device>,
+        updateMethods: List<UpdateMethod>
+    ) {
+        // Google Play services are not required if the user doesn't use notifications
+        if (checkPlayServices(requireActivity(), false)) {
+            // Subscribe to notifications for the newly selected device and update method
+            NotificationTopicSubscriber.resubscribeIfNeeded(devices, updateMethods)
+        } else {
+            Toast.makeText(
+                mContext,
+                getString(R.string.notification_no_notification_support),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

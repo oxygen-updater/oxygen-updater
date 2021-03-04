@@ -294,12 +294,10 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
                 updateTabBadge(R.id.page_device)
             }
 
-            // subscribe to notification topics
-            // we're doing it here, instead of [SplashActivity], because it requires the app to be setup first
-            // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences])
-            if (!SettingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
-                mainViewModel.subscribeToNotificationTopics(deviceList.filter { it.enabled })
-            }
+            // Resubscribe to notification topics, if needed.
+            // We're doing it here, instead of [SplashActivity], because it requires the app to be setup first
+            // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences]).
+            mainViewModel.resubscribeToNotificationTopicsIfNeeded(deviceList.filter { it.enabled })
         }
 
         mainViewModel.serverStatus.observe(this) { serverStatus ->

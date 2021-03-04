@@ -92,7 +92,7 @@ class OnboardingViewModel(
     }
 
     fun subscribeToNotificationTopics() = viewModelScope.launch(Dispatchers.IO) {
-        NotificationTopicSubscriber.subscribe(
+        NotificationTopicSubscriber.resubscribe(
             _enabledDevices.value ?: ArrayList(),
             serverRepository.fetchAllMethods() ?: ArrayList()
         )

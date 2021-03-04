@@ -177,10 +177,10 @@ class MainViewModel(
         }
     }
 
-    fun subscribeToNotificationTopics(
+    fun resubscribeToNotificationTopicsIfNeeded(
         enabledDeviceList: List<Device>
     ) = viewModelScope.launch(Dispatchers.IO) {
-        NotificationTopicSubscriber.subscribe(
+        NotificationTopicSubscriber.resubscribeIfNeeded(
             enabledDeviceList,
             serverRepository.fetchAllMethods() ?: ArrayList()
         )
