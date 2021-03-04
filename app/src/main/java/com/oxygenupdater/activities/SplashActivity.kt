@@ -50,6 +50,11 @@ class SplashActivity : AppCompatActivity() {
             )
             SettingsManager.removePreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
         }
+
+        // App version 5.2.0+: no longer used. We now configure capping in the AdMob dashboard itself.
+        if (SettingsManager.containsPreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN)) {
+            SettingsManager.removePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN)
+        }
     }
 
     private fun chooseActivityToLaunch() {

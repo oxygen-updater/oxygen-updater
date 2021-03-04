@@ -184,7 +184,18 @@ object SettingsManager {
     const val PROPERTY_TARGET_SYSTEM_VERSION = "targetSystemVersion"
     const val PROPERTY_INSTALLATION_ID = "installationId"
     const val PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED = "isAutomaticInstallationEnabled"
+
+    @Deprecated(
+        message = """
+            No longer used in v5.2.0+, because we configure frequency capping in
+            the AdMob dashboard itself. It was more reliable, and it didn't make
+            sense to duplicate such functionality in the app, when the AdMob lib
+            already has support for it built-in.
+        """,
+        level = DeprecationLevel.WARNING
+    )
     const val PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown"
+
     const val PROPERTY_CONTRIBUTE = "contribute"
     const val PROPERTY_CONTRIBUTION_COUNT = "contribution_count"
     const val PROPERTY_IS_EU_BUILD = "isEuBuild"
