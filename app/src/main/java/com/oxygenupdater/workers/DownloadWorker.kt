@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.text.format.Formatter
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
@@ -25,6 +24,7 @@ import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.enums.DownloadFailure
 import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.createFromWorkData
+import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.toWorkData
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE
@@ -135,8 +135,8 @@ class DownloadWorker(
         // This PendingIntent can be used to cancel the worker
         val cancelPendingIntent = workManager.createCancelPendingIntent(id)
 
-        val bytesDoneStr = Formatter.formatShortFileSize(context, bytesDone)
-        val totalBytesStr = Formatter.formatShortFileSize(context, totalBytes)
+        val bytesDoneStr = context.formatFileSize(bytesDone)
+        val totalBytesStr = context.formatFileSize(totalBytes)
 
         val text = "$bytesDoneStr / $totalBytesStr ($progress%)"
 
