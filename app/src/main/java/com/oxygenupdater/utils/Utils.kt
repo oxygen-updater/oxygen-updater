@@ -179,28 +179,24 @@ object Utils {
             }
         }
 
-        var isChosenDeviceIncorrect = false
-        chosenDevice?.productNames?.forEach {
-            val (chosenDeviceCode, chosenRegionCode) = it.split("_", limit = 2).run {
-                Pair(this[0], if (size > 1) this[1] else null)
-            }
-
-            // If the currently installed OS track is "Stable", `productName` should match exactly.
-            // Otherwise we should check `deviceCode` and `regionCode` individually, because other
-            // tracks (Alpha, Beta, Developer Preview, etc.) may not have any regional builds.
-            // In such cases, `regionCode` defaults to global (i.e. `null` instead of EEA/IND).
-            // So we must check if `deviceCode` and `regionCode` match (or if `regionCode` is `null`)
-            // Otherwise we assume the user is responsible enough to choose the correct device
-            // according to their region.
-            isChosenDeviceIncorrect = if (isStableTrack) {
+        // If the currently installed OS track is "Stable", `productName` should match exactly.
+        // Otherwise we should check `deviceCode` and `regionCode` individually, because other
+        // tracks (Alpha, Beta, Developer Preview, etc.) may not have any regional builds.
+        // In such cases, `regionCode` defaults to global (i.e. `null` instead of EEA/IND).
+        // So we must check if `deviceCode` and `regionCode` match (or if `regionCode` is `null`)
+        // Otherwise we assume the user is responsible enough to choose the correct device
+        // according to their region.
+        val isChosenDeviceIncorrect = chosenDevice?.productNames?.all {
+            if (isStableTrack) {
                 productName != it
             } else {
-                deviceCode != chosenDeviceCode || (regionCode != null && regionCode != chosenRegionCode)
+                it.split("_", limit = 2).run {
+                    val chosenDeviceCode = this[0]
+                    val chosenRegionCode = if (size > 1) this[1] else null
+                    deviceCode != chosenDeviceCode || (regionCode != null && regionCode != chosenRegionCode)
+                }
             }
-
-            // Break only if we've found a match
-            if (isChosenDeviceIncorrect) return@forEach
-        }
+        } ?: false
 
         actualDeviceName = matchedDevice?.name ?: actualDeviceName
 
