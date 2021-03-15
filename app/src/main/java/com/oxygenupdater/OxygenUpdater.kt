@@ -162,7 +162,9 @@ class OxygenUpdater : Application() {
             get() = _isNetworkAvailable
 
         // Test devices for ads.
-        private val ADS_TEST_DEVICES = mutableListOf("B5EB6278CE611E4A14FCB2E2DDF48993", "AA361A327964F1B961D98E98D8BB9843")
+        private val ADS_TEST_DEVICES = mutableListOf(
+            AdRequest.DEVICE_ID_EMULATOR
+        )
 
         const val NO_OXYGEN_OS = "no_oxygen_os_ver_found"
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5

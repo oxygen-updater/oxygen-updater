@@ -32,6 +32,8 @@ class OnboardingViewModel(
         get() = _enabledDevices
 
     private val _updateMethodsForDevice = MutableLiveData<List<UpdateMethod>>()
+    val updateMethodsForDevice: LiveData<List<UpdateMethod>>
+        get() = _updateMethodsForDevice
 
     private val _selectedDevice = MutableLiveData<Device>()
     val selectedDevice: LiveData<Device>
@@ -90,7 +92,7 @@ class OnboardingViewModel(
     }
 
     fun subscribeToNotificationTopics() = viewModelScope.launch(Dispatchers.IO) {
-        NotificationTopicSubscriber.subscribe(
+        NotificationTopicSubscriber.resubscribe(
             _enabledDevices.value ?: ArrayList(),
             serverRepository.fetchAllMethods() ?: ArrayList()
         )

@@ -55,16 +55,16 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
                 fetchDataInternal(it.id)
             }
         }
+
+        onboardingViewModel.updateMethodsForDevice.observe(viewLifecycleOwner) {
+            setupRecyclerView(it)
+        }
     }
 
     private fun fetchDataInternal(deviceId: Long) {
         shimmerFrameLayout?.isVisible = true
 
-        onboardingViewModel.fetchUpdateMethodsForDevice(deviceId).observe(
-            viewLifecycleOwner
-        ) {
-            setupRecyclerView(it)
-        }
+        onboardingViewModel.fetchUpdateMethodsForDevice(deviceId)
     }
 
     @Suppress("UNCHECKED_CAST", "NAME_SHADOWING")

@@ -11,7 +11,6 @@ import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.Logger.logDebug
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDateTime
 
 /**
  * For [com.oxygenupdater.activities.NewsItemActivity]
@@ -29,17 +28,8 @@ class NewsViewModel(
     val mayShowAds = !SettingsManager.getPreference(
         SettingsManager.PROPERTY_AD_FREE,
         false
-    )
-
-    val mayShowInterstitialAd = LocalDateTime.parse(
-        SettingsManager.getPreference(
-            SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
-            "1970-01-01T00:00:00.000"
-        )
-    ).isBefore(LocalDateTime.now().minusMinutes(5)).let { haveFiveMinutesPassed ->
-        logDebug(TAG, "mayShowInterstitialAd: mayShowAds: $mayShowAds, haveFiveMinutesPassed: $haveFiveMinutesPassed")
-
-        mayShowAds && haveFiveMinutesPassed
+    ).also {
+        logDebug(TAG, "mayShowAds: $it")
     }
 
     fun fetchNewsList(

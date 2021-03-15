@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.SpannableString
 import android.text.format.DateUtils
-import android.text.format.Formatter
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.view.View
@@ -40,6 +39,7 @@ import com.oxygenupdater.enums.DownloadStatus.NOT_DOWNLOADING
 import com.oxygenupdater.enums.DownloadStatus.VERIFICATION_COMPLETED
 import com.oxygenupdater.enums.DownloadStatus.VERIFICATION_FAILED
 import com.oxygenupdater.enums.DownloadStatus.VERIFYING
+import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.setImageResourceWithTint
 import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.DeviceInformationData
@@ -439,9 +439,8 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         }
 
         // Display download size.
-        downloadSizeTextView.text = Formatter.formatFileSize(
-            context,
-            updateData.downloadSizeForFormatter
+        downloadSizeTextView.text = context?.formatFileSize(
+            updateData.downloadSize
         )
 
         // Display update description.
@@ -675,9 +674,8 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     initDownloadActionButton(true)
 
                     downloadUpdateTextView.setText(R.string.download)
-                    downloadSizeTextView.text = Formatter.formatFileSize(
-                        context,
-                        updateData?.downloadSizeForFormatter ?: 0
+                    downloadSizeTextView.text = context?.formatFileSize(
+                        updateData?.downloadSize ?: 0
                     )
 
                     downloadProgressBar.isVisible = false
@@ -728,8 +726,8 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                                 isIndeterminate = false
                                 progress = currentProgress
 
-                                val bytesDoneStr = Formatter.formatFileSize(context, bytesDone)
-                                val totalBytesStr = Formatter.formatFileSize(context, totalBytes)
+                                val bytesDoneStr = context?.formatFileSize(bytesDone)
+                                val totalBytesStr = context?.formatFileSize(totalBytes)
 
                                 @SuppressLint("SetTextI18n")
                                 downloadSizeTextView.text = "$bytesDoneStr / $totalBytesStr ($currentProgress%)"
@@ -789,9 +787,8 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     initDownloadActionButton(false)
 
                     downloadUpdateTextView.setText(R.string.downloaded)
-                    downloadSizeTextView.text = Formatter.formatFileSize(
-                        context,
-                        updateData?.downloadSizeForFormatter ?: 0
+                    downloadSizeTextView.text = context?.formatFileSize(
+                        updateData?.downloadSize ?: 0
                     )
 
                     downloadProgressBar.isVisible = false
@@ -885,9 +882,8 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     initDownloadActionButton(false)
 
                     downloadUpdateTextView.setText(R.string.downloaded)
-                    downloadSizeTextView.text = Formatter.formatFileSize(
-                        context,
-                        updateData?.downloadSizeForFormatter ?: 0
+                    downloadSizeTextView.text = context?.formatFileSize(
+                        updateData?.downloadSize ?: 0
                     )
 
                     downloadProgressBar.isVisible = false

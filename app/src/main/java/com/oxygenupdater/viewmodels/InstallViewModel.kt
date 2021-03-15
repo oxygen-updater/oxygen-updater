@@ -87,7 +87,7 @@ class InstallViewModel(
 
     fun updateToolbarTitle(@StringRes resId: Int) = _toolbarTitle.postValue(resId)
 
-    fun updateToolbarSubtitle(@StringRes resId: Int?) = _toolbarSubtitle.postValue(resId)
+    fun updateToolbarSubtitle(@StringRes resId: Int) = _toolbarSubtitle.postValue(resId)
 
     fun updateToolbarImage(
         @DrawableRes resId: Int,

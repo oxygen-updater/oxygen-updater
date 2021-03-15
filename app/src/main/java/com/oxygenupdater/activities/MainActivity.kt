@@ -18,7 +18,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -294,12 +293,10 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
                 updateTabBadge(R.id.page_device)
             }
 
-            // subscribe to notification topics
-            // we're doing it here, instead of [SplashActivity], because it requires the app to be setup first
-            // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences])
-            if (!SettingsManager.containsPreference(SettingsManager.PROPERTY_NOTIFICATION_TOPIC)) {
-                mainViewModel.subscribeToNotificationTopics(deviceList.filter { it.enabled })
-            }
+            // Resubscribe to notification topics, if needed.
+            // We're doing it here, instead of [SplashActivity], because it requires the app to be setup first
+            // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences]).
+            mainViewModel.resubscribeToNotificationTopicsIfNeeded(deviceList.filter { it.enabled })
         }
 
         mainViewModel.serverStatus.observe(this) { serverStatus ->
@@ -699,7 +696,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             && ContextCompat.checkSelfPermission(this, DOWNLOAD_FILE_PERMISSION) == PERMISSION_GRANTED
 
     /**
-     * A [FragmentPagerAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.
+     * A [FragmentStateAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.
      */
     inner class MainPagerAdapter : FragmentStateAdapter(this) {
 

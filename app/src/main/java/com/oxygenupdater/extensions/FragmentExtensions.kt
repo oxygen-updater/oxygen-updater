@@ -30,7 +30,7 @@ fun Fragment.addPlaceholderItemsForShimmer(
     rootView: View,
     @LayoutRes placeholderRes: Int,
     placeholderItemHeight: Float
-) = LinearLayout(context).apply {
+) = LinearLayout(context ?: rootView.context).apply {
     layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     orientation = LinearLayout.VERTICAL
 

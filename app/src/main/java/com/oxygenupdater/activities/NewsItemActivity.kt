@@ -18,9 +18,12 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
@@ -29,11 +32,12 @@ import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.internal.WebViewClient
 import com.oxygenupdater.internal.WebViewError
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.NewsViewModel
@@ -67,6 +71,54 @@ class NewsItemActivity : SupportActionBarActivity(
                 NetworkException("Error marking news item as read on the server: ${result.errorMessage}")
             )
         }
+    }
+
+    private val fullScreenAdContentCallback = object : FullScreenContentCallback() {
+        override fun onAdDismissedFullScreenContent() = logDebug(
+            TAG,
+            "Interstitial ad was dismissed"
+        )
+
+        override fun onAdFailedToShowFullScreenContent(
+            adError: AdError?
+        ) = logWarning(
+            TAG,
+            "Interstitial ad failed to show: $adError"
+        )
+
+        override fun onAdShowedFullScreenContent() = logDebug(
+            TAG,
+            "Interstitial ad was shown"
+        )
+    }
+
+    private val interstitialAdLoadCallback = object : InterstitialAdLoadCallback() {
+        override fun onAdLoaded(
+            ad: InterstitialAd
+        ) = logDebug(TAG, "Interstitial ad loaded").also {
+            if (!isFinishing) {
+                ad.fullScreenContentCallback = fullScreenAdContentCallback
+
+                if (shouldDelayAdStart) {
+                    logDebug(TAG, "Showing interstitial ad in 5s")
+
+                    Handler().postDelayed({
+                        if (!isFinishing) {
+                            ad.show(this@NewsItemActivity)
+                        }
+                    }, 5000)
+                } else {
+                    ad.show(this@NewsItemActivity)
+                }
+            }
+        }
+
+        override fun onAdFailedToLoad(
+            loadAdError: LoadAdError
+        ) = logWarning(
+            TAG,
+            "Interstitial ad failed to load: $loadAdError"
+        )
     }
 
     /**
@@ -282,20 +334,7 @@ class NewsItemActivity : SupportActionBarActivity(
     private fun setupAds() {
         if (newsViewModel.mayShowAds) {
             setupBannerAd()
-
-            if (shouldDelayAdStart) {
-                logDebug(TAG, "Setting up interstitial ad in 5s")
-
-                Handler().postDelayed(
-                    {
-                        if (!isFinishing) {
-                            setupInterstitialAd()
-                        }
-                    }, 5000
-                )
-            } else {
-                setupInterstitialAd()
-            }
+            setupInterstitialAd()
         } else {
             // reset NestedScrollView padding
             nestedScrollView.setPadding(0, 0, 0, 0)
@@ -321,40 +360,21 @@ class NewsItemActivity : SupportActionBarActivity(
         }
     }
 
-    private fun setupInterstitialAd() {
-        if (newsViewModel.mayShowInterstitialAd) {
-            InterstitialAd(this).apply {
-                adUnitId = getString(R.string.advertising_interstitial_unit_id)
-                loadAd(buildAdRequest())
-
-                adListener = object : AdListener() {
-                    override fun onAdFailedToLoad(
-                        loadAdError: LoadAdError?
-                    ) = super.onAdFailedToLoad(loadAdError).also {
-                        logDebug(TAG, "Interstitial ad failed to load: $loadAdError")
-                    }
-
-                    override fun onAdClosed() = super.onAdClosed().also {
-                        logDebug(TAG, "Interstitial ad closed")
-                    }
-
-                    override fun onAdLoaded() = super.onAdLoaded().also {
-                        logDebug(TAG, "Interstitial ad loaded")
-
-                        if (!isFinishing) {
-                            // Store the last date when the ad was shown. Used to limit the ads to one per 5 minutes.
-                            SettingsManager.savePreference(
-                                SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN,
-                                LocalDateTime.now().toString()
-                            )
-
-                            show()
-                        }
-                    }
-                }
-            }
-        }
-    }
+    /**
+     * Interstitial ads are limited to only once per 5 minutes for better UX.
+     *
+     * v5.2.0 onwards, this frequency capping is configured within AdMob dashboard itself,
+     * because it seemed to be more reliable than custom SharedPreferences-based handling
+     * done prior to v5.2.0.
+     *
+     * @see [PROPERTY_LAST_NEWS_AD_SHOWN]
+     */
+    private fun setupInterstitialAd() = InterstitialAd.load(
+        this,
+        getString(R.string.advertising_interstitial_unit_id),
+        buildAdRequest(),
+        interstitialAdLoadCallback
+    )
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun loadNewsItem() {
@@ -471,7 +491,7 @@ class NewsItemActivity : SupportActionBarActivity(
     }
 
     companion object {
-        private const val TAG = "NewsActivity"
+        private const val TAG = "NewsItemActivity"
 
         const val INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID"
         const val INTENT_NEWS_ITEM_IMAGE_URL = "NEWS_ITEM_IMAGE_URL"
