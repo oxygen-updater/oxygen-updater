@@ -5,7 +5,9 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.GROUP_ALERT_CHILDREN
 import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
 import androidx.core.app.NotificationManagerCompat
@@ -18,6 +20,10 @@ import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
+import com.oxygenupdater.enums.NotificationType.GENERAL_NOTIFICATION
+import com.oxygenupdater.enums.NotificationType.NEWS
+import com.oxygenupdater.enums.NotificationType.NEW_DEVICE
+import com.oxygenupdater.enums.NotificationType.NEW_VERSION
 import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.AppLocale
@@ -27,6 +33,7 @@ import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationIds
 import org.koin.java.KoinJavaComponent.inject
+import kotlin.random.Random
 
 /**
  * Enqueued from [com.oxygenupdater.services.FirebaseMessagingService]
@@ -46,6 +53,10 @@ class DisplayDelayedNotificationWorker(
     private val localAppDb by inject(LocalAppDb::class.java)
     private val notificationManager by inject(NotificationManagerCompat::class.java)
 
+    private val random by lazy {
+        Random.Default
+    }
+
     private val newsItemDao by lazy {
         localAppDb.newsItemDao()
     }
@@ -60,7 +71,7 @@ class DisplayDelayedNotificationWorker(
         )
 
         val builder = when (notificationType) {
-            NotificationType.NEW_DEVICE -> if (!SettingsManager.getPreference(
+            NEW_DEVICE -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS,
                     true
                 )
@@ -69,7 +80,7 @@ class DisplayDelayedNotificationWorker(
             } else {
                 getNewDeviceNotificationBuilder(messageContents[NotificationElement.NEW_DEVICE_NAME.name])
             }
-            NotificationType.NEW_VERSION -> if (!SettingsManager.getPreference(
+            NEW_VERSION -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS,
                     true
                 )
@@ -81,7 +92,7 @@ class DisplayDelayedNotificationWorker(
                     messageContents[NotificationElement.NEW_VERSION_NUMBER.name]
                 )
             }
-            NotificationType.GENERAL_NOTIFICATION -> if (!SettingsManager.getPreference(
+            GENERAL_NOTIFICATION -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS,
                     true
                 )
@@ -97,7 +108,7 @@ class DisplayDelayedNotificationWorker(
                     }
                 )
             }
-            NotificationType.NEWS -> if (!SettingsManager.getPreference(
+            NEWS -> if (!SettingsManager.getPreference(
                     SettingsManager.PROPERTY_RECEIVE_NEWS_NOTIFICATIONS,
                     true
                 )
@@ -127,28 +138,99 @@ class DisplayDelayedNotificationWorker(
             }
         }
 
+        val notificationId = getNotificationId(notificationType)
+        val notificationGroupKey = getNotificationGroupKey(notificationType)
+        val notificationIntent = getNotificationIntent(
+            notificationType,
+            notificationId
+        )
+
         builder.setSmallIcon(R.drawable.logo_notification)
-            .setContentIntent(getNotificationIntent(notificationType))
+            .setContentIntent(notificationIntent)
             .setAutoCancel(true)
             .setDefaults(Notification.DEFAULT_ALL)
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
-        notificationManager.notify(
-            getNotificationId(notificationType),
-            builder.build()
-        )
+        if (notificationType != NEW_VERSION) {
+            builder.setGroup(notificationGroupKey)
+        }
+
+        notificationManager.notify(notificationId, builder.build())
+
+        // Summary notification is not shown for API < 24 because notification
+        // groups aren't supported anyway (meaning multiple notifications will
+        // be shown separately instead of using InboxStyle to emulate a "group").
+        if (notificationType != NEW_VERSION && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val summaryNotification = NotificationCompat.Builder(
+                context,
+                notificationGroupKey
+            ).setSmallIcon(R.drawable.logo_notification)
+                // Dismiss this notification when all its children are also dismissed
+                .setAutoCancel(true)
+                // Specify which group this notification belongs to
+                .setGroup(notificationGroupKey)
+                // Set this notification as the summary for the group
+                .setGroupSummary(true)
+                // Mute this summary notification in favour of children notifications
+                .setGroupAlertBehavior(GROUP_ALERT_CHILDREN)
+                .build()
+
+            notificationManager.notify(
+                getNotificationGroupId(notificationType),
+                summaryNotification
+            )
+        }
 
         return Result.success()
     }
 
+    /**
+     * Generates notification IDs from predefined [NotificationIds], but also
+     * guarantees uniqueness for each type that may show multiple notifications:
+     *
+     * - [NEWS]: add the news item ID to guarantee a unique notification ID
+     * - [NEW_DEVICE] & [GENERAL_NOTIFICATION]: Since there isn't any ID for
+     *   these notifications, rely on [Random.nextInt]. Upper limit is 100000
+     *   to ensure it never overflows to the next `REMOTE_NOTIFICATION_` value.
+     * - Other notifications are always unique, and should never be grouped
+     */
     @Suppress("REDUNDANT_ELSE_IN_WHEN")
-    private fun getNotificationId(type: NotificationType) = when (type) {
-        NotificationType.NEW_VERSION -> NotificationIds.REMOTE_NOTIFICATION_NEW_UPDATE
-        NotificationType.NEWS -> NotificationIds.REMOTE_NOTIFICATION_NEWS
-        NotificationType.NEW_DEVICE -> NotificationIds.REMOTE_NOTIFICATION_NEW_DEVICE
-        NotificationType.GENERAL_NOTIFICATION -> NotificationIds.REMOTE_NOTIFICATION_GENERIC
-        else -> NotificationIds.REMOTE_NOTIFICATION_UNKNOWN
+    private fun getNotificationId(
+        type: NotificationType
+    ) = when (type) {
+        NEWS -> NotificationIds.REMOTE_NEWS
+        NEW_VERSION -> NotificationIds.REMOTE_NEW_UPDATE
+        NEW_DEVICE -> NotificationIds.REMOTE_NEW_DEVICE
+        GENERAL_NOTIFICATION -> NotificationIds.REMOTE_GENERAL
+        else -> NotificationIds.REMOTE_UNKNOWN
+    } + when (type) {
+        NEWS -> messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toInt() ?: 0
+        NEW_DEVICE, GENERAL_NOTIFICATION -> random.nextInt(1, 100000)
+        else -> 0
+    }
+
+    private fun getNotificationGroupId(
+        type: NotificationType
+    ) = when (type) {
+        NEW_DEVICE -> NotificationIds.REMOTE_NEW_DEVICE_GROUP
+        NEWS -> NotificationIds.REMOTE_NEWS_GROUP
+        GENERAL_NOTIFICATION -> NotificationIds.REMOTE_GENERAL_GROUP
+        else -> NotificationIds.REMOTE_UNKNOWN_GROUP
+    }
+
+    /**
+     * Used both as a group key, and the channel ID for the summary notification
+     *
+     * @see NotificationCompat.Builder.setGroup
+     */
+    private fun getNotificationGroupKey(
+        type: NotificationType
+    ) = when (type) {
+        NEW_VERSION -> UPDATE_NOTIFICATION_CHANNEL_ID
+        NEWS -> NEWS_NOTIFICATION_CHANNEL_ID
+        NEW_DEVICE -> DEVICE_NOTIFICATION_CHANNEL_ID
+        GENERAL_NOTIFICATION -> GENERAL_NOTIFICATION_CHANNEL_ID
     }
 
     private fun getNewVersionNotificationBuilder(
@@ -192,11 +274,12 @@ class DisplayDelayedNotificationWorker(
         .setBigTextStyle(message)
 
     private fun getNotificationIntent(
-        notificationType: NotificationType
+        notificationType: NotificationType,
+        notificationId: Int
     ) = PendingIntent.getActivity(
         context,
-        0,
-        if (notificationType == NotificationType.NEWS) {
+        notificationId,
+        if (notificationType == NEWS) {
             Intent(context, NewsItemActivity::class.java)
                 .putExtra(
                     NewsItemActivity.INTENT_NEWS_ITEM_ID,

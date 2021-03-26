@@ -189,28 +189,38 @@ class NotificationUtils(private val context: Context) {
 
 /**
  * Generally, the format is:
- * * Remote: Multiples of 10
- * * Local: Multiples of 100
- * * Foreground: Multiples of 1000
+ * * Remote: Multiples of 1000000
+ * * Local: Multiples of 10
+ * * Foreground: Multiples of 100
  *
  * Intermediate values (e.g. 11, 102, 1005, etc) can be used to further differentiate between the same category
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-
 object NotificationIds {
-    const val REMOTE_NOTIFICATION_NEW_DEVICE = 10
-    const val REMOTE_NOTIFICATION_NEW_UPDATE = 20
-    const val REMOTE_NOTIFICATION_NEWS = 30
-    const val REMOTE_NOTIFICATION_GENERIC = 40
-    const val REMOTE_NOTIFICATION_UNKNOWN = 50
+    private const val localIdMultiplier = 10
+    private const val remoteIdMultiplier = 1000000
 
-    const val LOCAL_NOTIFICATION_DOWNLOAD = 100
-    const val LOCAL_NOTIFICATION_MD5_VERIFICATION = 200
-    const val LOCAL_NOTIFICATION_CONTRIBUTION = 300
-    const val LOCAL_NOTIFICATION_INSTALLATION_STATUS = 400
+    const val LOCAL_DOWNLOAD = 1 * localIdMultiplier
+    const val LOCAL_DOWNLOAD_FOREGROUND = 10 * localIdMultiplier
 
-    const val FOREGROUND_NOTIFICATION_DOWNLOAD = 1000
+    const val LOCAL_MD5_VERIFICATION = 2 * localIdMultiplier
+    const val LOCAL_CONTRIBUTION = 3 * localIdMultiplier
+    const val LOCAL_INSTALLATION_STATUS = 4 * localIdMultiplier
+
+    const val REMOTE_NEW_UPDATE = 1 * remoteIdMultiplier
+
+    const val REMOTE_NEW_DEVICE = 2 * remoteIdMultiplier
+    const val REMOTE_NEW_DEVICE_GROUP = 20 * remoteIdMultiplier
+
+    const val REMOTE_NEWS = 3 * remoteIdMultiplier
+    const val REMOTE_NEWS_GROUP = 30 * remoteIdMultiplier
+
+    const val REMOTE_GENERAL = 4 * remoteIdMultiplier
+    const val REMOTE_GENERAL_GROUP = 40 * remoteIdMultiplier
+
+    const val REMOTE_UNKNOWN = 5 * remoteIdMultiplier
+    const val REMOTE_UNKNOWN_GROUP = 50 * remoteIdMultiplier
 }
 
 /**

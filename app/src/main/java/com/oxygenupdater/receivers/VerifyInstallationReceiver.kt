@@ -30,7 +30,7 @@ import com.oxygenupdater.models.InstallationStatus
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_INSTALLATION_STATUS
+import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.workers.UploadRootInstallLogWorker
 import com.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_CURR_OS
 import com.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_DESTINATION_OS
@@ -107,7 +107,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             .build()
 
         notificationManager.notify(
-            LOCAL_NOTIFICATION_INSTALLATION_STATUS,
+            NotificationIds.LOCAL_INSTALLATION_STATUS,
             notification
         )
     }
@@ -134,7 +134,7 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             .build()
 
         notificationManager.notify(
-            LOCAL_NOTIFICATION_INSTALLATION_STATUS,
+            NotificationIds.LOCAL_INSTALLATION_STATUS,
             notification
         )
     }

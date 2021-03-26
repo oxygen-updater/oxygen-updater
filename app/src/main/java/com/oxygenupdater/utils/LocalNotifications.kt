@@ -23,9 +23,6 @@ import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_CONTRIBUTION
-import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_DOWNLOAD
-import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_MD5_VERIFICATION
 import org.koin.java.KoinJavaComponent.inject
 
 object LocalNotifications {
@@ -74,7 +71,7 @@ object LocalNotifications {
                 .build()
 
             notificationManager.apply {
-                notify(LOCAL_NOTIFICATION_CONTRIBUTION, notification)
+                notify(NotificationIds.LOCAL_CONTRIBUTION, notification)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display 'successful contribution' notification", e)
@@ -120,8 +117,8 @@ object LocalNotifications {
                 .build()
 
             notificationManager.apply {
-                cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
-                notify(LOCAL_NOTIFICATION_DOWNLOAD, notification)
+                cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
+                notify(NotificationIds.LOCAL_DOWNLOAD, notification)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display 'download complete' notification", e)
@@ -165,8 +162,8 @@ object LocalNotifications {
                 .build()
 
             notificationManager.apply {
-                cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
-                notify(LOCAL_NOTIFICATION_DOWNLOAD, notification)
+                cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
+                notify(NotificationIds.LOCAL_DOWNLOAD, notification)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display download failed notification: ", e)
@@ -189,8 +186,8 @@ object LocalNotifications {
             .build()
 
         notificationManager.apply {
-            cancel(LOCAL_NOTIFICATION_DOWNLOAD)
-            notify(LOCAL_NOTIFICATION_MD5_VERIFICATION, notification)
+            cancel(NotificationIds.LOCAL_DOWNLOAD)
+            notify(NotificationIds.LOCAL_MD5_VERIFICATION, notification)
         }
     }
 
@@ -211,8 +208,8 @@ object LocalNotifications {
                 .build()
 
             notificationManager.apply {
-                cancel(LOCAL_NOTIFICATION_DOWNLOAD)
-                notify(LOCAL_NOTIFICATION_MD5_VERIFICATION, notification)
+                cancel(NotificationIds.LOCAL_DOWNLOAD)
+                notify(NotificationIds.LOCAL_MD5_VERIFICATION, notification)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't display 'verifying' notification", e)
@@ -226,8 +223,8 @@ object LocalNotifications {
     fun hideDownloadCompleteNotification() {
         try {
             notificationManager.apply {
-                cancel(LOCAL_NOTIFICATION_DOWNLOAD)
-                cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
+                cancel(NotificationIds.LOCAL_DOWNLOAD)
+                cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't hide 'download complete' notification", e)

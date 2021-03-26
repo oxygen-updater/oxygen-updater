@@ -36,9 +36,7 @@ import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationIds.FOREGROUND_NOTIFICATION_DOWNLOAD
-import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_DOWNLOAD
-import com.oxygenupdater.utils.NotificationIds.LOCAL_NOTIFICATION_MD5_VERIFICATION
+import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -123,7 +121,7 @@ class DownloadWorker(
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
-        return ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, notification)
+        return ForegroundInfo(NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification)
     }
 
     private fun createProgressForegroundInfo(
@@ -163,11 +161,11 @@ class DownloadWorker(
             .build()
 
         notificationManager.apply {
-            cancel(LOCAL_NOTIFICATION_DOWNLOAD)
-            cancel(LOCAL_NOTIFICATION_MD5_VERIFICATION)
+            cancel(NotificationIds.LOCAL_DOWNLOAD)
+            cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
         }
 
-        return ForegroundInfo(FOREGROUND_NOTIFICATION_DOWNLOAD, notification)
+        return ForegroundInfo(NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification)
     }
 
     private suspend fun download(): Result = withContext(Dispatchers.IO) {
