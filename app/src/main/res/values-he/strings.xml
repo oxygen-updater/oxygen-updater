@@ -37,7 +37,7 @@
 	<!-- Downloader strings-->
 	<string name="download">הורד עדכון</string>
 	<string name="downloaded">העדכון ירד</string>
-	<string name="downloading">מוריד עדכון...</string>
+	<string name="downloading">מוריד עדכון…</string>
 	<string name="paused">הושהה - לחץ בשביל להמשיך</string>
 
 	<string name="download_complete">העדכון הושלם</string>
@@ -58,7 +58,7 @@ Iאם ברצונך לדעת עוד, תרגיש/י חופשי/ת ליצור אי�
 	<string name="download_error_storage">אין מספק שטח זיכרון בכונן שלך בשביל להוריד את העדכון. אנא הסר ופנה שטח אחסון ונסה להוריד שוב.</string>
 
 	<string name="download_failed">ההורדה נכשלה</string>
-	<string name="download_pending">ההורדה שלך תתחיל בקרוב...</string>
+	<string name="download_pending">ההורדה שלך תתחיל בקרוב…</string>
 	<string name="download_notification_error_server">שגיאת שרת אירעה בזמן ההורדה. אנא נסה להוריד מחדש את העדכון</string>
 	<string name="download_notification_error_internal">שגיאה טכנית אירעה בזמן ההורדה. אנא נסה להוריד מחדש או צור קשר עם צוות התמיכה שלנו</string>
 	<string name="download_notification_error_storage_full">אין מספיק שטח אחסון.</string>
@@ -70,11 +70,11 @@ Iאם ברצונך לדעת עוד, תרגיש/י חופשי/ת ליצור אי�
 	<string name="download_progress_text_one_hour_remaining">נשאר כבערך שעה אחתg</string>
 	<string name="download_progress_text_one_minute_remaining">נשאר כבערך דקה אחת</string>
 	<string name="download_progress_text_seconds_remaining">כמה שניות נשארו</string>
-	<string name="download_progress_text_unknown_time_remaining">מחשב זמן שנשאר...</string>
-	<string name="download_progress_text_verifying">מאמת קובץ...</string>
+	<string name="download_progress_text_unknown_time_remaining">מחשב זמן שנשאר…</string>
+	<string name="download_progress_text_verifying">מאמת קובץ…</string>
 	<string name="download_progress_text_paused">הושהה</string>
 
-	<string name="download_verifying">מאמת...</string>
+	<string name="download_verifying">מאמת…</string>
 	<string name="download_verifying_error">הקובץ נפגע</string>
 	<string name="download_verifying_start">ההורדה שלך תהיה כעת מאומתת</string>
 
@@ -88,7 +88,7 @@ Iאם ברצונך לדעת עוד, תרגיש/י חופשי/ת ליצור אי�
 
 	<string name="summary_on">מופעל</string>
 	<string name="summary_off">מכובה</string>
-	<string name="summary_please_wait">אנא המתן...</string>
+	<string name="summary_please_wait">אנא המתן…</string>
 	<string name="summary_update_method">אנא בחר ראשית מכשיר</string>
 	<string name="summary_theme">בחר עיצוב</string>
 	<string name="summary_language">בחר שפה</string>
@@ -159,17 +159,17 @@ Iאם ברצונך לדעת עוד, תרגיש/י חופשי/ת ליצור אי�
 
 	<!-- Automatic install strings -->
 	<string name="install">התקן</string>
-	<string name="install_checking_root">בודק אם למכשיר שלך יש גישות Root...</string>
+	<string name="install_checking_root">בודק אם למכשיר שלך יש גישות Root…</string>
 	<string name="install_grant_root_permissions">אנא אשר/י גישות Root כשתתבקש/י.</string>
 	<string name="install_going_back_not_possible">למרבה הצער, אינך יכול/ה לחזור אחורה כעת</string>
-	<string name="install_preparing_installation">מכין התקנה...</string>
+	<string name="install_preparing_installation">מכין התקנה…</string>
 
 	<string name="install_recovery_installer_title">התקנת עדכון&#160;&#160;</string> <!-- Add 2 spaces to the end -->
 	<string name="install_recovery_backing_up">מגבה את המכשיר שלך. תהליך זה עלול לקחת זמן מה!</string>
-	<string name="install_recovery_clearing_cache">מנקה את מחיצת המטמון...</string>
+	<string name="install_recovery_clearing_cache">מנקה את מחיצת המטמון…</string>
 	<string name="install_recovery_done">בוצע. המכשיר שלך יופעל מחדש.</string>
-	<string name="install_recovery_installing_additional_zip">מתקין את קובץ הZIP הנוסף...</string>
-	<string name="install_recovery_installing_update">מתקין את העדכון...</string>
+	<string name="install_recovery_installing_additional_zip">מתקין את קובץ הZIP הנוסף…</string>
+	<string name="install_recovery_installing_update">מתקין את העדכון…</string>
 	<string name="install_recovery_thank_you">תודה לך על כך שאת/ה משתמש/ת בOxygen Updater. אם את/ה אוהב/ת את האפליקציה, נשמח אם תדרג/י אותנו בGoogle Play ב5 כוכבים  :-)</string>
 
 	<string name="install_error_write_script_failed">"הכנת התקנת העדכון נכשלה. האם אפשרת גישות Root?"</string>
@@ -178,7 +178,7 @@ Iאם ברצונך לדעת עוד, תרגיש/י חופשי/ת ליצור אי�
 	<string name="install_options_header">באפשרותך להתאים אישית את תהליך ההתקנה על ידי שינוי האפשרויות המוצגות למטה. הקש על \"התחל התקנה\" כדי להתחיל בהתקנת העדכון.</string>
 	<string name="install_options_keep_root">השאר את המכשיר שלי עם גישות root</string>
 	<string name="install_options_reboot_after_install">הפעל מחדש אחרי ההתקנה</string>
-	<string name="install_options_select_root_package">בחר את חבילת הRoot להתקנה...</string>
+	<string name="install_options_select_root_package">בחר את חבילת הRoot להתקנה…</string>
 	<string name="install_options_start_install">התחל בהתקנה</string>
 	<string name="install_options_subtitle">בחר את אפשרויות ההתקנה</string>
 	<string name="install_options_wipe_cache_partition">מחק את מחיצת המטמון</string>
@@ -209,8 +209,8 @@ Iאם ברצונך לדעת עוד, תרגיש/י חופשי/ת ליצור אי�
 
 	<string name="install_zip_file_clear">נקה קובץ חבילת Root</string>
 	<string name="install_zip_file_pick">בחר קובץ חבילת Root</string>
-	<string name="install_zip_file_placeholder">בחר חבילת Root...</string>
-	<string name="install_zip_file_wrong_file_type">בחר חבילת Root...</string>
+	<string name="install_zip_file_placeholder">בחר חבילת Root…</string>
+	<string name="install_zip_file_wrong_file_type">בחר חבילת Root…</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
@@ -392,7 +392,7 @@ Iאם ברצונך לדעת עוד, תרגיש/י חופשי/ת ליצור אי�
 
 <string name="error">שגיאה</string>
 <string name="icon">סמל</string>
-<string name="loading">טוען...</string>
-<string name="processing">מעבד...</string>
+<string name="loading">טוען…</string>
+<string name="processing">מעבד…</string>
 <string name="choose_file">בחר קובץ</string>
 	</resources>
