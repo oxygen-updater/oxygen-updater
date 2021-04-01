@@ -1,8 +1,7 @@
-<!--  Oxygen Updater - Hebrew Translation V1-->
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="device_chooser_error_title">לא ניתן להשיג רשימה של המכשירים הנתמכים</string>
-
+	<!--  Oxygen Updater - Hebrew Translation V1-->
 	<!-- Update information strings-->
 	<string name="enable">הפעל</string>
 	<string name="update_information_description_not_available">עדכון זה לא מציג שום מידע רשמי על תכונות חדשות. בדרך כלל, עדכונים אלו מציגים תיקוני באגים, שיפורי ביצועים ו/או עדכוני אבטחה קריטיים למכשיר של</string>
