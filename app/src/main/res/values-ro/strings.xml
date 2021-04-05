@@ -4,16 +4,16 @@
 
 	<!-- Update information strings-->
 	<string name="enable">Permite</string>
-	<string name="update_information_description_not_available">Nu există informații oficiale asupra noilor funcții din această actualizare. În general, o astfel de actualizare rezolvă bug-uri, îmbunătățește performanța, și / sau aduce actualizări de securitate importante pentru dispoiztivul dumneavoastră.</string>
+	<string name="update_information_description_not_available">Nu există informații oficiale asupra noilor funcții din această actualizare. În general, o astfel de actualizare rezolvă bug-uri, îmbunătățește performanța, și / sau aduce actualizări de securitate importante pentru dispozitivul dumneavoastră.</string>
 	<string name="update_information_file_name">Nume fișier: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Întrucât a avut loc o eroare la descărcarea fișierelor, descărcarea trebuie repornită. Puteți folosi acest link pentru a descărca fișierele dintr-un browser. Este posibil ca fișierele descărcate să necesite mutarea lor din directorul \"Descărcări\" in directorul părinte. Acest link este același link pe care aplicația îl accesează la descărcarea actualizărilor, link oficial de la Server-ul OnePlus OTA:\n%1$s</string>
 	<string name="update_information_header">Actualizare</string>
 	<string name="update_information_error_title">Nu s-au putut recupera ultimele informații asupra actualizării</string>
 	<string name="update_information_banner_server">Apăsați aici pentru a vedea noutăți importante</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable advanced mode if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">Ați selectat pista de actualizare \"%1$s\". Activați modul avansat dacă intenționați să treceți la această pistă de actualizare.</string>
 	<string name="update_information_header_advanced_mode_hint">Modul avansat este activat</string>
-	<string name="update_information_header_advanced_mode_helper">Pentru că ați activat modul avansat, puteți descărca ultimul ZIP pentru \"%1$s\".\n\nPuteți dezactiva modul avansat din setări.</string>
+	<string name="update_information_header_advanced_mode_helper">Pentru că ați activat modul avansat, puteți descărca ultimul fișier ZIP pentru \"%1$s\".\n\nPuteți dezactiva modul avansat din setări.</string>
 	<string name="update_information_different_version_changelog_notice">Vizualizați un jurnal de schimbări pentru cea mai recentă actualizare din lista de actualizări \"%1$s\". Dacă doriți să instalați această actualizare, trebuie să activați mai întâi modul avansat (în setări).\n\nTotuși, dacă doriți să vedeți jurnalul de schimbări pentru versiunea instalată în prezent, va trebui să reveniți la metoda potrivită de actualizare.</string>
 	<string name="update_information_last_checked_on">Ultima verificare la: %1$s</string>
 	<string name="update_information_no_update_data_available">Nu există informații despre actualizare</string>
