@@ -8,7 +8,7 @@
 	<string name="update_information_file_name">"Datei Name: %1$s"</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Da ein Download Fehler aufgetreten ist, muss der Download neugestartet werden, du kannst diesen Link benutzen um den Download stattdessen über den Browser laufen zu lassen. Möglicherweiße musst du die heruntergeladene Datei von dem \"Downloads\" Ordner in den darüberliegenden Ordner verschieben. Dies ist ein offizieller OnePlus OTA Server Link, der auch von der App benutzt wird:\n%1$s</string>
-	<string name="update_information_header">"Aktualisieren"</string>
+	<string name="update_information_header">Aktualisierung</string>
 	<string name="update_information_error_title">Konnte die aktuellsten Update Informationen nicht herunterladen</string>
 	<string name="update_information_banner_server">Tippe hier um wichtige Nachrichten anzuzeigen</string>
 	<string name="update_information_banner_advanced_mode_tip">Du hast den \"%1$s\" Update Zweig ausgewählt. Aktiviere den Fortgeschrittenen Modus um zu diesem Update Zweig zu wechseln.</string>
@@ -23,9 +23,9 @@
 	<string name="update_information_view_update_information">"Update Informationen ansehen"</string>
 
 	<!-- Server status warning strings -->
-	<string name="server_status_error">Ein paar Funktionen sind zurzeit nicht verfügbar.</string>
+	<string name="server_status_error">Manche Funktionen sind zurzeit nicht verfügbar.</string>
 	<string name="server_status_unreachable">"Der Server ist nicht erreichbar. Versuche die Seite zu aktualisieren."</string>
-	<string name="server_status_warning">Ein paar Funktionen funktionieren möglicherweiße nicht richtig.</string>
+	<string name="server_status_warning">Manche Funktionen funktionieren möglicherweiße nicht richtig.</string>
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Es ist ein Update verfügbar (%1$s). Tippen Sie hier, um in den Play Store zu gelangen.</string>
@@ -35,7 +35,7 @@
 
 	<!-- Downloader strings -->
 	<string name="download">"Update herunterladen"</string>
-	<string name="downloaded">"Heruntergeladen"</string>
+	<string name="downloaded">"Update heruntergeladen"</string>
 	<string name="downloading">"Update wird heruntergeladen"</string>
 	<string name="paused">"Pausiert - berühren um fortzufahren"</string>
 
@@ -68,9 +68,9 @@ Wenn du  mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <
 	<string name="download_progress_text_seconds_remaining">"Noch ein paar Sekunden"</string>
 	<string name="download_progress_text_unknown_time_remaining">"Verbleibende Zeit wird berechnet…"</string>
 	<string name="download_progress_text_verifying">"Dateiverifizierung…"</string>
-	<string name="download_progress_text_paused">"Pausiert…"</string>
+	<string name="download_progress_text_paused">"Pausiert"</string>
 
-	<string name="download_verifying">"Verifizieren…"</string>
+	<string name="download_verifying">"Verifizierung…"</string>
 	<string name="download_verifying_error">"Datei ist beschädigt"</string>
 	<string name="download_verifying_start">"Dein Download wird verifiziert…"</string>
 
@@ -135,7 +135,7 @@ Das könnte nützlich sein wenn du z.B.:
 -Von der regulären Version auf eine Beta Version updaten willst
 -Von einer Beta Version zur regulären Version zurückkehren willst (Vergiss nicht dein Telefon zurückzusetzen)
 -Deine aktuelle Systemversion neuinstallieren willst."</string>
-	<string name="settings_update_method">"Update Methode"</string>
+	<string name="settings_update_method">"Aktualisierungsmethode"</string>
 
 	<string name="settings_upload_logs">Teile Nutzungsdaten und Protokolle</string>
 
@@ -146,7 +146,7 @@ Das könnte nützlich sein wenn du z.B.:
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Herzlich Willkommen"</string>
-	<string name="onboarding_finished_button">"App Starten"</string>
+	<string name="onboarding_finished_button">"App starten"</string>
 	<string name="onboarding_page_1_title">"Herzlich Willkommen im Oxygen Updater!"</string>
 	<string name="onboarding_page_1_text">"Diese App erlaubt es dir:
 
@@ -193,7 +193,7 @@ Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf d
 	<string name="install_recovery_clearing_cache">"Cache Partition wird gelöscht…"</string>
 	<string name="install_recovery_done">"Abgeschlossen. Dein Gerät wird neu gestartet."</string>
 	<string name="install_recovery_installing_additional_zip">"Zusätzliche ZIP Datei wird installiert…"</string>
-	<string name="install_recovery_installing_update">"Update wird installiert"</string>
+	<string name="install_recovery_installing_update">"Update wird installiert…"</string>
 	<string name="install_recovery_thank_you">"Vielen Dank, dass du den Oxygen Updater benutzt. Wenn dir die App gefällt dann bewerte sie bitte im Play Store mit 5 Sternen :-)"</string>
 	<string name="install_error_write_script_failed">"Fehler beim Vorbereiten der Installation des Updates. Hast du Root Zugriff erlaubt?"</string>
 	<string name="install_options_backup">"Mein Gerät sichern"</string>
@@ -208,7 +208,7 @@ Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf d
 	<string name="install_options_explanation_backup">"Mein Gerät sichern:
 Wenn du diese Option auswählst,wird ein Backup von deinem System, Apps und Einstellungen vor der Installation gemacht. Es ist praktisch ein Backup zu haben für den Fall das etwas schief geht."</string>
 	<string name="install_options_explanation_keep_root">"Lass mein Gerät gerootet:
-Wenn du diese Option auswählst, kannst du ein Root Paket auswählen welches installiert wird nachdem das Update installiert wurde. Das versichert das dein Gerät gerootet bleibt. Bitte beachte das das Root Paket mit der neuen OxygenOS Version kompatibel sein muss die du installierst!"</string>
+Wenn du diese Option auswählst, kannst du ein Root Paket auswählen welches installiert wird nachdem das Update installiert wurde. Das versichert das dein Gerät gerootet bleibt. Bitte beachte, dass das Root Paket mit der neuen OxygenOS Version kompatibel sein muss die du installierst!"</string>
 	<string name="install_options_explanation_wipe_cache">"Löschen der Cache Partition:
 Wenn du diese Option auswählst, wird die Cache Partition, nach dem das Update installiert wurde, gelöscht das versichert, das dein Gerät optimal Performt und senkt die Wahrscheinlichkeit von Bugs die durch das Update entstanden sind."</string>
 	<string name="install_options_explanation_reboot">"Neustarten nach der Installation:
@@ -252,7 +252,7 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 	<string name="install_guide_page_2_text">"Beachte: Die Installation des Updates findet auf einer speziellen Seite deines Systems statt. Sollte aus irgendeinem Grund bereits ein System Update angezeigt werden, installiere dieses zuerst. Danach öffne die App erneut um zu überprüfen ob du auf den neuesten Stand bist.
 
 Anleitung:
-&#8226; Schließe Oxygen Update durch Drücken des Home Buttons.
+&#8226; Schließe Oxygen Updater durch Drücken des Home Buttons.
 
 &#8226; Öffne deine Systemeinstellungen. Diese sollten über dein App Menü erreichbar sein.
 
@@ -265,7 +265,7 @@ Anleitung:
 
 &#8226; Wähle jetzt \"Lokales Upgrade\" aus. Es sollte ein Bildschirm zur Datei Auswahl erscheinen.
 
-&#8226; In diesem Bildschrimr, tippe auf die Update Datei die vom Oxygen Update heruntergeladen wurde. Der Name sollte mit \"%1$sOxygen\" beginnen.
+&#8226; In diesem Bildschrimr, tippe auf die Update Datei die vom Oxygen Updater heruntergeladen wurde. Der Name sollte mit \"%1$sOxygen\" beginnen.
 
 &#8226; Tippe nun auf \"Upgrade Now\". Die Installation sollte automatisch starten."</string>
 
@@ -289,20 +289,20 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="device_information_supported_oxygen_os">Dein Gerät wird unterstützt</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Dein Gerät wird nicht unterstützt, weil es ein Betreiber-exklusives Gerät ist</string>
 	<string name="device_information_unsupported_oxygen_os">Aktuell unterstützen wir dein Gerät noch nicht</string>
-	<string name="device_information_unsupported_os">YDein Gerät wird nicht unterstützt, da es kein OxygenOs verwendet</string>
+	<string name="device_information_unsupported_os">Dein Gerät wird nicht unterstützt, da es kein OxygenOs verwendet</string>
 
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
-	<string name="device_information_amount_of_memory">"RAM Größe:"</string>
-	<string name="device_information_cpu_frequency">"Prozessor Frequenz:"</string>
+	<string name="device_information_amount_of_memory">RAM-Größe</string>
+	<string name="device_information_cpu_frequency">Prozessor Frequenz</string>
 	<string name="device_information_header">"Gerät"</string>
 	<string name="device_information_image_description">"Geräte Bild"</string>
-	<string name="device_information_incremental_os_version">"Inkrementelle OS Version:"</string>
+	<string name="device_information_incremental_os_version">Inkrementelle OS Version</string>
 	<string name="device_information_os_version">"Android Version"</string>
 	<string name="device_information_oxygen_os_version">"OxygenOS Version"</string>
 	<string name="device_information_oxygen_os_ota_version">"OTA Version"</string>
-	<string name="device_information_patch_level_version">"Stand der Sicherheitsupdates:"</string>
+	<string name="device_information_patch_level_version">Sicherheitspatch-Level</string>
 	<string name="device_information_serial_number">"Seriennummer"</string>
 	<string name="device_information_system_on_a_chip">"Prozessor"</string>
 	<string name="device_information_unknown">"Unbekannt"</string>
@@ -326,7 +326,7 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">"Push Nachrichten"</string>
 	<string name="miscellaneous_notifications_group_name">Verschiedenes</string>
-	<string name="download_and_installation_notifications_group_description">"Zeigt alle unwichtigen Nachrichten von der Oxygen Updater App. Beinhaltet den Status Indikator der während des Downloads angezeigt wird."</string>
+	<string name="download_and_installation_notifications_group_description">Zeigt alle nicht-kritischen Nachrichten von der Oxygen Updater App. Beinhaltet den Status Indikator der während des Downloads angezeigt wird.</string>
 	<string name="push_notifications_group_description">"Zeigt alle wichtigen Nachrichten von der Oxygen Updater App. Dies beinhaltet System Update Nachrichten und Neuigkeiten."</string>
 	<string name="download_status_notification_channel_name">Download Status</string>
 	<string name="verification_status_notification_channel_name">Verifikations Status</string>
@@ -353,7 +353,7 @@ Hilfe beinhaltet die folgenden Themen:
 
 • Dein Gerät updaten
 • Die neusten Nachrichten lesen
-• Geräte Information anzeigen
+• Geräte Informationen anzeigen
 • Einstellungen ändern
 
 Scrolle nach unten um durch die Themen zu blättern"</string>
@@ -366,7 +366,7 @@ Der Installationsbildschirm überprüft als erstes ob du ein gerootetes Gerät h
 
 Automatisch Installieren:
 Du musst nur deine Installationsoption wählen."</string>
-	<string name="help_reading_news_title">"Lese die neusten Nachrichten"</string>
+	<string name="help_reading_news_title">Lese die neuesten Nachrichten</string>
 	<string name="help_reading_news_text">"Neuigkeiten findest du rechts von der Update Seite. Die neusten Neuigkeiten werden oben angezeigt. Tippe einfach darauf zum Anzeigen.
 Tippe auf die Zurück Taste um zurück zu den Neuigkeiten zu kommen."</string>
 	<string name="help_device_information_title">"Informationen über das Gerät anzeigen"</string>
@@ -387,7 +387,7 @@ Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphär
 	<string name="news_empty">"Dieser Artikel hat keinen Inhalt."</string>
 	<string name="news_load_network_error">"Fehler "</string>
 	<string name="news_load_id_error"><![CDATA[Der Artikel konnte nicht über den Link geöffnet werden: %1$s. Überprüfe den Link oder melde ihn uns per <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder über unseren <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.]]></string>
-	<string name="news_unread_count_1">Sie haben %1$d ungelesene Nachrichtenartikel. Tippen Sie hier um sie anzuzeigen.</string>
+	<string name="news_unread_count_1">Sie haben %1$d ungelesene Nachrichtenartikel. Tippe hier um sie anzuzeigen.</string>
 	<string name="news_unread_count_2">Sie haben %1$d ungelesene Nachrichtenartikel. Tippe um alle Artikel anzuzeigen.</string>
 	<string name="news_mark_read">Als gelesen markieren</string>
 	<string name="news_mark_unread">Als ungelesen markieren</string>
@@ -398,8 +398,8 @@ Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphär
 	<string name="news_empty_state_all_read_text">Du hast alle Artikel gelesen. Gute Arbeit!\nWir hoffen du hattest Spaß beim Lesen unserer Artikel und hast etwas neues gelernt.\n\nTippe das Banner erneut um alle Nachrichten anzuzeigen.</string>
 
 	<string name="contribute">Hilf mit</string>
-	<string name="contribute_title">Hilf mit Oxygen Update zu verbessern</string>
-	<string name="contribute_explanation">Oxygen Updater braucht deine Hilfe! Um dir deine neuesten Updates brauchen wird die Namen der Update Daten. Diese sind auf deinem Handy vorhanden sobald ein normales Update erscheint.\n\nWie kann ich helfen?\n\nOxygen Updater kann automatisch diese Update Dateinamen an unsere Admins übermitteln. Dies benötigt nur einen kleinen Teil deiner Mobilen Daten und braucht möglicherweiße etwas von deinem Akku. Alles was du tun musst ist warten (ungefähr 15 Minuten), bevor du das offiziele System Update installierst. Sobald du eine Bestätigung vom Oxygen Updater erhälst, dass die Dateinamen erfolgreich übermittelt wurden kannst du fortfahren. Es wird nur der ".Ota" Ordner auf deinem Telefon alle 15 Minuten überprüft. Wir prüfen nur auf einen bestimmten Dateinamen in diesem Ordner.</string>
+	<string name="contribute_title">Hilf mit Oxygen Updater zu verbessern</string>
+	<string name="contribute_explanation">Oxygen Updater braucht deine Hilfe! Um dir deine neuesten Updates brauchen wird die Namen der Update Daten. Diese sind auf deinem Handy vorhanden sobald ein normales Update erscheint.\n\nWie kann ich helfen?\n\nOxygen Updater kann automatisch diese Update Dateinamen an unsere Admins übermitteln. Dies benötigt nur einen kleinen Teil deiner Mobilen Daten und braucht möglicherweiße etwas von deinem Akku. Alles was du tun musst ist warten (ungefähr 15 Minuten), bevor du das offiziele System Update installierst. Sobald du eine Bestätigung vom Oxygen Updater erhälst, dass die Dateinamen erfolgreich übermittelt wurden kannst du fortfahren. Es wird nur der \".Ota\" Ordner auf deinem Telefon alle 15 Minuten überprüft. Wir prüfen nur auf einen bestimmten Dateinamen in diesem Ordner.</string>
 	<string name="contribute_agree">Ich möchte gerne helfen und stimme zu, dass Update Dateinamen an unsere Admins übermittelt werden</string>
 	<string name="contribute_agree_from_setup">Ich möchte gerne helfen die App zu verbessern und stimme zu, dass Update Dateinamen an unsere Admins übermittelt werden</string>
 	<string name="contribute_save">Speichern</string>
