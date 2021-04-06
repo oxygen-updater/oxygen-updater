@@ -29,7 +29,7 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Actualizare nouă disponibilă pentru aplicație (%1$s). Apăsați aici pentru a accesa Magazinul Google Play și pentru a actualiza aplicația.</string>
-	<string name="new_app_version_long">Actualizare nouă disponibilă pentru aplicație (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
+	<string name="new_app_version_long">Actualizare nouă disponibilă pentru aplicație (%1$s). Menținerea aplicației actualizate vă asigură că veți primi întotdeauna cele mai recente funcții și remedieri de erori.\nApăsați aici pentru a deschide Magazinul Google Play și a actualiza aplicația.</string>
 	<string name="new_app_version_inapp_downloaded">Actualizarea a fost descărcată</string>
 	<string name="new_app_version_inapp_failed">Actualizarea aplicației nu a putut fi instalată. Apăsați aici pentru a actualiza aplicația din Google Play.</string>
 
@@ -150,7 +150,7 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="onboarding_page_2_title">Selectați-vă dispozitivul</string>
 	<string name="onboarding_page_2_caption">De regulă, dispozitivul dumneavoastră este preselectat mai sus. În caz contrar, selectați-vă dispozitivul mai sus.</string>
 	<string name="onboarding_page_3_title">Alegeți metoda de actualizare</string>
-	<string name="onboarding_page_3_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
+	<string name="onboarding_page_3_caption">De obicei, actualizarea incrementală este alegerea potrivită aici, deoarece oferă descărcări mult mai rapide și mai mici.\n\nCu toate acestea, nu este compatibilă cu dispozitivele rootate. Dacă aveți un dispozitiv rootat, alegeți Actualizarea completă.\n\nDacă aveți o versiune beta a OxygenOS, alegeți (una) dintre metodele de actualizare Open Beta.</string>
 	<string name="onboarding_page_4_title">Totul este pregătit!</string>
 	<string name="onboarding_page_4_text">Bucurați-vă de utilizarea acestei aplicații!\n\nVă puteți schimba oricând setările mai târziu. Pentru a face acest lucru: apăsați pe cele trei puncte din colțul din dreapta sus și selectați \"Setări\".</string>
 
@@ -162,7 +162,7 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="install_preparing_installation">Se pregătește instalarea…</string>
 
 	<string name="install_recovery_installer_title">Instalator de actualizări&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">BSe creează un backup dispozitivului. Această acțiune va dura ceva mai mult timp!</string>
+	<string name="install_recovery_backing_up">Se creează un backup dispozitivului. Această acțiune va dura ceva mai mult timp!</string>
 	<string name="install_recovery_clearing_cache">Se curăță partiția cache…</string>
 	<string name="install_recovery_done">Finalizat. Dispozitivul dumneavoastră va reporni.</string>
 	<string name="install_recovery_installing_additional_zip">Se instalează fișierul ZIP suplimentar…</string>
@@ -181,7 +181,7 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="install_options_wipe_cache_partition">Șterge partiția cache</string>
 
 	<string name="install_options_explanation_title">Ce semnificație au aceste opțiuni?</string>
-	<string name="install_options_explanation_backup">reează un backup:\nCând selectați această opțiune, o copie de siguranță a sistemului, aplicațiilor și setărilor dumneavoastră va fi făcută înainte de instalare. Întotdeauna la îndemână, în cazul în care ceva nu merge bine.</string>
+	<string name="install_options_explanation_backup">Creează un backup:\nCând selectați această opțiune, o copie de siguranță a sistemului, aplicațiilor și setărilor dumneavoastră va fi făcută înainte de instalare. Întotdeauna la îndemână, în cazul în care ceva nu merge bine.</string>
 	<string name="install_options_explanation_keep_root">Păstrează-mi dispozitivul rootat:\nCând selectați această opțiune, puteți specifica un pachet root care va fi instalat după instalarea actualizării. Acest lucru vă asigură că dispozitivul dumneavoastră rămâne rootat. Vă rugăm să rețineți că acest pachet root trebuie să fie compatibil cu noua versiune OxygenOS pe care urmează să o instalați!</string>
 	<string name="install_options_explanation_wipe_cache">Șterge partiția cache:\nCând selectați această opțiune, partiția cache va fi ștearsă după ce actualizarea a fost instalată. Acest lucru asigură că dispozitivul dumneavoastră funcționează optim și de asemenea reduce probabilitatea de a experimenta erori cauzate de instalarea actualizării.</string>
 	<string name="install_options_explanation_reboot">Reporniți după instalare:\nCând selectați această opțiune, dispozitivul dumneavoastră va reporni automat înapoi în OxygenOS după instalarea actualizării. În caz contrar, dispozitivul dumneavoastră va rămâne în modul de recuperare, unde puteți instala pachete suplimentare.</string>
@@ -257,7 +257,7 @@ Instrucțiuni:
 	<string name="device_information_supported_oxygen_os">Dispozitivul dumneavoastră este suportat</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Dispozitivul dumneavoastră nu este suportat, întrucât este un dispozitiv ce aparține unui operator de telefonie mobilă</string>
 	<string name="device_information_unsupported_oxygen_os">Dispozitivul dumneavoastră nu este încă suportat de către aplicație</string>
-	<string name="device_information_unsupported_os">YDispozitivul dumneavoastră nu este suportat, întrucât nu rulează OxygenOS</string>
+	<string name="device_information_unsupported_os">Dispozitivul dumneavoastră nu este suportat, întrucât nu rulează OxygenOS</string>
 
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
@@ -277,8 +277,8 @@ Instrucțiuni:
 
 	<!-- About screen strings -->
 	<string name="about">Despre</string>
-	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
-	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">pagina de Patreon</a>.</string>
+	<string name="about_description">Această aplicație descarcă actualizări oficiale direct de pe serverele OnePlus și verifică integritatea fișierului ZIP descărcat înainte de a vă permite să instalați actualizarea. Procedând astfel, aplicația vă permite să omiteți perioada de lansare a actualizărilor și să instalați actualizări oficiale cât mai curând posibil. Dacă întâmpinați erori în sistemul de operare, raportați-le direct la OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Puteți, de asemenea, să vă alăturați <a href="https://discord.gg/5TXdhKJ">serverului nostru de Discord</a> pentru a discuta cu alți utilizatori în legătură cu ultimele actualizări. În rest, ne puteți scrie oricând un e-mail pe adresa <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> cu sugestii și păreri în legătură cu aplicația.</string>
+	<string name="about_support">Dacă doriți să ne sprijiniți, puteți cumpăra aplicația fără anunțuri (din setările aplicației) sau puteți să consultați<a href="https://patreon.com/oxygenupdater">pagina de Patreon</a>.</string>
 	<string name="about_background_story_header">Scurt istoric</string>
 	<string name="about_background_story">Această aplicație a fost creată inițial de Arjan Vlek, ca urmare a unei aplicații deja existente, numită <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (oferă funcționalitate similară pentru utilizatorii Cyanogen OS).\n\nDupă 4 ani, în iulie 2019, Arjan a decis să-și reducă activitatea în cele două proiecte și a transferat conducerea aplicației către o echipă de dezvoltatori provenind dintr-o varietate de țări. Aceștia și-au asumat responsabilitatea de a oferi comunității un suport excelent pentru primirea de actualizări OnePlus mai rapide &amp; .\nPuteți găsi mai multe informații legate de anunț <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">aici</a>.\n\nPe data de 14 august 2019 a avut loc prima lansare sub noua conducere, care a venit cu funcții noi precum modul întunecat și un design complet nou.\n\nPentru mai multe informații referitoare la echipă, încercați <a href="https://oxygenupdater.com/team/">acest website</a>.</string>
 	<string name="about_third_party_app_notice">Atenție, aceasta nu este o aplicație oficială OnePlus.\nNumele OnePlus, logo-ul OnePlus și OxygenOS aparțin companiei OnePlus.\nAndroid, Google, Google Play și logo-ul Google Play sunt mărci înregistrate ale Google Inc.\nAceastă aplicație folosește date de la OnePlus și de la compania părinte Oppo pentru a oferi informații legate de actualizări.</string>
@@ -287,30 +287,30 @@ Instrucțiuni:
 	<string name="about_email_button_text">E-mail</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device_text">The %1$s is now supported. Open the app to choose this device.</string>
-	<string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
-	<string name="notification_version">%1$s is now available for the %2$s!</string>
-	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
-	<string name="push_notifications_group_name">Push notifications</string>
-	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">Displays all non-important notifications of the Oxygen Updater app. Contains the status indicators shown during downloading.</string>
-	<string name="push_notifications_group_description">Displays all important notifications of the Oxygen Updater app. These include system update notifications and breaking news notifications.</string>
-	<string name="download_status_notification_channel_name">Download status</string>
-	<string name="verification_status_notification_channel_name">Verification status</string>
-	<string name="installation_status_notification_channel_name">Installation status</string>
-	<string name="update_notification_channel_name">System update available</string>
-	<string name="news_notification_channel_name">News article published</string>
-	<string name="device_notification_channel_name">New device supported</string>
+	<string name="notification_new_device_text">%1$s este acum supo. Deschideți aplicația pentru a alege acest dispozitiv.</string>
+	<string name="notification_no_notification_support">Instalați sau actualizați serviciile Google Play pentru a activa notificările push.</string>
+	<string name="notification_version">Actualizarea %1$s este acum disponibilă pentru %2$s!</string>
+	<string name="download_and_installation_notifications_group_name">Descărcare &amp; Instalare</string>
+	<string name="push_notifications_group_name">Notificări push</string>
+	<string name="miscellaneous_notifications_group_name">Diverse</string>
+	<string name="download_and_installation_notifications_group_description">Afișează toate notificările mai puțin importante ale aplicației Oxygen Updater. Conține indicatorii de stare afișați în timpul descărcării.</string>
+	<string name="push_notifications_group_description">Afișează toate notificările importante ale aplicației Oxygen Updater. Acestea includ notificări de actualizare a sistemului și notificări de știri de ultimă oră.</string>
+	<string name="download_status_notification_channel_name">Stadiul descărcării</string>
+	<string name="verification_status_notification_channel_name">Stadiul verificării</string>
+	<string name="installation_status_notification_channel_name">Stadiul instalării</string>
+	<string name="update_notification_channel_name">Actualizare de sistem disponibilă</string>
+	<string name="news_notification_channel_name">Articol nou publicat</string>
+	<string name="device_notification_channel_name">Dispozitiv nou suportat</string>
 	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
-	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
-	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
-	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
-	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
+	<string name="filename_submitted_notification_channel_name">Numele fișierului OTA a fost trimis</string>
+	<string name="download_status_notification_channel_description">Notificări care reflectă stadiul actual al unei descărcări: în așteptare, activă, finalizată sau eșuată</string>
+	<string name="verification_status_notification_channel_description">Notificări care reflectă stadiul curent al unei sarcini de verificare a fișierului: în curs, finalizată sau eșuată.\nSumele de verificare MD5 pentru fișierele descărcate sunt verificate pentru a ne asigura că acestea nu au suferit modificări și că sunt fișiere de actualizare valide.</string>
+	<string name="installation_status_notification_channel_description">Primiți o notificare dacă actualizarea a fost instalată cu succes sau nu</string>
+	<string name="update_notification_channel_description">Primiți notificări când există o nouă actualizare disponibilă pentru dispozitivul selectat &amp; metodă de actualizare</string>
 	<string name="news_notification_channel_description">Primiți o notificare când publicăm un articol nou</string>
-	<string name="device_notification_channel_description">Primiți o notificare când este adaugat suport pentru un nou dispozitiv</string>
-	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
+	<string name="device_notification_channel_description">Primiți o notificare când este adăugat suport pentru un nou dispozitiv</string>
+	<string name="general_notification_channel_description">Notificări generale care nu se încadrează în alte categorii</string>
+	<string name="filename_submitted_notification_channel_description">Primiți notificări când ați trimis cu succes numele fișierelor OTA către echipa noastră.\nPuteți renunța la trimiterea automată a numelor de fișiere în setările aplicației.</string>
 
 	<!-- Help strings -->
 	<string name="help">Ajutor</string>
