@@ -17,7 +17,7 @@
 	ההגדרות</string>
 	<string name="update_information_different_version_changelog_notice">הינך צופה ביומן השינויים עבור הגרסה האחרונה בשיטה זו. אם ברצונך להתקין עדכון זה, עלייך להדליק מצב מתקדם (בהגדרות). אך אם ברצונך לצפות ביומן השינויים עבור הגרסה הנוכחית, חזור אל השיטה בה המכשיר כעת.</string>
 	<string name="update_information_last_checked_on">נבדק בפעם האחרונה %1$s</string>
-	<string name="update_information_no_update_data_available">אין מידע זמין על עדכון זה</string>
+	<string name="update_information_no_update_data_available">אין מידע זמין עבור עדכון זה</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">המערכת שלך מעודכנת</string>
 	<string name="update_information_unknown_update_name">שם חסר עדכון עבור: %1$s</string>
