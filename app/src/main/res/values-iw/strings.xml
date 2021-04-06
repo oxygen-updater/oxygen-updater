@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="device_chooser_error_title">לא ניתן להשיג רשימה של המכשירים הנתמכים</string>
+
+	<!-- Update information strings-->
+	<string name="enable">הפעל</string>
+	<string name="update_information_description_not_available">עדכון זה אינו מציג מידע רשמי עבור תכונות חדשות. לרוב, עדכונים אלו מציגים תיקוני באגים, שיפורי ביצועים ו/או עדכוני אבטחה קריטיים למכשיר שלך</string>
+	<string name="update_information_file_name">File name: %1$s</string>
+	<string name="update_information_md5">MD5: %1$s</string>
+	<string name="update_information_download_link">קיימת שגיאה בהורדה, והפעלה מחדש זו פעולה נדרשת, ברשותך האפשרות במקום זאת להשתמש בקישור זה בשביל להוריד את קובץ העדכון מהדפדפן. שים לב שלאחר ההורדה יש להזיז את קובץ ההורדה מתיקיית ההורדה אל תיקיית האם, התיקייה הראשית. קישור זה מהווה מקור עבור האפליקציה בכדי להוריד עדכון מערכת זה. משמעות הדבר היא שמדובר בעדכון רשמי מ־OnePlus שרת OTA. קישור:\n%1$s</string>
+	<string name="update_information_header">עדכן</string>
+	<string name="update_information_error_title">לא ניתן לאחזר את פרטי נתוני העדכון האחרון</string>
+	<string name="update_information_banner_server">הקש כאן כדי להציג הודעות חשובות</string>
+	<string name="update_information_banner_advanced_mode_tip">את/ה בחרת את מסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.</string>
+	<string name="update_information_header_advanced_mode_hint">מצב מתקדם מופעל</string>
+	<string name="update_information_header_advanced_mode_helper">בחרת במסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.
+	ההגדרות</string>
+	<string name="update_information_different_version_changelog_notice">הינך צופה ביומן השינויים עבור הגרסה האחרונה בשיטה זו. אם ברצונך להתקין עדכון זה, עלייך להדליק מצב מתקדם (בהגדרות). אך אם ברצונך לצפות ביומן השינויים עבור הגרסה הנוכחית, חזור אל השיטה בה המכשיר כעת.</string>
+	<string name="update_information_last_checked_on">נבדק בפעם האחרונה %1$s</string>
+	<string name="update_information_no_update_data_available">אין מידע זמין עבור עדכון זה</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
+	<string name="update_information_system_is_up_to_date">המערכת שלך מעודכנת</string>
+	<string name="update_information_unknown_update_name">שם חסר עדכון עבור: %1$s</string>
+	<string name="update_information_view_update_information">צפה במידע על העדכון</string>
+
+	<!-- Server status warning strings -->
+	<string name="server_status_error">כמה תכונות אינם עובדים כעת. נסה שוב מאוחר יותר</string>
+	<string name="server_status_unreachable">לא ניתן להתחבר אל השרת. נסה לרענן את העמוד.</string>
+	<string name="server_status_warning">כמה מהתכונות עלולות לא לתפקד באופן יציב וכראוי</string>
+
+	<!-- New app version message strings -->
+	<string name="new_app_version">קיים עדכון חדש עבור האפליקציה (%1$s) לחץ כאן בשביל לפתוח את חנות הPlay Store ולעדכן את האפליקציה.</string>
+	<string name="new_app_version_long">קיים עדכון חדש (%1$s) וידוא כי האפליקציה נמצאת בגרסתה האחרונה והמעודכנת מאפשר לך לוודא כי תמיד תקבל את כל התכונות החדשות ותיקוני הבאגים. לחץ כאן על מנת לפתוח את דף האפליקציה ב־Play Store ולהוריד את העדכון.</string>
+	<string name="new_app_version_inapp_downloaded">האפליקציה עודכנה בהצלחה</string>
+	<string name="new_app_version_inapp_failed">העדכון לא ניתן להתקנה. לחץ כאן על מנת לפתוח את ה־Play Store ולנסות שנית.</string>
+
+	<!-- Downloader strings-->
+	<string name="download">הורד עדכון</string>
+	<string name="downloaded">העדכון ירד בהצלחה</string>
+	<string name="downloading">מוריד עדכון…</string>
+	<string name="paused">העדכון הושהה - לחץ כאן בשביל להמשיך</string>
+
+	<string name="download_complete">העדכון הושלם</string>
+	<string name="download_complete_notification">לחץ כאן בשביל להתחיל בהתקנה</string>
+
+	<string name="download_error">שגיאה בהורדה, אנא נסה שנית</string>
+	<string name="download_error_close">סגור</string>
+	<string name="download_error_corrupt">קובץ ההורדה נפגע! אנא נסה להוריד שנית.</string>
+	<string name="download_error_server">אירעה שגיאת שרת בזמן הורדת העדכון. אנא נסה להוריד שנית את העדכון</string>
+	<string name="download_error_internal">למרבה הצער, אירעה שגיאה טכנית במהלך הורדת העדכון. אנא נסה להוריד שנית. אם הודעה זאת ממשיכה להופיע, אנא צור קשר עם מפתחי האפליקציה עבור תמיכה טכנית</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[נראה כי קישור ההורדה שגוי. דבר זה עלול לומר שנעשתה טעות בזמן הוספת נתוני העדכון או שOnePlus הוציאה/ הסירה את קובץ העדכון מהשרתים שלהם. התראה נשלחה אל צוות המפתחים, וייטופל באופן מיידי.
+
+אם ברצונך לדעת עוד, הינך מוזמן ליצור איתנו קשר דרך כתובת המייל: support@oxygenupdater.com או דרך שרת הDiscord שלנו:https://discord.gg/5TXdhKJ</a>.]]></string>
+	<string name="download_error_could_not_move_temp_file">קובץ העדכון ירד בהצלחה, אך לא היה ניתן להעביר אותו אל המיקום המדוייק. אנא השתמש בסייר קבצים, נווט אל \"%1$s\" והעבר את הקובץ אל התיקייה העליונה ביותר באחסון פנימי</string>
+
+	<string name="download_error_retry">נסה שוב</string>
+	<string name="download_error_resume">המשך</string>
+	<string name="download_error_storage">אין מספיק שטח אחסון פנוי. אנא פנה שטח זיכרון על ידי הסרת אפליקציות, מחיקת תמונות, מחיקצת קבצים… ולאחר מכן נסה להוריד שנית.</string>
+
+	<string name="download_failed">ההורדה נכשלה</string>
+	<string name="download_pending">ההורדה שלך תתחיל בקרוב…</string>
+	<string name="download_notification_error_server">שגיאת שרת אירעה בזמן ההורדה. אנא נסה להוריד מחדש את העדכון</string>
+	<string name="download_notification_error_internal">שגיאה טכנית אירעה בזמן ההורדה. אנא נסה להוריד מחדש או צור קשר עם צוות התמיכה שלנו</string>
+	<string name="download_notification_error_storage_full">שטח האחסון שלך אזל.</string>
+	<string name="download_notification_error_corrupt">אימות הקבצים נכשל. בדוק את החיבור שלך ונסה שוב.</string>
+
+	<string name="download_progress_text_hours_remaining">נשארו כבערך %1$d שעות </string>
+	<string name="download_progress_text_less_than_a_minute_remaining">נשאר פחות מדקה</string>
+	<string name="download_progress_text_minutes_remaining">נשארו כבערך %1$d דקות</string>
+	<string name="download_progress_text_one_hour_remaining">נשאר כבערך שעה אחתg</string>
+	<string name="download_progress_text_one_minute_remaining">נשאר כבערך דקה אחת</string>
+	<string name="download_progress_text_seconds_remaining">נשארו כמה שניות</string>
+	<string name="download_progress_text_unknown_time_remaining">מחשב זמן שנשאר…</string>
+	<string name="download_progress_text_verifying">מאמת קובץ…</string>
+	<string name="download_progress_text_paused">הושהה</string>
+
+	<string name="download_verifying">מאמת…</string>
+	<string name="download_verifying_error">הקובץ נפגע</string>
+	<string name="download_verifying_start">הורדת הקובץ תעבור כעת תהליך אימות</string>
+
+	<!-- Settings strings-->
+	<string name="preference_header_support">תמוך בנו</string>
+	<string name="preference_header_device">מכשיר</string>
+	<string name="preference_header_ui">ממשק</string>
+	<string name="preference_header_notifications">התראות</string>
+	<string name="preference_header_advanced">מתקדם</string>
+	<string name="preference_header_about">אודות</string>
+
+	<string name="summary_on">מופעל</string>
+	<string name="summary_off">מכובה</string>
+	<string name="summary_please_wait">אנא המתן…</string>
+	<string name="summary_update_method">אנא בחר ראשית מכשיר</string>
+	<string name="summary_theme">בחר עיצוב</string>
+	<string name="summary_language">בחר שפה</string>
+	<string name="summary_privacy_policy">צפה בדפדפן</string>
+	<string name="summary_rate_app">השאר דירוג 5 כוכבים</string>
+
+	<string name="label_buy_ad_free">הסר פרסומות</string>
+	<string name="label_theme">עיצוב</string>
+	<string name="label_language">שפה</string>
+	<string name="label_privacy_policy">מדיניות הפרטיות</string>
+	<string name="label_rate_app">דרג את האפליקציה</string>
+
+	<string name="theme_light">בהיר</string>
+	<string name="theme_dark">כהה</string>
+	<string name="theme_system">מערכת</string>
+	<string name="theme_auto">אוטומטי</string>
+
+
+	<string name="theme_light_subtitle">עיצוב עם רקע לבן ואדום של ואן פלוס כצבע ראשי</string>
+	<string name="theme_dark_subtitle">צבע ראשי אדום של OnePlus ביחד עם רקע כמעט שחור. מומלץ להשתמש בעיצוב זה כדי לחסור בחיי סוללה, במיוחד במכשירים עם פאנל AMOLED.</string>
+	<string name="theme_system_subtitle">השתמש בעיצוב הנוכחי של המערכת. (ניתן להגדיר זאת בהגדרות תצוגה) משתנה לפי ההגדרות של המכשיר</string>
+	<string name="theme_auto_subtitle">הפעל בין עיצוב בהיר לכהה על ידי השעה של היום, בשביל למנוע כאב לעיניים בשעות הלילה.</string>
+	<string name="theme_additional_note">הערה: אם מצב \"אוטומטי\" מופעל וחיסכון בסוללה מופעל, עיצוב כהה יופעל למשך כל שעות היום ללא קשר לשעות היום.</string>
+
+	<string name="settings">הגדרות</string>
+	<string name="settings_buy_button_buy">קנה (%1$s)</string>
+	<string name="settings_buy_button_bought">נרכש</string>
+	<string name="settings_buy_button_not_possible">לא זמין</string>
+	<string name="settings_buy_ad_free_label">שדרג לגרסה בלי פרסומות</string>
+
+	<string name="settings_contribute_label">שתף אותנו בקבצי השמות של העדכונים</string>
+
+	<string name="settings_device">מכשיר</string>
+	<string name="settings_entered_incorrectly">שגיאה בשמירת ההגדרות. אנא חזור אחורה ובחר את המכשיר/ שיטת העדכון שנית</string>
+	<string name="settings_explanation_incremental_full_update">עדכון מצטבר יכול להיות מותקן בכל מקרה (חוץ ממקרה בו פתחת את הbootloader, אז עליך לקחת תמיד את העדכון המלא כשיטת עדכון). \n\n עדכון בטא של OxygenOS יכול תמיד להיות מותקן גם כשאתה על גרסת בטא וגם כשאתה על גרסה יציבה. כדי להחליף מגרסה יציבה לגרסת בטא, עליך להפעיל את מצב מתקדם בהגדרות. שיטות העדכונים: Beta, Full, Incremental.</string>
+
+	<string name="settings_push_from_server">הודעות ואזהרות</string>
+	<string name="settings_push_new_version">הודעות על עדכון מערכת חדש</string>
+	<string name="settings_push_new_device">הודעות על מכשיר חדש שנתמך</string>
+	<string name="settings_push_news">עדכוני חדשות</string>
+
+	<string name="settings_saving">ההגדרות שלך עדיין בתהליך שמירה. אם תהליך זה לוקח זמן רב מדי, אנא בדוק את חיבור הרשת שלך, ונסה לסגור את האפליקציה ולהפעילה מחדש.</string>
+
+	<string name="settings_advanced_mode">מצב מתקדם</string>
+	<string name="settings_advanced_mode_explanation">מצב מתקדם מסתיר את ההודעה \"המערכת שלך מעודכנת\", ומאפשר לך להוריד ולהתקין את כל העדכונים, בעוד שהם לא בהכרח תואמים למכשיר שלך. \n\nדבר זה שימושי כאשר: \n&#8226; מעדכנים מגרסה יציבה לגרסת בטא\n&#8226; שחזור מגרסת בטא לגרסה יציבה (לא לשכוח לבצע שחזור הגדרות יצרן) \n&#8226; התקנה חדשה של גרסת המכשיר</string>
+
+	<string name="settings_update_method">שיטת עדכון</string>
+	<string name="settings_upload_logs">שתף נתוני שימוש</string>
+
+	<!-- FAQ strings -->
+	<string name="faq">שאלות ותשובות</string>
+	<string name="faq_menu_item">שאלות ותשובות</string>
+	<string name="faq_no_network_text">הינך צריך חיבור יציב אל רשת האינטרנט בשביל לצפות בעמוד שאלות ותשובות.</string>
+
+	<!-- First-time onboarding strings -->
+	<string name="onboarding">ברוך הבא</string>
+	<string name="onboarding_finished_button">התחל אפליקציה</string>
+
+	<string name="onboarding_page_1_title">ברוך הבא ל־Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">יישום זה ייאפשר לך לעשות: \n\n&#8226; לקבל גישה מהירה לעדכוני גרסת האנדרואיד האחרונה עבור מכשירי OnePlus המריצים את OxygenOS\n\n&#8226; לעדכן בקלות מכשירים עם גישת Root\n\n&#8226; לראות מה חדש בעדכון המערכת שהינך משתמש בו \n\n&#8226; לקרוא את החדשות האחרונות על חברת OnePlus ומערכת ההפעלה OxygenOS\n\n החלק שמאלה כדי להמשיך</string>
+	<string name="onboarding_page_1_caption">אפליקציה זאת אינה אפליקציה רשמית מחברת OnePlus ואינה מתיימרת להיות אחת כזו. שימוש באפליקציה זאת היא על אחריותך בלבד. OnePlus או מפתחי האפליקציה אינם אחראים לפעולות שתעשה באפליקציה, המשמעות היא שכל נזק הנגרם עקב שימוש באפליקציה זאת על אחריותך בלבד. .\n\שימוש באפליקציה זאת משמעותה שהינך מסכים ומאשר את התנאים וההגבלות כאמור לעיל.</string>
+	<string name="onboarding_page_2_title">בחר את המכשיר שלך</string>
+	<string name="onboarding_page_2_caption">המכשיר שלך לרוב נבחר בצורה אוטומטית. אך אם לא בחר את המכשיר בצורה ידנית</string>
+	<string name="onboarding_page_3_title">בחר את שיטת העדכון</string>
+	<string name="onboarding_page_3_caption">בדרך כלל, שיטת Incremental update הוא הבחירה הנכונה, מכיוון שהוא מציע הורדה מהירה יותר, וקבצים קלי משקל לעומת שיטת ה־ Full\n\אם זאת, שיטת Incremental update איננה נתמכת במכשירים עם גישת Root. אם ברשותך מכשיר עם גישת Root, אנא בחר את שיטת Full update.\n\אם הינך מריץ גרסת בטא של מערכת ההפעלה OxygenOS, אנא בחר אחד משיטות העדכונים שמיועדים לבטא (Open Beta).</string>
+	<string name="onboarding_page_4_title">אתה מוכן!</string>
+	<string name="onboarding_page_4_text">מאחלים לך הנאה בזמן שימוש באפליקציה! \n\ברשותך תמיד האפשרות לשנות את ההגדרות שלך. כדי לגשת אל ההגדרות לחץ על גלגל השיניים בתפריט למטה.</string>
+
+	<!-- Automatic install strings -->
+	<string name="install">התקן</string>
+	<string name="install_checking_root">בודק אם למכשיר שלך יש גישת Root…</string>
+	<string name="install_grant_root_permissions">אנא הענק גישה מלאה בעת בקשת משתמש על כשתתבקש</string>
+	<string name="install_going_back_not_possible">למרבה הצער, לא ניתן לחזור אחורה כעת</string>
+	<string name="install_preparing_installation">מכין התקנה…</string>
+
+	<string name="install_recovery_installer_title">התקנת עדכון&#160;&#160;</string> <!-- Add 2 spaces to the end -->
+	<string name="install_recovery_backing_up">מגבה את המכשיר שלך. תהליך זה עלול לקחת זמן מה!</string>
+	<string name="install_recovery_clearing_cache">מנקה את מחיצת המטמון…</string>
+	<string name="install_recovery_done">בוצע. המכשיר שלך כעת יופעל מחדש.</string>
+	<string name="install_recovery_installing_additional_zip">מתקין את קובץ הZIP הנוסף…</string>
+	<string name="install_recovery_installing_update">מתקין את העדכון…</string>
+	<string name="install_recovery_thank_you">תודה לך על כך שאת/ה משתמש/ת בOxygen Updater. אם את/ה אוהב/ת את האפליקציה, נשמח אם תדרג/י אותנו בGoogle Play ב5 כוכבים  :-)</string>
+
+	<string name="install_error_write_script_failed">"הכנת התקנת העדכון נכשלה. האם הענקת גישה מלאה בעת משתמש על?"</string>
+
+	<string name="install_options_backup">גבה את המכשיר שלי</string>
+	<string name="install_options_header">באפשרותך להתאים אישית את תהליך ההתקנה על ידי שינוי האפשרויות המוצגות למטה. הקש על \"התחל התקנה\" כדי להתחיל בהתקנת העדכון.</string>
+	<string name="install_options_keep_root">השאר את המכשיר שלי עם גישת Root</string>
+	<string name="install_options_reboot_after_install">הפעל מחדש אחרי ההתקנה</string>
+	<string name="install_options_select_root_package">בחר את חבילת הRoot להתקנה…</string>
+	<string name="install_options_start_install">התחל בהתקנה</string>
+	<string name="install_options_subtitle">בחר את אפשרויות ההתקנה</string>
+	<string name="install_options_wipe_cache_partition">מחק את מחיצת המטמון</string>
+
+	<string name="install_options_explanation_title">מה האפשרויות האלו אומרות?</string>
+	<string name="install_options_explanation_backup">גבה את המכשיר שלי: \nכשאת/ה בוחר/ת באפשרות זו יחל גיבוי של המערכת, היישומים וההגדרות. דבר שתמיד טוב שיהיה מופעל, במקרה ומשהו משתבש.</string>
+	<string name="install_options_explanation_keep_root">שמור על המכשיר שלי עם גישת Root: \nכשאת/ה בוחר/ת באפשרות זו, את/ה עלול/ה לבחור חבילת Root אשר תותקן אחרי שהעדכון יותקן. זה יוודא שהמכשיר שלך יישאר עם גישת Root. שימ/י לב שחבילת הRoot שאת/ה בוחר/ת חייבת לתמוך בגרסה החדשה של OxygenOS שאת/ה עומד/ת להתקין!</string>
+	<string name="install_options_explanation_wipe_cache">מחק את מחיצת המטמון: \nכשאת/ה בוחר/ת באפשרות זו, מחיצת המטמון תמחק אחרי שהעדכון יותקן. זה יוודא שהמכשיר שלך יתפקד באופן אופטימלי וגם יפחית את הסבירות לחוות באגים הנגרמים על ידי התקנת העדכון.</string>
+	<string name="install_options_explanation_reboot">הפעלה מחדש לאחר ההתקנה: \nכשתבחר/י באפשרות זו, המכשיר שלך יופעל מחדש באופן אוטומטי חזרה לOxygenOS אחרי שהעדכון יותקן. אחרת, המכשיר שלך יישאר במצב שחזור, איפה שאתה יכול להתקין חבילות נוספות.</string>
+
+	<string name="install_method_chooser_title">בחר/י שיטת עדכון</string>
+	<string name="install_method_chooser_subtitle">איך את/ה רוצה להתקין את העדכון?</string>
+	<string name="install_method_chooser_automatic_title">התקנה אוטומטית*</string>
+	<string name="install_method_chooser_automatic_description">הדרך הכי קלה להתקין את העדכון. \nהמכשיר שלך יופעל מחדש כדי להתקין את העדכון. \n\*דורש גישת Root ושחזור TWRP.</string>
+
+	<string name="install_method_chooser_manual_title">התקנה ידנית</string>
+	<string name="install_method_chooser_manual_description">קרא/י את מדריך ההתקנה כדי ללמוד איך להתקין את העדכון. את/ה תתקינ/י את העדכון דרך מצב השחזור של המכשיר שלך.</string>
+
+	<string name="install_temporary_error">אירעה שגיאה זמנית במהלך הכנת התקנת העדכון. אנא נסה שנית.</string>
+
+	<string name="install_verify_error_title">ההתקנה נכשלה</string>
+	<string name="install_verify_error_nothing_installed">שגיאה במהלך התקנת העדכון. לא בוצעו שום שינויים למערכת של המכשיר שלך. אנא נסה להתקין את העדכון שנית.</string>
+	<string name="install_verify_error_unable_to_verify">נכשל הבדיקה כדי לראות אם העדכון הותקן בהצלחה. אנא פתח את Oxygen Updater כדי לראות אם העדכון הותקן בהצלחה.</string>
+	<string name="install_verify_error_wrong_version_installed">הותקנה גרסה אחרת של OxygenOS. אל תבחר/י קובץ עדכון לOxygenOS כשבוחרים חבילת Root תחת \"השאר את המכשיר שלי עם גישת Root\"</string>
+
+	<string name="install_verify_success_title">ההתקנה הושלמה</string>
+	<string name="install_verify_success_message">גרסת OxygenOS %1$s הותקנה בהצלחה.</string>
+
+	<string name="install_zip_file_clear">נקה קובץ חבילת Root</string>
+	<string name="install_zip_file_pick">בחר קובץ חבילת Root</string>
+	<string name="install_zip_file_placeholder">בחר חבילת Root…</string>
+	<string name="install_zip_file_wrong_file_type">הינך צריך לבחור קובץ מסוג zip. אנא בחר את הקובץ הנכון.</string>
+
+	<!-- Install guide strings -->
+	<string name="install_guide_no_root">התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
+	<string name="install_guide_automatic_install_disabled">עדכונים אוטומטיים הושבתו זמנית עקב בעיות טכניות שדווחו. התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
+	<string name="install_guide">מדריך התקנה</string>
+	<string name="install_guide_subtitle">מדריך התקנה - %1$d של %2$d</string>
+	<string name="install_guide_tip">&#8226; מומלץ לרשום את כל השלבים מכיוון שכיבוי המכשיר הוא אחד משלבי ההדרכה של ההתקנה.</string>
+
+	<string name="install_guide_page_1_title">הורד את העדכון</string>
+	<string name="install_guide_page_1_text">לחצ/י על כפתור ההורדה כדי להתחיל בהורדת העדכון. \n\n&#8226;תהליך &#8226; ההורדה יופיע באפליקציה, וכהתראה במסך ההתראות. \n\n&#8226;כשההורדה תסתיים את/ה תראה התראה עם הטקסט \"ההורדה הושלמה\".\n אם שגיאת הורדה מופיעה, פתח/י את האפליקציה ונסה להוריד את העדכון שוב. אם זה לא עובד, וודא/י שיש לך חיבור אינטרנט יציב. אחרת צור/צרי קשר עם המפתחים של האפליקציה. את/ה יכולה לעשות זאת על ידי ביקור בחלון \"האפליקציות והמשחקים שלי\" בחנות הGoogle Play.</string>
+
+	<string name="install_guide_page_2_title">הכנה להתקנה</string>
+	<string name="install_guide_page_2_text">"הערה: התקנת העדכון מתבצעת בדף מיוחד מעדכוני המערכת הסטנדרטיים במכשיר שלך. אם מסיבה כלשהי מופיע עדכון מערכת בדף זה, תוכל גם לבחור להתקין את העדכון הזה תחילה. לאחר מכן, פתח את Oxygen Updater שנית כדי לראות אם אתה נמצא בגרסה העדכנית ביותר.
+
+הוראות:
+&#8226; סגור את Oxygen Updater על ידי לחיצה על כפתור הבית.
+
+&#8226; פתח את יישום ההגדרות של המכשיר. לרוב מופיע במגירת האפליקציות
+
+&#8226; החלק למטה עד שתמצא תפריט בשם מערכת, בתוך המערכת לחץ על עדכוני מערכת."</string>
+
+	<string name="install_guide_page_3_title">התקנת העדכון</string>
+	<string name="install_guide_page_3_text">"הגיע הזמן להתקין את העדכון.
+
+&#8226; בעמוד עדכוני המערכת, לחץ על גלגל השיניים הנמצא בצד שמאל למעלה
+
+&#8226; כעת, בחר באפשרות \"שדרוג מקומי\". הגיע הזמן לבחור את הקובץ
+
+&#8226; בחר את קובץ העדכון שהורדת באמצעות Oxygen Updater. השם שלו אמור להתחיל עם \"%1$sOxygen\".
+
+&#8226; לחץ על \"שדרג עכשיו\". ההתקנה אמורה להתחיל באופן אוטומטי."</string>
+
+	<string name="install_guide_page_4_title">המתן עד שההתקנה תסתיים</string>
+	<string name="install_guide_page_4_text">"&#8226; המכשיר שלך יתקין כעת את העדכון ויציג בר התקדמות. אנא היעזר בסבלנות עד שההתקנה תגיע לסופה. ההתקנה עלולה לקחת בין כמה דקות עד ל15 דקות.
+
+&#8226; לאחר מכן, מכשירך יופעל מחדש כדי ליישם את העדכון."</string>
+
+	<string name="install_guide_page_5_title">בוצע. תהנה עם הגרסה החדשה של OxygenOS!</string>
+	<string name="install_guide_page_5_text">&#8226; לאחר שמכשירך סיים לעשות מיטוב אפליקציות, משמעות הדבר הוא שהעדכון הותקן בהצלחה. \nבשביל לאמת זאת, הינך מוזמן לבדוק את הגרסה הנוכחית של המערכת שלך על ידי: \n\n&#8226;כניסה להגדרות המכשיר, ולחיצה על "מידע על הטלפון"  ומשם מוזמן לבדוק את גרסת הOxygenOS. \n\n&#8226;אם אהבת את האפליקציה, נשמח אם תדרג אותנו ב5 כוכבים ב־Google Play!</string>
+
+	<string name="install_guide_close_button">סגור מדריך התקנה</string>
+
+	<string name="install_guide_zip_file_deleted">קובץ חבילת הRoot שבחרת אינו קיים יותר. אנא בחר קובץ Root חדש מלמעלה.</string>
+	<string name="install_guide_zip_file_missing">"אם ברצונך להמשיך להשאיר את המכשיר שלך עם גישת Root, יידרש לבחור קובץ Root מלמעלה."</string>
+
+	<!-- Device information strings -->
+	<string name="device_information_supported_oxygen_os">המכשיר שלך נתמך</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">המכשיר שלך אינו נתמך, מכיוון שהוא מכשיר בלעדי לספקים</string>
+	<string name="device_information_unsupported_oxygen_os">עוד לא הוספנו תמיכה למכשיר שלך עדיין</string>
+	<string name="device_information_unsupported_os">המכשיר שלך אינו תומך, מכיוון שהוא לא מריץ את מערכת ההפעלה OxygenOS</string>
+
+	<string name="device_information_hardware_header">חומרה</string>
+	<string name="device_information_software_header">תוכנה</string>
+
+	<string name="device_information_amount_of_memory">זיכרון RAM</string>
+	<string name="device_information_cpu_frequency">תדר מעבד</string>
+	<string name="device_information_header">מכשיר</string>
+	<string name="device_information_image_description">תמונת המכשיר</string>
+	<string name="device_information_incremental_os_version">גרסת מערכת הפעלה מצטברת</string>
+	<string name="device_information_os_version">גרסת Android</string>
+	<string name="device_information_oxygen_os_version">גרסת OxygenOS</string>
+	<string name="device_information_oxygen_os_ota_version">גרסת OTA</string>
+	<string name="device_information_patch_level_version">תאריך עדכון אבטחה</string>
+	<string name="device_information_serial_number">מספר Serial</string>
+	<string name="device_information_system_on_a_chip">מערכת על שבב</string>
+	<string name="device_information_unknown">לא ידוע</string>
+
+	<!-- About screen strings -->
+	<string name="about">אודות</string>
+	<string name="about_description">אפליקציה זו מורידה עדכונים רשמיים היישר מתוך השרתים של OnePlus, ואף מאשרת את שלמות קובץ העדכון לפני שהמשתמש יוכל להוריד אותו מהאפליקציה. על ידי כך, האפליקציה מאפשרת לך לדלג על ההמתנה של שחרור העדכונים ולהוריד עדכונים רשמיים במהירות האפשרית. אם אתם נתקלים בבאגים בתוכנה, דווחו זאת ל־OnePlus ישירות: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. אתם מוזמנים להצטרף<a href="https://discord.gg/5TXdhKJ"> לשרת ה־Discord שלנו </a>בשביל שתוכלו לדבר עם משתמשים אחרים על העדכונים האחרונים. בנוסף תרגישו חופשי לשלוח לנו אימייל בכתובת <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> עם הרעיונות/המשוב שלכם.</string>
+	<string name="about_support">אם ברצונך לתמוך בנו, את/ה יכול/ה לקנות תוספת המעניקה לך חופש מפרסומות (יישום/ הגדרות), או תתרום לנו בעמוד הPateron: <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_background_story_header">סיפור רקע</string>
+	<string name="about_background_story">אפליקציית Oxygen Updater פותחה במקור על ידי Arjan Vlek ככלי מעקב אחר אפליקציה אחרת שלו, המכונה <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (היא מספקת פונקציונליות דומה עבור משתמשי Cyanogen OS). \n\nאחרי 4 שנים, ביולי 2019, Arjan החליט לפרוש משני הפרויקטים והעביר את הבעלות על האפליקציה לצוות מפתחים שמגיעים ממדינות שונות. הם לקחו על עצמם את האחריות לספק לקהילה שירות מצויין ומהיר; תמיכה לקבלת עדכונים למכשירי OnePlus מהר יותר. \nהינך מוזמן לקרוא את ההכרזה <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">כאן</a>.\n\n ב14 לאוגוסט 2019 נרשמה המהדורה הראשונה תחת הבעלים החדשים, שהגיע עם תכונות חדשות כמו מצב חושך ועיצוב שונה לגמרי. \n\nעבור עוד מידע על הצוות בדוק את <a href="https://oxygenupdater.com/team/">האתר שלנו</a></string>
+	<string name="about_third_party_app_notice">שימו לב, זוהי אינה אפליקציה רשמית מOnePlus. \n שם הOnePlus, לוגו הOnePlus וOxygenOS הם רכוש של OnePlus. \n Android, Google, Google Play, Google Play Logo הם סימנים מסחריים רשומים של Google Inc. \nאפליקציה זאת משתמשת בנתונים מבית OnePlus ומחברת האם שלה Oppo כדי להראות מידע על עדכונים.</string>
+	<string name="about_rate_button_text">דרג</string>
+	<string name="about_website_button_text">אתר</string>
+	<string name="about_email_button_text">מייל</string>
+
+	<!-- LocalNotifications strings -->
+	<string name="notification_new_device_text">%1$s נתמך כעת. פתח את היישום כדי לבחור מכשיר זה.</string>
+	<string name="notification_no_notification_support">התקן או עדכן את שירותי Google Play כדי לאפשר התראות דחיפה.</string>
+	<string name="notification_version">%1$s עכשיו זמין עבור %2$s!</string>
+	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="push_notifications_group_name">התראות דחיפה</string>
+	<string name="miscellaneous_notifications_group_name">שונות</string>
+	<string name="download_and_installation_notifications_group_description">מציג את כל ההתראות הלא חשובות של אפליקצית Oxygen Updater. מכיל את מחווני המצב המוצגים במהלך ההורדה</string>
+	<string name="push_notifications_group_description">מציג את כל ההתראות החשובות של אפליקציית הOxygen Updater. אלה כוללים התראות על עדכוני מערכת והודעות חדשות ומתפרצות</string>
+	<string name="download_status_notification_channel_name">מצב הורדה</string>
+	<string name="verification_status_notification_channel_name">מצב אימות</string>
+	<string name="installation_status_notification_channel_name">מצב התקנה</string>
+	<string name="update_notification_channel_name">עדכון מערכת זמין</string>
+	<string name="news_notification_channel_name">מאמר חדשות פורסם</string>
+	<string name="device_notification_channel_name">מכשיר חדש נתמך</string>
+	<string name="general_notification_channel_name">כללי</string>
+	<string name="filename_submitted_notification_channel_name">שם קובץ OTA הוגש</string>
+	<string name="download_status_notification_channel_description">התראות המשקפות את המצב הנוכחי של ההורדה: המתנה, פעיל, הושלם או נכשל</string>
+	<string name="verification_status_notification_channel_description">התראות המשקפות את המצב הנוכחי של מטלת אימות קובץ: בתהליך, הושלם או נכשל. \n בדיקות MD5 עבור קבצים שהורדו מאומתות כדי לוודא שהקובץ לא טופל, והוא קובץ עדכון תקף.</string>
+	<string name="installation_status_notification_channel_description">קבל הודעה אם העדכון הותקן בהצלחה או לא</string>
+	<string name="update_notification_channel_description">קבל התראה כאשר יש עדכון חדש למכשיר שבחרת &amp; ושיטת עדכון</string>
+	<string name="news_notification_channel_description">קבל הודעה כשאנחנו מפרסמים מאמר חדשות</string>
+	<string name="device_notification_channel_description">קבל התראה כשהאפליקציה מוסיפה תמיכה למכשיר חדש</string>
+	<string name="general_notification_channel_description">התראות כלליות שאינן משתלבות בקטגוריות אחרות</string>
+	<string name="filename_submitted_notification_channel_description">קבל הודעה כאשר הגשת בהצלחה שמות קבצי OTA לצוות שלנו. \nאתה יכול לבטל את הסכמתך להגיש אוטומטית שמות קבצים בהגדרות האפליקציה.</string>
+
+	<!-- Help strings -->
+	<string name="help">עזרה</string>
+	<string name="help_text">ברוכים הבאים לחלקת העזרה של Oxygen Updater. \n\nעזרה מכסה את הנושאים הבאים: \n\n• עדכן את המכשיר שלך\n•קריאת חדשות אחרונות\n•צפייה בפרטי המכשיר\n• שינוי הגדרות\n\n גרור מטה כדי לדפדף דרך הנושאים.</string>
+	<string name="help_updating_your_device_title">עדכן את המכשיר שלך</string>
+	<string name="help_updating_your_device_text">בזמן שהאפליקציה פתוחה, אתה תראה אם קיים עדכון מערכת חדש. אם יש עדכון זמין, אתה יכול להתקין אותו. \n\nToכדי להתחיל את ההתקנה, לחץ על כפתור \"הורדה \" (מתחת לתיאור העדכון) כדי להתחיל את ההורדה. כשההורדה הסתיימה, מסך ההתקנה יופיע. אם עזבת את האפליקציה או שהמסך לא הופיע, לחץ על כפתור \"התקן\", שנמצא עכשיו ליד כפתור ה-\"הורד עדכון\".\n\nמסך ההתקנה יבדוק קודם אם יש לכם גישת Root. אם יש לכם גישת Root, הענק גישת Root כשתתבקש/י ותבחר/י איך את/ה רוצה להתקין את העדכון. אחרת אם אין לך גישת Root, עקוב אחר ההוראות בשביל התקנה ידנית. \n\nהתקנה אוטומטית: אתה תצטרך לבחור את אפשרויות ההתקנה, ההגדרות ברירית מחדל הם מומלצות, חוץ מזה שאתה צריך לציין את חבילת הRoot כשצריכה להיות מותקנת מחדש. בחר חבילת Root (קובץ zip) על ידי שימוש בכפתור תיקייה הכחולה ולחץ על \"התחל בהתקנה\" כדי להתחיל את ההתקנה. \n\nהתקנה ידנית: \nאתה תראה מדריך התקנה במסך שלך. רשום את ההוראות ובצע אותם כאמור להתקנת העדכון.</string>
+	<string name="help_reading_news_title">קורא את החדשות האחרונות</string>
+	<string name="help_reading_news_text">חדשות מוצגות משמאל למסך העדכון. הפריטים האחרונים מופיעים למעלה. פשוט הקש על פריט כדי לקרוא אותו. \n לחץ על החץ חזור כדי לחזור למסך פריטי החדשות.</string>
+	<string name="help_device_information_title">צופה במידע על המכשיר שלך</string>
+	<string name="help_device_information_text">אתה יכול להציג חלק מהמפרט של המכשיר שלך באמצעות המסך שמימין של מסך העדכון. זה שימושי בעת הגשת בקשת תמיכה, במהלכה ייתכן שתתבקש לתת חלק מהמפרט של המכשיר שלך</string>
+	<string name="help_change_settings_title">שינוי הגדרות</string>
+	<string name="help_change_settings_text">אתה יכול לשנות את ההגדרות שלך על ידי הקשה על שלושת הנקודות באיזור הימני למעלה, ולחיצה על הגדרות. \nאתה יכול לשנות את ההגדרות הבאות: \n\n•דגם מכשיר ושיטת עדכון \n•התראות דחיפה \n•הגדרות פרטיות (העלאת לוג). \n\n השתמש במתגים כדי להפעיל ולכבות את ההתראות / הגדרות הפרטיות. בחר מכשיר ו/או שיטת עדכון באמצעות התפריטים הנפתחים המוצגים מעל המתגים. התפריטים הנפתחים אינם גלויים? בדוק את חיבור האינטרנט ופתח את מסך ההגדרות שנית.</string>
+
+	<!-- News strings -->
+	<string name="news">חדשות</string>
+	<string name="news_date_published">עדכון אחרון: %1$s</string>
+	<string name="news_empty">לכתבה זאת אין תוכן.</string>
+	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"RETRY\" button to open the article.</string>
+	<string name="news_load_id_error"><![CDATA[אירעה שגיאה בעת פתיחת המאמר משום שהקישור לא תקין: %1$s. בדוק את קישור הURL ודווח לנו זאת דרך <a href="mailto:support@oxygenupdater.com">המייל</a> או דרך <a href="https://discord.gg/5TXdhKJ">שרת הDiscord שלנו </a>.]]></string>
+	<string name="news_unread_count_1">יש לך %1$d כתבות שלא קראת. לחץ כאן כדי לקרוא אותם.</string>
+	<string name="news_unread_count_2">יש לך %1$d כתבות שלא קראת. לחץ כאן כדי להציג את כל הכתבות.</string>
+	<string name="news_mark_read">סמן כנקרא</string>
+	<string name="news_mark_unread">סמן כלא נקרא</string>
+	<string name="news_mark_all_read">סמן ככל המאמרים כנקרא</string>
+	<string name="news_empty_state_none_available_header">אין מאמרים עדיין</string>
+	<string name="news_empty_state_all_read_header">אין מאמר נוסף לקרוא</string>
+	<string name="news_empty_state_none_available_text">אין מאמרים זמינים ברגע זה, בדוק שוב מאוחר יותר.</string>
+	<string name="news_empty_state_all_read_text">קראת את כל המאמרים. עבודה טובה! \nאנחנו מקווים שנהנת לקרוא את המאמרים שלנו, ולמדת משהו חדש מהם. \n\n הקש על הבאנר שוב כדי להציג את כל המאמרים.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">עזור לנו לשפר את האפליקציה</string>
+	<string name="contribute_title">עזור לשפר את Oxygen Updater</string>
+	<string name="contribute_explanation">אפליקציית Oxygen Updater צריכה את העזרה שלך! במטרה עבור לספק את העדכונים האחרונים, אנחנו צריכים לקבל את שמות קבצי העדכון אשר קיימים במכשירך.\n\nאיך אני יכול לעזור? \n\אפליקציית Oxygen Updater יכולה באופן אוטומטי לשלוח את קבצי שמות העדכונים החדשים למנהלים שלנו. זה יצרוך מעט מהנתונים שלך ועלול להשתמש במעט מהסוללה שלך. כל מה שהינך צריך לעשות זה להמתין (כ־15 דקות) לפני התקנת עדכון מערכת רשמי עד שהינך מקבל  אישור מOxygen Updater שהקובץ הנדרש נשלח בהצלחה. רק נתיב ה\".Ota\" במכשיר שלך נסרק כל 15 דקות. ובודק רק עבור שם ספציפי בתיקייה מסוימת.</string>
+	<string name="contribute_agree">ברצוני לעזור והנני מסכים להגיש שמות קבצים מעודכנים לצוות המפתחים</string>
+	<string name="contribute_agree_from_setup">אפשר שליחת שמות קבצי עדכון למפתחי האפליקציה למטרת פיתוח</string>
+	<string name="contribute_save">שמור הגדרות</string>
+	<string name="contribute_more_info">מידע נוסף</string>
+	<string name="contribute_allow_storage">אנא הענק לאפליקציה הרשאות לאחסון על מנת לעזור בשיפור האפליקציה</string>
+	<string name="contribute_successful_notification_title">התרומה התקבלה בהצלחה</string>
+	<string name="contribute_successful_notification_text">תודה ששיתפת איתנו את שמות קבצי העדכון!</string>
+
+	<!-- Error strings-->
+	<string name="error_app_outdated">אוי לא!</string>
+	<string name="error_app_outdated_message">גרסה זו של האפליקציה מיושנת. הגיע הזמן לעדכן! הקש על \"Google Play\" מתחת. ובתוך Google Play, הקש על \"עדכן\".</string>
+	<string name="error_app_requires_network_connection">אין חיבור</string>
+	<string name="error_app_requires_network_connection_message">החיבור לשרת נכשל. אנא וודא שיש ברשותך חיבור יציב לרשת האינטרנט. אפליקציה זאת עכשיו תסגר.</string>
+	<string name="error_google_play_button_text">Google Play</string>
+	<string name="error_no_internet_connection">אין חיבור.</string>
+	<string name="error_maintenance">השרת תחת תחזוקה</string>
+	<string name="error_maintenance_message">אנא המתן. השרת יהיה זמין בקרוב מאוד.</string>
+	<string name="error_maintenance_retry">השרת עלול להיות סגור בגלל בעיות תחזוקה. אנא נסה שוב מאוחר יותר, או דווח זאת דרך ה-<a href="mailto:support@oxygenupdater.com">מייל</a> או באמצעות <a href="https://discord.gg/5TXdhKJ">שרת הDiscordשלנו </a>.</string>
+	<string name="error_reload">טען מחדש</string>
+	<string name="error_unable_to_rate_app">אינך יכול לדרג את האפליקציה מכיוון שחנות ה-Google Play חסרה במכשיר שלך.</string>
+
+	<!-- Message strings -->
+	<string name="delete_message_title">העדכון כבר מותקן במכשיר זה</string>
+	<string name="delete_message_contents">נראה כי הורדת כבר את עדכון זה, אך לא התקנת עדיין. הקש על \"התקן\" כדי לצפות בהוראות התקנת העדכון. הקש על \"מחק\" בכדי למחוק לצמיתות את קובץ העדכון. לחץ על כפתור החזרה כדי לסגור הודעה זו.</string>
+	<string name="delete_message_delete_button">מחק</string>
+
+	<string name="unsupported_device_warning_title">מכשיר זה זוהה כלא נתמך</string>
+	<string name="carrier_exclusive_device_warning_message">נראה שאתה משתמש במכשיר בלעדי של ספק. למרות שאתה משתמש כעת במערכת OxygenOS, לא תוכל להתקין עדכונים. ספקים בדרך כלל נועלים את המכשיר כך שמשתמשים לא יוכלו לעדכן או לשנות את הקושחה ללא אישור מהספק עצמו. דבר זה נהוג בארה"ב: אפשרות \"שדרוג מקומי\" מוסרת מגרסאות בלעדיות של ספקים של OxygenOS. אפשרות זו נחוצה להתקנת עדכונים באפליקציה זו, גם אם אינך משתמש באפליקציה זו. למרבה הצער, אנו לא יכולים לסייע בנושא מכיוון שאנו מוגבלים מבחינה טכנית, ואולי, מבחינה חוקית. פנה אלינו באמצעות דוא"ל או באמצעות ה-Discord בשביל הסבר ברור יותר.</string>
+	<string name="unsupported_device_warning_message">מזל טוב על מכשיר ה-OnePlus החדש שלך! למרבה הצער, טרם הוספנו תמיכה למכשיר זה. אל דאגה, אנו נוסיף אותו בהקדם האפשרי. אנו לא אוהבים לטעות ולכן תהליך זה הוא תהליך שלוקח זמן בשביל לאמת ולבדוק עבור תמיכה במכשירים חדשים, אז בבקשה הישאר סבלני. צור איתנו קשר במייל או תצטרף לשרת הDiscord שלנו אם אתה רוצה לעזור לנו, או כדי להיות מעודכן מתי אנחנו משיקים גרסה חדשה של האפליקציה שתכלול תמיכה במכשיר שלך.</string>
+	<string name="unsupported_os_warning_message">נראה שהמכשיר שלך אינו מריץ את מערכת ההפעלה OxygenOS. שים לב שאתה יכול להתקין עדכוני מערכת רק במכשירים המריצים את מערכת ההפעלה OxygenOS. \n\מכשירים אחרים, כולל מכשירי OnePlus שמריצים גרסאות ROM מותאמות אישית, אינם נתמכות.</string>
+
+	<string name="incorrect_device_warning_title">אי התאמה בין המכשירים שנבחרו</string>
+	<string name="incorrect_device_warning_message">נראה כי בחרת את המכשיר הלא נכון: \"%1$s\", במקום \"%2$s\". שנה את בחירתך בהגדרות האפליקציה כדי לוודא שהינך מקבל עדכונים והתראות המיועדים עבור המכשיר שלך.</string>
+
+	<string name="device_warning_checkbox_title">אל תציג אזהרה זו שוב</string>
+
+	<string name="root_check_title">גישת Root</string>
+	<string name="root_check_message">אפליקציית Oxygen Updater מציעה התקנת עדכונים קלים ואוטומטיים למשתמשים עם מכשירים עם גישת Root. \n\עם זאת, שיטת Incremental אינה זמינה עבור מכשירים עם גישת Root. אפליקציית Oxygen Updater יכולה לבדוק אם יש לך גישת Root כדי להציע שיטות עדכון מותאמות עבור Root בלבד. \n\nאם יש לך גישת Root, הענק לOxygen Updater גישת Root אחרי סגירת ההודעה הזאת. \n\nאין למכשיר שלך גישת Root? לחץ \"סגור\" והמשך להשתמש באפליקציה.</string>
+
+	<!-- Purchasing strings -->
+	<string name="purchase_error_pending_payment">הרכישה שלך נמצאת במצב \"תשלום בהמתנה\". לאחר השלמת התשלום, תקבל את כל ההטבות שאתה זכאי להן.</string>
+	<string name="purchase_error_after_payment">רכישת הגרסה חסרת המודעות נכשלה, מכיוון שהתרחש שגיאה פנימית. נסה שוב בעוד מספר דקות. אם חוייבת בכרטיס האשראי, אנאא פנה לתמיכה של Google Play לקבלת סיוע.</string>
+
+	<string name="error">שגיאה</string>
+	<string name="icon">סמל</string>
+	<string name="loading">טוען…</string>
+	<string name="processing">מעבד…</string>
+	<string name="choose_file">בחר קובץ</string>
+</resources>
