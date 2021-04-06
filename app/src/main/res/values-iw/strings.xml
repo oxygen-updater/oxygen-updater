@@ -55,7 +55,7 @@
 
 	<string name="download_error_retry">נסה שוב</string>
 	<string name="download_error_resume">המשך</string>
-	<string name="download_error_storage">אין מספיק שטח אחסון פנוי. אנא פנה שטח זיכרון על ידי הסרת אפליקציות, מחיקת תמונות, מחיקצת קבצים... ולאחר מכן נסה להוריד שנית.</string>
+	<string name="download_error_storage">אין מספיק שטח אחסון פנוי. אנא פנה שטח זיכרון על ידי הסרת אפליקציות, מחיקת תמונות, מחיקצת קבצים… ולאחר מכן נסה להוריד שנית.</string>
 
 	<string name="download_failed">ההורדה נכשלה</string>
 	<string name="download_pending">ההורדה שלך תתחיל בקרוב…</string>
