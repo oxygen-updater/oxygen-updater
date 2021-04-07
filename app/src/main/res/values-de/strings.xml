@@ -7,9 +7,9 @@
 	<string name="enable">Aktivieren</string>
 	<string name="update_information_file_name">"Datei Name: %1$s"</string>
 	<string name="update_information_md5">MD5: %1$s</string>
-	<string name="update_information_download_link">Da ein Download Fehler aufgetreten ist, muss der Download neugestartet werden, du kannst diesen Link benutzen um den Download stattdessen über den Browser laufen zu lassen. Möglicherweiße musst du die heruntergeladene Datei von dem \"Downloads\" Ordner in den darüberliegenden Ordner verschieben. Dies ist ein offizieller OnePlus OTA Server Link, der auch von der App benutzt wird:\n%1$s</string>
+	<string name="update_information_download_link">Da ein Download Fehler aufgetreten ist, muss der Download neugestartet werden, du kannst diesen Link benutzen um den Download stattdessen über den Browser zu starten. Möglicherweiße musst du die heruntergeladene Datei von dem \"Downloads\" Ordner in das übergeordnete Verzeichnis verschieben. Dies ist ein offizieller OnePlus OTA Server Link, der auch von der App benutzt wird:\n%1$s</string>
 	<string name="update_information_header">Aktualisierung</string>
-	<string name="update_information_error_title">Konnte die aktuellsten Update Informationen nicht herunterladen</string>
+	<string name="update_information_error_title">Die aktuellsten Update Informationen konnten nicht herunterladen werden</string>
 	<string name="update_information_banner_server">Tippe hier um wichtige Nachrichten anzuzeigen</string>
 	<string name="update_information_banner_advanced_mode_tip">Du hast den \"%1$s\" Update Zweig ausgewählt. Aktiviere den Fortgeschrittenen Modus um zu diesem Update Zweig zu wechseln.</string>
 	<string name="update_information_header_advanced_mode_hint">Der Fortgeschrittene Modus ist aktiviert</string>
@@ -23,13 +23,13 @@
 	<string name="update_information_view_update_information">"Update Informationen ansehen"</string>
 
 	<!-- Server status warning strings -->
-	<string name="server_status_error">Manche Funktionen sind zurzeit nicht verfügbar.</string>
+	<string name="server_status_error">Manche Features sind zurzeit nicht verfügbar.</string>
 	<string name="server_status_unreachable">"Der Server ist nicht erreichbar. Versuche die Seite zu aktualisieren."</string>
-	<string name="server_status_warning">Manche Funktionen funktionieren möglicherweiße nicht richtig.</string>
+	<string name="server_status_warning">Manche Features funktionieren möglicherweiße nicht richtig.</string>
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Es ist ein Update verfügbar (%1$s). Tippen Sie hier, um in den Play Store zu gelangen.</string>
-	<string name="new_app_version_long">Es ist ein Update verfügbar (%1$s). Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Bugfixes bekommst.\nTippen Sie hier um in den Play Store zu gelangen.</string>
+	<string name="new_app_version_long">Es ist ein Update verfügbar (%1$s). Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Problembehebungen bekommst.\nTippe hier um in den Play Store zu gelangen.</string>
 	<string name="new_app_version_inapp_downloaded">Das App Update wurde heruntergeladen</string>
 	<string name="new_app_version_inapp_failed">Das App Update konnte nicht installiert werden. Tippen Sie hier, um in den Play Store zu gelangen.</string>
 
@@ -48,7 +48,7 @@
 	<string name="download_error_internal">Ein App Fehler ist während dem Herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen, oder schicke ein Support-Mail wenn es wieder fehlschlagt.</string>
 	<string name="download_error_unsuccessful_response"><![CDATA[Es sieht so aus als ob der Download Link ungültig ist. Dies kann bedeuten, dass wir einen Fehler bei dem Hinzufügen der Update Daten gemacht haben oder OnePlus hat die Update Datei von deren Server entfernt. Es wurde eine Benachrichtigung an unser Team gesendet und wir werden uns das so schnell wie möglich ansehen.
 
-Wenn du  mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder über unseren <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.]]></string>
+Wenn du mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder über unseren <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Die Datei wurde heruntergeladen, konnte aber nicht in den richtigen Ordner verschoben werden. Öffnen einen Datei Manager, navigiere zu \"%1$s\" und verschiebe die Datei in die oberste Ebene deines internen Speichers.</string>
 	<string name="download_error_retry">"ERNEUT VERSUCHEN"</string>
 	<string name="download_error_resume">"FORTSETZEN"</string>
@@ -103,7 +103,7 @@ Wenn du  mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <
 	<string name="theme_auto">Auto</string>
 
 	<string name="theme_light_subtitle">Theme mit einem weißen Hintergrund und der OnePlus Red Farbe</string>
-	<string name="theme_dark_subtitle">Leichte OnePlus Red Farbe mit einem fast schwarzen Hintergrund. Benutze diese Theme um Batterie zu sparen, vor allem bei AMOLED Bildschirmen.</string>
+	<string name="theme_dark_subtitle">Leichte OnePlus Red Farbe mit einem fast schwarzen Hintergrund. Benutze dieses Theme um Batterie zu sparen, vor allem bei AMOLED Bildschirmen.</string>
 	<string name="theme_system_subtitle">Benutzt die System Einstellung (Du kannst dies entweder in den Display Einstellungen oder den Entwickler Einstellungen einstellen). Variiert von Gerät zu Gerät.</string>
 	<string name="theme_auto_subtitle">Wechsle automatisch zwischen hellen und dunklen Themes abhängig von der Tageszeit um deine Augen in der Nacht zu schonen.</string>
 	<string name="theme_additional_note">Hinweis: Wenn das \"Auto\" Theme und der Energiesparmodus aktiviert ist ,wird das Dunkle Theme automatisch unabhängig von der Tageszeit verwendet um Akku zu sparen.</string>
@@ -161,7 +161,7 @@ Schneller die neusten Updates für dein OxygenOS Gerät zu bekommen
 Wische nach links um fortzufahren."</string>
 	<string name="onboarding_page_1_caption">"Das ist keine Offizielle OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder Oneplus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden.
 
-durch die Benutzung dieser App Stimmst du den oben genannten Nutzungsbedingungen zu.
+durch die Benutzung dieser App stimmst du den oben genannten Nutzungsbedingungen zu.
 
 Wische nach links um fortzufahren."</string>
 	<string name="onboarding_page_2_title">"Wähle dein Gerät"</string>
@@ -261,16 +261,16 @@ Anleitung:
 	<string name="install_guide_page_3_title">Das Update installieren</string>
 	<string name="install_guide_page_3_text">"Da du jetzt in der System Updates App bist ist es Zeit das Update zu installieren.
 
-&#8226; In der System Update App, tippe auf das Zahnrad Symbol in der rechten oberen Ecke.
+&#8226; Unter dem Punkt Systemupdate, tippe auf das Zahnrad Symbol in der rechten oberen Ecke.
 
 &#8226; Wähle jetzt \"Lokales Upgrade\" aus. Es sollte ein Bildschirm zur Datei Auswahl erscheinen.
 
-&#8226; In diesem Bildschrimr, tippe auf die Update Datei die vom Oxygen Updater heruntergeladen wurde. Der Name sollte mit \"%1$sOxygen\" beginnen.
+&#8226; In diesem Bildschrim, tippe auf die Update Datei die vom Oxygen Updater heruntergeladen wurde. Der Name sollte mit \"%1$sOxygen\" beginnen.
 
 &#8226; Tippe nun auf \"Upgrade Now\". Die Installation sollte automatisch starten."</string>
 
 	<string name="install_guide_page_4_title">Warte bis die Installation fertiggestellt ist</string>
-	<string name="install_guide_page_4_text">"&#8226; Dein Handy wird nun das Update installieren und einen Fortschrittsbalken anzeigen. Bitte warte bis die Installation abgeschlossen ist. Installation können bis zu 15 Minuten dauern.
+	<string name="install_guide_page_4_text">"&#8226; Das Update wird nun installiert und es wird ein Balken mit dem Fortschritt angezeigt. Bitte warte bis die Installation abgeschlossen ist. Installationen können bis zu 15 Minuten dauern.
 
 &#8226; Danach wird dein Handy neugestartet um das Update fertigzustellen."</string>
 
@@ -309,12 +309,11 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 
 	<!-- About screen strings -->
 	<string name="about">"Über"</string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
+	<string name="about_description">Diese App ladet Updates direkt von den OnePlus Servern herunter und überprüft die heruntergeladene ZIP Datei ob sie zu deinem Gerät passt bevor du sie installierst. Dies verringert die Wartezeit auf deine Updates und du bekommst die neusten Updates so schnell wie möglich. Wenn du Bugs bemerkst, melde diese direkt an OnePlus weiter: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Do willst vielleicht unserem <a href="https://discord.gg/5TXdhKJ">Discord server</a> beitreten, sodass du mit anderen Leuten über die neusten Updates reden kannst. Oder schreib uns einfach eine Email an <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> mit deinen Vorschlägen oder Bewertungen.</string>
 	<string name="about_support">Wenn du uns unterstützen möchtest kannst du entweder die werbungsfreie Version kaufen (Verfügbar über die App Einstellungen) oder besuchen Sie unsere <a href="https://patreon.com/oxygenupdater">Patreon Seite</a>.</string>
 	<string name="about_background_story_header">Geschichte</string>
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
-	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
+	<string name="about_background_story">Diese App wurde von Arjan Vlek programmiert, sie ist ein Nachfolger der App <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (Sie stellt gleiche Funktionen für Cyanogen OS Benutzer bereit).\n\nNach 4 Jahren, im Juli 2019, hat sich Arjan entschieden von seinen Projekten zurück zu treten und sie einem Team von Entwicklern von verschiedenen Herkunften zu überlassen. Diese haben die Verantwortung auf sich genommen der Community einen perfekten Service zu bieten &amp; OnePlus Geräte schneller mit Updates zu versorgen.\nDu kannst mehr über die Ankündigung herausfinden undzwar <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">hier</a>.\n\n14 August 2019 war der erste release unter neuer Leitung, welcher mit neuen Features wie dem Darkmode und einem komplettem Redesign erschienen ist.\n\nFür mehr Infos besuche <a href="https://oxygenupdater.com/team/">die Webseite</a>.</string>
+	<string name="about_third_party_app_notice">Bitte beachte, diese App ist nicht ofiziell von OnepPlus.\nDer OnePlus Name, das OnePlus Logo und OxygenOS sind Eigentum von OnePlus.\nAndroid, Google, Google Play und das Google Play Logo gehören mit Trademarks Google Inc.\nDiese App benutzt Daten von OnePlus und seiner Vaterfirma Oppo um Update Informationen anzuzeigen.</string>
 	<string name="about_rate_button_text">Bewerten</string>
 	<string name="about_website_button_text">Webseite</string>
 	<string name="about_email_button_text">E-Mail</string>
