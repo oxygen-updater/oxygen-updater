@@ -196,13 +196,27 @@ class NewsItemActivity : SupportActionBarActivity(
             }?.let {
                 val userDateTime = LocalDateTime.parse(it.replace(" ", "T"))
                     .atZone(Utils.SERVER_TIME_ZONE)
+                    .toInstant().toEpochMilli()
 
-                text = DateUtils.getRelativeTimeSpanString(
-                    userDateTime.toInstant().toEpochMilli(),
-                    System.currentTimeMillis(),
-                    DateUtils.SECOND_IN_MILLIS,
-                    FORMAT_SHOW_TIME or FORMAT_SHOW_DATE or FORMAT_SHOW_YEAR
-                )
+                // Weird bug in `android.text.format` that causes a crash in
+                // older Android versions, due to using the [FORMAT_SHOW_TIME]
+                // flag. Hacky workaround is to call the function again, but
+                // without this flag. See https://stackoverflow.com/a/52665211.
+                text = try {
+                    DateUtils.getRelativeTimeSpanString(
+                        userDateTime,
+                        System.currentTimeMillis(),
+                        DateUtils.SECOND_IN_MILLIS,
+                        FORMAT_SHOW_TIME or FORMAT_SHOW_DATE or FORMAT_SHOW_YEAR
+                    )
+                } catch (e: NullPointerException) {
+                    DateUtils.getRelativeTimeSpanString(
+                        userDateTime,
+                        System.currentTimeMillis(),
+                        DateUtils.SECOND_IN_MILLIS,
+                        FORMAT_SHOW_DATE or FORMAT_SHOW_YEAR
+                    )
+                }
             }
 
             isVisible = dateTimePrefix != null
