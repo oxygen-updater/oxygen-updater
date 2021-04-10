@@ -246,6 +246,8 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                             mainViewModel.deleteDownloadedFile(requireContext(), updateData)
                         }
 
+                        // Setup the work request before enqueueing it
+                        mainViewModel.setupDownloadWorkRequest(updateData!!)
                         mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
                     }
                 }
@@ -453,6 +455,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         fileNameTextView.text = getString(R.string.update_information_file_name, updateData.filename)
         md5TextView.text = getString(R.string.update_information_md5, updateData.mD5Sum)
 
+        // Setup the work request in advance, before enqueueing it later on
         mainViewModel.setupDownloadWorkRequest(updateData)
 
         if (mainViewModel.checkDownloadCompletionByFile(updateData)) {

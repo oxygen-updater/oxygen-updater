@@ -297,6 +297,14 @@ class MainViewModel(
         val requiredFreeBytes = updateData.downloadSize
         val externalFilesDir = activity.getExternalFilesDir(null)!!
 
+        // Even though it's impossible for this `lateinit` property to be
+        // uninitialized, it's better to guard against a crash just in case
+        // future code changes create unintentional bugs (i.e. we may forget to
+        // ensure that [setupDownloadWorkRequest] is always called before this).
+        if (!::downloadWorkRequest.isInitialized) {
+            setupDownloadWorkRequest(updateData)
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val storageManager = activity.getSystemService<StorageManager>()!!
             val appSpecificExternalDirUuid = storageManager.getUuidForPath(externalFilesDir)
