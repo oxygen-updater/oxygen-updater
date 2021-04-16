@@ -2,18 +2,10 @@ package com.oxygenupdater.viewmodels
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.IntentSender
-import android.os.Build
 import android.os.Environment
-import android.os.storage.StorageManager
-import android.os.storage.StorageManager.ACTION_MANAGE_STORAGE
-import android.os.storage.StorageManager.EXTRA_REQUESTED_BYTES
-import android.os.storage.StorageManager.EXTRA_UUID
 import android.util.SparseArray
 import androidx.annotation.IdRes
-import androidx.core.content.getSystemService
-import androidx.core.os.bundleOf
 import androidx.core.util.set
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -35,14 +27,11 @@ import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
-import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
-import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.enums.DownloadStatus
 import com.oxygenupdater.exceptions.UpdateDownloadException
 import com.oxygenupdater.extensions.toWorkData
 import com.oxygenupdater.fragments.UpdateInformationFragment
-import com.oxygenupdater.fragments.UpdateInformationFragment.Companion.SAFE_MARGIN
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.Device
@@ -52,7 +41,6 @@ import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
@@ -141,6 +129,9 @@ class MainViewModel(
 
     var deviceOsSpec: DeviceOsSpec? = null
     var deviceMismatchStatus: Triple<Boolean, String, String>? = null
+
+    val isDownloadWorkInitialized: Boolean
+        get() = ::downloadWorkRequest.isInitialized
 
     fun fetchAllDevices(): LiveData<List<Device>> = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.fetchDevices(DeviceRequestFilter.ALL)?.let {
@@ -293,90 +284,20 @@ class MainViewModel(
             .build()
     }
 
-    fun enqueueDownloadWork(activity: Activity, updateData: UpdateData) {
-        val requiredFreeBytes = updateData.downloadSize
-        val externalFilesDir = activity.getExternalFilesDir(null)!!
+    fun enqueueDownloadWork() = workManager.enqueueUniqueWork(
+        WORK_UNIQUE_DOWNLOAD,
+        ExistingWorkPolicy.REPLACE,
+        downloadWorkRequest
+    )
 
-        // Even though it's impossible for this `lateinit` property to be
-        // uninitialized, it's better to guard against a crash just in case
-        // future code changes create unintentional bugs (i.e. we may forget to
-        // ensure that [setupDownloadWorkRequest] is always called before this).
-        if (!::downloadWorkRequest.isInitialized) {
-            setupDownloadWorkRequest(updateData)
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val storageManager = activity.getSystemService<StorageManager>()!!
-            val appSpecificExternalDirUuid = storageManager.getUuidForPath(externalFilesDir)
-
-            // Get maximum bytes that can be allocated by the system to the app
-            // This value is usually larger than [File.usableSpace],
-            // because the system considers cached files that can be deleted
-            val allocatableBytes = storageManager.getAllocatableBytes(appSpecificExternalDirUuid)
-            if (allocatableBytes >= requiredFreeBytes + SAFE_MARGIN) {
-                // Allocate bytes. The system will delete cached files if necessary, to fulfil this request
-                storageManager.allocateBytes(appSpecificExternalDirUuid, requiredFreeBytes)
-
-                // Since the required space has been freed up, we can enqueue the download work
-                workManager.enqueueUniqueWork(
-                    WORK_UNIQUE_DOWNLOAD,
-                    ExistingWorkPolicy.REPLACE,
-                    downloadWorkRequest
-                )
-            } else {
-                val intent = Intent()
-                    .setAction(ACTION_MANAGE_STORAGE)
-                    .putExtras(
-                        bundleOf(
-                            EXTRA_UUID to appSpecificExternalDirUuid,
-                            EXTRA_REQUESTED_BYTES to requiredFreeBytes + SAFE_MARGIN - allocatableBytes
-                        )
-                    )
-
-                // Display prompt to user, requesting that they choose files to remove
-                activity.startActivityForResult(
-                    intent,
-                    UpdateInformationFragment.MANAGE_STORAGE_REQUEST_CODE
-                )
-            }
-        } else {
-            // Check if there is enough free storage space before downloading
-            val usableBytes = externalFilesDir.usableSpace
-
-            if (usableBytes >= requiredFreeBytes + SAFE_MARGIN) {
-                // Since we have enough space available, we can enqueue the download work
-                workManager.enqueueUniqueWork(
-                    WORK_UNIQUE_DOWNLOAD,
-                    ExistingWorkPolicy.REPLACE,
-                    downloadWorkRequest
-                )
-            } else {
-                // Don't have enough space to complete the download. Display a notification and an error dialog to the user
-                showDownloadFailedNotification(
-                    activity,
-                    false,
-                    R.string.download_error_storage,
-                    R.string.download_notification_error_storage_full
-                )
-
-                Dialogs.showDownloadError(
-                    activity,
-                    false,
-                    R.string.download_error,
-                    R.string.download_error_storage
-                )
-            }
-        }
-    }
-
-    fun cancelDownloadWork(context: Context, updateData: UpdateData?) {
-        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD)
+    fun cancelDownloadWork(
+        context: Context,
+        updateData: UpdateData?
+    ) = workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD).also {
         deleteDownloadedFile(context, updateData)
     }
 
-    fun pauseDownloadWork() {
-        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD)
-    }
+    fun pauseDownloadWork() = workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD)
 
     /**
      * This method is called in [UpdateInformationFragment.onDestroy], to prune finished work.

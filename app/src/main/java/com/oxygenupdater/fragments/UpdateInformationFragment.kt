@@ -2,13 +2,16 @@ package com.oxygenupdater.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.DialogInterface.BUTTON_NEGATIVE
 import android.content.DialogInterface.BUTTON_NEUTRAL
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.storage.StorageManager
 import android.text.SpannableString
 import android.text.format.DateUtils
 import android.text.method.LinkMovementMethod
@@ -16,14 +19,21 @@ import android.text.style.URLSpan
 import android.view.View
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.core.content.getSystemService
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.work.WorkInfo
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.oxygenupdater.OxygenUpdater.Companion.DOWNLOAD_FILE_PERMISSION
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
+import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.dialogs.Dialogs.showDownloadError
@@ -48,7 +58,10 @@ import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
+import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
+import com.oxygenupdater.utils.Logger.logInfo
+import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.canVersionInfoBeFormatted
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedOxygenOsVersion
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedVersionNumber
@@ -69,6 +82,8 @@ import kotlinx.android.synthetic.main.layout_update_information.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDateTime
+import java.io.IOException
+import java.util.*
 
 class UpdateInformationFragment : Fragment(R.layout.fragment_update_information) {
 
@@ -114,12 +129,15 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                             mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
                         }
                     } else {
-                        mainActivity.requestDownloadPermissions { granted ->
+                        requestDownloadPermissions { granted ->
                             if (granted) {
-                                val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
-
-                                if (deleted) {
-                                    mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                                mainViewModel.deleteDownloadedFile(
+                                    requireContext(),
+                                    updateData
+                                ).also { deleted ->
+                                    if (deleted) {
+                                        mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
+                                    }
                                 }
                             }
                         }
@@ -132,6 +150,18 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         }
     }
 
+    private val noSpaceForDownloadDialog by lazy {
+        MessageDialog(
+            requireActivity(),
+            title = getString(R.string.download_notification_error_storage_full),
+            message = getString(R.string.download_error_storage),
+            positiveButtonText = getString(android.R.string.ok),
+            negativeButtonText = getString(R.string.download_error_close),
+            positiveButtonIcon = R.drawable.install,
+            cancellable = true
+        )
+    }
+
     /**
      * Download button click listener. Performs these actions when the button is clicked.
      */
@@ -140,7 +170,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
             val mainActivity = activity as MainActivity? ?: return@OnClickListener
 
             if (mainActivity.hasDownloadPermissions()) {
-                mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
+                enqueueDownloadWork()
 
                 downloadProgressBar.isIndeterminate = true
                 downloadDetailsTextView.setText(R.string.download_pending)
@@ -148,12 +178,42 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                 // Pause is possible on first progress update
                 downloadLayout.setOnClickListener { }
             } else {
-                mainActivity.requestDownloadPermissions { granted ->
+                requestDownloadPermissions { granted ->
                     if (granted) {
-                        mainViewModel.enqueueDownloadWork(mainActivity, updateData!!)
+                        enqueueDownloadWork()
                     }
                 }
             }
+        }
+    }
+
+    private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
+
+    /**
+     * Although we request both the [VERIFY_FILE_PERMISSION] and the [DOWNLOAD_FILE_PERMISSION],
+     * only the latter *needs* to be granted. Which is why this listener passes the grant status
+     * of this permission only.
+     */
+    private val requestPermissionLauncher = registerForActivityResult(
+        RequestMultiplePermissions()
+    ) {
+        logInfo(TAG, "Permissions granted: $it")
+
+        downloadPermissionCallback?.invoke(it[DOWNLOAD_FILE_PERMISSION] == true)
+    }
+
+    private val manageStorageLauncher = registerForActivityResult(
+        StartActivityForResult()
+    ) {
+        when (it.resultCode) {
+            Activity.RESULT_OK -> logInfo(TAG, "User freed-up space").also {
+                // Since the required space has been freed up, we can enqueue the download work
+                mainViewModel.enqueueDownloadWork()
+            }
+            Activity.RESULT_CANCELED -> logInfo(TAG, "User didn't free-up space").also {
+                showDownloadError(R.string.download_error_storage)
+            }
+            else -> logWarning(TAG, "Unhandled resultCode: ${it.resultCode}")
         }
     }
 
@@ -196,18 +256,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         mainViewModel.maybePruneWork()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == MANAGE_STORAGE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
-            } else if (requestCode == Activity.RESULT_CANCELED) {
-                showDownloadError(R.string.download_error_storage)
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
     private fun setupServerResponseObservers() {
         mainViewModel.serverStatus.observe(viewLifecycleOwner) { serverStatus ->
             // display server status banner if required
@@ -248,7 +296,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
                         // Setup the work request before enqueueing it
                         mainViewModel.setupDownloadWorkRequest(updateData!!)
-                        mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                        enqueueDownloadWork()
                     }
                 }
 
@@ -455,7 +503,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         fileNameTextView.text = getString(R.string.update_information_file_name, updateData.filename)
         md5TextView.text = getString(R.string.update_information_md5, updateData.mD5Sum)
 
-        // Setup the work request in advance, before enqueueing it later on
+        // Setup the work request before enqueueing it
         mainViewModel.setupDownloadWorkRequest(updateData)
 
         if (mainViewModel.checkDownloadCompletionByFile(updateData)) {
@@ -567,6 +615,128 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
             } else {
                 securityPatchLabel.isVisible = false
                 isVisible = false
+            }
+        }
+    }
+
+    private fun requestDownloadPermissions(
+        callback: KotlinCallback<Boolean>
+    ) {
+        downloadPermissionCallback = callback
+        // Request both READ and WRITE permissions, since there may be cases
+        // when the WRITE permission is granted but READ isn't.
+        requestPermissionLauncher.launch(
+            arrayOf(DOWNLOAD_FILE_PERMISSION, VERIFY_FILE_PERMISSION)
+        )
+    }
+
+    /**
+     * This utility function shows the user a dialog asking them to free up
+     * some space, so that the app can download the update ZIP successfully.
+     *
+     * If the user accepts this request, [manageStorageLauncher] is launched
+     * which shows an Android system-supplied "Remove items" UI (API 26+)
+     * that guides the user on clearing up the required storage space.
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun requestManageStorage(
+        appSpecificExternalDirUuid: UUID,
+        requiredFreeBytes: Long,
+        allocatableBytes: Long
+    ) = noSpaceForDownloadDialog.show {
+        if (it == Dialog.BUTTON_POSITIVE) {
+            manageStorageLauncher.launch(
+                Intent(
+                    StorageManager.ACTION_MANAGE_STORAGE
+                ).putExtras(
+                    bundleOf(
+                        StorageManager.EXTRA_UUID to appSpecificExternalDirUuid,
+                        StorageManager.EXTRA_REQUESTED_BYTES to requiredFreeBytes + SAFE_MARGIN - allocatableBytes
+                    )
+                )
+            )
+        } else {
+            // To avoid duplicate clicks, we remove the click listener in
+            // [downloadNotStartedOnClickListener]. But since this function is
+            // called from that listener's flow itself, we need to now allow
+            // the user to click the download button again.
+            downloadLayout.setOnClickListener(downloadNotStartedOnClickListener)
+        }
+    }
+
+    /**
+     * Calls [MainViewModel.enqueueDownloadWork] whenever appropriate
+     */
+    private fun enqueueDownloadWork() {
+        val context = context ?: return
+        val updateData = updateData ?: return
+
+        val requiredFreeBytes = updateData.downloadSize
+        val externalFilesDir = context.getExternalFilesDir(null)!!
+
+        // Even though it's impossible for this `lateinit` property to be
+        // uninitialized, it's better to guard against a crash just in case
+        // future code changes create unintentional bugs (i.e. we may forget to
+        // ensure that [setupDownloadWorkRequest] is always called before this).
+        if (!mainViewModel.isDownloadWorkInitialized) {
+            mainViewModel.setupDownloadWorkRequest(updateData)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val storageManager = context.getSystemService<StorageManager>()!!
+            val appSpecificExternalDirUuid = storageManager.getUuidForPath(externalFilesDir)
+
+            // Get maximum bytes that can be allocated by the system to the app
+            // This value is usually larger than [File.usableSpace],
+            // because the system considers cached files that can be deleted
+            val allocatableBytes = storageManager.getAllocatableBytes(appSpecificExternalDirUuid)
+            if (allocatableBytes >= requiredFreeBytes + SAFE_MARGIN) {
+                try {
+                    // Allocate bytes: the system will delete cached files if
+                    // necessary to fulfil this request, or throw an IOException
+                    // if it fails for whatever reason.
+                    storageManager.allocateBytes(appSpecificExternalDirUuid, requiredFreeBytes)
+
+                    // Since the required space has been freed up, we can enqueue the download work
+                    mainViewModel.enqueueDownloadWork()
+                } catch (e: IOException) {
+                    // Request the user to free up space manually because the
+                    // system couldn't do it automatically
+                    requestManageStorage(
+                        appSpecificExternalDirUuid,
+                        requiredFreeBytes,
+                        allocatableBytes
+                    )
+                }
+            } else {
+                requestManageStorage(
+                    appSpecificExternalDirUuid,
+                    requiredFreeBytes,
+                    allocatableBytes
+                )
+            }
+        } else {
+            // Check if there is enough free storage space before downloading
+            val usableBytes = externalFilesDir.usableSpace
+
+            if (usableBytes >= requiredFreeBytes + SAFE_MARGIN) {
+                // Since we have enough space available, we can enqueue the download work
+                mainViewModel.enqueueDownloadWork()
+            } else {
+                // Don't have enough space to complete the download. Display a notification and an error dialog to the user
+                LocalNotifications.showDownloadFailedNotification(
+                    context,
+                    false,
+                    R.string.download_error_storage,
+                    R.string.download_notification_error_storage_full
+                )
+
+                showDownloadError(
+                    activity,
+                    false,
+                    R.string.download_error,
+                    R.string.download_error_storage
+                )
             }
         }
     }
@@ -779,7 +949,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                             downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
                             (downloadIcon.drawable as AnimationDrawable).start()
 
-                            mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                            enqueueDownloadWork()
 
                             // No resuming twice allowed
                             setOnClickListener { }
@@ -832,7 +1002,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                                     R.string.download_error_server,
                                     true
                                 ) {
-                                    mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                                    enqueueDownloadWork()
                                 }
                             }
                             DownloadFailure.CONNECTION_ERROR -> {
@@ -841,7 +1011,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                                     R.string.download_error_internal,
                                     true
                                 ) {
-                                    mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                                    enqueueDownloadWork()
                                 }
                             }
                             DownloadFailure.UNSUCCESSFUL_RESPONSE -> {
@@ -931,7 +1101,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                             downloadIcon.setImageResourceWithTint(android.R.drawable.stat_sys_download, R.color.colorPositive)
                             (downloadIcon.drawable as AnimationDrawable).start()
 
-                            mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                            enqueueDownloadWork()
 
                             // No resuming twice allowed
                             setOnClickListener { }
@@ -943,7 +1113,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                         R.string.download_error_corrupt,
                         false
                     ) {
-                        mainViewModel.enqueueDownloadWork(requireActivity(), updateData!!)
+                        enqueueDownloadWork()
                     }
                     // Delete downloaded file, so the user can restart the download
                     mainViewModel.deleteDownloadedFile(requireContext(), updateData)
@@ -990,8 +1160,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
     companion object {
         const val TAG = "UpdateInformationFragment"
-
-        const val MANAGE_STORAGE_REQUEST_CODE = 300
 
         /**
          * Amount of free storage space to reserve when downloading an update.

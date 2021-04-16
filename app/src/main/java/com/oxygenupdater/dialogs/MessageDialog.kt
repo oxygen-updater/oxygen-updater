@@ -26,7 +26,7 @@ class MessageDialog(
     private val negativeButtonText: String? = null,
     @DrawableRes private val positiveButtonIcon: Int? = null,
     private val cancellable: Boolean = false,
-    private val dialogListener: KotlinCallback<Int>? = null
+    private var dialogListener: KotlinCallback<Int>? = null
 ) : BottomSheetDialog(activity) {
 
     @SuppressLint("InflateParams")
@@ -71,6 +71,27 @@ class MessageDialog(
 
             setOnDismissListener { exit() }
         }
+    }
+
+    /**
+     * Overload for `super.show()`; useful in cases where [dialogListener]
+     * must be supplied just before showing.
+     *
+     * Note that if this dialog is marked [cancellable], then we call the
+     * [setOnDismissListener] method here, to ensure [callback] is invoked
+     * even if the user dismissing the dialog by touching outside (instead
+     * of clicking either of the buttons).
+     */
+    fun show(callback: KotlinCallback<Int>) {
+        dialogListener = callback
+
+        if (cancellable) {
+            setOnDismissListener {
+                dialogListener?.invoke(BUTTON_NEGATIVE)
+            }
+        }
+
+        show()
     }
 
     /**
