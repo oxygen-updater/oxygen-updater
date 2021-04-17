@@ -233,7 +233,7 @@ object Libraries {
 object TestLibraries {
     private object Versions {
         // https://developer.android.com/jetpack/androidx/releases/annotation
-        const val ANNOTATION = "1.2.0"
+        const val ANNOTATION = "1.1.0"
 
         // https://developer.android.com/jetpack/androidx/releases/test
         const val ESPRESSO = "3.3.0"
