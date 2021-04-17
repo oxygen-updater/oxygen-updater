@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ipaulpro.afilechooser.FileChooserActivity
@@ -38,6 +39,31 @@ import java.util.*
 class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
 
     private lateinit var updateData: UpdateData
+
+    private val fileChooserLauncher = registerForActivityResult(
+        StartActivityForResult()
+    ) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            try {
+                val uri = it.data?.data
+
+                // Get the zip file path from the Uri
+                SettingsManager.savePreference(
+                    SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH,
+                    FileUtils.getPath(context, uri)
+                )
+                displayZipFilePath()
+            } catch (e: Throwable) {
+                logError(TAG, "Error handling root package ZIP selection", e)
+
+                SettingsManager.savePreference(
+                    SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH,
+                    null
+                )
+                displayZipFilePath()
+            }
+        }
+    }
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
     private val installViewModel by sharedViewModel<InstallViewModel>()
@@ -163,13 +189,13 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
     ) {
         additionalZipFilePickButton.setOnClickListener {
             // Implicitly allow the user to select a particular kind of data
-            val intent = Intent(context, FileChooserActivity::class.java)
-                // Only return URIs that can be opened with ContentResolver
-                .addCategory(Intent.CATEGORY_OPENABLE)
-                // The MIME data type filter
-                .setType("application/zip")
-
-            startActivityForResult(intent, REQUEST_FILE_PICKER)
+            fileChooserLauncher.launch(
+                Intent(context, FileChooserActivity::class.java)
+                    // Only return URIs that can be opened with ContentResolver
+                    .addCategory(Intent.CATEGORY_OPENABLE)
+                    // The MIME data type filter
+                    .setType("application/zip")
+            )
         }
 
         additionalZipFileClearButton.setOnClickListener {
@@ -280,32 +306,8 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
         }
     }
 
-    /**
-     * Handle the action from the ZIP file picker
-     */
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_FILE_PICKER && resultCode == Activity.RESULT_OK) {
-            try {
-                val uri = data?.data
-
-                // Get the zip file path from the Uri
-                SettingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, FileUtils.getPath(context, uri))
-                displayZipFilePath()
-            } catch (e: Throwable) {
-                logError(TAG, "Error handling root package ZIP selection", e)
-
-                SettingsManager.savePreference(SettingsManager.PROPERTY_ADDITIONAL_ZIP_FILE_PATH, null)
-                displayZipFilePath()
-            }
-        }
-
-        super.onActivityResult(resultCode, resultCode, data)
-    }
-
     companion object {
         private const val TAG = "AutomaticInstallFragment"
         private const val EXTENSION_ZIP = ".zip"
-
-        private const val REQUEST_FILE_PICKER = 1606
     }
 }

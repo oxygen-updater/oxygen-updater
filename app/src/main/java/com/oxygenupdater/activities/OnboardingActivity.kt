@@ -1,12 +1,11 @@
 package com.oxygenupdater.activities
 
 import android.content.DialogInterface
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView.ScaleType
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
@@ -16,6 +15,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.OxygenUpdater
+import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.R
 import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
@@ -25,12 +25,12 @@ import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.oxygenupdater.fragments.SimpleOnboardingFragment
 import com.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
-import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logDebug
+import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
@@ -46,7 +46,12 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
     private lateinit var viewPagerAdapter: OnboardingPagerAdapter
 
-    private var permissionCallback: KotlinCallback<Boolean>? = null
+    private val startPage by lazy {
+        intent?.getIntExtra(
+            MainActivity.INTENT_START_PAGE,
+            MainActivity.PAGE_UPDATE
+        ) ?: MainActivity.PAGE_UPDATE
+    }
 
     private val contributorDialog by lazy {
         ContributorDialogFragment()
@@ -59,6 +64,22 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         override fun onPageSelected(
             position: Int
         ) = handlePageChangeCallback(position + 1)
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        RequestPermission()
+    ) {
+        logInfo(TAG, "`$VERIFY_FILE_PERMISSION` granted: $it")
+
+        if (it) {
+            // 1st time, will save setting to true.
+            ContributorUtils.flushSettings(true)
+            SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
+            startMainActivity(startPage)
+            finish()
+        } else {
+            Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onCreate(
@@ -285,23 +306,8 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 (application as OxygenUpdater?)?.setupCrashReporting(it)
             }
 
-            val startPage = intent?.getIntExtra(
-                MainActivity.INTENT_START_PAGE,
-                MainActivity.PAGE_UPDATE
-            ) ?: MainActivity.PAGE_UPDATE
-
             if (onboardingPage4ContributeCheckbox.isChecked) {
-                requestContributorStoragePermissions { granted: Boolean ->
-                    if (granted) {
-                        // 1st time, will save setting to true.
-                        ContributorUtils.flushSettings(true)
-                        SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
-                        startMainActivity(startPage)
-                        finish()
-                    } else {
-                        Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
-                    }
-                }
+                requestPermissionLauncher.launch(VERIFY_FILE_PERMISSION)
             } else {
                 // not signed up, saving this setting will prevent contribute popups which belong to app updates.
                 SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
@@ -335,25 +341,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
             .setMessage(getString(resourceId))
             .setPositiveButton(getString(R.string.download_error_close)) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
             .show()
-    }
-
-    private fun requestContributorStoragePermissions(permissionCallback: KotlinCallback<Boolean>) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            this.permissionCallback = permissionCallback
-            requestPermissions(arrayOf(MainActivity.VERIFY_FILE_PERMISSION), MainActivity.PERMISSION_REQUEST_CODE)
-        } else {
-            permissionCallback.invoke(true)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) = super.onRequestPermissionsResult(requestCode, permissions, grantResults).also {
-        if (grantResults.isNotEmpty() && requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
-            permissionCallback?.invoke(grantResults[0] == PackageManager.PERMISSION_GRANTED)
-        }
     }
 
     /**

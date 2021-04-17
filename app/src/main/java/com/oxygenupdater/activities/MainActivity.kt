@@ -1,11 +1,9 @@
 package com.oxygenupdater.activities
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
@@ -36,6 +34,8 @@ import com.google.android.play.core.install.model.InstallStatus.PENDING
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 import com.oxygenupdater.OxygenUpdater
+import com.oxygenupdater.OxygenUpdater.Companion.DOWNLOAD_FILE_PERMISSION
+import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.dialogs.ContributorDialogFragment
@@ -49,7 +49,6 @@ import com.oxygenupdater.fragments.DeviceInformationFragment
 import com.oxygenupdater.fragments.NewsListFragment
 import com.oxygenupdater.fragments.SettingsFragment
 import com.oxygenupdater.fragments.UpdateInformationFragment
-import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -66,8 +65,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemClickListener {
-
-    private var downloadPermissionCallback: KotlinCallback<Boolean>? = null
 
     private val noNetworkDialog by lazy {
         MessageDialog(
@@ -199,20 +196,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         R.id.action_announcements -> showServerMessagesDialog().let { true }
         R.id.action_contribute -> showContributorDialog().let { true }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) = super.onRequestPermissionsResult(
-        requestCode,
-        permissions,
-        grantResults
-    ).also {
-        if (requestCode == PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
-            downloadPermissionCallback?.invoke(grantResults[0] == PERMISSION_GRANTED)
-        }
     }
 
     /**
@@ -682,15 +665,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             }.show()
     }
 
-    fun requestDownloadPermissions(callback: KotlinCallback<Boolean>) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            downloadPermissionCallback = callback
-            requestPermissions(
-                arrayOf(DOWNLOAD_FILE_PERMISSION, VERIFY_FILE_PERMISSION), PERMISSION_REQUEST_CODE
-            )
-        }
-    }
-
     // Android 6.0 Run-time permissions
     fun hasDownloadPermissions() = ContextCompat.checkSelfPermission(this, VERIFY_FILE_PERMISSION) == PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(this, DOWNLOAD_FILE_PERMISSION) == PERMISSION_GRANTED
@@ -733,11 +707,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         const val PAGE_ABOUT = 3
         const val PAGE_SETTINGS = 4
         const val INTENT_START_PAGE = "start_page"
-
-        // Permissions constants
-        private const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
-        const val PERMISSION_REQUEST_CODE = 200
-        const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
         const val REQUEST_CODE_APP_UPDATE = 1000
         const val DAYS_FOR_APP_UPDATE_CHECK = 2L

@@ -1,21 +1,21 @@
 package com.oxygenupdater.dialogs
 
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.R
-import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTE
 import com.oxygenupdater.internal.settings.SettingsManager.getPreference
 import com.oxygenupdater.utils.ContributorUtils
+import com.oxygenupdater.utils.Logger.logInfo
 import kotlinx.android.synthetic.main.bottom_sheet_contributor.*
 
 /**
@@ -24,6 +24,23 @@ import kotlinx.android.synthetic.main.bottom_sheet_contributor.*
 class ContributorDialogFragment(
     private val showEnrollment: Boolean = false
 ) : BottomSheetDialogFragment() {
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        RequestPermission()
+    ) {
+        logInfo(TAG, "`$VERIFY_FILE_PERMISSION` granted: $it")
+
+        if (it) {
+            ContributorUtils.flushSettings(true)
+            dismiss()
+        } else {
+            Toast.makeText(
+                context,
+                R.string.contribute_allow_storage,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
     override fun onCreateDialog(
         savedInstanceState: Bundle?
@@ -53,25 +70,6 @@ class ContributorDialogFragment(
         savedInstanceState: Bundle?
     ) = setupViews()
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == MainActivity.PERMISSION_REQUEST_CODE && grantResults.isNotEmpty()) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                ContributorUtils.flushSettings(true)
-                dismiss()
-            } else {
-                Toast.makeText(
-                    context,
-                    R.string.contribute_allow_storage,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
-
     private fun setupViews() {
         val initialValue = getPreference(
             PROPERTY_CONTRIBUTE,
@@ -89,7 +87,7 @@ class ContributorDialogFragment(
             isVisible = showEnrollment
             setOnClickListener {
                 if (contributeCheckbox.isChecked) {
-                    requestContributorStoragePermissions()
+                    requestPermissionLauncher.launch(VERIFY_FILE_PERMISSION)
                 } else {
                     ContributorUtils.flushSettings(false)
                     dismiss()
@@ -105,15 +103,6 @@ class ContributorDialogFragment(
                 // Allow dismissing the dialog only if value hasn't changed
                 isCancelable = !showEnrollment || initialValue == isChecked
             }
-        }
-    }
-
-    private fun requestContributorStoragePermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(
-                arrayOf(MainActivity.VERIFY_FILE_PERMISSION),
-                MainActivity.PERMISSION_REQUEST_CODE
-            )
         }
     }
 

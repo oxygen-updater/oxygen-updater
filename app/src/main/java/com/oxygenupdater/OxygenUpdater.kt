@@ -1,5 +1,6 @@
 package com.oxygenupdater
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
@@ -165,6 +166,11 @@ class OxygenUpdater : Application() {
         private val ADS_TEST_DEVICES = mutableListOf(
             AdRequest.DEVICE_ID_EMULATOR
         )
+
+        // Permissions constants
+        const val PERMISSION_REQUEST_CODE = 200
+        const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
+        const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
         const val NO_OXYGEN_OS = "no_oxygen_os_ver_found"
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
