@@ -13,6 +13,7 @@ import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.internal.DeviceInformationData
+import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger
@@ -35,6 +36,12 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         displaySoftwareInfo()
         displayHardwareInfo()
+
+        mainViewModel.settingsChanged.observe(viewLifecycleOwner) {
+            if (it == SettingsManager.PROPERTY_DEVICE_ID) {
+                updateDeviceMismatchStatusBanner()
+            }
+        }
 
         mainViewModel.allDevices.observe(viewLifecycleOwner) { devices ->
             var deviceName = getString(
@@ -80,21 +87,6 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             )
         }
 
-        deviceMismatchStatus.run {
-            if (mainViewModel.deviceMismatchStatus?.first == true) {
-                isVisible = true
-                contentDivider.isVisible = true
-                text = getString(
-                    R.string.incorrect_device_warning_message,
-                    mainViewModel.deviceMismatchStatus!!.second,
-                    mainViewModel.deviceMismatchStatus!!.third
-                )
-            } else {
-                isVisible = false
-                contentDivider.isVisible = false
-            }
-        }
-
         deviceImageLayout.run {
             isVisible = true
             val resourceName = systemVersionProperties.oxygenDeviceName.replace(
@@ -127,6 +119,23 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
                 deviceImageOverlayIcon.isVisible = imageResId == 0
                 setOnClickListener(null)
             }
+        }
+
+        updateDeviceMismatchStatusBanner()
+    }
+
+    private fun updateDeviceMismatchStatusBanner() = deviceMismatchStatus.run {
+        if (mainViewModel.deviceMismatchStatus?.first == true) {
+            isVisible = true
+            contentDivider.isVisible = true
+            text = getString(
+                R.string.incorrect_device_warning_message,
+                mainViewModel.deviceMismatchStatus!!.second,
+                mainViewModel.deviceMismatchStatus!!.third
+            )
+        } else {
+            isVisible = false
+            contentDivider.isVisible = false
         }
     }
 
