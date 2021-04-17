@@ -1,7 +1,7 @@
 // https://blog.jetbrains.com/kotlin/category/releases/
 // https://kotlinlang.org/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
-const val KOTLIN_VERSION = "1.4.31"
+const val KOTLIN_VERSION = "1.4.32"
 
 // https://insert-koin.io/docs/setup/stable
 // https://github.com/InsertKoinIO/koin/releases
@@ -11,13 +11,13 @@ const val KOIN_VERSION = "2.2.2"
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
-        const val BUILD_GRADLE_PLUGIN = "4.1.2"
+        const val BUILD_GRADLE_PLUGIN = "4.1.3"
 
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.5"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_GRADLE_PLUGIN = "2.5.1"
+        const val FIREBASE_GRADLE_PLUGIN = "2.5.2"
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
@@ -63,10 +63,10 @@ object AndroidXLibraries {
         const val KTX_CORE = "1.3.2"
 
         // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.3.1"
+        const val KTX_FRAGMENT = "1.3.2"
 
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        const val KTX_LIFECYCLE = "2.3.0"
+        const val KTX_LIFECYCLE = "2.3.1"
 
         // https://developer.android.com/jetpack/androidx/releases/preference
         const val KTX_PREFERENCE = "1.1.1"
@@ -75,7 +75,7 @@ object AndroidXLibraries {
         const val KTX_WORK = "2.5.0"
 
         // https://developer.android.com/jetpack/androidx/releases/recyclerview
-        const val RECYCLER_VIEW = "1.1.0"
+        const val RECYCLER_VIEW = "1.2.0"
 
         // https://developer.android.com/jetpack/androidx/releases/room
         const val ROOM = "2.2.6"
@@ -127,17 +127,17 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "26.7.0"
+        const val FIREBASE_BOM = "27.0.0"
 
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.12.0"
 
         // https://developer.android.com/google/play/billing/release-notes
-        const val GOOGLE_PLAY_BILLING = "3.0.2"
+        const val GOOGLE_PLAY_BILLING = "3.0.3"
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.12.2"
+        const val JACKSON_KOTLIN_MODULE = "2.12.3"
 
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
@@ -233,7 +233,7 @@ object Libraries {
 object TestLibraries {
     private object Versions {
         // https://developer.android.com/jetpack/androidx/releases/annotation
-        const val ANNOTATION = "1.1.0"
+        const val ANNOTATION = "1.2.0"
 
         // https://developer.android.com/jetpack/androidx/releases/test
         const val ESPRESSO = "3.3.0"
