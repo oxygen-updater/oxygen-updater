@@ -126,7 +126,7 @@ class NewsListAdapter(
          * the `java.lang.IllegalStateException: Fragment already added` error
          */
         private fun showOptionsDialog(item: NewsItem) {
-            if (!optionsDialog.isAdded) {
+            if (!activity.isFinishing && !optionsDialog.isAdded) {
                 optionsDialog.apply {
                     newsItem = item
                 }.show(

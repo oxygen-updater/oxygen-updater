@@ -286,7 +286,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
      */
     @Suppress("UNUSED_PARAMETER")
     fun onMoreInfoButtonClicked(view: View) {
-        if (!contributorDialog.isAdded) {
+        if (!isFinishing && !contributorDialog.isAdded) {
             contributorDialog.show(
                 supportFragmentManager,
                 ContributorDialogFragment.TAG

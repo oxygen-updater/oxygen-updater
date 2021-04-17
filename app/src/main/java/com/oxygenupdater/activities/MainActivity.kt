@@ -507,7 +507,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * the `java.lang.IllegalStateException: Fragment already added` error
      */
     fun showServerMessagesDialog() {
-        if (!serverMessagesDialog.isAdded) {
+        if (!isFinishing && !serverMessagesDialog.isAdded) {
             serverMessagesDialog.show(
                 supportFragmentManager,
                 ServerMessagesDialogFragment.TAG
@@ -521,7 +521,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * the `java.lang.IllegalStateException: Fragment already added` error
      */
     fun showContributorDialog() {
-        if (!contributorDialog.isAdded) {
+        if (!isFinishing && !contributorDialog.isAdded) {
             contributorDialog.show(
                 supportFragmentManager,
                 ContributorDialogFragment.TAG
