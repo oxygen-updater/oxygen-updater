@@ -3,9 +3,9 @@ package com.oxygenupdater.activities
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
-import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
@@ -34,8 +34,6 @@ import com.google.android.play.core.install.model.InstallStatus.PENDING
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 import com.oxygenupdater.OxygenUpdater
-import com.oxygenupdater.OxygenUpdater.Companion.DOWNLOAD_FILE_PERMISSION
-import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.dialogs.ContributorDialogFragment
@@ -574,7 +572,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         @IdRes pageId: Int,
         delayMillis: Long = 0
     ) = bottomNavigationView.getBadge(pageId)?.apply {
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             if (bottomNavigationView.selectedItemId == pageId) {
                 isVisible = false
             }
@@ -664,10 +662,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
                 )
             }.show()
     }
-
-    // Android 6.0 Run-time permissions
-    fun hasDownloadPermissions() = ContextCompat.checkSelfPermission(this, VERIFY_FILE_PERMISSION) == PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(this, DOWNLOAD_FILE_PERMISSION) == PERMISSION_GRANTED
 
     /**
      * A [FragmentStateAdapter] that returns a fragment corresponding to one of the sections/tabs/pages.

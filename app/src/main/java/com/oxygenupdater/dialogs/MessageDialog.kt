@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
@@ -112,7 +113,7 @@ class MessageDialog(
         if (activity != null) {
             activity.finishAffinity()
         } else {
-            Handler().postDelayed({ exitProcess(0) }, 2000)
+            Handler(Looper.getMainLooper()).postDelayed({ exitProcess(0) }, 2000)
         }
     }
 }

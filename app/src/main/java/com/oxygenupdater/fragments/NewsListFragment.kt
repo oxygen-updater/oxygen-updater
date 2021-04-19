@@ -2,6 +2,7 @@ package com.oxygenupdater.fragments
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,7 +93,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
 
         // Load the news after up to 3 seconds to allow the update info screen to load first
         // This way, the app feels a lot faster. Also, it doesn't affect users that much, as they will always see the update info screen first.
-        Handler().postDelayed({ refreshNews() }, loadDelayMilliseconds.toLong())
+        Handler(Looper.getMainLooper()).postDelayed({ refreshNews() }, loadDelayMilliseconds.toLong())
 
         mainViewModel.settingsChanged.observe(viewLifecycleOwner) {
             if (it == PROPERTY_DEVICE_ID || it == PROPERTY_UPDATE_METHOD_ID) {

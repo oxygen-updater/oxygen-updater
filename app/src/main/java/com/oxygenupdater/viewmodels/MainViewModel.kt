@@ -243,7 +243,11 @@ class MainViewModel(
     /**
      * @return true if the downloaded ZIP was successfully deleted
      */
-    fun deleteDownloadedFile(context: Context, updateData: UpdateData?): Boolean {
+    fun deleteDownloadedFile(
+        context: Context,
+        updateData: UpdateData?,
+        markNotDownloading: Boolean = false
+    ): Boolean {
         if (updateData?.filename == null) {
             logWarning(
                 UpdateInformationFragment.TAG,
@@ -272,7 +276,12 @@ class MainViewModel(
             deleted = false
         }
 
-        updateDownloadStatus(DownloadStatus.NOT_DOWNLOADING)
+        // Mark downloaded only if the file was successfully deleted,
+        // or if the caller explicitly requested it
+        if (deleted || markNotDownloading) {
+            updateDownloadStatus(DownloadStatus.NOT_DOWNLOADING)
+        }
+
         return deleted
     }
 

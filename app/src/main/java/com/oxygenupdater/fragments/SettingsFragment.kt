@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
@@ -186,7 +187,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             when {
                 // If server can't be reached, keep trying until it can
-                validationResult == null -> Handler().postDelayed(
+                validationResult == null -> Handler(Looper.getMainLooper()).postDelayed(
                     {
                         validateAdFreePurchase(
                             purchase,

@@ -7,10 +7,12 @@ import android.content.DialogInterface.BUTTON_NEGATIVE
 import android.content.DialogInterface.BUTTON_NEUTRAL
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.storage.StorageManager
 import android.text.SpannableString
 import android.text.format.DateUtils
@@ -23,6 +25,7 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestMultiple
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
@@ -95,6 +98,26 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
     /**
+     * Android 6.0 run-time permissions
+     */
+    val hasDownloadPermissions: Boolean
+        get() {
+            // If context is somehow null, we can't check if permissions are granted.
+            // So, make an educated guess: on API < 23 both READ & WRITE permissions
+            // are granted automatically, while on API >= 23 only READ is granted
+            // automatically. A simple SDK version check should suffice.
+            val context = context ?: return Build.VERSION.SDK_INT <= Build.VERSION_CODES.M
+
+            return ContextCompat.checkSelfPermission(
+                context,
+                VERIFY_FILE_PERMISSION
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                context,
+                DOWNLOAD_FILE_PERMISSION
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+
+    /**
      * Allows an already downloaded update file to be deleted to save storage space.
      */
     private val updateAlreadyDownloadedDialog by lazy {
@@ -120,25 +143,15 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     )
                 }
                 BUTTON_NEGATIVE -> if (updateData != null) {
-                    val mainActivity = activity as MainActivity? ?: return@MessageDialog
-
-                    if (mainActivity.hasDownloadPermissions()) {
-                        val deleted = mainViewModel.deleteDownloadedFile(requireContext(), updateData)
-
-                        if (deleted) {
-                            mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
-                        }
+                    if (hasDownloadPermissions) {
+                        mainViewModel.deleteDownloadedFile(requireContext(), updateData)
                     } else {
                         requestDownloadPermissions { granted ->
                             if (granted) {
                                 mainViewModel.deleteDownloadedFile(
                                     requireContext(),
                                     updateData
-                                ).also { deleted ->
-                                    if (deleted) {
-                                        mainViewModel.updateDownloadStatus(NOT_DOWNLOADING)
-                                    }
-                                }
+                                )
                             }
                         }
                     }
@@ -167,9 +180,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
      */
     private val downloadNotStartedOnClickListener = View.OnClickListener {
         if (isAdded && updateInformationLayout != null) {
-            val mainActivity = activity as MainActivity? ?: return@OnClickListener
-
-            if (mainActivity.hasDownloadPermissions()) {
+            if (hasDownloadPermissions) {
                 enqueueDownloadWork()
 
                 downloadProgressBar.isIndeterminate = true
@@ -291,7 +302,11 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     ) { isResumable ->
                         if (!isResumable) {
                             // Delete downloaded file, so the user can restart the download
-                            mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                            mainViewModel.deleteDownloadedFile(
+                                requireContext(),
+                                updateData,
+                                true
+                            )
                         }
 
                         // Setup the work request before enqueueing it
@@ -1116,7 +1131,11 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                         enqueueDownloadWork()
                     }
                     // Delete downloaded file, so the user can restart the download
-                    mainViewModel.deleteDownloadedFile(requireContext(), updateData)
+                    mainViewModel.deleteDownloadedFile(
+                        requireContext(),
+                        updateData,
+                        true
+                    )
                 }
             }
         }
@@ -1133,7 +1152,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
             View.OnClickListener {
                 mainViewModel.cancelDownloadWork(requireContext(), updateData)
 
-                Handler().postDelayed(
+                Handler(Looper.getMainLooper()).postDelayed(
                     { mainViewModel.updateDownloadStatus(NOT_DOWNLOADING) },
                     250
                 )

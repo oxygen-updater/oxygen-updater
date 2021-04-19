@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.text.format.DateUtils
 import android.text.format.DateUtils.FORMAT_SHOW_DATE
 import android.text.format.DateUtils.FORMAT_SHOW_TIME
@@ -102,7 +103,7 @@ class NewsItemActivity : SupportActionBarActivity(
                 if (shouldDelayAdStart) {
                     logDebug(TAG, "Showing interstitial ad in 5s")
 
-                    Handler().postDelayed({
+                    Handler(Looper.getMainLooper()).postDelayed({
                         if (!isFinishing) {
                             ad.show(this@NewsItemActivity)
                         }
