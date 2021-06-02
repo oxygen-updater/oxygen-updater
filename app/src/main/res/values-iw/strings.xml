@@ -5,7 +5,7 @@
 	<!-- Update information strings-->
 	<string name="enable">הפעל</string>
 	<string name="update_information_description_not_available">עדכון זה אינו מציג מידע רשמי עבור תכונות חדשות. לרוב, עדכונים אלו מציגים תיקוני באגים, שיפורי ביצועים ו/או עדכוני אבטחה קריטיים למכשיר שלך</string>
-	<string name="update_information_file_name">File name: %1$s</string>
+	<string name="update_information_file_name">שם הקובץ: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">קיימת שגיאה בהורדה, והפעלה מחדש זו פעולה נדרשת, ברשותך האפשרות במקום זאת להשתמש בקישור זה בשביל להוריד את קובץ העדכון מהדפדפן. שים לב שלאחר ההורדה יש להזיז את קובץ ההורדה מתיקיית ההורדה אל תיקיית האם, התיקייה הראשית. קישור זה מהווה מקור עבור האפליקציה בכדי להוריד עדכון מערכת זה. משמעות הדבר היא שמדובר בעדכון רשמי מ־OnePlus שרת OTA. קישור:\n%1$s</string>
 	<string name="update_information_header">עדכן</string>
@@ -13,8 +13,7 @@
 	<string name="update_information_banner_server">הקש כאן כדי להציג הודעות חשובות</string>
 	<string name="update_information_banner_advanced_mode_tip">את/ה בחרת את מסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.</string>
 	<string name="update_information_header_advanced_mode_hint">מצב מתקדם מופעל</string>
-	<string name="update_information_header_advanced_mode_helper">בחרת במסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.
-	ההגדרות</string>
+	<string name="update_information_header_advanced_mode_helper">בחרת במסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.</string>
 	<string name="update_information_different_version_changelog_notice">הינך צופה ביומן השינויים עבור הגרסה האחרונה בשיטת \"%1$s\". אם ברצונך להתקין עדכון זה, עלייך להדליק מצב מתקדם (בהגדרות). אך אם ברצונך לצפות ביומן השינויים עבור הגרסה הנוכחית, חזור אל השיטה בה המכשיר כעת.</string>
 	<string name="update_information_last_checked_on">נבדק בפעם האחרונה %1$s</string>
 	<string name="update_information_no_update_data_available">אין מידע זמין עבור עדכון זה</string>
@@ -107,11 +106,11 @@
 	<string name="theme_auto">אוטומטי</string>
 
 
-	<string name="theme_light_subtitle">עיצוב עם רקע לבן ואדום של ואן פלוס כצבע ראשי</string>
+	<string name="theme_light_subtitle">עיצוב עם רקע לבן ואדום של OnePlus כצבע ראשי</string>
 	<string name="theme_dark_subtitle">צבע ראשי אדום של OnePlus ביחד עם רקע כמעט שחור. מומלץ להשתמש בעיצוב זה כדי לחסור בחיי סוללה, במיוחד במכשירים עם פאנל AMOLED.</string>
 	<string name="theme_system_subtitle">השתמש בעיצוב הנוכחי של המערכת. (ניתן להגדיר זאת בהגדרות תצוגה) משתנה לפי ההגדרות של המכשיר</string>
 	<string name="theme_auto_subtitle">הפעל בין עיצוב בהיר לכהה על ידי השעה של היום, בשביל למנוע כאב לעיניים בשעות הלילה.</string>
-	<string name="theme_additional_note">הערה: אם מצב \"אוטומטי\" מופעל וחיסכון בסוללה מופעל, עיצוב כהה יופעל למשך כל שעות היום ללא קשר לשעות היום.</string>
+	<string name="theme_additional_note">הערה: אם מצב \"אוטומטי\" מופעל וחיסכון בסוללה מופעל, עיצוב כהה יופעל למשך כל שעות היום.</string>
 
 	<string name="settings">הגדרות</string>
 	<string name="settings_buy_button_buy">קנה (%1$s)</string>
@@ -123,9 +122,9 @@
 
 	<string name="settings_device">מכשיר</string>
 	<string name="settings_entered_incorrectly">שגיאה בשמירת ההגדרות. אנא חזור אחורה ובחר את המכשיר/ שיטת העדכון שנית</string>
-	<string name="settings_explanation_incremental_full_update">עדכון מצטבר יכול להיות מותקן בכל מקרה (חוץ ממקרה בו פתחת את הbootloader, אז עליך לקחת תמיד את העדכון המלא כשיטת עדכון). \n\n עדכון בטא של OxygenOS יכול תמיד להיות מותקן גם כשאתה על גרסת בטא וגם כשאתה על גרסה יציבה. כדי להחליף מגרסה יציבה לגרסת בטא, עליך להפעיל את מצב מתקדם בהגדרות. שיטות העדכונים: Beta, Full, Incremental.</string>
+	<string name="settings_explanation_incremental_full_update">עדכון מצטבר יכול להיות מותקן בכל מקרה (חוץ ממקרה בו פתחת את ה-bootloader, אז עליך לקחת את שיטת 'העדכון המלא'). \n\n עדכון בטא של OxygenOS יכול תמיד להיות מותקן גם על גרסת בטא וגם על גרסה יציבה. כדי להחליף מגרסה יציבה לגרסת בטא, עליך להפעיל את 'מצב מתקדם' בהגדרות. שיטות העדכונים: Beta, Full, Incremental.</string>
 
-	<string name="settings_push_from_server">הודעות ואזהרות</string>
+	<string name="settings_push_from_server">הודעות ואזהרות - כללי</string>
 	<string name="settings_push_new_version">הודעות על עדכון מערכת חדש</string>
 	<string name="settings_push_new_device">הודעות על מכשיר חדש שנתמך</string>
 	<string name="settings_push_news">עדכוני חדשות</string>
@@ -148,7 +147,7 @@
 	<string name="onboarding_finished_button">התחל אפליקציה</string>
 
 	<string name="onboarding_page_1_title">ברוך הבא ל־Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">יישום זה ייאפשר לך לעשות: \n\n&#8226; לקבל גישה מהירה לעדכוני גרסת האנדרואיד האחרונה עבור מכשירי OnePlus המריצים את OxygenOS\n\n&#8226; לעדכן בקלות מכשירים עם גישת Root\n\n&#8226; לראות מה חדש בעדכון המערכת שהינך משתמש בו \n\n&#8226; לקרוא את החדשות האחרונות על חברת OnePlus ומערכת ההפעלה OxygenOS\n\n החלק שמאלה כדי להמשיך</string>
+	<string name="onboarding_page_1_text">יישום זה ייאפשר לך לעשות: \n\n&#8226; לקבל גישה מהירה לעדכוני גרסת האנדרואיד האחרונה עבור מכשירי OnePlus המריצים את OxygenOS\n\n&#8226; לעדכן בקלות מכשירים עם גישת Root\n\n&#8226; לגלות מה חדש בעדכון המערכת שהינך משתמש בו \n\n&#8226; לקרוא את החדשות האחרונות על חברת OnePlus ומערכת ההפעלה OxygenOS\n\n החלק שמאלה כדי להמשיך</string>
 	<string name="onboarding_page_1_caption">אפליקציה זאת אינה אפליקציה רשמית מחברת OnePlus ואינה מתיימרת להיות אחת כזו. שימוש באפליקציה זאת היא על אחריותך בלבד. OnePlus או מפתחי האפליקציה אינם אחראים לפעולות שתעשה באפליקציה, המשמעות היא שכל נזק הנגרם עקב שימוש באפליקציה זאת על אחריותך בלבד. .\n\שימוש באפליקציה זאת משמעותה שהינך מסכים ומאשר את התנאים וההגבלות כאמור לעיל.</string>
 	<string name="onboarding_page_2_title">בחר את המכשיר שלך</string>
 	<string name="onboarding_page_2_caption">המכשיר שלך לרוב נבחר בצורה אוטומטית. אך אם לא בחר את המכשיר בצורה ידנית</string>
@@ -180,7 +179,7 @@
 	<string name="install_options_reboot_after_install">הפעל מחדש אחרי ההתקנה</string>
 	<string name="install_options_select_root_package">בחר את חבילת הRoot להתקנה…</string>
 	<string name="install_options_start_install">התחל בהתקנה</string>
-	<string name="install_options_subtitle">בחר את אפשרויות ההתקנה</string>
+	<string name="install_options_subtitle">התאם את ההתקנה לפי רצונך</string>
 	<string name="install_options_wipe_cache_partition">מחק את מחיצת המטמון</string>
 
 	<string name="install_options_explanation_title">מה האפשרויות האלו אומרות?</string>
@@ -190,12 +189,12 @@
 	<string name="install_options_explanation_reboot">הפעלה מחדש לאחר ההתקנה: \nכשתבחר/י באפשרות זו, המכשיר שלך יופעל מחדש באופן אוטומטי חזרה לOxygenOS אחרי שהעדכון יותקן. אחרת, המכשיר שלך יישאר במצב שחזור, איפה שאתה יכול להתקין חבילות נוספות.</string>
 
 	<string name="install_method_chooser_title">בחר/י שיטת עדכון</string>
-	<string name="install_method_chooser_subtitle">איך את/ה רוצה להתקין את העדכון?</string>
-	<string name="install_method_chooser_automatic_title">התקנה אוטומטית*</string>
+	<string name="install_method_chooser_subtitle">איך ברצונך להתקין את העדכון?</string>
+	<string name="install_method_chooser_automatic_title">התקנה אוטומטית</string>
 	<string name="install_method_chooser_automatic_description">הדרך הכי קלה להתקין את העדכון. \nהמכשיר שלך יופעל מחדש כדי להתקין את העדכון. \n\*דורש גישת Root ושחזור TWRP.</string>
 
 	<string name="install_method_chooser_manual_title">התקנה ידנית</string>
-	<string name="install_method_chooser_manual_description">קרא/י את מדריך ההתקנה כדי ללמוד איך להתקין את העדכון. את/ה תתקינ/י את העדכון דרך מצב השחזור של המכשיר שלך.</string>
+	<string name="install_method_chooser_manual_description">קרא את מדריך ההתקנה כדי ללמוד איך להתקין את העדכון. העדכון יתבצע דרך מצב השחזור של המכשיר שלך.</string>
 
 	<string name="install_temporary_error">אירעה שגיאה זמנית במהלך הכנת התקנת העדכון. אנא נסה שנית.</string>
 
@@ -216,39 +215,40 @@
 	<string name="install_guide_no_root">התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
 	<string name="install_guide_automatic_install_disabled">עדכונים אוטומטיים הושבתו זמנית עקב בעיות טכניות שדווחו. התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
 	<string name="install_guide">מדריך התקנה</string>
-	<string name="install_guide_subtitle">מדריך התקנה - %1$d של %2$d</string>
+	<string name="install_guide_subtitle">מדריך התקנה - %1$d מתוך %2$</string>
 	<string name="install_guide_tip">&#8226; מומלץ לרשום את כל השלבים מכיוון שכיבוי המכשיר הוא אחד משלבי ההדרכה של ההתקנה.</string>
 
 	<string name="install_guide_page_1_title">הורד את העדכון</string>
 	<string name="install_guide_page_1_text">לחצ/י על כפתור ההורדה כדי להתחיל בהורדת העדכון. \n\n&#8226;תהליך &#8226; ההורדה יופיע באפליקציה, וכהתראה במסך ההתראות. \n\n&#8226;כשההורדה תסתיים את/ה תראה התראה עם הטקסט \"ההורדה הושלמה\".\n אם שגיאת הורדה מופיעה, פתח/י את האפליקציה ונסה להוריד את העדכון שוב. אם זה לא עובד, וודא/י שיש לך חיבור אינטרנט יציב. אחרת צור/צרי קשר עם המפתחים של האפליקציה. את/ה יכולה לעשות זאת על ידי ביקור בחלון \"האפליקציות והמשחקים שלי\" בחנות הGoogle Play.</string>
 
-	<string name="install_guide_page_2_title">הכנה להתקנה</string>
-	<string name="install_guide_page_2_text">"הערה: התקנת העדכון מתבצעת בדף מיוחד מעדכוני המערכת הסטנדרטיים במכשיר שלך. אם מסיבה כלשהי מופיע עדכון מערכת בדף זה, תוכל גם לבחור להתקין את העדכון הזה תחילה. לאחר מכן, פתח את Oxygen Updater שנית כדי לראות אם אתה נמצא בגרסה העדכנית ביותר.
+	<string name="install_guide_page_2_title">הכנות להתקנה</string>
+	<string name="install_guide_page_2_text">"הערה: התקנת העדכון מתבצעת בעמוד מיוחד בעדכוני המערכת הסטנדרטיים במכשיר שלך. אם מסיבה כלשהי מופיע עדכון מערכת בעמוד זה, באפשרותך לבחור להתקין את העדכון הזה תחילה. לאחר מכן, באפשרותך לבדוק באמצעות Oxygen Updater האם קיימים עדכוני מערכת נוספים.
 
 הוראות:
-&#8226; סגור את Oxygen Updater על ידי לחיצה על כפתור הבית.
+&#8226; נא לסגור את Oxygen Updater על ידי לחיצה על כפתור הבית.
 
-&#8226; פתח את יישום ההגדרות של המכשיר. לרוב מופיע במגירת האפליקציות
+&#8226; נא לפתוח את יישום ההגדרות של המכשיר. לרוב היישום מופיע במגירת האפליקציות
 
-&#8226; החלק למטה עד שתמצא תפריט בשם מערכת, בתוך המערכת לחץ על עדכוני מערכת."</string>
+&#8226; נא להחליק למטה עד מציאת סעיף בשם מערכת, נא לפתוח את סעיף 'מערכת' ובתוך סעיף 'מערכת' יש לפתוח את סעיף 'עדכוני מערכת'."
+</string>
 
 	<string name="install_guide_page_3_title">התקנת העדכון</string>
 	<string name="install_guide_page_3_text">"הגיע הזמן להתקין את העדכון.
 
-&#8226; בעמוד עדכוני המערכת, לחץ על גלגל השיניים הנמצא בצד שמאל למעלה
+&#8226; בעמוד עדכוני המערכת, לחץ כעת על אייקון גלגל השיניים הנמצא בצד שמאל למעלה
 
-&#8226; כעת, בחר באפשרות \"שדרוג מקומי\". הגיע הזמן לבחור את הקובץ
+&#8226; כעת, בחר בסעיף \"שדרוג מקומי\". הגיע הזמן לבחור את הקובץ
 
-&#8226; בחר את קובץ העדכון שהורדת באמצעות Oxygen Updater. השם שלו אמור להתחיל עם \"%1$sOxygen\".
+&#8226; בחר את קובץ העדכון שהורדת באמצעות אפליקציית Oxygen Updater. שם הקובת צפוי להתחיל עם \"%1$sOxygen\".
 
 &#8226; לחץ על \"שדרג עכשיו\". ההתקנה אמורה להתחיל באופן אוטומטי."</string>
 
 	<string name="install_guide_page_4_title">המתן עד שההתקנה תסתיים</string>
-	<string name="install_guide_page_4_text">"&#8226; המכשיר שלך יתקין כעת את העדכון ויציג בר התקדמות. אנא היעזר בסבלנות עד שההתקנה תגיע לסופה. ההתקנה עלולה לקחת בין כמה דקות עד ל15 דקות.
+	<string name="install_guide_page_4_text">"&#8226; מכשירך יתקין כעת את העדכון ויציג בר התקדמות. אנא היעזר בסבלנות עד שההתקנה תגיע לסופה. ההתקנה עלולה לקחת בין כמה דקות עד ל-15 דקות.
 
 &#8226; לאחר מכן, מכשירך יופעל מחדש כדי ליישם את העדכון."</string>
 
-	<string name="install_guide_page_5_title">בוצע. תהנה עם הגרסה החדשה של OxygenOS!</string>
+	<string name="install_guide_page_5_title">העדכון הושלם!</string>
 	<string name="install_guide_page_5_text">&#8226; לאחר שמכשירך סיים לעשות מיטוב אפליקציות, משמעות הדבר הוא שהעדכון הותקן בהצלחה. \nבשביל לאמת זאת, הינך מוזמן לבדוק את הגרסה הנוכחית של המערכת שלך על ידי: \n\n&#8226;כניסה להגדרות המכשיר, ולחיצה על "מידע על הטלפון"  ומשם מוזמן לבדוק את גרסת הOxygenOS. \n\n&#8226;אם אהבת את האפליקציה, נשמח אם תדרג אותנו ב5 כוכבים ב־Google Play!</string>
 
 	<string name="install_guide_close_button">סגור מדריך התקנה</string>
@@ -281,10 +281,10 @@
 	<!-- About screen strings -->
 	<string name="about">אודות</string>
 	<string name="about_description">אפליקציה זו מורידה עדכונים רשמיים היישר מתוך השרתים של OnePlus, ואף מאשרת את שלמות קובץ העדכון לפני שהמשתמש יוכל להוריד אותו מהאפליקציה. על ידי כך, האפליקציה מאפשרת לך לדלג על ההמתנה של שחרור העדכונים ולהוריד עדכונים רשמיים במהירות האפשרית. אם אתם נתקלים בבאגים בתוכנה, דווחו זאת ל־OnePlus ישירות: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. אתם מוזמנים להצטרף<a href="https://discord.gg/5TXdhKJ"> לשרת ה־Discord שלנו </a>בשביל שתוכלו לדבר עם משתמשים אחרים על העדכונים האחרונים. בנוסף תרגישו חופשי לשלוח לנו אימייל בכתובת <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> עם הרעיונות/המשוב שלכם.</string>
-	<string name="about_support">אם ברצונך לתמוך בנו, את/ה יכול/ה לקנות תוספת המעניקה לך חופש מפרסומות (יישום/ הגדרות), או תתרום לנו בעמוד הPateron: <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_support">אם ברצונך לתמוך בנו, באפשרותך לקנות תוספת המעניקה לך חופש מפרסומות (יישום/ הגדרות), או לתרום לנו בעמוד ה- <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
 	<string name="about_background_story_header">סיפור רקע</string>
-	<string name="about_background_story">אפליקציית Oxygen Updater פותחה במקור על ידי Arjan Vlek ככלי מעקב אחר אפליקציה אחרת שלו, המכונה <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (היא מספקת פונקציונליות דומה עבור משתמשי Cyanogen OS). \n\nאחרי 4 שנים, ביולי 2019, Arjan החליט לפרוש משני הפרויקטים והעביר את הבעלות על האפליקציה לצוות מפתחים שמגיעים ממדינות שונות. הם לקחו על עצמם את האחריות לספק לקהילה שירות מצויין ומהיר; תמיכה לקבלת עדכונים למכשירי OnePlus מהר יותר. \nהינך מוזמן לקרוא את ההכרזה <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">כאן</a>.\n\n ב14 לאוגוסט 2019 נרשמה המהדורה הראשונה תחת הבעלים החדשים, שהגיע עם תכונות חדשות כמו מצב חושך ועיצוב שונה לגמרי. \n\nעבור עוד מידע על הצוות בדוק את <a href="https://oxygenupdater.com/team/">האתר שלנו</a></string>
-	<string name="about_third_party_app_notice">שימו לב, זוהי אינה אפליקציה רשמית מOnePlus. \n שם הOnePlus, לוגו הOnePlus וOxygenOS הם רכוש של OnePlus. \n Android, Google, Google Play, Google Play Logo הם סימנים מסחריים רשומים של Google Inc. \nאפליקציה זאת משתמשת בנתונים מבית OnePlus ומחברת האם שלה Oppo כדי להראות מידע על עדכונים.</string>
+	<string name="about_background_story">אפליקציית Oxygen Updater פותחה במקור על ידי Arjan Vlek ככלי מעקב אחר תוכנה אחרת שלו, המכונה <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (היא מספקת פונקציונליות דומה עבור משתמשי Cyanogen OS). \n\nאחרי 4 שנים, ביולי 2019, Arjan החליט לפרוש משני הפרויקטים והעביר את הבעלות על האפליקציה לצוות מפתחים שמגיעים ממדינות שונות. הם לקחו על עצמם את האחריות לספק לקהילה שירות מצויין ומהיר; תמיכה לקבלת עדכונים למכשירי OnePlus מהר יותר. \nהינך מוזמן לקרוא את ההכרזה <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">כאן</a>.\n\n ב-14 לאוגוסט 2019 נרשמה המהדורה הראשונה תחת הבעלים החדשים, שהגיע עם תכונות חדשות כמו מצב חושך ועיצוב שונה לגמרי. \n\nעבור עוד מידע על הצוות בדוק את <a href="https://oxygenupdater.com/team/">האתר שלנו</a></string>
+	<string name="about_third_party_app_notice">שימו לב, זוהי אינה אפליקציה רשמית מ-OnePlus. \n שם ה-OnePlus, לוגו ה-OnePlus ו-OxygenOS הם רכוש של OnePlus. \n Android, Google, Google Play, Google Play Logo הם סימנים מסחריים רשומים של Google Inc. \nאפליקציה זאת משתמשת בנתונים מבית OnePlus ומחברת האם שלה Oppo כדי להראות מידע על עדכונים.</string>
 	<string name="about_rate_button_text">דרג</string>
 	<string name="about_website_button_text">אתר</string>
 	<string name="about_email_button_text">מייל</string>
@@ -301,8 +301,8 @@
 	<string name="download_status_notification_channel_name">מצב הורדה</string>
 	<string name="verification_status_notification_channel_name">מצב אימות</string>
 	<string name="installation_status_notification_channel_name">מצב התקנה</string>
-	<string name="update_notification_channel_name">עדכון מערכת זמין</string>
-	<string name="news_notification_channel_name">מאמר חדשות פורסם</string>
+	<string name="update_notification_channel_name">עדכון מערכת חדש זמין למכשירך</string>
+	<string name="news_notification_channel_name">כתבה חדשה פורסמה באפליקציה!</string>
 	<string name="device_notification_channel_name">מכשיר חדש נתמך</string>
 	<string name="general_notification_channel_name">כללי</string>
 	<string name="filename_submitted_notification_channel_name">שם קובץ OTA הוגש</string>
@@ -319,13 +319,13 @@
 	<string name="help">עזרה</string>
 	<string name="help_text">ברוכים הבאים לחלקת העזרה של Oxygen Updater. \n\nעזרה מכסה את הנושאים הבאים: \n\n• עדכן את המכשיר שלך\n•קריאת חדשות אחרונות\n•צפייה בפרטי המכשיר\n• שינוי הגדרות\n\n גרור מטה כדי לדפדף דרך הנושאים.</string>
 	<string name="help_updating_your_device_title">עדכן את המכשיר שלך</string>
-	<string name="help_updating_your_device_text">בזמן שהאפליקציה פתוחה, אתה תראה אם קיים עדכון מערכת חדש. אם יש עדכון זמין, אתה יכול להתקין אותו. \n\nToכדי להתחיל את ההתקנה, לחץ על כפתור \"הורדה \" (מתחת לתיאור העדכון) כדי להתחיל את ההורדה. כשההורדה הסתיימה, מסך ההתקנה יופיע. אם עזבת את האפליקציה או שהמסך לא הופיע, לחץ על כפתור \"התקן\", שנמצא עכשיו ליד כפתור ה-\"הורד עדכון\".\n\nמסך ההתקנה יבדוק קודם אם יש לכם גישת Root. אם יש לכם גישת Root, הענק גישת Root כשתתבקש/י ותבחר/י איך את/ה רוצה להתקין את העדכון. אחרת אם אין לך גישת Root, עקוב אחר ההוראות בשביל התקנה ידנית. \n\nהתקנה אוטומטית: אתה תצטרך לבחור את אפשרויות ההתקנה, ההגדרות ברירית מחדל הם מומלצות, חוץ מזה שאתה צריך לציין את חבילת הRoot כשצריכה להיות מותקנת מחדש. בחר חבילת Root (קובץ zip) על ידי שימוש בכפתור תיקייה הכחולה ולחץ על \"התחל בהתקנה\" כדי להתחיל את ההתקנה. \n\nהתקנה ידנית: \nאתה תראה מדריך התקנה במסך שלך. רשום את ההוראות ובצע אותם כאמור להתקנת העדכון.</string>
-	<string name="help_reading_news_title">קורא את החדשות האחרונות</string>
-	<string name="help_reading_news_text">חדשות מוצגות משמאל למסך העדכון. הפריטים האחרונים מופיעים למעלה. פשוט הקש על פריט כדי לקרוא אותו. \n לחץ על החץ חזור כדי לחזור למסך פריטי החדשות.</string>
-	<string name="help_device_information_title">צופה במידע על המכשיר שלך</string>
-	<string name="help_device_information_text">אתה יכול להציג חלק מהמפרט של המכשיר שלך באמצעות המסך שמימין של מסך העדכון. זה שימושי בעת הגשת בקשת תמיכה, במהלכה ייתכן שתתבקש לתת חלק מהמפרט של המכשיר שלך</string>
+	<string name="help_updating_your_device_text">בזמן שהאפליקציה פתוחה, יוצג לפניך אם קיים עדכון מערכת חדש. במידה וקיים עדכון מערכת חדש תהיה לך האפשרות להוריד את העדכון. \n\nכדי להתחיל בהתקנה, לחץ על כפתור \"הורד עדכון\" ולאחר מכן כשההורדה הסתיימה, מסך ההתקנה יופיע. אם עזבת את האפליקציה או שהמסך לא הופיע, לחץ על כפתור \"העדכון ירד בהצלחה\".\n\nראשית, מסך ההתקנה יבדוק אם יש לכם גישת Root. אם יש לכם גישת Root, הענק גישת Root כשתתבקש/י ולאחר מכן יהיה באפשרותך לבחור את שיטת ההתקנה הרצויה. במידה ואין לך גישת Root, עקוב אחר ההוראות בשביל התקנה ידנית. \n\nהתקנה אוטומטית: יהיה עליך לבחור את אפשרויות ההתקנה, אנו ממליצים להשתמש בהגדרות ברירת המחדל, יש לציין שיש צורך בחבילת ה-Root הרצויה שצריכה להיות מותקנת מחדש. בחר חבילת Root (קובץ zip) על ידי שימוש באייקון בצורת תיקייה כחולה ולחץ על \"התחל בהתקנה\" כדי להתחיל את ההתקנה. \n\nהתקנה ידנית: \nיוצג לך מדריך התקנה במסך שלך. אנו ממליצים לרשום את ההוראות במקור חיצוני: (דף, מחשב...) ולבצע אותם כאמור למדריך ההתקנה.</string>
+	<string name="help_reading_news_title">קרא את החדשות האחרונות</string>
+	<string name="help_reading_news_text">חדשות מוצגות משמאל למסך העדכון. הפריטים האחרונים מופיעים למעלה. הקש על כפתור ה-I כדי לקרוא אותם. \n לחץ על החץ חזור כדי לחזור למסך פריטי החדשות.</string>
+	<string name="help_device_information_title">צפה במידע על המכשיר שלך</string>
+	<string name="help_device_information_text">באפשרותך לצפות בחלק מהמפרט של המכשיר שלך באמצעות המסך שמשמאל למסך פריטי החדשות. דבר זה עלול להיות שימושי בעת הגשת בקשת תמיכה, במהלכה ייתכן שתתבקש לתת חלק מהמפרט של המכשיר שלך.</string>
 	<string name="help_change_settings_title">שינוי הגדרות</string>
-	<string name="help_change_settings_text">אתה יכול לשנות את ההגדרות שלך על ידי הקשה על שלושת הנקודות באיזור הימני למעלה, ולחיצה על הגדרות. \nאתה יכול לשנות את ההגדרות הבאות: \n\n•דגם מכשיר ושיטת עדכון \n•התראות דחיפה \n•הגדרות פרטיות (העלאת לוג). \n\n השתמש במתגים כדי להפעיל ולכבות את ההתראות / הגדרות הפרטיות. בחר מכשיר ו/או שיטת עדכון באמצעות התפריטים הנפתחים המוצגים מעל המתגים. התפריטים הנפתחים אינם גלויים? בדוק את חיבור האינטרנט ופתח את מסך ההגדרות שנית.</string>
+	<string name="help_change_settings_text">באפשרותך לשנות את ההגדרות שלך על ידי לחיצה על גלגל השיניים הנמצא בסרגל הניווט. \nבאפשרותך לשנות לשנות את ההגדרות הבאות: \n\n•דגם מכשיר ושיטת עדכון \n•התראות דחיפה \n•הגדרות פרטיות (העלאת לוג). \n\n השתמש במתגים כדי להפעיל ולכבות את ההתראות / הגדרות הפרטיות. בחר מכשיר ו/או שיטת עדכון באמצעות התפריטים הנפתחים המוצגים מעל המתגים. התפריטים הנפתחים אינם גלויים? בדוק את חיבור האינטרנט ופתח את מסך ההגדרות שנית.</string>
 
 	<!-- News strings -->
 	<string name="news">חדשות</string>
@@ -333,15 +333,15 @@
 	<string name="news_empty">לכתבה זאת אין תוכן.</string>
 	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"RETRY\" button to open the article.</string>
 	<string name="news_load_id_error"><![CDATA[אירעה שגיאה בעת פתיחת המאמר משום שהקישור לא תקין: %1$s. בדוק את קישור הURL ודווח לנו זאת דרך <a href="mailto:support@oxygenupdater.com">המייל</a> או דרך <a href="https://discord.gg/5TXdhKJ">שרת הDiscord שלנו </a>.]]></string>
-	<string name="news_unread_count_1">יש לך %1$d כתבות שלא קראת. לחץ כאן כדי לקרוא אותם.</string>
+	<string name="news_unread_count_1">גילינו שלא קראת %1$d כתבות. לחץ כאן כדי לקרוא אותם.</string>
 	<string name="news_unread_count_2">יש לך %1$d כתבות שלא קראת. לחץ כאן כדי להציג את כל הכתבות.</string>
 	<string name="news_mark_read">סמן כנקרא</string>
 	<string name="news_mark_unread">סמן כלא נקרא</string>
 	<string name="news_mark_all_read">סמן ככל המאמרים כנקרא</string>
 	<string name="news_empty_state_none_available_header">אין מאמרים עדיין</string>
-	<string name="news_empty_state_all_read_header">אין מאמר נוסף לקרוא</string>
+	<string name="news_empty_state_all_read_header">אין כתבה שלא קראת!</string>
 	<string name="news_empty_state_none_available_text">אין מאמרים זמינים ברגע זה, בדוק שוב מאוחר יותר.</string>
-	<string name="news_empty_state_all_read_text">קראת את כל המאמרים. עבודה טובה! \nאנחנו מקווים שנהנת לקרוא את המאמרים שלנו, ולמדת משהו חדש מהם. \n\n הקש על הבאנר שוב כדי להציג את כל המאמרים.</string>
+	<string name="news_empty_state_all_read_text">קראת את כל הכתבות. עבודה טובה! \nאנחנו מקווים שנהנתה לקרוא את הכתבות שלנו, ולמדת משהו חדש מהם. \n\n הקש על הבאנר שנית כדי להציג את כל הכתבות.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">עזור לנו לשפר את האפליקציה</string>
