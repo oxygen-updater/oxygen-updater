@@ -457,6 +457,6 @@ Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käytt
 	<string name="loading">"Ladataan…"</string>
 	<string name="processing">"Prosessoidaan…"</string>
 	<string name="choose_file">"Valitse tiedosto"</string>
-	<string name="update_information_description_not_available">"Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugikorjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi."</string>
+	<string name="update_information_description_not_available">"Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugikorjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi. Jotta se pysyy turvallisena"</string>
 	<string name="error_google_play_button_text">"Play Kauppa"</string>
 </resources>
