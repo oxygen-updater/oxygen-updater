@@ -11,8 +11,7 @@
 	<string name="update_information_header">"Aggiorna"</string>
 	<string name="update_information_error_title">Errore nel recuperare gli ultimi aggiornamenti.</string>
 	<string name="update_information_banner_server">Premi qui per i messaggi importanti</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable modalità avanzata if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">Hai selezionato il canale di aggiornamenti \"%1$s\". Abilita la modalità avanzata se vuoi passare a questo canale di aggiornamenti.</string>
 	<string name="update_information_header_advanced_mode_hint">La modalità avanzata è abilitata</string>
 	<string name="update_information_header_advanced_mode_helper">Grazie alla modalità avanzata, puoi scaricare l\'ultima ZIP per \"%1$s\".\n\nPuoi disattivare la modalità avanzata nelle impostazioni.</string>
 	<string name="update_information_different_version_changelog_notice">Stai visualizzando il changelog dell\'ultimo aggiornamento sulla traccia \"%1$s\". Se intendi installare questo aggiornamento, devi abilitare la modalità avanzata (impostazioni).\n\nPer visualizzare il changelog attuale devi scegliere la modalità di aggiornamento corretta.</string>
@@ -242,7 +241,7 @@ Il tuo dispositivo si riavvierà.
 	<string name="install_guide_automatic_install_disabled">"Le installazioni automatiche sono state temporaneamente disabilitate a causa di un problema tecnico. Installa l'aggiornamento secondo le istruzioni mostrate nella guida."</string>
 	<string name="install_guide">"Guida d'installazione"</string>
 	<string name="install_guide_subtitle">"Guida - %1$d of %2$d"</string>
-	<string name="install_guide_tip">"&#8226; È consigliato scriversi tutti i passaggi, giacché è ecessario spegnere il dispositivo durante l'installazione."</string>
+	<string name="install_guide_tip">"&#8226; È consigliato scriversi tutti i passaggi, giacché è necessario spegnere il dispositivo durante l'installazione."</string>
 	<string name="install_guide_page_1_title">"Scarica l'aggiornamento."</string>
 	<string name="install_guide_page_1_text">"&#8226; Premi il bottone Download per iniziare a scaricare.
 
@@ -325,28 +324,27 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="notification_new_device_text">"Il %1$s è ora supportato. Apri l'app o scegli il dispositivo."</string>
 	<string name="notification_no_notification_support">"Installa o aggiorna i servizi Google Play per abilitare le notifiche push."</string>
 	<string name="notification_version">"%1$s è ora disponibile per %2$s!"</string>
-	<!-- TODO: translate these 19 strings below -->
-	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="download_and_installation_notifications_group_name">Download &amp; Installazione</string>
 	<string name="push_notifications_group_name">"Notifiche push"</string>
-	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
+	<string name="miscellaneous_notifications_group_name">Varie</string>
 	<string name="download_and_installation_notifications_group_description">"Mostra tutte le notifiche non-importanti dell'app. "</string>
 	<string name="push_notifications_group_description">"Mostra tutte le notifiche importanti dell'app. Inclusi aggiornamenti di sistema e novità importanti."</string>
-	<string name="download_status_notification_channel_name">Download status</string>
-	<string name="verification_status_notification_channel_name">Verification status</string>
-	<string name="installation_status_notification_channel_name">Installation status</string>
+	<string name="download_status_notification_channel_name">Stato del download</string>
+	<string name="verification_status_notification_channel_name">Stato della verifica</string>
+	<string name="installation_status_notification_channel_name">Stato dell\'installazione</string>
 	<string name="update_notification_channel_name">"Aggiornamento sistema disponibile."</string>
-	<string name="news_notification_channel_name">News article published</string>
+	<string name="news_notification_channel_name">Articolo pubblicato</string>
 	<string name="device_notification_channel_name">"Nuovo dispositivo supportato"</string>
-	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
-	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
-	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
-	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
-	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
-	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
-	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
-	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
+	<string name="general_notification_channel_name">Generali</string>
+	<string name="filename_submitted_notification_channel_name">Nome del file OTA inviato</string>
+	<string name="download_status_notification_channel_description">Notifiche che riflettono lo stato di un download: in attesa, attivo, completato, oppure fallito</string>
+	<string name="verification_status_notification_channel_description">Notifiche che riflettono lo stato del processo di verifica di un file: attivo, completato, oppure fallito.\nLe checksum MD5 dei file scaricati sono verificate per assicurare che il file non sia stato modificato, e che sia un file di aggiornamento valido.</string>
+	<string name="installation_status_notification_channel_description">Ricevi una notifica se un aggiornamento è stato installato con successo oppure no</string>
+	<string name="update_notification_channel_description">Ricevi una notifica quando c\'è un aggiornamento disponibile per il dispositivo &amp; il metodo di aggiornamento selezionato</string>
+	<string name="news_notification_channel_description">Ricevi una notifica quando pubblichiamo un nuovo articolo</string>
+	<string name="device_notification_channel_description">Ricevi una notifica quando l\'app aggiunge il supporto per un nuovo dispositivo</string>
+	<string name="general_notification_channel_description">Notifiche generali che non fanno parte di altre categorie</string>
+	<string name="filename_submitted_notification_channel_description">Ricevi una notifica quando ha inviato il nome del file OTA con successo al nostro team.\nPuoi disabilitare l\'invio automatico dei nomi dei file nelle impostazioni dell\'app.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Aiuto"</string>
