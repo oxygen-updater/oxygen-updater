@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -31,6 +32,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.adapters.NewsItemButtonAdapter
 import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.exceptions.NetworkException
+import com.oxygenupdater.extensions.fullWidthAnchoredAdaptiveBannerAd
 import com.oxygenupdater.internal.WebViewClient
 import com.oxygenupdater.internal.WebViewError
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN
@@ -53,6 +55,8 @@ class NewsItemActivity : SupportActionBarActivity(
     R.layout.activity_news_item,
     MainActivity.PAGE_NEWS
 ) {
+
+    private lateinit var bannerAdView: AdView
 
     private val newsViewModel by viewModel<NewsViewModel>()
 
@@ -253,19 +257,27 @@ class NewsItemActivity : SupportActionBarActivity(
             return
         }
 
+        bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
+            R.string.advertising_news_banner_unit_id,
+            newsArticleAdViewContainer
+        )
+
         setupAds()
         loadNewsItem()
     }
 
     override fun onResume() = super.onResume().also {
+        bannerAdView.resume()
         webView.onResume()
     }
 
     override fun onPause() = super.onPause().also {
+        bannerAdView.pause()
         webView.onPause()
     }
 
     override fun onDestroy() = super.onDestroy().also {
+        bannerAdView.destroy()
         // We're invoking the listener here so that RecyclerView's standard item change/remove
         // animations run just after leaving the activity. This has two advantages:
         // 1. Better for UX, since the user can see the animations play out, which may
@@ -354,15 +366,15 @@ class NewsItemActivity : SupportActionBarActivity(
             // reset NestedScrollView padding
             nestedScrollView.setPadding(0, 0, 0, 0)
 
-            newsArticleAdView.isVisible = false
+            newsArticleAdViewContainer.isVisible = false
         }
     }
 
     private fun setupBannerAd() {
-        newsArticleAdView.apply {
+        newsArticleAdViewContainer.apply {
             isVisible = true
-            loadAd(buildAdRequest())
-            adListener = object : AdListener() {
+            bannerAdView.loadAd(buildAdRequest())
+            bannerAdView.adListener = object : AdListener() {
                 override fun onAdLoaded() = super.onAdLoaded().also {
                     logDebug(TAG, "Banner ad loaded")
 

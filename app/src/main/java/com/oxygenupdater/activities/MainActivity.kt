@@ -19,6 +19,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -40,6 +41,7 @@ import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.dialogs.MessageDialog
 import com.oxygenupdater.dialogs.ServerMessagesDialogFragment
+import com.oxygenupdater.extensions.fullWidthAnchoredAdaptiveBannerAd
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.fragments.AboutFragment
@@ -88,13 +90,15 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             R.string.error_no_internet_connection,
             Snackbar.LENGTH_INDEFINITE
         ).apply {
-            anchorView = bannerAdView
+            anchorView = bannerAdViewContainer
             setBackgroundTint(ContextCompat.getColor(this@MainActivity, R.color.colorError))
             setAction(getString(android.R.string.ok)) {
                 dismiss()
             }
         }
     }
+
+    private lateinit var bannerAdView: AdView
 
     private val mainViewModel by viewModel<MainViewModel>()
     private val billingViewModel by viewModel<BillingViewModel>()
@@ -144,6 +148,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     ) = super.onCreate(savedInstanceState).also {
         setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
 
+        bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
+            R.string.advertising_main_banner_unit_id,
+            bannerAdViewContainer
+        )
+
         toolbar.setOnMenuItemClickListener(this)
         setupViewPager()
 
@@ -162,7 +171,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     }
 
     override fun onResume() = super.onResume().also {
-        bannerAdView?.resume()
+        bannerAdView.resume()
         mainViewModel.checkForStalledAppUpdate().observe(
             this,
             appUpdateAvailableObserver
@@ -170,11 +179,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     }
 
     override fun onPause() = super.onPause().also {
-        bannerAdView?.pause()
+        bannerAdView.pause()
     }
 
     override fun onDestroy() = super.onDestroy().also {
-        bannerAdView?.destroy()
+        bannerAdView.destroy()
         viewPager?.unregisterOnPageChangeCallback(pageChangeCallback)
         noNetworkDialog.bypassListenerAndDismiss()
         mainViewModel.unregisterAppUpdateListener()
@@ -587,10 +596,10 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
         }
 
-        bannerAdView?.apply {
+        bannerAdViewContainer?.apply {
             if (shouldShowAds) {
                 isVisible = true
-                loadAd(buildAdRequest())
+                bannerAdView.loadAd(buildAdRequest())
 
                 bannerAdDivider.isVisible = true
             } else {

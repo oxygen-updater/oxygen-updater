@@ -16,7 +16,7 @@ import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger
 import com.oxygenupdater.utils.ThemeUtils
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 
 /**
  * Standardizes display of file sizes across the app, regardless of OS versions.
@@ -85,7 +85,7 @@ fun Context.openPlayStorePage() {
 }
 
 fun Context.openEmail() {
-    val systemVersionProperties by inject(SystemVersionProperties::class.java)
+    val systemVersionProperties by getKoin().inject<SystemVersionProperties>()
     val oxygenOsVersion = systemVersionProperties.oxygenOSVersion
     val oxygenOsOtaVersion = systemVersionProperties.oxygenOSOTAVersion
     val osType = systemVersionProperties.osType

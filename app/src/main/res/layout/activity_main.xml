@@ -81,12 +81,13 @@
 			android:layout_height="1dp"
 			android:background="?android:dividerVertical" />
 
-		<com.google.android.gms.ads.AdView
-			android:id="@+id/bannerAdView"
+		<FrameLayout
+			android:id="@+id/bannerAdViewContainer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:adSize="SMART_BANNER"
-			app:adUnitId="@string/advertising_main_banner_unit_id" />
+			android:visibility="gone"
+			tools:layout_height="64dp"
+			tools:visibility="visible" />
 
 		<View
 			android:layout_width="match_parent"

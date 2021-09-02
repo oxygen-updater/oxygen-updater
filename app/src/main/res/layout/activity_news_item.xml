@@ -149,15 +149,16 @@
 		android:layout_width="match_parent"
 		android:layout_height="1dp"
 		android:background="?android:dividerVertical"
-		app:layout_anchor="@id/newsArticleAdView"
+		app:layout_anchor="@id/newsArticleAdViewContainer"
 		app:layout_anchorGravity="top" />
 
-	<com.google.android.gms.ads.AdView
-		android:id="@+id/newsArticleAdView"
+	<FrameLayout
+		android:id="@+id/newsArticleAdViewContainer"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom|center_horizontal"
 		android:layout_marginBottom="0dp"
-		app:adSize="SMART_BANNER"
-		app:adUnitId="@string/advertising_news_banner_unit_id" />
+		android:visibility="gone"
+		tools:layout_height="64dp"
+		tools:visibility="visible" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
