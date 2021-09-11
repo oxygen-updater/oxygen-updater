@@ -9,7 +9,7 @@ import com.oxygenupdater.utils.DatabaseBuilders.NEWS_ITEMS_OLD_DB
 import com.oxygenupdater.utils.DatabaseBuilders.SUBMITTED_UPDATE_FILES_OLD_DB
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 
 /**
  * Migrations for all app databases/tables.
@@ -24,6 +24,16 @@ object DatabaseMigrations {
     private const val TAG = "DatabaseMigrations"
     private const val NEWS_ITEM_TABLE = "news_item"
     private const val SUBMITTED_UPDATE_FILE_TABLE = "submitted_update_file"
+
+    /**
+     * Was used from 4.3.0 — 5.3.0, when the app had migrated away from AIDL to
+     * Google Play Billing Library v3. It used a Room database as a cache for
+     * IAB responses, but in 5.4.0 when we upgraded GPBL to v4, we no longer
+     * needed a DB cache (code was simplified quite a bit).
+     */
+    fun deleteLocalBillingDatabase(
+        context: Context
+    ) = context.deleteDatabase(DatabaseBuilders.PURCHASES_OLD_DB)
 
     /**
      * Migration that pre-populates Room DB with old SQLite data.
@@ -54,7 +64,7 @@ object DatabaseMigrations {
         // function is called from the `onOpen` callback instead of `onCreate`.
         if (!migrationDone) {
             logDebug(TAG, "Starting migrations for SQLite to Room")
-            val context by inject(Context::class.java)
+            val context by getKoin().inject<Context>()
 
             migrateFromOldDb(
                 context,

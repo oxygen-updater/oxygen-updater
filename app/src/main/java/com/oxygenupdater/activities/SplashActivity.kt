@@ -7,6 +7,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.utils.DatabaseMigrations
 import com.oxygenupdater.utils.NotificationUtils
 import org.koin.android.ext.android.inject
 
@@ -30,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
             notificationUtils.createNewNotificationGroupsAndChannels()
         }
 
+        DatabaseMigrations.deleteLocalBillingDatabase(this)
         migrateOldSettings()
         chooseActivityToLaunch()
     }

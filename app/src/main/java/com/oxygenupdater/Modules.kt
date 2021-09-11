@@ -13,7 +13,6 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.DatabaseBuilders.buildLocalAppDatabase
-import com.oxygenupdater.utils.DatabaseBuilders.buildLocalBillingDatabase
 import com.oxygenupdater.utils.NotificationUtils
 import com.oxygenupdater.utils.createDownloadClient
 import com.oxygenupdater.utils.createNetworkClient
@@ -50,23 +49,21 @@ private val preferencesModule = module {
 
 private val repositoryModule = module {
     single { ServerRepository(get(), get(), get()) }
-    single { BillingRepository(get(), get()) }
+    single { BillingRepository(get()) }
 }
 
 private val viewModelModule = module {
-    viewModel { BillingViewModel(get(), get(), get()) }
+    viewModel { BillingViewModel(get(), get()) }
     viewModel { OnboardingViewModel(get(), get()) }
     viewModel { MainViewModel(get()) }
     viewModel { InstallViewModel(get()) }
     viewModel { NewsViewModel(get()) }
     viewModel { SettingsViewModel(get()) }
     viewModel { FaqViewModel(get()) }
-
 }
 
 private val databaseModule = module {
     single { buildLocalAppDatabase(androidContext()) }
-    single { buildLocalBillingDatabase(androidContext()) }
 }
 
 private val notificationModule = module {

@@ -1,23 +1,18 @@
 package com.oxygenupdater.viewmodels
 
 import android.app.Activity
-import android.app.Application
-import androidx.annotation.UiThread
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.internal.OnPurchaseFinishedListener
-import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.ServerPostResult
-import com.oxygenupdater.models.billing.AdFreeUnlock
-import com.oxygenupdater.models.billing.AugmentedSkuDetails
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -25,74 +20,40 @@ import kotlinx.coroutines.withContext
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class BillingViewModel(
-    application: Application,
     private val billingRepository: BillingRepository,
     private val serverRepository: ServerRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
-    val purchaseStateChangeLiveData: LiveData<Unit>
-    val pendingPurchasesLiveData: LiveData<Purchase>
-    val inappSkuDetailsListLiveData: LiveData<List<AugmentedSkuDetails>>
-    val adFreeUnlockLiveData: LiveData<AdFreeUnlock?>
+    val lifecycleObserver: LifecycleObserver = billingRepository
 
-    init {
-        billingRepository.startDataSourceConnections()
+    val adFreePrice = billingRepository.adFreePrice.asLiveData()
+    val adFreeState = billingRepository.adFreeState.asLiveData()
+    val hasPurchasedAdFree = billingRepository.hasPurchasedAdFree.asLiveData()
+    val newPurchase = billingRepository.newPurchase.asLiveData()
 
-        inappSkuDetailsListLiveData = billingRepository.inappSkuDetailsListLiveData
+    // Clients need to observe this LiveData so that internal logic is guaranteed to run
+    val pendingPurchase by lazy(LazyThreadSafetyMode.NONE) {
+        billingRepository.pendingPurchase.mapNotNull {
+            logPendingAdFreePurchase(it)
+        }.asLiveData()
+    }
 
-        // Clients need to observe this LiveData so that internal logic is guaranteed to run
-        adFreeUnlockLiveData = Transformations.map(
-            billingRepository.adFreeUnlockLiveData
-        ) {
-            // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-            SettingsManager.savePreference(
-                SettingsManager.PROPERTY_AD_FREE,
-                it?.entitled == true
-            ).run { it }
-        }
-
-        // Clients need to observe this LiveData so that internal logic is guaranteed to run
-        pendingPurchasesLiveData = Transformations.map(
-            billingRepository.pendingPurchasesLiveData
-        ) { purchases -> logPendingPurchase(purchases) }
-
-        // Clients need to observe this LiveData so that internal logic is guaranteed to run
-        purchaseStateChangeLiveData = Transformations.map(
-            billingRepository.purchaseStateChangeLiveData
-        ) { logPurchaseStateChange(it) }
+    // Clients need to observe this LiveData so that internal logic is guaranteed to run
+    val purchaseStateChange by lazy(LazyThreadSafetyMode.NONE) {
+        billingRepository.purchaseStateChange.mapNotNull {
+            logPendingAdFreePurchase(it)
+        }.asLiveData()
     }
 
     /**
-     * Not used yet, but could be used to force refresh (e.g. pull-to-refresh)
+     * Starts a billing flow for purchasing [type].
+     *
+     * @return whether or not we were able to start the flow
      */
-    @UiThread
-    fun queryPurchases() = billingRepository.queryPurchases()
-
-    override fun onCleared() = super.onCleared().also {
-        billingRepository.endDataSourceConnections()
-    }
-
-    @UiThread
     fun makePurchase(
         activity: Activity,
-        augmentedSkuDetails: AugmentedSkuDetails,
-        /**
-         * Invoked within [BillingRepository.disburseNonConsumableEntitlement] and [BillingRepository.onPurchasesUpdated]
-         */
-        callback: OnPurchaseFinishedListener
-    ) {
-        billingRepository.launchBillingFlow(
-            activity,
-            augmentedSkuDetails
-        ) { responseCode, purchase ->
-            // Since we update UI after receiving the callback,
-            // Make sure it's invoked on the main thread
-            // (otherwise app would crash)
-            viewModelScope.launch {
-                callback.invoke(responseCode, purchase)
-            }
-        }
-    }
+        type: PurchaseType
+    ) = billingRepository.makePurchase(activity, type.sku)
 
     fun verifyPurchase(
         purchase: Purchase,
@@ -100,11 +61,7 @@ class BillingViewModel(
         purchaseType: PurchaseType,
         callback: KotlinCallback<ServerPostResult?>
     ) = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.verifyPurchase(
-            purchase,
-            amount,
-            purchaseType
-        ).let {
+        serverRepository.verifyPurchase(purchase, amount, purchaseType).let {
             withContext(Dispatchers.Main) {
                 callback.invoke(it)
             }
@@ -115,35 +72,10 @@ class BillingViewModel(
      * Updates the server with information about the pending purchase, and returns
      * the pending purchase object so that other LiveData observers can act on it
      */
-    private fun logPendingPurchase(purchases: Set<Purchase>): Purchase? {
-        val pendingAdFreeUnlockPurchase = purchases.find {
-            it.sku == BillingRepository.Sku.AD_FREE
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            purchases.forEach {
-                serverRepository.verifyPurchase(
-                    it,
-                    null,
-                    PurchaseType.AD_FREE
-                )
-            }
-        }
-
-        return pendingAdFreeUnlockPurchase
-    }
-
-    /**
-     * Updates the server with information about any purchase state changes
-     */
-    private fun logPurchaseStateChange(purchases: Set<Purchase>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            purchases.forEach {
-                serverRepository.verifyPurchase(
-                    it,
-                    null,
-                    PurchaseType.AD_FREE
-                )
+    private fun logPendingAdFreePurchase(purchase: Purchase?) = purchase?.also {
+        if (it.skus.contains(PurchaseType.AD_FREE.sku)) {
+            viewModelScope.launch(Dispatchers.IO) {
+                serverRepository.verifyPurchase(purchase, null, PurchaseType.AD_FREE)
             }
         }
     }

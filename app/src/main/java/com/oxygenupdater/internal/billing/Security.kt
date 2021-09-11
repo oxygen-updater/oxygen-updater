@@ -44,11 +44,7 @@ object Security {
         logError(TAG, GooglePlayBillingException("Purchase verification failed: missing data"))
         BuildConfig.DEBUG // Line modified (https://stackoverflow.com/questions/14600664/android-in-app-purchase-signature-verification-failed). Was: return false.
     } else {
-        verify(
-            generatePublicKey(base64PublicKey),
-            signedData,
-            signature
-        )
+        verify(generatePublicKey(base64PublicKey), signedData, signature)
     }
 
     /**

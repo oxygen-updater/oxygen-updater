@@ -2,16 +2,16 @@ package com.oxygenupdater.repositories
 
 import android.app.Activity
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
 import androidx.annotation.UiThread
-import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
-import com.android.billingclient.api.BillingClient.FeatureType
 import com.android.billingclient.api.BillingClient.SkuType
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
@@ -24,506 +24,793 @@ import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
 import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
+import com.android.billingclient.api.queryPurchasesAsync
 import com.android.billingclient.api.querySkuDetails
-import com.oxygenupdater.database.LocalBillingDb
+import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.exceptions.GooglePlayBillingException
-import com.oxygenupdater.internal.OnPurchaseFinishedListener
-import com.oxygenupdater.internal.billing.PK1
-import com.oxygenupdater.internal.billing.PK2
 import com.oxygenupdater.internal.billing.Security
-import com.oxygenupdater.internal.billing.Security.verifyPurchase
-import com.oxygenupdater.models.billing.AdFreeUnlock
-import com.oxygenupdater.models.billing.AugmentedSkuDetails
-import com.oxygenupdater.models.billing.CachedPurchase
-import com.oxygenupdater.models.billing.Entitlement
-import com.oxygenupdater.repositories.BillingRepository.Sku.ALL_SKUS
-import com.oxygenupdater.repositories.BillingRepository.Sku.CONSUMABLE_SKUS
-import com.oxygenupdater.repositories.BillingRepository.Sku.INAPP_SKUS
-import com.oxygenupdater.repositories.BillingRepository.Sku.SUBS_SKUS
+import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_AD_FREE
+import com.oxygenupdater.internal.settings.SettingsManager.getPreference
+import com.oxygenupdater.internal.settings.SettingsManager.savePreference
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.Logger.logInfo
+import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.utils.Logger.logWarning
-import com.oxygenupdater.viewmodels.BillingViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
+import kotlin.collections.set
+import kotlin.math.min
+
 
 /**
- * @param application the [Application] context
+ * The BillingRepository implements all billing functionality for our test application.
+ * Purchases can happen while in the app or at any time while out of the app, so the
+ * BillingRepository has to account for that.
  *
- * @author [Adhiraj Singh Chauhan](https:// github.com/adhirajsinghchauhan)
+ * Since every SKU (Product ID) can have an individual state, all SKUs have an associated StateFlow
+ * to allow their state to be observed.
+ *
+ * This BillingRepository knows nothing about the application; all necessary information is either
+ * passed into the constructor, exported as observable Flows, or exported through callbacks.
+ * This code can be reused in a variety of apps.
+ *
+ * Beginning a purchase flow involves passing an Activity into the Billing Library, but we merely
+ * pass it along to the API.
+ *
+ * This data source has a few automatic features:
+ * 1) It checks for a valid signature on all purchases before attempting to acknowledge them.
+ * 2) It automatically acknowledges all known SKUs for non-consumables, and doesn't set the state
+ * to purchased until the acknowledgement is complete.
+ * 3) The data source will automatically consume skus that are set in CONSUMABLE_SKUS. As
+ * SKUs are consumed, a Flow will emit.
+ * 4) If the BillingService is disconnected, it will attempt to reconnect with exponential
+ * fallback.
+ *
+ * This data source attempts to keep billing library specific knowledge confined to this file;
+ * The only thing that clients of the BillingRepository need to know are the SKUs used by their
+ * application.
+ *
+ * The BillingClient needs access to the Application context in order to bind the remote billing
+ * service.
+ *
+ * The BillingRepository can also act as a LifecycleObserver for an Activity; this allows it to
+ * refresh purchases during onResume.
+ *
+ * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
+ *
+ * @see <a href="https://github.com/android/play-billing-samples/blob/3f75352320c232fc6a14526b67fef07a49cc6d17/TrivialDriveKotlin/app/src/main/java/com/sample/android/trivialdrivesample/billing/BillingRepository.kt">android/play-billing-samples@3f75352:BillingRepository.kt</a>
  */
-class BillingRepository constructor(
-    private val application: Application,
-    /**
-     * A local cache billing client is important in that the Play Store may be temporarily
-     * unavailable during updates. In such cases, it may be important that the users
-     * continue to get access to premium data that they own. Alternatively, you may choose not to
-     * provide offline access to your premium content.
-     *
-     * Even beyond offline access to premium content, however, a local cache billing client makes
-     * certain transactions easier. Without an offline cache billing client, for instance, the app
-     * would need both the secure server and the Play Billing client to be available in order to
-     * process consumable products.
-     *
-     * The data that lives here should be refreshed at regular intervals so that it reflects what's
-     * in the Google Play Store.
-     */
-    private val localCacheBillingClient: LocalBillingDb
-) : PurchasesUpdatedListener, BillingClientStateListener {
+class BillingRepository(
+    application: Application
+) : LifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener {
+
+    private val mainScope = CoroutineScope(Dispatchers.Main)
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
+    private val billingClient = BillingClient.newBuilder(application)
+        .enablePendingPurchases()
+        .setListener(this)
+        .build()
 
     /**
-     * The [BillingClient] is the most reliable and primary source of truth for all purchases
-     * made through the Google Play Store. The Play Store takes security precautions in guarding
-     * the data. Also, the data is available offline in most cases, which means the app incurs no
-     * network charges for checking for purchases using the [BillingClient]. The offline bit is
-     * because the Play Store caches every purchase the user owns, in an
-     * [eventually consistent manner](https://developer.android.com/google/play/billing/billing_library_overview#Keep-up-to-date).
-     * This is the only billing client an app is actually required to have on Android. The other
-     * two (webServerBillingClient and localCacheBillingClient) are optional.
-     *
-     * ASIDE. Notice that the connection to [playStoreBillingClient] is created using the
-     * applicationContext. This means the instance is not [Activity]-specific. And since it's also
-     * not expensive, it can remain open for the life of the entire [Application]. So whether it is
-     * (re)created for each [Activity] or [android.app.Fragment] or is kept open for the life of the application
-     * is a matter of choice.
+     * How long before the data source tries to reconnect to Google Play
      */
-    private lateinit var playStoreBillingClient: BillingClient
-
-    private val purchaseDao by lazy {
-        localCacheBillingClient.purchaseDao()
-    }
-
-    private val entitlementsDao by lazy {
-        localCacheBillingClient.entitlementsDao()
-    }
-
-    private val skuDetailsDao by lazy {
-        localCacheBillingClient.skuDetailsDao()
-    }
-
-    private val _purchaseStateChangeLiveData = MutableLiveData<Set<Purchase>>()
-    val purchaseStateChangeLiveData: LiveData<Set<Purchase>>
-        get() = Transformations.distinctUntilChanged(_purchaseStateChangeLiveData)
-
-    private val _pendingPurchasesLiveData = MutableLiveData<Set<Purchase>>()
-    val pendingPurchasesLiveData: LiveData<Set<Purchase>>
-        get() = Transformations.distinctUntilChanged(_pendingPurchasesLiveData)
+    private var reconnectMilliseconds = RECONNECT_TIMER_START_MILLISECONDS
 
     /**
-     * This list tells clients what in-app products are available for sale
+     * When was the last successful SkuDetailsResponse?
      */
-    val inappSkuDetailsListLiveData by lazy {
-        Transformations.distinctUntilChanged(skuDetailsDao.getInappSkuDetails())
-    }
+    private var skuDetailsResponseTime = -SKU_DETAILS_REQUERY_TIME
 
-    // START list of each distinct item user may own (i.e. entitlements)
-
-    /*
-     * The clients are interested in two types of information: what's for sale, and what the user
-     * owns access to. subsSkuDetailsListLiveData and inappSkuDetailsListLiveData tell the clients
-     * what's for sale. adFreeUnlockLiveData will tell the client what the user is entitled to.
-     * Notice there is nothing billing-specific about these items; they are just properties of the app.
-     * So exposing these items to the rest of the app doesn't mean that clients need to understand how billing works.
-     *
-     * One approach that isn't recommended would be to provide the clients a list of purchases and
-      * let them figure it out from there:
-     *
-     *
-     * ```
-     *    val purchasesLiveData: LiveData<Set<CachedPurchase>>
-     *        by lazy {
-     *            queryPurchases()
-     *             return purchaseDao.getPurchases()//assuming liveData
-     *       }
-     * ```
-     *
-     * In doing this, however, the [BillingRepository] API would not be client-friendly. Instead,
-     * you should specify each item for the clients.
-     *
-     * For instance, this sample app sells only one item: ad-free unlock.
-     * Hence, the rest of the app wants to know -- at all time and as it happens -- the
-     * following: does the user have the ad-free unlock. You don't need to expose any additional implementation details.
-     * Also you should provide each one of those items as a [LiveData] so that the appropriate UIs get updated
-     * automatically.
-     */
+    // Maps that are mostly maintained so they can be transformed into observables
+    private val skuStateMap = mutableMapOf<String, MutableStateFlow<SkuState>>()
+    private val skuDetailsMap = mutableMapOf<String, MutableStateFlow<SkuDetails?>>()
+    private val purchaseConsumptionInProcess = mutableSetOf<Purchase>()
 
     /**
-     * Tracks whether this user is entitled to an ad free unlock. This call returns data from the app's
-     * own local DB; this way if Play and the secure server are unavailable, users still have
-     * access to features they purchased.  Normally this would be a good place to update the local
-     * cache to make sure it's always up-to-date. However, [onBillingSetupFinished] already called
-     * [queryPurchases] for you; so no need.
+     * Flow of the [ad-free][PurchaseType.AD_FREE] SKU's [price][SkuDetails.getPrice]
      */
-    val adFreeUnlockLiveData by lazy {
-        Transformations.distinctUntilChanged(entitlementsDao.getAdFreeUnlock())
-    }
-
-    var purchaseFinishedCallback: OnPurchaseFinishedListener? = null
-
-    // END list of each distinct item user may own (i.e. entitlements)
+    val adFreePrice
+        get() = getSkuPrice(SKU_INAPP_AD_FREE).distinctUntilChanged()
 
     /**
-     * Correlated data sources belong inside a repository module so that the rest of
-     * the app can have appropriate access to the data it needs. Still, it may be effective to
-     * track the opening (and sometimes closing) of data source connections based on lifecycle
-     * events. One convenient way of doing that is by calling this
-     * [startDataSourceConnections] when the [BillingViewModel] is instantiated and
-     * [endDataSourceConnections] inside [ViewModel.onCleared]
+     * Flow of the [ad-free][PurchaseType.AD_FREE] SKU's [SkuState]
      */
-    @UiThread
-    fun startDataSourceConnections() {
-        logDebug(TAG, "[startDataSourceConnections]")
-        instantiateAndConnectToPlayBillingService()
+    val adFreeState
+        get() = getSkuState(SKU_INAPP_AD_FREE).distinctUntilChanged()
+
+    /**
+     * Returns whether or not the user has purchased ad-free. It does this by returning
+     * a Flow that returns true if the SKU is in the [PURCHASED][SkuState.PURCHASED] state and
+     * the [Purchase] has been acknowledged.
+     */
+    val hasPurchasedAdFree
+        get() = adFreeState.map {
+            logDebug(TAG, "[adFreeState] $it")
+
+            if (it == SkuState.UNKNOWN) {
+                // Purchases haven't been processed yet, so fallback to SharedPreferences
+                getPreference(PROPERTY_AD_FREE, false)
+            } else {
+                it == SkuState.PURCHASED_AND_ACKNOWLEDGED
+            }
+        }.distinctUntilChanged().onEach {
+            logDebug(TAG, "[hasPurchasedAdFree] saving to SharedPreferences: $it")
+            // Save, because we can guarantee that the device is online and that the purchase check has succeeded
+            savePreference(PROPERTY_AD_FREE, it)
+        }
+
+    /**
+     * A Flow that reports on purchases that are in the [PurchaseState.PENDING]
+     * state, e.g. if the user chooses an instrument that needs additional steps between
+     * when they initiate the purchase, and when the payment method is processed.
+     *
+     * @see <a href="https://developer.android.com/google/play/billing/integrate#pending">Handling pending transactions</a>
+     * @see [setSkuStateFromPurchase]
+     */
+    private val _pendingPurchase = MutableStateFlow<Purchase?>(null)
+    val pendingPurchase: StateFlow<Purchase?>
+        /**
+         * No need for [distinctUntilChanged], since [StateFlow]s are already distinct
+         */
+        get() = _pendingPurchase
+
+    /**
+     * A Flow that reports on purchases that have changed their state,
+     * e.g. [PurchaseState.PENDING] -> [PurchaseState.PURCHASED].
+     *
+     * @see [setSkuStateFromPurchase]
+     */
+    private val _purchaseStateChange = MutableStateFlow<Purchase?>(null)
+    val purchaseStateChange: StateFlow<Purchase?>
+        /**
+         * No need for [distinctUntilChanged], since [StateFlow]s are already distinct
+         */
+        get() = _purchaseStateChange
+
+    private val _newPurchase = MutableSharedFlow<Pair<Int, Purchase?>>(extraBufferCapacity = 1)
+    val newPurchase = _newPurchase.distinctUntilChanged().onEach { (responseCode, purchase) ->
+        logDebug(TAG, "[newPurchaseFlow] $responseCode: ${purchase?.skus}")
+
+        when (responseCode) {
+            BillingResponseCode.OK -> savePreference(PROPERTY_AD_FREE, purchase != null)
+            BillingResponseCode.ITEM_ALREADY_OWNED -> {
+                // This is tricky to deal with. Even pending purchases show up as "items already owned",
+                // so we can't grant entitlement i.e. set [PROPERTY_AD_FREE] to `true`.
+                // A message should be shown to the user informing them they may have pending purchases.
+                // This case will be handled by observing the pending purchases LiveData.
+                // Entitlement is being granted by observing to the in-app SKU details list LiveData anyway.
+            }
+            else -> savePreference(PROPERTY_AD_FREE, false)
+        }
+
+        purchase?.skus?.forEach {
+            when (it) {
+                SKU_SUBS_AD_FREE_MONTHLY, SKU_SUBS_AD_FREE_YEARLY -> {
+                    // Make sure that subscriptions upgrades/downgrades
+                    // are reflected correctly in the UI
+                    refreshPurchases()
+                }
+            }
+        }
     }
 
-    @UiThread
-    fun endDataSourceConnections() {
-        logDebug(TAG, "[endDataSourceConnections]")
-
-        purchaseFinishedCallback = null
-        playStoreBillingClient.endConnection()
-        // normally you don't worry about closing a DB connection unless you have more than
-        // one DB open. so no need to call 'localCacheBillingClient.close()'
-    }
-
-    @UiThread
-    private fun instantiateAndConnectToPlayBillingService() {
-        playStoreBillingClient = BillingClient.newBuilder(application)
-            .enablePendingPurchases() // required or app will crash
-            .setListener(this)
-            .build()
-
-        connectToPlayBillingService()
-    }
-
-    @UiThread
-    private fun connectToPlayBillingService() = if (!playStoreBillingClient.isReady) {
-        playStoreBillingClient.startConnection(this).let { true }
-    } else {
-        false
+    private val _consumedPurchaseSkus = MutableSharedFlow<List<String>>()
+    val consumedPurchaseSkus = _consumedPurchaseSkus.distinctUntilChanged().onEach {
+        logDebug(TAG, "[consumedPurchaseSkusFlow] $it")
+        // Take action (e.g. update models) on each consumed purchase
     }
 
     /**
-     * This is the callback for when connection to the Play [BillingClient] has been successfully
-     * established. It might make sense to get [SkuDetails] and [Purchases][Purchase] at this point.
+     * A Flow that reports if a billing flow is in process, meaning that
+     * [launchBillingFlow] has returned a successful [BillingResponseCode.OK],
+     * but [onPurchasesUpdated] hasn't been called yet.
      */
+    private val _billingFlowInProcess = MutableStateFlow(false)
+    val billingFlowInProcess: StateFlow<Boolean>
+        /**
+         * No need for [distinctUntilChanged], since [StateFlow]s are already distinct
+         */
+        get() = _billingFlowInProcess
+
+    init {
+        // Initialize flows for all known SKUs, so that state & details can be
+        // observed in ViewModels. This repository exposes mappings that are
+        // more useful for the rest of the application (via ViewModels).
+        addSkuFlows(INAPP_SKUS)
+        addSkuFlows(SUBS_SKUS)
+
+        billingClient.startConnection(this)
+    }
+
+    /**
+     * Called by initializeFlows to create the various Flow objects we're planning to emit
+     *
+     * @param skuList a List<String> of SKUs representing purchases and subscriptions
+     */
+    private fun addSkuFlows(skuList: List<String>) = skuList.forEach { sku ->
+        val skuState = MutableStateFlow(SkuState.UNKNOWN)
+        val details = MutableStateFlow<SkuDetails?>(null)
+
+        // Flow is considered "active" if there's at least one subscriber.
+        // `distinctUntilChanged`: ensure we only react to true<->false changes.
+        details.subscriptionCount.map { it > 0 }.distinctUntilChanged().onEach { active ->
+            if (active && (SystemClock.elapsedRealtime() - skuDetailsResponseTime > SKU_DETAILS_REQUERY_TIME)) {
+                logVerbose(TAG, "[addSkuFlows] stale SKUs; requerying")
+                skuDetailsResponseTime = SystemClock.elapsedRealtime()
+                querySkuDetails()
+            }
+        }.launchIn(mainScope) // launch it
+
+        skuStateMap[sku] = skuState
+        skuDetailsMap[sku] = details
+    }
+
+    /**
+     * It's recommended to requery purchases during onResume
+     */
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    internal fun onResume() {
+        logDebug(TAG, "[onResume]")
+        // Avoids an extra purchase refresh after we finish a billing flow
+        if (!_billingFlowInProcess.value && billingClient.isReady) {
+            ioScope.launch {
+                refreshPurchases()
+            }
+        }
+    }
+
     override fun onBillingSetupFinished(result: BillingResult) {
-        when (result.responseCode) {
-            BillingResponseCode.OK -> {
-                logDebug(TAG, "[onBillingSetupFinished] success")
-
-                CoroutineScope(Dispatchers.IO).launch {
-                    querySkuDetails(SkuType.INAPP, INAPP_SKUS)
-                    querySkuDetails(SkuType.SUBS, SUBS_SKUS)
-                }
-                queryPurchases()
+        val responseCode = result.responseCode
+        logDebug(TAG, "[onBillingSetupFinished] $responseCode: ${result.debugMessage}")
+        when (responseCode) {
+            BillingResponseCode.OK -> ioScope.launch {
+                querySkuDetails()
+                refreshPurchases()
+            }.also {
+                reconnectMilliseconds = RECONNECT_TIMER_START_MILLISECONDS
             }
-            BillingResponseCode.BILLING_UNAVAILABLE -> {
-                // Some apps may choose to make decisions based on this knowledge
-                logDebug(TAG, "[onBillingSetupFinished] unavailable")
-            }
-            else -> {
-                // Do nothing. Someone else will connect it through retry policy.
-                // May choose to send to server though
-                logDebug(TAG, "[onBillingSetupFinished] responseCode: ${result.responseCode}, debugMessage: ${result.debugMessage}")
-            }
+            else -> reconnectWithExponentialBackoff()
         }
     }
 
     /**
-     * This method is called when the app has inadvertently disconnected from the [BillingClient].
-     * An attempt should be made to reconnect using a retry policy. Note the distinction between
-     * [endConnection][BillingClient.endConnection] and disconnected:
-     * - disconnected means it's okay to try reconnecting.
-     * - endConnection means the [playStoreBillingClient] must be re-instantiated and then start
-     *   a new connection because a [BillingClient] instance is invalid after endConnection has
-     *   been called.
-     **/
-    override fun onBillingServiceDisconnected() {
-        logDebug(TAG, "[onBillingServiceDisconnected]")
-        connectToPlayBillingService()
+     * Rare occurrence; could happen if Play Store self-updates or is force-closed
+     */
+    override fun onBillingServiceDisconnected() = reconnectWithExponentialBackoff()
+
+    /**
+     * Reconnect to [BillingClient] with exponential backoff, with a max of
+     * [RECONNECT_TIMER_MAX_TIME_MILLISECONDS]
+     */
+    private fun reconnectWithExponentialBackoff() = handler.postDelayed(
+        { billingClient.startConnection(this) }, reconnectMilliseconds
+    ).let {
+        reconnectMilliseconds = min(
+            reconnectMilliseconds * 2,
+            RECONNECT_TIMER_MAX_TIME_MILLISECONDS
+        )
     }
 
     /**
-     * BACKGROUND
+     * Called by [BillingClient] when new purchases are detected; typically in
+     * response to [launchBillingFlow]
      *
-     * Google Play Billing refers to receipts as [Purchases][Purchase]. So when a user buys
-     * something, Play Billing returns a [Purchase] object that the app then uses to release the
-     * [Entitlement] to the user. Receipts are pivotal within the [BillingRepository]; but they are
-     * not part of the repo’s public API, because clients don’t need to know about them. When
-     * the release of entitlements occurs depends on the type of purchase. For consumable products,
-     * the release may be deferred until after consumption by Google Play; for non-consumable
-     * products and subscriptions, the release may be deferred until after
-     * [acknowledgePurchase] is called. You should keep receipts in the local
-     * cache for augmented security and for making some transactions easier.
+     * @param result billing result of the purchase flow
+     * @param list of new purchases
+     */
+    override fun onPurchasesUpdated(result: BillingResult, list: List<Purchase>?) {
+        when (result.responseCode) {
+            BillingResponseCode.OK -> list?.let {
+                processPurchaseList(it, null)
+                return
+            } ?: logDebug(
+                TAG,
+                "[onPurchasesUpdated] mull purchase list returned from OK response"
+            )
+            BillingResponseCode.USER_CANCELED -> logDebug(
+                TAG,
+                "[onPurchasesUpdated] USER_CANCELED"
+            )
+            BillingResponseCode.ITEM_ALREADY_OWNED -> logDebug(
+                TAG,
+                "[onPurchasesUpdated] ITEM_ALREADY_OWNED"
+            )
+            BillingResponseCode.DEVELOPER_ERROR -> logError(
+                TAG,
+                GooglePlayBillingException("[onPurchasesUpdated] DEVELOPER_ERROR")
+            )
+            else -> logDebug(TAG, "[onPurchasesUpdated] ${result.responseCode}: ${result.debugMessage}")
+        }
+
+        _newPurchase.tryEmit(Pair(result.responseCode, null))
+
+        ioScope.launch {
+            _billingFlowInProcess.emit(false)
+        }
+    }
+
+    fun getSkuState(sku: String) = skuStateMap[sku] ?: flowOf(SkuState.UNKNOWN).also {
+        logWarning(TAG, "[getSkuState] unknown SKU: $sku")
+    }
+
+    fun getSkuPrice(sku: String) = skuDetailsMap[sku]?.map {
+        it?.price
+    } ?: flowOf(null).also {
+        logWarning(TAG, "[getSkuPrice] unknown SKU: $sku")
+    }
+
+    /**
+     * GPBLv3 queried purchases synchronously, while v4 supports async.
      *
-     * THIS METHOD
+     * Note that the billing client only returns active purchases.
+     */
+    suspend fun refreshPurchases() = withContext(Dispatchers.IO) {
+        logDebug(TAG, "[refreshPurchases] start")
+
+        var purchasesResult = billingClient.queryPurchasesAsync(SkuType.INAPP)
+        var billingResult = purchasesResult.billingResult
+        var responseCode = billingResult.responseCode
+        var debugMessage = billingResult.debugMessage
+        if (responseCode == BillingResponseCode.OK) {
+            processPurchaseList(purchasesResult.purchasesList, INAPP_SKUS)
+        } else {
+            logError(TAG, GooglePlayBillingException("[refreshPurchases] INAPP $responseCode: $debugMessage"))
+        }
+
+        purchasesResult = billingClient.queryPurchasesAsync(SkuType.SUBS)
+        billingResult = purchasesResult.billingResult
+        responseCode = billingResult.responseCode
+        debugMessage = billingResult.debugMessage
+        if (responseCode == BillingResponseCode.OK) {
+            processPurchaseList(purchasesResult.purchasesList, SUBS_SKUS)
+        } else {
+            logError(TAG, GooglePlayBillingException("[refreshPurchases] SUBS $responseCode: $debugMessage"))
+        }
+
+        logDebug(TAG, "[refreshPurchases] finish")
+    }
+
+    /**
+     * Automatic support for upgrading/downgrading subscription
+     */
+    fun makePurchase(activity: Activity, sku: String) = when (sku) {
+        SKU_SUBS_AD_FREE_MONTHLY -> SKU_SUBS_AD_FREE_YEARLY
+        SKU_SUBS_AD_FREE_YEARLY -> SKU_SUBS_AD_FREE_MONTHLY
+        else -> null
+    }?.let { oldSku ->
+        launchBillingFlow(activity, sku, arrayOf(oldSku))
+    } ?: launchBillingFlow(activity, sku)
+
+    /**
+     * Launch the billing flow. This will launch an external Activity for a result, so it requires
+     * an Activity reference. For subscriptions, it supports upgrading from one SKU type to another
+     * by passing in SKUs to be upgraded.
      *
-     * [This method][queryPurchases] grabs all the active purchases of this user and makes them
-     * available to this app instance. Whereas this method plays a central role in the billing
-     * system, it should be called at key junctures, such as when user the app starts.
+     * @param activity active activity to launch our billing flow from
+     * @param sku SKU (Product ID) to be purchased
+     * @param upgradeSkus SKUs that the subscription can be upgraded from
      *
-     * Because purchase data is vital to the rest of the app, this method is called each time
-     * the [BillingViewModel] successfully establishes connection with the Play [BillingClient]:
-     * the call comes through [onBillingSetupFinished]. Recall also from Figure 4 that this method
-     * gets called from inside [onPurchasesUpdated] in the event that a purchase is "already
-     * owned", which can happen if a user buys the item around the same time
-     * on a different device.
+     * @return true if launch is successful
      */
     @UiThread
-    fun queryPurchases() {
-        val purchasesResult = HashSet<Purchase>()
-
-        var result = playStoreBillingClient.queryPurchases(SkuType.INAPP)
-        result.purchasesList?.apply { purchasesResult.addAll(this) }
-        logDebug(TAG, "[queryPurchases] INAPP results: ${result.purchasesList?.size}")
-
-        if (isSubscriptionSupported()) {
-            result = playStoreBillingClient.queryPurchases(SkuType.SUBS)
-            result.purchasesList?.apply { purchasesResult.addAll(this) }
-            logDebug(TAG, "[queryPurchases] SUBS results: ${result.purchasesList?.size}")
-        }
-
-        processPurchases(purchasesResult)
-    }
-
-    /**
-     * Can be called either from the [queryPurchases] or the [onPurchasesUpdated] chain.
-     *
-     * If it's the former, special care needs to be taken to ensure refunds/revocations etc are handled.
-     */
-    private fun processPurchases(
-        purchases: Set<Purchase>
-    ) = CoroutineScope(Dispatchers.IO).launch {
-        logDebug(TAG, "[processPurchases] purchasesResult: $purchases")
-
-        val validPurchases = HashSet<Purchase>(purchases.size)
-        val pendingPurchases = HashSet<Purchase>(purchases.size)
-        purchases.forEach {
-            when (it.purchaseState) {
-                PurchaseState.PURCHASED -> if (isSignatureValid(it)) {
-                    validPurchases.add(it)
-                }
-                PurchaseState.PENDING -> {
-                    logDebug(
+    fun launchBillingFlow(
+        activity: Activity,
+        sku: String,
+        upgradeSkus: Array<String>? = null
+    ) = skuDetailsMap[sku]?.value?.let { details ->
+        val builder = BillingFlowParams.newBuilder()
+        builder.setSkuDetails(details)
+        mainScope.launch {
+            if (upgradeSkus != null) {
+                val heldSubscriptions = getPurchases(SkuType.SUBS, upgradeSkus)
+                when (heldSubscriptions.size) {
+                    0 -> {
+                        // no-op
+                    }
+                    1 -> {
+                        builder.setSubscriptionUpdateParams(
+                            BillingFlowParams.SubscriptionUpdateParams.newBuilder()
+                                .setOldSkuPurchaseToken(heldSubscriptions[0].purchaseToken)
+                                .build()
+                        )
+                    }
+                    else -> logError(
                         TAG,
-                        "[processPurchases] received a pending purchase of SKU: ${it.sku}"
+                        GooglePlayBillingException("[launchBillingFlow] can't upgrade: ${heldSubscriptions.size} subscriptions subscribed to")
                     )
-
-                    if (isSignatureValid(it)) {
-                        pendingPurchases.add(it)
-                    }
                 }
             }
-        }
-
-        if (validPurchases.isNotEmpty() || pendingPurchases.isNotEmpty()) {
-            /**
-             * As is being done in this sample, for extra reliability you may store the
-             * receipts/purchases to a your own remote/local database for until after you
-             * disburse entitlements. That way if the Google Play Billing library fails at any
-             * given point, you can independently verify whether entitlements were accurately
-             * disbursed. In this sample, the receipts are then removed upon entitlement
-             * disbursement.
-             */
-
-            val existingPurchases = purchaseDao.getPurchases()
-            val updatedPurchases = HashSet<Purchase>(purchases.size)
-            logDebug(TAG, "[processPurchases] ${existingPurchases.size} purchases in the local db")
-
-            /**
-             * Inserts multiple [Purchases][Purchase], if they don't already exist in the DB.
-             * This is done to avoid any potential bugs due to duplicate purchases being stored. Even if the app
-             * supports consumable products in the future (i.e. the user can buy the same product multiple times),
-             * no two [Purchase] objects can ever be the exact same unless they're the exact same purchase.
-             */
-            (validPurchases + pendingPurchases).forEach { purchase ->
-                val existingPurchase = existingPurchases.find {
-                    it.data.orderId == purchase.orderId
-                }
-
-                if (existingPurchase != null) {
-                    // If the purchase already exists in the database but with a different state, we need to update it
-                    if (existingPurchase.data.purchaseState != purchase.purchaseState) {
-                        logDebug(TAG, "[processPurchases] state change: ${existingPurchase.data.purchaseState} -> ${purchase.purchaseState}")
-                        purchaseDao.update(CachedPurchase(purchase).apply { id = existingPurchase.id })
-                        updatedPurchases.add(purchase)
-                    }
-                } else {
-                    // Insert into DB only if the same purchase hasn't already been inserted
-                    purchaseDao.insert(CachedPurchase(purchase))
-                }
-            }
-
-            _purchaseStateChangeLiveData.postValue(updatedPurchases)
-        }
-
-        // Handle pending purchases, e.g. confirm with users about the pending
-        // purchases, prompt them to complete it, etc.
-        if (pendingPurchases.isNotEmpty()) {
-            _pendingPurchasesLiveData.postValue(pendingPurchases)
-        }
-
-        if (validPurchases.isEmpty()) {
-            handleNoValidPurchases()
-        } else {
-            val (consumables, nonConsumables) = validPurchases.partition {
-                CONSUMABLE_SKUS.contains(it.sku)
-            }
-
-            logDebug(TAG, "[processPurchases] consumables content $consumables")
-            logDebug(TAG, "[processPurchases] non-consumables content $nonConsumables")
-
-            consumeConsumablePurchases(consumables)
-            acknowledgeNonConsumablePurchases(nonConsumables)
-        }
-    }
-
-    /**
-     * Purchases can be empty in two known cases:
-     * - the user has never purchased anything
-     * - the user has been refunded all previous purchases
-     *
-     * This method mostly deals with handling refunds/revocations, by ensuring the local cache
-     * is always up-to-date. The app relies on the local cache to check if the user has any entitlements.
-     *
-     * If user does not have any active purchases, we should make sure to clean up the local cache as well
-     */
-    @WorkerThread
-    private suspend fun handleNoValidPurchases() = withContext(Dispatchers.IO) {
-        logDebug(TAG, "[handleNoValidPurchases] clearing all tables")
-
-        // Clear AdFreeUnlock table
-        entitlementsDao.clearAdFreeUnlockTable()
-
-        ALL_SKUS.forEach {
-            // Since the user no longer owns any valid, acknowledged purchases,
-            // mark all AugmentedSkuDetails rows as purchasable
-            skuDetailsDao.update(it, true)
-        }
-    }
-
-    /**
-     * Recall that Google Play Billing only supports two SKU types:
-     * [in-app products][SkuType.INAPP] and
-     * [subscriptions][SkuType.SUBS]. In-app products are actual items that a
-     * user can buy, such as a house or food; subscriptions refer to services that a user must
-     * pay for regularly, such as auto-insurance. Subscriptions are not consumable.
-     *
-     * Play Billing provides methods for consuming in-app products because they understand that
-     * apps may sell items that users will keep forever (i.e. never consume) such as a house,
-     * and consumable items that users will need to keep buying such as food. Nevertheless, Google
-     * Play leaves the distinction for which in-app products are consumable entirely up to you.
-     *
-     * If an app wants its users to be able to keep buying an item, it must call
-     * [consumePurchase] each time they buy it. This is because Google Play won't let
-     * users buy items that they've previously bought but haven't consumed. In Oxygen Updater, for
-     * example, [consumePurchase] is called each time the user buys a donation; otherwise they would never be
-     * able to buy donations once already done (NOT IMPLEMENTED YET).
-     */
-    private suspend fun consumeConsumablePurchases(
-        consumables: List<Purchase>
-    ) = consumables.forEach {
-        logDebug(TAG, "[handleConsumablePurchases] foreach it is $it")
-
-        val (result, _) = playStoreBillingClient.consumePurchase(
-            ConsumeParams.newBuilder()
-                .setPurchaseToken(it.purchaseToken)
-                .build()
-        )
-
-        when (result.responseCode) {
-            BillingResponseCode.OK -> when (disburseConsumableEntitlements(it)) {
-                /**
-                 * This disburseConsumableEntitlements method was called because Play called onConsumeResponse.
-                 * So if you think of a Purchase as a receipt, you no longer need to keep a copy of
-                 * the receipt in the local cache since the user has just consumed the product.
-                 */
-                true -> purchaseDao.delete(it)
-            }
-            else -> logWarning(
-                TAG,
-                "[handleConsumablePurchases] error responseCode: ${result.responseCode}, debugMessage: ${result.debugMessage}"
-            )
-        }
-    }
-
-    /**
-     * If you do not acknowledge a purchase, the Google Play Store will provide a refund to the
-     * users within a few days of the transaction. Therefore you have to implement
-     * [acknowledgePurchase] inside your app.
-     */
-    private suspend fun acknowledgeNonConsumablePurchases(
-        nonConsumables: List<Purchase>
-    ) = nonConsumables.forEach {
-        if (it.isAcknowledged) {
-            handleAcknowledgment(it, true)
-        } else {
-            val result = playStoreBillingClient.acknowledgePurchase(
-                AcknowledgePurchaseParams.newBuilder()
-                    .setPurchaseToken(it.purchaseToken)
-                    .build()
-            )
-
-            when (result.responseCode) {
-                BillingResponseCode.OK -> handleAcknowledgment(it)
-                // DEVELOPER_ERROR could be because the purchase is already acknowledged
-                BillingResponseCode.DEVELOPER_ERROR -> handleAcknowledgment(it, true)
-                else -> logWarning(
-                    TAG,
-                    "[acknowledgeNonConsumablePurchases] error responseCode: ${result.responseCode}, debugMessage: ${result.debugMessage}"
-                )
+            val result = billingClient.launchBillingFlow(activity, builder.build())
+            if (result.responseCode == BillingResponseCode.OK) {
+                _billingFlowInProcess.emit(true)
+            } else {
+                logError(TAG, GooglePlayBillingException("[launchBillingFlow] ${result.debugMessage}"))
             }
         }
-    }
+    } ?: logError(TAG, GooglePlayBillingException("[launchBillingFlow] unknown SKU: $sku"))
 
     /**
-     * This is the final step, where new purchases/receipts are converted to premium contents.
-     *
-     * Can be called from the [launchBillingFlow] chain only (new purchase flow being completed).
-     *
-     * In this sample, once the entitlement is disbursed the receipt is thrown out.
+     * Consumes an in-app purchase. Interested listeners can watch the [consumedPurchaseSkus] LiveEvent.
+     * To make things easy, you can send in a list of SKUs that are auto-consumed by the
+     * [BillingRepository].
      */
-    private suspend fun handleAcknowledgment(
-        purchase: Purchase,
-        alreadyAcknowledged: Boolean = false
-    ) = withContext(Dispatchers.IO) {
-        if (disburseNonConsumableEntitlement(purchase.sku) && !alreadyAcknowledged) {
-            // Isn't null only in the case of a billing flow being launched
-            purchaseFinishedCallback?.invoke(BillingResponseCode.OK, purchase)
-        }
-
-        purchaseDao.delete(purchase)
-    }
-
-    private suspend fun disburseConsumableEntitlements(
-        purchase: Purchase
-    ) = withContext(Dispatchers.IO) {
-        return@withContext when (purchase.sku) {
-            // TODO: handle additional cases when app supports consumable purchases
-            // Sku.AD_FREE -> true
-            else -> false
-        }
-    }
-
-    private suspend fun disburseNonConsumableEntitlement(
+    suspend fun consumeInAppPurchase(
         sku: String
     ) = withContext(Dispatchers.IO) {
-        return@withContext when (sku) {
-            Sku.AD_FREE -> AdFreeUnlock(true).let {
-                insert(it)
-
-                skuDetailsDao.insertOrUpdate(
-                    sku,
-                    it.mayPurchase()
-                )
-                true
+        billingClient.queryPurchasesAsync(SkuType.INAPP).let { result ->
+            val billingResult = result.billingResult
+            val purchasesList = result.purchasesList
+            val responseCode = billingResult.responseCode
+            if (responseCode == BillingResponseCode.OK) {
+                purchasesList.forEach { purchase ->
+                    // For right now any bundle of SKUs must all be consumable
+                    purchase.skus.find { it == sku }?.also {
+                        consumePurchase(purchase)
+                        return@let
+                    }
+                }
+            } else {
+                logError(TAG, GooglePlayBillingException("[consumeInAppPurchase] $responseCode: ${billingResult.debugMessage}"))
             }
-            // TODO: handle additional cases when app supports more non-consumable purchases
-            else -> false
+
+            logError(TAG, GooglePlayBillingException("[consumeInAppPurchase] unknown SKU: $sku"))
+        }
+    }
+
+    /**
+     * **Only for DEBUG use**: consume an in-app purchase so it can be bought again.
+     *
+     * This helps to rapidly test billing functionality (Play Store caches all
+     * purchases the user owns, and it can take a long time for it be evicted).
+     *
+     * Note that this function should be unused throughout the app, except
+     * while under testing by "license testers", in which case a developer
+     * sends them an APK (different from what's publicly distributed) — it'll
+     * have a button in the UI somewhere that calls this function.
+     *
+     * License testers are shown a few test instruments by Google Play (e.g.
+     * always approves, always declines, approves after delay, etc).
+     *
+     * @see <a href="https://developer.android.com/google/play/billing/test">Test Google Play Billing Library integration</a>
+     */
+    fun debugConsumeAdFree() = CoroutineScope(Dispatchers.IO).launch {
+        consumeInAppPurchase(SKU_INAPP_AD_FREE)
+    }
+
+    /**
+     * Receives the result from [querySkuDetails].
+     *
+     * Store the SkuDetails and post them in the [skuDetailsMap]. This allows other
+     * parts of the app to use the [SkuDetails] to show SKU information and make purchases.
+     */
+    private fun onSkuDetailsResponse(
+        result: BillingResult,
+        detailsList: List<SkuDetails>?
+    ) {
+        val responseCode = result.responseCode
+        val debugMessage = result.debugMessage
+
+        when (responseCode) {
+            BillingResponseCode.OK -> {
+                logInfo(TAG, "[onSkuDetailsResponse] $responseCode: $debugMessage")
+                if (detailsList.isNullOrEmpty()) {
+                    logError(TAG, GooglePlayBillingException("[onSkuDetailsResponse] null/empty List<SkuDetails>"))
+                } else {
+                    detailsList.forEach { details ->
+                        val sku = details.sku
+                        skuDetailsMap[sku]?.tryEmit(details) ?: logError(
+                            TAG,
+                            GooglePlayBillingException("[onSkuDetailsResponse] unknown SKU: $sku")
+                        )
+                    }
+                }
+            }
+            BillingResponseCode.USER_CANCELED -> logInfo(
+                TAG,
+                "[onSkuDetailsResponse] USER_CANCELED: $debugMessage"
+            )
+            BillingResponseCode.SERVICE_DISCONNECTED -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] SERVICE_DISCONNECTED: $debugMessage")
+            )
+            BillingResponseCode.SERVICE_UNAVAILABLE -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] SERVICE_UNAVAILABLE: $debugMessage")
+            )
+            BillingResponseCode.BILLING_UNAVAILABLE -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] BILLING_UNAVAILABLE: $debugMessage")
+            )
+            BillingResponseCode.ITEM_UNAVAILABLE -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] ITEM_UNAVAILABLE: $debugMessage")
+            )
+            BillingResponseCode.DEVELOPER_ERROR -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] DEVELOPER_ERROR: $debugMessage")
+            )
+            BillingResponseCode.ERROR -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] ERROR: $debugMessage")
+            )
+            BillingResponseCode.FEATURE_NOT_SUPPORTED -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] FEATURE_NOT_SUPPORTED: $debugMessage")
+            )
+            BillingResponseCode.ITEM_ALREADY_OWNED -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] ITEM_ALREADY_OWNED: $debugMessage")
+            )
+            BillingResponseCode.ITEM_NOT_OWNED -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] ITEM_NOT_OWNED: $debugMessage")
+            )
+            else -> logError(
+                TAG,
+                GooglePlayBillingException("[onSkuDetailsResponse] $responseCode: $debugMessage")
+            )
+        }
+
+        skuDetailsResponseTime = if (responseCode == BillingResponseCode.OK) {
+            SystemClock.elapsedRealtime()
+        } else {
+            -SKU_DETAILS_REQUERY_TIME
+        }
+    }
+
+    /**
+     * Calls the billing client functions to query sku details for both the inapp and subscription
+     * SKUs. SKU details are useful for displaying item names and price lists to the user, and are
+     * required to make a purchase.
+     */
+    private suspend fun querySkuDetails() = withContext(Dispatchers.IO) {
+        if (!INAPP_SKUS.isNullOrEmpty()) {
+            billingClient.querySkuDetails(
+                SkuDetailsParams.newBuilder()
+                    .setType(SkuType.INAPP)
+                    .setSkusList(INAPP_SKUS)
+                    .build()
+            ).also {
+                onSkuDetailsResponse(it.billingResult, it.skuDetailsList)
+            }
+        }
+
+        if (!SUBS_SKUS.isNullOrEmpty()) {
+            billingClient.querySkuDetails(
+                SkuDetailsParams.newBuilder()
+                    .setType(SkuType.SUBS)
+                    .setSkusList(SUBS_SKUS)
+                    .build()
+            ).also {
+                onSkuDetailsResponse(it.billingResult, it.skuDetailsList)
+            }
+        }
+    }
+
+    /**
+     * Used internally to get purchases from a requested set of SKUs. This is particularly
+     * important when changing subscriptions, as onPurchasesUpdated won't update the purchase state
+     * of a subscription that has been upgraded from.
+     *
+     * @param skus skus to get purchase information for
+     * @param skuType sku type, inapp or subscription, to get purchase information for.
+     * @return purchases
+     */
+    private suspend fun getPurchases(
+        skuType: String,
+        skus: Array<String>?
+    ): List<Purchase> = withContext(Dispatchers.IO) {
+        mutableListOf<Purchase>().apply {
+            val purchasesResult = billingClient.queryPurchasesAsync(skuType)
+            val billingResult = purchasesResult.billingResult
+            val responseCode = billingResult.responseCode
+            if (responseCode == BillingResponseCode.OK) {
+                purchasesResult.purchasesList.forEach { purchase ->
+                    skus?.forEach { sku ->
+                        purchase.skus.find { it == sku }?.also {
+                            add(purchase)
+                        }
+                    }
+                }
+            } else {
+                logError(TAG, GooglePlayBillingException("[getPurchases] $responseCode: ${billingResult.debugMessage}"))
+            }
+        }
+    }
+
+    /**
+     * Calling this means that we have the most up-to-date information for an SKU
+     * in a purchase object. This uses [PurchaseState]s & the acknowledged state.
+     *
+     * @param purchase an up-to-date object to set the state for the SKU
+     */
+    private fun setSkuStateFromPurchase(purchase: Purchase) = purchase.skus.forEach {
+        val skuStateFlow = skuStateMap[it] ?: logError(
+            TAG,
+            GooglePlayBillingException("[setSkuStateFromPurchase] unknown SKU: $it")
+        ).let { return@forEach }
+
+        val state = purchase.purchaseState
+        if ((state == PurchaseState.PURCHASED || state == PurchaseState.PENDING) && !isSignatureValid(purchase)) {
+            logError(TAG, GooglePlayBillingException("[setSkuStateFromPurchase] invalid signature"))
+            // Don't set SkuState if signature validation fails
+            return@forEach
+        }
+
+        val oldState = skuStateFlow.value
+        when (state) {
+            PurchaseState.PENDING -> SkuState.PENDING
+            PurchaseState.UNSPECIFIED_STATE -> SkuState.NOT_PURCHASED
+            PurchaseState.PURCHASED -> if (purchase.isAcknowledged) {
+                SkuState.PURCHASED_AND_ACKNOWLEDGED
+            } else {
+                SkuState.PURCHASED
+            }
+            else -> null
+        }?.let { newState ->
+            if (newState == SkuState.PENDING) {
+                _pendingPurchase.tryEmit(purchase)
+            } else if (newState != oldState) {
+                _purchaseStateChange.tryEmit(purchase)
+            }
+            skuStateFlow.tryEmit(newState)
+        } ?: logError(
+            TAG,
+            GooglePlayBillingException("[setSkuStateFromPurchase] unknown purchase state: $state")
+        )
+    }
+
+    /**
+     * Since we (mostly) are getting sku states when we actually make a purchase or update
+     * purchases, we keep some internal state when we do things like acknowledge or consume.
+     *
+     * @param sku product ID to change the state of
+     * @param newState the new state of the sku
+     */
+    private fun setSkuState(
+        sku: String,
+        newState: SkuState
+    ) = skuStateMap[sku]?.tryEmit(newState) ?: logError(
+        TAG,
+        GooglePlayBillingException("[setSkuState] unknown SKU: $sku")
+    )
+
+    /**
+     * Goes through each purchase and makes sure that the purchase state is processed and the state
+     * is available through Flows. Verifies signature and acknowledges purchases. PURCHASED isn't
+     * returned until the purchase is acknowledged.
+     *
+     * https://developer.android.com/google/play/billing/billing_library_releases_notes#2_0_acknowledge
+     *
+     * Developers can choose to acknowledge purchases from a server using the
+     * Google Play Developer API. The server has direct access to the user database,
+     * so using the Google Play Developer API for acknowledgement might be more reliable.
+     *
+     * If the purchase token is not acknowledged within 3 days,
+     * then Google Play will automatically refund and revoke the purchase.
+     * This behavior helps ensure that users are not charged unless the user has successfully
+     * received access to the content.
+     * This eliminates a category of issues where users complain to developers
+     * that they paid for something that the app is not giving to them.
+     *
+     * If a [skusToUpdate] list is passed-into this method, any purchases not in the list of
+     * purchases will have their state set to [SkuState.NOT_PURCHASED].
+     *
+     * @param purchases the List of purchases to process.
+     * @param skusToUpdate a list of skus that we want to update the state from --- this allows us
+     * to set the state of non-returned SKUs to [SkuState.NOT_PURCHASED].
+     */
+    private fun processPurchaseList(
+        purchases: List<Purchase>?,
+        skusToUpdate: List<String>?
+    ) {
+        val updatedSkus = HashSet<String>()
+        purchases?.forEach { purchase ->
+            purchase.skus.forEach { sku ->
+                skuStateMap[sku]?.let {
+                    updatedSkus.add(sku)
+                } ?: logError(TAG, GooglePlayBillingException("[processPurchaseList] unknown SKU: $sku"))
+            }
+
+            // Make sure the SkuState is set
+            setSkuStateFromPurchase(purchase)
+
+            if (purchase.purchaseState == PurchaseState.PURCHASED) {
+                logDebug(TAG, "[processPurchaseList] found purchase with SKUs: ${purchase.skus}")
+
+                var isConsumable = false
+                ioScope.launch {
+                    for (sku in purchase.skus) {
+                        if (CONSUMABLE_SKUS.contains(sku)) {
+                            isConsumable = true
+                        } else if (isConsumable) {
+                            isConsumable = false
+                            logError(
+                                TAG,
+                                GooglePlayBillingException("[processPurchaseList] purchase can't contain both consumables & non-consumables: ${purchase.skus}")
+                            )
+                            break
+                        }
+                    }
+
+                    if (isConsumable) {
+                        logDebug(TAG, "[processPurchaseList] consuming purchase")
+                        consumePurchase(purchase)
+                        _newPurchase.tryEmit(Pair(BillingResponseCode.OK, purchase))
+                    } else if (!purchase.isAcknowledged) {
+                        logDebug(TAG, "[processPurchaseList] acknowledging purchase")
+                        // Acknowledge everything — new purchases are ones not yet acknowledged
+                        val result = billingClient.acknowledgePurchase(
+                            AcknowledgePurchaseParams.newBuilder()
+                                .setPurchaseToken(purchase.purchaseToken)
+                                .build()
+                        )
+
+                        if (result.responseCode == BillingResponseCode.OK) {
+                            // Purchase acknowledged
+                            purchase.skus.forEach {
+                                setSkuState(it, SkuState.PURCHASED_AND_ACKNOWLEDGED)
+                            }
+                            _newPurchase.tryEmit(Pair(BillingResponseCode.OK, purchase))
+                        } else {
+                            logError(TAG, GooglePlayBillingException("[processPurchaseList] error acknowledging: ${purchase.skus}"))
+                        }
+                    }
+                }
+            }
+        } ?: logDebug(TAG, "[processPurchaseList] null purchase list")
+
+        // Clear purchase state of anything that didn't come with this purchase list if this is
+        // part of a refresh.
+        skusToUpdate?.forEach {
+            if (!updatedSkus.contains(it)) {
+                setSkuState(it, SkuState.NOT_PURCHASED)
+            }
+        }
+    }
+
+    /**
+     * Internal call only. Assumes that all signature checks have been completed and the purchase
+     * is ready to be consumed. If the sku is already being consumed, does nothing.
+     * @param purchase purchase to consume
+     */
+    private suspend fun consumePurchase(purchase: Purchase) = withContext(Dispatchers.IO) {
+        // weak check to make sure we're not already consuming the sku
+        if (purchaseConsumptionInProcess.contains(purchase)) {
+            // already consuming
+            return@withContext
+        }
+
+        purchaseConsumptionInProcess.add(purchase)
+        val consumePurchaseResult = billingClient.consumePurchase(
+            ConsumeParams.newBuilder()
+                .setPurchaseToken(purchase.purchaseToken)
+                .build()
+        )
+        purchaseConsumptionInProcess.remove(purchase)
+
+        if (consumePurchaseResult.billingResult.responseCode == BillingResponseCode.OK) {
+            logDebug(TAG, "[consumePurchase] successful, emitting SKU")
+            _consumedPurchaseSkus.emit(purchase.skus)
+            // Since we've consumed the purchase
+            purchase.skus.forEach {
+                setSkuState(it, SkuState.NOT_PURCHASED)
+            }
+        } else {
+            logError(TAG, GooglePlayBillingException("[consumePurchase] ${consumePurchaseResult.billingResult.debugMessage}"))
         }
     }
 
@@ -533,190 +820,49 @@ class BillingRepository constructor(
      *
      * @see [Security]
      */
-    private fun isSignatureValid(purchase: Purchase) = verifyPurchase(
-        PK1.A + "/" + PK2.B,
+    private fun isSignatureValid(purchase: Purchase) = Security.verifyPurchase(
+        BuildConfig.BASE64_PUBLIC_KEY,
         purchase.originalJson,
         purchase.signature
     )
 
-    /**
-     * Checks if the user's device supports subscriptions
-     */
-    @UiThread
-    private fun isSubscriptionSupported(): Boolean {
-        val result = playStoreBillingClient.isFeatureSupported(
-            FeatureType.SUBSCRIPTIONS
-        )
-
-        var succeeded = false
-        when (result.responseCode) {
-            BillingResponseCode.SERVICE_DISCONNECTED -> {
-                logDebug(TAG, "[isSubscriptionSupported] service disconnected; retrying")
-                connectToPlayBillingService()
-            }
-            BillingResponseCode.OK -> succeeded = true
-            else -> logWarning(
-                TAG,
-                "[isSubscriptionSupported] error responseCode: ${result.responseCode}, debugMessage: ${result.debugMessage}"
-            )
-        }
-
-        return succeeded
-    }
-
-    /**
-     * Presumably a set of SKUs has been defined on the Google Play Developer Console. This
-     * method is for requesting a (improper) subset of those SKUs. Hence, the method accepts a list
-     * of product IDs and returns the matching list of SkuDetails.
-     */
-    private suspend fun querySkuDetails(
-        @SkuType skuType: String,
-        skuList: List<String>
-    ) {
-        logDebug(TAG, "[querySkuDetails] for $skuType")
-
-        if (skuList.isNullOrEmpty()) {
-            logDebug(TAG, "[querySkuDetails] skuList is empty, skipping")
-            return
-        }
-
-        val (result, skuDetailsList) = playStoreBillingClient.querySkuDetails(
-            SkuDetailsParams.newBuilder()
-                .setSkusList(skuList)
-                .setType(skuType)
-                .build()
-        )
-
-        when (result.responseCode) {
-            BillingResponseCode.OK -> withContext(Dispatchers.IO) {
-                logDebug(TAG, "[querySkuDetails] success: ${skuDetailsList ?: "[]"}")
-
-                skuDetailsList?.let {
-                    skuDetailsDao.refreshSkuDetails(it)
-                }
-            }
-            else -> logError(
-                TAG,
-                GooglePlayBillingException("responseCode: ${result.responseCode}, debugMessage: ${result.debugMessage}")
-            )
-        }
-    }
-
-    /**
-     * This is the function to call when user wishes to make a purchase. This function will
-     * launch the Google Play Billing flow. The response to this call is returned in
-     * [onPurchasesUpdated]
-     */
-    @UiThread
-    fun launchBillingFlow(
-        activity: Activity,
-        augmentedSkuDetails: AugmentedSkuDetails,
-        purchaseFinishedCallback: OnPurchaseFinishedListener
-    ) = launchBillingFlow(
-        activity,
-        SkuDetails(augmentedSkuDetails.originalJson ?: ""),
-        purchaseFinishedCallback
-    )
-
-    @UiThread
-    fun launchBillingFlow(
-        activity: Activity,
-        skuDetails: SkuDetails,
-        purchaseFinishedCallback: OnPurchaseFinishedListener
-    ) {
-        this.purchaseFinishedCallback = purchaseFinishedCallback
-
-        val params = BillingFlowParams.newBuilder()
-            .setSkuDetails(skuDetails)
-            .build()
-        playStoreBillingClient.launchBillingFlow(
-            activity,
-            params
-        )
-    }
-
-    /**
-     * This method is called by the [playStoreBillingClient] when new purchases are detected.
-     * The purchase list in this method is not the same as the one in
-     * [queryPurchases][queryPurchases]. Whereas queryPurchases returns everything
-     * this user owns, [onPurchasesUpdated] only returns the items that were just now purchased or
-     * billed.
-     *
-     * The purchases provided here should be passed along to the secure server for
-     * [verification](https://developer.android.com/google/play/billing/billing_library_overview#Verify)
-     * and safekeeping. And if this purchase is consumable, it should be consumed, and the secure
-     * server should be told of the consumption. All that is accomplished by calling
-     * [queryPurchases].
-     */
-    override fun onPurchasesUpdated(
-        result: BillingResult,
-        purchases: MutableList<Purchase>?
-    ) {
-        val shouldInvokeCallback = when (result.responseCode) {
-            // Will handle server verification, consumables, and updating the local cache
-            BillingResponseCode.OK -> {
-                logDebug(TAG, "[onPurchasesUpdated] success: ${purchases ?: "[]"}")
-                purchases?.apply { processPurchases(toSet()) }
-                false
-            }
-            // Item already owned? call queryPurchases to verify and process all such items
-            BillingResponseCode.ITEM_ALREADY_OWNED -> {
-                logDebug(TAG, "[onPurchasesUpdated] item already owned")
-                queryPurchases()
-                true
-            }
-            // Retry connection if disconnected
-            BillingResponseCode.SERVICE_DISCONNECTED -> {
-                logDebug(TAG, "[onPurchasesUpdated] service disconnected; retrying")
-                connectToPlayBillingService()
-                true
-            }
-            else -> {
-                logDebug(
-                    TAG,
-                    "[onPurchasesUpdated] responseCode: ${result.responseCode}, debugMessage: ${result.debugMessage}"
-                )
-                true
-            }
-        }
-
-        if (shouldInvokeCallback) {
-            purchaseFinishedCallback?.invoke(result.responseCode, null)
-        }
-    }
-
-    @WorkerThread
-    private suspend fun insert(
-        entitlement: Entitlement
-    ) = withContext(Dispatchers.IO) {
-        entitlementsDao.insert(entitlement)
-    }
-
-    /**
-     * [INAPP_SKUS], [SUBS_SKUS], [CONSUMABLE_SKUS]:
-     *
-     * If you don't need customization ,then you can define these lists and hardcode them here.
-     * That said, there are use cases where you may need customization:
-     *
-     * - If you don't want to update your APK (or Bundle) each time you change your SKUs, then you
-     *   may want to load these lists from your secure server.
-     *
-     * - If your design is such that users can buy different items from different Activities or
-     * Fragments, then you may want to define a list for each of those subsets. I only have two
-     * subsets: INAPP_SKUS and SUBS_SKUS
-     */
-    object Sku {
-        const val AD_FREE = "oxygen_updater_ad_free"
-
-        val INAPP_SKUS = listOf(AD_FREE)
-        val SUBS_SKUS = listOf<String>()
-        val CONSUMABLE_SKUS = listOf<String>()
-
-        val ALL_SKUS = INAPP_SKUS + SUBS_SKUS + CONSUMABLE_SKUS
+    enum class SkuState {
+        UNKNOWN,
+        NOT_PURCHASED,
+        PENDING,
+        PURCHASED,
+        PURCHASED_AND_ACKNOWLEDGED
     }
 
     companion object {
         private const val TAG = "BillingRepository"
+
+        /**
+         * 1 second
+         */
+        private const val RECONNECT_TIMER_START_MILLISECONDS = 1000L
+
+        /**
+         * 15 minutes
+         */
+        private const val RECONNECT_TIMER_MAX_TIME_MILLISECONDS = 1000L * 60L * 15L
+
+        /**
+         * 4 hours
+         */
+        private const val SKU_DETAILS_REQUERY_TIME = 1000L * 60L/* * 60L * 4L*/
+
+        val SKU_INAPP_AD_FREE = PurchaseType.AD_FREE.sku
+        private val SKU_SUBS_AD_FREE_MONTHLY = PurchaseType.AD_FREE_MONTHLY.sku
+        private val SKU_SUBS_AD_FREE_YEARLY = PurchaseType.AD_FREE_YEARLY.sku
+
+        // Ideally SKUs should be fetched from the server, so that the app
+        // doesn't need to be updated every time we add a new product.
+        // However, we don't add products at all, so it's fine for now.
+        private val INAPP_SKUS = listOf(SKU_INAPP_AD_FREE)
+        private val SUBS_SKUS = listOf<String>()
+        private val CONSUMABLE_SKUS = listOf<String>()
+
+        private val handler = Handler(Looper.getMainLooper())
     }
 }
-

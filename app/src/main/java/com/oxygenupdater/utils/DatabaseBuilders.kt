@@ -5,7 +5,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.oxygenupdater.database.LocalAppDb
-import com.oxygenupdater.database.LocalBillingDb
 import com.oxygenupdater.utils.DatabaseMigrations.prepopulateFromSqlite
 
 /**
@@ -26,7 +25,7 @@ object DatabaseBuilders {
     }
 
     const val APP_DB = "oxygen_updater"
-    const val PURCHASES_DB = "purchase_db"
+    const val PURCHASES_OLD_DB = "purchase_db"
     const val NEWS_ITEMS_OLD_DB = "NewsItems.db"
     const val SUBMITTED_UPDATE_FILES_OLD_DB = "SubmittedUpdateFiles.db"
 
@@ -38,15 +37,6 @@ object DatabaseBuilders {
         APP_DB
     ).addCallback(prepopulateFromOldData)
         .fallbackToDestructiveMigrationOnDowngrade()
-        .build()
-
-    fun buildLocalBillingDatabase(
-        context: Context
-    ) = Room.databaseBuilder(
-        context,
-        LocalBillingDb::class.java,
-        PURCHASES_DB
-    ).fallbackToDestructiveMigration() // Data is cached, so it is OK to delete
         .build()
 
 }

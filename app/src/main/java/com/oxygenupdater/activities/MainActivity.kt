@@ -147,6 +147,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
         setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
+        lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
         bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
             R.string.advertising_main_banner_unit_id,
@@ -254,10 +255,9 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             }
         }
 
-        billingViewModel.adFreeUnlockLiveData.observe(this) {
-            // If it's null, user has not bought the ad-free unlock
-            // Thus, ads should be shown
-            setupAds(it == null || !it.entitled)
+        billingViewModel.hasPurchasedAdFree.observe(this) {
+            // Ads should be shown if user hasn't bought the ad-free unlock
+            setupAds(!it)
         }
 
         mainViewModel.maybeCheckForAppUpdate().observe(
