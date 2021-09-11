@@ -120,7 +120,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     /**
      * Allows an already downloaded update file to be deleted to save storage space.
      */
-    private val updateAlreadyDownloadedDialog by lazy {
+    private val updateAlreadyDownloadedDialog by lazy(LazyThreadSafetyMode.NONE) {
         MessageDialog(
             requireActivity(),
             title = getString(R.string.delete_message_title),
@@ -163,7 +163,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         }
     }
 
-    private val noSpaceForDownloadDialog by lazy {
+    private val noSpaceForDownloadDialog by lazy(LazyThreadSafetyMode.NONE) {
         MessageDialog(
             requireActivity(),
             title = getString(R.string.download_notification_error_storage_full),

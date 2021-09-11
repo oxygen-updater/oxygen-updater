@@ -24,8 +24,5 @@ jobs:
           java-version: 8
           cache: 'gradle'
 
-      - name: Create dummy keystore.properties
-        run: echo "storeFile=keyStore.jks" > keystore.properties
-
       - name: Build with Gradle
         run: ./gradlew clean assembleDebug -x uploadCrashlyticsMappingFileDebug

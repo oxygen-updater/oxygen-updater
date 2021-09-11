@@ -12,7 +12,7 @@ import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTE
 import com.oxygenupdater.workers.CheckSystemUpdateFilesWorker
 import com.oxygenupdater.workers.WORK_UNIQUE_CHECK_SYSTEM_UPDATE_FILES
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import java.util.concurrent.TimeUnit
 
 /**
@@ -21,8 +21,8 @@ import java.util.concurrent.TimeUnit
  */
 object ContributorUtils {
 
-    private val analytics by inject(FirebaseAnalytics::class.java)
-    private val workManager by inject(WorkManager::class.java)
+    private val analytics by getKoin().inject<FirebaseAnalytics>()
+    private val workManager by getKoin().inject<WorkManager>()
 
     fun flushSettings(isContributing: Boolean) {
         val isFirstTime = !SettingsManager.containsPreference(PROPERTY_CONTRIBUTE)

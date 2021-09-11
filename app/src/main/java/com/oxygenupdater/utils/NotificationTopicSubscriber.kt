@@ -34,7 +34,7 @@ object NotificationTopicSubscriber {
                     UPDATE_METHOD_TOPIC_PREFIX + updateMethodId
         }
 
-    private val messaging by lazy {
+    private val messaging by lazy(LazyThreadSafetyMode.NONE) {
         Firebase.messaging
     }
 

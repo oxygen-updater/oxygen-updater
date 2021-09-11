@@ -31,15 +31,15 @@ abstract class AnimationAdapter internal constructor(
         holder: RecyclerView.ViewHolder,
         position: Int
     ) = wrappedAdapter.onBindViewHolder(holder, position).also {
-        val adapterPosition = holder.adapterPosition
+        val bindingAdapterPosition = holder.bindingAdapterPosition
 
-        if (!isFirstOnly || adapterPosition > mLastPosition) {
+        if (!isFirstOnly || bindingAdapterPosition > mLastPosition) {
             getAnimators(holder.itemView).forEach {
                 it.setDuration(mDuration.toLong()).start()
                 it.interpolator = mInterpolator
             }
 
-            mLastPosition = adapterPosition
+            mLastPosition = bindingAdapterPosition
         } else {
             ViewHelper.clear(holder.itemView)
         }

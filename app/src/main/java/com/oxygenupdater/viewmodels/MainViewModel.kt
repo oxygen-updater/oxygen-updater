@@ -57,7 +57,7 @@ import com.oxygenupdater.workers.WORK_UNIQUE_DOWNLOAD
 import com.oxygenupdater.workers.WORK_UNIQUE_MD5_VERIFICATION
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import org.threeten.bp.LocalDate
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -116,8 +116,8 @@ class MainViewModel(
     val settingsChanged: LiveData<String>
         get() = _settingsChanged
 
-    private val workManager by inject(WorkManager::class.java)
-    private val appUpdateManager by inject(AppUpdateManager::class.java)
+    private val workManager by getKoin().inject<WorkManager>()
+    private val appUpdateManager by getKoin().inject<AppUpdateManager>()
 
     private lateinit var downloadWorkRequest: OneTimeWorkRequest
 

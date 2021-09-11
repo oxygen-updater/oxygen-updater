@@ -19,7 +19,7 @@ import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
 import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logVerbose
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import org.threeten.bp.ZoneId
 import kotlin.system.exitProcess
 
@@ -31,7 +31,7 @@ object Utils {
     private const val TAG = "Utils"
     private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
-    private val systemVersionProperties by inject(SystemVersionProperties::class.java)
+    private val systemVersionProperties by getKoin().inject<SystemVersionProperties>()
 
     /**
      * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later versions

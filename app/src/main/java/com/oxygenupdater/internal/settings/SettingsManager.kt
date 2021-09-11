@@ -3,11 +3,11 @@ package com.oxygenupdater.internal.settings
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.oxygenupdater.utils.Logger.logError
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 
 object SettingsManager {
 
-    val sharedPreferences by inject(SharedPreferences::class.java)
+    val sharedPreferences by getKoin().inject<SharedPreferences>()
 
     @Suppress("UNCHECKED_CAST")
     fun <T> getPreference(

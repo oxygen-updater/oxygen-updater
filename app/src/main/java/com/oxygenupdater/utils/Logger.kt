@@ -8,15 +8,14 @@ import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.utils.ExceptionUtils.isNetworkError
 import com.oxygenupdater.utils.Logger.LogLevel.ERROR
 import com.oxygenupdater.utils.Logger.LogLevel.WARNING
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 
-@Suppress("unused")
 object Logger {
 
     private const val CRASHLYTICS_TAG_EXCEPTION_SEVERITY = "EXCEPTION_SEVERITY"
     private const val CRASHLYTICS_TAG_ERROR_DETAIL_MESSAGE = "ERROR_DETAIL_MESSAGE"
 
-    private val crashlytics by inject(FirebaseCrashlytics::class.java)
+    private val crashlytics by getKoin().inject<FirebaseCrashlytics>()
 
     fun logVerbose(tag: String?, message: String) {
         if (isDebugBuild) {

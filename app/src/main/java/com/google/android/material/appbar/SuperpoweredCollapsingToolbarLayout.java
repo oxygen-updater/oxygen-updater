@@ -1,5 +1,7 @@
 package com.google.android.material.appbar;
 
+import static com.google.android.material.theme.overlay.MaterialThemeOverlay.wrap;
+
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,6 +36,7 @@ import androidx.core.util.ObjectsCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsCompat.Type;
 
 import com.google.android.material.animation.AnimationUtils;
 import com.google.android.material.internal.DescendantOffsetUtils;
@@ -42,8 +45,6 @@ import com.google.android.material.internal.ThemeEnforcement;
 import com.oxygenupdater.R;
 
 import org.jetbrains.annotations.NotNull;
-
-import static com.google.android.material.theme.overlay.MaterialThemeOverlay.wrap;
 
 /**
  * This class is a combination of <a href="https://github.com/hendraanggrian/collapsingtoolbarlayout-subtitle">collapsingtoolbarlayout-subtitle</a>
@@ -295,7 +296,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
 		// Consume the insets. This is done so that child views with fitSystemWindows=true do not
 		// get the default padding functionality from View
-		return insets.consumeSystemWindowInsets();
+		return WindowInsetsCompat.CONSUMED;
 	}
 
 	@Override
@@ -317,7 +318,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
 		// Now draw the status bar scrim
 		if (statusBarScrim != null && scrimAlpha > 0) {
-			int topInset = lastInsets != null ? lastInsets.getSystemWindowInsetTop() : 0;
+			int topInset = lastInsets != null ? lastInsets.getInsets(Type.systemBars()).top : 0;
 			if (topInset > 0) {
 				statusBarScrim.setBounds(0, -currentOffset, getWidth(), topInset - currentOffset);
 				statusBarScrim.mutate().setAlpha(scrimAlpha);
@@ -439,7 +440,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 		int mode = MeasureSpec.getMode(heightMeasureSpec);
-		int topInset = lastInsets != null ? lastInsets.getSystemWindowInsetTop() : 0;
+		int topInset = lastInsets != null ? lastInsets.getInsets(Type.systemBars()).top : 0;
 		if (mode == MeasureSpec.UNSPECIFIED && topInset > 0) {
 			// If we have a top inset and we're set to wrap_content height we need to make sure
 			// we add the top inset to our height, therefore we re-measure
@@ -454,7 +455,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
 		if (lastInsets != null) {
 			// Shift down any views which are not set to fit system windows
-			int insetTop = lastInsets.getSystemWindowInsetTop();
+			int insetTop = lastInsets.getInsets(Type.systemBars()).top;
 			for (int i = 0, z = getChildCount(); i < z; i++) {
 				View child = getChildAt(i);
 
@@ -1413,7 +1414,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 		}
 
 		// Otherwise we'll use the default computed value
-		int insetTop = lastInsets != null ? lastInsets.getSystemWindowInsetTop() : 0;
+		int insetTop = lastInsets != null ? lastInsets.getInsets(Type.systemBars()).top : 0;
 
 		int minHeight = ViewCompat.getMinimumHeight(this);
 		if (minHeight > 0) {
@@ -1523,7 +1524,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 		public void onOffsetChanged(AppBarLayout layout, int verticalOffset) {
 			currentOffset = verticalOffset;
 
-			int insetTop = lastInsets != null ? lastInsets.getSystemWindowInsetTop() : 0;
+			int insetTop = lastInsets != null ? lastInsets.getInsets(Type.systemBars()).top : 0;
 
 			for (int i = 0, z = getChildCount(); i < z; i++) {
 				View child = getChildAt(i);

@@ -19,7 +19,7 @@ class AlphaInAnimationAdapter private constructor(
         DEFAULT_ALPHA_FROM
     )
 
-    override fun getAnimators(view: View?): Array<Animator>  = arrayOf(
+    override fun getAnimators(view: View?): Array<Animator> = arrayOf(
         ObjectAnimator.ofFloat(view, "alpha", mFrom, 1f)
     )
 

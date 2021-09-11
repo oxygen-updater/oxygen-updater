@@ -38,7 +38,7 @@ class NewsListAdapter(
 ) : ListAdapter<NewsItem, NewsItemViewHolder>(DIFF_CALLBACK) {
 
     private val isNightThemeActive = ThemeUtils.isNightModeActive(activity)
-    private val optionsDialog by lazy {
+    private val optionsDialog by lazy(LazyThreadSafetyMode.NONE) {
         NewsItemOptionsDialogFragment()
     }
 

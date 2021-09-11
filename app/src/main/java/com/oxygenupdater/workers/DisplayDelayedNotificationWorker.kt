@@ -32,7 +32,7 @@ import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENER
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationIds
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import kotlin.random.Random
 
 /**
@@ -50,14 +50,14 @@ class DisplayDelayedNotificationWorker(
         .entries
         .associate { it.key to it.value.toString() }
 
-    private val localAppDb by inject(LocalAppDb::class.java)
-    private val notificationManager by inject(NotificationManagerCompat::class.java)
+    private val localAppDb by getKoin().inject<LocalAppDb>()
+    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
-    private val random by lazy {
+    private val random by lazy(LazyThreadSafetyMode.NONE) {
         Random.Default
     }
 
-    private val newsItemDao by lazy {
+    private val newsItemDao by lazy(LazyThreadSafetyMode.NONE) {
         localAppDb.newsItemDao()
     }
 

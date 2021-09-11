@@ -66,7 +66,7 @@ import kotlin.math.abs
 
 class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemClickListener {
 
-    private val noNetworkDialog by lazy {
+    private val noNetworkDialog by lazy(LazyThreadSafetyMode.NONE) {
         MessageDialog(
             this,
             title = getString(R.string.error_app_requires_network_connection),
@@ -76,15 +76,15 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         )
     }
 
-    private val serverMessagesDialog by lazy {
+    private val serverMessagesDialog by lazy(LazyThreadSafetyMode.NONE) {
         ServerMessagesDialogFragment()
     }
 
-    private val contributorDialog by lazy {
+    private val contributorDialog by lazy(LazyThreadSafetyMode.NONE) {
         ContributorDialogFragment(true)
     }
 
-    private val noConnectionSnackbar by lazy {
+    private val noConnectionSnackbar by lazy(LazyThreadSafetyMode.NONE) {
         Snackbar.make(
             coordinatorLayout,
             R.string.error_no_internet_connection,
@@ -458,7 +458,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         }
     }
 
-    private fun setupBottomNavigation() = bottomNavigationView.setOnNavigationItemSelectedListener {
+    private fun setupBottomNavigation() = bottomNavigationView.setOnItemSelectedListener {
         when (it.itemId) {
             R.id.page_update -> 0
             R.id.page_news -> 1
@@ -555,7 +555,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         @IdRes pageId: Int,
         show: Boolean = true,
         count: Int? = null
-    ) = bottomNavigationView.getOrCreateBadge(pageId)?.apply {
+    ) = bottomNavigationView.getOrCreateBadge(pageId).apply {
         isVisible = show
 
         if (isVisible && count != null /*&& count != 0*/) {

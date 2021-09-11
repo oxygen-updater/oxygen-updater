@@ -20,7 +20,7 @@ import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import java.io.File
 import java.util.*
 
@@ -34,11 +34,11 @@ class CheckSystemUpdateFilesWorker(
     parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
 
-    private val database by inject(LocalAppDb::class.java)
-    private val analytics by inject(FirebaseAnalytics::class.java)
-    private val serverRepository by inject(ServerRepository::class.java)
+    private val database by getKoin().inject<LocalAppDb>()
+    private val analytics by getKoin().inject<FirebaseAnalytics>()
+    private val serverRepository by getKoin().inject<ServerRepository>()
 
-    private val submittedUpdateFilesDao by lazy {
+    private val submittedUpdateFilesDao by lazy(LazyThreadSafetyMode.NONE) {
         database.submittedUpdateFileDao()
     }
 

@@ -39,14 +39,14 @@ import com.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_INSTALL_ID
 import com.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_START_OS
 import com.oxygenupdater.workers.WORK_DATA_UPLOAD_ROOT_INSTALL_LOG_STATUS
 import com.oxygenupdater.workers.WORK_UNIQUE_UPLOAD_ROOT_INSTALL_LOG
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import java.util.concurrent.TimeUnit
 
 class VerifyInstallationReceiver : BroadcastReceiver() {
 
-    private val systemVersionProperties by inject(SystemVersionProperties::class.java)
-    private val notificationManager by inject(NotificationManagerCompat::class.java)
-    private val workManager by inject(WorkManager::class.java)
+    private val systemVersionProperties by getKoin().inject<SystemVersionProperties>()
+    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
+    private val workManager by getKoin().inject<WorkManager>()
 
     override fun onReceive(context: Context, intent: Intent) {
         try {

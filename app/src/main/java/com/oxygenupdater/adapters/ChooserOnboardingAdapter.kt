@@ -91,7 +91,7 @@ class ChooserOnboardingAdapter(
 
         fun bindTo(item: SelectableModel) = textView.let {
             it.text = item.name
-            it.setOnClickListener { setSelection(adapterPosition) }
+            it.setOnClickListener { setSelection(bindingAdapterPosition) }
 
             if (item.id == selectedItem.id) {
                 markSelected()

@@ -1,5 +1,6 @@
 .idea
 Release*
+billing.properties
 keystore.properties
 output.json
 

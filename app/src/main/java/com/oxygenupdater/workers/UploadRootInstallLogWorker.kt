@@ -14,7 +14,7 @@ import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import org.threeten.bp.LocalDateTime
 
 /**
@@ -27,7 +27,7 @@ class UploadRootInstallLogWorker(
     private val parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
 
-    private val serverRepository by inject(ServerRepository::class.java)
+    private val serverRepository by getKoin().inject<ServerRepository>()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)

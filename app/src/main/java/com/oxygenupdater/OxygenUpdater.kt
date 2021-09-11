@@ -110,7 +110,7 @@ class OxygenUpdater : Application() {
         if (BuildConfig.DEBUG) {
             @SuppressLint("HardwareIds")
             val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-            val deviceId = MD5.calculateMD5(androidId).toUpperCase(Locale.getDefault())
+            val deviceId = MD5.calculateMD5(androidId).uppercase(Locale.getDefault())
             ADS_TEST_DEVICES.add(deviceId)
         }
 

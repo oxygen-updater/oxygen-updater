@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntRange
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.FaqActivity
@@ -122,7 +123,7 @@ fun Activity.enableEdgeToEdgeUiSupport() {
 
             doOnApplyWindowInsets { view, insets, initialPadding ->
                 // initialPadding contains the original padding values after inflation
-                view.updatePadding(bottom = initialPadding.bottom + insets.systemWindowInsetBottom)
+                view.updatePadding(bottom = initialPadding.bottom + insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom)
             }
         }
     }

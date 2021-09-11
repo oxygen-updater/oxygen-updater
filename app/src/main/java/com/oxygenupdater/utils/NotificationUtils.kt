@@ -12,9 +12,9 @@ import com.oxygenupdater.R
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup
 import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 
-private val notificationManager by inject(NotificationManagerCompat::class.java)
+private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
 class NotificationUtils(private val context: Context) {
 

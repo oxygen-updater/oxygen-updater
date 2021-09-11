@@ -23,13 +23,13 @@ import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 
 object LocalNotifications {
 
     private const val TAG = "LocalNotifications"
 
-    private val notificationManager by inject(NotificationManagerCompat::class.java)
+    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
     /**
      * Contribute: shows a notification that a update file has been submitted successfully.

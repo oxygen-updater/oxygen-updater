@@ -92,7 +92,7 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             val resourceName = systemVersionProperties.oxygenDeviceName.replace(
                 "(?:^OnePlus|^OP|Single\$|NR(?:Spr)?\$|TMO\$|VZW\$|_\\w+\$| )".toRegex(RegexOption.IGNORE_CASE),
                 ""
-            ).toLowerCase(Locale.ROOT)
+            ).lowercase(Locale.ROOT)
 
             var imageResId = resources.getIdentifier(
                 "oneplus$resourceName",

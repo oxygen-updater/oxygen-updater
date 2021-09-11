@@ -46,14 +46,14 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
     private lateinit var viewPagerAdapter: OnboardingPagerAdapter
 
-    private val startPage by lazy {
+    private val startPage by lazy(LazyThreadSafetyMode.NONE) {
         intent?.getIntExtra(
             MainActivity.INTENT_START_PAGE,
             MainActivity.PAGE_UPDATE
         ) ?: MainActivity.PAGE_UPDATE
     }
 
-    private val contributorDialog by lazy {
+    private val contributorDialog by lazy(LazyThreadSafetyMode.NONE) {
         ContributorDialogFragment()
     }
 
@@ -231,7 +231,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 val resourceName = systemVersionProperties.oxygenDeviceName.replace(
                     "(?:^OnePlus|^OP|Single\$|NR(?:Spr)?\$|TMO\$|VZW\$|_\\w+\$| )".toRegex(RegexOption.IGNORE_CASE),
                     ""
-                ).toLowerCase(Locale.ROOT)
+                ).lowercase(Locale.ROOT)
 
                 var imageResId = resources.getIdentifier(
                     "oneplus$resourceName",

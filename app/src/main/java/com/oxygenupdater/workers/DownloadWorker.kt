@@ -40,7 +40,7 @@ import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent.inject
+import org.koin.java.KoinJavaComponent.getKoin
 import java.io.File
 import java.io.IOException
 import java.io.RandomAccessFile
@@ -66,9 +66,9 @@ class DownloadWorker(
     private lateinit var tempFile: File
     private lateinit var zipFile: File
 
-    private val downloadApi by inject(DownloadApi::class.java)
-    private val workManager by inject(WorkManager::class.java)
-    private val notificationManager by inject(NotificationManagerCompat::class.java)
+    private val downloadApi by getKoin().inject<DownloadApi>()
+    private val workManager by getKoin().inject<WorkManager>()
+    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important

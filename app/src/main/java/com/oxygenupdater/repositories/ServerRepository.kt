@@ -34,7 +34,7 @@ class ServerRepository constructor(
 
     private var serverStatus: ServerStatus? = null
 
-    private val newsItemDao by lazy {
+    private val newsItemDao by lazy(LazyThreadSafetyMode.NONE) {
         localAppDb.newsItemDao()
     }
 
@@ -296,7 +296,7 @@ class ServerRepository constructor(
             hashMapOf(
                 "orderId" to purchase.orderId,
                 "packageName" to purchase.packageName,
-                "productId" to purchase.sku,
+                "productId" to purchase.skus.joinToString(","),
                 "purchaseTime" to purchase.purchaseTime,
                 "purchaseState" to purchase.purchaseState,
                 "developerPayload" to purchase.developerPayload,
