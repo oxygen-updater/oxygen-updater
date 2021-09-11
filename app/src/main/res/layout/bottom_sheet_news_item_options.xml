@@ -31,7 +31,6 @@
 		android:padding="@dimen/spacing_default"
 		android:stateListAnimator="@animator/clicked"
 		android:text="@string/fallback_menu_item_open_in_browser"
-		android:visibility="gone"
 		app:drawableStartCompat="@drawable/open_in_browser"
 		app:drawableTint="?colorPrimary" />
 

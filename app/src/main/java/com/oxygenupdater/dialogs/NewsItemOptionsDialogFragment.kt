@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.getSystemService
+import androidx.core.net.toUri
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_news_item_options.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -44,33 +46,31 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
-    ) = setupViews()
+    ) = ifInitialized {
+        setupViews()
+    }
 
     private fun setupViews() {
+        val read = newsItem.read
+        val title = newsItem.title
+        val fullUrl = newsItem.url + if (ThemeUtils.isNightModeActive(requireContext())) "Dark" else "Light"
+
         markAsReadTextView.apply {
             text = getString(
-                if (newsItem.read) {
-                    R.string.news_mark_unread
-                } else {
-                    R.string.news_mark_read
-                }
+                if (read) R.string.news_mark_unread
+                else R.string.news_mark_read
             )
 
             setCompoundDrawablesRelativeWithIntrinsicBounds(
-                if (newsItem.read) {
-                    R.drawable.cancel
-                } else {
-                    R.drawable.done_outline
-                }, 0, 0, 0
+                if (read) R.drawable.cancel
+                else R.drawable.done_outline,
+                0, 0, 0
             )
 
             setOnClickListener {
-                if (checkInitialized() && newsItem.id != null) {
+                if (newsItem.id != null) {
                     newsViewModel.toggleReadStatus(newsItem)
-                    NewsListAdapter.itemReadStatusChangedListener?.invoke(
-                        newsItem.id!!,
-                        !newsItem.read
-                    )
+                    NewsListAdapter.itemReadStatusChangedListener?.invoke(newsItem.id!!, !newsItem.read)
                 }
 
                 dismiss()
@@ -78,61 +78,53 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
         }
 
         openInBrowserTextView.setOnClickListener {
-            @Suppress("ControlFlowWithEmptyBody")
-            if (checkInitialized()) {
-                // no-op for now because the app has custom intent filters that
-                // may cause the article to open in the app itself (e.g. if the
-                // user has chosen "Set to always open"). Bypassing intent
-                // filters is hacky and likely to break in newer APIs (because
-                // it involves resolving the intent and checking package names).
+            // Bypassing intent filters is hacky and likely to break in newer APIs
+            // (because it involves resolving the intent and checking package names).
+            Intent.makeMainSelectorActivity(
+                Intent.ACTION_MAIN,
+                Intent.CATEGORY_APP_BROWSER
+            ).apply {
+                data = fullUrl.toUri()
+                startActivity(this)
             }
 
             dismiss()
         }
 
         shareLinkTextView.setOnClickListener {
-            if (checkInitialized()) {
-                val prefix = "${getString(R.string.app_name)}: ${newsItem.title}"
-                val intent = Intent(Intent.ACTION_SEND)
-                    // Rich text preview: should work only on API 29+
-                    .putExtra(Intent.EXTRA_TITLE, newsItem.title)
-                    // Main share content: will work on all API levels
-                    .putExtra(
-                        Intent.EXTRA_TEXT,
-                        "$prefix\n\n${newsItem.url}"
-                    ).setType("text/plain")
+            val prefix = "${getString(R.string.app_name)}: $title"
+            val intent = Intent(Intent.ACTION_SEND)
+                // Rich text preview: should work only on API 29+
+                .putExtra(Intent.EXTRA_TITLE, title)
+                // Main share content: will work on all API levels
+                .putExtra(
+                    Intent.EXTRA_TEXT,
+                    "$prefix\n\n$fullUrl"
+                ).setType("text/plain")
 
-                startActivity(Intent.createChooser(intent, null))
-            }
+            startActivity(Intent.createChooser(intent, null))
 
             dismiss()
         }
 
         copyLinkTextView.setOnClickListener {
-            if (checkInitialized() && clipboard != null) {
-                ClipData.newPlainText(
-                    getString(R.string.app_name),
-                    newsItem.url
-                ).let {
-                    clipboard!!.setPrimaryClip(it)
-
-                    Toast.makeText(
-                        context,
-                        getString(R.string.copy_toast_msg),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+            val clip = ClipData.newPlainText(getString(R.string.app_name), fullUrl)
+            clipboard?.setPrimaryClip(clip)?.also {
+                Toast.makeText(
+                    context,
+                    getString(R.string.copy_toast_msg),
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
             dismiss()
         }
     }
 
-    private fun checkInitialized() = if (this::newsItem.isInitialized) {
-        true
+    private fun ifInitialized(block: () -> Unit) = if (this::newsItem.isInitialized) {
+        block.invoke()
     } else {
         logWarning(TAG, "`newsItem` hasn't been initialized yet")
-        false
     }
 
     companion object {
