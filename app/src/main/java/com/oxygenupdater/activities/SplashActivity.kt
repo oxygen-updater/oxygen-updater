@@ -3,6 +3,7 @@ package com.oxygenupdater.activities
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
@@ -30,6 +31,9 @@ class SplashActivity : AppCompatActivity() {
             notificationUtils.deleteOldNotificationChannels()
             notificationUtils.createNewNotificationGroupsAndChannels()
         }
+
+        // Save app's version code to aid in future migrations (added in 5.4.0)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
 
         DatabaseMigrations.deleteLocalBillingDatabase(this)
         migrateOldSettings()

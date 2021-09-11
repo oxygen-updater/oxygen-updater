@@ -104,6 +104,13 @@ object SettingsManager {
 
     private const val TAG = "SettingsManager"
 
+    /**
+     * Added in v5.4.0
+     *
+     * @see [com.oxygenupdater.BuildConfig.VERSION_CODE]
+     */
+    const val PROPERTY_VERSION_CODE = "version_code"
+
     // Settings properties
     const val PROPERTY_DEVICE = "device"
     const val PROPERTY_DEVICE_ID = "device_id"
