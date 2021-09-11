@@ -62,86 +62,74 @@
 		android:requiresFadingEdge="vertical"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<FrameLayout
+		<LinearLayout
+			android:id="@+id/newsLayout"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="match_parent"
+			android:orientation="vertical">
 
-			<LinearLayout
-				android:id="@+id/newsLayout"
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/buttonRecyclerView"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:orientation="vertical">
+				android:layout_height="wrap_content"
+				app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+				app:spanCount="2" />
 
-				<androidx.recyclerview.widget.RecyclerView
-					android:id="@+id/buttonRecyclerView"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-					app:spanCount="2" />
-
-				<TextView
-					android:id="@+id/newsItemSubtitle"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="@dimen/spacing_default"
-					android:layout_marginTop="@dimen/spacing_default"
-					android:drawablePadding="@dimen/spacing_default"
-					android:gravity="center_vertical"
-					android:textColor="?android:textColorSecondary"
-					android:textSize="@dimen/typography_caption"
-					app:drawableStartCompat="@drawable/notes"
-					app:drawableTint="@color/colorPrimary"
-					tools:text="An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered" />
-
-				<TextView
-					android:id="@+id/newsDatePublished"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="@dimen/spacing_default"
-					android:layout_marginTop="@dimen/spacing_default"
-					android:drawablePadding="@dimen/spacing_default"
-					android:gravity="center_vertical"
-					android:textColor="?android:textColorSecondary"
-					android:textSize="@dimen/typography_caption"
-					app:drawableStartCompat="@drawable/schedule"
-					app:drawableTint="@color/colorPrimary"
-					tools:text="@string/news_date_published" />
-
-				<View
-					android:layout_width="match_parent"
-					android:layout_height="1dp"
-					android:layout_marginTop="@dimen/spacing_default"
-					android:background="@drawable/divider" />
-
-				<ProgressBar
-					android:id="@+id/progressBar"
-					style="?android:progressBarStyleLarge"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center"
-					android:layout_margin="@dimen/spacing_default"
-					android:visibility="gone"
-					tools:visibility="visible" />
-
-				<!-- news-content HTML already has an 8px margin -->
-				<WebView
-					android:id="@+id/webView"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="@dimen/spacing_half"
-					android:layout_marginEnd="@dimen/spacing_half"
-					android:layout_marginBottom="@dimen/spacing_half"
-					android:visibility="gone"
-					tools:visibility="visible" />
-			</LinearLayout>
-
-			<ViewStub
-				android:id="@+id/errorLayoutStub"
+			<TextView
+				android:id="@+id/newsItemSubtitle"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout="@layout/layout_error"
-				tools:visibility="gone" />
-		</FrameLayout>
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/spacing_default"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:drawablePadding="@dimen/spacing_default"
+				android:gravity="center_vertical"
+				android:textColor="?android:textColorSecondary"
+				android:textSize="@dimen/typography_caption"
+				app:drawableStartCompat="@drawable/notes"
+				app:drawableTint="@color/colorPrimary"
+				tools:text="An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered" />
+
+			<TextView
+				android:id="@+id/newsDatePublished"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/spacing_default"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:drawablePadding="@dimen/spacing_default"
+				android:gravity="center_vertical"
+				android:textColor="?android:textColorSecondary"
+				android:textSize="@dimen/typography_caption"
+				app:drawableStartCompat="@drawable/schedule"
+				app:drawableTint="@color/colorPrimary"
+				tools:text="@string/news_date_published" />
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginTop="@dimen/spacing_default"
+				android:background="@drawable/divider" />
+
+			<ProgressBar
+				android:id="@+id/progressBar"
+				style="?android:progressBarStyleLarge"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_margin="@dimen/spacing_default"
+				android:visibility="gone"
+				tools:visibility="visible" />
+
+			<!-- news-content HTML already has an 8px margin -->
+			<WebView
+				android:id="@+id/webView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/spacing_half"
+				android:layout_marginEnd="@dimen/spacing_half"
+				android:layout_marginBottom="@dimen/spacing_half"
+				android:visibility="gone"
+				tools:visibility="visible" />
+		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 
 	<View

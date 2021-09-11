@@ -10,7 +10,6 @@ import android.text.format.DateUtils
 import android.text.format.DateUtils.FORMAT_SHOW_DATE
 import android.text.format.DateUtils.FORMAT_SHOW_TIME
 import android.text.format.DateUtils.FORMAT_SHOW_YEAR
-import android.text.method.LinkMovementMethod
 import android.webkit.WebViewClient.ERROR_BAD_URL
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -31,6 +30,7 @@ import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.NewsItemButtonAdapter
 import com.oxygenupdater.adapters.NewsListAdapter
+import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.extensions.fullWidthAnchoredAdaptiveBannerAd
 import com.oxygenupdater.internal.WebViewClient
@@ -139,8 +139,6 @@ class NewsItemActivity : SupportActionBarActivity(
             return@Observer
         }
 
-        hideErrorStateIfInflated()
-
         // Display the title of the article.
         collapsingToolbarLayout.title = newsItem.title
         // Display the name of the author of the article
@@ -152,36 +150,21 @@ class NewsItemActivity : SupportActionBarActivity(
             .error(R.drawable.logo_notification)
             .into(collapsingToolbarImage)
 
-        // Display the contents of the article.
-        webView.apply {
-            // must be done to avoid the white background in dark themes
-            setBackgroundColor(Color.TRANSPARENT)
+        buttonRecyclerView.let { recyclerView ->
+            val verticalDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+            val horizontalDecorator = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
 
-            isVisible = true
-            settings.javaScriptEnabled = true
+            ContextCompat.getDrawable(this, R.drawable.divider)?.let {
+                verticalDecorator.setDrawable(it)
+                horizontalDecorator.setDrawable(it)
 
-            if (newsItem.text.isNullOrEmpty()) {
-                loadDataWithBaseURL("", getString(R.string.news_empty), "text/html", "UTF-8", "")
-            } else {
-                // since we can't edit CSS in WebViews,
-                // append 'Light' or 'Dark' to newsContentUrl to get the corresponding themed version
-                // backend handles CSS according to material spec
-                fullUrl = newsItem.url + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
-
-                settings.userAgentString = OxygenUpdater.APP_USER_AGENT
-                loadUrl(fullUrl)
+                recyclerView.addItemDecoration(verticalDecorator)
+                recyclerView.addItemDecoration(horizontalDecorator)
             }
 
-            // disable loading state once page is completely loaded
-            webViewClient = WebViewClient(context) { error ->
-                hideLoadingState()
-
-                if (error == null) {
-                    hideErrorStateIfInflated()
-                } else {
-                    showErrorState(error)
-                }
-            }
+            // Performance optimization
+            recyclerView.setHasFixedSize(true)
+            recyclerView.adapter = NewsItemButtonAdapter(this, newsItem)
         }
 
         // Display the subtitle of the article.
@@ -227,21 +210,34 @@ class NewsItemActivity : SupportActionBarActivity(
             isVisible = dateTimePrefix != null
         }
 
-        buttonRecyclerView.let { recyclerView ->
-            val verticalDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-            val horizontalDecorator = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
+        // Display the contents of the article.
+        webView.apply {
+            // must be done to avoid the white background in dark themes
+            setBackgroundColor(Color.TRANSPARENT)
 
-            ContextCompat.getDrawable(this, R.drawable.divider)?.let {
-                verticalDecorator.setDrawable(it)
-                horizontalDecorator.setDrawable(it)
+            isVisible = true
+            settings.javaScriptEnabled = true
+            settings.userAgentString = OxygenUpdater.APP_USER_AGENT
 
-                recyclerView.addItemDecoration(verticalDecorator)
-                recyclerView.addItemDecoration(horizontalDecorator)
+            if (newsItem.text.isNullOrEmpty()) {
+                loadDataWithBaseURL("", getString(R.string.news_empty), "text/html", "UTF-8", "")
+            } else {
+                // since we can't edit CSS in WebViews,
+                // append 'Light' or 'Dark' to newsContentUrl to get the corresponding themed version
+                // backend handles CSS according to material spec
+                fullUrl = newsItem.url + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
+
+                loadUrl(fullUrl)
             }
 
-            // Performance optimization
-            recyclerView.setHasFixedSize(true)
-            recyclerView.adapter = NewsItemButtonAdapter(this, newsItem)
+            // disable loading state once page is completely loaded
+            webViewClient = WebViewClient(context) { error ->
+                hideLoadingState()
+
+                if (error != null) {
+                    showErrorState(error)
+                }
+            }
         }
 
         hasReadArticle = true
@@ -421,9 +417,6 @@ class NewsItemActivity : SupportActionBarActivity(
 
     private fun showLoadingState() {
         progressBar.isVisible = true
-        newsLayout.isVisible = true
-
-        hideErrorStateIfInflated()
 
         val imageUrl = intent.getStringExtra(INTENT_NEWS_ITEM_IMAGE_URL)
         val title = intent.getStringExtra(INTENT_NEWS_ITEM_TITLE)
@@ -449,8 +442,6 @@ class NewsItemActivity : SupportActionBarActivity(
     private fun hideLoadingState() {
         // hide progress bar since the page has been loaded
         progressBar.isVisible = false
-        // Show newsLayout, which contains the WebView
-        newsLayout.isVisible = true
     }
 
     private fun showErrorState(
@@ -459,62 +450,20 @@ class NewsItemActivity : SupportActionBarActivity(
     ) {
         // hide progress bar since the page failed to load
         progressBar.isVisible = false
-        newsLayout.isVisible = false
 
-        inflateAndShowErrorState(error, isInvalidId)
-    }
-
-    private fun inflateAndShowErrorState(
-        error: WebViewError?,
-        isInvalidId: Boolean
-    ) {
-        collapsingToolbarLayout.title = getString(R.string.error)
-
-        // Show error layout
-        errorLayoutStub?.inflate()
-        errorLayout.isVisible = true
-
-        if (error != null) {
-            errorTitle.apply {
-                isVisible = true
-                text = error.errorCodeString
-            }
-        } else {
-            errorTitle.isVisible = false
-        }
-
-        if (isInvalidId) {
-            errorText.apply {
-                text = HtmlCompat.fromHtml(
+        Dialogs.showArticleError(
+            this,
+            !isInvalidId,
+            error?.errorCodeString ?: getString(R.string.error),
+            if (isInvalidId) {
+                HtmlCompat.fromHtml(
                     getString(R.string.news_load_id_error, fullUrl),
                     HtmlCompat.FROM_HTML_MODE_COMPACT
                 )
-                // Make the links clickable
-                movementMethod = LinkMovementMethod.getInstance()
+            } else {
+                getString(R.string.news_load_network_error)
             }
-            errorActionButton.apply {
-                isVisible = false
-                setOnClickListener(null)
-            }
-        } else {
-            errorText.apply {
-                text = getString(R.string.news_load_network_error)
-                movementMethod = null
-            }
-            errorActionButton.apply {
-                isVisible = true
-                setOnClickListener { loadNewsItem() }
-            }
-        }
-    }
-
-    private fun hideErrorStateIfInflated() {
-        // Stub is null only after it has been inflated, and
-        // we need to hide the error state only if it has been inflated
-        if (errorLayoutStub == null) {
-            errorLayout.isVisible = false
-            errorActionButton.setOnClickListener { }
-        }
+        ) { loadNewsItem() }
     }
 
     companion object {

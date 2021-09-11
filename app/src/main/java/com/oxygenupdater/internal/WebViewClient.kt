@@ -12,6 +12,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
+import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.utils.Logger.logDebug
 
 /**
@@ -42,10 +43,7 @@ class WebViewClient(
         request: WebResourceRequest?
     ) = request?.run {
         context.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                url
-            )
+            Intent(Intent.ACTION_VIEW, url)
         ).let { true }
     } ?: super.shouldOverrideUrlLoading(view, request)
 
@@ -58,10 +56,7 @@ class WebViewClient(
         url: String?
     ) = url?.run {
         context.startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                toUri()
-            )
+            Intent(Intent.ACTION_VIEW, toUri())
         ).let { true }
     } ?: super.shouldOverrideUrlLoading(view, url)
 
@@ -74,7 +69,7 @@ class WebViewClient(
         val error = WebViewError.from(resourceError)
 
         logDebug(TAG, "Received error: $error")
-        updateError(error)
+        updateError(error, request?.url?.toString())
     }
 
     @Suppress("DEPRECATION")
@@ -87,7 +82,7 @@ class WebViewClient(
         val error = WebViewError(errorCode, description)
 
         logDebug(TAG, "Received error: $error")
-        updateError(error)
+        updateError(error, failingUrl)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -99,7 +94,7 @@ class WebViewClient(
         val error = WebViewError.from(errorResponse)
 
         logDebug(TAG, "Received HTTP error: $error")
-        updateError(error)
+        updateError(error, request?.url?.toString())
     }
 
     override fun onReceivedSslError(
@@ -110,7 +105,7 @@ class WebViewClient(
         val error = WebViewError.from(sslError)
 
         logDebug(TAG, "Received SSL error: $error")
-        updateError(error)
+        updateError(error, sslError?.url)
     }
 
     /**
@@ -143,10 +138,26 @@ class WebViewClient(
     }
 
     /**
-     * Set [error] only if it hasn't been set already
+     * Set [error] only if it hasn't been set already.
+     *
+     * Errors that aren't for our URLs are ignored, because WebView (especially
+     * on newer APIs) reports errors for any resource (e.g. iframe, image, etc).
+     *
+     * Since we use WebView only for news articles, we're checking if [url]
+     * matches [BuildConfig.SERVER_BASE_URL], in which case we're ignoring the
+     * error. A more general match would be against hostname only.
+     *
+     * Note that this is necessary to fix a bug that only a few users experience
+     * — WebView successfully loads the article itself, but also reports a
+     * "net::ERR_CONNECTION_REFUSED" error. Prelim investigation didn't lead
+     * anywhere, until we discovered those errors originated from script URLs
+     * that are loaded within the main URL's page (e.g. Google AdSense and
+     * Cloudflare Web Analytics).
      */
-    private fun updateError(error: WebViewError) {
-        if (this.error == null) {
+    private fun updateError(error: WebViewError, url: String?) {
+        if (url?.startsWith(BuildConfig.SERVER_BASE_URL) == false) {
+            logDebug(TAG, "Ignoring error for url: $url")
+        } else if (this.error == null) {
             this.error = error
         }
     }

@@ -77,6 +77,44 @@ object Dialogs {
         }.show()
     }
 
+    /**
+     * Shows a [MessageDialog] with the occurred article loading error.
+     *
+     * @param title   Title of the error message
+     * @param message Contents of the error message
+     */
+    fun showArticleError(
+        activity: Activity?,
+        isRefreshable: Boolean,
+        title: CharSequence?,
+        message: CharSequence?,
+        callback: () -> Unit
+    ) = checkPreconditions(activity) {
+        MessageDialog(
+            activity!!,
+            title = title?.toString(),
+            message = message,
+            positiveButtonText = if (isRefreshable) {
+                activity.getString(R.string.download_error_retry)
+            } else {
+                null
+            },
+            negativeButtonText = activity.getString(R.string.download_error_close),
+            positiveButtonIcon = if (isRefreshable) {
+                R.drawable.auto
+            } else {
+                null
+            },
+            cancellable = true
+        ) {
+            when (it) {
+                BUTTON_POSITIVE -> if (isRefreshable) {
+                    callback.invoke()
+                }
+            }
+        }.show()
+    }
+
     fun showServerMaintenanceError(activity: Activity?) = checkPreconditions(activity) {
         MessageDialog(
             activity!!,

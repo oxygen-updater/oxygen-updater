@@ -6,6 +6,8 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
@@ -41,7 +43,15 @@ class MessageDialog(
 
     private fun setupViews() {
         titleTextView.text = title
-        messageTextView.text = message
+
+        messageTextView.apply {
+            text = message
+
+            if (message is Spanned) {
+                // Make the links clickable
+                movementMethod = LinkMovementMethod.getInstance()
+            }
+        }
 
         positiveButton.setup(positiveButtonText, {
             dismiss()
