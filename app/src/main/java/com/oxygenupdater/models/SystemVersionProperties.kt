@@ -86,7 +86,12 @@ class SystemVersionProperties {
             osType = readBuildPropItem(RO_BUILD_OS_TYPE_LOOKUP_KEY, properties, "Detected OS Type: %s")
 
             abPartitionLayout = parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s"))
-            val isEuBuild = parseBoolean(readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s"))
+            val euBooleanStr = readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s")
+            val isEuBuild = if (euBooleanStr == NO_OXYGEN_OS) {
+                readBuildPropItem(RO_VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY, properties, "isEuBuild: %s").startsWith("EU")
+            } else {
+                parseBoolean(euBooleanStr)
+            }
 
             // This prop is present only on 7-series and above
             if (osType.isBlank()) {
@@ -256,7 +261,16 @@ class SystemVersionProperties {
          * so that it's easy for contributors on Discord to figure out which build is for which region
          * (backend will take this into account while firing the webhook).
          */
-        private const val RO_BUILD_EU_LOOKUP_KEYS = "ro.build.eu, ro.vendor.build.eu"
+        private const val RO_BUILD_EU_LOOKUP_KEYS = "ro.build.eu,ro.vendor.build.eu"
+
+        /**
+         * This is a hack for Nord 2 (maybe future devices too), since it doesn't have any of the above EU keys.
+         * This key will be checked *after* the above keys are checked, as a backup (if above keys aren't found).
+         *
+         * Note: to keep things simple, we're checking if the value corresponding to this key starts with `EU`,
+         * even though we've seen that (at least on Nord 2), it's `EUEX` for EU devices, and `IN` for India.
+         */
+        private const val RO_VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY = "ro.vendor.oplus.regionmark"
 
         /**
          * Easy way to quickly check if the current build is stable, beta, or alpha.

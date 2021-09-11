@@ -105,10 +105,10 @@ android {
         getByName("release") {
             buildConfigField("String", "SERVER_BASE_URL", "\"https://oxygenupdater.com/api/v2.6/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
-            buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series, ro.build.product\"")
-            buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.rom.version, ro.oxygen.version, ro.build.ota.versionname\"")
+            buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series,ro.build.product\"")
+            buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.rom.version,ro.oxygen.version,ro.build.ota.versionname,ro.vendor.oplus.exp.version\"")
             buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\"")
-            buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint, ro.build.fingerprint\"")
+            buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint,ro.build.fingerprint\"")
             // Latter one is only used on very old OOS versions
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
             buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"")

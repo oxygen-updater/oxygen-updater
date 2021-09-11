@@ -99,13 +99,13 @@ object Utils {
     fun checkNetworkConnection() = isNetworkAvailable.value == true
 
     fun checkDeviceOsSpec(devices: List<Device>?): DeviceOsSpec {
-        val oemFingerPrint: String? = systemVersionProperties.oemFingerprint
-        val oxygenOsVersion: String? = systemVersionProperties.oxygenOSVersion
+        val oemFingerPrint = systemVersionProperties.oemFingerprint
+        val oxygenOsVersion = systemVersionProperties.oxygenOSVersion
 
-        val firmwareIsSupported = !oemFingerPrint.isNullOrEmpty()
+        val firmwareIsSupported = oemFingerPrint.isNotEmpty()
                 && oemFingerPrint != OxygenUpdater.NO_OXYGEN_OS
                 && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
-                && !oxygenOsVersion.isNullOrEmpty()
+                && oxygenOsVersion.isNotEmpty()
                 && oxygenOsVersion != OxygenUpdater.NO_OXYGEN_OS
 
         if (devices.isNullOrEmpty()) {
