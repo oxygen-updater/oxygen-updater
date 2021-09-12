@@ -6,7 +6,6 @@ import com.oxygenupdater.models.FormattableUpdateData
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader
-import java.util.*
 import java.util.regex.Pattern
 
 object UpdateDataVersionFormatter {
@@ -99,7 +98,7 @@ object UpdateDataVersionFormatter {
             val regularMatcher = STABLE_PATTERN.matcher(firstLine)
 
             when {
-                alphaBetaMatcher.find() -> if (alphaBetaMatcher.group(1)?.lowercase(Locale.ROOT) == "alpha") {
+                alphaBetaMatcher.find() -> if (alphaBetaMatcher.group(1)?.lowercase() == "alpha") {
                     "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaMatcher.group(2)}"
                 } else {
                     "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaMatcher.group(2)}"
@@ -119,7 +118,7 @@ object UpdateDataVersionFormatter {
 
         return when {
             version == NO_OXYGEN_OS || version.isBlank() -> NO_OXYGEN_OS
-            alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase(Locale.ROOT) ?: "") {
+            alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
                 "alpha" -> "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
                 "beta" -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
                 "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"

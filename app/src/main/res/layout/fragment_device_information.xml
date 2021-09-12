@@ -21,10 +21,8 @@
 			android:layout_marginStart="@dimen/spacing_default"
 			android:layout_marginTop="@dimen/spacing_default"
 			android:stateListAnimator="@animator/clicked"
-			android:visibility="gone"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			tools:visibility="visible">
+			app:layout_constraintTop_toTopOf="parent">
 
 			<ImageView
 				android:id="@+id/deviceImage"

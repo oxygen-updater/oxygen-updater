@@ -2,6 +2,7 @@ package com.oxygenupdater.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.oxygenupdater.BuildConfig
 
 data class Device(
     override val id: Long,
@@ -36,5 +37,21 @@ data class Device(
         return productNameTemplate.trim { it <= ' ' }.split(",")
             // Remove spaces after comma separation.
             .map { productName -> productName.trim { it <= ' ' } }
+    }
+
+    companion object {
+        private val IMAGE_URL_PREFIX = buildString(42) {
+            append("https://")
+            if (BuildConfig.BUILD_TYPE != "release") {
+                append("test.")
+            }
+            append("oxygenupdater.com/img/device/")
+        }
+
+        private const val IMAGE_URL_SUFFIX = "-min.png?v=1"
+
+        fun constructImageUrl(deviceName: String) = IMAGE_URL_PREFIX +
+                deviceName.split("(", limit = 2)[0].trim().replace(' ', '-').lowercase() +
+                IMAGE_URL_SUFFIX
     }
 }

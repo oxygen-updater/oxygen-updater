@@ -9,11 +9,13 @@ import android.view.View
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger
@@ -25,7 +27,6 @@ import kotlinx.android.synthetic.main.layout_device_information_hardware.*
 import kotlinx.android.synthetic.main.layout_device_information_software.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.*
 import kotlin.math.roundToLong
 
 class DeviceInformationFragment : Fragment(R.layout.fragment_device_information) {
@@ -44,17 +45,13 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
         }
 
         mainViewModel.allDevices.observe(viewLifecycleOwner) { devices ->
-            var deviceName = getString(
+            val deviceName = devices?.find { device ->
+                device.productNames.contains(systemVersionProperties.oxygenDeviceName)
+            }?.name ?: getString(
                 R.string.device_information_device_name,
                 DeviceInformationData.deviceManufacturer,
                 DeviceInformationData.deviceName
             )
-
-            devices.find { device ->
-                device.productNames.contains(systemVersionProperties.oxygenDeviceName)
-            }?.let { device ->
-                deviceName = device.name ?: deviceName
-            }
 
             updateBanner(deviceName)
         }
@@ -87,39 +84,20 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             )
         }
 
-        deviceImageLayout.run {
-            isVisible = true
-            val resourceName = systemVersionProperties.oxygenDeviceName.replace(
-                "(?:^OnePlus|^OP|Single\$|NR(?:Spr)?\$|TMO\$|VZW\$|_\\w+\$| )".toRegex(RegexOption.IGNORE_CASE),
-                ""
-            ).lowercase(Locale.ROOT)
+        Glide.with(this)
+            .load(Device.constructImageUrl(deviceName))
+            .placeholder(R.drawable.oneplus7pro)
+            .error(R.drawable.oneplus7pro)
+            .into(deviceImage)
 
-            var imageResId = resources.getIdentifier(
-                "oneplus$resourceName",
-                "drawable",
-                requireContext().packageName
-            )
-
-            // If the device is supported but no corresponding image was found,
-            // default to the latest device image
-            if (imageResId == 0 && mainViewModel.deviceOsSpec?.isDeviceOsSpecSupported == true) {
-                imageResId = R.drawable.oneplus8t
-            }
-
-            deviceImage.setImageResource(imageResId)
-
-            if (mainViewModel.deviceOsSpec?.isDeviceOsSpecSupported == false) {
-                deviceImageOverlay.isVisible = true
-                deviceImageOverlayIcon.isVisible = true
-                setOnClickListener {
-                    (activity as MainActivity?)?.displayUnsupportedDeviceOsSpecMessage()
-                }
-            } else {
-                deviceImageOverlay.isVisible = imageResId == 0
-                deviceImageOverlayIcon.isVisible = imageResId == 0
-                setOnClickListener(null)
-            }
-        }
+        val notSupported = mainViewModel.deviceOsSpec?.isDeviceOsSpecSupported == false
+        deviceImageOverlay.isVisible = notSupported
+        deviceImageOverlayIcon.isVisible = notSupported
+        deviceImageLayout.setOnClickListener(
+            if (notSupported) View.OnClickListener {
+                (activity as MainActivity?)?.displayUnsupportedDeviceOsSpecMessage()
+            } else null
+        )
 
         updateDeviceMismatchStatusBanner()
     }

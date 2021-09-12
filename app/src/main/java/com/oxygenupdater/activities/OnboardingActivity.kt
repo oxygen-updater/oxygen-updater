@@ -3,7 +3,6 @@ package com.oxygenupdater.activities
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView.ScaleType
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -11,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
@@ -25,7 +25,9 @@ import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.oxygenupdater.fragments.SimpleOnboardingFragment
 import com.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
+import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.ContributorUtils
@@ -39,12 +41,12 @@ import kotlinx.android.synthetic.main.activity_onboarding.*
 import kotlinx.android.synthetic.main.fragment_onboarding_complete.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 import kotlin.math.abs
 
 class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
     private lateinit var viewPagerAdapter: OnboardingPagerAdapter
+    private var deviceImageUrl: String? = null
 
     private val startPage by lazy(LazyThreadSafetyMode.NONE) {
         intent?.getIntExtra(
@@ -97,6 +99,16 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
             if (!deviceOsSpec.isDeviceOsSpecSupported) {
                 displayUnsupportedDeviceOsSpecMessage(deviceOsSpec)
             }
+
+            val deviceName = it?.find { device ->
+                device.productNames.contains(systemVersionProperties.oxygenDeviceName)
+            }?.name ?: getString(
+                R.string.device_information_device_name,
+                DeviceInformationData.deviceManufacturer,
+                DeviceInformationData.deviceName
+            )
+
+            deviceImageUrl = Device.constructImageUrl(deviceName)
         }
 
         setupViewPager()
@@ -218,7 +230,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 nextPageButton.isEnabled = true
 
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
-                collapsingToolbarImage.scaleType = ScaleType.CENTER_CROP
                 collapsingToolbarImage.setImageResourceWithAnimationAndTint(
                     R.drawable.logo_notification,
                     android.R.anim.fade_in,
@@ -228,34 +239,19 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
             2 -> {
                 nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
 
-                val resourceName = systemVersionProperties.oxygenDeviceName.replace(
-                    "(?:^OnePlus|^OP|Single\$|NR(?:Spr)?\$|TMO\$|VZW\$|_\\w+\$| )".toRegex(RegexOption.IGNORE_CASE),
-                    ""
-                ).lowercase(Locale.ROOT)
-
-                var imageResId = resources.getIdentifier(
-                    "oneplus$resourceName",
-                    "drawable",
-                    packageName
-                )
-
-                // If no image was found default to the latest device image
-                if (imageResId == 0) {
-                    imageResId = R.drawable.oneplus8t
-                }
-
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
-                collapsingToolbarImage.scaleType = ScaleType.FIT_CENTER
-                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
-                    imageResId,
-                    android.R.anim.fade_in
-                )
+                collapsingToolbarImage.imageTintList = null
+
+                Glide.with(this)
+                    .load(deviceImageUrl)
+                    .placeholder(R.drawable.oneplus7pro)
+                    .error(R.drawable.oneplus7pro)
+                    .into(collapsingToolbarImage)
             }
             3 -> {
                 nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3
 
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
-                collapsingToolbarImage.scaleType = ScaleType.CENTER_CROP
                 collapsingToolbarImage.setImageResourceWithAnimationAndTint(
                     R.drawable.cloud_download,
                     android.R.anim.fade_in,
@@ -266,7 +262,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 nextPageButton.isEnabled = true
 
                 collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
-                collapsingToolbarImage.scaleType = ScaleType.CENTER_CROP
                 collapsingToolbarImage.setImageResourceWithAnimationAndTint(
                     R.drawable.done_all,
                     android.R.anim.fade_in,
