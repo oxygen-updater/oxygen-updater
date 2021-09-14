@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fadingEdge="vertical"
-	android:fadingEdgeLength="@dimen/spacing_2x"
+	android:fadingEdgeLength="@dimen/spacing_default"
 	android:requiresFadingEdge="vertical">
 
 	<androidx.constraintlayout.widget.ConstraintLayout

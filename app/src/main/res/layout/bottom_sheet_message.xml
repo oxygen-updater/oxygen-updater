@@ -21,7 +21,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="@dimen/spacing_default"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_2x"
+		android:fadingEdgeLength="@dimen/spacing_default"
 		android:requiresFadingEdge="vertical"
 		app:layout_constrainedHeight="true"
 		app:layout_constraintBottom_toTopOf="@id/flow"

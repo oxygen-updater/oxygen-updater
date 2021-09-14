@@ -45,9 +45,6 @@ import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news_item.*
-import kotlinx.android.synthetic.main.activity_news_item.buttonRecyclerView
-import kotlinx.android.synthetic.main.fragment_about.*
-import kotlinx.android.synthetic.main.layout_error.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDateTime
 

@@ -28,7 +28,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_2x"
+		android:fadingEdgeLength="@dimen/spacing_default"
 		android:requiresFadingEdge="vertical"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

@@ -35,7 +35,7 @@
 		android:layout_height="0dp"
 		android:layout_weight="1"
 		android:fadingEdge="vertical"
-		android:fadingEdgeLength="@dimen/spacing_2x"
+		android:fadingEdgeLength="@dimen/spacing_default"
 		android:requiresFadingEdge="vertical"
 		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
