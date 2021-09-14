@@ -214,7 +214,7 @@
 	<string name="install_guide_no_root">התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
 	<string name="install_guide_automatic_install_disabled">עדכונים אוטומטיים הושבתו זמנית עקב בעיות טכניות שדווחו. התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
 	<string name="install_guide">מדריך התקנה</string>
-	<string name="install_guide_subtitle">מדריך התקנה - %1$d מתוך %2$</string>
+	<string name="install_guide_subtitle">מדריך התקנה - %1$d מתוך %2$d</string>
 	<string name="install_guide_tip">&#8226; מומלץ לרשום את כל השלבים מכיוון שכיבוי המכשיר הוא אחד משלבי ההדרכה של ההתקנה.</string>
 
 	<string name="install_guide_page_1_title">הורד את העדכון</string>
