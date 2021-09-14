@@ -25,4 +25,4 @@ jobs:
           cache: 'gradle'
 
       - name: Build with Gradle
-        run: ./gradlew clean assembleDebug -x uploadCrashlyticsMappingFileDebug
+        run: ./gradlew clean assembleDebug
