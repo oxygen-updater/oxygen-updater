@@ -179,6 +179,11 @@ class NotificationUtils(private val context: Context) {
         group = groupId
         description = channelDescription
 
+        // Force-disable sound for LOW & MIN importance notifications
+        if (importance < NotificationManager.IMPORTANCE_DEFAULT) {
+            setSound(null, null)
+        }
+
         // Sets the notification light color for notifications posted to this
         // channel, if the device supports this feature.
         lightColor = Color.RED
