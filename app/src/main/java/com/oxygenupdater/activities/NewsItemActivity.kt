@@ -245,15 +245,15 @@ class NewsItemActivity : SupportActionBarActivity(
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
-        if (!handleIntent(intent)) {
-            onBackPressed()
-            return
-        }
-
         bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
             R.string.advertising_news_banner_unit_id,
             newsArticleAdViewContainer
         )
+
+        if (!handleIntent(intent)) {
+            onBackPressed()
+            return
+        }
 
         setupAds()
         loadNewsItem()

@@ -49,6 +49,10 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
             fetchDataInternal(onboardingViewModel.selectedDevice.value!!.id)
         }
 
+        if (!isAdded) {
+            return
+        }
+
         // re-fetch update methods if selected device changes
         onboardingViewModel.selectedDevice.observe(viewLifecycleOwner) {
             if (rootMessageShown) {

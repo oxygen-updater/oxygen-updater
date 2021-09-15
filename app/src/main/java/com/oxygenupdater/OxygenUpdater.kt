@@ -21,6 +21,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
 import com.oxygenupdater.utils.ThemeUtils
 import org.koin.android.ext.android.inject
@@ -94,13 +95,17 @@ class OxygenUpdater : Application() {
             @Suppress("DEPRECATION")
             _isNetworkAvailable.postValue(activeNetworkInfo?.isConnectedOrConnecting == true)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                registerDefaultNetworkCallback(networkCallback)
-            } else {
-                registerNetworkCallback(
-                    NetworkRequest.Builder().build(),
-                    networkCallback
-                )
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    registerDefaultNetworkCallback(networkCallback)
+                } else {
+                    registerNetworkCallback(
+                        NetworkRequest.Builder().build(),
+                        networkCallback
+                    )
+                }
+            } catch (e: SecurityException) {
+                logError(TAG, "Couldn't setup network callback", e)
             }
         }
     }
