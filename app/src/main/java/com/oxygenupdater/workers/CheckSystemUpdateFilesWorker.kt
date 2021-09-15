@@ -8,6 +8,7 @@ import androidx.work.WorkerParameters
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.exceptions.NetworkException
+import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTION_COUNT
 import com.oxygenupdater.models.ServerPostResult
@@ -30,9 +31,11 @@ import java.util.*
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class CheckSystemUpdateFilesWorker(
-    private val context: Context,
+    context: Context,
     parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
+
+    private val context = context.attachWithLocale(false)
 
     private val database by getKoin().inject<LocalAppDb>()
     private val analytics by getKoin().inject<FirebaseAnalytics>()

@@ -23,6 +23,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.enums.DownloadFailure
 import com.oxygenupdater.exceptions.OxygenUpdaterException
+import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.createFromWorkData
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.toWorkData
@@ -54,9 +55,11 @@ import kotlin.math.abs
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class DownloadWorker(
-    private val context: Context,
+    context: Context,
     parameters: WorkerParameters
 ) : CoroutineWorker(context, parameters) {
+
+    private val context = context.attachWithLocale(false)
 
     private var isFirstPublish = true
     private var previousProgressTimestamp = 0L
@@ -417,7 +420,7 @@ class DownloadWorker(
                     previousBytesDone,
                     bytesDone,
                     totalBytes
-                )?.toString(applicationContext)
+                )?.toString(context)
 
                 setForeground(
                     createProgressForegroundInfo(
