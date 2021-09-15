@@ -21,8 +21,10 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.utils.DatabaseMigrations
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
+import com.oxygenupdater.utils.NotificationUtils
 import com.oxygenupdater.utils.ThemeUtils
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -75,6 +77,18 @@ class OxygenUpdater : Application() {
         setupCrashReporting()
         setupNetworkCallback()
         setupMobileAds()
+
+        val notificationUtils by inject<NotificationUtils>()
+        // Support functions for Android 8.0 "Oreo" and up.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationUtils.deleteOldNotificationChannels()
+            notificationUtils.createNewNotificationGroupsAndChannels()
+        }
+
+        // Save app's version code to aid in future migrations (added in 5.4.0)
+        SettingsManager.savePreference(SettingsManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
+        DatabaseMigrations.deleteLocalBillingDatabase(this)
+        migrateOldSettings()
     }
 
     private fun setupKoin() {
@@ -156,6 +170,29 @@ class OxygenUpdater : Application() {
         analytics.setAnalyticsCollectionEnabled(shouldShareLogs)
         // Sync crashlytics collection to user's preference, but only if we're on a release build
         crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
+    }
+
+    /**
+     * Migrate settings from old versions of the app, if any
+     */
+    @Suppress("DEPRECATION")
+    private fun migrateOldSettings() {
+        // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
+        if (SettingsManager.containsPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
+            SettingsManager.savePreference(
+                SettingsManager.PROPERTY_ADVANCED_MODE,
+                !SettingsManager.getPreference(
+                    SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE,
+                    true
+                )
+            )
+            SettingsManager.removePreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
+        }
+
+        // App version 5.2.0+: no longer used. We now configure capping in the AdMob dashboard itself.
+        if (SettingsManager.containsPreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN)) {
+            SettingsManager.removePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN)
+        }
     }
 
     @Suppress("unused")
