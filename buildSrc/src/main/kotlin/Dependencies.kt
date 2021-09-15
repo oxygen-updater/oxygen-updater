@@ -128,7 +128,7 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "28.4.0"
+        const val FIREBASE_BOM = "28.4.1"
 
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.12.0"
@@ -154,7 +154,7 @@ object Libraries {
         const val OKHTTP_LOGGING_INTERCEPTOR = "4.9.1"
 
         // https://developer.android.com/reference/com/google/android/play/core/release-notes
-        const val PLAY_CORE = "1.10.0"
+        const val PLAY_CORE = "1.10.1"
 
         // https://developers.google.com/android/guides/releases
         const val PLAY_SERVICES_BASE = "17.6.0"
