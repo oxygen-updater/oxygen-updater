@@ -776,7 +776,9 @@ class BillingRepository(
         // Clear purchase state of anything that didn't come with this purchase list if this is
         // part of a refresh.
         skusToUpdate?.forEach {
-            if (!updatedSkus.contains(it)) {
+            if (skuDetailsMap[it]?.value == null) {
+                setSkuState(it, SkuState.UNKNOWN)
+            } else if (!updatedSkus.contains(it)) {
                 setSkuState(it, SkuState.NOT_PURCHASED)
             }
         }
