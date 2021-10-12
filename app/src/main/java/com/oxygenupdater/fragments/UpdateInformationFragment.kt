@@ -511,7 +511,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         // Display update description.
         changelogTextView.apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = getUpdateChangelog(updateData.description)
+            text = getUpdateChangelog(updateData)
         }
 
         // Display update file name.
@@ -757,7 +757,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     }
 
     private fun setupChangelogViews(isDifferentVersion: Boolean) {
-        changelogField.text = getUpdateChangelog(updateData?.description)
+        changelogField.text = getUpdateChangelog(updateData)
         differentVersionChangelogNotice.text = getString(
             R.string.update_information_different_version_changelog_notice,
             SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
@@ -810,11 +810,13 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         (activity as MainActivity?)?.updateToolbarForPage(R.id.page_update)
     }
 
-    private fun getUpdateChangelog(description: String?) = if (!description.isNullOrBlank() && description != "null") {
-        UpdateDescriptionParser.parse(context, description).trim()
-    } else {
-        getString(R.string.update_information_description_not_available)
-    }
+    private fun getUpdateChangelog(updateData: UpdateData?) = updateData?.run {
+        if (!changelog.isNullOrBlank() && !description.isNullOrBlank()) {
+            UpdateDescriptionParser.parse(context, description!!).trim()
+        } else {
+            getString(R.string.update_information_description_not_available)
+        }
+    } ?: getString(R.string.update_information_description_not_available)
 
     private fun showDownloadLink() {
         if (updateData != null) {

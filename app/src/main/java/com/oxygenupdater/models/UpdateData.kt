@@ -11,6 +11,7 @@ data class UpdateData(
     var id: Long? = null,
     var versionNumber: String? = null,
     var otaVersionNumber: String? = null,
+    var changelog: String? = null,
     var description: String? = null,
     var downloadUrl: String? = null,
     var downloadSize: Long = 0,
