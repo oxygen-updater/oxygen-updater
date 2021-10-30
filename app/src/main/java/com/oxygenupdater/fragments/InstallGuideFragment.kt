@@ -43,6 +43,11 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
                 updateMethodId,
                 pageNumber
             ) {
+                if (!isAdded) {
+                    return@fetchInstallGuidePage
+                }
+
+                val resources = resources
                 // we need to clone the object, otherwise the correct object won't get reflected in
                 val page = if (it == null || it.isDefaultPage) {
                     val titleResourceId = resources.getIdentifier(
