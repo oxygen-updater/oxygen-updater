@@ -34,13 +34,13 @@ class NewsItemButtonAdapter(
                             // Main share content: will work on all API levels
                             .putExtra(
                                 Intent.EXTRA_TEXT,
-                                "${activity.getString(R.string.app_name)}: ${newsItem.title}\n\n${newsItem.url}"
+                                "${activity.getString(R.string.app_name)}: ${newsItem.title}\n\n${newsItem.webUrl}"
                             ).setType("text/plain"), null
                     )
                 )
                 R.drawable.link -> ClipData.newPlainText(
                     activity.getString(R.string.app_name),
-                    newsItem.url
+                    newsItem.webUrl
                 ).let {
                     activity.getSystemService<ClipboardManager>()?.setPrimaryClip(it)
 

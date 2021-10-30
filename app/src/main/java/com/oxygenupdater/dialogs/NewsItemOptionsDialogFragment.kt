@@ -15,7 +15,6 @@ import com.oxygenupdater.R
 import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logWarning
-import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_news_item_options.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -53,7 +52,7 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
     private fun setupViews() {
         val read = newsItem.read
         val title = newsItem.title
-        val fullUrl = newsItem.url + if (ThemeUtils.isNightModeActive(requireContext())) "Dark" else "Light"
+        val fullUrl = newsItem.webUrl
 
         markAsReadTextView.apply {
             text = getString(

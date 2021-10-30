@@ -61,8 +61,11 @@ data class NewsItem(
     val text = if (AppLocale.get() == NL) dutchText else englishText
 
     @Ignore
-    val url = "${BuildConfig.SERVER_BASE_URL}news-content/$id/" +
+    val apiUrl = "${BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE}news-content/$id/" +
             (if (AppLocale.get() == NL) "NL" else "EN") + "/"
+
+    @Ignore
+    val webUrl = "${BuildConfig.SERVER_DOMAIN}article/$id/"
 
     val isFullyLoaded: Boolean
         get() = id != null && dutchTitle != null && englishTitle != null && dutchText != null && englishText != null

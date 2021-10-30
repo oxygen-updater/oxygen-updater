@@ -48,6 +48,7 @@
 		<!-- All screens -->
 		<activity
 			android:name=".activities.SplashActivity"
+			android:exported="true"
 			android:label="@string/app_name"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.OxygenUpdater.Splash.DayNight">
@@ -115,10 +116,26 @@
 
 		<activity
 			android:name=".activities.NewsItemActivity"
+			android:exported="true"
 			android:label="@string/news"
 			android:parentActivityName=".activities.MainActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen">
+
+			<intent-filter
+				android:autoVerify="true"
+				tools:targetApi="m">
+				<action android:name="android.intent.action.VIEW" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+
+				<data android:scheme="http" />
+				<data android:scheme="https" />
+				<data android:host="${hostName}" />
+				<data android:host="www.${hostName}" />
+				<data android:pathPattern="/article/..*" />
+			</intent-filter>
 
 			<intent-filter
 				android:autoVerify="true"
@@ -181,7 +198,9 @@
 		</service>
 
 		<!-- Receiver to check auto update installation status at device startup -->
-		<receiver android:name="com.oxygenupdater.receivers.VerifyInstallationReceiver">
+		<receiver
+			android:name="com.oxygenupdater.receivers.VerifyInstallationReceiver"
+			android:exported="false">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>

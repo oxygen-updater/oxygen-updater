@@ -29,6 +29,7 @@ private const val TAG = "OxygenUpdaterNetwork"
 private const val USER_AGENT_TAG = "User-Agent"
 private const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
 private const val CACHE_SIZE = 10L * 1024 * 1024 // 10 MB
+private const val API_BASE_URL = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
 
 const val HEADER_READ_TIMEOUT = "X-Read-Timeout"
 
@@ -102,13 +103,13 @@ private fun httpClientForDownload() = OkHttpClient.Builder().apply {
 }.build()
 
 private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(BuildConfig.SERVER_BASE_URL)
+    .baseUrl(API_BASE_URL)
     .client(httpClient)
     .addConverterFactory(JacksonConverterFactory.create(objectMapper))
     .build()
 
 private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(BuildConfig.SERVER_BASE_URL)
+    .baseUrl(API_BASE_URL)
     .client(httpClient)
     .build()
 

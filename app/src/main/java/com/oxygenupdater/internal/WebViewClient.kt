@@ -144,7 +144,7 @@ class WebViewClient(
      * on newer APIs) reports errors for any resource (e.g. iframe, image, etc).
      *
      * Since we use WebView only for news articles, we're checking if [url]
-     * matches [BuildConfig.SERVER_BASE_URL], in which case we're ignoring the
+     * matches [API_BASE_URL], in which case we're ignoring the
      * error. A more general match would be against hostname only.
      *
      * Note that this is necessary to fix a bug that only a few users experience
@@ -155,7 +155,7 @@ class WebViewClient(
      * Cloudflare Web Analytics).
      */
     private fun updateError(error: WebViewError, url: String?) {
-        if (url?.startsWith(BuildConfig.SERVER_BASE_URL) == false) {
+        if (url?.startsWith(API_BASE_URL) == false) {
             logDebug(TAG, "Ignoring error for url: $url")
         } else if (this.error == null) {
             this.error = error
@@ -164,6 +164,7 @@ class WebViewClient(
 
     companion object {
         private const val TAG = "WebViewClient"
+        private const val API_BASE_URL = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
     }
 }
 

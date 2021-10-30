@@ -222,7 +222,7 @@ class NewsItemActivity : SupportActionBarActivity(
                 // since we can't edit CSS in WebViews,
                 // append 'Light' or 'Dark' to newsContentUrl to get the corresponding themed version
                 // backend handles CSS according to material spec
-                fullUrl = newsItem.url + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
+                fullUrl = newsItem.apiUrl + if (ThemeUtils.isNightModeActive(context)) "Dark" else "Light"
 
                 loadUrl(fullUrl)
             }
@@ -318,12 +318,11 @@ class NewsItemActivity : SupportActionBarActivity(
             } else {
                 when (it.scheme) {
                     "http", "https" -> {
-                        // https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
-                        val index = it.pathSegments.indexOf("news-content") + 1
-
-                        if (index != 0 && index < it.pathSegments.size) {
+                        val path = it.path ?: return@let false
+                        val groupValues = LINK_PATH_REGEX.matchEntire(path)?.groupValues ?: return@let false
+                        if (groupValues.size > 1) {
                             newsItemId = try {
-                                it.pathSegments[index].toLong()
+                                groupValues[1].toLong()
                             } catch (e: NumberFormatException) {
                                 -1L
                             }
@@ -465,6 +464,16 @@ class NewsItemActivity : SupportActionBarActivity(
 
     companion object {
         private const val TAG = "NewsItemActivity"
+
+        /**
+         * Matches both the API link and new website links
+         *
+         * https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
+         * https://oxygenupdater.com/article/<id>
+         */
+        private val LINK_PATH_REGEX = "^/(?:api/[v\\d.]+/news-content|article)/(\\d+)/?.*".toRegex(
+            RegexOption.IGNORE_CASE
+        )
 
         const val INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID"
         const val INTENT_NEWS_ITEM_IMAGE_URL = "NEWS_ITEM_IMAGE_URL"
