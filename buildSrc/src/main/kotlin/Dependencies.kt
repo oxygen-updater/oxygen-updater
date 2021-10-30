@@ -1,7 +1,7 @@
-// https://kotlinlang.org/releases.html#release-details
+// https://kotlinlang.org/docs/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 // https://blog.jetbrains.com/kotlin/category/releases/
-const val KOTLIN_VERSION = "1.5.30"
+const val KOTLIN_VERSION = "1.5.31"
 
 // https://insert-koin.io/docs/setup/stable
 // https://github.com/InsertKoinIO/koin/releases
@@ -18,7 +18,7 @@ object BuildPlugins {
         const val GOOGLE_SERVICES_PLUGIN = "4.3.10"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_GRADLE_PLUGIN = "2.7.1"
+        const val FIREBASE_GRADLE_PLUGIN = "2.8.0"
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
@@ -58,7 +58,7 @@ object AndroidXLibraries {
         const val BROWSER = "1.3.0"
 
         // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        const val CONSTRAINT_LAYOUT = "2.1.0"
+        const val CONSTRAINT_LAYOUT = "2.1.1"
 
         // https://developer.android.com/jetpack/androidx/releases/core
         const val KTX_CORE = "1.6.0"
@@ -128,7 +128,7 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "28.4.1"
+        const val FIREBASE_BOM = "29.0.0"
 
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.12.0"
@@ -138,7 +138,7 @@ object Libraries {
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.12.5"
+        const val JACKSON_KOTLIN_MODULE = "2.13.0"
 
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
@@ -154,14 +154,14 @@ object Libraries {
         const val OKHTTP_LOGGING_INTERCEPTOR = "4.9.1"
 
         // https://developer.android.com/reference/com/google/android/play/core/release-notes
-        const val PLAY_CORE = "1.10.1"
+        const val PLAY_CORE = "1.10.2"
 
         // https://developers.google.com/android/guides/releases
         const val PLAY_SERVICES_BASE = "17.6.0"
 
         // https://developers.google.com/android/guides/releases
         // https://developers.google.com/admob/android/rel-notes
-        const val PLAY_SERVICES_ADS = "20.3.0"
+        const val PLAY_SERVICES_ADS = "20.4.0"
 
         // https://github.com/square/retrofit/releases
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
