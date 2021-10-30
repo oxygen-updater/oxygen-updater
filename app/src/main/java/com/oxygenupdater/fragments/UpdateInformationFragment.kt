@@ -218,6 +218,14 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     ) {
         when (it.resultCode) {
             Activity.RESULT_OK -> logInfo(TAG, "User freed-up space").also {
+                // Even though it's impossible for this `lateinit` property to be
+                // uninitialized, it's better to guard against a crash just in case
+                // future code changes create unintentional bugs (i.e. we may forget to
+                // ensure that [setupDownloadWorkRequest] is always called before this).
+                if (!mainViewModel.isDownloadWorkInitialized) {
+                    mainViewModel.setupDownloadWorkRequest(updateData!!)
+                }
+
                 // Since the required space has been freed up, we can enqueue the download work
                 mainViewModel.enqueueDownloadWork()
             }
