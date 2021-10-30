@@ -91,7 +91,7 @@
 		android:paddingHorizontal="@dimen/spacing_half"
 		android:paddingVertical="@dimen/spacing_default"
 		android:src="@drawable/more_vertical"
-		android:tint="?android:textColorSecondary"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/newsItemImage" />
+		app:layout_constraintTop_toBottomOf="@id/newsItemImage"
+		app:tint="?android:textColorSecondary" />
 </androidx.constraintlayout.widget.ConstraintLayout>

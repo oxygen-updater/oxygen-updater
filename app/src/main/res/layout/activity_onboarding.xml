@@ -81,11 +81,11 @@
 			android:foreground="?selectableItemBackgroundBorderless"
 			android:rotation="-90"
 			android:src="@drawable/expand"
-			android:tint="@color/image_button_tint"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@id/tabLayout"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/divider" />
+			app:layout_constraintTop_toBottomOf="@id/divider"
+			app:tint="@color/image_button_tint" />
 
 		<com.google.android.material.tabs.TabLayout
 			android:id="@+id/tabLayout"
@@ -109,10 +109,10 @@
 			android:foreground="?selectableItemBackgroundBorderless"
 			android:rotation="90"
 			android:src="@drawable/expand"
-			android:tint="@color/image_button_tint"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@id/tabLayout"
-			app:layout_constraintTop_toBottomOf="@id/divider" />
+			app:layout_constraintTop_toBottomOf="@id/divider"
+			app:tint="@color/image_button_tint" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

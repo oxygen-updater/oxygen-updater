@@ -207,10 +207,10 @@
 			android:contentDescription="@string/icon"
 			android:src="@drawable/close"
 			android:stateListAnimator="@animator/clicked"
-			android:tint="?colorPrimary"
 			android:transitionName="@string/install_guide_transition_name"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/downloadLayoutDivider" />
+			app:layout_constraintTop_toBottomOf="@id/downloadLayoutDivider"
+			app:tint="?colorPrimary" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
