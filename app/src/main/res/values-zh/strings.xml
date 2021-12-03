@@ -278,7 +278,7 @@
 	<string name="about_description">本应用的更新文件直接从 OnePlus 服务器获取，并且在您安装前确保它可供使用。这样，您就可以不用再忍受 OnePlus 的分阶段推送，尽快安装官方的系统更新了。如果您遇到了系统 Bug，请直接向 OnePlus 进行反馈： <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>。 您也可以加入我们的<a href="https://discord.gg/5TXdhKJ">Discord 服务器</a>，来和各位老哥交流您对系统的意见。也可以通过电子邮件：<a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a>与我们联系。</string>
 	<string name="about_support">如果您愿意支持我们，可以去购买移除广告服务（在设置里），也可以看看我们的 <a href="https://patreon.com/oxygenupdater">Patreon 页面</a>。</string>
 	<string name="about_background_story_header">幕后故事</string>
-	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用 <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n2019 年 6 月，距离发布四年之后，Arjan 决定停止支持这两款应用，并将它们的所有权转让给其它团队。而这个团队，则担负起了为整个 OnePlus 社区提供优质的支持服务的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新团队发布了他所负责以来的第一个版本。该版本为用户们带来了深色模式的支持，令人耳目一新的界面设计，以及其它的新功能。\n\n如果您想更深入了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。</string>
+	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用 <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n2019 年 6 月，距离发布四年之后，Arjan 决定停止支持这两款应用，并将它们的所有权转让给其它团队。而这个团队，则担负起了为整个 OnePlus 社区提供优质的支持服务的责任，帮助无数用户更快地获取 OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新团队发布了他所负责以来的第一个版本。该版本为用户们带来了深色模式的支持、令人耳目一新的界面设计，以及其它的新功能。\n\n如果您想更深入了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。</string>
 	<string name="about_third_party_app_notice">请注意，这并不是 OnePlus 出品的官方应用！\nOnePlus 的名称、Logo、以及 OxygenOS 都由 OnePlus 所有！\nAndroid、Google、Google Play 以及 Google Play 的 Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。</string>
 	<string name="about_rate_button_text">评分</string>
 	<string name="about_website_button_text">网站</string>
@@ -308,7 +308,7 @@
 	<string name="news_notification_channel_description">在新文章发布时推送通知</string>
 	<string name="device_notification_channel_description">在更新器支持新设备时推送通知</string>
 	<string name="general_notification_channel_description">不属于其他类别的常规通知</string>
-	<string name="filename_submitted_notification_channel_description">在您成功为我们团队提交 OTA 包文件名时推送通知。\n您可以在应用的设置中选择不自动提交文件名。</string>
+	<string name="filename_submitted_notification_channel_description">在您成功为我们团队提交 OTA 包文件名后推送通知。\n您可以在应用的设置中选择不自动提交文件名。</string>
 
 	<!-- Help strings -->
 	<string name="help">帮助</string>
@@ -330,25 +330,25 @@
 
 	<string name="news_load_id_error"><![CDATA[无法从该链接打开文章： %1$s，请检查链接。 您也可以通过我们的 <a href="mailto:support@oxygenupdater.com">邮件</a> 或者我们的 <a href="https://discord.gg/5TXdhKJ">Discord 服务器</a> 发送反馈]]></string>
 
-	<string name="news_unread_count_1">您有 %1$d 未读文章，轻触即可浏览</string>
-	<string name="news_unread_count_2">您有 %1$d 未读文章，轻触即可全部显示</string>
+	<string name="news_unread_count_1">您有 %1$d 篇未读文章，轻触即可浏览</string>
+	<string name="news_unread_count_2">您有 %1$d 篇未读文章，轻触即可全部显示</string>
 	<string name="news_mark_read">标记为已读</string>
 	<string name="news_mark_unread">标记为未读</string>
 	<string name="news_mark_all_read">标记所有文章为已读</string>
 	<string name="news_empty_state_none_available_header">暂时没有文章</string>
 	<string name="news_empty_state_all_read_header">全部读完了</string>
 	<string name="news_empty_state_none_available_text">暂时没有可读的文章，请稍候再试</string>
-	<string name="news_empty_state_all_read_text">您已阅读所有文章，干得漂亮！\n希望您喜欢我们的文章，并能够从中了解到新的信息。\n\n 再次点击横幅即可显示所有新闻文章。</string>
+	<string name="news_empty_state_all_read_text">所有文章都已阅读完毕，干得漂亮！\n希望您喜欢我们的文章，并能够从中了解到新的信息。\n\n 再次点击横幅即可显示所有新闻文章。</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">参与共研</string>
 	<string name="contribute_title">加入 Oxygen 更新器共研计划</string>
 	<string name="contribute_explanation">Oxygen 更新器需要您的帮助！为了提供最新的更新包，我们需要获取更新包文件的名称。一般在您的系统推送更新时，相关信息就会出现在手机上。\n\n我该如何帮助呢？\nOxygen 更新器可以自动向我们的管理员提交最新更新包的文件名。 这将使用微量的数据流量，也可能会消耗一点的电池。而您需要做的，就是在安装官方系统更新之前稍微等一下，直到您看到 Oxygen 更新器已经确认文件名成功提交为止。</string>
-	<string name="contribute_agree">我同意将更新文件名提交给应用的管理员</string>
-	<string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用的管理员提交更新包文件名</string>
+	<string name="contribute_agree">我同意将更新包的文件名提交给应用管理员</string>
+	<string name="contribute_agree_from_setup">我愿意帮助改进该应用程序，并同意向应用的管理员提交更新包的文件名</string>
 	<string name="contribute_save">保存设置</string>
 	<string name="contribute_more_info">了解更多</string>
-	<string name="contribute_allow_storage">请给予内部存储文件读取权限以开启共研帮助我们</string>
+	<string name="contribute_allow_storage">请授予内部存储文件读取权限以开启共研计划</string>
 	<string name="contribute_successful_notification_title">共研完成</string>
 	<string name="contribute_successful_notification_text">感谢您将文件名分享给我们！</string>
 
@@ -377,12 +377,12 @@
 	<string name="unsupported_os_warning_message">您的设备好像并没有使用 OxygenOS。请注意，您只能在运行 OxygenOS 的设备上安装系统更新。\n不仅不支持其他非 OnePlus 设备，也不支持运行第三方 ROM 的 OnePlus 设备。</string>
 
 	<string name="incorrect_device_warning_title">已选中的设备不符</string>
-	<string name="incorrect_device_warning_message">似乎您把自己的设备选成“%1$s”了，而不是正确的“%2$s”了。请更改您在应用设置中的选项以确保您可以收到正确的更新及推送消息。</string>
+	<string name="incorrect_device_warning_message">您好像把自己的设备选成“%1$s”了，而不是正确的“%2$s”。请更改您在应用设置中的选项，以确保您可以收到正确的更新及推送消息。</string>
 
 	<string name="device_warning_checkbox_title">不再显示此警告</string>
 
 	<string name="root_check_title">Root 权限</string>
-	<string name="root_check_message">Oxygen 更新器为具有 Root 权限的用户提供简单，自动化的更新安装方式。\n但增量更新不适用于 Root 过的设备。Oxygen 更新器可以检查您是否具有 Root 权限，以提供适当的更新方法。\n如果您的设备拥有 Root 权限，请在关闭此消息后允许 Oxygen 更新器获取 Root 权限。\n没有 Root 权限？那么请直接点击关闭按钮。</string>
+	<string name="root_check_message">Oxygen 更新器为具有 Root 权限的用户提供简单，自动化的更新安装方式。\n不过增量更新不适用于 Root 过的设备。Oxygen 更新器可以检查您是否具有 Root 权限，以提供适当的更新方法。\n如果您的设备拥有 Root 权限，请在关闭此消息后允许 Oxygen 更新器获取 Root 权限。\n没有 Root 权限？那么请直接点击关闭按钮。</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">您的购买正处于“正在等待支付”状态。一旦付款完成，您将获得所有付款后的权益。</string>
