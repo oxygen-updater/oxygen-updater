@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
+	<string name="device_chooser_error_title">サポートされているデバイスの取得ができませんでした</string>
 
 	<!-- Update information strings-->
-	<!-- TODO: translate this string below -->
 	<string name="enable">有効にする</string>
 	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグfix、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
 	<string name="update_information_file_name">ファイル名: %1$s</string>
-	<!-- TODO: translate this line below -->
 	<string name="update_information_md5">MD5: %1$s</string>
-	<!-- TODO: translate this string below -->
-	<string name="update_information_download_link">Since there was a download error, and the download must be restarted, you can use this link to download the update file from a browser instead. You might have to move the downloaded file from the \"Downloads\" directory to its parent directory. This is the same link the app uses to download, which is an official OnePlus OTA server link:\n%1$s</string>
+	<string name="update_information_download_link">ダウンロードエラーが発生し、ダウンロードを再開する必要があるため、このリンクを使用してブラウザからアップデートファイルをダウンロードしてください。ダウンロードしたファイルは \"Downloads\" ディレクトリから上のディレクトリに移動させる必要があります。これはアプリがダウンロードするリンクと同じで、公式の OnePlus OTA サーバーのリンクです:\n%1$s</string>
 	<string name="update_information_header">アップデート</string>
-	<!-- TODO: translate these 6 strings below -->
-	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
-	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable 拡張モード if you plan to switch to this update track.</string>
-	<string name="update_information_header_advanced_mode_hint">詳細モードが有効になっている</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled 拡張モード, you can download the latest ZIP for \"%1$s\".\n\nYou can turn 拡張モード off from settings.</string>
+	<string name="update_information_error_title">最新アップデート情報の取得ができませんでした</string>
+	<string name="update_information_banner_server">ここをタップして重要なお知らせを見る</string>
+	<string name="update_information_banner_advanced_mode_tip">\"%1$s\" アップデートトラックを選択しました。このアップデートトラックに切り替える場合は拡張モードを有効化してください。</string>
+	<string name="update_information_header_advanced_mode_hint">拡張モードが有効</string>
+	<string name="update_information_header_advanced_mode_helper">拡張モードが選択され、\"%1$s\" の最新の ZIP をダウンロードすることができます。\n\n設定から拡張モードをオフにすることができます。</string>
+	<!-- TODO: translate this string below -->
 	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn 拡張モード on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
 	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
@@ -33,18 +29,16 @@
 	<string name="server_status_warning">いくつかの機能が正常に動作しません。</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
-	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
+	<string name="new_app_version">アプリのアップデートが利用可能です (%1$s)。ここをタップして Play ストアを開きアプリをアップデートします。</string>
+	<string name="new_app_version_long">アプリのアップデートが利用可能です (%1$s)。アプリを最新にすることで新機能と不具合の修正を入手できます。\nここをタップして Play ストアを開きアプリをアップデートします。</string>
+	<string name="new_app_version_inapp_downloaded">アプリのアップデートがダウンロードされました</string>
+	<string name="new_app_version_inapp_failed">アプリのアップデートをインストールできません。ここをタップして Play ストアを開きアプリをアップデートします。</string>
 
 	<!-- Downloader strings-->
-	<!-- TODO: translate these 4 strings below -->
 	<string name="download">アップデートをダウンロード</string>
 	<string name="downloaded">ダウンロードしたアップデート</string>
-	<string name="downloading">Downloading update…</string>
-	<string name="paused">Paused - tap to resume</string>
+	<string name="downloading">アップデートをダウンロード中…</string>
+	<string name="paused">一時停止 - タップして再開</string>
 
 	<string name="download_complete">ダウンロード完了</string>
 	<string name="download_complete_notification">タップでインストール出来ます</string>
@@ -195,8 +189,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="install_options_explanation_wipe_cache">cacheパテーションの消去:\n本オプションの選択時、アップデート完了後にキャッシュパテーションが消去されます。これにより、デバイスが最適に動作し、更新プログラムのインストールに起因するバグが発生する可能性が低くなります。</string>
 	<string name="install_options_explanation_reboot">インストール後に再起動:\n本オプションの選択時アップデート完了後にデバイスは再起動され自動的にOxygenOS が立ち上がります。非選択時はアップデート後もデバイスはリカバリモードのままとなり、追加パッケージのインストールが可能です。</string>
 
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
+	<string name="install_method_chooser_title">インストール方法を選択</string>
 	<string name="install_method_chooser_subtitle">このアップデートをインストールする必要はありますか?</string>
 	<string name="install_method_chooser_automatic_title">自動インストール*</string>
 	<string name="install_method_chooser_automatic_description">アップデートをインストールする最も簡単な方法。\nデバイスを再起動してアップデートをインストールします。\n\n*ルートアクセスとTWRP リカバリが必要です。</string>
@@ -267,11 +260,10 @@ Instructions:
 	<string name="install_guide_zip_file_missing">"デバイスのroot化を維持する場合、上からrootパッケージを指定して下さい"</string>
 
 	<!-- Device information strings -->
-	<!-- TODO: translate these 4 strings below -->
-	<string name="device_information_supported_oxygen_os">Your device is supported</string>
-	<string name="device_information_carrier_exclusive_oxygen_os">Your device isn\'t supported, as it\'s a carrier-exclusive device</string>
-	<string name="device_information_unsupported_oxygen_os">We haven\'t added support for your new device yet</string>
-	<string name="device_information_unsupported_os">Your device isn\'t supported, as it\'s not running OxygenOS</string>
+	<string name="device_information_supported_oxygen_os">サポートされているデバイス</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">キャリア専用の、サポートされていないデバイス</string>
+	<string name="device_information_unsupported_oxygen_os">まだ新しいデバイスに対応していません</string>
+	<string name="device_information_unsupported_os">OxygenOS を実行していないため、サポートされていません</string>
 
 	<string name="device_information_hardware_header">ハードウェア</string>
 	<string name="device_information_software_header">ソフトウェア</string>
@@ -290,7 +282,7 @@ Instructions:
 	<string name="device_information_unknown">不明</string>
 
 	<!-- About screen strings -->
-	<string name="about">約</string>
+	<string name="about">情報</string>
 	<!-- TODO: translate these 3 strings below -->
 	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
 	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
@@ -298,7 +290,6 @@ Instructions:
 	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
 	<string name="about_third_party_app_notice">注意、これはOnePlus の公式アプリケーションではありません。\nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
 	<string name="about_rate_button_text">評価</string>
-	<!-- TODO: translate this string below -->
 	<string name="about_website_button_text">ウェブサイト</string>
 	<string name="about_email_button_text">Eメール</string>
 
@@ -348,17 +339,15 @@ Instructions:
 	<string name="news_load_network_error">記事を開けませんでした。 接続を確認し、\'再試行\'ボタンを押して記事を開きます。</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
-	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
+	<string name="news_unread_count_1">%1$d 件未読のニュース記事。ここをタップして表示。</string>
+	<string name="news_unread_count_2">%1$d 件未読のニュース記事。ここをタップしてすべての記事を表示。</string>
 	<string name="news_mark_read">既読にする</string>
 	<string name="news_mark_unread">未読としてマーク</string>
-	<!-- TODO: translate these 5 strings below -->
-	<string name="news_mark_all_read">Mark all articles as read</string>
-	<string name="news_empty_state_none_available_header">No articles yet</string>
-	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
-	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
-	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
+	<string name="news_mark_all_read">すべてのニュース記事を既読にする</string>
+	<string name="news_empty_state_none_available_header">まだ記事がありません</string>
+	<string name="news_empty_state_all_read_header">読む物がありません</string>
+	<string name="news_empty_state_none_available_text">今はまだ記事がありません、後ほどチェックしてみてください。</string>
+	<string name="news_empty_state_all_read_text">すべての記事を読みました。お疲れ様！\n私たちの記事を読み、新しい何かを学んでいただけたら幸いです。\n\nここをタップしてすべてのニュース記事を再表示します。</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">貢献者になる</string>
