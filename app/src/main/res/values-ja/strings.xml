@@ -14,13 +14,12 @@
 	<string name="update_information_banner_advanced_mode_tip">\"%1$s\" アップデートトラックを選択しました。このアップデートトラックに切り替える場合は拡張モードを有効化してください。</string>
 	<string name="update_information_header_advanced_mode_hint">拡張モードが有効</string>
 	<string name="update_information_header_advanced_mode_helper">拡張モードが選択され、\"%1$s\" の最新の ZIP をダウンロードすることができます。\n\n設定から拡張モードをオフにすることができます。</string>
-	<!-- TODO: translate this string below -->
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn 拡張モード on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_different_version_changelog_notice">あなたは \"%1$s\" アップグレードトラックの最新版の更新履歴を見ています。このアップデートをインストールしたい場合は、始めに拡張モードをオンにする (設定で) 必要があります。\n\n現在インストールされているバージョンの更新履歴を見たい場合は、正しいアップデート方法に切り替える必要があります。</string>
 	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">あなたのシステムは最新です</string>
-	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
+	<string name="update_information_unknown_update_name">%1$s 用の名前のないアップデート</string>
 	<string name="update_information_view_update_information">アップデート情報を表示</string>
 
 	<!-- Server status warning strings -->
@@ -80,7 +79,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="download_verifying_start">ダウンロードファイルを確認します…</string>
 
 	<!-- Settings strings-->
-	<string name="preference_header_support">Support us</string>
+	<string name="preference_header_support">支援する</string>
 	<string name="preference_header_device">デバイス</string>
 	<string name="preference_header_ui">UI</string>
 	<string name="preference_header_notifications">通知</string>
@@ -282,10 +281,9 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- About screen strings -->
 	<string name="about">情報</string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
-	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
-	<string name="about_background_story_header">Background story</string>
+	<string name="about_description">このアプリは直接 OnePlus のサーバーから正式なアップデートをダウンロードし、インストールを許可する前にダウンロードされた ZIP の整合性を確認することができます。そうすることで、このアプリはロールアウトをスキップし、アップデートを即座にインストールすることができます。OS の不具合に遭遇した場合、OnePlus に直接報告してください: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>。私たちの <a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>に参加し、最新のアップデートについて話してみませんか。また、提案やフィードバックは <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> にお気軽にどうぞ。</string>
+	<string name="about_support">私たちを支援したい場合は、広告の除去を購入もしくは <a href="https://patreon.com/oxygenupdater">Patreon のページ</a>を確認してください。</string>
+	<string name="about_background_story_header">経緯</string>
 	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
 	<string name="about_third_party_app_notice">注意、これはOnePlus の公式アプリケーションではありません。\nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
 	<string name="about_rate_button_text">評価</string>
