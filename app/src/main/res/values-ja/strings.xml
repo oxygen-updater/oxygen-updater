@@ -19,7 +19,7 @@
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">あなたのシステムは最新です</string>
-	<string name="update_information_unknown_update_name">%1$s 用の名前のないアップデート</string>
+	<string name="update_information_unknown_update_name">%1$s 向けの名前のないアップデート</string>
 	<string name="update_information_view_update_information">アップデート情報を表示</string>
 
 	<!-- Server status warning strings -->
@@ -139,15 +139,15 @@
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">FAQページを表示するには、有効な接続が必要です。</string>
+	<string name="faq_no_network_text">FAQ ページを表示するには、有効な接続が必要です。</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">ようこそ</string>
 	<string name="onboarding_finished_button">アプリの開始</string>
 
 	<string name="onboarding_page_1_title">Oxygen Updater にようこそ!</string>
-	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n&#8226; OxygenOS搭載デバイスの最新のAndroidアップデートを高速アクセスで取得\n\n&#8226; ルート化済デバイスを簡単に更新\n\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n\n&#8226; OnePlusとOxygenOSに関する最新ニュースを読む\n\n続行するには左にスワイプします。</string>
-	<string name="onboarding_page_1_caption">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlusもアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。\n\nこのアプリを使用すると、上記の利用規約に同意したことになります。</string>
+	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n\n&#8226; ルート化済デバイスを簡単に更新\n\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n\n&#8226; OnePlus と OxygenOS に関する最新ニュースを読む\n\n続行するには左にスワイプします。</string>
+	<string name="onboarding_page_1_caption">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。\n\nこのアプリを使用すると、上記の利用規約に同意したことになります。</string>
 	<string name="onboarding_page_2_title">あなたのデバイスを選択</string>
 	<string name="onboarding_page_2_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
 	<string name="onboarding_page_3_title">アップデート方法を選択</string>
@@ -164,11 +164,11 @@
 
 	<string name="install_recovery_installer_title">インストーラのアップデート&#160;&#160;</string> <!-- Add 2 spaces to the end -->
 	<string name="install_recovery_backing_up">デバイスのバックアップ中です。これにはしばらく時間がかかります。</string>
-	<string name="install_recovery_clearing_cache">cacheパーティションの消去中…</string>
+	<string name="install_recovery_clearing_cache">cache パーティションの消去中…</string>
 	<string name="install_recovery_done">完了しました。デバイスが再起動されます。</string>
 	<string name="install_recovery_installing_additional_zip">追加のZIPファイルをインストール中…</string>
 	<string name="install_recovery_installing_update">アップデートのインストール中…</string>
-	<string name="install_recovery_thank_you">Oxygen Updator をお使いくださりありがとうございます。アプリが気に入ったなら、Google Playで５つ星の評価をお願いします :-)</string>
+	<string name="install_recovery_thank_you">Oxygen Updator をお使いくださりありがとうございます。アプリが気に入ったなら、Google Play で５つ星の評価をお願いします :-)</string>
 
 	<string name="install_error_write_script_failed">"アップデートのインストール準備中に失敗しました。本アプリのルート権限へのアクセスを許可しましたか?"</string>
 
@@ -179,18 +179,18 @@
 	<string name="install_options_select_root_package">インストール対象のルートパッケージを選択…</string>
 	<string name="install_options_start_install">インストールの開始</string>
 	<string name="install_options_subtitle">インストールオプションの選択</string>
-	<string name="install_options_wipe_cache_partition">cacheパーティションの消去</string>
+	<string name="install_options_wipe_cache_partition">cache パーティションの消去</string>
 
 	<string name="install_options_explanation_title">これらのオプションの意味は?</string>
 	<string name="install_options_explanation_backup">デバイスのバックアップ:\n本オプションの選択時、インストール作業前にシステム・アプリ・設定のバックアップが作成されます。何らかのトラブルが発生した際に備えて非常に便利です。</string>
-	<string name="install_options_explanation_keep_root">デバイスのルート化済を維持:\n本アプションの選択時、アップデート完了後にインストールされるroot化用パッケージを特定可能になります。これによりデバイスはルート化済の状態を維持できます。root化用パッケージはインストール予定の新しい OxygenOS のバージョンと互換性があることを確認して下さい!</string>
+	<string name="install_options_explanation_keep_root">デバイスのルート化済を維持:\n本アプションの選択時、アップデート完了後にインストールされるroot化用パッケージを特定可能になります。これによりデバイスはルート化済の状態を維持できます。root 化用パッケージはインストール予定の新しい OxygenOS のバージョンと互換性があることを確認して下さい!</string>
 	<string name="install_options_explanation_wipe_cache">cacheパテーションの消去:\n本オプションの選択時、アップデート完了後にキャッシュパテーションが消去されます。これにより、デバイスが最適に動作し、更新プログラムのインストールに起因するバグが発生する可能性が低くなります。</string>
 	<string name="install_options_explanation_reboot">インストール後に再起動:\n本オプションの選択時アップデート完了後にデバイスは再起動され自動的にOxygenOS が立ち上がります。非選択時はアップデート後もデバイスはリカバリモードのままとなり、追加パッケージのインストールが可能です。</string>
 
 	<string name="install_method_chooser_title">インストール方法を選択</string>
 	<string name="install_method_chooser_subtitle">このアップデートをインストールする必要はありますか?</string>
 	<string name="install_method_chooser_automatic_title">自動インストール*</string>
-	<string name="install_method_chooser_automatic_description">アップデートをインストールする最も簡単な方法。\nデバイスを再起動してアップデートをインストールします。\n\n*ルートアクセスとTWRP リカバリが必要です。</string>
+	<string name="install_method_chooser_automatic_description">アップデートをインストールする最も簡単な方法。\nデバイスを再起動してアップデートをインストールします。\n\n*ルートアクセスと TWRP リカバリが必要です。</string>
 
 	<string name="install_method_chooser_manual_title">手動インストール</string>
 	<string name="install_method_chooser_manual_description">ガイドを読み、アップデートをインストール方法について理解して下さい。デバイスのリカバリモードを使用してアップデートをインストールできます。</string>
@@ -199,16 +199,16 @@
 
 	<string name="install_verify_error_title">インストールに失敗</string>
 	<string name="install_verify_error_nothing_installed">アップデートのインストール中に失敗しました。デバイスのソフトウェアには何も変更がありません。アップデートのインストールを再試行して下さい。</string>
-	<string name="install_verify_error_unable_to_verify">アップデートのインストールに成功しましたが確認に失敗しました。アップデートが正常にインストールされたかを確認するためにOxygen Updaterを開いて下さい。</string>
-	<string name="install_verify_error_wrong_version_installed">違うバージョンの OxygenOS がインストール済みです。"デバイスのルート化済を維持" オプションでルートパッケージを選択する際、OxygenOSアップデートファイルを選択しないで下さい。</string>
+	<string name="install_verify_error_unable_to_verify">アップデートのインストールに成功しましたが確認に失敗しました。アップデートが正常にインストールされたかを確認するために Oxygen Updater を開いて下さい。</string>
+	<string name="install_verify_error_wrong_version_installed">違うバージョンの OxygenOS がインストール済みです。"デバイスのルート化済を維持" オプションでルートパッケージを選択する際、OxygenOS アップデートファイルを選択しないで下さい。</string>
 
 	<string name="install_verify_success_title">インストール完了</string>
 	<string name="install_verify_success_message">OxygenOS version %1$s のインストールが成功しました。</string>
 
-	<string name="install_zip_file_clear">rootパッケージファイルを消去</string>
-	<string name="install_zip_file_pick">rootパッケージファイルの選択</string>
-	<string name="install_zip_file_placeholder">root packageの選択…</string>
-	<string name="install_zip_file_wrong_file_type">ZIPファイルのみ選択出来ます。正しいファイルを選択して下さい。</string>
+	<string name="install_zip_file_clear">root パッケージファイルを消去</string>
+	<string name="install_zip_file_pick">root パッケージファイルの選択</string>
+	<string name="install_zip_file_placeholder">root package の選択…</string>
+	<string name="install_zip_file_wrong_file_type">ZIP ファイルのみ選択出来ます。正しいファイルを選択して下さい。</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">インストールガイドに示されている指示に従い、アップデートをインストールします。</string>
@@ -218,7 +218,7 @@
 	<string name="install_guide_tip">&#8226; 更新プログラムのインストール中にデバイスの電源を切る必要があるため、すべての手順を書き留めておくことをお勧めします。</string>
 
 	<string name="install_guide_page_1_title">アップデートのダウンロード</string>
-	<string name="install_guide_page_1_text">&#8226; ダウンロードボタンを押して、更新プログラムのダウンロードを開始します。\n\n&#8226; ダウンロードの進行状況がアプリに表示され、通知画面に通知として表示されます。\n\n&#8226; ダウンロードが完了すると、\"ダウンロード完了\"というテキストの通知が表示されます。\nダウンロードエラーが発生した場合は、アプリを開き、更新プログラムのダウンロードを再試行してください。機能しない場合は、接続が機能していることを確認してください。それ以外の場合は、Google Playストアの\"マイアプリ\"セクションにアクセスし、アプリの開発者に連絡してください。</string>
+	<string name="install_guide_page_1_text">&#8226; ダウンロードボタンを押して、更新プログラムのダウンロードを開始します。\n\n&#8226; ダウンロードの進行状況がアプリに表示され、通知画面に通知として表示されます。\n\n&#8226; ダウンロードが完了すると、\"ダウンロード完了\"というテキストの通知が表示されます。\nダウンロードエラーが発生した場合は、アプリを開き、更新プログラムのダウンロードを再試行してください。機能しない場合は、接続が機能していることを確認してください。それ以外の場合は、Google Play ストアの\"マイアプリ\"セクションにアクセスし、アプリの開発者に連絡してください。</string>
 
 	<string name="install_guide_page_2_title">イントールの準備</string>
 	<string name="install_guide_page_2_text">"注: アップデートのインストールはデバイスの標準の システム アップデート から行われます。何らかの理由で、それを開いた時にシステムアップデートが表示された場合は、始めにそれをインストールすることもできます。その後、Oxygen Updater を開き直して完全に最新の状態になっているか確認します。
@@ -248,13 +248,13 @@
 
 &#8226; その後、アップデートを完了するために電話が再起動されます。"</string>
 
-	<string name="install_guide_page_5_title">完了。新しいOxygenOSバージョンを使用して下さい!</string>
-	<string name="install_guide_page_5_text">&#8226; デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n&#8226; 設定に移動し\"端末情報\"をタップしOxygenOS バージョンを確認します。\n\n&#8226; このアプリが気に入ったら、Google Playで５つ星をつけて下さい!</string>
+	<string name="install_guide_page_5_title">完了。新しい OxygenOS バージョンを使用して下さい!</string>
+	<string name="install_guide_page_5_text">&#8226; デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n&#8226; 設定に移動し\"端末情報\"をタップしOxygenOS バージョンを確認します。\n\n&#8226; このアプリが気に入ったら、Google Play で ５ つ星をつけて下さい!</string>
 
 	<string name="install_guide_close_button">インストールガイドを閉じる</string>
 
-	<string name="install_guide_zip_file_deleted">指定したrootパッケージは既に存在しません。上からrootパッケージを選択して下さい。</string>
-	<string name="install_guide_zip_file_missing">"デバイスのroot化を維持する場合、上からrootパッケージを指定して下さい"</string>
+	<string name="install_guide_zip_file_deleted">指定したrootパッケージは既に存在しません。上から root パッケージを選択して下さい。</string>
+	<string name="install_guide_zip_file_missing">"デバイスの root 化を維持する場合、上から root パッケージを指定して下さい"</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">サポートされているデバイス</string>
@@ -265,17 +265,17 @@
 	<string name="device_information_hardware_header">ハードウェア</string>
 	<string name="device_information_software_header">ソフトウェア</string>
 
-	<string name="device_information_amount_of_memory">RAMの合計量</string>
+	<string name="device_information_amount_of_memory">RAM の合計量</string>
 	<string name="device_information_cpu_frequency">プロセッサ周波数</string>
 	<string name="device_information_header">マイデバイス</string>
 	<string name="device_information_image_description">デバイスイメージ</string>
-	<string name="device_information_incremental_os_version">インクリメンタルOS バージョン</string>
+	<string name="device_information_incremental_os_version">インクリメンタル OS バージョン</string>
 	<string name="device_information_os_version">Android バージョン</string>
 	<string name="device_information_oxygen_os_version">OxygenOS バージョン</string>
 	<string name="device_information_oxygen_os_ota_version">OTA バージョン</string>
 	<string name="device_information_patch_level_version">セキュリティパッチ日時</string>
 	<string name="device_information_serial_number">シリアル番号</string>
-	<string name="device_information_system_on_a_chip">搭載SoC</string>
+	<string name="device_information_system_on_a_chip">搭載 SoC</string>
 	<string name="device_information_unknown">不明</string>
 
 	<!-- About screen strings -->
@@ -296,7 +296,7 @@
 	<string name="download_and_installation_notifications_group_name">ダウンロードとインストール</string>
 	<string name="push_notifications_group_name">通知のプッシュ</string>
 	<string name="miscellaneous_notifications_group_name">その他</string>
-	<string name="download_and_installation_notifications_group_description">Oxygen Updaterアプリの重要でない通知をすべて表示します。 ダウンロード中に表示されるステータスインジケータが含まれます。</string>
+	<string name="download_and_installation_notifications_group_description">Oxygen Updater アプリの重要でない通知をすべて表示します。 ダウンロード中に表示されるステータスインジケータが含まれます。</string>
 	<string name="push_notifications_group_description">Oxygen Updater アプリに重要な通知を表示します。システムアップデート通知やニュース速報を含みます。</string>
 	<string name="download_status_notification_channel_name">ダウンロードの進捗状況</string>
 	<string name="verification_status_notification_channel_name">検証の進捗状況</string>
@@ -317,15 +317,15 @@
 
 	<!-- Help strings -->
 	<string name="help">ヘルプ</string>
-	<string name="help_text">Oxygen Updaterのヘルプセクションへようこそ。\n\nヘルプは次のトピックをカバーしています。\n\n•デバイスのアップデート\n•最新ニュースの購読\n•デバイス情報の表示\n•設定の変更\n\nスクロールダウンでトピックを参照します。</string>
+	<string name="help_text">Oxygen Updater のヘルプセクションへようこそ。\n\nヘルプは次のトピックをカバーしています。\n\n•デバイスのアップデート\n•最新ニュースの購読\n•デバイス情報の表示\n•設定の変更\n\nスクロールダウンでトピックを参照します。</string>
 	<string name="help_updating_your_device_title">デバイスのアップデート</string>
-	<string name="help_updating_your_device_text">アプリを開くと、システムアップデートが利用可能かどうかがわかります。更新プログラムが利用可能な場合は、それをインストールできます。\n\nインストールを開始するには、（更新プログラムの説明の下にある）\"ダウンロード\"ボタンをタップしてダウンロードを開始します。ダウンロードが完了すると、インストール画面が表示されます。アプリを離れた場合、または画面がポップアップしなかった場合は、\"ダウンロード\"ボタンの横に表示される\"インストール\"ボタンをタップします。\n\nインストール画面では、root化済デバイスであるか最初に確認されます。ルート化済デバイスで場合は、確認画面でルート権限を付与し、アップデートのインストール方法を選択します。非ルート化済みデバイスの場合は、手動インストールの手順に従ってください。\n\n自動インストール：\nインストールオプションを選択するだけです。デフォルトの設定が推奨されますが、（再）インストールする必要があるルートパッケージを指定する必要があります。青いフォルダボタンを使用してルートパッケージ（zipファイル）を選択し、\"インストールを開始\"をタップしてインストールを開始します。\n\n手動インストール：\n画面にインストールガイドが表示されます。指示を書き留め、記載されているとおりに実行して更新プログラムをインストールします。</string>
+	<string name="help_updating_your_device_text">アプリを開くと、システムアップデートが利用可能かどうかがわかります。更新プログラムが利用可能な場合は、それをインストールできます。\n\nインストールを開始するには、（更新プログラムの説明の下にある）\"ダウンロード\"ボタンをタップしてダウンロードを開始します。ダウンロードが完了すると、インストール画面が表示されます。アプリを離れた場合、または画面がポップアップしなかった場合は、\"ダウンロード\"ボタンの横に表示される\"インストール\"ボタンをタップします。\n\nインストール画面では、root化済デバイスであるか最初に確認されます。ルート化済デバイスで場合は、確認画面でルート権限を付与し、アップデートのインストール方法を選択します。非ルート化済みデバイスの場合は、手動インストールの手順に従ってください。\n\n自動インストール：\nインストールオプションを選択するだけです。デフォルトの設定が推奨されますが、（再）インストールする必要があるルートパッケージを指定する必要があります。青いフォルダボタンを使用してルートパッケージ（zip ファイル）を選択し、\"インストールを開始\"をタップしてインストールを開始します。\n\n手動インストール：\n画面にインストールガイドが表示されます。指示を書き留め、記載されているとおりに実行して更新プログラムをインストールします。</string>
 	<string name="help_reading_news_title">最新ニュースの購読</string>
-	<string name="help_reading_news_text">ニュースはアップデートスクリーンの左側に表示されます。最新アイテムは最上部に表示されます。項目をタップして読むだけです。\n←矢印をタップするか、backキーを押してニュース項目画面に戻ります。</string>
+	<string name="help_reading_news_text">ニュースはアップデートスクリーンの左側に表示されます。最新アイテムは最上部に表示されます。項目をタップして読むだけです。\n←矢印をタップするか、戻るキーを押してニュース項目画面に戻ります。</string>
 	<string name="help_device_information_title">デバイス情報の表示</string>
 	<string name="help_device_information_text">更新画面の右側の画面を使用して、デバイスの仕様の一部を表示できます。 これは、デバイスの仕様の一部を尋ねられる可能性のあるサポートリクエストを行うときに役立ちます。</string>
 	<string name="help_change_settings_title">設定の変更</string>
-	<string name="help_change_settings_text">設定を変更するには、右上の3つドットをタップし、\"設定\"をタップします。\n次の設定を変更できます。\ n\n•デバイスと更新方法\n•プッシュ通知\n•アプリ通知\n•プライバシー設定（ログのアップロード）。\n\nスイッチを使用して、通知/プライバシー設定をオンまたはオフにします。 スイッチの上に表示されるドロップダウンメニューを使用して、デバイスおよび/または更新方法を選択します。 ドロップダウンメニューは表示されませんか？ インターネット接続を確認し、設定画面を再度開きます。</string>
+	<string name="help_change_settings_text">設定を変更するには、右上の 3 つドットをタップし、\"設定\"をタップします。\n次の設定を変更できます。\ n\n•デバイスと更新方法\n•プッシュ通知\n•アプリ通知\n•プライバシー設定（ログのアップロード）。\n\nスイッチを使用して、通知/プライバシー設定をオンまたはオフにします。 スイッチの上に表示されるドロップダウンメニューを使用して、デバイスおよび/または更新方法を選択します。 ドロップダウンメニューは表示されませんか？ インターネット接続を確認し、設定画面を再度開きます。</string>
 
 	<!-- News strings -->
 	<string name="news">ニュース</string>
@@ -345,8 +345,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">貢献者になる</string>
-	<string name="contribute_title">Oxygen Updaterの改善に協力する</string>
-	<string name="contribute_explanation">Oxygen Updaterはあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。\n\nどうすればよいですか？\n\nOxygen Updaterは、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたというOxygen Updaterの確認が表示されるまで、公式のシステムアップデートをインストールする前に（約15分）待つことです。 電話機の".Ota" directoryのみが15分ごとに1回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
+	<string name="contribute_title">Oxygen Updater の改善に協力する</string>
+	<string name="contribute_explanation">Oxygen Updater はあなたの助けを必要としています！ 最新の更新を提供するために、更新ファイルの名前を取得する必要があります。 これらは、定期的な更新がポップアップするときに携帯電話に表示されます。\n\nどうすればよいですか？\n\nOxygen Updater は、新しい更新ファイル名を管理者に自動的に送信できます。これは少量のデータを使用し、バッテリーを少し使用する場合があります。 必要なことは、ファイルが正常に送信されたという Oxygen Updater の確認が表示されるまで、公式のシステムアップデートをインストールする前に（約 15 分）待つことです。 電話機の".Ota" directory のみが 15 分ごとに 1 回スキャンされます。その特定のフォルダ内の特定の名前のみをチェックします。</string>
 	<string name="contribute_agree">更新ファイル名を管理者へ送信することを同意</string>
 	<string name="contribute_agree_from_setup">アプリの改善に協力し、更新ファイル名を管理者に送信することに同意する。</string>
 	<string name="contribute_save">設定を保存</string>
@@ -357,7 +357,7 @@
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Oh no!</string>
-	<string name="error_app_outdated_message">このバージョンのアプリは古くなっています。 更新する時が来ました！ 下の\"Google Play\"をタップし、 Google Play内で、\"更新\"をタップします。</string>
+	<string name="error_app_outdated_message">このバージョンのアプリは古くなっています。 更新する時が来ました！ 下の\"Google Play\" をタップし、 Google Play 内で、\"更新\"をタップします。</string>
 	<string name="error_app_requires_network_connection">接続なし</string>
 	<string name="error_app_requires_network_connection_message">サーバへの接続に失敗しました。ネットワーク接続が正常であるか確認して下さい。アプリケーションを閉じます。</string>
 	<string name="error_google_play_button_text">Google Play</string>
@@ -367,7 +367,7 @@
 	<string name="error_maintenance_retry">サーバーはメンテナンスのためダウンしている可能性があります。時間をおいてもう一度やり直すか、<a href="mailto:support@oxygenupdater.com">メール</a>や<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>で報告してください。</string>
 	<string name="error_reload">再読込</string>
 
-	<string name="error_unable_to_rate_app">Google Playストアがデバイスにないため、アプリを評価できません。</string>
+	<string name="error_unable_to_rate_app">Google Play ストアがデバイスにないため、アプリを評価できません。</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">アップデートファイルダウンロード済</string>
@@ -377,7 +377,7 @@
 	<string name="unsupported_device_warning_title">未サポートデバイス</string>
 	<string name="carrier_exclusive_device_warning_message">キャリア独自のデバイスを使用しているようです。OxygenOS を実行していても、アップデートをインストールすることはできません。たいてい、キャリアはユーザーが許可無しにファームウェアを変更できないようデバイスをロックします。これはアメリカでは一般的なことで、"ローカルアップグレード" オプションはキャリア独自の OxygenOS から削除されています。このオプションは、このアプリを使用しなくても自身でアップデートをインストールするために必要です。残念ながら、技術的または法的な制限により何もできません。メールや Discord でより明確に説明いたします。</string>
 	<string name="unsupported_device_warning_message">新しい OnePlus デバイスの入手おめでとうございます！ 残念ながら、まだこのデバイスのサポートをしていません。ご心配なく、可能な限り早く追加します。ミスを避けるため、新しいデバイスの検証とテストには時間が掛かるため、ご容赦ください。私たちを手助けする場合、メールを送るか Discord サーバーに参加し、デバイスのサポートを含む新しいアプリのリリースの通知を受け取ってください。</string>
-	<string name="unsupported_os_warning_message">デバイスでOxygenOSが実行されていないようです。 OxygenOSを実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。\n\nカスタムROMを実行しているOnePlusデバイスを含むその他のデバイスはサポートされていません。</string>
+	<string name="unsupported_os_warning_message">デバイスで OxygenOS が実行されていないようです。 OxygenOS を実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。\n\nカスタム ROM を実行している OnePlus デバイスを含むその他のデバイスはサポートされていません。</string>
 
 	<string name="incorrect_device_warning_title">選択されたデバイスとの不一致</string>
 	<string name="incorrect_device_warning_message">\"%2$s\" の代わりに、間違ったデバイスを選択したようです: \"%1$s\"。正しいデバイスのアップデートと通知を受け取るためにアプリ内の設定から選択を変更してください。</string>
@@ -385,7 +385,7 @@
 	<string name="device_warning_checkbox_title">警告を二度と表示しない</string>
 
 	<string name="root_check_title">Root アクセス</string>
-	<string name="root_check_message">Oxygen Updaterは、ルート化されたデバイスを持つユーザー向けに、簡単で自動化されたアップデートインストールを提供します。 ただし、ルート化されたデバイスの増分更新は使用できません。 Oxygen Updaterは、適切な更新方法のみを提供するルートアクセス権があるかどうかを確認できます。\n\nルートアクセスがある場合は、このメッセージを閉じた後、Oxygen Updaterがルートアクセスを取得できるようにします。\n\nルートアクセスなし？ \"閉じる\"を押して、アプリの使用を続けます</string>
+	<string name="root_check_message">Oxygen Updater は、ルート化されたデバイスを持つユーザー向けに、簡単で自動化されたアップデートインストールを提供します。 ただし、ルート化されたデバイスの増分更新は使用できません。 Oxygen Updater は、適切な更新方法のみを提供するルートアクセス権があるかどうかを確認できます。\n\nルートアクセスがある場合は、このメッセージを閉じた後、Oxygen Updater がルートアクセスを取得できるようにします。\n\nルートアクセスなし？ \"閉じる\"を押して、アプリの使用を続けます</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">購入は \"支払い保留中\" になっています。支払いが完了すると特典が付与されます。</string>
