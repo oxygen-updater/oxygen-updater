@@ -305,7 +305,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         setItemList(
             BuildConfig.SUPPORTED_LANGUAGES.mapIndexed { i, languageCode ->
-                val locale = Locale(languageCode)
+                val split = languageCode.split("-r", limit = 2)
+                val language = split[0]
+                val country = split.getOrElse(1) { "" }
+                val locale = Locale(language, country)
                 // App-level localized name, which is displayed both as a title and summary
                 val appLocalizedName = locale.displayName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
                 // System-level localized name, which is displayed as a fallback for better
@@ -317,7 +320,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     systemLocale
                 ).replaceFirstChar { if (it.isLowerCase()) it.titlecase(systemLocale) else it.toString() }
 
-                if (languageCode == systemLocale.language) {
+                if (language == systemLocale.language && country == systemLocale.country) {
                     recommendedPosition = i
                 }
 
@@ -327,7 +330,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
                 BottomSheetItem(
                     title = appLocalizedName,
-                    subtitle = "$systemLocalizedName ($languageCode)",
+                    subtitle = "$systemLocalizedName [$languageCode]",
                     value = appLocalizedName,
                     secondaryValue = languageCode
                 )
