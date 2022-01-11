@@ -15,12 +15,24 @@ import java.util.*
  * (which is where Koin is initialized)
  */
 
+fun String.toLocale() = split("-r", limit = 2).let {
+    val language = it[0]
+    val country = it.getOrElse(1) { "" }
+    Locale(language, country)
+}
+
+fun Locale.toLanguageCode(): String = let {
+    val language = it.language
+    // Add other languages here if they need country-specifications too
+    if (language == "zh") "$language-r${it.country}" else language
+}
+
 fun Context.attachWithLocale(persist: Boolean = true) = persistAndSetLocale(
     PreferenceManager.getDefaultSharedPreferences(this),
     persist
 )
 
-fun Context.setLocale(languageCode: String) = Locale(languageCode).let {
+fun Context.setLocale(languageCode: String) = languageCode.toLocale().let {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         LocaleList.setDefault(LocaleList(it))
     } else {
@@ -34,7 +46,7 @@ private fun Context.persistAndSetLocale(
     persist: Boolean
 ) = sharedPreferences.getString(
     getString(R.string.key_language_id),
-    Locale.getDefault().language
+    Locale.getDefault().toLanguageCode()
 )!!.let { languageCode ->
     if (persist) {
         sharedPreferences.edit {

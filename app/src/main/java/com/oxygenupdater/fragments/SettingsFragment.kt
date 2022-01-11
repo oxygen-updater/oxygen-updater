@@ -28,6 +28,8 @@ import com.oxygenupdater.exceptions.GooglePlayBillingException
 import com.oxygenupdater.extensions.openInCustomTab
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.setLocale
+import com.oxygenupdater.extensions.toLanguageCode
+import com.oxygenupdater.extensions.toLocale
 import com.oxygenupdater.internal.settings.BottomSheetItem
 import com.oxygenupdater.internal.settings.BottomSheetPreference
 import com.oxygenupdater.internal.settings.SettingsManager
@@ -285,7 +287,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setupLanguagePreference() = findPreference<BottomSheetPreference>(
         mContext.getString(R.string.key_language)
     )!!.apply {
-        val defaultLanguageCode = Locale.getDefault().language
+        val defaultLanguageCode = Locale.getDefault().toLanguageCode()
         val savedLanguageCode = getPreference(
             SettingsManager.PROPERTY_LANGUAGE_ID,
             ""
@@ -305,10 +307,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         setItemList(
             BuildConfig.SUPPORTED_LANGUAGES.mapIndexed { i, languageCode ->
-                val split = languageCode.split("-r", limit = 2)
-                val language = split[0]
-                val country = split.getOrElse(1) { "" }
-                val locale = Locale(language, country)
+                val locale = languageCode.toLocale()
+                val language = locale.language
+                val country = locale.country
                 // App-level localized name, which is displayed both as a title and summary
                 val appLocalizedName = locale.displayName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
                 // System-level localized name, which is displayed as a fallback for better
@@ -320,7 +321,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     systemLocale
                 ).replaceFirstChar { if (it.isLowerCase()) it.titlecase(systemLocale) else it.toString() }
 
-                if (language == systemLocale.language && country == systemLocale.country) {
+                if (language == systemLocale.language && (country.isBlank() || country == systemLocale.country)) {
                     recommendedPosition = i
                 }
 
