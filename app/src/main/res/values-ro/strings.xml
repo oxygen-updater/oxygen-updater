@@ -8,14 +8,14 @@
 	<string name="update_information_file_name">Nume fișier: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Întrucât a avut loc o eroare la descărcarea fișierelor, descărcarea trebuie repornită. Puteți folosi acest link pentru a descărca fișierele dintr-un browser. Este posibil ca fișierele descărcate să necesite mutarea lor din directorul \"Descărcări\" in directorul părinte. Acest link este același link pe care aplicația îl accesează la descărcarea actualizărilor, link oficial de la Server-ul OnePlus OTA:\n%1$s</string>
-	<string name="update_information_header">Actualizare</string>
+	<string name="update_information_header">Actualizări</string>
 	<string name="update_information_error_title">Nu s-au putut recupera ultimele informații asupra actualizării</string>
 	<string name="update_information_banner_server">Apăsați aici pentru a vedea noutăți importante</string>
-	<string name="update_information_banner_advanced_mode_tip">Ați selectat pista de actualizare \"%1$s\". Activați modul avansat dacă intenționați să treceți la această pistă de actualizare.</string>
+	<string name="update_information_banner_advanced_mode_tip">Ați selectat varianta de actualizare \"%1$s\". Activați modul avansat dacă plănuiți să treceți la această variantă de actualizare.</string>
 	<string name="update_information_header_advanced_mode_hint">Modul avansat este activat</string>
 	<string name="update_information_header_advanced_mode_helper">Pentru că ați activat modul avansat, puteți descărca ultimul fișier ZIP pentru \"%1$s\".\n\nPuteți dezactiva modul avansat din setări.</string>
 	<string name="update_information_different_version_changelog_notice">Vizualizați un jurnal de schimbări pentru cea mai recentă actualizare din lista de actualizări \"%1$s\". Dacă doriți să instalați această actualizare, trebuie să activați mai întâi modul avansat (în setări).\n\nTotuși, dacă doriți să vedeți jurnalul de schimbări pentru versiunea instalată în prezent, va trebui să reveniți la metoda potrivită de actualizare.</string>
-	<string name="update_information_last_checked_on">Ultima verificare la: %1$s</string>
+	<string name="update_information_last_checked_on">Ultima verificare: %1$s</string>
 	<string name="update_information_no_update_data_available">Nu există informații despre actualizare</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Sistemul dumneavoastră este la zi</string>
@@ -46,7 +46,7 @@
 	<string name="download_error_close">ÎNCHIDE</string>
 	<string name="download_error_corrupt">Fișierul descărcat este compromis! Vă rugăm să îl descărcați din nou.</string>
 	<string name="download_error_server">A avut loc o eroare de server la descărcarea actualizării. Vă rugăm să încercați din nou descărcarea.</string>
-	<string name="download_error_internal">Din păcate a avut loc o eroare tehnică în timpul descărcării. Încercați să descărcați actualizarea din nou . Dacă problema persistă, vă rugăm să contactați dezvoltatorii aplicației pentru asistență.</string>
+	<string name="download_error_internal">Din păcate a avut loc o eroare tehnică în timpul descărcării. Încercați să descărcați actualizarea din nou. Dacă problema persistă, vă rugăm să contactați dezvoltatorii aplicației pentru asistență.</string>
 	<string name="download_error_unsuccessful_response"><![CDATA[Se pare că linkul de descărcare nu este valid. Acest lucru ar putea însemna fie că am greșit în timp ce adăugam date de actualizare, fie că OnePlus a extras / eliminat fișierul de actualizare de pe server-ele lor. O notificare a fost trimisă echipei și vom analiza acest lucru cât mai curând posibil.
 Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a href="mailto:support@oxygenupdater.com">e-mail</a> sau intrând pe <a href="https://discord.gg/5TXdhKJ">server-ul nostru de Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Fișierul a fost descărcat, dar nu a putut fi mutat în directorul corespunzător. Deschideți un manager de fișiere, navigați către \"%1$s\" și mutați manual fișierul în cel mai de sus director al stocării interne.</string>
@@ -84,8 +84,8 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="preference_header_advanced">Avansat</string>
 	<string name="preference_header_about">Despre</string>
 
-	<string name="summary_on">Activă</string>
-	<string name="summary_off">Inactivă</string>
+	<string name="summary_on">Activat</string>
+	<string name="summary_off">Dezactivat</string>
 	<string name="summary_please_wait">Vă rugăm așteptați…</string>
 	<string name="summary_update_method">Mai întâi selectați un dispozitiv</string>
 	<string name="summary_theme">Alegeți tema</string>
@@ -97,7 +97,7 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="label_theme">Temă</string>
 	<string name="label_language">Limbă</string>
 	<string name="label_privacy_policy">Politica de confidențialitate</string>
-	<string name="label_rate_app">Evaluați-ne aplicația</string>
+	<string name="label_rate_app">Evaluați aplicația</string>
 
 	<string name="theme_light">Deschisă</string>
 	<string name="theme_dark">Întunecată</string>
@@ -118,14 +118,14 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 
 	<string name="settings_contribute_label">Contribuiți la îmbunătățirea aplicației</string>
 
-	<string name="settings_device">Dispozitiv</string>
+	<string name="settings_device">Dispozitiv selectat</string>
 	<string name="settings_entered_incorrectly">Eroare la salvarea setărilor. Vă rugăm să reveniți la selectarea dispozitivului / a modalității de actualizare.</string>
-	<string name="settings_explanation_incremental_full_update">O actualizare incrementală poate fi instalată din orice versiune (cu excepția cazului în care aveți un bootloader deblocat; atunci ar trebui să alegeți întotdeauna actualizarea completă ca metodă de actualizare).\n\nO actualizare beta pentru OxygenOS poate fi instalată întotdeauna, de asemenea, atunci când sunteți pe o versiune stabilă. Pentru a trece de la o versiune stabilă la o versiune beta, trebuie să activați modul avansat în setări. Pentru versiunile beta, metodele de actualizare completă și incrementală funcționează în același mod ca pe versiunile stabile.</string>
+	<string name="settings_explanation_incremental_full_update">O actualizare incrementală poate fi instalată din orice versiune (cu excepția cazului în care aveți un bootloader deblocat; atunci ar trebui să alegeți întotdeauna actualizarea completă ca metodă de actualizare).\n\nO actualizare beta pentru OxygenOS poate fi instalată întotdeauna, de asemenea, atunci când rulați o versiune stabilă. Pentru a trece de la o versiune stabilă la o versiune beta, trebuie să activați modul avansat în setări. Pentru versiunile beta, metodele de actualizare completă și incrementală funcționează în același mod ca pe versiunile stabile.</string>
 
-	<string name="settings_push_from_server">Mesaje de informare și de avertizare</string>
-	<string name="settings_push_new_version">Mesaje de actualizare a sistemului</string>
-	<string name="settings_push_new_device">Un nou dispozitiv este suportat</string>
-	<string name="settings_push_news">Mesaje pentru noutăți</string>
+	<string name="settings_push_from_server">Informații și avertismente</string>
+	<string name="settings_push_new_version">Actualizări disponibile</string>
+	<string name="settings_push_new_device">Suport pentru dispozitive noi</string>
+	<string name="settings_push_news">Noutăți</string>
 
 	<string name="settings_saving">Setările dumneavoastră se salvează. Dacă operațiunea durează prea mult: Verificați conexiunea la rețea, închideți aplicația și porniți-o din nou.</string>
 
@@ -264,7 +264,7 @@ Instrucțiuni:
 
 	<string name="device_information_amount_of_memory">Memorie RAM</string>
 	<string name="device_information_cpu_frequency">Frecvență procesor</string>
-	<string name="device_information_header">Dispozitivul meu</string>
+	<string name="device_information_header">Dispozitiv</string>
 	<string name="device_information_image_description">Imaginea dispozitivului</string>
 	<string name="device_information_incremental_os_version">Versiunea incrementală de OS</string>
 	<string name="device_information_os_version">Versiunea de Android</string>
@@ -277,10 +277,10 @@ Instrucțiuni:
 
 	<!-- About screen strings -->
 	<string name="about">Despre</string>
-	<string name="about_description">Această aplicație descarcă actualizări oficiale direct de pe serverele OnePlus și verifică integritatea fișierului ZIP descărcat înainte de a vă permite să instalați actualizarea. Procedând astfel, aplicația vă permite să omiteți perioada de lansare a actualizărilor și să instalați actualizări oficiale cât mai curând posibil. Dacă întâmpinați erori în sistemul de operare, raportați-le direct la OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Puteți, de asemenea, să vă alăturați <a href="https://discord.gg/5TXdhKJ">server-ului nostru de Discord</a> pentru a discuta cu alți utilizatori în legătură cu ultimele actualizări. În rest, ne puteți scrie oricând un e-mail pe adresa <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> cu sugestii și păreri în legătură cu aplicația.</string>
-	<string name="about_support">Dacă doriți să ne sprijiniți, puteți cumpăra aplicația fără anunțuri (din setările aplicației) sau puteți să consultați<a href="https://patreon.com/oxygenupdater">pagina de Patreon</a>.</string>
+	<string name="about_description">Această aplicație descarcă actualizări oficiale direct de pe serverele OnePlus și verifică integritatea fișierului ZIP descărcat, înainte de a vă permite să instalați actualizarea. Astfel, aplicația vă permite să săriți peste perioada de lansare a actualizărilor și să instalați actualizări oficiale cât mai curând posibil. Dacă întâmpinați erori în sistemul de operare, raportați-le direct la OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Puteți, de asemenea, să vă alăturați <a href="https://discord.gg/5TXdhKJ">server-ului nostru de Discord</a> pentru a discuta cu alți utilizatori în legătură cu ultimele actualizări. În rest, ne puteți scrie oricând un e-mail pe adresa <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> cu sugestii și păreri în legătură cu aplicația.</string>
+	<string name="about_support">Dacă doriți să ne sprijiniți, puteți cumpăra aplicația fără anunțuri (din setările aplicației) sau puteți să consultați <a href="https://patreon.com/oxygenupdater">pagina de Patreon</a>.</string>
 	<string name="about_background_story_header">Scurt istoric</string>
-	<string name="about_background_story">Această aplicație a fost creată inițial de Arjan Vlek, ca urmare a unei aplicații deja existente, numită <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (oferă funcționalitate similară pentru utilizatorii Cyanogen OS).\n\nDupă 4 ani, în iulie 2019, Arjan a decis să-și reducă activitatea în cele două proiecte și a transferat conducerea aplicației către o echipă de dezvoltatori provenind dintr-o varietate de țări. Aceștia și-au asumat responsabilitatea de a oferi comunității un suport excelent pentru primirea de actualizări OnePlus mai rapide &amp; .\nPuteți găsi mai multe informații legate de anunț <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">aici</a>.\n\nPe data de 14 august 2019 a avut loc prima lansare sub noua conducere, care a venit cu funcții noi precum modul întunecat și un design complet nou.\n\nPentru mai multe informații referitoare la echipă, încercați <a href="https://oxygenupdater.com/team/">acest website</a>.</string>
+	<string name="about_background_story">Această aplicație a fost creată inițial de Arjan Vlek, ca urmare a unei aplicații deja existente, numită <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (aplicație ce oferă funcționalitate similară pentru utilizatorii Cyanogen OS).\n\nDupă 4 ani, în iulie 2019, Arjan a decis să-și reducă activitatea în cele două proiecte și a transferat conducerea aplicației către o echipă de dezvoltatori provenind dintr-o varietate de țări. Aceștia și-au asumat responsabilitatea de a oferi comunității un suport excelent pentru primirea de actualizări OnePlus mai rapide.\nPuteți găsi mai multe informații legate de anunț <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">aici</a>.\n\nPe data de 14 august 2019 a avut loc prima lansare sub noua conducere, care a adus utilizatorilor funcții noi precum tema întunecată și un design complet nou.\n\nPentru mai multe informații referitoare la echipă, încercați <a href="https://oxygenupdater.com/team/">acest website</a>.</string>
 	<string name="about_third_party_app_notice">Atenție, aceasta nu este o aplicație oficială OnePlus.\nNumele OnePlus, logo-ul OnePlus și OxygenOS aparțin companiei OnePlus.\nAndroid, Google, Google Play și logo-ul Google Play sunt mărci înregistrate ale Google Inc.\nAceastă aplicație folosește date de la OnePlus și de la compania părinte Oppo pentru a oferi informații legate de actualizări.</string>
 	<string name="about_rate_button_text">Evaluați</string>
 	<string name="about_website_button_text">Website</string>
@@ -316,13 +316,13 @@ Instrucțiuni:
 	<string name="help">Ajutor</string>
 	<string name="help_text">Bine ați venit la secțiunea de Ajutor din Oxygen Updater.\n\nAjutorul acoperă următoarele subiecte:\n\n• Actualizarea dispozitivului\n• Citirea ultimelor articole\n• Vizualizarea informațiilor despre dispozitiv\n• Modificarea setărilor\n\nDerulați în jos pentru a răsfoi subiectele.</string>
 	<string name="help_updating_your_device_title">Actualizați dispozitivul</string>
-	<string name="help_updating_your_device_text">La deschiderea aplicației, veți vedea dacă este disponibilă o actualizare de sistem. Dacă este disponibilă o actualizare, o puteți instala.\n\nPentru a începe instalarea, apăsați butonul de \"Descărcare\" (sub descrierea actualizării) pentru a începe descărcarea. Când descărcarea s-a încheiat, va apărea ecranul de instalare. Dacă ați părăsit aplicația sau ecranul nu a apărut, apăsați pe butonul\"Instalare\", care este acum afișat lângă butonul de \"Descărcare\".\n\nEcranul de instalare va verifica mai întâi dacă aveți un dispozitiv rootat. Dacă aveți un dispozitiv rootat, acordați permisiunea de root atunci când vi se solicită și alegeți modul în care doriți să instalați actualizarea. În caz contrar, urmați instrucțiunile pentru instalarea manuală.\n\nInstalarea automată:\nVa trebui doar să alegeți opțiunile de instalare. Sunt recomandate setările implicite, cu excepția faptului că trebuie să specificați pachetul root care trebuie (re)instalat. Selectați un pachet root (fișier zip) folosind butonul albastru al directorului și apăsați pe \"Porniți instalarea\" pentru a porni instalarea.\n\nInstalarea manuală:\nVeți vedea un ghid de instalare pe ecran. Scrieți instrucțiunile și efectuați-le așa cum este menționat pentru a instala actualizarea.</string>
+	<string name="help_updating_your_device_text">La deschiderea aplicației, veți vedea dacă este disponibilă o actualizare de sistem. Dacă este disponibilă o actualizare, atunci o puteți instala.\n\nPentru a începe instalarea, apăsați butonul de \"Descărcare\" (sub descrierea actualizării) pentru a începe descărcarea. Când descărcarea s-a încheiat, veți vedea meniul de instalare. Dacă ați părăsit aplicația sau în cazul în care meniul de instalare nu a apărut, apăsați pe butonul \"Instalare\", care este acum afișat lângă butonul de \"Descărcare\".\n\nProcesul de instalare va verifica mai întâi dacă aveți un dispozitiv rootat. Dacă aveți un dispozitiv rootat, acordați permisiunea de root atunci când vi se solicită și alegeți modul în care doriți să instalați actualizarea. În caz contrar, urmați instrucțiunile pentru instalarea manuală.\n\nInstalarea automată:\nVa trebui doar să alegeți opțiunile pentru instalare. Sunt recomandate setările implicite, cu excepția faptului că trebuie să specificați pachetul root care trebuie (re)instalat. Selectați un pachet root (în format .zip) folosind butonul albastru al directorului și apăsați pe \"Porniți instalarea\" pentru a porni instalarea.\n\nInstalarea manuală:\nVeți vedea un ghid de instalare pe ecran. Notați separat instrucțiunile și efectuați-le în ordinea în care sunt prezentate pentru a instala actualizarea.</string>
 	<string name="help_reading_news_title">Citiți ultimele noutăți</string>
-	<string name="help_reading_news_text">Noutățile sunt afișate în stânga panoului de Actualizare. Cele mai recente elemente apar în partea de sus. Doar atingeți un articol pentru a-l citi.\nAtingeți săgeata înapoi sau apăsați tasta înapoi pentru a reveni la ecranul de știri.</string>
+	<string name="help_reading_news_text">Noutățile și știrile sunt afișate în dreapta panoului de actualizări. Cele mai recente elemente apar în partea de sus. Pur și simplu atingeți un articol pentru a-l citi.\nAtingeți săgeata "înapoi" sau apăsați tasta "înapoi" pentru a reveni la ecranul de știri.</string>
 	<string name="help_device_information_title">Vizualizați informații despre dispozitiv</string>
-	<string name="help_device_information_text">Puteți vizualiza anumite specificații ale dispozitivului utilizând ecranul din dreapta panoului de Actualizare. Acest lucru este util atunci când faceți o solicitare de asistență în care s-ar putea să vi se solicite anumite specificații ale dispozitivului dumneavoastră.</string>
+	<string name="help_device_information_text">Puteți vizualiza anumite specificații ale dispozitivului utilizând ecranul din dreapta panoului de actualizări. Acest lucru este util atunci când faceți o solicitare de asistență în care există posibilitatea să vi se solicite anumite specificații ale dispozitivului dumneavoastră.</string>
 	<string name="help_change_settings_title">Modificați setările</string>
-	<string name="help_change_settings_text">Puteți modifica setările apăsând pe cele trei puncte din dreapta sus, apoi pe Setări.\nPuteți modifica următoarele setări:\n\n• Dispozitiv și metodă de actualizare\n• Notificări\n• Notificări în aplicație\n• Setări de confidențialitate (încărcare jurnal).\n\nUtilizați comutatoarele pentru a activa și dezactiva setările de notificare / confidențialitate. Selectați un dispozitiv și / sau o metodă de actualizare folosind meniurile dropdown afișate deasupra comutatoarelor. Meniurile dropdown nu sunt vizibile? Verificați conexiunea la internet și deschideți din nou meniul de Setări.</string>
+	<string name="help_change_settings_text">Puteți modifica setările apăsând pe cele trei puncte din dreapta sus, apoi pe Setări.\nPuteți modifica următoarele setări:\n\n• Dispozitiv și metodă de actualizare\n• Notificări\n• Notificări în aplicație\n• Setări de confidențialitate (încărcare jurnal).\n\nUtilizați comutatoarele pentru a activa și dezactiva setările de notificare / confidențialitate. Selectați un dispozitiv și / sau o metodă de actualizare folosind meniurile dropdown afișate deasupra comutatoarelor. Nu sunt vizibile meniurile dropdown? Verificați conexiunea la internet și deschideți din nou meniul de Setări.</string>
 
 	<!-- News strings -->
 	<string name="news">Noutăți</string>
@@ -330,54 +330,54 @@ Instrucțiuni:
 	<string name="news_empty">Acest articol nu are conținut.</string>
 	<string name="news_load_network_error">Articolul nu a putut fi deschis. Verificați conexiunea și apăsați butonul \"REÎNCERCARE\" pentru a deschide articolul.</string>
 	<string name="news_load_id_error"><![CDATA[Deschiderea articolului nu a reușit din cauza unei adrese URL invalide: %1$s. Verificați adresa URL sau raportați-ne acest lucru fie prin <a href="mailto:support@oxygenupdater.com">e-mail</a> sau pe <a href="https://discord.gg/5TXdhKJ">server-ul nostru de Discord</a>.]]></string>
-	<string name="news_unread_count_1">Aveți %1$d articole necitite. Apăsați aici pentru a le vizualiza.</string>
-	<string name="news_unread_count_2">Aveți %1$d articole necitite. Apăsați pentru a le vizualiza pe toate.</string>
+	<string name="news_unread_count_1">Aveți %1$d articole necitite. Atingeți pentru a le vizualiza.</string>
+	<string name="news_unread_count_2">Aveți %1$d articole necitite. Atingeți pentru a vizualiza toate articolele.</string>
 	<string name="news_mark_read">Marchează ca citit</string>
-	<string name="news_mark_unread">Marchează toate drept necitite</string>
-	<string name="news_mark_all_read">Marchează toate drept citite</string>
+	<string name="news_mark_unread">Marchează ca necitit</string>
+	<string name="news_mark_all_read">Marchează toate ca citite</string>
 	<string name="news_empty_state_none_available_header">Niciun articol momentan</string>
-	<string name="news_empty_state_all_read_header">Nu mai este nimic de citit</string>
+	<string name="news_empty_state_all_read_header">Nu mai este nimic nou de citit</string>
 	<string name="news_empty_state_none_available_text">Nu există articole disponibile momentan, reveniți mai târziu.</string>
-	<string name="news_empty_state_all_read_text">Ați citit toate articolele. Felicitări!\nSperăm că v-a plăcut să citiți articolele noastre și că ați învățat ceva nou.\n\nApăsați banner-ul din nou pentru a vedea toate articolele.</string>
+	<string name="news_empty_state_all_read_text">Ați citit toate articolele. Felicitări!\nSperăm că le-ați citit cu plăcere și că ați aflat ceva nou.\n\nApăsați banner-ul din nou pentru a vedea toate articolele.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Deveniți un contribuitor</string>
-	<string name="contribute_title">Ajutați la îmbunătățirea aplicației Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater are nevoie de ajutorul dumneavoastră! Pentru a vă oferi cele mai recente actualizări, trebuie să obținem numele fișierelor de actualizare. Acestea sunt prezente pe telefonul dumneavoastră atunci când apare o actualizare obișnuită.\n\nCum pot ajuta?\n\nOxygen Updater poate trimite automat nume noi de fișiere de actualizare administratorilor noștri. Această acțiune va utiliza o cantitate mică de date și poate folosi o parte din baterie. Tot ce trebuie să faceți este să așteptați (aproximativ 15 minute) înainte de a instala Actualizări de sistem oficiale până când veți vedea o confirmare de la Oxygen Updater că fișierul a fost trimis cu succes. Numai directorul \".Ota\" de pe telefonul dumneavoastră este scanat odată la 15 minute. Se verifică doar un anumit nume în acel director.</string>
+	<string name="contribute_title">Ajutați-ne să îmbunătățim aplicația Oxygen Updater</string>
+	<string name="contribute_explanation">Oxygen Updater are nevoie de ajutorul dumneavoastră! Pentru a vă oferi cele mai recente actualizări, trebuie să obținem numele fișierelor de actualizare. Acestea sunt prezente pe telefonul dumneavoastră atunci când apare o actualizare obișnuită.\n\nCum pot să ajut?\n\nOxygen Updater poate trimite automat nume noi de fișiere de actualizare administratorilor noștri. Acest proces va utiliza o cantitate mică de date și poate folosi o parte din baterie. Tot ce trebuie să faceți este să așteptați (aproximativ 15 minute) înainte de a instala actualizări de sistem oficiale până când veți primi o confirmare de la Oxygen Updater că fișierul a fost trimis cu succes. Numai directorul \".Ota\" de pe telefonul dumneavoastră este scanat odată la 15 minute. Se verifică doar un anumit nume în acel director.</string>
 	<string name="contribute_agree">Mi-ar plăcea să ajut și sunt de acord să trimit nume ale fișierelor de actualizare către administratori</string>
 	<string name="contribute_agree_from_setup">Mi-ar plăcea să ajut la îmbunătățirea aplicației și sunt de acord să trimit nume ale fișierelor de actualizare către administratori</string>
-	<string name="contribute_save">Salvare setări</string>
+	<string name="contribute_save">Salvează setările</string>
 	<string name="contribute_more_info">Mai multe informații…</string>
-	<string name="contribute_allow_storage">Vă rugăm să acordați permisiunea de a vă fi accesată stocarea pentru de a îmbunătăți aplicația</string>
+	<string name="contribute_allow_storage">Vă rugăm să acordați permisiunea de a vă fi accesată stocarea pentru a îmbunătăți aplicația</string>
 	<string name="contribute_successful_notification_title">Ați contribuit cu succes</string>
-	<string name="contribute_successful_notification_text">Mulțumim că ați Împărtășit numele fișierelor de actualizare cu noi!</string>
+	<string name="contribute_successful_notification_text">Mulțumim că ați împărtășit numele fișierelor de actualizare cu noi!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">O nu!</string>
-	<string name="error_app_outdated_message">Se pare că nu rulați ultima versiune a aplicației. Este timpul să o actualizați! Apăsați pe butonul \"Google Play\" de mai jos. În Google Play, apăsați \"Actualizare\".</string>
+	<string name="error_app_outdated_message">Se pare că nu rulați ultima versiune a aplicației. E timpul să o actualizați! Apăsați pe butonul \"Google Play\" de mai jos. În Google Play, apăsați \"Actualizare\".</string>
 	<string name="error_app_requires_network_connection">Lipsă conexiune</string>
 	<string name="error_app_requires_network_connection_message">Nu s-a putut realiza conexiunea la server. Vă rugăm să verificați conexiunea la rețea. Aplicația se va închide.</string>
 	<string name="error_google_play_button_text">Google Play</string>
 	<string name="error_no_internet_connection">Lipsă conexiune.</string>
 	<string name="error_maintenance">Mentenanță server</string>
 	<string name="error_maintenance_message">Vă rugăm așteptați. Server-ul va fi disponibil în curând.</string>
-	<string name="error_maintenance_retry">Server-ul ar putea fi oprit pentru mentenanță. Încercați din nou mai târziu sau contactați-ne pe <a href="mailto:support@oxygenupdater.com">e-mail</a> sau pe <a href="https://discord.gg/5TXdhKJ">server-ul de Discord</a>.</string>
+	<string name="error_maintenance_retry">Este posibil ca server-ul să fie oprit pentru mentenanță. Încercați din nou mai târziu sau contactați-ne pe <a href="mailto:support@oxygenupdater.com">e-mail</a> sau pe <a href="https://discord.gg/5TXdhKJ">server-ul de Discord</a>.</string>
 	<string name="error_reload">Reîncărcare</string>
 
 	<string name="error_unable_to_rate_app">Nu puteți evalua aplicația, întrucât Magazinul Google Play nu este instalat pe dispozitivul dumneavoastră.</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">Actualizarea este deja descărcată</string>
-	<string name="delete_message_contents">Ați descărcat deja această actualizare, dar încă nu ați instalat-o. Apăsați pe \"Instalare\" pentru a vedea instrucțiuni despre cum să instalați această actualizare. Apăsați pe \"Ștergere\" pentru a șterge definitiv fișierul descărcat. Apăsați butonul Înapoi sau atingeți în exterior pentru a închide acest mesaj.</string>
+	<string name="delete_message_contents">Ați descărcat deja această actualizare, dar încă nu ați instalat-o. Apăsați pe \"Instalare\" pentru a vedea instrucțiuni despre cum să o instalați. Apăsați pe \"Ștergere\" pentru a șterge definitiv fișierul descărcat. Apăsați butonul Înapoi sau atingeți în exterior pentru a închide acest mesaj.</string>
 	<string name="delete_message_delete_button">Ștergere</string>
 
 	<string name="unsupported_device_warning_title">Dispozitivul nu este suportat</string>
-	<string name="carrier_exclusive_device_warning_message">Se pare că folosiți un dispozitiv blocat într-o rețea. Chiar dacă rulați OxygenOS, nu veți putea instala actualizări. Operatorii blochează de obicei dispozitivul, astfel încât utilizatorii să nu poată actualiza sau modifica firmware-ul fără permisiunea operatorului. Acesta este un lucru obișnuit în SUA: opțiunea de \"Actualizare locală\" este eliminată din versiunile de OxygenOS blocate în rețea. Această opțiune este necesară pentru a instala actualizări de unul singur, chiar dacă nu utilizați această aplicație. Din păcate, nu putem face nimic în acest sens, întrucât suntem limitați nu numai tehnic, dar posibil și din punct de vedere legal. Contactați-ne prin e-mail sau Discord pentru mai multă detalii.</string>
-	<string name="unsupported_device_warning_message">Felicitări pentru noul dumneavoastră dispozitiv OnePlus! Din păcate, nu am adăugat încă suport pentru acest dispozitiv. Nu vă faceți griji, întrucât ne vom ocupa de acest lucru cât mai curând posibil. Nu ne place să facem greșeli și este un proces care necesită mult timp pentru a verifica și a testa suportul pentru dispozitive noi, așa că vă rugăm să ne înțelegeți. Trimiteți-ne un e-mail sau alăturați-vă server-ului de Discord dacă doriți să ne ajutați sau să primiți o notificare când lansăm o nouă versiune a aplicației care include suport pentru dispozitivul dumneavoastră</string>
-	<string name="unsupported_os_warning_message">Se pare că dispozitivul dumneavoastră nu rulează OxygenOS. Vă rugăm să rețineți că puteți instala actualizări de sistem pe dispozitive care rulează OxygenOs.\n\nAlte dispozitive, inclusiv dispozitive OnePlus care rulează ROM-uri custom, nu sunt suportate.</string>
+	<string name="carrier_exclusive_device_warning_message">Se pare că folosiți un dispozitiv blocat într-o rețea. Chiar dacă rulați OxygenOS, nu veți putea instala actualizări. Operatorii blochează de obicei dispozitivul, astfel încât utilizatorii să nu poată actualiza sau modifica firmware-ul fără permisiunea operatorului. Acesta este un lucru obișnuit în SUA: opțiunea de \"Actualizare locală\" este eliminată din versiunile de OxygenOS blocate în rețea. Această opțiune este necesară pentru a instala actualizări de unul singur, chiar dacă nu utilizați această aplicație. Din păcate, nu putem face nimic în acest sens, întrucât suntem limitați nu numai tehnic, dar posibil și din punct de vedere legal. Contactați-ne prin e-mail sau Discord pentru mai multe detalii.</string>
+	<string name="unsupported_device_warning_message">Felicitări pentru noul dumneavoastră dispozitiv OnePlus! Din păcate, nu am adăugat încă suport tehnic pentru acest dispozitiv. Nu vă faceți griji, întrucât ne vom ocupa de acest lucru cât mai curând posibil. Nu ne place să facem greșeli, întrucât verificarea și testarea suportului pentru dispozitive noi necesită mult timp, așa că vă rugăm să ne înțelegeți. Scrieți-ne un e-mail sau alăturați-vă server-ului de Discord dacă doriți să ne ajutați sau să primiți o notificare când lansăm o nouă versiune a aplicației care include suport pentru dispozitivul dumneavoastră.</string>
+	<string name="unsupported_os_warning_message">Se pare că dispozitivul dumneavoastră nu rulează OxygenOS. Vă rugăm să rețineți că puteți instala actualizări de sistem doar pe dispozitive care rulează OxygenOs.\n\nAlte dispozitive, inclusiv dispozitive OnePlus care rulează ROM-uri custom, nu sunt suportate.</string>
 
-	<string name="incorrect_device_warning_title">Selected device mismatch</string>
-	<string name="incorrect_device_warning_message">Se pare că ați selectat dispozitivul greșit: \"%1$s\", în loc de \"%2$s\". Schimbați selecția din setările aplicației pentru a vă asigura că primiți actualizări și notificări pentru dispozitivul corect.
+	<string name="incorrect_device_warning_title">Dispozitivul selectat nu corespunde</string>
+	<string name="incorrect_device_warning_message">Se pare că ați selectat dispozitivul greșit: \"%1$s\", în loc de \"%2$s\". Modificați selecția din setările aplicației pentru a vă asigura că primiți actualizări și notificări pentru dispozitivul corect.
 	</string>
 
 	<string name="device_warning_checkbox_title">Nu mai arăta acest avertisment</string>
