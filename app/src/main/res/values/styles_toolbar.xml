@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
+	<style name="AppBarLayout" parent="Widget.Material3.AppBarLayout">
+		<item name="liftOnScroll">false</item>
+	</style>
+
+	<style name="Toolbar" parent="Widget.Material3.Toolbar">
 		<item name="titleMarginStart">0dp</item>
 		<item name="contentInsetStartWithNavigation">0dp</item>
 
@@ -13,12 +17,12 @@
 		<item name="android:theme">@style/ToolbarTheme</item>
 	</style>
 
-	<style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
+	<style name="ToolbarTheme" parent="ThemeOverlay.Material3.Toolbar.Surface">
 		<item name="titleTextAppearance">@style/TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedTitle</item>
 		<item name="subtitleTextAppearance">@style/TextAppearance.Design.SuperpoweredCollapsingToolbar.CollapsedSubtitle</item>
 	</style>
 
-	<style name="ToolbarPopupTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
+	<style name="ToolbarPopupTheme" parent="ThemeOverlay.Material3.ActionBar">
 		<item name="fontFamily">sans-serif</item>
 		<item name="android:fontFamily">sans-serif</item>
 		<item name="android:textColorPrimary">@color/foreground</item>
@@ -40,7 +44,7 @@
 		<item name="android:theme">@style/SuperpoweredCollapsingToolbarTheme</item>
 	</style>
 
-	<style name="SuperpoweredCollapsingToolbarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar.Surface">
+	<style name="SuperpoweredCollapsingToolbarTheme" parent="ThemeOverlay.Material3.Toolbar.Surface">
 		<item name="fontFamily">@font/google_sans_medium</item>
 		<item name="android:fontFamily">@font/google_sans_medium</item>
 	</style>

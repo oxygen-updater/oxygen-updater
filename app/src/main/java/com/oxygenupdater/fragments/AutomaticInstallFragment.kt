@@ -17,7 +17,6 @@ import com.oxygenupdater.exceptions.SubmitUpdateInstallationException
 import com.oxygenupdater.exceptions.UpdateInstallationException
 import com.oxygenupdater.extensions.syncWithSharedPreferences
 import com.oxygenupdater.internal.AutomaticUpdateInstaller
-import com.oxygenupdater.internal.FunctionalAsyncTask
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.InstallationStatus
 import com.oxygenupdater.models.RootInstall
@@ -30,6 +29,10 @@ import com.oxygenupdater.utils.Utils.SERVER_TIME_ZONE
 import com.oxygenupdater.viewmodels.InstallViewModel
 import com.oxygenupdater.workers.DIRECTORY_ROOT
 import kotlinx.android.synthetic.main.fragment_automatic_install.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.threeten.bp.LocalDateTime
@@ -37,6 +40,10 @@ import java.io.File
 import java.util.*
 
 class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
+
+    private val ioScope by lazy {
+        CoroutineScope(Dispatchers.IO)
+    }
 
     private lateinit var updateData: UpdateData
 
@@ -141,17 +148,17 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                 }
 
                 // Always start the installation, as we don't want the user to have to press "install" multiple times if the server failed to respond.
-                FunctionalAsyncTask<Void?, Void, String?>({}, {
-                    try {
-                        SettingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
-                        SettingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
-                        SettingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
+                SettingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, true)
+                SettingsManager.savePreference(SettingsManager.PROPERTY_OLD_SYSTEM_VERSION, currentOSVersion)
+                SettingsManager.savePreference(SettingsManager.PROPERTY_TARGET_SYSTEM_VERSION, targetOSVersion)
 
-                        @Suppress("DEPRECATION")
-                        val downloadedUpdateFilePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).path +
-                                File.separator +
-                                updateData.filename
+                @Suppress("DEPRECATION")
+                val downloadedUpdateFilePath = Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).path +
+                        File.separator +
+                        updateData.filename
 
+                ioScope.launch {
+                    val errorMessage = try {
                         AutomaticUpdateInstaller.installUpdate(
                             requireContext(),
                             isAbPartitionLayout,
@@ -168,17 +175,19 @@ class AutomaticInstallFragment : Fragment(R.layout.fragment_automatic_install) {
                         logWarning(TAG, "Error installing update", e)
                         getString(R.string.install_temporary_error)
                     }
-                }, { errorMessage: String? ->
+
                     if (errorMessage != null) {
                         // Cancel the verification planned on reboot.
                         SettingsManager.savePreference(SettingsManager.PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT, false)
 
-                        if (isAdded) {
-                            init()
-                            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                        withContext(Dispatchers.Main) {
+                            if (isAdded) {
+                                init()
+                                Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
-                }).execute()
+                }
             }
         }
     }

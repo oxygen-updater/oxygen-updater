@@ -6,9 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import androidx.annotation.UiThread
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
@@ -94,7 +93,7 @@ import kotlin.math.min
  */
 class BillingRepository(
     application: Application
-) : LifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener {
+) : DefaultLifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener {
 
     private val mainScope = CoroutineScope(Dispatchers.Main)
     private val ioScope = CoroutineScope(Dispatchers.IO)
@@ -261,8 +260,7 @@ class BillingRepository(
     /**
      * It's recommended to requery purchases during onResume
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    internal fun onResume() {
+    override fun onResume(owner: LifecycleOwner) {
         logDebug(TAG, "[onResume]")
         // Avoids an extra purchase refresh after we finish a billing flow
         if (!_billingFlowInProcess.value && billingClient.isReady) {
@@ -612,8 +610,8 @@ class BillingRepository(
     private suspend fun getPurchases(
         skuType: String,
         skus: Array<String>?
-    ): List<Purchase> = withContext(Dispatchers.IO) {
-        mutableListOf<Purchase>().apply {
+    ) = withContext(Dispatchers.IO) {
+        buildList {
             val purchasesResult = billingClient.queryPurchasesAsync(skuType)
             val billingResult = purchasesResult.billingResult
             val responseCode = billingResult.responseCode

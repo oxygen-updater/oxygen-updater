@@ -19,11 +19,6 @@ val objectMapper: ObjectMapper = jacksonObjectMapper().registerModule(
  */
 typealias KotlinCallback<E> = (E) -> Unit
 
-/**
- * Generic Kotlin function. This used to be [java.util.function.Function] in Java
- */
-typealias KotlinFunction<T, R> = (T) -> R
-
 typealias GridButtonClickedListener = (
     view: View,
     item: GridButton

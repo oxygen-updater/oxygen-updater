@@ -10,7 +10,6 @@ import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
@@ -123,8 +122,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         view: View,
         savedInstanceState: Bundle?
     ) = super.onViewCreated(view, savedInstanceState).also {
-        setDivider(ContextCompat.getDrawable(requireContext(), R.drawable.divider))
-
         setupSupportPreferences()
         setupDevicePreferences()
         setupThemePreference()
@@ -251,6 +248,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 summary = mContext.getString(R.string.settings_buy_button_bought)
                 onPreferenceClickListener = null
             }
+            else -> {}
         }
     }
 
@@ -415,9 +413,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
             val deviceId = getPreference(mContext.getString(R.string.key_device_id), -1L)
 
-            val itemList: MutableList<BottomSheetItem> = ArrayList()
-            val deviceMap = HashMap<CharSequence, Long>()
-
+            val size = devices.size
+            val itemList: MutableList<BottomSheetItem> = ArrayList(size)
+            val deviceMap = HashMap<String, Long>(size)
             devices.forEachIndexed { i, device ->
                 deviceMap[device.name!!] = device.id
 
@@ -488,7 +486,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val recommendedPositions: MutableList<Int> = ArrayList()
             var selectedPosition = -1
 
-            val itemList: MutableList<BottomSheetItem> = ArrayList()
+            val itemList: MutableList<BottomSheetItem> = ArrayList(updateMethods.size)
             updateMethods.forEachIndexed { i, updateMethod ->
                 if (updateMethod.recommended) {
                     recommendedPositions.add(i)

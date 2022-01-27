@@ -6,7 +6,6 @@ import com.oxygenupdater.R
 import com.oxygenupdater.exceptions.UpdateInstallationException
 import com.oxygenupdater.utils.Logger.logVerbose
 import eu.chainfire.libsuperuser.Shell
-import java.util.*
 
 @Suppress("unused")
 object AutomaticUpdateInstaller {
@@ -145,7 +144,7 @@ object AutomaticUpdateInstaller {
 
     private fun addRecoveryCommand(builder: StringBuilder, content: String) = builder
         .append(content)
-        .append(System.getProperty("line.separator"))
+        .append(System.lineSeparator())
 
     private fun addRecoveryNewLine(commands: StringBuilder) = addRecoveryCommand(
         commands,
@@ -181,9 +180,9 @@ object AutomaticUpdateInstaller {
         }
 
         if (BuildConfig.DEBUG) {
-            val outputString = StringBuilder()
-
-            commandsOutput.forEach { outputString.append(it).append(System.getProperty("line.separator")) }
+            val outputString = buildString {
+                commandsOutput.forEach { append(it).append(System.lineSeparator()) }
+            }
 
             logVerbose("UpdateInstaller", "Output of commands: $outputString")
         }

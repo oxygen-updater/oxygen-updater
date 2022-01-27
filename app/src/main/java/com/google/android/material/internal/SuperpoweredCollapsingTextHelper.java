@@ -16,6 +16,9 @@
 
 package com.google.android.material.internal;
 
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static androidx.core.util.Preconditions.checkNotNull;
+
 import android.animation.TimeInterpolator;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
@@ -49,9 +52,6 @@ import com.google.android.material.animation.AnimationUtils;
 import com.google.android.material.internal.StaticLayoutBuilderCompat.StaticLayoutBuilderCompatException;
 import com.google.android.material.resources.CancelableFontCallback;
 import com.google.android.material.resources.TextAppearance;
-
-import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-import static androidx.core.util.Preconditions.checkNotNull;
 
 /**
  * Helper class for rendering and animating collapsed title.
@@ -487,12 +487,14 @@ public final class SuperpoweredCollapsingTextHelper {
 	public void setExpandedTitleAppearance(int resId) {
 		TextAppearance textAppearance = new TextAppearance(view.getContext(), resId);
 
-		if (textAppearance.textColor != null) {
-			expandedTitleColor = textAppearance.textColor;
+		ColorStateList textColor = textAppearance.getTextColor();
+		if (textColor != null) {
+			expandedTitleColor = textColor;
 		}
 
-		if (textAppearance.textSize != 0) {
-			expandedTitleSize = textAppearance.textSize;
+		float textSize = textAppearance.getTextSize();
+		if (textSize != 0) {
+			expandedTitleSize = textSize;
 		}
 
 		if (textAppearance.shadowColor != null) {
@@ -517,12 +519,14 @@ public final class SuperpoweredCollapsingTextHelper {
 	public void setExpandedSubtitleAppearance(int resId) {
 		TextAppearance textAppearance = new TextAppearance(view.getContext(), resId);
 
-		if (textAppearance.textColor != null) {
-			expandedSubtitleColor = textAppearance.textColor;
+		ColorStateList textColor = textAppearance.getTextColor();
+		if (textColor != null) {
+			expandedSubtitleColor = textColor;
 		}
 
-		if (textAppearance.textSize != 0) {
-			expandedSubtitleSize = textAppearance.textSize;
+		float textSize = textAppearance.getTextSize();
+		if (textSize != 0) {
+			expandedSubtitleSize = textSize;
 		}
 
 		if (textAppearance.shadowColor != null) {
@@ -547,12 +551,14 @@ public final class SuperpoweredCollapsingTextHelper {
 	public void setCollapsedTitleAppearance(int resId) {
 		TextAppearance textAppearance = new TextAppearance(view.getContext(), resId);
 
-		if (textAppearance.textColor != null) {
-			collapsedTitleColor = textAppearance.textColor;
+		ColorStateList textColor = textAppearance.getTextColor();
+		if (textColor != null) {
+			collapsedTitleColor = textColor;
 		}
 
-		if (textAppearance.textSize != 0) {
-			collapsedTitleSize = textAppearance.textSize;
+		float textSize = textAppearance.getTextSize();
+		if (textSize != 0) {
+			collapsedTitleSize = textSize;
 		}
 
 		if (textAppearance.shadowColor != null) {
@@ -577,12 +583,14 @@ public final class SuperpoweredCollapsingTextHelper {
 	public void setCollapsedSubtitleAppearance(int resId) {
 		TextAppearance textAppearance = new TextAppearance(view.getContext(), resId);
 
-		if (textAppearance.textColor != null) {
-			collapsedSubtitleColor = textAppearance.textColor;
+		ColorStateList textColor = textAppearance.getTextColor();
+		if (textColor != null) {
+			collapsedSubtitleColor = textColor;
 		}
 
-		if (textAppearance.textSize != 0) {
-			collapsedSubtitleSize = textAppearance.textSize;
+		float textSize = textAppearance.getTextSize();
+		if (textSize != 0) {
+			collapsedSubtitleSize = textSize;
 		}
 
 		if (textAppearance.shadowColor != null) {

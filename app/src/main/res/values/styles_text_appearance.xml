@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<style name="TextAppearance.GoogleSans.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+	<style name="TextAppearance.GoogleSans.Subtitle1" parent="TextAppearance.Material3.TitleMedium">
 		<item name="fontFamily">@font/google_sans</item>
 		<item name="android:fontFamily">@font/google_sans</item>
 	</style>
 
-	<style name="TextAppearance.GoogleSans.Tab" parent="TextAppearance.MaterialComponents.Subtitle2">
+	<style name="TextAppearance.GoogleSans.Tab" parent="TextAppearance.Material3.TitleSmall">
 		<item name="fontFamily">@font/google_sans_medium</item>
 		<item name="android:fontFamily">@font/google_sans_medium</item>
 	</style>
 
-	<style name="TextAppearance.Changelog" parent="TextAppearance.MaterialComponents.Body2">
+	<style name="TextAppearance.Changelog" parent="TextAppearance.Material3.BodyMedium">
 		<item name="android:textColor">?android:textColorSecondary</item>
 	</style>
 

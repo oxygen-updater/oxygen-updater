@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+		<item name="android:background">@color/backgroundVariant</item>
+		<item name="itemActiveIndicatorStyle">@null</item>
+		<item name="itemIconTint">@color/bottom_nav_icon_tint</item>
+		<item name="itemTextColor">?colorPrimary</item>
+		<item name="android:minHeight">?actionBarSize</item>
+	</style>
+
+</resources>

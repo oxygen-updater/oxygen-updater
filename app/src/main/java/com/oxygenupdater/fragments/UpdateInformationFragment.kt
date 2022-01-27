@@ -383,7 +383,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         swipeRefreshLayout.isRefreshing = false
 
         // Show error layout
-        errorLayoutStub?.inflate()
+        if (errorLayoutStub?.parent != null) {
+            errorLayoutStub.inflate()
+        }
         errorLayout.isVisible = true
         // Hide "System update available" view
         updateInformationLayout?.isVisible = false
@@ -477,7 +479,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         updateData: UpdateData
     ) {
         // Show "System update available" view.
-        updateInformationLayoutStub?.inflate()
+        if (updateInformationLayoutStub?.parent != null) {
+            updateInformationLayoutStub.inflate()
+        }
         updateInformationLayout?.isVisible = true
         // Hide "System is up to date" view
         systemIsUpToDateLayout?.isVisible = false
@@ -541,7 +545,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         online: Boolean
     ) {
         // Show "System is up to date" view.
-        systemIsUpToDateLayoutStub?.inflate()
+        if (systemIsUpToDateLayoutStub?.parent != null) {
+            systemIsUpToDateLayoutStub.inflate()
+        }
         systemIsUpToDateLayout?.isVisible = true
         // Hide "System update available" view
         updateInformationLayout?.isVisible = false
@@ -864,7 +870,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
     private fun initDownloadLayout(pair: Pair<DownloadStatus, WorkInfo?>) {
         // If the stub is null, that means it's been inflated, which means views used in this function aren't null
-        if (updateInformationLayoutStub == null) {
+        if (updateInformationLayoutStub == null || updateInformationLayoutStub.parent == null) {
             val workInfo = pair.second
 
             when (pair.first) {
@@ -1059,6 +1065,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                                     "Android/data/${requireContext().packageName}/files"
                                 )
                             )
+                            else -> {}
                         }
                     }
                 }

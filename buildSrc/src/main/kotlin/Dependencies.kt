@@ -1,24 +1,24 @@
 // https://kotlinlang.org/docs/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 // https://blog.jetbrains.com/kotlin/category/releases/
-const val KOTLIN_VERSION = "1.5.31"
+const val KOTLIN_VERSION = "1.6.10"
 
 // https://insert-koin.io/docs/setup/stable
 // https://github.com/InsertKoinIO/koin/releases
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-const val KOIN_VERSION = "3.1.2"
+const val KOIN_VERSION = "3.1.5"
 
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
         // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-        const val BUILD_GRADLE_PLUGIN = "4.1.3"
+        const val BUILD_GRADLE_PLUGIN = "7.1.0"
 
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.10"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_GRADLE_PLUGIN = "2.8.0"
+        const val FIREBASE_GRADLE_PLUGIN = "2.8.1"
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
@@ -42,44 +42,44 @@ object BuildPlugins {
 
 object AndroidSdk {
     // https://developer.android.com/studio/releases/build-tools
-    const val BUILD_TOOLS = "29.0.3"
+    const val BUILD_TOOLS = "31.0.0"
     const val MIN = 21
-    const val COMPILE = 29
-    const val TARGET = COMPILE
+    const val COMPILE = 31
+    const val TARGET = 29
 }
 
 // AndroidX: https://developer.android.com/jetpack/androidx/releases
 object AndroidXLibraries {
     private object Versions {
         // https://developer.android.com/jetpack/androidx/releases/appcompat
-        const val APP_COMPAT = "1.3.1"
+        const val APP_COMPAT = "1.4.1"
 
         // https://developer.android.com/jetpack/androidx/releases/browser
-        const val BROWSER = "1.3.0"
+        const val BROWSER = "1.4.0"
 
         // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        const val CONSTRAINT_LAYOUT = "2.1.1"
+        const val CONSTRAINT_LAYOUT = "2.1.3"
 
         // https://developer.android.com/jetpack/androidx/releases/core
-        const val KTX_CORE = "1.6.0"
+        const val KTX_CORE = "1.7.0"
 
         // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.3.6"
+        const val KTX_FRAGMENT = "1.4.1"
 
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        const val KTX_LIFECYCLE = "2.3.1"
+        const val KTX_LIFECYCLE = "2.4.0"
 
         // https://developer.android.com/jetpack/androidx/releases/preference
-        const val KTX_PREFERENCE = "1.1.1"
+        const val KTX_PREFERENCE = "1.2.0"
 
         // https://developer.android.com/jetpack/androidx/releases/work
-        const val KTX_WORK = "2.5.0"
+        const val KTX_WORK = "2.7.1"
 
         // https://developer.android.com/jetpack/androidx/releases/recyclerview
         const val RECYCLER_VIEW = "1.2.1"
 
         // https://developer.android.com/jetpack/androidx/releases/room
-        const val ROOM = "2.3.0"
+        const val ROOM = "2.4.1"
     }
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -128,7 +128,7 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "29.0.0"
+        const val FIREBASE_BOM = "29.0.4"
 
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.12.0"
@@ -138,30 +138,32 @@ object Libraries {
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.13.0"
+        const val JACKSON_KOTLIN_MODULE = "2.13.1"
 
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
         const val THREE_TEN_ABP = "1.3.1"
 
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.5.2"
+        const val KOTLIN_COROUTINES = "1.6.0"
 
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.4.0"
+        const val MATERIAL = "1.6.0-alpha02"
 
+        // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+        // https://github.com/square/okhttp/blob/master/CHANGELOG.md
         // https://square.github.io/okhttp/changelog/
-        const val OKHTTP_LOGGING_INTERCEPTOR = "4.9.1"
+        const val OKHTTP_LOGGING_INTERCEPTOR = "4.9.3"
 
         // https://developer.android.com/reference/com/google/android/play/core/release-notes
-        const val PLAY_CORE = "1.10.2"
+        const val PLAY_CORE = "1.10.3"
 
         // https://developers.google.com/android/guides/releases
-        const val PLAY_SERVICES_BASE = "17.6.0"
+        const val PLAY_SERVICES_BASE = "18.0.1"
 
         // https://developers.google.com/android/guides/releases
         // https://developers.google.com/admob/android/rel-notes
-        const val PLAY_SERVICES_ADS = "20.4.0"
+        const val PLAY_SERVICES_ADS = "20.5.0"
 
         // https://github.com/square/retrofit/releases
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
@@ -236,7 +238,7 @@ object Libraries {
 object TestLibraries {
     private object Versions {
         // https://developer.android.com/jetpack/androidx/releases/annotation
-        const val ANNOTATION = "1.2.0"
+        const val ANNOTATION = "1.3.0"
 
         // https://developer.android.com/jetpack/androidx/releases/test
         const val ESPRESSO = "3.4.0"

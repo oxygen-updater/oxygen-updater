@@ -30,7 +30,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import java.util.*
+import org.koin.core.logger.Level
 
 class OxygenUpdater : Application() {
 
@@ -94,7 +94,7 @@ class OxygenUpdater : Application() {
     private fun setupKoin() {
         startKoin {
             // use AndroidLogger as Koin Logger - default Level.INFO
-            androidLogger()
+            androidLogger(Level.ERROR)
             // use the Android context given there
             androidContext(this@OxygenUpdater)
             // module list

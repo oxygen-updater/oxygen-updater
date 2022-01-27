@@ -75,7 +75,7 @@
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/negativeButton"
-		style="@style/Widget.MaterialComponents.Button.TextButton"
+		style="@style/Widget.Material3.Button.TextButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginEnd="@dimen/spacing_half"
@@ -87,7 +87,7 @@
 
 	<com.google.android.material.button.MaterialButton
 		android:id="@+id/positiveButton"
-		style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+		style="@style/Widget.Material3.Button.OutlinedButton.Icon"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginEnd="@dimen/spacing_default"

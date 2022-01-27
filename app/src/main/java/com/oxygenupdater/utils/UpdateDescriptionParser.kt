@@ -20,7 +20,6 @@ import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.
 import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.LINK
 import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.LIST_ITEM
 import com.oxygenupdater.utils.UpdateDescriptionParser.UpdateDescriptionElement.TEXT
-import java.util.*
 
 object UpdateDescriptionParser {
 
@@ -130,7 +129,7 @@ object UpdateDescriptionParser {
                         result.setSpan(
                             TextAppearanceSpan(
                                 context,
-                                R.style.TextAppearance_MaterialComponents_Headline6
+                                R.style.TextAppearance_Material3_TitleLarge
                             ), startPosition, endPosition, 0
                         )
                         result.setSpan(GoogleSansMediumTypefaceSpan(context), startPosition, endPosition, 0)
@@ -140,7 +139,7 @@ object UpdateDescriptionParser {
                         result.setSpan(
                             TextAppearanceSpan(
                                 context,
-                                R.style.TextAppearance_MaterialComponents_Body1
+                                R.style.TextAppearance_Material3_BodyMedium
                             ), startPosition, endPosition, 0
                         )
                         result.setSpan(GoogleSansMediumTypefaceSpan(context), startPosition, endPosition, 0)

@@ -61,7 +61,7 @@
 		android:scaleType="centerCrop"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:shapeAppearance="@style/ShapeAppearance.NewsImage"
+		app:shapeAppearance="@style/ShapeAppearance.Material3.MediumComponent"
 		tools:shapeAppearance="?shapeAppearanceMediumComponent"
 		tools:srcCompat="@drawable/image" />
 

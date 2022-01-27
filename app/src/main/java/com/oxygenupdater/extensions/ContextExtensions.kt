@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.text.format.Formatter
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabColorSchemeParams
@@ -15,6 +16,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger
+import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.ThemeUtils
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -159,6 +161,15 @@ fun Context.openWebsite() = startActivity(
         Uri.parse(getString(R.string.website_url))
     ).withAppReferrer(this)
 )
+
+fun Context.openAppDetailsPage() {
+    val action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+    try {
+        startActivity(Intent(action, Uri.parse("package:$packageName")))
+    } catch (e: Exception) {
+        logError("ContextExtensions", "openAppDetailsPage failed", e)
+    }
+}
 
 fun Context.openInCustomTab(url: String) = customTabIntent().launchUrl(
     this,

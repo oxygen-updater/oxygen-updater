@@ -6,7 +6,6 @@ import android.content.IntentSender
 import android.os.Environment
 import android.util.SparseArray
 import androidx.annotation.IdRes
-import androidx.core.util.set
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -476,7 +475,7 @@ class MainViewModel(
         @IdRes pageId: Int,
         subtitle: CharSequence? = null
     ) {
-        pageToolbarSubtitle[pageId] = subtitle
+        pageToolbarSubtitle.put(pageId, subtitle)
         _pageToolbarTextUpdated.postValue(Pair(pageId, subtitle))
     }
 

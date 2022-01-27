@@ -10,6 +10,7 @@ package com.oxygenupdater.utils
 
 import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.utils.Logger.logError
+import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -21,24 +22,10 @@ internal object MD5 {
         return try {
             // Create MD5 Hash
             val digest = MessageDigest.getInstance("MD5")
-
-            digest.update(deviceId.toByteArray())
-
-            val messageDigest = digest.digest()
+            val messageDigest = digest.digest(deviceId.toByteArray())
 
             // Create Hex String
-            val hexString = StringBuilder()
-            for (b in messageDigest) {
-                val h = StringBuilder(Integer.toHexString(0xFF and b.toInt()))
-
-                while (h.length < 2) {
-                    h.insert(0, "0")
-                }
-
-                hexString.append(h)
-            }
-
-            hexString.toString()
+            String.format("%032x", BigInteger(1, messageDigest))
         } catch (e: NoSuchAlgorithmException) {
             logError(TAG, OxygenUpdaterException(e.message))
             ""

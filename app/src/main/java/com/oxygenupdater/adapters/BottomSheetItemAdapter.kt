@@ -67,10 +67,10 @@ class BottomSheetItemAdapter(
     inner class BottomSheetItemViewHolder(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
-        val rootLayout: ConstraintLayout = itemView.findViewById(R.id.dialog_item_layout)
-        val checkmarkView: ImageView = itemView.findViewById(R.id.dialog_item_checkmark)
-        val titleView: TextView = itemView.findViewById(R.id.dialog_item_title)
-        val subtitleView: TextView = itemView.findViewById(R.id.dialog_item_subtitle)
+        private val rootLayout: ConstraintLayout = itemView.findViewById(R.id.dialog_item_layout)
+        private val checkmarkView: ImageView = itemView.findViewById(R.id.dialog_item_checkmark)
+        private val titleView: TextView = itemView.findViewById(R.id.dialog_item_title)
+        private val subtitleView: TextView = itemView.findViewById(R.id.dialog_item_subtitle)
 
         fun bindTo(item: BottomSheetItem) {
             titleView.apply {

@@ -1,14 +1,22 @@
 package com.oxygenupdater.utils
 
-import android.os.AsyncTask
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.utils.Logger.logError
 import eu.chainfire.libsuperuser.Shell
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 object RootAccessChecker {
 
     private var hasCheckedOnce = false
     private var isRooted = false
+
+    private val ioScope by lazy {
+        CoroutineScope(Dispatchers.IO)
+    }
 
     /**
      * Checks if the device is rooted.
@@ -19,28 +27,20 @@ object RootAccessChecker {
         if (hasCheckedOnce) {
             callback.invoke(isRooted)
         } else {
-            RootCheckerImpl(callback).execute()
-        }
-    }
+            ioScope.launch {
+                isRooted = try {
+                    delay(2000) // Give the user the time to read what's happening.
+                    Shell.SU.available()
+                } catch (e: Exception) {
+                    logError("ApplicationData", "Failed to check for root access", e)
+                    false
+                }
 
-    private class RootCheckerImpl(
-        private val callback: KotlinCallback<Boolean>
-    ) : AsyncTask<Void?, Void?, Boolean>() {
-
-        override fun doInBackground(vararg params: Void?): Boolean {
-            return try {
-                Thread.sleep(2000) // Give the user the time to read what's happening.
-                Shell.SU.available()
-            } catch (e: Exception) {
-                logError("ApplicationData", "Failed to check for root access", e)
-                false
+                withContext(Dispatchers.Main) {
+                    hasCheckedOnce = true
+                    callback.invoke(isRooted)
+                }
             }
-        }
-
-        override fun onPostExecute(result: Boolean) {
-            hasCheckedOnce = true
-            isRooted = result
-            callback.invoke(isRooted)
         }
     }
 }

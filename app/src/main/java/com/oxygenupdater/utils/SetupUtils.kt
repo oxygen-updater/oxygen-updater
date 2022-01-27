@@ -9,16 +9,16 @@ import com.oxygenupdater.exceptions.UserSettingsCouldNotBeSavedException
 object SetupUtils {
 
     fun getAsError(screenName: String?, deviceId: Long?, updateMethodId: Long?): UserSettingsCouldNotBeSavedException {
-        val errors = StringBuilder()
+        val errors = buildString {
+            if (!isValid(deviceId)) {
+                append(System.lineSeparator())
+                    .append("  - Device")
+            }
 
-        if (!isValid(deviceId)) {
-            errors.append(System.lineSeparator())
-                .append("  - Device")
-        }
-
-        if (!isValid(updateMethodId)) {
-            errors.append(System.lineSeparator())
-                .append("  - Update method")
+            if (!isValid(updateMethodId)) {
+                append(System.lineSeparator())
+                    .append("  - Update method")
+            }
         }
 
         return UserSettingsCouldNotBeSavedException("User tried to leave the $screenName before all settings were saved. Missing item(s): $errors")

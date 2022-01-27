@@ -33,14 +33,14 @@ fun arrayForBuildConfig(vararg array: String) = array.joinToString(prefix = "{",
 }
 
 android {
-    compileSdkVersion(AndroidSdk.COMPILE)
+    compileSdk = AndroidSdk.COMPILE
     buildToolsVersion = AndroidSdk.BUILD_TOOLS
 
     defaultConfig {
         applicationId = "com.arjanvlek.oxygenupdater"
 
-        minSdkVersion(AndroidSdk.MIN)
-        targetSdkVersion(AndroidSdk.TARGET)
+        minSdk = AndroidSdk.MIN
+        targetSdk = AndroidSdk.TARGET
 
         versionCode = 82
         versionName = "5.5.0"
@@ -80,10 +80,14 @@ android {
     }
 
     packagingOptions {
-        exclude("META-INF/NOTICE.txt")
-        exclude("META-INF/LICENSE.txt")
-        exclude("META-INF/LICENSE")
-        exclude("META-INF/NOTICE")
+        resources.excludes.addAll(
+            arrayOf(
+                "META-INF/NOTICE.txt",
+                "META-INF/LICENSE.txt",
+                "META-INF/LICENSE",
+                "META-INF/NOTICE",
+            )
+        )
     }
 
     signingConfigs {
@@ -220,12 +224,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
     testBuildType = "debug"

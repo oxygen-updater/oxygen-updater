@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IntRange
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.oxygenupdater.R
@@ -118,9 +119,9 @@ fun Activity.startNewsActivity(
  */
 fun Activity.enableEdgeToEdgeUiSupport() {
     if (packageManager.getActivityInfo(componentName, 0).themeResource == R.style.Theme_OxygenUpdater_DayNight_FullScreen) {
-        findViewById<ViewGroup>(android.R.id.content).getChildAt(0)?.apply {
-            systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        findViewById<ViewGroup>(android.R.id.content).getChildAt(0)?.apply {
             doOnApplyWindowInsets { view, insets, initialPadding ->
                 // initialPadding contains the original padding values after inflation
                 view.updatePadding(bottom = initialPadding.bottom + insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom)

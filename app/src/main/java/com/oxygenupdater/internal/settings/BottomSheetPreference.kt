@@ -19,7 +19,6 @@ import com.oxygenupdater.extensions.getString
 import com.oxygenupdater.internal.settings.SettingsManager.getPreference
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logVerbose
-import java.util.*
 import kotlin.math.min
 
 /**
@@ -230,7 +229,7 @@ class BottomSheetPreference : Preference {
      *
      * @param item the selected item
      */
-    fun setValueItem(item: BottomSheetItem) {
+    private fun setValueItem(item: BottomSheetItem) {
         val newValue = item.value
         val newSecondaryValue = item.secondaryValue
 
@@ -259,7 +258,7 @@ class BottomSheetPreference : Preference {
         this.secondaryKey = secondaryKey
     }
 
-    override fun setTitle(title: CharSequence) {
+    override fun setTitle(title: CharSequence?) {
         logInfo(TAG, "Updating dialog title: $title")
         this.title = title.toString()
         setText(dialogLayout.findViewById(R.id.dialog_title), title.toString())
@@ -275,7 +274,7 @@ class BottomSheetPreference : Preference {
      * @param onPreferenceChangeListener The callback to be invoked
      */
     override fun setOnPreferenceChangeListener(
-        onPreferenceChangeListener: OnPreferenceChangeListener
+        onPreferenceChangeListener: OnPreferenceChangeListener?
     ) = super.setOnPreferenceChangeListener(onPreferenceChangeListener).also {
         mOnChangeListener = onPreferenceChangeListener
     }
@@ -286,7 +285,7 @@ class BottomSheetPreference : Preference {
         setValues(newValue, newSecondaryValue)
     }
 
-    override fun onSaveInstanceState(): Parcelable = super.onSaveInstanceState().let { superState ->
+    override fun onSaveInstanceState() = super.onSaveInstanceState().let { superState ->
         if (isPersistent) {
             // No need to save instance state since it's persistent
             superState

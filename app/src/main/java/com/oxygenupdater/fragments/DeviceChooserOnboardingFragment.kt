@@ -66,7 +66,9 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
         shimmerFrameLayout.isVisible = false
 
         // Show error layout
-        errorLayoutStub?.inflate()
+        if (errorLayoutStub?.parent != null) {
+            errorLayoutStub.inflate()
+        }
         errorLayout.isVisible = true
         errorActionButton.isVisible = false
 
@@ -78,7 +80,7 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
     private fun hideErrorStateIfInflated() {
         // Stub is null only after it has been inflated, and
         // we need to hide the error state only if it has been inflated
-        if (errorLayoutStub == null) {
+        if (errorLayoutStub == null || errorLayoutStub.parent == null) {
             errorLayout.isVisible = false
         }
     }

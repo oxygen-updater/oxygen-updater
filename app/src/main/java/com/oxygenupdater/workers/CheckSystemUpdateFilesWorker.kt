@@ -23,7 +23,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent.getKoin
 import java.io.File
-import java.util.*
 
 /**
  * Checks for new update files in the specified directories, and submits filenames to the backend

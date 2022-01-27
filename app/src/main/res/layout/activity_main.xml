@@ -98,7 +98,6 @@
 			android:id="@+id/bottomNavigationView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:backgroundTint="@color/backgroundVariant"
 			app:elevation="0dp"
 			app:labelVisibilityMode="auto"
 			app:menu="@menu/bottom_navigation_menu" />
