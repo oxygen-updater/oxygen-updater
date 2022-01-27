@@ -9,7 +9,6 @@ import com.oxygenupdater.utils.Logger.logVerbose
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader
-import java.lang.Boolean.parseBoolean
 import java.util.*
 
 /**
@@ -43,7 +42,9 @@ class SystemVersionProperties {
     /**
      * Fingerprint of the build. Used to check if the device uses an official build of OxygenOS
      */
-    val oemFingerprint: String
+    val fingerprint: String = Build.FINGERPRINT.trim().also {
+        logVerbose(TAG, "Detected build fingerprint: $it")
+    }
 
     /**
      * This prop is present only on 7-series and above. Possible values:
@@ -65,7 +66,6 @@ class SystemVersionProperties {
         var oxygenOSVersion = NO_OXYGEN_OS
         var oxygenOSOTAVersion = NO_OXYGEN_OS
         var securityPatchDate = NO_OXYGEN_OS
-        var oemFingerprint = NO_OXYGEN_OS
         var osType = NO_OXYGEN_OS
         var abPartitionLayout = false
 
@@ -79,18 +79,17 @@ class SystemVersionProperties {
 
             getBuildPropProcess.destroy()
 
-            oxygenDeviceName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEY, properties, "Detected device: %s")
-            oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with version: %s")
+            oxygenDeviceName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEYS, properties, "Detected device: %s")
+            oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, "Detected OxygenOS ROM with version: %s")
             oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with OTA version: %s")
-            oemFingerprint = readBuildPropItem(BuildConfig.BUILD_FINGERPRINT_LOOKUP_KEY, properties, "Detected build fingerprint: %s")
             osType = readBuildPropItem(RO_BUILD_OS_TYPE_LOOKUP_KEY, properties, "Detected OS Type: %s")
+            abPartitionLayout = readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s").toBoolean()
 
-            abPartitionLayout = parseBoolean(readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s"))
             val euBooleanStr = readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s")
             val isEuBuild = if (euBooleanStr == NO_OXYGEN_OS) {
                 readBuildPropItem(RO_VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY, properties, "isEuBuild: %s").startsWith("EU")
             } else {
-                parseBoolean(euBooleanStr)
+                euBooleanStr.toBoolean()
             }
 
             // This prop is present only on 7-series and above
@@ -118,7 +117,6 @@ class SystemVersionProperties {
         this.oxygenOSVersion = oxygenOSVersion
         this.oxygenOSOTAVersion = oxygenOSOTAVersion
         this.securityPatchDate = securityPatchDate
-        this.oemFingerprint = oemFingerprint
         this.osType = osType
         this.isABPartitionLayout = abPartitionLayout
     }
@@ -131,7 +129,6 @@ class SystemVersionProperties {
         oxygenOSVersion: String?,
         oxygenOSOTAVersion: String?,
         securityPatchDate: String?,
-        oemFingerprint: String?,
         osType: String?,
         ABPartitionLayout: Boolean
     ) {
@@ -141,28 +138,31 @@ class SystemVersionProperties {
         this.oxygenOSVersion = oxygenOSVersion ?: ""
         this.oxygenOSOTAVersion = oxygenOSOTAVersion ?: ""
         this.securityPatchDate = securityPatchDate ?: ""
-        this.oemFingerprint = oemFingerprint ?: ""
         this.osType = osType ?: ""
         this.isABPartitionLayout = ABPartitionLayout
     }
 
     @Throws(IOException::class)
-    private fun readBuildPropItem(itemKeys: String, buildProperties: String?, logText: String?): String {
+    private fun readBuildPropItem(
+        itemKey: String,
+        buildProperties: String?,
+        logText: String?,
+    ) = readBuildPropItem(arrayOf(itemKey), buildProperties, logText)
+
+    @Throws(IOException::class)
+    private fun readBuildPropItem(
+        itemKeys: Array<String>,
+        buildProperties: String?,
+        logText: String?,
+    ): String {
         if (buildProperties.isNullOrEmpty()) {
             return NO_OXYGEN_OS
         }
 
         var result = NO_OXYGEN_OS
 
-        // Some keys are not present on all devices. Therefore, we'll need support for multiple keys in a single string.
-        // If the first key is not present on this device, try the next key. We split the key string by ", "
-        val items = itemKeys
-            // see https://stackoverflow.com/a/45652573/6319730
-            .trim { it <= ' ' }
-            .replace(" ", "")
-            .split(",").toTypedArray()
-
-        items.forEach { item ->
+        // Some keys are not present on all devices, so check multiple in-order
+        itemKeys.forEach { item ->
             val reader = BufferedReader(StringReader(buildProperties))
             var inputLine: String?
 
@@ -261,7 +261,7 @@ class SystemVersionProperties {
          * so that it's easy for contributors on Discord to figure out which build is for which region
          * (backend will take this into account while firing the webhook).
          */
-        private const val RO_BUILD_EU_LOOKUP_KEYS = "ro.build.eu,ro.vendor.build.eu"
+        private val RO_BUILD_EU_LOOKUP_KEYS = arrayOf("ro.build.eu", "ro.vendor.build.eu")
 
         /**
          * This is a hack for Nord 2 (maybe future devices too), since it doesn't have any of the above EU keys.
@@ -286,7 +286,7 @@ class SystemVersionProperties {
          *
          * Note for GitHub contributors: add to the list if newer devices need to be excluded.
          */
-        private val RO_PRODUCT_NAME_LOOKUP_DEVICES_IGNORE = listOf(
+        private val RO_PRODUCT_NAME_LOOKUP_DEVICES_IGNORE = setOf(
             "OnePlus",
             "OnePlus 2",
             "OnePlus X",
@@ -304,7 +304,7 @@ class SystemVersionProperties {
          * distinction between ro.product.name in Indian and international variants.
          * Only workaround is to read `ro.build.soft.version`.
          */
-        private val RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES = listOf(
+        private val RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES = setOf(
             "OnePlus7T",
             "OnePlus7TPro"
         )

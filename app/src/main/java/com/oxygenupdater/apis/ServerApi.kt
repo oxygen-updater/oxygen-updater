@@ -41,6 +41,7 @@ interface ServerApi {
         @Path("incrementalSystemVersion") incrementalSystemVersion: String,
         @Query("osVersion") osVersion: String,
         @Query("osType") osType: String,
+        @Query("fingerprint") fingerprint: String,
         @Query("isEuBuild") isEuBuild: Boolean,
         @Query("appVersion") appVersion: String
     ): Response<UpdateData>

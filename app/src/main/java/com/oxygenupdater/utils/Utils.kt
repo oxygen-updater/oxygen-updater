@@ -6,8 +6,6 @@ import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.SettingsManager
@@ -99,14 +97,14 @@ object Utils {
     fun checkNetworkConnection() = isNetworkAvailable.value == true
 
     fun checkDeviceOsSpec(devices: List<Device>?): DeviceOsSpec {
-        val oemFingerPrint = systemVersionProperties.oemFingerprint
-        val oxygenOsVersion = systemVersionProperties.oxygenOSVersion
-
-        val firmwareIsSupported = oemFingerPrint.isNotEmpty()
-                && oemFingerPrint != OxygenUpdater.NO_OXYGEN_OS
-                && oemFingerPrint.contains(BuildConfig.SUPPORTED_BUILD_FINGERPRINT_KEYS)
-                && oxygenOsVersion.isNotEmpty()
-                && oxygenOsVersion != OxygenUpdater.NO_OXYGEN_OS
+        // <brand>/<product>/<device>:<version.release>/<id>/<version.incremental>:<type>/<tags>
+        val fingerprintParts = systemVersionProperties.fingerprint.split("/").map {
+            it.trim()
+        }
+        val firmwareIsSupported = fingerprintParts.size == 6
+                && fingerprintParts[0].lowercase() == "oneplus"
+                // must be `contains` and not a direct equality check
+                && fingerprintParts[5].lowercase().contains("release-keys")
 
         if (devices.isNullOrEmpty()) {
             // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an OxygenOS version is found on the device.
@@ -121,7 +119,9 @@ object Utils {
             // user's device is definitely running OxygenOS, now onto other checks...
             devices.forEach {
                 // find the user's device in the list of devices retrieved from the server
-                if (it.productNames.contains(systemVersionProperties.oxygenDeviceName)) {
+                if ((fingerprintParts.size > 2 && it.productNames.contains(fingerprintParts[1]))
+                    || it.productNames.contains(systemVersionProperties.oxygenDeviceName)
+                ) {
                     return if (it.enabled) {
                         // device found, and is enabled, which means it is supported
                         SUPPORTED_OXYGEN_OS

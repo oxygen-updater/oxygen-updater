@@ -28,6 +28,10 @@ fun loadProperties(
     }
 }
 
+fun arrayForBuildConfig(vararg array: String) = array.joinToString(prefix = "{", postfix = "}") {
+    "\"$it\""
+}
+
 android {
     compileSdkVersion(AndroidSdk.COMPILE)
     buildToolsVersion = AndroidSdk.BUILD_TOOLS
@@ -106,13 +110,29 @@ android {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://oxygenupdater.com/\"")
             buildConfigField("String", "SERVER_API_BASE", "\"api/v2.6/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
-            buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.display.series,ro.build.product\"")
-            buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.rom.version,ro.oxygen.version,ro.build.ota.versionname,ro.vendor.oplus.exp.version\"")
+            buildConfigField(
+                "String[]",
+                "DEVICE_NAME_LOOKUP_KEYS",
+                arrayForBuildConfig(
+                    "ro.display.series",
+                    "ro.build.product",
+                )
+            )
+            buildConfigField(
+                "String[]",
+                "OS_VERSION_NUMBER_LOOKUP_KEYS",
+                arrayForBuildConfig(
+                    "ro.rom.version",
+                    "ro.oxygen.version",
+                    "ro.build.ota.versionname",
+                    "ro.vendor.oplus.exp.version",
+                    "ro.build.display.ota",
+                    "ro.build.display.id",
+                )
+            )
             buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\"")
-            buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.oemfingerprint,ro.build.fingerprint\"")
             // Latter one is only used on very old OOS versions
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
-            buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"release-keys\"")
 
             signingConfig = signingConfigs.getByName("release")
 
@@ -126,37 +146,18 @@ android {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://test.oxygenupdater.com/\"")
             buildConfigField("String", "SERVER_API_BASE", "\"api/v2.6/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
-            buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\"")
-            buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\"")
+            buildConfigField(
+                "String[]",
+                "DEVICE_NAME_LOOKUP_KEYS",
+                arrayForBuildConfig("ro.product.name")
+            )
+            buildConfigField(
+                "String[]",
+                "OS_VERSION_NUMBER_LOOKUP_KEYS",
+                arrayForBuildConfig("ro.build.version.release")
+            )
             buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\"")
-            buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
             buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
-            buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
-
-            isMinifyEnabled = true
-            isShrinkResources = true
-            isDebuggable = true
-
-            // Should be this: https://github.com/firebase/firebase-android-sdk/issues/2665#issuecomment-849897741,
-            // but that doesn't work for some reason.
-            withGroovyBuilder {
-                "firebaseCrashlytics" {
-                    "mappingFileUploadEnabled"(false)
-                }
-            }
-        }
-        // Config for use during debugging locally on an emulator
-        // Uses localhost at port 8000, and reads system properties using the default build.prop values present on any Android device/emulator
-        create("localDebug") {
-            buildConfigField("String", "SERVER_DOMAIN", "\"http://10.0.2.2:8000/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.6/\"")
-            buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
-            buildConfigField("String", "DEVICE_NAME_LOOKUP_KEY", "\"ro.product.name\"")
-            buildConfigField("String", "OS_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.release\"")
-            buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\"")
-            buildConfigField("String", "BUILD_FINGERPRINT_LOOKUP_KEY", "\"ro.build.fingerprint\"")
-            buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
-            buildConfigField("String", "SUPPORTED_BUILD_FINGERPRINT_KEYS", "\"\"")
 
             isMinifyEnabled = true
             isShrinkResources = true

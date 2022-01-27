@@ -55,6 +55,7 @@ class ServerRepository constructor(
             incrementalSystemVersion,
             systemVersionProperties.oxygenOSVersion,
             systemVersionProperties.osType,
+            systemVersionProperties.fingerprint,
             SettingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false),
             BuildConfig.VERSION_NAME
         )
