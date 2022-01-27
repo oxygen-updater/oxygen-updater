@@ -39,22 +39,22 @@ object UpdateDataVersionFormatter {
     /**
      * User-readable name for regular versions of OxygenOS
      */
-    const val OXYGEN_OS_PREFIX = "OxygenOS"
+    private const val OXYGEN_OS_PREFIX = "OxygenOS"
 
     /**
      * User-readable name for beta versions of OxygenOS
      */
-    const val BETA_PREFIX = "Open Beta"
+    private const val BETA_PREFIX = "Open Beta"
 
     /**
      * User-readable name for alpha versions of OxygenOS
      */
-    const val ALPHA_PREFIX = "Closed Beta"
+    private const val ALPHA_PREFIX = "Closed Beta"
 
     /**
      * User-readable name for developer preview versions of OxygenOS
      */
-    const val DP_PREFIX = "DP"
+    private const val DP_PREFIX = "DP"
 
     /**
      * Checks if the passed update version information contains a version number which can be
@@ -94,14 +94,15 @@ object UpdateDataVersionFormatter {
             if (!versionInfo?.internalVersionNumber.isNullOrBlank()) "V. " + versionInfo!!.internalVersionNumber
             else "OxygenOS System Update"
         } else {
-            val alphaBetaMatcher = ALPHA_BETA_DP_PATTERN.matcher(firstLine)
+            val alphaBetaDpMatcher = ALPHA_BETA_DP_PATTERN.matcher(firstLine)
             val regularMatcher = STABLE_PATTERN.matcher(firstLine)
 
             when {
-                alphaBetaMatcher.find() -> if (alphaBetaMatcher.group(1)?.lowercase() == "alpha") {
-                    "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaMatcher.group(2)}"
-                } else {
-                    "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaMatcher.group(2)}"
+                alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
+                    "alpha" -> "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                    "beta" -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                    "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                    else -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
                 }
                 regularMatcher.find() -> "$OXYGEN_OS_PREFIX ${regularMatcher.group()}"
                 else -> firstLine.replace(OS_VERSION_LINE_HEADING, "")
@@ -119,13 +120,13 @@ object UpdateDataVersionFormatter {
         return when {
             version == NO_OXYGEN_OS || version.isBlank() -> NO_OXYGEN_OS
             alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
-                "alpha" -> "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                "beta" -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                "alpha" -> "$ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                "beta" -> "$BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
                 "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                else -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                else -> "$BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
             }
-            regularMatcher.find() -> "$OXYGEN_OS_PREFIX ${regularMatcher.group()}"
-            else -> "$OXYGEN_OS_PREFIX $version"
+            regularMatcher.find() -> regularMatcher.group()
+            else -> version
         }
     }
 
