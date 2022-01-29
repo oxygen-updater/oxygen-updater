@@ -4,7 +4,7 @@
 
 	<!-- Update information strings-->
 	<string name="enable">Inschakelen</string>
-	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en / of kritieke beveiligingsupdates voor jouw apparaat.</string>
+	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en/of kritieke beveiligingsupdates voor jouw apparaat.</string>
 	<string name="update_information_file_name">Bestandsnaam: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Omdat de download is mislukt, en de download opnieuw moet worden gestart, kan je deze link gebruiken om de update vanuit de browser te downloaden. Het kan zijn dat je het gedownloade bestand bestand vanuit je \"Downloads\" moet verplaatsen naar de hoofdmap. Dit is dezelfde link als wat de app normaal gezien download, wat een officiële link is van de OnePlus OTA server:\n%1$s</string>
@@ -18,7 +18,7 @@
 	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
-	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt.</string>
+	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt</string>
 	<string name="update_information_unknown_update_name">Naamloze update voor %1$s</string>
 	<string name="update_information_view_update_information">Bekijk update-informatie</string>
 
@@ -30,8 +30,8 @@
 	<!-- New app version message strings -->
 	<string name="new_app_version">Er is een app-update beschikbaar (%1$s). Tik hier om de Play Store te openen en update de app.</string>
 	<string name="new_app_version_long">Er is een app-update beschikbaar (%1$s). Door de app up-to-date te houden, krijg je altijd de nieuwste functies en bugfixes.\nTik hier om de Play Store te openen en update de app.</string>
-	<string name="new_app_version_inapp_downloaded">De app update is gedownload</string>
-	<string name="new_app_version_inapp_failed">De update kon niet geïnstalleerd worden. Tik hier om de Play Store te openen en update de app.</string>
+	<string name="new_app_version_inapp_downloaded">De app-update is gedownload</string>
+	<string name="new_app_version_inapp_failed">De app-update kon niet geïnstalleerd worden. Tik hier om de Play Store te openen en update de app.</string>
 
 	<!-- Downloader strings -->
 	<string name="download">Download update</string>
@@ -63,14 +63,14 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="download_notification_error_corrupt">Bestandscontrole mislukt. Controleer je verbinding en probeer het opnieuw.</string>
 
 	<string name="download_progress_text_hours_remaining">Ongeveer %1$d uur resterend</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">minder dan een minuut resterend</string>
-	<string name="download_progress_text_minutes_remaining">ongeveer %1$d minuten resterend</string>
-	<string name="download_progress_text_one_hour_remaining">ongeveer 1 uur resterend</string>
-	<string name="download_progress_text_one_minute_remaining">ongeveer een minuut resterend</string>
-	<string name="download_progress_text_seconds_remaining">enkele seconden resterend</string>
-	<string name="download_progress_text_unknown_time_remaining">resterende tijd berekenen…</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">Minder dan een minuut resterend</string>
+	<string name="download_progress_text_minutes_remaining">Ongeveer %1$d minuten resterend</string>
+	<string name="download_progress_text_one_hour_remaining">Ongeveer 1 uur resterend</string>
+	<string name="download_progress_text_one_minute_remaining">Ongeveer een minuut resterend</string>
+	<string name="download_progress_text_seconds_remaining">Enkele seconden resterend</string>
+	<string name="download_progress_text_unknown_time_remaining">Resterende tijd berekenen…</string>
 	<string name="download_progress_text_verifying">100%%, controleren op fouten…</string>
-	<string name="download_progress_text_paused">gepauzeerd…</string>
+	<string name="download_progress_text_paused">Gepauzeerd…</string>
 
 	<string name="download_verifying">Controleren…</string>
 	<string name="download_verifying_error">Bestand is beschadigd</string>
@@ -91,7 +91,7 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="summary_theme">Selecteer een thema</string>
 	<string name="summary_language">Taal instellen</string>
 	<string name="summary_privacy_policy">Bekijk online</string>
-	<string name="summary_rate_app">Geef een 5-sterren-review</string>
+	<string name="summary_rate_app">Geef een 5-sterren review</string>
 
 	<string name="label_buy_ad_free">Verwijder advertenties</string>
 	<string name="label_theme">Thema</string>
@@ -105,10 +105,10 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="theme_auto">Automatisch</string>
 
 	<string name="theme_light_subtitle">Thema met lichte achtergronden en een helderrode bovenbalk. Dit is het standaard thema.</string>
-	<string name="theme_dark_subtitle">Thema met bijna-zwarte achtergronden en een vleugje donkerrrood. Je kunt dit thema ook gebruiken om de batterij te sparen (alleen op AMOLED-schermen).</string>
-	<string name="theme_system_subtitle">Licht of donker thema op bassis van de systeeminstellingen (instelbaar in de weergave- of ontwikkelaarsopties van het apparaat). Beschikbaarheid varieert per apparaat.</string>
+	<string name="theme_dark_subtitle">Thema met bijna-zwarte achtergronden en een vleugje donkerrood. Je kunt dit thema ook gebruiken om de batterij te sparen (alleen op AMOLED-schermen).</string>
+	<string name="theme_system_subtitle">Licht of donker thema op basis van de systeeminstellingen (instelbaar in de weergave- of ontwikkelaarsopties van het apparaat). Beschikbaarheid varieert per apparaat.</string>
 	<string name="theme_auto_subtitle">Wisselt automatisch tussen het lichte en donkere thema op basis van de huidige tijd.</string>
-	<string name="theme_additional_note">Opmerking: Als het automatische thema actief is en de modus "Energiebesparing" actief is, zal het donkere thema worden getoond om de batterij te sparen</string>
+	<string name="theme_additional_note">Opmerking: als het automatische thema actief is en de modus "Energiebesparing" actief is, zal het donkere thema worden getoond om de batterij te sparen</string>
 
 	<string name="settings">Instellingen</string>
 	<string name="settings_buy_button_buy">Koop (%1$s)</string>
@@ -125,13 +125,13 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="settings_push_new_device">Ondersteuning voor een nieuw apparaat</string>
 	<string name="settings_push_news">Nieuwsberichten</string>
 
-	<string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een internetverbinding hebt en open je de app opnieuw.</string>
+	<string name="settings_saving">Je instellingen zijn nog niet opgeslagen. Als dit te lang duurt, controleer je of je een werkende internetverbinding hebt en open je de app opnieuw.</string>
 
 	<string name="settings_advanced_mode">Geavanceerde modus</string>
 	<string name="settings_advanced_mode_explanation">De geavanceerde modus verbergt de melding \"Uw systeem is up-to-date\". Hierdoor kun je updates altijd downloaden en installeren, ook als ze mogelijk niet voor je apparaat geschikt zijn.\n\nDit kan handig zijn wanneer:\n&#8226; Je van een reguliere versie naar een bètaversie wil updaten\n&#8226; Je van een bètaversie terug wil naar een stabiele versie (vereist herstel naar fabrieksinstellingen)\n&#8226; Je dezelfde versie als die je nu hebt opnieuw wil installeren.</string>
 
 	<string name="settings_update_method">Update-methode</string>
-	<string name="settings_upload_logs">Deel gebruiksgegevens en -logs</string>
+	<string name="settings_upload_logs">Deel gebruiksgegevens en logs</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">Veelgestelde vragen</string>
@@ -141,7 +141,7 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 
 	<!-- First-time setup screen strings -->
 	<string name="onboarding">Welkom</string>
-	<string name="onboarding_finished_button">start de app</string>
+	<string name="onboarding_finished_button">Start de app</string>
 
 	<string name="onboarding_page_1_title">Welkom bij Oxygen Updater!</string>
 	<string name="onboarding_page_1_text">Met deze app kun je:\n\n&#8226; De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n\n&#8226; Een \"rooted\" apparaat eenvoudig bijwerken\n\n&#8226; Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n\n&#8226; Nieuwsberichten over OxygenOS en OnePlus lezen\n\nVeeg naar links om verder te gaan.</string>
@@ -152,10 +152,10 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="onboarding_page_2_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? Kies dan hierboven je apparaat.</string>
 
 	<string name="onboarding_page_3_title">Kies je update-methode</string>
-	<string name="onboarding_page_3_caption">De Incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor de Volledige Update.\n\nGebruik je een bèta-versie van OxygenOS? Kies dan voor de Open Bèta.</string>
+	<string name="onboarding_page_3_caption">De incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt.\n\nAls je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor "Volledige Update".\n\nGebruik je een bèta-versie van OxygenOS? Kies dan voor de Open Bèta.</string>
 
 	<string name="onboarding_page_4_title">Klaar!</string>
-	<string name="onboarding_page_4_text">Veel plezier met het gebruik van Oxygen Updater!\n\nJe kunt je instellingen altijd veranderen: Tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\".</string>
+	<string name="onboarding_page_4_text">Veel plezier met het gebruik van Oxygen Updater!\n\nJe kunt je instellingen altijd veranderen: tik op de drie puntjes rechtsbovenin, en tik vervolgens op \"Instellingen\".</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Installeren</string>
@@ -187,7 +187,7 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="install_recovery_done">Klaar. Je apparaat zal herstarten.</string>
 	<string name="install_recovery_installing_additional_zip">Root-bestand installeren…</string>
 	<string name="install_recovery_installing_update">Update installeren…</string>
-	<string name="install_recovery_thank_you">Bedankt voor het gebruiken van Oxygen Updater. Als je deze app leuk vindt, geef hem dan 5 sterren op Google Play :-)</string>
+	<string name="install_recovery_thank_you">Bedankt voor het gebruiken van Oxygen Updater. Als je deze app leuk vindt, geef dan 5 sterren in de Google Play Store!</string>
 
 	<string name="install_method_chooser_title">Kies installatie methode.</string>
 	<string name="install_method_chooser_subtitle">Hoe wil je deze update installeren?</string>
@@ -214,17 +214,17 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
-	<string name="install_guide_automatic_install_disabled">Automatiche installaties zijn vanwege technische mankementen tijdelijk uitgeschakeld. Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
+	<string name="install_guide_automatic_install_disabled">Automatische installaties zijn vanwege technische mankementen tijdelijk uitgeschakeld. Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
 	<string name="install_guide">Installatiehandleiding</string>
 	<string name="install_guide_subtitle">Installatie - %1$d van %2$d</string>
 	<string name="install_guide_close_button">Sluit de installatiehandleiding</string>
 	<string name="install_guide_tip">&#8226; Het is aanbevolen om alle stappen op te schrijven, omdat je apparaat tijdens de installatie van de update opnieuw moet worden opgestart.</string>
 
 	<string name="install_guide_page_1_title">Download de update</string>
-	<string name="install_guide_page_1_text">&#8226;Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n&#8226; Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play-store doen, onder het tabblad \"Mijn apps\".</string>
+	<string name="install_guide_page_1_text">&#8226;Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n&#8226; Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play Store doen onder het tabblad \"Mijn apps\".</string>
 
 	<string name="install_guide_page_2_title">Installatie voorbereiden</string>
-	<string name="install_guide_page_2_text">"Opmerking: De installatie van de update vindt plaats in een speciaal scherm in de standaard Systeemupdates-sectie van je apparaat. Als bij het openen van de Systeemupdates-sectie (toevallig) een systeemupdate in verschijnt, installeer deze dan eerst. Open vervolgens Oxygen Updater om te controleren of je écht up-to-date bent.
+	<string name="install_guide_page_2_text">"Opmerking: de installatie van de update vindt plaats in een speciaal scherm in de standaard Systeemupdates-sectie van je apparaat. Als bij het openen van de Systeemupdates-sectie (toevallig) een systeemupdate in verschijnt, installeer deze dan eerst. Open vervolgens Oxygen Updater om te controleren of je écht up-to-date bent.
 
 Instructies:
 &#8226; Sluit Oxygen Updater af door op de home-knop te drukken.
@@ -252,7 +252,7 @@ Instructies:
 &#8226; Na de installatie start het apparaat opnieuw op om de update af te ronden."</string>
 
 	<string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe OxygenOS-versie!</string>
-	<string name="install_guide_page_5_text">&#8226; Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n&#8226; Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de OxygenOS-versie.\n\n&#8226; Als je deze app geweldig vindt, geef hem dan 5 sterren op Google Play!</string>
+	<string name="install_guide_page_5_text">&#8226; Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n&#8226; Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de OxygenOS-versie.\n\n&#8226; Als je deze app geweldig vindt, geef dan 5 sterren in de Google Play Store!</string>
 
 	<string name="install_guide_zip_file_deleted">Je hebt het root-bestand wat je hebt geselecteerd verwijderd. Kies hierboven een nieuw root-bestand.</string>
 	<string name="install_guide_zip_file_missing">"Als je root-toegang wil behouden, moet je hierboven een root-bestand selecteren."</string>
@@ -273,15 +273,15 @@ Instructies:
 	<string name="device_information_os_version">Android-versie</string>
 	<string name="device_information_oxygen_os_version">OxygenOS-versie</string>
 	<string name="device_information_oxygen_os_ota_version">OTA-versie</string>
-	<string name="device_information_patch_level_version">Datum beveiligingspatch</string>
+	<string name="device_information_patch_level_version">Datum beveiligingsupdate</string>
 	<string name="device_information_serial_number">Serienummer</string>
 	<string name="device_information_system_on_a_chip">Chipset</string>
-	<string name="device_information_unknown">onbekend</string>
+	<string name="device_information_unknown">Onbekend</string>
 
 	<!-- About screen strings -->
 	<string name="about">Over</string>
-	<string name="about_description">Deze app download alleen officiële updates van OnePlus, en verifieert de integriteit van de gedownloade ZIP voordat je deze update mag installeren. Als je dit doet, sla je de wachtrij van de uitrol over en dus kun je updates zo snel als dat ze verkrijgbaar zijn, installeren. Als je bugs ondervindt in het besturingssysteem, meldt deze dan aan OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Wellicht dat je onze <a href="https://discord.gg/5TXdhKJ">Discord server</a> wilt joinen, waar je met andere gebruikers kan praten over de laatste update. Je kan ons ook een e-mail sturen naar <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> met je suggesties/feedback.</string>
-	<string name="about_support">Als je ons graag wilt supporten, kan je de advertentie vrije versie kopen (instellingen van de app), of bekijk onze <a href="https://patreon.com/oxygenupdater">Patreon pagina</a>.</string>
+	<string name="about_description">Deze app downloadt alleen officiële updates van OnePlus, en verifieert de integriteit van het gedownloade ZIP-bestand voordat je deze update mag installeren. Als je dit doet, sla je de wachtrij van de uitrol over en dus kun je updates zo snel als dat ze verkrijgbaar zijn, installeren. Als je bugs ondervindt in het besturingssysteem, meld deze dan aan OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Wellicht dat je onze <a href="https://discord.gg/5TXdhKJ">Discord server</a> wil joinen, waar je met andere gebruikers kan praten over de laatste update. Je kan ons ook een e-mail sturen naar <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> met je suggesties/feedback.</string>
+	<string name="about_support">Als je ons graag wil supporten, kan je de advertentie vrije versie kopen (instellingen van de app), of bekijk onze <a href="https://patreon.com/oxygenupdater">Patreon pagina</a>.</string>
 	<string name="about_background_story_header">Achtergrondverhaal</string>
 	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een vergelijkbare functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de gemeenschap tevreden te stellen door een uitstekende service &amp; ondersteuning te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>.</string>
 	<string name="about_third_party_app_notice">Onthoud dat dit geen officiële OnePlus-applicatie is.\nDe OnePlus naam, het OnePlus Logo en OxygenOS zijn eigendommen van OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.</string>
@@ -319,7 +319,7 @@ Instructies:
 	<string name="help">Help</string>
 	<string name="help_text">Welkom bij de helpfunctie van Oxygen Updater.\n\nHelp bevat informatie over de volgende onderwerpen:\n\n• Je apparaat bijwerken\n• Nieuwsberichten lezen\n• Specificaties apparaat bekijken\n• Instellingen wijzigen\n\nScrol omlaag om door de inhoud te bladeren.</string>
 	<string name="help_updating_your_device_title">Je apparaat bijwerken</string>
-	<string name="help_updating_your_device_text">Als je de app opent, kun je zien of er een systeemupdate beschikbaar is. Als deze beschikbaar is, kun je hem installeren.\nOm de update te installeren, tik je als eerste op de \"Download\"-knop (onder de update-omschrijving).\n\nAls het downloaden klaar is, opent het installatie-scherm. Heb je de app inmiddels verlaten of verschijnt het installatie-scherm niet? Tik dan op de \"Installatie\"-knop, die nu naast de Downloadknop staat.\n\nHet installatie-scherm zal als eerste op root-toegang controleren. Als je root-toegang hebt, moet je de app hiervoor toestemming geven. Heb je geen root-toegang of weet je niet wat dit is? Volg dan de instructies voor Handmatige Installatie.\n\nAutomatische installatie:\nJe hoeft alleen de installatie-opties te bekijken en waar nodig aan te passen. Selecteer eventueel een root-bestand om te (her)installeren en je bent er helemaal klaar voor. Tik op \"Start installatie\" om de installatie te starten.\n\nHandmatige installatie:\nEr verschijnt een installatiehandleiding op het scherm. Deze bevat de instructies voor het handmatig installeren van de update. Omdat je je apparaat tijdens het installeren moet uitschakelen, is het aanbevolen om alle instructies eerst op te schrijven, en ze vervolgens pas uit te voeren.</string>
+	<string name="help_updating_your_device_text">Als je de app opent, kun je zien of er een systeemupdate beschikbaar is. Als deze beschikbaar is, kun je hem installeren.\nOm de update te installeren, tik je als eerste op de \"Download\"-knop (onder de update-omschrijving).\n\nAls het downloaden klaar is, opent het installatiescherm. Heb je de app inmiddels verlaten of verschijnt het installatiescherm niet? Tik dan op de \"Installatie\"-knop, die nu naast de \"Download\"-knop staat.\n\nHet installatiescherm zal als eerste op root-toegang controleren. Als je root-toegang hebt, moet je de app hiervoor toestemming geven. Heb je geen root-toegang of weet je niet wat dit is? Volg dan de instructies voor Handmatige Installatie.\n\nAutomatische installatie:\nJe hoeft alleen de installatie-opties te bekijken en waar nodig aan te passen. Selecteer eventueel een root-bestand om te (her)installeren en je bent er helemaal klaar voor. Tik op \"Start installatie\" om de installatie te starten.\n\nHandmatige installatie:\nEr verschijnt een installatiehandleiding op het scherm. Deze bevat de instructies voor het handmatig installeren van de update. Omdat je je apparaat tijdens het installeren moet uitschakelen, is het aanbevolen om alle instructies eerst te noteren en ze vervolgens pas uit te voeren.</string>
 	<string name="help_reading_news_title">Nieuwsberichten lezen</string>
 	<string name="help_reading_news_text">Nieuwsberichten worden aan de linkerkant van het update-scherm getoond. De meest recente berichten staan bovenaan de lijst. Tik op een item om het te bekijken, en tik op het pijltje naar links (of de terug-toets) om terug te keren naar het nieuwsoverzicht.</string>
 	<string name="help_device_information_title">Specificaties apparaat bekijken</string>
@@ -333,22 +333,22 @@ Instructies:
 	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
 	<string name="news_load_network_error">Kan artikel niet laden. Controleer je verbinding en tik op \"OPNIEUW\" om het artikel opnieuw te laden.</string>
 	<string name="news_load_id_error"><![CDATA[Kan artikel niet openen vanaf een geldige URL: %1$s. Bekijk de URL of meld dit aan ons via <a href="mailto:support@oxygenupdater.com">email</a> of op onze <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
-	<string name="news_unread_count_1">Je hebt %1$d ongelezen nieuwsartikelen. Tik hier om ze te lezen</string>
-	<string name="news_unread_count_2">Je hebt %1$d ongelezen nieuwsartikelen. Tik hier om alle artikelen te laten zien</string>
+	<string name="news_unread_count_1">Je hebt %1$d ongelezen nieuwsartikelen. Tik hier om ze te tonen.</string>
+	<string name="news_unread_count_2">Je hebt %1$d ongelezen nieuwsartikelen. Tik hier om alle artikelen te tonen.</string>
 	<string name="news_mark_read">Markeer als gelezen</string>
 	<string name="news_mark_unread">Markeren als ongelezen</string>
 	<string name="news_mark_all_read">Markeer alle artikelen als gelezen</string>
 	<string name="news_empty_state_none_available_header">Nog geen artikelen</string>
 	<string name="news_empty_state_all_read_header">Er is niets meer te lezen</string>
 	<string name="news_empty_state_none_available_text">Er zijn geen artikelen beschikbaar op dit moment, kom later terug.</string>
-	<string name="news_empty_state_all_read_text">Je hebt alle artikelen gelezen. Goed gedaan!\nWe hopen dat je hebt genoten van onze artikelen, en dat je er iets van hebt geleerd.\n\nTik op de banner om alle nieuwsartikelen te tonen.</string>
+	<string name="news_empty_state_all_read_text">Je hebt alle artikelen gelezen. Goed gedaan!\nWe hopen dat je hebt genoten van onze artikelen en dat je er iets van hebt geleerd.\n\nTik op de banner om alle nieuwsartikelen te tonen.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Draag bij</string>
 	<string name="contribute_title">Maak Oxygen Updater nóg beter</string>
 	<string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon.\n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend. Alleen de ".Ota" map op uw telefoon wordt eenmaal per 15 minuten gescand. Het controleert alleen voor een specifieke naam in die bepaalde map.</string>
 	<string name="contribute_agree">Ik help mee en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
-	<string name="contribute_agree_from_setup">Ik wil helpen om de app nog beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
+	<string name="contribute_agree_from_setup">Ik wil helpen om de app nóg beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
 	<string name="contribute_save">Bewaar keuze</string>
 	<string name="contribute_more_info">Meer informatie</string>
 	<string name="contribute_allow_storage">Geef de app toegang tot de opslagruimte om te helpen met verbeteren</string>
@@ -357,10 +357,10 @@ Instructies:
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">Oeps!</string>
-	<string name="error_app_outdated_message">Deze versie van de app is wel erg oud. Het is tijd om hem bij te werken! Dit kan door hieronder op \"Play Store\" te tikken. Tik vervolgens in Google Play op \"Bijwerken\".</string>
+	<string name="error_app_outdated_message">Deze versie van de app is wel erg oud. Het is tijd om hem bij te werken! Dit kan door hieronder op \"Play Store\" te tikken. Tik vervolgens in de Google Play Store op \"Bijwerken\".</string>
 	<string name="error_app_requires_network_connection">Geen verbinding</string>
 	<string name="error_app_requires_network_connection_message">Kan geen verbinding met de server maken. Zorg ervoor dat je een werkende internetverbinding hebt. De app zal nu afsluiten.</string>
-	<string name="error_google_play_button_text">Google Play</string>
+	<string name="error_google_play_button_text">Google Play Store</string>
 	<string name="error_no_internet_connection">Geen verbinding.</string>
 	<string name="error_maintenance">Serveronderhoud</string>
 	<string name="error_maintenance_message">Een ogenblik geduld. De server zal zeer snel weer beschikbaar zijn.</string>
@@ -370,7 +370,7 @@ Instructies:
 
 	<!-- Message box strings -->
 	<string name="delete_message_title">Update is al gedownload</string>
-	<string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installeren\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Gebruik de Terug-toets van je apparaat om dit bericht te sluiten.</string>
+	<string name="delete_message_contents">Je hebt deze update al gedownload, maar hij is nog niet geïnstalleerd. Tik op \"Installeren\" om met de installatie te beginnen. Tik op \"Verwijder\" om het bestand definitief te verwijderen. Tik hierboven om dit bericht te sluiten.</string>
 	<string name="delete_message_delete_button">Verwijder</string>
 
 	<string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
@@ -388,7 +388,7 @@ Instructies:
 
 	<!-- Purchase strings -->
 	<string name="purchase_error_pending_payment">Je aankoop bevindt zich in de \"betaling in behandeling\" status. Zodra de betaling voltooid is, zul je alle voordelen krijgen waar je recht op hebt.</string>
-	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play-helpdesk.</string>
+	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play Store helpdesk.</string>
 
 	<!-- Other strings -->
 	<string name="error">Fout</string>
