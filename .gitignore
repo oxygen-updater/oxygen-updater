@@ -94,3 +94,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Local history files
+.history
