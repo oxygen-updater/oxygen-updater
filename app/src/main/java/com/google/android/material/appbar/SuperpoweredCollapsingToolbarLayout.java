@@ -75,7 +75,7 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 
 	private long scrimAnimationDuration;
 
-	private int toolbarId;
+	private final int toolbarId;
 	private int scrimAlpha;
 	private int scrimVisibleHeightTrigger = -1;
 	private int expandedTitleMarginStart;
@@ -555,11 +555,11 @@ public class SuperpoweredCollapsingToolbarLayout extends FrameLayout {
 	}
 
 	static ViewOffsetHelper getViewOffsetHelper(View view) {
-		ViewOffsetHelper offsetHelper = (ViewOffsetHelper) view.getTag(R.id.view_offset_helper);
+		ViewOffsetHelper offsetHelper = (ViewOffsetHelper) view.getTag(com.google.android.material.R.id.view_offset_helper);
 
 		if (offsetHelper == null) {
 			offsetHelper = new ViewOffsetHelper(view);
-			view.setTag(R.id.view_offset_helper, offsetHelper);
+			view.setTag(com.google.android.material.R.id.view_offset_helper, offsetHelper);
 		}
 
 		return offsetHelper;

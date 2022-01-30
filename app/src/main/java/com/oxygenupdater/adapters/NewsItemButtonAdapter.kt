@@ -18,8 +18,8 @@ class NewsItemButtonAdapter(
     private val newsItem: NewsItem
 ) : GridButtonAdapter(
     arrayOf(
-        GridButton(activity.getString(R.string.fallback_menu_item_share_link), R.drawable.share),
-        GridButton(activity.getString(R.string.fallback_menu_item_copy_link), R.drawable.link)
+        GridButton(activity.getString(androidx.browser.R.string.fallback_menu_item_share_link), R.drawable.share),
+        GridButton(activity.getString(androidx.browser.R.string.fallback_menu_item_copy_link), R.drawable.link)
     )
 ) {
 
@@ -46,7 +46,7 @@ class NewsItemButtonAdapter(
 
                     Toast.makeText(
                         activity,
-                        activity.getString(R.string.copy_toast_msg),
+                        activity.getString(androidx.browser.R.string.copy_toast_msg),
                         Toast.LENGTH_LONG
                     ).show()
                 }

@@ -111,7 +111,7 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
             clipboard?.setPrimaryClip(clip)?.also {
                 Toast.makeText(
                     context,
-                    getString(R.string.copy_toast_msg),
+                    getString(androidx.browser.R.string.copy_toast_msg),
                     Toast.LENGTH_LONG
                 ).show()
             }

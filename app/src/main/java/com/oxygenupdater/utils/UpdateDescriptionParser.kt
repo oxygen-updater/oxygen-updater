@@ -129,7 +129,7 @@ object UpdateDescriptionParser {
                         result.setSpan(
                             TextAppearanceSpan(
                                 context,
-                                R.style.TextAppearance_Material3_TitleLarge
+                                com.google.android.material.R.style.TextAppearance_Material3_TitleLarge
                             ), startPosition, endPosition, 0
                         )
                         result.setSpan(GoogleSansMediumTypefaceSpan(context), startPosition, endPosition, 0)
@@ -139,7 +139,7 @@ object UpdateDescriptionParser {
                         result.setSpan(
                             TextAppearanceSpan(
                                 context,
-                                R.style.TextAppearance_Material3_BodyMedium
+                                com.google.android.material.R.style.TextAppearance_Material3_BodyMedium
                             ), startPosition, endPosition, 0
                         )
                         result.setSpan(GoogleSansMediumTypefaceSpan(context), startPosition, endPosition, 0)
