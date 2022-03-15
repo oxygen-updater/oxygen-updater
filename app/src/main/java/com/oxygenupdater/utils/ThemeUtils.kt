@@ -77,7 +77,7 @@ object ThemeUtils {
                 translatedTheme == DARK -> AppCompatDelegate.MODE_NIGHT_YES
                 translatedTheme == LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
                 // Android Pie (9.0) introduced a night mode system flag that could be set in developer options
-                translatedTheme != null && VERSION.SDK_INT >= VERSION_CODES.P -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                translatedTheme == null && VERSION.SDK_INT >= VERSION_CODES.P -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                 else -> AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
             }
         }
