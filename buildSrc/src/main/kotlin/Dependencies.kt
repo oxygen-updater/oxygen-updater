@@ -12,7 +12,7 @@ object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
         // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-        const val BUILD_GRADLE_PLUGIN = "7.1.0"
+        const val BUILD_GRADLE_PLUGIN = "7.1.2"
 
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.10"
@@ -67,7 +67,7 @@ object AndroidXLibraries {
         const val KTX_FRAGMENT = "1.4.1"
 
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        const val KTX_LIFECYCLE = "2.4.0"
+        const val KTX_LIFECYCLE = "2.4.1"
 
         // https://developer.android.com/jetpack/androidx/releases/preference
         const val KTX_PREFERENCE = "1.2.0"
@@ -79,7 +79,7 @@ object AndroidXLibraries {
         const val RECYCLER_VIEW = "1.2.1"
 
         // https://developer.android.com/jetpack/androidx/releases/room
-        const val ROOM = "2.4.1"
+        const val ROOM = "2.4.2"
     }
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -128,13 +128,13 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "29.0.4"
+        const val FIREBASE_BOM = "29.2.1"
 
         // https://github.com/bumptech/glide/releases
-        const val GLIDE = "4.12.0"
+        const val GLIDE = "4.13.1"
 
         // https://developer.android.com/google/play/billing/release-notes
-        const val GOOGLE_PLAY_BILLING = "4.0.0"
+        const val GOOGLE_PLAY_BILLING = "4.1.0"
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
@@ -148,7 +148,7 @@ object Libraries {
         const val KOTLIN_COROUTINES = "1.6.0"
 
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.6.0-alpha02"
+        const val MATERIAL = "1.6.0-alpha03"
 
         // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
         // https://github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -163,7 +163,7 @@ object Libraries {
 
         // https://developers.google.com/android/guides/releases
         // https://developers.google.com/admob/android/rel-notes
-        const val PLAY_SERVICES_ADS = "20.5.0"
+        const val PLAY_SERVICES_ADS = "20.6.0"
 
         // https://github.com/square/retrofit/releases
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
