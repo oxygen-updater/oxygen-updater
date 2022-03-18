@@ -292,10 +292,8 @@ class DisplayDelayedNotificationWorker(
         } else {
             Intent(context, MainActivity::class.java)
         },
-        FLAG_UPDATE_CURRENT
+        FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_MUTABLE
+        } else 0
     )
-
-    companion object {
-        private const val TAG = "DisplayDelayedNotificationWorker"
-    }
 }

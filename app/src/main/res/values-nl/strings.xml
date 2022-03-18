@@ -34,6 +34,8 @@
 	<string name="new_app_version_inapp_failed">De app-update kon niet geïnstalleerd worden. Tik hier om de Play Store te openen en update de app.</string>
 
 	<!-- Downloader strings -->
+	<!-- TODO: translate this string below -->
+	<string name="grant_all_files_access">Schakel \"Toegang tot alle bestanden\" in voor de app, die alleen wordt gebruikt voor het downloaden van OTA ZIP\'s naar de bovenste map van het interne geheugen</string>
 	<string name="download">Download update</string>
 	<string name="downloaded">Gedownload</string>
 	<string name="downloading">Downloaden van update…</string>

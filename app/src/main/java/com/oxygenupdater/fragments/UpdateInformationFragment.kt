@@ -3,6 +3,7 @@ package com.oxygenupdater.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface.BUTTON_NEGATIVE
 import android.content.DialogInterface.BUTTON_NEUTRAL
 import android.content.DialogInterface.BUTTON_POSITIVE
@@ -11,9 +12,11 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.AnimationDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.os.storage.StorageManager
+import android.provider.Settings
 import android.text.SpannableString
 import android.text.format.DateUtils
 import android.text.method.LinkMovementMethod
@@ -63,6 +66,7 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
+import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.canVersionInfoBeFormatted
@@ -100,21 +104,24 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     /**
      * Android 6.0 run-time permissions
      */
-    val hasDownloadPermissions: Boolean
-        get() {
+    private val hasDownloadPermissions: Boolean
+        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        } else {
+            context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    VERIFY_FILE_PERMISSION
+                ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                    it,
+                    DOWNLOAD_FILE_PERMISSION
+                ) == PackageManager.PERMISSION_GRANTED
+            } ?:
             // If context is somehow null, we can't check if permissions are granted.
             // So, make an educated guess: on API < 23 both READ & WRITE permissions
             // are granted automatically, while on API >= 23 only READ is granted
             // automatically. A simple SDK version check should suffice.
-            val context = context ?: return Build.VERSION.SDK_INT <= Build.VERSION_CODES.M
-
-            return ContextCompat.checkSelfPermission(
-                context,
-                VERIFY_FILE_PERMISSION
-            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
-                context,
-                DOWNLOAD_FILE_PERMISSION
-            ) == PackageManager.PERMISSION_GRANTED
+            (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M)
         }
 
     /**
@@ -650,7 +657,25 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
     private fun requestDownloadPermissions(
         callback: KotlinCallback<Boolean>
-    ) {
+    ) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        try {
+            // This opens up a screen where the user can grant "All files access" to the app.
+            // Since there's no result/output, there's no callback to receive it.
+            startActivity(
+                Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+            )
+
+            // Show a toast asking users what to do
+            // TODO: make it a dialog
+            Toast.makeText(
+                context,
+                R.string.grant_all_files_access,
+                LENGTH_LONG
+            ).show()
+        } catch (e: ActivityNotFoundException) {
+            logError(TAG, "Couldn't open MANAGE_ALL_FILES_ACCESS settings screen", e)
+        }
+    } else {
         downloadPermissionCallback = callback
         // Request both READ and WRITE permissions, since there may be cases
         // when the WRITE permission is granted but READ isn't.

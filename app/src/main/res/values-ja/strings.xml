@@ -34,6 +34,8 @@
 	<string name="new_app_version_inapp_failed">アプリのアップデートをインストールできません。ここをタップして Play ストアを開きアプリをアップデートします。</string>
 
 	<!-- Downloader strings-->
+	<!-- TODO: translate this string below -->
+	<string name="grant_all_files_access">Please enable \"All files access\" for the app, which is used only for downloading OTA ZIPs to the topmost directory of internal storage</string>
 	<string name="download">アップデートをダウンロード</string>
 	<string name="downloaded">ダウンロードしたアップデート</string>
 	<string name="downloading">アップデートをダウンロード中…</string>

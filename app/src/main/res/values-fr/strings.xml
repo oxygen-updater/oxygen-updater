@@ -34,6 +34,8 @@
 	<string name="new_app_version_inapp_failed">La mise à jour de l\'\application n\'a pas pu être installée. Appuyez ici pour ouvrir le Play Store et mettre à jour l\'application.</string>
 
 	<!-- Downloader strings -->
+	<!-- TODO: translate this string below -->
+	<string name="grant_all_files_access">Veuillez accorder à l\'application la permission \"Accès à tous les fichiers\". Cette permission est utilisée uniquement pour télécharger les fichiers d\'installation ZIP dans le répertoire racine du stockage interne</string>
 	<string name="download">Télécharger la mise à jour</string>
 	<string name="downloaded">Mise à jour téléchargée</string>
 	<string name="downloading">Téléchargement de la mise à jour…</string>

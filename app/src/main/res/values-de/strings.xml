@@ -34,6 +34,8 @@
 	<string name="new_app_version_inapp_failed">Das App Update konnte nicht installiert werden. Tippen Sie hier, um in den Play Store zu gelangen.</string>
 
 	<!-- Downloader strings -->
+	<!-- TODO: translate this string below -->
+	<string name="grant_all_files_access">Please enable \"All files access\" for the app, which is used only for downloading OTA ZIPs to the topmost directory of internal storage</string>
 	<string name="download">"Update herunterladen"</string>
 	<string name="downloaded">"Update heruntergeladen"</string>
 	<string name="downloading">"Update wird heruntergeladen"</string>

@@ -4,9 +4,11 @@ import android.app.Notification.CATEGORY_ERROR
 import android.app.Notification.CATEGORY_PROGRESS
 import android.app.Notification.CATEGORY_STATUS
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
@@ -45,7 +47,9 @@ object LocalNotifications {
                 // Since MainActivity's `launchMode` is `singleTask`, we don't
                 // need to add any flags to avoid creating multiple instances
                 Intent(context, MainActivity::class.java),
-                FLAG_UPDATE_CURRENT
+                FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    FLAG_MUTABLE
+                } else 0
             )
 
             val title = context.getString(R.string.contribute_successful_notification_title)
@@ -97,7 +101,9 @@ object LocalNotifications {
                 context,
                 0,
                 intent,
-                FLAG_UPDATE_CURRENT
+                FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    FLAG_MUTABLE
+                } else 0
             )
 
             val title = context.getString(R.string.download_complete)
@@ -145,7 +151,9 @@ object LocalNotifications {
                 context,
                 0,
                 intent,
-                FLAG_UPDATE_CURRENT
+                FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    FLAG_MUTABLE
+                } else 0
             )
 
             val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)

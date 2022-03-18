@@ -34,6 +34,8 @@
 	<string name="new_app_version_inapp_failed">Non è stato possibile scaricare l\'aggiornamento. Premi qui per aprire il Play Store ed aggiornare l\'app.</string>
 
 	<!-- Downloader strings -->
+	<!-- TODO: translate this string below -->
+	<string name="grant_all_files_access">Please enable \"All files access\" for the app, which is used only for downloading OTA ZIPs to the topmost directory of internal storage</string>
 	<string name="download">Scarica aggiornamento</string>
 	<string name="downloaded">Aggiornamento scaricato</string>
 	<string name="downloading">Scaricando…</string>

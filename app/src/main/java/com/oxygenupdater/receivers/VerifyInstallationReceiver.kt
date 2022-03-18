@@ -5,6 +5,7 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.CATEGORY_ERROR
 import androidx.core.app.NotificationCompat.CATEGORY_STATUS
@@ -90,7 +91,9 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             context,
             0,
             Intent(context, MainActivity::class.java),
-            FLAG_UPDATE_CURRENT
+            FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.FLAG_MUTABLE
+            } else 0
         )
 
         val notification = NotificationCompat.Builder(context, INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID)
@@ -117,7 +120,9 @@ class VerifyInstallationReceiver : BroadcastReceiver() {
             context,
             0,
             Intent(context, MainActivity::class.java),
-            FLAG_UPDATE_CURRENT
+            FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.FLAG_MUTABLE
+            } else 0
         )
 
         val notification = NotificationCompat.Builder(context, INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID)

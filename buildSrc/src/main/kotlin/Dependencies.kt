@@ -45,7 +45,7 @@ object AndroidSdk {
     const val BUILD_TOOLS = "31.0.0"
     const val MIN = 21
     const val COMPILE = 31
-    const val TARGET = 29
+    const val TARGET = COMPILE
 }
 
 // AndroidX: https://developer.android.com/jetpack/androidx/releases
