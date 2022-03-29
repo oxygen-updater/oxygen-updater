@@ -167,7 +167,7 @@
 	<string name="install_recovery_done">大功告成，您的裝置即將重新開機。</string>
 	<string name="install_recovery_installing_additional_zip">正在安裝額外的 ZIP 檔案…</string>
 	<string name="install_recovery_installing_update">正在安裝更新…</string>
-	<string name="install_recovery_thank_you">感謝您使用 Oxygen 更新器，能在 Google Play 留下 5 星好評嗎？</string>
+	<string name="install_recovery_thank_you">感謝您使用 Oxygen 更新器，能在 Google Play 留下 5 星評分嗎？</string>
 
 	<string name="install_error_write_script_failed">準備安裝時發生錯誤，請確保您已經給予了 Oxygen 更新器 Root 權限</string>
 
