@@ -269,7 +269,7 @@
 	<string name="device_information_os_version">Android 版本：</string>
 	<string name="device_information_oxygen_os_version">OxygenOS 版本：</string>
 	<string name="device_information_oxygen_os_ota_version">OTA 版本</string>
-	<string name="device_information_patch_level_version">安全更新：</string>
+	<string name="device_information_patch_level_version">安全性修補更新：</string>
 	<string name="device_information_serial_number">序號：</string>
 	<string name="device_information_system_on_a_chip">SoC：</string>
 	<string name="device_information_unknown">未知</string>
@@ -321,7 +321,7 @@
 	<string name="help_device_information_title">檢視您裝置的基本訊息</string>
 	<string name="help_device_information_text">您可以使用「更新」欄右侧的界面來檢視裝置的資訊。這在提出協助請求時非常有用且方便，因為在尋求協助時，可能會要求您提供裝置的某些規格。</string>
 	<string name="help_change_settings_title">更改設定</string>
-	<string name="help_change_settings_text">您可以輕點右上角的三點圖示後，點選設定來更改設定選項。\n\n您可以更改以下設定：\n\n• 您的裝置的更新方式\n• 何時為您推送通知\n• 何時在 App 中顯示提示\n• 隱私設定與日誌上傳\n\n使用裡面的開關來更改隱私與通知設定，選擇您的裝置與更新方式。下拉列表沒有出現嗎？ 請檢查您的網際網路連線，並再次進入設定。</string>
+	<string name="help_change_settings_text">您可以輕點右上角的三點圖示後，點選設定來變更設定選項。\n\n您可以調整以下設定：\n\n• 您的裝置的更新方式\n• 何時為您推送通知\n• 何時在 App 中顯示提示\n• 隱私設定與日誌上傳\n\n使用裡面的開關來更改隱私與通知設定，選擇您的裝置與更新方式。下拉列表沒有出現嗎？ 請檢查您的網際網路連線，並再次進入設定。</string>
 
 	<!-- News strings -->
 	<string name="news">新聞</string>
