@@ -172,7 +172,7 @@
 	<string name="install_error_write_script_failed">準備安裝時發生錯誤，請確保您已經給予了 Oxygen 更新器 Root 權限</string>
 
 	<string name="install_options_backup">備份我的裝置</string>
-	<string name="install_options_header">您可以透過更改下面的選項來自訂安裝過程。 點選「開始安裝」以開始安裝更新。</string>
+	<string name="install_options_header">您可以透過變更下面的選項來自訂安裝過程。 點選「開始安裝」以開始安裝更新。</string>
 	<string name="install_options_keep_root">保持裝置的 Root 狀態</string>
 	<string name="install_options_reboot_after_install">安裝後重新開機</string>
 	<string name="install_options_select_root_package">選擇您需要的 Root 包…</string>
@@ -197,7 +197,7 @@
 	<string name="install_temporary_error">準備安裝時發生了暫時性的錯誤，請稍候重試。</string>
 
 	<string name="install_verify_error_title">安裝失敗</string>
-	<string name="install_verify_error_nothing_installed">安裝更新時發生錯誤。目前尚未對您裝置的系統進行任何更改。請嘗試再次安裝更新。</string>
+	<string name="install_verify_error_nothing_installed">安裝更新時發生錯誤。目前尚未對您裝置的系統進行任何變更。請嘗試再次安裝更新。</string>
 	<string name="install_verify_error_unable_to_verify">無法檢查更新是否已成功安裝。\n請打開 Oxygen 更新器以檢視更新是否已成功安裝。</string>
 	<string name="install_verify_error_wrong_version_installed">您似乎安裝了一個其他版本的 OxygenOS。請不要在選擇 Root 包時選擇另外一個 OxygenOS 的更新包。</string>
 
