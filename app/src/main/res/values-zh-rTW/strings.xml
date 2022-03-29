@@ -279,11 +279,11 @@
 	<string name="about_description">本應用程式的更新檔案直接從 OnePlus 伺服器取得，並且在您安裝前確保它可供使用。這樣，您就可以不用再忍受 OnePlus 的分階段推送，盡快安裝官方的系統更新了。如果您遇到了系統 Bug，請直接向 OnePlus 反映意見： <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>。 您也可以加入我們的<a href="https://discord.gg/5TXdhKJ">Discord 伺服器</a>，來和各位加友交流您對系統的意見。也可以透過電子郵件：<a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a>與我們聯絡。</string>
 	<string name="about_support">如果您願意支持我們，可以去購買移除廣告服務（在設定裡），也可以看看我們的 <a href="https://patreon.com/oxygenupdater">Patreon 頁面</a>。</string>
 	<string name="about_background_story_header">幕後故事</string>
-	<string name="about_background_story">本應用程式原本由 Arjan Vlek 開發，作為他的另一款應用程式 <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的續作。(它可以為 Cyanogen OS 使用者提供與本應用程式類似的功能)\n\n2019 年 6 月，距離發布四年之後，Arjan 決定停止支援這兩款應用程式，並將它們的所有權轉讓给其它團隊。而這個團隊，則擔負起了為整個 OnePlus 社群提供優秀的支援服務的責任，協助無数使用者更快地取得 OnePlus 系統更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">這裡</a> 了解更多資訊。\n\n2019 年 8 月 14 日，新團隊發布了他所負責以來的第一個版本。該版本為使用者們帶來了深色模式的支援、令人耳目一新的界面設計，以及其它的新功能。\n\n如果您想更深入了解這個團隊，您可以去看看他們的<a href="https://oxygenupdater.com/team/">網站</a>。</string>
-	<string name="about_third_party_app_notice">請注意，這並不是 OnePlus 官方推出的應用程式！\nOnePlus 的名稱、Logo、以及 OxygenOS 都由 OnePlus 所有！\nAndroid、Google、Google Play 以及 Google Play 的 Logo，均為 Google LLC. 所擁有的商標。\n本應用程式使用來自 OnePlus 及其母公司 OPPO 的資料，為使用者提供更新訊息。</string>
+	<string name="about_background_story">本應用程式原本由 Arjan Vlek 開發，作為他的另一款應用程式 <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的續作。(它可以為 Cyanogen OS 使用者提供與本應用程式類似的功能)\n\n2019 年 6 月，距離發布四年之後，Arjan 決定停止支援這兩款應用程式，並將它們的所有權轉讓给其它團隊。而這個團隊，則擔負起了為整個 OnePlus 社群提供優秀的支援服務的責任，協助無數使用者更快地取得 OnePlus 系統更新。\n您可以在 <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">這裡</a> 了解更多資訊。\n\n2019 年 8 月 14 日，新團隊發布了他所負責以來的第一個版本。該版本為使用者們帶來了深色模式的支援、令人耳目一新的界面設計，以及其它的新功能。\n\n如果您想更深入了解這個團隊，您可以去看看他們的<a href="https://oxygenupdater.com/team/">網站</a>。</string>
+	<string name="about_third_party_app_notice">請注意，這並不是 OnePlus 官方推出的應用程式！\nOnePlus 的名稱、Logo、以及 OxygenOS 都由 OnePlus 所有！\nAndroid、Google、Google Play 以及 Play 商店的 Logo 均為 Google LLC. 所擁有的商標。\n本應用程式使用來自 OnePlus 及其母公司 OPPO 的資料，為使用者提供更新訊息。</string>
 	<string name="about_rate_button_text">評分</string>
 	<string name="about_website_button_text">網站</string>
-	<string name="about_email_button_text">Mail</string>
+	<string name="about_email_button_text">電子郵件</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device_text">現已支援 %1$s。 打開 App 來選擇您的裝置。</string>
@@ -301,7 +301,7 @@
 	<string name="news_notification_channel_name">新文章發布</string>
 	<string name="device_notification_channel_name">支援新裝置</string>
 	<string name="general_notification_channel_name">一般</string>
-	<string name="filename_submitted_notification_channel_name">已提交 OTA 包名稱</string>
+	<string name="filename_submitted_notification_channel_name">已傳送 OTA 更新包名稱</string>
 	<string name="download_status_notification_channel_description">反映目前下載狀態的通知：等待中、正在進行、完成或失敗</string>
 	<string name="verification_status_notification_channel_description">反映目前驗證情況的通知：正在進行、已完成或失敗\n為已下載的檔案進行 MD5 校驗可以確保檔案沒有被竄改並且有效。</string>
 	<string name="installation_status_notification_channel_description">取得通知，了解更新成功與否</string>
@@ -313,7 +313,7 @@
 
 	<!-- Help strings -->
 	<string name="help">協助</string>
-	<string name="help_text">歡迎來到 Oxygen 更新器的協助部分！\n\n「協助」包含以下内容：\n\n• 升級您的裝置\n• 閱讀最新新聞\n• 檢視裝置訊息\n• 更改設定\n\n向上滑動取得您需要的協助吧！</string>
+	<string name="help_text">歡迎來到 Oxygen 更新器的協助部分！\n\n「協助」包含以下內容：\n\n• 升級您的裝置\n• 閱讀最新新聞\n• 檢視裝置訊息\n• 更改設定\n\n向上滑動取得您需要的協助吧！</string>
 	<string name="help_updating_your_device_title">更新您的裝置</string>
 	<string name="help_updating_your_device_text">您打開應用程式時，即可看到是否有可用的軟體更新，如果有的話，您就可以方便地安裝了。\n\n要開始安裝，請點選「下載」按鈕（就在更新訊息下方）以開始下載。 下載完成後，將會出現安裝界面。 如果您退出了應用程式或安裝界面沒有跳出，請手動點選「安裝」按鈕，該按鈕一般顯示在「下載」按鈕旁邊。\n\n安裝界面會先檢查您是否有 Root 權限。 如果您的裝置有 Root 權限，請在詢問時授予其 Root 權限，並選擇安裝更新的方式。 否則，請按照手動安裝的說明進行操作。\n\n自動安裝：\n您只需選擇安裝選項即可。 建議使用預設設定，但您必須指定需要安裝的 Root 包。 使用藍色資料夾按鈕選擇 Root 包（支援 ZIP 檔案），然後點選「開始安裝」來開始安裝。\n\n手動安裝：\n您將在螢幕上看到安裝教學。 寫下說明並按照說明執行它們以安裝更新。</string>
 	<string name="help_reading_news_title">閱讀最新通知</string>
@@ -343,13 +343,13 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">參與共研</string>
-	<string name="contribute_title">加入 Oxygen 更新器共研計畫</string>
+	<string name="contribute_title">加入 Oxygen 更新器共同研究計畫</string>
 	<string name="contribute_explanation">Oxygen 更新器需要您的協助！為了提供最新的更新包，我們需要取得更新包檔案的名稱。一般在您的系統推送更新時，相關訊息就會出現在手機上。\n\n我該如何協助呢？\nOxygen 更新器可以自動向我們的管理員提交最新更新包的檔案名。 這將使用微量的資料流量，也可能會消耗一點電力。而您需要做的，就是在安裝官方系統更新之前稍微等一下，直到您看到 Oxygen 更新器已經確認檔案名成功提交為止。</string>
-	<string name="contribute_agree">我同意將更新包的檔案名提交给應用程式管理員</string>
-	<string name="contribute_agree_from_setup">我願意協助改進該應用程式，並同意向應用程式的管理員提交更新包的檔案名</string>
+	<string name="contribute_agree">我同意將更新包的檔名提供给應用程式管理員</string>
+	<string name="contribute_agree_from_setup">我願意協助改進該應用程式，並同意向應用程式的管理員提供更新包的檔案名稱</string>
 	<string name="contribute_save">儲存設定</string>
 	<string name="contribute_more_info">了解更多</string>
-	<string name="contribute_allow_storage">請授權内部儲存檔案讀取權限以開啟共研計畫</string>
+	<string name="contribute_allow_storage">請授權内部儲存空間檔案讀取權限以開啟共同研究計畫</string>
 	<string name="contribute_successful_notification_title">共研完成</string>
 	<string name="contribute_successful_notification_text">感謝您將檔名分享给我們！</string>
 
@@ -365,7 +365,7 @@
 	<string name="error_maintenance_retry">伺服器也許正在維護中，請稍候嘗試。您也可以透過我們的 <a href="mailto:support@oxygenupdater.com">Mail</a> 或者我們的 <a href="https://discord.gg/5TXdhKJ">Discord 伺服器</a> 傳送建議</string>
 	<string name="error_reload">重新載入</string>
 
-	<string name="error_unable_to_rate_app">非常感謝您的好意，但很抱歉，您的裝置缺少 Google Play 商店，因此無法為本應用程式做出評分。</string>
+	<string name="error_unable_to_rate_app">非常感謝您的好意，但很抱歉，由於您的裝置缺少 Play 商店，因此無法為本應用程式做出評分。</string>
 
 	<!-- Message strings -->
 	<string name="delete_message_title">更新包已下載</string>
@@ -373,12 +373,12 @@
 	<string name="delete_message_delete_button">删除</string>
 
 	<string name="unsupported_device_warning_title">不支援此裝置</string>
-	<string name="carrier_exclusive_device_warning_message">您似乎正在使用電信商合約機。儘管它使用的也是 OxygenOS，但您卻不能任意安裝更新。電信商通常會鎖定裝置，以防使用者在未經電信商允許的情況下更新或修改韌體。對於美國的電信商來說這十分正常，並且「系統更新」中的「本地升級」也被移除了（哪怕您不使用這個應用程式，想要自行安裝更新，這個選項都是十分重要的）。可惜的是，我們對此也無能為力，無論是從技術上還是法律上都不可能做到。但是您可以透過 Mail或 Discord 與我們聯絡以取得更多訊息。</string>
-	<string name="unsupported_device_warning_message">恭喜您使用全新的 OnePlus 裝置！ 不幸的是，我們尚未納入對此裝置的支援。 不過請放心，我們會盡快新增它。 我們不想犯错，所以驗證和測試對新裝置的支援是一個很耗時的過程，請您耐心等待。 如果您想為我們提供協助，請向我們傳送 Mail或加入我們的 Discord 伺服器。這樣的話，一旦我們發布支援您的裝置的新版應用程式，您就可以收到通知。</string>
+	<string name="carrier_exclusive_device_warning_message">您似乎正在使用電信商合約機。儘管它使用的也是 OxygenOS，但您卻不能任意安裝更新。電信商通常會鎖定裝置，以防使用者在未經電信商允許的情況下更新或修改韌體。對於美國的電信商來說這十分正常，並且「系統更新」中的「本地升級」也被移除了（哪怕您不使用這個應用程式，想要自行安裝更新，這個選項都是十分重要的）。可惜的是，我們對此也無能為力，無論是從技術上還是法律上都不可能做到。但是您可以透過電子郵件或 Discord 與我們聯絡以取得更多訊息。</string>
+	<string name="unsupported_device_warning_message">恭喜您使用全新的 OnePlus 裝置！ 不幸的是，我們尚未納入對此裝置的支援。 不過請放心，我們會盡快新增它。 我們不想犯错，所以驗證和測試對新裝置的支援是一個很耗時的過程，請您耐心等待。 如果您想為我們提供協助，請向我們傳送電子郵件或加入我們的 Discord 伺服器。這樣的話，一旦我們發布支援您的裝置的新版應用程式，您就可以收到通知。</string>
 	<string name="unsupported_os_warning_message">您的裝置似乎不是使用 OxygenOS。請注意，您只能在使用 OxygenOS 的裝置上安裝系統更新。\n不僅不支援其他非 OnePlus 裝置，也不支援使用第三方 ROM 的 OnePlus 裝置</string>
 
 	<string name="incorrect_device_warning_title">所選裝置不符合</string>
-	<string name="incorrect_device_warning_message">您似乎把自己的裝置選成“%1$s”了，而不是正確的“%2$s”。請更改您在應用程式設定中的選項，以確保您可以收到正確的更新及推送通知。</string>
+	<string name="incorrect_device_warning_message">您似乎把自己的裝置選成「%1$s」了，而不是正確的「%2$s」。請更改您在應用程式設定中的選項，以確保您可以收到正確的更新及推送通知。</string>
 
 	<string name="device_warning_checkbox_title">不再顯示此警告</string>
 
@@ -387,7 +387,7 @@
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">您的購買正處於「正在等待付款」狀態。一旦付款完成，您將獲得所有付款後的權益。</string>
-	<string name="purchase_error_after_payment">由於内部錯誤，購買移除廣告服務失敗，請稍候重試。 如果您已付款，請與 Google Play 支援小組聯絡以取得協助。</string>
+	<string name="purchase_error_after_payment">由於內部錯誤，購買移除廣告服務失敗，請稍候重試。 如果您已付款，請與 Google Play 支援小組聯絡以取得協助。</string>
 
 	<!-- Other strings-->
 	<string name="error">錯誤</string>
