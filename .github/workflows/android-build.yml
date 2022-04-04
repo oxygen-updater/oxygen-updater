@@ -1,4 +1,4 @@
-name: Android CI
+noolu name: Android CI
 on:
   push:
     paths:
