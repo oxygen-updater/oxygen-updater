@@ -1,18 +1,18 @@
 // https://kotlinlang.org/docs/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 // https://blog.jetbrains.com/kotlin/category/releases/
-const val KOTLIN_VERSION = "1.6.10"
+const val KOTLIN_VERSION = "1.6.21"
 
 // https://insert-koin.io/docs/setup/stable
 // https://github.com/InsertKoinIO/koin/releases
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-const val KOIN_VERSION = "3.1.5"
+const val KOIN_VERSION = "3.1.6"
 
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
         // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-        const val BUILD_GRADLE_PLUGIN = "7.1.2"
+        const val BUILD_GRADLE_PLUGIN = "7.1.3"
 
         // https://developers.google.com/android/guides/releases
         const val GOOGLE_SERVICES_PLUGIN = "4.3.10"
@@ -128,7 +128,7 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "29.2.1"
+        const val FIREBASE_BOM = "29.3.1"
 
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.13.1"
@@ -138,17 +138,17 @@ object Libraries {
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.13.1"
+        const val JACKSON_KOTLIN_MODULE = "2.13.2"
 
         // https://github.com/JakeWharton/ThreeTenABP/releases
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-        const val THREE_TEN_ABP = "1.3.1"
+        const val THREE_TEN_ABP = "1.4.0"
 
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.6.0"
+        const val KOTLIN_COROUTINES = "1.6.1"
 
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.6.0-alpha03"
+        const val MATERIAL = "1.6.0-rc01"
 
         // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
         // https://github.com/square/okhttp/blob/master/CHANGELOG.md
