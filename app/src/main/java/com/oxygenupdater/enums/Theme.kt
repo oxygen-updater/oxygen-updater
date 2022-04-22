@@ -3,7 +3,8 @@ package com.oxygenupdater.enums
 /**
  * Integer values for app and OnePlus' system themes.
  *
- * OnePlus-specific themes are translated into app-specific themes by value.
+ * v5.7.2 onwards, OnePlus-specific themes aren't translated into app themes.
+ * See https://github.com/oxygen-updater/oxygen-updater/issues/189#issuecomment-1101082561.
  *
  * Note:<br></br>
  * These integers are duplicated in `integers.xml` but are specified here to allow easy access and comparison throughout the app.
@@ -12,7 +13,6 @@ package com.oxygenupdater.enums
  * Read through the comments in `integers.xml` to understand why XML values are present as well
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @see com.oxygenupdater.utils.ThemeUtils.OEM_BLACK_MODE
  */
 internal enum class Theme(private val value: Int) {
 
