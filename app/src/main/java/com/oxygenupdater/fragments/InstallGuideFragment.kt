@@ -1,6 +1,7 @@
 package com.oxygenupdater.fragments
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -128,6 +129,8 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
         installGuideText.apply {
             isVisible = true
             text = installGuidePage.text
+            // Make the links clickable
+            movementMethod = LinkMovementMethod.getInstance()
         }
 
         // Display the "Close" button on the last page.
