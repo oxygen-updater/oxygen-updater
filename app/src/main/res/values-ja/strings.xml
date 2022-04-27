@@ -4,7 +4,7 @@
 
 	<!-- Update information strings-->
 	<string name="enable">有効にする</string>
-	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグfix、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
+	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグフィックス、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
 	<string name="update_information_file_name">ファイル名: %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">ダウンロードエラーが発生し、ダウンロードを再開する必要があるため、このリンクを使用してブラウザからアップデートファイルをダウンロードしてください。ダウンロードしたファイルは \"Downloads\" ディレクトリから上のディレクトリに移動させる必要があります。これはアプリがダウンロードするリンクと同じで、公式の OnePlus OTA サーバーのリンクです:\n%1$s</string>
@@ -35,7 +35,7 @@
 
 	<!-- Downloader strings-->
 	<!-- TODO: translate this string below -->
-	<string name="grant_all_files_access">Please enable \"All files access\" for the app, which is used only for downloading OTA ZIPs to the topmost directory of internal storage</string>
+	<string name="grant_all_files_access">OTA ZIP ファイルを内蔵ストレージ直下にダウンロードするために使われる、アプリの \"すべてのファイルへのアクセス\" を有効化してください。</string>
 	<string name="download">アップデートをダウンロード</string>
 	<string name="downloaded">ダウンロードしたアップデート</string>
 	<string name="downloading">アップデートをダウンロード中…</string>
@@ -66,11 +66,11 @@
 	<string name="download_notification_error_corrupt">ファイルの確認に失敗しました。ネットワーク接続を確認し再試行して下さい。</string>
 
 	<string name="download_progress_text_hours_remaining">残り時間 約 %1$d 時間</string>
-	<string name="download_progress_text_less_than_a_minute_remaining">残り時間１分未満</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">残り時間 1 分未満</string>
 	<string name="download_progress_text_minutes_remaining">残り時間 約 %1$d 分</string>
-	<string name="download_progress_text_one_hour_remaining">残り時間 １時間未満</string>
-	<string name="download_progress_text_one_minute_remaining">残り時間１分未満</string>
-	<string name="download_progress_text_seconds_remaining">残り時間数秒</string>
+	<string name="download_progress_text_one_hour_remaining">残り時間 1 時間未満</string>
+	<string name="download_progress_text_one_minute_remaining">残り時間 1 分未満</string>
+	<string name="download_progress_text_seconds_remaining">残り時間 数秒</string>
 	<string name="download_progress_text_unknown_time_remaining">残り時間を計算中…</string>
 	<string name="download_progress_text_verifying">ファイルを確認中…</string>
 	<string name="download_progress_text_paused">中断中</string>
@@ -94,7 +94,7 @@
 	<string name="summary_theme">テーマの設定</string>
 	<string name="summary_language">言語を設定する</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
-	<string name="summary_rate_app">レビューに５つ星を残す</string>
+	<string name="summary_rate_app">レビューに 5 つ星を残す</string>
 
 	<string name="label_buy_ad_free">広告の除去</string>
 	<string name="label_theme">テーマ</string>
@@ -255,7 +255,7 @@
 
 	<string name="install_guide_close_button">インストールガイドを閉じる</string>
 
-	<string name="install_guide_zip_file_deleted">指定したrootパッケージは既に存在しません。上から root パッケージを選択して下さい。</string>
+	<string name="install_guide_zip_file_deleted">指定した root パッケージは既に存在しません。上から root パッケージを選択して下さい。</string>
 	<string name="install_guide_zip_file_missing">"デバイスの root 化を維持する場合、上から root パッケージを指定して下さい"</string>
 
 	<!-- Device information strings -->
@@ -285,16 +285,16 @@
 	<string name="about_description">このアプリは直接 OnePlus のサーバーから正式なアップデートをダウンロードし、インストールを許可する前にダウンロードされた ZIP の整合性を確認することができます。そうすることで、このアプリはロールアウトをスキップし、アップデートを即座にインストールすることができます。OS の不具合に遭遇した場合、OnePlus に直接報告してください: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>。私たちの <a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>に参加し、最新のアップデートについて話してみませんか。また、提案やフィードバックは <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> にお気軽にどうぞ。</string>
 	<string name="about_support">私たちを支援したい場合は、広告の除去を購入もしくは <a href="https://patreon.com/oxygenupdater">Patreon のページ</a>を確認してください。</string>
 	<string name="about_background_story_header">経緯</string>
-	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanoge OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
-	<string name="about_third_party_app_notice">注意、これはOnePlus の公式アプリケーションではありません。\nOnePlus、OnePlusロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、およびGoogle PlayロゴはGoogle Inc.の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
+	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanogen OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
+	<string name="about_third_party_app_notice">注意、これは OnePlus 公式のアプリケーションではありません。\nOnePlus、OnePlus ロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、および Google Play ロゴは Google Inc. の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
 	<string name="about_rate_button_text">評価</string>
 	<string name="about_website_button_text">ウェブサイト</string>
-	<string name="about_email_button_text">Eメール</string>
+	<string name="about_email_button_text">メール</string>
 
 	<!-- LocalNotifications strings -->
 	<string name="notification_new_device_text">%1$s がサポートされました。 アプリを開き、このデバイスを選択。</string>
 	<string name="notification_no_notification_support">Google Play サービスをインストール/アップデートしプッシュ通知を有効化する</string>
-	<string name="notification_version"> %2$s 向けの %1$s が利用可能です!</string>
+	<string name="notification_version">%2$s 向けの %1$s が利用可能です!</string>
 	<string name="download_and_installation_notifications_group_name">ダウンロードとインストール</string>
 	<string name="push_notifications_group_name">通知のプッシュ</string>
 	<string name="miscellaneous_notifications_group_name">その他</string>
