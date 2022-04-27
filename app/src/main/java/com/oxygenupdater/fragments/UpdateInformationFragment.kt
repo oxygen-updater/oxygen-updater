@@ -493,6 +493,9 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         // Hide "System is up to date" view
         systemIsUpToDateLayout?.isVisible = false
 
+        // Hide download link (it's supposed to be shown only in case of failure)
+        downloadLinkTextView.isVisible = false
+
         oxygenOsVersionTextView.text = if (updateData.versionNumber != null && updateData.versionNumber != "null") {
             if (canVersionInfoBeFormatted(updateData)) {
                 getFormattedVersionNumber(updateData)
