@@ -34,8 +34,6 @@
 	<string name="new_app_version_inapp_failed">העדכון לא ניתן להתקנה. לחץ כאן על מנת לפתוח את ה־Play Store ולנסות שנית.</string>
 
 	<!-- Downloader strings-->
-	<!-- TODO: translate this string below -->
-	
 	<string name="grant_all_files_access">אנא הפעל \"גישה לכל הקבצים\" עבור האפליקצייה, כדי לאפשר לה להוריד את העדכון בפורמט דחוס בתיקייה העליונה ביותר של המכשיר</string>
 	<string name="download">הורד עדכון</string>
 	<string name="downloaded">העדכון ירד בהצלחה</string>
