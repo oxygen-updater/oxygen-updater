@@ -34,7 +34,7 @@
 	<string name="new_app_version_inapp_failed">Aktualizaci aplikace se nepodařilo nainstalovat. Klepnutím sem otevřete Obchod Play a aktualizujte aplikaci.</string>.
 
 	<!-- Řetězce downloaderu-->
-	<string name="grant_all_files_access">Prosím povolte \"All files access\" pro aplikaci, která se používá pouze pro stahování OTA ZIP do nejvyššího adresáře interního úložiště</string>
+	<string name="grant_all_files_access">Prosím povolte \"Přístup ke všem souborům\" pro aplikaci, která se používá pouze pro stahování OTA ZIP do nejvyššího adresáře interního úložiště</string>
 	<string name="download">Stáhnout aktualizaci</string>
 	<string name="downloaded">Aktualizace stažena</string>
 	<string name="downloading">Stahování aktualizace…</string>
@@ -176,7 +176,7 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="install_error_write_script_failed">"Nepodařilo se připravit instalaci aktualizace. Povolili jste přístup root?"</string>
 
 	<string name="install_options_backup">Zálohovat mé zařízení</string>
-	<string name="install_options_header">Proces instalace můžete přizpůsobit změnou níže uvedených možností. Klepnutím na \"Spustit instalaci\" zahájíte instalaci aktualizace.</string>
+	<string name="install_options_header">Proces instalace můžete přizpůsobit změnou níže uvedených možností. Klepnutím na \"Zahájit instalaci\" zahájíte instalaci aktualizace.</string>
 	<string name="install_options_keep_root">Ponechat root po aktualizaci</string>
 	<string name="install_options_reboot_after_install">Po instalaci restartovat zařízení</string>
 	<string name="install_options_select_root_package">Vyberte kořenový balíček k instalaci…</string>
@@ -203,7 +203,7 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="install_verify_error_title">Instalace se nezdařila</string>
 	<string name="install_verify_error_nothing_installed">Při instalaci aktualizace došlo k chybě. V softwaru vašeho zařízení nebyly provedeny žádné změny. Zkuste nainstalovat aktualizaci znovu.</string>
 	<string name="install_verify_error_unable_to_verify">Nepodařilo se ověřit, zda byla aktualizace úspěšně nainstalována. Otevřete prosím nástroj Oxygen Updater a zkontrolujte, zda byla aktualizace úspěšně nainstalována.</string>
-	<string name="install_verify_error_wrong_version_installed">Byla nainstalována jiná verze systému OxygenOS. Při výběru kořenového balíčku v rámci volby \"Zachovat kořenové zařízení\" nevybírejte aktualizační soubor systému OxygenOS.</string>
+	<string name="install_verify_error_wrong_version_installed">Byla nainstalována jiná verze systému OxygenOS. Při výběru kořenového balíčku v rámci volby \"Ponechat zařízení rootnuté\" nevybírejte aktualizační soubor systému OxygenOS.</string>
 
 	<string name="install_verify_success_title">Instalace dokončena</string>
 	<string name="install_verify_success_message">OxygenOS verze %1$s byl úspěšně nainstalován.</string>
@@ -242,7 +242,7 @@ Pokyny:
 
 &#8226; Na této obrazovce klepněte na aktualizační soubor, který jste stáhli pomocí nástroje Oxygen Updater. Jeho název by měl začínat \"%1$sOxygen\".
 
-&#8226; Klepněte na \"Upgrade Now\". Instalace by se měla spustit automaticky."</string>
+&#8226; Klepněte na \"Aktualizovat nyní\". Instalace by se měla spustit automaticky."</string>
 
 	<string name="install_guide_page_4_title">Počkejte, dokud se instalace nedokončí</string>
 	<string name="install_guide_page_4_text">"&#8226; Telefon nyní nainstaluje aktualizaci a zobrazí ukazatel průběhu. Vyčkejte, dokud se instalace nedokončí. Instalace může trvat od několika málo minut až po cca 15 minut.
@@ -275,7 +275,7 @@ Pokyny:
 	<string name="device_information_oxygen_os_version">OxygenOS verze</string>
 	<string name="device_information_oxygen_os_ota_version">OTA verze</string>
 	<string name="device_information_patch_level_version">Datum bezpečnostní záplaty</string>
-	<string name="device_information_serial_number">Seriálové číslo</string>
+	<string name="device_information_serial_number">Sériové číslo</string>
 	<string name="device_information_system_on_a_chip">Systém na čipu</string>
 	<string name="device_information_unknown">neznámý</string>
 
