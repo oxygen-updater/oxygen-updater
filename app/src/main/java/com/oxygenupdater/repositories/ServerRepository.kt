@@ -1,7 +1,6 @@
 package com.oxygenupdater.repositories
 
 import com.android.billingclient.api.Purchase
-import com.fasterxml.jackson.core.JsonProcessingException
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
@@ -11,8 +10,6 @@ import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.SettingsManager
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
-import com.oxygenupdater.models.RootInstall
-import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
@@ -20,12 +17,10 @@ import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.performServerRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONException
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-@Suppress("unused")
 class ServerRepository constructor(
     private val serverApi: ServerApi,
     private val systemVersionProperties: SystemVersionProperties,
@@ -98,13 +93,8 @@ class ServerRepository constructor(
     ) = if (useCache && serverStatus != null) {
         serverStatus!!
     } else {
-        performServerRequest {
-            serverApi.fetchServerStatus()
-        }.let { status ->
-            val automaticInstallationEnabled = SettingsManager.getPreference(
-                SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED,
-                false
-            )
+        performServerRequest { serverApi.fetchServerStatus() }.let { status ->
+            val automaticInstallationEnabled = false
             val pushNotificationsDelaySeconds = SettingsManager.getPreference(
                 SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
                 300
@@ -126,10 +116,6 @@ class ServerRepository constructor(
                 )
             }
 
-            SettingsManager.savePreference(
-                SettingsManager.PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED,
-                response.automaticInstallationEnabled
-            )
             SettingsManager.savePreference(
                 SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
                 response.pushNotificationDelaySeconds
@@ -199,13 +185,6 @@ class ServerRepository constructor(
         newReadStatus
     )
 
-    fun markNewsItemReadLocally(
-        newsItemId: Long
-    ) = newsItemDao.toggleReadStatus(
-        newsItemId,
-        true
-    )
-
     suspend fun markNewsItemRead(
         newsItemId: Long
     ) = performServerRequest {
@@ -214,15 +193,10 @@ class ServerRepository constructor(
 
     suspend fun fetchUpdateMethodsForDevice(
         deviceId: Long,
-        hasRootAccess: Boolean
     ) = performServerRequest {
         serverApi.fetchUpdateMethodsForDevice(deviceId)
     }.let { updateMethods ->
-        if (hasRootAccess) {
-            updateMethods?.filter { it.supportsRootedDevice }?.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") }
-        } else {
-            updateMethods?.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") }
-        }
+        updateMethods?.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") }
     }
 
     suspend fun fetchAllMethods() = performServerRequest {
@@ -274,20 +248,6 @@ class ServerRepository constructor(
         )
     }
 
-    suspend fun logRootInstall(rootInstall: RootInstall) = try {
-        performServerRequest { serverApi.logRootInstall(rootInstall) }
-    } catch (e: JSONException) {
-        ServerPostResult(
-            false,
-            "IN-APP ERROR (ServerConnector): Json parse error on input data $rootInstall"
-        )
-    } catch (e: JsonProcessingException) {
-        ServerPostResult(
-            false,
-            "IN-APP ERROR (ServerConnector): Json parse error on input data $rootInstall"
-        )
-    }
-
     suspend fun verifyPurchase(
         purchase: Purchase,
         amount: String?,
@@ -310,9 +270,5 @@ class ServerRepository constructor(
                 "amount" to amount
             )
         )
-    }
-
-    companion object {
-        private const val TAG = "ServerRepository"
     }
 }

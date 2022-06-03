@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Elérhető egy alkalmazásfrissítés (%1$s). Koppints ide a Play Áruház megnyitásához és az alkalmazás frissítéséhez.</string>
-	<string name="new_app_version_long">Elérhető egy alkalmazásfrissítés (%1$s). Az alkalmazás frissítésével biztosítod, hogy mindig megkapd a legújabb szolgáltatásokat és hibajavításokat.\nKoppintson ide a Play Áruház megnyitásához és az alkalmazás frissítéséhez.</string>
 	<string name="new_app_version_inapp_downloaded">Az alkalmazásfrissítés letöltésre került</string>
 	<string name="new_app_version_inapp_failed">Az alkalmazásfrissítést nem lehetett telepíteni. Koppintson ide a Play Áruház megnyitásához és az alkalmazás frissítéséhez.</string>
 
@@ -142,7 +141,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<!-- FAQ strings -->
 	<string name="faq">GYIK</string>
 	<string name="faq_menu_item">GYIK</string>
-	<string name="faq_no_network_text">A GYIK oldal megtekintéséhez működő kapcsolat szükséges.</string>
 
 	<!-- First-time onboarding strings -->
 	<string name="onboarding">Üdvözölünk</string>
@@ -160,62 +158,9 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 
 	<!-- Automatic install strings -->
 	<string name="install">Telepítés</string>
-	<string name="install_checking_root">Annak ellenőrzése, hogy a készülék rootolt-e…</string>
-	<string name="install_grant_root_permissions">Kérjük engedélyezt a root hozzáférést.</string>
-	<string name="install_going_back_not_possible">Sajnos most nem mehetsz vissza</string>
-	<string name="install_preparing_installation">Telepítés előkészítése…</string>
-
-	<string name="install_recovery_installer_title">Frissítés Telepítő&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Biztonsági mentés készítése. Ez eltart egy ideig!</string>
-	<string name="install_recovery_clearing_cache">Gyorsítótár partíciójának törlése…</string>
-	<string name="install_recovery_done">Kész. Az eszköz újraindul.</string>
-	<string name="install_recovery_installing_additional_zip">Kiegészítő ZIP fájl telepítése…</string>
-	<string name="install_recovery_installing_update">Frissítés telepítése…</string>
-	<string name="install_recovery_thank_you">Köszönjük, hogy az Oxygen Updater-t használtad. Ha tetszik ez az alkalmazás, kérjük értékeld 5 csillagra a Google Playen :-)</string>
-
-	<string name="install_error_write_script_failed">"A frissítés telepítésének előkészítése nem sikerült. Engedélyezted a root hozzáférést?"</string>
-
-	<string name="install_options_backup">Biztonsági mentés készítése az eszközről</string>
-	<string name="install_options_header">A telepítési folyamat a lejjebb található lehetőségek megváltoztatásával testreszabható. Érintsd meg a \"Telepítés indítása\" elemet a frissítés telepítésének megkezdéséhez.</string>
-	<string name="install_options_keep_root">Root megtartása</string>
-	<string name="install_options_reboot_after_install">Újraindítás telepítés után</string>
-	<string name="install_options_select_root_package">Válaszd ki a telepítendő root csomagot…</string>
-	<string name="install_options_start_install">Telepítés indítása</string>
-	<string name="install_options_subtitle">Válaszd ki a telepítési lehetőségeket</string>
-	<string name="install_options_wipe_cache_partition">Gyorsítótár partíciójának törlése</string>
-
-	<string name="install_options_explanation_title">Mit jelentenek ezek a lehetőségek?</string>
-	<string name="install_options_explanation_backup">Biztonsági mentés készítése az eszközről:\nHa ezt a lehetőséget választod, a telepítés előtt biztonsági másolat készül a rendszerről, az alkalmazásokról és a beállításokról. Jól jöhet, ha van valami katasztrofálisan rosszul sül el.</string>
-	<string name="install_options_explanation_keep_root">Root megtartása:\nHa ezt az opciót választod, meghatározhatsz egy root csomagot, amely a frissítés telepítése után kerül telepítésre. Ez biztosítja, hogy az eszközöd rootolt maradjon. Felhívjuk a figyelmedet, hogy ennek a root csomagnak kompatibilisnek kell lennie az új OxygenOS verzióval, amelyet telepíteni szeretnél!</string>
-	<string name="install_options_explanation_wipe_cache">Gyorsítótár partíciójának törlése:\nHa ezt az opciót választod, a gyorsítótár partíció a frissítés telepítése után törlődik. Ez biztosítja az eszköz optimális teljesítményét, és csökkenti a frissítés telepítése által okozott hibák észlelésének valószínűségét.</string>
-	<string name="install_options_explanation_reboot">Újraindítás telepítés után:\nHa ezt az opciót választod, az eszköz automatikusan újraindul az OxygenOS frissítés telepítése után. Ellenkező esetben az eszköz helyreállítási módban marad, ahol további csomagokat telepíthetsz.</string>
-
-	<string name="install_method_chooser_title">Telepítési módszer kiválasztása</string>
-	<string name="install_method_chooser_subtitle">Hogyan szeretnéd telepíteni ezt a frissítést?</string>
-	<string name="install_method_chooser_automatic_title">Automatikus telepítés*</string>
-	<string name="install_method_chooser_automatic_description">A legegyszerűbb módja a frissítés telepítésnek.\nAz eszköz újraindul a frissítés telepítéséhez.\n\n* Root hozzáférést és TWRP recovery-t igényel.</string>
-
-	<string name="install_method_chooser_manual_title">Kézi telepítés</string>
-	<string name="install_method_chooser_manual_description">Olvasd el a telepítési útmutatót a frissítés telepítéséről. A frissítést az eszköz Helyreállítási Módjával telepíti.</string>
-
-	<string name="install_temporary_error">Ideiglenes hiba történt a frissítés telepítésének előkészítése során. Próbáld újra.</string>
-
-	<string name="install_verify_error_title">Sikertelen telepítés</string>
-	<string name="install_verify_error_nothing_installed">Hiba a frissítés telepítésekor. Az eszköz szoftverében nem történt változás. Próbáld meg újra telepíteni a frissítést.</string>
-	<string name="install_verify_error_unable_to_verify">Nem sikerült ellenőrizni, hogy a frissítés telepítése sikeres-e. Kérjük, nyisd meg az Oxygen Updater alkalmazást, és ellenőrizd, hogy a frissítés telepítése sikeres-e.</string>
-	<string name="install_verify_error_wrong_version_installed">Az OxygenOS egy másik verziója került telepítésre. Ne válaszd ki az OxygenOS frissítési fájlt, amikor egy root csomagot választasz a \"Root megtartása\" opció alatt.</string>
-
-	<string name="install_verify_success_title">Telepítés befejezve</string>
-	<string name="install_verify_success_message">A(z) %1$s OxygenOS verzió sikeresen telepítve lett.</string>
-
-	<string name="install_zip_file_clear">Root csomag fájl törlése</string>
-	<string name="install_zip_file_pick">Root csomag fájl kiválasztása</string>
-	<string name="install_zip_file_placeholder">Válassz ki egy root csomagot…</string>
-	<string name="install_zip_file_wrong_file_type">Csak zip fájlt választhatsz. Válaszd ki a megfelelő fájlt.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Telepítsd a frissítést a telepítési útmutatóban bemutatott utasítások szerint.</string>
-	<string name="install_guide_automatic_install_disabled">Az automatikus telepítést ideiglenesen le lett tiltva a jelentett műszaki problémák miatt. Telepítsd a frissítést a telepítési útmutatóban bemutatott utasítások szerint.</string>
 	<string name="install_guide">Telepítési útmutató</string>
 	<string name="install_guide_subtitle">Telepítési útmutató - %2$d -ből %1$d</string>
 	<string name="install_guide_tip">&#8226; Javasoljuk, hogy írj le minden lépést, mivel a frissítés telepítésekor ki kell majd kapcsolnod az eszközt.</string>
@@ -253,9 +198,6 @@ Instrukciók:
 	<string name="install_guide_page_5_text">&#8226; Miután az eszköz optimalizálta alkalmazásokat, a frissítés sikeresen telepítve lett.\nEnnek ellenőrzéséhez ellenőrizze a rendszer jelenlegi verzióját a következők szerint:\n\n&#8226; Lépj a Beállítások menübe, érintsd meg az \"A telefonról\" gombot, és ellenőrizd az OxygenOS verziót.\n\n&#8226; Ha tetszik ez az alkalmazás, adj neki 5 csillagot a Google Playen!</string>
 
 	<string name="install_guide_close_button">Telepítési útmutató bezárása</string>
-
-	<string name="install_guide_zip_file_deleted">A megadott root csomagfájl már nem létezik. Kérjük, válassz ki feljebb egy új root csomagot.</string>
-	<string name="install_guide_zip_file_missing">"Ha azt szeretnéd, hogy az eszközöd rootolt maradjon, meg kell adnod egy gyökércsomagot feljebb."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">A készüléked támogatott</string>
@@ -318,7 +260,6 @@ Instrukciók:
 
 	<!-- Help strings -->
 	<string name="help">Súgó</string>
-	<string name="help_text">Üdvözölünk az Oxygen Updater súgójában.\n\nA súgó a következő témákat tartalmazza:\n\n• Az eszközöd frissítése\n• A legújabb hírek elolvasása\n• Eszközinformációk megtekintése\n• Beállítások módosítása\n\nGörgess le a témák közötti böngészéshez.</string>
 	<string name="help_updating_your_device_title">Az eszközöd frissítése</string>
 	<string name="help_updating_your_device_text">Az alkalmazás megnyitásakor megnézheted, hogy elérhető-e rendszerfrissítés. Ha elérhető frissítés, telepítheted azt.\n\nA telepítés megkezdéséhez érintsd meg a \"Letöltés\" gombot (a frissítés leírása alatt) a letöltés megkezdéséhez. Amikor a letöltés befejeződött, megjelenik a telepítési képernyő. Ha elhagytad az alkalmazást, vagy a képernyő nem jelenik meg, koppints a \"Telepítés\" gombra, amely a \"Letöltés\" gomb mellett látható.\n\nA telepítő először ellenőrzi, hogy rootolt-e az eszközöd. Ha rootolt eszközöd van, add meg a root engedélyt, amikor a rendszer kéri, és válaszd ki a frissítés telepítésének módját. Ellenkező esetben kövesd a Kézi telepítés utasításait.\n\nAutomatikus telepítés:\nCsak a telepítési lehetőségeket kell kiválasztanod. Az alapértelmezett beállítások ajánlottak, azzal a különbséggel, hogy meg kell adni a root csomagot, amelyet (újra) telepíteni kell. Válaszd ki a root csomagot (zip fájl) a kék mappa gombbal, és érintsd meg a \"Telepítés indítása\" gombot a telepítés megkezdéséhez.\n\nKézi telepítés:\nLátsz egy telepítési útmutatót a képernyőn. Írd le az utasításokat, és hajtsd végre azokat a frissítés telepítéséhez szükséges módon.</string>
 	<string name="help_reading_news_title">A legújabb hírek elolvasása</string>
@@ -385,9 +326,6 @@ Instrukciók:
 
 	<string name="device_warning_checkbox_title">Ne jelenítse meg újra ezt a figyelmeztetést</string>
 
-	<string name="root_check_title">Root hozzáférés</string>
-	<string name="root_check_message">Az Oxygen Updater egyszerű, automatizált frissítési telepítést kínál a rootolt eszközökkel rendelkező felhasználók számára. Az inkrementális frissítések azonban nem érhetők el a rootolt eszközökön. Az Oxygen Updater ellenőrizheti, hogy rendelkezel-e root hozzáféréssel, és csak a megfelelő frissítési módszereket fogja felajánlani.\n\nHa root hozzáféréssel rendelkezel, hagyd, hogy az Oxygen Updater root hozzáférést szerezzen az üzenet bezárását követően.\n\nNincs root hozzáférésed? Nyomd meg a \"Bezárás\" gombot, és folytasd az alkalmazás használatát.</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">A vásárlás \"fizetés függőben\" állapotban van. A fizetés befejezése után minden olyan juttatást megkapsz, amelyre jogosult vagy.</string>
 	<string name="purchase_error_after_payment">A hirdetésmentes verzió megvásárlása sikertelen, mert belső hiba történt. Kérjük, próbáld újra néhány perc múlva. Ha már fizettél, vedd fel a kapcsolatot a Google Play ügyfélszolgálatával.</string>
@@ -397,5 +335,4 @@ Instrukciók:
 	<string name="icon">Ikon</string>
 	<string name="loading">Betöltés…</string>
 	<string name="processing">Feldolgozás…</string>
-	<string name="choose_file">Fájl kiválasztása</string>
 </resources>

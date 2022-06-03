@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Es ist ein Update verfügbar (%1$s). Tippen Sie hier, um in den Play Store zu gelangen.</string>
-	<string name="new_app_version_long">Es ist ein Update verfügbar (%1$s). Halte die App auf dem neuesten Stand um sicherzustellen, dass du alle neuen Features und Problembehebungen bekommst.\nTippe hier um in den Play Store zu gelangen.</string>
 	<string name="new_app_version_inapp_downloaded">Das App Update wurde heruntergeladen</string>
 	<string name="new_app_version_inapp_failed">Das App Update konnte nicht installiert werden. Tippen Sie hier, um in den Play Store zu gelangen.</string>
 
@@ -144,7 +143,6 @@ Das könnte nützlich sein wenn du z.B.:
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
 	<string name="faq_menu_item">"FAQ"</string>
-	<string name="faq_no_network_text">"Du benötigst eine funktionierende Internet Verbindung um die FAQ Seite zu sehen."</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Herzlich Willkommen"</string>
@@ -185,60 +183,9 @@ Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf d
 
 	<!-- Automatic install strings -->
 	<string name="install">"Installieren"</string>
-	<string name="install_checking_root">"Überprüfung ob dein Gerät gerootet ist…"</string>
-	<string name="install_grant_root_permissions">"Bitte erlaube den Root Zugriff falls du gefragt wirst"</string>
-	<string name="install_going_back_not_possible">"Leider, kannst du jetzt nicht zurückgehen"</string>
-	<string name="install_preparing_installation">"Installation wird vorbereitet"</string>
-	<string name="install_recovery_installer_title">"Update Installer&#160;&#160;"</string>    <!-- Add 2 spaces to the end -->
-
-	<string name="install_recovery_backing_up">"Ein Backup wird erstellt. Dies kann etwas dauern!"</string>
-	<string name="install_recovery_clearing_cache">"Cache Partition wird gelöscht…"</string>
-	<string name="install_recovery_done">"Abgeschlossen. Dein Gerät wird neu gestartet."</string>
-	<string name="install_recovery_installing_additional_zip">"Zusätzliche ZIP Datei wird installiert…"</string>
-	<string name="install_recovery_installing_update">"Update wird installiert…"</string>
-	<string name="install_recovery_thank_you">"Vielen Dank, dass du den Oxygen Updater benutzt. Wenn dir die App gefällt dann bewerte sie bitte im Play Store mit 5 Sternen :-)"</string>
-	<string name="install_error_write_script_failed">"Fehler beim Vorbereiten der Installation des Updates. Hast du Root Zugriff erlaubt?"</string>
-	<string name="install_options_backup">"Mein Gerät sichern"</string>
-	<string name="install_options_header">"Du kannst den Installationsprozess anpassen, indem du die unten gezeigten Optionen ändern. Tippe auf \"Installation starten\", um die Installation des Updates zu starten."</string>
-	<string name="install_options_keep_root">"Behalte Root"</string>
-	<string name="install_options_reboot_after_install">"Nach der Installation neustarten"</string>
-	<string name="install_options_select_root_package">"Wähle das Root Paket aus zum installieren…"</string>
-	<string name="install_options_start_install">"Installation starten"</string>
-	<string name="install_options_subtitle">"Wähle deine Installationsoptionen"</string>
-	<string name="install_options_wipe_cache_partition">"Lösche die Cache Partition"</string>
-	<string name="install_options_explanation_title">"Was bedeuten diese Optionen?"</string>
-	<string name="install_options_explanation_backup">"Mein Gerät sichern:
-Wenn du diese Option auswählst,wird ein Backup von deinem System, Apps und Einstellungen vor der Installation gemacht. Es ist praktisch ein Backup zu haben für den Fall das etwas schief geht."</string>
-	<string name="install_options_explanation_keep_root">"Lass mein Gerät gerootet:
-Wenn du diese Option auswählst, kannst du ein Root Paket auswählen welches installiert wird nachdem das Update installiert wurde. Das versichert das dein Gerät gerootet bleibt. Bitte beachte, dass das Root Paket mit der neuen OxygenOS Version kompatibel sein muss die du installierst!"</string>
-	<string name="install_options_explanation_wipe_cache">"Löschen der Cache Partition:
-Wenn du diese Option auswählst, wird die Cache Partition, nach dem das Update installiert wurde, gelöscht das versichert, das dein Gerät optimal Performt und senkt die Wahrscheinlichkeit von Bugs die durch das Update entstanden sind."</string>
-	<string name="install_options_explanation_reboot">"Neustarten nach der Installation:
-Wenn du diese Option auswählst, wird dein Gerät automatisch zurück zu OxygenOS neustarten nachdem das Update installiert wurde. Ansonsten wird dein Gerät im Recovery Modus bleiben in dem du noch weitere Paket installieren kannst."</string>
-	<string name="install_method_chooser_title">Wählen Sie eine Installationsmethode</string>
-	<string name="install_method_chooser_subtitle">"Wie möchten Sie dieses Update installieren?"</string>
-	<string name="install_method_chooser_automatic_title">"Automatische Installation*"</string>
-	<string name="install_method_chooser_automatic_description">"Die einfachste Methode um das Update zu installieren.
-Dein Gerät wird neustarten um das Update zu installieren.
-
-*Benötigt Root Zugriff und TWRP Recovery."</string>
-	<string name="install_method_chooser_manual_title">"Manuelle Installation"</string>
-	<string name="install_method_chooser_manual_description">"Lese die Installationsanleitung um herauszufinden wie man das Update installiert. Du wirst das Update über den Recovery Modus von deinem Gerät installieren."</string>
-	<string name="install_temporary_error">"Es ist ein temporärer Fehler während der Vorbereitung für die Installation des Updates aufgetreten."</string>
-	<string name="install_verify_error_title">"Installation fehlgeschlagen"</string>
-	<string name="install_verify_error_nothing_installed">"Fehler beim installieren des Updates. Es wurden keine Veränderung an der Software von deinem Gerät gemacht. Versuche das Update nochmal zu installieren."</string>
-	<string name="install_verify_error_unable_to_verify">"Wir konnten leider nicht überprüfen ob das Update erfolgreich installiert wurde. Bitte öffne den Oxygen Updater um zu überprüfen, ob das Update erfolgreich installiert wurde."</string>
-	<string name="install_verify_error_wrong_version_installed">"Eine andere Version von OxygenOS wurde installiert. Wähle keine OxygenOS Update Datei aus wenn du ein Root Paket wählst unter der \"behalte Root\" Option."</string>
-	<string name="install_verify_success_title">"Installation abgeschlossen"</string>
-	<string name="install_verify_success_message">"OxygenOS version %1$s wurde erfolgreich installiert."</string>
-	<string name="install_zip_file_clear">"Lösche die Root Paket Datei"</string>
-	<string name="install_zip_file_pick">"Wähle eine Root Paket Datei"</string>
-	<string name="install_zip_file_placeholder">"Root Paket auswählen…"</string>
-	<string name="install_zip_file_wrong_file_type">"Du kannst nur eine ZIP Datei auswählen. Bitte wähle die richtige."</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">"Instaliere das Update gemäß den Anweisungen in der Installationsanleitung."</string>
-	<string name="install_guide_automatic_install_disabled">"Automatische Installationen wurden temporär deaktiviert wegen gemeldeten technischen Problemen."</string>
 	<string name="install_guide">"Installationsanleitung"</string>
 	<string name="install_guide_subtitle">"Installationsanleitung - %1$d von %2$d"</string>
 	<string name="install_guide_tip">"&#8226;Es ist empfehlenswert alle Schritte aufzuschreiben, da du dein Gerät während dem Update ausschalten musst."</string>
@@ -284,8 +231,6 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 
 -Wenn dir die App gefällt, dann gibt ihr doch 5 Sterne im Play Store!"</string>
 	<string name="install_guide_close_button">"Installationsanleitung schließen"</string>
-	<string name="install_guide_zip_file_deleted">"Das Root Paket das du ausgewählt hast existiert nicht mehr. Bitte wähle oben ein neues aus."</string>
-	<string name="install_guide_zip_file_missing">"Wenn du möchtest, dass dein Gerät gerootet bleibt, dann musst du oben ein Root Paket angeben."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Dein Gerät wird unterstützt</string>
@@ -315,7 +260,7 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="about_support">Wenn du uns unterstützen möchtest kannst du entweder die werbungsfreie Version kaufen (Verfügbar über die App Einstellungen) oder besuchen Sie unsere <a href="https://patreon.com/oxygenupdater">Patreon Seite</a>.</string>
 	<string name="about_background_story_header">Geschichte</string>
 	<string name="about_background_story">Diese App wurde von Arjan Vlek programmiert, sie ist ein Nachfolger der App <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (Sie stellt gleiche Funktionen für Cyanogen OS Benutzer bereit).\n\nNach 4 Jahren, im Juli 2019, hat sich Arjan entschieden von seinen Projekten zurück zu treten und sie einem Team von Entwicklern von verschiedenen Herkunften zu überlassen. Diese haben die Verantwortung auf sich genommen der Community einen perfekten Service zu bieten &amp; OnePlus Geräte schneller mit Updates zu versorgen.\nDu kannst mehr über die Ankündigung herausfinden undzwar <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">hier</a>.\n\n14 August 2019 war der erste release unter neuer Leitung, welcher mit neuen Features wie dem Darkmode und einem komplettem Redesign erschienen ist.\n\nFür mehr Infos besuche <a href="https://oxygenupdater.com/team/">die Webseite</a>.</string>
-	<string name="about_third_party_app_notice">Bitte beachte, diese App ist nicht ofiziell von OnepPlus.\nDer OnePlus Name, das OnePlus Logo und OxygenOS sind Eigentum von OnePlus.\nAndroid, Google, Google Play und das Google Play Logo gehören mit Trademarks Google Inc.\nDiese App benutzt Daten von OnePlus und seiner Vaterfirma Oppo um Update Informationen anzuzeigen.</string>
+	<string name="about_third_party_app_notice">Bitte beachte, diese App ist nicht offiziell von OnepPlus.\nDer OnePlus Name, das OnePlus Logo und OxygenOS sind Eigentum von OnePlus.\nAndroid, Google, Google Play und das Google Play Logo gehören mit Trademarks Google Inc.\nDiese App benutzt Daten von OnePlus und seiner Vaterfirma Oppo um Update Informationen anzuzeigen.</string>
 	<string name="about_rate_button_text">Bewerten</string>
 	<string name="about_website_button_text">Webseite</string>
 	<string name="about_email_button_text">E-Mail</string>
@@ -338,7 +283,7 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="general_notification_channel_name">Allgemein</string>
 	<string name="filename_submitted_notification_channel_name">OTA Dateiname übermittelt</string>
 	<string name="download_status_notification_channel_description">Benachrichtigungen die den aktuellen Status eines Download anzeigen: Steht aus, Aktiv, Fertig oder Fehlgeschlagen</string>
-	<string name="verification_status_notification_channel_description">Benachrichtigungen die den aktuellen Status einer Datei Verifizierung anzeigt: Läuft, Fertig oder Fehlgeschlagen.\nMD5 Prüfsummen werden überprüft umd sicherzustellen, dass die heruntergeladene Daten gültige Update Daten, verifiziert und nicht manipuliert sind.</string>
+	<string name="verification_status_notification_channel_description">Benachrichtigungen die den aktuellen Status einer Datei Verifizierung anzeigt: Läuft, Fertig oder Fehlgeschlagen.\nMD5 Prüfsummen werden überprüft und sicherzustellen, dass die heruntergeladene Daten gültige Update Daten, verifiziert und nicht manipuliert sind.</string>
 	<string name="installation_status_notification_channel_description">Werde benachrichtigt ob ein Update erfolgreich installiert wurde</string>
 	<string name="update_notification_channel_description">Werde benachrichtigt sobald ein neues Update für dein ausgewähltes Gerät sowie deiner gewählten Update Methode verfügbar ist</string>
 	<string name="news_notification_channel_description">Werde benachrichtigt wenn ein neuer Nachrichtenartikel veröffentlicht wurde</string>
@@ -348,16 +293,6 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 
 	<!-- Help strings -->
 	<string name="help">"Hilfe"</string>
-	<string name="help_text">"Willkommen zur Hilfe Seite vom Oxygen Updater.
-
-Hilfe beinhaltet die folgenden Themen:
-
-• Dein Gerät updaten
-• Die neusten Nachrichten lesen
-• Geräte Informationen anzeigen
-• Einstellungen ändern
-
-Scrolle nach unten um durch die Themen zu blättern"</string>
 	<string name="help_updating_your_device_title">"Dein Gerät wird aktualisiert"</string>
 	<string name="help_updating_your_device_text">"Wenn du die App öffnest, siehst du ob ein System Update verfügbar ist. Wenn eines Verfügbar ist, kannst du es installieren.
 
@@ -441,13 +376,6 @@ Andere Geräte, inklusive OnePlus Geräten mit Custom ROMs, werden nicht unterst
 
 	<string name="device_warning_checkbox_title">"Zeige mir diesen Warnhinweis nicht mehr an"</string>
 
-	<string name="root_check_title">"Root Zugriff"</string>
-	<string name="root_check_message">"Oxygen Updater bietet Benutzern mit gerooteten Geräten einfache, automatisierte Update-Installationen. Für gerootete Geräte sind jedoch keine inkrementellen Updates verfügbar. Oxygen Updater kann überprüfen, ob Sie Root-Zugriff haben, um nur für Sie geeignete Aktualisierungsmethoden anzubieten.
-
-Wenn Sie Root-Zugriff haben, erlauben Sie Oxygen Updater, nach dem Schließen dieser Nachricht Root-Zugriff zu erhalten.
-
-Kein Root-Zugriff? Drücken Sie \"Schließen\" und fahren Sie fort."</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ihr Kauf befindet sich im Status "Zahlung ausstehend". Sobald die Zahlung abgeschlossen ist, erhalten Sie alle Leistungen, auf die Sie Anspruch haben.</string>
 	<string name="purchase_error_after_payment">"Der Kauf der Werbe-freien Version ist durch einen internen Fehler fehlgeschlagen. Bitte versuche es in ein paar Minuten nochmal. Wenn du bereits bezahlt hast, kontaktiere bitte den Google Play Support für Hilfe."</string>
@@ -457,7 +385,6 @@ Kein Root-Zugriff? Drücken Sie \"Schließen\" und fahren Sie fort."</string>
 	<string name="icon">"Icon"</string>
 	<string name="loading">"Laden…"</string>
 	<string name="processing">"Bearbeiten…"</string>
-	<string name="choose_file">"Datei auswählen"</string>
 	<string name="update_information_description_not_available">"Es gibt keine offiziellen Informationen über die Neuerungen in diesem Update. Normalerweise beinhaltet solch ein Update Bugfixes, Performance Verbesserungen, und / oder wichtige Sicherheitsupdates für dein Gerät."</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
 </resources>

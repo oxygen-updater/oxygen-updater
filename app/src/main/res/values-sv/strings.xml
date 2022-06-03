@@ -31,7 +31,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Det finns en uppdatering för appen (%1$s). Tryck här för att öppna Play Store och uppdatera appen.</string>
-	<string name="new_app_version_long">Det finns en tillgänglig uppdatering för appen (%1$s). Att hålla appen uppdaterad till den senaste versionen ger dig tillgång till de senaste funktionerna och buggfixar.\nTryck här för att öppna Play Store och uppdatera appen.</string>
 	<string name="new_app_version_inapp_downloaded">Appuppdateringen har laddats ner.</string>
 	<string name="new_app_version_inapp_failed">Appuppdateringen kunde inte installeras. Tryck här för att öppna Play Store och uppdatera appen.</string>
 
@@ -145,7 +144,6 @@ Detta kan vara användbart när du:
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
 	<string name="faq_menu_item">"FAQ"</string>
-	<string name="faq_no_network_text">Du behöver en fungerande internetanslutning för att se FAQ-sidan.</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Välkommen"</string>
@@ -186,60 +184,9 @@ Du kan alltid ändra inställningar senare. För att göra det: Tryck på de tre
 
 	<!-- Automatic install strings -->
 	<string name="install">"Installera"</string>
-	<string name="install_checking_root">"Kontrollerar om din enhet har root…"</string>
-	<string name="install_grant_root_permissions">"Tillåt root när du blir tillfrågad."</string>
-	<string name="install_going_back_not_possible">"Tyvärr kan du inte gå tillbaka nu"</string>
-	<string name="install_preparing_installation">"Förbereder installation…"</string>
-	<string name="install_recovery_installer_title">"Uppdatera installationsprogrammet"</string>
-
-	<string name="install_recovery_backing_up">"Säkerhetskopierar din enhet, det här kan ta en stund!"</string>
-	<string name="install_recovery_clearing_cache">"Rensar cachen…"</string>
-	<string name="install_recovery_done">"Klar. Din enhet startar om"</string>
-	<string name="install_recovery_installing_additional_zip">"Installerar den tillvalda ZIP filen…"</string>
-	<string name="install_recovery_installing_update">"Installerar uppdateringen…"</string>
-	<string name="install_recovery_thank_you">"Tack för att du använder Oxygen Updater. Om du tycker om appen så får du gärna ge den 5 stjärnor på Google Play :-)"</string>
-	<string name="install_error_write_script_failed">"Misslyckades med att förbereda installation av uppdateringen. Tillät du root tillkomst?"</string>
-	<string name="install_options_backup">"Säkerhetskopiera upp min enhet"</string>
-	<string name="install_options_header">"Du kan anpassa installationsprocessen genom att ändra inställningarna nedanför. Tryck på 'Starta installationen' för att starta installationen av uppdateringen."</string>
-	<string name="install_options_keep_root">"Behåll root på min enhet"</string>
-	<string name="install_options_reboot_after_install">"Starta om efter installation"</string>
-	<string name="install_options_select_root_package">"Välj rootpaket att installera…"</string>
-	<string name="install_options_start_install">Påbörja installationen</string>
-	<string name="install_options_subtitle">"Välj installationsinställningar"</string>
-	<string name="install_options_wipe_cache_partition">Rensa cachepartitionen</string>
-	<string name="install_options_explanation_title">"Vad betyder dessa inställningar?"</string>
-	<string name="install_options_explanation_backup">"Säkerhetskopiera min enhet:
-När du väljer detta alternativ kommer en backup göras av ditt system, appar och inställningar innan installationen. Det är alltid bra att ha ifall något går hemskt fel."</string>
-	<string name="install_options_explanation_keep_root">"Behåll root på min enhet:
-När du väljer detta alternativ kommer du få välja ett rootpaket som kommer installeras efter uppdateringen. Detta säkerställer att din enhet behåller root. Notera att detta rootpaket måste vara kompatibelt med den NYA OxygenOS versionen du installerar!"</string>
-	<string name="install_options_explanation_wipe_cache">"Rensa cachepartitionen:
-När du väljer detta alternativ kommer cachepartitionen bli rensad efter uppdateringen har installerats. Det ser till att din enhet behåller bra prestanda och minskar chansen för buggar orsakade av installationen."</string>
-	<string name="install_options_explanation_reboot">"Starta om efter installationen:
-När du väljer detta alternativ kommer din enhet att startas om automatiskt till OxygenOS efter uppdateringen har installerat. Annars kommer din enhet stanna i återställningsläget där du kan installera ytterligare paket."</string>
-	<string name="install_method_chooser_title">Välj installationsmetod</string>
-	<string name="install_method_chooser_subtitle">"Hur vill du installera denna uppdatering?"</string>
-	<string name="install_method_chooser_automatic_title">Automatisk installation*</string>
-	<string name="install_method_chooser_automatic_description">"Det enklaste sättet att installera uppdateringen.
-Din enhet kommer starta om för att installera uppdateringen.
-
-* Kräver root behörighet och TWRP recovery."</string>
-	<string name="install_method_chooser_manual_title">"Manuell installation"</string>
-	<string name="install_method_chooser_manual_description">Läs installationsguiden för att ta reda på hur man installerar uppdateringen. Du kommer installera uppdateringen genom din enhets återställningsläge.</string>
-	<string name="install_temporary_error">Ett tillfälligt fel har uppstått under förberedningen av installationen av uppdateringen. Vänligen försök igen.</string>
-	<string name="install_verify_error_title">"Installationen misslyckades"</string>
-	<string name="install_verify_error_nothing_installed">"Fel vid installation av uppdatering. Inga ändringar gjordes på din enhet. Försök installera uppdateringen igen."</string>
-	<string name="install_verify_error_unable_to_verify">"Misslyckades med att kontrollera om uppdateringen installerades. Öppna Oxygen Updater för att se om uppdateringen har installerats korrekt."</string>
-	<string name="install_verify_error_wrong_version_installed">"En annan version av OxygenOS vart installerad. Välj inte en OxygenOS uppdateringsfil när du ska välja rootpaket för att behålla enheten rootad."</string>
-	<string name="install_verify_success_title">"Installationen klar"</string>
-	<string name="install_verify_success_message">"OxygenOS version %1$s har installerats."</string>
-	<string name="install_zip_file_clear">"Rensa valet av fil för rootpaketet"</string>
-	<string name="install_zip_file_pick">"Välj fil för rootpaketet"</string>
-	<string name="install_zip_file_placeholder">"Välj rootpaket…"</string>
-	<string name="install_zip_file_wrong_file_type">Du kan endast välja en zip-fil. Vänligen välj rätt fil.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">"Installera uppdateringen enligt installationsguidens instruktioner."</string>
-	<string name="install_guide_automatic_install_disabled">"Automatisk installation har blivit temporärt inaktiverad på grund av rapporterade tekniska problem. Installera uppdateringen enligt instruktionerna i installationsguiden."</string>
 	<string name="install_guide">"Installationsguide"</string>
 	<string name="install_guide_subtitle">Installationsguide - %1$d av %2$d</string>
 	<string name="install_guide_tip">"&#8226; Det är rekommenderat att skriva ner alla stegen eftersom du kommer behöva stänga av din enhet under installationsprocessen."</string>
@@ -286,8 +233,6 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 
 - Om du gillar den här appen, ge den 5 stjärnor på Google Play!"</string>
 	<string name="install_guide_close_button">Stäng installationsguiden</string>
-	<string name="install_guide_zip_file_deleted">Filen för rootpaketet du valde existerar inte längre. Vänligen välj ett nytt rootpaket.</string>
-	<string name="install_guide_zip_file_missing">"Om du vill behålla root så måste du välja ett rootpaket ovan."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Vi har stöd flr din enhet</string>
@@ -352,16 +297,6 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 
 	<!-- Help strings -->
 	<string name="help">"Hjälp"</string>
-	<string name="help_text">"Välkommen till hjälpavsnittet i Oxygen Updater.
-
-Hjälp omfattar följande ämnen:
-
-• Uppdatera enheten
-• De senaste nyheterna
-• Visa enhetens information
-• Ändra inställningar
-
-scrolla ner för att bläddra igenom ämnena."</string>
 	<string name="help_updating_your_device_title">"Uppdaterar din enhet"</string>
 	<string name="help_updating_your_device_text">"När du öppnar appen ser du om en systemuppdatering är tillgänglig. Om en uppdatering är tillgänglig kan du installera den.
 
@@ -447,12 +382,6 @@ Andra enheter samt OnePlus enheter som har \"Custom ROMs\" installerade är inte
 	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
 
 	<string name="device_warning_checkbox_title">"Visa inte denna varning igen"</string>
-	<string name="root_check_title">"Rootåtkomst"</string>
-	<string name="root_check_message">"Oxygen Updater erbjuder enkla, automatiska uppdateringsinstallationer för användare med rootade enheter. inkrementella uppdateringar är emellertid inte tillgängliga för rootade enheter. Oxygen Updater kan kontrollera om du har root-åtkomst för att bara erbjuda lämpliga uppdateringsmetoder.
-
-Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du stänger det här meddelandet.
-
-Är din enhet inte rootad? Tryck på \"Stäng\" och fortsätt använda appen."</string>
 
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->
@@ -464,7 +393,6 @@ Om du har root-åtkomst, tillåt Oxygen Updater att få root-åtkomst när du st
 	<string name="icon">"Ikon"</string>
 	<string name="loading">"Laddar…"</string>
 	<string name="processing">"Bearbetar…"</string>
-	<string name="choose_file">"Välj fil"</string>
 	<string name="update_information_description_not_available">"Det finns ingen officiell information om de nya funktionerna denna uppdatering innehåller. Vanligtvis innehåller en sådan uppdatering buggfixar, prestandaförbättringar och / eller viktiga säkerhetsuppdateringar för din enhet."</string>
 	<string name="theme_light_subtitle">Tema med en vit bakgrund och OnePlus-röd primär färg</string>
 

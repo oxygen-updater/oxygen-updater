@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Actualizare nouă disponibilă pentru aplicație (%1$s). Apăsați aici pentru a accesa Magazinul Google Play și pentru a actualiza aplicația.</string>
-	<string name="new_app_version_long">Actualizare nouă disponibilă pentru aplicație (%1$s). Menținerea aplicației actualizate vă asigură că veți primi întotdeauna cele mai recente funcții și remedieri de erori.\nApăsați aici pentru a deschide Magazinul Google Play și a actualiza aplicația.</string>
 	<string name="new_app_version_inapp_downloaded">Actualizarea a fost descărcată</string>
 	<string name="new_app_version_inapp_failed">Actualizarea aplicației nu a putut fi instalată. Apăsați aici pentru a actualiza aplicația din Google Play.</string>
 
@@ -140,7 +139,6 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">Aveți nevoie de o conexiune la rețea pentru a accesa pagina de FAQ (întrebări frecvente).</string>
 
 	<!-- First-time onboarding strings -->
 	<string name="onboarding">Bine ați venit</string>
@@ -158,62 +156,9 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 
 	<!-- Automatic install strings -->
 	<string name="install">Instalare</string>
-	<string name="install_checking_root">Se verifică dacă dispozitivul are acces root…</string>
-	<string name="install_grant_root_permissions">Please allow root access when asked.</string>
-	<string name="install_going_back_not_possible">Vă rugăm permiteți accesul root atunci când este necesar.</string>
-	<string name="install_preparing_installation">Se pregătește instalarea…</string>
-
-	<string name="install_recovery_installer_title">Instalator de actualizări&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Se creează un backup dispozitivului. Această acțiune va dura ceva mai mult timp!</string>
-	<string name="install_recovery_clearing_cache">Se curăță partiția cache…</string>
-	<string name="install_recovery_done">Finalizat. Dispozitivul dumneavoastră va reporni.</string>
-	<string name="install_recovery_installing_additional_zip">Se instalează fișierul ZIP suplimentar…</string>
-	<string name="install_recovery_installing_update">Se instalează actualizarea…</string>
-	<string name="install_recovery_thank_you">Vă mulțumim că ați ales Oxygen Updater. Dacă vă place această aplicație, vă rugăm să îi acordați un calificativ de 5 stele pe Google Play :-)</string>
-
-	<string name="install_error_write_script_failed">"Pregătirea de instalare a actualizării a eșuat. Ați permis accesul root?"</string>
-
-	<string name="install_options_backup">Creează un backup</string>
-	<string name="install_options_header">Puteți personaliza procesul de instalare schimbând opțiunile prezentate mai jos. Apăsați pe \"Începeți instalarea\" pentru a începe instalarea actualizării.</string>
-	<string name="install_options_keep_root">Păstrează-mi dispozitivul rootat</string>
-	<string name="install_options_reboot_after_install">Repornește după instalare</string>
-	<string name="install_options_select_root_package">Selectați pachetul root pentru instalare…</string>
-	<string name="install_options_start_install">Porniți instalarea</string>
-	<string name="install_options_subtitle">Selectați opțiunile pentru instalare</string>
-	<string name="install_options_wipe_cache_partition">Șterge partiția cache</string>
-
-	<string name="install_options_explanation_title">Ce semnificație au aceste opțiuni?</string>
-	<string name="install_options_explanation_backup">Creează un backup:\nCând selectați această opțiune, o copie de siguranță a sistemului, aplicațiilor și setărilor dumneavoastră va fi făcută înainte de instalare. Întotdeauna la îndemână, în cazul în care ceva nu merge bine.</string>
-	<string name="install_options_explanation_keep_root">Păstrează-mi dispozitivul rootat:\nCând selectați această opțiune, puteți specifica un pachet root care va fi instalat după instalarea actualizării. Acest lucru vă asigură că dispozitivul dumneavoastră rămâne rootat. Vă rugăm să rețineți că acest pachet root trebuie să fie compatibil cu noua versiune OxygenOS pe care urmează să o instalați!</string>
-	<string name="install_options_explanation_wipe_cache">Șterge partiția cache:\nCând selectați această opțiune, partiția cache va fi ștearsă după ce actualizarea a fost instalată. Acest lucru asigură că dispozitivul dumneavoastră funcționează optim și de asemenea reduce probabilitatea de a experimenta erori cauzate de instalarea actualizării.</string>
-	<string name="install_options_explanation_reboot">Reporniți după instalare:\nCând selectați această opțiune, dispozitivul dumneavoastră va reporni automat înapoi în OxygenOS după instalarea actualizării. În caz contrar, dispozitivul dumneavoastră va rămâne în modul de recuperare, unde puteți instala pachete suplimentare.</string>
-
-	<string name="install_method_chooser_title">Alegeți metoda de instalare</string>
-	<string name="install_method_chooser_subtitle">Cum doriți să instalați actualizarea?</string>
-	<string name="install_method_chooser_automatic_title">Instalare automată*</string>
-	<string name="install_method_chooser_automatic_description">Cel mai simplu mod de a instala actualizarea. \nDispozitivul va reporni pentru a instala actualizarea. \n\n* Necesită acces root și recuperare TWRP.</string>
-
-	<string name="install_method_chooser_manual_title">Instalare manuală</string>
-	<string name="install_method_chooser_manual_description">Citiți ghidul de instalare pentru a afla cum să instalați actualizarea. Veți instala actualizarea utilizând modul de recuperare a dispozitivului.</string>
-
-	<string name="install_temporary_error">S-a produs o eroare temporară în timp ce actualizarea se pregătea pentru instalare. Vă rugăm să încercați din nou.</string>
-
-	<string name="install_verify_error_title">Instalare eșuată</string>
-	<string name="install_verify_error_nothing_installed">Eroare la instalarea actualizării. Nu au fost aduse modificări software-ului dispozitivului dumneavoastră. Încercați să instalați din nou actualizarea.</string>
-	<string name="install_verify_error_unable_to_verify">Nu s-a putut verifica dacă actualizarea a fost instalată cu succes. Deschideți Oxygen Updater pentru a verifica dacă actualizarea a fost instalată cu succes.</string>
-	<string name="install_verify_error_wrong_version_installed">A fost instalată o versiune diferită de OxygenOS. Vă rugăm să NU selectați un fișier de actualizare pentru OxygenOS atunci când alegeți un pachet root sub opțiunea \"Păstrați-mi dispozitivul rootat\".</string>
-
-	<string name="install_verify_success_title">Instalare completă</string>
-	<string name="install_verify_success_message">Versiunea %1$s de OxygenOS a fost instalată cu succes.</string>
-
-	<string name="install_zip_file_clear">Eliminați fișierul de pachete root</string>
-	<string name="install_zip_file_pick">Alegeți fișierul de pachete root</string>
-	<string name="install_zip_file_placeholder">Selectați un pachet root…</string>
-	<string name="install_zip_file_wrong_file_type">Puteți selecta un singur fișier ZIP. Vă rugăm selectați fișierul corespunzător.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Instalați actualizarea conform instrucțiunilor prezentate în ghidul de instalare.</string>
-	<string name="install_guide_automatic_install_disabled">Instalarea automată a fost dezactivată temporar din cauza problemelor tehnice raportate. Instalați actualizarea conform instrucțiunilor prezentate în ghidul de instalare.</string>
 	<string name="install_guide">Ghid de instalare</string>
 	<string name="install_guide_subtitle">Ghid de instalare - %1$d din %2$d</string>
 	<string name="install_guide_tip">&#8226; Vă recomandăm să vă notați fiecare pas în parte, întrucât veți fi nevoit să opriți complet dispozitivul în timpul instalării actualizării.</string>
@@ -251,9 +196,6 @@ Instrucțiuni:
 	<string name="install_guide_page_5_text">&#8226; După ce dispozitivul dumneavoastră a terminat de optimizat aplicațiile sale, actualizarea a fost instalată cu succes.\nPentru a verifica acest lucru, puteți verifica versiunea curentă a sistemului dumneavoastră după cum urmează:\n\n&#8226; Duceți-vă la Setări, apăsați pe \"Despre telefon\" și verificați versiunea de OxygenOS.\n\n&#8226; Dacă vă place această aplicație, oferiți-ne 5 stele pe Google Play!</string>
 
 	<string name="install_guide_close_button">Închideți Ghidul de instalare</string>
-
-	<string name="install_guide_zip_file_deleted">Fișierul de pachet root specificat nu mai există. Vă rugăm selectați un nou pachet root mai sus.</string>
-	<string name="install_guide_zip_file_missing">"Dacă doriți să vă păstrați dispozitivul cu acces root, va trebui să specificați un pachet root mai sus."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Dispozitivul dumneavoastră este suportat</string>
@@ -316,7 +258,6 @@ Instrucțiuni:
 
 	<!-- Help strings -->
 	<string name="help">Ajutor</string>
-	<string name="help_text">Bine ați venit la secțiunea de Ajutor din Oxygen Updater.\n\nAjutorul acoperă următoarele subiecte:\n\n• Actualizarea dispozitivului\n• Citirea ultimelor articole\n• Vizualizarea informațiilor despre dispozitiv\n• Modificarea setărilor\n\nDerulați în jos pentru a răsfoi subiectele.</string>
 	<string name="help_updating_your_device_title">Actualizați dispozitivul</string>
 	<string name="help_updating_your_device_text">La deschiderea aplicației, veți vedea dacă este disponibilă o actualizare de sistem. Dacă este disponibilă o actualizare, atunci o puteți instala.\n\nPentru a începe instalarea, apăsați butonul de \"Descărcare\" (sub descrierea actualizării) pentru a începe descărcarea. Când descărcarea s-a încheiat, veți vedea meniul de instalare. Dacă ați părăsit aplicația sau în cazul în care meniul de instalare nu a apărut, apăsați pe butonul \"Instalare\", care este acum afișat lângă butonul de \"Descărcare\".\n\nProcesul de instalare va verifica mai întâi dacă aveți un dispozitiv rootat. Dacă aveți un dispozitiv rootat, acordați permisiunea de root atunci când vi se solicită și alegeți modul în care doriți să instalați actualizarea. În caz contrar, urmați instrucțiunile pentru instalarea manuală.\n\nInstalarea automată:\nVa trebui doar să alegeți opțiunile pentru instalare. Sunt recomandate setările implicite, cu excepția faptului că trebuie să specificați pachetul root care trebuie (re)instalat. Selectați un pachet root (în format .zip) folosind butonul albastru al directorului și apăsați pe \"Porniți instalarea\" pentru a porni instalarea.\n\nInstalarea manuală:\nVeți vedea un ghid de instalare pe ecran. Notați separat instrucțiunile și efectuați-le în ordinea în care sunt prezentate pentru a instala actualizarea.</string>
 	<string name="help_reading_news_title">Citiți ultimele noutăți</string>
@@ -384,9 +325,6 @@ Instrucțiuni:
 
 	<string name="device_warning_checkbox_title">Nu mai arăta acest avertisment</string>
 
-	<string name="root_check_title">Acces root</string>
-	<string name="root_check_message">Oxygen Updater oferă actualizări accesibile și automate pentru utilizatorii cu dispozitive rootate. Totuși, actualizările incrementale nu sunt disponibile pe aceste dispozitive. Oxygen Updater poate verifica dacă dispuneți de acces root numai pentru a vă oferi metodele corespunzătoare de actualizare.\n\nDacă dispuneți de acces root, vă rugăm să permiteți aplicației să obțină accesul după închiderea acestui mesaj.\n\nFără acces root? Apăsați \"Închide\" și continuați să folosiți aplicația în mod obișnuit.</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Achiziția se află în stadiul de \"procesare a plății"\. Odată ce plata este efectuată, veți avea parte de toate beneficiile oferite dumneavoastră.</string>
 	<string name="purchase_error_after_payment">Achiziția nu a avut loc din cauza unei erori interne. Vă rugăm să încercați din nou în câteva minute. Dacă ați efectuat deja plata, vă rugăm să contactați asistența Google Play pentru detalii.</string>
@@ -396,5 +334,4 @@ Instrucțiuni:
 	<string name="icon">Icoană</string>
 	<string name="loading">Se încarcă…</string>
 	<string name="processing">Procesare…</string>
-	<string name="choose_file">Selectați un fișier</string>
 </resources>

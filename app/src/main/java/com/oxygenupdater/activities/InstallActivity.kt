@@ -5,12 +5,8 @@ import android.util.DisplayMetrics
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.commit
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -19,9 +15,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
 import com.oxygenupdater.fragments.InstallGuideFragment
-import com.oxygenupdater.fragments.InstallMethodChooserFragment
 import com.oxygenupdater.models.UpdateData
-import com.oxygenupdater.utils.RootAccessChecker
 import com.oxygenupdater.viewmodels.InstallViewModel
 import kotlinx.android.synthetic.main.activity_install.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,12 +33,6 @@ class InstallActivity : SupportActionBarActivity(
     private var updateData: UpdateData? = null
 
     private val installViewModel by viewModel<InstallViewModel>()
-
-    private val appBarOffsetChangeListenerForMethodChooserFragment = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-        fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
-            bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
-        }
-    }
 
     private val appBarOffsetChangeListenerForViewPager = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
         viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
@@ -87,53 +75,8 @@ class InstallActivity : SupportActionBarActivity(
             )
         }
 
-        initialize()
-    }
-
-    private fun initialize() {
-        RootAccessChecker.checkRootAccess { isRooted ->
-            if (isFinishing) {
-                return@checkRootAccess
-            }
-
-            rootStatusCheckLayout.isVisible = false
-
-            if (isRooted) {
-                installViewModel.fetchServerStatus().observe(this) { serverStatus ->
-                    if (serverStatus.automaticInstallationEnabled) {
-                        openMethodSelectionPage()
-                    } else {
-                        Toast.makeText(this, getString(R.string.install_guide_automatic_install_disabled), LENGTH_LONG).show()
-                        openInstallGuide()
-                    }
-                }
-            } else {
-                Toast.makeText(this, getString(R.string.install_guide_no_root), LENGTH_LONG).show()
-                openInstallGuide()
-            }
-        }
-    }
-
-    private fun openMethodSelectionPage() = supportFragmentManager.commit {
-        setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        replace(
-            R.id.fragmentContainer,
-            InstallMethodChooserFragment().apply {
-                arguments = bundleOf(INTENT_UPDATE_DATA to updateData)
-            },
-            INSTALL_METHOD_CHOOSER_FRAGMENT_TAG
-        )
-        addToBackStack(INSTALL_METHOD_CHOOSER_FRAGMENT_TAG)
-    }
-
-    fun setupAppBarForMethodChooserFragment() = appBar.post {
-        // adjust bottom margin on first load
-        fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
-
-        // adjust bottom margin on scroll
-        appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
-    }.also {
-        setNavBarColorToBackground()
+        Toast.makeText(this, getString(R.string.install_guide_no_root), LENGTH_LONG).show()
+        setupViewPager()
     }
 
     private fun setupAppBarForViewPager() = appBar.post {
@@ -146,32 +89,7 @@ class InstallActivity : SupportActionBarActivity(
         setNavBarColorToBackgroundVariant()
     }
 
-    fun resetAppBarForMethodChooserFragment() = appBar.post {
-        // reset bottom margin on first load
-        fragmentContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
-
-        // remove listener
-        appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForMethodChooserFragment)
-    }
-
-    fun resetAppBarForViewPager() = appBar.post {
-        // reset bottom margin on first load
-        viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = 0 }
-
-        // remove listener
-        appBar.removeOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
-    }
-
-    fun openInstallGuide() = setupViewPager()
-
-    private fun hideViewPager() {
-        fragmentContainer.isVisible = true
-        viewPagerContainer.isVisible = false
-        resetAppBarForViewPager()
-    }
-
     private fun setupViewPager() {
-        fragmentContainer.isVisible = false
         viewPagerContainer.isVisible = true
 
         viewPager.apply {
@@ -185,7 +103,6 @@ class InstallActivity : SupportActionBarActivity(
         }
 
         setupButtonsForViewPager()
-        resetAppBarForMethodChooserFragment()
         setupAppBarForViewPager()
     }
 
@@ -280,39 +197,6 @@ class InstallActivity : SupportActionBarActivity(
         viewPager?.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
     }
 
-    /**
-     * Handles the following cases:
-     * * Once the installation is being started, there is no way out => do nothing
-     * * If [InstallGuideFragment] is being displayed, and was opened from [InstallMethodChooserFragment], switch back to [fragmentContainer]
-     * * If [InstallGuideFragment] was opened directly after checking for root (meaning if the device isn't rooted), delegate to `super`
-     * * If [InstallMethodChooserFragment] is the only fragment being displayed (meaning [FragmentManager.getBackStackEntryCount] returns `1`, delegate to `super`
-     * * Otherwise just call `super`, which respects [FragmentManager]'s back stack
-     */
-    override fun onBackPressed() = when {
-        // Once the installation is being started, there is no way out.
-        !installViewModel.canGoBack -> Toast.makeText(this, R.string.install_going_back_not_possible, LENGTH_LONG).show()
-        // if InstallGuide is being displayed, and was opened from `InstallMethodChooserFragment`, switch back to fragmentContainer
-        // if it was opened directly after checking for root (meaning if the device isn't rooted), delegate to `super`
-        viewPagerContainer.isVisible -> {
-            if (supportFragmentManager.backStackEntryCount == 0) {
-                super.onBackPressed()
-            } else {
-                hideViewPager()
-
-                // update toolbar state to reflect values set in `InstallMethodChooserFragment`
-                installViewModel.updateToolbarTitle(R.string.install_method_chooser_title)
-                installViewModel.updateToolbarSubtitle(R.string.install_method_chooser_subtitle)
-                installViewModel.updateToolbarImage(R.drawable.list_select, true)
-
-                setupAppBarForMethodChooserFragment()
-
-                viewPager.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
-            }
-        }
-        supportFragmentManager.backStackEntryCount == 1 -> super.onBackPressed()
-        else -> super.onBackPressed()
-    }
-
     companion object {
         private const val RESOURCE_ID_IMAGE = "_image"
         private const val RESOURCE_ID_PACKAGE_DRAWABLE = "drawable"
@@ -332,9 +216,6 @@ class InstallActivity : SupportActionBarActivity(
         const val INTENT_UPDATE_DATA = "update_data"
 
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
-
-        const val INSTALL_METHOD_CHOOSER_FRAGMENT_TAG = "InstallMethodChooser"
-        const val AUTOMATIC_INSTALL_FRAGMENT_TAG = "AutomaticInstall"
     }
 
     /**

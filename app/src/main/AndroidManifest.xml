@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	package="com.oxygenupdater">
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Networking permissions for fetching update data -->
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -175,23 +174,6 @@
 			</intent-filter>
 		</activity>
 
-		<!-- File picker -->
-		<activity
-			android:name="com.ipaulpro.afilechooser.FileChooserActivity"
-			android:enabled="true"
-			android:exported="false"
-			android:icon="@drawable/ic_chooser"
-			android:label="@string/choose_file">
-			<intent-filter>
-				<action android:name="android.intent.action.GET_CONTENT" />
-
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.OPENABLE" />
-
-				<data android:mimeType="application/zip" />
-			</intent-filter>
-		</activity>
-
 		<!-- Advertisements -->
 		<activity
 			android:name="com.google.android.gms.ads.AdActivity"
@@ -206,15 +188,6 @@
 				<action android:name="com.google.firebase.MESSAGING_EVENT" />
 			</intent-filter>
 		</service>
-
-		<!-- Receiver to check auto update installation status at device startup -->
-		<receiver
-			android:name="com.oxygenupdater.receivers.VerifyInstallationReceiver"
-			android:exported="false">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>
-		</receiver>
 
 		<meta-data
 			android:name="com.google.android.gms.version"

@@ -30,7 +30,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Sovelluspäivitys saatavilla (%1$s). Paina tästä avataksesi Play Kaupan ja päivitä sovellus.</string>
-	<string name="new_app_version_long">Sovelluspäivitys saatavilla (%1$s). Pidä sovellus ajan tasalla, jotta sinulla on aina viimeisimmät ominaisuudet ja bugikorjaukset.\nPaina tästä avataksesi Play Kaupan ja päivitä sovellus.</string>
 	<string name="new_app_version_inapp_downloaded">Sovelluspäivitys ladattu</string>
 	<string name="new_app_version_inapp_failed">Sovelluspäivitystä ei voitu asentaa. Paina tästä avataksesi Play Kaupan ja päivitä sovellus.</string>
 
@@ -145,7 +144,6 @@ Tämä voi olla hyödyllista kun:
 	<!-- FAQ strings -->
 	<string name="faq">"UKK"</string>
 	<string name="faq_menu_item">"UKK"</string>
-	<string name="faq_no_network_text">"Toimiva verkkoyhteys tarvitaan, jotta voidaan katsella UKK sivua"</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Tervetuloa"</string>
@@ -186,59 +184,9 @@ Voit aina muuttaa asetuksiasi myöhemmin napsauttamalla oikealta yläkulmasta ko
 
 	<!-- Automatic install strings -->
 	<string name="install">"Asenna"</string>
-	<string name="install_checking_root">"Tarkistetaan onko laitteesi rootattu…"</string>
-	<string name="install_grant_root_permissions">"Ole hyvä ja anna root oikeus kun sitä pyydetään."</string>
-	<string name="install_going_back_not_possible">"Ikävä kyllä et voi enää palata takaisin tässä kohtaa"</string>
-	<string name="install_preparing_installation">"Valmistellaan asennusta…"</string>
-	<string name="install_recovery_installer_title">"Päivityksen asennus"</string>
-	<string name="install_recovery_backing_up">"Varmuuskopioidaan laitettasi. Tässä saattaa mennä hetki!"</string>
-	<string name="install_recovery_clearing_cache">"Siivotaan välimuisti osiota…"</string>
-	<string name="install_recovery_done">"Valmis. Laitteesi käynnistyy nyt uudelleen."</string>
-	<string name="install_recovery_installing_additional_zip">"Asennetaan ylimääräinen ZIP tiedosto…"</string>
-	<string name="install_recovery_installing_update">"Asennetaan päivitystä…"</string>
-	<string name="install_recovery_thank_you">"Kiitos että käytät Oxygen Updateria. Jos pidät tästä sovelluksesta, olisi kiva jos voisit antaa sille 5 tähteä Play Kaupassa :-)"</string>
-	<string name="install_error_write_script_failed">"Päivityksen asennuksen valmistelu epäonnistui. Olethan antanut root oikeuden?"</string>
-	<string name="install_options_backup">"Varmuuskopio laitteeni"</string>
-	<string name="install_options_header">"Voit kustomoida asennusprosessia muuttamalla alla olevia valintoja. Napsauta 'Aloita asennus' kun olet valmis aloittamaan päivityksen asennuksen."</string>
-	<string name="install_options_keep_root">"Pidä laitteeni rootattuna"</string>
-	<string name="install_options_reboot_after_install">"Käynnistä uudelleen asennuksen jälkeen"</string>
-	<string name="install_options_select_root_package">"Valitse asennettava root paketti"</string>
-	<string name="install_options_start_install">"Aloita asennus"</string>
-	<string name="install_options_subtitle">"Valise asennuksen vaihtoehdot"</string>
-	<string name="install_options_wipe_cache_partition">"Pyyhi välimuisti osio"</string>
-	<string name="install_options_explanation_title">"Mitä nämä vaihtoehdot tarkoittavat?"</string>
-	<string name="install_options_explanation_backup">"Varmuuskopio laitteeni:
-Kun valitset tämän vaihtoehdon otetaan varmuuskopio ennen asennusta järjestelmästäsi, sovelluksista ja asetuksista. Aina hyvä olla olemassa, jos jotain menee pahasti pieleen."</string>
-	<string name="install_options_explanation_keep_root">"Pidä laitteeni rootattuna:
-Kun valitset tämän vaihtoehdon voit valita root paketin joka asennetaan päivityksen jälkeen. Tämä varmistaa, että laitteesi pysyy rootattuna. Ota huomioon, että root paketin tulee olla yhteensopiva UUDEN OxygenOS version kanssa jota olet asentamassa."</string>
-	<string name="install_options_explanation_wipe_cache">"Pyyhi välimuisti osio:
-Kun valitset tämän vaihtoehdon välimuistiosio pyyhitään automaattisesti kun asennus on suoritettu. Tämä varmistaa, että laitteesi suorityskyky on optimaalinen ja vähentää samalla myös bugien mahdollisuutta päivityksestä johtuen."</string>
-	<string name="install_options_explanation_reboot">"Käynnistä uudelleen asennuksen jälkeen:
-Kun valitset tämän vaihtoehdon laitteesi käynnistätään uudelleen automaattisesti OxygenOS:sään kun päivitys on asennettu. Muussa tapauksessa laitteesi pysyy palautustilassa, jossa voit asentaa ylimääräisiä lisäpaketteja."</string>
-	<string name="install_method_chooser_title">Valitse asennustapa</string>
-	<string name="install_method_chooser_subtitle">"Kuinka haluat asentaa tämän päivityksen?"</string>
-	<string name="install_method_chooser_automatic_title">"Automaattinen asennus*"</string>
-	<string name="install_method_chooser_automatic_description">"Helpoin tapa asentaa päivitys.
-Laitteesi käynnistyy uudelleen päivityksen asentamiseksi.
-
-* vaatii root oikeuden ja TWRP recoveryn."</string>
-	<string name="install_method_chooser_manual_title">"Manuaalinen asennus"</string>
-	<string name="install_method_chooser_manual_description">"Lue asennusohje oppiaksesi kuinka päivitys asennetaan. Asennat päivityksen käyttäen laitteesi palautustilaa."</string>
-	<string name="install_temporary_error">"Tilapäinen virhe ilmeni kun valmisteltiin päivityksen asennusta. Ole hyvä ja yritä uudelleen."</string>
-	<string name="install_verify_error_title">"Asennus epäonnistui"</string>
-	<string name="install_verify_error_nothing_installed">"Virhe päivitystä asennettaessa. Mitään muutoksia ei tehty laitteen ohjelmistoon. Yritä asentaa päivitys uudelleen."</string>
-	<string name="install_verify_error_unable_to_verify">"Päivityksen asennuksen varmistus epäonnistui. Ole hyvä ja avaa Oxygen Updater nähdäksesi onko päivitys asennettu onnistuneesti."</string>
-	<string name="install_verify_error_wrong_version_installed">"Eri version OxygenOS:stä asennettiin. Älä valitse OxygenOS päivitystiedostoa, kun valitset root pakettia Pidä laitteeni rootattuna vaihtoehdon alta."</string>
-	<string name="install_verify_success_title">"Asennus valmis"</string>
-	<string name="install_verify_success_message">"OxygenOS versio %1$s on asennettu onnistuneesti."</string>
-	<string name="install_zip_file_clear">"Pyyhi root paketti tiedosto"</string>
-	<string name="install_zip_file_pick">"Valitse root paketti tiedosto"</string>
-	<string name="install_zip_file_placeholder">"Valitse root paketti…"</string>
-	<string name="install_zip_file_wrong_file_type">"Voit valita vain zip tiedoston. Ole hyvä ja valitse oikea tiedosto."</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">"Asenna päivitys asennusohjeen mukaisesti"</string>
-	<string name="install_guide_automatic_install_disabled">"Automaattiset asennukset on tilapäisesti poissa käytöstä raportoitujen teknisten ongelmien vuoksi. Asenna päivitys asennusohjeen mukaisesti."</string>
 	<string name="install_guide">"Asennusohje"</string>
 	<string name="install_guide_subtitle">"Install guide - %1$d / %2$d"</string>
 	<string name="install_guide_tip">"&#8226; On suositeltavaa kirjoittaa kaikki vaiheet ylös, koska laitteen virta tulee katkaista päivitystä asennettaessa."</string>
@@ -283,8 +231,6 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 
 - Jos pidät tästä sovelluksesta, annathan sille 5 tähteä Play Kaupassa!"</string>
 	<string name="install_guide_close_button">"Sulje asennusohje"</string>
-	<string name="install_guide_zip_file_deleted">"Valitsemasi root paketti ei ole enää käytettävissä. Ole hyvä ja valitse uusi root paketti yläpuolelta."</string>
-	<string name="install_guide_zip_file_missing">"Jos haluat pitää laitteesi rootattuna sinun tulee valita asennettava root paketti yläpuolelta."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Laitteesi on tuettu</string>
@@ -347,16 +293,6 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 
 	<!-- Help strings -->
 	<string name="help">"Apua"</string>
-	<string name="help_text">"Tervetuloa Oxygen Updaterin apu osioon
-
-Apu sisältää seuraavat osiot
-
-• Laitteesi päivittäminen
-• Viimeisimpien uutisten lukeminen
-• Laitteen tietojen katsominen
-• Asetusten muuttaminen
-
-Selaa alaspäin käydäksesi läpi nämä osiot"</string>
 	<string name="help_updating_your_device_title">"Laitteesi päivittäminen"</string>
 	<string name="help_updating_your_device_text">"Avatessasi sovelluksen näet onko järjestelmään saatavilla päivityksiä. Jos uusi päivitys on saatavilla voit asentaa sen.
 
@@ -441,12 +377,6 @@ Muut laitteet, mukaan lukien OnePlus laitteet joille on asennettu kustomoitu kä
 	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
 
 	<string name="device_warning_checkbox_title">"Älä näytä tätä varoitusta uudelleen"</string>
-	<string name="root_check_title">"Root oikeus"</string>
-	<string name="root_check_message">"Oxygen Updater tarjoaa helpon automoidun tavan root käyttäjille päivitysten asentamiseen rootatuille laitteille. Kuitenkaan lisäävät päivitykset eivät ole saatavilla rootatuille laitteille. Oxygen Updater voi tarkistaa onko sinulla root oikeus, jotta se se voi tarjota oikean päivitystavan
-
-Jos sinulla on root oikeus asennettuna, annan Oxygen Updaterinlle root oikeus suljettuasi tämän viestin.
-
-Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käyttöä."</string>
 
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->
@@ -458,7 +388,6 @@ Ei root oikeutta? Ole hyvä ja napsauta \"Sulje\" jatkaaksesi sovelluksen käytt
 	<string name="icon">"Ikoni"</string>
 	<string name="loading">"Ladataan…"</string>
 	<string name="processing">"Prosessoidaan…"</string>
-	<string name="choose_file">"Valitse tiedosto"</string>
 	<string name="update_information_description_not_available">"Virallista informaatiota tämän päivityksen uusista ominaisuuksista ei ole saatavilla. Yleensä tällainen päivitys tuo mukanaan bugikorjauksia, suorituskyvyn parannuksia ja/tai kriittisiä tietoturvapäivityksiä laitteellesi."</string>
 	<string name="error_google_play_button_text">"Play Kauppa"</string>
 </resources>

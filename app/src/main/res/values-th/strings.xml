@@ -33,9 +33,8 @@
 	<string name="server_status_warning">มีบางอย่างฟีเจอร์อาจทำงานได้ไม่ถูกต้อง</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 4 strings below -->
+	<!-- TODO: translate these 3 strings below -->
 	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
@@ -148,7 +147,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">คุณต้องเชื่อมต่ออินเทอร์เน็ตก่อน</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">ยินดีต้อนรับ</string>
@@ -166,63 +164,9 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Automatic install strings -->
 	<string name="install">ติดตั้ง</string>
-	<string name="install_checking_root">กำลังตรวจสอบสถานะรูทบนอุปกรณ์ของคุณ…</string>
-	<string name="install_grant_root_permissions">โปรดอนุญาตการเข้าถึงรูท</string>
-	<string name="install_going_back_not_possible">ขออภัยคุณไม่สามารถย้อนกลับไปตอนนี้</string>
-	<string name="install_preparing_installation">กำลังเตรียมการติดตั้ง…</string>
-
-	<string name="install_recovery_installer_title">อัปเดตตัวติดตั้ง&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">กำลังสำรองข้อมูลบนอุปกรณ์ของคุณ กรุณารอเวลาสักครู่!</string>
-	<string name="install_recovery_clearing_cache">กำลังล้างแคช…</string>
-	<string name="install_recovery_done">เสร็จสิ้น อุปกรณ์ของคุณจะรีสตาร์ท</string>
-	<string name="install_recovery_installing_additional_zip">การติดตั้งโดยใช้ไฟล์ ZIP…</string>
-	<string name="install_recovery_installing_update">กำลังติดตั้งอัพเดท…</string>
-	<string name="install_recovery_thank_you">ขอบคุณที่ใช้ Oxygen Updater ถ้าคุณชอบแอพนี้โปรดให้คะแนน 5 ดาวที่ Google Play :-)</string>
-
-	<string name="install_error_write_script_failed">"ไม่สามารถเตรียมการติดตั้งการอัปเดตได้ คุณได้อนุญาตการเข้าถึงรูทหรือไม่?"</string>
-
-	<string name="install_options_backup">สำรองข้อมูลอุปกรณ์ของฉัน</string>
-	<string name="install_options_header">คุณสามารถปรับแต่งกระบวนการติดตั้งได้โดยเปลี่ยนตัวเลือกที่แสดงด้านล่าง แตะที่ \'เริ่มการติดตั้ง \' เพื่อเริ่มการติดตั้งการอัปเดต</string>
-	<string name="install_options_keep_root">ทำให้อุปกรณ์ของฉันอยู่ในสถานะรูท</string>
-	<string name="install_options_reboot_after_install">รีบูตหลังการติดตั้ง</string>
-	<string name="install_options_select_root_package">เลือกแพ็คเกจรูทที่จะติดตั้ง…</string>
-	<string name="install_options_start_install">เริ่มการติดตั้ง</string>
-	<string name="install_options_subtitle">เลือกตัวเลือกการติดตั้งของคุณ</string>
-	<string name="install_options_wipe_cache_partition">ล้างแคช</string>
-
-	<string name="install_options_explanation_title">ตัวเลือกเหล่านี้หมายถึงอะไร?</string>
-	<string name="install_options_explanation_backup">สำรองข้อมูลอุปกรณ์ของฉัน:\n เมื่อคุณเลือกตัวเลือกนี้ระบบจะทำการสำรองข้อมูลแอพและการตั้งค่าของคุณก่อนการติดตั้ง มีประโยชน์อย่างมากในกรณีที่มีบางอย่างผิดพลาด</string>
-	<string name="install_options_explanation_keep_root">ทำให้อุปกรณ์ของฉันอยู่ในสถานะรูท:\n เมื่อคุณเลือกตัวเลือกนี้คุณอาจระบุรูทแพ็คเกจซึ่งจะถูกติดตั้งหลังจากติดตั้งการอัปเดต วิธีนี้ช่วยให้มั่นใจได้ว่าอุปกรณ์ของคุณยังคงสถานะรูท โปรดทราบว่ารูทแพ็คเกจนี้จะต้องเข้ากันได้กับเวอร์ชั่น OxygenOS ใหม่ที่คุณกำลังจะติดตั้ง!</string>
-	<string name="install_options_explanation_wipe_cache">ล้างแคช:\nเมื่อคุณเลือกตัวเลือกนี้แคชพาร์ติชั่นจะถูกลบทิ้งหลังจากติดตั้งการอัพเดท ตัวเลือกนี้ทำให้มั่นใจได้ว่าอุปกรณ์ของคุณทำงานได้อย่างเหมาะสมและยังลดโอกาสที่จะเกิดข้อผิดพลาดที่เกิดจากการติดตั้งอัพเดต</string>
-	<string name="install_options_explanation_reboot">รีบูตหลังการติดตั้ง:\n เมื่อคุณเลือกตัวเลือกนี้อุปกรณ์ของคุณจะรีบูตโดยอัตโนมัติหลังจากติดตั้งการอัปเดต มิฉะนั้นอุปกรณ์ของคุณจะอยู่ในโหมดการกู้คืนซึ่งคุณสามารถติดตั้งแพ็คเกจเพิ่มเติมได้</string>
-
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
-	<string name="install_method_chooser_subtitle">คุณต้องการติดตั้งการอัพเดทนี้อย่างไร?</string>
-	<string name="install_method_chooser_automatic_title">ติดตั้งอัตโนมัติ*</string>
-	<string name="install_method_chooser_automatic_description">วิธีที่ง่ายที่สุดในการติดตั้งการอัปเดต\n อุปกรณ์ของคุณจะรีสตาร์ทเพื่อติดตั้งการอัปเดต\n\n * ต้องการการเข้าถึงรูทและการกู้คืน TWRP</string>
-
-	<string name="install_method_chooser_manual_title">การติดตั้งด้วยตนเอง</string>
-	<string name="install_method_chooser_manual_description">อ่านคู่มือการติดตั้งเพื่อเรียนรู้วิธีติดตั้งการอัพเดท คุณจะติดตั้งการอัปเดตโดยใช้โหมดการกู้คืนของอุปกรณ์ของคุณ</string>
-
-	<string name="install_temporary_error">เกิดข้อผิดพลาดชั่วคราวขณะเตรียมการติดตั้งอัพเดต โปรดลองอีกครั้ง</string>
-
-	<string name="install_verify_error_title">การติดตั้งล้มเหลว</string>
-	<string name="install_verify_error_nothing_installed">เกิดข้อผิดพลาดระหว่างการติดตั้งอัพเดต ไม่มีการเปลี่ยนแปลงใด ๆ กับซอฟต์แวร์บนอุปกรณ์ของคุณ ลองติดตั้งการอัปเดตอีกครั้ง</string>
-	<string name="install_verify_error_unable_to_verify">ไม่สามารถตรวจสอบว่ามีการติดตั้งการอัปเดตสำเร็จหรือไม่ โปรดเปิด Oxygen Updater เพื่อดูว่าการติดตั้งอัพเดตนั้นสำเร็จหรือไม่</string>
-	<string name="install_verify_error_wrong_version_installed">มี OxygenOS เวอร์ชั่นอื่นถูกติดตั้งอยู่แล้ว ห้ามเลือกไฟล์อัพเดท OxygenOS ระหว่างที่กำลังเลือกรูทแพ็คเกจใต้ "ทำให้อุปกรณ์ของฉันอยู่ในสถานะรูท" ตัวเลือก</string>
-
-	<string name="install_verify_success_title">การติดตั้งเสร็จสมบูรณ์</string>
-	<string name="install_verify_success_message">OxygenOS เวอร์ชั่น %1$s ได้ถูกติดตั้งเรียบร้อยแล้ว</string>
-
-	<string name="install_zip_file_clear">เคลียร์ไฟล์รูทแพ็กเกจ</string>
-	<string name="install_zip_file_pick">เลือกไฟล์รูทแพ็กเกจ</string>
-	<string name="install_zip_file_placeholder">เลือกไฟล์รูทแพ็กเกจ…</string>
-	<string name="install_zip_file_wrong_file_type">คุณสามารถเลือกไฟล์ zip ได้เท่านั้น โปรดเลือกไฟล์ที่ถูกต้อง</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">ติดตั้งการอัปเดตตามคำแนะนำที่แสดงในคู่มือการติดตั้ง</string>
-	<string name="install_guide_automatic_install_disabled">การติดตั้งอัตโนมัติถูกปิดใช้งานชั่วคราวเนื่องจากรายงานปัญหาทางเทคนิค ติดตั้งการอัปเดตตามคำแนะนำที่แสดงในคู่มือการติดตั้ง</string>
 	<string name="install_guide">คู่มือการติดตั้ง</string>
 	<string name="install_guide_subtitle">คู่มือการติดตั้ง - %1$d จาก %2$d</string>
 	<string name="install_guide_tip">&#8226; แนะนำให้จดหรือจำขั้นตอนทั้งหมดลงเนื่องจากคุณจะต้องปิดอุปกรณ์ในระหว่างการติดตั้งการอัปเดต</string>
@@ -263,9 +207,6 @@ Instructions:
 	<string name="install_guide_page_5_text">&#8226; หลังจากอุปกรณ์ของคุณเพิ่มประสิทธิภาพแอปเรียบร้อยแล้วและการอัปเดตได้รับการติดตั้งเรียบร้อยแล้ว\n หากต้องการตรวจสอบความถูกต้องของไฟล์คุณสามารถตรวจสอบเวอร์ชั่นปัจจุบันของระบบของคุณดังต่อไปนี้:\n\n&#8226; ไปที่การตั้งค่า และตรวจสอบเวอร์ชัน OxygenOS\n\n&#8226; หากคุณชอบแอพนี้โปรดให้คะแนน 5 ดาวที่ Google Play!</string>
 
 	<string name="install_guide_close_button">ปิดคู่มือการติดตั้ง</string>
-
-	<string name="install_guide_zip_file_deleted">ไฟล์รูทแพ็คเกจที่คุณระบุไม่มีอยู่อีกต่อไป โปรดเลือกแพ็คเกจรูทใหม่ด้านบน</string>
-	<string name="install_guide_zip_file_missing">"หากคุณต้องการให้อุปกรณ์ของคุณรูทคุณจะต้องระบุแพ็คเกจด้านบน"</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->
@@ -332,7 +273,6 @@ Instructions:
 
 	<!-- Help strings -->
 	<string name="help">ช่วยเหลือ</string>
-	<string name="help_text">ยินดีต้อนรับสู่ส่วนช่วยเหลือของ Oxygen Updater\n\n ความช่วยเหลือครอบคลุมหัวข้อต่อไปนี้:\n\n •อัปเดตอุปกรณ์ของคุณ\n •อ่านข่าวล่าสุด\n •ดูข้อมูลอุปกรณ์\n •เปลี่ยนการตั้งค่า\n\n เลื่อนลงไปที่ เรียกดูหัวข้อต่างๆ</string>
 	<string name="help_updating_your_device_title">กำลังอัปเดตอุปกรณ์ของคุณ</string>
 	<string name="help_updating_your_device_text">เมื่อเปิดแอพคุณจะเห็นว่ามีการอัปเดตระบบหรือไม่ หากมีการอัปเดตคุณสามารถติดตั้งได้\n\n หากต้องการเริ่มการติดตั้งให้แตะปุ่ม \"ดาวน์โหลด \" (ด้านล่างคำอธิบายการอัปเดต) เพื่อเริ่มการดาวน์โหลด เมื่อการดาวน์โหลดเสร็จสิ้นหน้าจอการติดตั้งจะปรากฏขึ้น หากคุณออกจากแอปหรือหน้าจอไม่ปรากฏขึ้นให้แตะปุ่ม \"ติดตั้ง \" ซึ่งจะปรากฏถัดจากปุ่ม \"ดาวน์โหลด \"\n\n หน้าจอติดตั้งจะตรวจสอบก่อนว่าคุณมี อุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้สิทธิ์การรูทเมื่อถูกถามและเลือกวิธีที่คุณต้องการติดตั้งการอัปเดต มิฉะนั้นให้ทำตามคำแนะนำสำหรับการติดตั้งด้วยตนเอง\n\n การติดตั้งอัตโนมัติ:\n คุณจะต้องเลือกตัวเลือกการติดตั้งของคุณเท่านั้น แนะนำให้ใช้การตั้งค่าเริ่มต้นยกเว้นว่าคุณจะต้องระบุรูทแพ็กเกจซึ่งจำเป็นต้องติดตั้งอีกครั้ง เลือกรูทแพ็กเกจ (ไฟล์ zip) โดยใช้ปุ่มโฟลเดอร์สีน้ำเงินแล้วแตะที่ \"เริ่มการติดตั้ง \" เพื่อเริ่มการติดตั้ง\n\n การติดตั้งแบบแมนนวล:\n คุณจะเห็นคู่มือการติดตั้งบนหน้าจอของคุณ จดคำแนะนำและดำเนินการตามที่ระบุไว้เพื่อติดตั้งการอัพเดท</string>
 	<string name="help_reading_news_title">อ่านข่าวล่าสุด</string>
@@ -405,9 +345,6 @@ Instructions:
 
 	<string name="device_warning_checkbox_title">อย่าแสดงคำเตือนนี้อีก</string>
 
-	<string name="root_check_title">การเข้าถึงรูท</string>
-	<string name="root_check_message">Oxygen Updater เสนอการติดตั้งการอัพเดทอัตโนมัติที่ง่ายดายสำหรับผู้ใช้ที่มีอุปกรณ์รูท อย่างไรก็ตามการอัพเดตแบบธรรมดาไม่พร้อมใช้งานสำหรับอุปกรณ์ที่ถูกรูท Oxygen Updater สามารถตรวจสอบว่าคุณมีการเข้าถึงรูทเพื่อเสนอวิธีการอัพเดทที่เหมาะสม\n\n หากคุณมีการเข้าถึงรูทกรุณาอนุญาตให้ Oxygen Updater รับสิทธิ์การเข้าถึงรูทหลังจากปิดข้อความนี้\n\n ไม่มีการเข้าถึงรูทหรือไม่ กด \"ปิด \" และใช้แอปต่อไป</string>
-
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->
 	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
@@ -419,5 +356,4 @@ Instructions:
 	<string name="icon">ไอคอน</string>
 	<string name="loading">กำลังโหลด…</string>
 	<string name="processing">กำลังประมวลผล…</string>
-	<string name="choose_file">เลือกไฟล์</string>
 </resources>

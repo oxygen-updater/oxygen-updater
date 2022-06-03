@@ -18,7 +18,8 @@
 			android:layout_height="match_parent"
 			android:theme="@style/SuperpoweredCollapsingToolbarTheme"
 			app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-			app:title="@string/install_checking_root">
+			app:subtitle="@string/summary_please_wait"
+			app:title="@string/install_guide">
 
 			<ImageView
 				android:id="@+id/collapsingToolbarImage"
@@ -51,36 +52,6 @@
 		android:background="?android:dividerVertical"
 		app:layout_anchor="@id/appBar"
 		app:layout_anchorGravity="bottom" />
-
-	<LinearLayout
-		android:id="@+id/rootStatusCheckLayout"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center_vertical"
-		android:orientation="vertical"
-		android:padding="@dimen/spacing_default"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-		<ProgressBar
-			style="?android:progressBarStyleLarge"
-			android:layout_width="100dp"
-			android:layout_height="100dp"
-			android:layout_gravity="center" />
-
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:layout_marginTop="@dimen/spacing_default"
-			android:gravity="center_horizontal"
-			android:text="@string/install_grant_root_permissions" />
-	</LinearLayout>
-
-	<FrameLayout
-		android:id="@+id/fragmentContainer"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/viewPagerContainer"

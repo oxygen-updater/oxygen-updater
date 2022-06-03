@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
@@ -165,7 +164,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">You\'ll need a working connection to view the FAQ page.</string>
 
 	<!-- First-time onboarding strings -->
 	<string name="onboarding">Welcome</string>
@@ -183,62 +181,9 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>
-	<string name="install_checking_root">Checking if your device is rooted…</string>
-	<string name="install_grant_root_permissions">Please allow root access when asked.</string>
-	<string name="install_going_back_not_possible">Unfortunately, you can\'t go back now</string>
-	<string name="install_preparing_installation">Preparing installation…</string>
-
-	<string name="install_recovery_installer_title">Update Installer&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Backing up your device. This will take a while!</string>
-	<string name="install_recovery_clearing_cache">Clearing the cache partition…</string>
-	<string name="install_recovery_done">Done. Your device will restart.</string>
-	<string name="install_recovery_installing_additional_zip">Installing the additional ZIP file…</string>
-	<string name="install_recovery_installing_update">Installing the update…</string>
-	<string name="install_recovery_thank_you">Thank you for using Oxygen Updater. If you like this app, please rate it 5 stars at Google Play :-)</string>
-
-	<string name="install_error_write_script_failed">"Failed to prepare the installation of the update. Did you allow root access?"</string>
-
-	<string name="install_options_backup">Backup my device</string>
-	<string name="install_options_header">You may customize the installation process by changing the options shown below. Tap on \"Start installation\" to start the installation of the update.</string>
-	<string name="install_options_keep_root">Keep my device rooted</string>
-	<string name="install_options_reboot_after_install">Reboot after installation</string>
-	<string name="install_options_select_root_package">Select the root package to install…</string>
-	<string name="install_options_start_install">Start installation</string>
-	<string name="install_options_subtitle">Choose your install options</string>
-	<string name="install_options_wipe_cache_partition">Wipe the cache partition</string>
-
-	<string name="install_options_explanation_title">What do these options mean?</string>
-	<string name="install_options_explanation_backup">Backup my device:\nWhen you select this option, a backup of your system, apps and settings will be made prior to the installation. Always handy to have, in case something goes horribly wrong.</string>
-	<string name="install_options_explanation_keep_root">Keep my device rooted:\nWhen you select this option, you may specify a root package which will be installed after the update is installed. This ensures that your device stays rooted. Please note that this root package must be compatible with the NEW OxygenOS version you are going to install!</string>
-	<string name="install_options_explanation_wipe_cache">Wipe the cache partition:\nWhen you select this option, the cache partition will be wiped after the update has been installed. This ensures your device performs optimally and also reduces the likelihood of experiencing bugs caused by the installation of the update.</string>
-	<string name="install_options_explanation_reboot">Reboot after installation:\nWhen you select this option, your device will automatically reboot back to OxygenOS after the update is installed. Otherwise, your device will stay in Recovery Mode, where you can install additional packages.</string>
-
-	<string name="install_method_chooser_title">Choose installation method</string>
-	<string name="install_method_chooser_subtitle">How do you want to install this update?</string>
-	<string name="install_method_chooser_automatic_title">Automatic installation*</string>
-	<string name="install_method_chooser_automatic_description">The easiest way to install the update.\nYour device will restart to install the update.\n\n* Requires root access and TWRP recovery.</string>
-
-	<string name="install_method_chooser_manual_title">Manual installation</string>
-	<string name="install_method_chooser_manual_description">Read the install guide to learn how to install the update. You will install the update using the Recovery Mode of your device.</string>
-
-	<string name="install_temporary_error">A temporary error occurred while preparing the installation of the update. Please try it again.</string>
-
-	<string name="install_verify_error_title">Installation failed</string>
-	<string name="install_verify_error_nothing_installed">Error when installing the update. No changes were made to the software of your device. Try installing the update again.</string>
-	<string name="install_verify_error_unable_to_verify">Failed to check if the update was installed successfully. Please open Oxygen Updater to see if the update was installed successfully.</string>
-	<string name="install_verify_error_wrong_version_installed">A different version of OxygenOS was installed. Don\'t select an OxygenOS update file when choosing a root package under the \"Keep my device rooted\" option.</string>
-
-	<string name="install_verify_success_title">Installation complete</string>
-	<string name="install_verify_success_message">OxygenOS version %1$s has been installed successfully.</string>
-
-	<string name="install_zip_file_clear">Clear root package file</string>
-	<string name="install_zip_file_pick">Choose root package file</string>
-	<string name="install_zip_file_placeholder">Select a root package…</string>
-	<string name="install_zip_file_wrong_file_type">You may only select a zip file. Please select the right file.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
-	<string name="install_guide_automatic_install_disabled">Automatic installations have been temporarily disabled due to reported technical issues. Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide">Install guide</string>
 	<string name="install_guide_subtitle">Install guide - %1$d of %2$d</string>
 	<string name="install_guide_tip">&#8226; It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
@@ -276,9 +221,6 @@ Instructions:
 	<string name="install_guide_page_5_text">&#8226; After your device has finished optimizing its apps, the update has been successfully installed.\nTo verify this, you can check the current version of your system as following:\n\n&#8226; Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.\n\n&#8226; If you like this app, give it 5 stars at Google Play!</string>
 
 	<string name="install_guide_close_button">Close Installation Guide</string>
-
-	<string name="install_guide_zip_file_deleted">The root package file you specified no longer exists. Please select a new root package above.</string>
-	<string name="install_guide_zip_file_missing">"If you want to keep your device rooted, you'll have to specify a root package above."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
@@ -346,7 +288,6 @@ Instructions:
 
 	<!-- Help strings -->
 	<string name="help">Help</string>
-	<string name="help_text">Welcome to the help section of Oxygen Updater.\n\nHelp covers the following topics:\n\n• Updating your device\n• Reading the latest news\n• Viewing device information\n• Changing settings\n\nScroll down to browse through the topics.</string>
 	<string name="help_updating_your_device_title">Updating your device</string>
 	<string name="help_updating_your_device_text">When opening the app, you\'ll see if a system update is available. If an update is available, you can install it.\n\nTo start the installation, tap the \"Download\" button (below the update description) to start the download. When the download has finished, the installation screen pops up. If you left the app or the screen didn\'t pop up, tap the \"Install\" button, which is now shown next to the \"Download\" button.\n\nThe install screen will first check if you have a rooted device. If you have a rooted device, grant root permission when asked and choose how you want to install the update. Otherwise, follow the instructions for Manual install.\n\nAutomatic install:\nYou\'ll only have to choose your install options. The default settings are recommended, except that you have to specify the root package which needs to be (re)installed. Select a root package (zip file) using the blue folder button and tap on \"Start install\" to start the installation.\n\nManual install:\nYou\'ll see an installation guide on your screen. Write the instructions down and perform them as stated to install the update.</string>
 	<string name="help_reading_news_title">Reading the latest news</string>
@@ -413,9 +354,6 @@ Instructions:
 
 	<string name="device_warning_checkbox_title">Don\'t show this warning again</string>
 
-	<string name="root_check_title">Root access</string>
-	<string name="root_check_message">Oxygen Updater offers easy, automated update installations for users with a rooted devices. However, incremental updates are not available for rooted devices. Oxygen Updater can check if you have root access to only offer appropriate update methods.\n\nIf you have root access, allow Oxygen Updater to obtain root access after closing this message.\n\nNo root access? Press \"Close\" and continue using the app.</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
 	<string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
@@ -435,7 +373,6 @@ Instructions:
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>
 	<string name="processing">Processing…</string>
-	<string name="choose_file">Select a file</string>
 	<string name="advertising_app_id" translatable="false">ca-app-pub-1816831161514116~4275332954</string>
 	<string name="advertising_main_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/9792024147</string>
 	<string name="advertising_news_banner_unit_id" translatable="false">ca-app-pub-1816831161514116/5072283884</string>

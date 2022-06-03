@@ -29,7 +29,6 @@
 
 	<!-- Řetězce zpráv nové verze aplikace -->
 	<string name="new_app_version">K dispozici je aktualizace aplikace (%1$s). Klepnutím sem otevřete Obchod Play a aktualizujte aplikaci.</string>
-	<string name="new_app_version_long">K dispozici je aktualizace aplikace (%1$s). Aktualizace aplikace vám zajistí, že budete mít vždy k dispozici nejnovější funkce a opravy chyb.\nKlepnutím sem otevřete Obchod Play a aktualizujte aplikaci.</string>
 	<string name="new_app_version_inapp_downloaded">Aktualizace aplikace byla stažena</string>
 	<string name="new_app_version_inapp_failed">Aktualizaci aplikace se nepodařilo nainstalovat. Klepnutím sem otevřete Obchod Play a aktualizujte aplikaci.</string>.
 
@@ -142,7 +141,6 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<!-- Řetězce FAQ -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">Pro zobrazení stránky FAQ - často kladených otázek - budete potřebovat funkční připojení.</string>
 
 	<!-- Řetězce pro první zapnutí -->
 	<string name="onboarding">Vítejte</string>
@@ -160,62 +158,9 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 
 	<!-- Řetězce pro automatickou instalaci -->
 	<string name="install">Install</string>
-	<string name="install_checking_root">Kontrola, zda je vaše zařízení rootnuté…</string>
-	<string name="install_grant_root_permissions">Prosím, povolte přístup root, až budete dotázáni.</string>
-	<string name="install_going_back_not_possible">Naneštěstí se nyní nemůžete vrátit zpět</string>
-	<string name="install_preparing_installation">Příprava instalace…</string>
-
-	<string name="install_recovery_installer_title">Update Installer&#160;&#160;</string> <!-- Na konec přidejte 2 mezery -->
-	<string name="install_recovery_backing_up">Zálohování zařízení. Bude to chvíli trvat!</string>
-	<string name="install_recovery_clearing_cache">Vymazání oddílu mezipaměti…</string>
-	<string name="install_recovery_done">Ukončeno. Vaše zařízení se restartuje.</string>
-	<string name="install_recovery_installing_additional_zip">Instalace dodatečného souboru ZIP…</string>
-	<string name="install_recovery_installing_update">Instalace aktualizace…</string>
-	<string name="install_recovery_thank_you">Děkujeme vám za používání programu Oxygen Updater. Pokud se vám tato aplikace líbí, ohodnoťte ji prosím 5 hvězdičkami na Google Play :-)</string>
-
-	<string name="install_error_write_script_failed">"Nepodařilo se připravit instalaci aktualizace. Povolili jste přístup root?"</string>
-
-	<string name="install_options_backup">Zálohovat mé zařízení</string>
-	<string name="install_options_header">Proces instalace můžete přizpůsobit změnou níže uvedených možností. Klepnutím na \"Zahájit instalaci\" zahájíte instalaci aktualizace.</string>
-	<string name="install_options_keep_root">Ponechat root po aktualizaci</string>
-	<string name="install_options_reboot_after_install">Po instalaci restartovat zařízení</string>
-	<string name="install_options_select_root_package">Vyberte kořenový balíček k instalaci…</string>
-	<string name="install_options_start_install">Spustit instalaci</string>
-	<string name="install_options_subtitle">Výběr možnosti instalace</string>
-	<string name="install_options_wipe_cache_partition">Vymazání oddílu vyrovnávací paměti</string>
-
-	<string name="install_options_explanation_title">Co tyto možnosti znamenají?</string>
-	<string name="install_options_explanation_backup">Zálohovat mé zařízení:\nPokud vyberete tuto možnost, bude před instalací vytvořena záloha systému, aplikací a nastavení. Vždy se hodí pro případ, že se něco pokazí.</string>
-	<string name="install_options_explanation_keep_root">Ponechat moje zařízení rootnuté:\nPokud vyberete tuto možnost, můžete zvolit balíček root, který bude nainstalován po instalaci aktualizace. Tím zajistíte, že vaše zařízení zůstane rootnuté. Upozorňujeme, že tento kořenový balíček musí být kompatibilní s NOVOU verzí systému OxygenOS, kterou se chystáte nainstalovat!</string>
-	<string name="install_options_explanation_wipe_cache">Vymazání oddílu mezipaměti:\nPokud vyberete tuto možnost, oddíl mezipaměti bude po instalaci aktualizace vymazán. To zajistí optimální výkon vašeho zařízení a také sníží pravděpodobnost výskytu chyb způsobených instalací aktualizace.</string>
-	<string name="install_options_explanation_reboot">Reboot po instalaci:\nPokud vyberete tuto možnost, zařízení se po instalaci aktualizace automaticky restartuje zpět do systému OxygenOS. V opačném případě zůstane zařízení v režimu obnovení, kde můžete instalovat další balíčky.</string>
-
-	<string name="install_method_chooser_title">Výběr způsobu instalace</string>
-	<string name="install_method_chooser_subtitle">Jak chcete tuto aktualizaci nainstalovat?</string>
-	<string name="install_method_chooser_automatic_title">Automatická instalace*</string>
-	<string name="install_method_chooser_automatic_description">Nejjednodušší způsob instalace aktualizace.\nVaše zařízení se při instalaci aktualizace restartuje.\n\n* Vyžaduje root přístup a TWRP recovery.</string>
-
-	<string name="install_method_chooser_manual_title">Ruční instalace</string>
-	<string name="install_method_chooser_manual_description">Přečtěte si průvodce instalací a zjistěte, jak aktualizaci nainstalovat. Aktualizaci nainstalujete pomocí režimu obnovení zařízení.</string>
-
-	<string name="install_temporary_error">Při přípravě instalace aktualizace došlo k dočasné chybě. Zkuste to prosím znovu.</string>
-
-	<string name="install_verify_error_title">Instalace se nezdařila</string>
-	<string name="install_verify_error_nothing_installed">Při instalaci aktualizace došlo k chybě. V softwaru vašeho zařízení nebyly provedeny žádné změny. Zkuste nainstalovat aktualizaci znovu.</string>
-	<string name="install_verify_error_unable_to_verify">Nepodařilo se ověřit, zda byla aktualizace úspěšně nainstalována. Otevřete prosím nástroj Oxygen Updater a zkontrolujte, zda byla aktualizace úspěšně nainstalována.</string>
-	<string name="install_verify_error_wrong_version_installed">Byla nainstalována jiná verze systému OxygenOS. Při výběru kořenového balíčku v rámci volby \"Ponechat zařízení rootnuté\" nevybírejte aktualizační soubor systému OxygenOS.</string>
-
-	<string name="install_verify_success_title">Instalace dokončena</string>
-	<string name="install_verify_success_message">OxygenOS verze %1$s byl úspěšně nainstalován.</string>
-
-	<string name="install_zip_file_clear">Vymazání kořenového souboru balíčku</string>
-	<string name="install_zip_file_pick">Vyberte kořenový soubor balíčku</string>
-	<string name="install_zip_file_placeholder">Vyberte kořenový balíček…</string>
-	<string name="install_zip_file_wrong_file_type">Můžete vybrat pouze soubor zip. Vyberte prosím správný soubor.</string>
 
 	<!-- Řetězce průvodce instalací -->
 	<string name="install_guide_no_root">Instalujte aktualizaci podle pokynů uvedených v průvodci instalací.</string>
-	<string name="install_guide_automatic_install_disabled">Automatická instalace byla dočasně zakázána z důvodu nahlášených technických problémů. Nainstalujte aktualizaci podle pokynů uvedených v průvodci instalací.</string>
 	<string name="install_guide">Průvodce instalací</string>
 	<string name="install_guide_subtitle">Průvodce instalací - %1$d z %2$d</string>
 	<string name="install_guide_tip">&#8226; Doporučujeme zapsat si všechny kroky, protože během instalace aktualizace budete muset zařízení vypnout.</string>
@@ -250,12 +195,9 @@ Pokyny:
 &#8226; Poté se telefon restartuje a dokončí aktualizaci."</string>
 
 	<string name="install_guide_page_5_title">Dokončeno. Užijte si novou verzi systému OxygenOS!</string>
-	<string name="install_guide_page_5_text">&#8226; Poté, co vaše zařízení dokončí optimalizaci aplikací, byla aktualizace úspěšně nainstalována.\nPro ověření můžete zkontrolovat aktuální verzi systému následujícím způsobem:\n\n&#8226; Přejděte do Nastavení, klepněte na \"O telefonu\" a zkontrolujte verzi OxygenOS.\n\n&#8226; Pokud se vám tato aplikace líbí, dejte jí na Google Play 5 hvězdiček!</string>.
+	<string name="install_guide_page_5_text">&#8226; Poté, co vaše zařízení dokončí optimalizaci aplikací, byla aktualizace úspěšně nainstalována.\nPro ověření můžete zkontrolovat aktuální verzi systému následujícím způsobem:\n\n&#8226; Přejděte do Nastavení, klepněte na \"O telefonu\" a zkontrolujte verzi OxygenOS.\n\n&#8226; Pokud se vám tato aplikace líbí, dejte jí na Google Play 5 hvězdiček!</string>
 
 	<string name="install_guide_close_button">Zavřít instalační příručku</string>
-
-	<string name="install_guide_zip_file_deleted">Zadaný kořenový soubor balíčku již neexistuje. Vyberte prosím nový kořenový balíček výše.</string>
-	<string name="install_guide_zip_file_missing">"Pokud chcete, aby vaše zařízení zůstalo rootnuté, musíte výše zvolit balíček rootu."</string>
 
 	<!-- Řetězce informací o zařízení -->
 	<string name="device_information_supported_oxygen_os">Vaše zařízení je podporováno</string>
@@ -318,7 +260,6 @@ Pokyny:
 
 	<!-- Nápovědné řetězce -->
 	<string name="help">Nápověda</string>
-	<string name="help_text">Vítejte v sekci nápovědy programu Oxygen Updater.\n\nNápověda pokrývá následující témata:\n\n- Aktualizace zařízení\n- Čtení posledních novinek\n- Zobrazení informací o zařízení\n- Změna nastavení\n\nPřejděte dolů a procházejte tématy.</string>
 	<string name="help_updating_your_device_title">Aktualizace zařízení</string>
 	<string name="help_updating_your_device_text">Při otevření aplikace uvidíte, zda je k dispozici aktualizace systému. Pokud je aktualizace k dispozici, můžete ji nainstalovat.\n\nChcete-li zahájit instalaci, klepněte na tlačítko \"Stáhnout\" (pod popisem aktualizace), čímž zahájíte stahování. Po dokončení stahování se zobrazí obrazovka instalace. Pokud jste aplikaci opustili nebo se obrazovka neobjevila, klepněte na tlačítko \"Instalovat\", které se nyní zobrazuje vedle tlačítka \"Stáhnout\".\n\nInstalační obrazovka nejprve zkontroluje, zda máte zařízení s rootem. Pokud máte zařízení s rootem, udělte na dotaz oprávnění root a vyberte způsob instalace aktualizace. V opačném případě postupujte podle pokynů pro ruční instalaci.\n\nAutomatická instalace:\n\budete muset pouze vybrat možnosti instalace. Výchozí nastavení jsou doporučená, s výjimkou toho, že musíte zadat kořenový balíček, který je třeba (pře)instalovat. Vyberte kořenový balíček (soubor zip) pomocí modrého tlačítka složky a klepnutím na \"Spustit instalaci\" spusťte instalaci.\n\nRuční instalace:\nNa obrazovce se zobrazí průvodce instalací. Zapište si pokyny a proveďte je podle pokynů pro instalaci aktualizace.</string>
 	<string name="help_reading_news_title">Přečtení nejnovějších zpráv</string>
@@ -385,9 +326,6 @@ Pokyny:
 
 	<string name="device_warning_checkbox_title">Nezobrazovat toto upozornění znovu</string>
 
-	<string name="root_check_title">Přístup ke kořenovému systému</string>
-	<string name="root_check_message">Oxygen Updater nabízí snadnou, automatizovanou instalaci aktualizací pro uživatele s rootnutým zařízením. Přírůstkové aktualizace však nejsou pro zařízení s rootem k dispozici. Program Oxygen Updater může zkontrolovat, zda máte přístup root, a nabídnout pouze vhodné metody aktualizace.\n\nPokud máte přístup root, povolte programu Oxygen Updater získat přístup root po zavření této zprávy.\n\nNení přístup root? Stiskněte \"Zavřít\" a pokračujte v používání aplikace.</string>
-
 	<!-- Nákupní řetězce -->
 	<string name="purchase_error_pending_payment">Váš nákup je ve stavu \"čekání na platbu\". Po dokončení platby vám budou poskytnuty všechny výhody, na které máte nárok.</string>
 	<string name="purchase_error_after_payment">Nákup verze bez reklam se nezdařil, protože došlo k interní chybě. Zkuste to prosím za několik minut znovu. Pokud jste již zaplatili, kontaktujte prosím podporu Google Play a požádejte o pomoc.</string>
@@ -396,6 +334,4 @@ Pokyny:
 	<string name="icon">Icon</string>
 	<string name="loading">Načítá se…</string>
 	<string name="processing">Zpracování…</string>
-	<string name="choose_file">Výběr souboru</string>
-
 </resources>

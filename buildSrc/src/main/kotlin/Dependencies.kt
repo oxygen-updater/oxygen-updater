@@ -118,12 +118,6 @@ object AndroidXLibraries {
 
 object Libraries {
     private object Versions {
-        // https://github.com/iPaulPro/aFileChooser
-        const val A_FILE_CHOOSER = "1.0.1"
-
-        // https://github.com/Chainfire/libsuperuser/releases
-        const val CHAINFIRE_LIBSUPERUSER = "1.1.0.201907261845"
-
         // https://github.com/facebook/shimmer-android/releases
         const val FACEBOOK_SHIMMER = "0.5.0"
 
@@ -227,12 +221,6 @@ object Libraries {
     // https://github.com/JakeWharton/ThreeTenABP/releases
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     const val THREE_TEN_ABP = "com.jakewharton.threetenabp:threetenabp:${Versions.THREE_TEN_ABP}"
-
-    // https://github.com/Chainfire/libsuperuser/releases
-    const val CHAINFIRE_LIBSUPERUSER = "eu.chainfire:libsuperuser:${Versions.CHAINFIRE_LIBSUPERUSER}"
-
-    // https://github.com/iPaulPro/aFileChooser
-    const val A_FILE_CHOOSER = "andhradroid.dev:aFilechooser:${Versions.A_FILE_CHOOSER}"
 }
 
 object TestLibraries {

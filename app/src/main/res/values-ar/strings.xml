@@ -33,9 +33,8 @@
 	<string name="server_status_warning">بعض الميزات قد لا تعمل بشكل صحيح.</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 4 strings below -->
+	<!-- TODO: translate these 3 strings below -->
 	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
@@ -135,7 +134,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<!-- FAQ strings -->
 	<string name="faq">التعليمات</string>
 	<string name="faq_menu_item">التعليمات</string>
-	<string name="faq_no_network_text">تحتاج إلى إتصال فعال لمشاهدة صفحة التعليمات.</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">مرحباً</string>
@@ -152,53 +150,9 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Automatic install strings -->
 	<string name="install">تثبيت</string>
-	<string name="install_checking_root">فحص إذا ما كان جهازك يمتلك (روت)…</string>
-	<string name="install_grant_root_permissions">فضلا قم بالسماح بالولوج إلى (الروت) عند الطلب.</string>
-	<string name="install_going_back_not_possible">للأسف, لا تستطيع العودة</string>
-	<string name="install_preparing_installation">الإعداد للتثبيت…</string>
-	<string name="install_recovery_installer_title">مثبت التحديث&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">قم بالنسخ الإحتياطي لجهازك. هذا سيأخذ بعض الوقت!</string>
-	<string name="install_recovery_clearing_cache">جاري مسح قسم ذاكرة التخزين المؤقت…</string>
-	<string name="install_recovery_done">تم. سيتم إعادة تشغيل جهازك.</string>
-	<string name="install_recovery_installing_additional_zip"> جاري تثبيت الملف المضغوط الإضافي…</string>
-	<string name="install_recovery_installing_update">جاري تثبيت التحديث…</string>
-	<string name="install_recovery_thank_you">شكراً لك على إستخدام تطبيق مُحدث أكسجين. فضلاً لا تنسى إذا أعجبك هذا التطبيق أن تترك لنا خمس نجوم على متجر بلاي :-)</string>
-	<string name="install_error_write_script_failed">"فشل في عملية الإعداد لتثبيت التحديث. هل قمت بالسماح بالولوج إلى (الروت)؟"</string>
-	<string name="install_options_backup">النسخ الإحتياطي لجهازي</string>
-	<string name="install_options_header">يمكنك تخصيص عملية التثبيت عن طريق تغيير الخيارات الموضحة أدناه. إضغط على \'بدء التثبيت\' لبدء تثبيت التحديث.</string>
-	<string name="install_options_keep_root">أبق على جهازي ممتلكاً (روت)</string>
-	<string name="install_options_reboot_after_install">إعادة التشغيل بعد التثبيت</string>
-	<string name="install_options_select_root_package">إختر حزمة (الروت) لتثبيتها…</string>
-	<string name="install_options_start_install">بدء التثبيت</string>
-	<string name="install_options_subtitle">إختر خيارات التثبيت المفضلة إليك</string>
-	<string name="install_options_wipe_cache_partition">مسح قسم ذاكرة التخزين المؤقت</string>
-	<string name="install_options_explanation_title">ماذا تعني هذه الخيارات؟</string>
-	<string name="install_options_explanation_backup">النسخ الاحتياطي لجهازي:\nعند تحديد هذا الخيار، سيتم إجراء نسخة احتياطية من النظام والتطبيقات والإعدادات قبل التثبيت. لتكون في متناول اليد في حالة حدوث خطأ.</string>
-	<string name="install_options_explanation_keep_root">الحفاظ على روت الجهاز:\nعند تحديد هذا الخيار ، يمكنك تحديد حزمة روت سيتم تثبيتها بعد إتمام تثبيت التحديث. هذا يضمن أن يبقى جهازك ذو روت. يرجى ملاحظة أن حزمة الروت هذه يجب أن تكون متوافقة مع الإصدار الجديد من إصدار أكسجين الذي ستقوم بتثبيته!</string>
-	<string name="install_options_explanation_wipe_cache">مسح قسم ذاكرة التخزين المؤقت:\nعند تحديد هذا الخيار، سيتم مسح قسم ذاكرة التخزين المؤقت بعد تثبيت التحديث. هذا يضمن أن يكون أداء جهازك على النحو الأمثل ويقلل أيضًا من إحتمال مواجهة الأخطاء الناجمة عن تثبيت التحديث.</string>
-	<string name="install_options_explanation_reboot">إعادة التشغيل بعد التثبيت:\nعند تحديد هذا الخيار ، سيقوم الجهاز تلقائيًا بإعادة التشغيل إلى نظام أكسجين بعد تثبيت التحديث. وإلا فسيظل جهازك في وضع الريكفري ، حيث يمكنك تثبيت حزم إضافية.</string>
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
-	<string name="install_method_chooser_subtitle">كيف تريد أن يتم تثبيت هذا التحديث؟</string>
-	<string name="install_method_chooser_automatic_title">تثبيت تلقائي*</string>
-	<string name="install_method_chooser_automatic_description">أسهل طريقة لتثبيت التحديث.\nسيتم إعادة تشغيل الجهاز لتثبيت التحديث.\n\n* يتطلب وصول إلى الروت وريكفريTWRP.</string>
-	<string name="install_method_chooser_manual_title">تثبيت يدوي</string>
-	<string name="install_method_chooser_manual_description">إقرأ دليل التثبيت لتتعلم كيفية تثبيت التحديث. ستقوم بتثبيت هذا التحديث عن طريق إستخدام وضع الريكفري لجهازك.</string>
-	<string name="install_temporary_error">حدث خطأ مؤقت أثناء التحضير لتثبيت التحديث. فضلاً حاول مرة أخرى.</string>
-	<string name="install_verify_error_title">فشل التثبيت</string>
-	<string name="install_verify_error_nothing_installed">خطأ عند تثبيت التحديث. لم يتم إجراء أي تغييرات على نظام تشغيل جهازك. حاول تثبيت التحديث مرة أخرى.</string>
-	<string name="install_verify_error_unable_to_verify">فشل التحقق إذا ما تم تثبيت التحديث بنجاح. يرجى فتح Oxygen Updater لمعرفة ما إذا كان قد تم تثبيت التحديث بنجاح.</string>
-	<string name="install_verify_error_wrong_version_installed">تم تثبيت إصدار آخر من نظام أكسجين. لا تحدد ملف تحديث نظام أكسجين عند اختيار حزمة الجذر ضمن خيار "الاحتفاظ بالروت على جهازي".</string>
-	<string name="install_verify_success_title">إكتمل التثبيت</string>
-	<string name="install_verify_success_message">تم تثبيت نظام أكسجين إصدار رقم %1$s بنجاح.</string>
-	<string name="install_zip_file_clear">مسح حزمة ملف الروت</string>
-	<string name="install_zip_file_pick">إختر حزمة ملف الروت</string>
-	<string name="install_zip_file_placeholder">إختر حزمة الروت…</string>
-	<string name="install_zip_file_wrong_file_type">يمكنك فقط إختيار ملف مضغوط. يرجى إختيار الملف الصحيح.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">قم بتثبيت التحديث وفقًا للإرشادات الموضحة في دليل التثبيت.</string>
-	<string name="install_guide_automatic_install_disabled">تم تعطيل التثبيتات التلقائية مؤقتًا بسبب مشكلات فنية تم الإبلاغ عنها. قم بتثبيت التحديث وفقًا للإرشادات الموضحة في دليل التثبيت.</string>
 	<string name="install_guide">دليل التثبيت</string>
 	<string name="install_guide_subtitle">دليل التثبيت - %1$d من %2$d</string>
 	<string name="install_guide_tip">&#8226; يوصى بتدوين جميع الخطوات ، حيث ستحتاج إلى إيقاف تشغيل الجهاز أثناء تثبيت التحديث.</string>
@@ -237,8 +191,6 @@ Instructions:
 	<string name="install_guide_page_5_title">تم. إستمتع بإصدار نظام أكسجين الجديد!</string>
 	<string name="install_guide_page_5_text">&#8226; بعد إنتهاء جهازك من تحسين التطبيقات ، سيكون قد تم تثبيت التحديث بنجاح.\nللتحقق من ذلك، يمكنك التحقق من الإصدار الحالي من نظامك على النحو التالي:\n\n&#8226; انتقل إلى الإعدادات ، انقر فوق \"حول الهاتف\" "، وتحقق من إصدار نظام أكسجين.\n\n&#8226; إذا أعجبك هذا التطبيق ، فإمنحه خمس نجوم على متجر بلاي!</string>
 	<string name="install_guide_close_button">إغلاق دليل التثبيت</string>
-	<string name="install_guide_zip_file_deleted">حزمة ملف الروت الذي حددته لم تعد موجودة. الرجاء تحديد حزمة روت جديدة أعلاه.</string>
-	<string name="install_guide_zip_file_missing">"إذا كنت ترغب في الحفاظ علي جهازك ممتلكاً للروت، سيكون عليك تحديد حزمة الروت أعلاه."</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->
@@ -304,7 +256,6 @@ Instructions:
 
 	<!-- Help strings -->
 	<string name="help">مساعدة</string>
-	<string name="help_text">مرحبًا بك في قسم المساعدة في Oxygen Updater.\n\nتغطي المساعدة المواضيع التالية:\n\n• تحديث جهازكn\• قراءة آخر الأخبارn\• عرض معلومات الجهازn\• تغيير الإعدادات n\n\إسحب لأسفل لتستعرض المواضيع.</string>
 	<string name="help_updating_your_device_title">تحديث جهازك</string>
 	<string name="help_updating_your_device_text">عند فتح التطبيق ، سترى ما إذا كان هنا تحديث للنظام متاحًا أم لا. إذا كان هناك تحديث متوفر ، يمكنك تثبيته.\n\nلبدء التثبيت، أنقر فوق زر \"تحميل\" (أسفل وصف التحديث) لبدء التحميل. عند إنتهاء التحميل، ستنبثق شاشة التثبيت. إذا تركت التطبيق أو لم تظهر إليك الشاشة المنبثقة، فأنقر فوق زر \"تثبيت\"، والذي سيكون ظاهراً بجوار زر \"تحميل\".\n\nستقوم شاشة التثبيت أولاً بفحص ما إذا كان لديك روت على الجهاز. إذا كان لديك روت، فإمنح الإذن للروت عند الطلب وإختر الطريقة التي تريد تثبيت التحديث بها. أما خلاف ذلك، فإتبع الإرشادات الخاصة بالتثبيت اليدوي.\n\nالتثبيت التلقائي:\nليس عليك سوى اختيار خيارات التثبيت الخاصة بك. يوصى بإستعمال الإعدادات الإفتراضية، باستثناء أنه يتعين عليك تحديد حزمة الروت التي يجب إعادة تثبيتها. حدد حزمة الروت عبارة عن (ملف مضغوط) بإستخدام زر المجلد الأزرق وإضغط على \"بدء التثبيت\" لبدء التثبيت.\n\nالتثبيت اليدوي:\nسترى دليل التثبيت على الشاشة. دون الإرشادات وقم بتنفيذها كما هو موضح لتثبيت التحديث.</string>
 	<string name="help_reading_news_title">قراءة آخر الأخبار</string>
@@ -374,8 +325,6 @@ Instructions:
 	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
 
 	<string name="device_warning_checkbox_title">لا تظهر هذا التحذير مرة أخرى</string>
-	<string name="root_check_title">الوصول إلى الروت</string>
-	<string name="root_check_message">يوفر Oxygen Updater عمليات تثبيت سهلة وآلية للمستخدمين الذين لديهم أجهزة ذات روت. ومع ذلك، لا تتوفر تحديثات تدريجية للأجهزة التي تم إجراء روت لها. يستطيع Oxygen Updater التحقق مما إذا كان لديك روت لتقديم طرق التحديث المناسبة فقط.\n\n إذا كان لديك روت، فإسمح لـ Oxygen Updater بالحصول على تصريح للوصول إلى الروت بعد إغلاق هذه الرسالة.\n\nلا تملك روت؟ إذاً إضغط على \"إغلاق\" وتابع إستخدام التطبيق.</string>
 
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->
@@ -388,5 +337,4 @@ Instructions:
 	<string name="icon">أيقونة</string>
 	<string name="loading">جاري التحميل…</string>
 	<string name="processing">جاري المعالجة…</string>
-	<string name="choose_file">أختر ملف</string>
 </resources>

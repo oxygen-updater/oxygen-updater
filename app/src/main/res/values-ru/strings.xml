@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Доступно обновление приложения (%1$s). Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
-	<string name="new_app_version_long">Доступно обновление приложения (%1$s). Постоянное обновление приложения гарантирует, что вы всегда будете получать новейшие функции и исправления ошибок. Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
 	<string name="new_app_version_inapp_downloaded">Обновление приложения загружено</string>
 	<string name="new_app_version_inapp_failed">Не удалось установить обновление приложения. Нажмите здесь, чтобы открыть Play Store и обновить приложение.</string>
 
@@ -135,7 +134,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
 	<string name="faq_menu_item">"FAQ"</string>
-	<string name="faq_no_network_text">"Необходимо подключение, чтобы открыть FAQ."</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Добро пожаловать"</string>
@@ -176,59 +174,9 @@
 
 	<!-- Automatic install strings -->
 	<string name="install">"Установить"</string>
-	<string name="install_checking_root">"Проверка наличия рута…"</string>
-	<string name="install_grant_root_permissions">"Пожалуйста, предоставьте рут-доступ по запросу."</string>
-	<string name="install_going_back_not_possible">"К сожалению, вернуться уже нельзя"</string>
-	<string name="install_preparing_installation">"Подготовка установки…"</string>
-	<string name="install_recovery_installer_title">"Установщик обновления"</string>
-	<string name="install_recovery_backing_up">"Резервное копирование устройства. Это займет некоторое время!"</string>
-	<string name="install_recovery_clearing_cache">"Очистка кэша (cache partition)…"</string>
-	<string name="install_recovery_done">"Готово. Устройство перезагрузится."</string>
-	<string name="install_recovery_installing_additional_zip">"Установка дополнительного ZIP архива…"</string>
-	<string name="install_recovery_installing_update">"Установка обновления…"</string>
-	<string name="install_recovery_thank_you">"Спасибо за использование Oxygen Updater. Если вам нравится приложение, пожалуйста оцените его на 5 звезд в Google Play :-)"</string>
-	<string name="install_error_write_script_failed">"Не удалось подготовить установку обновления. Проверьте, предоставлен ли рут-доступ."</string>
-	<string name="install_options_backup">"Резервное копирование устройства"</string>
-	<string name="install_options_header">"Вы можете настроить процесс установки изменяя опции снизу. Нажмите \"Начать установку\" для установки обновления."</string>
-	<string name="install_options_keep_root">"Сохранить рут-права на устройстве"</string>
-	<string name="install_options_reboot_after_install">"Перезагрузить после установки"</string>
-	<string name="install_options_select_root_package">"Выберите файл установки рута"</string>
-	<string name="install_options_start_install">"Начать установку"</string>
-	<string name="install_options_subtitle">"Выберите настройки установки"</string>
-	<string name="install_options_wipe_cache_partition">"Очистить кэш (cache partition)"</string>
-	<string name="install_options_explanation_title">"Что эти настройки означают?"</string>
-	<string name="install_options_explanation_backup">"Резервная копия устройства:
-При выборе этой опции, перед установкой будет сделана резервная копия вашей системы, приложений и настроек. Не помешает, если произойдет что-то ужасное."</string>
-	<string name="install_options_explanation_keep_root">"Сохранить рут-права на устройстве:
-При выборе этой опции, вы можете выбрать файл установки рута, который будет установлен после обновления системы. Это гарантирует сохранение рута на устройстве. Заметьте, что рут должен быть совместим с новой версией OxygenOS, которую вы собираетесь установить."</string>
-	<string name="install_options_explanation_wipe_cache">"Очистка кэша (cache partition):
-При выборе этой опции, раздел кэша будет очищен после установки обновления. Это гарантирует стабильную работу устройства и снижает вероятность возникновения ошибок, вызванных установкой обновления."</string>
-	<string name="install_options_explanation_reboot">"Перезагрузить после установки:
-При выборе этой опции ваше устройство автоматически загрузится в систему после установки обновления. В противном случае ваше устройство останется в рекавери, где вы можете установить дополнительные архивы."</string>
-	<string name="install_method_chooser_title">Выберите способ установки</string>
-	<string name="install_method_chooser_subtitle">"Как вы хотите установить обновление?"</string>
-	<string name="install_method_chooser_automatic_title">"Автоматическая установка*"</string>
-	<string name="install_method_chooser_automatic_description">"Самый простой способ установки.
-Устройство перезагрузится для установки обновления.
-
-* Требуются рут-права и TWRP рекавери."</string>
-	<string name="install_method_chooser_manual_title">"Ручная установка"</string>
-	<string name="install_method_chooser_manual_description">"Прочтите руководство по установке, чтобы узнать, как установить обновление. Вы установите обновление, используя режим восстановления вашего устройства."</string>
-	<string name="install_temporary_error">"При подготовке установки обновления произошла временная ошибка. Повторите попытку."</string>
-	<string name="install_verify_error_title">"Ошибка установки"</string>
-	<string name="install_verify_error_nothing_installed">"Ошибка при установке обновления. Никакие изменения не были внесены в ПО вашего устройства. Попробуйте установить обновление еще раз."</string>
-	<string name="install_verify_error_unable_to_verify">"Не удалось проверить, было ли обновление установлено успешно. Пожалуйста, откройте Oxygen Updater, чтобы убедиться, что обновление было установлено успешно."</string>
-	<string name="install_verify_error_wrong_version_installed">"Была установлена другая версия OxygenOS. Не выбирайте файл прошивки, при выборе архива рута в опции \"Сохранить рут-права\"."</string>
-	<string name="install_verify_success_title">"Установка завершена"</string>
-	<string name="install_verify_success_message">"OxygenOS версии %1$s установлен успешно."</string>
-	<string name="install_zip_file_clear">"Очистить архив установки рута"</string>
-	<string name="install_zip_file_pick">"Выберите архив установки рута"</string>
-	<string name="install_zip_file_placeholder">"Выберите архив рута…"</string>
-	<string name="install_zip_file_wrong_file_type">"Вы можете выбрать только zip файл. Выберите правильный архив."</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">"Установите обновление, следуя инструкциям в руководстве по установке."</string>
-	<string name="install_guide_automatic_install_disabled">"Автоматические установки были временно отключены из-за технических проблем. Установите обновление в соответствии с инструкциями, приведенными в руководстве по установке."</string>
 	<string name="install_guide">"Руководство по установке"</string>
 	<string name="install_guide_subtitle">"Руководство по установке - %1$d of %2$d"</string>
 	<string name="install_guide_tip">"&#8226; Рекомендуется записать все шаги установки, так как потребуется отключить устройство во время обновления."</string>
@@ -275,8 +223,6 @@
 
 - Если вам нравится это приложение, поставьте 5 звезд в Google Play!"</string>
 	<string name="install_guide_close_button">"Закрыть Руководство по установке"</string>
-	<string name="install_guide_zip_file_deleted">"Выбранный архив установки рут-прав больше не существует. Выберите новый архив выше."</string>
-	<string name="install_guide_zip_file_missing">"Если вы хотите сохранить рут-права на устройстве, выберите архив для установки выше."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Ваше устройство поддерживается</string>
@@ -337,16 +283,6 @@
 
 	<!-- Help strings -->
 	<string name="help">"Помощь"</string>
-	<string name="help_text">"Добро пожаловать в раздел помощи Oxygen Updater.
-
-Помощь охватывает следующие темы:
-
-• Обновление устройства
-• Чтение последних новостей
-• Просмотр информации об устройстве
-• Изменение настроек
-
-Прокрутите вниз, чтобы просмотреть темы."</string>
 	<string name="help_updating_your_device_title">"Обновление устройства"</string>
 	<string name="help_updating_your_device_text">"При открытии приложения вы увидите, доступно ли обновление системы. Если обновление доступно, его можно установить.
 
@@ -428,12 +364,6 @@
 	<string name="incorrect_device_warning_message">Похоже, вы выбрали не то устройство: \"%1$s\" вместо \"%2$s\". Измените свой выбор в настройках приложения, чтобы получать обновления и уведомления для правильного устройства.</string>
 
 	<string name="device_warning_checkbox_title">"Не показывать это предупреждение снова"</string>
-	<string name="root_check_title">"Рут-доступ"</string>
-	<string name="root_check_message">"Oxygen Updater предлагает простые автоматические установки обновлений для пользователей с рут-правами. Тем не менее, частичные обновления недоступны для устройств с рутом. Oxygen Updater может проверить, есть ли у вас рут для предоставления соответствующих методов обновления.
-
-Если у вас есть рут, крайне желательно предоставить рут-права приложению, после закрытия данного диалогового окна.
-
-Нет рута? Тогда нажмите \"Закрыть\" и продолжите пользоваться данным приложением."</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ваша покупка находится в состоянии «ожидание оплаты». Как только оплата будет завершена, вам будут предоставлены все льготы, на которые вы имеете право.</string>
@@ -444,6 +374,5 @@
 	<string name="icon">"Иконка"</string>
 	<string name="loading">"Загрузка…"</string>
 	<string name="processing">"Обработка…"</string>
-	<string name="choose_file">"Выберите файл"</string>
 	<string name="update_information_description_not_available">"Официальная информация об обновлении не предоставлена. Обычно такие обновления содержат исправления мелких ошибок, улучшения производительности и/или критические обновления безопасности."</string>
 </resources>

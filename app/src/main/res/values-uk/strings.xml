@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Доступне оновлення (%1$s). Натисніть, щоб відкрити Play Маркет і оновити застосунок.</string>
-	<string name="new_app_version_long">Доступне оновлення застосунку (%1$s). Своєчасне оновлення дозволить вам завжди використовувати останні можливості і виправлення помилок.\nНатисніть, щоб відкрити Play Маркет і оновити застосунок.</string>
 	<string name="new_app_version_inapp_downloaded">Оновлення застосунку завантажено</string>
 	<string name="new_app_version_inapp_failed">Неможливо встановити оновлення застосунку. Натисніть, щоб відкрити Play Маркет і оновити застосунок.</string>
 
@@ -141,7 +140,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">ЧаПи</string>
 	<string name="faq_menu_item">ЧаПи</string>
-	<string name="faq_no_network_text">Щоб переглянути сторінку ЧаПи, потрібне робоче з\'єднання з мережею.</string>
 
 	<!-- First-time onboarding strings -->
 	<string name="onboarding">Вітання</string>
@@ -159,62 +157,9 @@
 
 	<!-- Automatic install strings -->
 	<string name="install">Встановлення</string>
-	<string name="install_checking_root">Перевірка, чи ваш пристрій рутовано…</string>
-	<string name="install_grant_root_permissions">Будь ласка, надайте рут права, коли з\'явиться вікно.</string>
-	<string name="install_going_back_not_possible">На жаль, ви вже не можете вернутися назад</string>
-	<string name="install_preparing_installation">Підготування до встановлення…</string>
-
-	<string name="install_recovery_installer_title">Оновити Інсталятор&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Створення резервної копії пристрою. Це може зайняти деякий час!</string>
-	<string name="install_recovery_clearing_cache">Очищення кеш-розділу…</string>
-	<string name="install_recovery_done">Готово. Ваш пристрій зараз перезавантажиться.</string>
-	<string name="install_recovery_installing_additional_zip">Встановлення додаткового ZIP файлу…</string>
-	<string name="install_recovery_installing_update">Встановлення оновлення…</string>
-	<string name="install_recovery_thank_you">Дякуємо за використання Oxygen Updater. Якщо вам сподобався цей застосунок, будь ласка, поставте 5 зірочок в Google Play :-)</string>
-
-	<string name="install_error_write_script_failed">"Не вдалося підготуватися до встановлення оновлення. Ви надавали рут права?"</string>
-
-	<string name="install_options_backup">Зробити резервну копію</string>
-	<string name="install_options_header">Ви можете налаштувати процес встановлення, змінюючи параметри нижче. Натисніть \'Почати встановлення\', щоб розпочати встановлення оновлення.</string>
-	<string name="install_options_keep_root">Зберегти рут права</string>
-	<string name="install_options_reboot_after_install">Перезавантажити після встановлення</string>
-	<string name="install_options_select_root_package">Вибрати файл з рутом…</string>
-	<string name="install_options_start_install">Почати встановлення</string>
-	<string name="install_options_subtitle">Виберіть параметри встановлення</string>
-	<string name="install_options_wipe_cache_partition">Очистити розділ кеша</string>
-
-	<string name="install_options_explanation_title">Що означають ці параметри?</string>
-	<string name="install_options_explanation_backup">Зробити резервну копію:\nДо початку встановлення буде створено резервну копію вашої системи, застосунків і налаштувань. Таку копію завжди потрібно мати під рукою, якщо щось піде не так.</string>
-	<string name="install_options_explanation_keep_root">Зберегти рут права:\nВам буде запропоновано вибрати архів, в якому міститься рут. Цей архів буде встановлено після успішного встановлення оновлення. Таким чином, ваш пристрій матиме рут права після встановлення. Будь ласка, майте на увазі, що рут архів може бути не сумісний з НОВОЮ версією OxygenOS, яку ви збираєтеся встановити!</string>
-	<string name="install_options_explanation_wipe_cache">Очистити розділ кеша:\nПісля встановлення оновлення буде очищено розділ з кешами. Це гарантує, що ваш пристрій буде оптимально працювати, а також зменшує ризик виникнення помилок, викликаних встановленням оновлення.</string>
-	<string name="install_options_explanation_reboot">Перезавантажити після встановлення:\nВаш пристрій автоматично перезавантажиться в нову систему OxygenOS, після встановлення оновлення. Інакше, ваш пристрій залишиться в режимі Відновлення, де ви зможете встановити додаткові архіви.</string>
-
-	<string name="install_method_chooser_title">Виберіть спосіб встановлення</string>
-	<string name="install_method_chooser_subtitle">Як ви хочете встановити це оновлення?</string>
-	<string name="install_method_chooser_automatic_title">Автоматичне встановлення*</string>
-	<string name="install_method_chooser_automatic_description">Найлегший спосіб встановити оновлення.\nВаш пристрій перезавантажиться, щоб встановити оновлення.\n\n* Потрібні рут права і відновлювач TWRP.</string>
-
-	<string name="install_method_chooser_manual_title">Ручне встановлення</string>
-	<string name="install_method_chooser_manual_description">Прочитайте інструкцію, щоб дізнатися як встановити оновлення. В цьому способі використовується режим Відновлення (Recovery), який має бути на вашому пристрої.</string>
-
-	<string name="install_temporary_error">Виникла тимчасова помилка під час підготовки до встановлення. Будь ласка, спробуйте знову.</string>
-
-	<string name="install_verify_error_title">Не вдалося встановити</string>
-	<string name="install_verify_error_nothing_installed">Виникла помилка під час встановлення оновлення. До вашої системи не внесено ніяких змін. Спробуйте встановити оновлення ще раз.</string>
-	<string name="install_verify_error_unable_to_verify">Не вдалося перевірити, чи оновлення успішно встановлено. Будь ласка, відкрийте Oxygen Updater, щоб побачити, чи оновлення встановилося.</string>
-	<string name="install_verify_error_wrong_version_installed">Було встановлено іншу версію OxygenOS. Не вибирайте файл прошивки, якщо вибираєте архів рута при увімкненому параметрі "Зберегти рут права".</string>
-
-	<string name="install_verify_success_title">Успішно встановлено</string>
-	<string name="install_verify_success_message">Нову версію %1$s OxygenOS успішно встановлено на ваш пристрій.</string>
-
-	<string name="install_zip_file_clear">Очистити рут архів</string>
-	<string name="install_zip_file_pick">Вибрати рут архів</string>
-	<string name="install_zip_file_placeholder">Вибрати рут архів…</string>
-	<string name="install_zip_file_wrong_file_type">Можна вибрати лише zip архів. Будь ласка, виберіть правильний файл.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Встановіть оновлення відповідно до інструкції</string>
-	<string name="install_guide_automatic_install_disabled">Автоматичні встановлення тимчасово вимкнені через технічні неполадки. Встановіть оновлення відповідно до інструкції.</string>
 	<string name="install_guide">Інструкція по встановленню</string>
 	<string name="install_guide_subtitle">Інструкція — крок %1$d з %2$d</string>
 	<string name="install_guide_tip">&#8226; Рекомендується записати всі кроки, тому що вам потрібно буде вимкнути пристрій, щоб встановити оновлення.</string>
@@ -252,9 +197,6 @@
 	<string name="install_guide_page_5_text">&#8226; Після того, як пристрій завершить оптимізацію застосунків, оновлення успішно завершиться.\nЩоб це перевірити, ви можете переглянути поточну версію OxygenOS наступним чином:\n\n&#8226; Зайдіть в Налаштування, в самому низу виберіть \"Про телефон\", і погляньте на номер складання.\n\n&#8226; Якщо вам сподобався цей застосунок, поставте йому 5 зірочок в Google Play!</string>
 
 	<string name="install_guide_close_button">Закрити інструкцію</string>
-
-	<string name="install_guide_zip_file_deleted">Архіву з рутом, який ви обрали, більше немає. Будь ласка, виберіть новий архів вище.</string>
-	<string name="install_guide_zip_file_missing">"Якщо ви хочете зберегти рут права на вашому пристрої, виберіть рут архів вище."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Ваш пристрій підтримується</string>
@@ -318,7 +260,6 @@
 
 	<!-- Help strings -->
 	<string name="help">Допомога</string>
-	<string name="help_text">Вітаємо на сторінці допомоги по Oxygen Updater.\n\nЦя сторінка містить такі розділи:\n\n• Оновлення вашого пристрою\n• Читання останніх новин\n• Перегляд інформації про пристрій\n• Змінення налаштувань\n\nПрогорніть нижче, щоб перейти до цих розділів.</string>
 	<string name="help_updating_your_device_title">Оновлення вашого пристрою</string>
 	<string name="help_updating_your_device_text">Коли відкриєте застосунок, ви побачите, чи є доступне оновлення. Якщо оновлення доступне, ви зможете його встановити.\n\nЩоб завантажити оновлення, натисніть кнопку \"Завантажити\" (нижче опису оновлення). Після завершення завантаження, з\'явиться вікно встановлення. Якщо ви закрили застосунок, або вікно не з\'явилося, тоді натисніть кнопку \"Встановити\", яка буде розміщена біля кнопки \"Завантажити\".\n\nСпочатку застосунок перевірить, чи ваш пристрій має рут права. Якщо у вас рутований пристрій, надайте рут права застосункові і виберіть як ви хочете встановити оновлення. Інакше, дотримуйтесь інструкції для Ручного встановлення.\n\nАвтоматичне встановлення:\nВам лише потрібно вибрати параметри встановлення. Рекомендуються усталені параметри, однак ви також можете додати рут архів, щоб (пере)встановити рут права. Виберіть рут архів (zip файл), використовуючи зелену кнопку з текою і натисніть \"Почати встановлення\", щоб розпочати встановлення.\n\nРучне встановлення:\nВи побачите інструкцію по встановленню. Випишіть собі кроки встановлення з інструкції, перед тим як почнете встановлення.</string>
 	<string name="help_reading_news_title">Читання останніх новин</string>
@@ -385,9 +326,6 @@
 
 	<string name="device_warning_checkbox_title">Не показувати це попередження знову</string>
 
-	<string name="root_check_title">Рут права</string>
-	<string name="root_check_message">Oxygen Updater дозволяє легко оновлювати пристої, на яких встановлені рут права. Проте, інкрементне оновлення не доступне для таких пристроїв. Oxygen Updater може перевірити, чи пристрій має рут права, щоб запропонувати відповідні способи оновлення.\n\nЯкщо пристрій має рут права, надайте їх Oxygen Updater після того, як закриєте це вікно.\n\nЯкщо рут прав немає, тоді просто натисніть \"Закрити\" і продовжуйте використовувати застосунок.</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ваша покупка знаходиться в статусі \"очікування платежу\". Після надходження платежу, вам будуть доступні всі переваги платної версії.</string>
 	<string name="purchase_error_after_payment">Не вдалося купити видалення реклами, тому що виникла внутрішня помилка. Будь ласка, спробуйте знову через декілька хвилин. Якщо ви вже купляли, будь ласка, зверніться до підтримки Google Play за допомогою.</string>
@@ -397,5 +335,4 @@
 	<string name="icon">Значок</string>
 	<string name="loading">Завантажується…</string>
 	<string name="processing">Опрацювання…</string>
-	<string name="choose_file">Вибрати файл</string>
 </resources>

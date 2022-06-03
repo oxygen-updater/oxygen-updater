@@ -127,37 +127,6 @@ object SettingsManager {
     const val PROPERTY_RECEIVE_NEWS_NOTIFICATIONS = "receive_news_notifications"
     const val PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS = "receive_new_device_notifications"
 
-    @Suppress("unused")
-    @Deprecated(
-        message = """
-            No longer used in v5.0.0+ (redesign release). Despite what the name
-            suggests, this was meant for showing important notices/announcements.
-            Prior to v4.0.0, notices were shown line-by-line in the "Update" page.
-            That wasted screen space, which is why we allowed the user to toggle a
-            setting so that those notices are hidden. v4.0.0+ changed this to a
-            clickable single-line banner, that shows a bottom sheet once clicked.
-            This reduced screen space wastage a lot, but we still allowed the user
-            to hide that banner. However, v5.0.0+ now has a clickable toolbar icon
-            instead, which doesn't not waste screen space at all. So this setting
-            is no longer needed.
-        """,
-        level = DeprecationLevel.HIDDEN
-    )
-    const val PROPERTY_SHOW_NEWS_MESSAGES = "show_news_messages"
-
-    @Suppress("unused")
-    @Deprecated(
-        message = """
-            No longer used in v5.0.0+ (redesign release), because v4.0.0+ brought
-            support for Google Play's in-app updates, which effectively made the
-            banner redundant. However, the banner is still shown in case the in-app
-            update fails but given how this is an error handling case, we should
-            always show the banner regardless of what the user's preferences are.
-        """,
-        level = DeprecationLevel.HIDDEN
-    )
-    const val PROPERTY_SHOW_APP_UPDATE_MESSAGES = "show_app_update_messages"
-
     @Deprecated(
         message = "Used between v1.0.0 and v2.4.5 only",
         replaceWith = ReplaceWith(
@@ -180,17 +149,6 @@ object SettingsManager {
      * Value cannot be changed - is from older version where it was called 'upload_logs'
      */
     const val PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs"
-
-    const val PROPERTY_ADDITIONAL_ZIP_FILE_PATH = "additional_zip_file_path"
-    const val PROPERTY_BACKUP_DEVICE = "backupDevice"
-    const val PROPERTY_KEEP_DEVICE_ROOTED = "keepDeviceRooted"
-    const val PROPERTY_WIPE_CACHE_PARTITION = "wipeCachePartition"
-    const val PROPERTY_REBOOT_AFTER_INSTALL = "rebootAfterInstall"
-    const val PROPERTY_VERIFY_SYSTEM_VERSION_ON_REBOOT = "verifySystemVersion"
-    const val PROPERTY_OLD_SYSTEM_VERSION = "oldSystemVersion"
-    const val PROPERTY_TARGET_SYSTEM_VERSION = "targetSystemVersion"
-    const val PROPERTY_INSTALLATION_ID = "installationId"
-    const val PROPERTY_IS_AUTOMATIC_INSTALLATION_ENABLED = "isAutomaticInstallationEnabled"
 
     @Deprecated(
         message = """

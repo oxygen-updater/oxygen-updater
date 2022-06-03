@@ -17,7 +17,6 @@ abstract class SystemVersionPropertiesTest {
         null,
         null,
         null,
-        false
     )
 
     /**

@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">קיים עדכון חדש עבור האפליקציה (%1$s) לחץ כאן בשביל לפתוח את חנות הPlay Store ולעדכן את האפליקציה.</string>
-	<string name="new_app_version_long">קיים עדכון חדש (%1$s) וידוא כי האפליקציה נמצאת בגרסתה האחרונה והמעודכנת מאפשר לך לוודא כי תמיד תקבל את כל התכונות החדשות ותיקוני הבאגים. לחץ כאן על מנת לפתוח את דף האפליקציה ב־Play Store ולהוריד את העדכון.</string>
 	<string name="new_app_version_inapp_downloaded">האפליקציה עודכנה בהצלחה</string>
 	<string name="new_app_version_inapp_failed">העדכון לא ניתן להתקנה. לחץ כאן על מנת לפתוח את ה־Play Store ולנסות שנית.</string>
 
@@ -140,7 +139,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">שאלות ותשובות</string>
 	<string name="faq_menu_item">שאלות ותשובות</string>
-	<string name="faq_no_network_text">הינך צריך חיבור יציב אל רשת האינטרנט בשביל לצפות בעמוד שאלות ותשובות.</string>
 
 	<!-- First-time onboarding strings -->
 	<string name="onboarding">ברוך הבא</string>
@@ -158,62 +156,9 @@
 
 	<!-- Automatic install strings -->
 	<string name="install">התקן</string>
-	<string name="install_checking_root">בודק אם למכשיר שלך יש גישת Root…</string>
-	<string name="install_grant_root_permissions">אנא הענק גישה מלאה בעת בקשת משתמש על כשתתבקש</string>
-	<string name="install_going_back_not_possible">למרבה הצער, לא ניתן לחזור אחורה כעת</string>
-	<string name="install_preparing_installation">מכין התקנה…</string>
-
-	<string name="install_recovery_installer_title">התקנת עדכון&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">מגבה את המכשיר שלך. תהליך זה עלול לקחת זמן מה!</string>
-	<string name="install_recovery_clearing_cache">מנקה את מחיצת המטמון…</string>
-	<string name="install_recovery_done">בוצע. המכשיר שלך כעת יופעל מחדש.</string>
-	<string name="install_recovery_installing_additional_zip">מתקין את קובץ הZIP הנוסף…</string>
-	<string name="install_recovery_installing_update">מתקין את העדכון…</string>
-	<string name="install_recovery_thank_you">תודה לך על כך שאת/ה משתמש/ת בOxygen Updater. אם את/ה אוהב/ת את האפליקציה, נשמח אם תדרג/י אותנו בGoogle Play ב5 כוכבים  :-)</string>
-
-	<string name="install_error_write_script_failed">"הכנת התקנת העדכון נכשלה. האם הענקת גישה מלאה בעת משתמש על?"</string>
-
-	<string name="install_options_backup">גבה את המכשיר שלי</string>
-	<string name="install_options_header">באפשרותך להתאים אישית את תהליך ההתקנה על ידי שינוי האפשרויות המוצגות למטה. הקש על \"התחל התקנה\" כדי להתחיל בהתקנת העדכון.</string>
-	<string name="install_options_keep_root">השאר את המכשיר שלי עם גישת Root</string>
-	<string name="install_options_reboot_after_install">הפעל מחדש אחרי ההתקנה</string>
-	<string name="install_options_select_root_package">בחר את חבילת הRoot להתקנה…</string>
-	<string name="install_options_start_install">התחל בהתקנה</string>
-	<string name="install_options_subtitle">התאם את ההתקנה לפי רצונך</string>
-	<string name="install_options_wipe_cache_partition">מחק את מחיצת המטמון</string>
-
-	<string name="install_options_explanation_title">מה האפשרויות האלו אומרות?</string>
-	<string name="install_options_explanation_backup">גבה את המכשיר שלי: \nכשאת/ה בוחר/ת באפשרות זו יחל גיבוי של המערכת, היישומים וההגדרות. דבר שתמיד טוב שיהיה מופעל, במקרה ומשהו משתבש.</string>
-	<string name="install_options_explanation_keep_root">שמור על המכשיר שלי עם גישת Root: \nכשאת/ה בוחר/ת באפשרות זו, את/ה עלול/ה לבחור חבילת Root אשר תותקן אחרי שהעדכון יותקן. זה יוודא שהמכשיר שלך יישאר עם גישת Root. שימ/י לב שחבילת הRoot שאת/ה בוחר/ת חייבת לתמוך בגרסה החדשה של OxygenOS שאת/ה עומד/ת להתקין!</string>
-	<string name="install_options_explanation_wipe_cache">מחק את מחיצת המטמון: \nכשאת/ה בוחר/ת באפשרות זו, מחיצת המטמון תמחק אחרי שהעדכון יותקן. זה יוודא שהמכשיר שלך יתפקד באופן אופטימלי וגם יפחית את הסבירות לחוות באגים הנגרמים על ידי התקנת העדכון.</string>
-	<string name="install_options_explanation_reboot">הפעלה מחדש לאחר ההתקנה: \nכשתבחר/י באפשרות זו, המכשיר שלך יופעל מחדש באופן אוטומטי חזרה לOxygenOS אחרי שהעדכון יותקן. אחרת, המכשיר שלך יישאר במצב שחזור, איפה שאתה יכול להתקין חבילות נוספות.</string>
-
-	<string name="install_method_chooser_title">בחר/י שיטת עדכון</string>
-	<string name="install_method_chooser_subtitle">איך ברצונך להתקין את העדכון?</string>
-	<string name="install_method_chooser_automatic_title">התקנה אוטומטית</string>
-	<string name="install_method_chooser_automatic_description">הדרך הכי קלה להתקין את העדכון. \nהמכשיר שלך יופעל מחדש כדי להתקין את העדכון. \n\*דורש גישת Root ושחזור TWRP.</string>
-
-	<string name="install_method_chooser_manual_title">התקנה ידנית</string>
-	<string name="install_method_chooser_manual_description">קרא את מדריך ההתקנה כדי ללמוד איך להתקין את העדכון. העדכון יתבצע דרך מצב השחזור של המכשיר שלך.</string>
-
-	<string name="install_temporary_error">אירעה שגיאה זמנית במהלך הכנת התקנת העדכון. אנא נסה שנית.</string>
-
-	<string name="install_verify_error_title">ההתקנה נכשלה</string>
-	<string name="install_verify_error_nothing_installed">שגיאה במהלך התקנת העדכון. לא בוצעו שום שינויים למערכת של המכשיר שלך. אנא נסה להתקין את העדכון שנית.</string>
-	<string name="install_verify_error_unable_to_verify">נכשל הבדיקה כדי לראות אם העדכון הותקן בהצלחה. אנא פתח את Oxygen Updater כדי לראות אם העדכון הותקן בהצלחה.</string>
-	<string name="install_verify_error_wrong_version_installed">הותקנה גרסה אחרת של OxygenOS. אל תבחר/י קובץ עדכון לOxygenOS כשבוחרים חבילת Root תחת \"השאר את המכשיר שלי עם גישת Root\"</string>
-
-	<string name="install_verify_success_title">ההתקנה הושלמה</string>
-	<string name="install_verify_success_message">גרסת OxygenOS %1$s הותקנה בהצלחה.</string>
-
-	<string name="install_zip_file_clear">נקה קובץ חבילת Root</string>
-	<string name="install_zip_file_pick">בחר קובץ חבילת Root</string>
-	<string name="install_zip_file_placeholder">בחר חבילת Root…</string>
-	<string name="install_zip_file_wrong_file_type">הינך צריך לבחור קובץ מסוג zip. אנא בחר את הקובץ הנכון.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
-	<string name="install_guide_automatic_install_disabled">עדכונים אוטומטיים הושבתו זמנית עקב בעיות טכניות שדווחו. התקן את העדכון לפי ההוראות המוצגות במדריך ההתקנה.</string>
 	<string name="install_guide">מדריך התקנה</string>
 	<string name="install_guide_subtitle">מדריך התקנה - %1$d מתוך %2$d</string>
 	<string name="install_guide_tip">&#8226; מומלץ לרשום את כל השלבים מכיוון שכיבוי המכשיר הוא אחד משלבי ההדרכה של ההתקנה.</string>
@@ -252,9 +197,6 @@
 	<string name="install_guide_page_5_text">&#8226; לאחר שמכשירך סיים לעשות מיטוב אפליקציות, משמעות הדבר הוא שהעדכון הותקן בהצלחה. \nבשביל לאמת זאת, הינך מוזמן לבדוק את הגרסה הנוכחית של המערכת שלך על ידי: \n\n&#8226;כניסה להגדרות המכשיר, ולחיצה על "מידע על הטלפון"  ומשם מוזמן לבדוק את גרסת הOxygenOS. \n\n&#8226;אם אהבת את האפליקציה, נשמח אם תדרג אותנו ב5 כוכבים ב־Google Play!</string>
 
 	<string name="install_guide_close_button">סגור מדריך התקנה</string>
-
-	<string name="install_guide_zip_file_deleted">קובץ חבילת הRoot שבחרת אינו קיים יותר. אנא בחר קובץ Root חדש מלמעלה.</string>
-	<string name="install_guide_zip_file_missing">"אם ברצונך להמשיך להשאיר את המכשיר שלך עם גישת Root, יידרש לבחור קובץ Root מלמעלה."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">המכשיר שלך נתמך</string>
@@ -317,7 +259,6 @@
 
 	<!-- Help strings -->
 	<string name="help">עזרה</string>
-	<string name="help_text">ברוכים הבאים לחלקת העזרה של Oxygen Updater. \n\nעזרה מכסה את הנושאים הבאים: \n\n• עדכן את המכשיר שלך\n•קריאת חדשות אחרונות\n•צפייה בפרטי המכשיר\n• שינוי הגדרות\n\n גרור מטה כדי לדפדף דרך הנושאים.</string>
 	<string name="help_updating_your_device_title">עדכן את המכשיר שלך</string>
 	<string name="help_updating_your_device_text">בזמן שהאפליקציה פתוחה, יוצג לפניך אם קיים עדכון מערכת חדש. במידה וקיים עדכון מערכת חדש תהיה לך האפשרות להוריד את העדכון. \n\nכדי להתחיל בהתקנה, לחץ על כפתור \"הורד עדכון\" ולאחר מכן כשההורדה הסתיימה, מסך ההתקנה יופיע. אם עזבת את האפליקציה או שהמסך לא הופיע, לחץ על כפתור \"העדכון ירד בהצלחה\".\n\nראשית, מסך ההתקנה יבדוק אם יש לכם גישת Root. אם יש לכם גישת Root, הענק גישת Root כשתתבקש/י ולאחר מכן יהיה באפשרותך לבחור את שיטת ההתקנה הרצויה. במידה ואין לך גישת Root, עקוב אחר ההוראות בשביל התקנה ידנית. \n\nהתקנה אוטומטית: יהיה עליך לבחור את אפשרויות ההתקנה, אנו ממליצים להשתמש בהגדרות ברירת המחדל, יש לציין שיש צורך בחבילת ה-Root הרצויה שצריכה להיות מותקנת מחדש. בחר חבילת Root (קובץ zip) על ידי שימוש באייקון בצורת תיקייה כחולה ולחץ על \"התחל בהתקנה\" כדי להתחיל את ההתקנה. \n\nהתקנה ידנית: \nיוצג לך מדריך התקנה במסך שלך. אנו ממליצים לרשום את ההוראות במקור חיצוני: (דף, מחשב…) ולבצע אותם כאמור למדריך ההתקנה.</string>
 	<string name="help_reading_news_title">קרא את החדשות האחרונות</string>
@@ -383,9 +324,6 @@
 
 	<string name="device_warning_checkbox_title">אל תציג אזהרה זו שוב</string>
 
-	<string name="root_check_title">גישת Root</string>
-	<string name="root_check_message">אפליקציית Oxygen Updater מציעה התקנת עדכונים קלים ואוטומטיים למשתמשים עם מכשירים עם גישת Root. \n\עם זאת, שיטת Incremental אינה זמינה עבור מכשירים עם גישת Root. אפליקציית Oxygen Updater יכולה לבדוק אם יש לך גישת Root כדי להציע שיטות עדכון מותאמות עבור Root בלבד. \n\nאם יש לך גישת Root, הענק לOxygen Updater גישת Root אחרי סגירת ההודעה הזאת. \n\nאין למכשיר שלך גישת Root? לחץ \"סגור\" והמשך להשתמש באפליקציה.</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">הרכישה שלך נמצאת במצב \"תשלום בהמתנה\". לאחר השלמת התשלום, תקבל את כל ההטבות שאתה זכאי להן.</string>
 	<string name="purchase_error_after_payment">רכישת הגרסה חסרת המודעות נכשלה, מכיוון שהתרחש שגיאה פנימית. נסה שוב בעוד מספר דקות. אם חוייבת בכרטיס האשראי, אנאא פנה לתמיכה של Google Play לקבלת סיוע.</string>
@@ -394,5 +332,4 @@
 	<string name="icon">סמל</string>
 	<string name="loading">טוען…</string>
 	<string name="processing">מעבד…</string>
-	<string name="choose_file">בחר קובץ</string>
 </resources>

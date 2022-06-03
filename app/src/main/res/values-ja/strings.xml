@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">アプリのアップデートが利用可能です (%1$s)。ここをタップして Play ストアを開きアプリをアップデートします。</string>
-	<string name="new_app_version_long">アプリのアップデートが利用可能です (%1$s)。アプリを最新にすることで新機能と不具合の修正を入手できます。\nここをタップして Play ストアを開きアプリをアップデートします。</string>
 	<string name="new_app_version_inapp_downloaded">アプリのアップデートがダウンロードされました</string>
 	<string name="new_app_version_inapp_failed">アプリのアップデートをインストールできません。ここをタップして Play ストアを開きアプリをアップデートします。</string>
 
@@ -141,7 +140,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">FAQ ページを表示するには、有効な接続が必要です。</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">ようこそ</string>
@@ -159,62 +157,9 @@
 
 	<!-- Automatic install strings -->
 	<string name="install">インストール</string>
-	<string name="install_checking_root">デバイスがルート化済かを確認中…</string>
-	<string name="install_grant_root_permissions">ダイアログが表示されたらルートへのアクセスを許可して下さい。</string>
-	<string name="install_going_back_not_possible">残念ながら今は戻る操作は出来ません</string>
-	<string name="install_preparing_installation">インストールの準備中…</string>
-
-	<string name="install_recovery_installer_title">インストーラのアップデート&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">デバイスのバックアップ中です。これにはしばらく時間がかかります。</string>
-	<string name="install_recovery_clearing_cache">cache パーティションの消去中…</string>
-	<string name="install_recovery_done">完了しました。デバイスが再起動されます。</string>
-	<string name="install_recovery_installing_additional_zip">追加のZIPファイルをインストール中…</string>
-	<string name="install_recovery_installing_update">アップデートのインストール中…</string>
-	<string name="install_recovery_thank_you">Oxygen Updator をお使いくださりありがとうございます。アプリが気に入ったなら、Google Play で５つ星の評価をお願いします :-)</string>
-
-	<string name="install_error_write_script_failed">"アップデートのインストール準備中に失敗しました。本アプリのルート権限へのアクセスを許可しましたか?"</string>
-
-	<string name="install_options_backup">デバイスのバックアップ</string>
-	<string name="install_options_header">以下に表示されるオプションを変更することで、インストールプロセスをカスタマイズ出来ます。\'インストールの開始\'をタップしアップデートのインストールを開始して下さい。</string>
-	<string name="install_options_keep_root">デバイスのルート化済を維持</string>
-	<string name="install_options_reboot_after_install">インストール後に再起動する</string>
-	<string name="install_options_select_root_package">インストール対象のルートパッケージを選択…</string>
-	<string name="install_options_start_install">インストールの開始</string>
-	<string name="install_options_subtitle">インストールオプションの選択</string>
-	<string name="install_options_wipe_cache_partition">cache パーティションの消去</string>
-
-	<string name="install_options_explanation_title">これらのオプションの意味は?</string>
-	<string name="install_options_explanation_backup">デバイスのバックアップ:\n本オプションの選択時、インストール作業前にシステム・アプリ・設定のバックアップが作成されます。何らかのトラブルが発生した際に備えて非常に便利です。</string>
-	<string name="install_options_explanation_keep_root">デバイスのルート化済を維持:\n本アプションの選択時、アップデート完了後にインストールされるroot化用パッケージを特定可能になります。これによりデバイスはルート化済の状態を維持できます。root 化用パッケージはインストール予定の新しい OxygenOS のバージョンと互換性があることを確認して下さい!</string>
-	<string name="install_options_explanation_wipe_cache">cacheパテーションの消去:\n本オプションの選択時、アップデート完了後にキャッシュパテーションが消去されます。これにより、デバイスが最適に動作し、更新プログラムのインストールに起因するバグが発生する可能性が低くなります。</string>
-	<string name="install_options_explanation_reboot">インストール後に再起動:\n本オプションの選択時アップデート完了後にデバイスは再起動され自動的にOxygenOS が立ち上がります。非選択時はアップデート後もデバイスはリカバリモードのままとなり、追加パッケージのインストールが可能です。</string>
-
-	<string name="install_method_chooser_title">インストール方法を選択</string>
-	<string name="install_method_chooser_subtitle">このアップデートをインストールする必要はありますか?</string>
-	<string name="install_method_chooser_automatic_title">自動インストール*</string>
-	<string name="install_method_chooser_automatic_description">アップデートをインストールする最も簡単な方法。\nデバイスを再起動してアップデートをインストールします。\n\n*ルートアクセスと TWRP リカバリが必要です。</string>
-
-	<string name="install_method_chooser_manual_title">手動インストール</string>
-	<string name="install_method_chooser_manual_description">ガイドを読み、アップデートをインストール方法について理解して下さい。デバイスのリカバリモードを使用してアップデートをインストールできます。</string>
-
-	<string name="install_temporary_error">アップデートのインストール準備中に一時的なエラーが発生しました。再試行して下さい。</string>
-
-	<string name="install_verify_error_title">インストールに失敗</string>
-	<string name="install_verify_error_nothing_installed">アップデートのインストール中に失敗しました。デバイスのソフトウェアには何も変更がありません。アップデートのインストールを再試行して下さい。</string>
-	<string name="install_verify_error_unable_to_verify">アップデートのインストールに成功しましたが確認に失敗しました。アップデートが正常にインストールされたかを確認するために Oxygen Updater を開いて下さい。</string>
-	<string name="install_verify_error_wrong_version_installed">違うバージョンの OxygenOS がインストール済みです。"デバイスのルート化済を維持" オプションでルートパッケージを選択する際、OxygenOS アップデートファイルを選択しないで下さい。</string>
-
-	<string name="install_verify_success_title">インストール完了</string>
-	<string name="install_verify_success_message">OxygenOS version %1$s のインストールが成功しました。</string>
-
-	<string name="install_zip_file_clear">root パッケージファイルを消去</string>
-	<string name="install_zip_file_pick">root パッケージファイルの選択</string>
-	<string name="install_zip_file_placeholder">root package の選択…</string>
-	<string name="install_zip_file_wrong_file_type">ZIP ファイルのみ選択出来ます。正しいファイルを選択して下さい。</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">インストールガイドに示されている指示に従い、アップデートをインストールします。</string>
-	<string name="install_guide_automatic_install_disabled">技術的な問題により自動インストールは一時的に無効にされました。インストールガイドに示されている指示に従い、アップデートをインストールして下さい。</string>
 	<string name="install_guide">インストールガイド</string>
 	<string name="install_guide_subtitle">インストールガイド - %1$d of %2$d</string>
 	<string name="install_guide_tip">&#8226; 更新プログラムのインストール中にデバイスの電源を切る必要があるため、すべての手順を書き留めておくことをお勧めします。</string>
@@ -254,9 +199,6 @@
 	<string name="install_guide_page_5_text">&#8226; デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n&#8226; 設定に移動し\"端末情報\"をタップしOxygenOS バージョンを確認します。\n\n&#8226; このアプリが気に入ったら、Google Play で ５ つ星をつけて下さい!</string>
 
 	<string name="install_guide_close_button">インストールガイドを閉じる</string>
-
-	<string name="install_guide_zip_file_deleted">指定した root パッケージは既に存在しません。上から root パッケージを選択して下さい。</string>
-	<string name="install_guide_zip_file_missing">"デバイスの root 化を維持する場合、上から root パッケージを指定して下さい"</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">サポートされているデバイス</string>
@@ -319,7 +261,6 @@
 
 	<!-- Help strings -->
 	<string name="help">ヘルプ</string>
-	<string name="help_text">Oxygen Updater のヘルプセクションへようこそ。\n\nヘルプは次のトピックをカバーしています。\n\n•デバイスのアップデート\n•最新ニュースの購読\n•デバイス情報の表示\n•設定の変更\n\nスクロールダウンでトピックを参照します。</string>
 	<string name="help_updating_your_device_title">デバイスのアップデート</string>
 	<string name="help_updating_your_device_text">アプリを開くと、システムアップデートが利用可能かどうかがわかります。更新プログラムが利用可能な場合は、それをインストールできます。\n\nインストールを開始するには、（更新プログラムの説明の下にある）\"ダウンロード\"ボタンをタップしてダウンロードを開始します。ダウンロードが完了すると、インストール画面が表示されます。アプリを離れた場合、または画面がポップアップしなかった場合は、\"ダウンロード\"ボタンの横に表示される\"インストール\"ボタンをタップします。\n\nインストール画面では、root化済デバイスであるか最初に確認されます。ルート化済デバイスで場合は、確認画面でルート権限を付与し、アップデートのインストール方法を選択します。非ルート化済みデバイスの場合は、手動インストールの手順に従ってください。\n\n自動インストール：\nインストールオプションを選択するだけです。デフォルトの設定が推奨されますが、（再）インストールする必要があるルートパッケージを指定する必要があります。青いフォルダボタンを使用してルートパッケージ（zip ファイル）を選択し、\"インストールを開始\"をタップしてインストールを開始します。\n\n手動インストール：\n画面にインストールガイドが表示されます。指示を書き留め、記載されているとおりに実行して更新プログラムをインストールします。</string>
 	<string name="help_reading_news_title">最新ニュースの購読</string>
@@ -386,9 +327,6 @@
 
 	<string name="device_warning_checkbox_title">警告を二度と表示しない</string>
 
-	<string name="root_check_title">Root アクセス</string>
-	<string name="root_check_message">Oxygen Updater は、ルート化されたデバイスを持つユーザー向けに、簡単で自動化されたアップデートインストールを提供します。 ただし、ルート化されたデバイスの増分更新は使用できません。 Oxygen Updater は、適切な更新方法のみを提供するルートアクセス権があるかどうかを確認できます。\n\nルートアクセスがある場合は、このメッセージを閉じた後、Oxygen Updater がルートアクセスを取得できるようにします。\n\nルートアクセスなし？ \"閉じる\"を押して、アプリの使用を続けます</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">購入は \"支払い保留中\" になっています。支払いが完了すると特典が付与されます。</string>
 	<string name="purchase_error_after_payment">内部エラーが発生したため、広告なしバージョンの購入に失敗しました。 数分後にもう一度お試しください。 既に支払いを済ませている場合は、Google Play サポートにお問い合わせください。</string>
@@ -398,5 +336,4 @@
 	<string name="icon">アイコン</string>
 	<string name="loading">読み込中…</string>
 	<string name="processing">処理中…</string>
-	<string name="choose_file">ファイルを選択</string>
 </resources>

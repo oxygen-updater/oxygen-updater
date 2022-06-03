@@ -30,7 +30,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Det er en app oppdatering tilgjengelig (%1$s). Trykk her for å åpne Play Butikk og oppdater appen.</string>
-	<string name="new_app_version_long">Det er en app oppdatering tilgjengelig (%1$s). Å holde appen oppdatert sikrer at du alltid får de nyeste funksjonene og feilrettinger. \nTrykk her for å åpne Play Butikk og oppdater appen.</string>
 	<string name="new_app_version_inapp_downloaded">App Oppdateringen er lastet ned</string>
 	<string name="new_app_version_inapp_failed">App oppdateringen kunne ikke installeres. Trykk her for å åpne Play Butikk og oppdatere appen.</string>
 
@@ -143,7 +142,6 @@ spare batteri</string>
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">Du trenger en fungerende tilkobling for å se FAQ-siden.</string>
 
 	<!-- First-time onboarding strings -->
 	<string name="onboarding">Velkommen</string>
@@ -161,62 +159,9 @@ spare batteri</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Installer</string>
-	<string name="install_checking_root">Sjekker om enheten din er rootet..</string>
-	<string name="install_grant_root_permissions">Vennligst gi root-tilgang når du blir spurt.</string>
-	<string name="install_going_back_not_possible">Du kan dessverre ikke gå tilbake</string>
-	<string name="install_preparing_installation">Forbereder installasjon…</string>
-
-	<string name="install_recovery_installer_title">Oppdater Installer&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Sikkerhetskopierer enheten. Dette vil ta en stund!</string>
-	<string name="install_recovery_clearing_cache">Tømmer hurtigbufferpartisjonen…</string>
-	<string name="install_recovery_done">Ferdig. Enheten din starter på nytt.</string>
-	<string name="install_recovery_installing_additional_zip">Installerer den ekstra ZIP-filen…</string>
-	<string name="install_recovery_installing_update">Installerer oppdateringen…</string>
-	<string name="install_recovery_thank_you">Takk for at du bruker Oxygen Updater. Hvis du liker dette programmet, kan du vurdere den 5 stjerner på Google Play :-)</string>
-
-	<string name="install_error_write_script_failed">"Kunne ikke forberede installasjonen av oppdateringen. Tillot du root-tilgang?"</string>
-
-	<string name="install_options_backup">Sikkerhetskopier enheten min</string>
-	<string name="install_options_header">Du kan tilpasse installasjonsprosessen ved å endre alternativene vist nedenfor. Trykk på \"Start installasjon\" for å starte installasjonen av oppdateringen.</string>
-	<string name="install_options_keep_root">Hold enheten rootet</string>
-	<string name="install_options_reboot_after_install">Start på nytt etter installasjon</string>
-	<string name="install_options_select_root_package">Velg rotpakken du vil installere…</string>
-	<string name="install_options_start_install">Start installasjonen</string>
-	<string name="install_options_subtitle">Velg installasjonsalternativene</string>
-	<string name="install_options_wipe_cache_partition">Tøm cachepartisjonen</string>
-
-	<string name="install_options_explanation_title">Hva betyr disse alternativene?</string>
-	<string name="install_options_explanation_backup">Sikkerhetskopier enheten min:\nNår du velger dette alternativet, blir det tatt sikkerhetskopi av systemet, appene og innstillingene dine før installasjonen. Alltid praktisk å ha, i tilfelle noe går veldig galt.</string>
-	<string name="install_options_explanation_keep_root">Hold enheten rotfestet:\nNår du velger dette alternativet, kan du angi en rotpakke som vil bli installert etter at oppdateringen er installert. Dette sikrer at enheten forblir forankret. Vær oppmerksom på at denne rotpakken må være kompatibel med den nye OxygenOS-versjonen du skal installere!</string>
-	<string name="install_options_explanation_wipe_cache">Tøm cachepartisjonen:\nNår du velger dette alternativet, blir cachepartisjonen tømt etter at oppdateringen er installert. Dette sikrer at enheten din fungerer optimalt og også reduserer sannsynligheten for å oppleve feil forårsaket av installasjonen av oppdateringen.</string>
-	<string name="install_options_explanation_reboot">Start på nytt etter installasjon:\nNår du velger dette alternativet, vil enheten automatisk starte på nytt til OxygenOS etter at oppdateringen er installert. Ellers forblir enheten i gjenopprettingsmodus, hvor du kan installere flere pakker.</string>
-
-	<string name="install_method_chooser_title">Velg installasjonsmetode</string>
-	<string name="install_method_chooser_subtitle">Hvordan vil du installere denne oppdateringen?</string>
-	<string name="install_method_chooser_automatic_title">Automatisk installasjon*</string>
-	<string name="install_method_chooser_automatic_description">Den enkleste måten å installere oppdateringen på.\nEnheten din starter på nytt for å installere oppdateringen.\n\n* Krever root-tilgang og TWRP-gjenoppretting.</string>
-
-	<string name="install_method_chooser_manual_title">Manuell installasjon</string>
-	<string name="install_method_chooser_manual_description">Les installasjonsveiledningen for å lære hvordan du installerer oppdateringen. Du installerer oppdateringen ved hjelp av gjenopprettingsmodus på enheten.</string>
-
-	<string name="install_temporary_error">En midlertidig feil oppstod under installeringen av oppdateringen. Vennligst prøv igjen.</string>
-
-	<string name="install_verify_error_title">Installasjon feilet</string>
-	<string name="install_verify_error_nothing_installed">Feil ved installasjon av oppdateringen. Det ble ikke gjort noen endringer i programvaren til enheten. Prøv å installere oppdateringen på nytt.</string>
-	<string name="install_verify_error_unable_to_verify">Kunne ikke sjekke om oppdateringen ble installert. Vennligst åpne Oxygen Updater for å se om oppdateringen ble installert.</string>
-	<string name="install_verify_error_wrong_version_installed">En annen versjon av OxygenOS ble installert. Ikke velg en OxygenOS-oppdateringsfil når du velger en rotpakke under alternativet \"Hold enheten rotet\".</string>
-
-	<string name="install_verify_success_title">Installasjonen er ferdig</string>
-	<string name="install_verify_success_message">OxygenOS-versjon %1$s er installert.</string>
-
-	<string name="install_zip_file_clear">Fjern rotpakkefilen</string>
-	<string name="install_zip_file_pick">Velg rotpakkefil</string>
-	<string name="install_zip_file_placeholder">Velg en rotpakke…</string>
-	<string name="install_zip_file_wrong_file_type">Du kan bare velge en zip-fil. Velg riktig fil.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Installer oppdateringen i henhold til instruksjonene som vises i installasjonsveiledningen.381</string>
-	<string name="install_guide_automatic_install_disabled">Automatiske installasjoner er midlertidig deaktivert på grunn av rapporterte tekniske problemer. Installer oppdateringen i henhold til instruksjonene som vises i installasjonsveiledningen.</string>
 	<string name="install_guide">Installasjonsgveiledning</string>
 	<string name="install_guide_subtitle">Installasjonsveiledning - %1$d av %2$d</string>
 	<string name="install_guide_tip">&#8226; Det anbefales å skrive ned alle trinnene, ettersom du må slå av enheten din under installasjonen av oppdateringen.</string>
@@ -254,9 +199,6 @@ Bruksanvisning:
 	<string name="install_guide_page_5_text">&#8226; Etter at enheten din er ferdig med å optimalisere appene, har oppdateringen blitt installert. \nFor å bekrefte dette kan du sjekke den nåværende versjonen av systemet ditt som følgende:\n\n&#8226; Gå til Innstillinger, trykk på \"Om telefonen\", og sjekk OxygenOS-versjonen.\n\n&#8226; Hvis du liker denne appen, gi den 5 stjerner på Google Play!</string>
 
 	<string name="install_guide_close_button">Lukk installasjonsveiledningen</string>
-
-	<string name="install_guide_zip_file_deleted">Rotpakkefilen du spesifiserte eksisterer ikke lenger. Velg en ny rotpakke ovenfor.</string>
-	<string name="install_guide_zip_file_missing">"Hvis du vil holde enheten rotet, må du spesifisere en rotpakke ovenfor."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Enheten din støttes</string>
@@ -321,7 +263,6 @@ Bruksanvisning:
 
 	<!-- Help strings -->
 	<string name="help">Hjelp</string>
-	<string name="help_text">Velkommen til hjelpeseksjonen i Oxygen Updater.\n\nHjelp dekker følgende emner:\n\n • Oppdatere enheten\n• Les siste nytt\n• Vise enhetsinformasjon\n• Endre innstillinger\n\nRull ned til bla gjennom emnene.</string>
 	<string name="help_updating_your_device_title">Oppdaterer enheten</string>
 	<string name="help_updating_your_device_text">Når du åpner appen, ser du om en systemoppdatering er tilgjengelig. Hvis en oppdatering er tilgjengelig, kan du installere den.\n\nFor å starte installasjonen, trykk på \"Last ned\" -knappen (under oppdateringsbeskrivelsen) for å starte nedlastingen. Når nedlastingen er ferdig, vises installasjonsskjermen. Hvis du forlot appen eller skjermen ikke dukket opp, trykker du på \"Installer\" -knappen, som nå vises ved siden av \"Last ned\" -knappen.\n\nInstallasjonsskjermen vil først sjekke om du har en rotfestet enhet. Hvis du har en rotenhet, gi rottillatelse når du blir spurt, og velg hvordan du vil installere oppdateringen. Ellers følger du instruksjonene for manuell installasjon.\n\nAutomatisk installasjon:\nDu må bare velge installasjonsalternativer. Standardinnstillingene anbefales, bortsett fra at du må spesifisere rotpakken som må installeres. Velg en rotpakke (zip-fil) ved å bruke den blå mappeknappen og trykk på \"Start installasjon\" for å starte installasjonen.\n\nManuell installasjon:\nDu vil se en installasjonsveiledning på skjermen. Skriv instruksjonene ned og utfør dem som angitt for å installere oppdateringen.</string>
 	<string name="help_reading_news_title">Les siste nytt</string>
@@ -390,9 +331,6 @@ Bruksanvisning:
 
 	<string name="device_warning_checkbox_title">Ikke vis denne advarselen igjen</string>
 
-	<string name="root_check_title">Rot tilgang</string>
-	<string name="root_check_message">Oxygen Updater tilbyr enkle, automatiserte oppdateringsinstallasjoner for brukere med rotede enheter. Inkrementelle oppdateringer er imidlertid ikke tilgjengelige for rotede enheter. Oxygen Updater kan sjekke om du har root-tilgang til bare å tilby passende oppdateringsmetoder.\n\nHvis du har root-tilgang, la Oxygen Updater få root-tilgang etter at du har lukket denne meldingen.\n\nIngen root-tilgang? Trykk på \"Lukk\" og fortsett å bruke appen.</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Kjøpet ditt er i tilstanden \"betaling venter\". Når betalingen er fullført, vil du få alle fordelene du har rett til.</string>
 	<string name="purchase_error_after_payment">Kjøpet av den annonsefrie versjonen mislyktes fordi det oppstod en intern feil. Vennligst prøv igjen om noen minutter. Hvis du allerede har betalt, kan du kontakte brukerstøtten for Google Play for å få hjelp.</string>
@@ -402,6 +340,5 @@ Bruksanvisning:
 	<string name="icon">Ikon</string>
 	<string name="loading">Laster inn…</string>
 	<string name="processing">Behandler…</string>
-	<string name="choose_file">Velg en fil</string>
 
 </resources>

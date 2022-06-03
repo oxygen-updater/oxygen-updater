@@ -55,19 +55,12 @@ class SystemVersionProperties {
      */
     val osType: String
 
-    /**
-     * Whether or not the device has an A/B partition layout. Required to generate a proper install
-     * script for Automatic Update Installations (root feature)
-     */
-    val isABPartitionLayout: Boolean
-
     constructor() {
         var oxygenDeviceName = NO_OXYGEN_OS
         var oxygenOSVersion = NO_OXYGEN_OS
         var oxygenOSOTAVersion = NO_OXYGEN_OS
         var securityPatchDate = NO_OXYGEN_OS
         var osType = NO_OXYGEN_OS
-        var abPartitionLayout = false
 
         try {
             val getBuildPropProcess = Runtime.getRuntime().exec("getprop")
@@ -83,7 +76,6 @@ class SystemVersionProperties {
             oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, "Detected OxygenOS ROM with version: %s")
             oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with OTA version: %s")
             osType = readBuildPropItem(RO_BUILD_OS_TYPE_LOOKUP_KEY, properties, "Detected OS Type: %s")
-            abPartitionLayout = readBuildPropItem(BuildConfig.AB_UPDATE_LOOKUP_KEY, properties, "Device has A/B partition layout: %s").toBoolean()
 
             val euBooleanStr = readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s")
             val isEuBuild = if (euBooleanStr == NO_OXYGEN_OS) {
@@ -118,7 +110,6 @@ class SystemVersionProperties {
         this.oxygenOSOTAVersion = oxygenOSOTAVersion
         this.securityPatchDate = securityPatchDate
         this.osType = osType
-        this.isABPartitionLayout = abPartitionLayout
     }
 
     /**
@@ -130,7 +121,6 @@ class SystemVersionProperties {
         oxygenOSOTAVersion: String?,
         securityPatchDate: String?,
         osType: String?,
-        ABPartitionLayout: Boolean
     ) {
         println("Warning: SystemVersionProperties was constructed using a debug constructor. This should only happen during unit tests!")
 
@@ -139,7 +129,6 @@ class SystemVersionProperties {
         this.oxygenOSOTAVersion = oxygenOSOTAVersion ?: ""
         this.securityPatchDate = securityPatchDate ?: ""
         this.osType = osType ?: ""
-        this.isABPartitionLayout = ABPartitionLayout
     }
 
     @Throws(IOException::class)

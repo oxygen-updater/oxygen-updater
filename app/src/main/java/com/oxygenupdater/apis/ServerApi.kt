@@ -4,7 +4,6 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuidePage
 import com.oxygenupdater.models.NewsItem
-import com.oxygenupdater.models.RootInstall
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.ServerStatus
@@ -116,11 +115,6 @@ interface ServerApi {
     @POST("log-download-error")
     suspend fun logDownloadError(
         @Body body: HashMap<String, Any?>
-    ): Response<ServerPostResult>
-
-    @POST("log-update-installation")
-    suspend fun logRootInstall(
-        @Body rootInstall: RootInstall
     ): Response<ServerPostResult>
 
     @POST("verify-purchase")

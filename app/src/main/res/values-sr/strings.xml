@@ -31,7 +31,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">Доступно је ажурирање апликације (%1$s). Кликните овде да отворите Play продавницу и урадите ажурирање апликације.</string>
-	<string name="new_app_version_long">Доступно је ажурирање апликације (%1$s). Ажурирање апликације осигурава вам да увек добијате најновије функције и исправке грешака.\nКликните овде да отворите Play продавницу и урадите ажурирање апликације.</string>
 	<string name="new_app_version_inapp_downloaded">Преузето је ажурирање апликације</string>
 	<string name="new_app_version_inapp_failed">Ажурирање се не може извршити. Кликните овде да отворите Play продавницу и урадите ажурирање апликације.</string>
 
@@ -143,7 +142,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
-	<string name="faq_no_network_text">Требаће вам интернет конекција да погледате FAQ страницу.</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">Добродошли</string>
@@ -161,62 +159,9 @@
 
 	<!-- Automatic install strings -->
 	<string name="install">Инсталирај</string>
-	<string name="install_checking_root">Провера да ли је ваш уређај рутован…</string>
-	<string name="install_grant_root_permissions">Молимо вас омогућите приступ руту када затражимо.</string>
-	<string name="install_going_back_not_possible">Нажалост, не можете назад сада</string>
-	<string name="install_preparing_installation">Припрема се инсталација…</string>
-
-	<string name="install_recovery_installer_title">Ажурирајте инсталер&#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Направите сигурносну копију вашег уређаја. Ово ће потрајати!</string>
-	<string name="install_recovery_clearing_cache">Чишћење "cache" партиције…</string>
-	<string name="install_recovery_done">Завршено. Ваш уређај ће се поново покренути.</string>
-	<string name="install_recovery_installing_additional_zip">Инсталирање додатних ZIP фајлова…</string>
-	<string name="install_recovery_installing_update">Инсталирање ажурирања…</string>
-	<string name="install_recovery_thank_you">Хвала вам што користите Oxygen Updater. Ако вам се свиђа апликација молимо вас оцените је са 5 звездица на Google play продавници :-)</string>
-
-	<string name="install_error_write_script_failed">"Грешка у припремању инсталације ажурирања. Да ли сте дозволили притуп руту?"</string>
-
-	<string name="install_options_backup">Направи резервну копију уређаја</string>
-	<string name="install_options_header">Можете прилагодити начин инсталације променом подешавања испод. Притисните на \'Покренути инсталацију\' да бисте покренули инсталацију ажурирања.</string>
-	<string name="install_options_keep_root">Задржите мој уређај рутованим</string>
-	<string name="install_options_reboot_after_install">Поново покрени након инсталације</string>
-	<string name="install_options_select_root_package">Изаберите пакет рутовања…</string>
-	<string name="install_options_start_install">Покренути инсталацију</string>
-	<string name="install_options_subtitle">Одаберите опцију инсталације</string>
-	<string name="install_options_wipe_cache_partition">Обриши "cache" партицију</string>
-
-	<string name="install_options_explanation_title">Шта значе ове опције?</string>
-	<string name="install_options_explanation_backup">Направи сигурносну копију мог уређаја:\nКада изабререте ову опцију, копија вашег система, апликација и подешавања ће бити урађена пре инсталације. Увек је згодно имати у случају да пође нешто лоше.</string>
-	<string name="install_options_explanation_keep_root">Задржите мој уређај рутованим:\nКада изаберете ову опцију, требало би да изаберете пакет рутовања који ће бити инсталиран након инсталације ажурирања. Ово осигурава да ће ваш уређај остати рутован. Молимо вас запамтите да пакет за рутовање мора бити компатибилан са НОВОМ OxgenOS верзијом коју ћете инсталирати!</string>
-	<string name="install_options_explanation_wipe_cache">Обриши "cache" партицију:\nкада изаберете ову опцију "cache" партиција ће бити избрисана након инсталације ажурирања. Ово осигурава да ће ваш уређај радити оптимално, такође умањује могућност појављивања неправилности у раду након инсталације ажурирања.</string>
-	<string name="install_options_explanation_reboot">Поново покрени након инсталације:\nкада изаберете ову опцију, ваш уређај ће се аутоматски поново покренути назад у OxygenOS након инсталације ажурирања.У супротном, ваш уређај ће истати у "Recovery mode", где можете инсталирати додатне пакете.</string>
-
-	<string name="install_method_chooser_title">Изаберите методу инсталације</string>
-	<string name="install_method_chooser_subtitle">Како желите да инсталирате ово ажурирање?</string>
-	<string name="install_method_chooser_automatic_title">Аутоматска инсталација*</string>
-	<string name="install_method_chooser_automatic_description">Најлакши начин за инсталирање ажурирања.\nВаш уређај ће се поново покренути након инсталације.\n\n* Захтева приступ руту и "TWRP recovery".</string>
-
-	<string name="install_method_chooser_manual_title">Ручна инсталација</string>
-	<string name="install_method_chooser_manual_description">Прочитајте упуство за инсталацију. Инсталираћете ажирирање користећи Recovery mode вашег уређаја.</string>
-
-	<string name="install_temporary_error">Привремена грешка се десила приликом припреме инталације ажурирања. Молимо вас покушајте поново.</string>
-
-	<string name="install_verify_error_title">Инсталација неуспешна</string>
-	<string name="install_verify_error_nothing_installed">Десила се грешка приликом инсталације ажурирања. Ваш софтвер на уређају је остао нетакнут. Покушајте инсталацију ажурирања опет.</string>
-	<string name="install_verify_error_unable_to_verify">Неуспешна провера да ли је ажурирање инсталирано како треба. Молимо вас отворите Oxygen Updater да видите да ли је ажурирање успешно инсталирано.</string>
-	<string name="install_verify_error_wrong_version_installed">Другачија верзија OxygenOS-a је инсталирана. Немојте изабрати OxygenOS дадотеку за ажурирање у пакету за рут у опцијама "Задржи мој уређај рутованим".</string>
-
-	<string name="install_verify_success_title">Инсталација комплетна</string>
-	<string name="install_verify_success_message">OxygenOS верзија %1$s је успешно инсталирана.</string>
-
-	<string name="install_zip_file_clear">Очисти рут фајл</string>
-	<string name="install_zip_file_pick">Изабери пакет за рутовање</string>
-	<string name="install_zip_file_placeholder">Одабери рут пакет…</string>
-	<string name="install_zip_file_wrong_file_type">Можеш изабрати једино zip фајл. Молимо ваз изаберите прави фајл.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Инсталирај ажурирање према упуствима у "Упуство за инталацију"</string>
-	<string name="install_guide_automatic_install_disabled">Аутоматско инсталирање је тренутно онемогућено због пријављеног техничког проблема. Инсталирајте ажурирање према упуствима приказаним у "Упуство за инсталацију"</string>
 	<string name="install_guide">Упуство за инталацију</string>
 	<string name="install_guide_subtitle">Упуство за инсталацију - %1$d од %2$d</string>
 	<string name="install_guide_tip">&#8226; Препоручљиво је да запишете све кораке на папир због тога што ћете морати да угасите уређај приликом инсталације ажурирања.</string>
@@ -254,9 +199,6 @@
 	<string name="install_guide_page_5_text">&#8226; Након што уређај заврши са оптимизовањем ваших апликација ажурирање ће бити успешно инсталирано.\nДа бисте проверили ово, можете проверити тренутну верзију система на следећи начин:\n\n&#8226; Идите у подешавања, кликните на \"About phone\", и проверите OxygenOS верзију.\n\n&#8226; Ако вам се свиђа апликација, молимо вас оцените нас са 5 звездица на Google Play продавници!</string>
 
 	<string name="install_guide_close_button">Затвори упуство за инсталацију</string>
-
-	<string name="install_guide_zip_file_deleted">Пакет за рутовање више не постоји. Молимо вас изаберите други пакет.</string>
-	<string name="install_guide_zip_file_missing">"Ако желите да задржите ваш уређај рутованим мораћете да изаберете пакет за рут.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Ваш уређај је подржан</string>
@@ -320,7 +262,6 @@
 
 	<!-- Help strings -->
 	<string name="help">Помоћ</string>
-	<string name="help_text">Добродошли у секцију за помоћ у Oxygen Updater-у.\n\nПомоћ покрива следеће теме:\n\n• Ажурирање вашег уређаја\n• Читање последњих вести\n• Гледање информација о уређају\n• Промена подешавања\n\nЛистајте доле да видите ове теме.</string>
 	<string name="help_updating_your_device_title">Ажурирање вашег уређаја</string>
 	<string name="help_updating_your_device_text">Када отворите апликацију видећете да ли је доступно ажурирање система. Ако је ажурирање доступно можете га инсталирати.\n\nДа покренете инсталацију притисните дугме \"Преузми\" (испод описа ажурирања) да покренете преузимање. Када преузимање буде завршено инсталациони екран ће се појавити. Ако напустите апликацију или се инсталациони екран није појавио притисните \"Инсталирај\" дугме, које је сада приказано поред \"Преузми\" дугмета.\n\nИнсталациони екран ће прво проверити да ли имате рутован уређај. Ако је ваш уређај рутован, дозволите рут приступ када будете упитани и изаберите како желите да инсталирате ажурирање. У супротном пратите упуства за ручно инсталирање.\n\nАутоматско инсталирање:\nПотребно је само да изабере инсталирај опцију. Препоручљива су фабричка подешавања, осим ако имате специфичан пакет за рут који мора поново да се инсталира. Изаберите рут пакет (zip фајл) користећи плаво фолдер дугме \"Покрени инсталацију\" за покретање инсталације.\n\nРучно инсталирањеl:\nВидећете упуство за инсталирање на вашем екрану. Запишите их и примењујте када почнете са инсталацијом.</string>
 	<string name="help_reading_news_title">Прочитајте најновије вести</string>
@@ -391,9 +332,6 @@
 
 	<string name="device_warning_checkbox_title">Не приказуј ово упозорење опет</string>
 
-	<string name="root_check_title">Root access</string>
-	<string name="root_check_message">Oxygen Updater омогућава лаку и сигурну инсталацију ажурирања за кориснике са рутованим уређајима. Како год, инкрементална ажурирања нису доступна за рутоване уређаје. Oxygen Updater може да провери да ли је ваш уређај рутован само ради давања праве верзије ажурирања.\n\nАко имате приступ руту, омогућите Oxygen Updater-у рут приступ након затвања ове поруке.\n\nНемате рут приступ? Притисните \"Затвори\" и наставите коришћење апликације.</string>
-
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->
 	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
@@ -404,5 +342,4 @@
 	<string name="icon">Иконица</string>
 	<string name="loading">Учитавање…</string>
 	<string name="processing">Обрада…</string>
-	<string name="choose_file">Узаберите фајл</string>
 </resources>

@@ -33,6 +33,8 @@ fun arrayForBuildConfig(vararg array: String) = array.joinToString(prefix = "{",
 }
 
 android {
+    namespace = "com.oxygenupdater"
+
     compileSdk = AndroidSdk.COMPILE
     buildToolsVersion = AndroidSdk.BUILD_TOOLS
 
@@ -136,7 +138,6 @@ android {
             )
             buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\"")
             // Latter one is only used on very old OOS versions
-            buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
 
             signingConfig = signingConfigs.getByName("release")
 
@@ -161,7 +162,6 @@ android {
                 arrayForBuildConfig("ro.build.version.release")
             )
             buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\"")
-            buildConfigField("String", "AB_UPDATE_LOOKUP_KEY", "\"ro.build.ab_update\"")
 
             isMinifyEnabled = true
             isShrinkResources = true
@@ -293,10 +293,6 @@ dependencies {
     implementation(Libraries.FACEBOOK_SHIMMER)
 
     implementation(Libraries.THREE_TEN_ABP)
-
-    implementation(Libraries.CHAINFIRE_LIBSUPERUSER)
-
-    implementation(Libraries.A_FILE_CHOOSER)
 
     testImplementation(TestLibraries.JUNIT4)
     testImplementation(TestLibraries.KOTLIN_TEST_JUNIT)

@@ -29,7 +29,6 @@
 
 	<!-- New app version message strings -->
 	<string name="new_app_version">此應用程式有可用更新 (%1$s)。點選此處即可打開 Play 商店更新應用程式</string>
-	<string name="new_app_version_long">此應用程式有可用更新 (%1$s)！ 使用最新版的應用程式可確保您能夠享受到最新的功能和錯誤修復。\n點選此處即可打開 Play 商店更新應用程式</string>
 	<string name="new_app_version_inapp_downloaded">應用程式更新已下載</string>
 	<string name="new_app_version_inapp_failed">無法安裝應用程式更新。點選此處即可打開 Play 商店更新應用程式</string>
 
@@ -138,7 +137,6 @@
 	<!-- FAQ strings -->
 	<string name="faq">常見問題</string>
 	<string name="faq_menu_item">常見問題</string>
-	<string name="faq_no_network_text">您需要連線至網際網路來檢視常見問題</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">歡迎</string>
@@ -156,62 +154,9 @@
 
 	<!-- Automatic install strings -->
 	<string name="install">安裝</string>
-	<string name="install_checking_root">正在偵測您的裝置是否獲得 Root 權限…</string>
-	<string name="install_grant_root_permissions">請在您的 Root 權限管理應用程式詢問時選擇允許</string>
-	<string name="install_going_back_not_possible">抱歉，本步驟無法返回</string>
-	<string name="install_preparing_installation">正在準備安裝…</string>
-
-	<string name="install_recovery_installer_title">更新安裝器 &#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">正在備份您的資料。您可以去看看窗外放鬆一下，因為本步驟十分耗費時間</string>
-	<string name="install_recovery_clearing_cache">正在清理快取分割區…</string>
-	<string name="install_recovery_done">大功告成，您的裝置即將重新開機。</string>
-	<string name="install_recovery_installing_additional_zip">正在安裝額外的 ZIP 檔案…</string>
-	<string name="install_recovery_installing_update">正在安裝更新…</string>
-	<string name="install_recovery_thank_you">感謝您使用 Oxygen 更新器，能在 Google Play 留下 5 星評分嗎？</string>
-
-	<string name="install_error_write_script_failed">準備安裝時發生錯誤，請確保您已經給予了 Oxygen 更新器 Root 權限</string>
-
-	<string name="install_options_backup">備份我的裝置</string>
-	<string name="install_options_header">您可以透過變更下面的選項來自訂安裝過程。 點選「開始安裝」以開始安裝更新。</string>
-	<string name="install_options_keep_root">保持裝置的 Root 狀態</string>
-	<string name="install_options_reboot_after_install">安裝後重新開機</string>
-	<string name="install_options_select_root_package">選擇您需要的 Root 包…</string>
-	<string name="install_options_start_install">開始安裝</string>
-	<string name="install_options_subtitle">選擇您的安裝選項</string>
-	<string name="install_options_wipe_cache_partition">清理快取分割區</string>
-
-	<string name="install_options_explanation_title">這些選項代表什麼意思？</string>
-	<string name="install_options_explanation_backup">備份我的裝置：\n選擇此選項後，應用程式將在安裝之前備份系統、應用程式和設定。以防萬一出現意外狀況。</string>
-	<string name="install_options_explanation_keep_root">保持裝置的 Root 狀態：\n選擇此選項後，您可以選擇在安裝更新後安裝 Root 包。 這可確保您的裝置保持 Root 狀態。 請注意，您選擇的 Root 包必須與您將要安裝的新 OxygenOS 版本相容！</string>
-	<string name="install_options_explanation_wipe_cache">清理快取分割區：\n選擇此選項後，將在安裝更新後清除快取分割區。這可以確保您的裝置處在最佳狀態，並降低因安裝更新而導致錯誤的可能性。</string>
-	<string name="install_options_explanation_reboot">安裝後重新開機：\n選擇此選項後，將在安裝更新後自動重新啟動回 OxygenOS。如果不勾選的話，您的裝置將保持在 Recovery 模式中，以便繼續安裝其他軟體包。</string>
-
-	<string name="install_method_chooser_title">選擇安裝方式</string>
-	<string name="install_method_chooser_subtitle">您想用哪種方式安裝？</string>
-	<string name="install_method_chooser_automatic_title">自動安裝</string>
-	<string name="install_method_chooser_automatic_description">最簡單的更新方式，下載，安裝，重新開機。\n\n* 需要 Root 權限與 TWRP</string>
-
-	<string name="install_method_chooser_manual_title">手動安裝</string>
-	<string name="install_method_chooser_manual_description">閱讀安裝教學以了解如何安裝更新。 您將使用裝置的 Recovery 安裝更新。</string>
-
-	<string name="install_temporary_error">準備安裝時發生了暫時性的錯誤，請稍候重試。</string>
-
-	<string name="install_verify_error_title">安裝失敗</string>
-	<string name="install_verify_error_nothing_installed">安裝更新時發生錯誤。目前尚未對您裝置的系統進行任何變更。請嘗試再次安裝更新。</string>
-	<string name="install_verify_error_unable_to_verify">無法檢查更新是否已成功安裝。\n請打開 Oxygen 更新器以檢視更新是否已成功安裝。</string>
-	<string name="install_verify_error_wrong_version_installed">您似乎安裝了一個其他版本的 OxygenOS。請不要在選擇 Root 包時選擇另外一個 OxygenOS 的更新包。</string>
-
-	<string name="install_verify_success_title">安裝完成</string>
-	<string name="install_verify_success_message">OxygenOS 版本 %1$s 安裝成功！</string>
-
-	<string name="install_zip_file_clear">清除 Root 包</string>
-	<string name="install_zip_file_pick">選擇一個 Root 包檔案</string>
-	<string name="install_zip_file_placeholder">選擇一個 Root 包…</string>
-	<string name="install_zip_file_wrong_file_type">您可能只能選擇一個 ZIP 格式的檔案，請選擇正確的那個。</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">請依照安裝教學中顯示的說明安裝更新。</string>
-	<string name="install_guide_automatic_install_disabled">由於收到了使用者的建議，自動安裝已暫時停用。請根據安裝教學中顯示的說明安裝更新。</string>
 	<string name="install_guide">安裝教學</string>
 	<string name="install_guide_subtitle">安裝教學 - 第 %1$d 頁，共 %2$d 頁</string>
 	<string name="install_guide_tip">&#8226; 建議您把全部步驟都用紙筆寫下來，因為在接下來的安裝過程中，您的裝置會關機。</string>
@@ -248,9 +193,6 @@
 	<string name="install_guide_page_5_text">&#8226; 等您的裝置完成最佳化應用程式，那麼這次更新就算是大功告成了！\n為了驗證是否完成，您可以參考以下步驟來檢視目前系統版本：\n\n&#8226; 打開設定，點選「關於手機」，這裡您就可以看到您的 OxygenOS 版本。\n\n&#8226; 如果您喜歡這個 App，别忘了去 Google Play 留下 5 星評分</string>
 
 	<string name="install_guide_close_button">關閉安裝教學</string>
-
-	<string name="install_guide_zip_file_deleted">您指定的 Root 包檔案不再存在，請在上方選擇一個新的 Root 包。</string>
-	<string name="install_guide_zip_file_missing">如果您想保持裝置 Root 狀態，請在上方指定一個 Root 包。</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">您的裝置受支援</string>
@@ -313,7 +255,6 @@
 
 	<!-- Help strings -->
 	<string name="help">協助</string>
-	<string name="help_text">歡迎來到 Oxygen 更新器的協助部分！\n\n「協助」包含以下內容：\n\n• 升級您的裝置\n• 閱讀最新新聞\n• 檢視裝置訊息\n• 更改設定\n\n向上滑動取得您需要的協助吧！</string>
 	<string name="help_updating_your_device_title">更新您的裝置</string>
 	<string name="help_updating_your_device_text">您打開應用程式時，即可看到是否有可用的軟體更新，如果有的話，您就可以方便地安裝了。\n\n要開始安裝，請點選「下載」按鈕（就在更新訊息下方）以開始下載。 下載完成後，將會出現安裝界面。 如果您退出了應用程式或安裝界面沒有跳出，請手動點選「安裝」按鈕，該按鈕一般顯示在「下載」按鈕旁邊。\n\n安裝界面會先檢查您是否有 Root 權限。 如果您的裝置有 Root 權限，請在詢問時授予其 Root 權限，並選擇安裝更新的方式。 否則，請按照手動安裝的說明進行操作。\n\n自動安裝：\n您只需選擇安裝選項即可。 建議使用預設設定，但您必須指定需要安裝的 Root 包。 使用藍色資料夾按鈕選擇 Root 包（支援 ZIP 檔案），然後點選「開始安裝」來開始安裝。\n\n手動安裝：\n您將在螢幕上看到安裝教學。 寫下說明並按照說明執行它們以安裝更新。</string>
 	<string name="help_reading_news_title">閱讀最新通知</string>
@@ -382,9 +323,6 @@
 
 	<string name="device_warning_checkbox_title">不再顯示此警告</string>
 
-	<string name="root_check_title">Root 權限</string>
-	<string name="root_check_message">Oxygen 更新器為具有 Root 權限的使用者提供簡單，自動化的更新安裝方式。\n不過增量更新不適用於 Root 過的裝置。Oxygen 更新器可以檢查您是否具有 Root 權限，以提供適當的更新方法。\n如果您的裝置擁有 Root 權限，請在關閉此通知後允許 Oxygen 更新器取得 Root 權限。\n沒有 Root 權限？那麼請直接點選關閉按鈕。</string>
-
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">您的購買正處於「正在等待付款」狀態。一旦付款完成，您將獲得所有付款後的權益。</string>
 	<string name="purchase_error_after_payment">由於內部錯誤，購買移除廣告服務失敗，請稍候重試。 如果您已付款，請與 Google Play 支援小組聯絡以取得協助。</string>
@@ -394,5 +332,4 @@
 	<string name="icon">圖示</string>
 	<string name="loading">載入中…</string>
 	<string name="processing">正在處理…</string>
-	<string name="choose_file">選擇一個檔案</string>
 </resources>

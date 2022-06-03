@@ -20,7 +20,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter() // for `eu.chainfire:libsuperuser` & `andhradroid.dev:aFilechooser`
     }
 }
 

@@ -33,9 +33,8 @@
 	<string name="server_status_warning">Bazı özellikler tam olarak çalışmayabilir.</string>
 
 	<!-- New app version message strings -->
-	<!-- TODO: translate these 4 strings below -->
+	<!-- TODO: translate these 3 strings below -->
 	<string name="new_app_version">There\'s an app update available (%1$s). Tap here to open the Play Store and update the app.</string>
-	<string name="new_app_version_long">There\'s an app update available (%1$s). Keeping the app updated ensures you always get the latest features and bug fixes.\nTap here to open the Play Store and update the app.</string>
 	<string name="new_app_version_inapp_downloaded">The app update has been downloaded</string>
 	<string name="new_app_version_inapp_failed">The app update could not be installed. Tap here to open the Play Store and update the app.</string>
 
@@ -147,7 +146,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<!-- FAQ strings -->
 	<string name="faq">SSS</string>
 	<string name="faq_menu_item">SSS</string>
-	<string name="faq_no_network_text">SSS sayfasını görüntülemek için bağlantıya ihtiyacınız olacak.</string>
 
 	<!-- First-time setup strings -->
 	<string name="onboarding">Hoşgelidiniz</string>
@@ -165,63 +163,9 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Automatic install strings -->
 	<string name="install">Yükle</string>
-	<string name="install_checking_root">Cihazınızın root durumu kontrol ediliyor…</string>
-	<string name="install_grant_root_permissions">Lütfen root iznini sorulduğunda izin veriniz.</string>
-	<string name="install_going_back_not_possible">Ne yazık ki, artık geri dönemezsiniz…</string>
-	<string name="install_preparing_installation">Yükleme hazırlanıyor…</string>
-
-	<string name="install_recovery_installer_title">Güncelleme yükleyicisi &#160;&#160;</string> <!-- Add 2 spaces to the end -->
-	<string name="install_recovery_backing_up">Cihazınızın yedeği alınıyor. Biraz zaman alacaktır!</string>
-	<string name="install_recovery_clearing_cache">Önbellek temizleniyor…</string>
-	<string name="install_recovery_done">Tamamlandı. Cihazınız tekrar başlatılacak.</string>
-	<string name="install_recovery_installing_additional_zip">Gerekli olan ZIP dosyası yükleniyor…</string>
-	<string name="install_recovery_installing_update">Güncelleme yükleniyor…</string>
-	<string name="install_recovery_thank_you">Oxygen Updaterı kullandığınız için teşekkürler. Eğer beğendiyseniz lütfen Googe Play Store da 5 yıldız oy verin :-)</string>
-
-	<string name="install_error_write_script_failed">"Güncelleme hazırlığı yapılırken hata oluştu. Root izni verdiniz mi?"</string>
-
-	<string name="install_options_backup">Cihazımı yedekle</string>
-	<string name="install_options_header">Alttaki bölümden yükleme seçeneklerini değiştirebilirsiniz. \'Yüklemeyi Başlat\' a tıklayarak güncellemeyi yüklemeyi başlatabilirsiniz.</string>
-	<string name="install_options_keep_root">Cihazımı rootlu tut.</string>
-	<string name="install_options_reboot_after_install">Güncelledikten sonra cihazımı yeniden başlat</string>
-	<string name="install_options_select_root_package">indirmek istediğiniz root paketini seçiniz…</string>
-	<string name="install_options_start_install">Yüklemeyi başlat</string>
-	<string name="install_options_subtitle">İndirme yönteminizi seçiniz</string>
-	<string name="install_options_wipe_cache_partition">Önbelleği temizleyiniz.</string>
-
-	<string name="install_options_explanation_title">Bu ayarlar ne anlama geliyor?</string>
-	<string name="install_options_explanation_backup">Cihazımı yedekle:\nBunu seçtiğinizde cihazınızın tamamen bir yedeği alınır, her türlü duruma karşı önlem olarak.</string>
-	<string name="install_options_explanation_keep_root">Cihazımı rootlu tut:\nBu opsiyonu seçtiğinizde, güncelleme yüklendikten sonra kurulması gereken bir root paketi seçmeniz gerekebilir. Bu sayede cihazınız rootlu olduğundan emin oluruz. Lütfen seçeceğiniz rootun yeni OxygenOS ile uyumlu olduğundan emin olun!</string>
-	<string name="install_options_explanation_wipe_cache">Önbelleği sıfırlama:\nBu opsiyonu seçtiğinizde, Güncelleme sonrası önbellek temizlenecek ve sıfırlanacak. Bu sayede sorunsuz bir güncelleme olacaktır.</string>
-	<string name="install_options_explanation_reboot">Yüklemeden sonra yeniden başlat:\nBu opsiyonu seçtiğinizde, Cihazınız güncelleme sonrası otomatik olarak yeniden başlatılacak. Diğer türlü, cihazınız kurtarma modunda kalacaktır, bu sayede istediğiniz paketleri indirebilirsiniz.</string>
-
-	<!-- TODO: translate this string below -->
-	<string name="install_method_chooser_title">Choose installation method</string>
-	<string name="install_method_chooser_subtitle">Güncellemeyi nasıl yüklemek istersiniz?</string>
-	<string name="install_method_chooser_automatic_title">Otomatik yükleme*</string>
-	<string name="install_method_chooser_automatic_description">Güncellemeyi yüklemenin en kolay yolu.\nCihazınız güncellemeyi yüklemek için yeniden başlatılacak.\n\n* Root izni ve TWRP yedeklemesi gerektirir.</string>
-
-	<string name="install_method_chooser_manual_title">Manuel yükleme</string>
-	<string name="install_method_chooser_manual_description">Nasıl yüklendiğini öğrenmek için rehberi okuyun. Cihazınızın kurtarma modunu kullanarak güncellemeyi yükleyeceksiniz.</string>
-
-	<string name="install_temporary_error">Güncellemeyi yüklemeyi denerken bir sorun oluştu. Lütfen tekrar deneyin.</string>
-
-	<string name="install_verify_error_title">Yükleme başarısız</string>
-	<string name="install_verify_error_nothing_installed">Güncelleme yüklenirken sorun oluştu. Cihazınızda herhangi bir değişiklik yapılmadı. Güncellemeyi tekrar indirmeyi deneyiniz.</string>
-	<string name="install_verify_error_unable_to_verify">Güncelleme indirilme doğrulaması yapılamadı. Lütfen Oxygen Updater\'ı açın, ve güncelleme indirilmişmi diye kontrol edin.</string>
-	<string name="install_verify_error_wrong_version_installed">Farklı bir OxygenOS versiyonu yüklendi. "Cihazımı rootlu tut" seçeneğini seçtiyseniz, herhangi bir OxygenOS versiyonunu seçmeyiniz.</string>
-
-	<string name="install_verify_success_title">Yükleme tamamlandı</string>
-	<string name="install_verify_success_message">OxygenOS versiyon %1$s başarılı bir şekilde yüklendi.</string>
-
-	<string name="install_zip_file_clear">Root paketi dosyasını sil</string>
-	<string name="install_zip_file_pick">Root paketi dosyasını seçiniz</string>
-	<string name="install_zip_file_placeholder">Root paketi seçiniz…</string>
-	<string name="install_zip_file_wrong_file_type">Sadece ZIP paketi seçmeniz gerekebilir. Lütfen doğru dosyası seçiniz.</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide_no_root">Güncellemeyi rehberde gösterildiği sekilde uygulayınız.</string>
-	<string name="install_guide_automatic_install_disabled">Otomatik yükleme geçici olarak devredışı, teknik bir sorun bulunmakta. Güncelleme yüklemeyi rehbere göre kendiniz yapınız.</string>
 	<string name="install_guide">Yükleme rehberi</string>
 	<string name="install_guide_subtitle">Yükleme rehberi - %1$d of %2$d</string>
 	<string name="install_guide_tip">&#8226; Bütün adımları not etmeniz önerilir, güncelleme sırasında cihazınız kapalı olacaktır.</string>
@@ -262,9 +206,6 @@ Instructions:
 	<string name="install_guide_page_5_text">&#8226; Optimize edilme bittiğinde, güncelleme de başarılı şekilde olmuş demektir.\n Sistem ayarlarınızdan bunu görüntüleyebilirsiniz.\n\n&#8226; Uygulamayı beğendiyseniz, lütfen Google Play\'de 5 yıldız vermeyi unutmayınız!</string>
 
 	<string name="install_guide_close_button">Yükleme Rehberini Kapat</string>
-
-	<string name="install_guide_zip_file_deleted">Seçtiğiniz root paketi artık bulunmamakta. Lütfen yeni bir root paketi seçiniz.</string>
-	<string name="install_guide_zip_file_missing">"Cihazınızı rootlu tutmak istiyorsanız, root paketi belirtmeniz gerekmektedir."</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->
@@ -331,7 +272,6 @@ Instructions:
 
 	<!-- Help strings -->
 	<string name="help">Yardım</string>
-	<string name="help_text">Yardım bölümüne hoşgeldiniz.\n\nBu bölüm:\n\n• Cihaz güncellemeyi\n• Güncel haberleri okumayı\n• Cihaz bilgisi göstermeyi\n• Ayar değiştirmeyi içerir.\n\nKonuları incelemek için aşağı kaydırın.</string>
 	<string name="help_updating_your_device_title">Cihazı güncellemek</string>
 	<string name="help_updating_your_device_text">Uygulamayı açtığınızda, eğer güncelleme varsa bunu göreceksinizdir. Varsa, güncellemeyi indiredebilirsiniz.\n\n İndirmeyi başlatmak için, \"İndir\" butonuna basınız. (Güncelleme detayları altında). İndirme bittiğinde, yükleme ekranı karşınıza çıkacaktır. Herhangi bir şey olmadıysa(indirme sonrası), \"Yükle\" butonuna tıklayınız, Normalde \"İndir\" butonunun yanında bulunmakta.\n\nYükleme ekranı öncelikle cihazınız rootlu mu diye kontrol edecektir. Rootlu cihazınız varsa, sizden root erişimi istendiğinde izin vermeniz gerekecektir. Aksi takdirde, Manuel yükleme rehberini inceleyiniz.\n\nOtomatik yükleme:\n Sadece yükleme ayarlarını seçeceksiniz. Varsayılan ayarlar önerilmektedir, root paketinizi tekrar kurmak için seçmeniz gerekecek bölüm dışında. Root paketi içeren bir ZIP dosyasını "mavi dosya" simgesinden seçiniz ve daha sonra \"Yüklemeyi Başlat\" a tıklayıp başlatınız.\n\nManuel yükleme:\nEkranınızda yükleme rehberini göreceksiniz. Rehberde gözüken adımları not etmeniz önerilir.</string>
 	<string name="help_reading_news_title">Güncel haberleri okumak.</string>
@@ -404,9 +344,6 @@ Instructions:
 
 	<string name="device_warning_checkbox_title">Bu uyarıyı birdaha gösterme.</string>
 
-	<string name="root_check_title">Root İzni</string>
-	<string name="root_check_message">Oxygen Updater, rootlu cihazlarda bile size kolay, otomatik güncelleme yükleme imkanı sunar. Ancak, artımlı güncellemeler rootlu cihazlar için kullanılamaz. Oxygen Updater root izni ister, bu sayede size seçebileceğiniz güncelleme yöntemlerini gösterir.\n\nEğer root izniniz varsa, Oxygen Updater\'a izin verin, bu uyarıdan sonra sizden izin istenecektir.\n\nRoot iznin yokmu? \"Kapat\" butonuna tıklayın ve uygulamayı kullanmaya devam edin.</string>
-
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->
 	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
@@ -418,5 +355,4 @@ Instructions:
 	<string name="icon">İkon</string>
 	<string name="loading">Yükleniyor…</string>
 	<string name="processing">İşleniyor…</string>
-	<string name="choose_file">Dosya seçiniz</string>
 </resources>

@@ -12,7 +12,6 @@ import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.RootAccessChecker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
@@ -59,11 +58,9 @@ class SettingsViewModel(
 
     fun fetchUpdateMethodsForDevice(
         deviceId: Long
-    ): LiveData<List<UpdateMethod>> = RootAccessChecker.checkRootAccess { hasRootAccess ->
-        viewModelScope.launch(Dispatchers.IO) {
-            serverRepository.fetchUpdateMethodsForDevice(deviceId, hasRootAccess)?.let {
-                _updateMethodsForDevice.postValue(it)
-            }
+    ): LiveData<List<UpdateMethod>> = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.fetchUpdateMethodsForDevice(deviceId)?.let {
+            _updateMethodsForDevice.postValue(it)
         }
     }.let { _updateMethodsForDevice }
 
