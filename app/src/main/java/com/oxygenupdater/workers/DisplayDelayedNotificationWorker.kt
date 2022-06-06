@@ -5,6 +5,8 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.GROUP_ALERT_CHILDREN
@@ -14,6 +16,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.activities.NewsItemActivity
@@ -65,7 +70,7 @@ class DisplayDelayedNotificationWorker(
     }
 
     override suspend fun doWork(): Result {
-        if (messageContents.isNullOrEmpty()) {
+        if (messageContents.isEmpty()) {
             return Result.failure()
         }
 
@@ -118,7 +123,7 @@ class DisplayDelayedNotificationWorker(
             ) {
                 return Result.success()
             } else {
-                // If this is a "dump" notification, show it only to people who haven't yet read the article
+                // If this is a "bump" notification, show it only to people who haven't yet read the article
                 // A "bump" is defined as re-sending the notification so that people who haven't yet read the article can read it
                 // However, only app versions from v4.1.0 onwards properly support this,
                 // even though a broken implementation was added in v4.0.0 (Kotlin rebuild).
@@ -161,6 +166,14 @@ class DisplayDelayedNotificationWorker(
 
         notificationManager.notify(notificationId, builder.build())
 
+        val imageUrl = messageContents[NotificationElement.NEWS_ITEM_IMAGE.name]?.trim() ?: ""
+        if (imageUrl.isNotEmpty()) {
+            // Update an existing notification when image loads (avoids indefinite waits)
+            // Note: we're setting only the large icon; not changing style to BigPicture
+            //       because that doesn't show full text when expanded like BigText does
+            builder.reNotifyWithLargeIcon(notificationId, imageUrl)
+        }
+
         // Summary notification is not shown for API < 24 because notification
         // groups aren't supported anyway (meaning multiple notifications will
         // be shown separately instead of using InboxStyle to emulate a "group").
@@ -187,6 +200,22 @@ class DisplayDelayedNotificationWorker(
 
         return Result.success()
     }
+
+    private fun NotificationCompat.Builder.reNotifyWithLargeIcon(
+        notificationId: Int,
+        imageUrl: String,
+    ) = Glide.with(context).asBitmap().centerCrop().load(imageUrl).into(
+        object : CustomTarget<Bitmap>() {
+            override fun onResourceReady(
+                resource: Bitmap,
+                transition: Transition<in Bitmap>?
+            ) = notificationManager.notify(
+                notificationId,
+                setLargeIcon(resource).build()
+            )
+
+            override fun onLoadCleared(placeholder: Drawable?) {}
+        })
 
     /**
      * Generates notification IDs from predefined [NotificationIds], but also
