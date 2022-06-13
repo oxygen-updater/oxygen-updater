@@ -87,6 +87,8 @@ Wenn du mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <a
 	<string name="summary_off">Deaktiviert</string>
 	<string name="summary_please_wait">Bitte warten…</string>
 	<string name="summary_update_method">Bitte wähle zuerst dein Gerät aus</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Einige wichtige Benachrichtigungen sind deaktiviert: \"%1$s\"</string>
 	<string name="summary_theme">Theme einstellen</string>
 	<string name="summary_language">Sprache einstellen</string>
 	<string name="summary_privacy_policy">Online ansehen</string>
@@ -125,9 +127,6 @@ Ein komplettes Update kann immer installiert werden - egal welche System Softwar
 
 Ein OxygenOS Beta Update kann nur installiert werden wenn du bereits eine Beta Version benutzt."</string>
 	<string name="settings_push_from_server">"Informationen und Warnungen"</string>
-	<string name="settings_push_new_version">"System Update Nachrichten"</string>
-	<string name="settings_push_new_device">"Ein neues Gerät wird unterstützt"</string>
-	<string name="settings_push_news">"Neuigkeiten"</string>
 	<string name="settings_saving">"Deine Einstellungen werden weiterhin gespeichert. wenn das zu lange dauern sollte: Überprüfe deine Verbindung, schließe die App und starte sie erneut."</string>
 	<string name="settings_advanced_mode">"Fortgeschrittener Modus"</string>
 	<string name="settings_advanced_mode_explanation">"Der Fortgeschrittene Modus deaktiviert die Nachricht \"Dein System ist auf dem neuesten Stand\" und erlaubt es dir sogar Updates herunterzuladen und zu installieren die möglicherweiße nicht mit deinem Gerät kompatibel sind.

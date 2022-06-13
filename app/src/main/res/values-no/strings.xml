@@ -91,6 +91,8 @@ Hvis du ønsker å vite mer, ta gjerne kontakt med oss enten via <a href="mailto
 	<string name="summary_off">Deaktivert</string>
 	<string name="summary_please_wait">Vennligst vent…</string>
 	<string name="summary_update_method">Velg en enhet først</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Noen viktige varsler er deaktivert: \"%1$s\"</string>
 	<string name="summary_theme">Sett tema</string>
 	<string name="summary_language">Sett språk</string>
 	<string name="summary_privacy_policy">Se på nettet</string>
@@ -127,9 +129,6 @@ spare batteri</string>
 	<string name="settings_explanation_incremental_full_update">En inkrementell oppdatering kan installeres fra hvilken som helst versjon (bortsett fra hvis du har en ulåst oppstartslaster; du bør alltid velge full oppdatering som oppdateringsmetode). \n\n En betaoppdatering av OxygenOS kan alltid installeres, også når du er på en stabil versjon. For å bytte fra stabil til beta, må du aktivere den avanserte modusen i innstillingene. For betas fungerer de fulle og trinnvise oppdateringsmetodene på samme måte som på stabile versjoner.</string>
 
 	<string name="settings_push_from_server">Informasjons- og advarselsmeldinger</string>
-	<string name="settings_push_new_version">Systemoppdateringsmeldinger</string>
-	<string name="settings_push_new_device">Ny enhet støttes</string>
-	<string name="settings_push_news">Nyhetsmeldinger</string>
 
 	<string name="settings_saving">Innstillingene dine lagres fremdeles. Hvis dette tar for lang tid: Kontroller nettverkstilkoblingen din, avslutt appen og start den på nytt.</string>
 

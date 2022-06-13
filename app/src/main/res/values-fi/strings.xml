@@ -89,6 +89,8 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="summary_off">Pois käytöstä</string>
 	<string name="summary_please_wait">Ole hyvä ja odota…</string>
 	<string name="summary_update_method">Valitse laite ensin</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Jotkin tärkeät ilmoitukset on poistettu käytöstä: \"%1$s\"</string>
 	<string name="summary_theme">Aseta teema</string>
 	<string name="summary_language">Aseta kieli</string>
 	<string name="summary_privacy_policy">Katso verkkosivuilta</string>
@@ -127,9 +129,6 @@ Täydellinen päivitys voidaan asentaa aina - huolimatta nykyisestä järjestelm
 
 Beta päivitys voidaan asentaa vain jos sinulla on jo käytössäsi OxygenOS beta versio."</string>
 	<string name="settings_push_from_server">"Tiedotus- ja varoitusviestit"</string>
-	<string name="settings_push_new_version">"Järjestelmän päivitysviestit"</string>
-	<string name="settings_push_new_device">"Uutta laitetta tuetaan"</string>
-	<string name="settings_push_news">"Uutiset"</string>
 	<string name="settings_saving">"Asetuksiasi tallennetaan edelleen. Jos tämä tuntuu vievän liian pitkään varmista verkkoyhteytesi, sulje sovellus ja käynnistä se uudelleen."</string>
 	<string name="settings_advanced_mode">"Kehittynyt tila"</string>
 	<string name="settings_advanced_mode_explanation">"Kehittynyt tila piilottaa viestin \"Järjestelmäsi on ajantasalla\", antaa sinun ladata ja asentaa kaikki päivitykset, vaikka ne eivät olisikaan yhteensopiva laitteesi kanssa.

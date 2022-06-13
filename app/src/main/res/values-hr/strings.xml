@@ -85,6 +85,8 @@
 	<string name="summary_off">Onemogućeno</string>
 	<string name="summary_please_wait">Molim te pričekaj…</string>
 	<string name="summary_update_method">Select a device first</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Neke važne obavijesti su onemogućene: \"%1$s\"</string>
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_language">Postavite jezik</string>
 	<string name="summary_privacy_policy">Pogledajte na mreži</string>
@@ -124,9 +126,6 @@
 	<string name="settings_entered_incorrectly">"Greška pri spremanju postavki. Molimo vas ponovno odaberite vaš uređaj / metodu ažuriranja."</string>
 	<string name="settings_explanation_incremental_full_update">"Djelomično ažurianje može biti insalirano s bilo koje verzije (ako nemate bootloader otključan; onda biste uvjek trebali izabrati metodu punog ažuriranja), dok god mi imamo to djelomično ažuriranje.\n\nA Cjeli ažuriranje će uvjek biti instalirano - nevezano sa sadašnjom verzijom softwera korištenog na uređaju\n\nA Beta verzije OxygenOSa može uvjek biti instalirano kao i stabilna verzija. Da napravite to morate uključiti "napredni mod" u postavkama. Naćin ažuriranja je isti kao i kad ste na stabilnoj verziji."</string>
 	<string name="settings_push_from_server">"Važna poruka je dostupna"</string>
-	<string name="settings_push_new_version">"Dostupno je ažuriranje sistema"</string>
-	<string name="settings_push_new_device">"Novi uređaj je dostupan"</string>
-	<string name="settings_push_news">"Vijesti su objavljene"</string>
 	<string name="settings_saving">"Vaše postavke se još uvijek spremaju. Ako ovo potraje predugo: Provjerite vašu internet vezu , izađite iz aplikacije i pokrenite je ponovno."</string>
 	<string name="settings_advanced_mode">"Napredni način"</string>
 	<string name="settings_advanced_mode_explanation">"Napredni način skriva poruku \"Vaš uređaj je na najnovijim ažuriranjima\" , dopušta vam preuzimanje i instalaciju svih ažuriranja, iako oni možda nisu kompatibilni sa vašim uređajem.
@@ -414,6 +413,4 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Shows download progress & that it is currently paused -->
 	<string name="download_progress_text_paused">"Pauzirana"</string>
-
-	<!-- Internal name of background downloading service / process -->
 </resources>

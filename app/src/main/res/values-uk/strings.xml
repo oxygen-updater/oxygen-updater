@@ -90,6 +90,8 @@
 	<string name="summary_off">Вимкнено</string>
 	<string name="summary_please_wait">Будь ласка, зачекайте…</string>
 	<string name="summary_update_method">Спершу виберіть пристрій</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Деякі важливі сповіщення вимкнено: \"%1$s\"</string>
 	<string name="summary_theme">Вибрати тему оформлення</string>
 	<string name="summary_language">Встановити мову</string>
 	<string name="summary_privacy_policy">Переглянути онлайн</string>
@@ -125,9 +127,6 @@
 	<string name="settings_explanation_incremental_full_update">Інкрементне оновлення (Incremental update) можна встановлювати з будь-якої версії, якщо у вас заблокований завантажувач. Інакше, якщо завантажувач розблоковано — слід вибрати \"Повне оновлення\" (Full update).\n\nБета оновлення (Open Beta) для OxygenOS можна встановлювати, якщо у вас стабільна версія. Щоб встановити бета версію, потрібно увімкнути \"Розширений режим\" в налаштуваннях. Для бета версій, способи Повного та Інкрементного оновлення працюють так само, як і у стабільних версіях.</string>
 
 	<string name="settings_push_from_server">Інформаційні повідомлення та попередження</string>
-	<string name="settings_push_new_version">Повідомлення про оновлення системи</string>
-	<string name="settings_push_new_device">Підтримка нового пристрою</string>
-	<string name="settings_push_news">Нові повідомлення</string>
 
 	<string name="settings_saving">Ваші налаштування досі зберігаються. Якщо це триває занадто довго: перевірте з\'єднання з мережею, вийдіть із застосунку і запустіть його знову.</string>
 

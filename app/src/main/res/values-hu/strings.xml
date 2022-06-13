@@ -91,6 +91,8 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="summary_off">Tiltva</string>
 	<string name="summary_please_wait">Kérlek várj…</string>
 	<string name="summary_update_method">Először válassz ki egy eszközt</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Néhány fontos értesítés le van tiltva: \"%1$s\"</string>
 	<string name="summary_theme">Téma beállítása</string>
 	<string name="summary_language">Állítsa be a nyelvet</string>
 	<string name="summary_privacy_policy">Megtekintés interneten</string>
@@ -126,9 +128,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="settings_explanation_incremental_full_update">Az inkrementális frissítés bármilyen verzióból telepíthető (kivéve, ha nyitott bootloadered van; ilyenkor mindig a teljes frissítést kell frissítési módszerként választanod).\n\nAz OxygenOS bétafrissítése mindig telepíthető, és akkor is, ha stabil verzión vagy. A stabilról béta módra váltáshoz engedélyezned kell a haladó módot a beállításokban. A béta esetén a teljes és az inkrementális frissítési módszerek ugyanúgy működnek, mint a stabil verziók esetében.</string>
 
 	<string name="settings_push_from_server">Tájékoztató és figyelmeztető üzenetek</string>
-	<string name="settings_push_new_version">Rendszerfrissítési üzenetek</string>
-	<string name="settings_push_new_device">Új eszköz támogatott</string>
-	<string name="settings_push_news">Hírek üzenetek</string>
 
 	<string name="settings_saving">A beállításokat még mindig mentimentődnek. Ha ez túl sokáig tart: Ellenőrizd a hálózati kapcsolatot, lépj ki az alkalmazásból, és indítsd újra.</string>
 

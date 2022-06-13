@@ -88,6 +88,8 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 	<string name="summary_off">Disattivato</string>
 	<string name="summary_please_wait">Attendi…</string>
 	<string name="summary_update_method">Seleziona un dispositivo</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Alcune notifiche importanti sono disattivate: \"%1$s\"</string>
 	<string name="summary_theme">Scegli tema</string>
 	<string name="summary_language">Imposta la lingua</string>
 	<string name="summary_privacy_policy">Visualizza online</string>
@@ -126,9 +128,6 @@ Un aggiornamento completo può essere installato sempre - indipendentemente dall
 
 Un aggiornamento beta può essere installato solo se ti trovi già' sul branch delle beta."</string>
 	<string name="settings_push_from_server">"È disponibile un messaggio critico"</string>
-	<string name="settings_push_new_version">"È disponibile un aggiornamento di sistema"</string>
-	<string name="settings_push_new_device">"È disponibile un nuovo dispositivo"</string>
-	<string name="settings_push_news">"Vengono pubblicate delle news"</string>
 	<string name="settings_saving">"Le tue impostazioni si stanno ancora salvando. Se questo impiega troppo tempo controlla la tua connessione, riavvia l'applicazione e ritenta. "</string>
 	<string name="settings_advanced_mode">"Modalità avanzata"</string>
 	<string name="settings_advanced_mode_explanation">"La modalità avanzata nasconde il messaggio \"Il tuo sistema è aggiornato\", consentendo l'installazione di qualsiasi aggiornamento, anche se non compatibili con il tuo dispositivo.

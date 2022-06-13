@@ -92,6 +92,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_off">Deaktiveret</string>
 	<string name="summary_please_wait">Vent venligst …</string>
 	<string name="summary_update_method">vælg en enhed først</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Nogle vigtige meddelelser er deaktiveret: \"%1$s\"</string>
 	<string name="summary_theme">Vælg et tema</string>
 	<string name="summary_language">Indstil sprog</string>
 	<string name="summary_privacy_policy">Se online</string>
@@ -127,9 +129,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_explanation_incremental_full_update">En trinvis opdatering kan installeres fra en hvilken som helst version (undtagen hvis du har en ulåst bootloader; da skal du altid vælge fuld opdateringsmetode).\n\nA beta opdatering af OxygenOS kan altid installeres, lige så vel, som når det er en stabil version. For at skifte fra stabil til beta, så skal du aktivere avanceret tilstand, i indstillingerne. Vedrørende beta, den fulde og de trinvise opdaterings-metode, gør det på samme måde som ved den stabile versions.</string>
 
 	<string name="settings_push_from_server">Information- og -advarselsbeskeder</string>
-	<string name="settings_push_new_version">System-opdateringsbeskeder</string>
-	<string name="settings_push_new_device">Nye enheder der understøttes</string>
-	<string name="settings_push_news">Nyhedsbeskeder</string>
 
 	<string name="settings_saving">Dine indstillinger gemmes. Tager det for lang tid: Check forbindelse til netværket, afslut app\'en, og start den igen.</string>
 

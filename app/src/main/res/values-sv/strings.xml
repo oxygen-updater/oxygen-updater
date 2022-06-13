@@ -89,6 +89,8 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="summary_off">Av</string>
 	<string name="summary_please_wait">Var god vänta…</string>
 	<string name="summary_update_method">Välj en enhet först</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Vissa viktiga meddelanden är inaktiverade: \"%1$s\"</string>
 	<string name="summary_theme">Välj tema</string>
 	<string name="summary_language">Ställ in språk</string>
 	<string name="summary_privacy_policy">Visa online</string>
@@ -126,9 +128,6 @@ En fullständig uppdatering kan alltid installeras - oavsett vilken systemversio
 
 En betauppdatering av OxygenOS kan alltid installeras, även när du har den stabila versionen av OxygenOS installerad. För att göra detta måste du aktivera avancerat läge i inställningarna. Uppdateringsmetoden är densamma som för de stabila uppdateringarna.</string>
 	<string name="settings_push_from_server">"Viktigt meddelande är tillgängligt"</string>
-	<string name="settings_push_new_version">"Systemuppdatering är tillgänglig"</string>
-	<string name="settings_push_new_device">"Ny enhet stöds"</string>
-	<string name="settings_push_news">"Nyhet har publicerats"</string>
 	<string name="settings_saving">"Dina inställningar sparas fortfarande. Om detta tar för lång tid: Kolla din nätverksanslutning, stäng sedan av applikationen och starta den igen."</string>
 	<string name="settings_advanced_mode">"Avancerat läge"</string>
 	<string name="settings_advanced_mode_explanation">"Avancerat läge döljer texten \"Din enhet är uppdaterad\". Det tillåter dig att ladda ner och installera uppdateringar även fast de kanske inte är kompatibla med din enhet.

@@ -45,6 +45,12 @@
 			android:layout="@layout/custom_preference"
 			android:summary="@string/summary_update_method"
 			android:title="@string/settings_update_method" />
+
+		<Preference
+			android:key="@string/key_android_notifications"
+			android:icon="@drawable/bell"
+			android:layout="@layout/custom_preference"
+			android:title="@string/preference_header_notifications" />
 	</PreferenceCategory>
 
 	<PreferenceCategory
@@ -70,47 +76,6 @@
 			android:layout="@layout/custom_preference"
 			android:summary="@string/summary_language"
 			android:title="@string/label_language" />
-	</PreferenceCategory>
-
-	<PreferenceCategory
-		android:layout="@layout/custom_preference_header"
-		android:title="@string/preference_header_notifications">
-
-		<SwitchPreference
-			android:defaultValue="true"
-			android:icon="@drawable/announcement"
-			android:key="@string/key_notification_critical_message"
-			android:layout="@layout/custom_preference"
-			android:summaryOff="@string/summary_off"
-			android:summaryOn="@string/summary_on"
-			android:title="@string/settings_push_from_server" />
-
-		<SwitchPreference
-			android:defaultValue="true"
-			android:icon="@drawable/system_update_alt"
-			android:key="@string/key_notification_system_update"
-			android:layout="@layout/custom_preference"
-			android:summaryOff="@string/summary_off"
-			android:summaryOn="@string/summary_on"
-			android:title="@string/settings_push_new_version" />
-
-		<SwitchPreference
-			android:defaultValue="true"
-			android:icon="@drawable/device_info"
-			android:key="@string/key_notification_new_device_supported"
-			android:layout="@layout/custom_preference"
-			android:summaryOff="@string/summary_off"
-			android:summaryOn="@string/summary_on"
-			android:title="@string/settings_push_new_device" />
-
-		<SwitchPreference
-			android:defaultValue="true"
-			android:icon="@drawable/news"
-			android:key="@string/key_notification_news_story_published"
-			android:layout="@layout/custom_preference"
-			android:summaryOff="@string/summary_off"
-			android:summaryOn="@string/summary_on"
-			android:title="@string/settings_push_news" />
 	</PreferenceCategory>
 
 	<PreferenceCategory

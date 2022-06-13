@@ -89,6 +89,8 @@ Se você quiser saber mais, sinta-se à vontade para nos contatar via <a href="m
 	<string name="summary_off">Desabilitado</string>
 	<string name="summary_please_wait">Por favor aguarde…</string>
 	<string name="summary_update_method">Selecione um dispositivo</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Algumas notificações importantes são desativadas: \"%1$s\"</string>
 	<string name="summary_theme">Definir tema</string>
 	<string name="summary_language">Definir idioma</string>
 	<string name="summary_privacy_policy">Ver on-line</string>
@@ -125,9 +127,6 @@ conservar bateria</string>
 	<string name="settings_explanation_incremental_full_update">Uma atualização incremental pode ser instalada de qualquer versão (exceto se você tiver um bootloader desbloqueado; então você deve sempre escolher a atualização completa como método de atualização).\n\nUma atualização beta do OxygenOS sempre pode ser instalada, se você estiver em uma versão estável. Para mudar de estável para beta, você deve habilitar o modo avançado nas configurações. Para os betas, os métodos de atualização completa e incremental funcionam da mesma maneira que nas versões estáveis.</string>
 
 	<string name="settings_push_from_server">Mensagens informativas e de aviso</string>
-	<string name="settings_push_new_version">Mensagens de atualização do sistema</string>
-	<string name="settings_push_new_device">Novo dispositivo é compatível</string>
-	<string name="settings_push_news">Novas mensagens</string>
 
 	<string name="settings_saving">Suas configurações ainda estão sendo salvas. Se demorar muito: verifique sua conexão de rede, saia do aplicativo e inicie-o novamente.</string>
 

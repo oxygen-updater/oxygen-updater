@@ -89,6 +89,8 @@
 	<string name="summary_off">מכובה</string>
 	<string name="summary_please_wait">אנא המתן…</string>
 	<string name="summary_update_method">אנא בחר ראשית מכשיר</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">כמה התראות חשובות מושבתות: \"%1$s\"</string>
 	<string name="summary_theme">בחר עיצוב</string>
 	<string name="summary_language">בחר שפה</string>
 	<string name="summary_privacy_policy">צפה בדפדפן</string>
@@ -124,9 +126,6 @@
 	<string name="settings_entered_incorrectly">שגיאה בשמירת ההגדרות. אנא חזור אחורה ובחר את המכשיר/ שיטת העדכון שנית</string>
 	<string name="settings_explanation_incremental_full_update">עדכון מצטבר יכול להיות מותקן בכל מקרה (חוץ ממקרה בו פתחת את ה-bootloader, אז עליך לקחת את שיטת העדכון המלא). \n\n עדכון בטא של OxygenOS יכול תמיד להיות מותקן גם על גרסת בטא וגם על גרסה יציבה. כדי להחליף מגרסה יציבה לגרסת בטא, עליך להפעיל את מצב מתקדם בהגדרות. שיטות העדכונים: Beta, Full, Incremental.</string>
 	<string name="settings_push_from_server">הודעות ואזהרות - כללי</string>
-	<string name="settings_push_new_version">הודעות על עדכון מערכת חדש</string>
-	<string name="settings_push_new_device">הודעות על מכשיר חדש שנתמך</string>
-	<string name="settings_push_news">עדכוני חדשות</string>
 
 	<string name="settings_saving">ההגדרות שלך עדיין בתהליך שמירה. אם תהליך זה לוקח זמן רב מדי, אנא בדוק את חיבור הרשת שלך, ונסה לסגור את האפליקציה ולהפעילה מחדש.</string>
 

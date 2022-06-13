@@ -92,6 +92,8 @@
 	<string name="summary_off">Онемогућено</string>
 	<string name="summary_please_wait">Молимо сачекајте…</string>
 	<string name="summary_update_method">Прво селектујте уређај</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Нека важна обавештења су онемогућена: \"%1$s\"</string>
 	<string name="summary_theme">Поставите тему</string>
 	<string name="summary_language">Поставите језик</string>
 	<string name="summary_privacy_policy">Погледајте на интернету</string>
@@ -127,9 +129,6 @@
 	<string name="settings_explanation_incremental_full_update">Делимично ажурирање се може извршити са било које верзије (ако немате "bootloader" откључан; онда бисте требали изабрати методу пуног ажурирања).\n\nA beta ажурирање OxygenOS-а може увек бити инсталирано, и када сте на стабилној верзији. За пребацивање са стабилне на beta верзију, морате да омогућите напредни мод у подешавањима. За beta-е, методе целог и делимичног ажурирања раде на исти начин као на стабилним верзијама.</string>
 
 	<string name="settings_push_from_server">Важна порука је доступна</string>
-	<string name="settings_push_new_version">Доступно је ажурирање система</string>
-	<string name="settings_push_new_device">Нови уређај је доступан</string>
-	<string name="settings_push_news">Вести су објављене</string>
 
 	<string name="settings_saving">Ваша подешавања се још убек чувају. Ако ово предуго траје: Проверите вашу конекцију, изађите из апликације и покушајте поново.</string>
 

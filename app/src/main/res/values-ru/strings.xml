@@ -83,6 +83,8 @@
 	<string name="summary_off">Выключено</string>
 	<string name="summary_please_wait">пожалуйста, подождите…</string>
 	<string name="summary_update_method">Сначала выберите устройство</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Некоторые важные уведомления отключены: \"%1$s\"</string>
 	<string name="summary_theme">Выберите тему</string>
 	<string name="summary_language">Установить язык</string>
 	<string name="summary_privacy_policy">Просмотреть онлайн</string>
@@ -117,9 +119,6 @@
 
 Бета обновление прошивки OxygenOS возможно только в том случае, когда вы уже используете Бета версию прошивки."</string>
 	<string name="settings_push_from_server">"Если какое-либо критическое предупреждение"</string>
-	<string name="settings_push_new_version">"Доступно обновление системы"</string>
-	<string name="settings_push_new_device">"Добавлена поддержка нового устройства"</string>
-	<string name="settings_push_news">"Была опубликована новость"</string>
 	<string name="settings_saving">"Ваши настройки сохраняются. Если сохранение будет долгим, проверьте подключение и перезапустите приложение."</string>
 	<string name="settings_advanced_mode">"Расширенный режим"</string>
 	<string name="settings_advanced_mode_explanation">"Расширенный режим прячет сообщение \"Ваша система обновлена\", позволяя скачивать и устанавливать все обновления, даже не подходящие для вашего устройства.

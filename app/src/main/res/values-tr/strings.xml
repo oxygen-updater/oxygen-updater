@@ -97,6 +97,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_off">Kapalı</string>
 	<string name="summary_please_wait">Lütfen bekleyin…</string>
 	<string name="summary_update_method">Lütfen öncelikle cihazınızı belirtin.</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Bazı önemli bildirimler devre dışı bırakılır: \"%1$s\"</string>
 	<string name="summary_theme">Temayı seçiniz</string>
 	<string name="summary_language">Dili ayarla</string>
 	<string name="summary_privacy_policy">Online görüntüleyiniz.</string>
@@ -131,9 +133,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygenOSun herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
 
 	<string name="settings_push_from_server">Bilgilendirme ve uyarı mesajları.</string>
-	<string name="settings_push_new_version">Sistem güncellemerli mesajları.</string>
-	<string name="settings_push_new_device">Desteklenen yeni cihaz eklendiğinde.</string>
-	<string name="settings_push_news">Yeni haber mesajları.</string>
 
 	<string name="settings_saving">Ayarlarınız hala kaydedilmektedir. Eğer çok uzun sürerse: Bağlantınızı kontrol ediniz, uygulamayı kapatıp tekrar açınız.</string>
 

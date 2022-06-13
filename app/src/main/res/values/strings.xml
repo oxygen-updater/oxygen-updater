@@ -89,6 +89,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_off">Disabled</string>
 	<string name="summary_please_wait">Please wait…</string>
 	<string name="summary_update_method">Select a device first</string>
+	<string name="summary_important_notifications_disabled">Some important notifications are disabled: \"%1$s\"</string>
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_language">Set language</string>
 	<string name="summary_privacy_policy">View online</string>
@@ -113,6 +114,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="key_device_id" translatable="false">device_id</string>
 	<string name="key_update_method" translatable="false">update_method</string>
 	<string name="key_update_method_id" translatable="false">update_method_id</string>
+	<string name="key_android_notifications" translatable="false">android_notifications</string>
 	<string name="key_theme" translatable="false">theme</string>
 	<string name="key_theme_id" translatable="false">theme_id</string>
 	<string name="key_language" translatable="false">language</string>
@@ -120,11 +122,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
 	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
 	<string name="key_share_usage_data" translatable="false">upload_logs</string>
-	<!-- Typo can't be fixed due to older versions of the app being released with it -->
-	<string name="key_notification_critical_message" translatable="false">recive_general_notifications</string>
-	<string name="key_notification_system_update" translatable="false">receive_system_update_notifications</string>
-	<string name="key_notification_new_device_supported" translatable="false">receive_new_device_notifications</string>
-	<string name="key_notification_news_story_published" translatable="false">receive_news_notifications</string>
 	<string name="key_rate_app" translatable="false">rate</string>
 	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
 	<string name="key_oxygen" translatable="false">oxygen_updater</string>
@@ -149,9 +146,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method).\n\nA beta update of OxygenOS can always be installed, as well when you\'re on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. For the betas, the full and incremental update methods work the same way as on the stable versions.</string>
 
 	<string name="settings_push_from_server">Informational and warning messages</string>
-	<string name="settings_push_new_version">System update messages</string>
-	<string name="settings_push_new_device">New device is supported</string>
-	<string name="settings_push_news">News messages</string>
 
 	<string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
 

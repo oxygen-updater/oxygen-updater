@@ -98,6 +98,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_off">Deshabilitado</string>
 	<string name="summary_please_wait">Por favor, espera…</string>
 	<string name="summary_update_method">Selecciona un dispositivo primero</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Algunas notificaciones importantes están desactivadas: \"%1$s\"</string>
 	<string name="summary_theme">Establecer tema</string>
 	<string name="summary_language">Elegir lenguaje</string>
 	<string name="summary_privacy_policy">Ver online</string>
@@ -133,9 +135,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_explanation_incremental_full_update">Una actualización incremental puede instalarse desde cualquier versión (excepto si tienes el bootloader desbloqueado ya que tendras que usar el paquete completo para actualizar tu dispositivo).\n\nUna actualización beta de OxygenOS siempre podrá ser instalada, incluso cuando estás en la versión estable. Para cambiar de la estable a la beta, activa el modo avanzado en los ajustes. Para las betas, los métodos de actualización incremental y completo funcionan de las misma manera que en la versión estable.</string>
 
 	<string name="settings_push_from_server">Mensajes con avisos disponibles</string>
-	<string name="settings_push_new_version">Actualizaciónes del sistema disponible</string>
-	<string name="settings_push_new_device">Nuevos dispositivos soportados</string>
-	<string name="settings_push_news">Una nueva noticia publicada</string>
 
 	<string name="settings_saving">Tus preferencias todavía se están guardando. Si tarda mucho tiempo: Comprueba tu conexión a Internet, sal de la app e iníciala de nuevo.</string>
 

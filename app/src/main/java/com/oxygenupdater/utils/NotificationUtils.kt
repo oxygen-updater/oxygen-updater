@@ -18,6 +18,16 @@ private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
 class NotificationUtils(private val context: Context) {
 
+    val isDisabled
+        get() = !notificationManager.areNotificationsEnabled()
+
+    fun isDisabled(channelId: String) = notificationManager.run {
+        !areNotificationsEnabled() || getNotificationChannel(channelId)?.run {
+            importance == NotificationManager.IMPORTANCE_NONE ||
+                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && getNotificationChannelGroup(group)?.isBlocked == true)
+        } ?: false
+    }
+
     /**
      * Deletes all old notification channels
      */

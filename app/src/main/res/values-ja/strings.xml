@@ -90,6 +90,8 @@
 	<string name="summary_off">無効化</string>
 	<string name="summary_please_wait">お待ち下さい…</string>
 	<string name="summary_update_method">まずデバイスを選択して下さい</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">一部の重要な通知が無効になっています。\"%1$s\"</string>
 	<string name="summary_theme">テーマの設定</string>
 	<string name="summary_language">言語を設定する</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
@@ -125,9 +127,6 @@
 	<string name="settings_explanation_incremental_full_update">増分アップデートはどのバージョンからでもインストール可能です（ブートローダーをアンロックしていない場合; アンロック済みの場合はフルアップデートをアップデート方法から選択する必要があります）。\n\nOxygenOS のベータアップデートは安定バージョンを使用している場合でも常にインストールできます。安定版からベータ版に切り替えるには、設定で詳細モードを有効にする必要があります。ベータ版では、フル・増分アップデートは安定版と同じように機能します。</string>
 
 	<string name="settings_push_from_server">通知と警告メッセージ</string>
-	<string name="settings_push_new_version">システムアップデートメッセージ</string>
-	<string name="settings_push_new_device">新規デバイスのサポート開始</string>
-	<string name="settings_push_news">ニュースメッセージ</string>
 
 	<string name="settings_saving">設定を保存中です。長時間この状態が続く場合、ネットワーク接続を確認し、アプリをいったん終了し再起動して下さい。</string>
 

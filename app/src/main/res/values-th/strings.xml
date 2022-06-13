@@ -97,6 +97,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_off">ปิด</string>
 	<string name="summary_please_wait">รอสักครู่…</string>
 	<string name="summary_update_method">เลือกอุปกรณ์</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">การแจ้งเตือนที่สำคัญบางอย่างถูกปิดใช้งาน: \"%1$s\"</string>
 	<string name="summary_theme">ตั้งค่าธีม</string>
 	<string name="summary_language">ตั้งค่าภาษา</string>
 	<string name="summary_privacy_policy">ดูออนไลน์</string>
@@ -132,9 +134,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_explanation_incremental_full_update">การอัพเดทแบบปกติสามารถอัพเดทจากเวอร์ชั่นไหนก็ได้ (ยกเว้นคุณจะปลดล็อค bootloader แล้ว คุณควรเลือกวิธีติดตั้งแบบเต็มรูปแบบ)\n\nOxygenOS เวอร์ชั่นทดลองสามารถติดตั้งได้ตลอดเวลาตราบใดที่คุณอยู่บนเวอร์ชั่นสเถียร การที่คุณจะเปลี่ยนไปใช้เวอร์ชั่นทดลองนั้น คุณต้องเปิดขั้นสูงในตั้งค่าก่อนและสำหรับเวอร์ชั่นทดลองนั้น การติดตั้งแบบเต็มรูปแบบกับธรรมดาสามารถใช้แทนกันได้</string>
 
 	<string name="settings_push_from_server">แจ้งเตือนข้อมูลและข้อควรระวัง</string>
-	<string name="settings_push_new_version">แจ้งเตือนการอัพเดทของระบบ</string>
-	<string name="settings_push_new_device">มีการรองรับอุปกรณ์ใหม่</string>
-	<string name="settings_push_news">แจ้งเตือนของข่าวต่างๆ</string>
 
 	<string name="settings_saving">การตั้งค่าของคุณกำลังถูกบันทึก ถ้ากระบวนการนี้ใช้เวลานานเกินไป กรุณาเช็คการเชื่อมต่อของคุณและเริ่มต้นแอพพลิเคชั่น</string>
 

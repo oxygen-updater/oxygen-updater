@@ -117,15 +117,6 @@ object SettingsManager {
     const val PROPERTY_UPDATE_METHOD = "update_method"
     const val PROPERTY_UPDATE_METHOD_ID = "update_method_id"
     const val PROPERTY_UPDATE_CHECKED_DATE = "update_checked_date"
-    const val PROPERTY_RECEIVE_SYSTEM_UPDATE_NOTIFICATIONS = "receive_system_update_notifications"
-
-    /**
-     * Typo can't be fixed due to older versions of the app being released with it
-     */
-    const val PROPERTY_RECEIVE_GENERAL_NOTIFICATIONS = "recive_general_notifications"
-
-    const val PROPERTY_RECEIVE_NEWS_NOTIFICATIONS = "receive_news_notifications"
-    const val PROPERTY_RECEIVE_NEW_DEVICE_NOTIFICATIONS = "receive_new_device_notifications"
 
     @Deprecated(
         message = "Used between v1.0.0 and v2.4.5 only",

@@ -89,6 +89,8 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="summary_off">Dezactivat</string>
 	<string name="summary_please_wait">Vă rugăm așteptați…</string>
 	<string name="summary_update_method">Mai întâi selectați un dispozitiv</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Unele notificări importante sunt dezactivate: \"%1$s\"</string>
 	<string name="summary_theme">Alegeți tema</string>
 	<string name="summary_language">Alegeți limba</string>
 	<string name="summary_privacy_policy">Vizualizați online</string>
@@ -124,9 +126,6 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="settings_explanation_incremental_full_update">O actualizare incrementală poate fi instalată din orice versiune (cu excepția cazului în care aveți un bootloader deblocat; atunci ar trebui să alegeți întotdeauna actualizarea completă ca metodă de actualizare).\n\nO actualizare beta pentru OxygenOS poate fi instalată întotdeauna, de asemenea, atunci când rulați o versiune stabilă. Pentru a trece de la o versiune stabilă la o versiune beta, trebuie să activați modul avansat în setări. Pentru versiunile beta, metodele de actualizare completă și incrementală funcționează în același mod ca pe versiunile stabile.</string>
 
 	<string name="settings_push_from_server">Informații și avertismente</string>
-	<string name="settings_push_new_version">Actualizări disponibile</string>
-	<string name="settings_push_new_device">Suport pentru dispozitive noi</string>
-	<string name="settings_push_news">Noutăți</string>
 
 	<string name="settings_saving">Setările dumneavoastră se salvează. Dacă operațiunea durează prea mult: Verificați conexiunea la rețea, închideți aplicația și porniți-o din nou.</string>
 

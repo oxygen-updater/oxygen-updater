@@ -98,6 +98,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_off">Wyłączone</string>
 	<string name="summary_please_wait">Proszę czekać…</string>
 	<string name="summary_update_method">Wybierz najpierw urządzenie</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Niektóre ważne powiadomienia są wyłączone: \"%1$s\"</string>
 	<string name="summary_theme">Wybierz motyw</string>
 	<string name="summary_language">Ustaw język</string>
 	<string name="summary_privacy_policy">Zobacz online</string>
@@ -137,9 +139,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_explanation_incremental_full_update">Częściowa aktualizacja może zostać zainstalowana z dowolnej wersji (chyba że masz odblokowany bootloader, wtedy musisz wybrać pełną aktualizację jako metodę aktualizacji). Wersja beta OxygenOS zawsze może zostać zainstalowana, nawet jeśli jesteś na stabilnej wersji. Aby przejść na wersję beta ze stabilnej, należy włączyć tryb zaawansowany w ustawieniach. Dla wersji beta, pełne i częściowe metody aktualizacji działają tak samo jak na wersjach stabilnych.</string>
 
 	<string name="settings_push_from_server">Informacje oraz ostrzeżenia</string>
-	<string name="settings_push_new_version">Wiadomości o aktualizacji systemu</string>
-	<string name="settings_push_new_device">Nowe urządzenie jest wspierane</string>
-	<string name="settings_push_news">Wiadomości o nowościach</string>
 
 	<string name="settings_saving">Twoje ustawienia są nadal zapisywane. Jeśli to trwa zbyt długo: Sprawdź połączenie z internetem, wyjdź z aplikacji i spróbuj ponownie.</string>
 

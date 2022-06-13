@@ -89,6 +89,8 @@
 	<string name="summary_off">已停用</string>
 	<string name="summary_please_wait">請稍等…</string>
 	<string name="summary_update_method">請先選擇一個裝置</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">一些重要的通知被禁用。\"%1$s\"</string>
 	<string name="summary_theme">設定佈景主題</string>
 	<string name="summary_language">設定語言</string>
 	<string name="summary_privacy_policy">線上檢視</string>
@@ -123,9 +125,6 @@
 	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安裝（但是如果您解鎖了 Bootloader，那麼您將只能選擇安裝完整包）。\n\nOxygenOS 的公開測試版也可以在任何版本（包括正式版）中安裝。如果您想從正式版升級到測試版，那麼請在設定中打開進階模式。測試版和正式版一樣，都會要求您在解鎖了 Bootloader 的情況下下載全量包。</string>
 
 	<string name="settings_push_from_server">重要通知</string>
-	<string name="settings_push_new_version">系統更新</string>
-	<string name="settings_push_new_device">新裝置支援</string>
-	<string name="settings_push_news">新聞 / 故事發布</string>
 
 	<string name="settings_saving">您的設定仍在儲存中。如果時間過長，請檢查您的網路連線，或嘗試重新啟動更新器。</string>
 

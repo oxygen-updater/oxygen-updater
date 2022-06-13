@@ -1,12 +1,14 @@
 package com.oxygenupdater.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
@@ -40,7 +42,11 @@ import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.BillingRepository.SkuState
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationTopicSubscriber
+import com.oxygenupdater.utils.NotificationUtils
 import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.viewmodels.BillingViewModel
@@ -60,6 +66,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var adFreePreference: Preference
     private lateinit var devicePreference: BottomSheetPreference
     private lateinit var updateMethodPreference: BottomSheetPreference
+    private lateinit var notificationsPreference: Preference
+
+    private val notificationUtils by inject<NotificationUtils>()
 
     private var adFreePrice: String? = null
 
@@ -132,6 +141,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onResume() = super.onResume().also {
         init()
+
+        notificationsPreference.summary = if (notificationUtils.isDisabled) {
+            mContext.getString(R.string.summary_off)
+        } else {
+            val disabledList = buildList {
+                if (notificationUtils.isDisabled(UPDATE_NOTIFICATION_CHANNEL_ID))
+                    add(R.string.update_notification_channel_name)
+                if (notificationUtils.isDisabled(NEWS_NOTIFICATION_CHANNEL_ID))
+                    add(R.string.news_notification_channel_name)
+                if (notificationUtils.isDisabled(DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID))
+                    add(R.string.download_and_installation_notifications_group_name)
+            }
+            if (disabledList.isEmpty()) mContext.getString(R.string.summary_on)
+            else mContext.getString(
+                R.string.summary_important_notifications_disabled,
+                disabledList.joinToString("\", \"") {
+                    mContext.getString(it)
+                }
+            )
+        }
     }
 
     override fun onDestroy() = super.onDestroy().also {
@@ -260,9 +289,28 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setupDevicePreferences() {
         devicePreference = findPreference(SettingsManager.PROPERTY_DEVICE)!!
         updateMethodPreference = findPreference(SettingsManager.PROPERTY_UPDATE_METHOD)!!
+        notificationsPreference = findPreference(mContext.getString(R.string.key_android_notifications))!!
 
         devicePreference.isEnabled = false
         updateMethodPreference.isEnabled = false
+
+        notificationsPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val sdkInt = Build.VERSION.SDK_INT
+            val packageName = mContext.packageName
+            startActivity(
+                when {
+                    sdkInt >= Build.VERSION_CODES.O -> Intent(
+                        Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                    ).putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    // Works only for API 21+ (Lollipop), which happens to be the min API
+                    else -> Intent(
+                        Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                    ).putExtra("app_package", packageName)
+                        .putExtra("app_uid", mContext.applicationInfo.uid)
+                }
+            )
+            true
+        }
 
         settingsViewModel.fetchEnabledDevices().observe(viewLifecycleOwner) {
             populateDeviceSettings(it)

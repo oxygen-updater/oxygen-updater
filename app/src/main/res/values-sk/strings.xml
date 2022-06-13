@@ -89,6 +89,8 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="summary_off">Zakázané</string>
 	<string name="summary_please_wait">Prosím čakajte…</string>
 	<string name="summary_update_method">Najskôr vyberte zariadenie</string>
+	<!-- TODO: check the following translation -->
+	<string name="summary_important_notifications_disabled">Niektoré dôležité oznámenia sú vypnuté: \"%1$s\"</string>
 	<string name="summary_theme">Nastaviť tému</string>
 	<string name="summary_language">Nastaviť jazyk</string>
 	<string name="summary_privacy_policy">Zobraziť online</string>
@@ -124,9 +126,6 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="settings_explanation_incremental_full_update">Inkrementálnu aktualizáciu je možné nainštalovať z ktorejkoľvek verzie (okrem prípadov, keď máte odomknutý bootloader; ako spôsob aktualizácie by ste si mali vždy zvoliť úplnú aktualizáciu).\n\nBeta aktualizáciu systému OxygenOS je možné nainštalovať vždy, aj keď ste na stabilnej verzii. Ak chcete prejsť zo stabilnej verzie na beta, musíte v nastaveniach povoliť pokročilý režim. V prípade beta verzií fungujú metódy úplnej a inkrementálnej aktualizácie rovnakým spôsobom ako v prípade stabilných verzií.</string>
 
 	<string name="settings_push_from_server">Informačné a varovné správy</string>
-	<string name="settings_push_new_version">Správy o aktualizácii systému</string>
-	<string name="settings_push_new_device">Nové zariadenie je podporované</string>
-	<string name="settings_push_news">Novinky</string>
 
 	<string name="settings_saving">Vaše nastavenia sa stále ukladajú. Ak to trvá príliš dlho: Skontrolujte sieťové pripojenie, ukončite aplikáciu a spustite ju znova.</string>
 
