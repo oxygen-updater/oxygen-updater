@@ -254,6 +254,7 @@ dependencies {
     implementation(AndroidXLibraries.APP_COMPAT)
     implementation(AndroidXLibraries.BROWSER)
     implementation(AndroidXLibraries.CONSTRAINT_LAYOUT)
+    implementation(AndroidXLibraries.SWIPE_REFRESH_LAYOUT)
     implementation(AndroidXLibraries.RECYCLER_VIEW)
     implementation(AndroidXLibraries.ROOM_KTX)
     implementation(AndroidXLibraries.ROOM_RUNTIME)

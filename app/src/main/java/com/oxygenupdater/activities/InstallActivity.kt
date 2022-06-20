@@ -168,11 +168,12 @@ class InstallActivity : SupportActionBarActivity(
                 }
             } else {
                 installViewModel.updateToolbarImage(
-                    resources.getIdentifier(
-                        RESOURCE_ID_PREFIX + pageNumber + RESOURCE_ID_IMAGE,
-                        RESOURCE_ID_PACKAGE_DRAWABLE,
-                        packageName
-                    )
+                    if (pageNumber <= 1) R.drawable.download
+                    else if (pageNumber == 2) R.drawable.install_guide_app_in_list
+                    else if (pageNumber == 3 || pageNumber == 4) R.drawable.install_guide_installing
+                    else if (pageNumber >= 5) R.drawable.done_all
+                    else R.drawable.logo_notification,
+                    pageNumber <= 1 || pageNumber >= 5 // only first/last page
                 )
             }
         }
@@ -198,9 +199,6 @@ class InstallActivity : SupportActionBarActivity(
     }
 
     companion object {
-        private const val RESOURCE_ID_IMAGE = "_image"
-        private const val RESOURCE_ID_PACKAGE_DRAWABLE = "drawable"
-
         private const val IMAGE_VARIANT_LDPI = "ldpi"
         private const val IMAGE_VARIANT_MDPI = "mdpi"
         private const val IMAGE_VARIANT_TVDPI = "tvdpi"

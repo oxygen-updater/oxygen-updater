@@ -82,7 +82,7 @@ class NewsItemActivity : SupportActionBarActivity(
         )
 
         override fun onAdFailedToShowFullScreenContent(
-            adError: AdError?
+            adError: AdError
         ) = logWarning(
             TAG,
             "Interstitial ad failed to show: $adError"

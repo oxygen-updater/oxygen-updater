@@ -30,7 +30,7 @@ readonly UNAME_WINDOWS_OS_REGEX='^(MS/Windows|Cygwin|Msys)$'
 # endings are CRLF if shell is running under Windows
 correct_line_endings() {
   if [[ $OSTYPE =~ $WINDOWS_OS_REGEX ]]; then
-    unix2dos "$1"
+    unix2dos "$@"
   fi
 }
 
@@ -47,10 +47,6 @@ fi
 
 existing_version_name=$(grep -oE "versionName = \"$SEMVER\"" "$VERSION_FILE" | sed -E 's/[^0-9\.]//g')
 if [[ "$existing_version_name" != "$version_name" ]]; then
-  ## Check if the version file actually changed or not. Will be 1 if changed, 0 if not.
-  #version_file_changed=$(git diff --name-only "$VERSION_FILE")
-  #readonly version_file_changed
-  #if [[ -n "$version_file_changed" ]]; then
   # Extract `versionCode` from version file and increment it
   existing_version_code=$(grep -oE 'versionCode = [0-9]+' "$VERSION_FILE" | sed -E 's/[^0-9]//g')
   readonly existing_version_code

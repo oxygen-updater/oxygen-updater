@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 	<issue id="UnusedResources">
-		<ignore regexp="src/main/res/drawable-\w+dpi/install_guide_page_\d_image\.png" />
 		<ignore regexp="src/main/res/drawable-nodpi/oneplus[\d\w]*\.webp" />
 	</issue>
 </lint>
