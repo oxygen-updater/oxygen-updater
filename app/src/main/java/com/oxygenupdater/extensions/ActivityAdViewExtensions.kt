@@ -18,7 +18,7 @@ fun Activity.fullWidthAnchoredAdaptiveBannerAd(
     container: FrameLayout
 ) = AdView(this).apply {
     adUnitId = getString(adUnitIdStr)
-    adSize = fullWidthAdSize(container)
+    setAdSize(fullWidthAdSize(container))
 }.also {
     container.addView(it)
 }

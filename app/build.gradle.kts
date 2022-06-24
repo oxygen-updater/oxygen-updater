@@ -53,12 +53,10 @@ android {
             annotationProcessorOptions {
                 // Add Room-specific arguments
                 // https://developer.android.com/jetpack/androidx/releases/room#compiler-options
-                arguments(
-                    mapOf(
-                        "room.schemaLocation" to "$projectDir/schemas",
-                        "room.incremental" to "true",
-                        "room.expandProjection" to "true"
-                    )
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
                 )
             }
         }
@@ -276,7 +274,7 @@ dependencies {
 
     implementation(Libraries.GOOGLE_PLAY_BILLING)
     implementation(Libraries.GOOGLE_PLAY_BILLING_KTX)
-    implementation(Libraries.PLAY_CORE)
+    implementation(Libraries.PLAY_CORE_IN_APP_UPDATES)
     implementation(Libraries.PLAY_SERVICES_BASE)
     implementation(Libraries.PLAY_SERVICES_ADS)
 

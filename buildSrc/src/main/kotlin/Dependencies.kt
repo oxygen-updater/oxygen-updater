@@ -1,30 +1,30 @@
 // https://kotlinlang.org/docs/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 // https://blog.jetbrains.com/kotlin/category/releases/
-const val KOTLIN_VERSION = "1.6.21"
+const val KOTLIN_VERSION = "1.7.0"
 
-// https://insert-koin.io/docs/setup/stable
-// https://github.com/InsertKoinIO/koin/releases
+// https://mvnrepository.com/artifact/io.insert-koin/koin-android
+// https://github.com/InsertKoinIO/koin/tags
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-const val KOIN_VERSION = "3.1.6"
+const val KOIN_VERSION = "3.2.0"
 
 object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
         // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-        const val BUILD_GRADLE_PLUGIN = "7.1.3"
+        const val BUILD_GRADLE_PLUGIN = "7.2.1"
 
-        // https://developers.google.com/android/guides/releases
+        // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
         const val GOOGLE_SERVICES_PLUGIN = "4.3.10"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_GRADLE_PLUGIN = "2.8.1"
+        const val FIREBASE_GRADLE_PLUGIN = "2.9.1"
     }
 
     // https://developer.android.com/studio/releases/gradle-plugin
     const val ANDROID_GRADLE_PLUGIN = "com.android.tools.build:gradle:${Versions.BUILD_GRADLE_PLUGIN}"
 
-    // https://developers.google.com/android/guides/releases
+    // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
     const val GOOGLE_SERVICES_PLUGIN = "com.google.gms:google-services:${Versions.GOOGLE_SERVICES_PLUGIN}"
 
     // https://firebase.google.com/support/release-notes/android
@@ -52,16 +52,19 @@ object AndroidSdk {
 object AndroidXLibraries {
     private object Versions {
         // https://developer.android.com/jetpack/androidx/releases/appcompat
-        const val APP_COMPAT = "1.4.1"
+        const val APP_COMPAT = "1.4.2"
 
         // https://developer.android.com/jetpack/androidx/releases/browser
         const val BROWSER = "1.4.0"
 
         // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        const val CONSTRAINT_LAYOUT = "2.1.3"
+        const val CONSTRAINT_LAYOUT = "2.1.4"
+
+        // https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
+        const val SWIPE_REFRESH_LAYOUT = "1.1.0"
 
         // https://developer.android.com/jetpack/androidx/releases/core
-        const val KTX_CORE = "1.7.0"
+        const val KTX_CORE = "1.8.0"
 
         // https://developer.android.com/jetpack/androidx/releases/fragment
         const val KTX_FRAGMENT = "1.4.1"
@@ -90,6 +93,9 @@ object AndroidXLibraries {
 
     // https://developer.android.com/jetpack/androidx/releases/constraintlayout
     const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
+
+    // https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
+    const val SWIPE_REFRESH_LAYOUT = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.SWIPE_REFRESH_LAYOUT}"
 
     // https://developer.android.com/jetpack/androidx/releases/recyclerview
     const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:${Versions.RECYCLER_VIEW}"
@@ -122,44 +128,44 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "29.3.1"
+        const val FIREBASE_BOM = "30.2.0"
 
         // https://github.com/bumptech/glide/releases
-        const val GLIDE = "4.13.1"
+        const val GLIDE = "4.13.2"
 
         // https://developer.android.com/google/play/billing/release-notes
         const val GOOGLE_PLAY_BILLING = "4.1.0"
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.13.2"
+        const val JACKSON_KOTLIN_MODULE = "2.13.3"
 
-        // https://github.com/JakeWharton/ThreeTenABP/releases
+        // https://github.com/JakeWharton/ThreeTenABP/tags
         // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
         const val THREE_TEN_ABP = "1.4.0"
 
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.6.1"
+        const val KOTLIN_COROUTINES = "1.6.3"
 
         // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.6.0-rc01"
+        const val MATERIAL = "1.6.1"
 
         // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
         // https://github.com/square/okhttp/blob/master/CHANGELOG.md
         // https://square.github.io/okhttp/changelog/
-        const val OKHTTP_LOGGING_INTERCEPTOR = "4.9.3"
+        const val OKHTTP_LOGGING_INTERCEPTOR = "4.10.0"
 
-        // https://developer.android.com/reference/com/google/android/play/core/release-notes
-        const val PLAY_CORE = "1.10.3"
+        // https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
+        const val PLAY_CORE_IN_APP_UPDATES = "2.0.0"
 
         // https://developers.google.com/android/guides/releases
         const val PLAY_SERVICES_BASE = "18.0.1"
 
         // https://developers.google.com/android/guides/releases
         // https://developers.google.com/admob/android/rel-notes
-        const val PLAY_SERVICES_ADS = "20.6.0"
+        const val PLAY_SERVICES_ADS = "21.0.0"
 
-        // https://github.com/square/retrofit/releases
+        // https://github.com/square/retrofit/tags
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
         const val RETROFIT = "2.9.0"
     }
@@ -186,8 +192,8 @@ object Libraries {
     const val GOOGLE_PLAY_BILLING = "com.android.billingclient:billing:${Versions.GOOGLE_PLAY_BILLING}"
     const val GOOGLE_PLAY_BILLING_KTX = "com.android.billingclient:billing-ktx:${Versions.GOOGLE_PLAY_BILLING}"
 
-    // https://developer.android.com/reference/com/google/android/play/core/release-notes
-    const val PLAY_CORE = "com.google.android.play:core:${Versions.PLAY_CORE}"
+    // https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
+    const val PLAY_CORE_IN_APP_UPDATES = "com.google.android.play:app-update:${Versions.PLAY_CORE_IN_APP_UPDATES}"
 
     // https://developers.google.com/android/guides/releases
     const val PLAY_SERVICES_BASE = "com.google.android.gms:play-services-base:${Versions.PLAY_SERVICES_BASE}"
@@ -202,7 +208,7 @@ object Libraries {
     // https://square.github.io/okhttp/changelog/
     const val OKHTTP_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP_LOGGING_INTERCEPTOR}"
 
-    // https://github.com/square/retrofit/releases
+    // https://github.com/square/retrofit/tags
     // https://github.com/square/retrofit/blob/master/CHANGELOG.md
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
     const val RETROFIT_CONVERTER_JACKSON = "com.squareup.retrofit2:converter-jackson:${Versions.RETROFIT}"
@@ -218,7 +224,7 @@ object Libraries {
     // https://github.com/facebook/shimmer-android/releases
     const val FACEBOOK_SHIMMER = "com.facebook.shimmer:shimmer:${Versions.FACEBOOK_SHIMMER}"
 
-    // https://github.com/JakeWharton/ThreeTenABP/releases
+    // https://github.com/JakeWharton/ThreeTenABP/tags
     // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
     const val THREE_TEN_ABP = "com.jakewharton.threetenabp:threetenabp:${Versions.THREE_TEN_ABP}"
 }
