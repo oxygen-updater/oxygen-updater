@@ -21,7 +21,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
@@ -105,6 +104,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
+            toolbar.menu.findItem(R.id.action_mark_articles_read).isVisible = position == PAGE_NEWS
+
             bottomNavigationView.menu.getItem(position)?.run {
                 isChecked = true
 
@@ -202,6 +203,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
         R.id.action_announcements -> showServerMessagesDialog().let { true }
+        R.id.action_mark_articles_read -> mainViewModel.notifyMenuClicked(item.itemId).let { true }
         R.id.action_contribute -> showContributorDialog().let { true }
         else -> super.onOptionsItemSelected(item)
     }
@@ -211,6 +213,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * since an [AppUpdateType.IMMEDIATE] update is entirely handled by Google Play, with the exception of resuming an installation.
      * Check [onResume] for more info on how this is handled.
      */
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
@@ -450,11 +453,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             }
 
             // Adjust bottom margin on scroll
-            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            appBar.addOnOffsetChangedListener { _, verticalOffset ->
                 contentLayout.updateLayoutParams<LayoutParams> {
                     bottomMargin = totalScrollRange - abs(verticalOffset)
                 }
-            })
+            }
         }
     }
 
@@ -513,7 +516,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * can happen if the user clicks in rapid succession, which can cause
      * the `java.lang.IllegalStateException: Fragment already added` error
      */
-    fun showServerMessagesDialog() {
+    private fun showServerMessagesDialog() {
         if (!isFinishing && !serverMessagesDialog.isAdded) {
             serverMessagesDialog.show(
                 supportFragmentManager,
@@ -641,7 +644,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             }.show()
     }
 
-    fun displayIncorrectDeviceSelectedMessage() {
+    private fun displayIncorrectDeviceSelectedMessage() {
         // Do not show dialog if app was already exited upon receiving of devices from the server.
         if (isFinishing) {
             return

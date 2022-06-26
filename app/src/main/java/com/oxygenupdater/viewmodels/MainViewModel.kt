@@ -111,6 +111,10 @@ class MainViewModel(
         get() = _pageToolbarTextUpdated
     val pageToolbarSubtitle = SparseArray<CharSequence?>()
 
+    private val _menuClicked = MutableLiveData<Int>()
+    val menuClicked: LiveData<Int>
+        get() = _menuClicked
+
     private val _settingsChanged = MutableLiveData<String>()
     val settingsChanged: LiveData<String>
         get() = _settingsChanged
@@ -478,6 +482,8 @@ class MainViewModel(
         pageToolbarSubtitle.put(pageId, subtitle)
         _pageToolbarTextUpdated.postValue(Pair(pageId, subtitle))
     }
+
+    fun notifyMenuClicked(@IdRes id: Int) = _menuClicked.postValue(id)
 
     fun notifySettingsChanged(key: String) = _settingsChanged.postValue(key)
 }

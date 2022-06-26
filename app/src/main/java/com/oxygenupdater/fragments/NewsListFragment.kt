@@ -95,6 +95,12 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
         // This way, the app feels a lot faster. Also, it doesn't affect users that much, as they will always see the update info screen first.
         Handler(Looper.getMainLooper()).postDelayed({ refreshNews() }, loadDelayMilliseconds.toLong())
 
+        mainViewModel.menuClicked.observe(viewLifecycleOwner) {
+            if (it == R.id.action_mark_articles_read) {
+                markAllRead()
+            }
+        }
+
         mainViewModel.settingsChanged.observe(viewLifecycleOwner) {
             if (it == PROPERTY_DEVICE_ID || it == PROPERTY_UPDATE_METHOD_ID) {
                 refreshNews()
@@ -159,7 +165,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
 
         shimmerFrameLayout.isVisible = false
 
-        if (newsItems.isNullOrEmpty()) {
+        if (newsItems.isEmpty()) {
             displayEmptyState()
             return
         }
@@ -186,6 +192,23 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
         }
     }
 
+    private fun markAllRead() {
+        newsListAdapter.currentList.filter {
+            !it.read
+        }.forEach { newsItem ->
+            if (newsItem.id != null) {
+                newsViewModel.toggleReadStatus(newsItem, true)
+                newsListAdapter.changeItemReadStatus(newsItem.id, true)
+            }
+        }
+
+        updateBannerText(0)
+
+        if (isShowingOnlyUnreadArticles) {
+            displayEmptyState(true)
+        }
+    }
+
     private fun updateBannerText(count: Int) {
         if (!isAdded) {
             return
@@ -202,21 +225,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
                             show()
 
                             setOnMenuItemClickListener {
-                                newsListAdapter.currentList.filter {
-                                    !it.read
-                                }.forEach { newsItem ->
-                                    if (newsItem.id != null) {
-                                        newsViewModel.toggleReadStatus(newsItem, true)
-                                        newsListAdapter.changeItemReadStatus(newsItem.id, true)
-                                    }
-                                }
-
-                                updateBannerText(0)
-
-                                if (isShowingOnlyUnreadArticles) {
-                                    displayEmptyState(true)
-                                }
-
+                                markAllRead()
                                 true
                             }
                         }
