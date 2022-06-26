@@ -62,7 +62,7 @@ class ServerMessagesAdapter : ListAdapter<ServerMessage, ServerMessageViewHolder
 
     inner class ServerMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val message: TextView = itemView.findViewById(R.id.bannerTextView)
+        private val message: TextView = itemView.findViewById(R.id.bannerTextView)
 
         fun bindTo(banner: Banner) = message.run {
             banner.getBannerText(context).let {

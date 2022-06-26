@@ -87,7 +87,7 @@ class ChooserOnboardingAdapter(
 
     inner class ItemSelectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val textView: AppCompatTextView = itemView.findViewById(R.id.textView)
+        private val textView: AppCompatTextView = itemView.findViewById(R.id.textView)
 
         fun bindTo(item: SelectableModel) = textView.let {
             it.text = item.name

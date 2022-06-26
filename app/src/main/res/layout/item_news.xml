@@ -40,6 +40,7 @@
 		android:layout_height="0dp"
 		android:layout_marginTop="@dimen/spacing_quarter"
 		android:ellipsize="end"
+		android:maxLines="2"
 		android:textColor="?android:textColorSecondary"
 		app:autoSizeMaxTextSize="@dimen/typography_body"
 		app:autoSizeMinTextSize="@dimen/typography_caption"
@@ -48,7 +49,6 @@
 		app:layout_constraintEnd_toEndOf="@id/newsItemTitle"
 		app:layout_constraintStart_toStartOf="@id/newsItemTitle"
 		app:layout_constraintTop_toBottomOf="@id/newsItemTitle"
-		tools:maxLines="2"
 		tools:text="An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered" />
 
 	<com.google.android.material.imageview.ShapeableImageView

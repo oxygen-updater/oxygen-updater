@@ -112,13 +112,14 @@ class NewsListAdapter(
     }
 
     inner class NewsItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val containerLayout: ConstraintLayout = itemView.findViewById(R.id.newsItemContainer)
-        val thumbnailView: ImageView = itemView.findViewById(R.id.newsItemImage)
-        val unreadIndicator: ImageView = itemView.findViewById(R.id.newsUnreadIndicator)
-        val titleView: TextView = itemView.findViewById(R.id.newsItemTitle)
-        val subtitleView: TextView = itemView.findViewById(R.id.newsItemSubtitle)
-        val timestampAndAuthorView: TextView = itemView.findViewById(R.id.newsItemTimestampAndAuthor)
-        val optionsButton: ImageButton = itemView.findViewById(R.id.newsItemOptions)
+
+        private val containerLayout: ConstraintLayout = itemView.findViewById(R.id.newsItemContainer)
+        private val thumbnailView: ImageView = itemView.findViewById(R.id.newsItemImage)
+        private val unreadIndicator: ImageView = itemView.findViewById(R.id.newsUnreadIndicator)
+        private val titleView: TextView = itemView.findViewById(R.id.newsItemTitle)
+        private val subtitleView: TextView = itemView.findViewById(R.id.newsItemSubtitle)
+        private val timestampAndAuthorView: TextView = itemView.findViewById(R.id.newsItemTimestampAndAuthor)
+        private val optionsButton: ImageButton = itemView.findViewById(R.id.newsItemOptions)
 
         /**
          * Show the dialog fragment only if it hasn't been added already. This
@@ -172,14 +173,7 @@ class NewsListAdapter(
             }
 
             titleView.text = item.title
-            subtitleView.apply {
-                text = item.subtitle
-                // Manually set `maxLines` so that `ellipsize="end"` can work.
-                // This is necessary because this TextView's height fills
-                // available space, which might result in content getting
-                // cut off instead.
-                post { maxLines = height / lineHeight }
-            }
+            subtitleView.text = item.subtitle
 
             timestampAndAuthorView.apply {
                 isSelected = true // for enabling marquee effect
