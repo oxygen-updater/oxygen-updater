@@ -1,12 +1,14 @@
 package com.oxygenupdater.extensions
 
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.annotation.AnimRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import com.oxygenupdater.R
 
 /**
  * Convenient extension to set a drawable and a tint for an [ImageView]
@@ -17,7 +19,7 @@ fun ImageView.setImageResourceWithTint(
     @DrawableRes drawableResId: Int,
     @ColorRes colorResId: Int
 ) {
-    setImageResource(drawableResId)
+    trySetImageResource(drawableResId)
     imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, colorResId))
 }
 
@@ -31,7 +33,7 @@ fun ImageView.setImageResourceWithAnimation(
     @AnimRes animResId: Int
 ) {
     startAnimation(AnimationUtils.loadAnimation(context, animResId))
-    setImageResource(drawableResId)
+    trySetImageResource(drawableResId)
 }
 
 /**
@@ -50,5 +52,23 @@ fun ImageView.setImageResourceWithAnimationAndTint(
         null
     } else {
         ColorStateList.valueOf(ContextCompat.getColor(context!!, colorResId))
+    }
+}
+
+/**
+ * Fallback to [R.drawable.no_entry] if raster image somehow wasn't found. It
+ * happens on older Android versions, probably 9 and below (API < 28).
+ * Not sure what the cause is.
+ */
+private fun ImageView.trySetImageResource(
+    @DrawableRes drawableResId: Int
+) = try {
+    setImageResource(drawableResId)
+} catch (e: Resources.NotFoundException) {
+    try {
+        // Load a "no entry" sign to show that the image failed to load
+        setImageResource(R.drawable.no_entry)
+    } catch (e: Resources.NotFoundException) {
+        // Ignore
     }
 }
