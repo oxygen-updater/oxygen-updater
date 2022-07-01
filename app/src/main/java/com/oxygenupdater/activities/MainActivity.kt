@@ -314,7 +314,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
                 DOWNLOADING -> flexibleAppUpdateProgressBar.apply {
                     isVisible = true
                     isIndeterminate = false
-                    progress = (it.bytesDownloaded() * 100 / it.totalBytesToDownload()).toInt()
+                    progress = (it.bytesDownloaded() * 100 / it.totalBytesToDownload().coerceAtLeast(1)).toInt()
                 }
                 DOWNLOADED -> {
                     flexibleAppUpdateProgressBar.isVisible = false
