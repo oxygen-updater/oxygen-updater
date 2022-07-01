@@ -20,7 +20,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.oxygenupdater.extensions.attachWithLocale
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.utils.DatabaseMigrations
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
@@ -86,7 +86,7 @@ class OxygenUpdater : Application() {
         }
 
         // Save app's version code to aid in future migrations (added in 5.4.0)
-        SettingsManager.savePreference(SettingsManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
+        PrefManager.putInt(PrefManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
         DatabaseMigrations.deleteLocalBillingDatabase(this)
         migrateOldSettings()
     }
@@ -158,8 +158,8 @@ class OxygenUpdater : Application() {
      * @see [FirebaseCrashlytics.setCrashlyticsCollectionEnabled]
      */
     fun setupCrashReporting(
-        shouldShareLogs: Boolean = SettingsManager.getPreference(
-            SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
+        shouldShareLogs: Boolean = PrefManager.getBoolean(
+            PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
             true
         )
     ) {
@@ -178,20 +178,20 @@ class OxygenUpdater : Application() {
     @Suppress("DEPRECATION")
     private fun migrateOldSettings() {
         // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
-        if (SettingsManager.containsPreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
-            SettingsManager.savePreference(
-                SettingsManager.PROPERTY_ADVANCED_MODE,
-                !SettingsManager.getPreference(
-                    SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE,
+        if (PrefManager.contains(PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
+            PrefManager.putBoolean(
+                PrefManager.PROPERTY_ADVANCED_MODE,
+                !PrefManager.getBoolean(
+                    PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE,
                     true
                 )
             )
-            SettingsManager.removePreference(SettingsManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
+            PrefManager.remove(PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
         }
 
         // App version 5.2.0+: no longer used. We now configure capping in the AdMob dashboard itself.
-        if (SettingsManager.containsPreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN)) {
-            SettingsManager.removePreference(SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN)
+        if (PrefManager.contains(PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN)) {
+            PrefManager.remove(PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN)
         }
     }
 

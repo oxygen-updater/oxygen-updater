@@ -7,7 +7,7 @@ import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
@@ -51,7 +51,7 @@ class ServerRepository constructor(
             systemVersionProperties.oxygenOSVersion,
             systemVersionProperties.osType,
             systemVersionProperties.fingerprint,
-            SettingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false),
+            PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
             BuildConfig.VERSION_NAME
         )
     }.let { updateData: UpdateData? ->
@@ -62,16 +62,16 @@ class ServerRepository constructor(
         ) {
             fetchMostRecentUpdateData(deviceId, updateMethodId)
         } else if (!Utils.checkNetworkConnection()) {
-            if (SettingsManager.checkIfOfflineUpdateDataIsAvailable()) {
+            if (PrefManager.checkIfOfflineUpdateDataIsAvailable()) {
                 UpdateData(
-                    id = SettingsManager.getPreference<Long?>(SettingsManager.PROPERTY_OFFLINE_ID, null),
-                    versionNumber = SettingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_UPDATE_NAME, null),
-                    description = SettingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null),
-                    downloadUrl = SettingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_DOWNLOAD_URL, null),
-                    downloadSize = SettingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L),
-                    filename = SettingsManager.getPreference<String?>(SettingsManager.PROPERTY_OFFLINE_FILE_NAME, null),
-                    updateInformationAvailable = SettingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false),
-                    systemIsUpToDate = SettingsManager.getPreference(SettingsManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
+                    id = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_ID, -1L),
+                    versionNumber = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_NAME, null),
+                    description = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null),
+                    downloadUrl = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_DOWNLOAD_URL, null),
+                    downloadSize = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L),
+                    filename = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_FILE_NAME, null),
+                    updateInformationAvailable = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false),
+                    systemIsUpToDate = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
                 )
             } else {
                 null
@@ -95,8 +95,8 @@ class ServerRepository constructor(
     } else {
         performServerRequest { serverApi.fetchServerStatus() }.let { status ->
             val automaticInstallationEnabled = false
-            val pushNotificationsDelaySeconds = SettingsManager.getPreference(
-                SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+            val pushNotificationsDelaySeconds = PrefManager.getInt(
+                PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
                 300
             )
 
@@ -116,8 +116,8 @@ class ServerRepository constructor(
                 )
             }
 
-            SettingsManager.savePreference(
-                SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+            PrefManager.putInt(
+                PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
                 response.pushNotificationDelaySeconds
             )
 
@@ -130,8 +130,8 @@ class ServerRepository constructor(
         errorCallback: KotlinCallback<String?>
     ) = performServerRequest {
         serverApi.fetchServerMessages(
-            SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L),
-            SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L),
+            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         )
     }.let { serverMessages ->
         val status = serverStatus.status!!
@@ -217,9 +217,9 @@ class ServerRepository constructor(
         serverApi.submitUpdateFile(
             hashMapOf(
                 "filename" to filename,
-                "isEuBuild" to SettingsManager.getPreference(SettingsManager.PROPERTY_IS_EU_BUILD, false),
+                "isEuBuild" to PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
                 "appVersion" to BuildConfig.VERSION_NAME,
-                "deviceName" to SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>"),
+                "deviceName" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>"),
                 "actualDeviceName" to systemVersionProperties.oxygenDeviceName
             )
         )
@@ -242,7 +242,7 @@ class ServerRepository constructor(
                 "httpCode" to httpCode,
                 "httpMessage" to httpMessage,
                 "appVersion" to BuildConfig.VERSION_NAME,
-                "deviceName" to SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>"),
+                "deviceName" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>"),
                 "actualDeviceName" to systemVersionProperties.oxygenDeviceName
             )
         )

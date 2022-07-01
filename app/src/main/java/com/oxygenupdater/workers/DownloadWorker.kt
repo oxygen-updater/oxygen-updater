@@ -27,8 +27,8 @@ import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.createFromWorkData
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.toWorkData
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE
 import com.oxygenupdater.models.TimeRemaining
 import com.oxygenupdater.utils.ExceptionUtils
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
@@ -175,10 +175,10 @@ class DownloadWorker(
         @Suppress("DEPRECATION")
         zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
-        var startingByte = SettingsManager.getPreference<Long?>(PROPERTY_DOWNLOAD_BYTES_DONE, null)
-        var rangeHeader = if (startingByte != null) "bytes=$startingByte-" else null
+        var startingByte = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
+        var rangeHeader = if (startingByte != NOT_SET) "bytes=$startingByte-" else null
 
-        if (startingByte != null) {
+        if (startingByte != NOT_SET) {
             logDebug(TAG, "Looks like a resume operation. Adding $rangeHeader to the request")
 
             if (tempFile.length() > startingByte) {
@@ -192,7 +192,7 @@ class DownloadWorker(
                     OxygenUpdaterException("Partially downloaded ZIP size (${tempFile.length()}) is lesser than skipped bytes ($startingByte). Resetting state.")
                 )
 
-                startingByte = null
+                startingByte = NOT_SET
                 rangeHeader = null
             }
         }
@@ -219,7 +219,7 @@ class DownloadWorker(
         }
 
         body.byteStream().use { stream ->
-            logInfo(TAG, "Downloading ZIP from ${startingByte ?: 0} bytes")
+            logInfo(TAG, "Downloading ZIP from ${startingByte.coerceAtLeast(0L)} bytes")
 
             // Copy stream to file
             // We could have used the [InputStream.copyTo] extension defined in [IOStreams.kt],
@@ -227,7 +227,7 @@ class DownloadWorker(
             RandomAccessFile(tempFile, "rw").use { randomAccessFile ->
                 val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
                 var bytes: Int
-                var bytesRead = startingByte ?: 0L
+                var bytesRead = startingByte.coerceAtLeast(0L)
                 val contentLength = bytesRead + body.contentLength()
 
                 if (abs(contentLength - updateData.downloadSize) > THRESHOLD_BYTES_DIFFERENCE_WITH_BACKEND) {
@@ -237,7 +237,7 @@ class DownloadWorker(
                     )
                 }
 
-                if (startingByte != null) {
+                if (startingByte != NOT_SET) {
                     logDebug(TAG, "Looks like a resume operation. Seeking to $startingByte bytes")
                     randomAccessFile.seek(startingByte)
                 }
@@ -297,7 +297,7 @@ class DownloadWorker(
                             }
                             else -> {
                                 // Delete any associated tracker preferences to allow retrying this work with a fresh state
-                                SettingsManager.removePreference(PROPERTY_DOWNLOAD_BYTES_DONE)
+                                PrefManager.remove(PROPERTY_DOWNLOAD_BYTES_DONE)
 
                                 // Try deleting the file to allow retrying this work with a fresh state
                                 // Even if it doesn't get deleted, we can overwrite data to the same file
@@ -316,7 +316,7 @@ class DownloadWorker(
                 }
 
                 logDebug(TAG, "Download completed. Deleting any associated tracker preferences")
-                SettingsManager.removePreference(PROPERTY_DOWNLOAD_BYTES_DONE)
+                PrefManager.remove(PROPERTY_DOWNLOAD_BYTES_DONE)
 
                 setProgress(
                     workDataOf(
@@ -410,9 +410,9 @@ class DownloadWorker(
             val currentTimestamp = System.currentTimeMillis()
             if (isFirstPublish || currentTimestamp - previousProgressTimestamp > THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED) {
                 val progress = (bytesDone * 100 / totalBytes).toInt()
-                val previousBytesDone = SettingsManager.getPreference(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
+                val previousBytesDone = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
 
-                SettingsManager.savePreference(PROPERTY_DOWNLOAD_BYTES_DONE, bytesDone)
+                PrefManager.putLong(PROPERTY_DOWNLOAD_BYTES_DONE, bytesDone)
 
                 val downloadEta = calculateDownloadEta(
                     currentTimestamp,
@@ -483,7 +483,7 @@ class DownloadWorker(
             }
 
             // Calculate number of seconds remaining based off average download speed
-            val averageBytesPerSecond = if (measurements.isNullOrEmpty()) {
+            val averageBytesPerSecond = if (measurements.isEmpty()) {
                 0L
             } else {
                 (measurements.sum() / measurements.size).toLong()

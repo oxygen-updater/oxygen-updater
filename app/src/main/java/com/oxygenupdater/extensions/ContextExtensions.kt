@@ -13,7 +13,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger
 import com.oxygenupdater.utils.Logger.logError
@@ -93,16 +93,16 @@ fun Context.openEmail() {
     val osType = systemVersionProperties.osType
     val actualDeviceName = systemVersionProperties.oxygenDeviceName
     val appVersion = BuildConfig.VERSION_NAME
-    val chosenDeviceName = SettingsManager.getPreference(
-        SettingsManager.PROPERTY_DEVICE,
+    val chosenDeviceName = PrefManager.getString(
+        PrefManager.PROPERTY_DEVICE,
         "<UNKNOWN>"
     )
-    val chosenUpdateMethod = SettingsManager.getPreference(
-        SettingsManager.PROPERTY_UPDATE_METHOD,
+    val chosenUpdateMethod = PrefManager.getString(
+        PrefManager.PROPERTY_UPDATE_METHOD,
         "<UNKNOWN>"
     )
-    val advancedModeEnabled = SettingsManager.getPreference(
-        SettingsManager.PROPERTY_ADVANCED_MODE,
+    val advancedModeEnabled = PrefManager.getBoolean(
+        PrefManager.PROPERTY_ADVANCED_MODE,
         false
     )
 

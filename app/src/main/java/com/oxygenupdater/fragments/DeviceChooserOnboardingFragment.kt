@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.SystemVersionProperties
@@ -51,7 +51,7 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
 
         val data = data as List<Device>
 
-        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
 
         val recommendedIndex = data.indexOfFirst { it.productNames.contains(systemVersionProperties.oxygenDeviceName) }
         val initialSelectedIndex = if (deviceId != -1L) data.indexOfFirst { it.id == deviceId } else recommendedIndex

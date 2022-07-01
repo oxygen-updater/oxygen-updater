@@ -3,10 +3,10 @@ package com.oxygenupdater.utils
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_DEVICE_ID
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_NOTIFICATION_TOPIC
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DEVICE_ID
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_NOTIFICATION_TOPIC
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_UPDATE_METHOD_ID
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.utils.Logger.logDebug
@@ -20,11 +20,11 @@ object NotificationTopicSubscriber {
 
     private val topic: String
         get() {
-            val deviceId = SettingsManager.getPreference(
+            val deviceId = PrefManager.getLong(
                 PROPERTY_DEVICE_ID,
                 -1L
             )
-            val updateMethodId = SettingsManager.getPreference(
+            val updateMethodId = PrefManager.getLong(
                 PROPERTY_UPDATE_METHOD_ID,
                 -1L
             )
@@ -73,7 +73,7 @@ object NotificationTopicSubscriber {
     private fun subscribeToNewTopic(
         newTopic: String
     ) = messaging.subscribeToTopic(newTopic).also {
-        SettingsManager.savePreference(PROPERTY_NOTIFICATION_TOPIC, newTopic)
+        PrefManager.putString(PROPERTY_NOTIFICATION_TOPIC, newTopic)
         logDebug(TAG, "Subscribed to topic: $newTopic")
     }
 
@@ -85,7 +85,7 @@ object NotificationTopicSubscriber {
     fun resubscribe(
         deviceList: List<Device>,
         updateMethodList: List<UpdateMethod>,
-        oldTopic: String? = SettingsManager.getPreference<String?>(
+        oldTopic: String? = PrefManager.getString(
             PROPERTY_NOTIFICATION_TOPIC,
             null
         ),
@@ -112,7 +112,7 @@ object NotificationTopicSubscriber {
         updateMethodList: List<UpdateMethod>,
         newTopic: String = this.topic
     ) {
-        val oldTopic = SettingsManager.getPreference<String?>(
+        val oldTopic = PrefManager.getString(
             PROPERTY_NOTIFICATION_TOPIC,
             null
         )

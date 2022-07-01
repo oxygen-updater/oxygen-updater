@@ -16,7 +16,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.BottomSheetItemAdapter
 import com.oxygenupdater.extensions.getString
-import com.oxygenupdater.internal.settings.SettingsManager.getPreference
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logVerbose
 import kotlin.math.min
@@ -163,7 +162,7 @@ class BottomSheetPreference : Preference {
 
             val title = if (entries != null) entries[i] else titleEntries!![i]
             val subtitle = subtitleEntries?.get(i)
-            val secondaryValue: Any? = intEntryValues?.get(i)
+            val secondaryValue = intEntryValues?.get(i)
 
             if (title != null) {
                 item.title = title.toString()
@@ -239,10 +238,10 @@ class BottomSheetPreference : Preference {
             value = newValue
             secondaryValue = newSecondaryValue
             valueSet = true
-            SettingsManager.savePreference(key, newValue)
+            PrefManager.putPreference(key, newValue)
 
             if (newSecondaryValue != null) {
-                SettingsManager.savePreference(secondaryKey, newSecondaryValue)
+                PrefManager.putPreference(secondaryKey, newSecondaryValue)
             }
 
             if (changed) {
@@ -279,11 +278,14 @@ class BottomSheetPreference : Preference {
         mOnChangeListener = onPreferenceChangeListener
     }
 
-    override fun onSetInitialValue(defaultValue: Any?) {
-        val newValue = getPreference<Any?>(key, null)
-        val newSecondaryValue = getPreference<Any?>(secondaryKey, null)
-        setValues(newValue, newSecondaryValue)
-    }
+    override fun onSetInitialValue(defaultValue: Any?) = setValues(
+        value?.let {
+            PrefManager.getPreference(key, it, null)
+        } ?: PrefManager.getPreference<Any?>(key, null),
+        secondaryValue?.let {
+            PrefManager.getPreference(secondaryKey, it, null)
+        } ?: PrefManager.getPreference<Any?>(secondaryKey, null)
+    )
 
     override fun onSaveInstanceState() = super.onSaveInstanceState().let { superState ->
         if (isPersistent) {

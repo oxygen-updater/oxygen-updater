@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.InstallActivity
 import com.oxygenupdater.exceptions.OxygenUpdaterException
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.InstallGuidePage
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logDebug
@@ -35,8 +35,8 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         if (installViewModel.installGuideCache[pageNumber] == null) {
             installViewModel.fetchInstallGuidePage(

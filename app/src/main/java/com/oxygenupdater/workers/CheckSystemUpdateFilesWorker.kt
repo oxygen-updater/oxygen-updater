@@ -9,8 +9,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.extensions.attachWithLocale
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTION_COUNT
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTION_COUNT
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.SubmittedUpdateFile
 import com.oxygenupdater.repositories.ServerRepository
@@ -133,9 +133,9 @@ class CheckSystemUpdateFilesWorker(
             )
 
             // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
-            SettingsManager.savePreference(
+            PrefManager.putInt(
                 PROPERTY_CONTRIBUTION_COUNT,
-                SettingsManager.getPreference(PROPERTY_CONTRIBUTION_COUNT, 0) + count
+                PrefManager.getInt(PROPERTY_CONTRIBUTION_COUNT, 0) + count
             )
         }
 

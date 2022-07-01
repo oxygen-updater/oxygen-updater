@@ -10,7 +10,7 @@ import com.oxygenupdater.enums.Theme
 import com.oxygenupdater.enums.Theme.AUTO
 import com.oxygenupdater.enums.Theme.DARK
 import com.oxygenupdater.enums.Theme.LIGHT
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import java.util.*
 
 /**
@@ -47,7 +47,7 @@ object ThemeUtils {
      * @return the [NightMode] to apply using [AppCompatDelegate.setDefaultNightMode]
      */
     @NightMode
-    fun translateThemeToNightMode(context: Context) = SettingsManager.getPreference(
+    fun translateThemeToNightMode(context: Context) = PrefManager.getInt(
         context.getString(R.string.key_theme_id),
         context.resources.getInteger(R.integer.theme_system_id)
     ).let { translateThemeToNightMode(Theme[it]) }

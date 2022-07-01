@@ -48,7 +48,7 @@ import com.oxygenupdater.fragments.DeviceInformationFragment
 import com.oxygenupdater.fragments.NewsListFragment
 import com.oxygenupdater.fragments.SettingsFragment
 import com.oxygenupdater.fragments.UpdateInformationFragment
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.ServerMessage
@@ -159,8 +159,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         setupViewPager()
 
         // Offer contribution to users from app versions below 2.4.0
-        if (!SettingsManager.containsPreference(SettingsManager.PROPERTY_CONTRIBUTE)
-            && SettingsManager.containsPreference(SettingsManager.PROPERTY_SETUP_DONE)
+        if (!PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)
+            && PrefManager.contains(PrefManager.PROPERTY_SETUP_DONE)
         ) {
             showContributorDialog()
         }
@@ -222,17 +222,17 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         if (requestCode == REQUEST_CODE_APP_UPDATE) {
             when (resultCode) {
                 // Reset ignore count
-                Activity.RESULT_OK -> SettingsManager.savePreference(
-                    SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                Activity.RESULT_OK -> PrefManager.putInt(
+                    PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                     0
                 )
                 // Increment ignore count and show app update banner
-                Activity.RESULT_CANCELED -> SettingsManager.getPreference(
-                    SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                Activity.RESULT_CANCELED -> PrefManager.getInt(
+                    PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                     0
                 ).let { ignoreCount ->
-                    SettingsManager.savePreference(
-                        SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+                    PrefManager.putInt(
+                        PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                         ignoreCount + 1
                     )
                     showAppUpdateBanner()
@@ -271,8 +271,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         mainViewModel.fetchAllDevices().observe(this) { deviceList ->
             mainViewModel.deviceOsSpec = Utils.checkDeviceOsSpec(deviceList)
 
-            val showDeviceWarningDialog = !SettingsManager.getPreference(
-                SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
+            val showDeviceWarningDialog = !PrefManager.getBoolean(
+                PrefManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
                 false
             )
 
@@ -336,7 +336,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
         mainViewModel.settingsChanged.observe(this) {
             val allDevices = mainViewModel.allDevices.value
-            if (it == SettingsManager.PROPERTY_DEVICE_ID && allDevices != null) {
+            if (it == PrefManager.PROPERTY_DEVICE_ID && allDevices != null) {
                 updateDeviceMismatchStatus(allDevices)
             }
         }
@@ -380,8 +380,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     private fun updateDeviceMismatchStatus(deviceList: List<Device>) {
         mainViewModel.deviceMismatchStatus = Utils.checkDeviceMismatch(this, deviceList)
 
-        val showIncorrectDeviceDialog = !SettingsManager.getPreference(
-            SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
+        val showIncorrectDeviceDialog = !PrefManager.getBoolean(
+            PrefManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
             false
         )
 
@@ -488,11 +488,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * Defaults to [ViewPager2.getCurrentItem].
      */
     private fun shouldStopNavigateAwayFromSettings(currentPageIndex: Int = viewPager.currentItem) =
-        currentPageIndex == PAGE_SETTINGS && !SettingsManager.checkIfSetupScreenHasBeenCompleted()
+        currentPageIndex == PAGE_SETTINGS && !PrefManager.checkIfSetupScreenHasBeenCompleted()
 
     private fun showSettingsWarning() {
-        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         if (deviceId == -1L || updateMethodId == -1L) {
             logWarning(TAG, SetupUtils.getAsError("Settings screen", deviceId, updateMethodId))
@@ -637,8 +637,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             .setMessage(getString(resourceId))
             .setPositiveButton(getString(R.string.download_error_close), null)
             .setOnDismissListener {
-                SettingsManager.savePreference(
-                    SettingsManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
+                PrefManager.putBoolean(
+                    PrefManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS,
                     userIgnoreWarningsPref
                 )
             }.show()
@@ -668,8 +668,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             )
             .setPositiveButton(getString(R.string.download_error_close), null)
             .setOnDismissListener {
-                SettingsManager.savePreference(
-                    SettingsManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
+                PrefManager.putBoolean(
+                    PrefManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS,
                     userIgnoreWarningsPref
                 )
             }.show()

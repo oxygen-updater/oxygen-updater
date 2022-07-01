@@ -19,9 +19,9 @@ import com.oxygenupdater.adapters.NewsListAdapter
 import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.addPlaceholderItemsForShimmer
 import com.oxygenupdater.internal.NewsListChangedListener
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_DEVICE_ID
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_UPDATE_METHOD_ID
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DEVICE_ID
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_UPDATE_METHOD_ID
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
@@ -146,8 +146,8 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
 
         shimmerFrameLayout.isVisible = true
 
-        val deviceId = SettingsManager.getPreference(PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = SettingsManager.getPreference(PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = PrefManager.getLong(PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = PrefManager.getLong(PROPERTY_UPDATE_METHOD_ID, -1L)
 
         newsViewModel.fetchNewsList(deviceId, updateMethodId).observe(viewLifecycleOwner, fetchNewsObserver)
     }

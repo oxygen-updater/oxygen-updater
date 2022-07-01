@@ -29,9 +29,8 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.exceptions.GooglePlayBillingException
 import com.oxygenupdater.internal.billing.Security
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_AD_FREE
-import com.oxygenupdater.internal.settings.SettingsManager.getPreference
-import com.oxygenupdater.internal.settings.SettingsManager.savePreference
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_AD_FREE
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
@@ -141,14 +140,14 @@ class BillingRepository(
 
             if (it == SkuState.UNKNOWN) {
                 // Purchases haven't been processed yet, so fallback to SharedPreferences
-                getPreference(PROPERTY_AD_FREE, false)
+                PrefManager.getBoolean(PROPERTY_AD_FREE, false)
             } else {
                 it == SkuState.PURCHASED_AND_ACKNOWLEDGED
             }
         }.distinctUntilChanged().onEach {
             logDebug(TAG, "[hasPurchasedAdFree] saving to SharedPreferences: $it")
             // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-            savePreference(PROPERTY_AD_FREE, it)
+            PrefManager.putBoolean(PROPERTY_AD_FREE, it)
         }
 
     /**
@@ -184,7 +183,7 @@ class BillingRepository(
         logDebug(TAG, "[newPurchaseFlow] $responseCode: ${purchase?.skus}")
 
         when (responseCode) {
-            BillingResponseCode.OK -> savePreference(PROPERTY_AD_FREE, purchase != null)
+            BillingResponseCode.OK -> PrefManager.putBoolean(PROPERTY_AD_FREE, purchase != null)
             BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 // This is tricky to deal with. Even pending purchases show up as "items already owned",
                 // so we can't grant entitlement i.e. set [PROPERTY_AD_FREE] to `true`.
@@ -192,7 +191,7 @@ class BillingRepository(
                 // This case will be handled by observing the pending purchases LiveData.
                 // Entitlement is being granted by observing to the in-app SKU details list LiveData anyway.
             }
-            else -> savePreference(PROPERTY_AD_FREE, false)
+            else -> PrefManager.putBoolean(PROPERTY_AD_FREE, false)
         }
 
         purchase?.skus?.forEach {
@@ -575,7 +574,7 @@ class BillingRepository(
      * required to make a purchase.
      */
     private suspend fun querySkuDetails() = withContext(Dispatchers.IO) {
-        if (!INAPP_SKUS.isNullOrEmpty()) {
+        if (INAPP_SKUS.isNotEmpty()) {
             billingClient.querySkuDetails(
                 SkuDetailsParams.newBuilder()
                     .setType(SkuType.INAPP)
@@ -586,7 +585,7 @@ class BillingRepository(
             }
         }
 
-        if (!SUBS_SKUS.isNullOrEmpty()) {
+        if (SUBS_SKUS.isNotEmpty()) {
             billingClient.querySkuDetails(
                 SkuDetailsParams.newBuilder()
                     .setType(SkuType.SUBS)

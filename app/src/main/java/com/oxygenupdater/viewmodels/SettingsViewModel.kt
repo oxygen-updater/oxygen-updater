@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.UpdateMethod
@@ -36,16 +36,16 @@ class SettingsViewModel(
     private val previousSettingValues = hashMapOf<String, Any?>()
 
     init {
-        previousSettingValues[SettingsManager.PROPERTY_DEVICE_ID] = SettingsManager.getPreference(
-            SettingsManager.PROPERTY_DEVICE_ID,
+        previousSettingValues[PrefManager.PROPERTY_DEVICE_ID] = PrefManager.getLong(
+            PrefManager.PROPERTY_DEVICE_ID,
             -1L
         )
-        previousSettingValues[SettingsManager.PROPERTY_UPDATE_METHOD_ID] = SettingsManager.getPreference(
-            SettingsManager.PROPERTY_UPDATE_METHOD_ID,
+        previousSettingValues[PrefManager.PROPERTY_UPDATE_METHOD_ID] = PrefManager.getLong(
+            PrefManager.PROPERTY_UPDATE_METHOD_ID,
             -1L
         )
-        previousSettingValues[SettingsManager.PROPERTY_ADVANCED_MODE] = SettingsManager.getPreference(
-            SettingsManager.PROPERTY_ADVANCED_MODE,
+        previousSettingValues[PrefManager.PROPERTY_ADVANCED_MODE] = PrefManager.getBoolean(
+            PrefManager.PROPERTY_ADVANCED_MODE,
             false
         )
     }
@@ -86,9 +86,9 @@ class SettingsViewModel(
      */
     fun hasPreferenceChanged(key: String, callback: KotlinCallback<Boolean>) {
         when (key) {
-            SettingsManager.PROPERTY_DEVICE_ID,
-            SettingsManager.PROPERTY_UPDATE_METHOD_ID,
-            SettingsManager.PROPERTY_ADVANCED_MODE -> {
+            PrefManager.PROPERTY_DEVICE_ID,
+            PrefManager.PROPERTY_UPDATE_METHOD_ID,
+            PrefManager.PROPERTY_ADVANCED_MODE -> {
                 val timeout = if (pendingJob != null) {
                     logDebug(TAG, "$key: cancelling previous job and setting timeout to 200ms")
                     // Cancel any pending notifies and reset timeout to 200ms
@@ -106,7 +106,7 @@ class SettingsViewModel(
                     delay(timeout)
 
                     val previousValue = previousSettingValues[key]
-                    val currentValue = SettingsManager.getPreference<Any?>(key, null)
+                    val currentValue = PrefManager.getPreference(key, previousValue, null)
                     val hasChanged = previousValue != currentValue
 
                     previousSettingValues[key] = currentValue

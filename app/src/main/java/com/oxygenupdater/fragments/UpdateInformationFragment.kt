@@ -60,8 +60,8 @@ import com.oxygenupdater.extensions.setImageResourceWithTint
 import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_UPDATE_CHECKED_DATE
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_UPDATE_CHECKED_DATE
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.LocalNotifications
@@ -244,7 +244,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (SettingsManager.checkIfSetupScreenHasBeenCompleted()) {
+        if (PrefManager.checkIfSetupScreenHasBeenCompleted()) {
             val analytics by inject<FirebaseAnalytics>()
 
             swipeRefreshLayout.apply {
@@ -366,13 +366,13 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
         crashlytics.setUserId(
             "Device: "
-                    + SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                    + PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>")
                     + ", Update Method: "
-                    + SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+                    + PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
 
-        val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         mainViewModel.fetchServerStatus()
 
@@ -432,8 +432,8 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         // Hide the refreshing icon if it is present
         swipeRefreshLayout.isRefreshing = false
 
-        val systemIsUpToDate = updateData.systemIsUpToDate && !SettingsManager.getPreference(
-            SettingsManager.PROPERTY_ADVANCED_MODE,
+        val systemIsUpToDate = updateData.systemIsUpToDate && !PrefManager.getBoolean(
+            PrefManager.PROPERTY_ADVANCED_MODE,
             false
         )
 
@@ -468,16 +468,16 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
         if (online) {
             // Save update data for offline viewing
-            SettingsManager.apply {
-                savePreference(PROPERTY_OFFLINE_ID, updateData.id)
-                savePreference(PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
-                savePreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSize)
-                savePreference(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
-                savePreference(PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
-                savePreference(PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
-                savePreference(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable)
-                savePreference(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now(SERVER_TIME_ZONE).toString())
-                savePreference(PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
+            PrefManager.apply {
+                putLong(PROPERTY_OFFLINE_ID, updateData.id ?: -1L)
+                putString(PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
+                putLong(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSize)
+                putString(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
+                putString(PROPERTY_OFFLINE_FILE_NAME, updateData.filename)
+                putString(PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
+                putBoolean(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable)
+                putString(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now(SERVER_TIME_ZONE).toString())
+                putBoolean(PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
             }
         }
     }
@@ -505,12 +505,12 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         } else {
             getString(
                 R.string.update_information_unknown_update_name,
-                SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
+                PrefManager.getString(PrefManager.PROPERTY_DEVICE, getString(R.string.device_information_unknown))
             )
         }
 
         if (updateData.systemIsUpToDate) {
-            val updateMethod = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+            val updateMethod = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
 
             // Format footer based on system version installed.
             footerTextView.text = getString(R.string.update_information_header_advanced_mode_helper, updateMethod)
@@ -573,23 +573,19 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
             text = getString(
                 R.string.update_information_banner_advanced_mode_tip,
-                SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+                PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
             )
         }
 
         // Save last time checked if online.
-        if (online) {
-            SettingsManager.savePreference(
-                PROPERTY_UPDATE_CHECKED_DATE,
-                LocalDateTime.now(SERVER_TIME_ZONE).toString()
-            )
-        }
+        val now = LocalDateTime.now(SERVER_TIME_ZONE).toString()
+        if (online) PrefManager.putString(PROPERTY_UPDATE_CHECKED_DATE, now)
 
         // Show last time checked.
-        val updateCheckedDateStr = SettingsManager.getPreference(
+        val updateCheckedDateStr = PrefManager.getString(
             PROPERTY_UPDATE_CHECKED_DATE,
-            ""
-        ).replace(" ", "T")
+            now
+        )?.replace(" ", "T") ?: now
         val userDateTime = LocalDateTime.parse(updateCheckedDateStr)
             .atZone(SERVER_TIME_ZONE)
 
@@ -802,7 +798,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
         changelogField.text = getUpdateChangelog(updateData)
         differentVersionChangelogNotice.text = getString(
             R.string.update_information_different_version_changelog_notice,
-            SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "'<UNKNOWN>'")
+            PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
 
         changelogLabel.run {

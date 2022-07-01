@@ -11,7 +11,6 @@ import androidx.core.view.updateLayoutParams
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.OxygenUpdater
@@ -26,7 +25,7 @@ import com.oxygenupdater.fragments.DeviceChooserOnboardingFragment
 import com.oxygenupdater.fragments.SimpleOnboardingFragment
 import com.oxygenupdater.fragments.UpdateMethodChooserOnboardingFragment
 import com.oxygenupdater.internal.DeviceInformationData
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
@@ -76,7 +75,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         if (it) {
             // 1st time, will save setting to true.
             ContributorUtils.flushSettings(true)
-            SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
+            PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
             startMainActivity(startPage)
             finish()
         } else {
@@ -170,11 +169,11 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
             viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = totalScrollRange }
 
             // adjust bottom margin on scroll
-            appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            appBar.addOnOffsetChangedListener { _, verticalOffset ->
                 viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
                     bottomMargin = totalScrollRange - abs(verticalOffset)
                 }
-            })
+            }
         }
     }
 
@@ -291,10 +290,10 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
     @Suppress("UNUSED_PARAMETER")
     fun onStartAppButtonClicked(view: View) {
-        if (SettingsManager.checkIfSetupScreenIsFilledIn()) {
+        if (PrefManager.checkIfSetupScreenIsFilledIn()) {
             onboardingPage4LogsCheckbox.isChecked.let {
-                SettingsManager.savePreference(
-                    SettingsManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
+                PrefManager.putBoolean(
+                    PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
                     it
                 )
 
@@ -305,14 +304,14 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 requestPermissionLauncher.launch(VERIFY_FILE_PERMISSION)
             } else {
                 // not signed up, saving this setting will prevent contribute popups which belong to app updates.
-                SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
-                SettingsManager.savePreference(SettingsManager.PROPERTY_CONTRIBUTE, false)
+                PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
+                PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, false)
                 startMainActivity(startPage)
                 finish()
             }
         } else {
-            val deviceId = SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE_ID, -1L)
-            val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+            val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
+            val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
             logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId))
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
         }

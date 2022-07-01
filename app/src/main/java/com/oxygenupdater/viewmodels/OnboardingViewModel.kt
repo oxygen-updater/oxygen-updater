@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.UpdateMethod
@@ -66,8 +66,8 @@ class OnboardingViewModel(
     fun updateSelectedDevice(device: Device) {
         _selectedDevice.postValue(device)
 
-        SettingsManager.savePreference(SettingsManager.PROPERTY_DEVICE_ID, device.id)
-        SettingsManager.savePreference(SettingsManager.PROPERTY_DEVICE, device.name)
+        PrefManager.putLong(PrefManager.PROPERTY_DEVICE_ID, device.id)
+        PrefManager.putString(PrefManager.PROPERTY_DEVICE, device.name)
     }
 
     /**
@@ -77,14 +77,14 @@ class OnboardingViewModel(
     fun updateSelectedUpdateMethod(updateMethod: UpdateMethod) {
         _selectedUpdateMethod.postValue(updateMethod)
 
-        SettingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.id)
-        SettingsManager.savePreference(SettingsManager.PROPERTY_UPDATE_METHOD, updateMethod.name)
+        PrefManager.putLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, updateMethod.id)
+        PrefManager.putString(PrefManager.PROPERTY_UPDATE_METHOD, updateMethod.name)
 
         // since both device and update method have been selected,
         // we can safely update Crashlytics' user identifier
         crashlytics.setUserId(
-            "Device: " + SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<UNKNOWN>")
-                    + ", Update Method: " + SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+            "Device: " + PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>")
+                    + ", Update Method: " + PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
         )
     }
 

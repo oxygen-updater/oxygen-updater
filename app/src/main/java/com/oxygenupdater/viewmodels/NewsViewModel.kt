@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.repositories.ServerRepository
@@ -25,8 +25,8 @@ class NewsViewModel(
     private val _newsItem = MutableLiveData<NewsItem?>()
     private val _markNewsItemReadResult = MutableLiveData<ServerPostResult>()
 
-    val mayShowAds = !SettingsManager.getPreference(
-        SettingsManager.PROPERTY_AD_FREE,
+    val mayShowAds = !PrefManager.getBoolean(
+        PrefManager.PROPERTY_AD_FREE,
         false
     ).also {
         logDebug(TAG, "mayShowAds: $it")

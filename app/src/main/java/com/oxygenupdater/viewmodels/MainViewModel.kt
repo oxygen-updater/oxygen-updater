@@ -32,7 +32,7 @@ import com.oxygenupdater.exceptions.UpdateDownloadException
 import com.oxygenupdater.extensions.toWorkData
 import com.oxygenupdater.fragments.UpdateInformationFragment
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.DeviceRequestFilter
@@ -260,7 +260,7 @@ class MainViewModel(
         }
 
         logDebug(UpdateInformationFragment.TAG, "Deleting any associated tracker preferences for downloaded file")
-        SettingsManager.removePreference(SettingsManager.PROPERTY_DOWNLOAD_BYTES_DONE)
+        PrefManager.remove(PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE)
 
         logDebug(UpdateInformationFragment.TAG, "Deleting downloaded update file " + updateData.filename)
 
@@ -342,8 +342,8 @@ class MainViewModel(
         when (it.updateAvailability()) {
             DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> _appUpdateAvailable.postValue(it)
             UPDATE_AVAILABLE -> {
-                val lastAppUpdateCheckedDate = SettingsManager.getPreference(
-                    SettingsManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
+                val lastAppUpdateCheckedDate = PrefManager.getString(
+                    PrefManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
                     LocalDate.MIN.toString()
                 )
 
@@ -351,8 +351,8 @@ class MainViewModel(
 
                 // Check for app updates at most once every 2 days
                 if (LocalDate.parse(lastAppUpdateCheckedDate).plusDays(MainActivity.DAYS_FOR_APP_UPDATE_CHECK) <= today) {
-                    SettingsManager.savePreference(
-                        SettingsManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
+                    PrefManager.putString(
+                        PrefManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
                         today.toString()
                     )
 
@@ -360,8 +360,8 @@ class MainViewModel(
                 }
             }
             // Reset ignore count
-            else -> SettingsManager.savePreference(
-                SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+            else -> PrefManager.putInt(
+                PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                 0
             )
         }
@@ -391,8 +391,8 @@ class MainViewModel(
     @Throws(IntentSender.SendIntentException::class)
     fun requestImmediateAppUpdate(activity: Activity, appUpdateInfo: AppUpdateInfo) {
         // Reset ignore count
-        SettingsManager.savePreference(
-            SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+        PrefManager.putInt(
+            PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
             0
         )
 
@@ -424,8 +424,8 @@ class MainViewModel(
         //  (the library doesn't yet have an annotation interface for priority constants)
         appUpdateType = if (appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
             val versionStalenessDays = appUpdateInfo.clientVersionStalenessDays() ?: 0
-            val ignoreCount = SettingsManager.getPreference(
-                SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+            val ignoreCount = PrefManager.getInt(
+                PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                 0
             )
 
@@ -440,8 +440,8 @@ class MainViewModel(
             }
         } else {
             // Reset ignore count
-            SettingsManager.savePreference(
-                SettingsManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
+            PrefManager.putInt(
+                PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT,
                 0
             )
 

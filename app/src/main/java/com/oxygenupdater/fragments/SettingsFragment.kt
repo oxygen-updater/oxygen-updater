@@ -33,8 +33,7 @@ import com.oxygenupdater.extensions.toLanguageCode
 import com.oxygenupdater.extensions.toLocale
 import com.oxygenupdater.internal.settings.BottomSheetItem
 import com.oxygenupdater.internal.settings.BottomSheetPreference
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.getPreference
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.AppLocale
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SystemVersionProperties
@@ -164,7 +163,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     override fun onDestroy() = super.onDestroy().also {
-        SettingsManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(
+        PrefManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(
             onSharedPreferenceChangedListener
         )
     }
@@ -175,7 +174,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun init() {
         mContext = requireContext()
 
-        SettingsManager.sharedPreferences.registerOnSharedPreferenceChangeListener(
+        PrefManager.sharedPreferences.registerOnSharedPreferenceChangeListener(
             onSharedPreferenceChangedListener
         )
     }
@@ -236,7 +235,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
      * Set summary and enable/disable the buy preference depending on purchased status
      */
     private fun setupBuyAdFreePreference() {
-        adFreePreference = findPreference(SettingsManager.PROPERTY_AD_FREE)!!
+        adFreePreference = findPreference(PrefManager.PROPERTY_AD_FREE)!!
 
         val owner = viewLifecycleOwner
         billingViewModel.adFreePrice.observe(owner, adFreePriceObserver)
@@ -287,8 +286,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
      * Entries are retrieved from the server, which calls for dynamically setting `entries` and `entryValues`
      */
     private fun setupDevicePreferences() {
-        devicePreference = findPreference(SettingsManager.PROPERTY_DEVICE)!!
-        updateMethodPreference = findPreference(SettingsManager.PROPERTY_UPDATE_METHOD)!!
+        devicePreference = findPreference(PrefManager.PROPERTY_DEVICE)!!
+        updateMethodPreference = findPreference(PrefManager.PROPERTY_UPDATE_METHOD)!!
         notificationsPreference = findPreference(mContext.getString(R.string.key_android_notifications))!!
 
         devicePreference.isEnabled = false
@@ -334,8 +333,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         mContext.getString(R.string.key_language)
     )!!.apply {
         val defaultLanguageCode = Locale.getDefault().toLanguageCode()
-        val savedLanguageCode = getPreference(
-            SettingsManager.PROPERTY_LANGUAGE_ID,
+        val savedLanguageCode = PrefManager.getString(
+            PrefManager.PROPERTY_LANGUAGE_ID,
             ""
         )
 
@@ -391,10 +390,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, _ ->
             context.setLocale(
-                getPreference(
-                    SettingsManager.PROPERTY_LANGUAGE_ID,
+                PrefManager.getString(
+                    PrefManager.PROPERTY_LANGUAGE_ID,
                     defaultLanguageCode
-                )
+                ) ?: defaultLanguageCode
             )
             activity?.recreate()
             true
@@ -402,9 +401,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun setupAdvancedModePreference() {
-        findPreference<SwitchPreference>(SettingsManager.PROPERTY_ADVANCED_MODE)?.apply {
+        findPreference<SwitchPreference>(PrefManager.PROPERTY_ADVANCED_MODE)?.apply {
             onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                val isAdvancedMode = getPreference(SettingsManager.PROPERTY_ADVANCED_MODE, false)
+                val isAdvancedMode = PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false)
                 if (isAdvancedMode) {
                     isChecked = false
                     showAdvancedModeExplanation(activity) {
@@ -459,7 +458,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             var recommendedPosition = -1
             var selectedPosition = -1
 
-            val deviceId = getPreference(mContext.getString(R.string.key_device_id), -1L)
+            val deviceId = PrefManager.getLong(mContext.getString(R.string.key_device_id), -1L)
 
             val size = devices.size
             val itemList: MutableList<BottomSheetItem> = ArrayList(size)
@@ -529,7 +528,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         if (!updateMethods.isNullOrEmpty()) {
             updateMethodPreference.isEnabled = true
 
-            val currentUpdateMethodId = getPreference(mContext.getString(R.string.key_update_method_id), -1L)
+            val currentUpdateMethodId = PrefManager.getLong(mContext.getString(R.string.key_update_method_id), -1L)
 
             val recommendedPositions: MutableList<Int> = ArrayList()
             var selectedPosition = -1
@@ -585,11 +584,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun updateCrashlyticsUserId() {
-        val deviceName = getPreference(
+        val deviceName = PrefManager.getString(
             mContext.getString(R.string.key_device),
             "<UNKNOWN>"
         )
-        val updateMethodName = getPreference(
+        val updateMethodName = PrefManager.getString(
             mContext.getString(R.string.key_update_method),
             "<UNKNOWN>"
         )

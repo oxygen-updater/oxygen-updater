@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.KotlinCallback
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.utils.Utils.checkPlayServices
@@ -53,7 +53,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
     ) {
         val data = data as List<UpdateMethod>
 
-        val updateMethodId = SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         val recommendedPositions = ArrayList<Int>()
         data.mapIndexedTo(recommendedPositions) { index, updateMethod -> if (updateMethod.recommended) index else -1 }

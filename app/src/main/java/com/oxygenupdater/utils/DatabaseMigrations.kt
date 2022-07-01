@@ -2,8 +2,8 @@ package com.oxygenupdater.utils
 
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_SQL_TO_ROOM_MIGRATION_DONE
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_SQL_TO_ROOM_MIGRATION_DONE
 import com.oxygenupdater.utils.DatabaseBuilders.APP_DB
 import com.oxygenupdater.utils.DatabaseBuilders.NEWS_ITEMS_OLD_DB
 import com.oxygenupdater.utils.DatabaseBuilders.SUBMITTED_UPDATE_FILES_OLD_DB
@@ -55,7 +55,7 @@ object DatabaseMigrations {
      * 2. Deletes old databases since they won't be used after this migration completes
      */
     fun prepopulateFromSqlite(db: SupportSQLiteDatabase) = db.run {
-        val migrationDone = SettingsManager.getPreference(
+        val migrationDone = PrefManager.getBoolean(
             PROPERTY_SQL_TO_ROOM_MIGRATION_DONE,
             false
         )
@@ -82,7 +82,7 @@ object DatabaseMigrations {
                 "`id`, `dutch_title`, `english_title`, `dutch_subtitle`, `english_subtitle`, `image_url`, `dutch_text`, `english_text`, `date_published`, `date_last_edited`, `author_name`, `read`"
             )
 
-            SettingsManager.savePreference(
+            PrefManager.putBoolean(
                 PROPERTY_SQL_TO_ROOM_MIGRATION_DONE,
                 true
             )

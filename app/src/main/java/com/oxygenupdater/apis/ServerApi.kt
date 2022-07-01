@@ -100,7 +100,7 @@ interface ServerApi {
      */
     @POST("submit-update-file")
     suspend fun submitUpdateFile(
-        @Body body: HashMap<String, Any>
+        @Body body: HashMap<String, Any?>
     ): Response<ServerPostResult>
 
     /**

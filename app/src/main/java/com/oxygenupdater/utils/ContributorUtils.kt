@@ -8,8 +8,8 @@ import androidx.work.PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.oxygenupdater.internal.settings.SettingsManager
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTE
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTE
 import com.oxygenupdater.workers.CheckSystemUpdateFilesWorker
 import com.oxygenupdater.workers.WORK_UNIQUE_CHECK_SYSTEM_UPDATE_FILES
 import org.koin.java.KoinJavaComponent.getKoin
@@ -25,15 +25,15 @@ object ContributorUtils {
     private val workManager by getKoin().inject<WorkManager>()
 
     fun flushSettings(isContributing: Boolean) {
-        val isFirstTime = !SettingsManager.containsPreference(PROPERTY_CONTRIBUTE)
-        val wasContributing = SettingsManager.getPreference(PROPERTY_CONTRIBUTE, false)
+        val isFirstTime = !PrefManager.contains(PROPERTY_CONTRIBUTE)
+        val wasContributing = PrefManager.getBoolean(PROPERTY_CONTRIBUTE, false)
 
         if (isFirstTime || wasContributing != isContributing) {
-            SettingsManager.savePreference(PROPERTY_CONTRIBUTE, isContributing)
+            PrefManager.putBoolean(PROPERTY_CONTRIBUTE, isContributing)
 
             val analyticsEventData = bundleOf(
-                "CONTRIBUTOR_DEVICE" to SettingsManager.getPreference(SettingsManager.PROPERTY_DEVICE, "<<UNKNOWN>>"),
-                "CONTRIBUTOR_UPDATEMETHOD" to SettingsManager.getPreference(SettingsManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>")
+                "CONTRIBUTOR_DEVICE" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<<UNKNOWN>>"),
+                "CONTRIBUTOR_UPDATEMETHOD" to PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>")
             )
 
             if (isContributing) {

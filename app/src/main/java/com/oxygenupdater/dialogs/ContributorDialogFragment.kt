@@ -16,8 +16,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.openAppDetailsPage
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_CONTRIBUTE
-import com.oxygenupdater.internal.settings.SettingsManager.getPreference
+import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTE
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logInfo
 import kotlinx.android.synthetic.main.bottom_sheet_contributor.*
@@ -78,7 +78,7 @@ class ContributorDialogFragment(
     ) = setupViews()
 
     private fun setupViews() {
-        val initialValue = getPreference(
+        val initialValue = PrefManager.getBoolean(
             PROPERTY_CONTRIBUTE,
             false
         )

@@ -8,7 +8,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS
@@ -145,10 +145,10 @@ object Utils {
 
     fun checkDeviceMismatch(context: Context, devices: List<Device>?): Triple<Boolean, String, String> {
         var actualDeviceName = context.getString(R.string.device_information_unknown)
-        val savedDeviceName = SettingsManager.getPreference(
-            SettingsManager.PROPERTY_DEVICE,
+        val savedDeviceName = PrefManager.getString(
+            PrefManager.PROPERTY_DEVICE,
             actualDeviceName
-        )
+        ) ?: actualDeviceName
 
         val productName = systemVersionProperties.oxygenDeviceName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {

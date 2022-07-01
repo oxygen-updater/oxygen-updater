@@ -14,7 +14,7 @@ import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.internal.DeviceInformationData
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
@@ -39,7 +39,7 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
         displayHardwareInfo()
 
         mainViewModel.settingsChanged.observe(viewLifecycleOwner) {
-            if (it == SettingsManager.PROPERTY_DEVICE_ID) {
+            if (it == PrefManager.PROPERTY_DEVICE_ID) {
                 updateDeviceMismatchStatusBanner()
             }
         }

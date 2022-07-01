@@ -3,7 +3,7 @@ package com.oxygenupdater.models
 import android.os.Build
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logVerbose
 import java.io.BufferedReader
@@ -91,7 +91,7 @@ class SystemVersionProperties {
                 osType = ""
             }
 
-            SettingsManager.savePreference(SettingsManager.PROPERTY_IS_EU_BUILD, isEuBuild)
+            PrefManager.putBoolean(PrefManager.PROPERTY_IS_EU_BUILD, isEuBuild)
 
             securityPatchDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // Already available using Android API since Android 6.0

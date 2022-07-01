@@ -17,7 +17,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.adapters.BottomSheetItemAdapter.BottomSheetItemViewHolder
 import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.BottomSheetItem
-import com.oxygenupdater.internal.settings.SettingsManager.getPreference
+import com.oxygenupdater.internal.settings.PrefManager
 
 /**
  * Takes advantage of [ListAdapter], which is a convenient wrapper that handles
@@ -87,8 +87,8 @@ class BottomSheetItemAdapter(
                 onClickListener.invoke(item)
             }
 
-            val currentValue = getPreference<Any?>(key, null)
-            val currentSecondaryValue = getPreference<Any?>(secondaryKey, null)
+            val currentValue = PrefManager.getPreference(key, item.value, null)
+            val currentSecondaryValue = PrefManager.getPreference(secondaryKey, item.secondaryValue, null)
             val secondaryValue = item.secondaryValue
 
             // value is mandatory, secondary value is optional

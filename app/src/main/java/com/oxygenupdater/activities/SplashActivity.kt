@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 
 class SplashActivity : AppCompatActivity() {
 
@@ -27,10 +27,10 @@ class SplashActivity : AppCompatActivity() {
         // Mark the welcome tutorial as finished if the user is moving from older app version.
         // This is checked by either having stored update information for offline viewing,
         // or if the last update checked date is set (if user always had up to date system and never viewed update information before)
-        if (!SettingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)
-            && (SettingsManager.checkIfOfflineUpdateDataIsAvailable() || SettingsManager.containsPreference(SettingsManager.PROPERTY_UPDATE_CHECKED_DATE))
+        if (!PrefManager.getBoolean(PrefManager.PROPERTY_SETUP_DONE, false)
+            && (PrefManager.checkIfOfflineUpdateDataIsAvailable() || PrefManager.contains(PrefManager.PROPERTY_UPDATE_CHECKED_DATE))
         ) {
-            SettingsManager.savePreference(SettingsManager.PROPERTY_SETUP_DONE, true)
+            PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
         }
 
         // Since app shortcuts open this activity, we need to forward the
@@ -42,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
             else -> MainActivity.PAGE_UPDATE
         }
 
-        if (!SettingsManager.getPreference(SettingsManager.PROPERTY_SETUP_DONE, false)) {
+        if (!PrefManager.getBoolean(PrefManager.PROPERTY_SETUP_DONE, false)) {
             // Launch OnboardingActivity since the app hasn't been setup yet
             startOnboardingActivity(startPage)
         } else {

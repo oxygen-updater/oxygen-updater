@@ -2,21 +2,108 @@ package com.oxygenupdater.internal.settings
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.Logger
 import org.koin.java.KoinJavaComponent.getKoin
 
-object SettingsManager {
+object PrefManager {
 
     val sharedPreferences by getKoin().inject<SharedPreferences>()
+
+    /** @see [SharedPreferences.getString] */
+    fun getString(key: String, defValue: String?) = sharedPreferences.getString(key, defValue)
+
+    /** @see [SharedPreferences.Editor.putString] */
+    fun putString(key: String, value: String?) = sharedPreferences.edit { putString(key, value) }
+
+    /** @see [SharedPreferences.getStringSet] */
+    fun getStringSet(key: String, defValues: Set<String>?): Set<String>? = sharedPreferences.getStringSet(key, defValues)
+
+    /** @see [SharedPreferences.Editor.putStringSet] */
+    fun putStringSet(key: String, values: Set<String>?) = sharedPreferences.edit { putStringSet(key, values) }
+
+    /** @see [SharedPreferences.getInt] */
+    fun getInt(key: String, defValue: Int) = sharedPreferences.getInt(key, defValue)
+
+    /** @see [SharedPreferences.Editor.putInt] */
+    fun putInt(key: String, value: Int) = sharedPreferences.edit { putInt(key, value) }
+
+    /** @see [SharedPreferences.getLong] */
+    fun getLong(key: String, defValue: Long) = sharedPreferences.getLong(key, defValue)
+
+    /** @see [SharedPreferences.Editor.putLong] */
+    fun putLong(key: String, value: Long) = sharedPreferences.edit { putLong(key, value) }
+
+    /** @see [SharedPreferences.getFloat] */
+    fun getFloat(key: String, defValue: Float) = sharedPreferences.getFloat(key, defValue)
+
+    /** @see [SharedPreferences.Editor.putFloat] */
+    fun putFloat(key: String, value: Float) = sharedPreferences.edit { putFloat(key, value) }
+
+    /** @see [SharedPreferences.getBoolean] */
+    fun getBoolean(key: String, defValue: Boolean) = sharedPreferences.getBoolean(key, defValue)
+
+    /** @see [SharedPreferences.Editor.putBoolean] */
+    fun putBoolean(key: String, value: Boolean) = sharedPreferences.edit { putBoolean(key, value) }
 
     @Suppress("UNCHECKED_CAST")
     fun <T> getPreference(
         key: String?,
+        typecastValue: T,
         defaultValue: T
-    ): T = sharedPreferences.run {
-        when {
-            contains(key) -> all[key] as T
-            else -> defaultValue
+    ) = sharedPreferences.run {
+        if (key == null) return@run defaultValue
+        when (typecastValue) {
+            null, is String -> PrefManager.getString(key, null)
+            is Int -> PrefManager.getInt(key, -1)
+            is Long -> PrefManager.getLong(key, -1L)
+            is Float -> PrefManager.getFloat(key, -1f)
+            is Boolean -> PrefManager.getBoolean(key, false)
+            is Collection<*> -> PrefManager.getStringSet(key, null)
+            else -> if (contains(key)) all[key] else defaultValue
+        } as T
+    }
+
+    /**
+     * Terrible performance, it relies on loading the map of all preferences.
+     * Use this only if type isn't known.
+     */
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getPreference(
+        key: String?,
+        defaultValue: T
+    ) = sharedPreferences.run {
+        if (contains(key)) all[key] as T else defaultValue
+    }
+
+    /**
+     * Saves a preference to sharedPreferences when its type isn't known
+     *
+     * @param key   Item key to later retrieve the item back
+     * @param value Item that needs to be saved in shared preferences.
+     */
+    fun putPreference(key: String?, value: Any?) = try {
+        sharedPreferences.edit {
+            when (value) {
+                null, is String -> putString(key, value as String?)
+                is Int -> putInt(key, value)
+                is Long -> putLong(key, value)
+                is Float -> putFloat(key, value)
+                is Boolean -> putBoolean(key, value)
+                is Collection<*> -> putStringSet(key, buildSet<String> {
+                    value.forEach {
+                        if (it != null) {
+                            add(it.toString())
+                        }
+                    }
+                })
+            }
+        }
+    } catch (e: Exception) {
+        Logger.logError(TAG, "Failed to save preference with key $key and value $value. Defaulting to String value! ${e.message}", e)
+
+        // If this doesn't work, try to use String instead.
+        sharedPreferences.edit {
+            putString(key, value.toString())
         }
     }
 
@@ -27,57 +114,22 @@ object SettingsManager {
      *
      * @return Returns if the given key is stored in the preferences.
      */
-    fun containsPreference(key: String?) = sharedPreferences.contains(key)
+    fun contains(key: String) = sharedPreferences.contains(key)
 
     /**
      * Deletes/removes a preference
      *
      * @param key Preference Key
      */
-    fun removePreference(key: String?) = sharedPreferences.edit { remove(key) }
-
-    /**
-     * Saves a preference to sharedPreferences
-     *
-     * @param key   Item key to later retrieve the item back
-     * @param value Item that needs to be saved in shared preferences.
-     */
-    fun savePreference(key: String?, value: Any?) = try {
-        sharedPreferences.edit {
-            when (value) {
-                null -> putString(key, null)
-                is Boolean -> putBoolean(key, value)
-                is Float -> putFloat(key, value)
-                is Long -> putLong(key, value)
-                is Int -> putInt(key, value)
-                is String -> putString(key, value)
-                is Collection<*> -> HashSet<String>().let { valuesSet ->
-                    value.forEach {
-                        if (it != null) {
-                            valuesSet.add(it.toString())
-                        }
-                    }
-
-                    putStringSet(key, valuesSet)
-                }
-            }
-        }
-    } catch (e: Exception) {
-        logError(TAG, "Failed to save preference with key $key and value $value. Defaulting to String value! ${e.message}", e)
-
-        // If this doesn't work, try to use String instead.
-        sharedPreferences.edit {
-            putString(key, value.toString())
-        }
-    }
+    fun remove(key: String) = sharedPreferences.edit { remove(key) }
 
     /**
      * Checks if a device and update method have been set.
      *
      * @return if the user has chosen a device and an update method.
      */
-    fun checkIfSetupScreenIsFilledIn() = getPreference(PROPERTY_DEVICE_ID, -1L) != -1L
-            && getPreference(PROPERTY_UPDATE_METHOD_ID, -1L) != -1L
+    fun checkIfSetupScreenIsFilledIn() = getLong(PROPERTY_DEVICE_ID, -1L) != -1L
+            && getLong(PROPERTY_UPDATE_METHOD_ID, -1L) != -1L
 
     /**
      * Checks if a user has completed the initial setup screen. This means the user has filled it in
@@ -86,7 +138,7 @@ object SettingsManager {
      * @return if the user has completed the setup screen.
      */
     fun checkIfSetupScreenHasBeenCompleted() = checkIfSetupScreenIsFilledIn()
-            && getPreference(PROPERTY_SETUP_DONE, false)
+            && getBoolean(PROPERTY_SETUP_DONE, false)
 
     /**
      * Checks if the update information has been saved before so it can be viewed without a network
@@ -95,9 +147,9 @@ object SettingsManager {
      * @return true or false.
      */
     fun checkIfOfflineUpdateDataIsAvailable() = try {
-        containsPreference(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE)
-                && containsPreference(PROPERTY_OFFLINE_UPDATE_NAME)
-                && containsPreference(PROPERTY_OFFLINE_FILE_NAME)
+        contains(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE)
+                && contains(PROPERTY_OFFLINE_UPDATE_NAME)
+                && contains(PROPERTY_OFFLINE_FILE_NAME)
     } catch (ignored: Exception) {
         false
     }

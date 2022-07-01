@@ -9,7 +9,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
-import com.oxygenupdater.internal.settings.SettingsManager
+import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.workers.DisplayDelayedNotificationWorker
@@ -25,13 +25,13 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         logDebug(TAG, "Received new Firebase token: $token")
-        SettingsManager.savePreference(SettingsManager.PROPERTY_FIREBASE_TOKEN, token)
+        PrefManager.putString(PrefManager.PROPERTY_FIREBASE_TOKEN, token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         try {
-            val serverSpecifiedDelay = SettingsManager.getPreference(
-                SettingsManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+            val serverSpecifiedDelay = PrefManager.getInt(
+                PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
                 300
             ).let {
                 val isNewVersionNotification = NotificationType.valueOf(

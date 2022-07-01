@@ -35,7 +35,7 @@ import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.extensions.fullWidthAnchoredAdaptiveBannerAd
 import com.oxygenupdater.internal.WebViewClient
 import com.oxygenupdater.internal.WebViewError
-import com.oxygenupdater.internal.settings.SettingsManager.PROPERTY_LAST_NEWS_AD_SHOWN
+import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.utils.Logger.logDebug
