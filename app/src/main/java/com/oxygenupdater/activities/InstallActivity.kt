@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
 import com.oxygenupdater.fragments.InstallGuideFragment
-import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.viewmodels.InstallViewModel
 import kotlinx.android.synthetic.main.activity_install.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,7 +29,6 @@ class InstallActivity : SupportActionBarActivity(
 ) {
 
     private var showDownloadPage = true
-    private var updateData: UpdateData? = null
 
     private val installViewModel by viewModel<InstallViewModel>()
 
@@ -48,10 +46,6 @@ class InstallActivity : SupportActionBarActivity(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
-
-        if (intent != null) {
-            updateData = intent.getParcelableExtra(INTENT_UPDATE_DATA)
-        }
 
         installViewModel.firstInstallGuidePageLoaded.observe(this) {
             if (it) {
@@ -211,7 +205,6 @@ class InstallActivity : SupportActionBarActivity(
         const val RESOURCE_ID_PREFIX = "install_guide_page_"
 
         const val INTENT_SHOW_DOWNLOAD_PAGE = "show_download_page"
-        const val INTENT_UPDATE_DATA = "update_data"
 
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
     }

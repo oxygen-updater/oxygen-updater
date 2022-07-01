@@ -145,7 +145,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
 
                     activity?.startInstallActivity(
                         true,
-                        updateData,
                         downloadActionButton
                     )
                 }
@@ -1133,7 +1132,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
                     Toast.makeText(context, getString(R.string.download_complete), LENGTH_LONG).show()
                     activity?.startInstallActivity(
                         true,
-                        updateData,
                         downloadActionButton
                     )
                 }
@@ -1205,7 +1203,6 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
             View.OnClickListener {
                 activity?.startInstallActivity(
                     true,
-                    updateData,
                     downloadActionButton
                 )
             }

@@ -26,7 +26,6 @@ import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.createFromWorkData
 import com.oxygenupdater.extensions.formatFileSize
-import com.oxygenupdater.extensions.toWorkData
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE
 import com.oxygenupdater.models.TimeRemaining
@@ -358,7 +357,12 @@ class DownloadWorker(
         }, 0)
 
         val verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
-            .setInputData(updateData!!.toWorkData())
+            .setInputData(
+                workDataOf(
+                    "filename" to updateData!!.filename!!,
+                    "mD5Sum" to updateData.mD5Sum,
+                )
+            )
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 WorkRequest.MIN_BACKOFF_MILLIS,

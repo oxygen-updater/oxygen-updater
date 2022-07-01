@@ -20,7 +20,6 @@ import com.oxygenupdater.activities.InstallActivity
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.fragments.UpdateInformationFragment
-import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID
@@ -85,17 +84,13 @@ object LocalNotifications {
     /**
      * Shows a notification that the downloaded update file is downloaded successfully.
      */
-    fun showDownloadCompleteNotification(
-        context: Context,
-        updateData: UpdateData?
-    ) {
+    fun showDownloadCompleteNotification(context: Context) {
         try {
             val intent = Intent(context, InstallActivity::class.java)
                 // Hide the first page of the install guide because that page
                 // contains download instructions, which will be redundant because
                 // the download has already completed
                 .putExtra(InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE, false)
-                .putExtra(InstallActivity.INTENT_UPDATE_DATA, updateData)
 
             val contentIntent = PendingIntent.getActivity(
                 context,

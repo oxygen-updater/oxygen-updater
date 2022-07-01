@@ -20,7 +20,6 @@ import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.activities.OnboardingActivity
 import com.oxygenupdater.activities.SupportActionBarActivity
 import com.oxygenupdater.models.NewsItem
-import com.oxygenupdater.models.UpdateData
 
 /**
  * Starts an activity with a shared element transition
@@ -83,12 +82,10 @@ fun Activity.startFaqActivity(
 
 fun Activity.startInstallActivity(
     isDownloaded: Boolean,
-    updateData: UpdateData?,
     sharedElement: View
 ) {
     val intent = Intent(this, InstallActivity::class.java)
         .putExtra(InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE, !isDownloaded)
-        .putExtra(InstallActivity.INTENT_UPDATE_DATA, updateData)
 
     startActivityWithSharedTransition(
         intent,

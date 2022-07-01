@@ -8,7 +8,6 @@ import androidx.work.workDataOf
 import com.oxygenupdater.enums.Md5VerificationFailure
 import com.oxygenupdater.exceptions.UpdateVerificationException
 import com.oxygenupdater.extensions.attachWithLocale
-import com.oxygenupdater.extensions.createFromWorkData
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
@@ -38,7 +37,9 @@ class Md5VerificationWorker(
 
     private val context = context.attachWithLocale(false)
 
-    private val updateData = createFromWorkData(parameters.inputData)
+    private val filenameToMd5 = parameters.inputData.let {
+        it.getString("filename") to it.getString("mD5Sum")
+    }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         LocalNotifications.showVerifyingNotification(context)
@@ -47,7 +48,7 @@ class Md5VerificationWorker(
     }
 
     private suspend fun verify(): Result = withContext(Dispatchers.IO) {
-        if (updateData == null) {
+        if (filenameToMd5.first == null || filenameToMd5.second == null) {
             logError(TAG, UpdateVerificationException("updateData = null"))
             Result.failure(
                 workDataOf(
@@ -55,9 +56,9 @@ class Md5VerificationWorker(
                 )
             )
         } else {
-            logDebug(TAG, "Verifying " + updateData.filename)
+            logDebug(TAG, "Verifying " + filenameToMd5.first)
 
-            if (updateData.mD5Sum.isNullOrEmpty()) {
+            if (filenameToMd5.second.isNullOrEmpty()) {
                 logError(TAG, UpdateVerificationException("updateData.mD5Sum = null/empty"))
                 Result.failure(
                     workDataOf(
@@ -75,10 +76,10 @@ class Md5VerificationWorker(
                     )
                 } else {
                     logVerbose(TAG, "Calculated digest: $calculatedDigest")
-                    logVerbose(TAG, "Provided digest: ${updateData.mD5Sum}")
+                    logVerbose(TAG, "Provided digest: ${filenameToMd5.second}")
 
-                    if (calculatedDigest.equals(updateData.mD5Sum, ignoreCase = true)) {
-                        LocalNotifications.showDownloadCompleteNotification(context, updateData)
+                    if (calculatedDigest.equals(filenameToMd5.second, ignoreCase = true)) {
+                        LocalNotifications.showDownloadCompleteNotification(context)
                         Result.success()
                     } else {
                         LocalNotifications.showVerificationFailedNotification(context)
@@ -103,7 +104,7 @@ class Md5VerificationWorker(
         }
 
         @Suppress("DEPRECATION")
-        val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData!!.filename!!)
+        val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, filenameToMd5.first!!)
 
         var retryCount = 0
         while (!zipFile.exists()) {
