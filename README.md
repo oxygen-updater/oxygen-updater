@@ -58,7 +58,7 @@ You can still view/fork this repository, submit PRs, and/or raise issues. This i
 See [`CONTRIBUTING.md`][contributing].
 
 [badge-ci]: https://github.com/oxygen-updater/oxygen-updater/workflows/Android%20CI/badge.svg
-[badge-latest-release]: https://img.shields.io/badge/release-v5.8.0-%23f50514?logo=github
+[badge-latest-release]: https://img.shields.io/badge/release-v5.8.1-%23f50514?logo=github
 
 [contributing]: ./CONTRIBUTING.md
 
