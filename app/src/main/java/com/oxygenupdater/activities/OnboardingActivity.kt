@@ -209,6 +209,13 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 logDebug(TAG, "Selected update method: $it")
             }
         }
+
+        onboardingViewModel.fragmentCreated.observe(this) {
+            if (it == 4) {
+                onboardingPage4MoreInfoButton?.setOnClickListener(this::onMoreInfoButtonClicked)
+                onboardingPage4StartAppButton?.setOnClickListener(this::onStartAppButtonClicked)
+            }
+        }
     }
 
     private fun handlePageChangeCallback(pageNumber: Int) {

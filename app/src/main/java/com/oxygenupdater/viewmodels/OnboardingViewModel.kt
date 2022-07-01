@@ -42,6 +42,10 @@ class OnboardingViewModel(
     val selectedUpdateMethod: LiveData<UpdateMethod>
         get() = _selectedUpdateMethod
 
+    private val _fragmentCreated = MutableLiveData<Int?>()
+    val fragmentCreated: LiveData<Int?>
+        get() = _fragmentCreated
+
     /**
      * Fetches all devices and posts both [_allDevices] and [_enabledDevices].
      * This function is used directly in [com.oxygenupdater.activities.OnboardingActivity],
@@ -94,4 +98,6 @@ class OnboardingViewModel(
             serverRepository.fetchAllMethods() ?: ArrayList()
         )
     }
+
+    fun notifyFragmentCreated(pageNumber: Int?) = _fragmentCreated.postValue(pageNumber)
 }

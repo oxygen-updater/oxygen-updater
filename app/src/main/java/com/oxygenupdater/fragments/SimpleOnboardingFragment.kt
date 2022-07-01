@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.oxygenupdater.R
+import com.oxygenupdater.viewmodels.OnboardingViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * Contains the basic/non-interactive onboarding fragments
@@ -14,15 +16,20 @@ import com.oxygenupdater.R
  */
 class SimpleOnboardingFragment : Fragment() {
 
+    private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = super.onCreateView(inflater, container, savedInstanceState).let {
-        when (arguments?.getInt(ARG_PAGE_NUMBER, 0)) {
+        val pageNumber = arguments?.getInt(ARG_PAGE_NUMBER, 0)
+        when (pageNumber) {
             1 -> inflater.inflate(R.layout.fragment_onboarding_welcome, container, false)
             4 -> inflater.inflate(R.layout.fragment_onboarding_complete, container, false)
             else -> null
+        }.also {
+            onboardingViewModel.notifyFragmentCreated(pageNumber)
         }
     }
 
