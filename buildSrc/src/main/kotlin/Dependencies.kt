@@ -1,7 +1,7 @@
 // https://kotlinlang.org/docs/releases.html#release-details
 // https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 // https://blog.jetbrains.com/kotlin/category/releases/
-const val KOTLIN_VERSION = "1.7.0"
+const val KOTLIN_VERSION = "1.7.10"
 
 // https://mvnrepository.com/artifact/io.insert-koin/koin-android
 // https://github.com/InsertKoinIO/koin/tags
@@ -15,7 +15,7 @@ object BuildPlugins {
         const val BUILD_GRADLE_PLUGIN = "7.2.1"
 
         // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
-        const val GOOGLE_SERVICES_PLUGIN = "4.3.10"
+        const val GOOGLE_SERVICES_PLUGIN = "4.3.13"
 
         // https://firebase.google.com/support/release-notes/android
         const val FIREBASE_GRADLE_PLUGIN = "2.9.1"
@@ -67,10 +67,10 @@ object AndroidXLibraries {
         const val KTX_CORE = "1.8.0"
 
         // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.4.1"
+        const val KTX_FRAGMENT = "1.5.0"
 
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        const val KTX_LIFECYCLE = "2.4.1"
+        const val KTX_LIFECYCLE = "2.5.0"
 
         // https://developer.android.com/jetpack/androidx/releases/preference
         const val KTX_PREFERENCE = "1.2.0"
@@ -159,7 +159,7 @@ object Libraries {
         const val PLAY_CORE_IN_APP_UPDATES = "2.0.0"
 
         // https://developers.google.com/android/guides/releases
-        const val PLAY_SERVICES_BASE = "18.0.1"
+        const val PLAY_SERVICES_BASE = "18.1.0"
 
         // https://developers.google.com/android/guides/releases
         // https://developers.google.com/admob/android/rel-notes
@@ -232,7 +232,7 @@ object Libraries {
 object TestLibraries {
     private object Versions {
         // https://developer.android.com/jetpack/androidx/releases/annotation
-        const val ANNOTATION = "1.3.0"
+        const val ANNOTATION = "1.4.0"
 
         // https://developer.android.com/jetpack/androidx/releases/test
         const val ESPRESSO = "3.4.0"
