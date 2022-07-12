@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="device_chooser_error_title">Неможе да се врати листа од поддржани уреди</string>
+
+	<!-- Update information strings-->
+	<string name="enable">Овозможи</string>
+	<string name="update_information_description_not_available">Нема официјални информации за новите функции која ова ажурирање ги овозможува. Обично, вакво ажурирање се состои од поправки на грешки, подобрување на перформанси, и/или критични безбедносни закрпи за вашиот уред.</string>
+	<string name="update_information_file_name">Име на датотека: %1$s</string>
+	<string name="update_information_md5">MD5: %1$s</string>
+	<string name="update_information_download_link">Бидејќи имаше проблем при превземање, и превземањето мора да биде започнато одново, можете да го искористите овој линк за да ја превземете датотеката преку веб прелистувач. Можеби ќе биде потребно да ја преместите датотеката од \"Downloads\" директориумот, до родителскиот директориум. Ова е истиот линк кој го користи апликацијата, кој е официјален линк од OTA серверите на OnePlus:\n%1$s</string>
+	<string name="update_information_header">Ажурирање</string>
+	<string name="update_information_error_title">Неможе да се вратат податочни информации за најновото ажурирање</string>
+	<string name="update_information_banner_server">Притиснете овде за прикажување на важни известувања</string>
+	<string name="update_information_banner_advanced_mode_tip">Ја селектиравте \"%1$s\" ажурирачка трака. Овозможете напреден режим ако планирате да се префрлите на оваа ажурирачка трака.</string>
+	<string name="update_information_header_advanced_mode_hint">Напредниот режим е овозможен</string>
+	<string name="update_information_header_advanced_mode_helper">Бидејќи имате овозможено напреден режим, можете да ја превземете најновата ZIP датотека за \"%1$s\".\n\nМожете да го исклучите напредниот режим во поставките.</string>
+	<string name="update_information_different_version_changelog_notice">Ги гледате измените за најновото ажурирање во \"%1$s\" траката. Ако планирате да го инсталирате ова ажурирање, мора да го овозможите напредниот режим (во поставките).\n\nНо, ако сакате да ги видите промените за сегашното инсталирано ажурирање, ќе треба да се префрлите на точната ажурирачка метода.</string>
+	<string name="update_information_last_checked_on">Последно проверено на: %1$s</string>
+	<string name="update_information_no_update_data_available">Не се достапни податоци за ажурирање</string>
+	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
+	<string name="update_information_system_is_up_to_date">Вашиот систем е ажуриран</string>
+	<string name="update_information_unknown_update_name">Безимено ажурирање за %1$s</string>
+	<string name="update_information_view_update_information">Погледни ги информациите за ажурирањето</string>
+
+	<!-- Server status warning strings -->
+	<string name="server_status_error">Некои функции не работат.</string>
+	<string name="server_status_unreachable">Не може да се воспостави врска со серверот. Пробајте да ја освежите страницата.</string>
+	<string name="server_status_warning">Некои функции може да не работат правилно.</string>
+
+	<!-- New app version message strings -->
+	<string name="new_app_version">Има ново ажурирање за апликацијата (%1$s). Притиснете овде за да отворите Play Store и да ја ажурирате апликацијата.</string>
+	<string name="new_app_version_inapp_downloaded">Ажурирањето за апликацијата е превземено</string>
+	<string name="new_app_version_inapp_failed">Ажурирањето за апликацијата неможеше да се инсталира. Притиснете овде за да отворите Play Store и да ја ажурирате апликацијата.</string>
+
+	<!-- Downloader strings-->
+	<string name="grant_all_files_access">Ве молиме овозможете \"All files access\" за апликацијата, која се користи само за превземање на OTA ZIP датотеки, во најгорната гранка на внатрешната меморија</string>
+	<string name="download">Превземи ажурирање</string>
+	<string name="downloaded">Ажурирањето е превземено</string>
+	<string name="downloading">Ажурирањето се превзема…</string>
+	<string name="paused">Паузирано - притисни за да продолжи</string>
+
+	<string name="download_complete">Превземањето е завршено</string>
+	<string name="download_complete_notification">Притиснете за да ја започнете инсталацијата</string>
+
+	<string name="download_error">Грешка при превземање</string>
+	<string name="download_error_close">ЗАТВОРИ</string>
+	<string name="download_error_corrupt">Преземениот фајл за ажурирање е оштетен! Ве молиме превземете го павторно.</string>
+	<string name="download_error_server">Настана серверска грешка при превземање на ажурирањето. Ве молиме обидете се да го превземете ажурирањето повторно.</string>
+	<string name="download_error_internal">За жал, настана техничка грешка при превземање на ажурирањето. Обидете се да го превземето повторно. Ако грешките продолжат, ве молиме исконтактирајте го развивачот на оваа апликација за помош.</string>
+	<string name="download_error_unsuccessful_response"><![CDATA[Се чини дека линкот за превземање е невалиден. Ова значи дека или ние сме направиле грешка при додавање информации, или OnePlus јо има повлечено/избришано датотеката за ажурирање од нивните сервери. Испратена е нотификација до тимот, ќе го провериме ова во најкус можен рок.
+
+Ако сакате да дознаете повеќе, слободно контактирајте не на <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
+	<string name="download_error_could_not_move_temp_file">Датотеката е превземена, но неможе да се премести до соодветниот директориум. Отворете го менаџерот на податоци, навигирајте до \"%1$s\" и мануелно преместета ја датотеката во најгорниот директориум на внатрешната меморија.</string>
+
+	<string name="download_error_retry">ОБИДИ СЕ ПОВТОРНО</string>
+	<string name="download_error_resume">ПРОДОЛЖИ</string>
+	<string name="download_error_storage">Нема доволно меморија на вашиот уред за да се превземе ажурирањето. Ве молиме отстранете некои датотеки и обидете се повторно.</string>
+
+	<string name="download_failed">Превземањето е неуспешно</string>
+	<string name="download_pending">Вашето превземање ќе започне наскоро…</string>
+	<string name="download_notification_error_server">Серверска грешка при превземање. Ве молиме превземете повторно.</string>
+	<string name="download_notification_error_internal">Техничка грешка при превземање. Превземете повторно или исконтактирајте ја техничката поддршка.</string>
+	<string name="download_notification_error_storage_full">Нема доволно меморија.</string>
+	<string name="download_notification_error_corrupt">Верификација на датотеката е неуспешна. Проверете ја вашата конекција и обидете се повторно.</string>
+
+	<string name="download_progress_text_hours_remaining">Преостануваат околу %1$d часови</string>
+	<string name="download_progress_text_less_than_a_minute_remaining">Преостанува помалку од минута</string>
+	<string name="download_progress_text_minutes_remaining">Преостануваат околу %1$d минути</string>
+	<string name="download_progress_text_one_hour_remaining">Преостанува околу 1 час</string>
+	<string name="download_progress_text_one_minute_remaining">Преостанува околу минута</string>
+	<string name="download_progress_text_seconds_remaining">Преостануваат неколку секунди</string>
+	<string name="download_progress_text_unknown_time_remaining">Се калкулира преостанатото време…</string>
+	<string name="download_progress_text_verifying">Датотеката се верификува…</string>
+	<string name="download_progress_text_paused">Паузирано</string>
+
+	<string name="download_verifying">Верификување…</string>
+	<string name="download_verifying_error">Датотеката е оштетена</string>
+	<string name="download_verifying_start">Вашето превземање ќе биде верификувано…</string>
+
+	<!-- Settings strings-->
+	<string name="preference_header_support">Поддржете не</string>
+	<string name="preference_header_device">Уред</string>
+	<string name="preference_header_ui">КИ</string>
+	<string name="preference_header_notifications">Нотификации</string>
+	<string name="preference_header_advanced">Напредно</string>
+	<string name="preference_header_about">За</string>
+
+	<string name="summary_on">Овозможено</string>
+	<string name="summary_off">Оневозможено</string>
+	<string name="summary_please_wait">Ве молиме почекајте…</string>
+	<string name="summary_update_method">Најпрво изберете уред</string>
+	<string name="summary_important_notifications_disabled">Некои по важни нотификации се оневозможени: \"%1$s\"</string>
+	<string name="summary_theme">Избери тема</string>
+	<string name="summary_language">Избери јазик</string>
+	<string name="summary_privacy_policy">Погледнете онлајн</string>
+	<string name="summary_rate_app">Оставете преглед од 5 ѕвезди</string>
+
+	<string name="label_buy_ad_free">Отстранете ги реклмите</string>
+	<string name="label_theme">Тема</string>
+	<string name="label_language">Јазик</string>
+	<string name="label_privacy_policy">Полиса за приватност</string>
+	<string name="label_rate_app">Оценете ја оваа апликација</string>
+
+	<string name="theme_light">Светло</string>
+	<string name="theme_dark">Темно</string>
+	<string name="theme_system">Систем</string>
+	<string name="theme_auto">Автоматски</string>
+	<string name="theme_light_subtitle">Тема со бела позадина и OnePlus црвена примарна боја</string>
+	<string name="theme_dark_subtitle">Пригушена OnePlus Red примарна боја, со скоро црна позадина. Користете ја оваа тема да заштедите батерија, поготово на AMOLED екрани.</string>
+	<string name="theme_system_subtitle">Користете го системскиот ноќен режим (можете да го подесите во поставките за екран или развивачките поставки). Зависи од уредот.</string>
+	<string name="theme_auto_subtitle">Променете помеѓу светла и темна тема во зависност од времето во денот, за да ги заштитите очите од замор навечер.</string>
+	<string name="theme_additional_note">Забелешка: ако \"Auto\" темата е активирана и штедачот на батерија е уклучен, темната тема автоматски ќе биде користена независно од времето во денот со цел да се
+		заштеди батерија</string>
+
+	<string name="settings">Поставки</string>
+	<string name="settings_buy_button_buy">Купи (%1$s)</string>
+	<string name="settings_buy_button_bought">Купено</string>
+	<string name="settings_buy_button_not_possible">Недостапно</string>
+	<string name="settings_buy_ad_free_label">Надградба без реклами</string>
+
+	<string name="settings_contribute_label">Помогнете да се подобри апликацијата</string>
+
+	<string name="settings_device">Уред</string>
+	<string name="settings_entered_incorrectly">Грешка при зачувување на вашите поставки. Ве молиме вратете се назад и изберете го вашиот уред / метод на ажурирање повторно.</string>
+	<string name="settings_explanation_incremental_full_update">Инкрементално ажурирање може да биде инсталирано од било која верзија (освен ако имате отклучен bootloader; тогаш секогаш би требало да го избирате методот на целосно ажурирање).\n\nБета ажурирање за OxygenOS секогаш може да биде инсталирано, и кога сте на стабилна верзија. За да промените од стабилно на бета, мора да овозможите напреден режим од поставките. За бета ажурирањата, целосните и инкременталните методи работат на истиот начин како и кај стабилните верзии.</string>
+
+	<string name="settings_push_from_server">Информациони и предупредувачки пораки</string>
+
+	<string name="settings_saving">Вашите поставки сеуште се зачувуваат. Ако ова потрае долго време: Проверете ја интернет конекцијата, изгасете ја апликацијата и обидете се повторно.</string>
+
+	<string name="settings_advanced_mode">Напреден режим</string>
+	<string name="settings_advanced_mode_explanation">Напредниот режим ја крие пораката \"Your system is up to date\", овозможувајќи да ги превземете и инсталирате сите ажурирања, иако тие не се компатибилни со вашиот уред.\n\nОва може да биде корисно кога:\n&#8226; Ажурирање од стабилна кон бета верзија\n&#8226; Враќање од бета верзија кон стабилна верзија (не заборавајте да го вратите уредот на фабрички подесувања)\n&#8226; Преинсталација на сегашната системска верзија.</string>
+
+	<string name="settings_update_method">Метод на ажурирање</string>
+	<string name="settings_upload_logs">Споделете податоци за користење и дневници</string>
+
+	<!-- FAQ strings -->
+	<string name="faq">ЧПП</string>
+	<string name="faq_menu_item">ЧПП</string>
+
+	<!-- First-time onboarding strings -->
+	<string name="onboarding">Добредојдовте</string>
+	<string name="onboarding_finished_button">Стартувај ја апликација</string>
+
+	<string name="onboarding_page_1_title">Добредојдовте во Oxygen Updater!</string>
+	<string name="onboarding_page_1_text">Оваа апликација ви овозможува:\n\n&#8226; Добивање побрз пристап до најновите Андроид ажурирања за вашиот OxygenOS уред\n\n&#8226; Лесно ажурирање на рутиран уред\n\n&#8226; Преглед на што е ново кај системскиот софтвер кој го користите\n\n&#8226; Читање на најновите вести за OnePlus и OxygenOS\n\nЛизгајте на лево за да продолжите.</string>
+	<string name="onboarding_page_1_caption">Ова не е официјална OnePlus апликација. Користењето на оваа апликација е на ваш ризик. Ниту OnePlus ниту развивачот на оваа апликација се одговорни за вашите постапки, вклучувајчи секаква штета настаната од користење на оваа апликација.\n\nСо користење на оваа апликација, се согласувате со условите како што е наведено погоре.</string>
+	<string name="onboarding_page_2_title">Изберете го вашиот уред</string>
+	<string name="onboarding_page_2_caption">Вашиот уред би требало да е избран. Доколку не е, изберете го погоре.</string>
+	<string name="onboarding_page_3_title">Изберете го вашиот метод на ажурирање</string>
+	<string name="onboarding_page_3_caption">Вообичаено, инкременталното ажурирање е вистинскиот избор овде, бидејќи овозможува побрзи и помали превземања.\n\nНо, не е компатибилно со рутирани уреди. Доколку имате рутиран уред, изберете метод на целосно ажурирање.\n\nДоколку имате бета верзија на OxygenOS, изберете (едно од) метод(ите) на ажурирање за отворена бета.</string>
+	<string name="onboarding_page_4_title">Спремни сте!</string>
+	<string name="onboarding_page_4_text">Уживајте во користењето на оваа апликација!\n\nСекогаш може да ги промените поставките подоцна. За да го направите тоа: Притиснете ги трите точки во горниот десен агол, и притиснете на \"Settings\".</string>
+
+	<!-- Automatic install strings -->
+	<string name="install">Инсталирај</string>
+
+	<!-- Install guide strings -->
+	<string name="install_guide_no_root">Инсталирајте го ажурирањето според инструкциите кои се прикажани во водичот за инсталација.</string>
+	<string name="install_guide">Водич за инсталација</string>
+	<string name="install_guide_subtitle">Водич за инсталација - %1$d од %2$d</string>
+	<string name="install_guide_tip">&#8226; Пожелно е да ги запишете сите чекори, бидејќи треба да го исклучите вашиот уред за време на инсталацијата.</string>
+
+	<string name="install_guide_page_1_title">Превземете го ажурирањето</string>
+	<string name="install_guide_page_1_text">&#8226; Притиснете го копчето за превземање за да го превземете ажурирањето.\n\n&#8226; Прогресот на превземање ќе се прикаже на апликацијата, и како нотификација на вашиот екран за нотификации.\n\n&#8226; Кога превземањето ќе заврши, ќе се прикаже нотификација со текст \"Download complete\".\nДоколку има грешка при превземање, отворете ја апликацијата и обидете се да го превземете ажурирањето повторно. Доколку и ова не функционира, осигурајте се дека имате стабилна конекција. Во спротивно, исконтактирајте го развивачот на апликацијата. Ова може да го направите со посета на \"My apps\" делот во Google Play Store.</string>
+
+	<string name="install_guide_page_2_title">Припремете се за инсталација</string>
+	<string name="install_guide_page_2_text">"Забелешка: Инсталацијата на ажурирањето се одвива во специјална страница во секцијата за Системски Ажурирања на вашиот уред. Доколку, за било каква причина, системското ажурирање се прикажува во оваа секција, можете прво да го инсталирате тоа ажурирање. Подоцна, отворете го Oxygen Updater повторно за да проверите дали сте на најновото ажурирање.
+
+Инструкции:
+&#8226; Исклучете го Oxygen Updater со притискање на копчето за почетен екран.
+
+&#8226; Отворете ја апликацијата за поставки. Би требало да се наоѓа во вашата листа на апликации.
+
+&#8226; Скролајте надоле додека не видите Системски ажурирања. Притиснете."</string>
+
+	<string name="install_guide_page_3_title">Инсталирајте го ажурирањето</string>
+	<string name="install_guide_page_3_text">"Сега, кога сте во апликацијата за Системски Ажурирања, време е да го инсталирате ажурирањето.
+
+&#8226; Во секцијата за Системски Ажурирања, притиснете ја иконата со запчаник во горниот десен агол.
+
+&#8226; Потоа, селектирајте \"Local upgrade\". Би требало да се појави екран за селектирање на датотеки.
+
+&#8226; На овој екран, притиснете на датотеката со ажурирањето која ја превземавте со Oxygen Updater. Нејзиното име треба да започнува со \"%1$sOxygen\".
+
+&#8226; Притиснете на \"Upgrade Now\". Инсталацијата треба да започне автоматски."</string>
+
+	<string name="install_guide_page_4_title">Почекајте да заврши инсталацијата</string>
+	<string name="install_guide_page_4_text">"&#8226; Уредот сега ќе го инсталира ажурирањети и ќе прикаже прогресна лента. Ве молиме почекајте инсталацијата да заврши. Инсталацијата може да потрае од неколку минути до 15 минути.
+
+&#8226; Потоа, вашиот уред ќе се рестартира за да заврши со ажурирањето."</string>
+
+	<string name="install_guide_page_5_title">Завршено. Уживајте во новата верзија на OxygenOS!</string>
+	<string name="install_guide_page_5_text">&#8226; Откако вашиот уред ќе заврши со оптимизација на апликациите, ажурирањето е успешно инсталирано.\nЗа да верификувате, можете да ја проверите тековната верзија на вашиот систем на следниот начин:\n\n&#8226; Одете во поставките на уредот, притиснете на \"About Phone\", и проверете ја верзијата на OxygenOS.\n\n&#8226; Ако ви се допаѓа оваа апликација, дадете и 5 ѕвезди на Google Play!</string>
+
+	<string name="install_guide_close_button">Затвори го инсталациониот водич</string>
+
+	<!-- Device information strings -->
+	<string name="device_information_supported_oxygen_os">Вашиот уред не е поддржан</string>
+	<string name="device_information_carrier_exclusive_oxygen_os">Вашиот уред не е поддржан, бидејќи е операторски специфичен модел</string>
+	<string name="device_information_unsupported_oxygen_os">Сеуште немаме додадено поддршка за вашиот нов уред</string>
+	<string name="device_information_unsupported_os">Вашиот уред не е поддржан, бидејќи нема OxygenOS</string>
+
+	<string name="device_information_hardware_header">Харвер</string>
+	<string name="device_information_software_header">Софтвер</string>
+
+	<string name="device_information_amount_of_memory">Величина на РАМ</string>
+	<string name="device_information_cpu_frequency">Фрекфенција на процесорот</string>
+	<string name="device_information_header">Уред</string>
+	<string name="device_information_image_description">Слика од уредот</string>
+	<string name="device_information_incremental_os_version">Инкрементална верзија на ОС</string>
+	<string name="device_information_os_version">Андроид верзија</string>
+	<string name="device_information_oxygen_os_version">OxygenOS верзија</string>
+	<string name="device_information_oxygen_os_ota_version">OTA верзија</string>
+	<string name="device_information_patch_level_version">Датум на безбедносна закрпа</string>
+	<string name="device_information_serial_number">Сериски број</string>
+	<string name="device_information_system_on_a_chip">Систем на чип</string>
+	<string name="device_information_unknown">непознато</string>
+
+	<!-- About screen strings -->
+	<string name="about">За</string>
+	<string name="about_description">Оваа апликација превзема официјални ажурирања директно од серверите на OnePlus, и дури го верификува интегритетот на превземената ZIP датотека пред да ви дозволи да ја инсталирате. Со ова, апликацијата ви овозможува да ги прескокнете редовите за инсталирање на официјални ажурирања веднаш. Ако приметите грешки во ОС, пријавете ги директно на OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Би било пожелно и да се приклучите кон нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>, за да можете да контактирате со други корисници за најновите ажурирања. Во спротивно слободно пратете ни е-пошта на <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> со ваши сугестии/повратни информации.</string>
+	<string name="about_support">Доколку сакате да не поддржите, можете да ја купите верзијата без реклами (во поставките на апликацијата), или да ја посетите нашата <a href="https://patreon.com/oxygenupdater">Patreon страница</a>.</string>
+	<string name="about_background_story_header">Приказна</string>
+	<string name="about_background_story">Оваа апликација првично била развиена од Arjan Vlek како продолжение на друга негова апликација, наречена <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (овозможува слична функционалност за корисници на Cyanogen OS).\n\nПо 4 години, во Јули 2019, Arjan одлучува да се тргне од двата проекти и ги префрла на тим од развивачи од различни држави. Тие ја прифатија должноста да принесат одлична &amp; услуга за добивање на ажурирана на OnePlus побрзо.\nПовеќе информации за одлуката можете да најдете <a href="https://oxygenupdater.com/api/v2.6/news-content/81/EN">овде</a>.\n\n14ти Август 2019 ја одбележа првата верзија под нова сопственост, која се состоеше од нови функции како темен режим и комплетен редизајн.\n\nЗа повеќе инфромации за тимот, проверете ја <a href="https://oxygenupdater.com/team/">веб страната</a>.</string>
+	<string name="about_third_party_app_notice">Ве молиме забележете, ова не е официјална OnePlus апликација.\nИмето на OnePlus, логото на OnePlus и OxygenOS се сопственост на OnePlus.\nAndroid, Google, Google Play и логото на Google Play се регистрирани заштитни знаци на Google Inc.\nОваа апликација користи податоци од OnePlus и нејзината татковска компанија Oppo за да прикаже информации за ажурирања.</string>
+	<string name="about_rate_button_text">Оцени</string>
+	<string name="about_website_button_text">Веб страна</string>
+	<string name="about_email_button_text">Е-Пошта</string>
+
+	<!-- LocalNotifications strings -->
+	<string name="notification_new_device_text">%1$s сега е поддржан. Отворете ја апликацијата за да го изберете овој уред.</string>
+	<string name="notification_no_notification_support">Инсталирајте или ажурирајте ги сервисите на Google Play за да овозможите нотификации.</string>
+	<string name="notification_version">%1$s е сега достапна за %2$s!</string>
+	<string name="download_and_installation_notifications_group_name">Превземи &amp; Инсталација</string>
+	<string name="push_notifications_group_name">Нотификации</string>
+	<string name="miscellaneous_notifications_group_name">Разно</string>
+	<string name="download_and_installation_notifications_group_description">Прикажи ги сите небитни нотификации од апликацијата Oxygen Updater. Ги содржи индикаторите за статус прикажани при превземање.</string>
+	<string name="push_notifications_group_description">Ги прикажува сите важни нотификации од апликацијата Oxygen Updater. Ги содржи нотификациите за системски ажурирања и вондредни вести.</string>
+	<string name="download_status_notification_channel_name">Статус на превземање</string>
+	<string name="verification_status_notification_channel_name">Статус на верификација</string>
+	<string name="installation_status_notification_channel_name">Статус на инсталација</string>
+	<string name="update_notification_channel_name">Достапно е системско ажурирање</string>
+	<string name="news_notification_channel_name">Објавен напис од вести</string>
+	<string name="device_notification_channel_name">Подршка на нов уред</string>
+	<string name="general_notification_channel_name">Генерално</string>
+	<string name="filename_submitted_notification_channel_name">Име на OTA датотеката е испратено</string>
+	<string name="download_status_notification_channel_description">Нотификации кои го рефлектираат моменталниот статус на превземање: на чекање, активно, завршено, или неуспешно</string>
+	<string name="verification_status_notification_channel_description">Нотификации кои го рефлектираат моменталниот статус на верификување на датотека: се извршува, завршено, или неуспешно.\nMD5 контролните суми за превземени датотеки се верификуваат со цел да се провери дали датотеката била изменета, и дали истата е валидна.</string>
+	<string name="installation_status_notification_channel_description">Бидете известени ако ажурирањето е испешно инсталирано или не</string>
+	<string name="update_notification_channel_description">Бидете известени ако има ново ажурирање за вашиот селектиран уред &amp; метод на ажурирање</string>
+	<string name="news_notification_channel_description">Бидете известени ако има нова статија</string>
+	<string name="device_notification_channel_description">Бидете известени ако апликацијата додаде поддршка за нов уред</string>
+	<string name="general_notification_channel_description">Општи нотификации кои не се дел од другите категории</string>
+	<string name="filename_submitted_notification_channel_description">Бидете известени кога успешно ќе испратите има на OTA датотека до нашиот тим.\nМожете автоматски да го исклучите испраќањето на имиња на датотеки во поставките на апликацијата.</string>
+
+	<!-- Help strings -->
+	<string name="help">Помош</string>
+	<string name="help_updating_your_device_title">Ажурирање на вашиот уред</string>
+	<string name="help_updating_your_device_text">При отварање на апликација, ќе се прикаже ако има достапно системско ажурирање. Доколку има достапно, можете да го инсталирате.\n\nЗа да ја започнете инсталацијата, притиснете го \"Превземи\" копчето (под описот за ажурирањето) за да го започнете превземањето. Кога ќе заврши превземањето, се пркажува екранот за инсталација. Ако сте ја напуштиле апликацијата или ако екранот не се појавил, притиснете на \"Инсталирај\" копчето, кое сега е прикажано до \"Преврземи\" копчето.\n\nЕкранот за инсталација ќе провери дали имате рутиран уред. Ако имате рутиран уред, дозволете рут пермиссии кога ќе бидете прашани и изберете го начинот на кој ќе го инсталирате ажурирањето. Во спротивно, следете ги инструкциите за мануелна инсталација.\n\nАвтоматска инсталација:\nПотребно е само да ги изберете поставките за инсталацијата. Првичните поставки се пожелни, освен тоа што треба да спесифицирате кон рут пакетот кој треба да биде (ре)инсталиран. Селектирајте рут пакет (zip датотека) користејќи го плавото копче со фолдер и притиснете на \"Започни инсталација\" за да ја започнете инсталацијата.\n\nМануелна инсталација:\nЌе се прикаже инсталациски водич на вашиот екран. Запишете ги инструкциите и извршете ги како што се запишани за да го инсталирате ажурирањето.</string>
+	<string name="help_reading_news_title">Читање на најновите статии</string>
+	<string name="help_reading_news_text">Новостите се прикажани на левата страна од екранот за ажурирање. Најновите статии се наоѓаат на врвот. Само притиснете на статија за да ја прочитате.\nПритиснете на стрелката за враќање или на копчето за враќање за се вратите на екранот со статиите.</string>
+	<string name="help_device_information_title">Прикажување на информации за вашиот уред</string>
+	<string name="help_device_information_text">Можете да погледнете дел од спесификациите на вашиот уред со користење на екранот десно од екранот за ажурирање. Ова е корисно кога правите кроисничко барање, во кое може да бидете прашани за дел од спесификациите на вашиот уред.</string>
+	<string name="help_change_settings_title">Промена на поставки</string>
+	<string name="help_change_settings_text">Можете да ги промените поставките со притискање на трите точки во горниот десен агол, проследено со притискање на Поставки.\nМожете да ги промените следните поставки:\n\n• Уред и метод на ажурирање\n• Нотификации\n• Внатрешни нотификации\n• Поставки за приватност (праќање на логови).\n\nКористете ги прекинувачите за да ги овозможите поставките за нотификациите / приватност. Изберете уред и / или метод на ажурирање користејќи ги паѓачките менија прикажани над прекинувачите. Не се видливи паѓачките менија? Проверете ја вашата интернет врска и отворете ги поставките повторно.</string>
+
+	<!-- News strings -->
+	<string name="news">Новости</string>
+	<string name="news_date_published">Последно ажурирање: %1$s</string>
+	<string name="news_empty">Оваа статија нема никаква содржина.</string>
+	<string name="news_load_network_error">Грешка при отварање на статија. Проверете ја вашата конекција и притиснете \"Обидете се повторно\" копчето за да ја отворите статијата.</string>
+	<string name="news_load_id_error"><![CDATA[Грешка при отварање на статија со неважечко URL: %1$s. Проверете го URL-то или пријавете го на <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
+	<string name="news_unread_count_1">Имате %1$d непрочитани статии. Притиснете овде за да ги видите.</string>
+	<string name="news_unread_count_2">Имате %1$d непрочитани статии. Притиснете за да се прикажат сите статии.</string>
+	<string name="news_mark_read">Означи како прочитани</string>
+	<string name="news_mark_unread">Означи како непрочитани</string>
+	<string name="news_mark_all_read">Означи ги сите како прочитани</string>
+	<string name="news_empty_state_none_available_header">Нема статии</string>
+	<string name="news_empty_state_all_read_header">Нема ништо преостанато за читање</string>
+	<string name="news_empty_state_none_available_text">Нема никакви статии во моментов, проверете подоцна.</string>
+	<string name="news_empty_state_all_read_text">Ги прочитавте сите статии. Браво!\nСе надеваме дека ви се допаѓаат нашите статии, и дека научивте нешто ново од нив.\n\nПовторно кликнете го банерот за да се прикажат сите статии.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Станете соработник</string>
+	<string name="contribute_title">Помогнете да се подобри Oxygen Updater</string>
+	<string name="contribute_explanation">На Oxygen Updater му е потребна твојата помош! За да ви ги овозможиме најновите ажурирања, потребни ни се имињата на датотеките за ажурирање. Тие се достапни кога вашиот уред ќе добие ново ажурирање.\n\nКако можам да помогнам?\n\nOxygen Updater автоматски може да испраќа имиња на датотеки до нашите администратори. Ова ќе искористи мала количина на мобилни податоци, и малце од вашата батерија. Се што треба е да почекате (околу 15тина минути) пред да инсталирате официјално Системско Ажурирање додека не видите конфирмација од Oxygen Updater дека датотеката е успешно испратена. Само \".Ota\" директориумот на вашиот уред е скениран на секои 15 минути. Проверува спесифично име во тој фолдер.</string>
+	<string name="contribute_agree">Би сакал/а да помогнам и се согласувам да испраќам имиња на датотеки до вашите администратори</string>
+	<string name="contribute_agree_from_setup">Би сакал/а да придонесам кон подобрување на апликацијата, и се согласувам да споделувам имиња на датотеки со вашите администратори</string>
+	<string name="contribute_save">Зачувај поставки</string>
+	<string name="contribute_more_info">Повеќе информации</string>
+	<string name="contribute_allow_storage">Ве молиме дозволете пристап кон вашата меморија со цел да се подобри апликацијата</string>
+	<string name="contribute_successful_notification_title">Успешен придонес</string>
+	<string name="contribute_successful_notification_text">Ви благодариме што ги споделивте имињата на датотеките со нас!</string>
+
+	<!-- Error strings-->
+	<string name="error_app_outdated">Ох не!</string>
+	<string name="error_app_outdated_message">Оваа верзија на апликацијата е застарена. Време е да ја ажурирате! Притиснете на \"Google Play\" подоле. Во Google Play, притиснете на \"Ажурирај\".</string>
+	<string name="error_app_requires_network_connection">Нема конекција</string>
+	<string name="error_app_requires_network_connection_message">Грешка при конектирање со серверот. Ве молиме проверете дали имате стабилна конекција. Апликацијата сега ке се исклучи.</string>
+	<string name="error_google_play_button_text">Google Play</string>
+	<string name="error_no_internet_connection">Нема конекција.</string>
+	<string name="error_maintenance">Одржување на серверот</string>
+	<string name="error_maintenance_message">Ве молиме почекајте. Серверот ќе биде достапен наскоро.</string>
+	<string name="error_maintenance_retry">Серверот најверојатно е под рутинска поправка. Обидете се повторно после некое време, или пријавете на нашата <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.</string>
+	<string name="error_reload">Освежи</string>
+
+	<string name="error_unable_to_rate_app">Не можете да ја оцените апликацијата, бидејќи вашиот уред нема Google Play Store.</string>
+
+	<!-- Message strings -->
+	<string name="delete_message_title">Ажурирањете е веќе превземено</string>
+	<string name="delete_message_contents">Веќе го имате превземено ова ажурирање, но го немате инсталирано. Притиснете на \"Инсталирај\" за да ги видите инструкциите како да го инсталирате ова ажурирање. Притиснете на \"Избриши\" за да ја избришете превземаната датотека. Притиснете на копчето за назад, или надвор од полето за да ја исклучите оваа порака.</string>
+	<string name="delete_message_delete_button">Избришете</string>
+
+	<string name="unsupported_device_warning_title">Уредот не е поддржан</string>
+	<string name="carrier_exclusive_device_warning_message">Користите специфичен уред од оператор. Иако имате OxygenOS, нема да можете да инсталирате ажурирања. Операторите обично ги заклучуваат своите уреди за да не можете да го ажурирате или модификувате фирмверот без дозвола од нив. Ова често се случува во САД: Опцијата \"Локална Надградба\" е недостапна на операторско спесифичните верзии на OxygenOS. Оваа опција е потребна за сами да инсталирате ажурирања, иако не ја користите оваа апликација. Нажалост, неможеме да превземеме ништо, бидејќи сме технички, но најверојатно и правно лимитирани. Контактирајте не преку е-пошта или на Discord за повеќе информации.</string>
+	<string name="unsupported_device_warning_message">Честитки за вашиот нов OnePlus уред! Нажалост, сеуште немаме додадено поддршка за овој модел. Без грижи, ќе го додадеме најбрзо што можеме. Не сакаме да правиме грешки, а процесот на верификување и тестирање на подршка за нови уреди е долготраен, ве молиме бидете трпеливи. Испратете ни е-пошта или придружете се на нашиот Discord сервер ако сакате да ни помогнете, или да бидете известени кога ќе има нова верзија од апликацијата која ќе го поддржува вашиот уред.</string>
+	<string name="unsupported_os_warning_message">Изгледа дека вашиот уред нема OxygenOS. Ве молиме забележете дека можете да инсталирате системски ажурирања само доколку имате уред OxygenOS.\n\nДруги уреди, како и OnePlus уреди со Изменети РОМови, не се поддржани.</string>
+
+	<string name="incorrect_device_warning_title">Разлика во селектиран уред</string>
+	<string name="incorrect_device_warning_message">Изгледа дека сте го избрале погрешниот уред: \"%1$s\", наместо \"%2$s\". Изменете го вашиот избор во поставките на апликацијата за да се осигурате дека ќе ги добиете ажурирањата и нотификациите за соодветниот уред.</string>
+
+	<string name="device_warning_checkbox_title">Не го прикажувај ова предупредување повеќе</string>
+
+	<!-- Purchasing strings -->
+	<string name="purchase_error_pending_payment">Вашето купување е на статус \"исчекување на исплата\". Кога плаќањето ќе бите завршено, ќе ви бидат дадени сите бенефити кои ви следуваат.</string>
+	<string name="purchase_error_after_payment">Купувањето на верзијата без реклами беше неуспешно, заради внатрешна грешка. Ве молиме обидете се повторно за неколку минути. Доколку веќе сте платиле, ве молиме исконтактирајте ја поддршката на Google Play за помош.</string>
+
+	<!-- Other strings-->
+	<string name="error">Грешка</string>
+	<string name="icon">Икона</string>
+	<string name="loading">Вчитување…</string>
+	<string name="processing">Процесирање…</string>
+</resources>
