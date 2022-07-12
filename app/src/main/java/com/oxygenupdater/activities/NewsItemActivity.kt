@@ -469,7 +469,7 @@ class NewsItemActivity : SupportActionBarActivity(
          * Matches both the API link and new website links
          *
          * https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
-         * https://oxygenupdater.com/article/<id>
+         * https://oxygenupdater.com/article/<id>/
          */
         private val LINK_PATH_REGEX = "^/(?:api/[v\\d.]+/news-content|article)/(\\d+)/?.*".toRegex(
             RegexOption.IGNORE_CASE
