@@ -89,8 +89,7 @@
 	<string name="summary_off">已停用</string>
 	<string name="summary_please_wait">請稍等…</string>
 	<string name="summary_update_method">請先選擇一個裝置</string>
-	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">一些重要的通知被禁用。\"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">一些重要的通知被停用。\"%1$s\"</string>
 	<string name="summary_theme">設定佈景主題</string>
 	<string name="summary_language">設定語言</string>
 	<string name="summary_privacy_policy">線上檢視</string>
