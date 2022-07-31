@@ -122,8 +122,6 @@
 	<string name="settings_buy_button_not_possible">Недоступно</string>
 	<string name="settings_buy_ad_free_label">Надогради за без реклама</string>
 
-	<string name="settings_contribute_label">Помозите напредовању апликације</string>
-
 	<string name="settings_device">Уређај</string>
 	<string name="settings_entered_incorrectly">Грешка приликом чувања ваших подешавања. Молимо вас и изаберите ваш уређај / методу ажурирања.</string>
 	<string name="settings_explanation_incremental_full_update">Делимично ажурирање се може извршити са било које верзије (ако немате "bootloader" откључан; онда бисте требали изабрати методу пуног ажурирања).\n\nA beta ажурирање OxygenOS-а може увек бити инсталирано, и када сте на стабилној верзији. За пребацивање са стабилне на beta верзију, морате да омогућите напредни мод у подешавањима. За beta-е, методе целог и делимичног ажурирања раде на исти начин као на стабилним верзијама.</string>
@@ -249,7 +247,6 @@
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">Нови уређај подржан</string>
 	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -257,7 +254,6 @@
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">Помоћ</string>
@@ -287,18 +283,6 @@
 	<string name="news_empty_state_all_read_header">Није ништа преостало за прочитати</string>
 	<string name="news_empty_state_none_available_text">У овом тренутку нема доступних вести, погледајте касније.</string>
 	<string name="news_empty_state_all_read_text">Прочитали сте све вести. Одличан посао!\nНадамо се да сте уживали читајући наше чланке и научили нешто ново из њих.\n\nДодирните банер поново да бисте приказали све вести.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">Постани сарадник</string>
-	<string name="contribute_title">Помози напредовању Oxygen Updater-а</string>
-	<string name="contribute_explanation">Oxygen Updater-у је потребна твоја помоћ! Да би вам пружили последња ажурирања потребна су нам имена фајлова. Ти фајлови су присутни на вашем уређају када вам искочи регуларно ажурирање.\n\nКако ја могу да помогнем?\n\nOxygen Updater може аутоматски да пошање администрацији имена фајлова. Ово ће искористити малу количину ваших података и можда мало ваше батерије. Све што треба да урадите је да сачекате (одприлике 15 минута) пре него што инсталирате званично ажурирање система док не видите потврду од Oxygen Updater-а да је фајл успешно послат. Искључиво ".Ota" directory на вашем уређају ће бити претражен једном у 15 минута. То претраживање тражи само специјални фајл у том фолдеру.</string>
-	<string name="contribute_agree">Волео бих да помогнем и пошаљем имена фајлова админима</string>
-	<string name="contribute_agree_from_setup">Желим да помогнем развијању апликације и да пошаљем имена фајлова админима</string>
-	<string name="contribute_save">Сачувај подешавања</string>
-	<string name="contribute_more_info">Више информација</string>
-	<string name="contribute_allow_storage">Молимо вас допустите апликацији притуп фајловима ако желите да помогнете апликацији</string>
-	<string name="contribute_successful_notification_title">Учествовање успешно</string>
-	<string name="contribute_successful_notification_text">Хвала вам што делите ажурирано име датотеке са нама!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">О не!</string>

@@ -110,7 +110,6 @@
 	<string name="settings_buy_button_bought">"Куплено"</string>
 	<string name="settings_buy_button_not_possible">"Недоступно"</string>
 	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
-	<string name="settings_contribute_label">Помогите улучшить приложение</string>
 	<string name="settings_device">"Устройство"</string>
 	<string name="settings_entered_incorrectly">"Ошибка сохранения настроек. Пожалуйста, выберите снова ваше устройство / вариант обновления."</string>
 	<string name="settings_explanation_incremental_full_update">"Частичное обновление системы возможно только в случае, когда на момент выпуска обновления у вас уже была установлена последняя версия прошивки.
@@ -270,7 +269,6 @@
 	<string name="news_notification_channel_name">Опубликована новостная статья</string>
 	<string name="device_notification_channel_name">"Новое поддерживаемое устройство"</string>
 	<string name="general_notification_channel_name">Основной</string>
-	<string name="filename_submitted_notification_channel_name">OTA имя файла отправлено</string>
 	<string name="download_status_notification_channel_description">Уведомления, отражающие текущее состояние загрузки: ожидающая, активная, завершенная или неудачная.</string>
 	<string name="verification_status_notification_channel_description">Уведомления, которые отражают текущее состояние задачи проверки файлов: выполняется, завершено или не удалось. \nПроверяются контрольные суммы MD5 для загруженных файлов, чтобы убедиться, что файл не был подделан и является допустимым файлом обновления.</string>
 	<string name="installation_status_notification_channel_description">Получайте уведомления об успешной установке обновления</string>
@@ -278,7 +276,6 @@
 	<string name="news_notification_channel_description">Получайте уведомления, когда мы публикуем новостную статью</string>
 	<string name="device_notification_channel_description">Получайте уведомления, когда в приложение добавлена поддержка нового устройства</string>
 	<string name="general_notification_channel_description">Общие уведомления, не относящиеся к другим категориям</string>
-	<string name="filename_submitted_notification_channel_description">Получите уведомление, когда вы успешно отправили имена файлов OTA своей команде. \nВы можете отказаться от автоматической отправки имен файлов в настройках приложения.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Помощь"</string>
@@ -325,16 +322,6 @@
 	<string name="news_empty_state_all_read_header">Больше нечего читать</string>
 	<string name="news_empty_state_none_available_text">В данный момент нет доступных статей, проверьте позже.</string>
 	<string name="news_empty_state_all_read_text">Вы прочитали все статьи. Хорошая работа! \nМы надеемся, что вам понравилось читать наши статьи, и вы узнали из них что-то новое. \n\nСнова нажмите на баннер, чтобы показать все новостные статьи.</string>
-	<string name="contribute">Стать участником</string>
-	<string name="contribute_title">Помогите улучшить Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater нужна ваша помощь! Чтобы предоставлять вам последние обновления, нам нужно получить имена файлов обновлений. Они присутствуют на вашем телефоне, когда появляется обычное обновление. \n\nКак я могу помочь? \n\nOxygen Updater может автоматически отправлять новые имена файлов обновлений нашим администраторам. Это будет использовать небольшой объем данных и может потреблять немного заряда батареи. Все, что вам нужно сделать, это подождать (примерно 15 минут) перед установкой официальных обновлений системы, пока вы не увидите подтверждение Oxygen Updater, что файл был успешно отправлен. Только каталог «.Ota» на вашем телефоне сканируется один раз в 15 минут. Он проверяет только конкретное имя в этой конкретной папке.</string>
-	<string name="contribute_agree">Я хотел бы помочь и согласен отправить имена файлов обновлений вашим администраторам</string>
-	<string name="contribute_agree_from_setup">Я хотел бы помочь улучшить приложение и согласен отправлять имена файлов обновлений вашим администраторам.</string>
-	<string name="contribute_save">Сохранить настройки</string>
-	<string name="contribute_more_info">Больше инфо</string>
-	<string name="contribute_allow_storage">Пожалуйста, предоставьте разрешения на доступ к хранилищу, чтобы помочь улучшить приложение</string>
-	<string name="contribute_successful_notification_title">Вклад успешен</string>
-	<string name="contribute_successful_notification_text">Спасибо, что поделились с нами именами файлов обновлений!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"О нет!"</string>

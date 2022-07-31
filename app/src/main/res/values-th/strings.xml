@@ -127,8 +127,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_buy_button_not_possible">การซื้อถูกปิด</string>
 	<string name="settings_buy_ad_free_label">อัพเกรดเป็นเวอร์ชั่นไม่มีโฆษณา</string>
 
-	<string name="settings_contribute_label">ช่วยพวกเราพัฒนาแอพพลิเคชั่น</string>
-
 	<string name="settings_device">อุปกรณ์</string>
 	<string name="settings_entered_incorrectly">เกิดข้อผิดพลาดระหว่างบันทึกการตั้งค่า กรุณากลับไปเลือกอุปกรณ์หรือวิธีติดตั้งใหม่</string>
 	<string name="settings_explanation_incremental_full_update">การอัพเดทแบบปกติสามารถอัพเดทจากเวอร์ชั่นไหนก็ได้ (ยกเว้นคุณจะปลดล็อค bootloader แล้ว คุณควรเลือกวิธีติดตั้งแบบเต็มรูปแบบ)\n\nOxygenOS เวอร์ชั่นทดลองสามารถติดตั้งได้ตลอดเวลาตราบใดที่คุณอยู่บนเวอร์ชั่นสเถียร การที่คุณจะเปลี่ยนไปใช้เวอร์ชั่นทดลองนั้น คุณต้องเปิดขั้นสูงในตั้งค่าก่อนและสำหรับเวอร์ชั่นทดลองนั้น การติดตั้งแบบเต็มรูปแบบกับธรรมดาสามารถใช้แทนกันได้</string>
@@ -260,7 +258,6 @@ Instructions:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">รองรับอุปกรณ์ใหม่</string>
 	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -268,7 +265,6 @@ Instructions:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">ช่วยเหลือ</string>
@@ -299,18 +295,6 @@ Instructions:
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">เป็นผู้มีส่วนร่วม</string>
-	<string name="contribute_title">ช่วยปรับปรุง Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater ต้องการความช่วยเหลือของคุณ! เพื่อให้การอัปเดตล่าสุดแก่คุณเราต้องได้รับชื่อไฟล์การอัพเดท สิ่งเหล่านี้จะปรากฏบนโทรศัพท์ของคุณเมื่อมีการอัพเดทปกติปรากฏขึ้น\n\n ฉันจะช่วยได้อย่างไร\n\nOxygen Updater สามารถส่งชื่อไฟล์อัปเดตใหม่ไปยังผู้ดูแลระบบของเราโดยอัตโนมัติ การดำเนินการนี้จะใช้ข้อมูลจำนวนเล็กน้อยและอาจใช้แบตเตอรี่เล็กน้อย สิ่งที่คุณต้องทำคือรอ (ประมาณ 15 นาที) ก่อนที่จะติดตั้งการอัปเดตระบบอย่างเป็นทางการจนกว่าคุณจะเห็นการยืนยันของ Oxygen Updater ว่าไฟล์ได้ถูกส่งเรียบร้อยแล้ว สแกนเฉพาะไฟล์. ota ในโทรศัพท์ของคุณเพียงครั้งเดียวต่อ 15 นาที มันจะตรวจสอบชื่อเฉพาะในโฟลเดอร์นั้นเท่านั้น</string>
-	<string name="contribute_agree">ฉันต้องการความช่วยเหลือและตกลงที่จะส่งชื่อไฟล์อัปเดตไปยังผู้ดูแลระบบของเรา</string>
-	<string name="contribute_agree_from_setup">ฉันต้องการช่วยปรับปรุงแอพพลิเคชั่นและตกลงที่จะส่งชื่อไฟล์อัปเดตไปยังผู้ดูแลระบบของเรา</string>
-	<string name="contribute_save">บันทึกการตั้งค่า</string>
-	<string name="contribute_more_info">ข้อมูลเพิ่มเติม</string>
-	<string name="contribute_allow_storage">โปรดให้สิทธิ์การจัดเก็บเพื่อช่วยในการปรับปรุงแอพพลิเคชั่น</string>
-	<string name="contribute_successful_notification_title">บริจาคสำเร็จแล้ว</string>
-	<string name="contribute_successful_notification_text">ขอขอบคุณที่แบ่งปันชื่อไฟล์อัปเดตกับเรา!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">ไม่นะ!</string>

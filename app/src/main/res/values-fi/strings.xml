@@ -119,8 +119,6 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="settings_buy_button_not_possible">"Ei saatavilla"</string>
 	<string name="settings_buy_ad_free_label">"Päivitä mainosvapaaseen"</string>
 
-	<string name="settings_contribute_label">Auta parantamaan sovellusta</string>
-
 	<string name="settings_device">"Laite"</string>
 	<string name="settings_entered_incorrectly">"Virhe tallennettaessa asetuksia. Ole hyvä mene takaisin ja valitse laite / päivitystapa uudelleen."</string>
 	<string name="settings_explanation_incremental_full_update">"Lisäävä päivitys voidaan asentaa vain jos käytössäsi on viimeisin järjestelmäversio ennen kuin tämä päivitys julkaistiin.
@@ -280,7 +278,6 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">"Uusi laite tuettu"</string>
 	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -288,7 +285,6 @@ Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavast
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Apua"</string>
@@ -336,17 +332,6 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="news_empty_state_all_read_header">Ei luettavaa jäljellä</string>
 	<string name="news_empty_state_none_available_text">Ei artikkeleita. Tule takaisin myöhemmin.</string>
 	<string name="news_empty_state_all_read_text">Olet lukenut kaikki artikkelit. Hyvin tehty!\nToivomme, että pidät niistä ja olet oppinut jotain uutta.\n\nBannerin painaminen näyttää kaikki artikkelit.</string>
-
-	<string name="contribute">Tule tukijaksi</string>
-	<string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
-	<string name="contribute_explanation">Oxygen Updater tarvitsee apuasi! Voidaksemme tarjota sinulle viimeisimmät päivitykset, me tarvitsemme päivitystiedostojen nimet. Nämä näytetään puhelimessasi kun tavallinen päivitys ilmaantuu.\n\nKuinka voin auttaa?\n\nOxygen Updater voi automaattisesti lähettää uusien päivitystiedostojen nimet ylläpitäjillemme. Tämä käyttää pienen määrän tiedonsiirtoa ja voi viedä vähän akkuvirtaa. Kaikki, mitä sinun tulee tehdä, on odottaa (noin 15 minuuttia) ennen virallisen päivityksen asentamista, kunnes näet vahvistuksen, että Oxygen Updater on lähettänyt tiedoston onnistuneesti. Vain .ota -kansiota puhelimessa skannataan 15 minuutin välein. Tämä tarkistaa vain tiettyä nimeä tässä nimenomaisessa kansiossa.</string>
-	<string name="contribute_agree">Haluan auttaa ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
-	<string name="contribute_agree_from_setup">Haluan auttaa parantamaan sovellusta ja hyväksyn päivitystiedostojen nimien lähettämisen ylläpitäjille</string>
-	<string name="contribute_save">Tallenna asetukset</string>
-	<string name="contribute_more_info">Lisätietoja</string>
-	<string name="contribute_allow_storage">Ole hyvä ja anna tallennustilan käyttöoikeus auttaaksesi parantamaan sovellusta</string>
-	<string name="contribute_successful_notification_title">Osallistuminen onnistui</string>
-	<string name="contribute_successful_notification_text">Kiitos, että jaoit päivitystiedostonimet kanssamme!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Voi ei!"</string>

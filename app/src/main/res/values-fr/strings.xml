@@ -122,8 +122,6 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="settings_buy_button_not_possible">"Indisponible"</string>
 	<string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>
 
-	<string name="settings_contribute_label">Aidez à améliorer l\'application</string>
-
 	<string name="settings_device">"Appareil"</string>
 	<string name="settings_entered_incorrectly">"Une erreur s'est produite lors de la sauvegarde de vos réglages. Retournez en arrière et sélectionnez à nouveau votre appareil et méthode de mise à jour."</string>
 	<string name="settings_explanation_incremental_full_update">"Une mise à jour incrémentale peut être installée depuis n'importe quelle version (sauf si votre bootloader est déverouillé, auquel cas vous devriez toujours choisir la mise à jour entière en tant que méthode de mise à jour).\n\nLes versions bêta d'OxygenOS peuvent toujours être installées, même si vous exécutez actuellement une version stable. Pour passer de la version stable à la version bêta, vous devez activer le mode avancé dans les réglages. Les méthodes de mises à jour incrémentale et entières marchent de la même manière pour les versions bêta et stables."</string>
@@ -280,7 +278,6 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 	<string name="news_notification_channel_name">Nouvel article publié</string>
 	<string name="device_notification_channel_name">"Nouvel appareil supporté"</string>
 	<string name="general_notification_channel_name">Générales</string>
-	<string name="filename_submitted_notification_channel_name">Nom de fichier de mise à jour soumis</string>
 	<string name="download_status_notification_channel_description">Notifications qui reflètent le statut d\'un téléchargement : en pause, actif, complété, ou échoué</string>
 	<string name="verification_status_notification_channel_description">Notifications qui reflètent le statut de la vérification du fichier de mise à jour: en cours, complété, or échoué.\nLa somme de contrôle MD5 est utilisée pour s\'assurer que le fichier de mise à jour n\'a pas été modifié et est valide.</string>
 	<string name="installation_status_notification_channel_description">Soyez notifié afin de savoir si une mise à jour a été correctement installée ou pas</string>
@@ -288,7 +285,6 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 	<string name="news_notification_channel_description">Soyez notifié lorsque nous publions un nouvel article</string>
 	<string name="device_notification_channel_description">Soyez notifié lorsque l\'application supporte un nouvel appareil</string>
 	<string name="general_notification_channel_description">Notifications générales ne rentrant pas dans le cadre des autres catégories</string>
-	<string name="filename_submitted_notification_channel_description">Soyez notifié lorque vous avez soumis avec succès les noms de fichiers de mises à jour à l\'équipe. Si vous le souhaitez, vous pouvez arrêter de soumettre les noms de fichiers de mise à jour dans les réglages de l\'application.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Aide"</string>
@@ -335,18 +331,6 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_empty_state_all_read_header">Aucun article non lu</string>
 	<string name="news_empty_state_none_available_text">Aucun article n\'est disponible pour l\'instant, veuillez réessayez plus tard.</string>
 	<string name="news_empty_state_all_read_text">Félicitations, vous avez lu tous les articles! Nous espérons que vous les avez aimé.\n\nAppuyez sur la bannière pour les revoir.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">Devenez un contributeur</string>
-	<string name="contribute_title">Aidez à améliorer Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater a besoin de vous ! Afin de vous donner les dernières mises à jour disponibles, nous avons besoin de connaître les noms des fichiers de mise à jour. Ceux-ci sont présents sur votre téléphone quand une mise à jour arrive depuis le système FOTA de OnePlus.\n\nComment puis-je aider !\n\nOxygen Updater peut automatiquement soumettre les noms de fichiers de mise à jour aux administrateurs. Cela utilisera une petite quantité de données et un peu de batterie. Tout ce que vous avez à faire est attendre environ 15 minutes avant d\'installer les mises à jour provenant du système FOTA de OnePlus jusqu\'à ce que vous receviez une notification disant que le nom du fichier a bien été soumis.</string>
-	<string name="contribute_agree">J\'aimerais aider et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
-	<string name="contribute_agree_from_setup">J\'aimerais contribuer à améliorer l\'application et donne mon accord à la soumission automatique des noms des fichiers de mise à jour aux administrateurs d\'Oxygen Updater</string>
-	<string name="contribute_save">Enregistrer</string>
-	<string name="contribute_more_info">Plus d\'informations</string>
-	<string name="contribute_allow_storage">Veuillez accorder la permission d\'accéder au stockage afin de contribuer à l\'amélioration de l\'application</string>
-	<string name="contribute_successful_notification_title">Contribution effectuée</string>
-	<string name="contribute_successful_notification_text">Merci d\'avoir partagé les noms de fichiers de mise à jour avec nous!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh non !"</string>

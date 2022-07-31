@@ -120,8 +120,6 @@
 	<string name="settings_buy_button_not_possible">לא זמין</string>
 	<string name="settings_buy_ad_free_label">שדרג לגרסה בלי פרסומות</string>
 
-	<string name="settings_contribute_label">שתף אותנו בקבצי השמות של העדכונים</string>
-
 	<string name="settings_device">מכשיר</string>
 	<string name="settings_entered_incorrectly">שגיאה בשמירת ההגדרות. אנא חזור אחורה ובחר את המכשיר/ שיטת העדכון שנית</string>
 	<string name="settings_explanation_incremental_full_update">עדכון מצטבר יכול להיות מותקן בכל מקרה (חוץ ממקרה בו פתחת את ה-bootloader, אז עליך לקחת את שיטת העדכון המלא). \n\n עדכון בטא של OxygenOS יכול תמיד להיות מותקן גם על גרסת בטא וגם על גרסה יציבה. כדי להחליף מגרסה יציבה לגרסת בטא, עליך להפעיל את מצב מתקדם בהגדרות. שיטות העדכונים: Beta, Full, Incremental.</string>
@@ -246,7 +244,6 @@
 	<string name="news_notification_channel_name">כתבה חדשה פורסמה באפליקציה!</string>
 	<string name="device_notification_channel_name">מכשיר חדש נתמך</string>
 	<string name="general_notification_channel_name">כללי</string>
-	<string name="filename_submitted_notification_channel_name">שם קובץ OTA הוגש</string>
 	<string name="download_status_notification_channel_description">התראות המשקפות את המצב הנוכחי של ההורדה: המתנה, פעיל, הושלם או נכשל</string>
 	<string name="verification_status_notification_channel_description">התראות המשקפות את המצב הנוכחי של מטלת אימות קובץ: בתהליך, הושלם או נכשל. \n בדיקות MD5 עבור קבצים שהורדו מאומתות כדי לוודא שהקובץ לא טופל, והוא קובץ עדכון תקף.</string>
 	<string name="installation_status_notification_channel_description">קבל הודעה אם העדכון הותקן בהצלחה או לא</string>
@@ -254,7 +251,6 @@
 	<string name="news_notification_channel_description">קבל הודעה כשאנחנו מפרסמים מאמר חדשות</string>
 	<string name="device_notification_channel_description">קבל התראה כשהאפליקציה מוסיפה תמיכה למכשיר חדש</string>
 	<string name="general_notification_channel_description">התראות כלליות שאינן משתלבות בקטגוריות אחרות</string>
-	<string name="filename_submitted_notification_channel_description">קבל הודעה כאשר הגשת בהצלחה שמות קבצי OTA לצוות שלנו. \nאתה יכול לבטל את הסכמתך להגיש אוטומטית שמות קבצים בהגדרות האפליקציה.</string>
 
 	<!-- Help strings -->
 	<string name="help">עזרה</string>
@@ -282,18 +278,6 @@
 	<string name="news_empty_state_all_read_header">אין כתבה שלא קראת!</string>
 	<string name="news_empty_state_none_available_text">אין מאמרים זמינים ברגע זה, בדוק שוב מאוחר יותר.</string>
 	<string name="news_empty_state_all_read_text">קראת את כל הכתבות. עבודה טובה! \nאנחנו מקווים שנהנתה לקרוא את הכתבות שלנו, ולמדת משהו חדש מהם. \n\n הקש על הבאנר שנית כדי להציג את כל הכתבות.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">עזור לנו לשפר את האפליקציה</string>
-	<string name="contribute_title">עזור לשפר את Oxygen Updater</string>
-	<string name="contribute_explanation">אפליקציית Oxygen Updater צריכה את העזרה שלך! במטרה עבור לספק את העדכונים האחרונים, אנחנו צריכים לקבל את שמות קבצי העדכון אשר קיימים במכשירך.\n\nאיך אני יכול לעזור? \n\אפליקציית Oxygen Updater יכולה באופן אוטומטי לשלוח את קבצי שמות העדכונים החדשים למנהלים שלנו. זה יצרוך מעט מהנתונים שלך ועלול להשתמש במעט מהסוללה שלך. כל מה שהינך צריך לעשות זה להמתין (כ־15 דקות) לפני התקנת עדכון מערכת רשמי עד שהינך מקבל  אישור מOxygen Updater שהקובץ הנדרש נשלח בהצלחה. רק נתיב ה\".Ota\" במכשיר שלך נסרק כל 15 דקות. ובודק רק עבור שם ספציפי בתיקייה מסוימת.</string>
-	<string name="contribute_agree">ברצוני לעזור והנני מסכים להגיש שמות קבצים מעודכנים לצוות המפתחים</string>
-	<string name="contribute_agree_from_setup">אפשר שליחת שמות קבצי עדכון למפתחי האפליקציה למטרת פיתוח</string>
-	<string name="contribute_save">שמור הגדרות</string>
-	<string name="contribute_more_info">מידע נוסף</string>
-	<string name="contribute_allow_storage">אנא הענק לאפליקציה הרשאות לאחסון על מנת לעזור בשיפור האפליקציה</string>
-	<string name="contribute_successful_notification_title">התרומה התקבלה בהצלחה</string>
-	<string name="contribute_successful_notification_text">תודה ששיתפת איתנו את שמות קבצי העדכון!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">אוי לא!</string>

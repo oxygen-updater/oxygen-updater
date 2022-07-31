@@ -40,6 +40,10 @@ class NotificationUtils(private val context: Context) {
         notificationManager.deleteNotificationChannel(
             NotificationChannels.OLD_PROGRESS_NOTIFICATION_CHANNEL_ID
         )
+        // No longer used in v5.9.0+
+        notificationManager.deleteNotificationChannel(
+            MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID
+        )
     }
 
     /**
@@ -154,13 +158,6 @@ class NotificationUtils(private val context: Context) {
                 //// END: PushNotificationsGroup
 
                 //// BEGIN: MiscellaneousGroup
-                createNotificationChannel(
-                    MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID,
-                    MiscellaneousGroup.ID,
-                    context.getString(R.string.filename_submitted_notification_channel_name),
-                    context.getString(R.string.filename_submitted_notification_channel_description),
-                    NotificationManager.IMPORTANCE_LOW
-                ),
                 //// END: MiscellaneousGroup
             )
         )
@@ -318,6 +315,15 @@ object NotificationChannels {
          * Description: Get notified when you've submitted OTA filenames successfully to our team.
          * You can opt-out of automatically submitting filenames in the app's settings.
          */
+        @Deprecated(
+            message = """
+                No longer used in v5.9.0+, because all OnePlus phones now use either
+                Google OTA (doesn't save files anywhere), or Component OTA (saves in
+                a directory accessible only via root), but URL in this case can't be
+                constructed via filenames alone.
+            """,
+            level = DeprecationLevel.WARNING
+        )
         const val OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID = "$channelPrefix.filename"
     }
 

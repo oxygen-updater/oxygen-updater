@@ -117,7 +117,6 @@
 	<string name="settings_buy_button_bought">已購買</string>
 	<string name="settings_buy_button_not_possible">暫不提供</string>
 	<string name="settings_buy_ad_free_label">移除廣告服務</string>
-	<string name="settings_contribute_label">協助改進更新器</string>
 
 	<string name="settings_device">裝置</string>
 	<string name="settings_entered_incorrectly">儲存設定時發生錯誤。請返回並重新選擇您的裝置 / 更新方法。</string>
@@ -241,7 +240,6 @@
 	<string name="news_notification_channel_name">新文章發布</string>
 	<string name="device_notification_channel_name">支援新裝置</string>
 	<string name="general_notification_channel_name">一般</string>
-	<string name="filename_submitted_notification_channel_name">已傳送 OTA 更新包名稱</string>
 	<string name="download_status_notification_channel_description">反映目前下載狀態的通知：等待中、正在進行、完成或失敗</string>
 	<string name="verification_status_notification_channel_description">反映目前驗證情況的通知：正在進行、已完成或失敗\n為已下載的檔案進行 MD5 校驗可以確保檔案沒有被竄改並且有效。</string>
 	<string name="installation_status_notification_channel_description">取得通知，了解更新成功與否</string>
@@ -249,7 +247,6 @@
 	<string name="news_notification_channel_description">在新文章發布時推送通知</string>
 	<string name="device_notification_channel_description">在更新器支援新裝置時推送通知</string>
 	<string name="general_notification_channel_description">不屬於其他類別的一般通知</string>
-	<string name="filename_submitted_notification_channel_description">在您成功為我們團隊提交 OTA 包檔案名後推送通知。\n您可以在應用程式的設定中選擇不自動提交檔案名。</string>
 
 	<!-- Help strings -->
 	<string name="help">協助</string>
@@ -279,18 +276,6 @@
 	<string name="news_empty_state_all_read_header">全部讀完了</string>
 	<string name="news_empty_state_none_available_text">暫時沒有可讀的文章，請稍候再試</string>
 	<string name="news_empty_state_all_read_text">所有文章都已閱讀完畢，做的真好！\n希望您喜歡我們的文章，並能夠從中了解到新的訊息。\n\n 再次點選横幅即可顯示所有新聞文章。</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">參與共研</string>
-	<string name="contribute_title">加入 Oxygen 更新器共同研究計畫</string>
-	<string name="contribute_explanation">Oxygen 更新器需要您的協助！為了提供最新的更新包，我們需要取得更新包檔案的名稱。一般在您的系統推送更新時，相關訊息就會出現在手機上。\n\n我該如何協助呢？\nOxygen 更新器可以自動向我們的管理員提交最新更新包的檔案名。 這將使用微量的資料流量，也可能會消耗一點電力。而您需要做的，就是在安裝官方系統更新之前稍微等一下，直到您看到 Oxygen 更新器已經確認檔案名成功提交為止。</string>
-	<string name="contribute_agree">我同意將更新包的檔名提供给應用程式管理員</string>
-	<string name="contribute_agree_from_setup">我願意協助改進該應用程式，並同意向應用程式的管理員提供更新包的檔案名稱</string>
-	<string name="contribute_save">儲存設定</string>
-	<string name="contribute_more_info">了解更多</string>
-	<string name="contribute_allow_storage">請授權内部儲存空間檔案讀取權限以開啟共同研究計畫</string>
-	<string name="contribute_successful_notification_title">共研完成</string>
-	<string name="contribute_successful_notification_text">感謝您將檔名分享给我們！</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">糟糕！</string>

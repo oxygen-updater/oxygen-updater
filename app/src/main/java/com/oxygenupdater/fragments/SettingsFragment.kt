@@ -130,7 +130,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         view: View,
         savedInstanceState: Bundle?
     ) = super.onViewCreated(view, savedInstanceState).also {
-        setupSupportPreferences()
+        setupBuyAdFreePreference()
         setupDevicePreferences()
         setupThemePreference()
         setupLanguagePreference()
@@ -177,20 +177,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         PrefManager.sharedPreferences.registerOnSharedPreferenceChangeListener(
             onSharedPreferenceChangedListener
         )
-    }
-
-    /**
-     * Sets up buy ad-free and contribute preferences
-     */
-    private fun setupSupportPreferences() {
-        setupBuyAdFreePreference()
-
-        findPreference<Preference>(
-            mContext.getString(R.string.key_contributor)
-        )?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            (activity as MainActivity?)?.showContributorDialog()
-            true
-        }
     }
 
     private fun logIABError(errorMessage: String) = logError(
@@ -294,11 +280,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         updateMethodPreference.isEnabled = false
 
         notificationsPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val sdkInt = Build.VERSION.SDK_INT
             val packageName = mContext.packageName
             startActivity(
                 when {
-                    sdkInt >= Build.VERSION_CODES.O -> Intent(
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> Intent(
                         Settings.ACTION_APP_NOTIFICATION_SETTINGS
                     ).putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
                     // Works only for API 21+ (Lollipop), which happens to be the min API

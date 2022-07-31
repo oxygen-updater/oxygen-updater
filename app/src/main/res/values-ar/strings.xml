@@ -119,7 +119,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_buy_button_bought">تم الشراء</string>
 	<string name="settings_buy_button_not_possible">غير متاح</string>
 	<string name="settings_buy_ad_free_label">الترقية للتخلص من الإعلانات</string>
-	<string name="settings_contribute_label">المساعدة في تحسين التطبيق</string>
 	<string name="settings_device">الجهاز</string>
 	<string name="settings_entered_incorrectly">خطأ في حفظ إعداداتك. فضلاً عد وإختر جهازك وطريقة التحديث مرة أخرى.</string>
 	<string name="settings_explanation_incremental_full_update">التحديث التدريجي يمكن تثبيته فوق أي إصدار ( ماعدا اذا قمت بفك البوت لودر; إذاً فمن الأفضل دائماً إختيار التحديث الشامل كطريقة التحديث المثلى).\n\nA التحديث التجريبي من نظام أكسجين يمكن تثبيته دائماً, حتى اذا كنت على إصدار مستقر. للإنتقال من إصدار مستقر لإصدار تجريبي, يجب عليك تفعيل الوضع المطور من داخل الإعدادات. أما للإصدارات التجريبية فالتحديثات التدريجية والكاملة تعمل بنفس الطريقة السابقة كأن جهازك يعمل فعلاً بإصدار مستقر حالي.</string>
@@ -243,7 +242,6 @@ Instructions:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">جهاز جديد مدعوم</string>
 	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -251,7 +249,6 @@ Instructions:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">مساعدة</string>
@@ -282,18 +279,6 @@ Instructions:
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">كن مساهماً</string>
-	<string name="contribute_title">المساعدة في تحسين Oxygen Updater</string>
-	<string name="contribute_explanation">يحتاج Oxygen Updater إلى مساعدتك! وذلك للحفاظ على إعطائك آخر التحديثات بإستمرار ، نحتاج إلى الحصول على أسماء ملفات التحديث. وهي موجودة على هاتفك عند ظهور تحديث نظامي.\n\nكيف يمكنني المساعدة؟\n\nيستطيع Oxygen Updater إرسال أسماء ملفات التحديثات الجديدة تلقائيًا إلى المسؤولين لدينا. سيستخدم هذا كمية صغيرة من بيانات الإنترنت وقد يستهلك القليل من البطارية. كل ما عليك فعله هو الإنتظار (15 دقيقة تقريبًا) قبل بدء تثبيت تحديثات النظام الرسمية حتى ترى تأكيدًا على Oxygen Updater بأنه تم إرسال الملف بنجاح. يتم فحص مسار التحديث الهوائي فقط على هاتفك مرة واحدة خلال 15 دقيقة. ليتحقق فقط من اسم معين في هذا المجلد تحديداً.</string>
-	<string name="contribute_agree">أرغب في المساعدة وأوافق على إرسال أسماء ملفات التحديث إلى مسؤولينا</string>
-	<string name="contribute_agree_from_setup">أرغب بالمساعدة في تحسين التطبيق وأوافق على إرسال أسماء ملفات التحديث إلى مسؤولينا</string>
-	<string name="contribute_save">حفظ الإعدادات</string>
-	<string name="contribute_more_info">معلومات إضافية</string>
-	<string name="contribute_allow_storage">فضلاً إمنح الأذونات للوصول إلى ذاكرة التخزين من أجل المساعدة في تحسين التطبيق</string>
-	<string name="contribute_successful_notification_title">مساهمة ناجحة</string>
-	<string name="contribute_successful_notification_text">شكرًا لمشاركة أسماء ملفات التحديث معنا!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">كلا!</string>

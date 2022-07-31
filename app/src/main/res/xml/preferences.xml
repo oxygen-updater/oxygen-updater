@@ -18,13 +18,6 @@
 			android:layout="@layout/custom_preference_featured"
 			android:summary="@string/settings_buy_ad_free_label"
 			android:title="@string/label_buy_ad_free" />
-
-		<Preference
-			android:icon="@drawable/group_add"
-			android:key="@string/key_contributor"
-			android:layout="@layout/custom_preference_featured"
-			android:summary="@string/settings_contribute_label"
-			android:title="@string/contribute" />
 	</PreferenceCategory>
 
 	<PreferenceCategory
@@ -47,8 +40,8 @@
 			android:title="@string/settings_update_method" />
 
 		<Preference
-			android:key="@string/key_android_notifications"
 			android:icon="@drawable/bell"
+			android:key="@string/key_android_notifications"
 			android:layout="@layout/custom_preference"
 			android:title="@string/preference_header_notifications" />
 	</PreferenceCategory>

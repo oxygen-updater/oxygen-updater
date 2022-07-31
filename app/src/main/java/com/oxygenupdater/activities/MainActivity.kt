@@ -36,7 +36,6 @@ import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAI
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
-import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.dialogs.MessageDialog
 import com.oxygenupdater.dialogs.ServerMessagesDialogFragment
@@ -77,10 +76,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     private val serverMessagesDialog by lazy(LazyThreadSafetyMode.NONE) {
         ServerMessagesDialogFragment()
-    }
-
-    private val contributorDialog by lazy(LazyThreadSafetyMode.NONE) {
-        ContributorDialogFragment(true)
     }
 
     private val noConnectionSnackbar by lazy(LazyThreadSafetyMode.NONE) {
@@ -158,13 +153,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         toolbar.setOnMenuItemClickListener(this)
         setupViewPager()
 
-        // Offer contribution to users from app versions below 2.4.0
-        if (!PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)
-            && PrefManager.contains(PrefManager.PROPERTY_SETUP_DONE)
-        ) {
-            showContributorDialog()
-        }
-
         if (!Utils.checkNetworkConnection()) {
             noNetworkDialog.show()
         }
@@ -204,7 +192,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
         R.id.action_announcements -> showServerMessagesDialog().let { true }
         R.id.action_mark_articles_read -> mainViewModel.notifyMenuClicked(item.itemId).let { true }
-        R.id.action_contribute -> showContributorDialog().let { true }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -521,20 +508,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             serverMessagesDialog.show(
                 supportFragmentManager,
                 ServerMessagesDialogFragment.TAG
-            )
-        }
-    }
-
-    /**
-     * Show the dialog fragment only if it hasn't been added already. This
-     * can happen if the user clicks in rapid succession, which can cause
-     * the `java.lang.IllegalStateException: Fragment already added` error
-     */
-    fun showContributorDialog() {
-        if (!isFinishing && !contributorDialog.isAdded) {
-            contributorDialog.show(
-                supportFragmentManager,
-                ContributorDialogFragment.TAG
             )
         }
     }

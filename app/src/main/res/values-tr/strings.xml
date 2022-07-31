@@ -126,8 +126,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_buy_button_not_possible">Uygun değil.</string>
 	<string name="settings_buy_ad_free_label">Reklamsız versiyona güncelleyin.</string>
 
-	<string name="settings_contribute_label">Uygulamayı geliştirmemize yardımcı olun.</string>
-
 	<string name="settings_device">Aygıt</string>
 	<string name="settings_entered_incorrectly">Ayarlar kaydedilirken hata oluştu. Lütfen geri gidin ve güncelleme metodunuzu değiştirin, veya tekrar seçin.</string>
 	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygenOSun herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
@@ -259,7 +257,6 @@ Instructions:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">"Yeni cihaz destekleniyor"</string>
 	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -267,7 +264,6 @@ Instructions:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">Yardım</string>
@@ -298,18 +294,6 @@ Instructions:
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">Katkıda bulunan biri olun</string>
-	<string name="contribute_title">Oxygen Updater\'ı geliştirmemizde yardımcı olun.</string>
-	<string name="contribute_explanation">Oxygen Updater\'ın yardımınıza ihtiyacı var! En sonki yenilikleri sunmak için, güncelleme dosyalarının ismine ihtiyacımız var.\n\nNasıl yardım edebilirim?\n\nOxygen Updater otomatik olarak yeni güncelleme isimlerini yetkililere iletir. Sadece bir miktar veri(internet) ve pil kaybı yaşatır. Tek yapmanız gereken beklemek (yaklaşık olarak 15 dakika) bu sırada dosyalar yüklenir, Oxygen Updater tarafından doğrulanır. Sadece ".Ota" directory bölümü telefonunuzda 15 dakikada bir taranır.</string>
-	<string name="contribute_agree">Dosyaları yükleyerek yöneticilere yardım etmek isterim.</string>
-	<string name="contribute_agree_from_setup">Uygulamanın dosyaları doğrulayıp yöneticilere gönermesine yardım etmek isterim.</string>
-	<string name="contribute_save">Ayarları Kaydet</string>
-	<string name="contribute_more_info">Daha fazla bilgi</string>
-	<string name="contribute_allow_storage">Uygulamayı geliştirmek için depolama iznini kabul edin.</string>
-	<string name="contribute_successful_notification_title">Katkıda bulunma işi başarılı!</string>
-	<string name="contribute_successful_notification_text">Güncelleme dosya adını bizimle paylaştığınız için teşekkür ederiz!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Oh olamaz!</string>

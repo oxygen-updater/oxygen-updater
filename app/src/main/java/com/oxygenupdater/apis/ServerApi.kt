@@ -93,18 +93,6 @@ interface ServerApi {
 
     /**
      * @param body includes the following fields:
-     * * `filename: String`
-     * * `isEuBuild: Boolean`,
-     * * `appVersion: String`,
-     * * `deviceName: String`
-     */
-    @POST("submit-update-file")
-    suspend fun submitUpdateFile(
-        @Body body: HashMap<String, Any?>
-    ): Response<ServerPostResult>
-
-    /**
-     * @param body includes the following fields:
      * * `url: String`
      * * `otaVersion: String`,
      * * `httpCode: Int`,

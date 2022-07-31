@@ -120,7 +120,6 @@
 	<string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free"</string>
 
 	<!-- TODO translate these lines -->
-	<string name="settings_contribute_label">Help improving the app</string>
 
 	<string name="settings_device">"Uređaj"</string>
 	<string name="settings_entered_incorrectly">"Greška pri spremanju postavki. Molimo vas ponovno odaberite vaš uređaj / metodu ažuriranja."</string>
@@ -277,7 +276,6 @@ Instructions:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">"Novi uređaj podržan"</string>
 	<string name="general_notification_channel_name">General</string>
-	<string name="filename_submitted_notification_channel_name">OTA filename submitted</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -285,7 +283,6 @@ Instructions:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
-	<string name="filename_submitted_notification_channel_description">Get notified when you\'ve submitted OTA filenames successfully to our team.\nYou can opt-out of automatically submitting filenames in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Pomoć"</string>
@@ -336,16 +333,6 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
 
 	<!-- TODO translate these lines -->
-	<string name="contribute">Become a contributor</string>
-	<string name="contribute_title">Help improving Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater needs your help! In order to give you the latest updates, we need to get the names of update files. These are present on your phone when a regular update pops up.\n\nHow can I help?\n\nOxygen Updater can automatically submit new update file names to our admins. This will use a small amount of data and may use a bit of your battery. All you need to do is waiting (approximataly 15 minutes) before installing official System Updates until you see a confirmation of Oxygen Updater that the file has been successfully submitted. Only the ".Ota" directory on your phone gets scanned once per 15 minutes. It only checks for a specific name in that particular folder.</string>
-	<string name="contribute_agree">I\'d like to help and agree to submit update file names to our admins</string>
-	<string name="contribute_agree_from_setup">I\'d like to help improving the app and agree to submit update file names to our admins</string>
-	<string name="contribute_save">Save settings</string>
-	<string name="contribute_more_info">More info</string>
-	<string name="contribute_allow_storage">Please grant the storage permissions in order to help improving the app</string>
-	<string name="contribute_successful_notification_title">Contribution successful</string>
-	<string name="contribute_successful_notification_text">Thanks for sharing the update filenames with us!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"O ne!"</string>

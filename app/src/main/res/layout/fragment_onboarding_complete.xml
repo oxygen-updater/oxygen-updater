@@ -45,46 +45,17 @@
 			android:text="@string/settings_upload_logs"
 			android:textColor="?android:textColorSecondary"
 			android:textSize="@dimen/typography_caption"
-			app:layout_constraintBottom_toTopOf="@id/onboardingPage4ContributeCheckbox" />
-
-		<CheckBox
-			android:id="@+id/onboardingPage4ContributeCheckbox"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/spacing_default"
-			android:layout_marginEnd="@dimen/spacing_default"
-			android:layout_marginBottom="@dimen/spacing_half"
-			android:checked="true"
-			android:text="@string/contribute_agree_from_setup"
-			android:textColor="?android:textColorSecondary"
-			android:textSize="@dimen/typography_caption"
-			app:layout_constraintBottom_toTopOf="@id/onboardingPage4MoreInfoButton" />
-
-		<androidx.constraintlayout.helper.widget.Flow
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="@dimen/spacing_default"
-			app:constraint_referenced_ids="onboardingPage4MoreInfoButton,onboardingPage4StartAppButton"
-			app:flow_horizontalGap="@dimen/spacing_default"
-			app:flow_verticalGap="@dimen/spacing_quarter"
-			app:flow_wrapMode="chain"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent" />
-
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/onboardingPage4MoreInfoButton"
-			style="@style/Widget.Material3.Button.TextButton"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/contribute_more_info"
-			app:strokeColor="?colorPrimary" />
+			app:layout_constraintBottom_toTopOf="@id/onboardingPage4StartAppButton" />
 
 		<com.google.android.material.button.MaterialButton
 			android:id="@+id/onboardingPage4StartAppButton"
 			style="@style/Widget.Material3.Button.OutlinedButton"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/spacing_default"
 			android:text="@string/onboarding_finished_button"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
 			app:strokeColor="?colorPrimary" />
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

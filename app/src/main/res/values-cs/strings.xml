@@ -95,7 +95,6 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="summary_language">Nastavení jazyka</string>
 	<string name="summary_privacy_policy">Podívat se online</string>
 	<string name="summary_rate_app">Zanechat pětihvězdičkové hodnocení</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">Odstranit reklamy</string>
 	<string name="label_theme">Téma</string>
@@ -120,8 +119,6 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="settings_buy_button_bought">Koupeno</string>
 	<string name="settings_buy_button_not_possible">Nedostupné</string>
 	<string name="settings_buy_ad_free_label">Povýšit na verzi bez reklam</string>
-
-	<string name="settings_contribute_label">Pomozte aplikaci vylepšit</string>
 
 	<string name="settings_device">Zařízení</string>
 	<string name="settings_entered_incorrectly">Chyba uložení nastavení. Vraťte se prosím zpět a vyberte své zařízení / způsob aktualizace znovu.</string>
@@ -247,7 +244,6 @@ Pokyny:
 	<string name="news_notification_channel_name">Vydán nový článek</string>
 	<string name="device_notification_channel_name">Nové podporované zařízení</string>
 	<string name="general_notification_channel_name">Všeobecné</string>
-	<string name="filename_submitted_notification_channel_name">Odeslán název souboru OTA</string>
 	<string name="download_status_notification_channel_description">Oznámení, která odrážejí aktuální stav stahování: čekající, aktivní, dokončené nebo neúspěšné</string>
 	<string name="verification_status_notification_channel_description">Oznámení, která odrážejí aktuální stav úlohy ověření souboru: probíhá, dokončena nebo neúspěšná.\nMD5 kontrolní součty stahovaných souborů jsou ověřovány, aby se zajistilo, že se souborem nebylo manipulováno a že se jedná o platný aktualizační soubor.</string>
 	<string name="installation_status_notification_channel_description">Získat oznámení, zda byla aktualizace úspěšně nainstalována, nebo ne</string>
@@ -255,7 +251,6 @@ Pokyny:
 	<string name="news_notification_channel_description">Získejte upozornění, když zveřejníme novinku</string>
 	<string name="device_notification_channel_description">Získat upozornění, když aplikace přidá podporu pro nové zařízení</string>
 	<string name="general_notification_channel_description">Všeobecná oznámení, která nepatří do jiných kategorií</string>
-	<string name="filename_submitted_notification_channel_description">Získejte oznámení, když jste úspěšně odeslali názvy souborů OTA našemu týmu.\nAutomatické odesílání názvů souborů můžete v nastavení aplikace odmítnout.</string>
 
 	<!-- Nápovědné řetězce -->
 	<string name="help">Nápověda</string>
@@ -285,16 +280,6 @@ Pokyny:
 	<string name="news_empty_state_all_read_text">Přečetli jste všechny články. Dobrá práce!\nDoufáme, že se vám naše články líbily a že jste se z nich dozvěděli něco nového.\n\nZnovu klepněte na banner pro zobrazení všech novinek.</string>
 
 	<!-- Příspěvkové řetězce -->
-	<string name="contribute">Staňte se přispěvatelem</string>
-	<string name="contribute_title">Pomozte vylepšit Oxygen Updater</string>
-	<string name="contribute_explanation">Oxygen Updater potřebuje vaši pomoc! Abychom vám mohli poskytovat nejnovější aktualizace, potřebujeme získat názvy aktualizačních souborů. Ty jsou přítomny v telefonu, když se objeví pravidelná aktualizace.\n\nJak mohu pomoci?\n\nOxygen Updater může automaticky odesílat názvy nových aktualizačních souborů našim správcům. Tím se využije malé množství dat a může se trochu spotřebovat baterie. Před instalací oficiálních aktualizací systému stačí počkat (přibližně 15 minut), dokud se nezobrazí potvrzení programu Oxygen Updater, že soubor byl úspěšně odeslán. Jednou za 15 minut se zkontroluje pouze adresář \".Ota\" v telefonu. Kontroluje se pouze konkrétní název v tomto konkrétním adresáři.</string>
-	<string name="contribute_agree">Rád bych pomohl a souhlasím s odesláním názvů aktualizačních souborů našim správcům</string>
-	<string name="contribute_agree_from_setup">Rád bych pomohl se zlepšováním aplikace a souhlasím s odesláním názvů aktualizačních souborů našim správcům</string>
-	<string name="contribute_save">Uložit nastavení</string>
-	<string name="contribute_more_info">Další informace</string>
-	<string name="contribute_allow_storage">Prosím, udělte oprávnění k ukládání, abyste pomohli zlepšit aplikaci</string>
-	<string name="contribute_successful_notification_title">Úspěšný příspěvek</string>
-	<string name="contribute_successful_notification_text">Děkujeme, že jste s námi sdíleli názvy aktualizačních souborů!</string>
 
 	<!-- Chybové řetězce-->
 	<string name="error_app_outdated">Oh no!</string>

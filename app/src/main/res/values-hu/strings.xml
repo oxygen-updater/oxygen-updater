@@ -121,8 +121,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="settings_buy_button_not_possible">Nem érhető el</string>
 	<string name="settings_buy_ad_free_label">Frissítés hirdetés-mentesre</string>
 
-	<string name="settings_contribute_label">Segíts az alkalmazás fejlesztésében</string>
-
 	<string name="settings_device">Eszköz</string>
 	<string name="settings_entered_incorrectly">Hiba a beállítások mentésekor. Kérjük, menj vissza, és válaszd ki újra eszközöd / frissítési módszered.</string>
 	<string name="settings_explanation_incremental_full_update">Az inkrementális frissítés bármilyen verzióból telepíthető (kivéve, ha nyitott bootloadered van; ilyenkor mindig a teljes frissítést kell frissítési módszerként választanod).\n\nAz OxygenOS bétafrissítése mindig telepíthető, és akkor is, ha stabil verzión vagy. A stabilról béta módra váltáshoz engedélyezned kell a haladó módot a beállításokban. A béta esetén a teljes és az inkrementális frissítési módszerek ugyanúgy működnek, mint a stabil verziók esetében.</string>
@@ -247,7 +245,6 @@ Instrukciók:
 	<string name="news_notification_channel_name">Hírcikk közzétéve</string>
 	<string name="device_notification_channel_name">Új eszköz támogatott</string>
 	<string name="general_notification_channel_name">Általános</string>
-	<string name="filename_submitted_notification_channel_name">OTA fájlnév beküldve</string>
 	<string name="download_status_notification_channel_description">Értesítések, amelyek tükrözik a letöltés pillanatnyi állapotát: függőben lévő, aktív, befejezett vagy sikertelen</string>
 	<string name="verification_status_notification_channel_description">Értesítések, amelyek tükrözik a fájlellenőrzési feladat aktuális állapotát: folyamatban lévő, befejezett vagy sikertelen.\nA letöltött fájlok MD5 ellenőrző összegei ellenőrizve vannak, hogy megbizonyosodjon arról, hogy a fájlt nem hamisították meg, és hogy ez egy érvényes frissítési fájl.</string>
 	<string name="installation_status_notification_channel_description">Értesítést kapsz, hogy egy frissítést sikeresen telepítetve lett-e, vagy sem</string>
@@ -255,7 +252,6 @@ Instrukciók:
 	<string name="news_notification_channel_description">Értesítést kapsz, ha hírcikket teszünk közzé</string>
 	<string name="device_notification_channel_description">Értesítést kapsz, ha az alkalmazás támogat egy új eszközt</string>
 	<string name="general_notification_channel_description">Általános értesítések, amelyek nem illenek más kategóriákba</string>
-	<string name="filename_submitted_notification_channel_description">Értesítést kapsz, ha sikeresen elküldted nekünk az OTA fájlneveket.\nAz alkalmazás beállításaiban kikapcsolhatod a fájlnevek automatikus beküldését.</string>
 
 	<!-- Help strings -->
 	<string name="help">Súgó</string>
@@ -283,18 +279,6 @@ Instrukciók:
 	<string name="news_empty_state_all_read_header">Nincs mit elolvasni</string>
 	<string name="news_empty_state_none_available_text">Jelenleg nincs elérhető cikk, ellenőrizd később.</string>
 	<string name="news_empty_state_all_read_text">Elolvastad az összes cikket. Szép munka!\nReméljük, hogy élvezted a cikkek elolvasását, és valami újat tanultál belőlük.\n\nAz összes hír megjelenítéséhez érintsd meg ismét a szalagot.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">Közreműködés</string>
-	<string name="contribute_title">Segíts az Oxygen Updater javításában</string>
-	<string name="contribute_explanation">Az Oxygen Updater-nek a te segítségre van szüksége! A legfrissebb frissítések megszerzéséhez be kell szereznünk a frissítési fájlok nevét. Ezek jelen vannak a telefonodon, amikor egy rendszerfrissítés megjelenik.\n\nHogyan segíthetek?\n\nAz Oxygen Updater automatikusan új frissítési fájlneveket küldhet a rendszergazdáknak. Ez kis mennyiségű adatot igényel, és kevés akkumulátort használ. Csak annyit kell tenned, hogy várj (kb. 15 percet) a hivatalos rendszerfrissítések telepítése előtt, amíg nem látsz egy megerősítést az Oxygen Updater-től a fájl sikeres benyújtásáról. A telefonnak csak az \".Ota\" könyvtára van szkennelve 15 percenként egyszer. Csak egy adott nevet keres az adott mappában.</string>
-	<string name="contribute_agree">Segíteni szeretnék és egyetértek azzal, hogy frissítési fájlneveket küldjek az adminisztrátoroknak</string>
-	<string name="contribute_agree_from_setup">Szeretnék segíteni az alkalmazás fejlesztésében, és egyetértek azzal, hogy frissítési fájlneveket küldjek az adminisztrátoroknak</string>
-	<string name="contribute_save">Beállítások mentése</string>
-	<string name="contribute_more_info">Bővebb információ</string>
-	<string name="contribute_allow_storage">Kérjük, add meg a tárhely engedélyeket az alkalmazás fejlesztésének elősegítése érdekében</string>
-	<string name="contribute_successful_notification_title">Közreműködés sikeres</string>
-	<string name="contribute_successful_notification_text">Köszönjük, hogy megosztottad velünk a frissítési fájlneveket!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Jajj ne!</string>

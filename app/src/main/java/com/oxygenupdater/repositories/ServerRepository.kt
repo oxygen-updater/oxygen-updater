@@ -211,20 +211,6 @@ class ServerRepository constructor(
         serverApi.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber)
     }
 
-    suspend fun submitUpdateFile(
-        filename: String
-    ) = performServerRequest {
-        serverApi.submitUpdateFile(
-            hashMapOf(
-                "filename" to filename,
-                "isEuBuild" to PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
-                "appVersion" to BuildConfig.VERSION_NAME,
-                "deviceName" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>"),
-                "actualDeviceName" to systemVersionProperties.oxygenDeviceName
-            )
-        )
-    }
-
     suspend fun logDownloadError(
         url: String?,
         filename: String?,

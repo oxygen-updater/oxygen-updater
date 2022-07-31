@@ -118,7 +118,6 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="settings_buy_button_bought">Gekocht</string>
 	<string name="settings_buy_button_not_possible">Niet beschikbaar</string>
 	<string name="settings_buy_ad_free_label">Verwijder advertenties</string>
-	<string name="settings_contribute_label">Verbeter de app voor anderen</string>
 	<string name="settings_device">Apparaat</string>
 	<string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
 	<string name="settings_explanation_incremental_full_update">"Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode \"volledige update\" kiezen).\n\nEen bèta-versie kan te allen tijde geïnstalleerd worden. Ook als je een stabiele versie draait. Om te wisselen van de stabiele versies naar bèta's, moet je \"geavanceerde modus\" aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie."</string>
@@ -249,7 +248,6 @@ Instructies:
 	<string name="news_notification_channel_name">Nieuwsartikel gepubliceerd</string>
 	<string name="device_notification_channel_name">Nieuw apparaat ondersteund</string>
 	<string name="general_notification_channel_name">Algemeen</string>
-	<string name="filename_submitted_notification_channel_name">OTA-bestandsnaam ingediend</string>
 	<string name="download_status_notification_channel_description">Notificaties welke de huidige status van een download weergeven: in afwachting, actief, voltooid, mislukt.</string>
 	<string name="verification_status_notification_channel_description">Notificaties welke de huidige status van een bestandsverificatie weergeven: in behandeling, voltooid, mislukt.\nMD5 checksums voor gedownloade bestanden worden geverifieerd om er zeker van te zijn dat er niet met het bestand is geknoeid, en het daarom een geldig bestand is.</string>
 	<string name="installation_status_notification_channel_description">Wordt genotificeerd als er een update succesvol is geïnstalleerd of niet.</string>
@@ -257,7 +255,6 @@ Instructies:
 	<string name="news_notification_channel_description">Wordt genotificeerd wanneer we een nieuwsartikel hebben gepubliceerd</string>
 	<string name="device_notification_channel_description">Wordt genotificeerd wanneer er ondersteuning voor een nieuw apparaat is toegevoegd</string>
 	<string name="general_notification_channel_description">Algemene notificaties welke niet passen in andere categorieën</string>
-	<string name="filename_submitted_notification_channel_description">Wordt genotificeerd wanneer je OTA-bestandsnamen succesvol hebt ingediend bij ons team.\nJe kan je het automatisch indienen van bestandsnamen uitzetten in de instellingen van de app.</string>
 
 	<!-- Help strings -->
 	<string name="help">Help</string>
@@ -285,18 +282,6 @@ Instructies:
 	<string name="news_empty_state_all_read_header">Er is niets meer te lezen</string>
 	<string name="news_empty_state_none_available_text">Er zijn geen artikelen beschikbaar op dit moment, kom later terug.</string>
 	<string name="news_empty_state_all_read_text">Je hebt alle artikelen gelezen. Goed gedaan!\nWe hopen dat je hebt genoten van onze artikelen en dat je er iets van hebt geleerd.\n\nTik op de banner om alle nieuwsartikelen te tonen.</string>
-
-	<!-- Contribute strings -->
-	<string name="contribute">Draag bij</string>
-	<string name="contribute_title">Maak Oxygen Updater nóg beter</string>
-	<string name="contribute_explanation">Oxygen Updater heeft jouw hulp nodig! Om jou als eerste nieuwe updates te bieden, hebben wij de bestandsnamen van deze updates nodig. Deze staan namelijk soms op je telefoon.\n\nHoe kan ik helpen?\n\nOxygen Updater kan deze bestandsnamen automatisch met onze beheerders delen. Dit gebruikt een klein beetje (mobiele) data en energie van de batterij. Wanneer je een systeemupdate-melding van OnePlus krijgt, wacht dan met installeren totdat Oxygen Updater je heeft medegedeeld dat het bestand succesvol is ingediend. Alleen de ".Ota" map op uw telefoon wordt eenmaal per 15 minuten gescand. Het controleert alleen voor een specifieke naam in die bepaalde map.</string>
-	<string name="contribute_agree">Ik help mee en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
-	<string name="contribute_agree_from_setup">Ik wil helpen om de app nóg beter te maken en ga ermee akkoord om bestandsnamen met de beheerders te delen</string>
-	<string name="contribute_save">Bewaar keuze</string>
-	<string name="contribute_more_info">Meer informatie</string>
-	<string name="contribute_allow_storage">Geef de app toegang tot de opslagruimte om te helpen met verbeteren</string>
-	<string name="contribute_successful_notification_title">Bedankt voor je bijdrage</string>
-	<string name="contribute_successful_notification_text">Bedankt voor het delen van de bestandsnamen van updates met ons!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">Oeps!</string>

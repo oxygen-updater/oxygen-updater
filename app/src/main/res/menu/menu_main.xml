@@ -17,11 +17,4 @@
 		android:title="@string/news_mark_all_read"
 		android:visible="false"
 		app:iconTint="?android:textColorSecondary" />
-
-	<item
-		android:id="@+id/action_contribute"
-		android:icon="@drawable/group_add"
-		android:orderInCategory="3"
-		android:title="@string/contribute"
-		app:iconTint="?android:textColorSecondary" />
 </menu>

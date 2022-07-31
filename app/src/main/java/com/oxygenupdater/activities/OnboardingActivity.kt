@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
@@ -14,9 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.OxygenUpdater
-import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.R
-import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
@@ -29,9 +26,7 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
@@ -54,10 +49,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         ) ?: MainActivity.PAGE_UPDATE
     }
 
-    private val contributorDialog by lazy(LazyThreadSafetyMode.NONE) {
-        ContributorDialogFragment()
-    }
-
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
     private val systemVersionProperties by inject<SystemVersionProperties>()
 
@@ -65,22 +56,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         override fun onPageSelected(
             position: Int
         ) = handlePageChangeCallback(position + 1)
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        RequestPermission()
-    ) {
-        logInfo(TAG, "`$VERIFY_FILE_PERMISSION` granted: $it")
-
-        if (it) {
-            // 1st time, will save setting to true.
-            ContributorUtils.flushSettings(true)
-            PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
-            startMainActivity(startPage)
-            finish()
-        } else {
-            Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
-        }
     }
 
     override fun onCreate(
@@ -212,7 +187,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
         onboardingViewModel.fragmentCreated.observe(this) {
             if (it == 4) {
-                onboardingPage4MoreInfoButton?.setOnClickListener(this::onMoreInfoButtonClicked)
                 onboardingPage4StartAppButton?.setOnClickListener(this::onStartAppButtonClicked)
             }
         }
@@ -280,21 +254,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         }
     }
 
-    /**
-     * Show the dialog fragment only if it hasn't been added already. This
-     * can happen if the user clicks in rapid succession, which can cause
-     * the `java.lang.IllegalStateException: Fragment already added` error
-     */
-    @Suppress("UNUSED_PARAMETER")
-    fun onMoreInfoButtonClicked(view: View) {
-        if (!isFinishing && !contributorDialog.isAdded) {
-            contributorDialog.show(
-                supportFragmentManager,
-                ContributorDialogFragment.TAG
-            )
-        }
-    }
-
     @Suppress("UNUSED_PARAMETER")
     fun onStartAppButtonClicked(view: View) {
         if (PrefManager.checkIfSetupScreenIsFilledIn()) {
@@ -307,15 +266,9 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 (application as OxygenUpdater?)?.setupCrashReporting(it)
             }
 
-            if (onboardingPage4ContributeCheckbox.isChecked) {
-                requestPermissionLauncher.launch(VERIFY_FILE_PERMISSION)
-            } else {
-                // not signed up, saving this setting will prevent contribute popups which belong to app updates.
-                PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
-                PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, false)
-                startMainActivity(startPage)
-                finish()
-            }
+            PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
+            startMainActivity(startPage)
+            finish()
         } else {
             val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
             val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)

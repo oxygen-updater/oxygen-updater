@@ -117,8 +117,6 @@ Wenn du mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <a
 	<string name="settings_buy_button_not_possible">"Nicht verfügbar"</string>
 	<string name="settings_buy_ad_free_label">"Zur werbefreien Version Upgraden"</string>
 
-	<string name="settings_contribute_label">Hilf uns die App zu verbessern</string>
-
 	<string name="settings_device">"Gerät"</string>
 	<string name="settings_entered_incorrectly">"Fehler beim Speichern der Einstellungen. Bitte wähle dein Gerät und deine Update Methode erneut aus."</string>
 	<string name="settings_explanation_incremental_full_update">"Ein inkrementelles Update kann nur installiert werden wenn du die neuste System Software Version installiert hast bevor dieses Update veröffentlicht wurde.
@@ -280,7 +278,6 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="news_notification_channel_name">Nachrichtenartikel veröffentlicht</string>
 	<string name="device_notification_channel_name">"Neues Gerät unterstützt"</string>
 	<string name="general_notification_channel_name">Allgemein</string>
-	<string name="filename_submitted_notification_channel_name">OTA Dateiname übermittelt</string>
 	<string name="download_status_notification_channel_description">Benachrichtigungen die den aktuellen Status eines Download anzeigen: Steht aus, Aktiv, Fertig oder Fehlgeschlagen</string>
 	<string name="verification_status_notification_channel_description">Benachrichtigungen die den aktuellen Status einer Datei Verifizierung anzeigt: Läuft, Fertig oder Fehlgeschlagen.\nMD5 Prüfsummen werden überprüft und sicherzustellen, dass die heruntergeladene Daten gültige Update Daten, verifiziert und nicht manipuliert sind.</string>
 	<string name="installation_status_notification_channel_description">Werde benachrichtigt ob ein Update erfolgreich installiert wurde</string>
@@ -288,7 +285,6 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="news_notification_channel_description">Werde benachrichtigt wenn ein neuer Nachrichtenartikel veröffentlicht wurde</string>
 	<string name="device_notification_channel_description">Werde benachrichtigt wenn wir ein neues Gerät unterstützen</string>
 	<string name="general_notification_channel_description">Allgemeine Nachrichten die in keine andere Kategorie passen</string>
-	<string name="filename_submitted_notification_channel_description">Werde benachrichtigt wenn du OTA Dateinamen erfolgreich an unser Team übermittelt hast.\nDu kannst jederzeit das automatische Übermitteln von Dateinamen in den App Einstellungen deaktivieren.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Hilfe"</string>
@@ -331,17 +327,6 @@ Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphär
 	<string name="news_empty_state_all_read_header">Es gibt nichts mehr zu lesen</string>
 	<string name="news_empty_state_none_available_text">Zurzeit sind keine Artikel verfügbar, komme später noch einmal.</string>
 	<string name="news_empty_state_all_read_text">Du hast alle Artikel gelesen. Gute Arbeit!\nWir hoffen du hattest Spaß beim Lesen unserer Artikel und hast etwas neues gelernt.\n\nTippe das Banner erneut um alle Nachrichten anzuzeigen.</string>
-
-	<string name="contribute">Hilf mit</string>
-	<string name="contribute_title">Hilf mit Oxygen Updater zu verbessern</string>
-	<string name="contribute_explanation">Oxygen Updater braucht deine Hilfe! Um dir deine neuesten Updates brauchen wird die Namen der Update Daten. Diese sind auf deinem Handy vorhanden sobald ein normales Update erscheint.\n\nWie kann ich helfen?\n\nOxygen Updater kann automatisch diese Update Dateinamen an unsere Admins übermitteln. Dies benötigt nur einen kleinen Teil deiner Mobilen Daten und braucht möglicherweiße etwas von deinem Akku. Alles was du tun musst ist warten (ungefähr 15 Minuten), bevor du das offiziele System Update installierst. Sobald du eine Bestätigung vom Oxygen Updater erhälst, dass die Dateinamen erfolgreich übermittelt wurden kannst du fortfahren. Es wird nur der \".Ota\" Ordner auf deinem Telefon alle 15 Minuten überprüft. Wir prüfen nur auf einen bestimmten Dateinamen in diesem Ordner.</string>
-	<string name="contribute_agree">Ich möchte gerne helfen und stimme zu, dass Update Dateinamen an unsere Admins übermittelt werden</string>
-	<string name="contribute_agree_from_setup">Ich möchte gerne helfen die App zu verbessern und stimme zu, dass Update Dateinamen an unsere Admins übermittelt werden</string>
-	<string name="contribute_save">Speichern</string>
-	<string name="contribute_more_info">Mehr Informationen</string>
-	<string name="contribute_allow_storage">Bitte erlaube die Speicher Berechtigung um zu helfen die App zu verbessern</string>
-	<string name="contribute_successful_notification_title">Du hast erfolgreich beigetragen</string>
-	<string name="contribute_successful_notification_text">Vielen Dank, dass Sie mit uns die Dateinamen der Updates übermittelt haben!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh nein!"</string>

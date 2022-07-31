@@ -204,8 +204,18 @@ object PrefManager {
     )
     const val PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown"
 
+    @Deprecated(
+        message = """
+            No longer used in v5.9.0+, because all OnePlus phones now use either
+            Google OTA (doesn't save files anywhere), or Component OTA (saves in
+            a directory accessible only via root), but URL in this case can't be
+            constructed via filenames alone.
+        """,
+        level = DeprecationLevel.WARNING
+    )
     const val PROPERTY_CONTRIBUTE = "contribute"
     const val PROPERTY_CONTRIBUTION_COUNT = "contribution_count"
+
     const val PROPERTY_IS_EU_BUILD = "isEuBuild"
 
     const val PROPERTY_LAST_APP_UPDATE_CHECKED_DATE = "lastAppUpdateCheckDate"

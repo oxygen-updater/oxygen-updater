@@ -118,8 +118,6 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 	<string name="settings_buy_button_not_possible">"Non disponibile"</string>
 	<string name="settings_buy_ad_free_label">"Passa a senza annunci"</string>
 
-	<string name="settings_contribute_label">"Aiuta a migliorare l'app:"</string>
-
 	<string name="settings_device">"Dispositivo"</string>
 	<string name="settings_entered_incorrectly">"Errore nel salvare le impostazioni. Seleziona il tuo dispositivo / il modo d'aggiornamento e ritenta. "</string>
 	<string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale può essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalità avanzata nelle impostazioni.
@@ -280,7 +278,6 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="news_notification_channel_name">Articolo pubblicato</string>
 	<string name="device_notification_channel_name">"Nuovo dispositivo supportato"</string>
 	<string name="general_notification_channel_name">Generali</string>
-	<string name="filename_submitted_notification_channel_name">Nome del file OTA inviato</string>
 	<string name="download_status_notification_channel_description">Notifiche che riflettono lo stato di un download: in attesa, attivo, completato, oppure fallito</string>
 	<string name="verification_status_notification_channel_description">Notifiche che riflettono lo stato del processo di verifica di un file: attivo, completato, oppure fallito.\nLe checksum MD5 dei file scaricati sono verificate per assicurare che il file non sia stato modificato, e che sia un file di aggiornamento valido.</string>
 	<string name="installation_status_notification_channel_description">Ricevi una notifica se un aggiornamento è stato installato con successo oppure no</string>
@@ -288,7 +285,6 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="news_notification_channel_description">Ricevi una notifica quando pubblichiamo un nuovo articolo</string>
 	<string name="device_notification_channel_description">Ricevi una notifica quando l\'app aggiunge il supporto per un nuovo dispositivo</string>
 	<string name="general_notification_channel_description">Notifiche generali che non fanno parte di altre categorie</string>
-	<string name="filename_submitted_notification_channel_description">Ricevi una notifica quando ha inviato il nome del file OTA con successo al nostro team.\nPuoi disabilitare l\'invio automatico dei nomi dei file nelle impostazioni dell\'app.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Aiuto"</string>
@@ -335,17 +331,6 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="news_empty_state_all_read_header">Non c\'è più nulla da leggere!</string>
 	<string name="news_empty_state_none_available_text">Non c\'è nulla da leggere, riprova più tardi.</string>
 	<string name="news_empty_state_all_read_text">Hai letto tutto, congratulazioni!\nSperiamo ti piacciano i nostri articoli e che ne abbia tratto qualcosa.\n\nPremi il banner per rivedere tutti gli articoli.</string>
-
-	<string name="contribute">Diventa un contributor</string>
-	<string name="contribute_title">Migliora Oxygen Updater</string>
-	<string name="contribute_explanation">"Oxygen Updater ha bisogno di te! Per avere gli aggiornamenti più recenti, abbiamo bisogno del nome dei file d'aggiornamento. Questi sono presenti sul tuo telefono nel momento in cui appare un aggiornamento.\n\nCome posso aiutare?\n\nOxygen Updater puo automaticamente mandare i nomi dei file agli admin to our admins. Questo processo richiederà il trasferimento di alcuni kb e un pizzico della tua batteria!. L'unico prerequisito è aspettare circa 15 min prima di installare un aggiornamento finché non appare una notifica di conferma da parte nostra. (approximataly 15 minutes) Solo la \".Ota\" directory viene controllata una volta ogni 15 minuti."</string>
-	<string name="contribute_agree">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento."</string>
-	<string name="contribute_agree_from_setup">"Vorrei aiutare e concordo col presentare i nomi dei file d'aggiornamento agli admin."</string>
-	<string name="contribute_save">Salva</string>
-	<string name="contribute_more_info">Ulteriori info</string>
-	<string name="contribute_allow_storage">Abbiamo bisogno dei permessi storage per continuare</string>
-	<string name="contribute_successful_notification_title">Contribuzione avvenuta con successo!</string>
-	<string name="contribute_successful_notification_text">Grazie per aver condiviso con noi i nomi dei file di aggiornamento!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh no!"</string>
