@@ -67,10 +67,10 @@ object AndroidXLibraries {
         const val KTX_CORE = "1.8.0"
 
         // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.5.0"
+        const val KTX_FRAGMENT = "1.5.1"
 
         // https://developer.android.com/jetpack/androidx/releases/lifecycle
-        const val KTX_LIFECYCLE = "2.5.0"
+        const val KTX_LIFECYCLE = "2.5.1"
 
         // https://developer.android.com/jetpack/androidx/releases/preference
         const val KTX_PREFERENCE = "1.2.0"
@@ -82,7 +82,7 @@ object AndroidXLibraries {
         const val RECYCLER_VIEW = "1.2.1"
 
         // https://developer.android.com/jetpack/androidx/releases/room
-        const val ROOM = "2.4.2"
+        const val ROOM = "2.4.3"
     }
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -128,7 +128,7 @@ object Libraries {
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
-        const val FIREBASE_BOM = "30.2.0"
+        const val FIREBASE_BOM = "30.3.1"
 
         // https://github.com/bumptech/glide/releases
         const val GLIDE = "4.13.2"
@@ -145,7 +145,7 @@ object Libraries {
         const val THREE_TEN_ABP = "1.4.0"
 
         // https://github.com/Kotlin/kotlinx.coroutines/releases
-        const val KOTLIN_COROUTINES = "1.6.3"
+        const val KOTLIN_COROUTINES = "1.6.4"
 
         // https://github.com/material-components/material-components-android/releases
         const val MATERIAL = "1.6.1"
@@ -163,7 +163,7 @@ object Libraries {
 
         // https://developers.google.com/android/guides/releases
         // https://developers.google.com/admob/android/rel-notes
-        const val PLAY_SERVICES_ADS = "21.0.0"
+        const val PLAY_SERVICES_ADS = "21.1.0"
 
         // https://github.com/square/retrofit/tags
         // https://github.com/square/retrofit/blob/master/CHANGELOG.md
