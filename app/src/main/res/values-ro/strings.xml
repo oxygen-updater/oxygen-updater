@@ -33,8 +33,7 @@
 	<string name="new_app_version_inapp_failed">Actualizarea aplicației nu a putut fi instalată. Apăsați aici pentru a actualiza aplicația din Google Play.</string>
 
 	<!-- Downloader strings-->
-	<!-- TODO: translate this string below -->
-	<string name="grant_all_files_access">Please enable \"All files access\" for the app, which is used only for downloading OTA ZIPs to the topmost directory of internal storage</string>
+	<string name="grant_all_files_access">Permiteți \"Accesul la toate fișierele\" pentru descărcarea actualizărilor OTA în format .zip. Acestea vor fi descărcate în cel mai de sus director al memoriei interne.</string>
 	<string name="download">Descărcați actualizarea</string>
 	<string name="downloaded">Actualizare descărcată</string>
 	<string name="downloading">Se descarcă actualizarea…</string>
