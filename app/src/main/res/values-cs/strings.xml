@@ -159,16 +159,16 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="onboarding_page_4_text">Užívejte si používání této aplikace!\n\nVždy můžete později změnit nastavení. Můžete tak učinit klepnutím na tři tečky v pravém horním rohu a klepněte na \"Nastavení\".</string>
 
 	<!-- Řetězce pro automatickou instalaci -->
-	<string name="install">Install</string>
+	<string name="install">Instalovat</string>
 	<string name="install_checking_root">Kontrola, zda je vaše zařízení rootnuté…</string>
 	<string name="install_grant_root_permissions">Prosím, povolte přístup root, až budete dotázáni.</string>
 	<string name="install_going_back_not_possible">Naneštěstí se nyní nemůžete vrátit zpět</string>
 	<string name="install_preparing_installation">Příprava instalace…</string>
 
-	<string name="install_recovery_installer_title">Update Installer&#160;&#160;</string> <!-- Na konec přidejte 2 mezery -->
+	<string name="install_recovery_installer_title">Aktualizovat instalátor&#160;&#160;</string> <!-- Na konec přidejte 2 mezery -->
 	<string name="install_recovery_backing_up">Zálohování zařízení. Bude to chvíli trvat!</string>
 	<string name="install_recovery_clearing_cache">Vymazání oddílu mezipaměti…</string>
-	<string name="install_recovery_done">Ukončeno. Vaše zařízení se restartuje.</string>
+	<string name="install_recovery_done">Hotovo. Vaše zařízení se restartuje.</string>
 	<string name="install_recovery_installing_additional_zip">Instalace dodatečného souboru ZIP…</string>
 	<string name="install_recovery_installing_update">Instalace aktualizace…</string>
 	<string name="install_recovery_thank_you">Děkujeme vám za používání programu Oxygen Updater. Pokud se vám tato aplikace líbí, ohodnoťte ji prosím 5 hvězdičkami na Google Play :-)</string>
@@ -357,7 +357,7 @@ Pokyny:
 	<string name="contribute_successful_notification_text">Děkujeme, že jste s námi sdíleli názvy aktualizačních souborů!</string>
 
 	<!-- Chybové řetězce-->
-	<string name="error_app_outdated">Oh no!</string>
+	<string name="error_app_outdated">Ale ne!</string>
 	<string name="error_app_outdated_message">Tato verze aplikace je zastaralá. Je čas ji aktualizovat! Klepněte na \"Google Play\" níže. V Google Play klepněte na \"Aktualizovat\".</string>
 	<string name="error_app_requires_network_connection">Není připojení</string>
 	<string name="error_app_requires_network_connection_message">Nepodařilo se připojit k serveru. Ujistěte se, že máte funkční připojení. Aplikace se nyní zavře.</string>
@@ -392,8 +392,8 @@ Pokyny:
 	<string name="purchase_error_pending_payment">Váš nákup je ve stavu \"čekání na platbu\". Po dokončení platby vám budou poskytnuty všechny výhody, na které máte nárok.</string>
 	<string name="purchase_error_after_payment">Nákup verze bez reklam se nezdařil, protože došlo k interní chybě. Zkuste to prosím za několik minut znovu. Pokud jste již zaplatili, kontaktujte prosím podporu Google Play a požádejte o pomoc.</string>
 
-	<string name="error">Error</string>
-	<string name="icon">Icon</string>
+	<string name="error">Chyba</string>
+	<string name="icon">Ikona</string>
 	<string name="loading">Načítá se…</string>
 	<string name="processing">Zpracování…</string>
 	<string name="choose_file">Výběr souboru</string>
