@@ -153,7 +153,7 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="onboarding_page_4_text">Užívejte si používání této aplikace!\n\nVždy můžete později změnit nastavení. Můžete tak učinit klepnutím na tři tečky v pravém horním rohu a klepněte na \"Nastavení\".</string>
 
 	<!-- Řetězce pro automatickou instalaci -->
-	<string name="install">Install</string>
+	<string name="install">Instalovat</string>
 
 	<!-- Řetězce průvodce instalací -->
 	<string name="install_guide_no_root">Instalujte aktualizaci podle pokynů uvedených v průvodci instalací.</string>
@@ -221,7 +221,7 @@ Pokyny:
 	<string name="about">O nás</string>
 	<string name="about_description">Tato aplikace stahuje oficiální aktualizace přímo ze serverů společnosti OnePlus a před povolením instalace dokonce ověří integritu staženého souboru ZIP. Aplikace vám tak umožní přeskočit frontu a nainstalovat oficiální aktualizace co nejdříve. Pokud narazíte na chyby v operačním systému, nahlaste je přímo společnosti OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Mohli byste se také chtít připojit na náš <a href="https://discord.gg/5TXdhKJ">Discord server</a>, abyste se mohli s ostatními uživateli poradit o nejnovějších aktualizacích. V opačném případě nám můžete napsat na adresu <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> s vašimi návrhy/zpětnou vazbou.</string>
 	<string name="about_support">Pokud nás chcete podpořit, můžete si zakoupit odblokování bez reklam (nastavení aplikace) nebo se podívat na naši stránku. <a href="https://patreon.com/oxygenupdater">Patreon</a>.</string>
-	<string name="about_background_story_header">Příběh na pozadí</string>
+	<string name="about_background_story_header">Průběh na pozadí</string>
 	<string name="about_background_story">Tuto aplikaci původně vyvinul Arjan Vlek v návaznosti na jinou svou aplikaci s názvem <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (ta umožňovala stejným způsobem provídět aktualizaci pro Cyanogen OS uživatele).\n\nPo čtyřech letech, v červenci 2019, se Arjan rozhodl od obou projektů odstoupit a převedl vlastnictví aplikace na tým vývojářů z různých zemí. Ti převzali odpovědnost za poskytování vynikajících služeb komunitě &amp; podporu rychlejšího získávání aktualizací OnePlus.\nDalší informace o oznámení najdete <a href="https://oxygenupdater.com/article/81/">zde</a>.\n\n14. srpna 2019 vyšlo první vydání pod novým vlastnictvím, které přišlo s novými funkcemi, jako je tmavý režim a kompletní redesign.\n\nDalší informace o týmu najdete <a href="https://oxygenupdater.com/team/">na webových stránkách</a>.</string>
 	<string name="about_third_party_app_notice">Upozorňujeme, že se nejedná o oficiální aplikaci společnosti OnePlus.\nNázev OnePlus, logo OnePlus a OxygenOS jsou majetkem společnosti OnePlus.\nAndroid, Google, Google Play a logo Google Play jsou registrované ochranné známky společnosti Google Inc.\nTato aplikace používá k zobrazení informací o aktualizacích data společnosti OnePlus a její mateřské společnosti Oppo.</string>
 	<string name="about_rate_button_text">Cena</string>
@@ -282,7 +282,7 @@ Pokyny:
 	<!-- Příspěvkové řetězce -->
 
 	<!-- Chybové řetězce-->
-	<string name="error_app_outdated">Oh no!</string>
+	<string name="error_app_outdated">Ale ne!</string>
 	<string name="error_app_outdated_message">Tato verze aplikace je zastaralá. Je čas ji aktualizovat! Klepněte na \"Google Play\" níže. V Google Play klepněte na \"Aktualizovat\".</string>
 	<string name="error_app_requires_network_connection">Není připojení</string>
 	<string name="error_app_requires_network_connection_message">Nepodařilo se připojit k serveru. Ujistěte se, že máte funkční připojení. Aplikace se nyní zavře.</string>
@@ -314,8 +314,8 @@ Pokyny:
 	<string name="purchase_error_pending_payment">Váš nákup je ve stavu \"čekání na platbu\". Po dokončení platby vám budou poskytnuty všechny výhody, na které máte nárok.</string>
 	<string name="purchase_error_after_payment">Nákup verze bez reklam se nezdařil, protože došlo k interní chybě. Zkuste to prosím za několik minut znovu. Pokud jste již zaplatili, kontaktujte prosím podporu Google Play a požádejte o pomoc.</string>
 
-	<string name="error">Error</string>
-	<string name="icon">Icon</string>
+	<string name="error">Chyba</string>
+	<string name="icon">Ikona</string>
 	<string name="loading">Načítá se…</string>
 	<string name="processing">Zpracování…</string>
 </resources>
