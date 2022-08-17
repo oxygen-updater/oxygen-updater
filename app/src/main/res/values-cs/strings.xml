@@ -85,7 +85,7 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="preference_header_advanced">Rozšířené</string>
 	<string name="preference_header_about">O nás</string>
 
-	<string name="summary_on">Vypnuto</string>
+	<string name="summary_on">Povoleno</string>
 	<string name="summary_off">Zakázáno</string>
 	<string name="summary_please_wait">Prosím, počkejte…</string>
 	<string name="summary_update_method">Nejprve vyberte zařízení</string>
