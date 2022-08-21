@@ -170,7 +170,7 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 Pokyny:
 &#8226; Stisknutím tlačítka Domů zavřete aplikaci Oxygen Updater.
 
-&#8226; Otevřete aplikaci Nastavení. Měla by se nacházet v v přehledu aplikací.
+&#8226; Otevřete aplikaci Nastavení. Měla by se nacházet v přehledu aplikací.
 
 &#8226; Přejděte dolů, dokud neuvidíte položku Aktualizace systému. Klepněte na ni."</string>
 
@@ -246,10 +246,10 @@ Pokyny:
 	<string name="general_notification_channel_name">Všeobecné</string>
 	<string name="download_status_notification_channel_description">Oznámení, která odrážejí aktuální stav stahování: čekající, aktivní, dokončené nebo neúspěšné</string>
 	<string name="verification_status_notification_channel_description">Oznámení, která odrážejí aktuální stav úlohy ověření souboru: probíhá, dokončena nebo neúspěšná.\nMD5 kontrolní součty stahovaných souborů jsou ověřovány, aby se zajistilo, že se souborem nebylo manipulováno a že se jedná o platný aktualizační soubor.</string>
-	<string name="installation_status_notification_channel_description">Získat oznámení, zda byla aktualizace úspěšně nainstalována, nebo ne</string>
-	<string name="update_notification_channel_description">Získejte upozornění, pokud je k dispozici nová aktualizace pro vybrané zařízení &amp; způsob aktualizace</string>
-	<string name="news_notification_channel_description">Získejte upozornění, když zveřejníme novinku</string>
-	<string name="device_notification_channel_description">Získat upozornění, když aplikace přidá podporu pro nové zařízení</string>
+	<string name="installation_status_notification_channel_description">Dostat oznámení, zda byla aktualizace úspěšně nainstalována, nebo ne</string>
+	<string name="update_notification_channel_description">Dostat upozornění, pokud je k dispozici nová aktualizace pro vybrané zařízení &amp; způsob aktualizace</string>
+	<string name="news_notification_channel_description">Dostaňte upozornění, když zveřejníme novinku</string>
+	<string name="device_notification_channel_description">Dostat upozornění, když aplikace přidá podporu pro nové zařízení</string>
 	<string name="general_notification_channel_description">Všeobecná oznámení, která nepatří do jiných kategorií</string>
 
 	<!-- Nápovědné řetězce -->
@@ -287,7 +287,7 @@ Pokyny:
 	<string name="error_app_requires_network_connection">Není připojení</string>
 	<string name="error_app_requires_network_connection_message">Nepodařilo se připojit k serveru. Ujistěte se, že máte funkční připojení. Aplikace se nyní zavře.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Není žádné připojení.</string>
+	<string name="error_no_internet_connection">Není dostupné žádné připojení.</string>
 	<string name="error_maintenance">Údržba serveru</string>
 	<string name="error_maintenance_message">Počkejte prosím. Server bude brzy k dispozici.</string>
 	<string name="error_maintenance_retry">Server může být odstaven z důvodu údržby. Zkuste to znovu po nějaké době nebo nám to nahlaste prostřednictvím <a href="mailto:support@oxygenupdater.com">email</a> na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.</string>
@@ -308,7 +308,7 @@ Pokyny:
 	<string name="incorrect_device_warning_title">Nesoulad zvoleného zařízení</string>
 	<string name="incorrect_device_warning_message">Vypadá to, že jste vybrali nesprávné zařízení: \"%1$s\" místo \"%2$s\". Změňte výběr v nastavení aplikace, abyste zajistili příjem aktualizací a oznámení pro správné zařízení.</string>
 
-	<string name="device_warning_checkbox_title">Nezobrazovat toto upozornění znovu</string>
+	<string name="device_warning_checkbox_title">Znovu nezobrazovat toto upozornění</string>
 
 	<!-- Nákupní řetězce -->
 	<string name="purchase_error_pending_payment">Váš nákup je ve stavu \"čekání na platbu\". Po dokončení platby vám budou poskytnuty všechny výhody, na které máte nárok.</string>
