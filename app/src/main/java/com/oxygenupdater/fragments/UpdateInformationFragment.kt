@@ -408,7 +408,7 @@ class UpdateInformationFragment : Fragment(R.layout.fragment_update_information)
     private fun hideErrorStateIfInflated() {
         // Stub is null only after it has been inflated, and
         // we need to hide the error state only if it has been inflated
-        if (errorLayoutStub == null) {
+        if (errorLayoutStub == null || errorLayoutStub.parent == null) {
             errorLayout.isVisible = false
             errorActionButton.setOnClickListener { }
         }
