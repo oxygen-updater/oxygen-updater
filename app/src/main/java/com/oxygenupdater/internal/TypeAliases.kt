@@ -33,8 +33,3 @@ typealias NewsListChangedListener = (
     unreadCount: Int,
     isEmpty: Boolean
 ) -> Unit
-
-typealias OnPurchaseFinishedListener = (
-    responseCode: Int,
-    purchase: com.android.billingclient.api.Purchase?
-) -> Unit

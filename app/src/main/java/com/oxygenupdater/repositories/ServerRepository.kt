@@ -243,7 +243,7 @@ class ServerRepository constructor(
             hashMapOf(
                 "orderId" to purchase.orderId,
                 "packageName" to purchase.packageName,
-                "productId" to purchase.skus.joinToString(","),
+                "productId" to purchase.products.joinToString(","),
                 "purchaseTime" to purchase.purchaseTime,
                 "purchaseState" to purchase.purchaseState,
                 "developerPayload" to purchase.developerPayload,

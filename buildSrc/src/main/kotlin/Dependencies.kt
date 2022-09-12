@@ -134,7 +134,7 @@ object Libraries {
         const val GLIDE = "4.13.2"
 
         // https://developer.android.com/google/play/billing/release-notes
-        const val GOOGLE_PLAY_BILLING = "4.1.0"
+        const val GOOGLE_PLAY_BILLING = "5.0.0"
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>

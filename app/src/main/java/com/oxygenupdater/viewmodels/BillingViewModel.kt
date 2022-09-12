@@ -73,7 +73,7 @@ class BillingViewModel(
      * the pending purchase object so that other LiveData observers can act on it
      */
     private fun logPendingAdFreePurchase(purchase: Purchase?) = purchase?.also {
-        if (it.skus.contains(PurchaseType.AD_FREE.sku)) {
+        if (it.products.contains(PurchaseType.AD_FREE.sku)) {
             viewModelScope.launch(Dispatchers.IO) {
                 serverRepository.verifyPurchase(purchase, null, PurchaseType.AD_FREE)
             }
