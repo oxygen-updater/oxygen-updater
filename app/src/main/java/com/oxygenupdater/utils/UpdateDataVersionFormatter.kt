@@ -23,7 +23,7 @@ object UpdateDataVersionFormatter {
      * @see <a href="https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string">semver.org</a>
      */
     private val STABLE_PATTERN = Pattern.compile(
-        "((?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:\\.(?:0|[1-9]\\d*))?(?:\\.(?:[A-Z]{2}\\d{2}[A-Z]{2}))?)$",
+        "((?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:\\.(?:0|[1-9]\\d*))?(?:\\.[A-Z]{2}\\d{2}[A-Z]{2})?)$",
         Pattern.CASE_INSENSITIVE
     )
 

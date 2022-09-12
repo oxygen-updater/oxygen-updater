@@ -85,7 +85,7 @@ Se você quiser saber mais, sinta-se à vontade para nos contatar via <a href="m
 	<string name="preference_header_advanced">Avançado</string>
 	<string name="preference_header_about">Sobre</string>
 
-	<string name="summary_on">Habilitadp</string>
+	<string name="summary_on">Habilitado</string>
 	<string name="summary_off">Desabilitado</string>
 	<string name="summary_please_wait">Por favor aguarde…</string>
 	<string name="summary_update_method">Selecione um dispositivo</string>
