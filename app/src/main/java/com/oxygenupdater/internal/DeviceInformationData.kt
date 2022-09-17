@@ -3,12 +3,11 @@ package com.oxygenupdater.internal
 import android.annotation.SuppressLint
 import android.os.Build
 import com.oxygenupdater.utils.Logger.logVerbose
-import java.io.RandomAccessFile
+import java.io.File
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 object DeviceInformationData {
-
-    private const val CPU_FREQUENCY_FILE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq"
 
     const val UNKNOWN = "-"
 
@@ -26,17 +25,30 @@ object DeviceInformationData {
     val serialNumber: String = if (Build.VERSION.SDK_INT >= 26) UNKNOWN else Build.SERIAL
 
     val cpuFrequency = try {
-        RandomAccessFile(CPU_FREQUENCY_FILE_PATH, "r").let {
-            val cpuFrequencyString = it.readLine()
-            it.close()
-
-            val cpuFrequency = cpuFrequencyString.toInt() / 1000
-
-            // CPU Frequency in GHz
-            BigDecimal(cpuFrequency).divide(BigDecimal(1000), 3, BigDecimal.ROUND_DOWN).toString()
+        val firstCpuFreq = cpuFreq(0)
+        val lastCpuIndex = Runtime.getRuntime().availableProcessors() - 1
+        // Skip if single core
+        (if (lastCpuIndex == 0) firstCpuFreq else {
+            val lastCpuFreq = cpuFreq(lastCpuIndex)
+            // Choose higher frequency of the two
+            if (firstCpuFreq >= lastCpuFreq) firstCpuFreq else lastCpuFreq
+        }).let {
+            if (it != BigDecimal.ZERO) it.toString() else UNKNOWN
         }
     } catch (e: Exception) {
         logVerbose("DeviceInformationData", "CPU Frequency information is not available", e)
         UNKNOWN
+    }
+
+    private const val CPUFREQ_PATH_PREFIX = "/sys/devices/system/cpu/cpu"
+    private const val CPUFREQ_PATH_SUFFIX = "/cpufreq/cpuinfo_max_freq"
+    private fun cpuFreq(index: Int) = try {
+        val file = File(CPUFREQ_PATH_PREFIX + index + CPUFREQ_PATH_SUFFIX)
+        if (file.canRead()) BigDecimal(file.readText().trim()).divide(
+            BigDecimal(1000000), 6, RoundingMode.HALF_EVEN
+        ).stripTrailingZeros() else BigDecimal.ZERO
+    } catch (e: Exception) {
+        logVerbose("DeviceInformationData", "CPU Frequency information is not available", e)
+        BigDecimal.ZERO
     }
 }
