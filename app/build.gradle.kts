@@ -222,6 +222,7 @@ android {
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -246,9 +247,13 @@ repositories {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
+    coreLibraryDesugaring(Libraries.ANDROID_TOOLS_DESUGAR)
+
     implementation(Libraries.KOTLIN_COROUTINES_CORE)
     implementation(Libraries.KOTLIN_COROUTINES_ANDROID)
 
+    implementation(AndroidXLibraries.ANNOTATION)
     implementation(AndroidXLibraries.APP_COMPAT)
     implementation(AndroidXLibraries.BROWSER)
     implementation(AndroidXLibraries.CONSTRAINT_LAYOUT)
@@ -291,13 +296,10 @@ dependencies {
 
     implementation(Libraries.FACEBOOK_SHIMMER)
 
-    implementation(Libraries.THREE_TEN_ABP)
-
     testImplementation(TestLibraries.JUNIT4)
     testImplementation(TestLibraries.KOTLIN_TEST_JUNIT)
     testImplementation(TestLibraries.KOIN_TEST)
 
-    androidTestImplementation(TestLibraries.ANNOTATION)
     androidTestImplementation(TestLibraries.ESPRESSO_CORE)
     androidTestImplementation(TestLibraries.JUNIT_EXT)
     androidTestImplementation(TestLibraries.RULES)

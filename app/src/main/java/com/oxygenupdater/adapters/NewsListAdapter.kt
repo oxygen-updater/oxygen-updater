@@ -23,7 +23,7 @@ import com.oxygenupdater.internal.NewsListChangedListener
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 /**
  * Takes advantage of [ListAdapter], which is a convenient wrapper that handles

@@ -18,7 +18,6 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.utils.DatabaseMigrations
@@ -72,7 +71,6 @@ class OxygenUpdater : Application() {
         setupKoin()
         AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this))
         super.onCreate()
-        AndroidThreeTen.init(this)
 
         setupCrashReporting()
         setupNetworkCallback()

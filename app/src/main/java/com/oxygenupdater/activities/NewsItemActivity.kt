@@ -46,7 +46,7 @@ import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news_item.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 class NewsItemActivity : SupportActionBarActivity(
     R.layout.activity_news_item,

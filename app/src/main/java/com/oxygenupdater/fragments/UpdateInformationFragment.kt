@@ -88,8 +88,8 @@ import kotlinx.android.synthetic.main.layout_system_is_up_to_date.*
 import kotlinx.android.synthetic.main.layout_update_information.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.threeten.bp.LocalDateTime
 import java.io.IOException
+import java.time.LocalDateTime
 import java.util.*
 
 class UpdateInformationFragment : Fragment(R.layout.fragment_update_information) {

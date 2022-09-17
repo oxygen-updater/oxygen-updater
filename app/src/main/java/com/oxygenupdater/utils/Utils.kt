@@ -18,7 +18,7 @@ import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logVerbose
 import org.koin.java.KoinJavaComponent.getKoin
-import org.threeten.bp.ZoneId
+import java.time.ZoneId
 import kotlin.system.exitProcess
 
 @Suppress("unused")

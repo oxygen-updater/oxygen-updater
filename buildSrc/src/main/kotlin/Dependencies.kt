@@ -12,7 +12,7 @@ object BuildPlugins {
     private object Versions {
         // https://developer.android.com/studio/releases/gradle-plugin
         // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-        const val BUILD_GRADLE_PLUGIN = "7.2.2"
+        const val BUILD_GRADLE_PLUGIN = "7.3.0"
 
         // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
         const val GOOGLE_SERVICES_PLUGIN = "4.3.13"
@@ -51,6 +51,9 @@ object AndroidSdk {
 // AndroidX: https://developer.android.com/jetpack/androidx/releases
 object AndroidXLibraries {
     private object Versions {
+        // https://developer.android.com/jetpack/androidx/releases/annotation
+        const val ANNOTATION = "1.4.0"
+
         // https://developer.android.com/jetpack/androidx/releases/appcompat
         const val APP_COMPAT = "1.5.1"
 
@@ -84,6 +87,9 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/room
         const val ROOM = "2.4.3"
     }
+
+    // https://developer.android.com/jetpack/androidx/releases/annotation
+    const val ANNOTATION = "androidx.annotation:annotation:${Versions.ANNOTATION}"
 
     // https://developer.android.com/jetpack/androidx/releases/appcompat
     const val APP_COMPAT = "androidx.appcompat:appcompat:${Versions.APP_COMPAT}"
@@ -124,6 +130,9 @@ object AndroidXLibraries {
 
 object Libraries {
     private object Versions {
+        // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
+        const val ANDROID_TOOLS_DESUGAR = "1.2.2"
+
         // https://github.com/facebook/shimmer-android/releases
         const val FACEBOOK_SHIMMER = "0.5.0"
 
@@ -139,10 +148,6 @@ object Libraries {
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
         const val JACKSON_KOTLIN_MODULE = "2.13.4"
-
-        // https://github.com/JakeWharton/ThreeTenABP/tags
-        // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-        const val THREE_TEN_ABP = "1.4.0"
 
         // https://github.com/Kotlin/kotlinx.coroutines/releases
         const val KOTLIN_COROUTINES = "1.6.4"
@@ -224,9 +229,8 @@ object Libraries {
     // https://github.com/facebook/shimmer-android/releases
     const val FACEBOOK_SHIMMER = "com.facebook.shimmer:shimmer:${Versions.FACEBOOK_SHIMMER}"
 
-    // https://github.com/JakeWharton/ThreeTenABP/tags
-    // https://github.com/JakeWharton/ThreeTenABP/blob/master/CHANGELOG.md
-    const val THREE_TEN_ABP = "com.jakewharton.threetenabp:threetenabp:${Versions.THREE_TEN_ABP}"
+    // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
+    const val ANDROID_TOOLS_DESUGAR = "com.android.tools:desugar_jdk_libs:${Versions.ANDROID_TOOLS_DESUGAR}"
 }
 
 object TestLibraries {
