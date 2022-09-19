@@ -23,8 +23,7 @@ import kotlinx.coroutines.withContext
  */
 class ServerRepository constructor(
     private val serverApi: ServerApi,
-    private val systemVersionProperties: SystemVersionProperties,
-    localAppDb: LocalAppDb
+    localAppDb: LocalAppDb,
 ) {
 
     private var serverStatus: ServerStatus? = null
@@ -48,9 +47,9 @@ class ServerRepository constructor(
             deviceId,
             updateMethodId,
             incrementalSystemVersion,
-            systemVersionProperties.oxygenOSVersion,
-            systemVersionProperties.osType,
-            systemVersionProperties.fingerprint,
+            SystemVersionProperties.oxygenOSVersion,
+            SystemVersionProperties.osType,
+            SystemVersionProperties.fingerprint,
             PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
             BuildConfig.VERSION_NAME
         )
@@ -229,7 +228,7 @@ class ServerRepository constructor(
                 "httpMessage" to httpMessage,
                 "appVersion" to BuildConfig.VERSION_NAME,
                 "deviceName" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>"),
-                "actualDeviceName" to systemVersionProperties.oxygenDeviceName
+                "actualDeviceName" to SystemVersionProperties.oxygenDeviceName
             )
         )
     }

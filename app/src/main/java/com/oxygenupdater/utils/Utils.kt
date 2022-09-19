@@ -17,7 +17,6 @@ import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
 import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logVerbose
-import org.koin.java.KoinJavaComponent.getKoin
 import java.time.ZoneId
 import kotlin.system.exitProcess
 
@@ -28,8 +27,6 @@ object Utils {
 
     private const val TAG = "Utils"
     private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-
-    private val systemVersionProperties by getKoin().inject<SystemVersionProperties>()
 
     /**
      * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later versions
@@ -98,7 +95,7 @@ object Utils {
 
     fun checkDeviceOsSpec(devices: List<Device>?): DeviceOsSpec {
         // <brand>/<product>/<device>:<version.release>/<id>/<version.incremental>:<type>/<tags>
-        val fingerprintParts = systemVersionProperties.fingerprint.split("/").map {
+        val fingerprintParts = SystemVersionProperties.fingerprint.split("/").map {
             it.trim()
         }
         val firmwareIsSupported = fingerprintParts.size == 6
@@ -120,7 +117,7 @@ object Utils {
             devices.forEach {
                 // find the user's device in the list of devices retrieved from the server
                 if ((fingerprintParts.size > 2 && it.productNames.contains(fingerprintParts[1]))
-                    || it.productNames.contains(systemVersionProperties.oxygenDeviceName)
+                    || it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
                 ) {
                     return if (it.enabled) {
                         // device found, and is enabled, which means it is supported
@@ -150,12 +147,12 @@ object Utils {
             actualDeviceName
         ) ?: actualDeviceName
 
-        val productName = systemVersionProperties.oxygenDeviceName
+        val productName = SystemVersionProperties.oxygenDeviceName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {
             Pair(this[0], if (size > 1) this[1] else null)
         }
 
-        val isStableTrack = systemVersionProperties.osType.equals(
+        val isStableTrack = SystemVersionProperties.osType.equals(
             "stable",
             true
         )

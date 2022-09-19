@@ -17,7 +17,6 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.viewmodels.InstallViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class InstallGuideFragment : Fragment() {
@@ -25,7 +24,6 @@ class InstallGuideFragment : Fragment() {
     private var pageNumber = 1
     private var isFirstPage = false
 
-    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val installViewModel by sharedViewModel<InstallViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
@@ -79,7 +77,7 @@ class InstallGuideFragment : Fragment() {
                     )
 
                     // This is used to format the `install_guide_page_3_text` string
-                    val deviceName = systemVersionProperties.oxygenDeviceName
+                    val deviceName = SystemVersionProperties.oxygenDeviceName
                         // Ignore variant codes
                         .split("_")[0]
                         // Some old devices have spaces in the name.

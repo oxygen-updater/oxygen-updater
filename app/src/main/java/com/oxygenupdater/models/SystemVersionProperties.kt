@@ -14,10 +14,95 @@ import java.util.*
 /**
  * Contains some properties of the OS / ROM installed on the device.
  *
- *
  * Used to read / extract  OnePlus-specific properties from the ROM.
  */
-class SystemVersionProperties {
+object SystemVersionProperties {
+
+    private const val TAG = "SystemVersionProperties"
+    private const val SECURITY_PATCH_LOOKUP_KEY = "ro.build.version.security_patch"
+    private const val RO_ROM_VERSION_LOOKUP_KEY = "ro.rom.version"
+
+    /**
+     * Hack #1 (OS_VERSION_NUMBER_LOOKUP_KEY): remove incorrect "H2OS" prefix from version value (OOS 2.0.0 - 3.x).
+     * If this is the case, value is discarded and we try with the next item in "items" array.
+     *
+     * Note for GitHub contributors: this should never have to change, as it only applies to very old devices
+     */
+    private const val RO_ROM_VERSION_H2OS = "H2OS"
+
+    /**
+     * Hack #2 (OS_VERSION_NUMBER_LOOKUP_KEY): remove redundant "Oxygen OS " prefix from version value (OnePlus 7-series and newer).
+     * As the app only shows the number or ads custom formatting, remove this prefix
+     *
+     * Note for GitHub contributors: change this value if `ro.oxygen.version` contains another prefix than "Oxygen OS ".
+     */
+    private val RO_ROM_VERSION_OXYGENOS_PREFIX = "Oxygen ?OS ?".toRegex()
+
+    /**
+     * Hack #3 (DEVICE_NAME_LOOKUP_KEY): Support for regional device variants (OnePlus 7-series and newer).
+     * OnePlus 7 Pro and newer come in regional variants which cannot be detected by `ro.display.series`.
+     * However, its alternative (`ro.product.name`) does not play nice with values present on older devices.
+     * Bypass: if the key is `ro.display.series` and the value is not any of the older devices, then read
+     * `ro.product.name` instead to detect the correct device.
+     */
+    private const val RO_DISPLAY_SERIES_LOOKUP_KEY = "ro.display.series"
+    private const val RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name"
+    private const val RO_BUILD_SOFT_VERSION_LOOKUP_KEY = "ro.build.soft.version"
+
+    /**
+     * This isn't a hack, but was introduced in the first Open Beta for 7T-series
+     * These keys will be checked for on all devices, for better future-proofing, and saved to SharedPreferences
+     * The saved SharedPreferences value will be used while sending a POST request to the `/submit-update-file` endpoint,
+     * so that it's easy for contributors on Discord to figure out which build is for which region
+     * (backend will take this into account while firing the webhook).
+     */
+    private val RO_BUILD_EU_LOOKUP_KEYS = arrayOf("ro.build.eu", "ro.vendor.build.eu")
+
+    /**
+     * This is a hack for Nord 2 (maybe future devices too), since it doesn't have any of the above EU keys.
+     * This key will be checked *after* the above keys are checked, as a backup (if above keys aren't found).
+     *
+     * Note: to keep things simple, we're checking if the value corresponding to this key starts with `EU`,
+     * even though we've seen that (at least on Nord 2), it's `EUEX` for EU devices, and `IN` for India.
+     */
+    private const val RO_VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY = "ro.vendor.oplus.regionmark"
+
+    /**
+     * Easy way to quickly check if the current build is stable, beta, or alpha.
+     * Supported only in 7-series and above.
+     */
+    private const val RO_BUILD_OS_TYPE_LOOKUP_KEY = "ro.build.os_type"
+
+    /**
+     * From v4.5.1 onwards, `ro.product.name` is read by default, except for OP1 - OP6T.
+     * This change was done to simplify supporting new devices, assuming all new devices
+     * follow the trend set by OP7-series onwards (i.e. `ro.product.name` containing region
+     * information).
+     *
+     * Note for GitHub contributors: add to the list if newer devices need to be excluded.
+     */
+    private val RO_PRODUCT_NAME_LOOKUP_DEVICES_IGNORE = setOf(
+        "OnePlus",
+        "OnePlus 2",
+        "OnePlus X",
+        "OnePlus 3",
+        "OnePlus 3T",
+        "OnePlus 5",
+        "OnePlus 5T",
+        "OnePlus 6",
+        "OnePlus 6T"
+    )
+
+    /**
+     * Hack #4 (BUILD_SOFT_VERSION_LOOKUP_KEY): support for Indian variants in OnePlus 7T-series
+     * OnePlus started rolling out India-specific features with the 7T-series, but there was no
+     * distinction between ro.product.name in Indian and international variants.
+     * Only workaround is to read `ro.build.soft.version`.
+     */
+    private val RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES = setOf(
+        "OnePlus7T",
+        "OnePlus7TPro"
+    )
 
     /**
      * Matchable name of the device. Must be present in the Devices returned by ServerConnector
@@ -55,7 +140,7 @@ class SystemVersionProperties {
      */
     val osType: String
 
-    constructor() {
+    init {
         var oxygenDeviceName = NO_OXYGEN_OS
         var oxygenOSVersion = NO_OXYGEN_OS
         var oxygenOSOTAVersion = NO_OXYGEN_OS
@@ -110,25 +195,6 @@ class SystemVersionProperties {
         this.oxygenOSOTAVersion = oxygenOSOTAVersion
         this.securityPatchDate = securityPatchDate
         this.osType = osType
-    }
-
-    /**
-     * Only called from within the tests, as we do not want to call the real `getprop` command from there.
-     */
-    constructor(
-        oxygenDeviceName: String?,
-        oxygenOSVersion: String?,
-        oxygenOSOTAVersion: String?,
-        securityPatchDate: String?,
-        osType: String?,
-    ) {
-        println("Warning: SystemVersionProperties was constructed using a debug constructor. This should only happen during unit tests!")
-
-        this.oxygenDeviceName = oxygenDeviceName ?: ""
-        this.oxygenOSVersion = oxygenOSVersion ?: ""
-        this.oxygenOSOTAVersion = oxygenOSOTAVersion ?: ""
-        this.securityPatchDate = securityPatchDate ?: ""
-        this.osType = osType ?: ""
     }
 
     @Throws(IOException::class)
@@ -209,93 +275,5 @@ class SystemVersionProperties {
         }
 
         return result
-    }
-
-    companion object {
-        private const val TAG = "SystemVersionProperties"
-        private const val SECURITY_PATCH_LOOKUP_KEY = "ro.build.version.security_patch"
-        private const val RO_ROM_VERSION_LOOKUP_KEY = "ro.rom.version"
-
-        /**
-         * Hack #1 (OS_VERSION_NUMBER_LOOKUP_KEY): remove incorrect "H2OS" prefix from version value (OOS 2.0.0 - 3.x).
-         * If this is the case, value is discarded and we try with the next item in "items" array.
-         *
-         * Note for GitHub contributors: this should never have to change, as it only applies to very old devices
-         */
-        private const val RO_ROM_VERSION_H2OS = "H2OS"
-
-        /**
-         * Hack #2 (OS_VERSION_NUMBER_LOOKUP_KEY): remove redundant "Oxygen OS " prefix from version value (OnePlus 7-series and newer).
-         * As the app only shows the number or ads custom formatting, remove this prefix
-         *
-         * Note for GitHub contributors: change this value if `ro.oxygen.version` contains another prefix than "Oxygen OS ".
-         */
-        private val RO_ROM_VERSION_OXYGENOS_PREFIX = "Oxygen ?OS ?".toRegex()
-
-        /**
-         * Hack #3 (DEVICE_NAME_LOOKUP_KEY): Support for regional device variants (OnePlus 7-series and newer).
-         * OnePlus 7 Pro and newer come in regional variants which cannot be detected by `ro.display.series`.
-         * However, its alternative (`ro.product.name`) does not play nice with values present on older devices.
-         * Bypass: if the key is `ro.display.series` and the value is not any of the older devices, then read
-         * `ro.product.name` instead to detect the correct device.
-         */
-        private const val RO_DISPLAY_SERIES_LOOKUP_KEY = "ro.display.series"
-        private const val RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name"
-        private const val RO_BUILD_SOFT_VERSION_LOOKUP_KEY = "ro.build.soft.version"
-
-        /**
-         * This isn't a hack, but was introduced in the first Open Beta for 7T-series
-         * These keys will be checked for on all devices, for better future-proofing, and saved to SharedPreferences
-         * The saved SharedPreferences value will be used while sending a POST request to the `/submit-update-file` endpoint,
-         * so that it's easy for contributors on Discord to figure out which build is for which region
-         * (backend will take this into account while firing the webhook).
-         */
-        private val RO_BUILD_EU_LOOKUP_KEYS = arrayOf("ro.build.eu", "ro.vendor.build.eu")
-
-        /**
-         * This is a hack for Nord 2 (maybe future devices too), since it doesn't have any of the above EU keys.
-         * This key will be checked *after* the above keys are checked, as a backup (if above keys aren't found).
-         *
-         * Note: to keep things simple, we're checking if the value corresponding to this key starts with `EU`,
-         * even though we've seen that (at least on Nord 2), it's `EUEX` for EU devices, and `IN` for India.
-         */
-        private const val RO_VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY = "ro.vendor.oplus.regionmark"
-
-        /**
-         * Easy way to quickly check if the current build is stable, beta, or alpha.
-         * Supported only in 7-series and above.
-         */
-        private const val RO_BUILD_OS_TYPE_LOOKUP_KEY = "ro.build.os_type"
-
-        /**
-         * From v4.5.1 onwards, `ro.product.name` is read by default, except for OP1 - OP6T.
-         * This change was done to simplify supporting new devices, assuming all new devices
-         * follow the trend set by OP7-series onwards (i.e. `ro.product.name` containing region
-         * information).
-         *
-         * Note for GitHub contributors: add to the list if newer devices need to be excluded.
-         */
-        private val RO_PRODUCT_NAME_LOOKUP_DEVICES_IGNORE = setOf(
-            "OnePlus",
-            "OnePlus 2",
-            "OnePlus X",
-            "OnePlus 3",
-            "OnePlus 3T",
-            "OnePlus 5",
-            "OnePlus 5T",
-            "OnePlus 6",
-            "OnePlus 6T"
-        )
-
-        /**
-         * Hack #4 (BUILD_SOFT_VERSION_LOOKUP_KEY): support for Indian variants in OnePlus 7T-series
-         * OnePlus started rolling out India-specific features with the 7T-series, but there was no
-         * distinction between ro.product.name in Indian and international variants.
-         * Only workaround is to read `ro.build.soft.version`.
-         */
-        private val RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES = setOf(
-            "OnePlus7T",
-            "OnePlus7TPro"
-        )
     }
 }

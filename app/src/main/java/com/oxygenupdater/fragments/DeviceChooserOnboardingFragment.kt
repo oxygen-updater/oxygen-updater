@@ -12,12 +12,10 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.viewmodels.OnboardingViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
 
-    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,7 +50,7 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
 
         val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
 
-        val recommendedIndex = data.indexOfFirst { it.productNames.contains(systemVersionProperties.oxygenDeviceName) }
+        val recommendedIndex = data.indexOfFirst { it.productNames.contains(SystemVersionProperties.oxygenDeviceName) }
         val initialSelectedIndex = if (deviceId != -1L) data.indexOfFirst { it.id == deviceId } else recommendedIndex
 
         super.setupRecyclerView(data, initialSelectedIndex) {

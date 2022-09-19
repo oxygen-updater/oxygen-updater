@@ -114,7 +114,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val crashlytics by inject<FirebaseCrashlytics>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
     private val settingsViewModel by sharedViewModel<SettingsViewModel>()
@@ -128,7 +127,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) = super.onViewCreated(view, savedInstanceState).also {
         setupBuyAdFreePreference()
         setupDevicePreferences()
@@ -453,7 +452,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
                 val productNames = device.productNames
 
-                if (productNames.contains(systemVersionProperties.oxygenDeviceName)) {
+                if (productNames.contains(SystemVersionProperties.oxygenDeviceName)) {
                     recommendedPosition = i
                 }
 

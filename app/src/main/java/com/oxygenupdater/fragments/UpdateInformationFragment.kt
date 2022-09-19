@@ -98,7 +98,6 @@ class UpdateInformationFragment : Fragment() {
     private var updateData: UpdateData? = null
     private var isLoadedOnce = false
 
-    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val crashlytics by inject<FirebaseCrashlytics>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
@@ -270,7 +269,7 @@ class UpdateInformationFragment : Fragment() {
 
             analytics.setUserProperty(
                 "device_name",
-                systemVersionProperties.oxygenDeviceName
+                SystemVersionProperties.oxygenDeviceName
             )
 
             setupServerResponseObservers()
@@ -395,7 +394,7 @@ class UpdateInformationFragment : Fragment() {
         mainViewModel.fetchUpdateData(
             deviceId,
             updateMethodId,
-            systemVersionProperties.oxygenOSOTAVersion
+            SystemVersionProperties.oxygenOSOTAVersion
         )
     }
 
@@ -586,7 +585,7 @@ class UpdateInformationFragment : Fragment() {
         // https://stackoverflow.com/a/60542345
         rootView?.findViewById<ViewGroup>(R.id.systemIsUpToDateLayoutChild)?.layoutTransition?.setAnimateParentHierarchy(false)
 
-        val isDifferentVersion = updateData.otaVersionNumber != systemVersionProperties.oxygenOSOTAVersion
+        val isDifferentVersion = updateData.otaVersionNumber != SystemVersionProperties.oxygenOSOTAVersion
 
         rootView?.findViewById<TextView>(R.id.advancedModeTipTextView)?.run {
             isVisible = isDifferentVersion
@@ -638,7 +637,7 @@ class UpdateInformationFragment : Fragment() {
 
         // OxygenOS version (if available)
         rootView?.findViewById<TextView>(R.id.oxygenOsVersionField)?.run {
-            val oxygenOSVersion = getFormattedOxygenOsVersion(systemVersionProperties.oxygenOSVersion)
+            val oxygenOSVersion = getFormattedOxygenOsVersion(SystemVersionProperties.oxygenOSVersion)
 
             if (oxygenOSVersion != NO_OXYGEN_OS) {
                 text = oxygenOSVersion
@@ -650,7 +649,7 @@ class UpdateInformationFragment : Fragment() {
 
         // OxygenOS OTA version (if available)
         rootView?.findViewById<TextView>(R.id.otaVersionField)?.run {
-            val oxygenOSOTAVersion = systemVersionProperties.oxygenOSOTAVersion
+            val oxygenOSOTAVersion = SystemVersionProperties.oxygenOSOTAVersion
 
             if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
                 text = oxygenOSOTAVersion
@@ -665,7 +664,7 @@ class UpdateInformationFragment : Fragment() {
 
         // Security Patch Date (if available)
         rootView?.findViewById<TextView>(R.id.securityPatchField)?.run {
-            val securityPatchDate = systemVersionProperties.securityPatchDate
+            val securityPatchDate = SystemVersionProperties.securityPatchDate
 
             if (securityPatchDate != NO_OXYGEN_OS) {
                 text = securityPatchDate

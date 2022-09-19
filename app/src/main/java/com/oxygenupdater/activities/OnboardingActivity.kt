@@ -34,7 +34,6 @@ import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.OnboardingViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
@@ -51,7 +50,6 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
     }
 
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
-    private val systemVersionProperties by inject<SystemVersionProperties>()
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(
@@ -78,7 +76,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
             }
 
             val deviceName = it?.find { device ->
-                device.productNames.contains(systemVersionProperties.oxygenDeviceName)
+                device.productNames.contains(SystemVersionProperties.oxygenDeviceName)
             }?.name ?: getString(
                 R.string.device_information_device_name,
                 DeviceInformationData.deviceManufacturer,

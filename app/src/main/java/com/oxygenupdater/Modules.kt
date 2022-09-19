@@ -9,7 +9,6 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
-import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.DatabaseBuilders.buildLocalAppDatabase
@@ -48,7 +47,7 @@ private val preferencesModule = module {
 }
 
 private val repositoryModule = module {
-    single { ServerRepository(get(), get(), get()) }
+    single { ServerRepository(get(), get()) }
     single { BillingRepository(get()) }
 }
 
@@ -72,11 +71,6 @@ private val notificationModule = module {
 }
 
 private val miscellaneousSingletonModule = module {
-    /**
-     * A singleton [SystemVersionProperties] helps avoid unnecessary calls to the native `getprop` command.
-     */
-    single { SystemVersionProperties() }
-
     single { AppUpdateManagerFactory.create(androidContext()) }
     single { Firebase.analytics }
     single { Firebase.crashlytics }

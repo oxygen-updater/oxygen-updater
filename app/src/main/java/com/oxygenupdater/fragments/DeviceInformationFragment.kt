@@ -27,13 +27,11 @@ import com.oxygenupdater.utils.Logger
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedOxygenOsVersion
 import com.oxygenupdater.viewmodels.MainViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import kotlin.math.roundToLong
 
 class DeviceInformationFragment : Fragment() {
 
-    private val systemVersionProperties by inject<SystemVersionProperties>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
     /** Only valid between `onCreateView` and `onDestroyView` */
@@ -70,7 +68,7 @@ class DeviceInformationFragment : Fragment() {
 
         mainViewModel.allDevices.observe(viewLifecycleOwner) { devices ->
             val deviceName = devices?.find { device ->
-                device.productNames.contains(systemVersionProperties.oxygenDeviceName)
+                device.productNames.contains(SystemVersionProperties.oxygenDeviceName)
             }?.name ?: getString(
                 R.string.device_information_device_name,
                 DeviceInformationData.deviceManufacturer,
@@ -151,7 +149,7 @@ class DeviceInformationFragment : Fragment() {
 
         // OxygenOS version (if available)
         bindingSoftware?.oxygenOsVersionField?.run {
-            val oxygenOSVersion = getFormattedOxygenOsVersion(systemVersionProperties.oxygenOSVersion)
+            val oxygenOSVersion = getFormattedOxygenOsVersion(SystemVersionProperties.oxygenOSVersion)
 
             if (oxygenOSVersion != NO_OXYGEN_OS) {
                 text = oxygenOSVersion
@@ -163,7 +161,7 @@ class DeviceInformationFragment : Fragment() {
 
         // OxygenOS OTA version (if available)
         bindingSoftware?.otaVersionField?.run {
-            val oxygenOSOTAVersion = systemVersionProperties.oxygenOSOTAVersion
+            val oxygenOSOTAVersion = SystemVersionProperties.oxygenOSOTAVersion
 
             if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
                 text = oxygenOSOTAVersion
@@ -178,7 +176,7 @@ class DeviceInformationFragment : Fragment() {
 
         // Security Patch Date (if available)
         bindingSoftware?.securityPatchField?.run {
-            val securityPatchDate = systemVersionProperties.securityPatchDate
+            val securityPatchDate = SystemVersionProperties.securityPatchDate
 
             if (securityPatchDate != NO_OXYGEN_OS) {
                 text = securityPatchDate
