@@ -129,14 +129,14 @@ object Libraries {
         // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
         const val ANDROID_TOOLS_DESUGAR = "1.2.2"
 
+        // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
+        const val COIL = "2.2.2"
+
         // https://github.com/facebook/shimmer-android/releases
         const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
         const val FIREBASE_BOM = "30.4.1"
-
-        // https://github.com/bumptech/glide/releases
-        const val GLIDE = "4.13.2"
 
         // https://developer.android.com/google/play/billing/release-notes
         const val GOOGLE_PLAY_BILLING = "5.0.0"
@@ -218,9 +218,8 @@ object Libraries {
     // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
     const val JACKSON_KOTLIN_MODULE = "com.fasterxml.jackson.module:jackson-module-kotlin:${Versions.JACKSON_KOTLIN_MODULE}"
 
-    // https://github.com/bumptech/glide/releases
-    const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
-    const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
+    // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
+    const val COIL = "io.coil-kt:coil:${Versions.COIL}"
 
     // https://github.com/facebook/shimmer-android/releases
     const val FACEBOOK_SHIMMER = "com.facebook.shimmer:shimmer:${Versions.FACEBOOK_SHIMMER}"

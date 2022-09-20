@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.OxygenUpdater
@@ -63,6 +63,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
+        binding = ActivityOnboardingBinding.bind(rootView)
         enableEdgeToEdgeUiSupport()
         window.navigationBarColor = ContextCompat.getColor(
             this,
@@ -222,13 +223,13 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 binding.nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
 
                 binding.collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
-                binding.collapsingToolbarImage.imageTintList = null
-
-                Glide.with(this)
-                    .load(deviceImageUrl)
-                    .placeholder(R.drawable.oneplus7pro)
-                    .error(R.drawable.oneplus7pro)
-                    .into(binding.collapsingToolbarImage)
+                binding.collapsingToolbarImage.apply {
+                    imageTintList = null
+                    load(deviceImageUrl) {
+                        placeholder(R.drawable.oneplus7pro)
+                        error(R.drawable.oneplus7pro)
+                    }
+                }
             }
             3 -> {
                 binding.nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3

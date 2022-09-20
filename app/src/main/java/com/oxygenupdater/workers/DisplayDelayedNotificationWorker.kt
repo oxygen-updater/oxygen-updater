@@ -5,8 +5,6 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.GROUP_ALERT_CHILDREN
@@ -14,11 +12,11 @@ import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.activities.NewsItemActivity
@@ -37,6 +35,7 @@ import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENER
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationIds
+import com.oxygenupdater.utils.Utils
 import org.koin.java.KoinJavaComponent.getKoin
 import kotlin.random.Random
 
@@ -48,7 +47,7 @@ import kotlin.random.Random
  */
 class DisplayDelayedNotificationWorker(
     context: Context,
-    parameters: WorkerParameters
+    parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
 
     private val context = context.attachWithLocale(false)
@@ -172,18 +171,17 @@ class DisplayDelayedNotificationWorker(
     private fun NotificationCompat.Builder.reNotifyWithLargeIcon(
         notificationId: Int,
         imageUrl: String,
-    ) = Glide.with(context).asBitmap().centerCrop().load(imageUrl).into(
-        object : CustomTarget<Bitmap>() {
-            override fun onResourceReady(
-                resource: Bitmap,
-                transition: Transition<in Bitmap>?
-            ) = notificationManager.notify(
-                notificationId,
-                setLargeIcon(resource).build()
-            )
-
-            override fun onLoadCleared(placeholder: Drawable?) {}
-        })
+    ) = context.imageLoader.enqueue(
+        ImageRequest.Builder(context)
+            .data(imageUrl)
+            .size(Utils.dpToPx(context, 64f).toInt()) // memory optimization
+            .target {
+                notificationManager.notify(
+                    notificationId,
+                    setLargeIcon(it.toBitmap()).build()
+                )
+            }.build()
+    )
 
     /**
      * Generates notification IDs from predefined [NotificationIds], but also
@@ -197,7 +195,7 @@ class DisplayDelayedNotificationWorker(
      */
     @Suppress("REDUNDANT_ELSE_IN_WHEN")
     private fun getNotificationId(
-        type: NotificationType
+        type: NotificationType,
     ) = when (type) {
         NEWS -> NotificationIds.REMOTE_NEWS
         NEW_VERSION -> NotificationIds.REMOTE_NEW_UPDATE
@@ -211,7 +209,7 @@ class DisplayDelayedNotificationWorker(
     }
 
     private fun getNotificationGroupId(
-        type: NotificationType
+        type: NotificationType,
     ) = when (type) {
         NEW_DEVICE -> NotificationIds.REMOTE_NEW_DEVICE_GROUP
         NEWS -> NotificationIds.REMOTE_NEWS_GROUP
@@ -225,7 +223,7 @@ class DisplayDelayedNotificationWorker(
      * @see NotificationCompat.Builder.setGroup
      */
     private fun getNotificationGroupKey(
-        type: NotificationType
+        type: NotificationType,
     ) = when (type) {
         NEW_VERSION -> UPDATE_NOTIFICATION_CHANNEL_ID
         NEWS -> NEWS_NOTIFICATION_CHANNEL_ID
@@ -235,7 +233,7 @@ class DisplayDelayedNotificationWorker(
 
     private fun getNewVersionNotificationBuilder(
         deviceName: String?,
-        versionNumber: String?
+        versionNumber: String?,
     ) = NotificationCompat.Builder(context, UPDATE_NOTIFICATION_CHANNEL_ID)
         .setPriority(PRIORITY_HIGH)
         .setContentTitle(context.getString(R.string.update_notification_channel_name))
@@ -248,14 +246,14 @@ class DisplayDelayedNotificationWorker(
         )
 
     private fun getNewsArticleNotificationBuilder(
-        message: String?
+        message: String?,
     ) = NotificationCompat.Builder(context, NEWS_NOTIFICATION_CHANNEL_ID)
         .setPriority(PRIORITY_HIGH)
         .setContentTitle(context.getString(R.string.news_notification_channel_name))
         .setBigTextStyle(message)
 
     private fun getNewDeviceNotificationBuilder(
-        newDeviceName: String?
+        newDeviceName: String?,
     ) = NotificationCompat.Builder(context, DEVICE_NOTIFICATION_CHANNEL_ID)
         .setPriority(PRIORITY_DEFAULT)
         .setContentTitle(context.getString(R.string.device_notification_channel_name))
@@ -267,7 +265,7 @@ class DisplayDelayedNotificationWorker(
         )
 
     private fun getGeneralNotificationBuilder(
-        message: String?
+        message: String?,
     ) = NotificationCompat.Builder(context, GENERAL_NOTIFICATION_CHANNEL_ID)
         .setPriority(PRIORITY_DEFAULT)
         .setContentTitle(context.getString(R.string.general_notification_channel_name))
@@ -275,7 +273,7 @@ class DisplayDelayedNotificationWorker(
 
     private fun getNotificationIntent(
         notificationType: NotificationType,
-        notificationId: Int
+        notificationId: Int,
     ) = PendingIntent.getActivity(
         context,
         notificationId,

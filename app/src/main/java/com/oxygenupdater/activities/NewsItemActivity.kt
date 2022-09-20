@@ -17,7 +17,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.bumptech.glide.Glide
+import coil.load
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdView
@@ -83,7 +83,7 @@ class NewsItemActivity : SupportActionBarActivity(
         )
 
         override fun onAdFailedToShowFullScreenContent(
-            adError: AdError
+            adError: AdError,
         ) = logWarning(
             TAG,
             "Interstitial ad failed to show: $adError"
@@ -97,7 +97,7 @@ class NewsItemActivity : SupportActionBarActivity(
 
     private val interstitialAdLoadCallback = object : InterstitialAdLoadCallback() {
         override fun onAdLoaded(
-            ad: InterstitialAd
+            ad: InterstitialAd,
         ) = logDebug(TAG, "Interstitial ad loaded").also {
             if (!isFinishing) {
                 ad.fullScreenContentCallback = fullScreenAdContentCallback
@@ -117,7 +117,7 @@ class NewsItemActivity : SupportActionBarActivity(
         }
 
         override fun onAdFailedToLoad(
-            loadAdError: LoadAdError
+            loadAdError: LoadAdError,
         ) = logWarning(
             TAG,
             "Interstitial ad failed to load: $loadAdError"
@@ -142,11 +142,10 @@ class NewsItemActivity : SupportActionBarActivity(
         // Display the name of the author of the article
         binding.collapsingToolbarLayout.subtitle = newsItem.authorName
 
-        Glide.with(this)
-            .load(newsItem.imageUrl)
-            .placeholder(R.drawable.image)
-            .error(R.drawable.logo_notification)
-            .into(binding.collapsingToolbarImage)
+        binding.collapsingToolbarImage.load(newsItem.imageUrl) {
+            placeholder(R.drawable.image)
+            error(R.drawable.logo_notification)
+        }
 
         binding.buttonRecyclerView.let { recyclerView ->
             val verticalDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
@@ -245,7 +244,7 @@ class NewsItemActivity : SupportActionBarActivity(
 
     private lateinit var binding: ActivityNewsItemBinding
     override fun onCreate(
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) = super.onCreate(savedInstanceState).also {
         binding = ActivityNewsItemBinding.bind(rootView)
         bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
@@ -421,11 +420,10 @@ class NewsItemActivity : SupportActionBarActivity(
         val title = intent.getStringExtra(INTENT_NEWS_ITEM_TITLE)
         val subtitle = intent.getStringExtra(INTENT_NEWS_ITEM_SUBTITLE)
 
-        Glide.with(this)
-            .load(imageUrl)
-            .placeholder(R.drawable.image)
-            .error(R.drawable.logo_notification)
-            .into(binding.collapsingToolbarImage)
+        binding.collapsingToolbarImage.load(imageUrl) {
+            placeholder(R.drawable.image)
+            error(R.drawable.logo_notification)
+        }
 
         binding.collapsingToolbarLayout.title = title ?: getString(R.string.loading)
         binding.collapsingToolbarLayout.subtitle = getString(R.string.summary_please_wait)
@@ -445,7 +443,7 @@ class NewsItemActivity : SupportActionBarActivity(
 
     private fun showErrorState(
         error: WebViewError? = null,
-        isInvalidId: Boolean = false
+        isInvalidId: Boolean = false,
     ) {
         // hide progress bar since the page failed to load
         binding.progressBar.isVisible = false

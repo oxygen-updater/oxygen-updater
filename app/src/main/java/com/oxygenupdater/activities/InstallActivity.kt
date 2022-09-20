@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.R
@@ -155,14 +155,11 @@ class InstallActivity : SupportActionBarActivity(
 
             if (!isDefaultPage && useCustomImage) {
                 // Fetch the custom image from the server.
-                Glide.with(this@InstallActivity)
-                    .load(completeImageUrl(imageUrl, fileExtension))
-                    // Load a "no entry" sign to show that the image failed to load.
-                    .error(R.drawable.no_entry)
-                    .into(binding.collapsingToolbarImage)
-
                 binding.collapsingToolbarImage.apply {
                     imageTintList = null
+                    load(completeImageUrl(imageUrl, fileExtension)) {
+                        error(R.drawable.no_entry)
+                    }
                 }
             } else {
                 installViewModel.updateToolbarImage(

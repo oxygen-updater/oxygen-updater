@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.Glide
+import coil.load
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
@@ -108,11 +108,10 @@ class DeviceInformationFragment : Fragment() {
             )
         }
 
-        Glide.with(this)
-            .load(Device.constructImageUrl(deviceName))
-            .placeholder(R.drawable.oneplus7pro)
-            .error(R.drawable.oneplus7pro)
-            .into(binding?.deviceImage!!)
+        binding?.deviceImage?.load(Device.constructImageUrl(deviceName)) {
+            placeholder(R.drawable.oneplus7pro)
+            error(R.drawable.oneplus7pro)
+        }
 
         val notSupported = mainViewModel.deviceOsSpec?.isDeviceOsSpecSupported == false
         binding?.deviceImageOverlay?.isVisible = notSupported

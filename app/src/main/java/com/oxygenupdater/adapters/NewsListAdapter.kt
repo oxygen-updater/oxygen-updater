@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.NewsListAdapter.NewsItemViewHolder
 import com.oxygenupdater.dialogs.NewsItemOptionsDialogFragment
@@ -50,7 +50,7 @@ class NewsListAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ) = NewsItemViewHolder(
         LayoutInflater.from(parent.context).inflate(
             R.layout.item_news,
@@ -61,14 +61,14 @@ class NewsListAdapter(
 
     override fun onBindViewHolder(
         holder: NewsItemViewHolder,
-        position: Int
+        position: Int,
     ) = holder.bindTo(getItem(position))
 
     override fun getItemId(position: Int) = getItem(position).id ?: RecyclerView.NO_ID
 
     override fun onCurrentListChanged(
         previousList: List<NewsItem>,
-        currentList: List<NewsItem>
+        currentList: List<NewsItem>,
     ) = listChangedListener.invoke(
         currentList.count { !it.read },
         currentList.isEmpty()
@@ -91,12 +91,12 @@ class NewsListAdapter(
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NewsItem>() {
             override fun areItemsTheSame(
                 oldItem: NewsItem,
-                newItem: NewsItem
+                newItem: NewsItem,
             ) = oldItem.id == newItem.id
 
             override fun areContentsTheSame(
                 oldItem: NewsItem,
-                newItem: NewsItem
+                newItem: NewsItem,
             ) = oldItem.read == newItem.read
                     && oldItem.imageUrl == newItem.imageUrl
                     && oldItem.englishTitle == newItem.englishTitle
@@ -202,11 +202,10 @@ class NewsListAdapter(
                 }
             }
 
-            Glide.with(itemView.context)
-                .load(item.imageUrl)
-                .placeholder(R.drawable.image)
-                .error(R.drawable.image)
-                .into(thumbnailView)
+            thumbnailView.load(item.imageUrl) {
+                placeholder(R.drawable.image)
+                error(R.drawable.image)
+            }
         }
     }
 }

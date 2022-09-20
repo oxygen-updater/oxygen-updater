@@ -63,7 +63,6 @@ android {
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),
             "proguard-rules.pro",
-            "proguard-rules-glide.pro"
         )
     }
 
@@ -289,8 +288,7 @@ dependencies {
 
     implementation(Libraries.JACKSON_KOTLIN_MODULE)
 
-    implementation(Libraries.GLIDE)
-    kapt(Libraries.GLIDE_COMPILER)
+    implementation(Libraries.COIL)
 
     implementation(Libraries.FACEBOOK_SHIMMER)
 
