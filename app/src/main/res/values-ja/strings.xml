@@ -208,6 +208,7 @@
 
 	<string name="device_information_amount_of_memory">RAM の合計量</string>
 	<string name="device_information_cpu_frequency">プロセッサ周波数</string>
+	<string name="device_information_gigahertz">%1$s ジーゼル</string>
 	<string name="device_information_header">マイデバイス</string>
 	<string name="device_information_image_description">デバイスイメージ</string>
 	<string name="device_information_incremental_os_version">インクリメンタル OS バージョン</string>

@@ -202,6 +202,7 @@
 
 	<string name="device_information_amount_of_memory">内存大小：</string>
 	<string name="device_information_cpu_frequency">处理器频率：</string>
+	<string name="device_information_gigahertz">%1$s 频段</string>
 	<string name="device_information_header">我的设备</string>
 	<string name="device_information_image_description">设备图片</string>
 	<string name="device_information_incremental_os_version">增量更新版本：</string>

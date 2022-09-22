@@ -325,4 +325,5 @@
 	<string name="icon">Иконица</string>
 	<string name="loading">Учитавање…</string>
 	<string name="processing">Обрада…</string>
+	<string name="device_information_gigahertz">%1$s ГХз</string>
 </resources>

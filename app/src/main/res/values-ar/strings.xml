@@ -201,6 +201,7 @@ Instructions:
 	<string name="device_information_software_header">النظام</string>
 	<string name="device_information_amount_of_memory">مقدار الذاكرة العشوائية</string>
 	<string name="device_information_cpu_frequency">تردد المعالج</string>
+	<string name="device_information_gigahertz">جيجاهرتز %1$s</string>
 	<string name="device_information_header">جهاز</string>
 	<string name="device_information_image_description">نسخة الجهاز</string>
 	<string name="device_information_incremental_os_version">إصدار نظام التشغيل التدريجي</string>
