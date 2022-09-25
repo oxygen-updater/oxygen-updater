@@ -3,7 +3,6 @@ package com.oxygenupdater.extensions
 import android.app.Activity
 import android.util.DisplayMetrics
 import android.widget.FrameLayout
-import androidx.annotation.StringRes
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
@@ -14,10 +13,10 @@ import com.google.android.gms.ads.AdView
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun Activity.fullWidthAnchoredAdaptiveBannerAd(
-    @StringRes adUnitIdStr: Int,
+    adUnitId: String,
     container: FrameLayout
 ) = AdView(this).apply {
-    adUnitId = getString(adUnitIdStr)
+    setAdUnitId(adUnitId)
     setAdSize(fullWidthAdSize(container))
 }.also {
     container.addView(it)

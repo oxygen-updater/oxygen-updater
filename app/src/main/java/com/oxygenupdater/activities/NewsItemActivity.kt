@@ -25,6 +25,7 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
@@ -246,7 +247,7 @@ class NewsItemActivity : SupportActionBarActivity(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
         bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
-            R.string.advertising_news_banner_unit_id,
+            BuildConfig.AD_BANNER_NEWS_ID,
             newsArticleAdViewContainer
         )
 
@@ -390,7 +391,7 @@ class NewsItemActivity : SupportActionBarActivity(
      */
     private fun setupInterstitialAd() = InterstitialAd.load(
         this,
-        getString(R.string.advertising_interstitial_unit_id),
+        BuildConfig.AD_INTERSTITIAL_NEWS_ID,
         buildAdRequest(),
         interstitialAdLoadCallback
     )

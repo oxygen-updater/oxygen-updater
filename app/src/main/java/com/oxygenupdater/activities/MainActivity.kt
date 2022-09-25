@@ -33,6 +33,7 @@ import com.google.android.play.core.install.model.InstallStatus.FAILED
 import com.google.android.play.core.install.model.InstallStatus.PENDING
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
+import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
@@ -146,7 +147,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
         bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
-            R.string.advertising_main_banner_unit_id,
+            BuildConfig.AD_BANNER_MAIN_ID,
             bannerAdViewContainer
         )
 

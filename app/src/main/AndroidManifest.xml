@@ -195,7 +195,7 @@
 
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
-			android:value="@string/advertising_app_id" />
+			android:value="${advertisingAppId}" />
 
 		<!-- Opt out of WebView usage statistics collection -->
 		<meta-data

@@ -192,6 +192,9 @@ android {
 
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
         buildTypes.forEach {
+            it.buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")
+            it.buildConfigField("String", "AD_BANNER_NEWS_ID", "\"ca-app-pub-1816831161514116/5072283884\"")
+            it.buildConfigField("String", "AD_INTERSTITIAL_NEWS_ID", "\"ca-app-pub-1816831161514116/2367225965\"")
             it.buildConfigField("String", "BASE64_PUBLIC_KEY", "\"${billing["base64PublicKey"]}\"")
             it.buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")
 
@@ -199,23 +202,15 @@ android {
                 it.versionNameSuffix = "-${it.name}"
                 it.applicationIdSuffix = ".${it.name}"
                 it.resValue("string", "app_name", "Oxygen Updater (${it.name})")
-                it.addManifestPlaceholders(
-                    mapOf(
-                        "hostName" to "test.oxygenupdater.com"
-                    )
-                )
             } else {
                 it.resValue("string", "app_name", "Oxygen Updater")
-                it.addManifestPlaceholders(
-                    mapOf(
-                        "hostName" to "oxygenupdater.com"
-                    )
-                )
             }
 
             it.addManifestPlaceholders(
                 mapOf(
-                    "shortcutXml" to "@xml/shortcuts_${it.name.toLowerCase()}"
+                    "hostName" to "${if (it.name != "release") "test." else ""}oxygenupdater.com",
+                    "advertisingAppId" to "ca-app-pub-1816831161514116~4275332954",
+                    "shortcutXml" to "@xml/shortcuts_${it.name.toLowerCase()}",
                 )
             )
         }
