@@ -16,6 +16,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.adapters.AlphaInAnimationAdapter
 import com.oxygenupdater.adapters.NewsListAdapter
+import com.oxygenupdater.databinding.FragmentNewsListBinding
 import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.addPlaceholderItemsForShimmer
 import com.oxygenupdater.internal.NewsListChangedListener
@@ -27,10 +28,9 @@ import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.viewmodels.MainViewModel
 import com.oxygenupdater.viewmodels.NewsViewModel
-import kotlinx.android.synthetic.main.fragment_news_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class NewsListFragment : Fragment(R.layout.fragment_news_list) {
+class NewsListFragment : Fragment() {
 
     private var hasBeenLoadedOnce = false
     private var isShowingOnlyUnreadArticles = false
@@ -46,7 +46,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
     private val fetchNewsObserver = Observer<List<NewsItem>> { newsItems ->
         displayNewsItems(newsItems)
 
-        swipeRefreshLayout.isRefreshing = false
+        binding?.swipeRefreshLayout?.isRefreshing = false
     }
 
     /**
@@ -55,7 +55,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
      */
     private val adapterListChangedListener: NewsListChangedListener = { unreadCount, isEmpty ->
         if (isAdded) {
-            bannerTextView.text = getString(
+            binding?.bannerTextView?.text = getString(
                 if (isShowingOnlyUnreadArticles) {
                     R.string.news_unread_count_2
                 } else {
@@ -71,20 +71,29 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
                     displayEmptyState()
                 }
             } else {
-                emptyStateLayout.isVisible = false
+                binding?.emptyStateLayout?.isVisible = false
             }
         }
     }
 
+    /** Only valid between `onCreateView` and `onDestroyView` */
+    private var binding: FragmentNewsListBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = super.onCreateView(inflater, container, savedInstanceState).also {
-        it?.post {
+    ) = FragmentNewsListBinding.inflate(inflater, container, false).run {
+        binding = this
+        root
+    }.also {
+        it.post {
             // placeholderItem's height is 2x 16dp padding + 64dp image = 96dp
             addPlaceholderItemsForShimmer(inflater, container, it, R.layout.placeholder_item_news, 96f)
         }
+    }
+
+    override fun onDestroyView() = super.onDestroyView().also {
+        binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -107,14 +116,14 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             }
         }
 
-        swipeRefreshLayout.apply {
+        binding?.swipeRefreshLayout?.apply {
             setOnRefreshListener { refreshNews() }
             setColorSchemeResources(R.color.colorPrimary)
         }
     }
 
     private fun setupRecyclerView() {
-        newsContainer.let { recyclerView ->
+        binding?.newsContainer?.let { recyclerView ->
             newsListAdapter = NewsListAdapter(requireActivity(), adapterListChangedListener) { newsItemId, isRead ->
                 newsListAdapter.changeItemReadStatus(newsItemId, isRead)
                 updateBannerText(newsListAdapter.currentList.count { !it.read })
@@ -144,7 +153,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             return
         }
 
-        shimmerFrameLayout.isVisible = true
+        binding?.shimmerFrameLayout?.isVisible = true
 
         val deviceId = PrefManager.getLong(PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = PrefManager.getLong(PROPERTY_UPDATE_METHOD_ID, -1L)
@@ -163,7 +172,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             return
         }
 
-        shimmerFrameLayout.isVisible = false
+        binding?.shimmerFrameLayout?.isVisible = false
 
         if (newsItems.isEmpty()) {
             displayEmptyState()
@@ -182,7 +191,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
         newsListAdapter.submitList(itemList)
 
         // toggle between showing only reading articles and showing all articles
-        bannerLayout.setOnClickListener {
+        binding?.bannerLayout?.setOnClickListener {
             newsListAdapter.submitList(
                 if (isShowingOnlyUnreadArticles) newsItems
                 else newsItems.filter { !it.read }
@@ -214,7 +223,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             return
         }
 
-        bannerLayout.apply {
+        binding?.bannerLayout?.apply {
             isVisible = true
 
             if (count != 0) {
@@ -237,7 +246,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             }
         }
 
-        bannerTextView.text = getString(
+        binding?.bannerTextView?.text = getString(
             if (isShowingOnlyUnreadArticles) {
                 R.string.news_unread_count_2
             } else {
@@ -252,12 +261,12 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
     }
 
     private fun displayEmptyState(isAllReadEmptyState: Boolean = false) {
-        emptyStateLayout.apply {
+        binding?.emptyStateLayout?.apply {
             isVisible = true
             startAnimation(AnimationUtils.loadAnimation(context, android.R.anim.fade_in))
         }
 
-        emptyStateHeader.text = getString(
+        binding?.emptyStateHeader?.text = getString(
             if (isAllReadEmptyState) {
                 R.string.news_empty_state_all_read_header
             } else {
@@ -265,7 +274,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
             }
         )
 
-        emptyStateText.text = getString(
+        binding?.emptyStateText?.text = getString(
             if (isAllReadEmptyState) {
                 R.string.news_empty_state_all_read_text
             } else {

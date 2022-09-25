@@ -1,6 +1,5 @@
 package com.oxygenupdater.dialogs
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
@@ -12,10 +11,9 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.oxygenupdater.R
+import com.oxygenupdater.databinding.BottomSheetMessageBinding
 import com.oxygenupdater.extensions.setup
 import com.oxygenupdater.internal.KotlinCallback
-import kotlinx.android.synthetic.main.bottom_sheet_message.*
 import kotlin.system.exitProcess
 
 /**
@@ -32,19 +30,20 @@ class MessageDialog(
     private var dialogListener: KotlinCallback<Int>? = null
 ) : BottomSheetDialog(activity) {
 
-    @SuppressLint("InflateParams")
+    private lateinit var binding: BottomSheetMessageBinding
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
+        binding = BottomSheetMessageBinding.inflate(LayoutInflater.from(activity), null, false)
 
-        setContentView(LayoutInflater.from(activity).inflate(R.layout.bottom_sheet_message, null, false))
+        setContentView(binding.root)
         setupViews()
     }
 
     private fun setupViews() {
-        titleTextView.text = title
+        binding.titleTextView.text = title
 
-        messageTextView.apply {
+        binding.messageTextView.apply {
             text = message
 
             if (message is Spanned) {
@@ -53,12 +52,12 @@ class MessageDialog(
             }
         }
 
-        positiveButton.setup(positiveButtonText, {
+        binding.positiveButton.setup(positiveButtonText, {
             dismiss()
             dialogListener?.invoke(Dialog.BUTTON_POSITIVE)
         }, positiveButtonIcon)
 
-        negativeButton.setup(negativeButtonText, {
+        binding.negativeButton.setup(negativeButtonText, {
             dismiss()
             dialogListener?.invoke(Dialog.BUTTON_NEGATIVE)
         })

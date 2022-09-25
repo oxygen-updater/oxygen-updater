@@ -1,6 +1,8 @@
 package com.oxygenupdater.activities
 
 import android.content.Context
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -15,6 +17,9 @@ import com.oxygenupdater.utils.ThemeUtils
 abstract class BaseActivity(
     @LayoutRes contentLayoutId: Int
 ) : AppCompatActivity(contentLayoutId) {
+
+    protected val rootView: View
+        get() = findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
 
     override fun attachBaseContext(
         base: Context

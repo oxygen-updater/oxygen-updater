@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.FaqAdapter
+import com.oxygenupdater.databinding.ActivityFaqBinding
 import com.oxygenupdater.viewmodels.FaqViewModel
-import kotlinx.android.synthetic.main.activity_faq.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FaqActivity : SupportActionBarActivity(
@@ -16,25 +16,27 @@ class FaqActivity : SupportActionBarActivity(
     private val faqViewModel by viewModel<FaqViewModel>()
     private val adapter = FaqAdapter()
 
+    private lateinit var binding: ActivityFaqBinding
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
-        swipeRefreshLayout.apply {
+        binding = ActivityFaqBinding.bind(rootView)
+        binding.swipeRefreshLayout.apply {
             setOnRefreshListener { loadData() }
             setColorSchemeResources(R.color.colorPrimary)
         }.also { loadData() }
 
-        faqRecyclerView.adapter = adapter
+        binding.faqRecyclerView.adapter = adapter
         faqViewModel.inAppFaq.observe(this) {
-            shimmerFrameLayout.isVisible = false
-            swipeRefreshLayout.isRefreshing = false
+            binding.shimmerFrameLayout.isVisible = false
+            binding.swipeRefreshLayout.isRefreshing = false
 
             adapter.submitList(it)
         }
     }
 
     private fun loadData() {
-        shimmerFrameLayout.isVisible = true
+        binding.shimmerFrameLayout.isVisible = true
         faqViewModel.fetchFaqCategories()
     }
 

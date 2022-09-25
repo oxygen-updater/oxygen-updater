@@ -3,6 +3,8 @@ package com.oxygenupdater.activities
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
+import com.oxygenupdater.databinding.ActivityOnboardingBinding
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
@@ -31,8 +34,6 @@ import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.OnboardingViewModel
-import kotlinx.android.synthetic.main.activity_onboarding.*
-import kotlinx.android.synthetic.main.fragment_onboarding_complete.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
@@ -58,6 +59,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         ) = handlePageChangeCallback(position + 1)
     }
 
+    private lateinit var binding: ActivityOnboardingBinding
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
@@ -89,26 +91,26 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
     }
 
     override fun onDestroy() = super.onDestroy().also {
-        viewPager?.unregisterOnPageChangeCallback(pageChangeCallback)
+        binding.viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
     }
 
-    override fun onBackPressed() = if (viewPager.currentItem == 0) {
+    override fun onBackPressed() = if (binding.viewPager.currentItem == 0) {
         // If the user is currently looking at the first step, allow the system to handle the
         // Back button. This calls finish() on this activity and pops the back stack.
         super.onBackPressed()
     } else {
         // Otherwise, select the previous step.
-        viewPager.currentItem = viewPager.currentItem - 1
+        binding.viewPager.currentItem -= 1
     }
 
     private fun setupViewPager() {
-        viewPager.apply {
+        binding.viewPager.apply {
             // create the adapter that will return a fragment for each of the pages of the activity.
             adapter = OnboardingPagerAdapter().also { viewPagerAdapter = it }
             reduceDragSensitivity()
 
             // attach TabLayout to ViewPager2
-            TabLayoutMediator(tabLayout, this) { _, _ -> }.attach()
+            TabLayoutMediator(binding.tabLayout, this) { _, _ -> }.attach()
 
             registerOnPageChangeCallback(pageChangeCallback)
         }
@@ -119,33 +121,33 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
     }
 
     private fun setupButtonsForViewPager() {
-        previousPageButton.setOnClickListener {
-            viewPager.currentItem = if (viewPager.currentItem == 0) {
+        binding.previousPageButton.setOnClickListener {
+            binding.viewPager.currentItem = if (binding.viewPager.currentItem == 0) {
                 0
             } else {
-                viewPager.currentItem - 1
+                binding.viewPager.currentItem - 1
             }
         }
 
-        nextPageButton.setOnClickListener {
-            if (viewPager.currentItem == 3) {
+        binding.nextPageButton.setOnClickListener {
+            if (binding.viewPager.currentItem == 3) {
                 onStartAppButtonClicked(it)
             } else {
-                viewPager.currentItem++
+                binding.viewPager.currentItem++
             }
         }
     }
 
     private fun setupAppBarForViewPager() {
-        appBar.post {
-            val totalScrollRange = appBar.totalScrollRange
+        binding.appBar.post {
+            val totalScrollRange = binding.appBar.totalScrollRange
 
             // adjust bottom margin on first load
-            viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = totalScrollRange }
+            binding.viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = totalScrollRange }
 
             // adjust bottom margin on scroll
-            appBar.addOnOffsetChangedListener { _, verticalOffset ->
-                viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+            binding.appBar.addOnOffsetChangedListener { _, verticalOffset ->
+                binding.viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
                     bottomMargin = totalScrollRange - abs(verticalOffset)
                 }
             }
@@ -187,15 +189,15 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
         onboardingViewModel.fragmentCreated.observe(this) {
             if (it == 4) {
-                onboardingPage4StartAppButton?.setOnClickListener(this::onStartAppButtonClicked)
+                findViewById<Button>(R.id.onboardingPage4StartAppButton)?.setOnClickListener(this::onStartAppButtonClicked)
             }
         }
     }
 
     private fun handlePageChangeCallback(pageNumber: Int) {
-        previousPageButton.isEnabled = pageNumber != 1
+        binding.previousPageButton.isEnabled = pageNumber != 1
 
-        nextPageButton.apply {
+        binding.nextPageButton.apply {
             rotation = if (pageNumber == 4) {
                 setImageResource(R.drawable.done)
                 0f
@@ -207,42 +209,42 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
         when (pageNumber) {
             1 -> {
-                nextPageButton.isEnabled = true
+                binding.nextPageButton.isEnabled = true
 
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
-                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                binding.collapsingToolbarLayout.title = getString(R.string.onboarding_page_1_title)
+                binding.collapsingToolbarImage.setImageResourceWithAnimationAndTint(
                     R.drawable.logo_notification,
                     android.R.anim.fade_in,
                     R.color.colorPrimary
                 )
             }
             2 -> {
-                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
+                binding.nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 2
 
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
-                collapsingToolbarImage.imageTintList = null
+                binding.collapsingToolbarLayout.title = getString(R.string.onboarding_page_2_title)
+                binding.collapsingToolbarImage.imageTintList = null
 
                 Glide.with(this)
                     .load(deviceImageUrl)
                     .placeholder(R.drawable.oneplus7pro)
                     .error(R.drawable.oneplus7pro)
-                    .into(collapsingToolbarImage)
+                    .into(binding.collapsingToolbarImage)
             }
             3 -> {
-                nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3
+                binding.nextPageButton.isEnabled = viewPagerAdapter.numberOfPages > 3
 
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
-                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                binding.collapsingToolbarLayout.title = getString(R.string.onboarding_page_3_title)
+                binding.collapsingToolbarImage.setImageResourceWithAnimationAndTint(
                     R.drawable.cloud_download,
                     android.R.anim.fade_in,
                     R.color.colorPrimary
                 )
             }
             4 -> {
-                nextPageButton.isEnabled = true
+                binding.nextPageButton.isEnabled = true
 
-                collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
-                collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+                binding.collapsingToolbarLayout.title = getString(R.string.onboarding_page_4_title)
+                binding.collapsingToolbarImage.setImageResourceWithAnimationAndTint(
                     R.drawable.done_all,
                     android.R.anim.fade_in,
                     R.color.colorPrimary
@@ -257,7 +259,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
     @Suppress("UNUSED_PARAMETER")
     fun onStartAppButtonClicked(view: View) {
         if (PrefManager.checkIfSetupScreenIsFilledIn()) {
-            onboardingPage4LogsCheckbox.isChecked.let {
+            findViewById<CheckBox>(R.id.onboardingPage4LogsCheckbox).isChecked.let {
                 PrefManager.putBoolean(
                     PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
                     it
@@ -316,18 +318,18 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                 field = value
                 notifyDataSetChanged()
 
-                when (viewPager.currentItem) {
+                when (binding.viewPager.currentItem) {
                     0 -> {
-                        previousPageButton.isEnabled = false
-                        nextPageButton.isEnabled = true
+                        binding.previousPageButton.isEnabled = false
+                        binding.nextPageButton.isEnabled = true
                     }
                     field - 1 -> {
-                        previousPageButton.isEnabled = true
-                        nextPageButton.isEnabled = false
+                        binding.previousPageButton.isEnabled = true
+                        binding.nextPageButton.isEnabled = false
                     }
                     else -> {
-                        previousPageButton.isEnabled = true
-                        nextPageButton.isEnabled = true
+                        binding.previousPageButton.isEnabled = true
+                        binding.nextPageButton.isEnabled = true
                     }
                 }
             }

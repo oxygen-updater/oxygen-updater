@@ -2,12 +2,14 @@ package com.oxygenupdater.fragments
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.oxygenupdater.R
 import com.oxygenupdater.activities.InstallActivity
+import com.oxygenupdater.databinding.FragmentInstallGuideBinding
 import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.InstallGuidePage
@@ -15,11 +17,10 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.viewmodels.InstallViewModel
-import kotlinx.android.synthetic.main.fragment_install_guide.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
+class InstallGuideFragment : Fragment() {
 
     private var pageNumber = 1
     private var isFirstPage = false
@@ -32,6 +33,21 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
             pageNumber = it.getInt(ARG_PAGE_NUMBER, 1)
             isFirstPage = it.getBoolean(ARG_IS_FIRST_PAGE, false)
         }
+    }
+
+    /** Only valid between `onCreateView` and `onDestroyView` */
+    private var binding: FragmentInstallGuideBinding? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ) = FragmentInstallGuideBinding.inflate(inflater, container, false).run {
+        binding = this
+        root
+    }
+
+    override fun onDestroyView() = super.onDestroyView().also {
+        binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,14 +135,14 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
 
         // Display a reminder to write everything down on the first page.
         if (isFirstPage) {
-            installGuideTip.isVisible = true
+            binding?.installGuideTip?.isVisible = true
 
             installViewModel.markFirstInstallGuidePageLoaded()
         }
 
         // Hide the loading screen of the install guide page.
-        shimmerFrameLayout.isVisible = false
-        installGuideText.apply {
+        binding?.shimmerFrameLayout?.isVisible = false
+        binding?.installGuideText?.apply {
             isVisible = true
             text = installGuidePage.text
             // Make the links clickable
@@ -135,7 +151,7 @@ class InstallGuideFragment : Fragment(R.layout.fragment_install_guide) {
 
         // Display the "Close" button on the last page.
         if (pageNumber == InstallActivity.NUMBER_OF_INSTALL_GUIDE_PAGES) {
-            installGuideCloseButton.apply {
+            binding?.installGuideCloseButton?.apply {
                 setOnClickListener { activity?.onBackPressed() }
                 isVisible = true
             }

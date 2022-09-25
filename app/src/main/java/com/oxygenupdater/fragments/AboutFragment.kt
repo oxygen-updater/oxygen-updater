@@ -2,20 +2,37 @@ package com.oxygenupdater.fragments
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.AboutButtonAdapter
+import com.oxygenupdater.databinding.FragmentAboutBinding
 import com.oxygenupdater.viewmodels.MainViewModel
-import kotlinx.android.synthetic.main.fragment_about.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class AboutFragment : Fragment(R.layout.fragment_about) {
+class AboutFragment : Fragment() {
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
+
+    /** Only valid between `onCreateView` and `onDestroyView` */
+    private var binding: FragmentAboutBinding? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ) = FragmentAboutBinding.inflate(inflater, container, false).run {
+        binding = this
+        root
+    }
+
+    override fun onDestroyView() = super.onDestroyView().also {
+        binding = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mainViewModel.saveSubtitleForPage(
@@ -23,7 +40,7 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
             getString(R.string.summary_oxygen, BuildConfig.VERSION_NAME)
         )
 
-        buttonRecyclerView.let { recyclerView ->
+        binding?.buttonRecyclerView?.let { recyclerView ->
             val verticalDecorator = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
             val horizontalDecorator = DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL)
 
@@ -42,9 +59,9 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
 
         // Make the links in the background story clickable.
         LinkMovementMethod.getInstance().let {
-            appDescriptionTextView.movementMethod = it
-            appSupportTextView.movementMethod = it
-            backgroundStoryTextView.movementMethod = it
+            binding?.appDescriptionTextView?.movementMethod = it
+            binding?.appSupportTextView?.movementMethod = it
+            binding?.backgroundStoryTextView?.movementMethod = it
         }
     }
 }

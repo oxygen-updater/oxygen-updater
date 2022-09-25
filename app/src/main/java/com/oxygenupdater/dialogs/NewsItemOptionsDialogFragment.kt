@@ -13,10 +13,10 @@ import androidx.core.net.toUri
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.NewsListAdapter
+import com.oxygenupdater.databinding.BottomSheetNewsItemOptionsBinding
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.viewmodels.NewsViewModel
-import kotlinx.android.synthetic.main.bottom_sheet_news_item_options.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -30,16 +30,21 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
 
     private val newsViewModel by sharedViewModel<NewsViewModel>()
 
+    /** Only valid between `onCreateView` and `onDestroyView` */
+    private var binding: BottomSheetNewsItemOptionsBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(
-        R.layout.bottom_sheet_news_item_options,
-        container,
-        false
-    ).also {
+    ) = BottomSheetNewsItemOptionsBinding.inflate(inflater, container, false).run {
+        binding = this
+        root
+    }.also {
         clipboard = context?.getSystemService()
+    }
+
+    override fun onDestroyView() = super.onDestroyView().also {
+        binding = null
     }
 
     override fun onViewCreated(
@@ -54,7 +59,7 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
         val title = newsItem.title
         val fullUrl = newsItem.webUrl
 
-        markAsReadTextView.apply {
+        binding?.markAsReadTextView?.apply {
             text = getString(
                 if (read) R.string.news_mark_unread
                 else R.string.news_mark_read
@@ -76,7 +81,7 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
             }
         }
 
-        openInBrowserTextView.setOnClickListener {
+        binding?.openInBrowserTextView?.setOnClickListener {
             // Bypassing intent filters is hacky and likely to break in newer APIs
             // (because it involves resolving the intent and checking package names).
             Intent.makeMainSelectorActivity(
@@ -90,7 +95,7 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        shareLinkTextView.setOnClickListener {
+        binding?.shareLinkTextView?.setOnClickListener {
             val prefix = "${getString(R.string.app_name)}: $title"
             val intent = Intent(Intent.ACTION_SEND)
                 // Rich text preview: should work only on API 29+
@@ -106,7 +111,7 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
             dismiss()
         }
 
-        copyLinkTextView.setOnClickListener {
+        binding?.copyLinkTextView?.setOnClickListener {
             val clip = ClipData.newPlainText(getString(R.string.app_name), fullUrl)
             clipboard?.setPrimaryClip(clip)?.also {
                 Toast.makeText(

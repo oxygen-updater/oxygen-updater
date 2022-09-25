@@ -3,6 +3,7 @@ package com.oxygenupdater.fragments
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
+import android.widget.TextView
 import androidx.core.view.isVisible
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.KotlinCallback
@@ -11,8 +12,6 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.viewmodels.OnboardingViewModel
-import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
-import kotlinx.android.synthetic.main.layout_error.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -22,7 +21,7 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
     private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        onboardingChooserCaption.setText(R.string.onboarding_page_2_caption)
+        binding?.onboardingChooserCaption?.setText(R.string.onboarding_page_2_caption)
 
         fetchData()
     }
@@ -63,25 +62,26 @@ class DeviceChooserOnboardingFragment : ChooserOnboardingFragment() {
 
     private fun inflateAndShowErrorState() {
         // Hide the loading shimmer since an error state can only be enabled after a load completes
-        shimmerFrameLayout.isVisible = false
+        binding?.shimmerFrameLayout?.isVisible = false
 
         // Show error layout
-        if (errorLayoutStub?.parent != null) {
-            errorLayoutStub.inflate()
+        if (binding?.errorLayoutStub?.parent != null) {
+            binding?.errorLayoutStub?.inflate()
         }
-        errorLayout.isVisible = true
-        errorActionButton.isVisible = false
+        val rootView = binding?.root
+        rootView?.findViewById<View>(R.id.errorLayout)?.isVisible = true
+        rootView?.findViewById<View>(R.id.errorActionButton)?.isVisible = false
 
-        errorTitle.text = getString(R.string.device_chooser_error_title)
+        rootView?.findViewById<TextView>(R.id.errorTitle)?.text = getString(R.string.device_chooser_error_title)
         // Make the links clickable
-        errorText.movementMethod = LinkMovementMethod.getInstance()
+        rootView?.findViewById<TextView>(R.id.errorText)?.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun hideErrorStateIfInflated() {
         // Stub is null only after it has been inflated, and
         // we need to hide the error state only if it has been inflated
-        if (errorLayoutStub == null || errorLayoutStub.parent == null) {
-            errorLayout.isVisible = false
+        if (binding?.errorLayoutStub == null || binding?.errorLayoutStub?.parent == null) {
+            binding?.root?.findViewById<View>(R.id.errorLayout)?.isVisible = false
         }
     }
 }

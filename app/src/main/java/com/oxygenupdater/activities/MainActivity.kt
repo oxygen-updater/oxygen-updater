@@ -37,6 +37,7 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
+import com.oxygenupdater.databinding.ActivityMainBinding
 import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.dialogs.MessageDialog
 import com.oxygenupdater.dialogs.ServerMessagesDialogFragment
@@ -59,7 +60,6 @@ import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
@@ -81,11 +81,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     private val noConnectionSnackbar by lazy(LazyThreadSafetyMode.NONE) {
         Snackbar.make(
-            coordinatorLayout,
+            binding.coordinatorLayout,
             R.string.error_no_internet_connection,
             Snackbar.LENGTH_INDEFINITE
         ).apply {
-            anchorView = bannerAdViewContainer
+            anchorView = binding.bannerAdViewContainer
             setBackgroundTint(ContextCompat.getColor(this@MainActivity, R.color.colorError))
             setAction(getString(android.R.string.ok)) {
                 dismiss()
@@ -100,9 +100,9 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            toolbar.menu.findItem(R.id.action_mark_articles_read).isVisible = position == PAGE_NEWS
+            binding.toolbar.menu.findItem(R.id.action_mark_articles_read).isVisible = position == PAGE_NEWS
 
-            bottomNavigationView.menu.getItem(position)?.run {
+            binding.bottomNavigationView.menu.getItem(position)?.run {
                 isChecked = true
 
                 when (position) {
@@ -140,18 +140,20 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         }
     }
 
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
+        binding = ActivityMainBinding.bind(rootView)
         setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
         bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
             BuildConfig.AD_BANNER_MAIN_ID,
-            bannerAdViewContainer
+            binding.bannerAdViewContainer
         )
 
-        toolbar.setOnMenuItemClickListener(this)
+        binding.toolbar.setOnMenuItemClickListener(this)
         setupViewPager()
 
         if (!Utils.checkNetworkConnection()) {
@@ -175,7 +177,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     override fun onDestroy() = super.onDestroy().also {
         bannerAdView.destroy()
-        viewPager?.unregisterOnPageChangeCallback(pageChangeCallback)
+        binding.viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
         noNetworkDialog.bypassListenerAndDismiss()
         mainViewModel.unregisterAppUpdateListener()
     }
@@ -183,11 +185,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     override fun onBackPressed() = when {
         // If the user is currently looking at the first step, allow the system to handle the
         // Back button. This calls finish() on this activity and pops the back stack.
-        viewPager.currentItem == 0 -> finishAffinity()
+        binding.viewPager.currentItem == 0 -> finishAffinity()
         // If user's settings haven't been saved yet, don't reset to the first page
         shouldStopNavigateAwayFromSettings() -> showSettingsWarning()
         // Otherwise, reset to first page
-        else -> viewPager.currentItem = 0
+        else -> binding.viewPager.currentItem = 0
     }
 
     override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
@@ -295,30 +297,30 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
         mainViewModel.appUpdateInstallStatus.observe(this) {
             when (it.installStatus()) {
-                PENDING -> flexibleAppUpdateProgressBar.apply {
+                PENDING -> binding.flexibleAppUpdateProgressBar.apply {
                     isVisible = true
                     isIndeterminate = true
                 }
-                DOWNLOADING -> flexibleAppUpdateProgressBar.apply {
+                DOWNLOADING -> binding.flexibleAppUpdateProgressBar.apply {
                     isVisible = true
                     isIndeterminate = false
                     progress = (it.bytesDownloaded() * 100 / it.totalBytesToDownload().coerceAtLeast(1)).toInt()
                 }
                 DOWNLOADED -> {
-                    flexibleAppUpdateProgressBar.isVisible = false
+                    binding.flexibleAppUpdateProgressBar.isVisible = false
                     showAppUpdateSnackbar()
                 }
                 FAILED -> {
-                    flexibleAppUpdateProgressBar.isVisible = false
+                    binding.flexibleAppUpdateProgressBar.isVisible = false
                     showAppUpdateBanner()
                 }
-                else -> flexibleAppUpdateProgressBar.isVisible = false
+                else -> binding.flexibleAppUpdateProgressBar.isVisible = false
             }
         }
 
         mainViewModel.pageToolbarTextUpdated.observe(this) {
-            if (it.first == bottomNavigationView.selectedItemId) {
-                toolbar.subtitle = it.second
+            if (it.first == binding.bottomNavigationView.selectedItemId) {
+                binding.toolbar.subtitle = it.second
             }
         }
 
@@ -335,7 +337,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * Also submits [banners] to [serverMessagesDialog] so that its adapter can display them.
      */
     private fun displayServerMessageBars(banners: List<ServerMessage>) {
-        val announcementsItem = toolbar.menu.findItem(R.id.action_announcements)
+        val announcementsItem = binding.toolbar.menu.findItem(R.id.action_announcements)
 
         // Select only the banners that have a non-empty text (`ServerStatus.kt` has empty text in some cases)
         val bannerList = banners.filter {
@@ -351,7 +353,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     }
 
     private fun fetchServerMessagesInternal(
-        serverStatus: ServerStatus
+        serverStatus: ServerStatus,
     ) {
         mainViewModel.fetchServerMessages(serverStatus) { error ->
             if (isFinishing) {
@@ -380,9 +382,9 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     private fun showAppUpdateBanner(
         serverStatus: ServerStatus? = null
-    ) = appUpdateBannerTextView.run {
+    ) = binding.appUpdateBannerTextView.run {
         isVisible = true
-        appUpdateBannerDivider.isVisible = true
+        binding.appUpdateBannerDivider.isVisible = true
         text = if (serverStatus == null) {
             getString(R.string.new_app_version_inapp_failed)
         } else {
@@ -396,11 +398,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     private fun showAppUpdateSnackbar() {
         Snackbar.make(
-            coordinatorLayout,
+            binding.coordinatorLayout,
             R.string.new_app_version_inapp_downloaded,
             Snackbar.LENGTH_INDEFINITE
         ).apply {
-            anchorView = viewPager
+            anchorView = binding.viewPager
             setAction(getString(R.string.error_reload)) {
                 mainViewModel.completeAppUpdate()
             }
@@ -409,7 +411,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     }
 
     private fun setupViewPager() {
-        viewPager.apply {
+        binding.viewPager.apply {
             offscreenPageLimit = 1 // Enough to preload the "News" page
             adapter = MainPagerAdapter()
             reduceDragSensitivity()
@@ -428,28 +430,28 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
         setupBottomNavigation()
         setupAppBarForViewPager()
-        toolbar.setNavigationOnClickListener { showAboutPage() }
+        binding.toolbar.setNavigationOnClickListener { showAboutPage() }
     }
 
     private fun setupAppBarForViewPager() {
-        appBar.post {
-            val totalScrollRange = appBar.totalScrollRange
+        binding.appBar.post {
+            val totalScrollRange = binding.appBar.totalScrollRange
 
             // Adjust bottom margin on first load
-            contentLayout.updateLayoutParams<LayoutParams> {
+            binding.contentLayout.updateLayoutParams<LayoutParams> {
                 bottomMargin = totalScrollRange
             }
 
             // Adjust bottom margin on scroll
-            appBar.addOnOffsetChangedListener { _, verticalOffset ->
-                contentLayout.updateLayoutParams<LayoutParams> {
+            binding.appBar.addOnOffsetChangedListener { _, verticalOffset ->
+                binding.contentLayout.updateLayoutParams<LayoutParams> {
                     bottomMargin = totalScrollRange - abs(verticalOffset)
                 }
             }
         }
     }
 
-    private fun setupBottomNavigation() = bottomNavigationView.setOnItemSelectedListener {
+    private fun setupBottomNavigation() = binding.bottomNavigationView.setOnItemSelectedListener {
         when (it.itemId) {
             R.id.page_update -> 0
             R.id.page_news -> 1
@@ -463,7 +465,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
                 showSettingsWarning()
                 false
             } else {
-                viewPager.currentItem = pageIndex
+                binding.viewPager.currentItem = pageIndex
                 true
             }
         }
@@ -475,7 +477,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * @param currentPageIndex an optional parameter to pass a different pageIndex (e.g. when BottomNav's menu is clicked).
      * Defaults to [ViewPager2.getCurrentItem].
      */
-    private fun shouldStopNavigateAwayFromSettings(currentPageIndex: Int = viewPager.currentItem) =
+    private fun shouldStopNavigateAwayFromSettings(currentPageIndex: Int = binding.viewPager.currentItem) =
         currentPageIndex == PAGE_SETTINGS && !PrefManager.checkIfSetupScreenHasBeenCompleted()
 
     private fun showSettingsWarning() {
@@ -495,7 +497,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             // If user's settings haven't been saved yet, don't navigate to PAGE_ABOUT
             showSettingsWarning()
         } else {
-            viewPager.currentItem = PAGE_ABOUT
+            binding.viewPager.currentItem = PAGE_ABOUT
         }
     }
 
@@ -514,8 +516,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     }
 
     fun updateToolbarForPage(@IdRes pageId: Int, subtitle: CharSequence? = null) {
-        if (pageId == bottomNavigationView.selectedItemId) {
-            toolbar.subtitle = mainViewModel.pageToolbarSubtitle[pageId] ?: subtitle
+        if (pageId == binding.bottomNavigationView.selectedItemId) {
+            binding.toolbar.subtitle = mainViewModel.pageToolbarSubtitle[pageId] ?: subtitle
         }
     }
 
@@ -532,7 +534,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         @IdRes pageId: Int,
         show: Boolean = true,
         count: Int? = null
-    ) = bottomNavigationView.getOrCreateBadge(pageId).apply {
+    ) = binding.bottomNavigationView.getOrCreateBadge(pageId).apply {
         isVisible = show
 
         if (isVisible && count != null /*&& count != 0*/) {
@@ -545,7 +547,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
      * Hide the [com.google.android.material.bottomnavigation.BottomNavigationView]'s [com.google.android.material.badge.BadgeDrawable] after a specified delay
      *
      * Even though [updateTabBadge] can be used to hide a badge, this function is different because it only hides an existing badge, after a specified delay.
-     * It's meant to be called from the [viewPager]'s `onPageSelected` callback, within this class.
+     * It's meant to be called from the [ActivityMainBinding.viewPager]'s `onPageSelected` callback, within this class.
      * [updateTabBadge] can be called from child fragments to hide the badge immediately, for example, if required after refreshing
      *
      * @param pageId pageId of the tab/fragment
@@ -557,9 +559,9 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     private fun hideTabBadge(
         @IdRes pageId: Int,
         delayMillis: Long = 0
-    ) = bottomNavigationView.getBadge(pageId)?.apply {
+    ) = binding.bottomNavigationView.getBadge(pageId)?.apply {
         Handler(Looper.getMainLooper()).postDelayed({
-            if (bottomNavigationView.selectedItemId == pageId) {
+            if (binding.bottomNavigationView.selectedItemId == pageId) {
                 isVisible = false
             }
         }, delayMillis)
@@ -573,15 +575,15 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
             Toast.makeText(this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG).show()
         }
 
-        bannerAdViewContainer?.apply {
+        binding.bannerAdViewContainer.apply {
             if (shouldShowAds) {
                 isVisible = true
                 bannerAdView.loadAd(buildAdRequest())
 
-                bannerAdDivider.isVisible = true
+                binding.bannerAdDivider.isVisible = true
             } else {
                 isVisible = false
-                bannerAdDivider.isVisible = false
+                binding.bannerAdDivider.isVisible = false
             }
         }
     }

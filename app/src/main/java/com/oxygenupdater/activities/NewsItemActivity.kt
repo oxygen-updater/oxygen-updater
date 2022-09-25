@@ -31,6 +31,7 @@ import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.adapters.NewsItemButtonAdapter
 import com.oxygenupdater.adapters.NewsListAdapter
+import com.oxygenupdater.databinding.ActivityNewsItemBinding
 import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.extensions.fullWidthAnchoredAdaptiveBannerAd
@@ -45,7 +46,6 @@ import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.ThemeUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.NewsViewModel
-import kotlinx.android.synthetic.main.activity_news_item.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDateTime
 
@@ -138,17 +138,17 @@ class NewsItemActivity : SupportActionBarActivity(
         }
 
         // Display the title of the article.
-        collapsingToolbarLayout.title = newsItem.title
+        binding.collapsingToolbarLayout.title = newsItem.title
         // Display the name of the author of the article
-        collapsingToolbarLayout.subtitle = newsItem.authorName
+        binding.collapsingToolbarLayout.subtitle = newsItem.authorName
 
         Glide.with(this)
             .load(newsItem.imageUrl)
             .placeholder(R.drawable.image)
             .error(R.drawable.logo_notification)
-            .into(collapsingToolbarImage)
+            .into(binding.collapsingToolbarImage)
 
-        buttonRecyclerView.let { recyclerView ->
+        binding.buttonRecyclerView.let { recyclerView ->
             val verticalDecorator = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
             val horizontalDecorator = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
 
@@ -166,7 +166,7 @@ class NewsItemActivity : SupportActionBarActivity(
         }
 
         // Display the subtitle of the article.
-        newsItemSubtitle.apply {
+        binding.newsItemSubtitle.apply {
             newsItem.subtitle.let {
                 isVisible = it != null
                 text = it
@@ -174,7 +174,7 @@ class NewsItemActivity : SupportActionBarActivity(
         }
 
         // Display the last update time of the article.
-        newsDatePublished.apply {
+        binding.newsDatePublished.apply {
             val dateTimePrefix = if (newsItem.dateLastEdited == null && newsItem.datePublished != null) {
                 newsItem.datePublished
             } else {
@@ -209,7 +209,7 @@ class NewsItemActivity : SupportActionBarActivity(
         }
 
         // Display the contents of the article.
-        webView.apply {
+        binding.webView.apply {
             // must be done to avoid the white background in dark themes
             setBackgroundColor(Color.TRANSPARENT)
 
@@ -243,12 +243,14 @@ class NewsItemActivity : SupportActionBarActivity(
         newsViewModel.markNewsItemRead(newsItem).observe(this, markNewsItemReadObserver)
     }
 
+    private lateinit var binding: ActivityNewsItemBinding
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
+        binding = ActivityNewsItemBinding.bind(rootView)
         bannerAdView = fullWidthAnchoredAdaptiveBannerAd(
             BuildConfig.AD_BANNER_NEWS_ID,
-            newsArticleAdViewContainer
+            binding.newsArticleAdViewContainer
         )
 
         if (!handleIntent(intent)) {
@@ -262,12 +264,12 @@ class NewsItemActivity : SupportActionBarActivity(
 
     override fun onResume() = super.onResume().also {
         bannerAdView.resume()
-        webView.onResume()
+        binding.webView.onResume()
     }
 
     override fun onPause() = super.onPause().also {
         bannerAdView.pause()
-        webView.onPause()
+        binding.webView.onPause()
     }
 
     override fun onDestroy() = super.onDestroy().also {
@@ -286,7 +288,7 @@ class NewsItemActivity : SupportActionBarActivity(
             NewsListAdapter.itemReadStatusChangedListener?.invoke(newsItemId, true)
         }
 
-        webView.apply {
+        binding.webView.apply {
             loadUrl("")
             stopLoading()
             destroy()
@@ -357,14 +359,14 @@ class NewsItemActivity : SupportActionBarActivity(
             setupInterstitialAd()
         } else {
             // reset NestedScrollView padding
-            nestedScrollView.setPadding(0, 0, 0, 0)
+            binding.nestedScrollView.setPadding(0, 0, 0, 0)
 
-            newsArticleAdViewContainer.isVisible = false
+            binding.newsArticleAdViewContainer.isVisible = false
         }
     }
 
     private fun setupBannerAd() {
-        newsArticleAdViewContainer.apply {
+        binding.newsArticleAdViewContainer.apply {
             isVisible = true
             bannerAdView.loadAd(buildAdRequest())
             bannerAdView.adListener = object : AdListener() {
@@ -374,7 +376,7 @@ class NewsItemActivity : SupportActionBarActivity(
                     // Need to add spacing between NestedScrollView contents and the AdView to avoid overlapping the last item
                     // Since the AdView's size is SMART_BANNER, bottom padding should be exactly the AdView's height,
                     // which can only be calculated once the AdView has been drawn on the screen
-                    post { nestedScrollView.updatePadding(bottom = height) }
+                    post { binding.nestedScrollView.updatePadding(bottom = height) }
                 }
             }
         }
@@ -413,7 +415,7 @@ class NewsItemActivity : SupportActionBarActivity(
     }
 
     private fun showLoadingState() {
-        progressBar.isVisible = true
+        binding.progressBar.isVisible = true
 
         val imageUrl = intent.getStringExtra(INTENT_NEWS_ITEM_IMAGE_URL)
         val title = intent.getStringExtra(INTENT_NEWS_ITEM_TITLE)
@@ -423,22 +425,22 @@ class NewsItemActivity : SupportActionBarActivity(
             .load(imageUrl)
             .placeholder(R.drawable.image)
             .error(R.drawable.logo_notification)
-            .into(collapsingToolbarImage)
+            .into(binding.collapsingToolbarImage)
 
-        collapsingToolbarLayout.title = title ?: getString(R.string.loading)
-        collapsingToolbarLayout.subtitle = getString(R.string.summary_please_wait)
-        newsItemSubtitle.apply {
+        binding.collapsingToolbarLayout.title = title ?: getString(R.string.loading)
+        binding.collapsingToolbarLayout.subtitle = getString(R.string.summary_please_wait)
+        binding.newsItemSubtitle.apply {
             subtitle.let {
                 isVisible = it != null
                 text = it
             }
         }
-        newsDatePublished.text = getString(R.string.loading)
+        binding.newsDatePublished.text = getString(R.string.loading)
     }
 
     private fun hideLoadingState() {
         // hide progress bar since the page has been loaded
-        progressBar.isVisible = false
+        binding.progressBar.isVisible = false
     }
 
     private fun showErrorState(
@@ -446,7 +448,7 @@ class NewsItemActivity : SupportActionBarActivity(
         isInvalidId: Boolean = false
     ) {
         // hide progress bar since the page failed to load
-        progressBar.isVisible = false
+        binding.progressBar.isVisible = false
 
         Dialogs.showArticleError(
             this,

@@ -5,7 +5,9 @@ import android.app.ActivityManager
 import android.os.Build
 import android.os.Bundle
 import android.text.format.Formatter
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,6 +15,9 @@ import com.bumptech.glide.Glide
 import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.databinding.FragmentDeviceInformationBinding
+import com.oxygenupdater.databinding.LayoutDeviceInformationHardwareBinding
+import com.oxygenupdater.databinding.LayoutDeviceInformationSoftwareBinding
 import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
@@ -22,17 +27,36 @@ import com.oxygenupdater.utils.Logger
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedOxygenOsVersion
 import com.oxygenupdater.viewmodels.MainViewModel
-import kotlinx.android.synthetic.main.fragment_device_information.*
-import kotlinx.android.synthetic.main.layout_device_information_hardware.*
-import kotlinx.android.synthetic.main.layout_device_information_software.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import kotlin.math.roundToLong
 
-class DeviceInformationFragment : Fragment(R.layout.fragment_device_information) {
+class DeviceInformationFragment : Fragment() {
 
     private val systemVersionProperties by inject<SystemVersionProperties>()
     private val mainViewModel by sharedViewModel<MainViewModel>()
+
+    /** Only valid between `onCreateView` and `onDestroyView` */
+    private var binding: FragmentDeviceInformationBinding? = null
+    private var bindingSoftware: LayoutDeviceInformationSoftwareBinding? = null
+    private var bindingHardware: LayoutDeviceInformationHardwareBinding? = null
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ) = FragmentDeviceInformationBinding.inflate(inflater, container, false).run {
+        binding = this
+        root
+    }.also {
+        bindingSoftware = LayoutDeviceInformationSoftwareBinding.bind(it)
+        bindingHardware = LayoutDeviceInformationHardwareBinding.bind(it)
+    }
+
+    override fun onDestroyView() = super.onDestroyView().also {
+        binding = null
+        bindingSoftware = null
+        bindingHardware = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         displaySoftwareInfo()
@@ -63,15 +87,15 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             return
         }
 
-        deviceNameTextView.apply {
+        binding?.deviceNameTextView?.apply {
             isVisible = true
             text = deviceName
         }
-        modelTextView.apply {
+        binding?.modelTextView?.apply {
             isVisible = true
             text = DeviceInformationData.model
         }
-        deviceSupportStatus.apply {
+        binding?.deviceSupportStatus?.apply {
             isVisible = true
             text = getString(
                 when (mainViewModel.deviceOsSpec) {
@@ -88,12 +112,12 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             .load(Device.constructImageUrl(deviceName))
             .placeholder(R.drawable.oneplus7pro)
             .error(R.drawable.oneplus7pro)
-            .into(deviceImage)
+            .into(binding?.deviceImage!!)
 
         val notSupported = mainViewModel.deviceOsSpec?.isDeviceOsSpecSupported == false
-        deviceImageOverlay.isVisible = notSupported
-        deviceImageOverlayIcon.isVisible = notSupported
-        deviceImageLayout.setOnClickListener(
+        binding?.deviceImageOverlay?.isVisible = notSupported
+        binding?.deviceImageOverlayIcon?.isVisible = notSupported
+        binding?.deviceImageLayout?.setOnClickListener(
             if (notSupported) View.OnClickListener {
                 (activity as MainActivity?)?.displayUnsupportedDeviceOsSpecMessage()
             } else null
@@ -102,10 +126,10 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
         updateDeviceMismatchStatusBanner()
     }
 
-    private fun updateDeviceMismatchStatusBanner() = deviceMismatchStatus.run {
+    private fun updateDeviceMismatchStatusBanner() = binding?.deviceMismatchStatus?.run {
         if (mainViewModel.deviceMismatchStatus?.first == true) {
             isVisible = true
-            contentDivider.isVisible = true
+            binding?.contentDivider?.isVisible = true
             text = getString(
                 R.string.incorrect_device_warning_message,
                 mainViewModel.deviceMismatchStatus!!.second,
@@ -113,7 +137,7 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             )
         } else {
             isVisible = false
-            contentDivider.isVisible = false
+            binding?.contentDivider?.isVisible = false
         }
     }
 
@@ -124,43 +148,43 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
         }
 
         // Android version
-        osVersionField.text = DeviceInformationData.osVersion
+        bindingSoftware?.osVersionField?.text = DeviceInformationData.osVersion
 
         // OxygenOS version (if available)
-        oxygenOsVersionField.run {
+        bindingSoftware?.oxygenOsVersionField?.run {
             val oxygenOSVersion = getFormattedOxygenOsVersion(systemVersionProperties.oxygenOSVersion)
 
             if (oxygenOSVersion != NO_OXYGEN_OS) {
                 text = oxygenOSVersion
             } else {
-                oxygenOsVersionLabel.isVisible = false
+                bindingSoftware?.oxygenOsVersionLabel?.isVisible = false
                 isVisible = false
             }
         }
 
         // OxygenOS OTA version (if available)
-        otaVersionField.run {
+        bindingSoftware?.otaVersionField?.run {
             val oxygenOSOTAVersion = systemVersionProperties.oxygenOSOTAVersion
 
             if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
                 text = oxygenOSOTAVersion
             } else {
-                otaVersionLabel.isVisible = false
+                bindingSoftware?.otaVersionLabel?.isVisible = false
                 isVisible = false
             }
         }
 
         // Incremental OS version
-        incrementalOsVersionField.text = DeviceInformationData.incrementalOsVersion
+        bindingSoftware?.incrementalOsVersionField?.text = DeviceInformationData.incrementalOsVersion
 
         // Security Patch Date (if available)
-        securityPatchField.run {
+        bindingSoftware?.securityPatchField?.run {
             val securityPatchDate = systemVersionProperties.securityPatchDate
 
             if (securityPatchDate != NO_OXYGEN_OS) {
                 text = securityPatchDate
             } else {
-                securityPatchLabel.isVisible = false
+                bindingSoftware?.securityPatchLabel?.isVisible = false
                 isVisible = false
             }
         }
@@ -173,7 +197,7 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
         }
 
         // RAM (if available)
-        ramField.run {
+        bindingHardware?.ramField?.run {
             val ramBytes = try {
                 val mi = ActivityManager.MemoryInfo()
                 requireContext().getSystemService<ActivityManager>()?.getMemoryInfo(mi)
@@ -203,16 +227,16 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
             if (ramBytes != 0L) {
                 text = Formatter.formatShortFileSize(context, ramBytes)
             } else {
-                ramLabel.isVisible = false
+                bindingHardware?.ramLabel?.isVisible = false
                 isVisible = false
             }
         }
 
         // SoC
-        socField.text = DeviceInformationData.soc
+        bindingHardware?.socField?.text = DeviceInformationData.soc
 
         // CPU Frequency (if available)
-        freqField.run {
+        bindingHardware?.freqField?.run {
             val cpuFreqString = DeviceInformationData.cpuFrequency
 
             text = if (cpuFreqString != DeviceInformationData.UNKNOWN) {
@@ -223,13 +247,13 @@ class DeviceInformationFragment : Fragment(R.layout.fragment_device_information)
         }
 
         // Serial number (Android 7.1.2 and lower only)
-        serialField.run {
+        bindingHardware?.serialField?.run {
             val serialNumber = DeviceInformationData.serialNumber
 
             if (serialNumber != DeviceInformationData.UNKNOWN) {
                 text = serialNumber
             } else {
-                serialLabel.isVisible = false
+                bindingHardware?.serialLabel?.isVisible = false
                 isVisible = false
             }
         }

@@ -4,14 +4,13 @@ plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
     id(BuildPlugins.GOOGLE_SERVICES)
     id(BuildPlugins.FIREBASE_CRASHLYTICS)
-    id(BuildPlugins.KOTLIN_ANDROID)
-    id(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-    id(BuildPlugins.KOTLIN_KAPT)
+    kotlin("android")
+    kotlin("kapt")
 }
 
 fun loadProperties(
     name: String,
-    vararg defaults: Pair<String, String>
+    vararg defaults: Pair<String, String>,
 ) = Properties().apply {
     val logger = logger
     val file = rootProject.file("$name.properties")
@@ -224,6 +223,10 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     testBuildType = "debug"

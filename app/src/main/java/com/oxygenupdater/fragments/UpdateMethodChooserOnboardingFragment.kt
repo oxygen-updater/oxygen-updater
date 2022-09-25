@@ -11,7 +11,6 @@ import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.viewmodels.OnboardingViewModel
-import kotlinx.android.synthetic.main.fragment_onboarding_chooser.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
@@ -19,7 +18,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
     private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        onboardingChooserCaption.setText(R.string.onboarding_page_3_caption)
+        binding?.onboardingChooserCaption?.setText(R.string.onboarding_page_3_caption)
 
         fetchData()
     }
@@ -40,7 +39,7 @@ class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
     }
 
     private fun fetchDataInternal(deviceId: Long) {
-        shimmerFrameLayout?.isVisible = true
+        binding?.shimmerFrameLayout?.isVisible = true
 
         onboardingViewModel.fetchUpdateMethodsForDevice(deviceId)
     }

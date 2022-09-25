@@ -13,10 +13,10 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.R
+import com.oxygenupdater.databinding.ActivityInstallBinding
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
 import com.oxygenupdater.fragments.InstallGuideFragment
 import com.oxygenupdater.viewmodels.InstallViewModel
-import kotlinx.android.synthetic.main.activity_install.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
@@ -33,8 +33,8 @@ class InstallActivity : SupportActionBarActivity(
     private val installViewModel by viewModel<InstallViewModel>()
 
     private val appBarOffsetChangeListenerForViewPager = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-        viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
-            bottomMargin = appBar.totalScrollRange - abs(verticalOffset)
+        binding.viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+            bottomMargin = binding.appBar.totalScrollRange - abs(verticalOffset)
         }
     }
 
@@ -42,9 +42,11 @@ class InstallActivity : SupportActionBarActivity(
         override fun onPageSelected(position: Int) = handleInstallGuidePageChangeCallback(position)
     }
 
+    private lateinit var binding: ActivityInstallBinding
     override fun onCreate(
         savedInstanceState: Bundle?
     ) = super.onCreate(savedInstanceState).also {
+        binding = ActivityInstallBinding.bind(rootView)
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)
 
         installViewModel.firstInstallGuidePageLoaded.observe(this) {
@@ -54,15 +56,15 @@ class InstallActivity : SupportActionBarActivity(
         }
 
         installViewModel.toolbarTitle.observe(this) {
-            collapsingToolbarLayout.title = getString(it)
+            binding.collapsingToolbarLayout.title = getString(it)
         }
 
         installViewModel.toolbarSubtitle.observe(this) {
-            collapsingToolbarLayout.subtitle = if (it != null) getString(it) else null
+            binding.collapsingToolbarLayout.subtitle = if (it != null) getString(it) else null
         }
 
         installViewModel.toolbarImage.observe(this) {
-            collapsingToolbarImage.setImageResourceWithAnimationAndTint(
+            binding.collapsingToolbarImage.setImageResourceWithAnimationAndTint(
                 it.first,
                 android.R.anim.fade_in,
                 if (it.second) R.color.colorPrimary else null
@@ -73,25 +75,27 @@ class InstallActivity : SupportActionBarActivity(
         setupViewPager()
     }
 
-    private fun setupAppBarForViewPager() = appBar.post {
+    private fun setupAppBarForViewPager() = binding.appBar.post {
         // adjust bottom margin on first load
-        viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> { bottomMargin = appBar.totalScrollRange }
+        binding.viewPagerContainer.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+            bottomMargin = binding.appBar.totalScrollRange
+        }
 
         // adjust bottom margin on scroll
-        appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
+        binding.appBar.addOnOffsetChangedListener(appBarOffsetChangeListenerForViewPager)
     }.also {
         setNavBarColorToBackgroundVariant()
     }
 
     private fun setupViewPager() {
-        viewPagerContainer.isVisible = true
+        binding.viewPagerContainer.isVisible = true
 
-        viewPager.apply {
+        binding.viewPager.apply {
             offscreenPageLimit = 4 // Install guide is 5 pages max. So there can be only 4 off-screen
             adapter = InstallGuidePagerAdapter()
 
             // attach TabLayout to ViewPager2
-            TabLayoutMediator(tabLayout, this) { _, _ -> }.attach()
+            TabLayoutMediator(binding.tabLayout, this) { _, _ -> }.attach()
 
             registerOnPageChangeCallback(installGuidePageChangeCallback)
         }
@@ -101,29 +105,29 @@ class InstallActivity : SupportActionBarActivity(
     }
 
     private fun setupButtonsForViewPager() {
-        previousPageButton.setOnClickListener {
-            viewPager.currentItem--
+        binding.previousPageButton.setOnClickListener {
+            binding.viewPager.currentItem--
         }
 
-        nextPageButton.setOnClickListener {
+        binding.nextPageButton.setOnClickListener {
             val lastPageNumber = if (showDownloadPage) {
                 NUMBER_OF_INSTALL_GUIDE_PAGES
             } else {
                 NUMBER_OF_INSTALL_GUIDE_PAGES - 1
             }
 
-            if (viewPager.currentItem == lastPageNumber - 1) {
+            if (binding.viewPager.currentItem == lastPageNumber - 1) {
                 onBackPressed()
             } else {
-                viewPager.currentItem++
+                binding.viewPager.currentItem++
             }
         }
     }
 
     private fun handleInstallGuidePageChangeCallback(position: Int) {
-        previousPageButton.isEnabled = position != 0
+        binding.previousPageButton.isEnabled = position != 0
 
-        nextPageButton.apply {
+        binding.nextPageButton.apply {
             val lastPageNumber = if (showDownloadPage) {
                 NUMBER_OF_INSTALL_GUIDE_PAGES
             } else {
@@ -142,8 +146,8 @@ class InstallActivity : SupportActionBarActivity(
         val pageNumber = position + if (showDownloadPage) 1 else 2
 
         installViewModel.installGuideCache[pageNumber]?.run {
-            collapsingToolbarLayout.title = title
-            collapsingToolbarLayout.subtitle = getString(
+            binding.collapsingToolbarLayout.title = title
+            binding.collapsingToolbarLayout.subtitle = getString(
                 R.string.install_guide_subtitle,
                 position + 1,
                 if (showDownloadPage) NUMBER_OF_INSTALL_GUIDE_PAGES else NUMBER_OF_INSTALL_GUIDE_PAGES - 1
@@ -155,9 +159,9 @@ class InstallActivity : SupportActionBarActivity(
                     .load(completeImageUrl(imageUrl, fileExtension))
                     // Load a "no entry" sign to show that the image failed to load.
                     .error(R.drawable.no_entry)
-                    .into(collapsingToolbarImage)
+                    .into(binding.collapsingToolbarImage)
 
-                collapsingToolbarImage.apply {
+                binding.collapsingToolbarImage.apply {
                     imageTintList = null
                 }
             } else {
@@ -189,7 +193,7 @@ class InstallActivity : SupportActionBarActivity(
     }
 
     override fun onDestroy() = super.onDestroy().also {
-        viewPager?.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
+        binding.viewPager.unregisterOnPageChangeCallback(installGuidePageChangeCallback)
     }
 
     companion object {

@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.oxygenupdater.R
 import com.oxygenupdater.adapters.ServerMessagesAdapter
+import com.oxygenupdater.databinding.BottomSheetServerMessagesBinding
 import com.oxygenupdater.models.ServerMessage
-import kotlinx.android.synthetic.main.bottom_sheet_server_messages.*
 
 /**
  * Wrapper around [BottomSheetDialogFragment]
@@ -17,15 +16,20 @@ class ServerMessagesDialogFragment : BottomSheetDialogFragment() {
 
     private val serverMessagesAdapter = ServerMessagesAdapter()
 
+    /** Only valid between `onCreateView` and `onDestroyView` */
+    private var binding: BottomSheetServerMessagesBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(
-        R.layout.bottom_sheet_server_messages,
-        container,
-        false
-    )
+    ) = BottomSheetServerMessagesBinding.inflate(inflater, container, false).run {
+        binding = this
+        root
+    }
+
+    override fun onDestroyView() = super.onDestroyView().also {
+        binding = null
+    }
 
     override fun onViewCreated(
         view: View,
@@ -37,13 +41,13 @@ class ServerMessagesDialogFragment : BottomSheetDialogFragment() {
     ) = serverMessagesAdapter.submitList(bannerList)
 
     private fun setupViews() {
-        recyclerView.apply {
+        binding?.recyclerView?.apply {
             // Performance optimization
             setHasFixedSize(true)
             adapter = serverMessagesAdapter
         }
 
-        headerTextView.setOnClickListener { dismiss() }
+        binding?.headerTextView?.setOnClickListener { dismiss() }
     }
 
     companion object {

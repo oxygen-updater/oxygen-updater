@@ -34,10 +34,6 @@ object BuildPlugins {
     const val ANDROID_APPLICATION = "com.android.application"
     const val GOOGLE_SERVICES = "com.google.gms.google-services"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
-
-    const val KOTLIN_ANDROID = "kotlin-android"
-    const val KOTLIN_ANDROID_EXTENSIONS = "kotlin-android-extensions"
-    const val KOTLIN_KAPT = "kotlin-kapt"
 }
 
 object AndroidSdk {
