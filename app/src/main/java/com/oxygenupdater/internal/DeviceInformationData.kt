@@ -14,7 +14,22 @@ object DeviceInformationData {
     val deviceManufacturer: String = Build.MANUFACTURER
     val deviceName: String = Build.DEVICE
     val model: String = Build.MODEL
-    val soc: String = Build.BOARD
+    val soc: String = Build.BOARD.let { board ->
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val socManufacturer = Build.SOC_MANUFACTURER
+            val socModel = Build.SOC_MODEL
+            val validManufacturer = socManufacturer != Build.UNKNOWN
+            val validModel = socModel != Build.UNKNOWN
+
+            if (validManufacturer && validModel) {
+                "$socManufacturer $socModel ($board)"
+            } else if (validManufacturer) {
+                "$socManufacturer ($board)"
+            } else if (validModel) {
+                "$socModel ($board)"
+            } else board
+        } else board
+    }
     val osVersion: String = Build.VERSION.RELEASE
     val incrementalOsVersion: String = Build.VERSION.INCREMENTAL
 
