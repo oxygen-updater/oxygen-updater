@@ -212,7 +212,6 @@ class OxygenUpdater : Application() {
         const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
         const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
-        const val NO_OXYGEN_OS = "no_oxygen_os_ver_found"
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
         const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
         const val UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build"

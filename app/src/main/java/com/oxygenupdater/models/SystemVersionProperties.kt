@@ -2,7 +2,6 @@ package com.oxygenupdater.models
 
 import android.os.Build
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logVerbose
@@ -46,7 +45,6 @@ object SystemVersionProperties {
      * `ro.product.name` instead to detect the correct device.
      */
     private const val RO_DISPLAY_SERIES_LOOKUP_KEY = "ro.display.series"
-    private const val RO_PRODUCT_NAME_LOOKUP_KEY = "ro.product.name"
     private const val RO_BUILD_SOFT_VERSION_LOOKUP_KEY = "ro.build.soft.version"
 
     /**
@@ -141,11 +139,11 @@ object SystemVersionProperties {
     val osType: String
 
     init {
-        var oxygenDeviceName = NO_OXYGEN_OS
-        var oxygenOSVersion = NO_OXYGEN_OS
-        var oxygenOSOTAVersion = NO_OXYGEN_OS
-        var securityPatchDate = NO_OXYGEN_OS
-        var osType = NO_OXYGEN_OS
+        var oxygenDeviceName = Build.UNKNOWN
+        var oxygenOSVersion = Build.UNKNOWN
+        var oxygenOSOTAVersion = Build.UNKNOWN
+        var securityPatchDate = Build.UNKNOWN
+        var osType = Build.UNKNOWN
 
         try {
             val getBuildPropProcess = Runtime.getRuntime().exec("getprop")
@@ -158,12 +156,14 @@ object SystemVersionProperties {
             getBuildPropProcess.destroy()
 
             oxygenDeviceName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEYS, properties, "Detected device: %s")
-            oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, "Detected OxygenOS ROM with version: %s")
+            oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, "Detected OxygenOS ROM with version: %s").also {
+                if (it == Build.UNKNOWN) oxygenOSVersion = Build.DISPLAY
+            }
             oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, "Detected OxygenOS ROM with OTA version: %s")
             osType = readBuildPropItem(RO_BUILD_OS_TYPE_LOOKUP_KEY, properties, "Detected OS Type: %s")
 
             val euBooleanStr = readBuildPropItem(RO_BUILD_EU_LOOKUP_KEYS, properties, "isEuBuild: %s")
-            val isEuBuild = if (euBooleanStr == NO_OXYGEN_OS) {
+            val isEuBuild = if (euBooleanStr == Build.UNKNOWN) {
                 readBuildPropItem(RO_VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY, properties, "isEuBuild: %s").startsWith("EU")
             } else {
                 euBooleanStr.toBoolean()
@@ -172,7 +172,7 @@ object SystemVersionProperties {
             // This prop is present only on 7-series and above
             if (osType.isBlank()) {
                 osType = "Stable"
-            } else if (osType == NO_OXYGEN_OS) {
+            } else if (osType == Build.UNKNOWN) {
                 osType = ""
             }
 
@@ -211,10 +211,10 @@ object SystemVersionProperties {
         logText: String?,
     ): String {
         if (buildProperties.isNullOrEmpty()) {
-            return NO_OXYGEN_OS
+            return Build.UNKNOWN
         }
 
-        var result = NO_OXYGEN_OS
+        var result = Build.UNKNOWN
 
         // Some keys are not present on all devices, so check multiple in-order
         itemKeys.forEach { item ->
@@ -231,7 +231,7 @@ object SystemVersionProperties {
                     // Hack #1 (OS_VERSION_NUMBER_LOOKUP_KEY): remove incorrect "H2OS" prefix from version value (OOS 2.0.0 - 3.x)
                     // If this is the case, discard the value and try with the next item in "items" array
                     if (item == RO_ROM_VERSION_LOOKUP_KEY && result.contains(RO_ROM_VERSION_H2OS)) {
-                        result = NO_OXYGEN_OS
+                        result = Build.UNKNOWN
                         continue
                     }
 
@@ -245,22 +245,22 @@ object SystemVersionProperties {
                     // OnePlus 7-series and newer devices come in regional variants which cannot be detected by `ro.display.series`.
                     // `ro.product.name` should be read instead of `ro.display.series` to detect the correct device variant.
                     if (item == RO_DISPLAY_SERIES_LOOKUP_KEY && !RO_PRODUCT_NAME_LOOKUP_DEVICES_IGNORE.contains(result)) {
-                        // Android Logger class is not loaded during unit tests, so omit logging if called from test.
-                        val logMessage = if (logText != null) "Detected $result variant: %s" else null
-                        result = readBuildPropItem(RO_PRODUCT_NAME_LOOKUP_KEY, buildProperties, logMessage)
-                    }
+                        val product = Build.PRODUCT
+                        logVerbose(TAG, "Detected $result variant: $product")
+                        result = product
 
-                    // Hack #4 (BUILD_SOFT_VERSION_LOOKUP_KEY): support for Indian variants in OnePlus 7T-series
-                    // OnePlus 7T-series come with Indian builds which cannot be detected by `ro.product.name`.
-                    // `ro.build.soft.version` should be read in addition to `ro.product.name` to detect the correct device variant.
-                    if (item == RO_PRODUCT_NAME_LOOKUP_KEY && RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES.contains(result)) {
-                        // Android Logger class is not loaded during unit tests, so omit logging if called from test.
-                        val logMessage = if (logText != null) "Detected $result variant: %s" else null
-                        val buildSoftVersion = readBuildPropItem(RO_BUILD_SOFT_VERSION_LOOKUP_KEY, buildProperties, logMessage)
+                        // Hack #4 (BUILD_SOFT_VERSION_LOOKUP_KEY): support for Indian variants in OnePlus 7T-series
+                        // OnePlus 7T-series come with Indian builds which cannot be detected by `ro.product.name`.
+                        // `ro.build.soft.version` should be read in addition to `ro.product.name` to detect the correct device variant.
+                        if (RO_BUILD_SOFT_VERSION_LOOKUP_DEVICES.contains(result)) {
+                            // Android Logger class is not loaded during unit tests, so omit logging if called from test.
+                            val logMessage = if (logText != null) "Detected $result variant: %s" else null
+                            val buildSoftVersion = readBuildPropItem(RO_BUILD_SOFT_VERSION_LOOKUP_KEY, buildProperties, logMessage)
 
-                        // append _IN to mark device as Indian variant
-                        if (buildSoftVersion[0] == 'I') {
-                            result += "_IN"
+                            // append _IN to mark device as Indian variant
+                            if (buildSoftVersion[0] == 'I') {
+                                result += "_IN"
+                            }
                         }
                     }
 

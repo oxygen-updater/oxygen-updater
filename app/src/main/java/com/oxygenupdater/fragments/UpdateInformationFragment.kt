@@ -43,7 +43,6 @@ import androidx.work.WorkInfo
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.OxygenUpdater.Companion.DOWNLOAD_FILE_PERMISSION
-import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.OxygenUpdater.Companion.VERIFY_FILE_PERMISSION
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
@@ -639,7 +638,7 @@ class UpdateInformationFragment : Fragment() {
         rootView?.findViewById<TextView>(R.id.oxygenOsVersionField)?.run {
             val oxygenOSVersion = getFormattedOxygenOsVersion(SystemVersionProperties.oxygenOSVersion)
 
-            if (oxygenOSVersion != NO_OXYGEN_OS) {
+            if (oxygenOSVersion != Build.UNKNOWN) {
                 text = oxygenOSVersion
             } else {
                 rootView.findViewById<View>(R.id.oxygenOsVersionLabel)?.isVisible = false
@@ -651,7 +650,7 @@ class UpdateInformationFragment : Fragment() {
         rootView?.findViewById<TextView>(R.id.otaVersionField)?.run {
             val oxygenOSOTAVersion = SystemVersionProperties.oxygenOSOTAVersion
 
-            if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
+            if (oxygenOSOTAVersion != Build.UNKNOWN) {
                 text = oxygenOSOTAVersion
             } else {
                 rootView.findViewById<View>(R.id.otaVersionLabel)?.isVisible = false
@@ -666,7 +665,7 @@ class UpdateInformationFragment : Fragment() {
         rootView?.findViewById<TextView>(R.id.securityPatchField)?.run {
             val securityPatchDate = SystemVersionProperties.securityPatchDate
 
-            if (securityPatchDate != NO_OXYGEN_OS) {
+            if (securityPatchDate != Build.UNKNOWN) {
                 text = securityPatchDate
             } else {
                 rootView.findViewById<View>(R.id.securityPatchLabel)?.isVisible = false

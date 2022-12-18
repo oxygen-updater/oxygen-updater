@@ -1,6 +1,6 @@
 package com.oxygenupdater.models
 
-import com.oxygenupdater.OxygenUpdater
+import android.os.Build
 import com.oxygenupdater.utils.Utils.checkDeviceOsSpec
 import java.lang.reflect.InvocationTargetException
 import java.util.*
@@ -11,7 +11,7 @@ import kotlin.test.assertTrue
 
 abstract class SystemVersionPropertiesTest {
 
-    private val systemVersionProperties = SystemVersionProperties(
+    private val systemVersionProperties = com.oxygenupdater.models.SystemVersionProperties(
         null,
         null,
         null,
@@ -41,7 +41,7 @@ abstract class SystemVersionPropertiesTest {
         expectedDeviceDisplayName11x: String?,
         expectedOxygenOs: String?,
         expectedOxygenOsOta: String?,
-        expectedAbPartitionLayout: Boolean
+        expectedAbPartitionLayout: Boolean,
     ): Boolean {
         val testDataSet = readBuildPropFile(propertiesInDir, propertiesOfVersion)
         val testDataType = testDataSet.first
@@ -82,7 +82,7 @@ abstract class SystemVersionPropertiesTest {
 
     private fun readBuildPropFile(
         deviceName: String,
-        oxygenOsVersion: String
+        oxygenOsVersion: String,
     ): Pair<TestDataType, String> {
         // Read the build.prop file from the test resources folder.
         var testDataType = TestDataType.BUILD_PROP_FILE
@@ -114,7 +114,7 @@ abstract class SystemVersionPropertiesTest {
     // the output is "key=value" in contrast to getprop output of format "[key]:[value]".
     // So we need to split the result on the "=" sign in this helper method to get the same result as on a real device.
     private fun getBuildPropItem(key: String, propertyFileContents: String): String {
-        var result = OxygenUpdater.NO_OXYGEN_OS
+        var result = Build.UNKNOWN
 
         try {
             val readBuildPropItem = SystemVersionProperties::class.java.getDeclaredMethod("readBuildPropItem", String::class.java, String::class.java, String::class.java)
@@ -123,7 +123,7 @@ abstract class SystemVersionPropertiesTest {
 
             val rawResult = readBuildPropItem.invoke(systemVersionProperties, key, propertyFileContents, null) as String
 
-            if (rawResult != OxygenUpdater.NO_OXYGEN_OS) {
+            if (rawResult != Build.UNKNOWN) {
                 val keyValue = rawResult.split("=")
 
                 if (keyValue.size > 1) {

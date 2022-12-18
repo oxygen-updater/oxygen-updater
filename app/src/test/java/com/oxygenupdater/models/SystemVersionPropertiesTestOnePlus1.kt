@@ -1,6 +1,6 @@
 package com.oxygenupdater.models
 
-import com.oxygenupdater.OxygenUpdater
+import android.os.Build
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -15,7 +15,7 @@ class SystemVersionPropertiesTestOnePlus1 : SystemVersionPropertiesTest() {
                 "op1",
                 "1.0.0",
                 "One",
-                OxygenUpdater.NO_OXYGEN_OS,
+                Build.UNKNOWN,
                 "One",
                 "1.0.0",
                 "ONEL_12.A.01_001_150403",
@@ -34,7 +34,7 @@ class SystemVersionPropertiesTestOnePlus1 : SystemVersionPropertiesTest() {
                 "op1",
                 "1.0.3",
                 "One",
-                OxygenUpdater.NO_OXYGEN_OS,
+                Build.UNKNOWN,
                 "One",
                 "1.0.3",
                 "ONEL_12.A.01_001_150827",

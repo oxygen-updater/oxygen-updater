@@ -1,6 +1,6 @@
 package com.oxygenupdater.utils
 
-import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
+import android.os.Build
 import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.models.FormattableUpdateData
 import java.io.BufferedReader
@@ -118,7 +118,7 @@ object UpdateDataVersionFormatter {
         val regularMatcher = STABLE_PATTERN.matcher(version)
 
         return when {
-            version == NO_OXYGEN_OS || version.isBlank() -> NO_OXYGEN_OS
+            version.isBlank() -> Build.UNKNOWN
             alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
                 "alpha" -> "$ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
                 "beta" -> "$BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"

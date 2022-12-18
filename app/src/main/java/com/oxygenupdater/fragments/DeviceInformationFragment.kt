@@ -12,7 +12,6 @@ import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import coil.load
-import com.oxygenupdater.OxygenUpdater.Companion.NO_OXYGEN_OS
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.databinding.FragmentDeviceInformationBinding
@@ -151,7 +150,7 @@ class DeviceInformationFragment : Fragment() {
         bindingSoftware?.oxygenOsVersionField?.run {
             val oxygenOSVersion = getFormattedOxygenOsVersion(SystemVersionProperties.oxygenOSVersion)
 
-            if (oxygenOSVersion != NO_OXYGEN_OS) {
+            if (oxygenOSVersion != Build.UNKNOWN) {
                 text = oxygenOSVersion
             } else {
                 bindingSoftware?.oxygenOsVersionLabel?.isVisible = false
@@ -163,7 +162,7 @@ class DeviceInformationFragment : Fragment() {
         bindingSoftware?.otaVersionField?.run {
             val oxygenOSOTAVersion = SystemVersionProperties.oxygenOSOTAVersion
 
-            if (oxygenOSOTAVersion != NO_OXYGEN_OS) {
+            if (oxygenOSOTAVersion != Build.UNKNOWN) {
                 text = oxygenOSOTAVersion
             } else {
                 bindingSoftware?.otaVersionLabel?.isVisible = false
@@ -178,7 +177,7 @@ class DeviceInformationFragment : Fragment() {
         bindingSoftware?.securityPatchField?.run {
             val securityPatchDate = SystemVersionProperties.securityPatchDate
 
-            if (securityPatchDate != NO_OXYGEN_OS) {
+            if (securityPatchDate != Build.UNKNOWN) {
                 text = securityPatchDate
             } else {
                 bindingSoftware?.securityPatchLabel?.isVisible = false

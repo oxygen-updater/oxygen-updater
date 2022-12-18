@@ -129,7 +129,6 @@ android {
                     "ro.build.ota.versionname",
                     "ro.vendor.oplus.exp.version",
                     "ro.build.display.ota",
-                    "ro.build.display.id",
                 )
             )
             buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\"")
