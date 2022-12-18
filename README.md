@@ -26,7 +26,7 @@ This app uses Google & Firebase APIs, so `app/google-services.json` needs to exi
 
 ### KeyStore
 Running non-`debug` variants of the app requires two things: generating a Java KeyStore and referencing it in `keystore.properties`.
-Java KeyStores can be created in Android Studio itself: <kbd>Build</kbd> → <kbd>Generate Signed Bundle / APK</kbd> → <kbd>Next</kbd> → <kbd>Create new…</kbd> (under key store path). If you're not using Android Studio, check the instructions for your specific IDE. Otherwise you'll need to create one [via CLI][java-8-keytool].
+Java KeyStores can be created in Android Studio itself: <kbd>Build</kbd> → <kbd>Generate Signed Bundle / APK</kbd> → <kbd>Next</kbd> → <kbd>Create new…</kbd> (under key store path). If you're not using Android Studio, check the instructions for your specific IDE. Otherwise you'll need to create one [via CLI][java8-keytool].
 
 Store the JKS anywhere you want, though we'd recommend keeping it in the `app` directory. This git project has been configured to ignore all JKS files, so there's no danger of accidentally committing secrets.
 

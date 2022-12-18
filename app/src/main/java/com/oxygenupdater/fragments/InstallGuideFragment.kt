@@ -17,14 +17,14 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.viewmodels.InstallViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class InstallGuideFragment : Fragment() {
 
     private var pageNumber = 1
     private var isFirstPage = false
 
-    private val installViewModel by sharedViewModel<InstallViewModel>()
+    private val installViewModel by activityViewModel<InstallViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         arguments?.let {

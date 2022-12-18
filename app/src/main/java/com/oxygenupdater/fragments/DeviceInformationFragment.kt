@@ -26,12 +26,12 @@ import com.oxygenupdater.utils.Logger
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedOxygenOsVersion
 import com.oxygenupdater.viewmodels.MainViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import kotlin.math.roundToLong
 
 class DeviceInformationFragment : Fragment() {
 
-    private val mainViewModel by sharedViewModel<MainViewModel>()
+    private val mainViewModel by activityViewModel<MainViewModel>()
 
     /** Only valid between `onCreateView` and `onDestroyView` */
     private var binding: FragmentDeviceInformationBinding? = null

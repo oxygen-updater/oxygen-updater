@@ -11,11 +11,11 @@ import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.viewmodels.OnboardingViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class UpdateMethodChooserOnboardingFragment : ChooserOnboardingFragment() {
 
-    private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
+    private val onboardingViewModel by activityViewModel<OnboardingViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.onboardingChooserCaption?.setText(R.string.onboarding_page_3_caption)

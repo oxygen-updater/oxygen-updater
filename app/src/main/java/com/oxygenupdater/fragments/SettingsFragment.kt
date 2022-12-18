@@ -53,7 +53,7 @@ import com.oxygenupdater.viewmodels.MainViewModel
 import com.oxygenupdater.viewmodels.SettingsViewModel
 import kotlinx.coroutines.Job
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.util.*
 
 /**
@@ -115,9 +115,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private val crashlytics by inject<FirebaseCrashlytics>()
-    private val mainViewModel by sharedViewModel<MainViewModel>()
-    private val settingsViewModel by sharedViewModel<SettingsViewModel>()
-    private val billingViewModel by sharedViewModel<BillingViewModel>()
+    private val mainViewModel by activityViewModel<MainViewModel>()
+    private val settingsViewModel by activityViewModel<SettingsViewModel>()
+    private val billingViewModel by activityViewModel<BillingViewModel>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         init()

@@ -17,7 +17,7 @@ import com.oxygenupdater.databinding.BottomSheetNewsItemOptionsBinding
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.viewmodels.NewsViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 /**
  * Wrapper around [BottomSheetDialogFragment]
@@ -28,7 +28,7 @@ class NewsItemOptionsDialogFragment : BottomSheetDialogFragment() {
 
     private var clipboard: ClipboardManager? = null
 
-    private val newsViewModel by sharedViewModel<NewsViewModel>()
+    private val newsViewModel by activityViewModel<NewsViewModel>()
 
     /** Only valid between `onCreateView` and `onDestroyView` */
     private var binding: BottomSheetNewsItemOptionsBinding? = null

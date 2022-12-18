@@ -87,7 +87,7 @@ import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_TYPE
 import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_PROGRESS
 import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_TOTAL_BYTES
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.io.IOException
 import java.time.LocalDateTime
 import java.util.*
@@ -98,7 +98,7 @@ class UpdateInformationFragment : Fragment() {
     private var isLoadedOnce = false
 
     private val crashlytics by inject<FirebaseCrashlytics>()
-    private val mainViewModel by sharedViewModel<MainViewModel>()
+    private val mainViewModel by activityViewModel<MainViewModel>()
 
     /**
      * Android 6.0 run-time permissions

@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.oxygenupdater.R
 import com.oxygenupdater.viewmodels.OnboardingViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 /**
  * Contains the basic/non-interactive onboarding fragments
@@ -16,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
  */
 class SimpleOnboardingFragment : Fragment() {
 
-    private val onboardingViewModel by sharedViewModel<OnboardingViewModel>()
+    private val onboardingViewModel by activityViewModel<OnboardingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

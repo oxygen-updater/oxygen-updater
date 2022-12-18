@@ -28,7 +28,7 @@ import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.viewmodels.MainViewModel
 import com.oxygenupdater.viewmodels.NewsViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class NewsListFragment : Fragment() {
 
@@ -37,8 +37,8 @@ class NewsListFragment : Fragment() {
 
     private lateinit var newsListAdapter: NewsListAdapter
 
-    private val mainViewModel by sharedViewModel<MainViewModel>()
-    private val newsViewModel by sharedViewModel<NewsViewModel>()
+    private val mainViewModel by activityViewModel<MainViewModel>()
+    private val newsViewModel by activityViewModel<NewsViewModel>()
 
     /**
      * Re-use the same observer to avoid duplicated callbacks

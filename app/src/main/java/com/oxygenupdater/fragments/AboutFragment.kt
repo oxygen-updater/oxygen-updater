@@ -13,11 +13,11 @@ import com.oxygenupdater.R
 import com.oxygenupdater.adapters.AboutButtonAdapter
 import com.oxygenupdater.databinding.FragmentAboutBinding
 import com.oxygenupdater.viewmodels.MainViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class AboutFragment : Fragment() {
 
-    private val mainViewModel by sharedViewModel<MainViewModel>()
+    private val mainViewModel by activityViewModel<MainViewModel>()
 
     /** Only valid between `onCreateView` and `onDestroyView` */
     private var binding: FragmentAboutBinding? = null
