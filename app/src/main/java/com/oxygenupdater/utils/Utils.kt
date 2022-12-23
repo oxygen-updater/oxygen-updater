@@ -141,11 +141,8 @@ object Utils {
     }
 
     fun checkDeviceMismatch(context: Context, devices: List<Device>?): Triple<Boolean, String, String> {
-        var actualDeviceName = context.getString(R.string.device_information_unknown)
-        val savedDeviceName = PrefManager.getString(
-            PrefManager.PROPERTY_DEVICE,
-            actualDeviceName
-        ) ?: actualDeviceName
+        val unknown = context.getString(R.string.device_information_unknown)
+        val savedDeviceName = PrefManager.getString(PrefManager.PROPERTY_DEVICE, unknown) ?: unknown
 
         val productName = SystemVersionProperties.oxygenDeviceName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {
@@ -195,8 +192,9 @@ object Utils {
             }
         } ?: false
 
-        actualDeviceName = matchedDevice?.name ?: actualDeviceName
+        val actualDeviceName = matchedDevice?.name ?: unknown
 
-        return Triple(isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
+        // Don't show mismatch dialog if we don't know what the actual device is
+        return Triple(if (actualDeviceName == unknown) false else isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
     }
 }
