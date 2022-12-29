@@ -115,7 +115,7 @@ object SystemVersionProperties {
                 val buildSoftVersion = systemProperty(BUILD_SOFT_VERSION_LOOKUP_KEY)
 
                 // Append _IN to mark device as Indian variant
-                if (buildSoftVersion[0] == 'I') oxygenDeviceName += "_IN"
+                if (buildSoftVersion.getOrNull(0) == 'I') oxygenDeviceName += "_IN"
             } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R && ONEPLUS_7_SERIES.contains(oxygenDeviceName)) {
                 // Workaround #5 (Build.PRODUCT + ro.vendor.op.india): differentiate between 7-series GLO/IND on the
                 // last two OOS11 builds (11.0.8.1 & 11.0.9.1). This property was used by system OTA to deliver the
@@ -141,7 +141,7 @@ object SystemVersionProperties {
             val euBooleanStr = pickFirstValid(BUILD_EU_LOOKUP_KEYS) { _, value -> value }
             PrefManager.putBoolean(PrefManager.PROPERTY_IS_EU_BUILD, if (euBooleanStr == UNKNOWN) {
                 val pipeline = systemProperty(VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName))) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                     // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
                     // model number is used for both regions. Not sure if future builds would also be affected.
@@ -188,7 +188,7 @@ object SystemVersionProperties {
                     val buildSoftVersion = readBuildPropItem(BUILD_SOFT_VERSION_LOOKUP_KEY, properties)
 
                     // Append _IN to mark device as Indian variant
-                    if (buildSoftVersion[0] == 'I') oxygenDeviceName += "_IN"
+                    if (buildSoftVersion.getOrNull(0) == 'I') oxygenDeviceName += "_IN"
                 } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R && ONEPLUS_7_SERIES.contains(oxygenDeviceName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.op.india): differentiate between 7-series GLO/IND on the
                     // last two OOS11 builds (11.0.8.1 & 11.0.9.1). This property was used by system OTA to deliver the
@@ -202,7 +202,7 @@ object SystemVersionProperties {
                 val euBooleanStr = readBuildPropItem(BUILD_EU_LOOKUP_KEYS, properties)
                 PrefManager.putBoolean(PrefManager.PROPERTY_IS_EU_BUILD, if (euBooleanStr == UNKNOWN) {
                     val pipeline = readBuildPropItem(VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY, properties)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName))) {
                         // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                         // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
                         // model number is used for both regions. Not sure if future builds would also be affected.

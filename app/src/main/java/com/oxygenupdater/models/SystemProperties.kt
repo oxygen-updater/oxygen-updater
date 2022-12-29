@@ -11,7 +11,8 @@ private inline fun invokeGet(key: String) = with(ClassAndMethod) {
     if (!useSystemProperties.get()) throw UnsupportedOperationException("`useSystemProperties` is false")
 
     try {
-        second?.invoke(first, key) as? String ?: UNKNOWN
+        val value = second?.invoke(first, key) as? String
+        if (value.isNullOrEmpty()) UNKNOWN else value // ensure we never return null/empty
     } catch (e: Exception) {
         useSystemProperties.set(false)
         throw UnsupportedOperationException("`useSystemProperties` is false")
