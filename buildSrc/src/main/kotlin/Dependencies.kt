@@ -6,7 +6,7 @@ const val KOTLIN_VERSION = "1.7.21"
 // https://mvnrepository.com/artifact/io.insert-koin/koin-android
 // https://github.com/InsertKoinIO/koin/tags
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-const val KOIN_VERSION = "3.3.1"
+const val KOIN_VERSION = "3.3.2"
 
 object BuildPlugins {
     private object Versions {
@@ -142,8 +142,9 @@ object Libraries {
         const val GOOGLE_PLAY_BILLING = "5.1.0"
 
         // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
+        // Note: Stay on 2.13.x, as 2.14.x doesn't support Android 7.1/Nougat and below (API < 26)
         // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-        const val JACKSON_KOTLIN_MODULE = "2.14.1"
+        const val JACKSON_KOTLIN_MODULE = "2.13.4"
 
         // https://github.com/Kotlin/kotlinx.coroutines/releases
         const val KOTLIN_COROUTINES = "1.6.4"
