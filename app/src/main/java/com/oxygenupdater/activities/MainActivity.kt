@@ -182,6 +182,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         mainViewModel.unregisterAppUpdateListener()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() = when {
         // If the user is currently looking at the first step, allow the system to handle the
         // Back button. This calls finish() on this activity and pops the back stack.

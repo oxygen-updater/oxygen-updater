@@ -19,9 +19,10 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import androidx.work.WorkRequest.MIN_BACKOFF_MILLIS
+import androidx.work.WorkRequest.Companion.MIN_BACKOFF_MILLIS
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
@@ -239,7 +240,6 @@ class MainViewModel(
             return false
         }
 
-        @Suppress("DEPRECATION")
         return File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), updateData.filename!!).exists()
     }
 
@@ -266,7 +266,6 @@ class MainViewModel(
 
         val tempFile = File(context.getExternalFilesDir(null), updateData.filename!!)
 
-        @Suppress("DEPRECATION")
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
         if (tempFile.exists() && !tempFile.delete()) {
@@ -399,8 +398,8 @@ class MainViewModel(
         // If an in-app update is already running, resume the update.
         appUpdateManager.startUpdateFlowForResult(
             appUpdateInfo,
-            AppUpdateType.IMMEDIATE,
             activity,
+            AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE),
             MainActivity.REQUEST_CODE_APP_UPDATE
         )
     }
@@ -454,8 +453,8 @@ class MainViewModel(
 
         appUpdateManager.startUpdateFlowForResult(
             appUpdateInfo,
-            appUpdateType,
             activity,
+            AppUpdateOptions.defaultOptions(appUpdateType),
             MainActivity.REQUEST_CODE_APP_UPDATE
         )
     }

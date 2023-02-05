@@ -51,6 +51,7 @@ class WebViewClient(
      * Used on API 22 and below
      */
     @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
     override fun shouldOverrideUrlLoading(
         view: WebView?,
         url: String?
@@ -73,6 +74,7 @@ class WebViewClient(
     }
 
     @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
     override fun onReceivedError(
         view: WebView?,
         errorCode: Int,

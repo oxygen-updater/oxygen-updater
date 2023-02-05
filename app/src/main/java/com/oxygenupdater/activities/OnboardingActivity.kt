@@ -93,6 +93,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         binding.viewPager.unregisterOnPageChangeCallback(pageChangeCallback)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() = if (binding.viewPager.currentItem == 0) {
         // If the user is currently looking at the first step, allow the system to handle the
         // Back button. This calls finish() on this activity and pops the back stack.

@@ -96,7 +96,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private val pendingPurchaseObserver = Observer<Purchase> {
+    private val pendingPurchaseObserver = Observer<Purchase?> {
         Toast.makeText(mContext, getString(R.string.purchase_error_pending_payment), Toast.LENGTH_LONG).show()
 
         // Disable the Purchase button and set its text to "Processing..."

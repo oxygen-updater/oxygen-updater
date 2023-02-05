@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.Properties
 
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
@@ -77,7 +77,7 @@ android {
         }
     }
 
-    packagingOptions {
+    packaging {
         resources.excludes.addAll(
             arrayOf(
                 "META-INF/NOTICE.txt",
@@ -207,7 +207,7 @@ android {
                 mapOf(
                     "hostName" to "${if (it.name != "release") "test." else ""}oxygenupdater.com",
                     "advertisingAppId" to "ca-app-pub-1816831161514116~4275332954",
-                    "shortcutXml" to "@xml/shortcuts_${it.name.toLowerCase()}",
+                    "shortcutXml" to "@xml/shortcuts_${it.name.lowercase()}",
                 )
             )
         }
@@ -215,12 +215,12 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildFeatures {
@@ -243,7 +243,6 @@ repositories {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
     coreLibraryDesugaring(Libraries.ANDROID_TOOLS_DESUGAR)
 
     implementation(Libraries.KOTLIN_COROUTINES_CORE)
