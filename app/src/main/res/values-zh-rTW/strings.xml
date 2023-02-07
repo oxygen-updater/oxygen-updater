@@ -202,7 +202,7 @@
 
 	<string name="device_information_amount_of_memory">記憶體大小：</string>
 	<string name="device_information_cpu_frequency">處理器時脈：</string>
-	<string name="device_information_gigahertz">%1$s 千兆赫</string>
+	<string name="device_information_gigahertz">%1$s GHz</string>
 	<string name="device_information_header">我的裝置</string>
 	<string name="device_information_image_description">裝置圖片</string>
 	<string name="device_information_incremental_os_version">增量更新版本：</string>
