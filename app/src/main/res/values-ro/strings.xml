@@ -163,14 +163,14 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="install_guide_page_1_text">&#8226; Apăsați butonul Descărcare pentru a începe descărcarea actualizării.\n\n&#8226; Progresul descărcării va apărea atât în aplicație, cât și ca notificare în panoul de notificări.\n\n&#8226; Când descărcarea s-a încheiat, veți vedea o notificare cu textul \"Descărcare completă\".\nDacă a apărut o eroare de descărcare, deschideți aplicația și încercați să descărcați din nou actualizarea. Dacă acest lucru nu funcționează, asigurați-vă că aveți o conexiune funcțională. În caz contrar, luați legătura cu dezvoltatorul aplicației. Puteți face acest lucru accesând secțiunea \"Aplicațiile mele\" din Magazinul Google Play.</string>
 
 	<string name="install_guide_page_2_title">Pregătirea pentru instalare</string>
-	<string name="install_guide_page_2_text">"Atenție: Instalarea actualizării are loc de pe o pagină specială din secțiunea standard de Actualizări de sistem  a dispozitivului. Dacă, dintr-un anumit motiv, apare o actualizare de sistem la deschiderea acestei secțiuni, puteți opta pentru a instala mai întâi a această actualizare. Apoi, deschideți din nou Oxygen Updater pentru a vedea dacă sunteți complet actualizat.
+	<string name="install_guide_page_2_text">"Atenție: Instalarea actualizării are loc pe o pagină specială din secțiunea standard de Actualizări de sistem a dispozitivului. Dacă, dintr-un motiv anume, apare o actualizare de sistem la deschiderea acestei secțiuni, puteți opta pentru a instala mai întâi a acea actualizare. Apoi, deschideți din nou Oxygen Updater pentru a vedea dacă sunteți la zi cu actualizările.
 
 Instrucțiuni:
 &#8226; Închideți Oxygen Updater apăsând pe butonul Acasă.
 
 &#8226; Deschideți aplicația Setări. Ar trebui să se afle în lista de aplicații.
 
-&#8226; Derulați în jos până când întâlniți Actualizări de sistem. Apăsați pe aceasta."</string>
+&#8226; Derulați în jos până când ajungeți la Actualizări de sistem. Apăsați pentru a continua."</string>
 
 	<string name="install_guide_page_3_title">Instalarea actualizării</string>
 	<string name="install_guide_page_3_text">"Acum că vă aflați în aplicația Actualizări de sistem, este timpul să instalați actualizarea.
@@ -179,7 +179,7 @@ Instrucțiuni:
 
 &#8226; Acum, selectați \"Actualizare locală\". Ar trebui să apară un meniu de selectare a fișierului.
 
-&#8226; În acest meniu, apăsați pe fișierul de actualizare pe care l-ați descărcat folosind Oxygen Updater. Numele său ar trebui să înceapă cu \"%1$sOxygen\".
+&#8226; În acest meniu, apăsați pe fișierul de actualizare pe care l-ați descărcat folosind Oxygen Updater. Numele fișierului ar trebui să înceapă cu \"%1$sOxygen\".
 
 &#8226; Apăsați pe \"Actualizați acum\". Instalarea ar trebui să înceapă automat."</string>
 
@@ -253,7 +253,7 @@ Instrucțiuni:
 	<!-- Help strings -->
 	<string name="help">Ajutor</string>
 	<string name="help_updating_your_device_title">Actualizați dispozitivul</string>
-	<string name="help_updating_your_device_text">La deschiderea aplicației, veți vedea dacă este disponibilă o actualizare de sistem. Dacă este disponibilă o actualizare, atunci o puteți instala.\n\nPentru a începe instalarea, apăsați butonul de \"Descărcare\" (sub descrierea actualizării) pentru a începe descărcarea. Când descărcarea s-a încheiat, veți vedea meniul de instalare. Dacă ați părăsit aplicația sau în cazul în care meniul de instalare nu a apărut, apăsați pe butonul \"Instalare\", care este acum afișat lângă butonul de \"Descărcare\".\n\nProcesul de instalare va verifica mai întâi dacă aveți un dispozitiv rootat. Dacă aveți un dispozitiv rootat, acordați permisiunea de root atunci când vi se solicită și alegeți modul în care doriți să instalați actualizarea. În caz contrar, urmați instrucțiunile pentru instalarea manuală.\n\nInstalarea automată:\nVa trebui doar să alegeți opțiunile pentru instalare. Sunt recomandate setările implicite, cu excepția faptului că trebuie să specificați pachetul root care trebuie (re)instalat. Selectați un pachet root (în format .zip) folosind butonul albastru al directorului și apăsați pe \"Porniți instalarea\" pentru a porni instalarea.\n\nInstalarea manuală:\nVeți vedea un ghid de instalare pe ecran. Notați separat instrucțiunile și efectuați-le în ordinea în care sunt prezentate pentru a instala actualizarea.</string>
+	<string name="help_updating_your_device_text">La deschiderea aplicației, veți vedea dacă este disponibilă o actualizare de sistem. Dacă este disponibilă o actualizare, atunci o puteți instala.\n\nPentru a începe instalarea, apăsați butonul de \"Descărcare\" (sub descrierea actualizării) pentru a începe descărcarea. Când descărcarea s-a încheiat, veți vedea meniul de instalare. Dacă ați părăsit aplicația sau în cazul în care meniul de instalare nu a apărut, apăsați pe butonul \"Instalare\", care va fi afișat lângă butonul de \"Descărcare\".\n\nProcesul de instalare va verifica mai întâi dacă aveți un dispozitiv rootat. Dacă aveți un dispozitiv rootat, acordați permisiunea de root atunci când vi se solicită și alegeți modul în care doriți să instalați actualizarea. În caz contrar, urmați instrucțiunile pentru instalarea manuală.\n\nInstalarea automată:\nVa trebui doar să alegeți opțiunile pentru instalare. Sunt recomandate setările implicite, cu excepția faptului că trebuie să specificați pachetul root care trebuie (re)instalat. Selectați un pachet root (în format .zip) folosind butonul albastru al directorului și apăsați pe \"Porniți instalarea\" pentru a porni instalarea.\n\nInstalarea manuală:\nVeți vedea un ghid de instalare pe ecran. Notați separat instrucțiunile și efectuați-le în ordinea în care sunt prezentate pentru a instala actualizarea.</string>
 	<string name="help_reading_news_title">Citiți ultimele noutăți</string>
 	<string name="help_reading_news_text">Noutățile și știrile sunt afișate în dreapta panoului de actualizări. Cele mai recente elemente apar în partea de sus. Pur și simplu atingeți un articol pentru a-l citi.\nAtingeți săgeata "înapoi" sau apăsați tasta "înapoi" pentru a reveni la ecranul de știri.</string>
 	<string name="help_device_information_title">Vizualizați informații despre dispozitiv</string>
