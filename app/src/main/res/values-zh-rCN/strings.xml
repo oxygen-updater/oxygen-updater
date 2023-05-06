@@ -28,9 +28,9 @@
 	<string name="server_status_warning">部分功能可能无法正常工作</string>
 
 	<!-- New app version message strings -->
-	<string name="new_app_version">此应用有可用更新 (%1$s)。轻触此处即可打开 Play Store 更新应用</string>
+	<string name="new_app_version">此应用有可用更新 (%1$s)。轻触打开 Play Store 更新应用</string>
 	<string name="new_app_version_inapp_downloaded">应用更新已下载</string>
-	<string name="new_app_version_inapp_failed">无法安装应用更新。轻触此处即可打开 Play Store 更新应用</string>
+	<string name="new_app_version_inapp_failed">无法安装应用更新。轻触打开 Play Store 更新应用</string>
 
 	<!-- Downloader strings-->
 	<string name="grant_all_files_access">请为本 App 授予“所有文件访问权限”，我们只会将其用于把 OTA 的 ZIP 文件下载到内部存储的根目录。</string>
@@ -202,7 +202,7 @@
 
 	<string name="device_information_amount_of_memory">内存大小：</string>
 	<string name="device_information_cpu_frequency">处理器频率：</string>
-	<string name="device_information_gigahertz">%1$s 频段</string>
+	<string name="device_information_gigahertz">%1$s GHz</string>
 	<string name="device_information_header">我的设备</string>
 	<string name="device_information_image_description">设备图片</string>
 	<string name="device_information_incremental_os_version">增量更新版本：</string>
@@ -226,9 +226,9 @@
 	<string name="about_email_button_text">邮箱</string>
 
 	<!-- LocalNotifications strings -->
-	<string name="notification_new_device_text">现已支持 %1$s。 打开 App 来选择您的设备。</string>
+	<string name="notification_new_device_text">现已支持 %1$s。打开 App 来选择您的设备。</string>
 	<string name="notification_no_notification_support">安装或升级您的 Google Play 服务来开启推送服务</string>
-	<string name="notification_version">恭喜 %2$s! 喜提 %1$s ！</string>
+	<string name="notification_version">恭喜 %2$s! 喜提 %1$s！</string>
 	<string name="download_and_installation_notifications_group_name">下载 &amp; 安装</string>
 	<string name="push_notifications_group_name">推送通知</string>
 	<string name="miscellaneous_notifications_group_name">杂项</string>
