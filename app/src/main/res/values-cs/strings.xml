@@ -111,8 +111,7 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="theme_dark_subtitle">Ztlumená primární barva OnePlus červená s téměř černým pozadím. Toto téma použijte k úspoře baterie, zejména na AMOLED obrazovkách.</string>
 	<string name="theme_system_subtitle">Používejte noční režim systému (můžete jej nastavit buď v nastavení displeje, nebo v možnostech pro vývojáře). Liší se podle zařízení.</string>
 	<string name="theme_auto_subtitle">Přepínání mezi světlými a tmavými motivy podle denní doby, aby se zabránilo namáhání očí v noci</string>.
-	<string name="theme_additional_note">Poznámka: pokud je aktivní téma \"Auto\" a je povolen spořič baterie, bude automaticky použito tmavé téma bez ohledu na denní dobu, aby se
-		šetřila baterie</string>
+	<string name="theme_additional_note">Poznámka: pokud je aktivní téma \"Auto\" a je povolen spořič baterie, bude automaticky použito tmavé téma bez ohledu na denní dobu, aby se šetřila baterie</string>
 
 	<string name="settings">Nastavení</string>
 	<string name="settings_buy_button_buy">Koupit (%1$s)</string>
@@ -214,7 +213,7 @@ Pokyny:
 	<string name="device_information_oxygen_os_ota_version">OTA verze</string>
 	<string name="device_information_patch_level_version">Datum bezpečnostní záplaty</string>
 	<string name="device_information_serial_number">Sériové číslo</string>
-	<string name="device_information_system_on_a_chip">Systém na čipu</string>
+	<string name="device_information_system_on_a_chip">SoC</string>
 	<string name="device_information_unknown">neznámý</string>
 
 	<!-- O řetězcích obrazovky -->
@@ -314,8 +313,9 @@ Pokyny:
 	<string name="purchase_error_pending_payment">Váš nákup je ve stavu \"čekání na platbu\". Po dokončení platby vám budou poskytnuty všechny výhody, na které máte nárok.</string>
 	<string name="purchase_error_after_payment">Nákup verze bez reklam se nezdařil, protože došlo k interní chybě. Zkuste to prosím za několik minut znovu. Pokud jste již zaplatili, kontaktujte prosím podporu Google Play a požádejte o pomoc.</string>
 
+	<!-- Other strings-->
 	<string name="error">Chyba</string>
 	<string name="icon">Ikona</string>
-	<string name="loading">Načítá se…</string>
-	<string name="processing">Zpracování…</string>
+	<string name="loading">Načítání…</string>
+	<string name="processing">Zpracovávání…</string>
 </resources>
