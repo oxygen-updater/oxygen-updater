@@ -1,5 +1,6 @@
 package com.oxygenupdater.apis
 
+import androidx.collection.ArrayMap
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuidePage
@@ -90,6 +91,20 @@ interface ServerApi {
         @Path("updateMethodId") updateMethodId: Long,
         @Path("pageNumber") pageNumber: Int
     ): Response<InstallGuidePage>
+
+    /**
+     * @param body includes the following fields:
+     * * `rows: List<ArrayMap<String, Any?>>`,
+     * * `otaVersion: String`,
+     * * `isEuBuild: Boolean`,
+     * * `appVersion: String`,
+     * * `deviceName: String`,
+     * * `actualDeviceName: String`,
+     */
+    @POST("submit-update-url")
+    suspend fun submitOtaDbRows(
+        @Body body: ArrayMap<String, Any>
+    ): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:

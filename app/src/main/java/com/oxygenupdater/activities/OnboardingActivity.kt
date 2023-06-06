@@ -1,13 +1,16 @@
 package com.oxygenupdater.activities
 
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -17,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.databinding.ActivityOnboardingBinding
+import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.oxygenupdater.extensions.reduceDragSensitivity
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
@@ -29,10 +33,12 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
+import com.oxygenupdater.utils.hasRootAccess
 import com.oxygenupdater.viewmodels.OnboardingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
@@ -47,6 +53,12 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
             MainActivity.INTENT_START_PAGE,
             MainActivity.PAGE_UPDATE
         ) ?: MainActivity.PAGE_UPDATE
+    }
+
+
+    private val contributorDialog by lazy(LazyThreadSafetyMode.NONE) {
+        if (!ContributorUtils.isAtLeastQ) return@lazy null
+        ContributorDialogFragment()
     }
 
     private val onboardingViewModel by viewModel<OnboardingViewModel>()
@@ -189,7 +201,16 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
 
         onboardingViewModel.fragmentCreated.observe(this) {
             if (it == 4) {
-                findViewById<Button>(R.id.onboardingPage4StartAppButton)?.setOnClickListener(this::onStartAppButtonClicked)
+                val visible = ContributorUtils.isAtLeastQAndPossiblyRooted
+                findViewById<CheckBox>(R.id.onboardingPage4ContributeCheckbox)?.isVisible = visible
+                findViewById<Button>(R.id.onboardingPage4MoreInfoButton)?.apply {
+                    isVisible = visible
+                    if (visible) setOnClickListener(this@OnboardingActivity::onMoreInfoButtonClicked)
+                }
+                findViewById<Button>(R.id.onboardingPage4StartAppButton)?.apply {
+                    isVisible = visible
+                    if (visible) setOnClickListener(this@OnboardingActivity::onStartAppButtonClicked)
+                }
             }
         }
     }
@@ -256,27 +277,49 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         }
     }
 
+    /**
+     * Show the dialog fragment only if it hasn't been added already. This
+     * can happen if the user clicks in rapid succession, which can cause
+     * the `java.lang.IllegalStateException: Fragment already added` error
+     */
+    @RequiresApi(Build.VERSION_CODES.Q)
     @Suppress("UNUSED_PARAMETER")
-    fun onStartAppButtonClicked(view: View) {
-        if (PrefManager.checkIfSetupScreenIsFilledIn()) {
-            findViewById<CheckBox>(R.id.onboardingPage4LogsCheckbox).isChecked.let {
-                PrefManager.putBoolean(
-                    PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
-                    it
-                )
+    fun onMoreInfoButtonClicked(view: View) {
+        if (!isFinishing && contributorDialog?.isAdded == false) contributorDialog!!.show(
+            supportFragmentManager,
+            ContributorDialogFragment.TAG
+        )
+    }
 
-                (application as OxygenUpdater?)?.setupCrashReporting(it)
+    @Suppress("UNUSED_PARAMETER", "MemberVisibilityCanBePrivate")
+    fun onStartAppButtonClicked(view: View) = if (PrefManager.checkIfSetupScreenIsFilledIn()) {
+        findViewById<CheckBox>(R.id.onboardingPage4LogsCheckbox).isChecked.let {
+            PrefManager.putBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, it)
+
+            (application as OxygenUpdater?)?.setupCrashReporting(it)
+        }
+
+        // If user enables OTA contribution, check if device is rooted and ask for root permission
+        if (findViewById<CheckBox>(R.id.onboardingPage4ContributeCheckbox).isChecked) {
+            Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
+            hasRootAccess {
+                PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
+                PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, true)
+                startMainActivity(startPage)
+                finish()
             }
-
+        } else {
+            // Skip shell creation and thus don't show root permission prompt
             PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
+            PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, false)
             startMainActivity(startPage)
             finish()
-        } else {
-            val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
-            val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-            logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId))
-            Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
         }
+    } else {
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        logWarning(TAG, SetupUtils.getAsError("Setup wizard", deviceId, updateMethodId))
+        Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
     }
 
     private fun displayUnsupportedDeviceOsSpecMessage(deviceOsSpec: DeviceOsSpec) {

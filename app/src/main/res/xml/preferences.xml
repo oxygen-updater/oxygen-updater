@@ -18,6 +18,13 @@
 			android:layout="@layout/custom_preference_featured"
 			android:summary="@string/settings_buy_ad_free_label"
 			android:title="@string/label_buy_ad_free" />
+
+		<Preference
+			android:icon="@drawable/group_add"
+			android:key="@string/key_contributor"
+			android:layout="@layout/custom_preference_featured"
+			android:summary="@string/settings_contribute_label"
+			android:title="@string/contribute" />
 	</PreferenceCategory>
 
 	<PreferenceCategory

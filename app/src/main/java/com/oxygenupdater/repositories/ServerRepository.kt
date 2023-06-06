@@ -1,5 +1,6 @@
 package com.oxygenupdater.repositories
 
+import androidx.collection.ArrayMap
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
@@ -208,6 +209,20 @@ class ServerRepository constructor(
         pageNumber: Int
     ) = performServerRequest {
         serverApi.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber)
+    }
+
+    suspend fun submitOtaDbRows(rows: List<ArrayMap<String, Any?>>) = performServerRequest {
+        serverApi.submitOtaDbRows(
+            ArrayMap<String, Any>(7).apply {
+                put("rows", rows)
+                put("fingerprint", SystemVersionProperties.fingerprint)
+                put("currentOtaVersion", SystemVersionProperties.oxygenOSOTAVersion)
+                put("isEuBuild", PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false))
+                put("appVersion", BuildConfig.VERSION_NAME)
+                put("deviceName", PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>") ?: "<UNKNOWN>")
+                put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
+            }
+        )
     }
 
     suspend fun logDownloadError(

@@ -25,6 +25,7 @@ import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
 import com.oxygenupdater.utils.NotificationUtils
 import com.oxygenupdater.utils.ThemeUtils
+import com.topjohnwu.superuser.Shell
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -32,6 +33,13 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 class OxygenUpdater : Application() {
+
+    init {
+        // Set settings before the main shell can be created
+        Shell.enableVerboseLogging = BuildConfig.DEBUG
+        // Accessing non-scoped storage (e.g. /data/data/) requires running in the global namespace
+        Shell.setDefaultBuilder(Shell.Builder.create().setFlags(Shell.FLAG_MOUNT_MASTER))
+    }
 
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
 

@@ -149,6 +149,9 @@ object Libraries {
         // https://github.com/Kotlin/kotlinx.coroutines/releases
         const val KOTLIN_COROUTINES = "1.7.1"
 
+        // https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
+        const val LIBSU = "5.1.0"
+
         // https://github.com/material-components/material-components-android/releases
         const val MATERIAL = "1.9.0"
 
@@ -228,6 +231,11 @@ object Libraries {
 
     // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
     const val ANDROID_TOOLS_DESUGAR = "com.android.tools:desugar_jdk_libs:${Versions.ANDROID_TOOLS_DESUGAR}"
+
+    // https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
+    const val LIBSU_CORE = "com.github.topjohnwu.libsu:core:${Versions.LIBSU}"
+    const val LIBSU_NIO = "com.github.topjohnwu.libsu:nio:${Versions.LIBSU}"
+    const val LIBSU_SERVICE = "com.github.topjohnwu.libsu:service:${Versions.LIBSU}"
 }
 
 object TestLibraries {

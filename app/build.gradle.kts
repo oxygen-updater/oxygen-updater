@@ -110,7 +110,7 @@ android {
         // Uses the production server, and reads system properties using the OnePlus/OxygenOS specific build.prop values
         getByName("release") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.6/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.7/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
             buildConfigField(
                 "String[]",
@@ -144,7 +144,7 @@ android {
         // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
         getByName("debug") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://test.oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.6/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.7/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
             buildConfigField(
                 "String[]",
@@ -238,6 +238,7 @@ buildscript {
 
 repositories {
     mavenCentral()
+    maven("https://jitpack.io") // for com.github.topjohnwu.libsu
 }
 
 dependencies {
@@ -289,6 +290,10 @@ dependencies {
     implementation(Libraries.COIL)
 
     implementation(Libraries.FACEBOOK_SHIMMER)
+
+    implementation(Libraries.LIBSU_CORE)
+    implementation(Libraries.LIBSU_NIO)
+    implementation(Libraries.LIBSU_SERVICE)
 
     testImplementation(TestLibraries.JUNIT4)
     testImplementation(TestLibraries.KOTLIN_TEST_JUNIT)

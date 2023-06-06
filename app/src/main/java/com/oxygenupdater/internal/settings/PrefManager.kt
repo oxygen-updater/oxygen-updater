@@ -204,15 +204,13 @@ object PrefManager {
     )
     const val PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown"
 
-    @Deprecated(
-        message = """
-            No longer used in v5.9.0+, because all OnePlus phones now use either
-            Google OTA (doesn't save files anywhere), or Component OTA (saves in
-            a directory accessible only via root), but URL in this case can't be
-            constructed via filenames alone.
-        """,
-        level = DeprecationLevel.WARNING
-    )
+    /**
+     * Note: contribution was a feature in app v2.7.0 - v5.8.3. v5.9.0 removed it, as it wasn't useful anymore.
+     * Post Oppo-merger, OnePlus phones used either Google OTA (doesn't save files anywhere), or Component OTA
+     * (saves in a directory accessible only via root). URLs in the latter case couldn't be constructed via names alone.
+     *
+     * It was brought back in app v5.11.0, because we failed to realize that URLs were saved in a SQLite database.
+     */
     const val PROPERTY_CONTRIBUTE = "contribute"
     const val PROPERTY_CONTRIBUTION_COUNT = "contribution_count"
 

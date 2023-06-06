@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Networking permissions for fetching update data -->
@@ -20,13 +21,10 @@
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
 	<!-- Push notification permissions -->
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.VIBRATE" />
 
-	<!-- Update installation permissions -->
+	<!-- For DeviceBootOrAppUpdateReceiver -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
 
 	<application
 		android:name=".OxygenUpdater"
@@ -188,6 +186,16 @@
 				<action android:name="com.google.firebase.MESSAGING_EVENT" />
 			</intent-filter>
 		</service>
+
+		<!-- Receiver to auto start RootFileService at device startup or app update -->
+		<receiver
+			android:name="com.oxygenupdater.receivers.DeviceBootOrAppUpdateReceiver"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+				<action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+			</intent-filter>
+		</receiver>
 
 		<meta-data
 			android:name="com.google.android.gms.version"

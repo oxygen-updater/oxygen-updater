@@ -3,6 +3,7 @@ package com.oxygenupdater.activities
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
 import androidx.core.content.ContextCompat
@@ -38,6 +40,7 @@ import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.OxygenUpdater.Companion.buildAdRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.databinding.ActivityMainBinding
+import com.oxygenupdater.dialogs.ContributorDialogFragment
 import com.oxygenupdater.dialogs.Dialogs
 import com.oxygenupdater.dialogs.MessageDialog
 import com.oxygenupdater.dialogs.ServerMessagesDialogFragment
@@ -54,10 +57,12 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
+import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.checkPlayServices
+import com.oxygenupdater.utils.hasRootAccess
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,6 +82,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
 
     private val serverMessagesDialog by lazy(LazyThreadSafetyMode.NONE) {
         ServerMessagesDialogFragment()
+    }
+
+    private val contributorDialog by lazy(LazyThreadSafetyMode.NONE) {
+        if (!ContributorUtils.isAtLeastQ) return@lazy null
+        ContributorDialogFragment(true)
     }
 
     private val noConnectionSnackbar by lazy(LazyThreadSafetyMode.NONE) {
@@ -161,6 +171,20 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
         }
 
         setupLiveDataObservers()
+
+        // Offer contribution to users from app versions below v2.4.0 and v5.10.1
+        if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)) {
+            showContributorDialog()
+        }
+
+        binding.toolbar.menu.findItem(R.id.action_contribute).isVisible = ContributorUtils.isAtLeastQAndPossiblyRooted
+
+        // TODO(root): move this to the proper place
+        hasRootAccess {
+            if (!it) return@hasRootAccess ContributorUtils.stopDbCheckingProcess(this)
+
+            ContributorUtils.startDbCheckingProcess(this)
+        }
     }
 
     override fun onResume() = super.onResume().also {
@@ -196,6 +220,11 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
     override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
         R.id.action_announcements -> showServerMessagesDialog().let { true }
         R.id.action_mark_articles_read -> mainViewModel.notifyMenuClicked(item.itemId).let { true }
+        R.id.action_contribute -> {
+            if (ContributorUtils.isAtLeastQAndPossiblyRooted) showContributorDialog() else item.isVisible = false
+            true
+        }
+
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -514,6 +543,19 @@ class MainActivity : BaseActivity(R.layout.activity_main), Toolbar.OnMenuItemCli
                 ServerMessagesDialogFragment.TAG
             )
         }
+    }
+
+    /**
+     * Show the dialog fragment only if it hasn't been added already. This
+     * can happen if the user clicks in rapid succession, which can cause
+     * the `java.lang.IllegalStateException: Fragment already added` error
+     */
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun showContributorDialog() {
+        if (!isFinishing && contributorDialog?.isAdded == false) contributorDialog!!.show(
+            supportFragmentManager,
+            ContributorDialogFragment.TAG
+        )
     }
 
     fun updateToolbarForPage(@IdRes pageId: Int, subtitle: CharSequence? = null) {

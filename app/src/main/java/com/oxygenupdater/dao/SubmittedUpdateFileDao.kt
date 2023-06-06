@@ -2,6 +2,7 @@ package com.oxygenupdater.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.oxygenupdater.models.SubmittedUpdateFile
 
@@ -11,9 +12,9 @@ import com.oxygenupdater.models.SubmittedUpdateFile
 @Dao
 interface SubmittedUpdateFileDao {
 
-    @Query("SELECT COUNT(name) > 0 FROM submitted_update_file WHERE name = :filename")
-    fun isFileAlreadySubmitted(filename: String?): Boolean
+    @Query("SELECT EXISTS(SELECT 1 FROM submitted_update_file WHERE name = :url LIMIT 1)")
+    fun isUrlAlreadySubmitted(url: String?): Boolean
 
-    @Insert
-    fun insert(submittedUpdateFile: SubmittedUpdateFile)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(vararg submittedUpdateFile: SubmittedUpdateFile)
 }

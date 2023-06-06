@@ -158,6 +158,13 @@ class NotificationUtils(private val context: Context) {
                 //// END: PushNotificationsGroup
 
                 //// BEGIN: MiscellaneousGroup
+                createNotificationChannel(
+                    MiscellaneousGroup.OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID,
+                    MiscellaneousGroup.ID,
+                    context.getString(R.string.url_submitted_notification_channel_name),
+                    context.getString(R.string.url_submitted_notification_channel_description),
+                    NotificationManager.IMPORTANCE_LOW
+                ),
                 //// END: MiscellaneousGroup
             )
         )
@@ -325,6 +332,8 @@ object NotificationChannels {
             level = DeprecationLevel.WARNING
         )
         const val OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID = "$channelPrefix.filename"
+
+        const val OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID = "$channelPrefix.url"
     }
 
     /**

@@ -39,6 +39,7 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.BillingRepository.SkuState
+import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
@@ -129,7 +130,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         view: View,
         savedInstanceState: Bundle?,
     ) = super.onViewCreated(view, savedInstanceState).also {
-        setupBuyAdFreePreference()
+        setupSupportPreferences()
         setupDevicePreferences()
         setupThemePreference()
         setupLanguagePreference()
@@ -213,6 +214,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 TAG,
                 GooglePlayBillingException("[validateAdFreePurchase] couldn't purchase ad-free: (${validationResult.errorMessage})")
             )
+        }
+    }
+
+    /** Sets up buy ad-free and contribute preferences */
+    private fun setupSupportPreferences() {
+        setupBuyAdFreePreference()
+
+        val visible = ContributorUtils.isAtLeastQAndPossiblyRooted
+        findPreference<Preference>(mContext.getString(R.string.key_contributor))?.apply {
+            isVisible = visible
+            if (visible) setOnPreferenceClickListener {
+                (activity as MainActivity?)?.showContributorDialog()
+                true
+            }
         }
     }
 
