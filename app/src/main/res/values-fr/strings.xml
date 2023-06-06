@@ -122,6 +122,8 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="settings_buy_button_not_possible">"Indisponible"</string>
 	<string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>
 
+	<string name="settings_contribute_label">Aidez à améliorer l\'application</string>
+
 	<string name="settings_device">"Appareil"</string>
 	<string name="settings_entered_incorrectly">"Une erreur s'est produite lors de la sauvegarde de vos réglages. Retournez en arrière et sélectionnez à nouveau votre appareil et méthode de mise à jour."</string>
 	<string name="settings_explanation_incremental_full_update">"Une mise à jour incrémentale peut être installée depuis n'importe quelle version (sauf si votre bootloader est déverouillé, auquel cas vous devriez toujours choisir la mise à jour entière en tant que méthode de mise à jour).\n\nLes versions bêta d'OxygenOS peuvent toujours être installées, même si vous exécutez actuellement une version stable. Pour passer de la version stable à la version bêta, vous devez activer le mode avancé dans les réglages. Les méthodes de mises à jour incrémentale et entières marchent de la même manière pour les versions bêta et stables."</string>
@@ -278,6 +280,7 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 	<string name="news_notification_channel_name">Nouvel article publié</string>
 	<string name="device_notification_channel_name">"Nouvel appareil supporté"</string>
 	<string name="general_notification_channel_name">Générales</string>
+	<string name="url_submitted_notification_channel_name">Transmission de l\'URL de l\'OTA</string>
 	<string name="download_status_notification_channel_description">Notifications qui reflètent le statut d\'un téléchargement : en pause, actif, complété, ou échoué</string>
 	<string name="verification_status_notification_channel_description">Notifications qui reflètent le statut de la vérification du fichier de mise à jour: en cours, complété, or échoué.\nLa somme de contrôle MD5 est utilisée pour s\'assurer que le fichier de mise à jour n\'a pas été modifié et est valide.</string>
 	<string name="installation_status_notification_channel_description">Soyez notifié afin de savoir si une mise à jour a été correctement installée ou pas</string>
@@ -285,6 +288,8 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 	<string name="news_notification_channel_description">Soyez notifié lorsque nous publions un nouvel article</string>
 	<string name="device_notification_channel_description">Soyez notifié lorsque l\'application supporte un nouvel appareil</string>
 	<string name="general_notification_channel_description">Notifications générales ne rentrant pas dans le cadre des autres catégories</string>
+	<string name="url_submitted_notification_channel_description">Recevez une notification lorsque vous avez soumis avec succès des URL d\'OTA à notre équipe.\n
+Vous pouvez choisir de ne pas soumettre automatiquement les URL dans les paramètres de l\'application.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Aide"</string>
@@ -331,6 +336,17 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="news_empty_state_all_read_header">Aucun article non lu</string>
 	<string name="news_empty_state_none_available_text">Aucun article n\'est disponible pour l\'instant, veuillez réessayez plus tard.</string>
 	<string name="news_empty_state_all_read_text">Félicitations, vous avez lu tous les articles! Nous espérons que vous les avez aimé.\n\nAppuyez sur la bannière pour les revoir.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Devenez un contributeur</string>
+	<string name="contribute_title">Aidez à améliorer Oxygen Updater</string>
+	<string name="contribute_explanation">Afin de vous fournir les dernières mises à jour, nous avons besoin de capturer les URL OTA ZIP.\n\nComment puis-je vous aider ?\n\nOxygen Updater peut soumettre automatiquement les nouvelles URL OTA à nos administrateurs. Cela utilisera une petite quantité de données et peut utiliser un peu de votre batterie. Vous devrez accorder à l\'application le droit d\'accès à la racine, car elle lit un fichier de base de données qui n\'est accessible que par l\'intermédiaire de la racine. Vous serez averti lorsqu\'une URL aura été soumise avec succès.</string>
+	<string name="contribute_agree">J\'aimerais aider et je suis d\'accord pour soumettre les URL des OTA à nos administrateurs</string>
+	<string name="contribute_save">Enregistrer</string>
+	<string name="contribute_more_info">Plus d\'informations</string>
+	<string name="contribute_allow_storage">Veuillez accorder les permissions de stockage et d\'accès à la racine pour améliorer l\'application.</string>
+	<string name="contribute_successful_notification_title">Contribution effectuée</string>
+	<string name="contribute_successful_notification_text">Merci de partager les URL des OTA avec nous !</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh non !"</string>

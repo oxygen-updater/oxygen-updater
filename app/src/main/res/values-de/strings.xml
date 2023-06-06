@@ -117,6 +117,8 @@ Wenn du mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <a
 	<string name="settings_buy_button_not_possible">"Nicht verfügbar"</string>
 	<string name="settings_buy_ad_free_label">"Zur werbefreien Version Upgraden"</string>
 
+	<string name="settings_contribute_label">Hilf uns die App zu verbessern</string>
+
 	<string name="settings_device">"Gerät"</string>
 	<string name="settings_entered_incorrectly">"Fehler beim Speichern der Einstellungen. Bitte wähle dein Gerät und deine Update Methode erneut aus."</string>
 	<string name="settings_explanation_incremental_full_update">"Ein inkrementelles Update kann nur installiert werden wenn du die neuste System Software Version installiert hast bevor dieses Update veröffentlicht wurde.
@@ -278,6 +280,7 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="news_notification_channel_name">Nachrichtenartikel veröffentlicht</string>
 	<string name="device_notification_channel_name">"Neues Gerät unterstützt"</string>
 	<string name="general_notification_channel_name">Allgemein</string>
+	<string name="url_submitted_notification_channel_name">OTA-URL übermittelt</string>
 	<string name="download_status_notification_channel_description">Benachrichtigungen die den aktuellen Status eines Download anzeigen: Steht aus, Aktiv, Fertig oder Fehlgeschlagen</string>
 	<string name="verification_status_notification_channel_description">Benachrichtigungen die den aktuellen Status einer Datei Verifizierung anzeigt: Läuft, Fertig oder Fehlgeschlagen.\nMD5 Prüfsummen werden überprüft und sicherzustellen, dass die heruntergeladene Daten gültige Update Daten, verifiziert und nicht manipuliert sind.</string>
 	<string name="installation_status_notification_channel_description">Werde benachrichtigt ob ein Update erfolgreich installiert wurde</string>
@@ -285,6 +288,7 @@ Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrol
 	<string name="news_notification_channel_description">Werde benachrichtigt wenn ein neuer Nachrichtenartikel veröffentlicht wurde</string>
 	<string name="device_notification_channel_description">Werde benachrichtigt wenn wir ein neues Gerät unterstützen</string>
 	<string name="general_notification_channel_description">Allgemeine Nachrichten die in keine andere Kategorie passen</string>
+	<string name="url_submitted_notification_channel_description">Sie werden benachrichtigt, wenn Sie OTA-URLs erfolgreich an unser Team übermittelt haben.\nSie können die automatische Übermittlung von URLs in den Einstellungen der App deaktivieren.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Hilfe"</string>
@@ -327,6 +331,16 @@ Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphär
 	<string name="news_empty_state_all_read_header">Es gibt nichts mehr zu lesen</string>
 	<string name="news_empty_state_none_available_text">Zurzeit sind keine Artikel verfügbar, komme später noch einmal.</string>
 	<string name="news_empty_state_all_read_text">Du hast alle Artikel gelesen. Gute Arbeit!\nWir hoffen du hattest Spaß beim Lesen unserer Artikel und hast etwas neues gelernt.\n\nTippe das Banner erneut um alle Nachrichten anzuzeigen.</string>
+
+	<string name="contribute">Hilf mit</string>
+	<string name="contribute_title">Hilf mit Oxygen Updater zu verbessern</string>
+	<string name="contribute_explanation">Um Ihnen die neuesten Updates zur Verfügung stellen zu können, müssen wir die OTA-ZIP-URLs erfassen.\n\nWie kann ich Ihnen dabei helfen?\n\nOxygen Updater kann automatisch neue OTA-URLs an unsere Administratoren übermitteln. Dies erfordert eine geringe Datenmenge und kann Ihren Akku ein wenig belasten. Sie müssen der Anwendung Root-Rechte erteilen, da sie eine Datenbankdatei liest, die nur über Root zugänglich ist. Sie werden benachrichtigt, wenn eine URL erfolgreich übermittelt wurde.</string>
+	<string name="contribute_agree">Ich möchte helfen und erkläre mich bereit, OTA-URLs an unsere Administratoren zu übermitteln</string>
+	<string name="contribute_save">Speichern</string>
+	<string name="contribute_more_info">Mehr Informationen</string>
+	<string name="contribute_allow_storage">Bitte gewähren Sie Speicher- und Root-Rechte, um die App zu verbessern</string>
+	<string name="contribute_successful_notification_title">Du hast erfolgreich beigetragen</string>
+	<string name="contribute_successful_notification_text">Danke, dass Sie die OTA-URLs mit uns teilen!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh nein!"</string>

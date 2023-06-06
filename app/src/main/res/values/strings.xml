@@ -108,6 +108,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="theme_auto">Auto</string>
 
 	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
+	<string name="key_contributor" translatable="false">become_contributor</string>
 	<string name="key_category_device" translatable="false">key_category_device</string>
 	<string name="key_device" translatable="false">device</string>
 	<string name="key_device_id" translatable="false">device_id</string>
@@ -137,6 +138,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_buy_button_bought">Purchased</string>
 	<string name="settings_buy_button_not_possible">Unavailable</string>
 	<string name="settings_buy_ad_free_label">Upgrade to Ad-Free</string>
+
+	<string name="settings_contribute_label">Help improve the app</string>
 
 	<string name="settings_device">Device</string>
 	<string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
@@ -267,6 +270,7 @@ Instructions:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">New device supported</string>
 	<string name="general_notification_channel_name">General</string>
+	<string name="url_submitted_notification_channel_name">OTA URL submitted</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -274,6 +278,7 @@ Instructions:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="url_submitted_notification_channel_description">Get notified when you\'ve submitted OTA URLs successfully to our team.\nYou can opt-out of automatically submitting URLs in the app\'s settings.</string>
 
 	<!-- Help strings -->
 	<string name="help">Help</string>
@@ -301,6 +306,17 @@ Instructions:
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Become a contributor</string>
+	<string name="contribute_title">Help improve Oxygen Updater</string>
+	<string name="contribute_explanation">In order to give you the latest updates, we need to capture OTA ZIP URLs.\n\nHow can I help?\n\nOxygen Updater can automatically submit new OTA URLs to our admins. This will use a small amount of data and may use a bit of your battery. You\'ll need to grant root permission to the app, because it reads a database file that\'s accessible only via root. You will be notified when a URL has been successfully submitted.</string>
+	<string name="contribute_agree">I\'d like to help and agree to submit OTA URLs to our admins</string>
+	<string name="contribute_save">Save settings</string>
+	<string name="contribute_more_info">More info</string>
+	<string name="contribute_allow_storage">Please grant storage &amp; root permissions to help improve the app</string>
+	<string name="contribute_successful_notification_title">Contribution successful</string>
+	<string name="contribute_successful_notification_text">Thanks for sharing OTA URLs with us!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Oh no!</string>

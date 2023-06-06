@@ -117,6 +117,7 @@
 	<string name="settings_buy_button_bought">已购买</string>
 	<string name="settings_buy_button_not_possible">暂不提供</string>
 	<string name="settings_buy_ad_free_label">移除广告服务</string>
+	<string name="settings_contribute_label">帮助改进更新器</string>
 
 	<string name="settings_device">设备</string>
 	<string name="settings_entered_incorrectly">保存设置时出错。请返回并重新选择您的设备 / 更新方法。</string>
@@ -241,6 +242,7 @@
 	<string name="news_notification_channel_name">新文章发布啦</string>
 	<string name="device_notification_channel_name">支持新设备</string>
 	<string name="general_notification_channel_name">常规</string>
+	<string name="url_submitted_notification_channel_name">提交的OTA网址</string>
 	<string name="download_status_notification_channel_description">反映当前下载状态的通知：挂起、活跃、完成或失败</string>
 	<string name="verification_status_notification_channel_description">反映当前验证情况的通知：正在进行、已完成或失败\n为已下载的文件进行 MD5 校验可以确保文件没有被篡改并且有效。</string>
 	<string name="installation_status_notification_channel_description">获取消息，了解更新成功与否</string>
@@ -248,6 +250,7 @@
 	<string name="news_notification_channel_description">在新文章发布时推送通知</string>
 	<string name="device_notification_channel_description">在更新器支持新设备时推送通知</string>
 	<string name="general_notification_channel_description">不属于其他类别的常规通知</string>
+	<string name="url_submitted_notification_channel_description">当你成功提交OTA网址给我们的团队时得到通知。\n你可以在应用程序的设置中选择退出自动提交URL。</string>
 
 	<!-- Help strings -->
 	<string name="help">帮助</string>
@@ -277,6 +280,17 @@
 	<string name="news_empty_state_all_read_header">全部读完了</string>
 	<string name="news_empty_state_none_available_text">暂时没有可读的文章，请稍候再试</string>
 	<string name="news_empty_state_all_read_text">所有文章都已阅读完毕，干得漂亮！\n希望您喜欢我们的文章，并能够从中了解到新的信息。\n\n 再次点击横幅即可显示所有新闻文章。</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">参与共研</string>
+	<string name="contribute_title">加入 Oxygen 更新器共研计划</string>
+	<string name="contribute_explanation">为了给你提供最新的更新，我们需要捕获OTA ZIP URL。\n\n我可以如何帮助？\n\nOxygen Updater 可以自动提交新的 OTA URL 给我们的管理员。这将使用少量的数据，并可能使用一点你的电池。您需要授予该应用程序的root权限，因为它读取的数据库文件只能通过root访问。当一个URL被成功提交时，你会得到通知。</string>
+	<string name="contribute_agree">我愿意帮忙，并同意向我们的管理员提交OTA的网址</string>
+	<string name="contribute_save">保存设置</string>
+	<string name="contribute_more_info">了解更多</string>
+	<string name="contribute_allow_storage">请授予存储和root权限，以帮助改进应用程序。</string>
+	<string name="contribute_successful_notification_title">共研完成</string>
+	<string name="contribute_successful_notification_text">谢谢你与我们分享OTA的网址!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">糟糕！</string>

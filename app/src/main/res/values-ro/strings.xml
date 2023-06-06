@@ -118,6 +118,8 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="settings_buy_button_not_possible">Indisponibil</string>
 	<string name="settings_buy_ad_free_label">Treceți la versiunea făra reclame</string>
 
+	<string name="settings_contribute_label">Contribuiți la îmbunătățirea aplicației</string>
+
 	<string name="settings_device">Dispozitiv selectat</string>
 	<string name="settings_entered_incorrectly">Eroare la salvarea setărilor. Vă rugăm să reveniți la selectarea dispozitivului / a modalității de actualizare.</string>
 	<string name="settings_explanation_incremental_full_update">O actualizare incrementală poate fi instalată din orice versiune (cu excepția cazului în care aveți un bootloader deblocat; atunci ar trebui să alegeți întotdeauna actualizarea completă ca metodă de actualizare).\n\nO actualizare beta pentru OxygenOS poate fi instalată întotdeauna, de asemenea, atunci când rulați o versiune stabilă. Pentru a trece de la o versiune stabilă la o versiune beta, trebuie să activați modul avansat în setări. Pentru versiunile beta, metodele de actualizare completă și incrementală funcționează în același mod ca pe versiunile stabile.</string>
@@ -242,6 +244,7 @@ Instrucțiuni:
 	<string name="news_notification_channel_name">Articol nou publicat</string>
 	<string name="device_notification_channel_name">Dispozitiv nou suportat</string>
 	<string name="general_notification_channel_name">General</string>
+	<string name="url_submitted_notification_channel_name">URL-ul OTA trimis</string>
 	<string name="download_status_notification_channel_description">Notificări care reflectă stadiul actual al unei descărcări: în așteptare, activă, finalizată sau eșuată</string>
 	<string name="verification_status_notification_channel_description">Notificări care reflectă stadiul curent al unei sarcini de verificare a fișierului: în curs, finalizată sau eșuată.\nSumele de verificare MD5 pentru fișierele descărcate sunt verificate pentru a ne asigura că acestea nu au suferit modificări și că sunt fișiere de actualizare valide.</string>
 	<string name="installation_status_notification_channel_description">Primiți o notificare dacă actualizarea a fost instalată cu succes sau nu</string>
@@ -249,6 +252,7 @@ Instrucțiuni:
 	<string name="news_notification_channel_description">Primiți o notificare când publicăm un articol nou</string>
 	<string name="device_notification_channel_description">Primiți o notificare când este adăugat suport pentru un nou dispozitiv</string>
 	<string name="general_notification_channel_description">Notificări generale care nu se încadrează în alte categorii</string>
+	<string name="url_submitted_notification_channel_description">Primiți o notificare atunci când trimiteți cu succes URL-uri OTA către echipa noastră.\nPuteți renunța la trimiterea automată a URL-urilor în setările aplicației.</string>
 
 	<!-- Help strings -->
 	<string name="help">Ajutor</string>
@@ -276,6 +280,17 @@ Instrucțiuni:
 	<string name="news_empty_state_all_read_header">Nu mai este nimic nou de citit</string>
 	<string name="news_empty_state_none_available_text">Nu există articole disponibile momentan, reveniți mai târziu.</string>
 	<string name="news_empty_state_all_read_text">Ați citit toate articolele. Felicitări!\nSperăm că le-ați citit cu plăcere și că ați aflat ceva nou.\n\nApăsați banner-ul din nou pentru a vedea toate articolele.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Deveniți un contribuitor</string>
+	<string name="contribute_title">Ajutați-ne să îmbunătățim aplicația Oxygen Updater</string>
+	<string name="contribute_explanation">Pentru a vă oferi cele mai recente actualizări, trebuie să capturăm URL-urile OTA ZIP.\n\nCum vă pot ajuta?\n\nOxygen Updater poate trimite automat noile URL-uri OTA către administratorii noștri. Acest lucru va utiliza o cantitate mică de date și poate consuma puțin din bateria dvs. Va trebui să acordați permisiunea de root aplicației, deoarece aceasta citește un fișier de bază de date care este accesibil doar prin root. Veți fi notificat atunci când un URL a fost trimis cu succes.</string>
+	<string name="contribute_agree">Aș dori să ajut și sunt de acord să trimit URL-urile OTA către administratorii noștri</string>
+	<string name="contribute_save">Salvează setările</string>
+	<string name="contribute_more_info">Mai multe informații…</string>
+	<string name="contribute_allow_storage">Vă rugăm să acordați permisiuni de stocare și root pentru a ajuta la îmbunătățirea aplicației</string>
+	<string name="contribute_successful_notification_title">Ați contribuit cu succes</string>
+	<string name="contribute_successful_notification_text">Vă mulțumim pentru că ați împărtășit URL-urile OTA cu noi!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">O nu!</string>

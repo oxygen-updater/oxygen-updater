@@ -120,6 +120,8 @@
 	<string name="settings_buy_button_not_possible">無効</string>
 	<string name="settings_buy_ad_free_label">広告消去のためアップグレード</string>
 
+	<string name="settings_contribute_label">アプリの改善にご協力ください</string>
+
 	<string name="settings_device">デバイス</string>
 	<string name="settings_entered_incorrectly">設定の保存に失敗しました。デバイス / 更新方法を再選択して下さい。</string>
 	<string name="settings_explanation_incremental_full_update">増分アップデートはどのバージョンからでもインストール可能です（ブートローダーをアンロックしていない場合; アンロック済みの場合はフルアップデートをアップデート方法から選択する必要があります）。\n\nOxygenOS のベータアップデートは安定バージョンを使用している場合でも常にインストールできます。安定版からベータ版に切り替えるには、設定で詳細モードを有効にする必要があります。ベータ版では、フル・増分アップデートは安定版と同じように機能します。</string>
@@ -247,6 +249,7 @@
 	<string name="news_notification_channel_name">ニュース記事の公開</string>
 	<string name="device_notification_channel_name">新しいデバイスのサポート</string>
 	<string name="general_notification_channel_name">一般</string>
+	<string name="url_submitted_notification_channel_name">OTAのURLを送信</string>
 	<string name="download_status_notification_channel_description">待機中、アクティブ、完了または失敗などのダウンロードの状況を反映する通知</string>
 	<string name="verification_status_notification_channel_description">処理中、完了または失敗などのファイル検証の状況を反映する通知。\nダウンロードされたファイルの MD5 チェックサムを検証し、ファイルが改ざんされていないこと、有効なアップデートファイルであることを確認します。</string>
 	<string name="installation_status_notification_channel_description">アップデートがイントールされたかどうかをお知らせします</string>
@@ -254,6 +257,7 @@
 	<string name="news_notification_channel_description">新しいニュース記事が公開されたときお知らせします</string>
 	<string name="device_notification_channel_description">アプリが新しいデバイスをサポートしたときお知らせします</string>
 	<string name="general_notification_channel_description">どのカテゴリにも属さない一般的な通知</string>
+	<string name="url_submitted_notification_channel_description">OTA URLの提出が完了したら、通知を受け取ることができます。\nアプリの設定で、URLの自動送信を停止することができます。</string>
 
 	<!-- Help strings -->
 	<string name="help">ヘルプ</string>
@@ -281,6 +285,17 @@
 	<string name="news_empty_state_all_read_header">読む物がありません</string>
 	<string name="news_empty_state_none_available_text">今はまだ記事がありません、後ほどチェックしてみてください。</string>
 	<string name="news_empty_state_all_read_text">すべての記事を読みました。お疲れ様！\n私たちの記事を読み、新しい何かを学んでいただけたら幸いです。\n\nここをタップしてすべてのニュース記事を再表示します。</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">貢献者になる</string>
+	<string name="contribute_title">Oxygen Updater の改善に協力する</string>
+	<string name="contribute_explanation">最新のアップデートを提供するために、OTA ZIP URLを取得する必要があります。\n\nどうすればいいのでしょうか？\n\nOxygen Updaterは、新しいOTA URLを管理者に自動的に送信することができます。これは少量のデータを使用し、あなたのバッテリーを少し使用するかもしれません。このアプリはroot権限でのみアクセス可能なデータベースファイルを読み込むため、root権限を付与する必要があります。URLの送信に成功すると、通知されます。</string>
+	<string name="contribute_agree">協力したいし、管理者にOTAのURLを提出することに同意する</string>
+	<string name="contribute_save">設定を保存</string>
+	<string name="contribute_more_info">詳細情報</string>
+	<string name="contribute_allow_storage">アプリの改善のため、ストレージ＆ルート権限の付与をお願いします</string>
+	<string name="contribute_successful_notification_title">貢献に成功</string>
+	<string name="contribute_successful_notification_text">OTAのURLを教えていただきありがとうございます！</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Oh no!</string>

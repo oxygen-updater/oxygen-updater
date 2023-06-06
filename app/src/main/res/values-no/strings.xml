@@ -122,6 +122,8 @@ spare batteri</string>
 	<string name="settings_buy_button_not_possible">Utilgjengelig</string>
 	<string name="settings_buy_ad_free_label">Oppgrader til Ad-Free</string>
 
+	<string name="settings_contribute_label">Hjelp til å forbedre appen</string>
+
 	<string name="settings_device">Enhet</string>
 	<string name="settings_entered_incorrectly">Feil ved lagring av innstillingene. Gå tilbake og velg din enhet / oppdateringsmetode igjen.</string>
 	<string name="settings_explanation_incremental_full_update">En inkrementell oppdatering kan installeres fra hvilken som helst versjon (bortsett fra hvis du har en ulåst oppstartslaster; du bør alltid velge full oppdatering som oppdateringsmetode). \n\n En betaoppdatering av OxygenOS kan alltid installeres, også når du er på en stabil versjon. For å bytte fra stabil til beta, må du aktivere den avanserte modusen i innstillingene. For betas fungerer de fulle og trinnvise oppdateringsmetodene på samme måte som på stabile versjoner.</string>
@@ -248,6 +250,7 @@ Bruksanvisning:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">Ny enhet utgitt</string>
 	<string name="general_notification_channel_name">General</string>
+	<string name="url_submitted_notification_channel_name">OTA-URL sendt inn</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -255,6 +258,7 @@ Bruksanvisning:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="url_submitted_notification_channel_description">Bli varslet når du har sendt inn OTA-URL-er til teamet vårt.\nDu kan velge bort automatisk innsending av nettadresser i appens innstillinger.</string>
 
 	<!-- Help strings -->
 	<string name="help">Hjelp</string>
@@ -283,6 +287,17 @@ Bruksanvisning:
 	<string name="news_empty_state_all_read_header">Det er ingenting igjen å lese</string>
 	<string name="news_empty_state_none_available_text">Det er ingen tilgjengelige artikler for øyeblikket, prøv igjen senere.</string>
 	<string name="news_empty_state_all_read_text">Du har lest alle artiklene. Bra jobb!\nVi håper du likte å lese artiklene våre, og lærte noe nytt av dem.\n\nTrykk på banneret igjen for å vise alle nyhetsartikler.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Bli en bidragsyter</string>
+	<string name="contribute_title">Hjelp med å forbedre Oxygen Updater</string>
+	<string name="contribute_explanation">For å kunne gi deg de nyeste oppdateringene må vi registrere OTA ZIP-URL-adresser.\n\nHvordan kan jeg hjelpe til?\n\nOxygen Updater kan automatisk sende nye OTA-URL-er til administratorene våre. Dette vil bruke en liten mengde data og kan bruke litt av batteriet ditt. Du må gi root-tillatelse til appen, fordi den leser en databasefil som bare er tilgjengelig via root. Du vil bli varslet når en URL er sendt inn.</string>
+	<string name="contribute_agree">Jeg vil gjerne hjelpe til og samtykker i å sende OTA-URL-er til administratorene våre</string>
+	<string name="contribute_save">Lagre innstillinger</string>
+	<string name="contribute_more_info">Mer informasjon …</string>
+	<string name="contribute_allow_storage">Vennligst gi lagrings- og root-tillatelser for å forbedre appen</string>
+	<string name="contribute_successful_notification_title">Bidrag vellykket</string>
+	<string name="contribute_successful_notification_text">Takk for at du deler OTA-nettadresser med oss!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">Å nei!</string>

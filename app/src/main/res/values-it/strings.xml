@@ -116,6 +116,8 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 	<string name="settings_buy_button_not_possible">"Non disponibile"</string>
 	<string name="settings_buy_ad_free_label">"Passa a senza annunci"</string>
 
+	<string name="settings_contribute_label">"Aiuta a migliorare l'app:"</string>
+
 	<string name="settings_device">"Dispositivo"</string>
 	<string name="settings_entered_incorrectly">"Errore nel salvare le impostazioni. Seleziona il tuo dispositivo / il modo d'aggiornamento e ritenta."</string>
 	<string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale può essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalità avanzata nelle impostazioni.
@@ -276,6 +278,7 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="news_notification_channel_name">Articolo pubblicato</string>
 	<string name="device_notification_channel_name">"Nuovo dispositivo supportato"</string>
 	<string name="general_notification_channel_name">Generali</string>
+	<string name="url_submitted_notification_channel_name">URL OTA inviato</string>
 	<string name="download_status_notification_channel_description">Notifiche che riflettono lo stato di un download: in attesa, attivo, completato, oppure fallito</string>
 	<string name="verification_status_notification_channel_description">Notifiche che riflettono lo stato del processo di verifica di un file: attivo, completato, oppure fallito.\nLe checksum MD5 dei file scaricati sono verificate per assicurare che il file non sia stato modificato, e che sia un file di aggiornamento valido.</string>
 	<string name="installation_status_notification_channel_description">Ricevi una notifica se un aggiornamento è stato installato con successo oppure no</string>
@@ -283,6 +286,7 @@ Per verificare, controlla la versione attuale del tuo sistema:
 	<string name="news_notification_channel_description">Ricevi una notifica quando pubblichiamo un nuovo articolo</string>
 	<string name="device_notification_channel_description">Ricevi una notifica quando l\'app aggiunge il supporto per un nuovo dispositivo</string>
 	<string name="general_notification_channel_description">Notifiche generali che non fanno parte di altre categorie</string>
+	<string name="url_submitted_notification_channel_description">Riceverete una notifica quando avrete inviato con successo gli URL OTA al nostro team.\nÈ possibile disattivare l\'invio automatico degli URL nelle impostazioni dell\'applicazione.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Aiuto"</string>
@@ -329,6 +333,16 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="news_empty_state_all_read_header">Non c\'è più nulla da leggere!</string>
 	<string name="news_empty_state_none_available_text">Non c\'è nulla da leggere, riprova più tardi.</string>
 	<string name="news_empty_state_all_read_text">Hai letto tutto, congratulazioni!\nSperiamo ti piacciano i nostri articoli e che ne abbia tratto qualcosa.\n\nPremi il banner per rivedere tutti gli articoli.</string>
+
+	<string name="contribute">Diventa un contributor</string>
+	<string name="contribute_title">Migliora Oxygen Updater</string>
+	<string name="contribute_explanation">Per potervi fornire gli ultimi aggiornamenti, abbiamo bisogno di acquisire gli URL OTA ZIP.\n\nCome posso aiutarvi?\n\nOxygen Updater può inviare automaticamente nuovi URL OTA ai nostri amministratori. Questa operazione utilizza una piccola quantità di dati e potrebbe consumare un po\' di batteria. È necessario concedere i permessi di root all\'applicazione, perché legge un file di database accessibile solo tramite root. L\'utente riceverà una notifica quando un URL è stato inviato con successo.</string>
+	<string name="contribute_agree">Vorrei aiutare e sono d\'accordo nel sottoporre gli URL OTA ai nostri amministratori</string>
+	<string name="contribute_save">Salva</string>
+	<string name="contribute_more_info">Ulteriori info</string>
+	<string name="contribute_allow_storage">Si prega di concedere i permessi di archiviazione e di root per contribuire a migliorare l\'app</string>
+	<string name="contribute_successful_notification_title">Contribuzione avvenuta con successo!</string>
+	<string name="contribute_successful_notification_text">Grazie per aver condiviso con noi gli URL delle OTA!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Oh no!"</string>

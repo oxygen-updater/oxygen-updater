@@ -122,6 +122,8 @@
 	<string name="settings_buy_button_not_possible">Недоступно</string>
 	<string name="settings_buy_ad_free_label">Надогради за без реклама</string>
 
+	<string name="settings_contribute_label">Помозите напредовању апликације</string>
+
 	<string name="settings_device">Уређај</string>
 	<string name="settings_entered_incorrectly">Грешка приликом чувања ваших подешавања. Молимо вас и изаберите ваш уређај / методу ажурирања.</string>
 	<string name="settings_explanation_incremental_full_update">Делимично ажурирање се може извршити са било које верзије (ако немате "bootloader" откључан; онда бисте требали изабрати методу пуног ажурирања).\n\nA beta ажурирање OxygenOS-а може увек бити инсталирано, и када сте на стабилној верзији. За пребацивање са стабилне на beta верзију, морате да омогућите напредни мод у подешавањима. За beta-е, методе целог и делимичног ажурирања раде на исти начин као на стабилним верзијама.</string>
@@ -247,6 +249,7 @@
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">Нови уређај подржан</string>
 	<string name="general_notification_channel_name">General</string>
+	<string name="url_submitted_notification_channel_name">ОТА УРЛ је послат</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -254,6 +257,7 @@
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="url_submitted_notification_channel_description">Примите обавештење када нашем тиму успешно пошаљете ОТА УРЛ адресе.\nМожете да онемогућите аутоматско слање УРЛ-ова у подешавањима апликације.</string>
 
 	<!-- Help strings -->
 	<string name="help">Помоћ</string>
@@ -283,6 +287,17 @@
 	<string name="news_empty_state_all_read_header">Није ништа преостало за прочитати</string>
 	<string name="news_empty_state_none_available_text">У овом тренутку нема доступних вести, погледајте касније.</string>
 	<string name="news_empty_state_all_read_text">Прочитали сте све вести. Одличан посао!\nНадамо се да сте уживали читајући наше чланке и научили нешто ново из њих.\n\nДодирните банер поново да бисте приказали све вести.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Постани сарадник</string>
+	<string name="contribute_title">Помози напредовању Oxygen Updater-а</string>
+	<string name="contribute_explanation">Да бисмо вам дали најновија ажурирања, морамо да ухватимо ОТА ЗИП УРЛ адресе.\n\nКако могу да помогнем?\n\nОкиген Упдатер може аутоматски да пошаље нове ОТА УРЛ адресе нашим администраторима. Ово ће користити малу количину података и можда ће потрошити мало батерије. Мораћете да доделите роот дозволу за апликацију, јер она чита датотеку базе података којој се може приступити само преко роот-а. Бићете обавештени када УРЛ буде успешно послат.</string>
+	<string name="contribute_agree">Желео бих да помогнем и пристајем на слање ОТА УРЛ адреса нашим администраторима</string>
+	<string name="contribute_save">Сачувај подешавања</string>
+	<string name="contribute_more_info">Више информација</string>
+	<string name="contribute_allow_storage">Дајте дозволе за складиштење и роот да бисте помогли у побољшању апликације</string>
+	<string name="contribute_successful_notification_title">Учествовање успешно</string>
+	<string name="contribute_successful_notification_text">Хвала што сте поделили ОТА УРЛ-ове са нама!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">О не!</string>

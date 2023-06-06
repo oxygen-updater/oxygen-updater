@@ -128,6 +128,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_buy_button_not_possible">No disponible</string>
 	<string name="settings_buy_ad_free_label">Actualizar a la versión sin publicidad</string>
 
+	<string name="settings_contribute_label">Ayuda a mejorar la app</string>
+
 	<string name="settings_device">Dispositivo</string>
 	<string name="settings_entered_incorrectly">Error al guardar tus preferencias. Por favor, regresa y selecciona tu dispositivo de nuevo / método de actualización de nuevo.</string>
 	<string name="settings_explanation_incremental_full_update">Una actualización incremental puede instalarse desde cualquier versión (excepto si tienes el bootloader desbloqueado ya que tendras que usar el paquete completo para actualizar tu dispositivo).\n\nUna actualización beta de OxygenOS siempre podrá ser instalada, incluso cuando estás en la versión estable. Para cambiar de la estable a la beta, activa el modo avanzado en los ajustes. Para las betas, los métodos de actualización incremental y completo funcionan de las misma manera que en la versión estable.</string>
@@ -259,6 +261,7 @@ Instructions:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">Nuevo dispositivo compatible</string>
 	<string name="general_notification_channel_name">General</string>
+	<string name="url_submitted_notification_channel_name">URL OTA enviada</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -266,6 +269,7 @@ Instructions:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="url_submitted_notification_channel_description">Recibe una notificación cuando hayas enviado URL de OTA a nuestro equipo.\nPuedes desactivar el envío automático de URL en los ajustes de la aplicación.</string>
 
 	<!-- Help strings -->
 	<string name="help">Ayuda</string>
@@ -296,6 +300,17 @@ Instructions:
 	<string name="news_empty_state_all_read_header">There\'s nothing left to read</string>
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Hazte colaborador</string>
+	<string name="contribute_title">Ayuda a mejorar Oxygen Updater</string>
+	<string name="contribute_explanation">Para poder ofrecerte las últimas actualizaciones, necesitamos capturar las URL ZIP OTA.\n\n¿Cómo puedo ayudar?\n\nOxygen Updater puede enviar automáticamente nuevas URL OTA a nuestros administradores. Esto utilizará una pequeña cantidad de datos y puede usar un poco de tu batería. Tendrás que conceder permisos de root a la aplicación, ya que lee un archivo de base de datos al que sólo se puede acceder a través de root. Recibirás una notificación cuando una URL se haya enviado correctamente.</string>
+	<string name="contribute_agree">Me gustaría ayudar y estoy de acuerdo en enviar URLs OTA a nuestros administradores</string>
+	<string name="contribute_save">Guardar ajustes</string>
+	<string name="contribute_more_info">Más información</string>
+	<string name="contribute_allow_storage">Por favor, concede permisos de almacenamiento y root para ayudar a mejorar la aplicación</string>
+	<string name="contribute_successful_notification_title">Contribución completa</string>
+	<string name="contribute_successful_notification_text">¡Gracias por compartir con nosotros las URL de las OTA!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">¡Oh no!</string>

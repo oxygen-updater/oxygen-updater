@@ -118,6 +118,8 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="settings_buy_button_not_possible">"Otillgänglig"</string>
 	<string name="settings_buy_ad_free_label">"Uppgradera till reklamfritt"</string>
 
+	<string name="settings_contribute_label">Hjälp till med att förbättra appen</string>
+
 	<string name="settings_device">"Enhet"</string>
 	<string name="settings_entered_incorrectly">"Kunde inte spara dina inställningar. Gå tillbaka och välj din enhet och uppdateringsmetod igen."</string>
 	<string name="settings_explanation_incremental_full_update">"En inkrementell uppdatering kan installeras från vilken version som helst (förutom om du har en olåst bootloader, då ska du alltid välja den fullständiga uppdateringen som uppdateringsmetod) så länge vi har den uppdateringen tillgänglig.
@@ -282,6 +284,7 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">"Ny enhet stöds"</string>
 	<string name="general_notification_channel_name">General</string>
+	<string name="url_submitted_notification_channel_name">OTA URL inskickad</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -289,6 +292,7 @@ För att verifiera detta kan du kontrollera nuvarande version av ditt system enl
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="url_submitted_notification_channel_description">Få ett meddelande när du har skickat in OTA-adresser till vårt team.\nDu kan välja bort att automatiskt skicka in webbadresser i appens inställningar.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Hjälp"</string>
@@ -335,6 +339,16 @@ Använd knapparna för att aktivera och inaktivera meddelande / sekretessinstäl
 	<string name="news_empty_state_all_read_header">Det finns inget mer att läsa.</string>
 	<string name="news_empty_state_none_available_text">Det finns inga artiklar tillgängliga just nu, kom tillbaka senare.</string>
 	<string name="news_empty_state_all_read_text">Du har läst alla artiklar. Bra jobbat!\nVi hoppas att du tyckte om våra artiklar och lärde dig något nytt.\n\nTryck på rubriken igen för att visa alla nyhetsartiklar</string>
+
+	<string name="contribute">Bli en bidragare</string>
+	<string name="contribute_title">Hjälp till att förbättra Oxygen Updater</string>
+	<string name="contribute_explanation">För att kunna ge dig de senaste uppdateringarna måste vi samla in OTA ZIP-URL:er.\n\nHur kan jag hjälpa till?\n\nOxygen Updater kan automatiskt skicka nya OTA-adresser till våra administratörer. Detta kommer att använda en liten mängd data och kan använda lite av ditt batteri. Du måste ge root-behörighet till appen eftersom den läser en databasfil som endast är åtkomlig via root. Du kommer att meddelas när en URL har skickats in.</string>
+	<string name="contribute_agree">Jag vill gärna hjälpa till och samtycker till att skicka OTA-URL:er till våra administratörer</string>
+	<string name="contribute_save">Spara inställningar</string>
+	<string name="contribute_more_info">Mer info</string>
+	<string name="contribute_allow_storage">Vänligen bevilja lagrings- och rotbehörighet för att förbättra appen</string>
+	<string name="contribute_successful_notification_title">Bidrag lyckades</string>
+	<string name="contribute_successful_notification_text">Tack för att du delar OTA-URL:er med oss!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"Åh nej!"</string>

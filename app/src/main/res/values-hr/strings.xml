@@ -119,7 +119,7 @@
 	<string name="settings_buy_button_not_possible">"Nedostupno"</string>
 	<string name="settings_buy_ad_free_label">"Nadogradi na Ad-Free"</string>
 
-	<!-- TODO translate these lines -->
+	<string name="settings_contribute_label">Pomozite poboljšati aplikaciju</string>
 
 	<string name="settings_device">"Uređaj"</string>
 	<string name="settings_entered_incorrectly">"Greška pri spremanju postavki. Molimo vas ponovno odaberite vaš uređaj / metodu ažuriranja."</string>
@@ -276,6 +276,7 @@ Instructions:
 	<string name="news_notification_channel_name">News article published</string>
 	<string name="device_notification_channel_name">"Novi uređaj podržan"</string>
 	<string name="general_notification_channel_name">General</string>
+	<string name="url_submitted_notification_channel_name">OTA URL dostavljen</string>
 	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
 	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
 	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
@@ -283,6 +284,7 @@ Instructions:
 	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="url_submitted_notification_channel_description">Primite obavijest kada uspješno pošaljete OTA URL-ove našem timu.\nMožete isključiti automatsko slanje URL-ova u postavkama aplikacije.</string>
 
 	<!-- Help strings -->
 	<string name="help">"Pomoć"</string>
@@ -332,7 +334,16 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 	<string name="news_empty_state_none_available_text">There aren\'t any articles available at this moment, check back later.</string>
 	<string name="news_empty_state_all_read_text">You\'ve read all articles. Good job!\nWe hope you enjoyed reading our articles, and learnt something new from them.\n\nTap the banner again to show all news articles.</string>
 
-	<!-- TODO translate these lines -->
+	<!-- Contribute strings -->
+	<string name="contribute">Postanite suradnik</string>
+	<string name="contribute_title">Pomozite poboljšati Oxygen Updater</string>
+	<string name="contribute_explanation">Kako bismo vam dali najnovija ažuriranja, moramo uhvatiti OTA ZIP URL-ove.\n\nKako mogu pomoći?\n\nOxygen Updater može automatski poslati nove OTA URL-ove našim administratorima. To će upotrijebiti malu količinu podataka i može potrošiti malo baterije. Aplikaciji ćete morati dodijeliti root dozvolu jer ona čita datoteku baze podataka kojoj se može pristupiti samo putem roota. Bit ćete obaviješteni kada URL bude uspješno poslan.</string>
+	<string name="contribute_agree">Želio bih pomoći i pristajem na slanje OTA URL-ova našim administratorima</string>
+	<string name="contribute_save">Spremi postavke</string>
+	<string name="contribute_more_info">Više informacija</string>
+	<string name="contribute_allow_storage">Dajte dopuštenja za pohranu i root kako biste poboljšali aplikaciju</string>
+	<string name="contribute_successful_notification_title">Doprinos uspješan</string>
+	<string name="contribute_successful_notification_text">Hvala što ste s nama podijelili OTA URL-ove!</string>
 
 	<!-- Error strings -->
 	<string name="error_app_outdated">"O ne!"</string>

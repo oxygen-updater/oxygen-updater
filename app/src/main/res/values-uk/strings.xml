@@ -120,6 +120,8 @@
 	<string name="settings_buy_button_not_possible">Недоступно</string>
 	<string name="settings_buy_ad_free_label">Видалити рекламу із застосунку</string>
 
+	<string name="settings_contribute_label">Допомогти покращити застосунок</string>
+
 	<string name="settings_device">Вибрати пристрій</string>
 	<string name="settings_entered_incorrectly">Помилка під час збереження налаштувань. Будь ласка, верніться назад і виберіть ваш пристрій / спосіб оновлення знову.</string>
 	<string name="settings_explanation_incremental_full_update">Інкрементне оновлення (Incremental update) можна встановлювати з будь-якої версії, якщо у вас заблокований завантажувач. Інакше, якщо завантажувач розблоковано — слід вибрати \"Повне оновлення\" (Full update).\n\nБета оновлення (Open Beta) для OxygenOS можна встановлювати, якщо у вас стабільна версія. Щоб встановити бета версію, потрібно увімкнути \"Розширений режим\" в налаштуваннях. Для бета версій, способи Повного та Інкрементного оновлення працюють так само, як і у стабільних версіях.</string>
@@ -245,6 +247,7 @@
 	<string name="news_notification_channel_name">Опубліковано нову новину</string>
 	<string name="device_notification_channel_name">Підтримується новий пристрій</string>
 	<string name="general_notification_channel_name">Загальні</string>
+	<string name="url_submitted_notification_channel_name">Надіслано URL-адресу OTA</string>
 	<string name="download_status_notification_channel_description">Сповіщення, які показують поточний стан завантаження: очікування, активний, завершено чи помилка</string>
 	<string name="verification_status_notification_channel_description">Сповіщення, які показують поточний стан перевірки файлу: в процесі, завершено чи помилка.\nДля завантаженого файлу обчислюється хешсума MD5 і перевіряється із завантаженою хешсумою, щоб переконатися що файл оновлення коректний і не пошкоджений.</string>
 	<string name="installation_status_notification_channel_description">Отримувати сповіщення коли оновлення успішно встановиться (або сповіщення про помилку)</string>
@@ -252,6 +255,7 @@
 	<string name="news_notification_channel_description">Отримувати сповіщення, коли публікують нову новину</string>
 	<string name="device_notification_channel_description">Отримувати сповіщення, коли до застосунку додають підтримку нового пристрою</string>
 	<string name="general_notification_channel_description">Загальні сповіщення, які не підпадають ні під одну категорію</string>
+	<string name="url_submitted_notification_channel_description">Отримайте сповіщення, коли ви успішно надішлете URL-адреси OTA нашій команді.\nВи можете відмовитися від автоматичного надсилання URL-адрес у налаштуваннях програми.</string>
 
 	<!-- Help strings -->
 	<string name="help">Допомога</string>
@@ -279,6 +283,17 @@
 	<string name="news_empty_state_all_read_header">Не залишилось нічого, що можна почитати</string>
 	<string name="news_empty_state_none_available_text">На даний момент немає новин, перевірте пізніше.</string>
 	<string name="news_empty_state_all_read_text">Ви прочитали всі новини. Чудово!\nСподіваємося, вам сподобалося читати наші новини, і надіємося що ви почерпнули щось нове для себе.\n\nНатисніть на банер, щоб знову показати всі новини.</string>
+
+	<!-- Contribute strings -->
+	<string name="contribute">Стати помічником</string>
+	<string name="contribute_title">Допомога в покращенні Oxygen Updater</string>
+	<string name="contribute_explanation">Для того, щоб надавати вам останні оновлення, нам потрібно перехоплювати URL-адреси OTA ZIP.\n\nЯк я можу допомогти?\n\nOxygen Updater може автоматично надсилати нові OTA-адреси нашим адміністраторам. Для цього буде використано невелику кількість даних і може витрачатися трохи заряду вашого акумулятора. Вам потрібно надати програмі привілеї root, тому що вона читає файл бази даних, доступ до якого є лише у привілейованих користувачів. Ви отримаєте сповіщення, коли URL буде успішно надіслано.</string>
+	<string name="contribute_agree">Я хотів би допомогти і згоден надіслати OTA URL-адреси нашим адміністраторам</string>
+	<string name="contribute_save">Зберегти налаштування</string>
+	<string name="contribute_more_info">Детальніше</string>
+	<string name="contribute_allow_storage">Будь ласка, надайте права доступу до сховища та root, щоб допомогти покращити додаток</string>
+	<string name="contribute_successful_notification_title">Ви дуже допомогли!</string>
+	<string name="contribute_successful_notification_text">Дякуємо, що поділилися з нами URL-адресами OTA!</string>
 
 	<!-- Error strings-->
 	<string name="error_app_outdated">От халепа!</string>
