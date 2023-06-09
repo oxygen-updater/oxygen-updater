@@ -300,7 +300,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
         }
 
         // If user enables OTA contribution, check if device is rooted and ask for root permission
-        if (findViewById<CheckBox>(R.id.onboardingPage4ContributeCheckbox).isChecked) {
+        if (ContributorUtils.isAtLeastQAndPossiblyRooted && findViewById<CheckBox>(R.id.onboardingPage4ContributeCheckbox).isChecked) {
             Toast.makeText(this, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
             hasRootAccess {
                 PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
