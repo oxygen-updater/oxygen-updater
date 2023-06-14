@@ -207,10 +207,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
                     isVisible = visible
                     if (visible) setOnClickListener(this@OnboardingActivity::onMoreInfoButtonClicked)
                 }
-                findViewById<Button>(R.id.onboardingPage4StartAppButton)?.apply {
-                    isVisible = visible
-                    if (visible) setOnClickListener(this@OnboardingActivity::onStartAppButtonClicked)
-                }
+                findViewById<Button>(R.id.onboardingPage4StartAppButton)?.setOnClickListener(this::onStartAppButtonClicked)
             }
         }
     }
