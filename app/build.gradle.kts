@@ -43,8 +43,8 @@ android {
         minSdk = AndroidSdk.MIN
         targetSdk = AndroidSdk.TARGET
 
-        versionCode = 98
-        versionName = "5.11.1"
+        versionCode = 99
+        versionName = "5.11.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
