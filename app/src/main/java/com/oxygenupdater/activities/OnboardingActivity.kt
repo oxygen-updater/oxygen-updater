@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -203,7 +204,7 @@ class OnboardingActivity : BaseActivity(R.layout.activity_onboarding) {
             if (it == 4) {
                 val visible = ContributorUtils.isAtLeastQAndPossiblyRooted
                 findViewById<CheckBox>(R.id.onboardingPage4ContributeCheckbox)?.isVisible = visible
-                findViewById<Button>(R.id.onboardingPage4MoreInfoButton)?.apply {
+                findViewById<ImageButton>(R.id.onboardingPage4MoreInfoButton)?.apply {
                     isVisible = visible
                     if (visible) setOnClickListener(this@OnboardingActivity::onMoreInfoButtonClicked)
                 }
