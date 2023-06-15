@@ -124,18 +124,21 @@ object SystemVersionProperties {
                 if (india == "1" || india == "true") oxygenDeviceName += "_IN"
             }
 
-            oxygenOSVersion = pickFirstValid(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, oxygenOSVersion) { key, value ->
-                if (key == ROM_VERSION_LOOKUP_KEY) {
-                    // Workaround #1 (ro.rom.version): ignore if value has the "H2OS" prefix (seen on OOS 2 & 3).
-                    if (value.contains(H2OS)) return@pickFirstValid null
+            // Prefer `Build.DISPLAY` on Android>13/T, to pick the new OOS13.1 format: KB2001_13.1.0.513(EX01),
+            // which corresponds to the KB2001_11_F.66 version number. Below OOS13.1, `Build.DISPLAY` is the version
+            // number, so we're not losing any info.
+            if (oxygenOSVersion == UNKNOWN || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) oxygenOSVersion = pickFirstValid(
+                BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, oxygenOSVersion
+            ) { key, value ->
+                if (key != ROM_VERSION_LOOKUP_KEY) return@pickFirstValid value
 
-                    // Workaround #2 (ro.rom.version): remove redundant "Oxygen OS " prefix from value, because the app
-                    // shows only the number or adds custom formatting. Seen on devices from OnePlus 7-series onwards,
-                    // on OS versions released before the Oppo merger (ColorOS base).
-                    if (value.contains(OXYGENOS_PREFIX)) {
-                        value.replace(OXYGENOS_PREFIX, "")
-                    } else value
-                } else value
+                // Workaround #1 (ro.rom.version): ignore if value has the "H2OS" prefix (seen on OOS 2 & 3).
+                if (value.contains(H2OS)) return@pickFirstValid null
+
+                // Workaround #2 (ro.rom.version): remove redundant "Oxygen OS " prefix from value, because the app
+                // shows only the number or adds custom formatting. Seen on devices from OnePlus 7-series onwards,
+                // on OS versions released before the Oppo merger (ColorOS base).
+                if (value.contains(OXYGENOS_PREFIX)) value.replace(OXYGENOS_PREFIX, "") else value
             }
 
             val euBooleanStr = pickFirstValid(BUILD_EU_LOOKUP_KEYS) { _, value -> value }
@@ -197,7 +200,12 @@ object SystemVersionProperties {
                     if (india == "1" || india == "true") oxygenDeviceName += "_IN"
                 }
 
-                oxygenOSVersion = readBuildPropItem(BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, oxygenOSVersion)
+                // Prefer `Build.DISPLAY` on Android>13/T, to pick the new OOS13.1 format: KB2001_13.1.0.513(EX01),
+                // which corresponds to the KB2001_11_F.66 version number. Below OOS13.1, `Build.DISPLAY` is the version
+                // number, so we're not losing any info.
+                if (oxygenOSVersion == UNKNOWN || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) oxygenOSVersion = readBuildPropItem(
+                    BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, oxygenOSVersion
+                )
 
                 val euBooleanStr = readBuildPropItem(BUILD_EU_LOOKUP_KEYS, properties)
                 PrefManager.putBoolean(PrefManager.PROPERTY_IS_EU_BUILD, if (euBooleanStr == UNKNOWN) {
