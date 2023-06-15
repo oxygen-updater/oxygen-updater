@@ -584,16 +584,22 @@ class UpdateInformationFragment : Fragment() {
         // https://stackoverflow.com/a/60542345
         rootView?.findViewById<ViewGroup>(R.id.systemIsUpToDateLayoutChild)?.layoutTransition?.setAnimateParentHierarchy(false)
 
-        val isDifferentVersion = updateData.otaVersionNumber != SystemVersionProperties.oxygenOSOTAVersion
+        val incomingOtaVersion = updateData.otaVersionNumber
+        val currentOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
+        val isDifferentVersion = incomingOtaVersion != currentOtaVersion
+        val method = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>") ?: "<UNKNOWN>"
+        val visible = isDifferentVersion
+                // ...and incoming is newer (older builds can't be installed due to standard Android security measures)
+                && UpdateData.getBuildDate(incomingOtaVersion) >= UpdateData.getBuildDate(currentOtaVersion)
+                // ...and incoming is likely a full ZIP, or the selected update method is "full"
+                // (incrementals are only for specific source/target version combos)
+                && (updateData.downloadSize >= FULL_ZIP_LIKELY_MIN_SIZE || method.endsWith("(full)") || method.endsWith("(volledig)"))
 
         rootView?.findViewById<TextView>(R.id.advancedModeTipTextView)?.run {
-            isVisible = isDifferentVersion
-            rootView.findViewById<View>(R.id.advancedModeTipDivider)?.isVisible = isDifferentVersion
+            isVisible = visible
+            rootView.findViewById<View>(R.id.advancedModeTipDivider)?.isVisible = visible
 
-            text = getString(
-                R.string.update_information_banner_advanced_mode_tip,
-                PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
-            )
+            if (visible) text = getString(R.string.update_information_banner_advanced_mode_tip, method)
         }
 
         // Save last time checked if online.
@@ -1255,6 +1261,8 @@ class UpdateInformationFragment : Fragment() {
 
     companion object {
         const val TAG = "UpdateInformationFragment"
+
+        private const val FULL_ZIP_LIKELY_MIN_SIZE = 1048576 * 2000L // 2GB
 
         /**
          * Amount of free storage space to reserve when downloading an update.

@@ -1,5 +1,6 @@
 package com.oxygenupdater.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -20,7 +21,7 @@ data class UpdateData(
     var information: String? = null,
     var updateInformationAvailable: Boolean = false,
 
-    var systemIsUpToDate: Boolean = false
+    var systemIsUpToDate: Boolean = false,
 ) : FormattableUpdateData {
 
     val isUpdateInformationAvailable = updateInformationAvailable || versionNumber != null
@@ -32,5 +33,16 @@ data class UpdateData(
     @JsonProperty("update_information_available")
     fun setIsUpdateInformationAvailable(updateInformationAvailable: Boolean) {
         this.updateInformationAvailable = updateInformationAvailable
+    }
+
+    companion object {
+        @JsonIgnore
+        fun getBuildDate(otaVersionNumber: String?) = try {
+            otaVersionNumber
+                ?.substringAfterLast('_')
+                ?.toLong() ?: 0
+        } catch (e: NumberFormatException) {
+            0
+        }
     }
 }
