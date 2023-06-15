@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/swipeRefreshLayout"
@@ -86,6 +87,7 @@
 			android:fadingEdge="vertical"
 			android:fadingEdgeLength="@dimen/spacing_default"
 			android:requiresFadingEdge="vertical"
+			android:scrollbars="vertical"
 			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 	</LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

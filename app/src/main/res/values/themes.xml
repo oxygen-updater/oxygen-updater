@@ -36,6 +36,11 @@
 		<item name="android:textColorTertiary">@color/foreground</item>
 		<item name="android:textColorTertiaryInverse">?android:windowBackground</item>
 
+		<item name="android:scrollbarStyle">insideOverlay</item>
+		<item name="android:scrollbarSize">2dp</item>
+		<item name="android:scrollbarThumbHorizontal">@color/scrollbar</item>
+		<item name="android:scrollbarThumbVertical">@color/scrollbar</item>
+
 		<item name="android:lineSpacingExtra">4dp</item>
 		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
 		<item name="android:windowActivityTransitions">true</item>

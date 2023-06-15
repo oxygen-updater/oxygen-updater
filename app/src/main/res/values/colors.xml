@@ -10,6 +10,7 @@
 	<color name="foreground">#212121</color>
 	<!--<color name="appBarBackground">@color/colorPrimary</color>-->
 	<color name="splashBackgroundColor">@color/colorPrimary</color>
+	<color name="scrollbar">#1f000000</color> <!-- 12% black -->
 
 	<color name="red_400">#ef5350</color>
 	<color name="red_500">#f44336</color>

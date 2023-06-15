@@ -11,4 +11,5 @@
 	<!--<color name="appBarBackground">#241113</color>-->
 	<!--<color name="appBarBackground">@color/backgroundVariant</color>-->
 	<color name="splashBackgroundColor">@color/background</color>
+	<color name="scrollbar">#1fffffff</color> <!-- 12% white -->
 </resources>
