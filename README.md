@@ -22,7 +22,7 @@ Note: installing via GitHub still supports auto-updates via the Play Store. Both
 | **[Android Studio (latest stable)][android-studio]** | Any other IDE (IntelliJ IDEA, Eclipse, etc.) or even a text editor (Visual Studio Code, Atom, etc.) | Additional tools not included with your chosen IDE/editor might need to be installed separately (ADB, SDK Manager, platforms/sources, etc.)    |
 | **Android device**                 | Android emulator                                                                                    | Emulators generally perform worse than a real device, even with accelerators. Also, you won't be able to test the app's root-related features. |
 
-The app targets API 31 (Android 12/S), with a minimum API level of 21 (Android 5/Lollipop). Make sure both SDK platforms (and optionally sources) are installed via SDK Manager.
+The app targets API 34 (Android 14/U), with a minimum API level of 21 (Android 5/Lollipop). Make sure both SDK platforms (and optionally sources) are installed via SDK Manager.
 
 ### Setup
 

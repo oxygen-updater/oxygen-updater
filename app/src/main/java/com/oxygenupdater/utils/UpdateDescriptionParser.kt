@@ -54,12 +54,15 @@ object UpdateDescriptionParser {
                     HEADING_3 -> modifiedLine = StringBuilder(
                         currentLine.replace("^ *###".toRegex(), "")
                     )
+
                     HEADING_2 -> modifiedLine = StringBuilder(
                         currentLine.replace("^ *##([^#])".toRegex(), "$1")
                     )
+
                     HEADING_1 -> modifiedLine = StringBuilder(
                         currentLine.replace("^ *#([^#])".toRegex(), "$1")
                     )
+
                     LIST_ITEM -> {
                         modifiedLine = StringBuilder(currentLine.replace("^ *[*•]".toRegex(), "  •"))
 
@@ -71,11 +74,13 @@ object UpdateDescriptionParser {
                             }
                         }
                     }
+
                     LINE_SEPARATORS -> currentLine.forEach {
                         if (it == '\\') {
                             modifiedLine.append("\n")
                         }
                     }
+
                     LINK -> {
                         val linkTitle = currentLine.substring(
                             currentLine.indexOf("[") + 1,
@@ -96,12 +101,13 @@ object UpdateDescriptionParser {
                             ""
                         }
 
-                        // We need to save the full URL somewhere, to point the browser to it when clicked...
+                        // We need to save the full URL somewhere, to point the browser to it when clicked…
                         links[linkTitle] = linkAddress
 
                         // The link title will be displayed. It will also be used to look up the full url when clicked.
                         modifiedLine = StringBuilder(linkTitle)
                     }
+
                     else -> modifiedLine = StringBuilder(currentLine)
                 }
 
@@ -148,7 +154,8 @@ object UpdateDescriptionParser {
                     HEADING_3 -> result.setSpan(StyleSpan(Typeface.BOLD), startPosition, endPosition, 0)
                     // Decrease opacity of list items and text
                     LIST_ITEM,
-                    TEXT -> if (context != null) {
+                    TEXT,
+                    -> if (context != null) {
                         result.setSpan(
                             TextAppearanceSpan(
                                 context,
@@ -235,6 +242,6 @@ object UpdateDescriptionParser {
     // Special class which can be used by UpdateDataVersionFormatter lib to check if the current line contains the OS version number, since that must be excluded from the update description itself.
     private class LineDetectingUpdateInfo(currentLine: String) : FormattableUpdateData {
         override val internalVersionNumber: String? = null
-        override val updateDescription: String? = currentLine
+        override val updateDescription: String = currentLine
     }
 }

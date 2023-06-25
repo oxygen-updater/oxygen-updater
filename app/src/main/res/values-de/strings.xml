@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Tippe hier um wichtige Nachrichten anzuzeigen</string>
 	<string name="update_information_banner_advanced_mode_tip">Du hast den \"%1$s\" Update Zweig ausgewählt. Aktiviere den Fortgeschrittenen Modus um zu diesem Update Zweig zu wechseln.</string>
 	<string name="update_information_header_advanced_mode_hint">Der Fortgeschrittene Modus ist aktiviert</string>
-	<string name="update_information_header_advanced_mode_helper">Da du den Fortgeschrittenen Modus aktiviert hast, kannst du das neueste ZIP für \"%1$s\" herunterladen.\n\nDu kannst den Fortgeschrittenen Modus in den Einstellungen deaktivieren.</string>
-	<string name="update_information_different_version_changelog_notice">Du siehst das Änderungsprotokoll für das aktuellste Update im \"%1$s\" Update Zweig. Wenn du dieses Update installieren willst, musst du zuerst den Fortgeschrittenen Modus in den Einstellungen aktivieren.\n\nWenn du aber das Änderungsprotokoll für deine aktuelle installierte Version anzeigen lassen willst, musst du zu der korrekten Update Methode zurückkehren.</string>
+	<string name="update_information_header_advanced_mode_helper">Da du den Fortgeschrittenen Modus aktiviert hast, kannst du das neueste ZIP für \"%1$s\" herunterladen. Du kannst den Fortgeschrittenen Modus in den Einstellungen deaktivieren.</string>
+	<string name="update_information_different_version_changelog_notice_base">Hinweis: Dieses Änderungsprotokoll bezieht sich auf die neueste verfügbare Version (%1$s) in der Aktualisierungsmethode \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Wenn Sie dieses Update installieren möchten, müssen Sie in den Einstellungen die Option "Erweiterter Modus" aktivieren.</string>
 	<string name="update_information_last_checked_on">"Zuletzt aktualisiert: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Es sind keine Update informationen verfügbar"</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -43,7 +44,7 @@
 	<string name="download_complete">"Download abgeschlossen"</string>
 	<string name="download_complete_notification">"Tippe um die Installation zu starten"</string>
 	<string name="download_error">"Download Fehler"</string>
-	<string name="download_error_close">"SCHLIEẞEN"</string>
+	<string name="download_error_close">"Schließen"</string>
 	<string name="download_error_corrupt">"Die heruntergeladene Update Datei ist beschädigt! Versuche sie erneut herunterzuladen."</string>
 	<string name="download_error_server">"Ein Serverfehler ist während dem herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen."</string>
 	<string name="download_error_internal">Ein App Fehler ist während dem Herunterladen des Updates aufgetreten. Bitte versuche es erneut herunterzuladen, oder schicke ein Support-Mail wenn es wieder fehlschlagt.</string>
@@ -51,8 +52,8 @@
 
 Wenn du mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder über unseren <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Die Datei wurde heruntergeladen, konnte aber nicht in den richtigen Ordner verschoben werden. Öffnen einen Datei Manager, navigiere zu \"%1$s\" und verschiebe die Datei in die oberste Ebene deines internen Speichers.</string>
-	<string name="download_error_retry">"ERNEUT VERSUCHEN"</string>
-	<string name="download_error_resume">"FORTSETZEN"</string>
+	<string name="download_error_retry">"Erneut versuchen"</string>
+	<string name="download_error_resume">"Fortsetzen"</string>
 	<string name="download_error_storage">"Auf deinem Gerät ist nicht genügend Speicherplatz verfügbar um das Update herunterzuladen. Entferne ein paar Dateien und Versuche erneut es herunterzuladen."</string>
 	<string name="download_failed">"Download fehlgeschlagen"</string>
 	<string name="download_pending">"Der Download wird in Kürze gestartet…"</string>
@@ -129,12 +130,12 @@ Ein OxygenOS Beta Update kann nur installiert werden wenn du bereits eine Beta V
 	<string name="settings_push_from_server">"Informationen und Warnungen"</string>
 	<string name="settings_saving">"Deine Einstellungen werden weiterhin gespeichert. wenn das zu lange dauern sollte: Überprüfe deine Verbindung, schließe die App und starte sie erneut."</string>
 	<string name="settings_advanced_mode">"Fortgeschrittener Modus"</string>
-	<string name="settings_advanced_mode_explanation">"Der Fortgeschrittene Modus deaktiviert die Nachricht \"Dein System ist auf dem neuesten Stand\" und erlaubt es dir sogar Updates herunterzuladen und zu installieren die möglicherweiße nicht mit deinem Gerät kompatibel sind.
+	<string name="settings_advanced_mode_explanation">"Normalerweise zeigt Ihnen die App Updates auf der Grundlage Ihrer aktuellen Betriebssystemversion an. Im erweiterten Modus wird unabhängig von der Geräte-/Versionskompatibilität immer das neueste verfügbare Update angezeigt.
 
-Das könnte nützlich sein wenn du z.B.:
--Von der regulären Version auf eine Beta Version updaten willst
--Von einer Beta Version zur regulären Version zurückkehren willst (Vergiss nicht dein Telefon zurückzusetzen)
--Deine aktuelle Systemversion neuinstallieren willst."</string>
+Dies kann nützlich sein, wenn Sie Folgendes möchten:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; die neueste Version erneut herunterladen möchten, auch wenn Sie sie bereits installiert haben
+&#8226; Zu einem anderen Update-Track wechseln möchten"</string>
+	<string name="settings_advanced_mode_caption">"Der erweiterte Modus wird nur in den oben genannten Fällen benötigt. Sie sollten ihn nicht aktivieren, wenn Sie nicht wissen, was Sie tun."</string>
 	<string name="settings_update_method">"Aktualisierungsmethode"</string>
 
 	<string name="settings_upload_logs">Teile Nutzungsdaten und Protokolle</string>
@@ -149,20 +150,11 @@ Das könnte nützlich sein wenn du z.B.:
 	<string name="onboarding_page_1_title">"Herzlich Willkommen im Oxygen Updater!"</string>
 	<string name="onboarding_page_1_text">"Diese App erlaubt es dir:
 
-Schneller die neusten Updates für dein OxygenOS Gerät zu bekommen
-
--Ein gerootetes Gerät einfach zu aktualisieren
-
--Zu sehen was in deiner aktuellen Version alles neu ist
-
--Die neusten Updates über OnePlus und OxygenOS zu sehen
-
-Wische nach links um fortzufahren."</string>
-	<string name="onboarding_page_1_caption">"Das ist keine Offizielle OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder OnePlus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden.
-
-durch die Benutzung dieser App stimmst du den oben genannten Nutzungsbedingungen zu.
-
-Wische nach links um fortzufahren."</string>
+&#8226; Schneller die neusten Updates für dein OxygenOS Gerät zu bekommen
+&#8226; Ein gerootetes Gerät einfach zu aktualisieren
+&#8226; Zu sehen was in deiner aktuellen Version alles neu ist
+&#8226; Die neusten Updates über OnePlus und OxygenOS zu sehen"</string>
+	<string name="onboarding_page_1_caption">"Das ist keine Offizielle OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder OnePlus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden. durch die Benutzung dieser App stimmst du den oben genannten Nutzungsbedingungen zu."</string>
 	<string name="onboarding_page_2_title">"Wähle dein Gerät"</string>
 	<string name="onboarding_page_2_caption">"Normalerweise sollte dein Gerät bereits oben ausgewählt sein. Falls nicht, wähle dein Gerät oben aus.
 
@@ -176,9 +168,7 @@ Falls auf deinem Gerät eine Beta Version von OxygenOS läuft, dann wähle eine 
 
 Wische nach links um fortzufahren."</string>
 	<string name="onboarding_page_4_title">"Du bist fertig!"</string>
-	<string name="onboarding_page_4_text">"Viel Spaß beim Benutzen dieser App!
-
-Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf das drei Punkte Kontext Menü in der rechten oberen Ecke, und drücke auf \"Einstellungen\""</string>
+	<string name="onboarding_page_4_text">"Viel Spaß beim Benutzen dieser App! Du kannst jederzeit die Einstellungen später noch ändern."</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Installieren"</string>
@@ -191,9 +181,9 @@ Du kannst jederzeit die Einstellungen später noch ändern. Drücke dafür auf d
 	<string name="install_guide_page_1_title">"Update herunterzuladen."</string>
 	<string name="install_guide_page_1_text">"&#8226;Drücke den Download Button um mit dem Hertunterladen des Updates zu starten
 
--Der Download Fortschritt wird in der App angezeigt und als Benachrichtigung in der Benachrichtigungsleiste.
+&#8226; Der Download Fortschritt wird in der App angezeigt und als Benachrichtigung in der Benachrichtigungsleiste.
 
--Wenn der Download abgeschlossen ist, wirst du eine Benachrichtigung mit dem Text \"Download abgeschlossen\" erhalten.
+&#8226; Wenn der Download abgeschlossen ist, wirst du eine Benachrichtigung mit dem Text \"Download abgeschlossen\" erhalten.
 Falls es einen Download Fehler gibt, öffne die App und versuche das Update erneut zu downloaden. Wenn das nicht funktioniert, kontrolliere ob du eine funktionierende Internet Verbindung hast. Ansonsten kontaktiere den Entwickler dieser App. Du kannst das wenn du auf \"Meine Apps\" im Google Play Store gehst."</string>
 
 	<string name="install_guide_page_2_title">Installation vorbereiten</string>
@@ -226,9 +216,9 @@ Anleitung:
 	<string name="install_guide_page_5_text">"&#8226;Sobald dein Gerät das Optimieren der Apps fertiggestellt hat, wurde das Update erfolgreich installiert.
 Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrollieren:
 
--Gehe in die Einstellungen, tippe auf \"Über das Telefon\", und überprüfe die OxygenOS Version.
+&#8226; Gehe in die Einstellungen, tippe auf \"Über das Telefon\", und überprüfe die OxygenOS Version.
 
--Wenn dir die App gefällt, dann gibt ihr doch 5 Sterne im Play Store!"</string>
+&#8226; Wenn dir die App gefällt, dann gibt ihr doch 5 Sterne im Play Store!"</string>
 	<string name="install_guide_close_button">"Installationsanleitung schließen"</string>
 
 	<!-- Device information strings -->
@@ -320,7 +310,7 @@ Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphär
 	<string name="news">"Neuigkeiten"</string>
 	<string name="news_date_published">"Letztes Update: %1$s"</string>
 	<string name="news_empty">"Dieser Artikel hat keinen Inhalt."</string>
-	<string name="news_load_network_error">"Fehler "</string>
+	<string name="news_load_network_error">"Der Artikel konnte nicht geöffnet werden. Überprüfen Sie Ihre Verbindung und drücken Sie die Taste \"Erneut versuchen\", um den Artikel zu öffnen."</string>
 	<string name="news_load_id_error"><![CDATA[Der Artikel konnte nicht über den Link geöffnet werden: %1$s. Überprüfe den Link oder melde ihn uns per <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder über unseren <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.]]></string>
 	<string name="news_unread_count_1">Sie haben %1$d ungelesene Nachrichtenartikel. Tippe hier um sie anzuzeigen.</string>
 	<string name="news_unread_count_2">Sie haben %1$d ungelesene Nachrichtenartikel. Tippe um alle Artikel anzuzeigen.</string>
@@ -351,7 +341,7 @@ Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphär
 	<string name="error_maintenance">"Server Wartungsarbeiten"</string>
 
 	<string name="error_maintenance_message">"Bitte haben Sie Geduld. Der Server wird bald wieder erreichbar sein."</string>
-	<string name="error_maintenance_retry">Möglicherweiße sind die Server gerade wegen Wartungsarbeiten heruntergefahren. Versuchen Sie es später noch einmal oder melden es und entweder über <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder auf unserem <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Möglicherweiße sind die Server gerade wegen Wartungsarbeiten heruntergefahren. Versuchen Sie es später noch einmal oder melden es und entweder über <a href="mailto:support@oxygenupdater.com">E-Mail</a> oder auf unserem <a href="https://discord.gg/5TXdhKJ">Discord Server</a>.]]></string>
 
 	<string name="error_reload">"Aktualisieren"</string>
 	<string name="error_unable_to_rate_app">"Du kannst die App nicht bewerten, weil auf deinem Gerät kein Google Play Store gefunden wurde."</string>

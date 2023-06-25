@@ -1,10 +1,10 @@
 package com.oxygenupdater.services
 
 import androidx.work.BackoffPolicy
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
-import androidx.work.workDataOf
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.oxygenupdater.enums.NotificationElement
@@ -54,13 +54,15 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
             logDebug(TAG, "Displaying push notification in $displayDelayInSeconds second(s)")
 
-            val pairs = remoteMessage.data.map {
-                Pair(it.key, it.value)
-            }.toTypedArray()
+            val inputData = Data.Builder().apply {
+                remoteMessage.data.forEach { (key, value) ->
+                    putString(key, value)
+                }
+            }.build()
 
             val oneTimeWorkRequest = OneTimeWorkRequestBuilder<DisplayDelayedNotificationWorker>()
                 .setInitialDelay(displayDelayInSeconds, TimeUnit.SECONDS)
-                .setInputData(workDataOf(*pairs))
+                .setInputData(inputData)
                 .setBackoffCriteria(BackoffPolicy.LINEAR, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
                 .build()
 

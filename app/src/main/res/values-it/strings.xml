@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Premi qui per i messaggi importanti</string>
 	<string name="update_information_banner_advanced_mode_tip">Hai selezionato il canale di aggiornamenti \"%1$s\". Abilita la modalità avanzata se vuoi passare a questo canale di aggiornamenti.</string>
 	<string name="update_information_header_advanced_mode_hint">La modalità avanzata è abilitata</string>
-	<string name="update_information_header_advanced_mode_helper">Grazie alla modalità avanzata, puoi scaricare l\'ultima ZIP per \"%1$s\".\n\nPuoi disattivare la modalità avanzata nelle impostazioni.</string>
-	<string name="update_information_different_version_changelog_notice">Stai visualizzando il changelog dell\'ultimo aggiornamento sulla traccia \"%1$s\". Se intendi installare questo aggiornamento, devi abilitare la modalità avanzata (impostazioni).\n\nPer visualizzare il changelog attuale devi scegliere la modalità di aggiornamento corretta.</string>
+	<string name="update_information_header_advanced_mode_helper">Grazie alla modalità avanzata, puoi scaricare l\'ultima ZIP per \"%1$s\". Puoi disattivare la modalità avanzata nelle impostazioni.</string>
+	<string name="update_information_different_version_changelog_notice_base">Nota: questo changelog riguarda l\'ultima versione disponibile (%1$s) nel metodo di aggiornamento \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Se si intende installare questo aggiornamento, è necessario attivare la modalità avanzata nelle impostazioni.</string>
 	<string name="update_information_last_checked_on">"Ultima verifica: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Non è disponibile alcuna informazione sull'aggiornamento."</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -42,7 +43,7 @@
 	<string name="download_complete">"Download completato"</string>
 	<string name="download_complete_notification">"Premi su start per iniziare l'installazione"</string>
 	<string name="download_error">"Errore nel download"</string>
-	<string name="download_error_close">"CHIUDI"</string>
+	<string name="download_error_close">"Chiudi"</string>
 	<string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova."</string>
 
 	<string name="download_error_internal">"Errore interno."</string>
@@ -51,8 +52,8 @@
 Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">server Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Il file è stato scaricato ma non è stato possibile spostarlo. Apri un file manager, naviga a \"%1$s\" e sposta il file nella cartella più\' in alto di internal storage.</string>
 	<string name="download_error_server">"Errore nel server."</string>
-	<string name="download_error_retry">"RIPROVA"</string>
-	<string name="download_error_resume">"RIPRENDI"</string>
+	<string name="download_error_retry">"Riprova"</string>
+	<string name="download_error_resume">"Riprendi"</string>
 	<string name="download_error_storage">"Spazio insufficiente. Liberane un po' e ritenta."</string>
 	<string name="download_failed">"Download fallito"</string>
 	<string name="download_pending">"Il tuo download inizierà subito…"</string>
@@ -128,12 +129,12 @@ Un aggiornamento beta può essere installato solo se ti trovi già' sul branch d
 	<string name="settings_push_from_server">"È disponibile un messaggio critico"</string>
 	<string name="settings_saving">"Le tue impostazioni si stanno ancora salvando. Se questo impiega troppo tempo controlla la tua connessione, riavvia l'applicazione e ritenta."</string>
 	<string name="settings_advanced_mode">"Modalità avanzata"</string>
-	<string name="settings_advanced_mode_explanation">"La modalità avanzata nasconde il messaggio \"Il tuo sistema è aggiornato\", consentendo l'installazione di qualsiasi aggiornamento, anche se non compatibili con il tuo dispositivo.
+	<string name="settings_advanced_mode_explanation">"Normalmente, l'applicazione mostra gli aggiornamenti in base alla versione corrente del sistema operativo. Con la modalità avanzata, verrà sempre mostrato l'ultimo aggiornamento disponibile, indipendentemente dalla compatibilità tra dispositivo e versione.
 
-Questo può essere utile quando:
-- Aggiorni da un branch regolare a una beta;
-- Ritorni a un branch regolare da una beta (Non ti dimenticare di effetuare il factory reset)
-- Reinstallare la versione attuale del tuo sistema."</string>
+Questo può essere utile se si desidera:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Riscaricare l'ultima versione anche se è già disponibile
+&#8226; Passare a una traccia di aggiornamento diversa"</string>
+	<string name="settings_advanced_mode_caption">"La modalità avanzata può essere necessaria solo nelle situazioni sopra descritte. Non è consigliabile attivarla se non si sa cosa si sta facendo."</string>
 	<string name="settings_update_method">"Metodo d'aggiornamento"</string>
 	<string name="settings_upload_logs">Condividi uso e logs.</string>
 
@@ -147,20 +148,11 @@ Questo può essere utile quando:
 	<string name="onboarding_page_1_title">"Benvenuto su Oxygen Updater!"</string>
 	<string name="onboarding_page_1_text">"Questa app ti permetterà di:
 
--Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OnePlus con OxygenOS
-
--Facilmente aggiornare un dispositivo rootato
-
--Visualizzare le notivate in aggiornamenti
-
--Leggere le novità su OnePlus e OxygenOS
-
-Trascina verso sinistra per continuare."</string>
-	<string name="onboarding_page_1_caption">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app.
-
-Usando l'app consenti ai termini e condizioni citati sopra.
-
-Trascina verso sinistra per continuare."</string>
+&#8226; Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OnePlus con OxygenOS
+&#8226; Facilmente aggiornare un dispositivo rootato
+&#8226; Visualizzare le notivate in aggiornamenti
+&#8226; Leggere le novità su OnePlus e OxygenOS"</string>
+	<string name="onboarding_page_1_caption">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app. Usando l'app consenti ai termini e condizioni citati sopra."</string>
 	<string name="onboarding_page_2_title">"Seleziona il tuo dispositivo:"</string>
 	<string name="onboarding_page_2_caption">"Il tuo dovrebbe già essere selezionato, se non lo è, selezionalo sopra.
 
@@ -174,9 +166,7 @@ Se hai una versione beta, seleziona una delle opzioni Open Beta.
 
 Trascina verso sinistra per continuare."</string>
 	<string name="onboarding_page_4_title">"Sei pronto per continuare!"</string>
-	<string name="onboarding_page_4_text">"Goditi l'app!
-
-Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i tre puntini in alto a destra e selezionando \"Impostazioni\"."</string>
+	<string name="onboarding_page_4_text">"Goditi l'app! Puoi cambiare le tue impostazioni in qualsiasi momento."</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Installa"</string>
@@ -189,9 +179,9 @@ Puoi cambiare le tue impostazioni in qualsiasi momento. Puoi farlo cliccando i t
 	<string name="install_guide_page_1_title">"Scarica l'aggiornamento."</string>
 	<string name="install_guide_page_1_text">"&#8226; Premi il bottone Download per iniziare a scaricare.
 
-- Il progresso apparirà nell'app e come notifica.
+&#8226; Il progresso apparirà nell'app e come notifica.
 
-- Al termine del download, riceverai una notifica con il testo \"Download completato\".
+&#8226; Al termine del download, riceverai una notifica con il testo \"Download completato\".
 Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati di avere una connessione internet funzionante."</string>
 
 	<string name="install_guide_page_2_title">"Preparati per l'installazione"</string>
@@ -221,12 +211,12 @@ Istruzioni:
 &#8226; Successivamente, il telefono verrà riavviato per completare l'aggiornamento."</string>
 
 	<string name="install_guide_page_5_title">"Fine. Buon divertimento!"</string>
-	<string name="install_guide_page_5_text"><![CDATA["- Dopo l'ottimizzazione delle app, l'aggiornamento è stato installato.
+	<string name="install_guide_page_5_text"><![CDATA["&#8226; Dopo l'ottimizzazione delle app, l'aggiornamento è stato installato.
 Per verificare, controlla la versione attuale del tuo sistema:
 
-- Impostazioni —> Info Telefono \"Versione OxygenOS\".
+&#8226; Impostazioni —> Info Telefono \"Versione OxygenOS\".
 
-- Se ti piace l'app, lascia 5 stelle!"]]></string>
+&#8226; Se ti piace l'app, lascia 5 stelle!"]]></string>
 	<string name="install_guide_close_button">"Chiudi guida"</string>
 
 	<!-- Device information strings -->
@@ -352,7 +342,7 @@ Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornament
 	<string name="error_no_internet_connection">"Nessuna connesione."</string>
 	<string name="error_maintenance">"Manutenzione"</string>
 	<string name="error_maintenance_message">"Attendi. Il server tornerà disponibile presto."</string>
-	<string name="error_maintenance_retry">Il server potrebbe essere sotto manutenzione. Riprova più tardi o facci sapere tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">Discord</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Il server potrebbe essere sotto manutenzione. Riprova più tardi o facci sapere tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
 	<string name="error_reload">"Ricarica"</string>
 	<string name="error_unable_to_rate_app">"Non puoi valutare l'app perché Google Play Store non è presente sul dispositivo."</string>
 

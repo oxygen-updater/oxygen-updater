@@ -16,10 +16,11 @@
 	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable الوضع المطور if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable الوضع المطور if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">الوضع المتقدم ممكّن</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled الوضع المطور, you can download the latest ZIP for \"%1$s\".\n\nYou can turn الوضع المطور off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn الوضع المطور on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled الوضع المطور, you can download the latest ZIP for \"%1$s\". You can turn الوضع المطور off from settings.</string>
+	<string name="update_information_different_version_changelog_notice_base">ملاحظة: سجل التغيير هذا لأحدث إصدار متوفر (%1$s) في طريقة التحديث \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. إذا كنت تنوي تثبيت هذا التحديث ، يجب تمكين \ "الوضع المطور\" في الإعدادات.</string>
 	<string name="update_information_last_checked_on">أخر فحص تم في: %1$s</string>
 	<string name="update_information_no_update_data_available">لا توجد بيانات متاحة عن التحديث</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -126,7 +127,12 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_push_from_server">رسائل معلوماتية وتحذيرية</string>
 	<string name="settings_saving">جاري حفظ إعداداتك. اذا إستغرق ذلك وقتاً طويلاً: أفحص اتصالك, وأخرج من التطبيق وأفتحه مجدداً.</string>
 	<string name="settings_advanced_mode">الوضع المطور</string>
-	<string name="settings_advanced_mode_explanation">الوضع المطور يقوم بإخفاء رسالة (نظامك محدث بالفعل) سامحاً لك بتحميل وتثبيت جميع التحديثات, حتى وإن لم تكن متوافقة مع جهازك. ربما يكون هذا مفيداً في حالة الترقية من إصدار إعتيادي إلى إصدار تجريبي أو العكس, (لا تنسى إعادة تهيئة جهازك).</string>
+	<string name="settings_advanced_mode_explanation">"عادةً ، يعرض لك التطبيق تحديثات بناءً على إصدار نظام التشغيل الحالي لديك. مع الوضع المتقدم ، سيتم دائمًا عرض آخر تحديث متوفر بغض النظر عن توافق الجهاز / الإصدار.
+
+يمكن أن يكون هذا مفيدًا إذا كنت تريد:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; أعد تنزيل أحدث إصدار حتى إذا كنت تستخدمه بالفعل
+&#8226; التبديل إلى مسار تحديث مختلف"</string>
+	<string name="settings_advanced_mode_caption">"قد تكون هناك حاجة إلى الوضع المتقدم فقط في المواقف المذكورة أعلاه. يجب ألا تقوم بتمكينه إلا إذا كنت تعرف ما تفعله."</string>
 	<string name="settings_update_method">طريقة التحديث</string>
 	<string name="settings_upload_logs">مشاركة بيانات الإستخدام والسجل</string>
 
@@ -138,14 +144,14 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="onboarding">مرحباً</string>
 	<string name="onboarding_finished_button">بدء التطبيق</string>
 	<string name="onboarding_page_1_title">مرحباً بك في Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">هذا التطبيق يتيح لك:\n\n&#8226; الوصول سريعاً إلى آخر تحديثات أندرويد لنظام أكسجين\n\n&#8226; التحديث بشكل مبسط للأجهزة التي تملك (روت)\n\n&#8226; مشاهدة كل ماهو جديد في النظام الذي تستعمله حالياً\n\n&#8226; قراءة أخر الأخبار حول جهاز ون بلس ونظام أكسجين\n\nإسحب إلى اليسار للإستمرار.</string>
-	<string name="onboarding_page_1_caption">هذا التطبيق لا يعتبر تطبيق رسمي من شركة ون بلس. وإستعمال هذا التطبيق على مسؤوليتك الخاصة كاملاً. لا شركة ون بلس ولا المطور مسؤولين عن أعمالك ويشتمل ذلك أي أضرار تنتج عن إستعمال هذا التطبيق.\n\nبإستعمالك هذا التطبيق فأنت تعتبر موافقاً على الأحكام والشروط التي ذكرت بالأعلى.</string>
+	<string name="onboarding_page_1_text">هذا التطبيق يتيح لك:\n\n&#8226; الوصول سريعاً إلى آخر تحديثات أندرويد لنظام أكسجين\n&#8226; التحديث بشكل مبسط للأجهزة التي تملك (روت)\n&#8226; مشاهدة كل ماهو جديد في النظام الذي تستعمله حالياً\n&#8226; قراءة أخر الأخبار حول جهاز ون بلس ونظام أكسجين</string>
+	<string name="onboarding_page_1_caption">هذا التطبيق لا يعتبر تطبيق رسمي من شركة ون بلس. وإستعمال هذا التطبيق على مسؤوليتك الخاصة كاملاً. لا شركة ون بلس ولا المطور مسؤولين عن أعمالك ويشتمل ذلك أي أضرار تنتج عن إستعمال هذا التطبيق. بإستعمالك هذا التطبيق فأنت تعتبر موافقاً على الأحكام والشروط التي ذكرت بالأعلى.</string>
 	<string name="onboarding_page_2_title">إختر جهازك</string>
 	<string name="onboarding_page_2_caption">جهازك غالباً تم إختياره بالأعلى. إذا لم يكن كذلك قم انت بإختياره من الأعلى.\n\إسحب إلى اليسار للإستمرار.</string>
 	<string name="onboarding_page_3_title">إختر الطريقة التي تفضلها للتحديث</string>
 	<string name="onboarding_page_3_caption">عادتاً, التحديث التدريجي هو الإختيار الأمثل هنا, لعرضه تحميلات أسرع وأصغر.\n\nعلى كل حال, لا يعتبر ذلك مناسباً للأجهزة التي تملك (روت). اذا كنت تملك جهاز ذو (روت) مفعل, فأختر التحديث الكامل.</string>
 	<string name="onboarding_page_4_title">هل انت جاهز للبدء!</string>
-	<string name="onboarding_page_4_text">إستمتع بهذا التطبيق!\n\nيمكنك دائماً تغيير إعداداتك لاحقاً. لعمل ذلك كل ما عليك هو: الضغط على الثلاث نقاط المتواجدة في أعلى الجانب الأيمن, وأضغط على \"الإعدادات\".</string>
+	<string name="onboarding_page_4_text">إستمتع بهذا التطبيق! يمكنك دائماً تغيير إعداداتك لاحقاً.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">تثبيت</string>
@@ -305,7 +311,7 @@ Instructions:
 	<string name="error_maintenance">صيانة الخادم</string>
 	<string name="error_maintenance_message">فضلاً إنتظر. سيكون الخادم متاح قريباً جداً.</string>
 	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="error_reload">أعد التحميل</string>
 	<string name="error_unable_to_rate_app">لا يمكنك تقييم التطبيق ، لأن متجر بلاي غير متواجد على جهازك.</string>
 

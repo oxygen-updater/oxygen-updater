@@ -13,6 +13,7 @@ import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.oxygenupdater.R
+import com.oxygenupdater.compose.activities.MainActivity
 import com.oxygenupdater.databinding.ActivityInstallBinding
 import com.oxygenupdater.extensions.setImageResourceWithAnimationAndTint
 import com.oxygenupdater.fragments.InstallGuideFragment
@@ -44,7 +45,7 @@ class InstallActivity : SupportActionBarActivity(
 
     private lateinit var binding: ActivityInstallBinding
     override fun onCreate(
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) = super.onCreate(savedInstanceState).also {
         binding = ActivityInstallBinding.bind(rootView)
         showDownloadPage = intent == null || intent.getBooleanExtra(INTENT_SHOW_DOWNLOAD_PAGE, true)

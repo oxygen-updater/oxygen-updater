@@ -7,7 +7,6 @@ import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.PurchaseType
-import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
@@ -16,8 +15,6 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.performServerRequest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -36,13 +33,26 @@ class ServerRepository constructor(
     suspend fun fetchFaq() = performServerRequest { serverApi.fetchFaq() }
 
     suspend fun fetchDevices(
-        filter: DeviceRequestFilter
+        filter: DeviceRequestFilter,
     ) = performServerRequest { serverApi.fetchDevices(filter.filter) }
+
+    fun fetchUpdateDataFromPrefs() = if (PrefManager.checkIfOfflineUpdateDataIsAvailable()) {
+        UpdateData(
+            id = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_ID, -1L),
+            versionNumber = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_NAME, null),
+            description = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null),
+            downloadUrl = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_DOWNLOAD_URL, null),
+            downloadSize = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L),
+            filename = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_FILE_NAME, null),
+            updateInformationAvailable = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false),
+            systemIsUpToDate = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
+        )
+    } else null
 
     suspend fun fetchUpdateData(
         deviceId: Long,
         updateMethodId: Long,
-        incrementalSystemVersion: String
+        incrementalSystemVersion: String,
     ) = performServerRequest {
         serverApi.fetchUpdateData(
             deviceId,
@@ -59,134 +69,91 @@ class ServerRepository constructor(
             && updateData.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
             && updateData.isUpdateInformationAvailable
             && updateData.systemIsUpToDate
-        ) {
-            fetchMostRecentUpdateData(deviceId, updateMethodId)
-        } else if (!Utils.checkNetworkConnection()) {
-            if (PrefManager.checkIfOfflineUpdateDataIsAvailable()) {
-                UpdateData(
-                    id = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_ID, -1L),
-                    versionNumber = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_NAME, null),
-                    description = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null),
-                    downloadUrl = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_DOWNLOAD_URL, null),
-                    downloadSize = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L),
-                    filename = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_FILE_NAME, null),
-                    updateInformationAvailable = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false),
-                    systemIsUpToDate = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
-                )
-            } else {
-                null
-            }
-        } else {
-            updateData
-        }
+        ) fetchMostRecentUpdateData(deviceId, updateMethodId)
+        else if (!Utils.checkNetworkConnection()) fetchUpdateDataFromPrefs()
+        else updateData
     }
 
     private suspend fun fetchMostRecentUpdateData(
         deviceId: Long,
-        updateMethodId: Long
+        updateMethodId: Long,
     ) = performServerRequest {
         serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId)
     }
 
     suspend fun fetchServerStatus(
-        useCache: Boolean = false
+        useCache: Boolean = false,
     ) = if (useCache && serverStatus != null) {
         serverStatus!!
-    } else {
-        performServerRequest { serverApi.fetchServerStatus() }.let { status ->
-            val automaticInstallationEnabled = false
-            val pushNotificationsDelaySeconds = PrefManager.getInt(
-                PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
-                300
-            )
+    } else performServerRequest { serverApi.fetchServerStatus() }.let { status ->
+        val automaticInstallationEnabled = false
+        val pushNotificationsDelaySeconds = PrefManager.getInt(
+            PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+            300
+        )
 
-            val response = if (status == null && Utils.checkNetworkConnection()) {
-                ServerStatus(
-                    ServerStatus.Status.UNREACHABLE,
-                    BuildConfig.VERSION_NAME,
-                    automaticInstallationEnabled,
-                    pushNotificationsDelaySeconds
-                )
-            } else {
-                status ?: ServerStatus(
-                    ServerStatus.Status.NORMAL,
-                    BuildConfig.VERSION_NAME,
-                    automaticInstallationEnabled,
-                    pushNotificationsDelaySeconds
-                )
-            }
+        val response = if (status == null && Utils.checkNetworkConnection()) ServerStatus(
+            ServerStatus.Status.UNREACHABLE,
+            BuildConfig.VERSION_NAME,
+            automaticInstallationEnabled,
+            pushNotificationsDelaySeconds
+        ) else status ?: ServerStatus(
+            ServerStatus.Status.NORMAL,
+            BuildConfig.VERSION_NAME,
+            automaticInstallationEnabled,
+            pushNotificationsDelaySeconds
+        )
 
-            PrefManager.putInt(
-                PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
-                response.pushNotificationDelaySeconds
-            )
+        PrefManager.putInt(
+            PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+            response.pushNotificationDelaySeconds
+        )
 
-            response.also { serverStatus = it }
-        }
+        response.also { serverStatus = it }
     }
 
-    suspend fun fetchServerMessages(
-        serverStatus: ServerStatus,
-        errorCallback: KotlinCallback<String?>
-    ) = performServerRequest {
+    suspend fun fetchServerMessages() = performServerRequest {
         serverApi.fetchServerMessages(
             PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L),
             PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
         )
-    }.let { serverMessages ->
-        val status = serverStatus.status!!
-        if (status.isNonRecoverableError) {
-            when (status) {
-                ServerStatus.Status.MAINTENANCE -> withContext(Dispatchers.Main) {
-                    errorCallback.invoke(OxygenUpdater.SERVER_MAINTENANCE_ERROR)
-                }
-                ServerStatus.Status.OUTDATED -> withContext(Dispatchers.Main) {
-                    errorCallback.invoke(OxygenUpdater.APP_OUTDATED_ERROR)
-                }
-                else -> {
-                    // no-op
-                }
-            }
-        }
-
-        serverMessages
     }
+
+    @Suppress("RedundantSuspendModifier")
+    suspend fun fetchNewsFromDb() = newsItemDao.getAll()
+
+    @Suppress("RedundantSuspendModifier")
+    suspend fun markAllReadLocally() = newsItemDao.markAllRead()
 
     suspend fun fetchNews(
         deviceId: Long,
-        updateMethodId: Long
+        updateMethodId: Long,
     ) = performServerRequest {
         serverApi.fetchNews(deviceId, updateMethodId)
     }.let {
-        if (!it.isNullOrEmpty()) {
-            newsItemDao.refreshNewsItems(it)
-        }
+        if (!it.isNullOrEmpty()) newsItemDao.refreshNewsItems(it)
 
+        // Note: we're returning a local copy so that read statuses are respected
         newsItemDao.getAll()
     }
 
     suspend fun fetchNewsItem(
-        newsItemId: Long
+        newsItemId: Long,
     ) = performServerRequest {
         serverApi.fetchNewsItem(newsItemId)
     }.let {
-        if (it != null) {
-            newsItemDao.insertOrUpdate(it)
-        }
+        if (it != null) newsItemDao.insertOrUpdate(it)
 
         newsItemDao.getById(newsItemId)
     }
 
-    fun toggleNewsItemReadStatusLocally(
+    fun toggleNewsItemReadLocally(
         newsItem: NewsItem,
-        newReadStatus: Boolean = !newsItem.read
-    ) = newsItemDao.toggleReadStatus(
-        newsItem,
-        newReadStatus
-    )
+        read: Boolean = !newsItem.read,
+    ) = newsItemDao.toggleRead(newsItem, read)
 
     suspend fun markNewsItemRead(
-        newsItemId: Long
+        newsItemId: Long,
     ) = performServerRequest {
         serverApi.markNewsItemRead(mapOf("news_item_id" to newsItemId))
     }
@@ -206,7 +173,7 @@ class ServerRepository constructor(
     suspend fun fetchInstallGuidePage(
         deviceId: Long,
         updateMethodId: Long,
-        pageNumber: Int
+        pageNumber: Int,
     ) = performServerRequest {
         serverApi.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber)
     }
@@ -231,7 +198,7 @@ class ServerRepository constructor(
         version: String?,
         otaVersion: String?,
         httpCode: Int,
-        httpMessage: String?
+        httpMessage: String?,
     ) = performServerRequest {
         serverApi.logDownloadError(
             hashMapOf(
@@ -251,7 +218,7 @@ class ServerRepository constructor(
     suspend fun verifyPurchase(
         purchase: Purchase,
         amount: String?,
-        purchaseType: PurchaseType
+        purchaseType: PurchaseType,
     ) = performServerRequest {
         serverApi.verifyPurchase(
             hashMapOf(

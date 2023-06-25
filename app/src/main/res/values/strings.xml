@@ -11,10 +11,11 @@
 	<string name="update_information_header">Update</string>
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable advanced mode if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable advanced mode if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">Advanced mode is enabled</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\".\n\nYou can turn advanced mode off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" update track. If you intend to install this update, you must turn advanced mode on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\". You can turn advanced mode off from settings.</string>
+	<string name="update_information_different_version_changelog_notice_base">Note: this changelog is for the latest available version (%1$s) in the \"%2$s\" update method</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. If you intend to install this update, you must enable \"Advanced mode\" in settings.</string>
 	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
 	<string name="update_information_no_update_data_available">No update information is available</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -43,7 +44,7 @@
 	<string name="download_complete_notification">Tap to start the installation</string>
 
 	<string name="download_error">Download Error</string>
-	<string name="download_error_close">CLOSE</string>
+	<string name="download_error_close">Close</string>
 	<string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
@@ -52,8 +53,8 @@
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
-	<string name="download_error_retry">RETRY</string>
-	<string name="download_error_resume">RESUME</string>
+	<string name="download_error_retry">Retry</string>
+	<string name="download_error_resume">Resume</string>
 	<string name="download_error_storage">There is insufficient storage space available on your device to download the update. Please remove some files and try downloading it again.</string>
 
 	<string name="download_failed">Download failed</string>
@@ -94,7 +95,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_language">Set language</string>
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
-	<string name="summary_oxygen" translatable="false">v%1$s</string>
 
 	<string name="label_buy_ad_free">Remove ads</string>
 	<string name="label_theme">Theme</string>
@@ -115,8 +115,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="key_update_method" translatable="false">update_method</string>
 	<string name="key_update_method_id" translatable="false">update_method_id</string>
 	<string name="key_android_notifications" translatable="false">android_notifications</string>
-	<string name="key_theme" translatable="false">theme</string>
-	<string name="key_theme_id" translatable="false">theme_id</string>
 	<string name="key_language" translatable="false">language</string>
 	<string name="key_language_id" translatable="false">language_id</string>
 	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
@@ -150,7 +148,12 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_saving">Your settings are still being saved. If this takes too long: Check your network connection, exit the app and start it again.</string>
 
 	<string name="settings_advanced_mode">Advanced mode</string>
-	<string name="settings_advanced_mode_explanation">Advanced mode hides the message \"Your system is up to date\", allowing you to download and install all updates, even though they may not be compatible with your device.\n\nThis can be useful when:\n&#8226; Updating from a regular version to a beta version\n&#8226; Reverting from a beta version to the regular version (don\'t forget to factory reset your device)\n&#8226; Reinstalling your current system version.</string>
+	<string name="settings_advanced_mode_explanation">"Normally, the app shows you updates based on your current OS version. With advanced mode, the latest available update will always be shown regardless of device/version compatibility.
+
+This can be useful if you want to:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Re-download the latest version even if you're already on it
+&#8226; Switch to a different update track"</string>
+	<string name="settings_advanced_mode_caption">"Advanced mode may be needed only in the above situations. You should not enable it unless you know what you're doing."</string>
 
 	<string name="settings_update_method">Update method</string>
 	<string name="settings_upload_logs">Share usage data and logs</string>
@@ -164,14 +167,14 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="onboarding_finished_button">Start app</string>
 
 	<string name="onboarding_page_1_title">Welcome to Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS powered device\n\n&#8226; Easily update a rooted device\n\n&#8226; View what\'s new in the system software you are currently using\n\n&#8226; Read the latest news about OnePlus and OxygenOS\n\nSwipe to the left to continue.</string>
-	<string name="onboarding_page_1_caption">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app.\n\nBy using this app, you agree to the terms and conditions as stated above.</string>
+	<string name="onboarding_page_1_text">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS powered device\n&#8226; Easily update a rooted device\n&#8226; View what\'s new in the system software you are currently using\n&#8226; Read the latest news about OnePlus and OxygenOS</string>
+	<string name="onboarding_page_1_caption">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app. By using this app, you agree to the terms and conditions as stated above.</string>
 	<string name="onboarding_page_2_title">Choose your device</string>
 	<string name="onboarding_page_2_caption">Your device is usually already selected above. If not, select your device above.</string>
 	<string name="onboarding_page_3_title">Choose your update method</string>
 	<string name="onboarding_page_3_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
 	<string name="onboarding_page_4_title">You are ready to go!</string>
-	<string name="onboarding_page_4_text">Enjoy using this app!\n\nYou can always change your settings later on. To do so: Tap the three dots in the top right corner, and tap on \"Settings\".</string>
+	<string name="onboarding_page_4_text">Enjoy using this app! You can always change your settings later on.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>
@@ -242,10 +245,10 @@ Instructions:
 
 	<!-- About screen strings -->
 	<string name="about">About</string>
-	<string name="about_description">This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
-	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
+	<string name="about_description"><![CDATA[This app downloads official updates directly from OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.]]></string>
+	<string name="about_support"><![CDATA[If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.]]></string>
 	<string name="about_background_story_header">Background story</string>
-	<string name="about_background_story">This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/article/81/">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.</string>
+	<string name="about_background_story"><![CDATA[This app was originally developed by Arjan Vlek as a follow-up of another one of his apps, called <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (it provides similar functionality for Cyanogen OS users).\n\nAfter 4 years, in July 2019, Arjan decided to step down from both projects and transferred ownership of the app to a team of developers hailing from different countries. They took on the responsibility of providing the community with excellent service &amp; support of getting OnePlus updates faster.\nYou can find more information about the announcement <a href="https://oxygenupdater.com/article/81/">here</a>.\n\n14th August 2019 marked the first release under new ownership, which came with new features like dark mode and a complete redesign.\n\nFor more information on the team, check <a href="https://oxygenupdater.com/team/">the website</a>.]]></string>
 	<string name="about_third_party_app_notice">Please note, this is not an official OnePlus application.\nThe OnePlus name, the OnePlus Logo and OxygenOS are property of OnePlus.\nAndroid, Google, Google Play and the Google Play logo are registered trademarks of Google Inc.\nThis app uses data from OnePlus and its parent company Oppo to show update information.</string>
 	<string name="about_rate_button_text">Rate</string>
 	<string name="about_website_button_text">Website</string>
@@ -295,7 +298,7 @@ Instructions:
 	<string name="news">News</string>
 	<string name="news_date_published">Last update: %1$s</string>
 	<string name="news_empty">This article has no contents.</string>
-	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"RETRY\" button to open the article.</string>
+	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"Retry\" button to open the article.</string>
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
@@ -327,7 +330,7 @@ Instructions:
 	<string name="error_no_internet_connection">No connection.</string>
 	<string name="error_maintenance">Server maintenance</string>
 	<string name="error_maintenance_message">Please wait. The server will be available very soon.</string>
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="error_reload">Reload</string>
 
 	<string name="error_unable_to_rate_app">You can\'t rate the app, because the Google Play Store is missing on your device.</string>

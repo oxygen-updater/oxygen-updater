@@ -18,8 +18,8 @@ import androidx.work.WorkerParameters
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.oxygenupdater.R
-import com.oxygenupdater.activities.MainActivity
-import com.oxygenupdater.activities.NewsItemActivity
+import com.oxygenupdater.compose.activities.MainActivity
+import com.oxygenupdater.compose.activities.NewsItemActivity
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
@@ -56,8 +56,15 @@ class DisplayDelayedNotificationWorker(
         .entries
         .associate { it.key to it.value.toString() }
 
-    private val localAppDb by getKoin().inject<LocalAppDb>()
-    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
+    private val localAppDb: LocalAppDb
+    private val notificationManager: NotificationManagerCompat
+
+    init {
+        val koin = getKoin()
+
+        localAppDb = koin.inject<LocalAppDb>().value
+        notificationManager = koin.inject<NotificationManagerCompat>().value
+    }
 
     private val random by lazy(LazyThreadSafetyMode.NONE) {
         Random.Default

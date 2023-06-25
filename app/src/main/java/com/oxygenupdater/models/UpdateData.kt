@@ -1,9 +1,13 @@
 package com.oxygenupdater.models
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class UpdateData(
     var id: Long? = null,
@@ -19,21 +23,22 @@ data class UpdateData(
     var mD5Sum: String? = null,
 
     var information: String? = null,
+
+    @JsonProperty("update_information_available")
     var updateInformationAvailable: Boolean = false,
 
     var systemIsUpToDate: Boolean = false,
-) : FormattableUpdateData {
+) : FormattableUpdateData, Parcelable {
 
+    @IgnoredOnParcel
     val isUpdateInformationAvailable = updateInformationAvailable || versionNumber != null
 
     // Formatting library: interface FormattableUpdateData
+    @IgnoredOnParcel
     override val internalVersionNumber = versionNumber
-    override val updateDescription = description
 
-    @JsonProperty("update_information_available")
-    fun setIsUpdateInformationAvailable(updateInformationAvailable: Boolean) {
-        this.updateInformationAvailable = updateInformationAvailable
-    }
+    @IgnoredOnParcel
+    override val updateDescription = description
 
     companion object {
         @JsonIgnore

@@ -12,6 +12,7 @@ import com.google.android.material.transition.platform.MaterialArcMotion
 import com.google.android.material.transition.platform.MaterialContainerTransform
 import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
 import com.oxygenupdater.R
+import com.oxygenupdater.compose.activities.MainActivity
 import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
 import com.oxygenupdater.extensions.startMainActivity
 
@@ -37,11 +38,11 @@ abstract class SupportActionBarActivity(
         from = MainActivity.PAGE_UPDATE.toLong(),
         to = MainActivity.PAGE_SETTINGS.toLong()
     )
-    private val startPage: Int
+    private val startPage: Int,
 ) : BaseActivity(contentLayoutId) {
 
     override fun onCreate(
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) = super.onCreate(savedInstanceState).also {
         setupTransitions()
         setupToolbar()
@@ -56,13 +57,8 @@ abstract class SupportActionBarActivity(
         // behaviour. Previously, `onBackPressed` was overridden instead.
         // See https://developer.android.com/guide/navigation/navigation-custom-back#activity_onbackpressed
         onBackPressedDispatcher.addCallback(this) {
-            if (isTaskRoot) {
-                // If this is the only activity left in the stack, call [MainActivity].
-                startMainActivity(startPage)
-            } else {
-                // Otherwise call [finishAfterTransition].
-                finishAfterTransition()
-            }
+            /** If this is the only activity left in the stack, launch [MainActivity] */
+            if (isTaskRoot) startMainActivity(startPage) else finishAfterTransition()
         }
     }
 
@@ -90,7 +86,7 @@ abstract class SupportActionBarActivity(
     }
 
     private fun buildContainerTransform(
-        duration: Long
+        duration: Long,
     ) = MaterialContainerTransform().apply {
         setDuration(duration)
         addTarget(android.R.id.content)

@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Clique aqui para ver avisos importantes</string>
 	<string name="update_information_banner_advanced_mode_tip">Você selecionou \"%1$s\" canal de atualização. Habilite o modo avançado se você deseja mudar de canal.</string>
 	<string name="update_information_header_advanced_mode_hint">Modo avançado está habilitado</string>
-	<string name="update_information_header_advanced_mode_helper">Uma vez que ativou o modo avançado, você pode baixar o ZIP mais recente \"%1$s\".\n\nVocê pode desabilitar o modo avançado nas configurações.</string>
-	<string name="update_information_different_version_changelog_notice">Você está vendo uma nota de atualização do \"%1$s\" canal de atualiazçãi. Se você pretende instalar esta atualização, você deve ativar o modo avançado primeiro (nas configurações).\n\nNo entanto, se você deseja ver a nota de atualização para a versão atualmente instalada, você precisará voltar para o método de atualização correto.</string>
+	<string name="update_information_header_advanced_mode_helper">Uma vez que ativou o modo avançado, você pode baixar o ZIP mais recente \"%1$s\". Você pode desabilitar o modo avançado nas configurações.</string>
+	<string name="update_information_different_version_changelog_notice_base">Observação: este registro de alterações se refere à versão mais recente disponível (%1$s) no método de atualização \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Se você pretende instalar essa atualização, deve ativar o \"Modo Avançado\" nas configurações.</string>
 	<string name="update_information_last_checked_on">Última verificação: %1$s</string>
 	<string name="update_information_no_update_data_available">Nenhuma informação de atualização está disponível</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -43,7 +44,7 @@
 	<string name="download_complete_notification">Clique para começar a instalação</string>
 
 	<string name="download_error">Erro no download</string>
-	<string name="download_error_close">FECHAR</string>
+	<string name="download_error_close">Fechar</string>
 	<string name="download_error_corrupt">O arquivo de atualização baixado está danificado! Por favor, tente baixá-lo novamente.</string>
 	<string name="download_error_server">Ocorreu um erro de servidor durante o download da atualização. Por favor, tente baixar a atualização novamente.</string>
 	<string name="download_error_internal">Infelizmente, ocorreu um erro técnico durante o download da atualização. Tente fazer o download novamente. Se isso continuar ocorrendo, entre em contato com o desenvolvedor deste aplicativo para obter assistência.</string>
@@ -52,8 +53,8 @@
 Se você quiser saber mais, sinta-se à vontade para nos contatar via <a href="mailto:support@oxygenupdater.com">email</a> ou pelo nosso <a href="https://discord.gg/5TXdhKJ">servidor do Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">O arquivo foi baixado, mas não pôde ser movido para o diretório correto. Abra um gerenciador de arquivos, navegue até \"%1$s\" e mova manualmente o arquivo para o diretório principal de armazenamento interno.</string>
 
-	<string name="download_error_retry">TENTAR NOVAMENTE</string>
-	<string name="download_error_resume">RETOMAR</string>
+	<string name="download_error_retry">Tentar novamente</string>
+	<string name="download_error_resume">Retomar</string>
 	<string name="download_error_storage">Não há espaço de armazenamento suficiente disponível em seu dispositivo para baixar a atualização. Remova alguns arquivos e tente baixá-los novamente.</string>
 
 	<string name="download_failed">Erro no download</string>
@@ -131,7 +132,12 @@ conservar bateria</string>
 	<string name="settings_saving">Suas configurações ainda estão sendo salvas. Se demorar muito: verifique sua conexão de rede, saia do aplicativo e inicie-o novamente.</string>
 
 	<string name="settings_advanced_mode">Modo Avançado</string>
-	<string name="settings_advanced_mode_explanation">O Modo Avançado desabilita a mensagem \"Seu sistema está atualizado\", permitindo que você baixe e instale todas as atualizações, mesmo que elas possam não ser compatíveis com o seu dispositivo.\n\nIsto pode ser útil quando:\n&#8226; Estiver atualizando da versão estável para a beta\n&#8226; Estiver voltando da versão beta para estável (lembre-se de realizar a resturação de fábrica)\n&#8226; Estiver reinstalando sua versão do sistema atual.</string>
+	<string name="settings_advanced_mode_explanation">"Normalmente, o aplicativo mostra as atualizações com base na versão atual do sistema operacional. Com o modo avançado, a última atualização disponível sempre será mostrada, independentemente da compatibilidade de dispositivo/versão.
+
+Isso pode ser útil se você quiser:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Baixar novamente a versão mais recente, mesmo que você já esteja usando-a
+&#8226; Mudar para uma faixa de atualização diferente"</string>
+	<string name="settings_advanced_mode_caption">"O modo avançado pode ser necessário somente nas situações acima. Você não deve ativá-lo a menos que saiba o que está fazendo."</string>
 
 	<string name="settings_update_method">Método de atualização</string>
 	<string name="settings_upload_logs">Compartilhar dados e registros de uso</string>
@@ -145,14 +151,14 @@ conservar bateria</string>
 	<string name="onboarding_finished_button">Iniciar o aplicativo</string>
 
 	<string name="onboarding_page_1_title">Bem-vindo ao Atualizador Oxygen!</string>
-	<string name="onboarding_page_1_text">Este aplicativo vai te possibilitar:\n\n&#8226; Obtenha acesso mais rápido às últimas atualizações do Android para o seu dispositivo com OxygenOS\n\n&#8226; Atualize facilmente um dispositivo com acesso root\n\n&#8226; Veja o que há de novo no software do sistema que você está usando atualmente\n\n&#8226; Leia as última notícias sobre OxygenOS e OnePlus\n\nDeslize para esquerda para continuar.</string>
-	<string name="onboarding_page_1_caption">Este não é um aplicativo oficial OnePlus. O uso deste aplicativo é totalmente por sua própria conta e risco. Nem a OnePlus nem o desenvolvedor do aplicativo são responsáveis por suas ações, incluindo quaisquer danos causados pelo uso deste aplicativo.\n\nAo usar este aplicativo, você concorda com os termos e condições indicados acima.</string>
+	<string name="onboarding_page_1_text">Este aplicativo vai te possibilitar:\n\n&#8226; Obtenha acesso mais rápido às últimas atualizações do Android para o seu dispositivo com OxygenOS\n&#8226; Atualize facilmente um dispositivo com acesso root\n&#8226; Veja o que há de novo no software do sistema que você está usando atualmente\n&#8226; Leia as última notícias sobre OxygenOS e OnePlus</string>
+	<string name="onboarding_page_1_caption">Este não é um aplicativo oficial OnePlus. O uso deste aplicativo é totalmente por sua própria conta e risco. Nem a OnePlus nem o desenvolvedor do aplicativo são responsáveis por suas ações, incluindo quaisquer danos causados pelo uso deste aplicativo. Ao usar este aplicativo, você concorda com os termos e condições indicados acima.</string>
 	<string name="onboarding_page_2_title">Escolha seu dispositivo</string>
 	<string name="onboarding_page_2_caption">Normalmente, o seu dispositivo já está selecionado acima. Caso contrário, selecione seu dispositivo acima.</string>
 	<string name="onboarding_page_3_title">Escolha o seu método de atualização</string>
 	<string name="onboarding_page_3_caption">Normalmente, a atualização incremental é a escolha certa aqui, porque oferece downloads muito mais rápidos e menores.\n\nNo entanto, não é compatível com dispositivos com acesso root. Se você tiver um dispositivo com acesso root, escolha a atualização completa.\n\nSe você tiver uma versão beta do OxygenOS, escolha (um dos) canais de atualização do Open Beta.</string>
 	<string name="onboarding_page_4_title">Você está pronto para ir!</string>
-	<string name="onboarding_page_4_text">Aprecie este aplicativo!\n\nVocê sempre pode alterar suas configurações mais tarde. Para fazer isso: toque nos três pontos no canto superior direito e toque em\"Configurações\".</string>
+	<string name="onboarding_page_4_text">Aprecie este aplicativo! Você sempre pode alterar suas configurações mais tarde.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>
@@ -302,7 +308,7 @@ Instruções:
 	<string name="error_no_internet_connection">Sem conexão.</string>
 	<string name="error_maintenance">Manutenção do servidor</string>
 	<string name="error_maintenance_message">Por favor, espere. O servidor estará disponível em breve.</string>
-	<string name="error_maintenance_retry">O servidor pode estar inativo para manutenção. Tente novamente depois de algum tempo ou informe-nos via <a href="mailto:support@oxygenupdater.com">email</a> ou pelo nosso <a href="https://discord.gg/5TXdhKJ">servidor do Discord</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[O servidor pode estar inativo para manutenção. Tente novamente depois de algum tempo ou informe-nos via <a href="mailto:support@oxygenupdater.com">email</a> ou pelo nosso <a href="https://discord.gg/5TXdhKJ">servidor do Discord</a>.]]></string>
 	<string name="error_reload">Recarregar</string>
 
 	<string name="error_unable_to_rate_app">Você não pode avaliar o aplicativo, porque o Google Play Store não está instalado em seu dispositivo.</string>

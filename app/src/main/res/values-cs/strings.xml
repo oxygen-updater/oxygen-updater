@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Klepnutím sem zobrazíte důležitá upozornění</string>
 	<string name="update_information_banner_advanced_mode_tip">Vybrali jste aktualizační stopu \"%1$s\". Pokud plánujete přejít na tuto aktualizační stopu, zapněte pokročilý režim.</string>
 	<string name="update_information_header_advanced_mode_hint">Pokročilý režim je povolen</string>
-	<string name="update_information_header_advanced_mode_helper">Protože jste povolili pokročilý režim, můžete si stáhnout nejnovější ZIP pro \"%1$s\".\n\nPokročilý režim můžete vypnout v nastavení.</string>
-	<string name="update_information_different_version_changelog_notice">Prohlížíte si seznam změn pro nejnovější aktualizaci ve stopě aktualizací \"%1$s\". Pokud hodláte tuto aktualizaci nainstalovat, musíte nejprve zapnout rozšířený režim (v nastavení).\n\nPokud však chcete místo toho zobrazit seznam změn pro aktuálně nainstalovanou verzi, musíte se přepnout zpět na správný způsob aktualizace.</string>
+	<string name="update_information_header_advanced_mode_helper">Protože jste povolili pokročilý režim, můžete si stáhnout nejnovější ZIP pro \"%1$s\". Pokročilý režim můžete vypnout v nastavení.</string>
+	<string name="update_information_different_version_changelog_notice_base">Poznámka: tento seznam změn se týká poslední dostupné verze (%1$s) v metodě aktualizace \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Pokud chcete tuto aktualizaci nainstalovat, musíte v nastavení povolit \"Pokročilý režim\".</string>
 	<string name="update_information_last_checked_on">Poslední kontrola: %1$s</string>
 	<string name="update_information_no_update_data_available">Není k dispozici žádná informace o aktualizaci</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -52,8 +53,8 @@
 Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednictvím <a href="mailto:support@oxygenupdater.com">e-mailu</a> nebo na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Soubor byl stažen, ale nepodařilo se jej přesunout do správného adresáře. Otevřete správce souborů, přejděte na \"%1$s\" a ručně přesuňte soubor do nejvyššího adresáře interního úložiště.</string>
 
-	<string name="download_error_retry">ZKUSIT ZNOVU</string>
-	<string name="download_error_resume">POKRAČOVAT</string>
+	<string name="download_error_retry">Zkusit znovu</string>
+	<string name="download_error_resume">Pokračovat</string>
 	<string name="download_error_storage">Na vašem zařízení není k dispozici dostatek místa pro stažení aktualizace. Odstraňte prosím některé soubory a zkuste ji stáhnout znovu.</string>
 
 	<string name="download_failed">Stahování se nezdařilo</string>
@@ -130,7 +131,12 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="settings_saving">Vaše nastavení se stále ukládá. Pokud to trvá příliš dlouho: Zkontrolujte připojení k síti, ukončete aplikaci a spusťte ji znovu.</string>
 
 	<string name="settings_advanced_mode">Pokročilý režim</string>
-	<string name="settings_advanced_mode_explanation">Pokročilý režim skrývá zprávu \"Váš systém je aktuální\" a umožňuje vám stáhnout a nainstalovat všechny aktualizace, i když nemusí být kompatibilní s vaším zařízením. \To může být užitečné při:\n&#8226; Aktualizaci z běžné verze na beta verzi\n&#8226; Návratu z beta verze na běžnou verzi (nezapomeňte obnovit tovární nastavení zařízení)\n&#8226; Přeinstalaci aktuální verze systému.</string>
+	<string name="settings_advanced_mode_explanation">"Obvykle aplikace zobrazuje aktualizace na základě aktuální verze operačního systému. V rozšířeném režimu se vždy zobrazí nejnovější dostupná aktualizace bez ohledu na kompatibilitu zařízení/verze.
+
+To může být užitečné, pokud chcete:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Znovu stáhnout nejnovější verzi, i když ji již používáte
+&#8226; Přepnout na jinou aktualizační stopu"</string>
+	<string name="settings_advanced_mode_caption">"Rozšířený režim může být potřebný pouze ve výše uvedených situacích. Neměli byste jej povolovat, pokud nevíte, co děláte."</string>
 
 	<string name="settings_update_method">Způsob aktualizace</string>
 	<string name="settings_upload_logs">Sdílení dat o používání a sdílení protokolů</string>
@@ -144,14 +150,14 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="onboarding_finished_button">Spustit aplikaci</string>
 
 	<string name="onboarding_page_1_title">Vítejte v aplikaci Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Tato aplikace vám umožní:\n\n&#8226; Získat rychlejší přístup k nejnovějším aktualizacím systému Android pro vaše zařízení s operačním systémem OxygenOS\n\n&#8226; Snadno aktualizovat zařízení s rootem\n\n&#8226; Prohlédnout si novinky o systémovém softwaru, který právě používáte\n\n&#8226; Přečíst si nejnovější zprávy o společnosti OnePlus a OxygenOS\n\nPřejeďte doleva pro pokračování. </string>
-	<string name="onboarding_page_1_caption">Nejedná se o oficiální aplikaci společnosti OnePlus. Používání této aplikace je zcela na vaše vlastní riziko. Společnost OnePlus ani vývojář aplikace nenesou odpovědnost za vaše jednání, včetně jakýchkoli škod způsobených používáním této aplikace.\n\nPoužíváním této aplikace souhlasíte s výše uvedenými podmínkami.</string>
+	<string name="onboarding_page_1_text">Tato aplikace vám umožní:\n\n&#8226; Získat rychlejší přístup k nejnovějším aktualizacím systému Android pro vaše zařízení s operačním systémem OxygenOS\n&#8226; Snadno aktualizovat zařízení s rootem\n&#8226; Prohlédnout si novinky o systémovém softwaru, který právě používáte\n&#8226; Přečíst si nejnovější zprávy o společnosti OnePlus a OxygenOS</string>
+	<string name="onboarding_page_1_caption">Nejedná se o oficiální aplikaci společnosti OnePlus. Používání této aplikace je zcela na vaše vlastní riziko. Společnost OnePlus ani vývojář aplikace nenesou odpovědnost za vaše jednání, včetně jakýchkoli škod způsobených používáním této aplikace. Používáním této aplikace souhlasíte s výše uvedenými podmínkami.</string>
 	<string name="onboarding_page_2_title">Vyberte své zařízení</string>
 	<string name="onboarding_page_2_caption">Vaše zařízení je obvykle již vybráno výše. Pokud ne, vyberte jej.</string>
 	<string name="onboarding_page_3_title">Vyberte způsob aktualizace</string>
 	<string name="onboarding_page_3_caption">Obvykle je zde správnou volbou aktualizace typu incremental, protože nabízí mnohem rychlejší a menší objem dat ke stažení.\n\nNení však kompatibilní se zařízeními s rootem. Pokud máte zařízení s rootem, zvolte plnou aktualizaci.\n\nPokud máte beta verzi systému OxygenOS, zvolte jednu z metod aktualizace Open Beta.</string>
 	<string name="onboarding_page_4_title">Jste připraveni!</string>
-	<string name="onboarding_page_4_text">Užívejte si používání této aplikace!\n\nVždy můžete později změnit nastavení. Můžete tak učinit klepnutím na tři tečky v pravém horním rohu a klepněte na \"Nastavení\".</string>
+	<string name="onboarding_page_4_text">Užívejte si používání této aplikace! Vždy můžete později změnit nastavení.</string>
 
 	<!-- Řetězce pro automatickou instalaci -->
 	<string name="install">Instalovat</string>
@@ -270,7 +276,7 @@ Pokyny:
 	<string name="news">Novinky</string>
 	<string name="news_date_published">Poslední aktualizace: %1$s</string>
 	<string name="news_empty">Tento článek nemá žádný obsah</string>
-	<string name="news_load_network_error">Nepodařilo se otevřít článek. Zkontrolujte připojení a stisknutím tlačítka \"OPAKOVAT\" článek otevřete.</string>
+	<string name="news_load_network_error">Nepodařilo se otevřít článek. Zkontrolujte připojení a stisknutím tlačítka \"Opakovat\" článek otevřete.</string>
 	<string name="news_load_id_error"><![CDATA[Chyba otevření článku z neplatné adresy: %1$s. Zkontrolujte adresu URL nebo nám to nahlaste buď prostřednictvím <a href="mailto:support@oxygenupdater.com">e-mailu</a>, nebo na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
 	<string name="news_unread_count_1">Máte %1$d nepřečtených novinek. Klepněte sem pro jejich zobrazení.</string>
 	<string name="news_unread_count_2">Máte %1$d nepřečtených novinových článků. Klepnutím na zobrazíte všechny články.</string>
@@ -302,7 +308,7 @@ Pokyny:
 	<string name="error_no_internet_connection">Není dostupné žádné připojení.</string>
 	<string name="error_maintenance">Údržba serveru</string>
 	<string name="error_maintenance_message">Počkejte prosím. Server bude brzy k dispozici.</string>
-	<string name="error_maintenance_retry">Server může být odstaven z důvodu údržby. Zkuste to znovu po nějaké době nebo nám to nahlaste prostřednictvím <a href="mailto:support@oxygenupdater.com">email</a> na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Server může být odstaven z důvodu údržby. Zkuste to znovu po nějaké době nebo nám to nahlaste prostřednictvím <a href="mailto:support@oxygenupdater.com">email</a> na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
 	<string name="error_reload">Znovu načíst</string>
 
 	<string name="error_unable_to_rate_app">Aplikaci nemůžete hodnotit, protože ve vašem zařízení chybí obchod Google Play.</string>

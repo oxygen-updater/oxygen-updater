@@ -12,16 +12,16 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
-import androidx.work.workDataOf
 import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
-import com.oxygenupdater.enums.DownloadFailure
+import com.oxygenupdater.compose.ui.update.DownloadFailure
 import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.createFromWorkData
@@ -54,7 +54,7 @@ import kotlin.math.abs
  */
 class DownloadWorker(
     context: Context,
-    parameters: WorkerParameters
+    parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
 
     private val context = context.attachWithLocale(false)
@@ -67,9 +67,17 @@ class DownloadWorker(
     private lateinit var tempFile: File
     private lateinit var zipFile: File
 
-    private val downloadApi by getKoin().inject<DownloadApi>()
-    private val workManager by getKoin().inject<WorkManager>()
-    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
+    private val downloadApi: DownloadApi
+    private val workManager: WorkManager
+    private val notificationManager: NotificationManagerCompat
+
+    init {
+        val koin = getKoin()
+
+        downloadApi = koin.inject<DownloadApi>().value
+        workManager = koin.inject<WorkManager>().value
+        notificationManager = koin.inject<NotificationManagerCompat>().value
+    }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important
@@ -79,21 +87,19 @@ class DownloadWorker(
             updateData?.downloadUrl == null -> {
                 showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
 
-                Result.failure(
-                    workDataOf(
-                        WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.NULL_UPDATE_DATA_OR_DOWNLOAD_URL.name
-                    )
-                )
+                Result.failure(Data.Builder().apply {
+                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.NullUpdateDataOrDownloadUrl.value)
+                }.build())
             }
+
             updateData.downloadUrl?.contains("http") == false -> {
                 showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
 
-                Result.failure(
-                    workDataOf(
-                        WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.DOWNLOAD_URL_INVALID_SCHEME.name
-                    )
-                )
+                Result.failure(Data.Builder().apply {
+                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.DownloadUrlInvalidScheme.value)
+                }.build())
             }
+
             else -> download()
         }
     }
@@ -129,7 +135,7 @@ class DownloadWorker(
         bytesDone: Long,
         totalBytes: Long,
         progress: Int,
-        downloadEta: String?
+        downloadEta: String?,
     ): ForegroundInfo {
         // This PendingIntent can be used to cancel the worker
         val cancelPendingIntent = workManager.createCancelPendingIntent(id)
@@ -171,7 +177,6 @@ class DownloadWorker(
 
     private suspend fun download(): Result = withContext(Dispatchers.IO) {
         tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
-        @Suppress("DEPRECATION")
         zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
 
         var startingByte = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
@@ -204,17 +209,15 @@ class DownloadWorker(
         val body = response.body()
 
         if (!response.isSuccessful || body == null) {
-            return@withContext Result.failure(
-                workDataOf(
-                    WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.UNSUCCESSFUL_RESPONSE.name,
-                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL to updateData.downloadUrl,
-                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME to updateData.filename,
-                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION to updateData.versionNumber,
-                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION to updateData.otaVersionNumber,
-                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE to response.code(),
-                    WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE to response.message()
-                )
-            )
+            return@withContext Result.failure(Data.Builder().apply {
+                putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.UnsuccessfulResponse.value)
+                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL, updateData.downloadUrl)
+                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME, updateData.filename)
+                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION, updateData.versionNumber)
+                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION, updateData.otaVersionNumber)
+                putInt(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE, response.code())
+                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE, response.message())
+            }.build())
         }
 
         body.byteStream().use { stream ->
@@ -270,13 +273,12 @@ class DownloadWorker(
                                         R.string.download_notification_error_server
                                     )
 
-                                    Result.failure(
-                                        workDataOf(
-                                            WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.SERVER_ERROR.name
-                                        )
-                                    )
+                                    Result.failure(Data.Builder().apply {
+                                        putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.ServerError.value)
+                                    }.build())
                                 }
                             }
+
                             e is IOException -> if (retryCount <= 5) {
                                 logDebug(TAG, "IOException encountered. Retrying ($retryCount/5)")
                                 Result.retry()
@@ -288,12 +290,11 @@ class DownloadWorker(
                                     R.string.download_notification_error_internal
                                 )
 
-                                Result.failure(
-                                    workDataOf(
-                                        WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.CONNECTION_ERROR.name
-                                    )
-                                )
+                                Result.failure(Data.Builder().apply {
+                                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.ConnectionError.value)
+                                }.build())
                             }
+
                             else -> {
                                 // Delete any associated tracker preferences to allow retrying this work with a fresh state
                                 PrefManager.remove(PROPERTY_DOWNLOAD_BYTES_DONE)
@@ -304,11 +305,9 @@ class DownloadWorker(
                                     logWarning(TAG, "Could not delete the partially downloaded ZIP")
                                 }
 
-                                Result.failure(
-                                    workDataOf(
-                                        WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.UNKNOWN.name
-                                    )
-                                )
+                                Result.failure(Data.Builder().apply {
+                                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.Unknown.value)
+                                }.build())
                             }
                         }
                     }
@@ -317,13 +316,11 @@ class DownloadWorker(
                 logDebug(TAG, "Download completed. Deleting any associated tracker preferences")
                 PrefManager.remove(PROPERTY_DOWNLOAD_BYTES_DONE)
 
-                setProgress(
-                    workDataOf(
-                        WORK_DATA_DOWNLOAD_BYTES_DONE to contentLength,
-                        WORK_DATA_DOWNLOAD_TOTAL_BYTES to contentLength,
-                        WORK_DATA_DOWNLOAD_PROGRESS to 100
-                    )
-                )
+                setProgress(Data.Builder().apply {
+                    putLong(WORK_DATA_DOWNLOAD_BYTES_DONE, contentLength)
+                    putLong(WORK_DATA_DOWNLOAD_TOTAL_BYTES, contentLength)
+                    putInt(WORK_DATA_DOWNLOAD_PROGRESS, 100)
+                }.build())
 
                 // Copy file to root directory of internal storage
                 // Note: this requires the storage permission to be granted
@@ -332,11 +329,9 @@ class DownloadWorker(
                 } catch (e: IOException) {
                     logError(TAG, "Could not rename file", e)
 
-                    return@withContext Result.failure(
-                        workDataOf(
-                            WORK_DATA_DOWNLOAD_FAILURE_TYPE to DownloadFailure.COULD_NOT_MOVE_TEMP_FILE.name
-                        )
-                    )
+                    return@withContext Result.failure(Data.Builder().apply {
+                        putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.CouldNotMoveTempFile.value)
+                    }.build())
                 }
             }
         }
@@ -357,12 +352,10 @@ class DownloadWorker(
         }, 0)
 
         val verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
-            .setInputData(
-                workDataOf(
-                    "filename" to updateData!!.filename!!,
-                    "mD5Sum" to updateData.mD5Sum,
-                )
-            )
+            .setInputData(Data.Builder().apply {
+                putString("filename", updateData!!.filename!!)
+                putString("mD5Sum", updateData.mD5Sum)
+            }.build())
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,
                 WorkRequest.MIN_BACKOFF_MILLIS,
@@ -410,44 +403,42 @@ class DownloadWorker(
      * @param totalBytes total bytes that need to be read
      */
     private suspend fun publishProgressIfNeeded(bytesDone: Long, totalBytes: Long) = withContext(Dispatchers.IO) {
-        if (!isStopped) {
-            val currentTimestamp = System.currentTimeMillis()
-            if (isFirstPublish || currentTimestamp - previousProgressTimestamp > THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED) {
-                val progress = (bytesDone * 100 / totalBytes).toInt()
-                val previousBytesDone = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
+        if (isStopped) return@withContext
 
-                PrefManager.putLong(PROPERTY_DOWNLOAD_BYTES_DONE, bytesDone)
+        val currentTimestamp = System.currentTimeMillis()
+        if (isFirstPublish || currentTimestamp - previousProgressTimestamp > THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED) {
+            val progress = (bytesDone * 100 / totalBytes).toInt()
+            val previousBytesDone = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
 
-                val downloadEta = calculateDownloadEta(
-                    currentTimestamp,
-                    previousBytesDone,
+            PrefManager.putLong(PROPERTY_DOWNLOAD_BYTES_DONE, bytesDone)
+
+            val downloadEta = calculateDownloadEta(
+                currentTimestamp,
+                previousBytesDone,
+                bytesDone,
+                totalBytes
+            )?.toString(context)
+
+            setForeground(
+                createProgressForegroundInfo(
                     bytesDone,
-                    totalBytes
-                )?.toString(context)
-
-                setForeground(
-                    createProgressForegroundInfo(
-                        bytesDone,
-                        totalBytes,
-                        progress,
-                        downloadEta
-                    )
+                    totalBytes,
+                    progress,
+                    downloadEta
                 )
-                setProgress(
-                    workDataOf(
-                        WORK_DATA_DOWNLOAD_BYTES_DONE to bytesDone,
-                        WORK_DATA_DOWNLOAD_TOTAL_BYTES to totalBytes,
-                        WORK_DATA_DOWNLOAD_PROGRESS to progress,
-                        WORK_DATA_DOWNLOAD_ETA to downloadEta
-                    )
-                )
+            )
+            setProgress(Data.Builder().apply {
+                putLong(WORK_DATA_DOWNLOAD_BYTES_DONE, bytesDone)
+                putLong(WORK_DATA_DOWNLOAD_TOTAL_BYTES, totalBytes)
+                putInt(WORK_DATA_DOWNLOAD_PROGRESS, progress)
+                putString(WORK_DATA_DOWNLOAD_ETA, downloadEta)
+            }.build())
 
-                if (!isFirstPublish) {
-                    previousProgressTimestamp = currentTimestamp
-                }
-
-                isFirstPublish = false
+            if (!isFirstPublish) {
+                previousProgressTimestamp = currentTimestamp
             }
+
+            isFirstPublish = false
         }
     }
 
@@ -455,7 +446,7 @@ class DownloadWorker(
         currentTimestamp: Long,
         previousBytesDone: Long,
         bytesDone: Long,
-        totalBytes: Long
+        totalBytes: Long,
     ): TimeRemaining? {
         val bytesDonePerSecond: Double
         var secondsRemaining = NOT_SET
@@ -473,7 +464,7 @@ class DownloadWorker(
             val validMeasurement = bytesDonePerSecond > 0 || secondsElapsed > 5
 
             if (validMeasurement) {
-                // In case of no network, clear all measurements to allow displaying the now-unknown ETA...
+                // In case of no network, clear all measurements to allow displaying the now-unknown ETA
                 if (bytesDonePerSecond == 0.0) {
                     measurements.clear()
                 }

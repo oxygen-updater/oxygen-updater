@@ -16,10 +16,11 @@
 	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable tryb zaawansowany if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable tryb zaawansowany if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">Tryb zaawansowany jest włączony</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled tryb zaawansowany, you can download the latest ZIP for \"%1$s\".\n\nYou can turn tryb zaawansowany off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn tryb zaawansowany on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled tryb zaawansowany, you can download the latest ZIP for \"%1$s\". You can turn tryb zaawansowany off from settings.</string>
+	<string name="update_information_different_version_changelog_notice_base">Uwaga: ten dziennik zmian dotyczy najnowszej dostępnej wersji (%1$s) w metodzie aktualizacji \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Jeśli chcesz zainstalować tę aktualizację, musisz włączyć "Tryb zaawansowany" w ustawieniach.</string>
 	<string name="update_information_last_checked_on">Ostatnio sprawdzono: %1$s</string>
 	<string name="update_information_no_update_data_available">Brak dostępnych informacji o aktualizacjach</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -50,7 +51,7 @@
 	<string name="download_complete_notification">Naciśnij, aby rozpocząć instalację</string>
 
 	<string name="download_error">Błąd pobierania</string>
-	<string name="download_error_close">ZAMKNIJ</string>
+	<string name="download_error_close">Zamknij</string>
 	<string name="download_error_corrupt">Pobrany plik jest uszkodzony ! Spróbuj pobrać go ponownie.</string>
 
 	<string name="download_error_server">Wystąpił bląd serwera podczas pobierania aktualizacji. Spróbuj pobrać aktualizację ponownie.</string>
@@ -61,8 +62,8 @@
 If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
-	<string name="download_error_retry">PONÓW</string>
-	<string name="download_error_resume">WZNÓW</string>
+	<string name="download_error_retry">Ponów</string>
+	<string name="download_error_resume">Wznów</string>
 	<string name="download_error_storage">Na twoim urządzeniu nie jest wystarczająco wolnego miejsca na pobranie aktualizacji. Proszę usunąć jakieś pliki i spróbować pobrać ją ponownie.</string>
 
 	<string name="download_failed">Pobieranie nieudane</string>
@@ -143,7 +144,12 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_saving">Twoje ustawienia są nadal zapisywane. Jeśli to trwa zbyt długo: Sprawdź połączenie z internetem, wyjdź z aplikacji i spróbuj ponownie.</string>
 
 	<string name="settings_advanced_mode">Tryb zaawansowany</string>
-	<string name="settings_advanced_mode_explanation"> Tryb zaawansowany ukryje informację \"Twój system jest zaktualizowany\", pozwalając ci na pobieranie i instalowanie wszystkich aktualizacji, nawet jeśli nie są one kompatybilne z twoim urządzeniem.\n\nTo może być przydatne kiedy:\n&#8226; Aktualizowanie z wersji stabilnej na betę\n&#8226; Powracanie na wersję stabilną z wersji beta. (nie zapomnij o przywróceniu ustawień fabrycznych w urządzeniu)\n&#8226; Przeinstalowanie twojej aktualnej wersji systemu.</string>
+	<string name="settings_advanced_mode_explanation">"Zwykle aplikacja wyświetla aktualizacje na podstawie bieżącej wersji systemu operacyjnego. W trybie zaawansowanym najnowsza dostępna aktualizacja będzie zawsze wyświetlana niezależnie od zgodności urządzenia/wersji.
+
+Może to być przydatne, jeśli chcesz:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Ponownie pobrać najnowszą wersję, nawet jeśli już na niej jesteś
+&#8226; Przełączyć się na inną ścieżkę aktualizacji"</string>
+	<string name="settings_advanced_mode_caption">"Tryb zaawansowany może być potrzebny tylko w powyższych sytuacjach. Nie powinieneś go włączać, jeśli nie wiesz, co robisz."</string>
 
 	<string name="settings_update_method">Metoda aktualizacji</string>
 	<string name="settings_upload_logs">Udostępnij dane użytkowania oraz logi</string>
@@ -157,14 +163,14 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="onboarding_finished_button">włącz aplikację</string>
 
 	<string name="onboarding_page_1_title">Witaj w Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Ta aplikacji pozwoli ci na:\n\n&#8226; Szybszy dostęp do aktualizacji na twoim urządzeniu z OxygenOS\n\n&#8226; Łatwa aktualizacja na urządzeniu z rootem\n\n&#8226; Zobaczyć nowości w systemie którego obecnie używasz\n\n&#8226; Przeczytać najnowsze wiadomości o OnePlus i aktualizacjach OxygenOS\n\nPrzesuń w lewo aby kontynuować.</string>
-	<string name="onboarding_page_1_caption">To nie jest oficjalna aplikacja OnePlusa. Ponosisz pełne ryzyko za używanie tej aplikacji.Ani OnePlus ani deweloper tej aplikacji nie są odpowiedzialni za twoje akcje, włączając wszelkie akcje mogące wyrządzić szkody przez tę aplikację.\n\nUżywając tej apliakcji, zgadzasz się na zasady i warunki opisane powyżej.</string>
+	<string name="onboarding_page_1_text">Ta aplikacji pozwoli ci na:\n\n&#8226; Szybszy dostęp do aktualizacji na twoim urządzeniu z OxygenOS\n&#8226; Łatwa aktualizacja na urządzeniu z rootem\n&#8226; Zobaczyć nowości w systemie którego obecnie używasz\n&#8226; Przeczytać najnowsze wiadomości o OnePlus i aktualizacjach OxygenOS</string>
+	<string name="onboarding_page_1_caption">To nie jest oficjalna aplikacja OnePlusa. Ponosisz pełne ryzyko za używanie tej aplikacji.Ani OnePlus ani deweloper tej aplikacji nie są odpowiedzialni za twoje akcje, włączając wszelkie akcje mogące wyrządzić szkody przez tę aplikację. Używając tej apliakcji, zgadzasz się na zasady i warunki opisane powyżej.</string>
 	<string name="onboarding_page_2_title">Wybierz swoje urządzenie</string>
 	<string name="onboarding_page_2_caption">Twoje urządzenie jest zazwyczaj wybrane powyżej. Jeśli nie, wybierz twoje urządzenie wyżej.</string>
 	<string name="onboarding_page_3_title">Wybierz metodę aktualizacji</string>
 	<string name="onboarding_page_3_caption">Zazwyczaj, częściowa aktualizacja jest tutaj właściwym wyborem, ponieważ umożliwia znacznie szybsze pobieranie oraz mniejszy rozmiar pliku.\n\nAczkolwiek, ta opcja nie jest kompatybilna ze zrootowanymi urządzeniami. Jeśli masz zrootowane urzadzenie, wybierz Pełną aktualizację.\n\nJeśli masz wersję beta OxygenOS, wybierz (jedną z) metod aktualizacji wersji Open Beta.</string>
 	<string name="onboarding_page_4_title">Jesteś gotowy do uruchomienia aplikacji!</string>
-	<string name="onboarding_page_4_text">Miłego korzystania z tej aplikacji !\n\nMożesz zawsze zmienić swoje ustawienia w dowolnym momencie. Aby to zrobić: Naciśnij trzy kropki w prawym górnym rogu oraz wybierz \"Ustawienia\".</string>
+	<string name="onboarding_page_4_text">Miłego korzystania z tej aplikacji! Możesz zawsze zmienić swoje ustawienia w dowolnym momencie.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Instaluj</string>
@@ -290,7 +296,7 @@ Instructions:
 	<string name="news">Wiadomości</string>
 	<string name="news_date_published">Ostatnia aktualizacja: %1$s</string>
 	<string name="news_empty">Ten artykuł nie ma treści.</string>
-	<string name="news_load_network_error">Niepowodzenie otwierania artykułu. Sprawdź połączenie z internetem i naciśnij przycisk \'PONÓW PRÓBĘ\' aby otworzyć artykuł.</string>
+	<string name="news_load_network_error">Niepowodzenie otwierania artykułu. Sprawdź połączenie z internetem i naciśnij przycisk \'Ponów próbę\' aby otworzyć artykuł.</string>
 	<!-- TODO: translate this string below -->
 	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<!-- TODO: translate these 2 strings below -->
@@ -326,7 +332,7 @@ Instructions:
 	<string name="error_maintenance">Prace serwerowe</string>
 	<string name="error_maintenance_message">Proszę czekać. Serwer będzie dostępny niedługo.</string>
 	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="error_reload">Przeładuj</string>
 
 	<string name="error_unable_to_rate_app">Nie możesz ocenić aplikacji, ponieważ nie posiadasz Sklepu Play na swoim urządzeniu.</string>

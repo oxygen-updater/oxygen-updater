@@ -16,10 +16,11 @@
 	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable napredni način if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable napredni način if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">Omogućen je napredni način rada</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled napredni način, you can download the latest ZIP for \"%1$s\".\n\nYou can turn napredni način off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn napredni način on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled napredni način, you can download the latest ZIP for \"%1$s\". You can turn napredni način off from settings.</string>
+	<string name="update_information_different_version_changelog_notice_base">Napomena: ovaj dnevnik promjena je za posljednju dostupnu verziju (%1$s) u metodi ažuriranja \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Ako namjeravate instalirati ovo ažuriranje, morate omogućiti \"Napredni način\" u postavkama.</string>
 	<string name="update_information_last_checked_on">"Zadnja provjera: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Nema novosti o ažuriranju"</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -49,9 +50,9 @@
 	<string name="download_complete">"Preuzimanje je gotovo."</string>
 	<string name="download_complete_notification">"Pritisnite kako bi počeli sa instalacijom"</string>
 	<string name="download_error">"Greška pri preuzimanju"</string>
-	<string name="download_error_close">"ZATVORI"</string>
+	<string name="download_error_close">"Zatvori"</string>
 	<string name="download_error_corrupt">"Podatak koji je preuzet je oštećen. Molimo pokušajte preuzeti ponovo."</string>
-	<string name="download_error_retry">"PONOVI"</string>
+	<string name="download_error_retry">"Ponovi"</string>
 	<string name="download_error_storage">"Na vašem uređaju nema dovoljno mjesta za preuzimanje ažuriranje. Molimo vas da uklonite neke podatke i pokušate preuzeti ponovo"</string>
 	<string name="download_failed">"Preuzimanje nije uspjelo"</string>
 	<string name="download_pending">"Tvoje ažuriranje će početi uskoro…"</string>
@@ -127,10 +128,12 @@
 	<string name="settings_push_from_server">"Važna poruka je dostupna"</string>
 	<string name="settings_saving">"Vaše postavke se još uvijek spremaju. Ako ovo potraje predugo: Provjerite vašu internet vezu , izađite iz aplikacije i pokrenite je ponovno."</string>
 	<string name="settings_advanced_mode">"Napredni način"</string>
-	<string name="settings_advanced_mode_explanation">"Napredni način skriva poruku \"Vaš uređaj je na najnovijim ažuriranjima\" , dopušta vam preuzimanje i instalaciju svih ažuriranja, iako oni možda nisu kompatibilni sa vašim uređajem.
+	<string name="settings_advanced_mode_explanation">"Obično vam aplikacija prikazuje ažuriranja na temelju vaše trenutne verzije OS-a. Uz napredni način rada, najnovije dostupno ažuriranje uvijek će biti prikazano bez obzira na kompatibilnost uređaja/verzije.
 
-To može biti korisno:
-- Ažuriranje"</string>
+Ovo može biti korisno ako želite:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Ponovno preuzmite najnoviju verziju čak i ako je već koristite
+&#8226; Prebacite se na drugu stazu ažuriranja"</string>
+	<string name="settings_advanced_mode_caption">"Napredni način rada može biti potreban samo u gore navedenim situacijama. Ne biste ga trebali omogućiti ako ne znate što radite."</string>
 	<string name="settings_update_method">"Metoda ažuriranja"</string>
 	<!-- TODO translate -->
 	<string name="settings_upload_logs">Share usage data and logs</string>
@@ -145,15 +148,10 @@ To može biti korisno:
 	<string name="onboarding_page_1_title">"Dobrodošli u Oxygen Updater!"</string>
 	<string name="onboarding_page_1_text">"Ova aplikacija vam omogućava:
 
-- Dobivanje ažuriranje brže na vaše OxygenOS uređaje
-
-- Lakše ažuriranje root-anih uređaja
-
-- Pregled novih mogućnosti vašeg software-a
-
-- Najnovije vijesti o OnePlus-u i OxygenOs-u
-
-Povucite lijevo za nastavak."</string>
+&#8226; Dobivanje ažuriranje brže na vaše OxygenOS uređaje
+&#8226; Lakše ažuriranje root-anih uređaja
+&#8226; Pregled novih mogućnosti vašeg software-a
+&#8226; Najnovije vijesti o OnePlus-u i OxygenOs-u"</string>
 	<string name="onboarding_page_1_caption">"Ovo nije službena aplikacija OnePlus-a. Koristite ovu aplikaciju na svoj rizik. OnePlus i developer ove aplikacije nisu dogovorni za vaše postupke, uključujući ikakvu štetu koristeči ovu aplikaciju."</string>
 	<string name="onboarding_page_2_title">"Izaberi svoj uređaj:"</string>
 	<string name="onboarding_page_2_caption">"Vaš uređaj je uobičajno već izabran. Ako nije izaberite svoj uređaj gore.
@@ -181,9 +179,9 @@ Povuci lijevo da nastaviš."</string>
 	<string name="install_guide_page_1_title">"Preuzmi ažuriranje"</string>
 	<string name="install_guide_page_1_text">"&#8226; Pritisnite dugme za preuzimanje kako bi započeli preuzimanje ažuriranja.
 
-- Status preuzimanja biti će prikazan u aplikaciji i kao notifikacija.
+&#8226; Status preuzimanja biti će prikazan u aplikaciji i kao notifikacija.
 
-- Nakon završetka preuzimanja dobiti čete notifikaciju sa tekstom \"Preuzimanje završeno\" , ako se dogodi greška pri preuzimanju otvorite aplikaciju i pokušajte ponovno , ako ni to ne djeluje provjerite jeli imate stabilnu vezu. U suprotnom kontaktirajte stvaratelja aplikacije. To možete učiniti preko \"My apps\" sekcije u Google Play Store-u."</string>
+&#8226; Nakon završetka preuzimanja dobiti čete notifikaciju sa tekstom \"Preuzimanje završeno\" , ako se dogodi greška pri preuzimanju otvorite aplikaciju i pokušajte ponovno , ako ni to ne djeluje provjerite jeli imate stabilnu vezu. U suprotnom kontaktirajte stvaratelja aplikacije. To možete učiniti preko \"My apps\" sekcije u Google Play Store-u."</string>
 
 	<!-- TODO: translate these 2 strings below -->
 	<string name="install_guide_page_2_title">Prepare for installation</string>
@@ -217,9 +215,9 @@ Instructions:
 	<string name="install_guide_page_5_title">"Gotovo. Uživajte u novoj OxygenOS verziji!"</string>
 	<string name="install_guide_page_5_text">"&#8226; Nakon što je vaš uređaj završio optimizaciju aplikacija tada je proces instalacije uspješno gotov.
 
-- Možete provjeriti verziju pomoću \"O uređaju\" u vašim postavkama uređaja
+&#8226; Možete provjeriti verziju pomoću \"O uređaju\" u vašim postavkama uređaja
 
-- Ako vam se aplikacija sviđa molimo vas ocijenite je s 5 zvjezdica na Google Play-u!"</string>
+&#8226; Ako vam se aplikacija sviđa molimo vas ocijenite je s 5 zvjezdica na Google Play-u!"</string>
 	<string name="install_guide_close_button">"Zatvorite priručnik."</string>
 
 	<!-- Device information strings -->
@@ -354,7 +352,7 @@ Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatn
 	<string name="error_maintenance">"Održavanje servera"</string>
 	<string name="error_maintenance_message">"Molimo pričekajte. Serveri će uskoro biti dostupni."</string>
 	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="error_reload">"Ponovno pokreni"</string>
 	<string name="error_unable_to_rate_app">"Nemožete ocijeniti ovu aplikaciju jer na vašem uređaju nema Google Play aplikacije"</string>
 

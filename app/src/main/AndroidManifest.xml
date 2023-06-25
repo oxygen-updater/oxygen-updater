@@ -1,5 +1,4 @@
-<manifest
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Networking permissions for fetching update data -->
@@ -59,7 +58,7 @@
 			android:name=".activities.SplashActivity"
 			android:exported="true"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.Splash.DayNight">
+			android:theme="@style/Theme.OxygenUpdater.Splash">
 
 			<tools:validation testUrl="https://${hostName}/inapp" />
 
@@ -90,7 +89,7 @@
 
 		<!-- All screens -->
 		<activity
-			android:name=".activities.MainActivity"
+			android:name=".compose.activities.MainActivity"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
 			android:theme="@style/Theme.OxygenUpdater.DayNight.Main" />
@@ -98,36 +97,36 @@
 		<activity
 			android:name=".activities.InstallActivity"
 			android:label="@string/install_guide"
-			android:parentActivityName=".activities.MainActivity"
+			android:parentActivityName=".compose.activities.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen" />
+			android:theme="@style/Theme.OxygenUpdater.DayNight" />
 
 		<activity
-			android:name=".activities.OnboardingActivity"
+			android:name=".compose.activities.OnboardingActivity"
 			android:label="@string/onboarding"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen" />
+			android:theme="@style/Theme.OxygenUpdater.DayNight" />
 
 		<activity
-			android:name=".activities.HelpActivity"
+			android:name=".compose.activities.HelpActivity"
 			android:label="@string/help"
-			android:parentActivityName=".activities.MainActivity"
+			android:parentActivityName=".compose.activities.MainActivity"
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".activities.FaqActivity"
+			android:name=".compose.activities.FaqActivity"
 			android:label="@string/faq"
-			android:parentActivityName=".activities.MainActivity"
+			android:parentActivityName=".compose.activities.MainActivity"
 			android:screenOrientation="portrait" />
 
 		<activity
-			android:name=".activities.NewsItemActivity"
+			android:name=".compose.activities.NewsItemActivity"
 			android:exported="true"
 			android:label="@string/news"
-			android:parentActivityName=".activities.MainActivity"
+			android:parentActivityName=".compose.activities.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen">
+			android:theme="@style/Theme.OxygenUpdater.DayNight">
 
 			<intent-filter
 				android:autoVerify="true"
@@ -204,6 +203,14 @@
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="${advertisingAppId}" />
+
+		<!-- https://developers.google.com/admob/android/optimize-initialization -->
+		<meta-data
+			android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
+			android:value="true" />
+		<meta-data
+			android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
+			android:value="true" />
 
 		<!-- Opt out of WebView usage statistics collection -->
 		<meta-data

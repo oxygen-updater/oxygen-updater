@@ -37,7 +37,7 @@ object DeviceInformationData {
     @SuppressLint("HardwareIds")
     // Only used on older Android versions.
     // Serial number is only used on older Android versions as it requires too much permissions on O and higher.
-    val serialNumber: String = if (Build.VERSION.SDK_INT >= 26) UNKNOWN else Build.SERIAL
+    val serialNumber = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) Build.SERIAL else null
 
     val cpuFrequency = try {
         val firstCpuFreq = cpuFreq(0)
@@ -48,11 +48,11 @@ object DeviceInformationData {
             // Choose higher frequency of the two
             if (firstCpuFreq >= lastCpuFreq) firstCpuFreq else lastCpuFreq
         }).let {
-            if (it != BigDecimal.ZERO) it.toString() else UNKNOWN
+            if (it != BigDecimal.ZERO) it.toString() else null
         }
     } catch (e: Exception) {
         logVerbose("DeviceInformationData", "CPU Frequency information is not available", e)
-        UNKNOWN
+        null
     }
 
     private const val CPUFREQ_PATH_PREFIX = "/sys/devices/system/cpu/cpu"

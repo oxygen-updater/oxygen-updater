@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">點選此處以檢視重要訊息</string>
 	<string name="update_information_banner_advanced_mode_tip">您已選擇了“%1$s”更新頻道。如果您想切換到該更新頻道，請開啟進階模式。</string>
 	<string name="update_information_header_advanced_mode_hint">啟用進階模式</string>
-	<string name="update_information_header_advanced_mode_helper">由於您開啟了進階模式，您可以手動下載 \"%1$s\" 的 ZIP 包\n\n 您可以在設定中關閉進階模式。</string>
-	<string name="update_information_different_version_changelog_notice">您正在檢視 \"%1$s\" 更新通道中最新版本的更新訊息。如果您要安裝此更新，請在設定中打開進階模式 \n\n但如果您希望檢視目前安裝版本的更新訊息，則需要切換回正確的更新方法。</string>
+	<string name="update_information_header_advanced_mode_helper">由於您開啟了進階模式，您可以手動下載 \"%1$s\" 的 ZIP 包。 您可以在設定中關閉進階模式。</string>
+	<string name="update_information_different_version_changelog_notice_base">注意：此更改日誌適用於“%2$s”更新方法中的最新可用版本 (%1$s)</string>
+	<string name="update_information_different_version_changelog_notice_advanced">。 如果您打算安裝此更新，則必須在設置中啟用“進階模式”。</string>
 	<string name="update_information_last_checked_on">上一次檢查更新在： %1$s</string>
 	<string name="update_information_no_update_data_available">沒有可用的更新訊息</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -128,7 +129,12 @@
 	<string name="settings_saving">您的設定仍在儲存中。如果時間過長，請檢查您的網路連線，或嘗試重新啟動更新器。</string>
 
 	<string name="settings_advanced_mode">進階模式</string>
-	<string name="settings_advanced_mode_explanation">開啟進階模式後，將隱藏「您的裝置已是最新版本」的通知，使得您可以下載與安裝任何裝置的新版本系統，哪怕下載的檔案與您的裝置並不相容。\n\n在如下情況下，該功能會很有用：\n&#8226; 您想從正式版更新為測試版系統\n&#8226; 從測試版恢復成正式版（需要進行雙清！）\n&#8226; 重新安裝目前版本的系統</string>
+	<string name="settings_advanced_mode_explanation">"通常，該應用程序會根據您當前的操作系統版本向您顯示更新。 使用高級模式，無論設備/版本兼容性如何，都將始終顯示最新的可用更新。
+
+如果您想要執行以下操作，這會很有用："</string>
+	<string name="settings_advanced_mode_uses">"&#8226; 重新下載最新版本，即使您已經在使用它
+&#8226; 切換到不同的更新軌道"</string>
+	<string name="settings_advanced_mode_caption">"僅在上述情況下才可能需要高級模式。 除非您知道自己在做什麼，否則不應啟用它。"</string>
 	<string name="settings_update_method">更新方式</string>
 	<string name="settings_upload_logs">分享使用日誌</string>
 
@@ -141,8 +147,8 @@
 	<string name="onboarding_finished_button">開始吧！</string>
 
 	<string name="onboarding_page_1_title">歡迎使用 Oxygen 更新器！</string>
-	<string name="onboarding_page_1_text">這款 App 可以協助您：\n\n&#8226; 更快地接收 OxygenOS 的最新更新\n&#8226; 更輕鬆地升級 Root 過的裝置\n&#8226; 檢視目前系統版本的更新資訊\n&#8226; 了解關於 OnePlus 與 OxygenOS 的最新通知\n\n向左滑動以繼續</string>
-	<string name="onboarding_page_1_caption">本應用程式不是 OnePlus 官方推出的應用程式，使用此應用程式完全由您自己承擔風險。OnePlus 和本程式開發者都不對您的行為負責，包括使用此應用程式造成的任何損害。\n\n使用此應用程式即表示您同意上述條款。</string>
+	<string name="onboarding_page_1_text">這款 App 可以協助您：\n\n&#8226; 更快地接收 OxygenOS 的最新更新\n&#8226; 更輕鬆地升級 Root 過的裝置\n&#8226; 檢視目前系統版本的更新資訊\n&#8226; 了解關於 OnePlus 與 OxygenOS 的最新通知</string>
+	<string name="onboarding_page_1_caption">本應用程式不是 OnePlus 官方推出的應用程式，使用此應用程式完全由您自己承擔風險。OnePlus 和本程式開發者都不對您的行為負責，包括使用此應用程式造成的任何損害。 使用此應用程式即表示您同意上述條款。</string>
 	<string name="onboarding_page_2_title">選擇您的裝置：</string>
 	<string name="onboarding_page_2_caption">一般情況下，應用程式已經自動選擇了您的裝置。\n如果沒有，請在上面選擇。</string>
 	<string name="onboarding_page_3_title">選擇您的更新方式：</string>
@@ -301,7 +307,7 @@
 	<string name="error_no_internet_connection">無網際網路連線</string>
 	<string name="error_maintenance">伺服器維護中…</string>
 	<string name="error_maintenance_message">伺服器馬上就好，請待會再來吧～</string>
-	<string name="error_maintenance_retry">伺服器也許正在維護中，請稍候嘗試。您也可以透過我們的 <a href="mailto:support@oxygenupdater.com">Mail</a> 或者我們的 <a href="https://discord.gg/5TXdhKJ">Discord 伺服器</a> 傳送建議</string>
+	<string name="error_maintenance_retry"><![CDATA[伺服器也許正在維護中，請稍候嘗試。您也可以透過我們的 <a href="mailto:support@oxygenupdater.com">Mail</a> 或者我們的 <a href="https://discord.gg/5TXdhKJ">Discord 伺服器</a> 傳送建議]]></string>
 	<string name="error_reload">重新載入</string>
 
 	<string name="error_unable_to_rate_app">非常感謝您的好意，但很抱歉，由於您的裝置缺少 Play 商店，因此無法為本應用程式做出評分。</string>

@@ -1,6 +1,7 @@
 package com.oxygenupdater.models
 
 import android.content.Context
+import androidx.compose.runtime.Immutable
 import androidx.core.content.ContextCompat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -13,7 +14,7 @@ data class ServerStatus(
     var status: Status? = null,
     var latestAppVersion: String? = null,
     var automaticInstallationEnabled: Boolean = false,
-    var pushNotificationDelaySeconds: Int = 0
+    var pushNotificationDelaySeconds: Int = 0,
 ) : Banner {
 
     @JsonProperty("push_notification_delay_seconds")
@@ -51,16 +52,12 @@ data class ServerStatus(
     }
 
     fun checkIfAppIsUpToDate() = try {
-        val appVersionNumeric = BuildConfig.VERSION_NAME.replace(".", "")
-            // handle custom buildConfigs
-            .split("-")[0]
-            .toInt()
-        val appVersionFromResultNumeric = latestAppVersion!!.replace(".", "").toInt()
-        appVersionFromResultNumeric <= appVersionNumeric
+        appVersionNumeric >= latestAppVersion!!.replace(".", "").toInt()
     } catch (e: Exception) {
         true
     }
 
+    @Immutable
     enum class Status {
         NORMAL,
         WARNING,
@@ -74,5 +71,11 @@ data class ServerStatus(
 
         val isNonRecoverableError
             get() = !isUserRecoverableError && !equals(NORMAL)
+    }
+
+    companion object {
+        private val appVersionNumeric = BuildConfig.VERSION_NAME.replace(".", "")
+            // handle custom buildConfigs
+            .split("-")[0].toInt()
     }
 }

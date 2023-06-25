@@ -14,7 +14,8 @@
 	<string name="update_information_banner_advanced_mode_tip">את/ה בחרת את מסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.</string>
 	<string name="update_information_header_advanced_mode_hint">מצב מתקדם מופעל</string>
 	<string name="update_information_header_advanced_mode_helper">בחרת במסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.</string>
-	<string name="update_information_different_version_changelog_notice">הינך צופה ביומן השינויים עבור הגרסה האחרונה בשיטת \"%1$s\". אם ברצונך להתקין עדכון זה, עלייך להדליק מצב מתקדם (בהגדרות). אך אם ברצונך לצפות ביומן השינויים עבור הגרסה הנוכחית, חזור אל השיטה בה המכשיר כעת.</string>
+	<string name="update_information_different_version_changelog_notice_base">הערה: יומן שינויים זה מיועד לגרסה האחרונה הזמינה (%1$s) בשיטת העדכון \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. אם בכוונתך להתקין עדכון זה, עליך להפעיל את \"מצב מתקדם\" בהגדרות.</string>
 	<string name="update_information_last_checked_on">נבדק בפעם האחרונה %1$s</string>
 	<string name="update_information_no_update_data_available">אין מידע זמין עבור עדכון זה</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -130,7 +131,12 @@
 	<string name="settings_saving">ההגדרות שלך עדיין בתהליך שמירה. אם תהליך זה לוקח זמן רב מדי, אנא בדוק את חיבור הרשת שלך, ונסה לסגור את האפליקציה ולהפעילה מחדש.</string>
 
 	<string name="settings_advanced_mode">מצב מתקדם</string>
-	<string name="settings_advanced_mode_explanation">מצב מתקדם מסתיר את ההודעה \"המערכת שלך מעודכנת\", ומאפשר לך להוריד ולהתקין את כל העדכונים, בעוד שהם לא בהכרח תואמים למכשיר שלך. \n\nדבר זה שימושי כאשר: \n&#8226; מעדכנים מגרסה יציבה לגרסת בטא\n&#8226; שחזור מגרסת בטא לגרסה יציבה (לא לשכוח לבצע שחזור הגדרות יצרן) \n&#8226; התקנה חדשה של גרסת המכשיר</string>
+	<string name="settings_advanced_mode_explanation">"בדרך כלל, האפליקציה מציגה לך עדכונים על סמך גרסת מערכת ההפעלה הנוכחית שלך. במצב מתקדם, העדכון האחרון הזמין תמיד יוצג ללא קשר לתאימות מכשיר/גרסה.
+
+זה יכול להיות שימושי אם אתה רוצה:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; הורד מחדש את הגרסה העדכנית ביותר גם אם אתה כבר משתמש בה
+&#8226; עבור למסלול עדכון אחר"</string>
+	<string name="settings_advanced_mode_caption">"ייתכן שיהיה צורך במצב מתקדם רק במצבים שלעיל. אתה לא צריך להפעיל את זה אלא אם כן אתה יודע מה אתה עושה."</string>
 
 	<string name="settings_update_method">שיטת עדכון</string>
 	<string name="settings_upload_logs">שתף נתוני שימוש</string>
@@ -144,14 +150,14 @@
 	<string name="onboarding_finished_button">התחל אפליקציה</string>
 
 	<string name="onboarding_page_1_title">ברוך הבא ל־Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">יישום זה ייאפשר לך לעשות: \n\n&#8226; לקבל גישה מהירה לעדכוני גרסת האנדרואיד האחרונה עבור מכשירי OnePlus המריצים את OxygenOS\n\n&#8226; לעדכן בקלות מכשירים עם גישת Root\n\n&#8226; לגלות מה חדש בעדכון המערכת שהינך משתמש בו \n\n&#8226; לקרוא את החדשות האחרונות על חברת OnePlus ומערכת ההפעלה OxygenOS\n\n החלק שמאלה כדי להמשיך</string>
-	<string name="onboarding_page_1_caption">אפליקציה זאת אינה אפליקציה רשמית מחברת OnePlus ואינה מתיימרת להיות אחת כזו. שימוש באפליקציה זאת היא על אחריותך בלבד. OnePlus או מפתחי האפליקציה אינם אחראים לפעולות שתעשה באפליקציה, המשמעות היא שכל נזק הנגרם עקב שימוש באפליקציה זאת על אחריותך בלבד. .\n\שימוש באפליקציה זאת משמעותה שהינך מסכים ומאשר את התנאים וההגבלות כאמור לעיל.</string>
+	<string name="onboarding_page_1_text">יישום זה ייאפשר לך לעשות: \n\n&#8226; לקבל גישה מהירה לעדכוני גרסת האנדרואיד האחרונה עבור מכשירי OnePlus המריצים את OxygenOS\n&#8226; לעדכן בקלות מכשירים עם גישת Root\n&#8226; לגלות מה חדש בעדכון המערכת שהינך משתמש בו \n&#8226; לקרוא את החדשות האחרונות על חברת OnePlus ומערכת ההפעלה OxygenOS</string>
+	<string name="onboarding_page_1_caption">אפליקציה זאת אינה אפליקציה רשמית מחברת OnePlus ואינה מתיימרת להיות אחת כזו. שימוש באפליקציה זאת היא על אחריותך בלבד. OnePlus או מפתחי האפליקציה אינם אחראים לפעולות שתעשה באפליקציה, המשמעות היא שכל נזק הנגרם עקב שימוש באפליקציה זאת על אחריותך בלבד. שימוש באפליקציה זאת משמעותה שהינך מסכים ומאשר את התנאים וההגבלות כאמור לעיל.</string>
 	<string name="onboarding_page_2_title">בחר את המכשיר שלך</string>
 	<string name="onboarding_page_2_caption">המכשיר שלך לרוב נבחר בצורה אוטומטית. אך אם לא בחר את המכשיר בצורה ידנית</string>
 	<string name="onboarding_page_3_title">בחר את שיטת העדכון</string>
 	<string name="onboarding_page_3_caption">בדרך כלל, שיטת Incremental update הוא הבחירה הנכונה, מכיוון שהוא מציע הורדה מהירה יותר, וקבצים קלי משקל לעומת שיטת ה־ Full\n\אם זאת, שיטת Incremental update איננה נתמכת במכשירים עם גישת Root. אם ברשותך מכשיר עם גישת Root, אנא בחר את שיטת Full update.\n\אם הינך מריץ גרסת בטא של מערכת ההפעלה OxygenOS, אנא בחר אחד משיטות העדכונים שמיועדים לבטא (Open Beta).</string>
 	<string name="onboarding_page_4_title">אתה מוכן!</string>
-	<string name="onboarding_page_4_text">מאחלים לך הנאה בזמן שימוש באפליקציה! \n\ברשותך תמיד האפשרות לשנות את ההגדרות שלך. כדי לגשת אל ההגדרות לחץ על גלגל השיניים בתפריט למטה.</string>
+	<string name="onboarding_page_4_text">מאחלים לך הנאה בזמן שימוש באפליקציה! ברשותך תמיד האפשרות לשנות את ההגדרות שלך.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">התקן</string>
@@ -271,7 +277,7 @@
 	<string name="news">חדשות</string>
 	<string name="news_date_published">עדכון אחרון: %1$s</string>
 	<string name="news_empty">לכתבה זאת אין תוכן.</string>
-	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"RETRY\" button to open the article.</string>
+	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"Retry\" button to open the article.</string>
 	<string name="news_load_id_error"><![CDATA[אירעה שגיאה בעת פתיחת המאמר משום שהקישור לא תקין: %1$s. בדוק את קישור הURL ודווח לנו זאת דרך <a href="mailto:support@oxygenupdater.com">המייל</a> או דרך <a href="https://discord.gg/5TXdhKJ">שרת הDiscord שלנו </a>.]]></string>
 	<string name="news_unread_count_1">גילינו שלא קראת %1$d כתבות. לחץ כאן כדי לקרוא אותם.</string>
 	<string name="news_unread_count_2">יש לך %1$d כתבות שלא קראת. לחץ כאן כדי להציג את כל הכתבות.</string>
@@ -303,7 +309,7 @@
 	<string name="error_no_internet_connection">אין חיבור.</string>
 	<string name="error_maintenance">השרת תחת תחזוקה</string>
 	<string name="error_maintenance_message">אנא המתן. השרת יהיה זמין בקרוב מאוד.</string>
-	<string name="error_maintenance_retry">השרת עלול להיות סגור בגלל בעיות תחזוקה. אנא נסה שוב מאוחר יותר, או דווח זאת דרך ה-<a href="mailto:support@oxygenupdater.com">מייל</a> או באמצעות <a href="https://discord.gg/5TXdhKJ">שרת הDiscordשלנו </a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[השרת עלול להיות סגור בגלל בעיות תחזוקה. אנא נסה שוב מאוחר יותר, או דווח זאת דרך ה-<a href="mailto:support@oxygenupdater.com">מייל</a> או באמצעות <a href="https://discord.gg/5TXdhKJ">שרת הDiscordשלנו </a>.]]></string>
 	<string name="error_reload">טען מחדש</string>
 	<string name="error_unable_to_rate_app">אינך יכול לדרג את האפליקציה מכיוון שחנות ה-Google Play חסרה במכשיר שלך.</string>
 

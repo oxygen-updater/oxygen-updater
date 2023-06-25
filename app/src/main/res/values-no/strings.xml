@@ -12,10 +12,11 @@
 	<string name="update_information_error_title">Kunne ikke hente den siste oppdateringsdatainformasjonen</string>
 	<string name="update_information_banner_server">Trykk her for å se viktige merknader</string>
 	<!-- TODO: translate these two strings below -->
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable advanced mode if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable advanced mode if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">Advanced mode is enabled</string>
-	<string name="update_information_header_advanced_mode_helper">Siden du har aktivert avansert modus, kan du laste ned den nyeste ZIP for \"%1$s\".\n\nDu kan slå avansert modus av fra innstillinger</string>
-	<string name="update_information_different_version_changelog_notice">Du ser på et endringslogg for den siste oppdateringen i oppdateringssporet \"%1$s\" Hvis du har tenkt å installere denne oppdateringen, må du aktivere avansert modus på første (i innstillingene). \n\nMen, hvis du ønsker å se endringsloggen for den installerte versjonen i stedet, du \'ll trenger å bytte tilbake til riktig oppdateringsmetode.</string>
+	<string name="update_information_header_advanced_mode_helper">Siden du har aktivert avansert modus, kan du laste ned den nyeste ZIP for \"%1$s\". Du kan slå avansert modus av fra innstillinger</string>
+	<string name="update_information_different_version_changelog_notice_base">Merk: Denne endringsloggen gjelder den siste tilgjengelige versjonen (%1$s) i oppdateringsmetoden \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Hvis du vil installere denne oppdateringen, må du aktivere "Avansert modus" i innstillingene.</string>
 	<string name="update_information_last_checked_on">Sist sjekket: %1$s</string>
 	<string name="update_information_no_update_data_available">Ingen oppdateringsinformasjon er tilgjengelig</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -45,7 +46,7 @@
 	<string name="download_complete_notification">Trykk for å starte installasjonen</string>
 
 	<string name="download_error">Nedlastingsfeil</string>
-	<string name="download_error_close">LUKK</string>
+	<string name="download_error_close">Lukk</string>
 	<string name="download_error_corrupt">Den nedlastede oppdateringsfilen er skadet! Prøv å laste ned den igjen.</string>
 	<string name="download_error_server">Det oppsto en serverfeil under nedlasting av oppdateringen. Prøv å laste ned oppdateringen igjen.</string>
 	<string name="download_error_internal">Dessverre skjedde det en teknisk feil under nedlasting av oppdateringen. Prøv å laste den ned igjen. Hvis dette fortsetter å skje, kan du kontakte utvikleren av denne appen for å få hjelp.</string>
@@ -54,8 +55,8 @@
 Hvis du ønsker å vite mer, ta gjerne kontakt med oss enten via <a href="mailto:support@oxygenupdater.com">e-post</a>eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Filen er lastet ned, men kan ikke flyttes til riktig katalog. Åpne en filbehandling, naviger til \"%1$s\" og flytt filen manuelt til den øverste katalogen med intern lagring</string>
 
-	<string name="download_error_retry">PRØV IGJEN</string>
-	<string name="download_error_resume">GJENOPPTA</string>
+	<string name="download_error_retry">Prøv igjen</string>
+	<string name="download_error_resume">Gjenoppta</string>
 	<string name="download_error_storage">Det er ikke nok lagringsplass tilgjengelig på enheten din for å laste ned oppdateringen. Fjern noen filer og prøv å laste dem ned igjen.</string>
 
 	<string name="download_failed">Nedlasting mislyktes</string>
@@ -133,7 +134,12 @@ spare batteri</string>
 	<string name="settings_saving">Innstillingene dine lagres fremdeles. Hvis dette tar for lang tid: Kontroller nettverkstilkoblingen din, avslutt appen og start den på nytt.</string>
 
 	<string name="settings_advanced_mode">Avansert modus</string>
-	<string name="settings_advanced_mode_explanation">Avansert modus skjuler meldingen \"Systemet ditt er oppdatert\", slik at du kan laste ned og installere alle oppdateringer, selv om de kanskje ikke er kompatible med enheten din. \n\ nDette kan være nyttig når: \n- Oppdatering fra en vanlig versjon til en betaversjon \n- Gjenoppretter fra en betaversjon til den vanlige versjonen (ikke glem å tilbakestille enheten til fabrikken) \n- Installere den nåværende systemversjonen på nytt.</string>
+	<string name="settings_advanced_mode_explanation">"Normalt viser appen deg oppdateringer basert på den aktuelle versjonen av operativsystemet. Med avansert modus vises alltid den siste tilgjengelige oppdateringen, uavhengig av enhetens/versjonens kompatibilitet.
+
+Dette kan være nyttig hvis du vil:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Laste ned den nyeste versjonen på nytt selv om du allerede bruker den
+&#8226; Bytt til et annet oppdateringsspor"</string>
+	<string name="settings_advanced_mode_caption">"Avansert modus er kanskje bare nødvendig i de ovennevnte situasjonene. Du bør ikke aktivere den med mindre du vet hva du gjør."</string>
 
 	<string name="settings_update_method">Oppdateringsmetode</string>
 	<string name="settings_upload_logs">Del bruksdata og logger</string>
@@ -147,14 +153,14 @@ spare batteri</string>
 	<string name="onboarding_finished_button">Start app</string>
 
 	<string name="onboarding_page_1_title">Velkommen til Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Denne appen lar deg få raskere tilgang til:\n\n&#8226; de siste Android-oppdateringene for din OxygenOS-drevne enhet \n\n&#8226; Oppdater enkelt en forankret enhet \n\n&#8226; Se hva som er nytt i systemprogramvaren du bruker for øyeblikket \n\n&#8226; Les de siste nyhetene om OnePlus og OxygenOS\n\nSveip til venstre for å fortsette.</string>
-	<string name="onboarding_page_1_caption">Dette er ikke en offisiell OnePlus-applikasjon. Bruk av denne appen er helt på egen risiko. Verken OnePlus eller utvikleren av appen er ansvarlig for handlingene dine, inkludert skader forårsaket av bruk av denne appen.\n\nGjennom å bruke denne appen, godtar du vilkårene og betingelsene som nevnt ovenfor.</string>
+	<string name="onboarding_page_1_text">Denne appen lar deg få raskere tilgang til:\n\n&#8226; de siste Android-oppdateringene for din OxygenOS-drevne enhet\n&#8226; Oppdater enkelt en forankret enhet\n&#8226; Se hva som er nytt i systemprogramvaren du bruker for øyeblikket\n&#8226; Les de siste nyhetene om OnePlus og OxygenOS</string>
+	<string name="onboarding_page_1_caption">Dette er ikke en offisiell OnePlus-applikasjon. Bruk av denne appen er helt på egen risiko. Verken OnePlus eller utvikleren av appen er ansvarlig for handlingene dine, inkludert skader forårsaket av bruk av denne appen. Gjennom å bruke denne appen, godtar du vilkårene og betingelsene som nevnt ovenfor.</string>
 	<string name="onboarding_page_2_title">Velg enheten din</string>
 	<string name="onboarding_page_2_caption">Enheten er vanligvis allerede valgt ovenfor. Hvis ikke, velg enheten ovenfor.</string>
 	<string name="onboarding_page_3_title">Velg din oppdateringsmetode</string>
 	<string name="onboarding_page_3_caption">Vanligvis er den inkrementelle oppdateringen det riktige valget her, fordi den tilbyr mye raskere og mindre nedlastinger.\n\nMen den er ikke kompatibel med forankrede enheter. Hvis du har en forankret enhet, velger du Full oppdatering.\n\nHvis du har en beta-versjon av OxygenOS, velger du (en av) Open Beta-oppdateringsmetoden (e).</string>
 	<string name="onboarding_page_4_title">Du er klar til å dra!</string>
-	<string name="onboarding_page_4_text">Gled deg over å bruke denne appen!\n\nDu kan alltid endre innstillingene senere. For å gjøre det: Trykk på de tre prikkene i øverste høyre hjørne, og trykk på \"Innstillinger\".</string>
+	<string name="onboarding_page_4_text">Gled deg over å bruke denne appen! Du kan alltid endre innstillingene senere.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Installer</string>
@@ -275,7 +281,7 @@ Bruksanvisning:
 	<string name="news">Nyheter</string>
 	<string name="news_date_published">Siste oppdatering: %1$s</string>
 	<string name="news_empty">Denne artikkelen har ikke noe innhold.</string>
-	<string name="news_load_network_error">Kunne ikke åpne artikkelen. Sjekk forbindelsen din og trykk på \"PRØV PÅ NYTT\" -knappen for å åpne artikkelen.</string>
+	<string name="news_load_network_error">Kunne ikke åpne artikkelen. Sjekk forbindelsen din og trykk på \"Prøv på nytt\" -knappen for å åpne artikkelen.</string>
 	<string name="news_load_id_error"><![CDATA[Kunne ikke åpne artikkelen fra en ugyldig URL: %1$s. Sjekk URL-en eller rapporter dette til oss via <a href="mailto:support@oxygenupdater.com">e-post</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">Du har %1$d uleste nyhetsartikler. Trykk her for å se dem.</string>
 	<string name="news_unread_count_2">Du har %1$d uleste nyhetsartikler. Trykk for å vise alle artiklene.</string>
@@ -308,7 +314,7 @@ Bruksanvisning:
 	<string name="error_no_internet_connection">Ingen forbindelse.</string>
 	<string name="error_maintenance">Server vedlikehold</string>
 	<string name="error_maintenance_message">Vennligst vent. Serveren vil være tilgjengelig veldig snart.</string>
-	<string name="error_maintenance_retry">Serveren kan være nede for vedlikehold. Prøv igjen etter en stund, eller rapporter det til oss enten via <a href="mailto:support@oxygenupdater.com">e-post</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Serveren kan være nede for vedlikehold. Prøv igjen etter en stund, eller rapporter det til oss enten via <a href="mailto:support@oxygenupdater.com">e-post</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="error_reload">Last inn på nytt</string>
 
 	<string name="error_unable_to_rate_app">Du kan ikke rangere appen, fordi Google Play Store mangler på enheten din.</string>

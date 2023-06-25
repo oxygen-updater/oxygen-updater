@@ -1,13 +1,17 @@
 package com.oxygenupdater.internal.settings
 
 import android.content.SharedPreferences
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.content.edit
+import com.oxygenupdater.compose.ui.Theme
 import com.oxygenupdater.utils.Logger
 import org.koin.java.KoinJavaComponent.getKoin
 
 object PrefManager {
 
-    val sharedPreferences by getKoin().inject<SharedPreferences>()
+    private val sharedPreferences by getKoin().inject<SharedPreferences>()
 
     /** @see [SharedPreferences.getString] */
     fun getString(key: String, defValue: String?) = sharedPreferences.getString(key, defValue)
@@ -26,6 +30,10 @@ object PrefManager {
 
     /** @see [SharedPreferences.Editor.putInt] */
     fun putInt(key: String, value: Int) = sharedPreferences.edit { putInt(key, value) }
+
+    fun incrementInt(key: String) = sharedPreferences.edit {
+        putInt(key, getInt(key, 0) + 1)
+    }
 
     /** @see [SharedPreferences.getLong] */
     fun getLong(key: String, defValue: Long) = sharedPreferences.getLong(key, defValue)
@@ -49,7 +57,7 @@ object PrefManager {
     fun <T> getPreference(
         key: String?,
         typecastValue: T,
-        defaultValue: T
+        defaultValue: T,
     ) = sharedPreferences.run {
         if (key == null) return@run defaultValue
         when (typecastValue) {
@@ -70,7 +78,7 @@ object PrefManager {
     @Suppress("UNCHECKED_CAST")
     fun <T> getPreference(
         key: String?,
-        defaultValue: T
+        defaultValue: T,
     ) = sharedPreferences.run {
         if (contains(key)) all[key] as T else defaultValue
     }
@@ -180,6 +188,7 @@ object PrefManager {
     )
     const val PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE = "show_if_system_is_up_to_date"
 
+    const val PROPERTY_THEME_ID = "theme_id"
     const val PROPERTY_LANGUAGE_ID = "language_id"
     const val PROPERTY_ADVANCED_MODE = "advanced_mode"
     const val PROPERTY_SETUP_DONE = "setup_done"
@@ -237,4 +246,8 @@ object PrefManager {
     // IAB properties
     const val PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj"
 
+    var theme by mutableStateOf(Theme.from(getInt(PROPERTY_THEME_ID, Theme.System.value)))
+        internal set
+
+    val advancedMode = mutableStateOf(getBoolean(PROPERTY_ADVANCED_MODE, false))
 }

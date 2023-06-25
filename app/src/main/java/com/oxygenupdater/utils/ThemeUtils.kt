@@ -5,13 +5,9 @@ import android.content.res.Configuration
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.NightMode
-import com.oxygenupdater.R
-import com.oxygenupdater.enums.Theme
-import com.oxygenupdater.enums.Theme.AUTO
-import com.oxygenupdater.enums.Theme.DARK
-import com.oxygenupdater.enums.Theme.LIGHT
+import com.oxygenupdater.compose.ui.Theme
 import com.oxygenupdater.internal.settings.PrefManager
-import java.util.*
+import java.util.Calendar
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -47,23 +43,17 @@ object ThemeUtils {
      * @return the [NightMode] to apply using [AppCompatDelegate.setDefaultNightMode]
      */
     @NightMode
-    fun translateThemeToNightMode(context: Context) = PrefManager.getInt(
-        context.getString(R.string.key_theme_id),
-        context.resources.getInteger(R.integer.theme_system_id)
-    ).let { translateThemeToNightMode(Theme[it]) }
-
-    @NightMode
-    private fun translateThemeToNightMode(theme: Theme) = when (theme) {
-        LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-        DARK -> AppCompatDelegate.MODE_NIGHT_YES
-        AUTO -> Calendar.getInstance()[Calendar.HOUR_OF_DAY].let { hour ->
+    fun translateThemeToNightMode() = when (PrefManager.getInt(PrefManager.PROPERTY_THEME_ID, Theme.System.value)) {
+        Theme.Light.value -> AppCompatDelegate.MODE_NIGHT_NO
+        Theme.Dark.value -> AppCompatDelegate.MODE_NIGHT_YES
+        Theme.Auto.value -> Calendar.getInstance()[Calendar.HOUR_OF_DAY].let { hour ->
             if (hour in 19..23 || hour in 0..6) {
                 AppCompatDelegate.MODE_NIGHT_YES
             } else {
                 AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
             }
         }
-        // includes case for Theme.SYSTEM as well
+        // includes case for Theme.System as well
         else -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             // Android Pie (9.0) introduced a night mode system flag that could be set in developer options
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM

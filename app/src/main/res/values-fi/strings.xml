@@ -12,10 +12,11 @@
 	<string name="update_information_error_title">Ei voitu hakea uusia päivitystietoja</string>
 	<string name="update_information_banner_server">Paina tästä nähdäksesi tärkeät ilmoitukset</string>
 	<!-- TODO: translate these 2 strings below -->
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable kehittynyt tila if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable kehittynyt tila if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">Edistynyt tila on käytössä</string>
-	<string name="update_information_header_advanced_mode_helper">Edistynyt tila on käytössä, voit ladata viimeisimmän \"%1$s\" ZIP:in.\n\nEdistyneen tilan saat pois käytöstä asetuksista.</string>
-	<string name="update_information_different_version_changelog_notice">Katsot viimeisimmän \"%1$s\" päivityksen muutoslokia. Jos aiot asentaa tämän päivityksen, sinun täytyy ottaa käyttöön edistynyt tila asetuksista.\n\nJos haluat nähdä muutoslokin tällä hetkellä asennettuna olevasta versiosta, sinun täytyy vaihtaa takaisin oikeaan päivitystapaan.</string>
+	<string name="update_information_header_advanced_mode_helper">Edistynyt tila on käytössä, voit ladata viimeisimmän \"%1$s\" ZIP:in. Edistyneen tilan saat pois käytöstä asetuksista.</string>
+	<string name="update_information_different_version_changelog_notice_base">Huomautus: tämä muutosluettelo koskee uusinta saatavilla olevaa versiota (%1$s) \"%2$s\" päivitysmenetelmällä</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Jos aiot asentaa tämän päivityksen, sinun on otettava asetuksissa käyttöön \"Kehittynyt tila\".</string>
 	<string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Päivitystietoja ei saatavilla"</string>
 	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
@@ -131,12 +132,12 @@ Beta päivitys voidaan asentaa vain jos sinulla on jo käytössäsi OxygenOS bet
 	<string name="settings_push_from_server">"Tiedotus- ja varoitusviestit"</string>
 	<string name="settings_saving">"Asetuksiasi tallennetaan edelleen. Jos tämä tuntuu vievän liian pitkään varmista verkkoyhteytesi, sulje sovellus ja käynnistä se uudelleen."</string>
 	<string name="settings_advanced_mode">"Kehittynyt tila"</string>
-	<string name="settings_advanced_mode_explanation">"Kehittynyt tila piilottaa viestin \"Järjestelmäsi on ajantasalla\", antaa sinun ladata ja asentaa kaikki päivitykset, vaikka ne eivät olisikaan yhteensopiva laitteesi kanssa.
+	<string name="settings_advanced_mode_explanation">"Normaalisti sovellus näyttää päivitykset nykyisen käyttöjärjestelmäversion mukaan. Edistyneessä tilassa näytetään aina uusin saatavilla oleva päivitys riippumatta laitteen/version yhteensopivuudesta.
 
-Tämä voi olla hyödyllista kun:
--Päivitetään tavallisesta versiosta beta versioon
--Palautetaan beta versiosta tavalliseen versioon (älä unohda tehdä tehdastilan palautusta laitteelle)
--Asennettaessa uudelleen nykyistä järjestelmäversiota"</string>
+Tästä voi olla hyötyä, jos haluat:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Lataa uusin versio uudelleen, vaikka se olisi jo käytössäsi
+&#8226; Vaihtaa eri päivitysraidalle"</string>
+	<string name="settings_advanced_mode_caption">"Edistynyttä tilaa saatetaan tarvita vain edellä mainituissa tilanteissa. Sitä ei kannata ottaa käyttöön, ellet tiedä, mitä olet tekemässä."</string>
 	<string name="settings_update_method">"Päivitystapa"</string>
 	<string name="settings_upload_logs">Jaa käyttötiedot ja lokit</string>
 
@@ -150,20 +151,11 @@ Tämä voi olla hyödyllista kun:
 	<string name="onboarding_page_1_title">"Tervetuloa Oxygen Updateriin!"</string>
 	<string name="onboarding_page_1_text">"Tämä sovellus mahdollistaa sinulle:
 
--Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS laitteellesi
-
--Rootatun laitteen päivittämisen helposti
-
--Katsoa mitkä ovat uudistukset käytössäsi olevassa järjestelmäversiossa
-
--Lukea viimeisimpiä uutisia koskien OnePlussaa ja OxygeOS:ää
-
-Pyyhkäise vasemmalle jatkaaksesi"</string>
-	<string name="onboarding_page_1_caption">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu.
-
-Käyttämällä sovellusta hyväksyt yllä olevat käyttöehdot.
-
-Pyyhkäise vasemmalle jatkaaksesi"</string>
+&#8226; Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS laitteellesi
+&#8226; Rootatun laitteen päivittämisen helposti
+&#8226; Katsoa mitkä ovat uudistukset käytössäsi olevassa järjestelmäversiossa
+&#8226; Lukea viimeisimpiä uutisia koskien OnePlussaa ja OxygeOS"</string>
+	<string name="onboarding_page_1_caption">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu. Käyttämällä sovellusta hyväksyt yllä olevat käyttöehdot."</string>
 	<string name="onboarding_page_2_title">"Valitse laitteesi:"</string>
 	<string name="onboarding_page_2_caption">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta.
 
@@ -177,9 +169,7 @@ Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoi
 
 Pyyhkäise vasemmalle jatkaaksesi."</string>
 	<string name="onboarding_page_4_title">"Olet valmis!"</string>
-	<string name="onboarding_page_4_text">"Nauti sovelluksesta!
-
-Voit aina muuttaa asetuksiasi myöhemmin napsauttamalla oikealta yläkulmasta kolmea pistettä ja napsauttamalla \"Asetukset\"."</string>
+	<string name="onboarding_page_4_text">"Nauti sovelluksesta! Voit aina muuttaa asetuksia myöhemmin."</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Asenna"</string>
@@ -192,9 +182,9 @@ Voit aina muuttaa asetuksiasi myöhemmin napsauttamalla oikealta yläkulmasta ko
 	<string name="install_guide_page_1_title">"Lataa päivitys"</string>
 	<string name="install_guide_page_1_text">"&#8226; Paina lataa painiketta käynnistääksesi päivityksen lataamisen.
 
-- Latauksen edistyminen tulee näkyviin sovelluksessa ja ilmoituksena ilmoituskeskuksessa.
+&#8226; Latauksen edistyminen tulee näkyviin sovelluksessa ja ilmoituksena ilmoituskeskuksessa.
 
-- Kun lataus on valmistunut näet ilmoituksen \"Lataus valmis\".
+&#8226; Kun lataus on valmistunut näet ilmoituksen \"Lataus valmis\".
 Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudelleen. Jos tämä ei toimi varmista, että sinulla on toimiva yhteys. Muutoin olen yhteydessä sovelluksen kehittäjään. Voit tehdä tämän myös vierailemalla \"Omat sovellukset\" osiossa Play Kaupassa."</string>
 
 	<string name="install_guide_page_2_title">Valmistaudu asennukseen</string>
@@ -226,9 +216,9 @@ Ohje:
 	<string name="install_guide_page_5_text">"&#8226; Kun laitteesi on viimeistellyt sovellusten optimoinnin, asennus on onnistuneesti suoritettu.
 Varmistaaksesi tämän voit tarkistaa nykyisen järjestelmän version seuraavasti:
 
-- Mene asetuksiin, napsauta \"Tietoja puhelimesta\" ja tarkista OxygenOS versio.
+&#8226; Mene asetuksiin, napsauta \"Tietoja puhelimesta\" ja tarkista OxygenOS versio.
 
-- Jos pidät tästä sovelluksesta, annathan sille 5 tähteä Play Kaupassa!"</string>
+&#8226; Jos pidät tästä sovelluksesta, annathan sille 5 tähteä Play Kaupassa!"</string>
 	<string name="install_guide_close_button">"Sulje asennusohje"</string>
 
 	<!-- Device information strings -->
@@ -323,7 +313,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="news">"Uutiset"</string>
 	<string name="news_date_published">"Viimeisin päivitys: %1$s"</string>
 	<string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
-	<string name="news_load_network_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'UUDELLEEN' painiketta avataksesi artikkeli."</string>
+	<string name="news_load_network_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'Uudelleen' painiketta avataksesi artikkeli."</string>
 	<string name="news_load_id_error"><![CDATA[Artikkelin avaaminen viallisesta URL epäonnistui: %1$s. Tarkista URL tai kerro tästä meille joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord serverillä</a>.]]></string>
 
 	<string name="news_unread_count_1">Sinulla on %1$d lukematonta artikkelia. Paina tästä nähdäksesi ne.</string>
@@ -355,7 +345,7 @@ Käytä kytkimiä kääntääksesi ilmoitus ja yksityisyysasetuksia päälle ja 
 	<string name="error_no_internet_connection">"Ei yhteyttä"</string>
 	<string name="error_maintenance">"Palvelimella huoltokatko"</string>
 	<string name="error_maintenance_message">"Ole hyvä ja odota. Palvelin on hyvin pian taas käytettävissä."</string>
-	<string name="error_maintenance_retry">Palvelimella saattaa olla huoltokatko. Yritä uudestaan pian, tai ilmoita siitä meille joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord palvelimella</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Palvelimella saattaa olla huoltokatko. Yritä uudestaan pian, tai ilmoita siitä meille joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord palvelimella</a>.]]></string>
 	<string name="error_reload">"Lataa uudelleen"</string>
 	<string name="error_unable_to_rate_app">"Ei voi arvostella sovellusta, sillä Play Kauppa puuttuu laitteeltasi."</string>
 

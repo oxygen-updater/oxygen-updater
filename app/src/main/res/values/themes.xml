@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+	<!-- TODO(compose): remove appcompat/Material dependents -->
 	<style name="Theme.OxygenUpdater" parent="Theme.Material3.DayNight.NoActionBar">
 		<item name="colorSurface">@color/background</item>
 		<item name="colorPrimary">@color/colorPrimary</item>
@@ -30,7 +31,7 @@
 		<!-- For visual continuity between the app and the navigation bar, set to the window background -->
 		<item name="android:navigationBarColor">?colorSurface</item>
 		<!-- For visual continuity between the app and the status bar, set to the window background -->
-		<item name="android:statusBarColor">?colorSurface</item>
+		<item name="android:statusBarColor">@android:color/transparent</item>
 		<item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
 		<item name="android:textColorTertiary">@color/foreground</item>
@@ -59,11 +60,6 @@
 	<style name="Theme.OxygenUpdater.DayNight.Main">
 		<!-- For visual continuity between the app and the navigation bar, set to bottom nav colour -->
 		<item name="android:navigationBarColor">@color/backgroundVariant</item>
-	</style>
-
-	<!-- Used in activities that support edge-to-edge UI -->
-	<style name="Theme.OxygenUpdater.DayNight.FullScreen">
-		<item name="android:statusBarColor">@android:color/transparent</item>
 	</style>
 
 </resources>

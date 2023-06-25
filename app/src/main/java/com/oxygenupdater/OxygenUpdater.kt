@@ -1,6 +1,5 @@
 package com.oxygenupdater
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
@@ -9,13 +8,11 @@ import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
 import android.provider.Settings
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.extensions.attachWithLocale
@@ -24,7 +21,6 @@ import com.oxygenupdater.utils.DatabaseMigrations
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
 import com.oxygenupdater.utils.NotificationUtils
-import com.oxygenupdater.utils.ThemeUtils
 import com.topjohnwu.superuser.Shell
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -72,12 +68,11 @@ class OxygenUpdater : Application() {
     }
 
     override fun attachBaseContext(
-        base: Context
+        base: Context,
     ) = super.attachBaseContext(base.attachWithLocale())
 
     override fun onCreate() {
         setupKoin()
-        AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this))
         super.onCreate()
 
         setupCrashReporting()
@@ -108,43 +103,38 @@ class OxygenUpdater : Application() {
         }
     }
 
-    private fun setupNetworkCallback() {
-        getSystemService<ConnectivityManager>()?.apply {
-            // Posting initial value is required, as [networkCallback]'s
-            // methods get called only when network connectivity changes
-            @Suppress("DEPRECATION")
-            _isNetworkAvailable.postValue(activeNetworkInfo?.isConnectedOrConnecting == true)
+    private fun setupNetworkCallback() = getSystemService<ConnectivityManager>()?.run {
+        // Posting initial value is required, as [networkCallback]'s
+        // methods get called only when network connectivity changes
+        @Suppress("DEPRECATION")
+        _isNetworkAvailable.postValue(activeNetworkInfo?.isConnectedOrConnecting == true)
 
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    registerDefaultNetworkCallback(networkCallback)
-                } else {
-                    registerNetworkCallback(
-                        NetworkRequest.Builder().build(),
-                        networkCallback
-                    )
-                }
-            } catch (e: SecurityException) {
-                logError(TAG, "Couldn't setup network callback", e)
-            }
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                registerDefaultNetworkCallback(networkCallback)
+            } else registerNetworkCallback(NetworkRequest.Builder().build(), networkCallback)
+        } catch (e: SecurityException) {
+            logError(TAG, "Couldn't setup network callback", e)
         }
     }
 
     private fun setupMobileAds() {
+        val requestConfiguration = MobileAds.getRequestConfiguration().toBuilder()
         // If it's a debug build, add current device's ID to the list of test device IDs for ads
-        if (BuildConfig.DEBUG) {
-            @SuppressLint("HardwareIds")
-            val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-            val deviceId = MD5.calculateMD5(androidId).uppercase()
-            ADS_TEST_DEVICES.add(deviceId)
-        }
+        if (BuildConfig.DEBUG) requestConfiguration.setTestDeviceIds(buildList(2) {
+            add(AdRequest.DEVICE_ID_EMULATOR)
+            try {
+                @SuppressLint("HardwareIds")
+                val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+                val deviceId = MD5.calculateMD5(androidId).uppercase()
+                add(deviceId)
+            } catch (_: Exception) {
+                // no-op
+            }
+        })
 
-        val requestConfiguration = RequestConfiguration.Builder()
-            .setTestDeviceIds(ADS_TEST_DEVICES)
-            .build()
-
-        MobileAds.initialize(this) {}
-        MobileAds.setRequestConfiguration(requestConfiguration)
+        MobileAds.initialize(this)
+        MobileAds.setRequestConfiguration(requestConfiguration.build())
 
         // By default video ads run at device volume, which could be annoying
         // to some users. We're reducing ad volume to be 10% of device volume.
@@ -167,7 +157,7 @@ class OxygenUpdater : Application() {
         shouldShareLogs: Boolean = PrefManager.getBoolean(
             PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
             true
-        )
+        ),
     ) {
         val analytics by inject<FirebaseAnalytics>()
         val crashlytics by inject<FirebaseCrashlytics>()
@@ -205,7 +195,6 @@ class OxygenUpdater : Application() {
     companion object {
         private const val TAG = "OxygenUpdater"
 
-        @Suppress("ObjectPropertyName")
         private val _isNetworkAvailable = MutableLiveData<Boolean>()
         val isNetworkAvailable: LiveData<Boolean>
             get() = _isNetworkAvailable
@@ -217,8 +206,6 @@ class OxygenUpdater : Application() {
 
         // Permissions constants
         const val PERMISSION_REQUEST_CODE = 200
-        const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
-        const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
         const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
         const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME

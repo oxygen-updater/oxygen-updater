@@ -52,7 +52,7 @@ if [[ "$existing_version_name" != "$version_name" ]]; then
   readonly existing_version_code
   version_code=$((existing_version_code + 1))
 
-  # Replace `versionName = "..."` in the version file with the user-supplied version
+  # Replace `versionName = "…"` in the version file with the user-supplied version
   # -b: treat file as binary, thus preserving line endings (must be before -i)
   # -i: in-place
   # -E: extended regex (can also be -r)

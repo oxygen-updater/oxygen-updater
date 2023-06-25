@@ -17,15 +17,17 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.InstallActivity
-import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.compose.activities.MainActivity
+import com.oxygenupdater.compose.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
+import com.oxygenupdater.compose.ui.update.KEY_DOWNLOAD_ERROR_RESUMABLE
 import com.oxygenupdater.extensions.setBigTextStyle
-import com.oxygenupdater.fragments.UpdateInformationFragment
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID
 import org.koin.java.KoinJavaComponent.getKoin
 
+// TODO(compose): convert to composables (e.g. getString -> stringResource)
 object LocalNotifications {
 
     private const val TAG = "LocalNotifications"
@@ -37,7 +39,7 @@ object LocalNotifications {
      */
     fun showContributionSuccessfulNotification(
         context: Context,
-        filenameSet: Set<String>
+        filenameSet: Set<String>,
     ) = try {
         val contentIntent = PendingIntent.getActivity(
             context,
@@ -126,17 +128,15 @@ object LocalNotifications {
         context: Context,
         resumable: Boolean,
         @StringRes message: Int,
-        @StringRes notificationMessage: Int
+        @StringRes notificationMessage: Int,
     ) {
         try {
             // Since MainActivity's `launchMode` is `singleTask`, we don't
             // need to add any flags to avoid creating multiple instances
             val intent = Intent(context, MainActivity::class.java)
                 // Show a dialog detailing the download failure
-                .putExtra(UpdateInformationFragment.KEY_HAS_DOWNLOAD_ERROR, true)
-                .putExtra(UpdateInformationFragment.KEY_DOWNLOAD_ERROR_TITLE, context.getString(R.string.download_error))
-                .putExtra(UpdateInformationFragment.KEY_DOWNLOAD_ERROR_MESSAGE, context.getString(message))
-                .putExtra(UpdateInformationFragment.KEY_DOWNLOAD_ERROR_RESUMABLE, resumable)
+                .putExtra(KEY_DOWNLOAD_ERROR_MESSAGE, context.getString(message))
+                .putExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, resumable)
 
             val contentIntent = PendingIntent.getActivity(
                 context,

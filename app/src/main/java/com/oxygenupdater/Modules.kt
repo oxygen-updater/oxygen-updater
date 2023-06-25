@@ -9,6 +9,11 @@ import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
+import com.oxygenupdater.compose.ui.faq.FaqViewModel
+import com.oxygenupdater.compose.ui.news.NewsItemViewModel
+import com.oxygenupdater.compose.ui.news.NewsListViewModel
+import com.oxygenupdater.compose.ui.settings.SettingsViewModel
+import com.oxygenupdater.compose.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.DatabaseBuilders.buildLocalAppDatabase
@@ -17,12 +22,8 @@ import com.oxygenupdater.utils.createDownloadClient
 import com.oxygenupdater.utils.createNetworkClient
 import com.oxygenupdater.utils.createOkHttpCache
 import com.oxygenupdater.viewmodels.BillingViewModel
-import com.oxygenupdater.viewmodels.FaqViewModel
 import com.oxygenupdater.viewmodels.InstallViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
-import com.oxygenupdater.viewmodels.NewsViewModel
-import com.oxygenupdater.viewmodels.OnboardingViewModel
-import com.oxygenupdater.viewmodels.SettingsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.StringQualifier
@@ -42,7 +43,7 @@ private val networkModule = module {
     single { get<Retrofit>(StringQualifier(QUALIFIER_DOWNLOAD)).create(DownloadApi::class.java) }
 }
 
-private val preferencesModule = module {
+val preferencesModule = module {
     single { PreferenceManager.getDefaultSharedPreferences(androidContext()) }
 }
 
@@ -53,12 +54,15 @@ private val repositoryModule = module {
 
 private val viewModelModule = module {
     viewModel { BillingViewModel(get(), get()) }
-    viewModel { OnboardingViewModel(get(), get()) }
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get(), get()) }
+    viewModel { UpdateInformationViewModel(get()) }
     viewModel { InstallViewModel(get()) }
-    viewModel { NewsViewModel(get()) }
-    viewModel { SettingsViewModel(get()) }
+    viewModel { NewsListViewModel(get()) }
+    viewModel { NewsItemViewModel(get()) }
+    viewModel { SettingsViewModel(get(), get()) }
     viewModel { FaqViewModel(get()) }
+
+    // TODO(compose): remove old viewmodels
 }
 
 private val databaseModule = module {

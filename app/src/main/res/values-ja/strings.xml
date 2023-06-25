@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">ここをタップして重要なお知らせを見る</string>
 	<string name="update_information_banner_advanced_mode_tip">\"%1$s\" アップデートトラックを選択しました。このアップデートトラックに切り替える場合は拡張モードを有効化してください。</string>
 	<string name="update_information_header_advanced_mode_hint">拡張モードが有効</string>
-	<string name="update_information_header_advanced_mode_helper">拡張モードが選択され、\"%1$s\" の最新の ZIP をダウンロードすることができます。\n\n設定から拡張モードをオフにすることができます。</string>
-	<string name="update_information_different_version_changelog_notice">あなたは \"%1$s\" アップグレードトラックの最新版の更新履歴を見ています。このアップデートをインストールしたい場合は、始めに拡張モードをオンにする (設定で) 必要があります。\n\n現在インストールされているバージョンの更新履歴を見たい場合は、正しいアップデート方法に切り替える必要があります。</string>
+	<string name="update_information_header_advanced_mode_helper">拡張モードが選択され、\"%1$s\" の最新の ZIP をダウンロードすることができます。 設定から拡張モードをオフにすることができます。</string>
+	<string name="update_information_different_version_changelog_notice_base">注意: この変更履歴は、\"%2$s\"アップデート方法で利用可能な最新バージョン(%1$s)のものです</string>
+	<string name="update_information_different_version_changelog_notice_advanced">。このアップデートをインストールする場合は、設定で\"拡張モード\"を有効にしてください。</string>
 	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -131,7 +132,12 @@
 	<string name="settings_saving">設定を保存中です。長時間この状態が続く場合、ネットワーク接続を確認し、アプリをいったん終了し再起動して下さい。</string>
 
 	<string name="settings_advanced_mode">拡張モード</string>
-	<string name="settings_advanced_mode_explanation">拡張モードでは \"お使いのシステムは最新です\"というメッセージが非表示となり、デバイスと互換性がない場合でも全てのアップデートをダウンロードしインストール可能となります。\n\n以下の場合に役立ちます:\n&#8226; 通常版からベータ版へのアップデート\n&#8226; ベータ版から通常版への復帰(デバイスの工場出荷時設定へのリセットをお忘れずに)\n&#8226; 現在のシステムバージョンの再インストール 。</string>
+	<string name="settings_advanced_mode_explanation">"通常、アプリは現在のOSバージョンに基づいてアップデートを表示します。アドバンスモードでは、デバイス/バージョンの互換性に関係なく、利用可能な最新のアップデートが常に表示されます。
+
+これは次のような場合に便利です："</string>
+	<string name="settings_advanced_mode_uses">"&#8226; すでに最新バージョンであっても再ダウンロードしたい場合
+&#8226; 別のアップデートトラックに切り替える"</string>
+	<string name="settings_advanced_mode_caption">"アドバンスモードが必要になるのは、上記のような場合のみです。自分が何をしているのか分かっていない限り、有効にすべきではありません。"</string>
 
 	<string name="settings_update_method">アップデート方法</string>
 	<string name="settings_upload_logs">利用データとログを共有</string>
@@ -145,14 +151,14 @@
 	<string name="onboarding_finished_button">アプリの開始</string>
 
 	<string name="onboarding_page_1_title">Oxygen Updater にようこそ!</string>
-	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n\n&#8226; ルート化済デバイスを簡単に更新\n\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n\n&#8226; OnePlus と OxygenOS に関する最新ニュースを読む\n\n続行するには左にスワイプします。</string>
-	<string name="onboarding_page_1_caption">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。\n\nこのアプリを使用すると、上記の利用規約に同意したことになります。</string>
+	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n&#8226; ルート化済デバイスを簡単に更新\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n&#8226; OnePlus と OxygenOS に関する最新ニュースを読む</string>
+	<string name="onboarding_page_1_caption">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。 このアプリを使用すると、上記の利用規約に同意したことになります。</string>
 	<string name="onboarding_page_2_title">あなたのデバイスを選択</string>
 	<string name="onboarding_page_2_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
 	<string name="onboarding_page_3_title">アップデート方法を選択</string>
 	<string name="onboarding_page_3_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。\n\nただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。\n\nOxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
 	<string name="onboarding_page_4_title">準備が出来ました!</string>
-	<string name="onboarding_page_4_text">アプリの使用をお楽しみください！\n\n後からいつでも設定を変更できます。そのためには、右上隅の3つのドットをタップし、\"設定\"をタップします。</string>
+	<string name="onboarding_page_4_text">アプリの使用をお楽しみください！後からいつでも設定を変更できます。</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">インストール</string>
@@ -306,7 +312,7 @@
 	<string name="error_no_internet_connection">接続なし</string>
 	<string name="error_maintenance">サーバメンテナンス</string>
 	<string name="error_maintenance_message">お待ちください。 サーバーはまもなく利用可能になります。</string>
-	<string name="error_maintenance_retry">サーバーはメンテナンスのためダウンしている可能性があります。時間をおいてもう一度やり直すか、<a href="mailto:support@oxygenupdater.com">メール</a>や<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>で報告してください。</string>
+	<string name="error_maintenance_retry"><![CDATA[サーバーはメンテナンスのためダウンしている可能性があります。時間をおいてもう一度やり直すか、<a href="mailto:support@oxygenupdater.com">メール</a>や<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>で報告してください。]]></string>
 	<string name="error_reload">再読込</string>
 
 	<string name="error_unable_to_rate_app">Google Play ストアがデバイスにないため、アプリを評価できません。</string>

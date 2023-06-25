@@ -13,10 +13,11 @@
 	<string name="update_information_error_title">Не могу преузети најновије информације о ажурирању</string>
 	<string name="update_information_banner_server">Додирните овде да бисте видели важна обавештења</string>
 	<!-- TODO: translate these 2 strings below -->
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable напредни мод if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable напредни мод if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">Омогућен је напредни режим</string>
-	<string name="update_information_header_advanced_mode_helper">Пошто сте укључили напредни мод, можете преузети последњи ZIP за \"%1$s\".\n\nМожете искључити напредни мод из подешавања.</string>
-	<string name="update_information_different_version_changelog_notice">Прегледавате дневник измена за најновију исправку у систему \"%1$s\" записника надоградње. Ако намеравате да инсталирате ову исправку, морате прво укључити напредни мод (у подешавањима).\n\nКако год, ако уместо тога желите да видите дневник измена за тренутну верзију, мораћете се вратити на исправан начин ажурирања.</string>
+	<string name="update_information_header_advanced_mode_helper">Пошто сте укључили напредни мод, можете преузети последњи ZIP за \"%1$s\". Можете искључити напредни мод из подешавања.</string>
+	<string name="update_information_different_version_changelog_notice_base">Напомена: овај дневник промена је за најновију доступну верзију (%1$s) у методи ажурирања \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Ако намеравате да инсталирате ову исправку, морате да омогућите „Напредни мод“ у подешавањима.</string>
 	<string name="update_information_last_checked_on">Задња провера: %1$s</string>
 	<string name="update_information_no_update_data_available">Нема новости о ажурирању</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -46,7 +47,7 @@
 	<string name="download_complete_notification">Притисните за почетак инсталације</string>
 
 	<string name="download_error">Грешка при преузимању</string>
-	<string name="download_error_close">ЗАТВОРИ</string>
+	<string name="download_error_close">Затвори</string>
 	<string name="download_error_corrupt">Преузети фајл је оштећен! Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_server">Грешка са сервером је настала приликом преузимања. Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_internal">Нажалост, техничка грешка је настала приликом преузимања ажурирања. Молимо вас покушајте да преузмете поново. Ако грешка настави да се појављује, молимо вас контактирајте нас за помоћ.</string>
@@ -55,8 +56,8 @@
 Ако желите да сазнате више, осећајте се слободно да нас контактирате путем <a href="mailto:support@oxygenupdater.com">email</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Фајл је преузет, али не може бити пребачен у исправни директоријум. Отворите менаџер фајлова, идите на \"%1$s\" и ручно преместите фајл у највиши директориј интерне меморије.</string>
 
-	<string name="download_error_retry">ПОНОВИ</string>
-	<string name="download_error_resume">НАСТАВИ</string>
+	<string name="download_error_retry">Понови</string>
+	<string name="download_error_resume">Настави</string>
 	<string name="download_error_storage">Немате довољно простора на уређају за ажурирање. Молимо вас уклоните неке податке и покушајте поново.</string>
 
 	<string name="download_failed">Недовољно простора</string>
@@ -133,7 +134,12 @@
 	<string name="settings_saving">Ваша подешавања се још убек чувају. Ако ово предуго траје: Проверите вашу конекцију, изађите из апликације и покушајте поново.</string>
 
 	<string name="settings_advanced_mode">Напредни мод</string>
-	<string name="settings_advanced_mode_explanation">Напредни мод скрива ову поруку \"Ваш систем је на најновијим ажурирањима\", дозвољавајући вам да преузмете и инсталирате сва ажурирања, иако она можда нису компатибилна са вашим уређајем.\n\nОво може бити корисно када:\n&#8226; Ажурирање са регуларне верзије на beta верзију\n&#8226; Враћање са beta верзије на регуларну верзију (не заборавите да вратите на фабричка подешавања ваш уређај)\n&#8226; Реинсталације ваше тренутне верзије система.</string>
+	<string name="settings_advanced_mode_explanation">"Обично вам апликација приказује ажурирања на основу ваше тренутне верзије ОС-а. Са напредним режимом, најновије доступно ажурирање ће увек бити приказано без обзира на компатибилност уређаја/верзије.
+
+Ово може бити корисно ако желите да:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Поново преузмите најновију верзију чак и ако је већ користите
+&#8226; Пребаците се на другу стазу ажурирања"</string>
+	<string name="settings_advanced_mode_caption">"Напредни режим може бити потребан само у горе наведеним ситуацијама. Не би требало да га омогућавате осим ако не знате шта радите."</string>
 
 	<string name="settings_update_method">Методе ажурирања</string>
 	<string name="settings_upload_logs">Подели податке коришћења и записе</string>
@@ -147,14 +153,14 @@
 	<string name="onboarding_finished_button">Покрените апликацију</string>
 
 	<string name="onboarding_page_1_title">Добродошли у Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Ова апликација ће вам омогућити:\n\n&#8226; Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n\n&#8226; Лако ажурирајте рутован уређај\n\n&#8226; Погледајте шта има ново у софтверу који тренутно користите\n\n&#8226; Прочитајте последње вести о OnePlus-у и OxgenOS-у\n\nПревуците лево за наставак.</string>
-	<string name="onboarding_page_1_caption">Ово није званична OnePlus апликација. Користите ову апликацију комплетно на ваш ризик. Ни OnePlus нити људи који раде на овој апликацији нису одговорни за ваше поступке, укључујући било коју штету која је настала коришћењем ове апликације.\n\nКоришћењем ове апликације прихватате услове наведене изнад.</string>
+	<string name="onboarding_page_1_text">Ова апликација ће вам омогућити:\n\n&#8226; Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n&#8226; Лако ажурирајте рутован уређај\n&#8226; Погледајте шта има ново у софтверу који тренутно користите\n&#8226; Прочитајте последње вести о OnePlus-у и OxgenOS-у</string>
+	<string name="onboarding_page_1_caption">Ово није званична OnePlus апликација. Користите ову апликацију комплетно на ваш ризик. Ни OnePlus нити људи који раде на овој апликацији нису одговорни за ваше поступке, укључујући било коју штету која је настала коришћењем ове апликације. Коришћењем ове апликације прихватате услове наведене изнад.</string>
 	<string name="onboarding_page_2_title">Изаберите ваш уређај</string>
 	<string name="onboarding_page_2_caption">Обично је ваш уређај већ изабран. Ако није, изаберите уређај изнад.</string>
 	<string name="onboarding_page_3_title">Изаберите методу ажурирањ</string>
 	<string name="onboarding_page_3_caption">Обично је делимично ажурирање прави избор, зато што омогућава мања и бржа преузимања.\n\nАли тај метод ажурирања није компатибилан са рутованим уређајима. Ако имате рутован уређај изаберите пуно ажурирање.\n\nАко имате beta верзију OxgenOS-a, изаберите једну од Open Beta метода ажурирања.</string>
 	<string name="onboarding_page_4_title">Спремни сте за коришћење!</string>
-	<string name="onboarding_page_4_text">Уживајте у коришћењу апликације!\n\nМожете увек променити поставке у подешавањима касније. Да урадите то: кликните на три тачке у горњем десном углу, и притисните на \"Settings\".</string>
+	<string name="onboarding_page_4_text">Уживајте у коришћењу апликације! Можете увек променити поставке у подешавањима касније.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Инсталирај</string>
@@ -274,7 +280,7 @@
 	<string name="news">Вести</string>
 	<string name="news_date_published">Последње ажурирање: %1$s</string>
 	<string name="news_empty">Ова вест нема садржај.</string>
-	<string name="news_load_network_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'ПОНОВИ\' дугме да отворите вест.</string>
+	<string name="news_load_network_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'Понови\' дугме да отворите вест.</string>
 
 	<string name="news_load_id_error"><![CDATA[Није успео отварање чланка са неважеће УРЛ адресе: %1$s. Проверите УРЛ или нам то пријавите или путем <a href="mailto:support@oxygenupdater.com">email</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 
@@ -309,7 +315,7 @@
 	<string name="error_maintenance">Одржавање сервера</string>
 	<string name="error_maintenance_message">Молимо вас сачекајте. Сервер ће ускоро бити поново доступан.</string>
 
-	<string name="error_maintenance_retry">Сервер је можда искључен ради одржавања. Покушајте поново након неког времена, или нам то пријавите путем <a href="mailto:support@oxygenupdater.com">мејла</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord серверу</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Сервер је можда искључен ради одржавања. Покушајте поново након неког времена, или нам то пријавите путем <a href="mailto:support@oxygenupdater.com">мејла</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord серверу</a>.]]></string>
 	<string name="error_reload">Освежи</string>
 
 	<string name="error_unable_to_rate_app">Не можете оценити ову апликацију јер се Google Play продавница не налази на вашем уређају.</string>

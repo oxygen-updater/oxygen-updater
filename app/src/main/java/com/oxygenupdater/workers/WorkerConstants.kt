@@ -17,7 +17,7 @@ const val WORK_DATA_DOWNLOAD_ETA = "DOWNLOAD_ETA"
 const val WORK_DATA_DOWNLOAD_FAILURE_TYPE = "DOWNLOAD_FAILURE_TYPE"
 
 /**
- * The following parameters are set only if failure type is [com.oxygenupdater.enums.DownloadFailure.UNSUCCESSFUL_RESPONSE]
+ * The following parameters are set only if failure type is [com.oxygenupdater.enums.DownloadFailure.UnsuccessfulResponse]
  */
 const val WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL = "DOWNLOAD_FAILURE_EXTRA_URL"
 const val WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME = "DOWNLOAD_FAILURE_EXTRA_FILENAME"

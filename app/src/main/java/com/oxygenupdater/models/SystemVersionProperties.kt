@@ -99,7 +99,7 @@ object SystemVersionProperties {
         } else UNKNOWN // read later on
 
         try {
-            if (!useSystemProperties.get()) throw UnsupportedOperationException("`useSystemProperties` is false")
+            if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")
 
             if (oxygenDeviceName == ONEPLUS_3) {
                 // Workaround #3: don't use `ro.product.name` for OP3/3T; they have the same value.
@@ -245,7 +245,7 @@ object SystemVersionProperties {
     private inline fun pickFirstValid(
         keys: Array<String>,
         default: String = UNKNOWN,
-        crossinline workarounds: (String, String) -> String?,
+        workarounds: (String, String) -> String?,
     ): String {
         for ((key, value) in systemPropertyPairs(keys)) {
             if (value.isEmpty() || value == UNKNOWN) continue // invalid, skip to next iteration

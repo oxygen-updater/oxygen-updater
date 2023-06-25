@@ -4,6 +4,7 @@ plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
     id(BuildPlugins.GOOGLE_SERVICES)
     id(BuildPlugins.FIREBASE_CRASHLYTICS)
+    id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
     id(BuildPlugins.KSP) version KSP_VERSION
@@ -213,8 +214,13 @@ android {
         jvmTarget = javaVersion.toString()
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = COMPOSE_COMPILER
+    }
+
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     testBuildType = "debug"
@@ -254,18 +260,44 @@ dependencies {
     implementation(AndroidXLibraries.APP_COMPAT)
     implementation(AndroidXLibraries.BROWSER)
     implementation(AndroidXLibraries.CONSTRAINT_LAYOUT)
+
+    implementation(AndroidXLibraries.CORE_KTX)
+    implementation(AndroidXLibraries.CORE_SPLASHSCREEN)
+
+    implementation(AndroidXLibraries.LIFECYCLE_LIVEDATA_KTX)
+    implementation(AndroidXLibraries.LIFECYCLE_VIEWMODEL_KTX)
+    implementation(AndroidXLibraries.LIFECYCLE_RUNTIME_COMPOSE)
+    kapt(AndroidXLibraries.LIFECYCLE_COMPILER)
+
     implementation(AndroidXLibraries.SWIPE_REFRESH_LAYOUT)
     implementation(AndroidXLibraries.RECYCLER_VIEW)
+
     implementation(AndroidXLibraries.ROOM_KTX)
     implementation(AndroidXLibraries.ROOM_RUNTIME)
     ksp(AndroidXLibraries.ROOM_COMPILER)
 
-    implementation(AndroidXLibraries.KTX_CORE)
     implementation(AndroidXLibraries.KTX_FRAGMENT)
-    implementation(AndroidXLibraries.KTX_LIFECYCLE_LIVEDATA)
-    implementation(AndroidXLibraries.KTX_LIFECYCLE_VIEWMODEL)
     implementation(AndroidXLibraries.KTX_PREFERENCE)
     implementation(AndroidXLibraries.KTX_WORK)
+
+    implementation(AndroidXLibraries.COMPOSE_ANIMATION)
+    implementation(AndroidXLibraries.COMPOSE_ANIMATION_GRAPHICS)
+    implementation(AndroidXLibraries.COMPOSE_FOUNDATION)
+    implementation(AndroidXLibraries.COMPOSE_MATERIAL)
+    // implementation(AndroidXLibraries.COMPOSE_MATERIAL3)
+    implementation(AndroidXLibraries.COMPOSE_MATERIAL_ICONS_EXTENDED)
+    implementation(AndroidXLibraries.COMPOSE_RUNTIME_LIVEDATA)
+    implementation(AndroidXLibraries.COMPOSE_UI)
+    debugImplementation(AndroidXLibraries.COMPOSE_UI_TOOLING)
+    implementation(AndroidXLibraries.COMPOSE_UI_TOOLING_PREVIEW)
+
+    implementation(AndroidXLibraries.ACTIVITY_COMPOSE)
+    implementation(AndroidXLibraries.NAVIGATION_COMPOSE)
+
+    implementation(GoogleAccompanistLibraries.SYSTEM_UI_CONTROLLER)
+    implementation(GoogleAccompanistLibraries.PERMISSIONS)
+    implementation(GoogleAccompanistLibraries.PLACEHOLDER_MATERIAL)
+    implementation(GoogleAccompanistLibraries.WEBVIEW)
 
     implementation(Libraries.MATERIAL)
 
@@ -288,7 +320,7 @@ dependencies {
 
     implementation(Libraries.JACKSON_KOTLIN_MODULE)
 
-    implementation(Libraries.COIL)
+    implementation(Libraries.COIL_COMPOSE)
 
     implementation(Libraries.FACEBOOK_SHIMMER)
 

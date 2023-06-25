@@ -1,5 +1,6 @@
 package com.oxygenupdater.models
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -8,8 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.models.AppLocale.NL
-import java.io.Serializable
+import com.oxygenupdater.utils.Utils
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import java.time.LocalDateTime
 
+@Parcelize
 @Entity(tableName = "news_item")
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class NewsItem(
@@ -48,29 +53,42 @@ data class NewsItem(
 
     @ColumnInfo(defaultValue = "0")
     @JsonIgnore
-    var read: Boolean = false
-) : Serializable {
+    var read: Boolean = false,
+) : Parcelable {
 
+    @IgnoredOnParcel
     @Ignore
     val title = if (AppLocale.get() == NL) dutchTitle else englishTitle
 
+    @IgnoredOnParcel
     @Ignore
     val subtitle = if (AppLocale.get() == NL) dutchSubtitle else englishSubtitle
 
+    @IgnoredOnParcel
     @Ignore
     val text = if (AppLocale.get() == NL) dutchText else englishText
 
+    @IgnoredOnParcel
     @Ignore
     val apiUrl = "${BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE}news-content/$id/" +
             (if (AppLocale.get() == NL) "NL" else "EN") + "/"
 
+    @IgnoredOnParcel
     @Ignore
     val webUrl = "${BuildConfig.SERVER_DOMAIN}article/$id/"
 
-    val isFullyLoaded: Boolean
-        get() = id != null && dutchTitle != null && englishTitle != null && dutchText != null && englishText != null
-
-    companion object {
-        private const val serialVersionUID = 6270363342908901533L
+    @IgnoredOnParcel
+    @Ignore
+    val epochMilli = (dateLastEdited ?: datePublished)?.let {
+        LocalDateTime.parse(it.replace(" ", "T"))
+            .atZone(Utils.SERVER_TIME_ZONE)
+            .toInstant().toEpochMilli()
     }
+
+    val isFullyLoaded: Boolean
+        get() = id != null && if (AppLocale.get() == NL) {
+            dutchTitle != null && dutchText != null
+        } else {
+            englishTitle != null && englishText != null
+        }
 }

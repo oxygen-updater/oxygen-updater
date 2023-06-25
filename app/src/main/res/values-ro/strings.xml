@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Apăsați aici pentru a vedea noutăți importante</string>
 	<string name="update_information_banner_advanced_mode_tip">Ați selectat varianta de actualizare \"%1$s\". Activați modul avansat dacă plănuiți să treceți la această variantă de actualizare.</string>
 	<string name="update_information_header_advanced_mode_hint">Modul avansat este activat</string>
-	<string name="update_information_header_advanced_mode_helper">Pentru că ați activat modul avansat, puteți descărca ultimul fișier ZIP pentru \"%1$s\".\n\nPuteți dezactiva modul avansat din setări.</string>
-	<string name="update_information_different_version_changelog_notice">Vizualizați un jurnal de schimbări pentru cea mai recentă actualizare din lista de actualizări \"%1$s\". Dacă doriți să instalați această actualizare, trebuie să activați mai întâi modul avansat (în setări).\n\nTotuși, dacă doriți să vedeți jurnalul de schimbări pentru versiunea instalată în prezent, va trebui să reveniți la metoda potrivită de actualizare.</string>
+	<string name="update_information_header_advanced_mode_helper">Pentru că ați activat modul avansat, puteți descărca ultimul fișier ZIP pentru \"%1$s\". Puteți dezactiva modul avansat din setări.</string>
+	<string name="update_information_different_version_changelog_notice_base">Notă: această listă de modificări se referă la ultima versiune disponibilă (%1$s) în metoda de actualizare \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Dacă intenționați să instalați această actualizare, trebuie să activați \"Mod avansat\" în setări.</string>
 	<string name="update_information_last_checked_on">Ultima verificare: %1$s</string>
 	<string name="update_information_no_update_data_available">Nu există informații despre actualizare</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -43,7 +44,7 @@
 	<string name="download_complete_notification">Atingeți pentru a începe instalarea</string>
 
 	<string name="download_error">Eroare la descărcare</string>
-	<string name="download_error_close">ÎNCHIDE</string>
+	<string name="download_error_close">Închide</string>
 	<string name="download_error_corrupt">Fișierul descărcat este compromis! Vă rugăm să îl descărcați din nou.</string>
 	<string name="download_error_server">A avut loc o eroare de server la descărcarea actualizării. Vă rugăm să încercați din nou descărcarea.</string>
 	<string name="download_error_internal">Din păcate a avut loc o eroare tehnică în timpul descărcării. Încercați să descărcați actualizarea din nou. Dacă problema persistă, vă rugăm să contactați dezvoltatorii aplicației pentru asistență.</string>
@@ -51,8 +52,8 @@
 Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a href="mailto:support@oxygenupdater.com">e-mail</a> sau intrând pe <a href="https://discord.gg/5TXdhKJ">server-ul nostru de Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Fișierul a fost descărcat, dar nu a putut fi mutat în directorul corespunzător. Deschideți un manager de fișiere, navigați către \"%1$s\" și mutați manual fișierul în cel mai de sus director al stocării interne.</string>
 
-	<string name="download_error_retry">REÎNCERCARE</string>
-	<string name="download_error_resume">RELUARE</string>
+	<string name="download_error_retry">Reîncercare</string>
+	<string name="download_error_resume">Reluare</string>
 	<string name="download_error_storage">Nu există suficient spațiu de stocare disponibil pe dispozitiv pentru a descărca actualizarea. Vă rugăm să eliberați spațiu și să încercați din nou.</string>
 
 	<string name="download_failed">Descărcare eșuată</string>
@@ -129,7 +130,12 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="settings_saving">Setările dumneavoastră se salvează. Dacă operațiunea durează prea mult: Verificați conexiunea la rețea, închideți aplicația și porniți-o din nou.</string>
 
 	<string name="settings_advanced_mode">Mod avansat</string>
-	<string name="settings_advanced_mode_explanation">Modul avansat ascunde mesajul \"Sistemul dumneavoastră este la zi\", permițându-vă să descărcați și să instalați toate actualizările, chiar dacă este posibil ca unele să nu fie compatibile cu dispozitivul dumneavoastră.\n\nAcest lucru poate fi util atunci când:\n&#8226; Actualizați dispozitivul de la o versiune obișnuită la o versiune beta\n&#8226; Reveniți de la o versiune beta la cea obișnuită (nu uitați să vă resetați dispozitivul)\n&#8226; Reinstalați versiunea curentă a sistemului.</string>
+	<string name="settings_advanced_mode_explanation">"În mod normal, aplicația vă arată actualizările în funcție de versiunea curentă a sistemului de operare. Cu modul avansat, cea mai recentă actualizare disponibilă va fi afișată întotdeauna, indiferent de compatibilitatea dispozitiv/versiune.
+
+Acest lucru poate fi util dacă doriți să:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Reîncărcați cea mai recentă versiune chiar dacă sunteți deja pe ea
+&#8226; Treceți la o altă cale de actualizare"</string>
+	<string name="settings_advanced_mode_caption">"Modul avansat poate fi necesar doar în situațiile de mai sus. Nu ar trebui să îl activați decât dacă știți ce faceți."</string>
 
 	<string name="settings_update_method">Metoda de actualizare</string>
 	<string name="settings_upload_logs">Împărtășiți date de utilizare și jurnale ale aplicației</string>
@@ -143,14 +149,14 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="onboarding_finished_button">Porniți aplicația</string>
 
 	<string name="onboarding_page_1_title">Bine ați venit la Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Această aplicație vă va permite să:\n\n&#8226; Obțineți acces mai rapid la cele mai recente actualizări Android pentru dispozitivul dumneavoastră cu OxygenOS\n\n&#8226; Actualizați cu ușurință un dispozitiv rootat\n\n&#8226; Vedeți ce este nou în software-ul de sistem pe care îl utilizați în prezent\n\n&#8226; Citiți cele mai recente noutăți despre OnePlus și OxygenOS\n\nGlisați spre stânga pentru a continua.</string>
-	<string name="onboarding_page_1_caption">Aceasta nu este o aplicație oficială OnePlus. Utilizați aplicația pe propria răspundere. Nici OnePlus și nici dezvoltatorul aplicației nu sunt responsabili pentru acțiunile dumneavoastră, nici pentru orice daune cauzate de utilizarea acestei aplicații.\n\nPrin utilizarea acestei aplicații, sunteți de acord cu termenii și condițiile menționate mai sus.</string>
+	<string name="onboarding_page_1_text">Această aplicație vă va permite să:\n\n&#8226; Obțineți acces mai rapid la cele mai recente actualizări Android pentru dispozitivul dumneavoastră cu OxygenOS\n&#8226; Actualizați cu ușurință un dispozitiv rootat\n&#8226; Vedeți ce este nou în software-ul de sistem pe care îl utilizați în prezent\n&#8226; Citiți cele mai recente noutăți despre OnePlus și OxygenOS</string>
+	<string name="onboarding_page_1_caption">Aceasta nu este o aplicație oficială OnePlus. Utilizați aplicația pe propria răspundere. Nici OnePlus și nici dezvoltatorul aplicației nu sunt responsabili pentru acțiunile dumneavoastră, nici pentru orice daune cauzate de utilizarea acestei aplicații. Prin utilizarea acestei aplicații, sunteți de acord cu termenii și condițiile menționate mai sus.</string>
 	<string name="onboarding_page_2_title">Selectați-vă dispozitivul</string>
 	<string name="onboarding_page_2_caption">De regulă, dispozitivul dumneavoastră este preselectat mai sus. În caz contrar, selectați-vă dispozitivul mai sus.</string>
 	<string name="onboarding_page_3_title">Alegeți metoda de actualizare</string>
 	<string name="onboarding_page_3_caption">De obicei, actualizarea incrementală este alegerea potrivită aici, deoarece oferă descărcări mult mai rapide și mai mici.\n\nCu toate acestea, nu este compatibilă cu dispozitivele rootate. Dacă aveți un dispozitiv rootat, alegeți Actualizarea completă.\n\nDacă aveți o versiune beta a OxygenOS, alegeți (una) dintre metodele de actualizare Open Beta.</string>
 	<string name="onboarding_page_4_title">Totul este pregătit!</string>
-	<string name="onboarding_page_4_text">Bucurați-vă de utilizarea acestei aplicații!\n\nVă puteți schimba oricând setările mai târziu. Pentru a face acest lucru: apăsați pe cele trei puncte din colțul din dreapta sus și selectați \"Setări\".</string>
+	<string name="onboarding_page_4_text">Bucurați-vă de utilizarea acestei aplicații! Vă puteți schimba oricând setările mai târziu.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Instalare</string>
@@ -269,7 +275,7 @@ Instrucțiuni:
 	<string name="news">Noutăți</string>
 	<string name="news_date_published">Ultima actualizare: %1$s</string>
 	<string name="news_empty">Acest articol nu are conținut.</string>
-	<string name="news_load_network_error">Articolul nu a putut fi deschis. Verificați conexiunea și apăsați butonul \"REÎNCERCARE\" pentru a deschide articolul.</string>
+	<string name="news_load_network_error">Articolul nu a putut fi deschis. Verificați conexiunea și apăsați butonul \"Reîncercare\" pentru a deschide articolul.</string>
 	<string name="news_load_id_error"><![CDATA[Deschiderea articolului nu a reușit din cauza unei adrese URL invalide: %1$s. Verificați adresa URL sau raportați-ne acest lucru fie prin <a href="mailto:support@oxygenupdater.com">e-mail</a> sau pe <a href="https://discord.gg/5TXdhKJ">server-ul nostru de Discord</a>.]]></string>
 	<string name="news_unread_count_1">Aveți %1$d articole necitite. Atingeți pentru a le vizualiza.</string>
 	<string name="news_unread_count_2">Aveți %1$d articole necitite. Atingeți pentru a vizualiza toate articolele.</string>
@@ -301,7 +307,7 @@ Instrucțiuni:
 	<string name="error_no_internet_connection">Lipsă conexiune.</string>
 	<string name="error_maintenance">Mentenanță server</string>
 	<string name="error_maintenance_message">Vă rugăm așteptați. Server-ul va fi disponibil în curând.</string>
-	<string name="error_maintenance_retry">Este posibil ca server-ul să fie oprit pentru mentenanță. Încercați din nou mai târziu sau contactați-ne pe <a href="mailto:support@oxygenupdater.com">e-mail</a> sau pe <a href="https://discord.gg/5TXdhKJ">server-ul de Discord</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Este posibil ca server-ul să fie oprit pentru mentenanță. Încercați din nou mai târziu sau contactați-ne pe <a href="mailto:support@oxygenupdater.com">e-mail</a> sau pe <a href="https://discord.gg/5TXdhKJ">server-ul de Discord</a>.]]></string>
 	<string name="error_reload">Reîncărcare</string>
 
 	<string name="error_unable_to_rate_app">Nu puteți evalua aplicația, întrucât Magazinul Google Play nu este instalat pe dispozitivul dumneavoastră.</string>

@@ -24,7 +24,7 @@ fun String.toLocale() = split("-r", limit = 2).let {
 fun Locale.toLanguageCode(): String = let {
     val language = it.language
     // Add other languages here if they need country-specifications too
-    if (language == "zh") "$language-r${it.country}" else language
+    if (language == "pt" || language == "zh") "$language-r${it.country}" else language
 }
 
 fun Context.attachWithLocale(persist: Boolean = true) = persistAndSetLocale(
@@ -43,7 +43,7 @@ fun Context.setLocale(languageCode: String) = languageCode.toLocale().let {
 
 private fun Context.persistAndSetLocale(
     sharedPreferences: SharedPreferences,
-    persist: Boolean
+    persist: Boolean,
 ) = sharedPreferences.getString(
     getString(R.string.key_language_id),
     Locale.getDefault().toLanguageCode()
@@ -58,7 +58,7 @@ private fun Context.persistAndSetLocale(
 }
 
 private fun Context.updateResources(
-    locale: Locale
+    locale: Locale,
 ): Context = resources.configuration.let { config ->
     config.setLocale(locale)
 

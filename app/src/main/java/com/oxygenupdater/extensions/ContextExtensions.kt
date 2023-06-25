@@ -1,6 +1,9 @@
 package com.oxygenupdater.extensions
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +14,7 @@ import android.widget.Toast
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
@@ -43,15 +47,37 @@ import com.oxygenupdater.utils.ThemeUtils
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun Context.formatFileSize(
-    sizeBytes: Long
+    sizeBytes: Long,
 ): String = Formatter.formatFileSize(
     this,
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        (sizeBytes / 1.048576).toLong()
-    } else {
-        sizeBytes
-    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) (sizeBytes / 1.048576).toLong() else sizeBytes
 )
+
+fun Context.shareExternally(
+    title: String,
+    text: String,
+) {
+    val prefix = "${getString(R.string.app_name)}: $title"
+    val intent = Intent(Intent.ACTION_SEND)
+        // Rich text preview: should work only on API 29+
+        .putExtra(Intent.EXTRA_TITLE, title)
+        // Main share content: will work on all API levels
+        .putExtra(
+            Intent.EXTRA_TEXT,
+            "$prefix\n\n$text"
+        ).setType("text/plain")
+
+    startActivity(Intent.createChooser(intent, null))
+}
+
+@SuppressLint("PrivateResource")
+fun Context.copyToClipboard(text: String) = getSystemService<ClipboardManager>()?.setPrimaryClip(
+    ClipData.newPlainText(getString(R.string.app_name), text)
+)?.let {
+    Toast.makeText(
+        this, getString(androidx.browser.R.string.copy_toast_msg), Toast.LENGTH_LONG
+    ).show()
+}
 
 fun Context.openPlayStorePage() {
     val appPackageName = packageName

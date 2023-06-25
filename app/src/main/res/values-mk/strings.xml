@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Притиснете овде за прикажување на важни известувања</string>
 	<string name="update_information_banner_advanced_mode_tip">Ја селектиравте \"%1$s\" ажурирачка трака. Овозможете напреден режим ако планирате да се префрлите на оваа ажурирачка трака.</string>
 	<string name="update_information_header_advanced_mode_hint">Напредниот режим е овозможен</string>
-	<string name="update_information_header_advanced_mode_helper">Бидејќи имате овозможено напреден режим, можете да ја превземете најновата ZIP датотека за \"%1$s\".\n\nМожете да го исклучите напредниот режим во поставките.</string>
-	<string name="update_information_different_version_changelog_notice">Ги гледате измените за најновото ажурирање во \"%1$s\" траката. Ако планирате да го инсталирате ова ажурирање, мора да го овозможите напредниот режим (во поставките).\n\nНо, ако сакате да ги видите промените за сегашното инсталирано ажурирање, ќе треба да се префрлите на точната ажурирачка метода.</string>
+	<string name="update_information_header_advanced_mode_helper">Бидејќи имате овозможено напреден режим, можете да ја превземете најновата ZIP датотека за \"%1$s\". Можете да го исклучите напредниот режим во поставките.</string>
+	<string name="update_information_different_version_changelog_notice_base">Забелешка: овој дневник е за најновата достапна верзија (%1$s) во методот за ажурирање \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Ако имате намера да го инсталирате ова ажурирање, мора да овозможите \"Напреден режим\" во поставките.</string>
 	<string name="update_information_last_checked_on">Последно проверено на: %1$s</string>
 	<string name="update_information_no_update_data_available">Не се достапни податоци за ажурирање</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -43,7 +44,7 @@
 	<string name="download_complete_notification">Притиснете за да ја започнете инсталацијата</string>
 
 	<string name="download_error">Грешка при превземање</string>
-	<string name="download_error_close">ЗАТВОРИ</string>
+	<string name="download_error_close">Затвори</string>
 	<string name="download_error_corrupt">Преземениот фајл за ажурирање е оштетен! Ве молиме превземете го павторно.</string>
 	<string name="download_error_server">Настана серверска грешка при превземање на ажурирањето. Ве молиме обидете се да го превземете ажурирањето повторно.</string>
 	<string name="download_error_internal">За жал, настана техничка грешка при превземање на ажурирањето. Обидете се да го превземето повторно. Ако грешките продолжат, ве молиме исконтактирајте го развивачот на оваа апликација за помош.</string>
@@ -52,8 +53,8 @@
 Ако сакате да дознаете повеќе, слободно контактирајте не на <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Датотеката е превземена, но неможе да се премести до соодветниот директориум. Отворете го менаџерот на податоци, навигирајте до \"%1$s\" и мануелно преместета ја датотеката во најгорниот директориум на внатрешната меморија.</string>
 
-	<string name="download_error_retry">ОБИДИ СЕ ПОВТОРНО</string>
-	<string name="download_error_resume">ПРОДОЛЖИ</string>
+	<string name="download_error_retry">Обиди се повторно</string>
+	<string name="download_error_resume">Продолжи</string>
 	<string name="download_error_storage">Нема доволно меморија на вашиот уред за да се превземе ажурирањето. Ве молиме отстранете некои датотеки и обидете се повторно.</string>
 
 	<string name="download_failed">Превземањето е неуспешно</string>
@@ -129,7 +130,12 @@
 	<string name="settings_saving">Вашите поставки сеуште се зачувуваат. Ако ова потрае долго време: Проверете ја интернет конекцијата, изгасете ја апликацијата и обидете се повторно.</string>
 
 	<string name="settings_advanced_mode">Напреден режим</string>
-	<string name="settings_advanced_mode_explanation">Напредниот режим ја крие пораката \"Your system is up to date\", овозможувајќи да ги превземете и инсталирате сите ажурирања, иако тие не се компатибилни со вашиот уред.\n\nОва може да биде корисно кога:\n&#8226; Ажурирање од стабилна кон бета верзија\n&#8226; Враќање од бета верзија кон стабилна верзија (не заборавајте да го вратите уредот на фабрички подесувања)\n&#8226; Преинсталација на сегашната системска верзија.</string>
+	<string name="settings_advanced_mode_explanation">"Вообичаено, апликацијата ви прикажува ажурирања врз основа на вашата тековна верзија на ОС. Со напредниот режим, последното достапно ажурирање секогаш ќе се прикажува без оглед на компатибилноста на уредот/верзијата.
+
+Ова може да биде корисно ако сакате:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Преземете ја повторно најновата верзија дури и ако веќе сте на неа
+&#8226; Префрлете се на друга песна за ажурирање"</string>
+	<string name="settings_advanced_mode_caption">"Напредниот режим може да биде потребен само во горенаведените ситуации. Не треба да го овозможите освен ако не знаете што правите."</string>
 
 	<string name="settings_update_method">Метод на ажурирање</string>
 	<string name="settings_upload_logs">Споделете податоци за користење и дневници</string>
@@ -144,13 +150,13 @@
 
 	<string name="onboarding_page_1_title">Добредојдовте во Oxygen Updater!</string>
 	<string name="onboarding_page_1_text">Оваа апликација ви овозможува:\n\n&#8226; Добивање побрз пристап до најновите Андроид ажурирања за вашиот OxygenOS уред\n\n&#8226; Лесно ажурирање на рутиран уред\n\n&#8226; Преглед на што е ново кај системскиот софтвер кој го користите\n\n&#8226; Читање на најновите вести за OnePlus и OxygenOS\n\nЛизгајте на лево за да продолжите.</string>
-	<string name="onboarding_page_1_caption">Ова не е официјална OnePlus апликација. Користењето на оваа апликација е на ваш ризик. Ниту OnePlus ниту развивачот на оваа апликација се одговорни за вашите постапки, вклучувајчи секаква штета настаната од користење на оваа апликација.\n\nСо користење на оваа апликација, се согласувате со условите како што е наведено погоре.</string>
+	<string name="onboarding_page_1_caption">Ова не е официјална OnePlus апликација. Користењето на оваа апликација е на ваш ризик. Ниту OnePlus ниту развивачот на оваа апликација се одговорни за вашите постапки, вклучувајчи секаква штета настаната од користење на оваа апликација. Со користење на оваа апликација, се согласувате со условите како што е наведено погоре.</string>
 	<string name="onboarding_page_2_title">Изберете го вашиот уред</string>
 	<string name="onboarding_page_2_caption">Вашиот уред би требало да е избран. Доколку не е, изберете го погоре.</string>
 	<string name="onboarding_page_3_title">Изберете го вашиот метод на ажурирање</string>
 	<string name="onboarding_page_3_caption">Вообичаено, инкременталното ажурирање е вистинскиот избор овде, бидејќи овозможува побрзи и помали превземања.\n\nНо, не е компатибилно со рутирани уреди. Доколку имате рутиран уред, изберете метод на целосно ажурирање.\n\nДоколку имате бета верзија на OxygenOS, изберете (едно од) метод(ите) на ажурирање за отворена бета.</string>
 	<string name="onboarding_page_4_title">Спремни сте!</string>
-	<string name="onboarding_page_4_text">Уживајте во користењето на оваа апликација!\n\nСекогаш може да ги промените поставките подоцна. За да го направите тоа: Притиснете ги трите точки во горниот десен агол, и притиснете на \"Settings\".</string>
+	<string name="onboarding_page_4_text">Уживајте во користењето на оваа апликација! Секогаш може да ги промените поставките подоцна.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Инсталирај</string>
@@ -301,7 +307,7 @@
 	<string name="error_no_internet_connection">Нема конекција.</string>
 	<string name="error_maintenance">Одржување на серверот</string>
 	<string name="error_maintenance_message">Ве молиме почекајте. Серверот ќе биде достапен наскоро.</string>
-	<string name="error_maintenance_retry">Серверот најверојатно е под рутинска поправка. Обидете се повторно после некое време, или пријавете на нашата <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Серверот најверојатно е под рутинска поправка. Обидете се повторно после некое време, или пријавете на нашата <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
 	<string name="error_reload">Освежи</string>
 
 	<string name="error_unable_to_rate_app">Не можете да ја оцените апликацијата, бидејќи вашиот уред нема Google Play Store.</string>

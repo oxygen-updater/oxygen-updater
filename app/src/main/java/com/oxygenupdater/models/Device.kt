@@ -10,7 +10,7 @@ data class Device(
     override val name: String?,
 
     @JsonIgnore
-    private val productName: String
+    private val productName: String,
 ) : SelectableModel {
 
     init {
@@ -34,17 +34,15 @@ data class Device(
     }
 
     private fun getProductNames(productNameTemplate: String): List<String> {
-        return productNameTemplate.trim { it <= ' ' }.split(",")
+        return productNameTemplate.trim().split(",")
             // Remove spaces after comma separation.
-            .map { productName -> productName.trim { it <= ' ' } }
+            .map { productName -> productName.trim() }
     }
 
     companion object {
-        private val IMAGE_URL_PREFIX = buildString(42) {
+        private val IMAGE_URL_PREFIX = buildString(38) {
             append("https://")
-            if (BuildConfig.BUILD_TYPE != "release") {
-                append("test.")
-            }
+            if (BuildConfig.DEBUG) append("test.")
             append("oxygenupdater.com/img/device/")
         }
 

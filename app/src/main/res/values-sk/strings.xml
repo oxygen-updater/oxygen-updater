@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Klepnutím tu zobrazíte dôležité oznámenia</string>
 	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na tento kanál aktualizácií, povoľte pokročilý režim.</string>
 	<string name="update_information_header_advanced_mode_hint">Pokročilý režim je povolený</string>
-	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili pokročilý režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\".\n\nPokročilý režim môžete vypnúť v nastaveniach.</string>
-	<string name="update_information_different_version_changelog_notice">Prezeráte si zoznam zmien najnovšej aktualizácie v kanále aktualizácií \"%1$s\". Ak chcete nainštalovať túto aktualizáciu, musíte najskôr povoliť pokročilý režim (v nastaveniach).\n\nAk chcete však namiesto toho zobraziť zoznam zmien aktuálne nainštalovanej verzie, budete musieť prepnúť späť na správnu metódu aktualizácie.</string>
+	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili pokročilý režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\". Pokročilý režim môžete vypnúť v nastaveniach.</string>
+	<string name="update_information_different_version_changelog_notice_base">Poznámka: tento zoznam zmien sa týka najnovšej dostupnej verzie (%1$s) v metóde aktualizácie \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Ak máte v úmysle nainštalovať túto aktualizáciu, musíte v nastaveniach povoliť \"Pokročilý režim\".</string>
 	<string name="update_information_last_checked_on">Naposledy kontrolované: %1$s</string>
 	<string name="update_information_no_update_data_available">Nie sú k dispozícii žiadne informácie o aktualizácii</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -44,7 +45,7 @@
 	<string name="download_complete_notification">Klepnutím spustíte inštaláciu</string>
 
 	<string name="download_error">Chyba pri sťahovaní</string>
-	<string name="download_error_close">ZAVRIEŤ</string>
+	<string name="download_error_close">Zavrieť</string>
 	<string name="download_error_corrupt">Stiahnutý aktualizačný súbor je poškodený! Skúste ho stiahnuť znova.</string>
 	<string name="download_error_server">Počas sťahovania aktualizácie sa vyskytla chyba servera. Skúste aktualizáciu stiahnuť znova.</string>
 	<string name="download_error_internal">Počas sťahovania aktualizácie sa, bohužiaľ, vyskytla technická chyba. Skúste ju stiahnuť znova. Ak sa to bude opakovať, obráťte sa so žiadosťou o pomoc na vývojára tejto aplikácie.</string>
@@ -52,8 +53,8 @@
 Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Súbor bol stiahnutý, ale nepodarilo sa ho presunúť do správneho adresára. Otvorte správcu súborov, prejdite do \"%1$s\" a ručne presuňte súbor do najvyššieho adresára interného úložiska.</string>
 
-	<string name="download_error_retry">SKÚSIŤ ZNOVA</string>
-	<string name="download_error_resume">POKRAČOVAŤ</string>
+	<string name="download_error_retry">Skúsiť znova</string>
+	<string name="download_error_resume">Pokračovať</string>
 	<string name="download_error_storage">Vo vašom zariadení nie je k dispozícii dostatok úložného priestoru na stiahnutie aktualizácie. Odstráňte niektoré súbory a skúste aktualizáciu znovu stiahnuť.</string>
 
 	<string name="download_failed">Sťahovanie zlyhalo</string>
@@ -130,7 +131,12 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="settings_saving">Vaše nastavenia sa stále ukladajú. Ak to trvá príliš dlho: Skontrolujte sieťové pripojenie, ukončite aplikáciu a spustite ju znova.</string>
 
 	<string name="settings_advanced_mode">Pokročilý režim</string>
-	<string name="settings_advanced_mode_explanation">Pokročilý režim skryje správu \"Váš systém je aktuálny\", ktorá vám umožní stiahnuť a nainštalovať všetky aktualizácie, aj keď nemusia byť kompatibilné s vaším zariadením.\n\nTTo môže byť užitočné, keď:\n&#8226; Aktualizujete z bežnej verzie na beta verziu\n&#8226; Vraciate sa z beta verzie na bežnú verziu (nezabudnite na obnovenie továrenských nastavení zariadenia)\n&#8226; Preinštalovávate aktuálnu verziu systému.</string>
+	<string name="settings_advanced_mode_explanation">"Aplikácia zvyčajne zobrazuje aktualizácie na základe aktuálnej verzie operačného systému. V rozšírenom režime sa vždy zobrazí najnovšia dostupná aktualizácia bez ohľadu na kompatibilitu zariadenia/verzie.
+
+To môže byť užitočné, ak chcete:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Opätovne stiahnuť najnovšiu verziu, aj keď ju už používate
+&#8226; Prepnúť na inú aktualizačnú stopu"</string>
+	<string name="settings_advanced_mode_caption">"Rozšírený režim môže byť potrebný len vo vyššie uvedených situáciách. Nemali by ste ho zapínať, ak neviete, čo robíte."</string>
 
 	<string name="settings_update_method">Spôsob aktualizácie</string>
 	<string name="settings_upload_logs">Zdieľajte údaje o používaní a logy</string>
@@ -144,14 +150,14 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="onboarding_finished_button">Spustiť aplikáciu</string>
 
 	<string name="onboarding_page_1_title">Vitajte v Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n\n&#8226; Ľahko aktualizujte rootované zariadenie\n\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n\n&#8226; Prečítajte si najnovšie správy o OnePlus a OxygenOS\n\nPokračujte prejdením doľava.</string>
-	<string name="onboarding_page_1_caption">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojári aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie.\n\nPoužívaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
+	<string name="onboarding_page_1_text">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n&#8226; Ľahko aktualizujte rootované zariadenie\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n&#8226; Prečítajte si najnovšie správy o OnePlus a OxygenOS</string>
+	<string name="onboarding_page_1_caption">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojári aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie. Používaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
 	<string name="onboarding_page_2_title">Vyberte svoje zariadenie</string>
 	<string name="onboarding_page_2_caption">Vaše zariadenie by malo byť vybrané vyššie. Ak nie, vyberte svoje zariadenie vyššie.</string>
 	<string name="onboarding_page_3_title">Vyberte spôsob aktualizácie</string>
 	<string name="onboarding_page_3_caption">Tu je zvyčajne správnou voľbou inkrementálna aktualizácia, pretože ponúka oveľa rýchlejšie a menšie sťahovanie.\n\nNie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie.\n\nAk máte beta verziu systému OxygenOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
 	<string name="onboarding_page_4_title">Ste pripravení začať!</string>
-	<string name="onboarding_page_4_text">Želáme príjemné používanie aplikácie!\n\nNeskôr môžete svoje nastavenia kedykoľvek zmeniť. Urobíte to takto: Klepnite na tri bodky v pravom hornom rohu a klepnite na \"Nastavenia\".</string>
+	<string name="onboarding_page_4_text">Želáme príjemné používanie aplikácie! Neskôr môžete svoje nastavenia kedykoľvek zmeniť.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Inštalovať</string>
@@ -270,7 +276,7 @@ Inštrukcie:
 	<string name="news">Novinky</string>
 	<string name="news_date_published">Posledná aktualizácia: %1$s</string>
 	<string name="news_empty">Tento článok nemá žiadny obsah.</string>
-	<string name="news_load_network_error">Článok sa nepodarilo otvoriť. Skontrolujte svoje pripojenie a stlačením tlačidla \"SKÚSIŤ ZNOVA\" otvorte článok</string>
+	<string name="news_load_network_error">Článok sa nepodarilo otvoriť. Skontrolujte svoje pripojenie a stlačením tlačidla \"Skúsiť znova\" otvorte článok</string>
 	<string name="news_load_id_error"><![CDATA[Nepodarilo sa otvoriť článok z neplatnej adresy URL: %1$s. Skontrolujte adresu URL alebo nám to nahláste prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
 	<string name="news_unread_count_1">Máte %1$d neprečítaných správ. Klepnutím tu ich zobrazíte.</string>
 	<string name="news_unread_count_2">Máte %1$d neprečítaných správ. Klepnutím zobrazíte všetky články.</string>
@@ -302,7 +308,7 @@ Inštrukcie:
 	<string name="error_no_internet_connection">Žiadne pripojenie.</string>
 	<string name="error_maintenance">Údržba serverov</string>
 	<string name="error_maintenance_message">Prosím čakajte. Server bude čoskoro k dispozícii.</string>
-	<string name="error_maintenance_retry">Server môže byť kvôli údržbe mimo prevádzky. Skúste to znova po nejakom čase alebo nám to nahláste prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Server môže byť kvôli údržbe mimo prevádzky. Skúste to znova po nejakom čase alebo nám to nahláste prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
 	<string name="error_reload">Znova načítať</string>
 
 	<string name="error_unable_to_rate_app">Aplikáciu nemôžete hodnotiť, pretože vo vašom zariadení chýba Obchod Google Play.</string>

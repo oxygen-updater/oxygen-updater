@@ -3,9 +3,6 @@ package com.oxygenupdater.utils
 import android.os.Build
 import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.models.FormattableUpdateData
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.StringReader
 import java.util.regex.Pattern
 
 object UpdateDataVersionFormatter {
@@ -66,7 +63,7 @@ object UpdateDataVersionFormatter {
      * formatted.
      */
     fun canVersionInfoBeFormatted(versionInfo: FormattableUpdateData?) = getFirstLine(versionInfo)
-        .trim { it <= ' ' }
+        .trim()
         .startsWith(OS_VERSION_LINE_HEADING)
 
     /**
@@ -80,7 +77,10 @@ object UpdateDataVersionFormatter {
      *
      * @return Formatted version number for the given Update Version Information.
      */
-    fun getFormattedVersionNumber(versionInfo: FormattableUpdateData?): String {
+    fun getFormattedVersionNumber(
+        versionInfo: FormattableUpdateData?,
+        default: String = "OxygenOS System Update",
+    ): String {
         val firstLine = getFirstLine(versionInfo)
 
         // we could use the `canVersionInfoBeFormatted(versionInfo)` function defined in this file,
@@ -88,12 +88,8 @@ object UpdateDataVersionFormatter {
         // `canVersionInfoBeFormatted(versionInfo)` calls `getFirstLine(versionInfo)`, which is also called to set the value for `firstLine`.
         // `firstLine` is used in the else branch, so it's better to call `getFirstLine(versionInfo)` only once.
         // `getFirstLine(versionInfo)` constructs a `BufferedReader` and a `StringReader`, so this optimization saves some CPU cycles, and some memory as well
-        val canVersionInfoBeFormatted = firstLine.trim { it <= ' ' }.startsWith(OS_VERSION_LINE_HEADING)
-
-        return if (!canVersionInfoBeFormatted) {
-            if (!versionInfo?.internalVersionNumber.isNullOrBlank()) "V. " + versionInfo!!.internalVersionNumber
-            else "OxygenOS System Update"
-        } else {
+        val canVersionInfoBeFormatted = firstLine.trim().startsWith(OS_VERSION_LINE_HEADING)
+        return if (canVersionInfoBeFormatted) {
             val alphaBetaDpMatcher = ALPHA_BETA_DP_PATTERN.matcher(firstLine)
             val regularMatcher = STABLE_PATTERN.matcher(firstLine)
 
@@ -107,6 +103,8 @@ object UpdateDataVersionFormatter {
                 regularMatcher.find() -> "$OXYGEN_OS_PREFIX ${regularMatcher.group()}"
                 else -> firstLine.replace(OS_VERSION_LINE_HEADING, "")
             }
+        } else versionInfo?.internalVersionNumber.run {
+            if (isNullOrBlank()) default else this
         }
     }
 
@@ -138,15 +136,7 @@ object UpdateDataVersionFormatter {
      * @return The first line of the update description of the given Version Info, or the empty
      * string if the update description is null or empty.
      */
-    private fun getFirstLine(versionInfo: FormattableUpdateData?): String {
-        if (versionInfo?.updateDescription.isNullOrBlank()) {
-            return ""
-        }
-
-        return try {
-            BufferedReader(StringReader(versionInfo?.updateDescription)).readLine() ?: ""
-        } catch (e: IOException) {
-            ""
-        }
+    private fun getFirstLine(versionInfo: FormattableUpdateData?) = versionInfo?.updateDescription.run {
+        if (isNullOrBlank()) "" else splitToSequence("\r\n", "\n", "\r", limit = 2).firstOrNull() ?: ""
     }
 }

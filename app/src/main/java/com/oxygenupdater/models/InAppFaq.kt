@@ -1,8 +1,13 @@
 package com.oxygenupdater.models
 
+import android.os.Parcelable
+import androidx.compose.runtime.mutableStateOf
 import com.oxygenupdater.models.AppLocale.FR
 import com.oxygenupdater.models.AppLocale.NL
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class InAppFaq(
     val id: Long,
 
@@ -19,15 +24,17 @@ data class InAppFaq(
     /**
      * Either `category` or `item`
      */
-    val type: String
-) {
+    val type: String,
+) : Parcelable {
 
+    @IgnoredOnParcel
     val title = when (AppLocale.get()) {
         FR -> frenchTitle
         NL -> dutchTitle
         else -> englishTitle
     }
 
+    @IgnoredOnParcel
     val body = when (AppLocale.get()) {
         NL -> dutchBody
         FR -> frenchBody
@@ -35,7 +42,8 @@ data class InAppFaq(
     }
 
     /**
-     * To preserver expand/collapse state in [androidx.recyclerview.widget.RecyclerView]
+     * To preserve expand/collapse state in [androidx.recyclerview.widget.RecyclerView]
      */
-    var expanded = false
+    @IgnoredOnParcel
+    var expanded = mutableStateOf(false)
 }

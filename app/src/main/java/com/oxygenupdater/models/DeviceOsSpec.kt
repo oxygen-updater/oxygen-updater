@@ -20,7 +20,4 @@ enum class DeviceOsSpec {
     // for devices that aren't running OxygenOS
     // this may include OnePlus devices with a custom ROM installed
     UNSUPPORTED_OS;
-
-    val isDeviceOsSpecSupported: Boolean
-        get() = this == SUPPORTED_OXYGEN_OS
 }

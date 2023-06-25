@@ -21,14 +21,14 @@ import kotlinx.coroutines.withContext
  */
 class BillingViewModel(
     private val billingRepository: BillingRepository,
-    private val serverRepository: ServerRepository
+    private val serverRepository: ServerRepository,
 ) : ViewModel() {
 
     val lifecycleObserver: LifecycleObserver = billingRepository
 
-    val adFreePrice = billingRepository.adFreePrice.asLiveData()
-    val adFreeState = billingRepository.adFreeState.asLiveData()
-    val hasPurchasedAdFree = billingRepository.hasPurchasedAdFree.asLiveData()
+    val adFreePrice = billingRepository.adFreePrice
+    val adFreeState = billingRepository.adFreeState
+    val hasPurchasedAdFree = billingRepository.hasPurchasedAdFree
     val newPurchase = billingRepository.newPurchase.asLiveData()
 
     // Clients need to observe this LiveData so that internal logic is guaranteed to run
@@ -52,14 +52,14 @@ class BillingViewModel(
      */
     fun makePurchase(
         activity: Activity,
-        type: PurchaseType
+        type: PurchaseType,
     ) = billingRepository.makePurchase(activity, type.sku)
 
     fun verifyPurchase(
         purchase: Purchase,
         amount: String?,
         purchaseType: PurchaseType,
-        callback: KotlinCallback<ServerPostResult?>
+        callback: KotlinCallback<ServerPostResult?>,
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.verifyPurchase(purchase, amount, purchaseType).let {
             withContext(Dispatchers.Main) {

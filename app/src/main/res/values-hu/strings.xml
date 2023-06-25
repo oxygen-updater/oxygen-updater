@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Koppints ide a fontos értesítések megtekintéséhez</string>
 	<string name="update_information_banner_advanced_mode_tip">A(z) \"%1$s\" frissítési módot választottad. Engedélyezd a haladó módot ha erre a frissítési módra szeretnél váltani.</string>
 	<string name="update_information_header_advanced_mode_hint">A Haladó mód engedélyezve van</string>
-	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára.\n\nA haladó módot a beállításokban kapcsolhatod ki.</string>
-	<string name="update_information_different_version_changelog_notice">A legfrissebb frissítés módosítási naplóját nézi a \"%1$s\" frissítési sávon. Ha telepíteni szeretnéd ezt a frissítést, előbb be kell kapcsolnod a haladó módot (a beállításokban).\n\nHa azonban inkább az aktuálisan telepített verzió módosítási naplóját szeretnéd látni, akkor vissza kell váltanod a helyes frissítési módszerre.</string>
+	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára. A haladó módot a beállításokban kapcsolhatod ki.</string>
+	<string name="update_information_different_version_changelog_notice_base">Megjegyzés: ez a változásjegyzék a legújabb elérhető verzióra (%1$s) vonatkozik a \"%2$s\" frissítési módszerrel</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Ha ezt a frissítést kívánja telepíteni, engedélyeznie kell a \"Haladó mód\" opciót a beállításokban.</string>
 	<string name="update_information_last_checked_on">Utoljára ellenőrizve: %1$s</string>
 	<string name="update_information_no_update_data_available">Nem állnak rendelkezésre frissítési információk</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -44,7 +45,7 @@
 	<string name="download_complete_notification">Érintsd meg a telepítés elindításához</string>
 
 	<string name="download_error">letöltési Hiba</string>
-	<string name="download_error_close">BEZÁRÁS</string>
+	<string name="download_error_close">Bezárás</string>
 	<string name="download_error_corrupt">A letöltött frissítés fájl sérült! Próbáld meg újra letölteni.</string>
 	<string name="download_error_server">Szerverhiba történt a frissítés letöltése közben. Próbáld újra letölteni a frissítést.</string>
 	<string name="download_error_internal">Sajnos technikai hiba történt a frissítés letöltése közben. Próbáld meg újra letölteni. Ha ez továbbra is fennáll, kérjük, fordulj segítségért az alkalmazás fejlesztőjéhez.</string>
@@ -53,8 +54,8 @@
 Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">A fájl letöltésre került, de nem sikerült áthelyezni a megfelelő könyvtárba. Nyiss meg egy fájlkezelőt, keresd meg a \"%1$s\" helyet, és kézzel helyezd át a fájlt a belső tárolóhely legfelső könyvtárába.</string>
 
-	<string name="download_error_retry">ÚJRA</string>
-	<string name="download_error_resume">FOLYTATÁS</string>
+	<string name="download_error_retry">Újra</string>
+	<string name="download_error_resume">Folytatás</string>
 	<string name="download_error_storage">Nincs elegendő tárhely a készüléken a frissítés letöltéséhez. Távolíts el néhány fájlt, és próbáld meg újra letölteni.</string>
 
 	<string name="download_failed">Sikertelen letöltés</string>
@@ -132,7 +133,12 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="settings_saving">A beállításokat még mindig mentimentődnek. Ha ez túl sokáig tart: Ellenőrizd a hálózati kapcsolatot, lépj ki az alkalmazásból, és indítsd újra.</string>
 
 	<string name="settings_advanced_mode">Haladó mód</string>
-	<string name="settings_advanced_mode_explanation">A haladó mód hides elrejti az \"A rendszer naprakész\" üzenetet, és lehetővé teszi az összes frissítés letöltését és telepítését, akkor is, hogy ha ezek nem lennének kompatibilisek az eszközöddel.\n\nEz hasznos lehet ha:\n&#8226; Normál verzióról béta verzióra frissítesz\n&#8226; Béta verzióról stabil verzióra frissítesz vissza (ne felejtsd el készülékd gyári állapotát visszaállítani)\n&#8226; Jelenlegi rendszerverzió újratelepítése.</string>
+	<string name="settings_advanced_mode_explanation">"Normális esetben az alkalmazás az aktuális operációs rendszer verziója alapján mutatja a frissítéseket. A speciális módban mindig a legújabb elérhető frissítés jelenik meg, függetlenül az eszköz/verzió kompatibilitástól.
+
+Ez hasznos lehet, ha szeretné:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Újra letölteni a legújabb verziót, még akkor is, ha már rajta van.
+&#8226; Másik frissítési sávra váltani"</string>
+	<string name="settings_advanced_mode_caption">"A speciális módra csak a fenti helyzetekben lehet szükség. Nem szabad engedélyeznie, hacsak nem tudja, mit csinál."</string>
 
 	<string name="settings_update_method">Frissítési módszer</string>
 	<string name="settings_upload_logs">Használati adatok és a naplók megosztása</string>
@@ -146,14 +152,14 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="onboarding_finished_button">Alkalmazás elindítása</string>
 
 	<string name="onboarding_page_1_title">Üdvözlünk az Oxygen Updater-ben!</string>
-	<string name="onboarding_page_1_text">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n\n&#8226; Rootolt eszközök egyszerű frissítését\n\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban\n\nHúzd balra a folytatáshoz.</string>
-	<string name="onboarding_page_1_caption">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is.\n\nAz alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
+	<string name="onboarding_page_1_text">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n&#8226; Rootolt eszközök egyszerű frissítését\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban</string>
+	<string name="onboarding_page_1_caption">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is. Az alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
 	<string name="onboarding_page_2_title">Válaszd ki a készüléked</string>
 	<string name="onboarding_page_2_caption">A készüléked általában már feljebb ki van választva. Ha nem, válaszd ki a készüléket feljebb.</string>
 	<string name="onboarding_page_3_title">Válaszd ki a frissítési módszered</string>
 	<string name="onboarding_page_3_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál.\n\nAzonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget.\n\nHa OxygenOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
 	<string name="onboarding_page_4_title">Készen állsz!</string>
-	<string name="onboarding_page_4_text">Reméljük élvezni fogod az alkalmazás használatát!\n\nA beállításokat később bármikor megváltoztathatod. Ehhez: érintd meg a három pontot a jobb felső sarokban, majd érintsd meg a \"Beállítások\" gombot.</string>
+	<string name="onboarding_page_4_text">Reméljük élvezni fogod az alkalmazás használatát! A beállításokat később bármikor megváltoztathatod.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Telepítés</string>
@@ -272,7 +278,7 @@ Instrukciók:
 	<string name="news">Hírek</string>
 	<string name="news_date_published">Utolsó frissítés: %1$s</string>
 	<string name="news_empty">Ennek a cikknek nincs tartalma.</string>
-	<string name="news_load_network_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"ÚJRA\" gombot a cikk megnyitásához.</string>
+	<string name="news_load_network_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"Újra\" gombot a cikk megnyitásához.</string>
 	<string name="news_load_id_error"><![CDATA[Nem sikerült megnyitni a cikket érvénytelen URL-ről: %1$s. Ellenőrizd az URL-t, vagy jelentsd nekünk ezt <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
 	<string name="news_unread_count_1">%1$d olvasatlan híred van. Érints meg a megtekintésükhöz.</string>
 	<string name="news_unread_count_2">%1$d olvasatlan híred van. Érints meg az összes megtekintéséhez.</string>
@@ -304,7 +310,7 @@ Instrukciók:
 	<string name="error_no_internet_connection">Nincs kapcsolat.</string>
 	<string name="error_maintenance">Szerver karbantartás</string>
 	<string name="error_maintenance_message">Kérlek várj. A szerver hamarosan elérhető lesz.</string>
-	<string name="error_maintenance_retry">Lehetséges, hogy a szerver nem működik karbantartás miatt. Próbáld újra egy idő után, vagy jelentsd nekünk <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Lehetséges, hogy a szerver nem működik karbantartás miatt. Próbáld újra egy idő után, vagy jelentsd nekünk <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
 	<string name="error_reload">Újratöltés</string>
 
 	<string name="error_unable_to_rate_app">Nem tudod értékelni az alkalmazást, mert a Google Play Áruház hiányzik az eszközödről.</string>

@@ -221,7 +221,7 @@ class ReadOtaDbWorker(
             // URLs. App v2.7.0 - v5.8.3 had this old filename contribution feature, which was removed in v5.9.0.
             // v5.11.0 brought it back with adjustments for URLs instead, and behind a root access check.
             // Note: we're taking the lazy approach and saving the entire URL in the `name` field, to avoid
-            // bumping DB version and adding column-name-change upgrade logic. Why? Because `ALTER...RENAME`
+            // bumping DB version and adding column-name-change upgrade logic. Why? Because `ALTER…RENAME`
             // is supported only in SQLite v3.25.0+, and versions vary per device/Android release:
             // https://stackoverflow.com/a/4377116. On older SQLite versions, table recreation was the only
             // way, plus we'd still have to worry about recreating indices etc.

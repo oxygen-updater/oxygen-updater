@@ -13,8 +13,9 @@
 	<string name="update_information_banner_server">Натисніть, щоб переглянути важливі повідомлення</string>
 	<string name="update_information_banner_advanced_mode_tip">Ви вибрали режим оновлення \"%1$s\". Увімкніть розширений режим якщо плануєте використовувати цей режим.</string>
 	<string name="update_information_header_advanced_mode_hint">Увімкнено розширений режим</string>
-	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\".\n\nРозширений режим можна вимкнути в налаштуваннях.</string>
-	<string name="update_information_different_version_changelog_notice">Ви переглядаєте список змін для способу оновлення \"%1$s\". Якщо ви маєте намір встановити це оновлення, спочатку необхідно увімкнути розширений режим в налаштуваннях.\n\nПроте, якщо ви хочете переглянути список змін до поточної встановленої версії, вам потрібно вибрати відповідний спосіб оновлення в налаштуваннях.</string>
+	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\". Розширений режим можна вимкнути в налаштуваннях.</string>
+	<string name="update_information_different_version_changelog_notice_base">Примітка: цей журнал змін стосується останньої доступної версії (%1$s) у методі оновлення \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Якщо ви маєте намір встановити це оновлення, вам слід увімкнути \"Розширений режим\" у налаштуваннях.</string>
 	<string name="update_information_last_checked_on">Востаннє перевірено: %1$s</string>
 	<string name="update_information_no_update_data_available">Немає інформації про оновлення</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -44,7 +45,7 @@
 	<string name="download_complete_notification">Натисніть, щоб встановити</string>
 
 	<string name="download_error">Помилка завантаження</string>
-	<string name="download_error_close">ЗАКРИТИ</string>
+	<string name="download_error_close">Закрити</string>
 	<string name="download_error_corrupt">Завантажене оновлення пошкоджене! Будь ласка, спробуйте завантажити його знову.</string>
 	<string name="download_error_server">Під час завантаження оновлення сталася помилка на сервері. Будь ласка, спробуйте завантажити оновлення знову.</string>
 	<string name="download_error_internal">На жаль, під час завантаження оновлення виникла технічна помилка. Спробуйте завантажити його знову. Але якщо помилка не зникне, тоді зв\'яжіться з розробником застосунку для консультації.</string>
@@ -53,8 +54,8 @@
 Якщо хочете дізнатися більше, можете зв\'язатися з нами через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або написати в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Файл завантажено, але його не вдалося перемістити в потрібну теку. Відкрийте менеджер файлів, перейдіть в \"%1$s\", і вручну перемістіть файл в теку \"topmost\" на внутрішньому сховищі.</string>
 
-	<string name="download_error_retry">ПОВТОРИТИ</string>
-	<string name="download_error_resume">ПРОДОВЖИТИ</string>
+	<string name="download_error_retry">Повторити</string>
+	<string name="download_error_resume">Продовжити</string>
 	<string name="download_error_storage">На вашому пристрої недостатньо місця, щоб завантажити оновлення. Будь ласка, видаліть деякі файли і спробуйте завантажити його знову.</string>
 
 	<string name="download_failed">Не вдалося завантажити</string>
@@ -131,7 +132,12 @@
 	<string name="settings_saving">Ваші налаштування досі зберігаються. Якщо це триває занадто довго: перевірте з\'єднання з мережею, вийдіть із застосунку і запустіть його знову.</string>
 
 	<string name="settings_advanced_mode">Розширений режим</string>
-	<string name="settings_advanced_mode_explanation">Розширений режим приховує повідомлення \"Система оновлена\", дозволяючи вам завантажувати і встановлювати всі оновлення, навіть якщо вони можуть бути не сумісні з вашим пристроєм.\n\nЦей режим може бути корисним, коли потрібно:\n&#8226; оновитися зі звичайної версії до бета версії;\n&#8226; відкотитися з бета версії до звичайної версії (не забувайте повністю очищати ваш пристрій);\n&#8226; перевстановити вашу поточну систему.</string>
+	<string name="settings_advanced_mode_explanation">"Зазвичай програма показує оновлення на основі поточної версії ОС. У розширеному режимі завжди буде показано останнє доступне оновлення, незалежно від сумісності пристрою/версії.
+
+Це може бути корисно, якщо ви хочете:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Повторно завантажити останню версію, навіть якщо вона вже встановлена
+&#8226; Переключитися на інший шлях оновлення"</string>
+	<string name="settings_advanced_mode_caption">"Розширений режим може знадобитися лише у вищезазначених ситуаціях. Не вмикайте його, якщо не знаєте, що робите."</string>
 
 	<string name="settings_update_method">Спосіб оновлення</string>
 	<string name="settings_upload_logs">Ділитися даними про використання та журналом помилок</string>
@@ -145,14 +151,14 @@
 	<string name="onboarding_finished_button">розпочати</string>
 
 	<string name="onboarding_page_1_title">Ласкаво просимо до Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Цей застосунок дозволить вам:\n\n&#8226; Отримувати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n\n&#8226; Легко оновлювати пристрій з рутом\n\n&#8226; Переглядати, що нового на встановленій прошивці\n\n&#8226; Читати останні новини про OnePlus і OxygenOS\n\nПроведіть вліво, щоб продовжити.</string>
-	<string name="onboarding_page_1_caption">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком.\n\nВикористовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
+	<string name="onboarding_page_1_text">Цей застосунок дозволить вам:\n\n&#8226; Отримувати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n&#8226; Легко оновлювати пристрій з рутом\n&#8226; Переглядати, що нового на встановленій прошивці\n&#8226; Читати останні новини про OnePlus і OxygenOS</string>
+	<string name="onboarding_page_1_caption">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком. Використовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
 	<string name="onboarding_page_2_title">Виберіть ваш пристрій</string>
 	<string name="onboarding_page_2_caption">Зазвичай пристрій визначається автоматично. Якщо ні, тоді виберіть його зі списку.</string>
 	<string name="onboarding_page_3_title">Виберіть спосіб оновлення</string>
 	<string name="onboarding_page_3_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що під час нього завантажується менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open Beta).</string>
 	<string name="onboarding_page_4_title">Ви готові до оновлення!</string>
-	<string name="onboarding_page_4_text">Сподіваємося, вам буде приємно користуватися цим застосунком!\n\nВи завжди можете змінити налаштування. Щоб це зробити, натисніть на три крапки в правому верхньому куті, і виберіть \"Налаштування\".</string>
+	<string name="onboarding_page_4_text">Сподіваємося, вам буде приємно користуватися цим застосунком! Ви завжди можете змінити налаштування.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Встановлення</string>
@@ -272,7 +278,7 @@
 	<string name="news">Новини</string>
 	<string name="news_date_published">Останнє оновлення: %1$s</string>
 	<string name="news_empty">Ця стаття немає вмісту.</string>
-	<string name="news_load_network_error">Не вдалося відкрити статтю. Перевірте з\'єднання і натисніть кнопку \'ПОВТОРИТИ\', щоб відкрити статтю знову.</string>
+	<string name="news_load_network_error">Не вдалося відкрити статтю. Перевірте з\'єднання і натисніть кнопку \'Повторити\', щоб відкрити статтю знову.</string>
 	<string name="news_load_id_error"><![CDATA[Не вдалося відкрити новину з недійсного URL: %1$s. Перевірте URL, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
 	<string name="news_unread_count_1">Є %1$d непрочитаних новин.\nНатисніть, щоб показати непрочитані новини</string>
 	<string name="news_unread_count_2">Є %1$d непрочитаних новин.\nНатисніть, щоб показати всі новини</string>
@@ -304,7 +310,7 @@
 	<string name="error_no_internet_connection">Немає з\'єднання.</string>
 	<string name="error_maintenance">Сервер на обслуговуванні</string>
 	<string name="error_maintenance_message">Будь ласка, зачекайте. Сервер незабаром стане доступним.</string>
-	<string name="error_maintenance_retry">Сервер може бути закритий на обслуговування. Спробуйте знову через декілька хвилин, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Сервер може бути закритий на обслуговування. Спробуйте знову через декілька хвилин, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
 	<string name="error_reload">Перезавантажити</string>
 
 	<string name="error_unable_to_rate_app">Ви не можете оцінити застосунок, тому що Play Маркет відсутній на вашому пристрої.</string>

@@ -14,6 +14,7 @@ import com.oxygenupdater.utils.Logger.logWarning
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -43,32 +44,25 @@ fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
  * Otherwise, default to [CACHE_SIZE]
  */
 fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-    context.getSystemService<StorageManager>()!!.run {
+    context.getSystemService<StorageManager>()?.run {
         try {
-            getCacheQuotaBytes(getUuidForPath(context.cacheDir)).let {
-                if (it != 0L) it
-                else CACHE_SIZE
-            }
+            val quota = getCacheQuotaBytes(getUuidForPath(context.cacheDir))
+            if (quota > 0L) quota else CACHE_SIZE
         } catch (e: IOException) {
             CACHE_SIZE
         }
-    }
+    } ?: CACHE_SIZE
 } else {
     CACHE_SIZE
-}.let { cacheSize ->
-    Cache(context.cacheDir, cacheSize)
+}.let {
+    Cache(context.cacheDir, it)
 }
 
 private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
     cache(cache)
     addInterceptor { chain ->
         val request = chain.request()
-
-        logDebug(TAG, "Method: ${request.method}, URL: ${request.url}")
-
-        val builder = request.newBuilder()
-            .addHeader(USER_AGENT_TAG, APP_USER_AGENT)
-
+        val builder = request.newBuilder().addHeader(USER_AGENT_TAG, APP_USER_AGENT)
         val readTimeout = request.header(HEADER_READ_TIMEOUT)?.toInt()?.let {
             builder.removeHeader(HEADER_READ_TIMEOUT)
             it
@@ -79,27 +73,17 @@ private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
                 logDebug(TAG, "readTimeout = ${readTimeout}s")
 
                 withReadTimeout(readTimeout, TimeUnit.SECONDS)
-            } else {
-                logDebug(TAG, "readTimeout = ${chain.readTimeoutMillis() / 1000}s")
-            }
+            } else logDebug(TAG, "readTimeout = ${chain.readTimeoutMillis() / 1000}s")
 
             proceed(builder.build())
         }
     }
 
-    if (BuildConfig.DEBUG) {
-        addInterceptor(HttpLoggingInterceptor().apply {
-            setLevel(HttpLoggingInterceptor.Level.BASIC)
-        })
-    }
+    if (BuildConfig.DEBUG) addInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
 }.build()
 
 private fun httpClientForDownload() = OkHttpClient.Builder().apply {
-    if (BuildConfig.DEBUG) {
-        addInterceptor(HttpLoggingInterceptor().apply {
-            setLevel(HttpLoggingInterceptor.Level.BASIC)
-        })
-    }
+    if (BuildConfig.DEBUG) addInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
 }.build()
 
 private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
@@ -113,48 +97,41 @@ private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Build
     .client(httpClient)
     .build()
 
-suspend inline fun <reified R> performServerRequest(
-    crossinline block: suspend () -> Response<R>
-): R? {
+@Suppress("RedundantSuspendModifier")
+suspend inline fun <reified R> performServerRequest(block: () -> Response<R>): R? {
     val logTag = "OxygenUpdaterNetwork"
 
     var retryCount = 0
-    while (retryCount < 5) {
-        try {
-            val response = block()
+    while (retryCount < 5) try {
+        val response = block()
 
-            return if (response.isSuccessful) {
-                response.body().apply {
-                    logVerbose(logTag, "Response: $this")
-                }
-            } else {
-                val json = convertErrorBody(response)
-                logWarning(
-                    logTag, "Response: $json",
-                    OxygenUpdaterException("API Response Error: $json")
-                )
-                null
-            }
-        } catch (e: Exception) {
-            when {
-                e is HttpException -> logWarning(
-                    logTag,
-                    "HttpException: [code: ${e.code()}, errorBody: ${convertErrorBody(e)}]"
-                )
-                ExceptionUtils.isNetworkError(e) -> logWarning(
-                    logTag,
-                    "Network error while performing request", e
-                )
-                else -> logError(
-                    logTag,
-                    "Error performing request", e
-                )
-            }
-
-            if (retryCount++ < 5) {
-                logDebug(logTag, "Retrying the request ($retryCount/5)")
-            }
+        return if (response.isSuccessful) response.body().apply {
+            logVerbose(logTag, "Response: $this")
+        } else {
+            val json = convertErrorBody(response)
+            logWarning(
+                logTag, "Response: $json",
+                OxygenUpdaterException("API Response Error: $json")
+            )
+            null
         }
+    } catch (e: Exception) {
+        when {
+            e is HttpException -> logWarning(
+                logTag,
+                "HttpException: [code: ${e.code()}, errorBody: ${convertErrorBody(e)}]"
+            )
+
+            ExceptionUtils.isNetworkError(e) -> logWarning(
+                logTag,
+                "Network error while performing request", e
+            )
+
+            else -> logError(logTag, "Error performing request", e)
+        }
+
+        retryCount++
+        logDebug(logTag, "Retrying the request ($retryCount/5)")
     }
 
     return null

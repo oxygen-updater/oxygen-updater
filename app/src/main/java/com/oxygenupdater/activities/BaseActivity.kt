@@ -15,19 +15,17 @@ import com.oxygenupdater.utils.ThemeUtils
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 abstract class BaseActivity(
-    @LayoutRes contentLayoutId: Int
+    @LayoutRes contentLayoutId: Int,
 ) : AppCompatActivity(contentLayoutId) {
 
     protected val rootView: View
         get() = findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
 
     override fun attachBaseContext(
-        base: Context
+        base: Context,
     ) = super.attachBaseContext(base.attachWithLocale())
 
     override fun onResume() = super.onResume().also {
-        AppCompatDelegate.setDefaultNightMode(
-            ThemeUtils.translateThemeToNightMode(this)
-        )
+        AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode())
     }
 }

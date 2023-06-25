@@ -16,10 +16,11 @@
 	<!-- TODO: translate these 6 strings below -->
 	<string name="update_information_error_title">Couldn\'t retrieve latest update data information</string>
 	<string name="update_information_banner_server">Tap here to view important notices</string>
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update track. Enable โหมดขั้นสูง if you plan to switch to this update track.</string>
+	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable โหมดขั้นสูง if you plan to switch to this update method.</string>
 	<string name="update_information_header_advanced_mode_hint">เปิดใช้งานโหมดขั้นสูง</string>
-	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled โหมดขั้นสูง, you can download the latest ZIP for \"%1$s\".\n\nYou can turn โหมดขั้นสูง off from settings.</string>
-	<string name="update_information_different_version_changelog_notice">You\'re viewing a changelog for the latest update in the \"%1$s\" upgrade track. If you intend to install this update, you must turn โหมดขั้นสูง on first (in settings).\n\nHowever, if you wish to see the changelog for the currently installed version instead, you\'ll need to switch back to the correct update method.</string>
+	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled โหมดขั้นสูง, you can download the latest ZIP for \"%1$s\". You can turn โหมดขั้นสูง off from settings.</string>
+	<string name="update_information_different_version_changelog_notice_base">หมายเหตุ: บันทึกการเปลี่ยนแปลงนี้มีไว้สำหรับเวอร์ชันล่าสุดที่มีอยู่ (%1$s) ในวิธีการอัปเดต \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced"> หากคุณต้องการติดตั้งการอัปเดตนี้ คุณต้องเปิดใช้งาน \"โหมดขั้นสูง\" ในการตั้งค่า</string>
 	<string name="update_information_last_checked_on">ตรวจสอบครั้งสุดท้ายเมื่อ: %1$s</string>
 	<string name="update_information_no_update_data_available">ยังไม่มีการอัพเดทถูกปล่อยออกมา</string>
 	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
@@ -138,7 +139,12 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_saving">การตั้งค่าของคุณกำลังถูกบันทึก ถ้ากระบวนการนี้ใช้เวลานานเกินไป กรุณาเช็คการเชื่อมต่อของคุณและเริ่มต้นแอพพลิเคชั่น</string>
 
 	<string name="settings_advanced_mode">โหมดขั้นสูง</string>
-	<string name="settings_advanced_mode_explanation">โหมดขั้นสูงจะข้อความ \"ระบบของคุณใหม่ล่าสุดแล้ว\", และอนุญาตให้คุณดาวน์โหลดและติดตั้งทุกเวอร์ชั่นของระบบถึงแม้ว่าระบบจะไม่สามารถติดตั้งได้\n\n การทำแบบนี้จะมีประโยชน์อย่างมากเมื่อ:\n&#8226; อัพเดทจากเวอร์ชั่นธรรมดาไปเวอร์ชั่นทดลอง\n&#8226; วิธีการกลับจากเวอร์ชั่นทดลองมาเวอร์ชั่นธรรมดา(อย่าลืมคืนค่าโรงงานก่อน)\n&#8226; คือติดตั้งระบบเวอร์ชั่นธรรมดาใหม่อีกครั้ง</string>
+	<string name="settings_advanced_mode_explanation">"โดยปกติแล้ว แอปจะแสดงการอัปเดตตามเวอร์ชันระบบปฏิบัติการปัจจุบันของคุณ ด้วยโหมดขั้นสูง การอัปเดตล่าสุดที่มีอยู่จะแสดงเสมอโดยไม่คำนึงถึงความเข้ากันได้ของอุปกรณ์/เวอร์ชัน
+
+สิ่งนี้มีประโยชน์หากคุณต้องการ:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; ดาวน์โหลดเวอร์ชันล่าสุดอีกครั้งแม้ว่าคุณจะใช้เวอร์ชันนั้นอยู่แล้วก็ตาม
+&#8226; สลับไปยังแทร็กอัปเดตอื่น"</string>
+	<string name="settings_advanced_mode_caption">"โหมดขั้นสูงอาจจำเป็นในสถานการณ์ข้างต้นเท่านั้น คุณไม่ควรเปิดใช้งานจนกว่าคุณจะรู้ว่าคุณกำลังทำอะไรอยู่"</string>
 
 	<string name="settings_update_method">วิธีการอัพเดท</string>
 	<string name="settings_upload_logs">แบ่งปันข้อมูลการใช้และล็อก</string>
@@ -152,14 +158,14 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="onboarding_finished_button">เริ่มใช้งาน</string>
 
 	<string name="onboarding_page_1_title">ยินดีต้อนรับสู่ Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">แอพนนี้จะทำให้คุณสามารถ:\n\n&#8226; ติดตั้ง OxygenOS เวอร์ชั่นใหม่ได้ก่อน\n\n&#8226; ง่ายต่อเครื่องที่ผ่านการรูท\n\n&#8226; และสามารถดูข้อมูลการอัพเดทต่างๆของระบบเวอร์ชั่นปัจจุบันที่คุณกำลังใช้อยู่\n\n&#8226; อ่านข่าวล่าสุดเกี่ยวกับ OnePlus และ OxygenOS\n\nปัดไปทางซ้ายเพื่อดำเนินการต่อ</string>
-	<string name="onboarding_page_1_caption">นี้ไม่ใช่แอพพลิเคชั่นอย่างทางการของ OnePlus ใช้แอพพลิเคชั่นนี้ด้วยความเสี่ยงของคุณเอง OnePlus หรือผู้พัฒนาแอปจะไม่รับผิดชอบต่อการกระทำของคุณร่วมถึงความเสียหายทีเกิดขี้นจากแอพนี้\n\nโดยการใช้แอพนี้คุณยอมรับข้อกำหนดและเงื่อนไขตามที่ระบุไว้ข้างต้น</string>
+	<string name="onboarding_page_1_text">แอพนนี้จะทำให้คุณสามารถ:\n\n&#8226; ติดตั้ง OxygenOS เวอร์ชั่นใหม่ได้ก่อน\n&#8226; ง่ายต่อเครื่องที่ผ่านการรูท\n&#8226; และสามารถดูข้อมูลการอัพเดทต่างๆของระบบเวอร์ชั่นปัจจุบันที่คุณกำลังใช้อยู่\n&#8226; อ่านข่าวล่าสุดเกี่ยวกับ OnePlus และ OxygenOS</string>
+	<string name="onboarding_page_1_caption">นี้ไม่ใช่แอพพลิเคชั่นอย่างทางการของ OnePlus ใช้แอพพลิเคชั่นนี้ด้วยความเสี่ยงของคุณเอง OnePlus หรือผู้พัฒนาแอปจะไม่รับผิดชอบต่อการกระทำของคุณร่วมถึงความเสียหายทีเกิดขี้นจากแอพนี้ โดยการใช้แอพนี้คุณยอมรับข้อกำหนดและเงื่อนไขตามที่ระบุไว้ข้างต้น</string>
 	<string name="onboarding_page_2_title">เลือกอุปกรณ์ของคุณ</string>
 	<string name="onboarding_page_2_caption">โดยปกติอุปกรณ์ของคุณจะถูกเลือกไว้ด้านบน หากไม่ คุณสามารถเลือกอุปกรณ์ของคุณด้านบน</string>
 	<string name="onboarding_page_3_title">เลือกวิธีการอัพเดทของคุณ</string>
 	<string name="onboarding_page_3_caption">โดยปกติแล้วการอัปเดตธรรมดาจะเป็นตัวเลือกที่เหมาะสมเนื่องจากมีการดาวน์โหลดที่เร็วกว่าและเล็กกว่ามาก\n\n อย่างไรก็ตามมันเข้ากันไม่ได้กับอุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้เลือกการอัพเดทแบบเต็มรูปแบบ\n\nหากคุณมี OxygenOS รุ่นเบต้าให้เลือก (หนึ่งใน) วิธีการอัปเดต Open Beta</string>
 	<string name="onboarding_page_4_title">คุณพร้อมแล้ว!</string>
-	<string name="onboarding_page_4_text">ขอสนุกกับการใช้แอพนี้!\n\n คุณสามารถเปลี่ยนการตั้งค่าได้ในภายหลัง โดยทำดังนี้: แตะจุดสามจุดที่มุมขวาบนแล้วแตะที่ \"การตั้งค่า \".</string>
+	<string name="onboarding_page_4_text">ขอสนุกกับการใช้แอพนี้! คุณสามารถเปลี่ยนการตั้งค่าได้ในภายหลัง.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">ติดตั้ง</string>
@@ -321,7 +327,7 @@ Instructions:
 	<string name="error_maintenance">การบำรุงรักษาเซิร์ฟเวอร์</string>
 	<string name="error_maintenance_message">โปรดรอ. เซิร์ฟเวอร์จะพร้อมใช้งานในไม่ช้า</string>
 	<!-- TODO: translate this string below -->
-	<string name="error_maintenance_retry">The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="error_reload">โหลดใหม่</string>
 
 	<string name="error_unable_to_rate_app">คุณไม่สามารถให้คะแนนแอพพลิเคชั่นได้ เนื่องจาก Google Play Store ไม่มีอยู่ในอุปกรณ์ของคุณ</string>
