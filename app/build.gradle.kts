@@ -6,6 +6,7 @@ plugins {
     id(BuildPlugins.FIREBASE_CRASHLYTICS)
     kotlin("android")
     kotlin("kapt")
+    id(BuildPlugins.KSP) version KSP_VERSION
 }
 
 fun loadProperties(
@@ -47,18 +48,6 @@ android {
         versionName = "5.11.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                // Add Room-specific arguments
-                // https://developer.android.com/jetpack/androidx/releases/room#compiler-options
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true",
-                    "room.expandProjection" to "true"
-                )
-            }
-        }
 
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -213,14 +202,15 @@ android {
         }
     }
 
+    val javaVersion = JavaVersion.VERSION_17 // keep in sync with `jvmToolchain` below
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = javaVersion.toString()
     }
 
     buildFeatures {
@@ -228,6 +218,17 @@ android {
     }
 
     testBuildType = "debug"
+}
+
+// Required to workaround https://issuetracker.google.com/issues/260059413
+kotlin {
+    jvmToolchain(17) // keep in sync with `javaVersion` above
+}
+
+ksp {
+    // Add Room-specific arguments: https://developer.android.com/jetpack/androidx/releases/room#compiler-options
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
 }
 
 buildscript {
@@ -257,7 +258,7 @@ dependencies {
     implementation(AndroidXLibraries.RECYCLER_VIEW)
     implementation(AndroidXLibraries.ROOM_KTX)
     implementation(AndroidXLibraries.ROOM_RUNTIME)
-    kapt(AndroidXLibraries.ROOM_COMPILER)
+    ksp(AndroidXLibraries.ROOM_COMPILER)
 
     implementation(AndroidXLibraries.KTX_CORE)
     implementation(AndroidXLibraries.KTX_FRAGMENT)

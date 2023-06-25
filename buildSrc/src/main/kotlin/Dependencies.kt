@@ -3,6 +3,9 @@
 // https://blog.jetbrains.com/kotlin/category/releases/
 const val KOTLIN_VERSION = "1.8.22"
 
+// https://github.com/google/ksp/releases
+const val KSP_VERSION = "1.8.22-1.0.11" // keep in sync with Kotlin version
+
 // https://mvnrepository.com/artifact/io.insert-koin/koin-android
 // https://github.com/InsertKoinIO/koin/tags
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
@@ -34,6 +37,7 @@ object BuildPlugins {
     const val ANDROID_APPLICATION = "com.android.application"
     const val GOOGLE_SERVICES = "com.google.gms.google-services"
     const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
+    const val KSP = "com.google.devtools.ksp"
 }
 
 object AndroidSdk {
