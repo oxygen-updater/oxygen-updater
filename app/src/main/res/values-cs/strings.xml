@@ -205,7 +205,7 @@ Pokyny:
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
 
-	<string name="device_information_amount_of_memory">Množství paměti RAM</string>
+	<string name="device_information_amount_of_memory">Paměť RAM</string>
 	<string name="device_information_cpu_frequency">Frekvence procesoru</string>
 	<string name="device_information_header">Zařízení</string>
 	<string name="device_information_image_description">Obrázek zařízení</string>
