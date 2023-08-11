@@ -2,24 +2,26 @@ package com.oxygenupdater.compose.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import androidx.activity.compose.BackHandler
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import coil.size.Size
 import com.google.accompanist.web.rememberSaveableWebViewState
 import com.google.accompanist.web.rememberWebViewNavigator
 import com.google.android.gms.ads.AdError
@@ -35,26 +37,25 @@ import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Image
 import com.oxygenupdater.compose.icons.LogoNotification
 import com.oxygenupdater.compose.ui.CollapsingAppBar
-import com.oxygenupdater.compose.ui.PullRefresh
-import com.oxygenupdater.compose.ui.TopAppBarDefaults
+import com.oxygenupdater.compose.ui.common.PullRefresh
+import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
 import com.oxygenupdater.compose.ui.news.ErrorSheet
 import com.oxygenupdater.compose.ui.news.NewsItemScreen
 import com.oxygenupdater.compose.ui.news.NewsItemViewModel
-import com.oxygenupdater.compose.ui.theme.light
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
-import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.viewmodels.BillingViewModel
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Timer
 import kotlin.concurrent.schedule
 
+@OptIn(ExperimentalMaterial3Api::class)
 class NewsItemActivity : ComposeSupportActionBarActivity(
     MainActivity.PAGE_NEWS,
     R.string.news
@@ -103,21 +104,16 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
     override fun scrollBehavior() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     @Composable
-    override fun SystemBars() {
-        val controller = rememberSystemUiController()
-        controller.setSystemBarsColor(Color.Transparent, MaterialTheme.colors.light)
-    }
-
-    @Composable
     override fun TopAppBar() = CollapsingAppBar(scrollBehavior, { modifier ->
         val context = LocalContext.current
         val imageUrl = item?.imageUrl
         AsyncImage(
             imageUrl?.let {
+                val density = LocalDensity.current
                 remember(it, maxWidth) {
                     ImageRequest.Builder(context)
                         .data(it)
-                        .size(Utils.dpToPx(context, maxWidth.value).toInt(), Utils.dpToPx(context, 256f).toInt())
+                        .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
                         .build()
                 }
             },
@@ -125,13 +121,12 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
             placeholder = rememberVectorPainter(CustomIcons.Image),
             error = rememberVectorPainter(CustomIcons.LogoNotification),
             contentScale = ContentScale.Crop,
-            colorFilter = if (imageUrl == null) ColorFilter.tint(MaterialTheme.colors.primary) else null
+            colorFilter = if (imageUrl == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
         )
     }, item?.title ?: stringResource(R.string.loading), item?.authorName ?: stringResource(R.string.summary_please_wait)) {
         onBackPressed()
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     override fun Content() {
         // Ads should be shown if user hasn't bought the ad-free unlock
@@ -153,38 +148,29 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
                 navigator.reload()
             }
         }
+
         PullRefresh(state, shouldShowProgressIndicator = {
             it?.isFullyLoaded != true
         }, onRefresh) {
-            val scope = rememberCoroutineScope()
             val sheetState = defaultModalBottomSheetState()
+            var error by remember { mutableStateOf<String?>(null) }
+            val hide = rememberCallback { error = null }
+            BackHandler(sheetState.isVisible, hide)
 
-            val (error, setError) = remember { mutableStateOf<String?>(null) }
-            val hide: () -> Unit = remember(scope, sheetState) {
-                {
-                    setError(null)
-                    // Action passed for clicking close button in the content
-                    scope.launch { sheetState.hide() }
+            error?.let {
+                ModalBottomSheet(hide, sheetState) {
+                    ErrorSheet(it, hide, onRefresh)
                 }
             }
 
-            LaunchedEffect(Unit) { // run only on init
-                // Hide empty sheet in case activity was recreated or config was changed
-                if (sheetState.isVisible && error == null) sheetState.hide()
-            }
+            NewsItemScreen(state, scrollBehavior, webViewState, navigator, showAds, bannerAdInit = rememberTypedCallback {
+                bannerAdView = it
+            }, onError = rememberTypedCallback {
+                error = it
+            }, onLoadFinished = rememberTypedCallback {
+                viewModel.markRead(it)
+            })
 
-            ModalBottomSheet({
-                if (error != null) ErrorSheet(error, hide, onRefresh)
-            }, sheetState) {
-                NewsItemScreen(state, scrollBehavior, webViewState, navigator, showAds, bannerAdInit = {
-                    bannerAdView = it
-                }, onError = {
-                    setError(it)
-                    scope.launch { sheetState.show() }
-                }) {
-                    viewModel.markRead(it)
-                }
-            }
         }
     }
 
@@ -280,8 +266,8 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
             RegexOption.IGNORE_CASE
         )
 
-        @Volatile
-        var item: NewsItem? = null
+        var item by mutableStateOf<NewsItem?>(null)
+            internal set
 
         const val INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID"
         const val INTENT_DELAY_AD_START = "DELAY_AD_START"

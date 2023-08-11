@@ -14,15 +14,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Switch
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material.icons.outlined.GroupAdd
@@ -30,18 +25,23 @@ import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Paid
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.Policy
+import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.NotificationsNone
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TrackChanges
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -57,17 +57,25 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.LogoNotification
+import com.oxygenupdater.compose.ui.SettingsListWrapper
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.animatedClickable
+import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.dialogs.AdvancedModeSheet
+import com.oxygenupdater.compose.ui.dialogs.ContributorSheet
+import com.oxygenupdater.compose.ui.dialogs.LanguageSheet
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.compose.ui.dialogs.SelectableSheet
 import com.oxygenupdater.compose.ui.dialogs.SheetType
+import com.oxygenupdater.compose.ui.dialogs.ThemeSheet
 import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
-import com.oxygenupdater.extensions.openInCustomTab
+import com.oxygenupdater.extensions.launch
 import com.oxygenupdater.extensions.openPlayStorePage
+import com.oxygenupdater.extensions.rememberCustomTabsIntent
+import com.oxygenupdater.extensions.toLanguageCode
 import com.oxygenupdater.extensions.toLocale
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.putBoolean
@@ -78,166 +86,191 @@ import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationUtils
-import kotlinx.coroutines.launch
+import java.util.Locale
 
 private var previousAdFreeConfig: Triple<Boolean, Int, (() -> Unit)?> = Triple(
     false, R.string.settings_buy_ad_free_label, null
 )
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    enabledDevices: List<Device>,
-    methodsForDevice: List<UpdateMethod>,
+    lists: SettingsListWrapper,
+    initialDeviceIndex: Int,
+    deviceChanged: (Device) -> Unit,
     initialMethodIndex: Int,
     methodChanged: (UpdateMethod) -> Unit,
-    selectedLanguageCode: String,
+    languageChanged: (String) -> Unit,
     adFreePrice: String?,
     adFreeConfig: Triple<Boolean, Int, (() -> Unit)?>?,
     openAboutScreen: () -> Unit,
-    showBottomSheet: (SheetType) -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
     val sheetState = defaultModalBottomSheetState()
     val listState = rememberLazyListState()
     var sheetType by remember { mutableStateOf(SheetType.None) }
-    val hide: () -> Unit = remember(scope, sheetState) {
-        {
-            sheetType = SheetType.None
-            // Action passed for clicking close button in the content
-            scope.launch { sheetState.hide() }
-        }
-    }
+    val hide = rememberCallback { sheetType = SheetType.None }
+    BackHandler(sheetState.isVisible, hide)
 
+    val (enabledDevices, methodsForDevice) = lists
     val deviceSelectionEnabled = enabledDevices.isNotEmpty()
     val methodSelectionEnabled = methodsForDevice.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
 
-    // TODO(compose/settings): TopAppBar scrollBehavior stays active even when sheet is visible.
-    //  See if sheets can be moved up into MainActivity to avoid nesting ModalBottomSheet layouts.
-    ModalBottomSheet({
+    var selectedLanguageCode by remember {
+        val defaultLanguageCode = Locale.getDefault().toLanguageCode()
+        mutableStateOf(PrefManager.getString(PrefManager.PROPERTY_LANGUAGE_ID, defaultLanguageCode) ?: defaultLanguageCode)
+    }
+
+    val advancedMode = remember {
+        mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
+    }
+
+    if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
         when (sheetType) {
+            SheetType.Contributor -> ContributorSheet(hide, true)
+
+            SheetType.Device -> SelectableSheet(
+                hide,
+                rememberLazyListState(), enabledDevices,
+                initialDeviceIndex,
+                R.string.settings_device, R.string.onboarding_page_2_caption,
+                keyId = PrefManager.PROPERTY_DEVICE_ID, keyName = PrefManager.PROPERTY_DEVICE,
+                deviceChanged
+            )
+
             SheetType.Method -> SelectableSheet(
                 hide,
                 listState, methodsForDevice,
                 initialMethodIndex,
                 R.string.settings_update_method, R.string.onboarding_page_3_caption,
                 keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID, keyName = PrefManager.PROPERTY_UPDATE_METHOD,
-            ) {
-                methodChanged(it)
+                methodChanged
+            )
+
+            SheetType.Theme -> ThemeSheet(hide) {
+                PrefManager.theme = it
+            }
+
+            SheetType.Language -> LanguageSheet(hide, selectedLanguageCode) {
+                selectedLanguageCode = it
+                languageChanged(it)
+            }
+
+            SheetType.AdvancedMode -> AdvancedModeSheet(hide) {
+                putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
+                advancedMode.value = it
             }
 
             else -> {}
         }
-    }, sheetState) {
-        Column(Modifier.verticalScroll(rememberScrollState())) {
-            //region Support us
-            Column(Modifier.background(MaterialTheme.colors.backgroundVariant)) {
-                Header(R.string.preference_header_support)
-
-                val config = adFreeConfig ?: previousAdFreeConfig
-                previousAdFreeConfig = config
-                val (enabled, subtitleResId, onClick) = config
-                val subtitle = if (onClick != null && adFreePrice != null) {
-                    stringResource(subtitleResId, adFreePrice)
-                } else stringResource(subtitleResId)
-
-                Item(Icons.Outlined.Paid, R.string.label_buy_ad_free, subtitle, enabled) {
-                    if (onClick != null) onClick()
-                }
-
-                val runningInPreview = LocalInspectionMode.current
-                if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) Item(
-                    Icons.Outlined.GroupAdd,
-                    R.string.contribute,
-                    stringResource(R.string.settings_contribute_label),
-                ) {
-                    showBottomSheet(SheetType.Contributor)
-                }
-            }
-            //endregion
-
-            //region Device
-            Header(R.string.preference_header_device)
-
-            Item(
-                Icons.Rounded.PhoneAndroid,
-                R.string.settings_device,
-                if (deviceSelectionEnabled) {
-                    PrefManager.getString(PrefManager.PROPERTY_DEVICE, notSelected) ?: notSelected
-                } else stringResource(R.string.summary_please_wait),
-                deviceSelectionEnabled
-            ) {
-                showBottomSheet(SheetType.Device)
-            }
-
-            Item(
-                Icons.Outlined.CloudDownload, R.string.settings_update_method, if (methodSelectionEnabled) {
-                    PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, notSelected) ?: notSelected
-                } else stringResource(R.string.summary_update_method), methodSelectionEnabled
-            ) {
-                sheetType = SheetType.Method
-                scope.launch { sheetState.show() }
-            }
-
-            Notifications()
-            //endregion
-
-            //region UI
-            Header(R.string.preference_header_ui)
-
-            Item(Icons.Outlined.Palette, R.string.label_theme, PrefManager.theme.toString()) {
-                showBottomSheet(SheetType.Theme)
-            }
-
-            Item(Icons.Outlined.Language, R.string.label_language, remember(selectedLanguageCode) {
-                val locale = selectedLanguageCode.toLocale()
-                locale.displayName.replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(locale) else it.toString()
-                }
-            }) {
-                showBottomSheet(SheetType.Language)
-            }
-            //endregion
-
-            //region Advanced
-            Header(R.string.preference_header_advanced)
-
-            SwitchItem(PrefManager.PROPERTY_ADVANCED_MODE, remember {
-                PrefManager.advancedMode
-            }, Icons.Rounded.LockOpen, R.string.settings_advanced_mode) {
-                showBottomSheet(SheetType.AdvancedMode)
-            }
-
-            SwitchItem(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, remember {
-                mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true))
-            }, Icons.Rounded.TrackChanges, R.string.settings_upload_logs)
-            //endregion
-
-            //region About
-            Header(R.string.preference_header_about)
-
-            val context = LocalContext.current
-            Item(Icons.Outlined.Policy, R.string.label_privacy_policy, stringResource(R.string.summary_privacy_policy)) {
-                // Use Chrome Custom Tabs to open the privacy policy link
-                context.openInCustomTab("https://oxygenupdater.com/privacy/")
-            }
-
-            Item(Icons.Rounded.StarOutline, R.string.label_rate_app, stringResource(R.string.summary_rate_app)) {
-                context.openPlayStorePage()
-            }
-
-            Item(
-                CustomIcons.LogoNotification,
-                R.string.app_name,
-                "v${BuildConfig.VERSION_NAME}",
-                onClick = openAboutScreen
-            )
-            //endregion
-        }
     }
 
-    BackHandler(sheetState.isVisible) { hide() }
+    Column(Modifier.verticalScroll(rememberScrollState())) {
+        //region Support us
+        Column(Modifier.background(MaterialTheme.colorScheme.backgroundVariant)) {
+            Header(R.string.preference_header_support)
+
+            val config = adFreeConfig ?: previousAdFreeConfig
+            previousAdFreeConfig = config
+            val (enabled, subtitleResId, onClick) = config
+            val subtitle = if (onClick != null && adFreePrice != null) {
+                stringResource(subtitleResId, adFreePrice)
+            } else stringResource(subtitleResId)
+
+            Item(Icons.Outlined.Paid, R.string.label_buy_ad_free, subtitle, enabled) {
+                if (onClick != null) onClick()
+            }
+
+            val runningInPreview = LocalInspectionMode.current
+            if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) Item(
+                Icons.Outlined.GroupAdd,
+                R.string.contribute,
+                stringResource(R.string.settings_contribute_label),
+            ) {
+                sheetType = SheetType.Contributor
+            }
+        }
+        //endregion
+
+        //region Device
+        Header(R.string.preference_header_device)
+
+        Item(
+            Icons.Rounded.PhoneAndroid,
+            R.string.settings_device,
+            if (deviceSelectionEnabled) {
+                PrefManager.getString(PrefManager.PROPERTY_DEVICE, notSelected) ?: notSelected
+            } else stringResource(R.string.summary_please_wait),
+            deviceSelectionEnabled
+        ) {
+            sheetType = SheetType.Device
+        }
+
+        Item(
+            Icons.Outlined.CloudDownload, R.string.settings_update_method, if (methodSelectionEnabled) {
+                PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, notSelected) ?: notSelected
+            } else stringResource(R.string.summary_update_method), methodSelectionEnabled
+        ) {
+            sheetType = SheetType.Method
+        }
+
+        Notifications()
+        //endregion
+
+        //region UI
+        Header(R.string.preference_header_ui)
+
+        Item(Icons.Outlined.Palette, R.string.label_theme, PrefManager.theme.toString()) {
+            sheetType = SheetType.Theme
+        }
+
+        Item(Icons.Outlined.Language, R.string.label_language, remember(selectedLanguageCode) {
+            val locale = selectedLanguageCode.toLocale()
+            locale.displayName.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(locale) else it.toString()
+            }
+        }) {
+            sheetType = SheetType.Language
+        }
+        //endregion
+
+        //region Advanced
+        Header(R.string.preference_header_advanced)
+
+        SwitchItem(
+            PrefManager.PROPERTY_ADVANCED_MODE, advancedMode,
+            Icons.Rounded.LockOpen, R.string.settings_advanced_mode
+        ) {
+            sheetType = SheetType.AdvancedMode
+        }
+
+        SwitchItem(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, remember {
+            mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true))
+        }, Icons.Rounded.TrackChanges, R.string.settings_upload_logs)
+        //endregion
+
+        //region About
+        Header(R.string.preference_header_about)
+
+        val context = LocalContext.current
+        val customTabIntent = rememberCustomTabsIntent()
+        Item(Icons.Outlined.Policy, R.string.label_privacy_policy, stringResource(R.string.summary_privacy_policy)) {
+            // Use Chrome Custom Tabs to open the privacy policy link
+            customTabIntent.launch(context, "https://oxygenupdater.com/privacy/")
+        }
+
+        Item(Icons.Rounded.StarOutline, R.string.label_rate_app, stringResource(R.string.summary_rate_app)) {
+            context.openPlayStorePage()
+        }
+
+        Item(
+            CustomIcons.LogoNotification,
+            R.string.app_name,
+            "v${BuildConfig.VERSION_NAME}",
+            onClick = openAboutScreen
+        )
+        //endregion
+    }
 }
 
 @Composable
@@ -304,21 +337,23 @@ private fun SwitchItem(
     }
 
     Item(icon, titleResId, stringResource(if (checked.value) R.string.summary_on else R.string.summary_off), content = {
-        Switch(checked.value, onCheckedChange)
+        Switch(checked.value, onCheckedChange, thumbContent = {
+            if (!checked.value) return@Switch
+            Icon(Icons.Rounded.Done, null, Modifier.size(SwitchDefaults.IconSize))
+        })
     }) {
         onCheckedChange(!checked.value)
     }
 }
 
 @Composable
-@NonRestartableComposable
 private fun Header(@StringRes textResId: Int) {
     ItemDivider(Modifier.padding(bottom = 16.dp))
     Text(
         stringResource(textResId),
         Modifier.padding(horizontal = 16.dp),
-        MaterialTheme.colors.primary,
-        style = MaterialTheme.typography.caption
+        MaterialTheme.colorScheme.primary,
+        style = MaterialTheme.typography.bodySmall
     )
 }
 
@@ -331,27 +366,27 @@ private fun Item(
     onClick: () -> Unit,
 ) = Row(
     Modifier
-        .alpha(if (enabled) 1f else ContentAlpha.disabled)
+        .alpha(if (enabled) 1f else 0.38f)
         .fillMaxWidth()
         .animatedClickable(enabled, onClick)
         .padding(16.dp), // must be after `clickable`
     verticalAlignment = Alignment.CenterVertically
 ) {
-    Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colors.primary)
+    Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colorScheme.primary)
 
     Column(Modifier.padding(start = 16.dp)) {
         @OptIn(ExperimentalFoundationApi::class)
         Text(
             stringResource(titleResId),
             Modifier.basicMarquee(), maxLines = 1,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.titleMedium
         )
 
         if (subtitle != null) Text(
             subtitle,
-            Modifier.alpha(ContentAlpha.medium),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             overflow = TextOverflow.Ellipsis, maxLines = 10,
-            style = MaterialTheme.typography.body2
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 
@@ -366,42 +401,47 @@ private fun Item(
 @Composable
 fun PreviewSettingsScreen() = PreviewAppTheme {
     SettingsScreen(
-        enabledDevices = listOf(
-            Device(
-                id = 1,
-                name = "OnePlus 7 Pro",
-                productName = "OnePlus7Pro",
+        SettingsListWrapper(
+            listOf(
+                Device(
+                    id = 1,
+                    name = "OnePlus 7 Pro",
+                    productNamesCsv = "OnePlus7Pro",
+                    enabled = true,
+                ),
+                Device(
+                    id = 2,
+                    name = "OnePlus 8T",
+                    productNamesCsv = "OnePlus8T",
+                    enabled = true,
+                ),
             ),
-            Device(
-                id = 2,
-                name = "OnePlus 8T",
-                productName = "OnePlus8T",
+            listOf(
+                UpdateMethod(
+                    id = 1,
+                    englishName = "Stable (full)",
+                    dutchName = "Stabiel (volledig)",
+                    recommendedForRootedDevice = true,
+                    recommendedForNonRootedDevice = false,
+                    supportsRootedDevice = true,
+                ),
+                UpdateMethod(
+                    id = 2,
+                    englishName = "Stable (incremental)",
+                    dutchName = "Stabiel (incrementeel)",
+                    recommendedForRootedDevice = false,
+                    recommendedForNonRootedDevice = true,
+                    supportsRootedDevice = false,
+                )
             ),
         ),
-        methodsForDevice = listOf(
-            UpdateMethod(
-                id = 1,
-                englishName = "Stable (full)",
-                dutchName = "Stabiel (volledig)",
-                recommended = false,
-                recommendedForRootedDevice = true,
-                recommendedForNonRootedDevice = false,
-                supportsRootedDevice = true,
-            ), UpdateMethod(
-                id = 2,
-                englishName = "Stable (incremental)",
-                dutchName = "Stabiel (incrementeel)",
-                recommended = true,
-                recommendedForRootedDevice = false,
-                recommendedForNonRootedDevice = true,
-                supportsRootedDevice = false,
-            )
-        ),
+        initialDeviceIndex = 1,
+        deviceChanged = {},
         initialMethodIndex = 1,
         methodChanged = {},
-        selectedLanguageCode = "en",
+        languageChanged = {},
         adFreePrice = null,
         adFreeConfig = previousAdFreeConfig,
         openAboutScreen = {},
-    ) {}
+    )
 }

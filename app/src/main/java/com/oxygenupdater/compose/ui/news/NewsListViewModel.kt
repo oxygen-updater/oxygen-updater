@@ -3,7 +3,6 @@ package com.oxygenupdater.compose.ui.news
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oxygenupdater.compose.ui.RefreshAwareState
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
@@ -32,11 +31,8 @@ class NewsListViewModel(private val serverRepository: ServerRepository) : ViewMo
     )
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-
         refreshingFlow.emit(true)
-        flow.emit(serverRepository.fetchNews(deviceId, updateMethodId))
+        flow.emit(serverRepository.fetchNews())
         refreshingFlow.emit(false)
     }
 
@@ -46,7 +42,7 @@ class NewsListViewModel(private val serverRepository: ServerRepository) : ViewMo
 
     fun toggleRead(
         newsItem: NewsItem,
-        newRead: Boolean = !newsItem.read,
+        newRead: Boolean = !newsItem.readState.value,
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.toggleNewsItemReadLocally(newsItem, newRead)
     }

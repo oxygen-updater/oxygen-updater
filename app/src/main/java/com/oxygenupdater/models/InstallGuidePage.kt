@@ -1,30 +1,32 @@
 package com.oxygenupdater.models
 
+import androidx.compose.runtime.Immutable
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.oxygenupdater.models.AppLocale.NL
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Immutable
 data class InstallGuidePage(
     val id: Long,
-    var deviceId: Long?,
-    var updateMethodId: Long?,
-    var pageNumber: Int,
-    var fileExtension: String?,
-    var imageUrl: String?,
-    var useCustomImage: Boolean = false,
+    val deviceId: Long?,
+    val updateMethodId: Long?,
+    val pageNumber: Int,
+    val fileExtension: String?,
+    val imageUrl: String?,
+    val useCustomImage: Boolean = false,
 
     @JsonProperty("title_en")
-    var englishTitle: String?,
+    val englishTitle: String?,
 
     @JsonProperty("title_nl")
-    var dutchTitle: String?,
+    val dutchTitle: String?,
 
     @JsonProperty("text_en")
-    var englishText: String?,
+    val englishText: String?,
 
     @JsonProperty("text_nl")
-    var dutchText: String?
+    val dutchText: String?,
 ) {
     val isDefaultPage = deviceId == null || updateMethodId == null
 
@@ -33,7 +35,7 @@ data class InstallGuidePage(
 
     fun cloneWithDefaultTitleAndText(
         title: String,
-        text: String
+        text: String,
     ) = copy(
         englishTitle = title,
         dutchTitle = title,

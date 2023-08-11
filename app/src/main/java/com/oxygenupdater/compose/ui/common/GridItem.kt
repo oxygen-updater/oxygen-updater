@@ -3,11 +3,10 @@ package com.oxygenupdater.compose.ui.common
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Android
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -17,7 +16,6 @@ import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 
 @Composable
-@NonRestartableComposable
 fun GridItem(
     icon: ImageVector,
     @StringRes textResId: Int,
@@ -28,9 +26,7 @@ fun GridItem(
         .borderExceptTop()
         .padding(16.dp),
     icon = icon, text = stringResource(textResId),
-    style = MaterialTheme.typography.body2.copy(
-        fontFamily = MaterialTheme.typography.subtitle1.fontFamily,
-    )
+    style = MaterialTheme.typography.titleSmall
 )
 
 @PreviewThemes

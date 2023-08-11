@@ -1,13 +1,14 @@
 package com.oxygenupdater.compose.ui.theme
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.PowerManager
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -23,20 +24,50 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import java.util.Calendar
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Composable
-@NonRestartableComposable
-fun AppTheme(content: @Composable () -> Unit) = MaterialTheme(colors, appTypography(), content = content)
+fun AppTheme(content: @Composable () -> Unit) {
+    val context = LocalContext.current
+
+    val theme by remember { derivedStateOf(structuralEqualityPolicy()) { PrefManager.theme } }
+    val dark = remember(theme) {
+        when (theme) {
+            Theme.Light -> false
+            Theme.Dark -> true
+            else -> null
+        }
+    }.let {
+        if (it != null) return@let it
+
+        if (theme == Theme.System) isSystemInDarkTheme() else {
+            // Avoid a potentially expensive call
+            remember {
+                Calendar.getInstance()[Calendar.HOUR_OF_DAY].let { hour ->
+                    if (hour in 19..23 || hour in 0..6) true
+                    else context.getSystemService<PowerManager>()?.isPowerSaveMode == true
+                }
+            }
+        }
+    }
+
+    val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    } else if (dark) DarkColorScheme else LightColorScheme
+
+    MaterialTheme(colorScheme, typography = remember {
+        appTypography()
+    }, content = content)
+}
 
 /**
  * TODO(compose): this function only serves to initialize Koin with [PrefManager],
  * so that we can use state variables like [PrefManager.theme].
  */
 @Composable
-@NonRestartableComposable
 fun PreviewAppTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     if (GlobalContext.getOrNull() == null) startKoin {
@@ -45,35 +76,8 @@ fun PreviewAppTheme(content: @Composable () -> Unit) {
         modules(preferencesModule)
     }
 
-    MaterialTheme(colors, appTypography(), content = { Surface(content = content) })
+    AppTheme(content = { Surface(content = content) })
 }
-
-private inline val colors: Colors
-    @Composable
-    @NonRestartableComposable
-    get() {
-        val theme by remember { derivedStateOf(structuralEqualityPolicy()) { PrefManager.theme } }
-
-        val dark = remember(theme) {
-            when (theme) {
-                Theme.Light -> false
-                Theme.Dark -> true
-                else -> null
-            }
-        }.let {
-            if (it != null) return@let it
-
-            if (theme == Theme.System) isSystemInDarkTheme() else {
-                // Avoid a potentially expensive call
-                val context = LocalContext.current
-                remember {
-                    context.getSystemService<PowerManager>()?.isPowerSaveMode == true
-                }
-            }
-        }
-
-        return if (dark) DarkColors else LightColors
-    }
 
 @Preview("Light", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview("Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)

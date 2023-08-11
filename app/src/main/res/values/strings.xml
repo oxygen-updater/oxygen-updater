@@ -360,11 +360,6 @@ Instructions:
 	<string name="faq_transition_name" translatable="false">FAQ_TRANSITION</string>
 	<string name="news_item_transition_name" translatable="false">NEWS_ITEM_TRANSITION_%d</string>
 
-	<string name="discord_url" translatable="false">https://discord.gg/5TXdhKJ</string>
-	<string name="github_url" translatable="false">https://github.com/oxygen-updater/oxygen-updater</string>
-	<string name="patreon_url" translatable="false">https://patreon.com/oxygenupdater</string>
-	<string name="website_url" translatable="false">https://oxygenupdater.com</string>
-	<string name="email_address" translatable="false">support@oxygenupdater.com</string>
 	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>

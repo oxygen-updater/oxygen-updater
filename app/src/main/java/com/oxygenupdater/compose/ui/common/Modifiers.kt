@@ -5,14 +5,13 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithCache
@@ -21,18 +20,17 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material.placeholder
-import com.google.accompanist.placeholder.material.shimmer
+import com.google.accompanist.placeholder.material3.placeholder
+import com.google.accompanist.placeholder.shimmer
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
 import kotlin.math.ceil
 
-fun Modifier.edgeToEdge() = statusBarsPadding().navigationBarsPadding()
-
-fun Modifier.withPlaceholder(refreshing: Boolean) = composed {
+@Suppress("DEPRECATION")
+fun Modifier.withPlaceholder(refreshing: Boolean) = if (!refreshing) this else composed {
     placeholder(
         refreshing,
         shape = RoundedCornerShape(2.dp),
-        highlight = PlaceholderHighlight.shimmer(),
+        highlight = PlaceholderHighlight.shimmer(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
     )
 }
 
@@ -46,6 +44,7 @@ fun Modifier.animatedClickable(
         label = "ScaleAnimation"
     )
 
+    @OptIn(ExperimentalComposeUiApi::class)
     clickable(onClick = onClick)
         .motionEventSpy {
             when (it.action) {
@@ -60,7 +59,7 @@ fun Modifier.animatedClickable(
 }
 
 fun Modifier.borderExceptTop() = composed {
-    val color = MaterialTheme.colors.backgroundVariant
+    val color = MaterialTheme.colorScheme.backgroundVariant
     drawWithCache {
         onDrawBehind {
             val stroke = ceil(1.dp.value)

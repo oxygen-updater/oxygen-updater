@@ -10,12 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Done
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.animatedClickable
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
-import com.oxygenupdater.compose.ui.theme.positive
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
@@ -45,16 +44,16 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     keyId: String, keyName: String,
     onClick: (T) -> Unit,
 ) {
-    SheetHeader(titleResId, hide)
+    SheetHeader(titleResId)
 
-    val selectedId = PrefManager.getLong(keyId, -1L)
+    val selectedId = PrefManager.getLong(keyId, list.getOrNull(initialIndex)?.id ?: -1L)
 
     var selectedIndex by remember { mutableIntStateOf(-1) }
     LaunchedEffect(selectedIndex, listState) {
         if (selectedIndex != -1) listState.animateScrollToItem(selectedIndex)
     }
 
-    val colors = MaterialTheme.colors
+    val colorScheme = MaterialTheme.colorScheme
     LazyColumn(Modifier.weight(1f, false), state = listState) {
         itemsIndexed(list, { _, it -> it.id }) { index, item ->
             Row(
@@ -68,14 +67,14 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                     .padding(horizontal = 16.dp, vertical = 8.dp), // must be after `clickable`
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val positive = colors.positive
+                val primary = colorScheme.primary
                 val name = item.name ?: return@itemsIndexed
                 val selected = selectedId == item.id
                 if (selected) selectedIndex = index
                 if (selected) Icon(
                     Icons.Rounded.Done, stringResource(R.string.summary_on),
                     Modifier.padding(end = 16.dp),
-                    tint = positive,
+                    tint = primary,
                 ) else Spacer(Modifier.size(40.dp)) // 24 + 16
 
                 Text(
@@ -83,14 +82,14 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                     Modifier
                         .weight(1f)
                         .padding(vertical = 8.dp),
-                    if (selected) positive else Color.Unspecified,
-                    style = MaterialTheme.typography.subtitle2
+                    if (selected) primary else Color.Unspecified,
+                    style = MaterialTheme.typography.titleSmall
                 )
 
                 if (index == initialIndex) Icon(
                     Icons.Rounded.AutoAwesome, stringResource(R.string.theme_auto),
                     Modifier.padding(start = 16.dp),
-                    tint = colors.secondary
+                    tint = colorScheme.secondary
                 )
             }
         }
@@ -109,12 +108,14 @@ fun PreviewDeviceSheet() = PreviewModalBottomSheet {
             Device(
                 id = 1,
                 name = "OnePlus 7 Pro",
-                productName = "OnePlus7Pro",
+                productNamesCsv = "OnePlus7Pro",
+                enabled = true,
             ),
             Device(
                 id = 2,
                 name = "OnePlus 8T",
-                productName = "OnePlus8T",
+                productNamesCsv = "OnePlus8T",
+                enabled = true,
             ),
         ),
         initialIndex = 1,
@@ -135,15 +136,14 @@ fun PreviewMethodSheet() = PreviewModalBottomSheet {
                 id = 1,
                 englishName = "Stable (full)",
                 dutchName = "Stabiel (volledig)",
-                recommended = false,
                 recommendedForRootedDevice = true,
                 recommendedForNonRootedDevice = false,
                 supportsRootedDevice = true,
-            ), UpdateMethod(
+            ),
+            UpdateMethod(
                 id = 2,
                 englishName = "Stable (incremental)",
                 dutchName = "Stabiel (incrementeel)",
-                recommended = true,
                 recommendedForRootedDevice = false,
                 recommendedForNonRootedDevice = true,
                 supportsRootedDevice = false,

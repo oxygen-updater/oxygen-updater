@@ -10,7 +10,6 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.internal.KotlinCallback
 import com.topjohnwu.superuser.ShellUtils
 import com.topjohnwu.superuser.ipc.RootService
 import com.topjohnwu.superuser.nio.ExtendedFile
@@ -108,7 +107,7 @@ class RootFileService : RootService() {
 
     private class FolderObserver(
         folder: ExtendedFile,
-        private val callback: KotlinCallback<Int>
+        private val callback: (Int) -> Unit,
     ) : FileObserver(folder, OBSERVER_MASK) {
 
         private var lastRunnable: Runnable? = null

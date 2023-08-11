@@ -1,14 +1,19 @@
 package com.oxygenupdater.models
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
-enum class DeviceRequestFilter(val filter: String) {
-    ALL("all"),
-    ENABLED("enabled"),
-    DISABLED("disabled");
+import androidx.compose.runtime.Stable
 
-    override fun toString(): String {
-        return filter
+@JvmInline
+value class DeviceRequestFilter(val value: String) {
+    override fun toString() = value
+
+    companion object {
+        @Stable
+        val All = DeviceRequestFilter("all")
+
+        @Stable
+        val Enabled = DeviceRequestFilter("enabled")
+
+        @Stable
+        val Disabled = DeviceRequestFilter("disabled")
     }
 }

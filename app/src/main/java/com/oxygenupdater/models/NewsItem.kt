@@ -1,6 +1,8 @@
 package com.oxygenupdater.models
 
 import android.os.Parcelable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -17,6 +19,7 @@ import java.time.LocalDateTime
 @Parcelize
 @Entity(tableName = "news_item")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Stable
 data class NewsItem(
     @PrimaryKey
     val id: Long?,
@@ -53,8 +56,17 @@ data class NewsItem(
 
     @ColumnInfo(defaultValue = "0")
     @JsonIgnore
-    var read: Boolean = false,
+    @Deprecated(
+        "Don't read boolean column directly, use MutableState instead",
+        ReplaceWith("readState.value"),
+    )
+    val read: Boolean = false,
 ) : Parcelable {
+
+    @Suppress("DEPRECATION")
+    @IgnoredOnParcel
+    @Ignore
+    val readState = mutableStateOf(read)
 
     @IgnoredOnParcel
     @Ignore

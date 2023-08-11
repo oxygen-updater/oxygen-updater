@@ -16,6 +16,7 @@ value class SheetType(val value: Int) {
         Theme -> "Theme"
         Language -> "Language"
         AdvancedMode -> "AdvancedMode"
+        AlreadyDownloaded -> "AlreadyDownloaded"
         else -> "Invalid"
     }
 
@@ -43,5 +44,8 @@ value class SheetType(val value: Int) {
 
         @Stable
         val AdvancedMode = SheetType(7)
+
+        @Stable
+        val AlreadyDownloaded = SheetType(8)
     }
 }

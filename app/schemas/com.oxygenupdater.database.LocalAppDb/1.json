@@ -83,10 +83,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "id"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -116,10 +116,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": true,
           "columnNames": [
             "id"
-          ],
-          "autoGenerate": true
+          ]
         },
         "indices": [
           {
@@ -128,6 +128,7 @@
             "columnNames": [
               "name"
             ],
+            "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_submitted_update_file_name` ON `${TABLE_NAME}` (`name`)"
           }
         ],

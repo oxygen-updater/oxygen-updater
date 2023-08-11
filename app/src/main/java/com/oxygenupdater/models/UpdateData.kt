@@ -1,6 +1,8 @@
 package com.oxygenupdater.models
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
+import androidx.work.Data
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -9,45 +11,62 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Immutable
 data class UpdateData(
-    var id: Long? = null,
-    var versionNumber: String? = null,
-    var otaVersionNumber: String? = null,
-    var changelog: String? = null,
-    var description: String? = null,
-    var downloadUrl: String? = null,
-    var downloadSize: Long = 0,
-    var filename: String? = null,
+    val id: Long? = null,
+    val versionNumber: String? = null,
+    val otaVersionNumber: String? = null,
+    val changelog: String? = null,
+    val description: String? = null,
+    val downloadUrl: String? = null,
+    val downloadSize: Long = 0,
+    val filename: String? = null,
 
     @JsonProperty("md5sum")
-    var mD5Sum: String? = null,
+    val mD5Sum: String? = null,
 
-    var information: String? = null,
+    val information: String? = null,
 
     @JsonProperty("update_information_available")
-    var updateInformationAvailable: Boolean = false,
+    val updateInformationAvailable: Boolean = false,
 
-    var systemIsUpToDate: Boolean = false,
-) : FormattableUpdateData, Parcelable {
+    val systemIsUpToDate: Boolean = false,
+) : Parcelable {
 
     @IgnoredOnParcel
     val isUpdateInformationAvailable = updateInformationAvailable || versionNumber != null
 
-    // Formatting library: interface FormattableUpdateData
-    @IgnoredOnParcel
-    override val internalVersionNumber = versionNumber
-
-    @IgnoredOnParcel
-    override val updateDescription = description
+    fun toWorkData() = Data.Builder().apply {
+        putLong("id", id ?: -1L)
+        putString("versionNumber", versionNumber)
+        putString("otaVersionNumber", otaVersionNumber)
+        putString("description", description)
+        putString("downloadUrl", downloadUrl)
+        putLong("downloadSize", downloadSize)
+        putString("filename", filename)
+        putString("mD5Sum", mD5Sum)
+        putString("information", information)
+        putBoolean("updateInformationAvailable", updateInformationAvailable)
+        putBoolean("systemIsUpToDate", systemIsUpToDate)
+    }.build()
 
     companion object {
         @JsonIgnore
-        fun getBuildDate(otaVersionNumber: String?) = try {
-            otaVersionNumber
-                ?.substringAfterLast('_')
-                ?.toLong() ?: 0
-        } catch (e: NumberFormatException) {
-            0
-        }
+        fun getBuildDate(otaVersionNumber: String?) = otaVersionNumber?.substringAfterLast('_')?.toLongOrNull() ?: 0
+
+        @JsonIgnore
+        fun createFromWorkData(inputData: Data?) = if (inputData != null) UpdateData(
+            id = inputData.getLong("id", -1L),
+            versionNumber = inputData.getString("versionNumber"),
+            otaVersionNumber = inputData.getString("otaVersionNumber"),
+            description = inputData.getString("description"),
+            downloadUrl = inputData.getString("downloadUrl"),
+            downloadSize = inputData.getLong("downloadSize", -1L),
+            filename = inputData.getString("filename"),
+            mD5Sum = inputData.getString("mD5Sum"),
+            information = inputData.getString("information"),
+            updateInformationAvailable = inputData.getBoolean("updateInformationAvailable", false),
+            systemIsUpToDate = inputData.getBoolean("systemIsUpToDate", false)
+        ) else null
     }
 }

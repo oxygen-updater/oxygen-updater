@@ -16,11 +16,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.work.Data
-import androidx.work.WorkInfo
 import com.oxygenupdater.R
-import com.oxygenupdater.compose.ui.PullRefresh
 import com.oxygenupdater.compose.ui.RefreshAwareState
 import com.oxygenupdater.compose.ui.common.ErrorState
+import com.oxygenupdater.compose.ui.common.PullRefresh
 import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.UpdateData
@@ -33,7 +32,7 @@ import java.time.LocalDateTime
 @Composable
 fun UpdateScreen(
     state: RefreshAwareState<UpdateData?>,
-    workInfoWithStatus: Pair<WorkInfo?, DownloadStatus>,
+    workInfoWithStatus: WorkInfoWithStatus,
     forceDownloadErrorDialog: Boolean,
     refresh: () -> Unit,
     setSubtitle: (String) -> Unit,
@@ -65,7 +64,7 @@ fun UpdateScreen(
     }
 
     if (updateData.id == null || !updateData.isUpdateInformationAvailable
-        || (updateData.systemIsUpToDate && !PrefManager.advancedMode.value)
+        || (updateData.systemIsUpToDate && !PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
     ) {
         val subtitle = stringResource(
             if (updateData.isUpdateInformationAvailable) R.string.update_information_system_is_up_to_date

@@ -17,10 +17,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.DeveloperBoard
@@ -29,6 +25,9 @@ import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.PermDeviceInformation
 import androidx.compose.material.icons.rounded.Security
 import androidx.compose.material.icons.rounded.TripOrigin
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
@@ -37,11 +36,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -65,7 +64,6 @@ import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
-import com.oxygenupdater.utils.Utils
 import kotlin.math.roundToLong
 
 @Composable
@@ -106,10 +104,11 @@ private fun DeviceHeader(
         Box(Modifier.animatedClickable(notSupported) { showUnsupportedDialog = true }) {
             AsyncImage(
                 Device.constructImageUrl(deviceName).let {
+                    val density = LocalDensity.current
                     remember(it) {
                         ImageRequest.Builder(context)
                             .data(it)
-                            .size(Utils.dpToPx(context, 128f).toInt())
+                            .size(density.run { 128.dp.roundToPx() })
                             .build()
                     }
                 },
@@ -129,7 +128,7 @@ private fun DeviceHeader(
                 Icon(
                     Icons.Rounded.ErrorOutline, stringResource(R.string.icon),
                     Modifier.align(Alignment.Center),
-                    tint = MaterialTheme.colors.primary
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -139,12 +138,12 @@ private fun DeviceHeader(
                 .padding(start = 16.dp)
                 .height(128.dp), // same size as image
         ) {
-            Text(deviceName, style = MaterialTheme.typography.h6)
+            Text(deviceName, style = MaterialTheme.typography.titleLarge)
             SelectionContainer(Modifier.weight(1f)) {
                 Text(
                     DeviceInformationData.model,
-                    Modifier.alpha(ContentAlpha.medium),
-                    style = MaterialTheme.typography.body2
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium
                 )
             }
 
@@ -158,11 +157,10 @@ private fun DeviceHeader(
                         else -> R.string.device_information_unsupported_os
                     }
                 }),
-                Modifier
-                    .alpha(ContentAlpha.medium)
-                    .padding(vertical = 8.dp),
+                Modifier.padding(vertical = 8.dp),
+                MaterialTheme.colorScheme.onSurfaceVariant,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }
@@ -176,10 +174,9 @@ private fun DeviceHeader(
                 deviceMismatchStatus.second,
                 deviceMismatchStatus.third
             ),
-            Modifier
-                .alpha(ContentAlpha.medium)
-                .padding(16.dp),
-            style = MaterialTheme.typography.caption
+            Modifier.padding(16.dp),
+            MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall
         )
         ItemDivider()
     }
@@ -230,8 +227,8 @@ fun DeviceSoftwareInfo(showHeader: Boolean = true) {
 private fun Header(@StringRes textResId: Int) = Text(
     stringResource(textResId),
     Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-    color = MaterialTheme.colors.primary,
-    style = MaterialTheme.typography.caption
+    color = MaterialTheme.colorScheme.primary,
+    style = MaterialTheme.typography.bodySmall
 )
 
 @Composable
@@ -276,12 +273,16 @@ private fun Item(
     Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
     verticalAlignment = Alignment.CenterVertically
 ) {
-    Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colors.primary)
+    Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colorScheme.primary)
 
     Column(Modifier.padding(start = 16.dp)) {
-        Text(stringResource(titleResId), style = MaterialTheme.typography.subtitle1)
+        Text(stringResource(titleResId), style = MaterialTheme.typography.titleMedium)
         SelectionContainer {
-            Text(text, Modifier.alpha(ContentAlpha.medium), style = MaterialTheme.typography.body2)
+            Text(
+                text,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }

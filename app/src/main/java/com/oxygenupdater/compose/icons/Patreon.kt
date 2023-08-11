@@ -11,8 +11,8 @@ val CustomIcons.Patreon: ImageVector
             materialPath {
                 moveTo(14.8f, 9.6f)
                 moveToRelative(-7.2f, 0f)
-                arcToRelative(7.2f, 7.2f, 0f, true, true, 14.4f, 0f)
-                arcToRelative(7.2f, 7.2f, 0f, true, true, -14.4f, 0f)
+                arcToRelative(7.2f, 7.2f, 0f, isMoreThanHalf = true, isPositiveArc = true, dx1 = 14.4f, dy1 = 0f)
+                arcToRelative(7.2f, 7.2f, 0f, isMoreThanHalf = true, isPositiveArc = true, dx1 = -14.4f, dy1 = 0f)
             }
             materialPath {
                 moveTo(2f, 2.4f)

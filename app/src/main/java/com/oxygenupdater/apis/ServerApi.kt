@@ -30,9 +30,7 @@ interface ServerApi {
     suspend fun fetchFaq(): Response<List<InAppFaq>>
 
     @GET("devices/{filter}")
-    suspend fun fetchDevices(
-        @Path("filter") filter: String
-    ): Response<List<Device>>
+    suspend fun fetchDevices(@Path("filter") filter: String): Response<List<Device>>
 
     @GET("updateData/{deviceId}/{updateMethodId}/{incrementalSystemVersion}")
     suspend fun fetchUpdateData(
@@ -43,13 +41,13 @@ interface ServerApi {
         @Query("osType") osType: String,
         @Query("fingerprint") fingerprint: String,
         @Query("isEuBuild") isEuBuild: Boolean,
-        @Query("appVersion") appVersion: String
+        @Query("appVersion") appVersion: String,
     ): Response<UpdateData>
 
     @GET("mostRecentUpdateData/{deviceId}/{updateMethodId}")
     suspend fun fetchMostRecentUpdateData(
         @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long
+        @Path("updateMethodId") updateMethodId: Long,
     ): Response<UpdateData>
 
     @GET("serverStatus")
@@ -58,29 +56,23 @@ interface ServerApi {
     @GET("serverMessages/{deviceId}/{updateMethodId}")
     suspend fun fetchServerMessages(
         @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long
+        @Path("updateMethodId") updateMethodId: Long,
     ): Response<List<ServerMessage>>
 
     @GET("news/{deviceId}/{updateMethodId}")
     suspend fun fetchNews(
         @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long
+        @Path("updateMethodId") updateMethodId: Long,
     ): Response<List<NewsItem>>
 
     @GET("news-item/{newsItemId}")
-    suspend fun fetchNewsItem(
-        @Path("newsItemId") newsItemId: Long
-    ): Response<NewsItem>
+    suspend fun fetchNewsItem(@Path("newsItemId") newsItemId: Long): Response<NewsItem>
 
     @POST("news-read")
-    suspend fun markNewsItemRead(
-        @Body newsItemId: Map<String, Long>
-    ): Response<ServerPostResult>
+    suspend fun markNewsItemRead(@Body newsItemId: Map<String, Long>): Response<ServerPostResult>
 
     @GET("updateMethods/{deviceId}")
-    suspend fun fetchUpdateMethodsForDevice(
-        @Path("deviceId") deviceId: Long
-    ): Response<List<UpdateMethod>>
+    suspend fun fetchUpdateMethodsForDevice(@Path("deviceId") deviceId: Long): Response<List<UpdateMethod>>
 
     @GET("allUpdateMethods")
     suspend fun fetchAllUpdateMethods(): Response<List<UpdateMethod>>
@@ -102,9 +94,7 @@ interface ServerApi {
      * * `actualDeviceName: String`,
      */
     @POST("submit-update-url")
-    suspend fun submitOtaDbRows(
-        @Body body: ArrayMap<String, Any>
-    ): Response<ServerPostResult>
+    suspend fun submitOtaDbRows(@Body body: ArrayMap<String, Any>): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:
@@ -116,13 +106,9 @@ interface ServerApi {
      * * `deviceName: String`
      */
     @POST("log-download-error")
-    suspend fun logDownloadError(
-        @Body body: HashMap<String, Any?>
-    ): Response<ServerPostResult>
+    suspend fun logDownloadError(@Body body: HashMap<String, Any?>): Response<ServerPostResult>
 
     @POST("verify-purchase")
     @Headers("$HEADER_READ_TIMEOUT:120")
-    suspend fun verifyPurchase(
-        @Body purchaseData: HashMap<String, Any?>
-    ): Response<ServerPostResult>
+    suspend fun verifyPurchase(@Body purchaseData: HashMap<String, Any?>): Response<ServerPostResult>
 }

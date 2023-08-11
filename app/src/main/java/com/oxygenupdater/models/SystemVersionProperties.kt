@@ -142,16 +142,18 @@ object SystemVersionProperties {
             }
 
             val euBooleanStr = pickFirstValid(BUILD_EU_LOOKUP_KEYS) { _, value -> value }
-            PrefManager.putBoolean(PrefManager.PROPERTY_IS_EU_BUILD, if (euBooleanStr == UNKNOWN) {
-                val pipeline = systemProperty(VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName))) {
-                    // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
-                    // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
-                    // model number is used for both regions. Not sure if future builds would also be affected.
-                    if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
-                }
-                pipeline.startsWith("EU")
-            } else euBooleanStr.toBoolean())
+            PrefManager.putBoolean(
+                PrefManager.PROPERTY_IS_EU_BUILD, if (euBooleanStr == UNKNOWN) {
+                    val pipeline = systemProperty(VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName))) {
+                        // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
+                        // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
+                        // model number is used for both regions. Not sure if future builds would also be affected.
+                        if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                    }
+                    pipeline.startsWith("EU")
+                } else euBooleanStr.toBoolean()
+            )
 
             oxygenOSOTAVersion = systemProperty(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY)
 
@@ -208,16 +210,18 @@ object SystemVersionProperties {
                 )
 
                 val euBooleanStr = readBuildPropItem(BUILD_EU_LOOKUP_KEYS, properties)
-                PrefManager.putBoolean(PrefManager.PROPERTY_IS_EU_BUILD, if (euBooleanStr == UNKNOWN) {
-                    val pipeline = readBuildPropItem(VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY, properties)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName))) {
-                        // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
-                        // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
-                        // model number is used for both regions. Not sure if future builds would also be affected.
-                        if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
-                    }
-                    pipeline.startsWith("EU")
-                } else euBooleanStr.toBoolean())
+                PrefManager.putBoolean(
+                    PrefManager.PROPERTY_IS_EU_BUILD, if (euBooleanStr == UNKNOWN) {
+                        val pipeline = readBuildPropItem(VENDOR_OPLUS_REGIONMARK_LOOKUP_KEY, properties)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (ONEPLUS_7_SERIES.contains(oxygenDeviceName) || ONEPLUS_7T_SERIES.contains(oxygenDeviceName))) {
+                            // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
+                            // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
+                            // model number is used for both regions. Not sure if future builds would also be affected.
+                            if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                        }
+                        pipeline.startsWith("EU")
+                    } else euBooleanStr.toBoolean()
+                )
 
                 oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties)
 

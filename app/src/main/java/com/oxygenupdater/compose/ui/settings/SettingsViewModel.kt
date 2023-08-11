@@ -3,6 +3,7 @@ package com.oxygenupdater.compose.ui.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.oxygenupdater.compose.ui.SettingsListWrapper
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.internal.settings.PrefManager
@@ -12,6 +13,7 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.NotificationTopicSubscriber
+import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,16 +34,16 @@ class SettingsViewModel(
     private val methodsForDeviceFlow = MutableStateFlow<List<UpdateMethod>>(listOf())
 
     val state = enabledDevicesFlow.combine(methodsForDeviceFlow) { devices, methods ->
-        devices to methods
+        SettingsListWrapper(devices, methods)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = enabledDevicesFlow.value to methodsForDeviceFlow.value
+        initialValue = SettingsListWrapper(enabledDevicesFlow.value, methodsForDeviceFlow.value)
     )
 
     fun fetchEnabledDevices(cached: List<Device>? = null) = viewModelScope.launch(Dispatchers.IO) {
         val enabledDevices = if (cached.isNullOrEmpty()) {
-            serverRepository.fetchDevices(DeviceRequestFilter.ENABLED) ?: listOf()
+            serverRepository.fetchDevices(DeviceRequestFilter.Enabled) ?: listOf()
         } else cached
 
         setup(enabledDevices)
@@ -77,9 +79,12 @@ class SettingsViewModel(
     private fun fetchMethodsForDevice(deviceId: Long) = viewModelScope.launch(Dispatchers.IO) {
         val methods = serverRepository.fetchUpdateMethodsForDevice(deviceId) ?: listOf()
         val methodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
+        val rooted = Shell.isAppGrantedRoot() == true
         initialMethodIndex = if (methodId != NOT_SET_L) methods.indexOfFirst {
             it.id == methodId
-        } else methods.indexOfLast { it.recommended }
+        } else methods.indexOfLast {
+            if (rooted) it.recommendedForRootedDevice else it.recommendedForNonRootedDevice
+        }
 
         if (initialMethodIndex != NOT_SET && methods.size > initialMethodIndex) {
             // Persist only if there's no method saved yet

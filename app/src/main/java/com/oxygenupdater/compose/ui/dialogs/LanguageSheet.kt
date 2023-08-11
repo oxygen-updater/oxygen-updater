@@ -3,25 +3,22 @@ package com.oxygenupdater.compose.ui.dialogs
 import android.content.res.Resources
 import android.os.Build
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Done
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,17 +26,16 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.animatedClickable
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
-import com.oxygenupdater.compose.ui.theme.positive
 import com.oxygenupdater.extensions.toLocale
 import com.oxygenupdater.internal.settings.PrefManager
 
 @Composable
-fun ColumnScope.LanguageSheet(
+fun LanguageSheet(
     hide: () -> Unit,
     selectedLanguageCode: String,
     onClick: (String) -> Unit,
 ) {
-    SheetHeader(R.string.label_language, hide)
+    SheetHeader(R.string.label_language)
 
     val list = remember { BuildConfig.SUPPORTED_LANGUAGES }
     val systemConfig = Resources.getSystem().configuration
@@ -47,7 +43,7 @@ fun ColumnScope.LanguageSheet(
         systemConfig.locales[0]
     } else @Suppress("DEPRECATION") systemConfig.locale
 
-    val colors = MaterialTheme.colors
+    val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
     LazyColumn {
         items(list, { it }) { code ->
@@ -61,12 +57,12 @@ fun ColumnScope.LanguageSheet(
                     .padding(16.dp), // must be after `clickable`
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val positive = colors.positive
+                val primary = colorScheme.primary
                 val selected = selectedLanguageCode == code
                 if (selected) Icon(
                     Icons.Rounded.Done, stringResource(R.string.summary_on),
                     Modifier.padding(end = 16.dp),
-                    tint = positive,
+                    tint = primary,
                 ) else Spacer(Modifier.size(40.dp)) // 24 + 16
 
                 val locale = code.toLocale()
@@ -86,15 +82,14 @@ fun ColumnScope.LanguageSheet(
                 Column(Modifier.weight(1f)) {
                     Text(
                         appLocalizedName,
-                        color = if (selected) positive else Color.Unspecified,
-                        style = typography.subtitle2
+                        color = if (selected) primary else Color.Unspecified,
+                        style = typography.titleSmall
                     )
 
                     Text(
                         "$systemLocalizedName [$code]",
-                        Modifier.alpha(ContentAlpha.high),
-                        color = if (selected) positive else Color.Unspecified,
-                        style = typography.caption
+                        color = if (selected) primary else colorScheme.onSurfaceVariant,
+                        style = typography.bodySmall
                     )
                 }
 
@@ -103,7 +98,7 @@ fun ColumnScope.LanguageSheet(
                 if (language == systemLocale.language && (country.isBlank() || country == systemLocale.country)) Icon(
                     Icons.Rounded.AutoAwesome, stringResource(R.string.theme_auto),
                     Modifier.padding(start = 16.dp),
-                    tint = colors.secondary
+                    tint = colorScheme.secondary
                 )
             }
         }

@@ -13,19 +13,17 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.compose.ui.RefreshAwareState
@@ -70,7 +68,7 @@ private fun FaqItem(
         Modifier
             .padding(start = 16.dp, top = 16.dp, end = 16.dp)
             .withPlaceholder(refreshing),
-        style = MaterialTheme.typography.subtitle1
+        style = MaterialTheme.typography.titleMedium
     ) else {
         var expanded by remember { item.expanded }
         IconText(
@@ -100,9 +98,9 @@ private fun FaqItem(
             RichText(
                 item.body,
                 Modifier
-                    .alpha(ContentAlpha.medium)
                     .padding(start = 56.dp, end = 16.dp, bottom = 16.dp)
                     .withPlaceholder(refreshing),
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 

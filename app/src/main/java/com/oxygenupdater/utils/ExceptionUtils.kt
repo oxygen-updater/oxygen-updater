@@ -16,6 +16,6 @@ object ExceptionUtils {
                 || t is SocketTimeoutException
                 || t is SSLException
                 || t is UnknownHostException
-                || t is FileNotFoundException && t.message!!.contains("http"))
+                || t is FileNotFoundException && t.message?.contains("http") == true)
     }
 }

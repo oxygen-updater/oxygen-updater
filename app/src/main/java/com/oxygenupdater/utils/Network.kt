@@ -4,9 +4,11 @@ import android.content.Context
 import android.os.Build
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.exceptions.OxygenUpdaterException
-import com.oxygenupdater.internal.objectMapper
+import com.oxygenupdater.internal.BooleanDeserializer
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logVerbose
@@ -62,7 +64,7 @@ private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
     cache(cache)
     addInterceptor { chain ->
         val request = chain.request()
-        val builder = request.newBuilder().addHeader(USER_AGENT_TAG, APP_USER_AGENT)
+        val builder = request.newBuilder().header(USER_AGENT_TAG, APP_USER_AGENT)
         val readTimeout = request.header(HEADER_READ_TIMEOUT)?.toInt()?.let {
             builder.removeHeader(HEADER_READ_TIMEOUT)
             it
@@ -89,8 +91,16 @@ private fun httpClientForDownload() = OkHttpClient.Builder().apply {
 private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
     .baseUrl(API_BASE_URL)
     .client(httpClient)
-    .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-    .build()
+    .addConverterFactory(
+        JacksonConverterFactory.create(
+            jacksonObjectMapper().registerModule(
+                // Coerce strings to booleans
+                SimpleModule().addDeserializer(Boolean::class.java, BooleanDeserializer())
+            ).setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+            // ^ Tell ObjectMapper to convert camelCase to snake_case (Server API responses have fields in snake case)
+            // This helps us avoid annotating every field with `@JsonProperty` unnecessarily
+        )
+    ).build()
 
 private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Builder()
     .baseUrl(API_BASE_URL)
@@ -108,11 +118,7 @@ suspend inline fun <reified R> performServerRequest(block: () -> Response<R>): R
         return if (response.isSuccessful) response.body().apply {
             logVerbose(logTag, "Response: $this")
         } else {
-            val json = convertErrorBody(response)
-            logWarning(
-                logTag, "Response: $json",
-                OxygenUpdaterException("API Response Error: $json")
-            )
+            logWarning(logTag, "Error response: ${convertErrorBody(response)}")
             null
         }
     } catch (e: Exception) {

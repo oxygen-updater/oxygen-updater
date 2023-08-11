@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircleOutline
+import androidx.compose.material3.ButtonDefaults.textButtonColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +27,6 @@ import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.CheckboxText
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
-import com.oxygenupdater.compose.ui.theme.positive
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.hasRootAccess
 
@@ -35,7 +35,7 @@ fun ColumnScope.ContributorSheet(
     hide: () -> Unit,
     showEnrollment: Boolean = false,
 ) {
-    SheetHeader(R.string.contribute_title, hide)
+    SheetHeader(R.string.contribute_title)
 
     Text(
         stringResource(R.string.contribute_explanation),
@@ -43,7 +43,7 @@ fun ColumnScope.ContributorSheet(
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .weight(1f, false)
             .verticalScroll(rememberScrollState()),
-        style = MaterialTheme.typography.body2
+        style = MaterialTheme.typography.bodyMedium
     )
 
     val runningInPreview = LocalInspectionMode.current
@@ -61,7 +61,11 @@ fun ColumnScope.ContributorSheet(
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TextButton({ hide() }, Modifier.padding(end = 8.dp)) {
+        TextButton(
+            hide,
+            Modifier.padding(end = 8.dp),
+            colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)
+        ) {
             Text(stringResource(android.R.string.cancel))
         }
 
@@ -76,7 +80,7 @@ fun ColumnScope.ContributorSheet(
                 ContributorUtils.flushSettings(context, false)
                 hide()
             }
-        }, Icons.Rounded.CheckCircleOutline, R.string.contribute_save, MaterialTheme.colors.positive)
+        }, Icons.Rounded.CheckCircleOutline, R.string.contribute_save)
     }
 }
 

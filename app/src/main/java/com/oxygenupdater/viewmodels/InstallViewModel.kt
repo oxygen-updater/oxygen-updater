@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.models.InstallGuidePage
 import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +18,7 @@ import kotlinx.coroutines.withContext
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class InstallViewModel(
-    private val serverRepository: ServerRepository
+    private val serverRepository: ServerRepository,
 ) : ViewModel() {
 
     val installGuideCache = SparseArray<InstallGuidePage>()
@@ -44,7 +43,7 @@ class InstallViewModel(
         deviceId: Long,
         updateMethodId: Long,
         pageNumber: Int,
-        callback: KotlinCallback<InstallGuidePage?>
+        callback: (InstallGuidePage?) -> Unit,
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber).let {
             withContext(Dispatchers.Main) {
@@ -55,7 +54,7 @@ class InstallViewModel(
 
     fun updateToolbarImage(
         @DrawableRes resId: Int,
-        applyTint: Boolean = false
+        applyTint: Boolean = false,
     ) = _toolbarImage.postValue(Pair(resId, applyTint))
 
     fun markFirstInstallGuidePageLoaded() = _firstInstallGuidePageLoaded.postValue(true)

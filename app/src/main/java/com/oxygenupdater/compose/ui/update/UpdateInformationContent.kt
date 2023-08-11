@@ -12,6 +12,7 @@ import android.os.Environment
 import android.os.storage.StorageManager
 import android.provider.Settings
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.RequiresApi
@@ -39,15 +40,6 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProgressIndicatorDefaults
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material.icons.rounded.CheckCircleOutline
@@ -58,6 +50,17 @@ import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Launch
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults.textButtonColors
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProgressIndicatorDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -68,7 +71,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -103,9 +105,14 @@ import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.common.RichText
 import com.oxygenupdater.compose.ui.common.RichTextType
 import com.oxygenupdater.compose.ui.common.animatedClickable
+import com.oxygenupdater.compose.ui.common.rememberCallback
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.device.DeviceSoftwareInfo
 import com.oxygenupdater.compose.ui.device.defaultDeviceName
+import com.oxygenupdater.compose.ui.dialogs.AlreadyDownloadedSheet
+import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
+import com.oxygenupdater.compose.ui.dialogs.SheetType
+import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
@@ -143,7 +150,7 @@ import java.util.UUID
 private var previousProgressText: String? = null
 private var previousProgress: Float? = null
 
-@OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateAvailable(
     refreshing: Boolean,
@@ -169,7 +176,7 @@ fun UpdateAvailable(
                     defaultDeviceName().let { PrefManager.getString(PrefManager.PROPERTY_DEVICE, it) ?: it }
                 ),
                 Modifier.withPlaceholder(refreshing),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.titleLarge
             )
         }
 
@@ -184,15 +191,14 @@ fun UpdateAvailable(
 
         ItemDivider(Modifier.padding(vertical = 16.dp))
 
-        val caption = MaterialTheme.typography.caption
+        val caption = MaterialTheme.typography.bodySmall
         if (updateData.systemIsUpToDate) {
             // Remind user why they're seeing this update
             val updateMethod = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>") ?: "<UNKNOWN>"
             Text(
                 stringResource(R.string.update_information_header_advanced_mode_helper, updateMethod),
-                Modifier
-                    .alpha(ContentAlpha.medium)
-                    .padding(horizontal = 16.dp),
+                Modifier.padding(horizontal = 16.dp),
+                MaterialTheme.colorScheme.onSurfaceVariant,
                 style = caption
             )
 
@@ -202,9 +208,8 @@ fun UpdateAvailable(
         SelectionContainer(Modifier.padding(start = 16.dp, end = 8.dp)) {
             Text(
                 stringResource(R.string.update_information_file_name, updateData.filename ?: Build.UNKNOWN),
-                Modifier
-                    .alpha(ContentAlpha.medium)
-                    .withPlaceholder(refreshing),
+                Modifier.withPlaceholder(refreshing),
+                MaterialTheme.colorScheme.onSurfaceVariant,
                 style = caption
             )
         }
@@ -213,9 +218,8 @@ fun UpdateAvailable(
         SelectionContainer(Modifier.padding(start = 16.dp, end = 8.dp)) {
             Text(
                 stringResource(R.string.update_information_md5, updateData.mD5Sum ?: Build.UNKNOWN),
-                Modifier
-                    .alpha(ContentAlpha.medium)
-                    .withPlaceholder(refreshing),
+                Modifier.withPlaceholder(refreshing),
+                MaterialTheme.colorScheme.onSurfaceVariant,
                 style = caption
             )
         }
@@ -243,8 +247,8 @@ fun UpdateAvailable(
             RichText(
                 text,
                 Modifier
-                    .alpha(ContentAlpha.medium)
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp),
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 type = RichTextType.Custom
             ) { text, contentColor, urlColor ->
                 AnnotatedString.Builder(length).apply {
@@ -262,7 +266,7 @@ fun UpdateAvailable(
         }
     }
 
-    val colors = MaterialTheme.colors
+    val colorScheme = MaterialTheme.colorScheme
     val context = LocalContext.current
 
     val runningInPreview = LocalInspectionMode.current
@@ -293,14 +297,22 @@ fun UpdateAvailable(
         }
     }
 
-    var showAlreadyDownloadedDialog by remember { mutableStateOf(false) }
-    if (showAlreadyDownloadedDialog) UpdateAlreadyDownloadedDialog({
-        showAlreadyDownloadedDialog = false
-    }, onConfirm = {
-        context.startInstallActivity()
-    }, onDismiss = {
-        if (hasDownloadPermissions) downloadAction(DownloadAction.Delete) else requestDownloadPermissions()
-    })
+    val sheetState = defaultModalBottomSheetState()
+    var sheetType by remember { mutableStateOf(SheetType.None) }
+    val hide = rememberCallback { sheetType = SheetType.None }
+    BackHandler(sheetState.isVisible, hide)
+
+    if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
+        when (sheetType) {
+            SheetType.AlreadyDownloaded -> AlreadyDownloadedSheet(hide) {
+                if (it) context.startInstallActivity()
+                else if (hasDownloadPermissions) downloadAction(DownloadAction.Delete)
+                else requestDownloadPermissions()
+            }
+
+            else -> {}
+        }
+    }
 
     // Since params are set automatically (i.e. without user action), we need an extra flag to control
     // when dialog can be shown, to avoid infinitely re-showing it on every state change.
@@ -308,6 +320,8 @@ fun UpdateAvailable(
     val (downloadErrorDialogParams, setDownloadErrorParams) = remember {
         mutableStateOf<DownloadErrorParams?>(null)
     }
+
+    // TODO(compose/update): make it a BottomSheet
     if (canShowDownloadErrorDialog && downloadErrorDialogParams != null) DownloadErrorDialog({
         canShowDownloadErrorDialog = false
         setDownloadErrorParams(null)
@@ -317,6 +331,7 @@ fun UpdateAvailable(
         mutableStateOf<Pair<UUID, Long>?>(null)
     }
 
+    // TODO(compose/update): make it a BottomSheet
     if (SDK_INT >= VERSION_CODES.O && manageStorageDialogData != null) ManageStorageDialog({
         setManageStorageData(null)
     }, manageStorageDialogData, downloadAction, onCancel = {
@@ -462,7 +477,7 @@ fun UpdateAvailable(
             progress = if (currentProgress == 0) 0f else currentProgress / 100f
             previousProgress = progress
 
-            actionButtonConfig = Triple(true, Icons.Rounded.Close, colors.primary)
+            actionButtonConfig = Triple(true, Icons.Rounded.Close, colorScheme.error)
             onDownloadClick = { downloadAction(DownloadAction.Pause) }
         }
 
@@ -471,7 +486,7 @@ fun UpdateAvailable(
             details = stringResource(R.string.download_progress_text_paused)
             sizeOrProgressText = previousProgressText ?: context.formatFileSize(downloadSize)
             progress = previousProgress
-            actionButtonConfig = Triple(true, Icons.Rounded.Close, colors.primary)
+            actionButtonConfig = Triple(true, Icons.Rounded.Close, colorScheme.error)
             onDownloadClick = if (hasDownloadPermissions) ({
                 enqueueIfSpaceAvailable()
             }) else requestDownloadPermissions().let { null }
@@ -482,8 +497,13 @@ fun UpdateAvailable(
             details = null
             sizeOrProgressText = context.formatFileSize(downloadSize)
             progress = null
-            actionButtonConfig = Triple(false, Icons.Rounded.Launch, colors.positive)
-            onDownloadClick = { showAlreadyDownloadedDialog = true }
+            actionButtonConfig = Triple(false, Icons.Rounded.Launch, colorScheme.primary)
+            onDownloadClick = { sheetType = SheetType.AlreadyDownloaded }
+
+            // Open install guide automatically, but only after the normal download flow completes
+            LaunchedEffect(Unit) {
+                if (previousProgress != null) context.startInstallActivity()
+            }
         }
 
         VERIFYING -> {
@@ -515,7 +535,7 @@ fun UpdateAvailable(
     Box(
         Modifier
             .fillMaxWidth()
-            .background(colors.backgroundVariant)
+            .background(colorScheme.backgroundVariant)
             .animatedClickable(onDownloadClick != null, onDownloadClick)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -533,13 +553,13 @@ fun UpdateAvailable(
                     ),
                     iconContentDescription,
                     Modifier.requiredWidth(56.dp),
-                    tint = colors.positive
+                    tint = colorScheme.positive
                 )
             } else Icon(
                 if (successful) Icons.Rounded.CheckCircleOutline else Icons.Rounded.Download,
                 iconContentDescription,
                 Modifier.requiredWidth(56.dp),
-                tint = if (successful) colors.positive else colors.primary
+                tint = if (successful) colorScheme.positive else colorScheme.primary
             )
 
             Column(
@@ -548,10 +568,14 @@ fun UpdateAvailable(
                     .padding(vertical = 16.dp)
             ) {
                 // Title
-                Text(stringResource(titleResId), style = MaterialTheme.typography.body2)
+                Text(stringResource(titleResId), style = MaterialTheme.typography.bodyMedium)
                 // Size + progress%
-                Text(sizeOrProgressText, Modifier.alpha(ContentAlpha.medium), style = MaterialTheme.typography.body2)
-                if (details != null) Text(details, style = MaterialTheme.typography.body2)
+                Text(
+                    sizeOrProgressText,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                if (details != null) Text(details, style = MaterialTheme.typography.bodyMedium)
             }
 
             actionButtonConfig?.let { (forCancel, icon, tint) ->
@@ -573,6 +597,8 @@ fun UpdateAvailable(
                 LinearProgressIndicator(animatedProgress, Modifier.fillMaxWidth())
             }
         }
+
+        HorizontalDivider(Modifier.align(Alignment.BottomStart))
     }
 }
 
@@ -602,7 +628,7 @@ fun UpToDate(
     }
 
     Box(Modifier.fillMaxWidth()) {
-        val positive = MaterialTheme.colors.positive
+        val positive = MaterialTheme.colorScheme.positive
         IconText(
             Modifier
                 .align(Alignment.CenterStart)
@@ -610,7 +636,7 @@ fun UpToDate(
             icon = Icons.Rounded.CheckCircleOutline,
             text = stringResource(R.string.update_information_system_is_up_to_date),
             iconTint = positive,
-            style = MaterialTheme.typography.subtitle1.copy(color = positive)
+            style = MaterialTheme.typography.titleMedium.copy(color = positive)
         )
 
         Icon(
@@ -640,7 +666,7 @@ fun UpToDate(
             if (!expandEnabled) R.string.update_information_no_update_data_available
             else R.string.update_information_view_update_information
         ),
-        style = MaterialTheme.typography.subtitle1.copy(color = MaterialTheme.colors.primary)
+        style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
     )
 
     AnimatedVisibility(
@@ -668,9 +694,9 @@ fun UpToDate(
                 ) + if (showAdvancedModeTip) stringResource(R.string.update_information_different_version_changelog_notice_advanced) else "",
                 Modifier
                     .padding(start = 20.dp, end = 16.dp, bottom = 8.dp)
-                    .alpha(ContentAlpha.medium)
                     .withPlaceholder(refreshing),
-                style = MaterialTheme.typography.caption
+                MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodySmall
             )
 
             updateData.Changelog(changelogModifier)
@@ -689,7 +715,7 @@ private fun UpdateData.Changelog(
 ) else Text(
     stringResource(R.string.update_information_description_not_available),
     if (extraTextPadding) modifier.padding(top = 16.dp) else modifier,
-    style = MaterialTheme.typography.body2
+    style = MaterialTheme.typography.bodyMedium
 )
 
 @Immutable
@@ -709,17 +735,17 @@ fun DownloadErrorDialog(
     AlertDialog(hide, confirmButton = {
         if (callback == null) return@AlertDialog
         val icon = if (resumable) Icons.Rounded.Download else Icons.Rounded.Autorenew
-        val textId = if (resumable) R.string.download_error_resume else R.string.download_error_retry
+        val resId = if (resumable) R.string.download_error_resume else R.string.download_error_retry
         OutlinedIconButton({
             LocalNotifications.hideDownloadCompleteNotification()
             hide()
             callback(resumable) // must be after `hide` so that the extra flag works correctly
-        }, icon, textId, MaterialTheme.colors.positive)
+        }, icon, resId)
     }, dismissButton = {
         TextButton({
             LocalNotifications.hideDownloadCompleteNotification()
             hide()
-        }) {
+        }, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
             Text(stringResource(R.string.download_error_close))
         }
     }, title = {
@@ -728,29 +754,6 @@ fun DownloadErrorDialog(
         if (type == null) Text(text) else RichText(text, type = type)
     })
 }
-
-@Composable
-private fun UpdateAlreadyDownloadedDialog(
-    hide: () -> Unit,
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit,
-) = AlertDialog(hide, confirmButton = {
-    OutlinedIconButton({
-        onConfirm()
-        hide()
-    }, Icons.Rounded.Launch, R.string.install, MaterialTheme.colors.positive)
-}, dismissButton = {
-    TextButton({
-        onDismiss()
-        hide()
-    }) {
-        Text(stringResource(R.string.delete_message_delete_button))
-    }
-}, title = {
-    Text(stringResource(R.string.delete_message_title))
-}, text = {
-    Text(stringResource(R.string.delete_message_contents))
-})
 
 /**
  * Shows a dialog to the user asking them to free up some space, so that the app can download the OTA ZIP successfully.
@@ -786,9 +789,9 @@ private fun ManageStorageDialog(
             .putExtra(StorageManager.EXTRA_REQUESTED_BYTES, bytes)
         launcher.launch(intent)
         hide()
-    }, Icons.Rounded.Launch, android.R.string.ok, MaterialTheme.colors.positive)
+    }, Icons.Rounded.Launch, android.R.string.ok)
 }, dismissButton = {
-    TextButton(hide) {
+    TextButton(hide, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
         Text(stringResource(R.string.download_error_close))
     }
 }, title = {

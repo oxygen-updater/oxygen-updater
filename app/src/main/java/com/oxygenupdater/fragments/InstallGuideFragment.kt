@@ -10,12 +10,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.oxygenupdater.activities.InstallActivity
 import com.oxygenupdater.databinding.FragmentInstallGuideBinding
-import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.InstallGuidePage
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.viewmodels.InstallViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -127,7 +126,7 @@ class InstallGuideFragment : Fragment() {
 
         if (activity == null) {
             // Should not happen, but can occur when the fragment gets content resolved after the user exited the install guide and returned to another activity.
-            logError(TAG, OxygenUpdaterException("getActivity() returned null (displayInstallGuide)"))
+            logWarning(TAG, "null activity")
             return
         }
 

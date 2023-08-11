@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oxygenupdater.R
-import com.oxygenupdater.compose.ui.PullRefresh
+import com.oxygenupdater.compose.ui.common.PullRefresh
+import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.faq.FaqScreen
 import com.oxygenupdater.compose.ui.faq.FaqViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,9 +22,9 @@ class FaqActivity : ComposeSupportActionBarActivity(
     override fun Content() {
         val state by viewModel.state.collectAsStateWithLifecycle()
 
-        PullRefresh(state, shouldShowProgressIndicator = {
+        PullRefresh(state, shouldShowProgressIndicator = rememberTypedCallback {
             it.isEmpty()
-        }, onRefresh = {
+        }, onRefresh = rememberCallback {
             viewModel.refresh()
         }) {
             FaqScreen(state)

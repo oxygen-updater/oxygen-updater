@@ -6,22 +6,25 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.format.Formatter
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContextCompat
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.getSystemService
+import androidx.core.net.toUri
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
+import com.oxygenupdater.compose.ui.theme.light
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.utils.Logger
 import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.ThemeUtils
+import com.oxygenupdater.utils.Logger.logWarning
 
 /**
  * Standardizes display of file sizes across the app, regardless of OS versions.
@@ -53,10 +56,7 @@ fun Context.formatFileSize(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) (sizeBytes / 1.048576).toLong() else sizeBytes
 )
 
-fun Context.shareExternally(
-    title: String,
-    text: String,
-) {
+fun Context.shareExternally(title: String, text: String) {
     val prefix = "${getString(R.string.app_name)}: $title"
     val intent = Intent(Intent.ACTION_SEND)
         // Rich text preview: should work only on API 29+
@@ -87,7 +87,7 @@ fun Context.openPlayStorePage() {
         startActivity(
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=$appPackageName")
+                "market://details?id=$appPackageName".toUri()
             ).withAppReferrer(this)
         )
     } catch (e: ActivityNotFoundException) {
@@ -96,7 +96,7 @@ fun Context.openPlayStorePage() {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
                 ).withAppReferrer(this)
             )
         } catch (e1: ActivityNotFoundException) {
@@ -106,115 +106,68 @@ fun Context.openPlayStorePage() {
                 getString(R.string.error_unable_to_rate_app),
                 Toast.LENGTH_LONG
             ).show()
-            Logger.logWarning("AboutActivity", "App rating without google play store support", e1)
+            logWarning("AboutActivity", "App rating without google play store support", e1)
         }
     }
 }
 
 fun Context.openEmail() {
-    val oxygenOsVersion = SystemVersionProperties.oxygenOSVersion
-    val oxygenOsOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
-    val osType = SystemVersionProperties.osType
-    val actualDeviceName = SystemVersionProperties.oxygenDeviceName
-    val appVersion = BuildConfig.VERSION_NAME
-    val chosenDeviceName = PrefManager.getString(
-        PrefManager.PROPERTY_DEVICE,
-        "<UNKNOWN>"
-    )
-    val chosenUpdateMethod = PrefManager.getString(
-        PrefManager.PROPERTY_UPDATE_METHOD,
-        "<UNKNOWN>"
-    )
-    val advancedModeEnabled = PrefManager.getBoolean(
-        PrefManager.PROPERTY_ADVANCED_MODE,
-        false
-    )
+    val chosenDevice = PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>")
+    val chosenMethod = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+    val advancedMode = PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false)
+    val osVersionWithType = SystemVersionProperties.oxygenOSVersion + SystemVersionProperties.osType.let {
+        if (it.isNotEmpty()) " ($it)" else ""
+    }
+
+    // Don't localize any part of this, it'll be an annoyance for us while reading emails
+    val emailBody = """
+--------------------
+• Device: $chosenDevice (${SystemVersionProperties.oxygenDeviceName})
+• Method: $chosenMethod
+• OS version: $osVersionWithType
+• OTA version: ${SystemVersionProperties.oxygenOSOTAVersion}
+• Advanced mode: $advancedMode
+• App version: ${BuildConfig.VERSION_NAME}
+--------------------
+
+<write your query here>"""
 
     startActivity(
-        Intent.createChooser(
-            Intent(Intent.ACTION_SENDTO)
-                .setData(Uri.parse("mailto:"))
-                .putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_address)))
-                // Parts of this should probably be localized but it may pose a
-                // problem for us while reading emails
-                .putExtra(
-                    Intent.EXTRA_TEXT,
-                    """
-                        --------------------
-                        • Actual device: $actualDeviceName
-                        • Chosen device: $chosenDeviceName
-                        • Update method: $chosenUpdateMethod
-                        • OS version: $oxygenOsVersion ($osType)
-                        • OTA version: $oxygenOsOtaVersion
-                        • Advanced mode: $advancedModeEnabled
-                        • App version: $appVersion
-                        --------------------
-                        
-                        <write your query here>
-                    """.trimIndent()
-                ),
-            getString(R.string.about_email_button_text)
-        )
+        Intent(Intent.ACTION_SENDTO)
+            .setData("mailto:".toUri())
+            .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
+            .putExtra(Intent.EXTRA_TEXT, emailBody)
     )
 }
-
-fun Context.openDiscord() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.discord_url))
-    ).withAppReferrer(this)
-)
-
-fun Context.openGitHub() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.github_url))
-    ).withAppReferrer(this)
-)
-
-fun Context.openPatreon() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.patreon_url))
-    ).withAppReferrer(this)
-)
-
-fun Context.openWebsite() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.website_url))
-    ).withAppReferrer(this)
-)
 
 fun Context.openAppDetailsPage() {
     val action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
     try {
-        startActivity(Intent(action, Uri.parse("package:$packageName")))
+        startActivity(Intent(action, "package:$packageName".toUri()))
     } catch (e: Exception) {
         logError("ContextExtensions", "openAppDetailsPage failed", e)
     }
 }
 
-fun Context.openInCustomTab(url: String) = customTabIntent().launchUrl(
-    this,
-    Uri.parse(url)
-)
+fun CustomTabsIntent.launch(context: Context, url: String) = apply {
+    intent.withAppReferrer(context)
+}.launchUrl(context, url.toUri())
 
-private fun Context.customTabIntent() = CustomTabsIntent.Builder()
-    .setShowTitle(true)
-    .setUrlBarHidingEnabled(true)
-    .setDefaultColorSchemeParams(
-        CustomTabColorSchemeParams.Builder()
-            .setToolbarColor(ContextCompat.getColor(this, R.color.background))
-            .setNavigationBarColor(ContextCompat.getColor(this, R.color.background))
-            .build()
-    )
-    .setColorScheme(
-        if (ThemeUtils.isNightModeActive(this)) {
-            CustomTabsIntent.COLOR_SCHEME_DARK
-        } else {
-            CustomTabsIntent.COLOR_SCHEME_LIGHT
-        }
-    ).build().apply {
-        intent.withAppReferrer(this@customTabIntent)
+@Composable
+fun rememberCustomTabsIntent(): CustomTabsIntent {
+    val colorScheme = MaterialTheme.colorScheme
+    return remember(colorScheme) {
+        CustomTabsIntent.Builder()
+            .setShowTitle(true)
+            .setUrlBarHidingEnabled(true)
+            .setDefaultColorSchemeParams(colorScheme.surface.toArgb().let {
+                CustomTabColorSchemeParams.Builder()
+                    .setToolbarColor(it)
+                    .setNavigationBarColor(it)
+                    .build()
+            }).setColorScheme(
+                if (colorScheme.light) CustomTabsIntent.COLOR_SCHEME_DARK
+                else CustomTabsIntent.COLOR_SCHEME_LIGHT
+            ).build()
     }
+}

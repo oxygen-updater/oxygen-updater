@@ -34,8 +34,7 @@ import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAI
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.compose.activities.MainActivity
 import com.oxygenupdater.compose.ui.update.DownloadStatus
-import com.oxygenupdater.exceptions.UpdateDownloadException
-import com.oxygenupdater.extensions.toWorkData
+import com.oxygenupdater.compose.ui.update.WorkInfoWithStatus
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -99,7 +98,7 @@ class MainViewModel(
     val appUpdateStatus = appUpdateStatusFlow.asStateFlow()
 
     // Referential equality because we're reusing static Pairs
-    var snackbarText by mutableStateOf<Pair<Int, Int>?>(null, referentialEqualityPolicy())
+    val snackbarText = mutableStateOf<Pair<Int, Int>?>(null, referentialEqualityPolicy())
 
     /** Ensure init is placed after all `*Flow` declarations */
     init {
@@ -118,7 +117,7 @@ class MainViewModel(
     }
 
     var deviceOsSpec: DeviceOsSpec? = null
-    var mismatchStatus by mutableStateOf<Triple<Boolean, String, String>?>(null)
+    var deviceMismatch by mutableStateOf<Triple<Boolean, String, String>?>(null)
 
     private var lastDownloadStatus: DownloadStatus? = null
     private val cancelShouldPauseDownload = AtomicBoolean(false)
@@ -126,7 +125,7 @@ class MainViewModel(
         workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_MD5_VERIFICATION).asFlow()
     ) { download, verification ->
         val infoAndStatus = if (download.isNotEmpty()) download[0].let {
-            it to when (it.state) {
+            val status = when (it.state) {
                 State.ENQUEUED, State.BLOCKED -> DownloadStatus.DOWNLOAD_QUEUED
                 State.RUNNING -> DownloadStatus.DOWNLOADING
                 State.SUCCEEDED -> DownloadStatus.DOWNLOAD_COMPLETED
@@ -143,27 +142,29 @@ class MainViewModel(
                     if (pause) DownloadStatus.DOWNLOAD_PAUSED else DownloadStatus.NOT_DOWNLOADING
                 }
             }
+            WorkInfoWithStatus(it, status)
         } else if (verification.isNotEmpty()) verification[0].let {
-            it to when (it.state) {
+            val status = when (it.state) {
                 State.ENQUEUED, State.BLOCKED, State.RUNNING -> DownloadStatus.VERIFYING
                 State.SUCCEEDED -> DownloadStatus.VERIFICATION_COMPLETED
                 State.FAILED, State.CANCELLED -> DownloadStatus.VERIFICATION_FAILED
             }
-        } else return@combine null to DownloadStatus.NOT_DOWNLOADING
+            WorkInfoWithStatus(it, status)
+        } else return@combine WorkInfoWithStatus(null, DownloadStatus.NOT_DOWNLOADING)
 
-        val status = infoAndStatus.second
+        val status = infoAndStatus.downloadStatus
         // Post value only if it's changed, or if status is DOWNLOADING (because we need to update views for progress)
         if (status != lastDownloadStatus || status == DownloadStatus.DOWNLOADING) infoAndStatus.also {
             lastDownloadStatus = status
-        } else null to DownloadStatus.NOT_DOWNLOADING
+        } else WorkInfoWithStatus(null, DownloadStatus.NOT_DOWNLOADING)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = null to DownloadStatus.NOT_DOWNLOADING
+        initialValue = WorkInfoWithStatus(null, DownloadStatus.NOT_DOWNLOADING)
     )
 
     private fun fetchAllDevices() = viewModelScope.launch(Dispatchers.IO) {
-        deviceFlow.emit(serverRepository.fetchDevices(DeviceRequestFilter.ALL) ?: listOf())
+        deviceFlow.emit(serverRepository.fetchDevices(DeviceRequestFilter.All) ?: listOf())
     }
 
     private fun fetchServerMessages() = viewModelScope.launch(Dispatchers.IO) {
@@ -190,10 +191,7 @@ class MainViewModel(
      */
     fun deleteDownloadedFile(context: Context, filename: String?): Boolean {
         if (filename == null) {
-            logWarning(
-                TAG,
-                UpdateDownloadException("Could not delete downloaded file, null update data or update data without file name was provided")
-            )
+            logWarning(TAG, "Can't delete downloaded file; filename null")
             return false
         }
 
@@ -207,12 +205,12 @@ class MainViewModel(
         val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, filename)
 
         if (tempFile.exists() && !tempFile.delete()) {
-            logWarning(TAG, UpdateDownloadException("Could not delete temporary file $filename"))
+            logWarning(TAG, "Can't delete temporary file $filename")
         }
 
         var deleted = true
         if (zipFile.exists() && !zipFile.delete()) {
-            logWarning(TAG, UpdateDownloadException("Could not delete downloaded file $filename"))
+            logWarning(TAG, "Can't delete downloaded file $filename")
             deleted = false
         }
 
@@ -255,7 +253,7 @@ class MainViewModel(
      * as it results in unnecessary calls to [updateDownloadStatus]
      */
     fun maybePruneWork() {
-        if (workInfoWithStatus.value.second.run { successful || failed }) {
+        if (workInfoWithStatus.value.downloadStatus.run { successful || failed }) {
             workManager.pruneWork()
         }
     }

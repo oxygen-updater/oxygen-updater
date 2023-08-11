@@ -20,19 +20,20 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.rounded.Autorenew
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.Notes
 import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material3.ButtonDefaults.textButtonColors
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -57,8 +58,6 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.RefreshAwareState
-import com.oxygenupdater.compose.ui.TopAppBarDefaults
-import com.oxygenupdater.compose.ui.TopAppBarScrollBehavior
 import com.oxygenupdater.compose.ui.common.BannerAd
 import com.oxygenupdater.compose.ui.common.GridItem
 import com.oxygenupdater.compose.ui.common.IconText
@@ -68,12 +67,12 @@ import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.compose.ui.theme.light
-import com.oxygenupdater.compose.ui.theme.positive
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.shareExternally
 import com.oxygenupdater.models.NewsItem
 import java.time.LocalDateTime
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsItemScreen(
     state: RefreshAwareState<NewsItem?>,
@@ -100,7 +99,7 @@ fun NewsItemScreen(
             var showDivider = false
             val modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
             val textModifier = Modifier.withPlaceholder(refreshing)
-            val caption = MaterialTheme.typography.caption
+            val caption = MaterialTheme.typography.bodySmall
 
             item.subtitle?.let {
                 showDivider = true
@@ -121,7 +120,7 @@ fun NewsItemScreen(
             }
 
             // We can't edit CSS in WebViews, so pass theme to backend to style it accordingly
-            val url = item.apiUrl + if (MaterialTheme.colors.light) "Light" else "Dark"
+            val url = item.apiUrl + if (MaterialTheme.colorScheme.light) "Light" else "Dark"
             RefreshAwareWebView(refreshing, webViewState, navigator, url, showDivider, onError, adLoaded.value) {
                 onLoadFinished(item)
             }
@@ -159,19 +158,14 @@ fun ColumnScope.ErrorSheet(
     dismiss: () -> Unit,
     confirm: () -> Unit,
 ) {
-    Row(Modifier.padding(start = 16.dp, end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text(
-            title,
-            Modifier.weight(1f),
-            color = MaterialTheme.colors.primary,
-            overflow = TextOverflow.Ellipsis, maxLines = 1,
-            style = MaterialTheme.typography.subtitle1
-        )
-
-        IconButton({ dismiss() }) {
-            Icon(Icons.Rounded.Close, stringResource(androidx.compose.ui.R.string.close_sheet))
-        }
-    }
+    val colorScheme = MaterialTheme.colorScheme
+    Text(
+        title,
+        Modifier.padding(start = 16.dp, end = 8.dp),
+        color = colorScheme.primary,
+        overflow = TextOverflow.Ellipsis, maxLines = 1,
+        style = MaterialTheme.typography.titleMedium
+    )
 
     Text(
         stringResource(R.string.news_load_network_error),
@@ -179,7 +173,7 @@ fun ColumnScope.ErrorSheet(
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .weight(1f, false)
             .verticalScroll(rememberScrollState()),
-        style = MaterialTheme.typography.body2
+        style = MaterialTheme.typography.bodyMedium
     )
 
     Row(
@@ -190,14 +184,18 @@ fun ColumnScope.ErrorSheet(
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        TextButton({ dismiss() }, Modifier.padding(end = 8.dp)) {
+        TextButton(
+            dismiss,
+            Modifier.padding(end = 8.dp),
+            colors = textButtonColors(contentColor = colorScheme.error)
+        ) {
             Text(stringResource(R.string.download_error_close))
         }
 
         OutlinedIconButton({
             confirm()
             dismiss()
-        }, Icons.Rounded.Autorenew, R.string.download_error_retry, MaterialTheme.colors.positive)
+        }, Icons.Rounded.Autorenew, R.string.download_error_retry)
     }
 }
 
@@ -224,15 +222,17 @@ private fun RefreshAwareWebView(
     ) else if (loading is LoadingState.Loading) LinearProgressIndicator(
         loading.progress, paddingTop.fillMaxWidth()
     ) else if (loading == LoadingState.Finished) {
-        // Errors not for our URLs are filtered out in [WebViewClient]
-        val error = webViewState.errorsForCurrentRequest.firstOrNull()?.error
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && error != null) onError(error.errorString())
-        if (showDivider) ItemDivider(Modifier.padding(top = 16.dp))
-    }
+        val error = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Errors not for our URLs are filtered out in [WebViewClient]
+            webViewState.errorsForCurrentRequest.firstOrNull()?.error?.errorString()
+        } else null
 
-    LaunchedEffect(loading) {
-        // Ensure it's called only once per successful load
-        if (loading == LoadingState.Finished) onLoadFinished()
+        // Ensure finished & error callbacks are done just once per load
+        LaunchedEffect(error) {
+            if (error == null) onLoadFinished() else onError(error)
+        }
+
+        if (showDivider) ItemDivider(Modifier.padding(top = 16.dp))
     }
 
     val context = LocalContext.current
@@ -243,6 +243,7 @@ private fun RefreshAwareWebView(
         ""
     }
 
+    // TODO(compose/news): add scrollbars when it's out as first-party solution: https://developer.android.com/jetpack/androidx/compose-roadmap
     val runningInPreview = LocalInspectionMode.current
     WebView(
         webViewState,
@@ -317,6 +318,7 @@ private fun NewsItem.getRelativeTime() = epochMilli?.let {
     }
 }?.toString()
 
+@OptIn(ExperimentalMaterial3Api::class)
 @PreviewThemes
 @Composable
 fun PreviewNewsItemScreen() = PreviewAppTheme {

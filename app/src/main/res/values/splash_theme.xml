@@ -4,7 +4,7 @@
 	<style name="Theme.OxygenUpdater.Splash" parent="Theme.SplashScreen">
 		<item name="windowSplashScreenBackground">@color/splashBackgroundColor</item>
 		<item name="windowSplashScreenAnimatedIcon">@drawable/splash</item>
-		<item name="postSplashScreenTheme">@style/Theme.OxygenUpdater.DayNight</item>
+		<item name="postSplashScreenTheme">@style/Theme.OxygenUpdater</item>
 	</style>
 
 </resources>

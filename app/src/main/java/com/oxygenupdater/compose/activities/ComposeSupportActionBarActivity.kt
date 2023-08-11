@@ -6,33 +6,27 @@ import androidx.activity.compose.setContent
 import androidx.annotation.IntRange
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.material.transition.platform.MaterialContainerTransform
-import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.TopAppBar
-import com.oxygenupdater.compose.ui.TopAppBarDefaults
-import com.oxygenupdater.compose.ui.TopAppBarScrollBehavior
+import com.oxygenupdater.compose.ui.common.TransparentSystemBars
 import com.oxygenupdater.compose.ui.theme.AppTheme
-import com.oxygenupdater.compose.ui.theme.light
 import com.oxygenupdater.extensions.startMainActivity
 
 /**
  * Sets support action bar and enables home up button on the toolbar.
- * Additionally, it sets up:
- * * shared element transitions (see [MaterialContainerTransform])
- * * a full screen activity if its theme is [R.style.Theme_OxygenUpdater_DayNight_FullScreen]
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
+@OptIn(ExperimentalMaterial3Api::class)
 abstract class ComposeSupportActionBarActivity(
     /**
      * Used in the `onBackPressed` callback, only if this is the task root and
@@ -53,18 +47,9 @@ abstract class ComposeSupportActionBarActivity(
     protected open fun scrollBehavior() = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     @Composable
-    protected open fun SystemBars() {
-        val colors = MaterialTheme.colors
-        val controller = rememberSystemUiController()
-        val darkIcons = colors.light
-        controller.setNavigationBarColor(Color.Transparent, darkIcons)
-        controller.setStatusBarColor(colors.surface, darkIcons)
-    }
-
-    @Composable
     protected open fun TopAppBar() = TopAppBar(scrollBehavior, {
         onBackPressed()
-    }, stringResource(subtitleResId), Modifier.statusBarsPadding(), false)
+    }, stringResource(subtitleResId), false)
 
     @Composable
     protected abstract fun Content()
@@ -74,9 +59,14 @@ abstract class ComposeSupportActionBarActivity(
             scrollBehavior = scrollBehavior()
 
             AppTheme {
-                SystemBars()
+                TransparentSystemBars()
 
-                Scaffold(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = { TopAppBar() }) {
+                Scaffold(
+                    Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                    topBar = { TopAppBar() },
+                    // Let children handle it, so that we can achieve "overlay" navbar
+                    contentWindowInsets = WindowInsets(0)
+                ) {
                     Box(Modifier.padding(it)) {
                         Content()
                     }

@@ -8,16 +8,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircleOutline
+import androidx.compose.material3.ButtonDefaults.textButtonColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
@@ -25,14 +24,13 @@ import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.ListItemTextIndent
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
-import com.oxygenupdater.compose.ui.theme.positive
 
 @Composable
 fun ColumnScope.AdvancedModeSheet(
     hide: () -> Unit,
     onClick: (Boolean) -> Unit,
 ) {
-    SheetHeader(R.string.settings_advanced_mode, hide)
+    SheetHeader(R.string.settings_advanced_mode)
 
     Column(
         Modifier
@@ -40,28 +38,28 @@ fun ColumnScope.AdvancedModeSheet(
             .weight(1f, false)
             .verticalScroll(rememberScrollState())
     ) {
-        val body2 = MaterialTheme.typography.body2
+        val bodyMedium = MaterialTheme.typography.bodyMedium
         Text(
             stringResource(R.string.settings_advanced_mode_explanation),
-            style = body2
+            style = bodyMedium
         )
 
         Text(
             AnnotatedString(
                 stringResource(R.string.settings_advanced_mode_uses),
-                body2.toSpanStyle(),
-                body2.toParagraphStyle().copy(textIndent = ListItemTextIndent)
+                bodyMedium.toSpanStyle(),
+                bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
             ),
-            style = body2
+            style = bodyMedium
         )
     }
 
+    val colorScheme = MaterialTheme.colorScheme
     Text(
         stringResource(R.string.settings_advanced_mode_caption),
-        Modifier
-            .alpha(ContentAlpha.medium)
-            .padding(horizontal = 16.dp),
-        style = MaterialTheme.typography.caption
+        Modifier.padding(horizontal = 16.dp),
+        colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodySmall
     )
 
     Row(
@@ -74,14 +72,14 @@ fun ColumnScope.AdvancedModeSheet(
         TextButton({
             onClick(false)
             hide()
-        }, Modifier.padding(end = 8.dp)) {
+        }, Modifier.padding(end = 8.dp), colors = textButtonColors(contentColor = colorScheme.error)) {
             Text(stringResource(android.R.string.cancel))
         }
 
         OutlinedIconButton({
             onClick(true)
             hide()
-        }, Icons.Rounded.CheckCircleOutline, R.string.enable, MaterialTheme.colors.positive)
+        }, Icons.Rounded.CheckCircleOutline, R.string.enable)
     }
 }
 

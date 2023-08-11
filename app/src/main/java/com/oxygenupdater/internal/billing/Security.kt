@@ -2,7 +2,7 @@ package com.oxygenupdater.internal.billing
 
 import android.util.Base64
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.exceptions.GooglePlayBillingException
+import com.oxygenupdater.utils.Logger.logBillingError
 import com.oxygenupdater.utils.Logger.logError
 import java.security.InvalidKeyException
 import java.security.KeyFactory
@@ -36,13 +36,13 @@ object Security {
     fun verifyPurchase(
         base64PublicKey: String?,
         signedData: String?,
-        signature: String?
+        signature: String?,
     ) = if (signedData.isNullOrBlank()
         || base64PublicKey.isNullOrBlank()
         || signature.isNullOrBlank()
     ) {
-        logError(TAG, GooglePlayBillingException("Purchase verification failed: missing data"))
-        BuildConfig.DEBUG // Line modified (https://stackoverflow.com/questions/14600664/android-in-app-purchase-signature-verification-failed). Was: return false.
+        logBillingError(TAG, "Purchase verification failed: missing data")
+        BuildConfig.DEBUG // Line modified (https://stackoverflow.com/q/14600664). Was: return false.
     } else {
         verify(generatePublicKey(base64PublicKey), signedData, signature)
     }
@@ -61,7 +61,7 @@ object Security {
             X509EncodedKeySpec(Base64.decode(encodedPublicKey, Base64.DEFAULT))
         )
     } catch (e: InvalidKeySpecException) {
-        logError(TAG, GooglePlayBillingException("Invalid key specification"))
+        logBillingError(TAG, "Invalid key specification")
         throw IllegalArgumentException(e)
     }
 
@@ -78,7 +78,7 @@ object Security {
     fun verify(
         publicKey: PublicKey?,
         signedData: String,
-        signature: String?
+        signature: String?,
     ): Boolean {
         val signatureBytes = try {
             Base64.decode(signature, Base64.DEFAULT)
@@ -93,7 +93,7 @@ object Security {
                 update(signedData.toByteArray())
 
                 if (!verify(signatureBytes)) {
-                    logError(TAG, GooglePlayBillingException("Signature verification failed"))
+                    logBillingError(TAG, "Signature verification failed")
                     return false
                 }
             }

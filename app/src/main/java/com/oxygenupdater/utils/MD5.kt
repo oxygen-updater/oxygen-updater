@@ -8,7 +8,6 @@
  */
 package com.oxygenupdater.utils
 
-import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.utils.Logger.logError
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -26,7 +25,7 @@ internal object MD5 {
         // Create Hex String
         String.format("%032x", BigInteger(1, messageDigest))
     } catch (e: NoSuchAlgorithmException) {
-        logError(TAG, OxygenUpdaterException(e.message))
+        logError(TAG, e.message ?: "MD5 algorithm not found", e)
         ""
     }
 }

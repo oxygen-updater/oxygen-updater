@@ -6,6 +6,7 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import androidx.compose.ui.text.intl.Locale
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.GROUP_ALERT_CHILDREN
 import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
@@ -29,7 +30,6 @@ import com.oxygenupdater.enums.NotificationType.NEW_DEVICE
 import com.oxygenupdater.enums.NotificationType.NEW_VERSION
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.setBigTextStyle
-import com.oxygenupdater.models.AppLocale
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DEVICE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENERAL_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
@@ -89,19 +89,22 @@ class DisplayDelayedNotificationWorker(
                 messageContents[NotificationElement.DEVICE_NAME.name],
                 messageContents[NotificationElement.NEW_VERSION_NUMBER.name]
             )
+
             GENERAL_NOTIFICATION -> getGeneralNotificationBuilder(
-                if (AppLocale.get() == AppLocale.NL) {
+                if (Locale.current.language.lowercase() == "nl") {
                     messageContents[NotificationElement.DUTCH_MESSAGE.name]
                 } else {
                     messageContents[NotificationElement.ENGLISH_MESSAGE.name]
                 }
             )
+
             NEWS -> {
                 // If this is a "bump" notification, show it only to people who haven't yet read the article
                 // A "bump" is defined as re-sending the notification so that people who haven't yet read the article can read it
                 // However, only app versions from v4.1.0 onwards properly support this,
                 // even though a broken implementation was added in v4.0.0 (Kotlin rebuild).
                 // So use the "bump" feature on admin portal with care - the notification will still be shown on older app versions
+                @Suppress("DEPRECATION")
                 if (messageContents[NotificationElement.NEWS_ITEM_IS_BUMP.name]?.toBoolean() == true
                     && newsItemDao.getById(
                         messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
@@ -111,7 +114,7 @@ class DisplayDelayedNotificationWorker(
                 }
 
                 getNewsArticleNotificationBuilder(
-                    if (AppLocale.get() == AppLocale.NL) {
+                    if (Locale.current.language.lowercase() == "nl") {
                         messageContents[NotificationElement.DUTCH_MESSAGE.name]
                     } else {
                         messageContents[NotificationElement.ENGLISH_MESSAGE.name]

@@ -1,17 +1,17 @@
 package com.oxygenupdater.compose.ui.main
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -31,7 +31,7 @@ import com.oxygenupdater.models.ServerStatus.Status
 @Composable
 fun ServerStatusBanner(serverStatus: ServerStatus) {
     val latestAppVersion = serverStatus.latestAppVersion
-    if (latestAppVersion != null && !serverStatus.checkIfAppIsUpToDate()) {
+    if (latestAppVersion != null && (LocalInspectionMode.current || !serverStatus.checkIfAppIsUpToDate())) {
         val context = LocalContext.current
         IconText(
             Modifier
@@ -47,9 +47,9 @@ fun ServerStatusBanner(serverStatus: ServerStatus) {
     val status = serverStatus.status
     if (status?.isUserRecoverableError != true) return
 
-    val warn = MaterialTheme.colors.warn
-    val error = MaterialTheme.colors.error
-    val (icon, @StringRes textResId, background) = remember(status, error, warn) {
+    val warn = MaterialTheme.colorScheme.warn
+    val error = MaterialTheme.colorScheme.error
+    val (icon, @StringRes textResId, color) = remember(status, error, warn) {
         when (status) {
             Status.WARNING -> Triple(CustomIcons.Warning, R.string.server_status_warning, warn)
             Status.ERROR -> Triple(CustomIcons.Error, R.string.server_status_error, error)
@@ -58,33 +58,48 @@ fun ServerStatusBanner(serverStatus: ServerStatus) {
         }
     }
 
+    if (color == null) return
+
     IconText(
         Modifier
             .fillMaxWidth()
-            .background(background ?: return)
             .padding(16.dp),
         icon = icon,
         text = stringResource(textResId),
-        iconTint = Color.White,
-        style = MaterialTheme.typography.body2.copy(color = Color.White),
+        iconTint = color,
+        style = MaterialTheme.typography.bodyMedium.copy(color = color),
     )
     ItemDivider()
 }
 
 @PreviewThemes
 @Composable
+fun PreviewAppOutdated() = PreviewAppTheme {
+    Column {
+        ServerStatusBanner(ServerStatus(Status.OUTDATED, "8.8.8"))
+    }
+}
+
+@PreviewThemes
+@Composable
 fun PreviewServerWarning() = PreviewAppTheme {
-    ServerStatusBanner(ServerStatus(Status.WARNING))
+    Column {
+        ServerStatusBanner(ServerStatus(Status.WARNING))
+    }
 }
 
 @PreviewThemes
 @Composable
 fun PreviewServerError() = PreviewAppTheme {
-    ServerStatusBanner(ServerStatus(Status.ERROR))
+    Column {
+        ServerStatusBanner(ServerStatus(Status.ERROR))
+    }
 }
 
 @PreviewThemes
 @Composable
 fun PreviewServerUnreachable() = PreviewAppTheme {
-    ServerStatusBanner(ServerStatus(Status.UNREACHABLE))
+    Column {
+        ServerStatusBanner(ServerStatus(Status.UNREACHABLE))
+    }
 }

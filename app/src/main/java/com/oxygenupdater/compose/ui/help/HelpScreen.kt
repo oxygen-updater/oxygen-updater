@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.SystemUpdateAlt
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -72,14 +72,14 @@ private fun HelpItem(
     IconText(
         Modifier.padding(horizontal = 16.dp),
         icon = icon, text = stringResource(titleResId),
-        style = MaterialTheme.typography.subtitle1
+        style = MaterialTheme.typography.titleMedium
     )
 
     SelectionContainer(if (last) Modifier.navigationBarsPadding() else Modifier) {
         Text(
             stringResource(textResId),
             Modifier.padding(start = 56.dp, end = 16.dp),
-            style = MaterialTheme.typography.body2
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 

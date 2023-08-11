@@ -5,7 +5,6 @@ package com.oxygenupdater.models
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-@Suppress("unused")
 enum class DeviceOsSpec {
     // for devices that are supported by the app
     SUPPORTED_OXYGEN_OS,

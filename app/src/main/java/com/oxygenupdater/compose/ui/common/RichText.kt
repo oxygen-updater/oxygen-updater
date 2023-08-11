@@ -12,10 +12,9 @@ import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Typography
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
@@ -37,8 +36,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
+import androidx.core.text.getSpans
 import com.oxygenupdater.compose.ui.theme.DefaultTextStyle
 
+// TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap#core-libraries
 /**
  * @param type Defaults to [RichTextType.Html]
  * @param custom required when [type] is [RichTextType.Custom]
@@ -49,7 +50,7 @@ fun RichText(
     text: String?,
     modifier: Modifier = Modifier, // `weight` won't work; put that in a Spacer instead
     textAlign: TextAlign? = null,
-    contentColor: Color = LocalContentColor.current.copy(alpha = ContentAlpha.high),
+    contentColor: Color = LocalContentColor.current,
     type: RichTextType = RichTextType.Html,
     custom: ((String, Color, Color) -> AnnotatedString)? = null,
 ) = SelectionContainer(modifier) {
@@ -57,7 +58,7 @@ fun RichText(
     val text = text ?: ""
 
     val uriHandler = LocalUriHandler.current
-    val urlColor = MaterialTheme.colors.primary
+    val urlColor = MaterialTheme.colorScheme.primary
     val typography = MaterialTheme.typography
     val annotated = remember(text, type) {
         when (type) {
@@ -101,8 +102,8 @@ private fun htmlToAnnotatedString(
     html: String,
     typography: Typography,
     contentColor: Color, urlColor: Color,
-    spanStyle: SpanStyle = typography.body2.toSpanStyle().copy(color = contentColor),
-    paragraphStyle: ParagraphStyle = typography.body2.toParagraphStyle(),
+    spanStyle: SpanStyle = typography.bodyMedium.toSpanStyle().copy(color = contentColor),
+    paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle(),
 ) = buildAnnotatedString {
     val fontSize = spanStyle.fontSize
     val spanned = HtmlCompat.fromHtml(
@@ -117,7 +118,7 @@ private fun htmlToAnnotatedString(
     addStyle(spanStyle, 0, length)
     addStyle(paragraphStyle, 0, length)
 
-    spanned.getSpans(0, length, Any::class.java).forEach { span ->
+    spanned.getSpans<Any>().forEach { span ->
         val start = spanned.getSpanStart(span)
         val end = spanned.getSpanEnd(span)
         if (start == -1 || end == -1) return@forEach
@@ -161,8 +162,8 @@ private fun changelogToAnnotatedString(
     changelog: String,
     typography: Typography,
     contentColor: Color, urlColor: Color,
-    spanStyle: SpanStyle = typography.body2.toSpanStyle().copy(color = contentColor),
-    paragraphStyle: ParagraphStyle = typography.body2.toParagraphStyle(),
+    spanStyle: SpanStyle = typography.bodyMedium.toSpanStyle().copy(color = contentColor),
+    paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle(),
 ) = try {
     buildAnnotatedString {
         if (changelog.isBlank()) return AnnotatedString("")
@@ -172,24 +173,24 @@ private fun changelogToAnnotatedString(
             var lineToAppend = line
             var paraStyleToApply = paragraphStyle
             val spanStyleToApply = when {
-                // Heading 1 => App's h5 typography (24sp; Google Sans Medium)
+                // Heading 1 => App's headlineSmall typography (24sp; Google Sans Medium)
                 // Note that lines that are likely version numbers are skipped, since they'll be displayed elsewhere
                 H1.containsMatchIn(line) -> if (line.startsWith(OS_VERSION_LINE_HEADING)) return@forEach
-                else typography.h5.toSpanStyle().also {
+                else typography.headlineSmall.toSpanStyle().also {
                     heading = true
                     lineToAppend = line.replace(H1, "$1")
                 }
-                // Heading 2 => App's subtitle1 (16sp; Google Sans Medium)
-                H2.containsMatchIn(line) -> typography.subtitle1.toSpanStyle().also {
+                // Heading 2 => App's titleMedium (16sp; Google Sans Medium)
+                H2.containsMatchIn(line) -> typography.titleMedium.toSpanStyle().also {
                     heading = true
                     lineToAppend = line.replace(H2, "$1")
                 }
-                // Heading 3 => App's body2 but bold
+                // Heading 3 => App's bodyMedium but bold
                 H3.containsMatchIn(line) -> spanStyle.copy(fontWeight = FontWeight.Bold).also {
                     heading = true
                     lineToAppend = line.replace(H3, "")
                 }
-                // List item => App's body2 with bullet margins on wrap
+                // List item => App's bodyMedium with bullet margins on wrap
                 LI.containsMatchIn(line) -> spanStyle.also {
                     lineToAppend = line.replace(LI, "•")
                     // Quirky method to add an approximate margin to bullet lines when they wrap

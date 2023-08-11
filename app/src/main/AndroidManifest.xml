@@ -34,7 +34,7 @@
 		android:label="@string/app_name"
 		android:requestLegacyExternalStorage="true"
 		android:supportsRtl="true"
-		android:theme="@style/Theme.OxygenUpdater.DayNight"
+		android:theme="@style/Theme.OxygenUpdater"
 		android:usesCleartextTraffic="true"
 		tools:ignore="LockedOrientationActivity"
 		tools:targetApi="s">
@@ -92,21 +92,21 @@
 			android:name=".compose.activities.MainActivity"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.Main" />
+			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
 			android:name=".activities.InstallActivity"
 			android:label="@string/install_guide"
 			android:parentActivityName=".compose.activities.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight" />
+			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
 			android:name=".compose.activities.OnboardingActivity"
 			android:label="@string/onboarding"
 			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight" />
+			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
 			android:name=".compose.activities.HelpActivity"
@@ -126,7 +126,7 @@
 			android:label="@string/news"
 			android:parentActivityName=".compose.activities.MainActivity"
 			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight">
+			android:theme="@style/Theme.OxygenUpdater">
 
 			<intent-filter
 				android:autoVerify="true"

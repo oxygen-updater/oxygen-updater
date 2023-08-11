@@ -12,7 +12,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.database.LocalAppDb
-import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTION_COUNT
 import com.oxygenupdater.models.SubmittedUpdateFile
@@ -21,7 +20,6 @@ import com.oxygenupdater.services.RootFileService
 import com.oxygenupdater.services.RootFileService.Companion.FILENAME
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.Utils
@@ -50,7 +48,7 @@ import java.time.LocalDateTime
 @RequiresApi(Build.VERSION_CODES.Q) // same as RootFileService
 class ReadOtaDbWorker(
     context: Context,
-    parameters: WorkerParameters
+    parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
 
     private val database: LocalAppDb
@@ -142,7 +140,7 @@ class ReadOtaDbWorker(
                 insertInDb(rows, false)
             } else {
                 // Server error, try again later
-                logError(TAG, NetworkException("Error submitting URLs: ${result.errorMessage}"))
+                logWarning(TAG, "Error submitting URLs: ${result.errorMessage}")
                 failed = true
             }
         } else {
@@ -199,7 +197,7 @@ class ReadOtaDbWorker(
     private inline fun CoroutineScope.insertInDb(
         rows: List<ArrayMap<String, Any?>>,
         success: Boolean,
-        action: (String) -> Unit = {}
+        action: (String) -> Unit = {},
     ) {
         // Perf: just once out of loop
         val now = LocalDateTime.now(Utils.SERVER_TIME_ZONE).toString()

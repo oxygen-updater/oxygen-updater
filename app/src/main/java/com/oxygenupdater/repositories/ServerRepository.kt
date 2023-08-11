@@ -32,9 +32,9 @@ class ServerRepository constructor(
 
     suspend fun fetchFaq() = performServerRequest { serverApi.fetchFaq() }
 
-    suspend fun fetchDevices(
-        filter: DeviceRequestFilter,
-    ) = performServerRequest { serverApi.fetchDevices(filter.filter) }
+    suspend fun fetchDevices(filter: DeviceRequestFilter) = performServerRequest {
+        serverApi.fetchDevices(filter.value)
+    }
 
     fun fetchUpdateDataFromPrefs() = if (PrefManager.checkIfOfflineUpdateDataIsAvailable()) {
         UpdateData(
@@ -49,41 +49,33 @@ class ServerRepository constructor(
         )
     } else null
 
-    suspend fun fetchUpdateData(
-        deviceId: Long,
-        updateMethodId: Long,
-        incrementalSystemVersion: String,
-    ) = performServerRequest {
-        serverApi.fetchUpdateData(
-            deviceId,
-            updateMethodId,
-            incrementalSystemVersion,
-            SystemVersionProperties.oxygenOSVersion,
-            SystemVersionProperties.osType,
-            SystemVersionProperties.fingerprint,
-            PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
-            BuildConfig.VERSION_NAME
-        )
-    }.let { updateData: UpdateData? ->
-        if (updateData?.information != null
-            && updateData.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
-            && updateData.isUpdateInformationAvailable
-            && updateData.systemIsUpToDate
-        ) fetchMostRecentUpdateData(deviceId, updateMethodId)
-        else if (!Utils.checkNetworkConnection()) fetchUpdateDataFromPrefs()
-        else updateData
+    suspend fun fetchUpdateData(): UpdateData? {
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+
+        return performServerRequest {
+            serverApi.fetchUpdateData(
+                deviceId,
+                updateMethodId,
+                SystemVersionProperties.oxygenOSOTAVersion,
+                SystemVersionProperties.oxygenOSVersion,
+                SystemVersionProperties.osType,
+                SystemVersionProperties.fingerprint,
+                PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
+                BuildConfig.VERSION_NAME
+            )
+        }.let {
+            if (it?.information != null
+                && it.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
+                && it.isUpdateInformationAvailable
+                && it.systemIsUpToDate
+            ) performServerRequest {
+                serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId)
+            } else if (!Utils.checkNetworkConnection()) fetchUpdateDataFromPrefs() else it
+        }
     }
 
-    private suspend fun fetchMostRecentUpdateData(
-        deviceId: Long,
-        updateMethodId: Long,
-    ) = performServerRequest {
-        serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId)
-    }
-
-    suspend fun fetchServerStatus(
-        useCache: Boolean = false,
-    ) = if (useCache && serverStatus != null) {
+    suspend fun fetchServerStatus(useCache: Boolean = false) = if (useCache && serverStatus != null) {
         serverStatus!!
     } else performServerRequest { serverApi.fetchServerStatus() }.let { status ->
         val automaticInstallationEnabled = false
@@ -125,11 +117,11 @@ class ServerRepository constructor(
     @Suppress("RedundantSuspendModifier")
     suspend fun markAllReadLocally() = newsItemDao.markAllRead()
 
-    suspend fun fetchNews(
-        deviceId: Long,
-        updateMethodId: Long,
-    ) = performServerRequest {
-        serverApi.fetchNews(deviceId, updateMethodId)
+    suspend fun fetchNews() = performServerRequest {
+        serverApi.fetchNews(
+            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L),
+            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        )
     }.let {
         if (!it.isNullOrEmpty()) newsItemDao.refreshNewsItems(it)
 
@@ -137,9 +129,7 @@ class ServerRepository constructor(
         newsItemDao.getAll()
     }
 
-    suspend fun fetchNewsItem(
-        newsItemId: Long,
-    ) = performServerRequest {
+    suspend fun fetchNewsItem(newsItemId: Long) = performServerRequest {
         serverApi.fetchNewsItem(newsItemId)
     }.let {
         if (it != null) newsItemDao.insertOrUpdate(it)
@@ -149,21 +139,15 @@ class ServerRepository constructor(
 
     fun toggleNewsItemReadLocally(
         newsItem: NewsItem,
-        read: Boolean = !newsItem.read,
+        read: Boolean = !newsItem.readState.value,
     ) = newsItemDao.toggleRead(newsItem, read)
 
-    suspend fun markNewsItemRead(
-        newsItemId: Long,
-    ) = performServerRequest {
+    suspend fun markNewsItemRead(newsItemId: Long) = performServerRequest {
         serverApi.markNewsItemRead(mapOf("news_item_id" to newsItemId))
     }
 
-    suspend fun fetchUpdateMethodsForDevice(
-        deviceId: Long,
-    ) = performServerRequest {
+    suspend fun fetchUpdateMethodsForDevice(deviceId: Long) = performServerRequest {
         serverApi.fetchUpdateMethodsForDevice(deviceId)
-    }.let { updateMethods ->
-        updateMethods?.map { it.setRecommended(if (it.recommendedForNonRootedDevice) "1" else "0") }
     }
 
     suspend fun fetchAllMethods() = performServerRequest {

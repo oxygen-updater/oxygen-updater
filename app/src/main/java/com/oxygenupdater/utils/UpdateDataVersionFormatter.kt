@@ -2,7 +2,7 @@ package com.oxygenupdater.utils
 
 import android.os.Build
 import com.oxygenupdater.internal.DeviceInformationData
-import com.oxygenupdater.models.FormattableUpdateData
+import com.oxygenupdater.models.UpdateData
 import java.util.regex.Pattern
 
 object UpdateDataVersionFormatter {
@@ -54,19 +54,6 @@ object UpdateDataVersionFormatter {
     private const val DP_PREFIX = "DP"
 
     /**
-     * Checks if the passed update version information contains a version number which can be
-     * formatted
-     *
-     * @param versionInfo Update version information to check
-     *
-     * @return Whether or not this update version information contains a version number which can be
-     * formatted.
-     */
-    fun canVersionInfoBeFormatted(versionInfo: FormattableUpdateData?) = getFirstLine(versionInfo)
-        .trim()
-        .startsWith(OS_VERSION_LINE_HEADING)
-
-    /**
      * Get the formatted version number of the passed update version information. The output is as
      * following: Regular update: "OxygenOS 4.0.0" Open Beta update: "OxygenOS Open Beta 28" Other
      * update with "(#)OS Version": "OS Version: Windows 10 1709" Update without "(#)OS Version":
@@ -78,10 +65,12 @@ object UpdateDataVersionFormatter {
      * @return Formatted version number for the given Update Version Information.
      */
     fun getFormattedVersionNumber(
-        versionInfo: FormattableUpdateData?,
+        versionInfo: UpdateData?,
         default: String = "OxygenOS System Update",
     ): String {
-        val firstLine = getFirstLine(versionInfo)
+        val firstLine = versionInfo?.description.run {
+            if (isNullOrBlank()) "" else splitToSequence("\r\n", "\n", "\r", limit = 2).firstOrNull() ?: ""
+        }
 
         // we could use the `canVersionInfoBeFormatted(versionInfo)` function defined in this file,
         // but this is a performance/memory optimization.
@@ -100,10 +89,11 @@ object UpdateDataVersionFormatter {
                     "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"
                     else -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
                 }
+
                 regularMatcher.find() -> "$OXYGEN_OS_PREFIX ${regularMatcher.group()}"
                 else -> firstLine.replace(OS_VERSION_LINE_HEADING, "")
             }
-        } else versionInfo?.internalVersionNumber.run {
+        } else versionInfo?.versionNumber.run {
             if (isNullOrBlank()) default else this
         }
     }
@@ -123,20 +113,9 @@ object UpdateDataVersionFormatter {
                 "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"
                 else -> "$BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
             }
+
             regularMatcher.find() -> regularMatcher.group()
             else -> version
         }
-    }
-
-    /**
-     * Returns the first line of the update description of the given Version Info
-     *
-     * @param versionInfo Version Info to get the first line of.
-     *
-     * @return The first line of the update description of the given Version Info, or the empty
-     * string if the update description is null or empty.
-     */
-    private fun getFirstLine(versionInfo: FormattableUpdateData?) = versionInfo?.updateDescription.run {
-        if (isNullOrBlank()) "" else splitToSequence("\r\n", "\n", "\r", limit = 2).firstOrNull() ?: ""
     }
 }

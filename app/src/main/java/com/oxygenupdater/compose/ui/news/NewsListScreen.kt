@@ -2,12 +2,12 @@ package com.oxygenupdater.compose.ui.news
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -17,14 +17,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Badge
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.rounded.CheckCircleOutline
@@ -33,8 +25,16 @@ import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.material.icons.rounded.PlaylistAddCheck
+import androidx.compose.material3.Badge
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -44,18 +44,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.vector.RenderVectorGroup
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -66,20 +65,20 @@ import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Image
 import com.oxygenupdater.compose.icons.Info
 import com.oxygenupdater.compose.icons.NewsMultiple
-import com.oxygenupdater.compose.ui.PullRefresh
 import com.oxygenupdater.compose.ui.RefreshAwareState
 import com.oxygenupdater.compose.ui.common.DropdownMenuItem
 import com.oxygenupdater.compose.ui.common.IconText
 import com.oxygenupdater.compose.ui.common.ItemDivider
+import com.oxygenupdater.compose.ui.common.PullRefresh
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.extensions.copyToClipboard
-import com.oxygenupdater.extensions.openInCustomTab
+import com.oxygenupdater.extensions.launch
+import com.oxygenupdater.extensions.rememberCustomTabsIntent
 import com.oxygenupdater.extensions.shareExternally
 import com.oxygenupdater.models.NewsItem
-import com.oxygenupdater.utils.Utils
 import java.time.LocalDateTime
 import kotlin.random.Random
 
@@ -98,10 +97,10 @@ fun NewsListScreen(
     val refreshing = state.refreshing
     var onlyUnread by remember { mutableStateOf(false) }
 
-    val data = if (onlyUnread) state.data.filterNot { it.read } else state.data
+    val data = if (onlyUnread) state.data.filterNot { it.readState.value } else state.data
     val list = if (!refreshing) rememberSaveable(onlyUnread) { data } else data
     var unreadCount by remember(onlyUnread) {
-        mutableIntStateOf(if (onlyUnread) list.size else list.count { !it.read })
+        mutableIntStateOf(if (onlyUnread) list.size else list.count { !it.readState.value })
     }
 
     if (unreadCount != previousUnreadCount) {
@@ -125,7 +124,7 @@ fun NewsListScreen(
             onlyUnread = !onlyUnread
         }) {
             markAllRead()
-            list.forEach { it.read = true }
+            list.forEach { it.readState.value = true }
             unreadCount = 0
         }
 
@@ -137,7 +136,7 @@ fun NewsListScreen(
             items(list, { it.id ?: Random.nextLong() }) {
                 NewsListItem(refreshing, it, toggleRead = {
                     toggleRead(it)
-                    unreadCount += if (it.read) 1 else -1
+                    unreadCount += if (it.readState.value) 1 else -1
                 }) {
                     NewsItemActivity.item = it
                     openItem(it.id ?: -1L)
@@ -158,12 +157,12 @@ private fun EmptyState(allRead: Boolean) = Column(
         ),
         Modifier.padding(16.dp),
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.h6
+        style = MaterialTheme.typography.titleLarge
     )
     Icon(
         CustomIcons.NewsMultiple, null,
         Modifier.requiredSize(150.dp),
-        tint = MaterialTheme.colors.primary
+        tint = MaterialTheme.colorScheme.primary
     )
     Text(
         stringResource(
@@ -172,10 +171,11 @@ private fun EmptyState(allRead: Boolean) = Column(
         ),
         Modifier.padding(16.dp),
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.body2
+        style = MaterialTheme.typography.bodyMedium
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NewsListItem(
     refreshing: Boolean,
@@ -191,7 +191,7 @@ private fun NewsListItem(
         onClick()
     }) {
         Box {
-            if (!refreshing && !item.read) Badge(Modifier.offset(4.dp, 16.dp), MaterialTheme.colors.primary)
+            if (!refreshing && !item.readState.value) Badge(Modifier.offset(4.dp, 16.dp))
 
             ItemMenu(showItemMenu, { showItemMenu = false }, item, toggleRead)
 
@@ -199,21 +199,19 @@ private fun NewsListItem(
                 Column(
                     Modifier
                         .weight(1f)
-                        .requiredHeight(80.dp)
+                        .requiredHeight(80.dp) // same as image
                         .padding(end = 8.dp)
                 ) {
                     Text(
                         item.title ?: "Unknown title",
                         Modifier.withPlaceholder(refreshing),
                         overflow = TextOverflow.Ellipsis, maxLines = 2,
-                        style = MaterialTheme.typography.subtitle1
+                        style = MaterialTheme.typography.titleMedium
                     )
                     AutoresizeText(
                         item.subtitle ?: "",
-                        FontSizeRange(12.sp, 14.sp),
-                        Modifier
-                            .alpha(ContentAlpha.medium)
-                            .withPlaceholder(refreshing)
+                        FontSizeRange(12f, 14f),
+                        Modifier.withPlaceholder(refreshing)
                     )
                 }
 
@@ -224,7 +222,7 @@ private fun NewsListItem(
                         viewportWidth = viewportWidth,
                         viewportHeight = viewportHeight,
                         name = name,
-                        tintColor = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
+                        tintColor = MaterialTheme.colorScheme.onSurfaceVariant,
                         tintBlendMode = tintBlendMode,
                         autoMirror = autoMirror,
                         content = { _, _ -> RenderVectorGroup(group = root) }
@@ -232,10 +230,11 @@ private fun NewsListItem(
                 }
                 AsyncImage(
                     item.imageUrl?.let {
+                        val density = LocalDensity.current
                         remember(it) {
                             ImageRequest.Builder(context)
                                 .data(it)
-                                .size(Utils.dpToPx(context, 80f).toInt())
+                                .size(density.run { 80.dp.roundToPx() })
                                 .build()
                         }
                     },
@@ -265,31 +264,29 @@ private fun NewsListItem(
                 }?.let {
                     "$it \u2022 $authorName"
                 } ?: authorName,
-                (if (refreshing) Modifier else Modifier.basicMarquee())
-                    .weight(1f)
+                Modifier
                     .padding(start = 16.dp)
-                    .alpha(ContentAlpha.medium)
                     .withPlaceholder(refreshing),
-                maxLines = 1,
-                style = MaterialTheme.typography.caption
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                overflow = TextOverflow.Ellipsis, maxLines = 1,
+                style = MaterialTheme.typography.bodySmall
             )
 
-            IconButton({ showItemMenu = true }, Modifier.offset(x = 8.dp), !refreshing) {
-                CompositionLocalProvider(
-                    LocalContentAlpha provides if (refreshing) {
-                        LocalContentAlpha.current
-                    } else ContentAlpha.medium
-                ) {
-                    Icon(
-                        Icons.Rounded.MoreVert, stringResource(R.string.icon),
-                        Modifier.requiredSize(20.dp),
-                    )
-                }
+            Spacer(Modifier.weight(1f))
+
+            // Offset by 6.dp to bring in line with image
+            IconButton({ showItemMenu = true }, Modifier.offset(x = 6.dp), !refreshing) {
+                Icon(
+                    Icons.Rounded.MoreVert, stringResource(R.string.icon),
+                    Modifier.requiredSize(20.dp),
+                    if (refreshing) LocalContentColor.current else MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Banner(
     expanded: Boolean,
@@ -298,26 +295,18 @@ private fun Banner(
     onLongClick: () -> Unit,
     onClick: () -> Unit,
     onMarkAllReadClick: () -> Unit,
+) = IconText(
+    Modifier
+        .fillMaxWidth()
+        .combinedClickable(onLongClick = onLongClick, onClick = onClick)
+        .padding(16.dp), // must be after `clickable`
+    icon = CustomIcons.Info, text = text,
 ) {
-    @OptIn(ExperimentalFoundationApi::class)
-    IconText(
-        Modifier
-            .fillMaxWidth()
-            .combinedClickable(onLongClick = onLongClick, onClick = onClick)
-            .padding(16.dp), // must be after `clickable`
-        icon = CustomIcons.Info, text = text,
-    ) { BannerMenu(expanded, onDismiss, onMarkAllReadClick) }
-}
-
-@Composable
-private fun BannerMenu(
-    showBannerMenu: Boolean,
-    onDismiss: () -> Unit,
-    onMarkAllReadClick: () -> Unit,
-) = DropdownMenu(showBannerMenu, onDismiss, offset = DpOffset(24.dp, 0.dp)) {
-    DropdownMenuItem(Icons.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
-        onMarkAllReadClick()
-        onDismiss()
+    DropdownMenu(expanded, onDismiss, offset = DpOffset(24.dp, 0.dp)) {
+        DropdownMenuItem(Icons.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
+            onMarkAllReadClick()
+            onDismiss()
+        }
     }
 }
 
@@ -329,19 +318,21 @@ private fun ItemMenu(
     onToggleReadClick: () -> Unit,
 ) = DropdownMenu(expanded, onDismiss, offset = DpOffset(1000.dp, 0.dp)) {
     val context = LocalContext.current
+    var read by remember { item.readState }
 
     DropdownMenuItem(
-        if (item.read) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
-        if (item.read) R.string.news_mark_unread else R.string.news_mark_read,
+        if (read) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
+        if (read) R.string.news_mark_unread else R.string.news_mark_read,
     ) {
         onToggleReadClick()
-        item.read = !item.read
+        read = !read
 
         onDismiss()
     }
 
+    val customTabIntent = rememberCustomTabsIntent()
     DropdownMenuItem(Icons.Rounded.OpenInBrowser, androidx.browser.R.string.fallback_menu_item_open_in_browser) {
-        context.openInCustomTab(item.webUrl)
+        customTabIntent.launch(context, item.webUrl)
         onDismiss()
     }
 
@@ -356,6 +347,7 @@ private fun ItemMenu(
     }
 }
 
+// TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap#core-libraries
 /**
  * @see <a href="https://stackoverflow.com/a/69780826">stackoverflow.com/a/69780826<a>
  */
@@ -367,7 +359,7 @@ private fun AutoresizeText(
     maxLines: Int = 2,
 ) {
     val (min, max, step) = fontSizeRange
-    var fontSizeValue by remember { mutableFloatStateOf(max.value) }
+    var fontSizeValue by remember { mutableFloatStateOf(max) }
     var readyToDraw by remember { mutableStateOf(false) }
 
     Text(
@@ -379,12 +371,12 @@ private fun AutoresizeText(
         overflow = TextOverflow.Ellipsis, maxLines = maxLines,
         onTextLayout = {
             // Fits before reaching min, mark readyToDraw
-            if (!it.didOverflowHeight) readyToDraw = true
+            if (!it.hasVisualOverflow) readyToDraw = true
             else if (!readyToDraw) {
-                val nextFontSizeValue = fontSizeValue - step.value
-                if (nextFontSizeValue <= min.value) {
+                val nextFontSizeValue = fontSizeValue - step
+                if (nextFontSizeValue <= min) {
                     // Reached min, set & mark readyToDraw
-                    fontSizeValue = min.value
+                    fontSizeValue = min
                     readyToDraw = true
                 } else {
                     // Doesn't fit yet and we haven't reached min, keep decreasing
@@ -392,22 +384,24 @@ private fun AutoresizeText(
                 }
             }
         },
-        style = MaterialTheme.typography.body2
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodyMedium
     )
 }
 
+@Immutable
 private data class FontSizeRange(
-    val min: TextUnit,
-    val max: TextUnit,
-    val step: TextUnit = DEFAULT_STEP,
+    val min: Float,
+    val max: Float,
+    val step: Float = DEFAULT_STEP,
 ) {
     init {
         require(min <= max) { "min should be less than or equal to max, $this" }
-        require(step.value > 0) { "step should be greater than 0, $this" }
+        require(step > 0) { "step should be greater than 0, $this" }
     }
 
     companion object {
-        private val DEFAULT_STEP = 1.sp
+        private const val DEFAULT_STEP = 1f
     }
 }
 

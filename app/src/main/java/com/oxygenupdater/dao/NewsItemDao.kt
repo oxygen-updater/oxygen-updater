@@ -22,19 +22,15 @@ interface NewsItemDao {
     @Query("SELECT * FROM `news_item` WHERE `id` = :id")
     fun getById(id: Long?): NewsItem?
 
-    /**
-     * Toggles [NewsItem.read] status, unless overridden by [read]
-     */
+    /** Toggles [NewsItem.read] status, unless overridden by [read] */
     @Query("UPDATE `news_item` SET `read` = :read WHERE `id` = :id")
     fun toggleRead(id: Long, read: Boolean)
 
-    /**
-     * Toggles [NewsItem.read] status, unless overridden by [read]
-     */
+    /** Toggles [NewsItem.read] status, unless overridden by [read] */
     @Transaction
     fun toggleRead(
         newsItem: NewsItem,
-        read: Boolean = !newsItem.read,
+        read: Boolean = !newsItem.readState.value,
     ) = toggleRead(newsItem.id!!, read)
 
     @Query("UPDATE `news_item` SET `read` = 1")
@@ -44,7 +40,7 @@ interface NewsItemDao {
     @Transaction
     fun insertOrUpdate(newsItem: NewsItem) = getById(newsItem.id)?.let {
         // Make sure the `read` column isn't overwritten
-        update(newsItem.copy(read = it.read))
+        update(newsItem.copy(read = it.readState.value))
     } ?: insert(newsItem)
 
     @Transaction

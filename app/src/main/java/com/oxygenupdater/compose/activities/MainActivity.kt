@@ -1,56 +1,34 @@
 package com.oxygenupdater.compose.activities
 
-import android.content.IntentSender
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Badge
-import androidx.compose.material.BadgedBox
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProgressIndicatorDefaults
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.GroupAdd
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.PlaylistAddCheck
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
@@ -61,56 +39,49 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.android.billingclient.api.BillingClient.BillingResponseCode
+import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.ads.AdView
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
-import com.google.android.play.core.install.model.ActivityResult
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.InstallStatus
-import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.Announcement
 import com.oxygenupdater.compose.icons.CustomIcons
-import com.oxygenupdater.compose.icons.PlayStore
 import com.oxygenupdater.compose.ui.RefreshAwareState
 import com.oxygenupdater.compose.ui.TopAppBar
-import com.oxygenupdater.compose.ui.TopAppBarDefaults
 import com.oxygenupdater.compose.ui.about.AboutScreen
 import com.oxygenupdater.compose.ui.common.BannerAd
-import com.oxygenupdater.compose.ui.common.DropdownMenuItem
 import com.oxygenupdater.compose.ui.common.ItemDivider
-import com.oxygenupdater.compose.ui.common.OutlinedIconButton
-import com.oxygenupdater.compose.ui.common.edgeToEdge
+import com.oxygenupdater.compose.ui.common.TransparentSystemBars
+import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.device.DeviceScreen
 import com.oxygenupdater.compose.ui.device.IncorrectDeviceDialog
 import com.oxygenupdater.compose.ui.device.UnsupportedDeviceOsSpecDialog
 import com.oxygenupdater.compose.ui.device.defaultDeviceName
-import com.oxygenupdater.compose.ui.dialogs.AdvancedModeSheet
 import com.oxygenupdater.compose.ui.dialogs.ContributorSheet
-import com.oxygenupdater.compose.ui.dialogs.LanguageSheet
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
-import com.oxygenupdater.compose.ui.dialogs.NonCancellableDialog
-import com.oxygenupdater.compose.ui.dialogs.SelectableSheet
 import com.oxygenupdater.compose.ui.dialogs.ServerMessagesSheet
 import com.oxygenupdater.compose.ui.dialogs.SheetType
-import com.oxygenupdater.compose.ui.dialogs.ThemeSheet
 import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
 import com.oxygenupdater.compose.ui.main.AboutRoute
+import com.oxygenupdater.compose.ui.main.AppUpdateInfo
 import com.oxygenupdater.compose.ui.main.DeviceRoute
+import com.oxygenupdater.compose.ui.main.FlexibleAppUpdateProgress
+import com.oxygenupdater.compose.ui.main.MainMenu
+import com.oxygenupdater.compose.ui.main.MainSnackbar
 import com.oxygenupdater.compose.ui.main.NewsListRoute
+import com.oxygenupdater.compose.ui.main.NoConnectionSnackbarData
 import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.compose.ui.main.ServerStatusBanner
+import com.oxygenupdater.compose.ui.main.ServerStatusDialogs
 import com.oxygenupdater.compose.ui.main.SettingsRoute
 import com.oxygenupdater.compose.ui.main.UpdateRoute
 import com.oxygenupdater.compose.ui.news.NewsListScreen
@@ -118,42 +89,33 @@ import com.oxygenupdater.compose.ui.news.NewsListViewModel
 import com.oxygenupdater.compose.ui.news.previousUnreadCount
 import com.oxygenupdater.compose.ui.settings.SettingsScreen
 import com.oxygenupdater.compose.ui.settings.SettingsViewModel
+import com.oxygenupdater.compose.ui.settings.adFreeConfig
 import com.oxygenupdater.compose.ui.theme.AppTheme
-import com.oxygenupdater.compose.ui.theme.backgroundVariant
-import com.oxygenupdater.compose.ui.theme.light
-import com.oxygenupdater.compose.ui.theme.positive
 import com.oxygenupdater.compose.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
 import com.oxygenupdater.compose.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.compose.ui.update.UpdateScreen
 import com.oxygenupdater.enums.PurchaseType
-import com.oxygenupdater.exceptions.GooglePlayBillingException
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.setLocale
 import com.oxygenupdater.extensions.startNewsItemActivity
-import com.oxygenupdater.extensions.toLanguageCode
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.NewsItem
-import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.repositories.BillingRepository.SkuState
 import com.oxygenupdater.utils.ContributorUtils
+import com.oxygenupdater.utils.Logger.logBillingError
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationTopicSubscriber
-import com.oxygenupdater.utils.SetupUtils
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.utils.hasRootAccess
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.Locale
 import java.util.Timer
 import kotlin.concurrent.schedule
 
@@ -164,7 +126,6 @@ class MainActivity : ComposeBaseActivity() {
     private val newsListViewModel by viewModel<NewsListViewModel>()
     private val settingsViewModel by viewModel<SettingsViewModel>()
     private val billingViewModel by viewModel<BillingViewModel>()
-    private val crashlytics by inject<FirebaseCrashlytics>()
 
     private val startPage: Int
     private val downloadErrorMessage: String?
@@ -213,31 +174,23 @@ class MainActivity : ComposeBaseActivity() {
     @Volatile
     private var currentRoute: String? = null
 
-    @Composable
-    private fun SystemBars() {
-        val colors = MaterialTheme.colors
-        val controller = rememberSystemUiController()
-        val darkIcons = colors.light
-        controller.setNavigationBarColor(colors.backgroundVariant, darkIcons)
-        controller.setStatusBarColor(colors.surface, darkIcons)
-    }
+    private lateinit var navController: NavHostController
 
-    @OptIn(ExperimentalMaterialApi::class)
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun Content() {
-        val navController = rememberNavController()
-        val scope = rememberCoroutineScope()
+        navController = rememberNavController()
         val sheetState = defaultModalBottomSheetState()
 
         val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
         LaunchedEffect(allDevices) {
             viewModel.deviceOsSpec = Utils.checkDeviceOsSpec(allDevices)
-            viewModel.mismatchStatus = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
+            viewModel.deviceMismatch = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
         }
 
         val showDeviceBadge = viewModel.deviceOsSpec.let {
             it != null && it != DeviceOsSpec.SUPPORTED_OXYGEN_OS
-        } || viewModel.mismatchStatus.let { it != null && it.first }
+        } || viewModel.deviceMismatch.let { it != null && it.first }
         Screen.Device.badge = if (showDeviceBadge) "!" else null
 
         val enabledDevices = remember(allDevices) { allDevices.filter { it.enabled } }
@@ -252,7 +205,6 @@ class MainActivity : ComposeBaseActivity() {
 
         val startScreen = remember(startPage) {
             screens.getOrNull(startPage) ?: Screen.Update
-            Screen.Device
         }
 
         val showDeviceWarningDialog = !PrefManager.getBoolean(PrefManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
@@ -261,20 +213,37 @@ class MainActivity : ComposeBaseActivity() {
             UnsupportedDeviceOsSpecDialog(it)
         }
 
-        if (showIncorrectDeviceDialog) viewModel.mismatchStatus?.let {
+        if (showIncorrectDeviceDialog) viewModel.deviceMismatch?.let {
             IncorrectDeviceDialog(it)
         }
 
-        val scaffoldState = rememberScaffoldState()
-        Snackbar(scaffoldState.snackbarHostState)
-        AppUpdateInfo()
+        val snackbarHostState = remember { SnackbarHostState() }
+        MainSnackbar(snackbarHostState, viewModel.snackbarText, openPlayStorePage = {
+            openPlayStorePage()
+        }, completeAppUpdate = {
+            viewModel.completeAppUpdate()
+        })
+
+        AppUpdateInfo(
+            viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
+            viewModel.snackbarText,
+            unregisterAppUpdateListener = {
+                viewModel.unregisterAppUpdateListener()
+            },
+            requestUpdate = { launcher, info ->
+                viewModel.requestUpdate(launcher, info)
+            },
+            requestImmediateUpdate = { launcher, info ->
+                viewModel.requestImmediateAppUpdate(launcher, info)
+            },
+        )
 
         // Display the "No connection" banner if required
         val isNetworkAvailable by OxygenUpdater.isNetworkAvailable.observeAsState(true)
-        if (!isNetworkAvailable) viewModel.snackbarText = NoConnectionSnackbarData
-        else if (viewModel.snackbarText?.first == NoConnectionSnackbarData.first) {
+        if (!isNetworkAvailable) viewModel.snackbarText.value = NoConnectionSnackbarData
+        else if (viewModel.snackbarText.value?.first == NoConnectionSnackbarData.first) {
             // Dismiss only this snackbar
-            viewModel.snackbarText = null
+            viewModel.snackbarText.value = null
         }
 
         val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
@@ -284,18 +253,16 @@ class MainActivity : ComposeBaseActivity() {
         var showMarkAllRead by remember { mutableStateOf(false) }
         var sheetType by remember { mutableStateOf(SheetType.None) }
 
-        val colors = MaterialTheme.colors
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        Scaffold(Modifier.edgeToEdge(), scaffoldState, topBar = {
+        Scaffold(topBar = {
             TopAppBar(scrollBehavior, {
                 navController.navigateWithDefaults(AboutRoute)
             }, subtitle) {
                 // Server-provided info & warning messages
                 if (serverMessages.isNotEmpty()) IconButton({
                     sheetType = SheetType.ServerMessages
-                    scope.launch { sheetState.show() }
                 }, Modifier.requiredWidth(40.dp)) {
-                    Icon(CustomIcons.Announcement, stringResource(R.string.update_information_banner_server), Modifier.requiredSize(24.dp))
+                    Icon(CustomIcons.Announcement, stringResource(R.string.update_information_banner_server))
                 }
 
                 val showBecomeContributor = ContributorUtils.isAtLeastQAndPossiblyRooted
@@ -305,39 +272,35 @@ class MainActivity : ComposeBaseActivity() {
                     // Hide other menu items behind overflow icon
                     var showMenu by remember { mutableStateOf(false) }
                     IconButton({ showMenu = true }, Modifier.requiredWidth(40.dp)) {
-                        Icon(Icons.Rounded.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu), Modifier.requiredSize(24.dp))
+                        Icon(Icons.Rounded.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu))
                     }
 
-                    Menu(showMenu, {
+                    MainMenu(showMenu, {
                         showMenu = false
-                    }, showMarkAllRead, showBecomeContributor, openContributorSheet = {
+                    }, showMarkAllRead, {
+                        newsListViewModel.markAllRead() // TODO(compose/news): propagate to newsListScreen
+                    }, showBecomeContributor, openContributorSheet = {
                         sheetType = SheetType.Contributor
-                        scope.launch { sheetState.show() }
                     })
                 }
             }
         }, bottomBar = {
-            BottomNavigation(Modifier.height(64.dp), colors.backgroundVariant, elevation = 0.dp) {
+            NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 currentRoute = navBackStackEntry?.destination?.route
                 showMarkAllRead = currentRoute == NewsListRoute
-
-                // TODO(compose/main): use filled icons when selected and default colors with M3
-                val primary = colors.primary
-                val defaultMedium = LocalContentColor.current.copy(alpha = ContentAlpha.medium)
 
                 screens.forEach { screen ->
                     val route = screen.route
                     val label = stringResource(screen.labelResId)
                     val selected = currentRoute == route
                     if (selected) subtitle = screen.subtitle ?: label
-                    BottomNavigationItem(selected, {
-                        if (sheetState.isVisible) scope.launch { sheetState.hide() }
+                    NavigationBarItem(selected, {
                         navController.navigateWithDefaults(route)
                     }, icon = {
                         val badge = screen.badge
                         if (badge == null) Icon(screen.icon, label) else BadgedBox({
-                            Badge(backgroundColor = colors.primary) {
+                            Badge {
                                 Text("$badge".take(3), Modifier.semantics {
                                     contentDescription = "$badge unread articles"
                                 })
@@ -345,270 +308,94 @@ class MainActivity : ComposeBaseActivity() {
                         }) { Icon(screen.icon, label) }
                     }, label = {
                         Text(label)
-                    }, alwaysShowLabel = false, selectedContentColor = primary, unselectedContentColor = defaultMedium)
+                    }, alwaysShowLabel = false)
                 }
             }
+        }, snackbarHost = {
+            SnackbarHost(snackbarHostState)
         }) { innerPadding ->
+            // TODO(compose/perf): this causes children to recompose every single time on scroll (if scrollBehaviour is used)
             Box(Modifier.padding(innerPadding)) {
-                val hide: () -> Unit = remember(scope, sheetState) {
-                    {
-                        sheetType = SheetType.None
-                        // Action passed for clicking close button in the content
-                        scope.launch { sheetState.hide() }
-                    }
-                }
+                val hide = rememberCallback { sheetType = SheetType.None }
 
                 LaunchedEffect(Unit) { // run only on init
-                    // Hide empty sheet in case activity was recreated or config was changed
-                    if (sheetState.isVisible && sheetType == SheetType.None) sheetState.hide()
-
                     // Offer contribution to users from app versions below v2.4.0 and v5.10.1
                     if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)) {
                         sheetType = SheetType.Contributor
-                        sheetState.show()
                     }
                 }
 
-                var selectedLanguageCode by remember {
-                    val defaultLanguageCode = Locale.getDefault().toLanguageCode()
-                    mutableStateOf(PrefManager.getString(PrefManager.PROPERTY_LANGUAGE_ID, defaultLanguageCode) ?: defaultLanguageCode)
-                }
-
-                val listState = rememberLazyListState()
-
-                // TODO(compose/main): bottom sheets don't draw over top & bottom bars, see if it can be rearranged.
-                //  Do it in other places too (e.g. OnboardingScreen)
-                ModalBottomSheet({
+                if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
                     when (sheetType) {
-                        SheetType.Device -> SelectableSheet(
-                            hide,
-                            listState, enabledDevices,
-                            settingsViewModel.initialDeviceIndex,
-                            R.string.settings_device, R.string.onboarding_page_2_caption,
-                            keyId = PrefManager.PROPERTY_DEVICE_ID, keyName = PrefManager.PROPERTY_DEVICE,
-                        ) {
-                            settingsViewModel.saveSelectedDevice(it)
-                            viewModel.mismatchStatus = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
-                        }
-
                         SheetType.Contributor -> ContributorSheet(hide, true)
-                        SheetType.ServerMessages -> ServerMessagesSheet(hide, serverMessages)
-
-                        SheetType.Theme -> ThemeSheet(hide) {
-                            PrefManager.theme = it
-                        }
-
-                        SheetType.Language -> LanguageSheet(hide, selectedLanguageCode) {
-                            selectedLanguageCode = it
-                            setLocale(it)
-                            recreate()
-                        }
-
-                        SheetType.AdvancedMode -> AdvancedModeSheet(hide) {
-                            PrefManager.putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
-                            PrefManager.advancedMode.value = it
-                        }
-
+                        SheetType.ServerMessages -> ServerMessagesSheet(serverMessages)
                         else -> {}
                     }
-                }, sheetState) {
-                    Column(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) {
-                        val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
-                        ServerStatusDialogs(serverStatus.status)
-                        ServerStatusBanner(serverStatus)
+                }
 
-                        // NavHost can't preload other composables, so in order to get NewsList's unread count early,
-                        // we're using the initial state here itself. State is refreshed only once the user visits that
-                        // screen, so it's easy on the server too (no unnecessarily eager requests).
-                        // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
-                        val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
-                        LaunchedEffect(Unit) { // run only on init
-                            val unreadCount = newsListState.data.count { !it.read }
-                            if (unreadCount != previousUnreadCount) {
-                                Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
-                                previousUnreadCount = unreadCount
-                            }
-                        }
+                Column(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) {
+                    val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
+                    ServerStatusDialogs(serverStatus.status) { openPlayStorePage() }
+                    ServerStatusBanner(serverStatus)
 
-                        // TODO(compose/main): use SavedStateHandle in ViewModels to work on "cached" data on init
-                        NavHost(navController, startScreen.route, Modifier.weight(1f)) {
-                            updateScreen { subtitle = it }
-                            newsListScreen(newsListState)
-                            deviceScreen(allDevices)
-                            aboutScreen()
-                            settingsScreen(enabledDevices, selectedLanguageCode, showBottomSheet = {
-                                sheetType = it
-                                scope.launch { sheetState.show() }
-                            }) {
-                                navController.navigateWithDefaults(AboutRoute)
-                            }
-                        }
-
-                        // Ads should be shown if user hasn't bought the ad-free unlock
-                        val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-                            !PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
-                        ).value
-                        if (showAds) {
-                            ItemDivider()
-                            val adLoaded = remember { mutableStateOf(false) }
-                            BannerAd(BuildConfig.AD_BANNER_MAIN_ID, adLoaded) { bannerAdView = it }
+                    // NavHost can't preload other composables, so in order to get NewsList's unread count early,
+                    // we're using the initial state here itself. State is refreshed only once the user visits that
+                    // screen, so it's easy on the server too (no unnecessarily eager requests).
+                    // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
+                    val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
+                    LaunchedEffect(Unit) { // run only on init
+                        @Suppress("DEPRECATION")
+                        val unreadCount = newsListState.data.count { !it.read }
+                        if (unreadCount != previousUnreadCount) {
+                            Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
+                            previousUnreadCount = unreadCount
                         }
                     }
 
-                    // This must be defined on the same level as NavHost, otherwise it won't work
-                    // We can safely put it outside Column because it's an inline composable
-                    BackHandler {
-                        if (sheetState.isVisible) scope.launch { sheetState.hide() }
-                        else navController.run {
-                            if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
-                            else if (!popBackStack()) finishAffinity() // nothing to back to => exit
-                        }
+                    // TODO(compose/main): use SavedStateHandle in ViewModels to work on "cached" data on init
+                    NavHost(navController, startScreen.route, Modifier.weight(1f)) {
+                        updateScreen { subtitle = it }
+                        newsListScreen(newsListState)
+                        deviceScreen(allDevices)
+                        aboutScreen()
+                        settingsScreen(enabledDevices, updateMismatchStatus = {
+                            viewModel.deviceMismatch = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
+                        })
+                    }
+
+                    // Ads should be shown if user hasn't bought the ad-free unlock
+                    val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
+                        !PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+                    ).value
+                    if (showAds) {
+                        ItemDivider()
+                        val adLoaded = remember { mutableStateOf(false) }
+                        BannerAd(BuildConfig.AD_BANNER_MAIN_ID, adLoaded) { bannerAdView = it }
                     }
                 }
-                FlexibleAppUpdateProgress() // gets placed below TopAppBar
-            }
-        }
-    }
 
-    @Composable
-    private fun Snackbar(snackbarHostState: SnackbarHostState) {
-        val data = viewModel.snackbarText
-        if (data == null) {
-            snackbarHostState.currentSnackbarData?.dismiss()
-            return
-        }
-
-        val context = this
-        LaunchedEffect(data) {
-            val actionResId = data.second
-            val result = snackbarHostState.showSnackbar(
-                getString(data.first), getString(actionResId), SnackbarDuration.Indefinite
-            )
-            if (result != SnackbarResult.ActionPerformed) return@LaunchedEffect
-
-            when (actionResId) {
-                AppUpdateFailedSnackbarData.second -> context.openPlayStorePage()
-                AppUpdateDownloadedSnackbarData.second -> viewModel.completeAppUpdate()
-            }
-        }
-    }
-
-    @Composable
-    private fun AppUpdateInfo() {
-        val info = viewModel.appUpdateInfo.collectAsStateWithLifecycle().value ?: return
-
-        val status = info.installStatus()
-        if (status == InstallStatus.DOWNLOADED) {
-            viewModel.unregisterAppUpdateListener()
-            viewModel.snackbarText = AppUpdateDownloadedSnackbarData
-        } else {
-            if (viewModel.snackbarText?.first == AppUpdateDownloadedSnackbarData.first) {
-                // Dismiss only this snackbar
-                viewModel.snackbarText = null
-            }
-
-            /**
-             * Control comes back to the activity in the form of a result only for a [AppUpdateType.FLEXIBLE] update request,
-             * since an [AppUpdateType.IMMEDIATE] update is entirely handled by Google Play, with the exception of resuming an installation.
-             * Check [onResume] for more info on how this is handled.
-             */
-            val launcher = rememberLauncherForActivityResult(
-                ActivityResultContracts.StartIntentSenderForResult()
-            ) {
-                val code = it.resultCode
-                if (code == RESULT_OK) {
-                    // Reset ignore count
-                    PrefManager.putInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT, 0)
-                    if (viewModel.snackbarText?.first == AppUpdateFailedSnackbarData.first) {
-                        // Dismiss only this snackbar
-                        viewModel.snackbarText = null
+                // This must be defined on the same level as NavHost, otherwise it won't work
+                // We can safely put it outside Column because it's an inline composable
+                BackHandler {
+                    if (sheetState.isVisible) hide()
+                    else navController.run {
+                        if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
+                        else if (!popBackStack()) finishAffinity() // nothing to back to => exit
                     }
-                } else if (code == RESULT_CANCELED) {
-                    // Increment ignore count and show app update banner
-                    PrefManager.incrementInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT)
-                    viewModel.snackbarText = AppUpdateFailedSnackbarData
-                } else if (code == ActivityResult.RESULT_IN_APP_UPDATE_FAILED) {
-                    // Show app update banner
-                    viewModel.snackbarText = AppUpdateFailedSnackbarData
                 }
+
+                // Gets placed below TopAppBar
+                FlexibleAppUpdateProgress(
+                    viewModel.appUpdateStatus.collectAsStateWithLifecycle().value,
+                    viewModel.snackbarText,
+                )
             }
-
-            try {
-                val availability = info.updateAvailability()
-                if (availability == UpdateAvailability.UPDATE_AVAILABLE) {
-                    viewModel.requestUpdate(launcher, info)
-                } else if (availability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                    // If an IMMEDIATE update is in the stalled state, we should resume it
-                    viewModel.requestImmediateAppUpdate(launcher, info)
-                }
-            } catch (e: IntentSender.SendIntentException) {
-                // no-op
-            }
-        }
-    }
-
-    @Composable
-    private fun FlexibleAppUpdateProgress() {
-        val state = viewModel.appUpdateStatus.collectAsStateWithLifecycle().value ?: return
-        val status = state.installStatus()
-
-        if (status == InstallStatus.DOWNLOADED) {
-            viewModel.snackbarText = AppUpdateDownloadedSnackbarData
-        } else if (viewModel.snackbarText?.first == AppUpdateDownloadedSnackbarData.first) {
-            // Dismiss only this snackbar
-            viewModel.snackbarText = null
-        }
-
-        if (status == InstallStatus.PENDING) LinearProgressIndicator(Modifier.fillMaxWidth())
-        else if (status == InstallStatus.DOWNLOADING) {
-            val bytesDownloaded = state.bytesDownloaded().toFloat()
-            val totalBytesToDownload = state.totalBytesToDownload().coerceAtLeast(1)
-            val progress = bytesDownloaded / totalBytesToDownload
-            val animatedProgress by animateFloatAsState(
-                progress, ProgressIndicatorDefaults.ProgressAnimationSpec,
-                label = "FlexibleUpdateProgressAnimation"
-            )
-            LinearProgressIndicator(animatedProgress, Modifier.fillMaxWidth())
         }
     }
 
     private fun NavController.navigateWithDefaults(
         route: String,
     ) = if (shouldStopNavigateAwayFromSettings()) showSettingsWarning() else navigate(route, navOptions)
-
-    @Composable
-    private fun ServerStatusDialogs(status: ServerStatus.Status?) {
-        if (status?.isNonRecoverableError != true) return
-
-        if (status == ServerStatus.Status.MAINTENANCE) {
-            var show by remember { mutableStateOf(true) }
-            if (show) AlertDialog({ show = false }, confirmButton = {}, dismissButton = {
-                TextButton({ show = false }) {
-                    Text(stringResource(R.string.download_error_close))
-                }
-            }, title = {
-                Text(stringResource(R.string.error_maintenance))
-            }, text = {
-                Text(stringResource(R.string.error_maintenance_message))
-            }, properties = NonCancellableDialog)
-        } else if (status == ServerStatus.Status.OUTDATED) {
-            var show by remember { mutableStateOf(true) }
-            if (show) AlertDialog({ show = false }, confirmButton = {
-                OutlinedIconButton({
-                    show = false
-                    openPlayStorePage()
-                }, CustomIcons.PlayStore, R.string.error_google_play_button_text, MaterialTheme.colors.positive)
-            }, dismissButton = {
-                TextButton({ show = false }) {
-                    Text(stringResource(R.string.download_error_close))
-                }
-            }, title = {
-                Text(stringResource(R.string.error_app_outdated))
-            }, text = {
-                Text(stringResource(R.string.error_app_outdated_message))
-            }, properties = NonCancellableDialog)
-        }
-    }
 
     private fun NavGraphBuilder.updateScreen(setSubtitle: (String) -> Unit) = composable(UpdateRoute) {
         if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) return@composable
@@ -621,22 +408,22 @@ class MainActivity : ComposeBaseActivity() {
         val state by updateViewModel.state.collectAsStateWithLifecycle()
         val workInfoWithStatus by viewModel.workInfoWithStatus.collectAsStateWithLifecycle()
 
-        UpdateScreen(state, workInfoWithStatus, downloadErrorMessage != null, {
+        UpdateScreen(state, workInfoWithStatus, downloadErrorMessage != null, rememberCallback {
             settingsViewModel.updateCrashlyticsUserId()
             viewModel.fetchServerStatus()
             updateViewModel.refresh()
-        }, setSubtitle, enqueueDownload = {
+        }, rememberTypedCallback(setSubtitle), enqueueDownload = rememberTypedCallback {
             viewModel.setupDownloadWorkRequest(it)
             viewModel.enqueueDownloadWork()
-        }, pauseDownload = {
+        }, pauseDownload = rememberCallback {
             viewModel.pauseDownloadWork()
-        }, cancelDownload = {
+        }, cancelDownload = rememberTypedCallback {
             viewModel.cancelDownloadWork(this@MainActivity, it)
-        }, deleteDownload = {
+        }, deleteDownload = rememberTypedCallback {
             viewModel.deleteDownloadedFile(this@MainActivity, it)
-        }) {
+        }, logDownloadError = rememberTypedCallback {
             viewModel.logDownloadError(it)
-        }
+        })
     }
 
     private fun NavGraphBuilder.newsListScreen(state: RefreshAwareState<List<NewsItem>>) = composable(NewsListRoute) {
@@ -646,17 +433,17 @@ class MainActivity : ComposeBaseActivity() {
             if (state.refreshing) newsListViewModel.refresh()
         }
 
-        NewsListScreen(state, refresh = {
+        NewsListScreen(state, refresh = rememberCallback {
             viewModel.fetchServerStatus()
             newsListViewModel.refresh()
-        }, markAllRead = {
+        }, markAllRead = rememberCallback {
             newsListViewModel.markAllRead()
-        }, toggleRead = {
+        }, toggleRead = rememberTypedCallback {
             newsListViewModel.toggleRead(it)
-        }) {
+        }, openItem = rememberTypedCallback {
             // TODO(compose/news): handle shared element transition, see `movableContentOf`
             startNewsItemActivity(it)
-        }
+        })
     }
 
     private fun NavGraphBuilder.deviceScreen(allDevices: List<Device>) = composable(DeviceRoute) {
@@ -665,108 +452,85 @@ class MainActivity : ComposeBaseActivity() {
             allDevices.find {
                 it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
             }?.name ?: defaultDeviceName
-        }, viewModel.deviceOsSpec, viewModel.mismatchStatus)
+        }, viewModel.deviceOsSpec, viewModel.deviceMismatch)
     }
 
     private fun NavGraphBuilder.aboutScreen() = composable(AboutRoute) { AboutScreen() }
 
     private fun NavGraphBuilder.settingsScreen(
         cachedEnabledDevices: List<Device>,
-        selectedLanguageCode: String,
-        showBottomSheet: (SheetType) -> Unit,
-        openAboutScreen: () -> Unit,
+        updateMismatchStatus: () -> Unit,
     ) = composable(SettingsRoute) {
         LaunchedEffect(cachedEnabledDevices) {
             // Passthrough from MainViewModel to avoid sending a request again
             settingsViewModel.fetchEnabledDevices(cachedEnabledDevices)
         }
 
-        val (enabledDevices, methodsForDevice) = settingsViewModel.state.collectAsStateWithLifecycle().value
+        val state = settingsViewModel.state.collectAsStateWithLifecycle().value
 
         // TODO(compose/settings): test all this thoroughly
         val adFreePrice by billingViewModel.adFreePrice.collectAsStateWithLifecycle(null)
         val adFreeState by billingViewModel.adFreeState.collectAsStateWithLifecycle(null)
 
-        val pendingObserver = remember {
-            Observer<Purchase?> {
-                Toast.makeText(this@MainActivity, getString(R.string.purchase_error_pending_payment), Toast.LENGTH_LONG).show()
-            }
+        val markPending = rememberCallback {
+            Toast.makeText(
+                this@MainActivity,
+                getString(R.string.purchase_error_pending_payment),
+                Toast.LENGTH_LONG
+            ).show()
         }
 
-        val adFreeConfig by adFreeConfig(adFreeState, pendingObserver)
+        val adFreeConfig by adFreeConfig(adFreeState, markPending, makePurchase = {
+            billingViewModel.makePurchase(this@MainActivity, it)
+        })
 
-        BillingObservers(adFreePrice, pendingObserver)
+        // Note: we use `this` instead of LocalLifecycleOwner because the latter can change, which results
+        // in an IllegalArgumentException (can't reuse the same observer with different lifecycles)
 
-        SettingsScreen(enabledDevices, methodsForDevice, settingsViewModel.initialMethodIndex, {
+        // no-op observe because the actual work is being done in BillingViewModel
+        billingViewModel.purchaseStateChange.observe(this@MainActivity, remember { Observer<Purchase> {} })
+        billingViewModel.pendingPurchase.observe(this@MainActivity, remember { Observer<Purchase?> { markPending() } })
+        billingViewModel.newPurchase.observe(this@MainActivity, remember {
+            Observer<Pair<Int, Purchase?>> {
+                val (responseCode, purchase) = it
+                when (responseCode) {
+                    BillingClient.BillingResponseCode.OK -> if (purchase != null) validateAdFreePurchase(
+                        purchase, adFreePrice, PurchaseType.AD_FREE
+                    )
+
+                    BillingClient.BillingResponseCode.USER_CANCELED -> logDebug(TAG, "Purchase of ad-free version was cancelled by the user")
+
+                    else -> {
+                        logBillingError(TAG, "Purchase of the ad-free version failed due to an unknown error during the purchase flow: $responseCode")
+                        Toast.makeText(
+                            this@MainActivity,
+                            getString(R.string.purchase_error_after_payment),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+        })
+
+        SettingsScreen(state, settingsViewModel.initialDeviceIndex, rememberTypedCallback {
+            settingsViewModel.saveSelectedDevice(it)
+            updateMismatchStatus()
+        }, settingsViewModel.initialMethodIndex, rememberTypedCallback {
             settingsViewModel.saveSelectedMethod(it)
 
             if (checkPlayServices(this@MainActivity, true)) {
                 // Subscribe to notifications for the newly selected device and update method
-                NotificationTopicSubscriber.resubscribeIfNeeded(enabledDevices, methodsForDevice)
+                NotificationTopicSubscriber.resubscribeIfNeeded(state.enabledDevices, state.methodsForDevice)
             } else Toast.makeText(
                 this@MainActivity,
                 this@MainActivity.getString(R.string.notification_no_notification_support),
                 Toast.LENGTH_LONG
             ).show()
-        }, selectedLanguageCode, adFreePrice, adFreeConfig, openAboutScreen, showBottomSheet)
-    }
-
-    @Composable
-    private fun adFreeConfig(state: SkuState?, pendingObserver: Observer<Purchase?>) = remember {
-        derivedStateOf(structuralEqualityPolicy()) {
-            when (state) {
-                SkuState.UNKNOWN -> {
-                    logError(TAG, GooglePlayBillingException("SKU '${PurchaseType.AD_FREE.sku}' is not available"))
-                    Triple(false, R.string.settings_buy_button_not_possible, null)
-                }
-
-                SkuState.NOT_PURCHASED -> Triple(true, R.string.settings_buy_button_buy) {
-                    // TODO(compose/settings): disable the Purchase button and set its text to "Processing…"
-                    // isEnabled = false
-                    // summary = mContext.getString(R.string.processing)
-
-                    // [newPurchaseObserver] handles the result
-                    billingViewModel.makePurchase(this@MainActivity, PurchaseType.AD_FREE)
-                }
-
-                SkuState.PENDING -> {
-                    pendingObserver.onChanged(null)
-                    Triple(false, R.string.processing, null)
-                }
-
-                SkuState.PURCHASED_AND_ACKNOWLEDGED -> Triple(false, R.string.settings_buy_button_bought, null)
-
-                // PURCHASED => already bought, but not yet acknowledged by the app.
-                // This should never happen, as it's already handled within BillingDataSource.
-                null, SkuState.PURCHASED -> null
-            }
-        }
-    }
-
-    @Composable
-    private fun BillingObservers(adFreePrice: String?, pendingObserver: Observer<Purchase?>) {
-        // Note: we use `this` instead of LocalLifecycleOwner because the latter can change, which results
-        // in an IllegalArgumentException (can't reuse the same observer with different lifecycles)
-
-        // no-op observe because the actual work is being done in BillingViewModel
-        billingViewModel.purchaseStateChange.observe(this, remember { Observer<Purchase> {} })
-        billingViewModel.pendingPurchase.observe(this, pendingObserver)
-        billingViewModel.newPurchase.observe(this, remember {
-            Observer<Pair<Int, Purchase?>> {
-                val (responseCode, purchase) = it
-                when (responseCode) {
-                    BillingResponseCode.OK -> if (purchase != null) validateAdFreePurchase(
-                        purchase, adFreePrice, PurchaseType.AD_FREE
-                    )
-
-                    BillingResponseCode.USER_CANCELED -> logDebug(TAG, "Purchase of ad-free version was cancelled by the user")
-
-                    else -> {
-                        logError(TAG, GooglePlayBillingException("Purchase of the ad-free version failed due to an unknown error during the purchase flow: $responseCode"))
-                        Toast.makeText(this, getString(R.string.purchase_error_after_payment), Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
+        }, rememberTypedCallback {
+            setLocale(it)
+            recreate()
+        }, adFreePrice, adFreeConfig, openAboutScreen = rememberCallback {
+            navController.navigateWithDefaults(AboutRoute)
         })
     }
 
@@ -797,14 +561,13 @@ class MainActivity : ComposeBaseActivity() {
                 validateAdFreePurchase(purchase, amount, purchaseType)
             }
 
-            !it.success -> logError(
+            !it.success -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[validateAdFreePurchase] couldn't purchase ad-free: (${it.errorMessage})")
+                "[validateAdFreePurchase] couldn't purchase ad-free: (${it.errorMessage})"
             )
         }
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(
         savedInstanceState: Bundle?,
     ) = super.onCreate(savedInstanceState).also {
@@ -817,12 +580,11 @@ class MainActivity : ComposeBaseActivity() {
 
         setContent {
             AppTheme {
-                SystemBars()
+                TransparentSystemBars()
                 Content()
             }
         }
 
-        setExitSharedElementCallback(MaterialContainerTransformSharedElementCallback())
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
         // TODO(root): move this to the proper place
@@ -830,27 +592,6 @@ class MainActivity : ComposeBaseActivity() {
             if (!it) return@hasRootAccess ContributorUtils.stopDbCheckingProcess(this)
 
             ContributorUtils.startDbCheckingProcess(this)
-        }
-    }
-
-    @Composable
-    private inline fun Menu(
-        expanded: Boolean,
-        noinline onDismiss: () -> Unit,
-        showMarkAllRead: Boolean,
-        showBecomeContributor: Boolean,
-        crossinline openContributorSheet: () -> Unit,
-    ) = DropdownMenu(expanded, onDismiss) {
-        // Mark all articles read
-        if (showMarkAllRead) DropdownMenuItem(Icons.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
-            newsListViewModel.markAllRead()
-            onDismiss()
-        }
-
-        // OTA URL contribution
-        if (showBecomeContributor) DropdownMenuItem(Icons.Outlined.GroupAdd, R.string.contribute) {
-            openContributorSheet()
-            onDismiss()
         }
     }
 
@@ -877,7 +618,7 @@ class MainActivity : ComposeBaseActivity() {
         val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
         if (deviceId == -1L || updateMethodId == -1L) {
-            logWarning(TAG, SetupUtils.getAsError("Settings screen", deviceId, updateMethodId))
+            logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(this, getString(R.string.settings_saving), Toast.LENGTH_LONG).show()
@@ -886,18 +627,6 @@ class MainActivity : ComposeBaseActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
-
-        private val NoConnectionSnackbarData = Pair(
-            R.string.error_no_internet_connection, android.R.string.ok
-        )
-
-        private val AppUpdateDownloadedSnackbarData = Pair(
-            R.string.new_app_version_inapp_downloaded, R.string.error_reload
-        )
-
-        private val AppUpdateFailedSnackbarData = Pair(
-            R.string.new_app_version_inapp_failed, R.string.error_google_play_button_text
-        )
 
         const val PAGE_UPDATE = 0
         const val PAGE_NEWS = 1

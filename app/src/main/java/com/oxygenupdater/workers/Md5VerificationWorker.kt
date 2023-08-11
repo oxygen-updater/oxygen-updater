@@ -6,7 +6,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.oxygenupdater.compose.ui.update.Md5VerificationFailure
-import com.oxygenupdater.exceptions.UpdateVerificationException
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
@@ -55,7 +54,7 @@ class Md5VerificationWorker(
 
     private suspend fun verify(): Result = withContext(Dispatchers.IO) {
         if (filename == null || md5 == null) {
-            logError(TAG, UpdateVerificationException("updateData = null"))
+            logWarning(TAG, "Required parameters are null: $filename, $md5")
             Result.failure(Data.Builder().apply {
                 putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.NullUpdateData.value)
             }.build())
@@ -63,14 +62,14 @@ class Md5VerificationWorker(
             logDebug(TAG, "Verifying $filename")
 
             if (md5.isEmpty()) {
-                logError(TAG, UpdateVerificationException("updateData.mD5Sum = null/empty"))
+                logWarning(TAG, "MD5 is empty")
                 Result.failure(Data.Builder().apply {
                     putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.NullOrEmptyProvidedChecksum.value)
                 }.build())
             } else {
                 val calculatedDigest = calculateMd5()
                 if (calculatedDigest == null) {
-                    logError(TAG, UpdateVerificationException("calculatedDigest = null"))
+                    logWarning(TAG, "calculatedDigest = null")
                     Result.failure(Data.Builder().apply {
                         putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.NullCalculatedChecksum.value)
                     }.build())
@@ -83,7 +82,7 @@ class Md5VerificationWorker(
                         Result.success()
                     } else {
                         LocalNotifications.showVerificationFailedNotification(context)
-                        logError(TAG, UpdateVerificationException("updateData.mD5Sum != calculatedDigest"))
+                        logWarning(TAG, "md5 != calculatedDigest")
                         Result.failure(Data.Builder().apply {
                             putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.ChecksumsNotEqual.value)
                         }.build())

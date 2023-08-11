@@ -16,11 +16,6 @@
 #   public *;
 #}
 
-# Disable the annoying "Parameter specified as non-null is null" exceptions
--assumenosideeffects class kotlin.jvm.internal.Intrinsics {
-    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
-}
-
 # BEGIN: Crashlytics suggestions
 # Allow for meaningful crash reports
 -keepattributes *Annotation*,EnclosingMethod,Signature,SourceFile,LineNumberTable

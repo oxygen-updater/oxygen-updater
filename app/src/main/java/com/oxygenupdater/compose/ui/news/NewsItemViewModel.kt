@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oxygenupdater.compose.activities.NewsItemActivity
 import com.oxygenupdater.compose.ui.RefreshAwareState
-import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.Logger.logWarning
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,7 +29,7 @@ class NewsItemViewModel(private val serverRepository: ServerRepository) : ViewMo
 
     fun refreshItem(id: Long) = viewModelScope.launch(Dispatchers.IO) {
         refreshingFlow.emit(true)
-        flow.emit(serverRepository.fetchNewsItem(id))
+        flow.emit(serverRepository.fetchNewsItem(id).also { NewsItemActivity.item = it })
         refreshingFlow.emit(false)
     }
 
@@ -38,9 +37,9 @@ class NewsItemViewModel(private val serverRepository: ServerRepository) : ViewMo
         serverRepository.toggleNewsItemReadLocally(item, true)
 
         val result = serverRepository.markNewsItemRead(item.id!!) ?: return@launch
-        if (!result.success) logError(
+        if (!result.success) logWarning(
             TAG,
-            NetworkException("Error marking news item as read on the server: ${result.errorMessage}")
+            "Failed to mark article as read on the server: ${result.errorMessage}"
         )
     }
 

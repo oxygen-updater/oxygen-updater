@@ -4,7 +4,7 @@
 const val KOTLIN_VERSION = "1.9.0"
 
 // https://github.com/google/ksp/releases
-const val KSP_VERSION = "1.9.0-1.0.12" // keep in sync with Kotlin version
+const val KSP_VERSION = "1.9.0-1.0.13" // keep in sync with Kotlin version
 
 // https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 // https://developer.android.com/jetpack/androidx/releases/compose-compiler
@@ -13,7 +13,7 @@ const val COMPOSE_COMPILER = "1.5.1" // keep in sync with Kotlin version
 // https://mvnrepository.com/artifact/io.insert-koin/koin-android
 // https://github.com/InsertKoinIO/koin/tags
 // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-const val KOIN_VERSION = "3.4.2"
+const val KOIN_VERSION = "3.4.3"
 
 object BuildPlugins {
     private object Versions {
@@ -61,36 +61,23 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/annotation
         const val ANNOTATION = "1.6.0"
 
-        // https://developer.android.com/jetpack/androidx/releases/appcompat
-        const val APP_COMPAT = "1.6.1"
-
         // https://developer.android.com/jetpack/androidx/releases/browser
         const val BROWSER = "1.5.0"
 
         // https://developer.android.com/jetpack/androidx/releases/compose#versions
-        const val COMPOSE = "1.5.0"
+        const val COMPOSE = "1.6.0-alpha03"
 
         // https://developer.android.com/jetpack/androidx/releases/compose#versions
-        // TODO(compose): remove DefaultTextStyle from Typography once M2 1.6.0 or M3 1.2.0 go stable; will be default then
-        const val COMPOSE_MATERIAL = "1.5.0"
+        const val COMPOSE_MATERIAL = "1.6.0-alpha03"
 
         // https://developer.android.com/jetpack/androidx/releases/compose-material3
-        const val COMPOSE_MATERIAL3 = "1.1.1"
-
-        // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-        const val CONSTRAINT_LAYOUT = "2.1.4"
+        const val COMPOSE_MATERIAL3 = "1.2.0-alpha05"
 
         // https://developer.android.com/jetpack/androidx/releases/core
         const val CORE_KTX = "1.10.1"
 
         // https://developer.android.com/jetpack/androidx/releases/core
         const val CORE_SPLASHSCREEN = "1.0.1"
-
-        // https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
-        const val SWIPE_REFRESH_LAYOUT = "1.1.0"
-
-        // https://developer.android.com/jetpack/androidx/releases/fragment
-        const val KTX_FRAGMENT = "1.5.7"
 
         // https://developer.android.com/jetpack/androidx/releases/preference
         const val KTX_PREFERENCE = "1.2.0"
@@ -104,18 +91,12 @@ object AndroidXLibraries {
         // https://developer.android.com/jetpack/androidx/releases/navigation#versions
         const val NAVIGATION = "2.6.0"
 
-        // https://developer.android.com/jetpack/androidx/releases/recyclerview
-        const val RECYCLER_VIEW = "1.3.0"
-
         // https://developer.android.com/jetpack/androidx/releases/room
         const val ROOM = "2.5.1"
     }
 
     // https://developer.android.com/jetpack/androidx/releases/annotation
     const val ANNOTATION = "androidx.annotation:annotation:${Versions.ANNOTATION}"
-
-    // https://developer.android.com/jetpack/androidx/releases/appcompat
-    const val APP_COMPAT = "androidx.appcompat:appcompat:${Versions.APP_COMPAT}"
 
     // https://developer.android.com/jetpack/androidx/releases/browser
     const val BROWSER = "androidx.browser:browser:${Versions.BROWSER}"
@@ -124,11 +105,12 @@ object AndroidXLibraries {
     const val COMPOSE_ANIMATION = "androidx.compose.animation:animation:${Versions.COMPOSE}"
     const val COMPOSE_ANIMATION_GRAPHICS = "androidx.compose.animation:animation-graphics:${Versions.COMPOSE}"
     const val COMPOSE_FOUNDATION = "androidx.compose.foundation:foundation:${Versions.COMPOSE_MATERIAL}"
-    const val COMPOSE_MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE_MATERIAL}"
     const val COMPOSE_MATERIAL3 = "androidx.compose.material3:material3:${Versions.COMPOSE_MATERIAL3}"
     const val COMPOSE_MATERIAL_ICONS_EXTENDED = "androidx.compose.material:material-icons-extended:${Versions.COMPOSE_MATERIAL}"
     const val COMPOSE_RUNTIME_LIVEDATA = "androidx.compose.runtime:runtime-livedata:${Versions.COMPOSE}"
     const val COMPOSE_UI = "androidx.compose.ui:ui:${Versions.COMPOSE}"
+    const val COMPOSE_UI_TEXT_GOOGLE_FONTS = "androidx.compose.ui:ui-text-google-fonts:${Versions.COMPOSE}"
+
     const val COMPOSE_UI_TOOLING = "androidx.compose.ui:ui-tooling:${Versions.COMPOSE}"
     const val COMPOSE_UI_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}"
 
@@ -138,26 +120,14 @@ object AndroidXLibraries {
     // https://developer.android.com/jetpack/androidx/releases/navigation#versions
     const val NAVIGATION_COMPOSE = "androidx.navigation:navigation-compose:${Versions.NAVIGATION}"
 
-    // https://developer.android.com/jetpack/androidx/releases/constraintlayout
-    const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
-
     // https://developer.android.com/jetpack/androidx/releases/core
     const val CORE_KTX = "androidx.core:core-ktx:${Versions.CORE_KTX}"
     const val CORE_SPLASHSCREEN = "androidx.core:core-splashscreen:${Versions.CORE_SPLASHSCREEN}"
-
-    // https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout
-    const val SWIPE_REFRESH_LAYOUT = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.SWIPE_REFRESH_LAYOUT}"
-
-    // https://developer.android.com/jetpack/androidx/releases/recyclerview
-    const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:${Versions.RECYCLER_VIEW}"
 
     // https://developer.android.com/jetpack/androidx/releases/room
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.ROOM}"
     const val ROOM_KTX = "androidx.room:room-ktx:${Versions.ROOM}"
     const val ROOM_RUNTIME = "androidx.room:room-runtime:${Versions.ROOM}"
-
-    // https://developer.android.com/jetpack/androidx/releases/fragment
-    const val KTX_FRAGMENT = "androidx.fragment:fragment-ktx:${Versions.KTX_FRAGMENT}"
 
     // https://developer.android.com/jetpack/androidx/releases/lifecycle
     const val LIFECYCLE_LIVEDATA_KTX = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE}"
@@ -175,11 +145,10 @@ object AndroidXLibraries {
 object GoogleAccompanistLibraries {
     // https://github.com/google/accompanist#compose-versions
     // https://github.com/google/accompanist/releases
-    private const val VERSION = "0.31.6-rc" // keep in sync with Compose version
+    private const val VERSION = "0.32.0" // keep in sync with Compose version
 
     const val SYSTEM_UI_CONTROLLER = "com.google.accompanist:accompanist-systemuicontroller:$VERSION"
     const val PERMISSIONS = "com.google.accompanist:accompanist-permissions:$VERSION"
-    const val PLACEHOLDER_MATERIAL = "com.google.accompanist:accompanist-placeholder-material:$VERSION"
     const val PLACEHOLDER_MATERIAL3 = "com.google.accompanist:accompanist-placeholder-material3:$VERSION"
     const val WEBVIEW = "com.google.accompanist:accompanist-webview:$VERSION"
 }
@@ -191,9 +160,6 @@ object Libraries {
 
         // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
         const val COIL = "2.4.0"
-
-        // https://github.com/facebook/shimmer-android/releases
-        const val FACEBOOK_SHIMMER = "0.5.0"
 
         // https://firebase.google.com/support/release-notes/android
         const val FIREBASE_BOM = "32.1.0"
@@ -211,9 +177,6 @@ object Libraries {
 
         // https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
         const val LIBSU = "5.1.0"
-
-        // https://github.com/material-components/material-components-android/releases
-        const val MATERIAL = "1.9.0"
 
         // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
         // https://github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -239,10 +202,6 @@ object Libraries {
     // https://github.com/Kotlin/kotlinx.coroutines/releases
     const val KOTLIN_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
     const val KOTLIN_COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLIN_COROUTINES}"
-
-    // Google Material Components for Android
-    // https://github.com/material-components/material-components-android/releases
-    const val MATERIAL = "com.google.android.material:material:${Versions.MATERIAL}"
 
     // Google Firebase
     // https://firebase.google.com/support/release-notes/android
@@ -285,9 +244,6 @@ object Libraries {
 
     // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${Versions.COIL}"
-
-    // https://github.com/facebook/shimmer-android/releases
-    const val FACEBOOK_SHIMMER = "com.facebook.shimmer:shimmer:${Versions.FACEBOOK_SHIMMER}"
 
     // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
     const val ANDROID_TOOLS_DESUGAR = "com.android.tools:desugar_jdk_libs:${Versions.ANDROID_TOOLS_DESUGAR}"

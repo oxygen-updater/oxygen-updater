@@ -1,43 +1,23 @@
 package com.oxygenupdater.models
 
+import androidx.compose.runtime.Immutable
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.oxygenupdater.BuildConfig
 
+@Immutable // required because we have a List field (productNames)
 data class Device(
     override val id: Long,
-    var enabled: Boolean,
     override val name: String?,
 
-    @JsonIgnore
-    private val productName: String,
+    @JsonProperty("product_names")
+    private val productNamesCsv: String?,
+
+    val enabled: Boolean,
 ) : SelectableModel {
 
-    init {
-        setProductName(productName)
-    }
-
-    lateinit var productNames: List<String>
-
-    /**
-     * Treat device as enabled by default, for backwards compatibility
-     *
-     * @param id          the device ID
-     * @param name        the device name
-     * @param productName the device name (ro.product.name)
-     */
-    constructor(id: Long, name: String?, productName: String) : this(id, true, name, productName)
-
-    @JsonProperty("product_names")
-    fun setProductName(productName: String) {
-        productNames = getProductNames(productName)
-    }
-
-    private fun getProductNames(productNameTemplate: String): List<String> {
-        return productNameTemplate.trim().split(",")
-            // Remove spaces after comma separation.
-            .map { productName -> productName.trim() }
-    }
+    @JsonIgnore
+    val productNames = productNamesCsv?.trim()?.split(",")?.map { it.trim() } ?: listOf()
 
     companion object {
         private val IMAGE_URL_PREFIX = buildString(38) {

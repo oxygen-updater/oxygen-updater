@@ -19,7 +19,6 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logVerbose
 import java.time.ZoneId
 
-@Suppress("unused")
 object Utils {
 
     val SERVER_TIME_ZONE: ZoneId = ZoneId.of("Europe/Amsterdam")
@@ -27,29 +26,9 @@ object Utils {
     private const val TAG = "Utils"
     private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
-    /**
-     * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later versions
-     *
-     * @param string the string to test
-     *
-     * @return true if string is a number, false otherwise
-     */
-    fun isNumeric(string: String) = try {
-        string.toLong()
-        true
-    } catch (e: NumberFormatException) {
-        false
-    }
-
     fun dpToPx(context: Context, @Dimension(unit = Dimension.DP) dp: Float) = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         dp,
-        context.resources.displayMetrics
-    )
-
-    fun spToPx(context: Context, @Dimension(unit = Dimension.SP) sp: Float) = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP,
-        sp,
         context.resources.displayMetrics
     )
 

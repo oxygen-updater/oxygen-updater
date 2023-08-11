@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,25 +29,22 @@ import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerMessage.ServerMessagePriority
 
 @Composable
-fun ColumnScope.ServerMessagesSheet(
-    hide: () -> Unit,
-    list: List<ServerMessage>,
-) {
+fun ColumnScope.ServerMessagesSheet(list: List<ServerMessage>) {
     @Suppress("NAME_SHADOWING")
     val list = if (list.isNotEmpty()) rememberSaveable { list } else return
 
-    SheetHeader(R.string.settings_push_from_server, hide)
+    SheetHeader(R.string.settings_push_from_server)
 
-    val colors = MaterialTheme.colors
+    val colorScheme = MaterialTheme.colorScheme
     LazyColumn(contentPadding = PaddingValues(bottom = 16.dp)) {
         items(list, { it.id }, contentType = { it.priority }) {
             Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                 val priority = it.priority
-                val (icon, color) = remember(priority, colors) {
+                val (icon, color) = remember(priority, colorScheme) {
                     when (priority) {
-                        ServerMessagePriority.LOW -> CustomIcons.Info to colors.positive
-                        ServerMessagePriority.MEDIUM -> CustomIcons.Warning to colors.warn
-                        ServerMessagePriority.HIGH -> CustomIcons.Error to colors.error
+                        ServerMessagePriority.LOW -> CustomIcons.Info to colorScheme.positive
+                        ServerMessagePriority.MEDIUM -> CustomIcons.Warning to colorScheme.warn
+                        ServerMessagePriority.HIGH -> CustomIcons.Error to colorScheme.error
                         else -> CustomIcons.Info to null
                     }
                 }
@@ -64,7 +61,6 @@ fun ColumnScope.ServerMessagesSheet(
 fun PreviewServerMessagesSheet() = PreviewModalBottomSheet {
     val message = "An unnecessarily long server message, to get an accurate understanding of how long titles are rendered"
     ServerMessagesSheet(
-        hide = {},
         list = listOf(
             ServerMessage(
                 1L,

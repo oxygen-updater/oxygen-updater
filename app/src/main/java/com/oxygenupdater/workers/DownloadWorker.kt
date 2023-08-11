@@ -22,13 +22,12 @@ import androidx.work.WorkerParameters
 import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.compose.ui.update.DownloadFailure
-import com.oxygenupdater.exceptions.OxygenUpdaterException
 import com.oxygenupdater.extensions.attachWithLocale
-import com.oxygenupdater.extensions.createFromWorkData
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE
 import com.oxygenupdater.models.TimeRemaining
+import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.ExceptionUtils
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
 import com.oxygenupdater.utils.Logger.logDebug
@@ -62,7 +61,7 @@ class DownloadWorker(
     private var isFirstPublish = true
     private var previousProgressTimestamp = 0L
     private val measurements = ArrayList<Double>()
-    private val updateData = createFromWorkData(parameters.inputData)
+    private val updateData = UpdateData.createFromWorkData(parameters.inputData)
 
     private lateinit var tempFile: File
     private lateinit var zipFile: File
@@ -92,7 +91,7 @@ class DownloadWorker(
                 }.build())
             }
 
-            updateData.downloadUrl?.contains("http") == false -> {
+            !updateData.downloadUrl.contains("http") -> {
                 showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
 
                 Result.failure(Data.Builder().apply {
@@ -193,7 +192,7 @@ class DownloadWorker(
             } else if (tempFile.length() < startingByte) {
                 logWarning(
                     TAG,
-                    OxygenUpdaterException("Partially downloaded ZIP size (${tempFile.length()}) is lesser than skipped bytes ($startingByte). Resetting state.")
+                    "Partially downloaded ZIP size (${tempFile.length()}) is lesser than skipped bytes ($startingByte). Resetting state."
                 )
 
                 startingByte = NOT_SET

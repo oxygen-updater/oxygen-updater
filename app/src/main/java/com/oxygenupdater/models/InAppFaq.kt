@@ -1,6 +1,7 @@
 package com.oxygenupdater.models
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.mutableStateOf
 import com.oxygenupdater.models.AppLocale.FR
 import com.oxygenupdater.models.AppLocale.NL
@@ -8,6 +9,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@Immutable
 data class InAppFaq(
     val id: Long,
 
@@ -21,9 +23,7 @@ data class InAppFaq(
 
     val important: Boolean = false,
 
-    /**
-     * Either `category` or `item`
-     */
+    /** Either `category` or `item` */
     val type: String,
 ) : Parcelable {
 
@@ -41,9 +41,7 @@ data class InAppFaq(
         else -> englishBody
     }
 
-    /**
-     * To preserve expand/collapse state in [androidx.recyclerview.widget.RecyclerView]
-     */
+    /** To preserve expand/collapse state in LazyColumn */
     @IgnoredOnParcel
-    var expanded = mutableStateOf(false)
+    val expanded = mutableStateOf(false)
 }

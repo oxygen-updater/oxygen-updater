@@ -248,6 +248,4 @@ object PrefManager {
 
     var theme by mutableStateOf(Theme.from(getInt(PROPERTY_THEME_ID, Theme.System.value)))
         internal set
-
-    val advancedMode = mutableStateOf(getBoolean(PROPERTY_ADVANCED_MODE, false))
 }

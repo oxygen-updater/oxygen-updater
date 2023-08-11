@@ -3,8 +3,6 @@ package com.oxygenupdater.compose.ui.update
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oxygenupdater.compose.ui.RefreshAwareState
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,11 +29,8 @@ class UpdateInformationViewModel(private val serverRepository: ServerRepository)
     }
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
-
         refreshingFlow.emit(true)
-        flow.emit(serverRepository.fetchUpdateData(deviceId, updateMethodId, SystemVersionProperties.oxygenOSOTAVersion))
+        flow.emit(serverRepository.fetchUpdateData())
         refreshingFlow.emit(false)
     }
 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.enums.PurchaseType
-import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
@@ -59,7 +58,7 @@ class BillingViewModel(
         purchase: Purchase,
         amount: String?,
         purchaseType: PurchaseType,
-        callback: KotlinCallback<ServerPostResult?>,
+        callback: (ServerPostResult?) -> Unit,
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.verifyPurchase(purchase, amount, purchaseType).let {
             withContext(Dispatchers.Main) {

@@ -1,3 +1,4 @@
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import java.util.Properties
 
 plugins {
@@ -152,12 +153,8 @@ android {
             isShrinkResources = true
             isDebuggable = true
 
-            // Should be this: https://github.com/firebase/firebase-android-sdk/issues/2665#issuecomment-849897741,
-            // but that doesn't work for some reason.
-            withGroovyBuilder {
-                "firebaseCrashlytics" {
-                    "mappingFileUploadEnabled"(false)
-                }
+            configure<CrashlyticsExtension> {
+                mappingFileUploadEnabled = false
             }
         }
 
@@ -229,6 +226,17 @@ android {
 // Required to workaround https://issuetracker.google.com/issues/260059413
 kotlin {
     jvmToolchain(17) // keep in sync with `javaVersion` above
+    compilerOptions {
+        // Disable the annoying "Parameter specified as non-null is null" exceptions
+        freeCompilerArgs.add("-Xno-param-assertions")
+        // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
+        // Requires a fresh build to show all outputs
+        val composeMetrics = project.buildDir.absolutePath + File.separatorChar + "composeMetrics"
+        freeCompilerArgs.addAll(
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeMetrics",
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeMetrics",
+        )
+    }
 }
 
 ksp {
@@ -257,9 +265,7 @@ dependencies {
     implementation(Libraries.KOTLIN_COROUTINES_ANDROID)
 
     implementation(AndroidXLibraries.ANNOTATION)
-    implementation(AndroidXLibraries.APP_COMPAT)
     implementation(AndroidXLibraries.BROWSER)
-    implementation(AndroidXLibraries.CONSTRAINT_LAYOUT)
 
     implementation(AndroidXLibraries.CORE_KTX)
     implementation(AndroidXLibraries.CORE_SPLASHSCREEN)
@@ -269,25 +275,21 @@ dependencies {
     implementation(AndroidXLibraries.LIFECYCLE_RUNTIME_COMPOSE)
     kapt(AndroidXLibraries.LIFECYCLE_COMPILER)
 
-    implementation(AndroidXLibraries.SWIPE_REFRESH_LAYOUT)
-    implementation(AndroidXLibraries.RECYCLER_VIEW)
-
     implementation(AndroidXLibraries.ROOM_KTX)
     implementation(AndroidXLibraries.ROOM_RUNTIME)
     ksp(AndroidXLibraries.ROOM_COMPILER)
 
-    implementation(AndroidXLibraries.KTX_FRAGMENT)
     implementation(AndroidXLibraries.KTX_PREFERENCE)
     implementation(AndroidXLibraries.KTX_WORK)
 
     implementation(AndroidXLibraries.COMPOSE_ANIMATION)
     implementation(AndroidXLibraries.COMPOSE_ANIMATION_GRAPHICS)
     implementation(AndroidXLibraries.COMPOSE_FOUNDATION)
-    implementation(AndroidXLibraries.COMPOSE_MATERIAL)
-    // implementation(AndroidXLibraries.COMPOSE_MATERIAL3)
+    implementation(AndroidXLibraries.COMPOSE_MATERIAL3)
     implementation(AndroidXLibraries.COMPOSE_MATERIAL_ICONS_EXTENDED)
     implementation(AndroidXLibraries.COMPOSE_RUNTIME_LIVEDATA)
     implementation(AndroidXLibraries.COMPOSE_UI)
+    implementation(AndroidXLibraries.COMPOSE_UI_TEXT_GOOGLE_FONTS)
     debugImplementation(AndroidXLibraries.COMPOSE_UI_TOOLING)
     implementation(AndroidXLibraries.COMPOSE_UI_TOOLING_PREVIEW)
 
@@ -296,10 +298,8 @@ dependencies {
 
     implementation(GoogleAccompanistLibraries.SYSTEM_UI_CONTROLLER)
     implementation(GoogleAccompanistLibraries.PERMISSIONS)
-    implementation(GoogleAccompanistLibraries.PLACEHOLDER_MATERIAL)
+    implementation(GoogleAccompanistLibraries.PLACEHOLDER_MATERIAL3)
     implementation(GoogleAccompanistLibraries.WEBVIEW)
-
-    implementation(Libraries.MATERIAL)
 
     implementation(platform(Libraries.FIREBASE_BOM))
     implementation(Libraries.FIREBASE_ANALYTICS_KTX)
@@ -321,8 +321,6 @@ dependencies {
     implementation(Libraries.JACKSON_KOTLIN_MODULE)
 
     implementation(Libraries.COIL_COMPOSE)
-
-    implementation(Libraries.FACEBOOK_SHIMMER)
 
     implementation(Libraries.LIBSU_CORE)
     implementation(Libraries.LIBSU_NIO)

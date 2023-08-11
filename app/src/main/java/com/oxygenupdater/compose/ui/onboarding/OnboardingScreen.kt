@@ -10,22 +10,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material.icons.rounded.DoneAll
 import androidx.compose.material.icons.rounded.PhoneAndroid
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,13 +38,13 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Info
-import com.oxygenupdater.compose.ui.TopAppBarDefaults
-import com.oxygenupdater.compose.ui.TopAppBarScrollBehavior
+import com.oxygenupdater.compose.ui.SettingsListWrapper
 import com.oxygenupdater.compose.ui.common.CheckboxText
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.ListItemTextIndent
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.common.animatedClickable
+import com.oxygenupdater.compose.ui.common.rememberCallback
 import com.oxygenupdater.compose.ui.dialogs.ContributorSheet
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.compose.ui.dialogs.SelectableSheet
@@ -57,45 +56,31 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.utils.ContributorUtils
-import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen(
     scrollBehavior: TopAppBarScrollBehavior,
-    enabledDevices: List<Device>,
-    methodsForDevice: List<UpdateMethod>,
+    lists: SettingsListWrapper,
+    initialDeviceIndex: Int,
     deviceChanged: (Device) -> Unit,
+    initialMethodIndex: Int,
     methodChanged: (UpdateMethod) -> Unit,
-    initialIndices: Pair<Int, Int>,
     finish: () -> Unit,
     startApp: (Boolean, Boolean) -> Unit, // contribute, submitLogs
 ) {
-    val scope = rememberCoroutineScope()
     val sheetState = defaultModalBottomSheetState()
     val listState = rememberLazyListState()
     var sheetType by remember { mutableStateOf(SheetType.None) }
-    val hide: () -> Unit = remember(scope, sheetState) {
-        {
-            sheetType = SheetType.None
-            // Action passed for clicking close button in the content
-            scope.launch { sheetState.hide() }
-        }
-    }
+    val hide = rememberCallback { sheetType = SheetType.None }
 
-    LaunchedEffect(Unit) { // run only on init
-        // Hide empty sheet in case activity was recreated or config was changed
-        if (sheetState.isVisible && sheetType == SheetType.None) sheetState.hide()
-    }
-
-    val (initialDeviceIndex, initialMethodIndex) = initialIndices
-
+    val (enabledDevices, methodsForDevice) = lists
     val deviceSelectionEnabled = enabledDevices.isNotEmpty()
     val methodSelectionEnabled = methodsForDevice.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
 
     val typography = MaterialTheme.typography
-    ModalBottomSheet({
+    if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
         when (sheetType) {
             SheetType.Device -> SelectableSheet(
                 hide,
@@ -121,89 +106,85 @@ fun OnboardingScreen(
 
             else -> {}
         }
-    }, sheetState) {
+    }
+
+    Column(
+        Modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .fillMaxHeight()
+    ) {
         Column(
             Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
-                .fillMaxHeight()
+                .weight(1f)
+                .verticalScroll(rememberScrollState()),
         ) {
-            Column(
-                Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState()),
+            SheetOpener(
+                deviceSelectionEnabled,
+                Icons.Rounded.PhoneAndroid, R.string.settings_device,
+                if (deviceSelectionEnabled) PrefManager.getString(
+                    PrefManager.PROPERTY_DEVICE, notSelected
+                ) ?: notSelected else stringResource(R.string.summary_please_wait),
             ) {
-                SheetOpener(
-                    deviceSelectionEnabled,
-                    Icons.Rounded.PhoneAndroid, R.string.settings_device,
-                    if (deviceSelectionEnabled) PrefManager.getString(
-                        PrefManager.PROPERTY_DEVICE, notSelected
-                    ) ?: notSelected else stringResource(R.string.summary_please_wait),
-                ) {
-                    sheetType = SheetType.Device
-                    scope.launch { sheetState.show() }
-                }
-
-                SheetOpener(
-                    methodSelectionEnabled,
-                    Icons.Outlined.CloudDownload, R.string.settings_update_method,
-                    if (methodSelectionEnabled) PrefManager.getString(
-                        PrefManager.PROPERTY_UPDATE_METHOD, notSelected
-                    ) ?: notSelected else stringResource(R.string.summary_update_method),
-                ) {
-                    sheetType = SheetType.Method
-                    scope.launch { sheetState.show() }
-                }
-
-                val body2 = typography.body2
-                Text(
-                    AnnotatedString(
-                        stringResource(R.string.onboarding_page_1_text),
-                        body2.toSpanStyle(),
-                        body2.toParagraphStyle().copy(textIndent = ListItemTextIndent)
-                    ),
-                    Modifier.padding(16.dp),
-                    style = body2
-                )
-
-                Text(
-                    stringResource(R.string.onboarding_page_4_text),
-                    Modifier.padding(16.dp),
-                    style = body2
-                )
+                sheetType = SheetType.Device
             }
 
-            ItemDivider()
+            SheetOpener(
+                methodSelectionEnabled,
+                Icons.Outlined.CloudDownload, R.string.settings_update_method,
+                if (methodSelectionEnabled) PrefManager.getString(
+                    PrefManager.PROPERTY_UPDATE_METHOD, notSelected
+                ) ?: notSelected else stringResource(R.string.summary_update_method),
+            ) {
+                sheetType = SheetType.Method
+            }
+
+            val bodyMedium = typography.bodyMedium
             Text(
-                stringResource(R.string.onboarding_page_1_caption),
-                Modifier
-                    .alpha(ContentAlpha.medium)
-                    .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
-                style = typography.caption
+                AnnotatedString(
+                    stringResource(R.string.onboarding_page_1_text),
+                    bodyMedium.toSpanStyle(),
+                    bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
+                ),
+                Modifier.padding(16.dp),
+                style = bodyMedium
             )
 
-            val contribute = remember { mutableStateOf(true) }
-            val runningInPreview = LocalInspectionMode.current
-            if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) CheckboxText(
-                contribute, R.string.contribute_agree,
-                Modifier.padding(end = 4.dp), Modifier.padding(end = 16.dp),
-            ) {
-                IconButton({
-                    sheetType = SheetType.Contributor
-                    scope.launch { sheetState.show() }
-                }) {
-                    Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
-                }
-            }
+            Text(
+                stringResource(R.string.onboarding_page_4_text),
+                Modifier.padding(16.dp),
+                style = bodyMedium
+            )
+        }
 
-            val submitLogs = remember { mutableStateOf(true) }
-            CheckboxText(
-                submitLogs, R.string.settings_upload_logs,
-                Modifier.padding(end = 16.dp, bottom = 16.dp), Modifier.padding(end = 16.dp),
-            ) {
-                OutlinedIconButton({
-                    startApp(contribute.value, submitLogs.value)
-                }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
+        ItemDivider()
+        Text(
+            stringResource(R.string.onboarding_page_1_caption),
+            Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
+            MaterialTheme.colorScheme.onSurfaceVariant,
+            style = typography.bodySmall
+        )
+
+        val contribute = remember { mutableStateOf(true) }
+        val runningInPreview = LocalInspectionMode.current
+        if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) CheckboxText(
+            contribute, R.string.contribute_agree,
+            Modifier.padding(end = 4.dp), Modifier.padding(end = 16.dp),
+        ) {
+            IconButton({
+                sheetType = SheetType.Contributor
+            }) {
+                Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
             }
+        }
+
+        val submitLogs = remember { mutableStateOf(true) }
+        CheckboxText(
+            submitLogs, R.string.settings_upload_logs,
+            Modifier.padding(end = 16.dp, bottom = 16.dp), Modifier.padding(end = 16.dp),
+        ) {
+            OutlinedIconButton({
+                startApp(contribute.value, submitLogs.value)
+            }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
         }
     }
 
@@ -220,65 +201,74 @@ private fun SheetOpener(
     selectedName: String,
     onClick: () -> Unit,
 ) {
-    val colors = MaterialTheme.colors
+    val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
 
     Row(
         Modifier
             .fillMaxWidth()
-            .alpha(if (enabled) 1f else ContentAlpha.disabled)
+            .alpha(if (enabled) 1f else 0.38f)
             .animatedClickable(enabled, onClick)
             .padding(horizontal = 16.dp), // must be after 'clickable`
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(icon, stringResource(R.string.icon), Modifier.padding(end = 16.dp), tint = colors.primary)
+        Icon(icon, stringResource(R.string.icon), Modifier.padding(end = 16.dp), tint = colorScheme.primary)
 
         Column(Modifier.padding(vertical = 16.dp)) {
-            Text(stringResource(labelResId), style = typography.subtitle1)
-            Text(selectedName, Modifier.alpha(ContentAlpha.medium), style = typography.body2)
+            Text(stringResource(labelResId), style = typography.titleMedium)
+            Text(
+                selectedName,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = typography.bodyMedium
+            )
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @PreviewThemes
 @Composable
 fun PreviewOnboardingScreen() = PreviewAppTheme {
     OnboardingScreen(
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
-        enabledDevices = listOf(
-            Device(
-                id = 1,
-                name = "OnePlus 7 Pro",
-                productName = "OnePlus7Pro",
+        SettingsListWrapper(
+            listOf(
+                Device(
+                    id = 1,
+                    name = "OnePlus 7 Pro",
+                    productNamesCsv = "OnePlus7Pro",
+                    enabled = true,
+                ),
+                Device(
+                    id = 2,
+                    name = "OnePlus 8T",
+                    productNamesCsv = "OnePlus8T",
+                    enabled = true,
+                ),
             ),
-            Device(
-                id = 2,
-                name = "OnePlus 8T",
-                productName = "OnePlus8T",
+            listOf(
+                UpdateMethod(
+                    id = 1,
+                    englishName = "Stable (full)",
+                    dutchName = "Stabiel (volledig)",
+                    recommendedForRootedDevice = true,
+                    recommendedForNonRootedDevice = false,
+                    supportsRootedDevice = true,
+                ),
+                UpdateMethod(
+                    id = 2,
+                    englishName = "Stable (incremental)",
+                    dutchName = "Stabiel (incrementeel)",
+                    recommendedForRootedDevice = false,
+                    recommendedForNonRootedDevice = true,
+                    supportsRootedDevice = false,
+                )
             ),
         ),
-        methodsForDevice = listOf(
-            UpdateMethod(
-                id = 1,
-                englishName = "Stable (full)",
-                dutchName = "Stabiel (volledig)",
-                recommended = false,
-                recommendedForRootedDevice = true,
-                recommendedForNonRootedDevice = false,
-                supportsRootedDevice = true,
-            ), UpdateMethod(
-                id = 2,
-                englishName = "Stable (incremental)",
-                dutchName = "Stabiel (incrementeel)",
-                recommended = true,
-                recommendedForRootedDevice = false,
-                recommendedForNonRootedDevice = true,
-                supportsRootedDevice = false,
-            )
-        ),
+        initialDeviceIndex = 1,
         deviceChanged = {},
+        initialMethodIndex = 1,
         methodChanged = {},
-        initialIndices = 0 to 1,
         finish = {},
         startApp = { _, _ -> },
     )
