@@ -369,8 +369,7 @@ class MainActivity : ComposeBaseActivity() {
                     ).value
                     if (showAds) {
                         ItemDivider()
-                        val adLoaded = remember { mutableStateOf(false) }
-                        BannerAd(BuildConfig.AD_BANNER_MAIN_ID, adLoaded) { bannerAdView = it }
+                        BannerAd(BuildConfig.AD_BANNER_MAIN_ID) { bannerAdView = it }
                     }
                 }
 

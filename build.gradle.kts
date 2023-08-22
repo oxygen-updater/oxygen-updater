@@ -7,10 +7,17 @@ buildscript {
     }
 
     dependencies {
-        classpath(BuildPlugins.ANDROID_GRADLE_PLUGIN)
-        classpath(BuildPlugins.GOOGLE_SERVICES_PLUGIN)
-        classpath(BuildPlugins.FIREBASE_GRADLE_PLUGIN)
-        classpath(BuildPlugins.KOTLIN_GRADLE_PLUGIN)
+        // https://developer.android.com/studio/releases/gradle-plugin
+        classpath("com.android.tools.build:gradle:8.1.1")
+
+        // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
+        classpath("com.google.gms:google-services:4.3.15")
+
+        // https://firebase.google.com/support/release-notes/android
+        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.8")
+
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION")
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
     }

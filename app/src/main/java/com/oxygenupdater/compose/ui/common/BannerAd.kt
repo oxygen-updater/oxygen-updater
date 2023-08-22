@@ -7,45 +7,46 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize
+import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.utils.Logger.logDebug
 
+/**
+ * @param adLoaded if supplied, [Modifier.navigationBarsPadding] will be applied on the
+ * assumption that the only view placed below this is the navigation bar.
+ */
 @Composable
 fun ColumnScope.BannerAd(
     adUnitId: String,
-    adLoaded: MutableState<Boolean>,
+    adLoaded: MutableState<Boolean>? = null,
     view: (AdView) -> Unit,
 ) = if (LocalInspectionMode.current) {
     Text("AdView", Modifier.align(Alignment.CenterHorizontally))
-} else LocalConfiguration.current.screenWidthDp.let { screenWidthDp ->
-    AndroidView(factory = {
-        AdView(it).apply {
-            setAdUnitId(adUnitId)
-            setAdSize(getCurrentOrientationAnchoredAdaptiveBannerAdSize(it, screenWidthDp))
+} else AndroidView(factory = {
+    AdView(it).apply {
+        setAdUnitId(adUnitId)
+        setAdSize(AdSize(AdSize.FULL_WIDTH, AdSize.AUTO_HEIGHT))
 
-            loadAd(OxygenUpdater.buildAdRequest())
+        loadAd(OxygenUpdater.buildAdRequest())
 
-            adListener = object : AdListener() {
-                override fun onAdFailedToLoad(error: LoadAdError) {
-                    logDebug(TAG, "Banner ad failed to load: $error")
-                    adLoaded.value = false
-                }
+        if (adLoaded != null) adListener = object : AdListener() {
+            override fun onAdFailedToLoad(error: LoadAdError) {
+                logDebug(TAG, "Banner ad failed to load: $error")
+                adLoaded.value = false
+            }
 
-                override fun onAdLoaded() {
-                    logDebug(TAG, "Banner ad loaded")
-                    adLoaded.value = true
-                }
+            override fun onAdLoaded() {
+                logDebug(TAG, "Banner ad loaded")
+                adLoaded.value = true
             }
         }
-        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
-    }, if (adLoaded.value) Modifier.navigationBarsPadding() else Modifier, view)
-}
+    }
+    // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
+}, if (adLoaded?.value == true) Modifier.navigationBarsPadding() else Modifier, view)
 
 private const val TAG = "BannerAd"

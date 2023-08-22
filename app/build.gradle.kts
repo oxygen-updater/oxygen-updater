@@ -2,13 +2,13 @@ import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import java.util.Properties
 
 plugins {
-    id(BuildPlugins.ANDROID_APPLICATION)
-    id(BuildPlugins.GOOGLE_SERVICES)
-    id(BuildPlugins.FIREBASE_CRASHLYTICS)
+    id("com.android.application")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
-    id(BuildPlugins.KSP) version KSP_VERSION
+    id("com.google.devtools.ksp") version KSP_VERSION
 }
 
 fun loadProperties(
@@ -37,14 +37,15 @@ fun arrayForBuildConfig(vararg array: String) = array.joinToString(prefix = "{",
 android {
     namespace = "com.oxygenupdater"
 
-    compileSdk = AndroidSdk.COMPILE
-    buildToolsVersion = AndroidSdk.BUILD_TOOLS
+    // https://developer.android.com/studio/releases/build-tools
+    buildToolsVersion = "34.0.0"
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.arjanvlek.oxygenupdater"
 
-        minSdk = AndroidSdk.MIN
-        targetSdk = AndroidSdk.TARGET
+        minSdk = 21
+        targetSdk = 31 // TODO: 31st August 2023 onwards, app updates require targeting 33
 
         versionCode = 100
         versionName = "5.11.3"
@@ -259,79 +260,131 @@ repositories {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    coreLibraryDesugaring(Libraries.ANDROID_TOOLS_DESUGAR)
+    // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
-    implementation(Libraries.KOTLIN_COROUTINES_CORE)
-    implementation(Libraries.KOTLIN_COROUTINES_ANDROID)
+    // https://github.com/Kotlin/kotlinx.coroutines/releases
+    val kotlinCoroutines = "1.7.3"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutines")
 
-    implementation(AndroidXLibraries.ANNOTATION)
-    implementation(AndroidXLibraries.BROWSER)
+    // https://developer.android.com/jetpack/androidx/releases/annotation
+    val annotation = "1.6.0"
+    implementation("androidx.annotation:annotation:$annotation")
 
-    implementation(AndroidXLibraries.CORE_KTX)
-    implementation(AndroidXLibraries.CORE_SPLASHSCREEN)
+    // https://developer.android.com/jetpack/androidx/releases/browser
+    implementation("androidx.browser:browser:1.6.0")
 
-    implementation(AndroidXLibraries.LIFECYCLE_LIVEDATA_KTX)
-    implementation(AndroidXLibraries.LIFECYCLE_VIEWMODEL_KTX)
-    implementation(AndroidXLibraries.LIFECYCLE_RUNTIME_COMPOSE)
-    kapt(AndroidXLibraries.LIFECYCLE_COMPILER)
+    // https://developer.android.com/jetpack/androidx/releases/core
+    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
-    implementation(AndroidXLibraries.ROOM_KTX)
-    implementation(AndroidXLibraries.ROOM_RUNTIME)
-    ksp(AndroidXLibraries.ROOM_COMPILER)
+    // https://developer.android.com/jetpack/androidx/releases/lifecycle
+    val lifecycle = "2.6.1"
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle")
 
-    implementation(AndroidXLibraries.KTX_PREFERENCE)
-    implementation(AndroidXLibraries.KTX_WORK)
+    // https://developer.android.com/jetpack/androidx/releases/room
+    val room = "2.5.2"
+    ksp("androidx.room:room-compiler:$room")
+    implementation("androidx.room:room-ktx:$room")
+    implementation("androidx.room:room-runtime:$room")
 
-    implementation(AndroidXLibraries.COMPOSE_ANIMATION)
-    implementation(AndroidXLibraries.COMPOSE_ANIMATION_GRAPHICS)
-    implementation(AndroidXLibraries.COMPOSE_FOUNDATION)
-    implementation(AndroidXLibraries.COMPOSE_MATERIAL3)
-    implementation(AndroidXLibraries.COMPOSE_MATERIAL_ICONS_EXTENDED)
-    implementation(AndroidXLibraries.COMPOSE_RUNTIME_LIVEDATA)
-    implementation(AndroidXLibraries.COMPOSE_UI)
-    implementation(AndroidXLibraries.COMPOSE_UI_TEXT_GOOGLE_FONTS)
-    debugImplementation(AndroidXLibraries.COMPOSE_UI_TOOLING)
-    implementation(AndroidXLibraries.COMPOSE_UI_TOOLING_PREVIEW)
+    // https://developer.android.com/jetpack/androidx/releases/preference
+    implementation("androidx.preference:preference-ktx:1.2.1")
 
-    implementation(AndroidXLibraries.ACTIVITY_COMPOSE)
-    implementation(AndroidXLibraries.NAVIGATION_COMPOSE)
+    // https://developer.android.com/jetpack/androidx/releases/work
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 
-    implementation(GoogleAccompanistLibraries.SYSTEM_UI_CONTROLLER)
-    implementation(GoogleAccompanistLibraries.PERMISSIONS)
-    implementation(GoogleAccompanistLibraries.PLACEHOLDER_MATERIAL3)
-    implementation(GoogleAccompanistLibraries.WEBVIEW)
+    // https://developer.android.com/jetpack/androidx/releases/compose#versions
+    implementation("androidx.compose.animation:animation:$COMPOSE")
+    implementation("androidx.compose.animation:animation-graphics:$COMPOSE")
+    implementation("androidx.compose.foundation:foundation:$COMPOSE")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha05")
+    implementation("androidx.compose.material:material-icons-extended:$COMPOSE")
+    implementation("androidx.compose.runtime:runtime-livedata:$COMPOSE")
+    implementation("androidx.compose.ui:ui:$COMPOSE")
+    implementation("androidx.compose.ui:ui-text-google-fonts:$COMPOSE")
+    debugImplementation("androidx.compose.ui:ui-tooling:$COMPOSE")
+    debugImplementation("androidx.compose.ui:ui-tooling-preview:$COMPOSE")
 
-    implementation(platform(Libraries.FIREBASE_BOM))
-    implementation(Libraries.FIREBASE_ANALYTICS_KTX)
-    implementation(Libraries.FIREBASE_CRASHLYTICS_KTX)
-    implementation(Libraries.FIREBASE_MESSAGING_KTX)
+    // https://developer.android.com/jetpack/androidx/releases/activity
+    implementation("androidx.activity:activity-compose:1.7.2")
 
-    implementation(Libraries.GOOGLE_PLAY_BILLING)
-    implementation(Libraries.GOOGLE_PLAY_BILLING_KTX)
-    implementation(Libraries.PLAY_CORE_IN_APP_UPDATES)
-    implementation(Libraries.PLAY_SERVICES_BASE)
-    implementation(Libraries.PLAY_SERVICES_ADS)
+    // https://developer.android.com/jetpack/androidx/releases/navigation#versions
+    implementation("androidx.navigation:navigation-compose:2.7.0")
 
-    implementation(Libraries.KOIN)
+    // https://github.com/google/accompanist#compose-versions
+    // https://github.com/google/accompanist/releases
+    val accompanist = "0.32.0" // keep in sync with Compose version
+    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanist")
+    implementation("com.google.accompanist:accompanist-permissions:$accompanist")
+    implementation("com.google.accompanist:accompanist-placeholder-material3:$accompanist")
+    implementation("com.google.accompanist:accompanist-webview:$accompanist")
 
-    implementation(Libraries.OKHTTP_LOGGING_INTERCEPTOR)
-    implementation(Libraries.RETROFIT)
-    implementation(Libraries.RETROFIT_CONVERTER_JACKSON)
+    // https://firebase.google.com/support/release-notes/android
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-messaging-ktx")
 
-    implementation(Libraries.JACKSON_KOTLIN_MODULE)
+    // https://developer.android.com/google/play/billing/release-notes
+    val playBilling = "5.1.0"
+    implementation("com.android.billingclient:billing:$playBilling")
+    implementation("com.android.billingclient:billing-ktx:$playBilling")
 
-    implementation(Libraries.COIL_COMPOSE)
+    // https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
+    implementation("com.google.android.play:app-update:2.1.0")
 
-    implementation(Libraries.LIBSU_CORE)
-    implementation(Libraries.LIBSU_NIO)
-    implementation(Libraries.LIBSU_SERVICE)
+    // https://developers.google.com/android/guides/releases
+    // https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
+    implementation("com.google.android.gms:play-services-base:18.2.0")
+    // https://developers.google.com/admob/android/rel-notes
+    implementation("com.google.android.gms:play-services-ads:22.3.0")
 
-    testImplementation(TestLibraries.JUNIT4)
-    testImplementation(TestLibraries.KOTLIN_TEST_JUNIT)
-    testImplementation(TestLibraries.KOIN_TEST)
+    // https://mvnrepository.com/artifact/io.insert-koin/koin-android
+    // https://github.com/InsertKoinIO/koin/tags
+    // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
+    val koin = "3.4.3"
+    implementation("io.insert-koin:koin-android:$koin")
 
-    androidTestImplementation(TestLibraries.ESPRESSO_CORE)
-    androidTestImplementation(TestLibraries.JUNIT_EXT)
-    androidTestImplementation(TestLibraries.RULES)
-    androidTestImplementation(TestLibraries.RUNNER)
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    // https://github.com/square/okhttp/blob/master/CHANGELOG.md
+    // https://square.github.io/okhttp/changelog/
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    // https://github.com/square/retrofit/tags
+    // https://github.com/square/retrofit/blob/master/CHANGELOG.md
+    val retrofit = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit")
+    implementation("com.squareup.retrofit2:converter-jackson:$retrofit")
+
+    // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
+    // Note: Stay on 2.13.x, as 2.14.x doesn't support Android 7.1/Nougat and below (API < 26)
+    // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
+    //noinspection GradleDependency
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.5")
+
+    // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    // https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
+    val libsu = "5.1.0"
+    implementation("com.github.topjohnwu.libsu:core:$libsu")
+    implementation("com.github.topjohnwu.libsu:nio:$libsu")
+    implementation("com.github.topjohnwu.libsu:service:$libsu")
+
+    // https://github.com/junit-team/junit4/releases
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$KOTLIN_VERSION")
+    testImplementation("io.insert-koin:koin-test:$koin")
+    testImplementation("androidx.annotation:annotation:$annotation")
+
+    // https://developer.android.com/jetpack/androidx/releases/test
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+    androidTestImplementation("androidx.test:runner:1.5.2")
 }
