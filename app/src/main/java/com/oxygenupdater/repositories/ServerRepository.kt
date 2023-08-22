@@ -32,6 +32,8 @@ class ServerRepository constructor(
 
     suspend fun fetchFaq() = performServerRequest { serverApi.fetchFaq() }
 
+    suspend fun fetchInstallGuide() = performServerRequest { serverApi.fetchInstallGuide() }
+
     suspend fun fetchDevices(filter: DeviceRequestFilter) = performServerRequest {
         serverApi.fetchDevices(filter.value)
     }
@@ -152,14 +154,6 @@ class ServerRepository constructor(
 
     suspend fun fetchAllMethods() = performServerRequest {
         serverApi.fetchAllUpdateMethods()
-    }
-
-    suspend fun fetchInstallGuidePage(
-        deviceId: Long,
-        updateMethodId: Long,
-        pageNumber: Int,
-    ) = performServerRequest {
-        serverApi.fetchInstallGuidePage(deviceId, updateMethodId, pageNumber)
     }
 
     suspend fun submitOtaDbRows(rows: List<ArrayMap<String, Any?>>) = performServerRequest {

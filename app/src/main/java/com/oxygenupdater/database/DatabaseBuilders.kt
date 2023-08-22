@@ -1,11 +1,9 @@
-package com.oxygenupdater.utils
+package com.oxygenupdater.database
 
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.oxygenupdater.database.LocalAppDb
-import com.oxygenupdater.utils.DatabaseMigrations.prepopulateFromSqlite
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -17,21 +15,14 @@ object DatabaseBuilders {
      * other databases doesn't work (due to some WAL/transaction restrictions).
      */
     private val prepopulateFromOldData = object : RoomDatabase.Callback() {
-        override fun onOpen(
-            db: SupportSQLiteDatabase
-        ) = super.onOpen(db).also {
-            prepopulateFromSqlite(db)
+        override fun onOpen(db: SupportSQLiteDatabase) = super.onOpen(db).also {
+            SqliteMigrations.prepopulateFromSqlite(db)
         }
     }
 
     const val APP_DB = "oxygen_updater"
-    const val PURCHASES_OLD_DB = "purchase_db"
-    const val NEWS_ITEMS_OLD_DB = "NewsItems.db"
-    const val SUBMITTED_UPDATE_FILES_OLD_DB = "SubmittedUpdateFiles.db"
 
-    fun buildLocalAppDatabase(
-        context: Context
-    ) = Room.databaseBuilder(
+    fun buildLocalAppDatabase(context: Context) = Room.databaseBuilder(
         context,
         LocalAppDb::class.java,
         APP_DB

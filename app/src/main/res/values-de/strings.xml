@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 
 	<string name="device_chooser_error_title">Konnte die Liste der unterstützen Geräte nicht abrufen</string>
 
@@ -174,52 +174,7 @@ Wische nach links um fortzufahren."</string>
 	<string name="install">"Installieren"</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">"Instaliere das Update gemäß den Anweisungen in der Installationsanleitung."</string>
 	<string name="install_guide">"Installationsanleitung"</string>
-	<string name="install_guide_subtitle">"Installationsanleitung - %1$d von %2$d"</string>
-	<string name="install_guide_tip">"&#8226;Es ist empfehlenswert alle Schritte aufzuschreiben, da du dein Gerät während dem Update ausschalten musst."</string>
-	<string name="install_guide_page_1_title">"Update herunterzuladen."</string>
-	<string name="install_guide_page_1_text">"&#8226;Drücke den Download Button um mit dem Hertunterladen des Updates zu starten
-
-&#8226; Der Download Fortschritt wird in der App angezeigt und als Benachrichtigung in der Benachrichtigungsleiste.
-
-&#8226; Wenn der Download abgeschlossen ist, wirst du eine Benachrichtigung mit dem Text \"Download abgeschlossen\" erhalten.
-Falls es einen Download Fehler gibt, öffne die App und versuche das Update erneut zu downloaden. Wenn das nicht funktioniert, kontrolliere ob du eine funktionierende Internet Verbindung hast. Ansonsten kontaktiere den Entwickler dieser App. Du kannst das wenn du auf \"Meine Apps\" im Google Play Store gehst."</string>
-
-	<string name="install_guide_page_2_title">Installation vorbereiten</string>
-	<string name="install_guide_page_2_text">"Beachte: Die Installation des Updates findet auf einer speziellen Seite deines Systems statt. Sollte aus irgendeinem Grund bereits ein System Update angezeigt werden, installiere dieses zuerst. Danach öffne die App erneut um zu überprüfen ob du auf den neuesten Stand bist.
-
-Anleitung:
-&#8226; Schließe Oxygen Updater durch Drücken des Home Buttons.
-
-&#8226; Öffne deine Systemeinstellungen. Diese sollten über dein App Menü erreichbar sein.
-
-&#8226; Scrolle nach unten bis du System Updates siehst. Klicke darauf."</string>
-
-	<string name="install_guide_page_3_title">Das Update installieren</string>
-	<string name="install_guide_page_3_text">"Da du jetzt in der System Updates App bist ist es Zeit das Update zu installieren.
-
-&#8226; Unter dem Punkt Systemupdate, tippe auf das Zahnrad Symbol in der rechten oberen Ecke.
-
-&#8226; Wähle jetzt \"Lokales Upgrade\" aus. Es sollte ein Bildschirm zur Datei Auswahl erscheinen.
-
-&#8226; In diesem Bildschrim, tippe auf die Update Datei die vom Oxygen Updater heruntergeladen wurde. Der Name sollte mit \"%1$sOxygen\" beginnen.
-
-&#8226; Tippe nun auf \"Upgrade Now\". Die Installation sollte automatisch starten."</string>
-
-	<string name="install_guide_page_4_title">Warte bis die Installation fertiggestellt ist</string>
-	<string name="install_guide_page_4_text">"&#8226; Das Update wird nun installiert und es wird ein Balken mit dem Fortschritt angezeigt. Bitte warte bis die Installation abgeschlossen ist. Installationen können bis zu 15 Minuten dauern.
-
-&#8226; Danach wird dein Handy neugestartet um das Update fertigzustellen."</string>
-
-	<string name="install_guide_page_5_title">"Fertig. Viel Spaß mit der neuen OxygenOS Version!"</string>
-	<string name="install_guide_page_5_text">"&#8226;Sobald dein Gerät das Optimieren der Apps fertiggestellt hat, wurde das Update erfolgreich installiert.
-Um das zu überprüfen, kannst du deine aktuelle Version folgendermaßen kontrollieren:
-
-&#8226; Gehe in die Einstellungen, tippe auf \"Über das Telefon\", und überprüfe die OxygenOS Version.
-
-&#8226; Wenn dir die App gefällt, dann gibt ihr doch 5 Sterne im Play Store!"</string>
-	<string name="install_guide_close_button">"Installationsanleitung schließen"</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Dein Gerät wird unterstützt</string>

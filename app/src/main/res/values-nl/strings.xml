@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 	<string name="device_chooser_error_title">Kon lijst van ondersteunde apparaten niet ophalen.</string>
 
 	<!-- Update information strings-->
@@ -166,46 +166,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="install">Installeren</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Installeer de update volgens de in de installatiehandleiding omschreven instructies.</string>
 	<string name="install_guide">Installatiehandleiding</string>
-	<string name="install_guide_subtitle">Installatie - %1$d van %2$d</string>
-	<string name="install_guide_close_button">Sluit de installatiehandleiding</string>
-	<string name="install_guide_tip">&#8226; Het is aanbevolen om alle stappen op te schrijven, omdat je apparaat tijdens de installatie van de update opnieuw moet worden opgestart.</string>
-
-	<string name="install_guide_page_1_title">Download de update</string>
-	<string name="install_guide_page_1_text">&#8226;Druk op de Download-knop om het downloaden te starten. De downloadvoortgang zal in de app verschijnen, en verschijnt ook als melding in je notificatiescherm.\n\n&#8226; Als het downloaden is voltooid, zie je een melding met de tekst \"Download voltooid\".\nAls er tijdens het downloaden een fout is opgetreden, probeer je de update opnieuw te downloaden. Indien dit niet werkt, controleer dan je internetverbinding, of neem contact op met de ontwikkelaar. Dit kun je via de Google Play Store doen onder het tabblad \"Mijn apps\".</string>
-
-	<string name="install_guide_page_2_title">Installatie voorbereiden</string>
-	<string name="install_guide_page_2_text">"Opmerking: de installatie van de update vindt plaats in een speciaal scherm in de standaard Systeemupdates-sectie van je apparaat. Als bij het openen van de Systeemupdates-sectie (toevallig) een systeemupdate in verschijnt, installeer deze dan eerst. Open vervolgens Oxygen Updater om te controleren of je écht up-to-date bent.
-
-Instructies:
-&#8226; Sluit Oxygen Updater af door op de home-knop te drukken.
-
-&#8226; Open de Instellingen-app. Deze staat als het goed is in je lijst met apps.
-
-&#8226; Scrol omlaag totdat je de Systeemupdates optie ziet. Tik daarop."</string>
-
-	<string name="install_guide_page_3_title">Installeer de update</string>
-	<string name="install_guide_page_3_text">"Nadat je de Systeemupdates-sectie hebt geopend, is het tijd om de update te gaan installeren.
-
-&#8226; In de Systeemupdates-sectie, tik je op het symbool met het tandwiel, wat rechtsboven staat.
-
-&#8226; Tik nu op \"Lokale upgrade\". Er verschijnt een bestandskeuze-scherm.
-
-&#8226; In dit scherm tik je op het updatebestand wat je zojuist met Oxygen Updater hebt gedownload. De naam hiervan begint meestal met \"%1$sOxygen\".
-
-&#8226; Tik op \"Nu bijwerken\"
-
-&#8226; De installatie verloopt hierna automatisch."</string>
-
-	<string name="install_guide_page_4_title">Wacht totdat de installatie is voltooid</string>
-	<string name="install_guide_page_4_text">"&#8226; Je apparaat gaat de update nu installeren en laat een voortgangsbalk zien. Wacht tot het installeren klaar is. Dit kan enkele minuten tot een kwartier duren.
-
-&#8226; Na de installatie start het apparaat opnieuw op om de update af te ronden."</string>
-
-	<string name="install_guide_page_5_title">Klaar. Geniet van je nieuwe OxygenOS-versie!</string>
-	<string name="install_guide_page_5_text">&#8226; Nadat het optimaliseren van je apps is voltooid, is de update succesvol geinstalleerd. Je kunt dit controleren door de nieuwe systeemversie te bekijken:\n\n&#8226; Ga naar Instellingen, tik op \"Over de telefoon\" en bekijk de OxygenOS-versie.\n\n&#8226; Als je deze app geweldig vindt, geef dan 5 sterren in de Google Play Store!</string>
-
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Je apparaat wordt ondersteund.</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Je apparaat wordt niet ondersteund, omdat het een provider-exclusief apparaat is.</string>

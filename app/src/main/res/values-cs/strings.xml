@@ -163,44 +163,7 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="install">Instalovat</string>
 
 	<!-- Řetězce průvodce instalací -->
-	<string name="install_guide_no_root">Instalujte aktualizaci podle pokynů uvedených v průvodci instalací.</string>
 	<string name="install_guide">Průvodce instalací</string>
-	<string name="install_guide_subtitle">Průvodce instalací - %1$d z %2$d</string>
-	<string name="install_guide_tip">&#8226; Doporučujeme zapsat si všechny kroky, protože během instalace aktualizace budete muset zařízení vypnout.</string>
-
-	<string name="install_guide_page_1_title">Stáhněte si aktualizaci</string>
-	<string name="install_guide_page_1_text">&#8226; Stisknutím tlačítka Stáhnout zahájíte stahování aktualizace.\n\n&#8226; Průběh stahování se zobrazí v aplikaci a jako oznámení na obrazovce oznámení.\n\n&#8226; Po dokončení stahování se zobrazí oznámení s textem \"Stahování dokončeno\".\nPokud došlo k chybě při stahování, otevřete aplikaci a zkuste stáhnout aktualizaci znovu. Pokud se to nepodaří, zkontrolujte, zda máte funkční připojení. V opačném případě kontaktujte vývojáře aplikace. Můžete tak učinit v sekci \"Moje aplikace\" v obchodě Google Play.</string>
-
-	<string name="install_guide_page_2_title">Příprava na instalaci</string>
-	<string name="install_guide_page_2_text">"Poznámka: Instalace aktualizace probíhá ze speciální stránky standardní sekce Aktualizace systému vašeho zařízení. Pokud se při otevření této sekce z nějakého důvodu objeví aktualizace systému, můžete se také rozhodnout nejprve nainstalovat tuto aktualizaci. Poté znovu otevřete nástroj Oxygen Updater a zkontrolujte, zda je zařízené zcela aktualizované.
-
-Pokyny:
-&#8226; Stisknutím tlačítka Domů zavřete aplikaci Oxygen Updater.
-
-&#8226; Otevřete aplikaci Nastavení. Měla by se nacházet v přehledu aplikací.
-
-&#8226; Přejděte dolů, dokud neuvidíte položku Aktualizace systému. Klepněte na ni."</string>
-
-	<string name="install_guide_page_3_title">Instalace aktualizace</string>
-	<string name="install_guide_page_3_text">"Nyní, když jste v aplikaci Aktualizace systému, je čas nainstalovat aktualizaci.
-
-&#8226; V části Aktualizace systému klepněte na ikonu ozubeného kola v pravém horním rohu.
-
-&#8226; Nyní vyberte možnost \"Místní aktualizace\". Měla by se zobrazit obrazovka pro výběr souboru.
-
-&#8226; Na této obrazovce klepněte na aktualizační soubor, který jste stáhli pomocí nástroje Oxygen Updater. Jeho název by měl začínat \"%1$sOxygen\".
-
-&#8226; Klepněte na \"Aktualizovat nyní\". Instalace by se měla spustit automaticky."</string>
-
-	<string name="install_guide_page_4_title">Počkejte, dokud se instalace nedokončí</string>
-	<string name="install_guide_page_4_text">"&#8226; Telefon nyní nainstaluje aktualizaci a zobrazí ukazatel průběhu. Vyčkejte, dokud se instalace nedokončí. Instalace může trvat od několika málo minut až po cca 15 minut.
-
-&#8226; Poté se telefon restartuje a dokončí aktualizaci."</string>
-
-	<string name="install_guide_page_5_title">Dokončeno. Užijte si novou verzi systému OxygenOS!</string>
-	<string name="install_guide_page_5_text">&#8226; Poté, co vaše zařízení dokončí optimalizaci aplikací, byla aktualizace úspěšně nainstalována.\nPro ověření můžete zkontrolovat aktuální verzi systému následujícím způsobem:\n\n&#8226; Přejděte do Nastavení, klepněte na \"O telefonu\" a zkontrolujte verzi OxygenOS.\n\n&#8226; Pokud se vám tato aplikace líbí, dejte jí na Google Play 5 hvězdiček!</string>
-
-	<string name="install_guide_close_button">Zavřít instalační příručku</string>
 
 	<!-- Řetězce informací o zařízení -->
 	<string name="device_information_supported_oxygen_os">Vaše zařízení je podporováno</string>

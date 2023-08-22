@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 	<!-- TODO: translate this string below -->
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
@@ -170,47 +170,7 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="install">Yükle</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Güncellemeyi rehberde gösterildiği sekilde uygulayınız.</string>
 	<string name="install_guide">Yükleme rehberi</string>
-	<string name="install_guide_subtitle">Yükleme rehberi - %1$d of %2$d</string>
-	<string name="install_guide_tip">&#8226; Bütün adımları not etmeniz önerilir, güncelleme sırasında cihazınız kapalı olacaktır.</string>
-
-	<string name="install_guide_page_1_title">Güncellemeyi indirmek</string>
-	<string name="install_guide_page_1_text">&#8226; Güncellemeyi indirmeyi başlatmak için butona basınız.\n\n&#8226; İndirme işlemi uygulama içinde gözükecektir, ayrıca bildirim olarakta gösterilecektir.\n\n&#8226; İndirme bittiğinde, Bu bildirimi göreceksiniz \"İndirme tamamlandı\".\nEğer indirmede sorun oluşutuysa, Uygulamayı tekrar açın ve indirmeyi birdaha başlatın. Eğer çalışmazsa, internet bağlantınız olduğundan emin olun. Aksi takdirde, uygulama geliştiricileriyle iletişime geçiniz. Google Play\'de \"Uygulamalarım\" bölümünden bakabilirsiniz.</string>
-
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
-
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
-
-&#8226; Open the Settings app. It should be located in your app drawer.
-
-&#8226; Scroll down until you see System updates. Tap on it."</string>
-
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
-
-&#8226; Within the System Updates section, tap the gear icon in the top right
-
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
-
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
-
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
-
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
-
-&#8226; Afterwards, your phone will restart to complete the update."</string>
-
-	<string name="install_guide_page_5_title">Bitti. OxygenOS un yeni sürümünün tadını çıkarın!</string>
-	<string name="install_guide_page_5_text">&#8226; Optimize edilme bittiğinde, güncelleme de başarılı şekilde olmuş demektir.\n Sistem ayarlarınızdan bunu görüntüleyebilirsiniz.\n\n&#8226; Uygulamayı beğendiyseniz, lütfen Google Play\'de 5 yıldız vermeyi unutmayınız!</string>
-
-	<string name="install_guide_close_button">Yükleme Rehberini Kapat</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->

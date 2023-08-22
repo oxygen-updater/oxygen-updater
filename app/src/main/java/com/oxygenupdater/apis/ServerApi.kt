@@ -1,9 +1,10 @@
 package com.oxygenupdater.apis
 
 import androidx.collection.ArrayMap
+import androidx.compose.ui.text.intl.Locale
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
-import com.oxygenupdater.models.InstallGuidePage
+import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerPostResult
@@ -27,7 +28,14 @@ import retrofit2.http.Query
 interface ServerApi {
 
     @GET("flattenedFaq")
-    suspend fun fetchFaq(): Response<List<InAppFaq>>
+    suspend fun fetchFaq(
+        @Query("language") language: String = Locale.current.toLanguageTag(),
+    ): Response<List<InAppFaq>>
+
+    @GET("installGuide")
+    suspend fun fetchInstallGuide(
+        @Query("language") language: String = Locale.current.toLanguageTag(),
+    ): Response<List<InstallGuide>>
 
     @GET("devices/{filter}")
     suspend fun fetchDevices(@Path("filter") filter: String): Response<List<Device>>
@@ -57,32 +65,35 @@ interface ServerApi {
     suspend fun fetchServerMessages(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
+        @Query("language") language: String = Locale.current.toLanguageTag(),
     ): Response<List<ServerMessage>>
+
+    @GET("updateMethods/{deviceId}")
+    suspend fun fetchUpdateMethodsForDevice(
+        @Path("deviceId") deviceId: Long,
+        @Query("language") language: String = Locale.current.toLanguageTag(),
+    ): Response<List<UpdateMethod>>
+
+    @GET("allUpdateMethods")
+    suspend fun fetchAllUpdateMethods(
+        @Query("language") language: String = Locale.current.toLanguageTag(),
+    ): Response<List<UpdateMethod>>
 
     @GET("news/{deviceId}/{updateMethodId}")
     suspend fun fetchNews(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
+        @Query("language") language: String = if (Locale.current.language == "nl") "nl" else "en",
     ): Response<List<NewsItem>>
 
     @GET("news-item/{newsItemId}")
-    suspend fun fetchNewsItem(@Path("newsItemId") newsItemId: Long): Response<NewsItem>
+    suspend fun fetchNewsItem(
+        @Path("newsItemId") newsItemId: Long,
+        @Query("language") language: String = if (Locale.current.language == "nl") "nl" else "en",
+    ): Response<NewsItem>
 
     @POST("news-read")
     suspend fun markNewsItemRead(@Body newsItemId: Map<String, Long>): Response<ServerPostResult>
-
-    @GET("updateMethods/{deviceId}")
-    suspend fun fetchUpdateMethodsForDevice(@Path("deviceId") deviceId: Long): Response<List<UpdateMethod>>
-
-    @GET("allUpdateMethods")
-    suspend fun fetchAllUpdateMethods(): Response<List<UpdateMethod>>
-
-    @GET("installGuide/{deviceId}/{updateMethodId}/{pageNumber}")
-    suspend fun fetchInstallGuidePage(
-        @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long,
-        @Path("pageNumber") pageNumber: Int
-    ): Response<InstallGuidePage>
 
     /**
      * @param body includes the following fields:

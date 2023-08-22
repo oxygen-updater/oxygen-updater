@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 
 	<string name="device_chooser_error_title">Errore nel recuperare la lista dei dispositivi supportati.</string>
 
@@ -172,52 +172,7 @@ Trascina verso sinistra per continuare."</string>
 	<string name="install">"Installa"</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">"Installa secondo le istruzioni mostrate nella guida."</string>
 	<string name="install_guide">"Guida d'installazione"</string>
-	<string name="install_guide_subtitle">"Guida - %1$d of %2$d"</string>
-	<string name="install_guide_tip">"&#8226; È consigliato scriversi tutti i passaggi, giacché è necessario spegnere il dispositivo durante l'installazione."</string>
-	<string name="install_guide_page_1_title">"Scarica l'aggiornamento."</string>
-	<string name="install_guide_page_1_text">"&#8226; Premi il bottone Download per iniziare a scaricare.
-
-&#8226; Il progresso apparirà nell'app e come notifica.
-
-&#8226; Al termine del download, riceverai una notifica con il testo \"Download completato\".
-Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati di avere una connessione internet funzionante."</string>
-
-	<string name="install_guide_page_2_title">"Preparati per l'installazione"</string>
-	<string name="install_guide_page_2_text">"Nota: l\'installazione dell\'aggiornamento avviene da una pagina speciale della sezione Aggiornamenti di sistema standard del dispositivo. Se, per qualche motivo, viene visualizzato un aggiornamento di sistema all\'apertura di questa sezione, puoi anche scegliere di installarlo prima. Successivamente, apri nuovamente Oxygen Updater per vedere se sei completamente aggiornato.
-
-Istruzioni:
-&#8226; Chiudi Oxygen Updater premendo il pulsante home.
-
-&#8226; Apri l\'app Impostazioni. Dovrebbe trovarsi nell\'app drawer.
-
-&#8226; Scorri verso il basso fino a visualizzare Aggiornamenti di sistema. Selezionalo."</string>
-
-	<string name="install_guide_page_3_title">"Installa l'aggiornamento"</string>
-	<string name="install_guide_page_3_text">"Ora che sei nell'app Aggiornamenti di sistema, è il momento di installare l'aggiornamento.
-
-&#8226; Nella sezione Aggiornamenti di sistema, tocca l'icona a forma di ingranaggio in alto a destra
-
-&#8226; Ora seleziona \"Aggiornamento locale\". Dovrebbe apparire una schermata di selezione dei file.
-
-&#8226; In questa schermata, seleziona il file di aggiornamento che hai scaricato utilizzando Oxygen Updater. Il suo nome dovrebbe iniziare con \"%1$sOxygen\".
-
-&#8226; Premi \"Aggiorna ora\". L'installazione dovrebbe iniziare automaticamente."</string>
-
-	<string name="install_guide_page_4_title">"Attendi il completamento dell'installazione"</string>
-	<string name="install_guide_page_4_text">"&#8226; Il telefono installerà ora l'aggiornamento e visualizzerà una barra di avanzamento. Attendi fino al termine dell'installazione. L'installazione può richiedere da pochi minuti a 15 minuti.
-
-&#8226; Successivamente, il telefono verrà riavviato per completare l'aggiornamento."</string>
-
-	<string name="install_guide_page_5_title">"Fine. Buon divertimento!"</string>
-	<string name="install_guide_page_5_text"><![CDATA["&#8226; Dopo l'ottimizzazione delle app, l'aggiornamento è stato installato.
-Per verificare, controlla la versione attuale del tuo sistema:
-
-&#8226; Impostazioni —> Info Telefono \"Versione OxygenOS\".
-
-&#8226; Se ti piace l'app, lascia 5 stelle!"]]></string>
-	<string name="install_guide_close_button">"Chiudi guida"</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Il tuo dispositivo è supportato.</string>

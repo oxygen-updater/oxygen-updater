@@ -409,20 +409,16 @@ private data class FontSizeRange(
 @Composable
 fun PreviewNewsListScreen() = PreviewAppTheme {
     val now = LocalDateTime.now()
-    val longEn = "Unnecessarily long text, to get an accurate understanding of how its rendered"
-    val longNl = "Onnodig lange tekst, om goed te begrijpen hoe het wordt weergegeven"
+    val long = "Unnecessarily long text, to get an accurate understanding of how its rendered"
     NewsListScreen(
         RefreshAwareState(
             false, listOf(
                 NewsItem(
                     1,
-                    dutchTitle = stringResource(R.string.app_name),
-                    englishTitle = stringResource(R.string.app_name),
-                    dutchSubtitle = longNl,
-                    englishSubtitle = longEn,
+                    title = stringResource(R.string.app_name),
+                    subtitle = long,
                     imageUrl = "https://github.com/oxygen-updater.png",
-                    dutchText = longNl,
-                    englishText = longEn,
+                    text = long,
                     datePublished = now.minusDays(1).toString(),
                     dateLastEdited = now.minusHours(4).toString(),
                     authorName = "Author",
@@ -430,13 +426,10 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
                 ),
                 NewsItem(
                     2,
-                    dutchTitle = longNl,
-                    englishTitle = longEn,
-                    dutchSubtitle = longNl,
-                    englishSubtitle = longEn,
+                    title = long,
+                    subtitle = long,
                     imageUrl = "https://github.com/oxygen-updater.png",
-                    dutchText = longNl,
-                    englishText = longEn,
+                    text = long,
                     datePublished = now.minusDays(2).toString(),
                     dateLastEdited = now.minusHours(5).toString(),
                     authorName = "Author",

@@ -21,7 +21,6 @@ fun AlertDialog(
     @StringRes titleResId: Int,
     text: String,
     content: (@Composable ColumnScope.() -> Unit)? = null,
-    @StringRes dismissResId: Int = R.string.download_error_close,
     confirmIconAndResId: Pair<ImageVector, Int>? = null,
     action: ((Boolean) -> Unit)? = null,
 ) {
@@ -41,7 +40,7 @@ fun AlertDialog(
             show.value = false
             action?.invoke(false)
         }, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
-            Text(stringResource(dismissResId))
+            Text(stringResource(R.string.download_error_close))
         }
     }, title = {
         Text(stringResource(titleResId))

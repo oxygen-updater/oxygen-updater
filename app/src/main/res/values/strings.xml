@@ -180,44 +180,7 @@ This can be useful if you want to:"</string>
 	<string name="install">Install</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Install the update according to the instructions shown in the install guide.</string>
 	<string name="install_guide">Install guide</string>
-	<string name="install_guide_subtitle">Install guide - %1$d of %2$d</string>
-	<string name="install_guide_tip">&#8226; It\'s recommended to write all steps down, as you\'ll need to power off your device during the installation of the update.</string>
-
-	<string name="install_guide_page_1_title">Download the update</string>
-	<string name="install_guide_page_1_text">&#8226; Press the Download button to start downloading the update.\n\n&#8226; The download progress will appear in the app, and as a notification in your notifications screen.\n\n&#8226; When the download has finished, you\'ll see a notification with the text \"Download complete\".\nIf a download error occurred, open the app and try to downloading the update again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
-
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
-
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
-
-&#8226; Open the Settings app. It should be located in your app drawer.
-
-&#8226; Scroll down until you see System updates. Tap on it."</string>
-
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
-
-&#8226; Within the System Updates section, tap the gear icon in the top right
-
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
-
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
-
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
-
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
-
-&#8226; Afterwards, your phone will restart to complete the update."</string>
-
-	<string name="install_guide_page_5_title">Done. Enjoy the new OxygenOS version!</string>
-	<string name="install_guide_page_5_text">&#8226; After your device has finished optimizing its apps, the update has been successfully installed.\nTo verify this, you can check the current version of your system as following:\n\n&#8226; Go to Settings, tap on \"About Phone\", and check the OxygenOS Version.\n\n&#8226; If you like this app, give it 5 stars at Google Play!</string>
-
-	<string name="install_guide_close_button">Close Installation Guide</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
@@ -355,11 +318,6 @@ Instructions:
 	<string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
 
 	<!-- Other strings-->
-	<string name="install_guide_transition_name" translatable="false">INSTALL_GUIDE_TRANSITION</string>
-	<string name="help_transition_name" translatable="false">HELP_TRANSITION</string>
-	<string name="faq_transition_name" translatable="false">FAQ_TRANSITION</string>
-	<string name="news_item_transition_name" translatable="false">NEWS_ITEM_TRANSITION_%d</string>
-
 	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>

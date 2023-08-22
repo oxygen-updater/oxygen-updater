@@ -9,15 +9,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Stable
-data class InAppFaq(
+data class InstallGuide(
     val id: Long,
-
-    val title: String?,
-    val body: String?,
-    val important: Boolean = false,
-
-    /** Either `category` or `item` */
-    val type: String,
+    val title: String,
+    val subtitle: String,
+    val body: String,
 ) : Parcelable {
 
     /** To preserve expand/collapse state in LazyColumn */

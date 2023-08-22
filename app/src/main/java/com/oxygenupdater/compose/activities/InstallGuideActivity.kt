@@ -7,16 +7,16 @@ import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.PullRefresh
 import com.oxygenupdater.compose.ui.common.rememberCallback
 import com.oxygenupdater.compose.ui.common.rememberTypedCallback
-import com.oxygenupdater.compose.ui.faq.FaqScreen
-import com.oxygenupdater.compose.ui.faq.FaqViewModel
+import com.oxygenupdater.compose.ui.install.InstallGuideScreen
+import com.oxygenupdater.compose.ui.install.InstallGuideViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FaqActivity : ComposeSupportActionBarActivity(
-    MainActivity.PAGE_ABOUT,
-    R.string.faq,
+class InstallGuideActivity : ComposeSupportActionBarActivity(
+    MainActivity.PAGE_UPDATE,
+    R.string.install_guide,
 ) {
 
-    private val viewModel by viewModel<FaqViewModel>()
+    private val viewModel by viewModel<InstallGuideViewModel>()
 
     @Composable
     override fun Content() {
@@ -27,7 +27,7 @@ class FaqActivity : ComposeSupportActionBarActivity(
         }, onRefresh = rememberCallback {
             viewModel.refresh()
         }) {
-            FaqScreen(state)
+            InstallGuideScreen(state)
         }
     }
 }

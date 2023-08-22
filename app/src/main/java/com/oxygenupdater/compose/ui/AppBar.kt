@@ -46,6 +46,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
@@ -97,7 +98,7 @@ fun TopAppBar(
         }
     }, navigationIcon = {
         // Nav icon
-        IconButton(navIconClicked, Modifier.padding(end = 4.dp)) {
+        IconButton(navIconClicked) {
             Icon(
                 if (root) CustomIcons.LogoNotification else Icons.Rounded.ArrowBack,
                 if (root) stringResource(R.string.about) else null,
@@ -107,14 +108,17 @@ fun TopAppBar(
         if (actions != null) actions()
     }, colors = colors, scrollBehavior = scrollBehavior)
 
-    // Reduce recompositions by mutating only on true/false
+    // Perf: reduce recompositions by mutating only on true/false
     val showDivider by remember {
         derivedStateOf(structuralEqualityPolicy()) {
             scrollBehavior.state.collapsedFraction != 1f
         }
     }
 
-    if (showDivider) ItemDivider()
+    // Perf: `if (showDivider) ItemDivider()` causes recomposition; we avoid that by "hiding" via graphicsLayer alpha
+    ItemDivider(Modifier.graphicsLayer {
+        alpha = (if (showDivider) 1f else 0f)
+    })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -132,9 +136,7 @@ fun CollapsingAppBar(
 
     val statusBarHeightPx: Int
     val heightOffset: Dp
-    val heightOffsetPx by remember {
-        derivedStateOf(structuralEqualityPolicy()) { scrollBehavior.state.heightOffset }
-    }
+    val heightOffsetPx = scrollBehavior.state.heightOffset
     val minHeightPx: Float
     val maxHeightPx: Float
     val bottomPaddingPx: Int

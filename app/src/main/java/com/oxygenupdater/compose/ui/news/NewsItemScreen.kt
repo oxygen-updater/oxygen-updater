@@ -327,13 +327,10 @@ fun PreviewNewsItemScreen() = PreviewAppTheme {
         RefreshAwareState(
             false, NewsItem(
                 1,
-                dutchTitle = "Dutch title",
-                englishTitle = "An unnecessarily long news title, to get an accurate understanding of how long titles are rendered",
-                dutchSubtitle = "Dutch subtitle",
-                englishSubtitle = "An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered",
+                title = "An unnecessarily long news title, to get an accurate understanding of how long titles are rendered",
+                subtitle = "An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered",
                 imageUrl = "https://github.com/oxygen-updater.png",
-                dutchText = "Dutch text",
-                englishText = "English text",
+                text = "Text",
                 datePublished = date,
                 dateLastEdited = date,
                 authorName = "Author",

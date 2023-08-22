@@ -95,7 +95,7 @@
 			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
-			android:name=".activities.InstallActivity"
+			android:name=".compose.activities.InstallGuideActivity"
 			android:label="@string/install_guide"
 			android:parentActivityName=".compose.activities.MainActivity"
 			android:screenOrientation="portrait"

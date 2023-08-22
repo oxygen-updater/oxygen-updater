@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 	<string name="device_chooser_error_title">無法搜尋支援的裝置列表</string>
 
 	<!-- Update information strings-->
@@ -160,43 +160,7 @@
 	<string name="install">安裝</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">請依照安裝教學中顯示的說明安裝更新。</string>
 	<string name="install_guide">安裝教學</string>
-	<string name="install_guide_subtitle">安裝教學 - 第 %1$d 頁，共 %2$d 頁</string>
-	<string name="install_guide_tip">&#8226; 建議您把全部步驟都用紙筆寫下來，因為在接下來的安裝過程中，您的裝置會關機。</string>
-
-	<string name="install_guide_page_1_title">下載更新包</string>
-	<string name="install_guide_page_1_text">&#8226; 點選「下載」按鈕以開始下載。\n\n&#8226; 下載進度會在 App 中顯示，同時，它也會在通知欄裡即時顯示。\n\n&#8226; 當下載結束時，您將會看到「下載完成」的通知。\n如果下載中出現錯誤，請嘗試前往 App 中重試一遍。如果仍出現錯誤，請您檢查您的網際網路連線。或者您也可以嘗試透過 Google Play 中該應用程式留下的聯絡方式聯絡該應用程式的開發者。</string>
-
-	<string name="install_guide_page_2_title">準備安裝</string>
-	<string name="install_guide_page_2_text">注意：更新的安裝過程是透過裝置普通系統更新的特殊畫面進行的。 萬一在打開此部分時出現系統內建的系統更新頁面，您也可以選擇先安裝該更新。 之後再打開 Oxygen Updater 來檢視您是否完全是最新的。
-
-操作指引：
-&#8226; 長按 Home 鍵關閉 Oxygen 更新器
-
-&#8226; 打開設定應用程式
-
-&#8226; 往下滑，並點選「系統更新」</string>
-	<string name="install_guide_page_3_title">安裝更新</string>
-	<string name="install_guide_page_3_text">"現在，您已位於系統更新應用程式，是時候安裝更新了
-
-&#8226; 點選右上角的三點圖示
-
-&#8226; 選擇「本地更新」，随後應該會要求您選擇一個檔案
-
-&#8226; 在這個界面選擇您在 Oxygen 更新器中下載的更新包。一般開頭都是 \"%1$sOxygen\"。
-
-&#8226; 點選「立即更新」，隨後更新將自動進行</string>
-
-	<string name="install_guide_page_4_title">請等待更新完成</string>
-	<string name="install_guide_page_4_text">"&#8226; 手機現在將安裝更新並顯示進度條。 請等待安裝完成。 安裝過程可能需要幾分鐘到 15 分鐘。
-
-&#8226; 重新開機後，您的裝置即可完成更新了</string>
-
-	<string name="install_guide_page_5_title">大功告成！在全新的 OxygenOS 中盡情探索吧！</string>
-	<string name="install_guide_page_5_text">&#8226; 等您的裝置完成最佳化應用程式，那麼這次更新就算是大功告成了！\n為了驗證是否完成，您可以參考以下步驟來檢視目前系統版本：\n\n&#8226; 打開設定，點選「關於手機」，這裡您就可以看到您的 OxygenOS 版本。\n\n&#8226; 如果您喜歡這個 App，别忘了去 Google Play 留下 5 星評分</string>
-
-	<string name="install_guide_close_button">關閉安裝教學</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">您的裝置受支援</string>

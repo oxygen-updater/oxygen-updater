@@ -11,8 +11,4 @@ class HelpActivity : ComposeSupportActionBarActivity(
 
     @Composable
     override fun Content() = HelpScreen()
-
-    companion object {
-        const val TRANSITION_NAME = "HELP_TRANSITION"
-    }
 }

@@ -1,6 +1,5 @@
 package com.oxygenupdater.compose.ui.dialogs
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -29,7 +28,7 @@ import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerMessage.ServerMessagePriority
 
 @Composable
-fun ColumnScope.ServerMessagesSheet(list: List<ServerMessage>) {
+fun ServerMessagesSheet(list: List<ServerMessage>) {
     @Suppress("NAME_SHADOWING")
     val list = if (list.isNotEmpty()) rememberSaveable { list } else return
 
@@ -64,24 +63,21 @@ fun PreviewServerMessagesSheet() = PreviewModalBottomSheet {
         list = listOf(
             ServerMessage(
                 1L,
-                englishMessage = message,
-                dutchMessage = message,
+                text = message,
                 deviceId = null,
                 updateMethodId = null,
                 priority = ServerMessagePriority.LOW,
             ),
             ServerMessage(
                 2L,
-                englishMessage = message,
-                dutchMessage = message,
+                text = message,
                 deviceId = null,
                 updateMethodId = null,
                 priority = ServerMessagePriority.MEDIUM,
             ),
             ServerMessage(
                 3L,
-                englishMessage = message,
-                dutchMessage = message,
+                text = message,
                 deviceId = null,
                 updateMethodId = null,
                 priority = ServerMessagePriority.HIGH,

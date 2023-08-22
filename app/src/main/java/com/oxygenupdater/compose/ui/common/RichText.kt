@@ -50,6 +50,7 @@ fun RichText(
     text: String?,
     modifier: Modifier = Modifier, // `weight` won't work; put that in a Spacer instead
     textAlign: TextAlign? = null,
+    textIndent: TextIndent? = null,
     contentColor: Color = LocalContentColor.current,
     type: RichTextType = RichTextType.Html,
     custom: ((String, Color, Color) -> AnnotatedString)? = null,
@@ -66,6 +67,7 @@ fun RichText(
             RichTextType.Html -> htmlToAnnotatedString(
                 text, typography,
                 contentColor = contentColor, urlColor = urlColor,
+                textIndent,
             )
 
             RichTextType.Markdown -> changelogToAnnotatedString(
@@ -102,8 +104,11 @@ private fun htmlToAnnotatedString(
     html: String,
     typography: Typography,
     contentColor: Color, urlColor: Color,
+    textIndent: TextIndent?,
     spanStyle: SpanStyle = typography.bodyMedium.toSpanStyle().copy(color = contentColor),
-    paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle(),
+    paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle().run {
+        if (textIndent != null) copy(textIndent = textIndent) else this
+    },
 ) = buildAnnotatedString {
     val fontSize = spanStyle.fontSize
     val spanned = HtmlCompat.fromHtml(

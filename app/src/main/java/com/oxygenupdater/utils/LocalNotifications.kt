@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.R
-import com.oxygenupdater.activities.InstallActivity
+import com.oxygenupdater.compose.activities.InstallGuideActivity
 import com.oxygenupdater.compose.activities.MainActivity
 import com.oxygenupdater.compose.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
 import com.oxygenupdater.compose.ui.update.KEY_DOWNLOAD_ERROR_RESUMABLE
@@ -82,46 +82,38 @@ object LocalNotifications {
     /**
      * Shows a notification that the downloaded update file is downloaded successfully.
      */
-    fun showDownloadCompleteNotification(context: Context) {
-        try {
-            val intent = Intent(context, InstallActivity::class.java)
-                // Hide the first page of the install guide because that page
-                // contains download instructions, which will be redundant because
-                // the download has already completed
-                .putExtra(InstallActivity.INTENT_SHOW_DOWNLOAD_PAGE, false)
+    fun showDownloadCompleteNotification(context: Context) = try {
+        val contentIntent = PendingIntent.getActivity(
+            context,
+            0,
+            Intent(context, InstallGuideActivity::class.java),
+            FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                FLAG_MUTABLE
+            } else 0
+        )
 
-            val contentIntent = PendingIntent.getActivity(
-                context,
-                0,
-                intent,
-                FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    FLAG_MUTABLE
-                } else 0
-            )
+        val title = context.getString(R.string.download_complete)
+        val text = context.getString(R.string.download_complete_notification)
 
-            val title = context.getString(R.string.download_complete)
-            val text = context.getString(R.string.download_complete_notification)
+        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.download)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setContentIntent(contentIntent)
+            .setOngoing(false)
+            .setAutoCancel(true)
+            .setCategory(CATEGORY_PROGRESS)
+            .setPriority(PRIORITY_LOW)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setVisibility(VISIBILITY_PUBLIC)
+            .build()
 
-            val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.download)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setContentIntent(contentIntent)
-                .setOngoing(false)
-                .setAutoCancel(true)
-                .setCategory(CATEGORY_PROGRESS)
-                .setPriority(PRIORITY_LOW)
-                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setVisibility(VISIBILITY_PUBLIC)
-                .build()
-
-            notificationManager.apply {
-                cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
-                notify(NotificationIds.LOCAL_DOWNLOAD, notification)
-            }
-        } catch (e: Exception) {
-            logError(TAG, "Can't display 'download complete' notification", e)
+        notificationManager.run {
+            cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
+            notify(NotificationIds.LOCAL_DOWNLOAD, notification)
         }
+    } catch (e: Exception) {
+        logError(TAG, "Can't display 'download complete' notification", e)
     }
 
     fun showDownloadFailedNotification(
@@ -129,44 +121,42 @@ object LocalNotifications {
         resumable: Boolean,
         @StringRes message: Int,
         @StringRes notificationMessage: Int,
-    ) {
-        try {
-            // Since MainActivity's `launchMode` is `singleTask`, we don't
-            // need to add any flags to avoid creating multiple instances
-            val intent = Intent(context, MainActivity::class.java)
-                // Show a dialog detailing the download failure
-                .putExtra(KEY_DOWNLOAD_ERROR_MESSAGE, context.getString(message))
-                .putExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, resumable)
+    ) = try {
+        // Since MainActivity's `launchMode` is `singleTask`, we don't
+        // need to add any flags to avoid creating multiple instances
+        val intent = Intent(context, MainActivity::class.java)
+            // Show a dialog detailing the download failure
+            .putExtra(KEY_DOWNLOAD_ERROR_MESSAGE, context.getString(message))
+            .putExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, resumable)
 
-            val contentIntent = PendingIntent.getActivity(
-                context,
-                0,
-                intent,
-                FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    FLAG_MUTABLE
-                } else 0
-            )
+        val contentIntent = PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                FLAG_MUTABLE
+            } else 0
+        )
 
-            val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.download)
-                .setContentTitle(context.getString(R.string.download_failed))
-                .setBigTextStyle(context.getString(notificationMessage))
-                .setContentIntent(contentIntent)
-                .setOngoing(false)
-                .setAutoCancel(true)
-                .setCategory(CATEGORY_ERROR)
-                .setPriority(PRIORITY_LOW)
-                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setVisibility(VISIBILITY_PUBLIC)
-                .build()
+        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.download)
+            .setContentTitle(context.getString(R.string.download_failed))
+            .setBigTextStyle(context.getString(notificationMessage))
+            .setContentIntent(contentIntent)
+            .setOngoing(false)
+            .setAutoCancel(true)
+            .setCategory(CATEGORY_ERROR)
+            .setPriority(PRIORITY_LOW)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setVisibility(VISIBILITY_PUBLIC)
+            .build()
 
-            notificationManager.apply {
-                cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
-                notify(NotificationIds.LOCAL_DOWNLOAD, notification)
-            }
-        } catch (e: Exception) {
-            logError(TAG, "Can't display download failed notification: ", e)
+        notificationManager.run {
+            cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
+            notify(NotificationIds.LOCAL_DOWNLOAD, notification)
         }
+    } catch (e: Exception) {
+        logError(TAG, "Can't display download failed notification: ", e)
     }
 
     fun showVerificationFailedNotification(context: Context) {
@@ -184,7 +174,7 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        notificationManager.apply {
+        notificationManager.run {
             cancel(NotificationIds.LOCAL_DOWNLOAD)
             notify(NotificationIds.LOCAL_MD5_VERIFICATION, notification)
         }
@@ -193,26 +183,24 @@ object LocalNotifications {
     /**
      * Shows a notification that the downloaded update file is being verified on MD5 sums.
      */
-    fun showVerifyingNotification(context: Context) {
-        try {
-            val notification = NotificationCompat.Builder(context, VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.logo_notification)
-                .setContentTitle(context.getString(R.string.download_verifying))
-                .setProgress(100, 50, true)
-                .setOngoing(true)
-                .setCategory(CATEGORY_PROGRESS)
-                .setPriority(PRIORITY_LOW)
-                .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                .setVisibility(VISIBILITY_PUBLIC)
-                .build()
+    fun showVerifyingNotification(context: Context) = try {
+        val notification = NotificationCompat.Builder(context, VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID)
+            .setSmallIcon(R.drawable.logo_notification)
+            .setContentTitle(context.getString(R.string.download_verifying))
+            .setProgress(100, 50, true)
+            .setOngoing(true)
+            .setCategory(CATEGORY_PROGRESS)
+            .setPriority(PRIORITY_LOW)
+            .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setVisibility(VISIBILITY_PUBLIC)
+            .build()
 
-            notificationManager.apply {
-                cancel(NotificationIds.LOCAL_DOWNLOAD)
-                notify(NotificationIds.LOCAL_MD5_VERIFICATION, notification)
-            }
-        } catch (e: Exception) {
-            logError(TAG, "Can't display 'verifying' notification", e)
+        notificationManager.run {
+            cancel(NotificationIds.LOCAL_DOWNLOAD)
+            notify(NotificationIds.LOCAL_MD5_VERIFICATION, notification)
         }
+    } catch (e: Exception) {
+        logError(TAG, "Can't display 'verifying' notification", e)
     }
 
     /**

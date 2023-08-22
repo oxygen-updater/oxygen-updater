@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 	<string name="device_chooser_error_title">Nem sikerült beolvasni a támogatott eszközök listáját</string>
 
 	<!-- Update information strings-->
@@ -165,44 +165,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="install">Telepítés</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Telepítsd a frissítést a telepítési útmutatóban bemutatott utasítások szerint.</string>
 	<string name="install_guide">Telepítési útmutató</string>
-	<string name="install_guide_subtitle">Telepítési útmutató - %2$d -ből %1$d</string>
-	<string name="install_guide_tip">&#8226; Javasoljuk, hogy írj le minden lépést, mivel a frissítés telepítésekor ki kell majd kapcsolnod az eszközt.</string>
-
-	<string name="install_guide_page_1_title">Töltsd le a frissítést</string>
-	<string name="install_guide_page_1_text">&#8226; A frissítés letöltésének megkezdéséhez nyomd meg a Letöltés gombot.\n\n&#8226; A letöltési folyamat az alkalmazásban jelenik meg, és értesítésként az értesítési sávban.\n\n&#8226; Amikor a letöltés befejeződött, egy értesítést fogsz látni, amelynek szövege: \"Letöltés kész\" lesz.\nHa letöltési hiba történt, nyisd meg az alkalmazást, és próbáld meg újra letölteni a frissítést. Ha ez nem működik, ellenőrizd, hogy működőképes-e a kapcsolat. Ellenkező esetben vedd fel a kapcsolatot az alkalmazás fejlesztőjével. Ezt megteheted a Google Play Áruház \"Saját alkalmazások\" szekciójában.</string>
-
-	<string name="install_guide_page_2_title">Felkészülés a telepítésre</string>
-	<string name="install_guide_page_2_text">"Megjegyzés: A frissítés telepítésére a készülék szabványos rendszerfrissítések részének speciális oldaláról kerül sor. Ha valamilyen oknál fogva megjelenik egy rendszerfrissítés a szakasz megnyitásakor, akkor dönthet az első frissítés telepítéséről is. Ezután nyissa meg újra az Oxygen Updater készüléket, hogy megnézze, teljesen naprakész-e.
-
-Instrukciók:
-&#8226; Zárd be az Oxygen Updater-t a középső gomb megnyomásával.
-
-&#8226; Nyisd meg a Beállítások alkalmazást. Ennek az alkalmazástárban kell lennie.
-
-&#8226; Görgess lefelé, amíg meg nem jelenik a Rendszerfrissítések. Érintsd meg."</string>
-
-	<string name="install_guide_page_3_title">Telepítsd a frissítést</string>
-	<string name="install_guide_page_3_text">"Most, hogy a Rendszerfrissítések alkalmazásban vagy, ideje telepíteni a frissítést.
-
-&#8226; A Rendszerfrissítések részben érintse meg a fogaskerék ikont a jobb felső sarokban
-
-&#8226; Most válaszd ki a \"Helyi frissítés\" lehetőséget. Megjelenik egy fájlkiválasztási képernyő.
-
-&#8226; Ezen a képernyőn érintsd meg az Oxygen Updater használatával letöltött frissítési fájlt. A nevének \"%1$sOxygen\" -nel kell kezdődnie.
-
-&#8226; Érintsd meg a \"Frissítés most\" elemet. A telepítésnek automatikusan el kell indulnia."</string>
-
-	<string name="install_guide_page_4_title">Várj, amíg a telepítés befejeződik</string>
-	<string name="install_guide_page_4_text">"&#8226; A telefon most telepíti a frissítést, és megjelenik egy folyamatjelző sáv. Várj, amíg a telepítés befejeződik. A telepítés néhány perctől 15 percig is eltarthat.
-
-&#8226; Ezután a telefon újraindul a frissítés befejezéséhez."</string>
-
-	<string name="install_guide_page_5_title">Kész. Élvezd az új OxygenOS verziót!</string>
-	<string name="install_guide_page_5_text">&#8226; Miután az eszköz optimalizálta alkalmazásokat, a frissítés sikeresen telepítve lett.\nEnnek ellenőrzéséhez ellenőrizze a rendszer jelenlegi verzióját a következők szerint:\n\n&#8226; Lépj a Beállítások menübe, érintsd meg az \"A telefonról\" gombot, és ellenőrizd az OxygenOS verziót.\n\n&#8226; Ha tetszik ez az alkalmazás, adj neki 5 csillagot a Google Playen!</string>
-
-	<string name="install_guide_close_button">Telepítési útmutató bezárása</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">A készüléked támogatott</string>

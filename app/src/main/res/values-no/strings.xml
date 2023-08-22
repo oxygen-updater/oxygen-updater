@@ -166,44 +166,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="install">Installer</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Installer oppdateringen i henhold til instruksjonene som vises i installasjonsveiledningen.381</string>
 	<string name="install_guide">Installasjonsgveiledning</string>
-	<string name="install_guide_subtitle">Installasjonsveiledning - %1$d av %2$d</string>
-	<string name="install_guide_tip">&#8226; Det anbefales å skrive ned alle trinnene, ettersom du må slå av enheten din under installasjonen av oppdateringen.</string>
-
-	<string name="install_guide_page_1_title">Last ned oppdateringen</string>
-	<string name="install_guide_page_1_text">&#8226; Trykk på Last ned-knappen for å begynne å laste ned oppdateringen.\n\n&#8226; Nedlastingsfremdriften vises i appen, og som et varsel på varslingsskjermen.\n\n&#8226; Når nedlastingen er fullført, ser du et varsel med teksten \"Nedlasting ferdig\".\nHvis det oppstår en nedlastingsfeil, åpner du appen og prøver å laste ned oppdateringen på nytt. Hvis dette ikke fungerer, må du sørge for at du har en fungerende forbindelse. Kontakt ellers utvikleren av appen. Du kan gjøre dette ved å gå til \"Mine apper\" -delen i Google Play Butikk.</string>
-
-	<string name="install_guide_page_2_title">Forbered for installasjon</string>
-	<string name="install_guide_page_2_text">"Merk: Installasjonen av oppdateringen skjer fra en spesiell side i standard systemoppdateringer på enheten. Hvis det av en eller annen grunn vises en systemoppdatering når du åpner denne delen, kan du også velge å installere den oppdateringen først. Etterpå åpner du Oxygen Updater igjen for å se om du er helt oppdatert.
-
-Bruksanvisning:
-&#8226; Lukk Oxygen Updater ved å trykke på startknappen.
-
-&#8226; Åpne Innstillinger-appen. Den skal være plassert i appskuffen din.
-
-&#8226; Rull ned til du ser Systemoppdateringer. Trykk på den."</string>
-
-	<string name="install_guide_page_3_title">Installer oppdateringen</string>
-	<string name="install_guide_page_3_text">"Nå som du er i Systemoppdateringer-appen, er det på tide å installere oppdateringen.
-
-&#8226; Innenfor systemoppdateringer, klikker du på tannhjulikonet øverst til høyre
-
-&#8226; Velg nå \"Lokal oppgradering\". Et filvalgskjermbilde skal vises.
-
-&#8226; På denne skjermen trykker du på oppdateringsfilen du lastet ned ved hjelp av Oxygen Updater. Navnet skal begynne med \"%1$sOxygen\".
-
-&#8226; Trykk på \"Oppgrader nå\". Installasjonen skal starte automatisk."</string>
-
-	<string name="install_guide_page_4_title">Vent til installasjonen er fullført</string>
-	<string name="install_guide_page_4_text">"&#8226; Telefonen vil nå installere oppdateringen og viser en fremdriftslinje. Vent til installasjonen er ferdig. Installasjonen kan ta alt fra noen minutter til 15 minutter.
-
-&#8226; Etterpå starter telefonen på nytt for å fullføre oppdateringen."</string>
-
-	<string name="install_guide_page_5_title">Ferdig. Kos deg med den nye OxygenOS-versjonen!</string>
-	<string name="install_guide_page_5_text">&#8226; Etter at enheten din er ferdig med å optimalisere appene, har oppdateringen blitt installert. \nFor å bekrefte dette kan du sjekke den nåværende versjonen av systemet ditt som følgende:\n\n&#8226; Gå til Innstillinger, trykk på \"Om telefonen\", og sjekk OxygenOS-versjonen.\n\n&#8226; Hvis du liker denne appen, gi den 5 stjerner på Google Play!</string>
-
-	<string name="install_guide_close_button">Lukk installasjonsveiledningen</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Enheten din støttes</string>

@@ -254,7 +254,7 @@ class MainActivity : ComposeBaseActivity() {
         var sheetType by remember { mutableStateOf(SheetType.None) }
 
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        Scaffold(topBar = {
+        Scaffold(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
             TopAppBar(scrollBehavior, {
                 navController.navigateWithDefaults(AboutRoute)
             }, subtitle) {
@@ -315,6 +315,7 @@ class MainActivity : ComposeBaseActivity() {
             SnackbarHost(snackbarHostState)
         }) { innerPadding ->
             // TODO(compose/perf): this causes children to recompose every single time on scroll (if scrollBehaviour is used)
+            //  Consider implementing this whole layout without using Scaffold.
             Box(Modifier.padding(innerPadding)) {
                 val hide = rememberCallback { sheetType = SheetType.None }
 
@@ -333,7 +334,7 @@ class MainActivity : ComposeBaseActivity() {
                     }
                 }
 
-                Column(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) {
+                Column {
                     val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
                     ServerStatusDialogs(serverStatus.status) { openPlayStorePage() }
                     ServerStatusBanner(serverStatus)

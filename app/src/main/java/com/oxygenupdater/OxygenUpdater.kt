@@ -15,9 +15,9 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.oxygenupdater.database.SqliteMigrations
 import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.utils.DatabaseMigrations
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
 import com.oxygenupdater.utils.NotificationUtils
@@ -88,7 +88,7 @@ class OxygenUpdater : Application() {
 
         // Save app's version code to aid in future migrations (added in 5.4.0)
         PrefManager.putInt(PrefManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
-        DatabaseMigrations.deleteLocalBillingDatabase(this)
+        SqliteMigrations.deleteLocalBillingDatabase(this)
         migrateOldSettings()
     }
 

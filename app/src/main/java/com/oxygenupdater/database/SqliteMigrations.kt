@@ -1,12 +1,10 @@
-package com.oxygenupdater.utils
+package com.oxygenupdater.database
 
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.oxygenupdater.database.DatabaseBuilders.APP_DB
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_SQL_TO_ROOM_MIGRATION_DONE
-import com.oxygenupdater.utils.DatabaseBuilders.APP_DB
-import com.oxygenupdater.utils.DatabaseBuilders.NEWS_ITEMS_OLD_DB
-import com.oxygenupdater.utils.DatabaseBuilders.SUBMITTED_UPDATE_FILES_OLD_DB
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 import org.koin.java.KoinJavaComponent.getKoin
@@ -19,11 +17,14 @@ import org.koin.java.KoinJavaComponent.getKoin
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-object DatabaseMigrations {
+object SqliteMigrations {
 
     private const val TAG = "DatabaseMigrations"
     private const val NEWS_ITEM_TABLE = "news_item"
     private const val SUBMITTED_UPDATE_FILE_TABLE = "submitted_update_file"
+    private const val PURCHASES_OLD_DB = "purchase_db"
+    private const val NEWS_ITEMS_OLD_DB = "NewsItems.db"
+    private const val SUBMITTED_UPDATE_FILES_OLD_DB = "SubmittedUpdateFiles.db"
 
     /**
      * Was used from 4.3.0 — 5.3.0, when the app had migrated away from AIDL to
@@ -31,9 +32,7 @@ object DatabaseMigrations {
      * IAB responses, but in 5.4.0 when we upgraded GPBL to v4, we no longer
      * needed a DB cache (code was simplified quite a bit).
      */
-    fun deleteLocalBillingDatabase(
-        context: Context
-    ) = context.deleteDatabase(DatabaseBuilders.PURCHASES_OLD_DB)
+    fun deleteLocalBillingDatabase(context: Context) = context.deleteDatabase(PURCHASES_OLD_DB)
 
     /**
      * Migration that pre-populates Room DB with old SQLite data.
@@ -96,7 +95,7 @@ object DatabaseMigrations {
         oldDbName: String,
         oldTableName: String,
         newTableName: String,
-        columnSqlStr: String
+        columnSqlStr: String,
     ) = context.getDatabasePath(oldDbName).run {
         val migrationLogStr = "`$oldDbName`.`$oldTableName` to `$APP_DB`.`$newTableName`"
 
@@ -105,32 +104,23 @@ object DatabaseMigrations {
 
             val oldDbPath = toString()
             try {
-                execSQL("ATTACH DATABASE '$oldDbPath' as `$oldDbName`").also {
-                    logDebug(TAG, "Attached old database: $oldDbName")
-                }
+                execSQL("ATTACH DATABASE '$oldDbPath' as `$oldDbName`")
+                logDebug(TAG, "Attached old database: $oldDbName")
 
                 // Column names & order are explicitly mentioned to avoid mistakes.
-                execSQL("INSERT INTO `$newTableName` ($columnSqlStr) SELECT $columnSqlStr FROM `$oldDbName`.`$oldTableName`").also {
-                    logDebug(TAG, "Finished copying data")
-                }
+                execSQL("INSERT INTO `$newTableName` ($columnSqlStr) SELECT $columnSqlStr FROM `$oldDbName`.`$oldTableName`")
+                logDebug(TAG, "Finished copying data")
 
-                execSQL("DETACH `$oldDbName`").also {
-                    logDebug(TAG, "Detached old database: $oldDbName")
-                }
+                execSQL("DETACH `$oldDbName`")
+                logDebug(TAG, "Detached old database: $oldDbName")
             } catch (e: Exception) {
                 logWarning(TAG, "Error: ${e.message}")
             } finally {
-                context.deleteOldAppDb(oldDbName)
+                val deleted = context.deleteDatabase(oldDbName)
+                logDebug(TAG, "[cleanup] `$oldDbName` deleted: $deleted")
             }
         } else {
             logDebug(TAG, "Migration from $migrationLogStr not required since old database doesn't exist")
         }
     }
-
-    private fun Context.deleteOldAppDb(oldDbName: String) {
-        deleteDatabase(oldDbName).also {
-            logDebug(TAG, "[cleanup] `$oldDbName` deleted: $it")
-        }
-    }
-
 }

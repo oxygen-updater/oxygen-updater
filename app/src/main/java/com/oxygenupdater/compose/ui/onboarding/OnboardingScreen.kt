@@ -249,16 +249,14 @@ fun PreviewOnboardingScreen() = PreviewAppTheme {
             listOf(
                 UpdateMethod(
                     id = 1,
-                    englishName = "Stable (full)",
-                    dutchName = "Stabiel (volledig)",
+                    name = "Stable (full)",
                     recommendedForRootedDevice = true,
                     recommendedForNonRootedDevice = false,
                     supportsRootedDevice = true,
                 ),
                 UpdateMethod(
                     id = 2,
-                    englishName = "Stable (incremental)",
-                    dutchName = "Stabiel (incrementeel)",
+                    name = "Stable (incremental)",
                     recommendedForRootedDevice = false,
                     recommendedForNonRootedDevice = true,
                     supportsRootedDevice = false,

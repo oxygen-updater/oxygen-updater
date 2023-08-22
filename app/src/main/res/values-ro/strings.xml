@@ -162,44 +162,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="install">Instalare</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Instalați actualizarea conform instrucțiunilor prezentate în ghidul de instalare.</string>
 	<string name="install_guide">Ghid de instalare</string>
-	<string name="install_guide_subtitle">Ghid de instalare - %1$d din %2$d</string>
-	<string name="install_guide_tip">&#8226; Vă recomandăm să vă notați fiecare pas în parte, întrucât veți fi nevoit să opriți complet dispozitivul în timpul instalării actualizării.</string>
-
-	<string name="install_guide_page_1_title">Descărcarea actualizării</string>
-	<string name="install_guide_page_1_text">&#8226; Apăsați butonul Descărcare pentru a începe descărcarea actualizării.\n\n&#8226; Progresul descărcării va apărea atât în aplicație, cât și ca notificare în panoul de notificări.\n\n&#8226; Când descărcarea s-a încheiat, veți vedea o notificare cu textul \"Descărcare completă\".\nDacă a apărut o eroare de descărcare, deschideți aplicația și încercați să descărcați din nou actualizarea. Dacă acest lucru nu funcționează, asigurați-vă că aveți o conexiune funcțională. În caz contrar, luați legătura cu dezvoltatorul aplicației. Puteți face acest lucru accesând secțiunea \"Aplicațiile mele\" din Magazinul Google Play.</string>
-
-	<string name="install_guide_page_2_title">Pregătirea pentru instalare</string>
-	<string name="install_guide_page_2_text">"Atenție: Instalarea actualizării are loc pe o pagină specială din secțiunea standard de Actualizări de sistem a dispozitivului. Dacă, dintr-un motiv anume, apare o actualizare de sistem la deschiderea acestei secțiuni, puteți opta pentru a instala mai întâi a acea actualizare. Apoi, deschideți din nou Oxygen Updater pentru a vedea dacă sunteți la zi cu actualizările.
-
-Instrucțiuni:
-&#8226; Închideți Oxygen Updater apăsând pe butonul Acasă.
-
-&#8226; Deschideți aplicația Setări. Ar trebui să se afle în lista de aplicații.
-
-&#8226; Derulați în jos până când ajungeți la Actualizări de sistem. Apăsați pentru a continua."</string>
-
-	<string name="install_guide_page_3_title">Instalarea actualizării</string>
-	<string name="install_guide_page_3_text">"Acum că vă aflați în aplicația Actualizări de sistem, este timpul să instalați actualizarea.
-
-&#8226; În secțiunea Actualizări de sistem, atingeți pictograma rotiței din colțul din dreapta sus
-
-&#8226; Acum, selectați \"Actualizare locală\". Ar trebui să apară un meniu de selectare a fișierului.
-
-&#8226; În acest meniu, apăsați pe fișierul de actualizare pe care l-ați descărcat folosind Oxygen Updater. Numele fișierului ar trebui să înceapă cu \"%1$sOxygen\".
-
-&#8226; Apăsați pe \"Actualizați acum\". Instalarea ar trebui să înceapă automat."</string>
-
-	<string name="install_guide_page_4_title">Așteptați până când instalarea este finalizată</string>
-	<string name="install_guide_page_4_text">"&#8226; Telefonul va instala acum actualizarea și va afișa o bară de progres. Vă rugăm să așteptați până la finalizarea instalării. Instalarea poate dura de la câteva minute până la 15 minute.
-
-&#8226; Ulterior, telefonul dumneavoastră va reporni pentru a finaliza actualizarea."</string>
-
-	<string name="install_guide_page_5_title">Asta a fost tot. Bucurați-vă de noua versiune de OxygenOS!</string>
-	<string name="install_guide_page_5_text">&#8226; După ce dispozitivul dumneavoastră a terminat de optimizat aplicațiile sale, actualizarea a fost instalată cu succes.\nPentru a verifica acest lucru, puteți verifica versiunea curentă a sistemului dumneavoastră după cum urmează:\n\n&#8226; Duceți-vă la Setări, apăsați pe \"Despre telefon\" și verificați versiunea de OxygenOS.\n\n&#8226; Dacă vă place această aplicație, oferiți-ne 5 stele pe Google Play!</string>
-
-	<string name="install_guide_close_button">Închideți Ghidul de instalare</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Dispozitivul dumneavoastră este suportat</string>

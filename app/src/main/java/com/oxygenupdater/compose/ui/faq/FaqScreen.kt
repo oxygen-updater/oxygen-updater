@@ -116,22 +116,14 @@ fun PreviewFaqScreen() = PreviewAppTheme {
             false, listOf(
                 InAppFaq(
                     id = 1,
-                    englishTitle = PreviewTitle,
-                    dutchTitle = PreviewTitle,
-                    frenchTitle = PreviewTitle,
-                    englishBody = null,
-                    dutchBody = null,
-                    frenchBody = null,
+                    title = PreviewTitle,
+                    body = null,
                     type = TypeCategory,
                 ),
                 InAppFaq(
                     id = 1,
-                    englishTitle = PreviewTitle,
-                    dutchTitle = PreviewTitle,
-                    frenchTitle = PreviewTitle,
-                    englishBody = PreviewBodyHtml,
-                    dutchBody = PreviewBodyHtml,
-                    frenchBody = PreviewBodyHtml,
+                    title = PreviewTitle,
+                    body = PreviewBodyHtml,
                     type = TypeItem,
                 ),
             )

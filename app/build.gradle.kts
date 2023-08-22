@@ -45,7 +45,9 @@ android {
         applicationId = "com.arjanvlek.oxygenupdater"
 
         minSdk = 21
-        targetSdk = 31 // TODO: 31st August 2023 onwards, app updates require targeting 33
+        // TODO: 31st August 2023 onwards, app updates require targeting 33
+        //  Request POST_NOTIFICATIONS if targeting A13+: https://firebase.google.com/docs/cloud-messaging/android/client#request-permission13
+        targetSdk = 31
 
         versionCode = 100
         versionName = "5.11.3"
@@ -102,7 +104,7 @@ android {
         // Uses the production server, and reads system properties using the OnePlus/OxygenOS specific build.prop values
         getByName("release") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.7/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
             buildConfigField(
                 "String[]",
@@ -136,7 +138,7 @@ android {
         // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
         getByName("debug") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://test.oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.7/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
             buildConfigField(
                 "String[]",
@@ -232,7 +234,7 @@ kotlin {
         freeCompilerArgs.add("-Xno-param-assertions")
         // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
         // Requires a fresh build to show all outputs
-        val composeMetrics = project.buildDir.absolutePath + File.separatorChar + "composeMetrics"
+        val composeMetrics = project.layout.buildDirectory.dir("composeMetrics").get().asFile.path
         freeCompilerArgs.addAll(
             "-P", "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeMetrics",
             "-P", "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeMetrics",
@@ -308,7 +310,7 @@ dependencies {
     implementation("androidx.compose.ui:ui:$COMPOSE")
     implementation("androidx.compose.ui:ui-text-google-fonts:$COMPOSE")
     debugImplementation("androidx.compose.ui:ui-tooling:$COMPOSE")
-    debugImplementation("androidx.compose.ui:ui-tooling-preview:$COMPOSE")
+    implementation("androidx.compose.ui:ui-tooling-preview:$COMPOSE")
 
     // https://developer.android.com/jetpack/androidx/releases/activity
     implementation("androidx.activity:activity-compose:1.7.2")

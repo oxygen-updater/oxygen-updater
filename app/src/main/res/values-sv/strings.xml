@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 
 	<string name="device_chooser_error_title">Det gick inte att hämta en lista över enheter som stöds</string>
 
@@ -174,53 +174,7 @@ Svep vänster för att fortsätta."</string>
 	<string name="install">"Installera"</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">"Installera uppdateringen enligt installationsguidens instruktioner."</string>
 	<string name="install_guide">"Installationsguide"</string>
-	<string name="install_guide_subtitle">Installationsguide - %1$d av %2$d</string>
-	<string name="install_guide_tip">"&#8226; Det är rekommenderat att skriva ner alla stegen eftersom du kommer behöva stänga av din enhet under installationsprocessen."</string>
-	<string name="install_guide_page_1_title">"Ladda ner uppdateringen."</string>
-	<string name="install_guide_page_1_text">"&#8226; Tryck på nedladdningsknappen för att starta nedladdningen av uppdateringen.
-
-&#8226; Nedladdningens status kommer visas i appen och som en notifikation på din enhet.
-
-&#8226; När nedladdningen är klar visas en notifikation med texten \"Nedladdning klar\". Om ett nedladdningsfel inträffat öppnar du appen och försöker hämta uppdateringen igen. Om det inte fungerar, se till att du har en fungerande anslutning. Annars kontakta utvecklaren av appen. Du kan göra det genom att besöka sektionen \"Mina appar\" i Google Play Butik."</string>
-
-	<string name="install_guide_page_2_title">Förberedelse inför installation</string>
-	<!-- TODO: translate this string below -->
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
-
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
-
-&#8226; Open the Settings app. It should be located in your app drawer.
-
-&#8226; Scroll down until you see System updates. Tap on it."</string>
-
-	<string name="install_guide_page_3_title">Installera uppdateringen</string>
-	<!-- TODO: translate this string below -->
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
-
-&#8226; Within the System Updates section, tap the gear icon in the top right
-
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
-
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
-
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
-
-	<string name="install_guide_page_4_title">Vänta tills installationen är klar</string>
-	<string name="install_guide_page_4_text">"&#8226; Telefonen kommer nu att installera uppdateringen och visa ett framstegsfält. Var god vänta tills installationen är slutförd. Installationen kan ta upp till 15 minuter.
-
-&#8226; Efter det kommer din telefon att startas om för att tillämpa uppdateringen."</string>
-
-	<string name="install_guide_page_5_title">"Klar. Njut av den nya versionen av OxygenOS!"</string>
-	<string name="install_guide_page_5_text">"&#8226; När enheten har slutfört optimeringen av apparna har uppdateringen installerats.
-För att verifiera detta kan du kontrollera nuvarande version av ditt system enligt följande instruktioner:
-
-&#8226; Gå till Inställningar, tryck på \"Om telefonen\", och kolla OxygenOS Version.
-
-&#8226; Om du gillar den här appen, ge den 5 stjärnor på Google Play!"</string>
-	<string name="install_guide_close_button">Stäng installationsguiden</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Vi har stöd flr din enhet</string>

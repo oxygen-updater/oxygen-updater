@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 
 	<string name="device_chooser_error_title">Impossible de récupérer la liste des appareils supportés</string>
 
@@ -174,53 +174,7 @@ Balayez vers la droite pour continuer."</string>
 	<string name="install">"Installation"</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">"Installez la mise à jour en suivant les instructions du guide d'installation."</string>
 	<string name="install_guide">"Guide d'installation"</string>
-	<string name="install_guide_subtitle">"Guide d'installation — %1$d de %2$d"</string>
-	<string name="install_guide_tip">"Il est recommandé d'écrire sur papier les étapes suivantes, étant donné que vous devrez éteindre votre appareil pendant l'installation de la mise à jour."</string>
-	<string name="install_guide_page_1_title">"Téléchargez la mise à jour"</string>
-	<string name="install_guide_page_1_text">"Appuyez sur le bouton « Téléchargement » pour commencer à télécharger la mise à jour.
-
-&#8226; La progression du téléchargement va s'afficher dans l'application et dans votre barre de notifications.
-
-&#8226; Quand le téléchargement sera fini, vous verrez une notification avec le texte « Téléchargement fini ».
-Si une erreur de téléchargement s'est produite, ouvrez l'application et réessayez de télécharger l'application. Si cela ne fonctionne pas, vérifiez que votre connexion Internet fonctionne. Autrement, contactez le développeur de l'application.
-Vous pouvez faire cela en visitant la section « Mes applications » dans le Play Store."</string>
-
-	<string name="install_guide_page_2_title">Préparation de l\'installation</string>
-	<string name="install_guide_page_2_text">"Note: L'installation de la mise à jour s'effectue à partir d'une page spéciale dans la section « Mises à jour du système » de votre appareil. Si, pour quelque raison que ce soit, une mise à jour système apparaît lors de l'ouverture de cette section, vous pouvez également choisir d'installer cette mise à jour en premier. Ensuite, ouvrez à nouveau Oxygen Updater pour vérifier que votre appareil est bien à jour.
-
-Instructions:
-&#8226; Fermez Oxygen Updater en appuyant sur le bouton d'accueil.
-
-&#8226; Ouvrez l'application « Paramètres ». Elle devrait être localisée dans le tiroir d'applications.
-
-&#8226; Faites défiler vers le bas jusqu'à la section « Système ». Appuyez dessus et sélectionnez « Mise à jour du système »."</string>
-
-	<string name="install_guide_page_3_title">Installation de la mise à jour</string>
-	<string name="install_guide_page_3_text">"Maintenant que vous êtes dans l'application de mise à jour du système, vous pouvez installer la mise à jour.
-
-&#8226; Appuyez sur la roue dentée en haut à droite.
-
-&#8226; Maintenant, sélectionnez \"Mise à niveau locale\". Un écran de sélection de fichier devrait apparaître.
-
-&#8226; Dans cet écran, appuyez sur le fichier de mise à jour que vous avez téléchargé à l'aide d'Oxygen Updater. Son nom devrait commencer par \"%1$sOxygen\".
-
-&#8226; Appuyez sur \"Installer maintenant\". L'installation devrait alors démarrer automatiquement."</string>
-
-	<string name="install_guide_page_4_title">Patientez jusqu\'à la fin de l\'installation</string>
-	<string name="install_guide_page_4_text">"&#8226; Votre appareil va maintenant installer la mise à jour et afficher une barre de progression. Veuillez patienter jusqu'à la fin de l'installation, qui peut prendre jusqu'à quinze minutes.
-
-&#8226; Après cela, votre appareil va redémarrer."</string>
-
-	<string name="install_guide_page_5_title">"Fait. Profitez de la nouvelle version d'OxygenOS !"</string>
-	<string name="install_guide_page_5_text">"Une fois que votre appareil a fini d'optimiser les applications, la mise à jour s'est correctement installée.
-Afin de le vérifier, vous pouvez effectuer la manipulation suivante:
-
-&#8226; Allez dans « Réglages », « À propos du téléphone » et regardez la version d'OxygenOS.
-
-&#8226; Si vous aimez l'application, donnez-lui 5 étoiles sur le Play Store !"</string>
-	<string name="install_guide_close_button">"Fermer le guide d'installation"</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Votre appareil est supporté</string>

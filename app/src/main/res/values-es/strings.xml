@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
+<resources>
 	<!-- TODO: translate this string below -->
 	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
 
@@ -172,47 +172,7 @@ Esto puede ser útil si quieres:"</string>
 	<string name="install">Instalar</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Instalar la actualización basándose en las instrucciones de la guía de instalación.</string>
 	<string name="install_guide">Guía de instalación</string>
-	<string name="install_guide_subtitle">Guía de instalación - %1$d de %2$d</string>
-	<string name="install_guide_tip">&#8226; Es recomendable apuntar todos los pasos a seguir ya que deberás apagar tu dispositivo en el proceso de actualización.</string>
-
-	<string name="install_guide_page_1_title">Descargar la actualización</string>
-	<string name="install_guide_page_1_text">&#8226; Pulsa el botón Descargar para empezar a descargar la actualización.\n\n&#8226; El progreso de la descarga aparecerá en la aplicación y como notificación.\n\n&#8226; Cuando la descarga haya terminado, verás una notificación diciendo \"Descarga completa\".\nSi ocurre algún error durante la descarga, abre la app e intenta descargar la actualización de nuevo. Si esto no funciona, asegúrate de que tienes una conexión a internet. De otra manera, contacta con el desarrollador de esta app. Puedes hacer esto visitando la sección \"Mis aplicaciones\" en Google Play Store.</string>
-
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_2_title">Prepare for installation</string>
-	<string name="install_guide_page_2_text">"Note: The installation of the update takes place from a special page of the standard System Updates section of your device. If, for some reason, a system update appears when opening this section, you may also opt to install that update first. Afterwards, open Oxygen Updater again to see if you're completely up-to-date.
-
-Instructions:
-&#8226; Close Oxygen Updater by pressing the home button.
-
-&#8226; Open the Settings app. It should be located in your app drawer.
-
-&#8226; Scroll down until you see System updates. Tap on it."</string>
-
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_3_title">Install the update</string>
-	<string name="install_guide_page_3_text">"Now that you're in the System Updates app, it's time to install the update.
-
-&#8226; Within the System Updates section, tap the gear icon in the top right
-
-&#8226; Now, select \"Local upgrade\". A file selection screen should appear.
-
-&#8226; In this screen, tap on the update file you downloaded using Oxygen Updater. Its name should start with \"%1$sOxygen\".
-
-&#8226; Tap on \"Upgrade Now\". The installation should start automatically."</string>
-
-	<!-- TODO: translate these 2 strings below -->
-	<string name="install_guide_page_4_title">Wait until the installation completes</string>
-	<string name="install_guide_page_4_text">"&#8226; The phone will now install the update and displays a progress bar. Please wait until the installation has finished. Installation may take anywhere from a few minutes up to 15 minutes.
-
-&#8226; Afterwards, your phone will restart to complete the update."</string>
-
-	<string name="install_guide_page_5_title">Hecho. ¡Disfruta de la nueva versión de OxygenOS!</string>
-	<string name="install_guide_page_5_text">&#8226; Después de que el dispositivo haya terminado de optimizar tus apps, la actualización se habrá instalado correctamente.\nPara verificarlo,puedes comprobar la versión actual del sistema:\n\n&#8226; Ve a ajustes, pulsa en \"Información del teléfono\", y comprueba tu versión de OxygenOS.\n\n&#8226; Si te gusta esta app, ¡valórala con 5 stars en Google Play!</string>
-
-	<string name="install_guide_close_button">Cerrar la guía de instalación</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->

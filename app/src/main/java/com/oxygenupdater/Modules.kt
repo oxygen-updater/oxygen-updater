@@ -10,19 +10,19 @@ import com.google.firebase.ktx.Firebase
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.compose.ui.faq.FaqViewModel
+import com.oxygenupdater.compose.ui.install.InstallGuideViewModel
 import com.oxygenupdater.compose.ui.news.NewsItemViewModel
 import com.oxygenupdater.compose.ui.news.NewsListViewModel
 import com.oxygenupdater.compose.ui.settings.SettingsViewModel
 import com.oxygenupdater.compose.ui.update.UpdateInformationViewModel
+import com.oxygenupdater.database.DatabaseBuilders.buildLocalAppDatabase
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.utils.DatabaseBuilders.buildLocalAppDatabase
 import com.oxygenupdater.utils.NotificationUtils
 import com.oxygenupdater.utils.createDownloadClient
 import com.oxygenupdater.utils.createNetworkClient
 import com.oxygenupdater.utils.createOkHttpCache
 import com.oxygenupdater.viewmodels.BillingViewModel
-import com.oxygenupdater.viewmodels.InstallViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -56,7 +56,7 @@ private val viewModelModule = module {
     viewModel { BillingViewModel(get(), get()) }
     viewModel { MainViewModel(get(), get(), get()) }
     viewModel { UpdateInformationViewModel(get()) }
-    viewModel { InstallViewModel(get()) }
+    viewModel { InstallGuideViewModel(get()) }
     viewModel { NewsListViewModel(get()) }
     viewModel { NewsItemViewModel(get()) }
     viewModel { SettingsViewModel(get(), get()) }
