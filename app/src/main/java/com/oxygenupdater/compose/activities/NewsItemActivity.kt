@@ -149,9 +149,7 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
             }
         }
 
-        PullRefresh(state, shouldShowProgressIndicator = {
-            it?.isFullyLoaded != true
-        }, onRefresh) {
+        PullRefresh(state, { it?.isFullyLoaded != true }, onRefresh) {
             val sheetState = defaultModalBottomSheetState()
             var error by remember { mutableStateOf<String?>(null) }
             val hide = rememberCallback { error = null }

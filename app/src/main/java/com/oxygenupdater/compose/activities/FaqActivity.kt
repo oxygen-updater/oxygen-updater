@@ -22,11 +22,7 @@ class FaqActivity : ComposeSupportActionBarActivity(
     override fun Content() {
         val state by viewModel.state.collectAsStateWithLifecycle()
 
-        PullRefresh(state, shouldShowProgressIndicator = rememberTypedCallback {
-            it.isEmpty()
-        }, onRefresh = rememberCallback {
-            viewModel.refresh()
-        }) {
+        PullRefresh(state, rememberTypedCallback { it.isEmpty() }, rememberCallback(viewModel::refresh)) {
             FaqScreen(state)
         }
     }

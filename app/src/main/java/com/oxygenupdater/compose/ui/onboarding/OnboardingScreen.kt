@@ -66,8 +66,7 @@ fun OnboardingScreen(
     deviceChanged: (Device) -> Unit,
     initialMethodIndex: Int,
     methodChanged: (UpdateMethod) -> Unit,
-    finish: () -> Unit,
-    startApp: (Boolean, Boolean) -> Unit, // contribute, submitLogs
+    startApp: (Pair<Boolean, Boolean>) -> Unit, // contribute, submitLogs
 ) {
     val sheetState = defaultModalBottomSheetState()
     val listState = rememberLazyListState()
@@ -183,15 +182,12 @@ fun OnboardingScreen(
             Modifier.padding(end = 16.dp, bottom = 16.dp), Modifier.padding(end = 16.dp),
         ) {
             OutlinedIconButton({
-                startApp(contribute.value, submitLogs.value)
+                startApp(contribute.value to submitLogs.value)
             }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
         }
     }
 
-    BackHandler {
-        if (sheetState.isVisible) hide()
-        else finish()
-    }
+    BackHandler(sheetState.isVisible, hide)
 }
 
 @Composable
@@ -267,8 +263,7 @@ fun PreviewOnboardingScreen() = PreviewAppTheme {
         deviceChanged = {},
         initialMethodIndex = 1,
         methodChanged = {},
-        finish = {},
-        startApp = { _, _ -> },
+        startApp = {},
     )
 }
 

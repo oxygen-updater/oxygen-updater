@@ -19,7 +19,7 @@ import com.oxygenupdater.compose.ui.pullrefresh.rememberPullRefreshState
 @Composable
 fun <T> PullRefresh(
     state: RefreshAwareState<T>,
-    shouldShowProgressIndicator: (T) -> Boolean = { true },
+    shouldShowProgressIndicator: (T) -> Boolean,
     onRefresh: () -> Unit,
     content: @Composable () -> Unit,
 ) {

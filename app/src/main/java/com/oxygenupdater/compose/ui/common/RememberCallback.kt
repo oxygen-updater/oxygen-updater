@@ -18,3 +18,9 @@ fun rememberCallback(
 fun <T, R> rememberTypedCallback(
     callback: @DisallowComposableCalls (T) -> R,
 ) = remember { callback }
+
+@Composable
+fun <T, R> rememberTypedCallback(
+    vararg keys: Any?,
+    callback: @DisallowComposableCalls (T) -> R,
+) = remember(keys) { callback }

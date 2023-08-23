@@ -415,9 +415,7 @@ class MainActivity : ComposeBaseActivity() {
         }, rememberTypedCallback(setSubtitle), enqueueDownload = rememberTypedCallback {
             viewModel.setupDownloadWorkRequest(it)
             viewModel.enqueueDownloadWork()
-        }, pauseDownload = rememberCallback {
-            viewModel.pauseDownloadWork()
-        }, cancelDownload = rememberTypedCallback {
+        }, pauseDownload = rememberCallback(viewModel::pauseDownloadWork), cancelDownload = rememberTypedCallback {
             viewModel.cancelDownloadWork(this@MainActivity, it)
         }, deleteDownload = rememberTypedCallback {
             viewModel.deleteDownloadedFile(this@MainActivity, it)
@@ -433,12 +431,10 @@ class MainActivity : ComposeBaseActivity() {
             if (state.refreshing) newsListViewModel.refresh()
         }
 
-        NewsListScreen(state, refresh = rememberCallback {
+        NewsListScreen(state, rememberCallback {
             viewModel.fetchServerStatus()
             newsListViewModel.refresh()
-        }, markAllRead = rememberCallback {
-            newsListViewModel.markAllRead()
-        }, toggleRead = rememberTypedCallback {
+        }, markAllRead = rememberCallback(newsListViewModel::markAllRead), toggleRead = rememberTypedCallback {
             newsListViewModel.toggleRead(it)
         }, openItem = rememberTypedCallback {
             // TODO(compose/news): handle shared element transition, see `movableContentOf`
@@ -515,7 +511,7 @@ class MainActivity : ComposeBaseActivity() {
         SettingsScreen(state, settingsViewModel.initialDeviceIndex, rememberTypedCallback {
             settingsViewModel.saveSelectedDevice(it)
             updateMismatchStatus()
-        }, settingsViewModel.initialMethodIndex, rememberTypedCallback {
+        }, settingsViewModel.initialMethodIndex, rememberTypedCallback(state) {
             settingsViewModel.saveSelectedMethod(it)
 
             if (checkPlayServices(this@MainActivity, true)) {
@@ -568,9 +564,7 @@ class MainActivity : ComposeBaseActivity() {
         }
     }
 
-    override fun onCreate(
-        savedInstanceState: Bundle?,
-    ) = super.onCreate(savedInstanceState).also {
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
 

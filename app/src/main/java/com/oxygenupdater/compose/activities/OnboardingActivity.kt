@@ -11,6 +11,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -31,6 +32,7 @@ import com.oxygenupdater.compose.icons.Image
 import com.oxygenupdater.compose.icons.LogoNotification
 import com.oxygenupdater.compose.ui.CollapsingAppBar
 import com.oxygenupdater.compose.ui.common.TransparentSystemBars
+import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.onboarding.OnboardingScreen
 import com.oxygenupdater.compose.ui.settings.SettingsViewModel
@@ -60,9 +62,10 @@ class OnboardingActivity : ComposeBaseActivity() {
         ) ?: MainActivity.PAGE_UPDATE
 
         setContent {
-            val state = viewModel.state.collectAsStateWithLifecycle().value
-            val deviceName = viewModel.deviceName ?: remember(state.enabledDevices) {
-                state.enabledDevices.find {
+            val state by viewModel.state.collectAsStateWithLifecycle()
+            val enabledDevices = state.enabledDevices
+            val deviceName = viewModel.deviceName ?: remember(enabledDevices) {
+                enabledDevices.find {
                     it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
                 }?.name
             }
@@ -94,16 +97,14 @@ class OnboardingActivity : ComposeBaseActivity() {
                 }) { innerPadding ->
                     HorizontalDivider()
                     Box(Modifier.padding(innerPadding)) {
-                        OnboardingScreen(scrollBehavior, state, viewModel.initialDeviceIndex, {
-                            viewModel.saveSelectedDevice(it)
-                        }, viewModel.initialMethodIndex, {
-                            viewModel.saveSelectedMethod(it)
-                        }, finish = {
-                            finish()
-                        }) { contribute, submitLogs ->
+                        OnboardingScreen(scrollBehavior, state, viewModel.initialDeviceIndex, rememberTypedCallback(
+                            viewModel::saveSelectedDevice
+                        ), viewModel.initialMethodIndex, rememberTypedCallback(
+                            viewModel::saveSelectedMethod
+                        ), startApp = rememberTypedCallback(enabledDevices) { (contribute, submitLogs) ->
                             if (Utils.checkPlayServices(this@OnboardingActivity, false)) {
                                 // Subscribe to notifications for the newly selected device and update method
-                                viewModel.subscribeToNotificationTopics(state.enabledDevices)
+                                viewModel.subscribeToNotificationTopics(enabledDevices)
                             } else Toast.makeText(
                                 context,
                                 context.getString(R.string.notification_no_notification_support),
@@ -135,7 +136,7 @@ class OnboardingActivity : ComposeBaseActivity() {
                                 logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
                                 Toast.makeText(context, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
                             }
-                        }
+                        })
                     }
                 }
             }

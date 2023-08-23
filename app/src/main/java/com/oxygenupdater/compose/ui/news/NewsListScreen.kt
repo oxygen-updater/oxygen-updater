@@ -91,9 +91,7 @@ fun NewsListScreen(
     markAllRead: () -> Unit,
     toggleRead: (NewsItem) -> Unit,
     openItem: (Long) -> Unit,
-) = PullRefresh(state, shouldShowProgressIndicator = {
-    it.isEmpty()
-}, onRefresh = refresh) {
+) = PullRefresh(state, { it.isEmpty() }, refresh) {
     val refreshing = state.refreshing
     var onlyUnread by remember { mutableStateOf(false) }
 

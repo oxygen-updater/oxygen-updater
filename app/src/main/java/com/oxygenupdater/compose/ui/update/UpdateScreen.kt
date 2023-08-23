@@ -41,7 +41,7 @@ fun UpdateScreen(
     cancelDownload: (String?) -> Unit,
     deleteDownload: (String?) -> Boolean,
     logDownloadError: (Data) -> Unit,
-) = PullRefresh(state, onRefresh = refresh) {
+) = PullRefresh(state, { it == null }, refresh) {
     val (refreshing, data) = state
     val updateData = if (!refreshing && data != null) rememberSaveable { data } else data
     if (updateData == null) {
