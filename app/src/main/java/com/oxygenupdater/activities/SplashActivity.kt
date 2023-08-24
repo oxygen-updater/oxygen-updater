@@ -19,13 +19,6 @@ class SplashActivity : Activity() {
     }
 
     private fun chooseActivityToLaunch() {
-        // Mark the welcome tutorial as finished if the user is moving from older app version.
-        // This is checked by either having stored update information for offline viewing,
-        // or if the last update checked date is set (if user always had up to date system and never viewed update information before)
-        if (!PrefManager.getBoolean(PrefManager.PROPERTY_SETUP_DONE, false)
-            && (PrefManager.contains(PrefManager.PROPERTY_UPDATE_CHECKED_DATE) || PrefManager.checkIfOfflineUpdateDataIsAvailable())
-        ) PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
-
         // Since app shortcuts open this activity, we need to forward the
         // corresponding `startPage` so that MainActivity eventually receives it
         val startPage = when (intent?.action) {

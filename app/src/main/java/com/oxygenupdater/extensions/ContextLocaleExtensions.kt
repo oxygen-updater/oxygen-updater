@@ -6,7 +6,7 @@ import android.os.Build
 import android.os.LocaleList
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import com.oxygenupdater.R
+import com.oxygenupdater.internal.settings.PrefManager
 import java.util.*
 
 /**
@@ -45,12 +45,12 @@ private fun Context.persistAndSetLocale(
     sharedPreferences: SharedPreferences,
     persist: Boolean,
 ) = sharedPreferences.getString(
-    getString(R.string.key_language_id),
+    PrefManager.PROPERTY_LANGUAGE_ID,
     Locale.getDefault().toLanguageCode()
 )!!.let { languageCode ->
     if (persist) {
         sharedPreferences.edit {
-            putString(getString(R.string.key_language_id), languageCode)
+            putString(PrefManager.PROPERTY_LANGUAGE_ID, languageCode)
         }
     }
 

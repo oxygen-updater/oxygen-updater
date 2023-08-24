@@ -46,7 +46,6 @@ import com.oxygenupdater.compose.ui.news.ErrorSheet
 import com.oxygenupdater.compose.ui.news.NewsItemScreen
 import com.oxygenupdater.compose.ui.news.NewsItemViewModel
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
@@ -241,8 +240,6 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
      * v5.2.0 onwards, this frequency capping is configured within AdMob dashboard itself,
      * because it seemed to be more reliable than custom SharedPreferences-based handling
      * done prior to v5.2.0.
-     *
-     * @see [PROPERTY_LAST_NEWS_AD_SHOWN]
      */
     private fun setupInterstitialAd() = InterstitialAd.load(
         this,

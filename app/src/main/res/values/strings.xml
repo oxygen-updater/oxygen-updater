@@ -107,22 +107,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="key_ad_free" translatable="false">34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj</string>
-	<string name="key_contributor" translatable="false">become_contributor</string>
-	<string name="key_category_device" translatable="false">key_category_device</string>
-	<string name="key_device" translatable="false">device</string>
-	<string name="key_device_id" translatable="false">device_id</string>
-	<string name="key_update_method" translatable="false">update_method</string>
-	<string name="key_update_method_id" translatable="false">update_method_id</string>
-	<string name="key_android_notifications" translatable="false">android_notifications</string>
-	<string name="key_language" translatable="false">language</string>
 	<string name="key_language_id" translatable="false">language_id</string>
-	<string name="key_advanced_mode" translatable="false">advanced_mode</string>
-	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
-	<string name="key_share_usage_data" translatable="false">upload_logs</string>
-	<string name="key_rate_app" translatable="false">rate</string>
-	<string name="key_privacy_policy" translatable="false">privacy_policy</string>
-	<string name="key_oxygen" translatable="false">oxygen_updater</string>
 
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
@@ -322,5 +307,5 @@ This can be useful if you want to:"</string>
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>
 	<string name="processing">Processing…</string>
-	<string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"https://oxygenupdater.com\",\n  }\n}]</string>
+	<string name="asset_statements" translatable="false">[{\"relation\":[\"delegate_permission/common.handle_all_urls\"],\"target\":{\"namespace\":\"web\",\"site\":\"https://oxygenupdater.com\"}}]</string>
 </resources>

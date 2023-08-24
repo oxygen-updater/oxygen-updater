@@ -98,6 +98,7 @@ import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.setLocale
 import com.oxygenupdater.extensions.startNewsItemActivity
+import com.oxygenupdater.extensions.startOnboardingActivity
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -376,6 +377,10 @@ class MainActivity : ComposeBaseActivity() {
 
                 // This must be defined on the same level as NavHost, otherwise it won't work
                 // We can safely put it outside Column because it's an inline composable
+                // TODO(compose): when support for predictive back is added, animate sheet close based on back progress
+                //  Also delegate to NavHost's default implementation if it does nice things with predictive back
+                //  https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture#opt-predictive
+                //  Adjust all other BackHandlers if required
                 BackHandler {
                     if (sheetState.isVisible) hide()
                     else navController.run {
@@ -398,7 +403,10 @@ class MainActivity : ComposeBaseActivity() {
     ) = if (shouldStopNavigateAwayFromSettings()) showSettingsWarning() else navigate(route, navOptions)
 
     private fun NavGraphBuilder.updateScreen(setSubtitle: (String) -> Unit) = composable(UpdateRoute) {
-        if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) return@composable
+        if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) {
+            startOnboardingActivity(startPage)
+            return@composable finish()
+        }
 
         LaunchedEffect(Unit) { // runs once every time this screen is visited
             settingsViewModel.updateCrashlyticsUserId()

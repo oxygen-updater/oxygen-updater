@@ -89,7 +89,6 @@ class OxygenUpdater : Application() {
         // Save app's version code to aid in future migrations (added in 5.4.0)
         PrefManager.putInt(PrefManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
         SqliteMigrations.deleteLocalBillingDatabase(this)
-        migrateOldSettings()
     }
 
     private fun setupKoin() {
@@ -166,29 +165,6 @@ class OxygenUpdater : Application() {
         analytics.setAnalyticsCollectionEnabled(shouldShareLogs)
         // Sync crashlytics collection to user's preference, but only if we're on a release build
         crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
-    }
-
-    /**
-     * Migrate settings from old versions of the app, if any
-     */
-    @Suppress("DEPRECATION")
-    private fun migrateOldSettings() {
-        // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
-        if (PrefManager.contains(PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
-            PrefManager.putBoolean(
-                PrefManager.PROPERTY_ADVANCED_MODE,
-                !PrefManager.getBoolean(
-                    PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE,
-                    true
-                )
-            )
-            PrefManager.remove(PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
-        }
-
-        // App version 5.2.0+: no longer used. We now configure capping in the AdMob dashboard itself.
-        if (PrefManager.contains(PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN)) {
-            PrefManager.remove(PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN)
-        }
     }
 
     @Suppress("unused")

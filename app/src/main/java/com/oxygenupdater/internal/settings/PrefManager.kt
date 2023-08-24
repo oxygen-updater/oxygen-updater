@@ -148,20 +148,6 @@ object PrefManager {
     fun checkIfSetupScreenHasBeenCompleted() = checkIfSetupScreenIsFilledIn()
             && getBoolean(PROPERTY_SETUP_DONE, false)
 
-    /**
-     * Checks if the update information has been saved before so it can be viewed without a network
-     * connection
-     *
-     * @return true or false.
-     */
-    fun checkIfOfflineUpdateDataIsAvailable() = try {
-        contains(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE)
-                && contains(PROPERTY_OFFLINE_UPDATE_NAME)
-                && contains(PROPERTY_OFFLINE_FILE_NAME)
-    } catch (ignored: Exception) {
-        false
-    }
-
     private const val TAG = "SettingsManager"
 
     /**
@@ -176,17 +162,6 @@ object PrefManager {
     const val PROPERTY_DEVICE_ID = "device_id"
     const val PROPERTY_UPDATE_METHOD = "update_method"
     const val PROPERTY_UPDATE_METHOD_ID = "update_method_id"
-    const val PROPERTY_UPDATE_CHECKED_DATE = "update_checked_date"
-
-    @Deprecated(
-        message = "Used between v1.0.0 and v2.4.5 only",
-        replaceWith = ReplaceWith(
-            "SettingsManager.PROPERTY_ADVANCED_MODE",
-            imports = arrayOf("com.oxygenupdater.internal.settings.SettingsManager")
-        ),
-        level = DeprecationLevel.WARNING
-    )
-    const val PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE = "show_if_system_is_up_to_date"
 
     const val PROPERTY_THEME_ID = "theme_id"
     const val PROPERTY_LANGUAGE_ID = "language_id"
@@ -202,17 +177,6 @@ object PrefManager {
      */
     const val PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs"
 
-    @Deprecated(
-        message = """
-            No longer used in v5.2.0+, because we configure frequency capping in
-            the AdMob dashboard itself. It was more reliable, and it didn't make
-            sense to duplicate such functionality in the app, when the AdMob lib
-            already has support for it built-in.
-        """,
-        level = DeprecationLevel.WARNING
-    )
-    const val PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown"
-
     /**
      * Note: contribution was a feature in app v2.7.0 - v5.8.3. v5.9.0 removed it, as it wasn't useful anymore.
      * Post Oppo-merger, OnePlus phones used either Google OTA (doesn't save files anywhere), or Component OTA
@@ -227,16 +191,6 @@ object PrefManager {
 
     const val PROPERTY_LAST_APP_UPDATE_CHECKED_DATE = "lastAppUpdateCheckDate"
     const val PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT = "flexibleAppUpdateIgnoreCount"
-
-    // Offline cache properties
-    const val PROPERTY_OFFLINE_ID = "offlineId"
-    const val PROPERTY_OFFLINE_UPDATE_NAME = "offlineUpdateName"
-    const val PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE = "offlineUpdateDownloadSize"
-    const val PROPERTY_OFFLINE_UPDATE_DESCRIPTION = "offlineUpdateDescription"
-    const val PROPERTY_OFFLINE_FILE_NAME = "offlineFileName"
-    const val PROPERTY_OFFLINE_DOWNLOAD_URL = "offlineDownloadUrl"
-    const val PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE = "offlineUpdateInformationAvailable"
-    const val PROPERTY_OFFLINE_IS_UP_TO_DATE = "offlineIsUpToDate"
 
     // Notifications properties
     const val PROPERTY_FIREBASE_TOKEN = "firebase_token"

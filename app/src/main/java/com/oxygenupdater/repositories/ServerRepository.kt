@@ -69,7 +69,7 @@ class ServerRepository constructor(
         val automaticInstallationEnabled = false
         val pushNotificationsDelaySeconds = PrefManager.getInt(
             PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
-            300
+            10
         )
 
         val response = if (status == null && Utils.checkNetworkConnection()) ServerStatus(

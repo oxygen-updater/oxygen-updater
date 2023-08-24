@@ -28,51 +28,37 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         PrefManager.putString(PrefManager.PROPERTY_FIREBASE_TOKEN, token)
     }
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        try {
-            val serverSpecifiedDelay = PrefManager.getInt(
-                PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
-                300
-            ).let {
-                val isNewVersionNotification = NotificationType.valueOf(
-                    remoteMessage.data[NotificationElement.TYPE.name] ?: ""
-                ) == NotificationType.NEW_VERSION
-
-                // The app should notify people about new versions ASAP, so bypass the server-specified
-                // delay if the notification is a "system update available" one.
-                // Also, `random.nextLong(from, until)` throws an exception if `until` and `from` have
-                // the same value. So make sure they're never the same.
-                if (it == 1 || isNewVersionNotification) 2 else it
-            }
-
-            // Receive the notification contents but build/show the actual notification
-            // with a small random delay to avoid overloading the server.
-            val displayDelayInSeconds = random.nextLong(
-                1,
-                serverSpecifiedDelay.toLong()
-            )
-
-            logDebug(TAG, "Displaying push notification in $displayDelayInSeconds second(s)")
-
-            val inputData = Data.Builder().apply {
+    override fun onMessageReceived(remoteMessage: RemoteMessage) = try {
+        val oneTimeWorkRequest = OneTimeWorkRequestBuilder<DisplayDelayedNotificationWorker>()
+            .setBackoffCriteria(BackoffPolicy.LINEAR, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .setInputData(Data.Builder().apply {
                 remoteMessage.data.forEach { (key, value) ->
                     putString(key, value)
                 }
-            }.build()
+            }.build())
 
-            val oneTimeWorkRequest = OneTimeWorkRequestBuilder<DisplayDelayedNotificationWorker>()
-                .setInitialDelay(displayDelayInSeconds, TimeUnit.SECONDS)
-                .setInputData(inputData)
-                .setBackoffCriteria(BackoffPolicy.LINEAR, WorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
-                .build()
+        // Add a random delay to avoid overloading the server, but only if this is not a new version notification
+        try {
+            NotificationType.valueOf(
+                remoteMessage.data[NotificationElement.TYPE.name] ?: ""
+            ) == NotificationType.NEW_VERSION
+        } catch (e: IllegalArgumentException) {
+            false
+        }.let {
+            if (!it) return@let // new version notifications should be shown immediately
 
-            workManager.enqueue(oneTimeWorkRequest)
-        } catch (e: Exception) {
-            logError(TAG, "Error dispatching push notification", e)
+            val serverSpecifiedDelay = PrefManager.getInt(PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 10)
+            val delay = random.nextLong(1, serverSpecifiedDelay.coerceAtLeast(2).toLong())
+            logDebug(TAG, "Displaying push notification in $delay second(s)")
+            oneTimeWorkRequest.setInitialDelay(delay, TimeUnit.SECONDS)
         }
+
+        workManager.enqueue(oneTimeWorkRequest.build()).let {}
+    } catch (e: Exception) {
+        logError(TAG, "Error dispatching push notification", e)
     }
 
     companion object {
-        const val TAG = "FirebaseMessagingService"
+        private const val TAG = "FirebaseMessagingService"
     }
 }
