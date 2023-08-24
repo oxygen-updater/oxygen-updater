@@ -279,7 +279,7 @@ class MainActivity : ComposeBaseActivity() {
                     MainMenu(showMenu, {
                         showMenu = false
                     }, showMarkAllRead, {
-                        newsListViewModel.markAllRead() // TODO(compose/news): propagate to newsListScreen
+                        newsListViewModel.markAllRead()
                     }, showBecomeContributor, openContributorSheet = {
                         sheetType = SheetType.Contributor
                     })
@@ -354,7 +354,6 @@ class MainActivity : ComposeBaseActivity() {
                         }
                     }
 
-                    // TODO(compose/main): use SavedStateHandle in ViewModels to work on "cached" data on init
                     NavHost(navController, startScreen.route, Modifier.weight(1f)) {
                         updateScreen { subtitle = it }
                         newsListScreen(newsListState)
@@ -367,7 +366,7 @@ class MainActivity : ComposeBaseActivity() {
 
                     // Ads should be shown if user hasn't bought the ad-free unlock
                     val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-                        !PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+                        PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
                     ).value
                     if (showAds) {
                         ItemDivider()
@@ -412,7 +411,6 @@ class MainActivity : ComposeBaseActivity() {
             settingsViewModel.updateCrashlyticsUserId()
         }
 
-        // TODO(compose/update): restore savedState when re-visiting this screen
         val state = updateViewModel.state.collectAsStateWithLifecycle(null).value ?: return@composable
         val workInfoWithStatus by viewModel.workInfoWithStatus.collectAsStateWithLifecycle()
 
@@ -427,9 +425,7 @@ class MainActivity : ComposeBaseActivity() {
             viewModel.cancelDownloadWork(this@MainActivity, it)
         }, deleteDownload = rememberTypedCallback {
             viewModel.deleteDownloadedFile(this@MainActivity, it)
-        }, logDownloadError = rememberTypedCallback {
-            viewModel.logDownloadError(it)
-        })
+        }, logDownloadError = rememberTypedCallback(viewModel::logDownloadError))
     }
 
     private fun NavGraphBuilder.newsListScreen(state: RefreshAwareState<List<NewsItem>>) = composable(NewsListRoute) {
@@ -439,15 +435,15 @@ class MainActivity : ComposeBaseActivity() {
             if (state.refreshing) newsListViewModel.refresh()
         }
 
-        NewsListScreen(state, rememberCallback {
-            viewModel.fetchServerStatus()
-            newsListViewModel.refresh()
-        }, markAllRead = rememberCallback(newsListViewModel::markAllRead), toggleRead = rememberTypedCallback {
-            newsListViewModel.toggleRead(it)
-        }, openItem = rememberTypedCallback {
-            // TODO(compose/news): handle shared element transition, see `movableContentOf`
-            startNewsItemActivity(it)
-        })
+        NewsListScreen(
+            state, rememberCallback {
+                viewModel.fetchServerStatus()
+                newsListViewModel.refresh()
+            },
+            rememberCallback(newsListViewModel::markAllRead),
+            rememberTypedCallback(newsListViewModel::toggleRead),
+            rememberTypedCallback(::startNewsItemActivity)
+        )
     }
 
     private fun NavGraphBuilder.deviceScreen(allDevices: List<Device>) = composable(DeviceRoute) {

@@ -17,8 +17,6 @@ import com.oxygenupdater.utils.Logger.logDebug
  * Note: Overriding [shouldOverrideUrlLoading] is necessary, as without it, custom URL schemes won't work (mailto, tel, etc)
  * Moreover, clicking page links in the associated WebView will load those pages within the WebView, which is not desired.
  *
- * TODO(compose): check if this still works as expected after https://github.com/google/accompanist/pull/1398 (v0.29.1-alpha)
- *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class WebViewClient(private val context: Context) : AccompanistWebViewClient() {

@@ -267,7 +267,7 @@ class MainViewModel(
             data.getInt(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE, -1),
             data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE)
         )
-    }
+    }.let {}
 
     /**
      * Checks that the platform will allow the specified type of update

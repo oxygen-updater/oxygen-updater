@@ -32,6 +32,7 @@ inline fun Activity.startMainActivity(
     )
 )
 
+// TODO(compose/news): handle shared element transition, see `movableContentOf` and `LookaheadScope`
 inline fun Activity.startNewsItemActivity(id: Long) = startActivity(
     Intent(this, NewsItemActivity::class.java).putExtra(
         NewsItemActivity.INTENT_NEWS_ITEM_ID, id

@@ -129,10 +129,9 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
     @Composable
     override fun Content() {
         // Ads should be shown if user hasn't bought the ad-free unlock
-        val adFree by billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-            !PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
-        )
-        val showAds = !adFree
+        val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
+            PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+        ).value
 
         val state by viewModel.state.collectAsStateWithLifecycle()
         val webViewState = rememberSaveableWebViewState()
@@ -160,14 +159,11 @@ class NewsItemActivity : ComposeSupportActionBarActivity(
                 }
             }
 
-            NewsItemScreen(state, scrollBehavior, webViewState, navigator, showAds, bannerAdInit = rememberTypedCallback {
+            NewsItemScreen(state, scrollBehavior, webViewState, navigator, showAds, rememberTypedCallback {
                 bannerAdView = it
-            }, onError = rememberTypedCallback {
+            }, rememberTypedCallback {
                 error = it
-            }, onLoadFinished = rememberTypedCallback {
-                viewModel.markRead(it)
-            })
-
+            }, rememberTypedCallback(viewModel::markRead))
         }
     }
 

@@ -41,7 +41,7 @@ class NewsItemViewModel(private val serverRepository: ServerRepository) : ViewMo
             TAG,
             "Failed to mark article as read on the server: ${result.errorMessage}"
         )
-    }
+    }.let {}
 
     companion object {
         private const val TAG = "NewsItemViewModel"

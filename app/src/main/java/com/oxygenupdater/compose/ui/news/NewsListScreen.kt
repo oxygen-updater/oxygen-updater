@@ -122,7 +122,6 @@ fun NewsListScreen(
             onlyUnread = !onlyUnread
         }) {
             markAllRead()
-            list.forEach { it.readState.value = true }
             unreadCount = 0
         }
 
