@@ -2,7 +2,6 @@ package com.oxygenupdater.dao
 
 import androidx.collection.ArraySet
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -66,10 +65,4 @@ interface NewsItemDao {
 
     @Query("DELETE FROM `news_item` WHERE `id` IN (:ids)")
     fun deleteByIds(vararg ids: Long)
-
-    @Delete
-    fun delete(newsItems: Set<NewsItem>)
-
-    @Query("DELETE FROM `news_item`")
-    fun deleteAll()
 }

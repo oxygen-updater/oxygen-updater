@@ -45,7 +45,7 @@ import com.oxygenupdater.models.InstallGuide
 @Composable
 fun InstallGuideScreen(state: RefreshAwareState<List<InstallGuide>>) {
     val (refreshing, data) = state
-    val list = if (!refreshing) rememberSaveable { data } else data
+    val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
 
     LazyColumn(Modifier.fillMaxHeight()) {

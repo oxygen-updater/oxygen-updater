@@ -24,10 +24,8 @@ import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.Logger.logInfo
-import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.workers.DIRECTORY_ROOT
 import java.io.File
-import java.time.LocalDateTime
 
 @Composable
 fun UpdateScreen(
@@ -43,25 +41,13 @@ fun UpdateScreen(
     logDownloadError: (Data) -> Unit,
 ) = PullRefresh(state, { it == null }, refresh) {
     val (refreshing, data) = state
-    val updateData = if (!refreshing && data != null) rememberSaveable { data } else data
+    val updateData = if (!refreshing && data != null) rememberSaveable(data) { data } else data
     if (updateData == null) {
         ErrorState(stringResource(R.string.update_information_error_title), refresh)
         return@PullRefresh // skip the rest
     }
 
     val filename = updateData.filename
-    // Save update data for offline viewing
-    if (Utils.checkNetworkConnection()) PrefManager.apply {
-        putLong(PROPERTY_OFFLINE_ID, updateData.id ?: -1L)
-        putString(PROPERTY_OFFLINE_UPDATE_NAME, updateData.versionNumber)
-        putLong(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, updateData.downloadSize)
-        putString(PROPERTY_OFFLINE_UPDATE_DESCRIPTION, updateData.description)
-        putString(PROPERTY_OFFLINE_FILE_NAME, filename)
-        putString(PROPERTY_OFFLINE_DOWNLOAD_URL, updateData.downloadUrl)
-        putBoolean(PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, updateData.isUpdateInformationAvailable)
-        putString(PROPERTY_UPDATE_CHECKED_DATE, LocalDateTime.now(Utils.SERVER_TIME_ZONE).toString())
-        putBoolean(PROPERTY_OFFLINE_IS_UP_TO_DATE, updateData.systemIsUpToDate)
-    }
 
     if (updateData.id == null || !updateData.isUpdateInformationAvailable
         || (updateData.systemIsUpToDate && !PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
@@ -70,7 +56,7 @@ fun UpdateScreen(
             if (updateData.isUpdateInformationAvailable) R.string.update_information_system_is_up_to_date
             else R.string.update_information_no_update_data_available
         )
-        LaunchedEffect(Unit) { setSubtitle(subtitle) }
+        LaunchedEffect(subtitle) { setSubtitle(subtitle) }
 
         Screen.Update.badge = null
 
@@ -80,7 +66,7 @@ fun UpdateScreen(
             if (updateData.systemIsUpToDate) R.string.update_information_header_advanced_mode_hint
             else R.string.update_notification_channel_name
         )
-        LaunchedEffect(Unit) { setSubtitle(subtitle) }
+        LaunchedEffect(subtitle) { setSubtitle(subtitle) }
 
         Screen.Update.badge = if (updateData.systemIsUpToDate) null else "new"
 

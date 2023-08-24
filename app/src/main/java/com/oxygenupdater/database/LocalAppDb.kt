@@ -9,8 +9,10 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
 import com.oxygenupdater.dao.NewsItemDao
 import com.oxygenupdater.dao.SubmittedUpdateFileDao
+import com.oxygenupdater.dao.UpdateDataDao
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.SubmittedUpdateFile
+import com.oxygenupdater.models.UpdateData
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
@@ -21,6 +23,7 @@ import com.oxygenupdater.models.SubmittedUpdateFile
     entities = [
         NewsItem::class,
         SubmittedUpdateFile::class,
+        UpdateData::class,
     ],
     autoMigrations = [
         AutoMigration(1, 2, LocalAppDb.NewsItemRemoveLanguageSpecificity::class),
@@ -29,6 +32,7 @@ import com.oxygenupdater.models.SubmittedUpdateFile
 abstract class LocalAppDb : RoomDatabase() {
     abstract fun newsItemDao(): NewsItemDao
     abstract fun submittedUpdateFileDao(): SubmittedUpdateFileDao
+    abstract fun updateDataDao(): UpdateDataDao
 
     @RenameColumn(NewsItem, "english_title", "title")
     @RenameColumn(NewsItem, "english_subtitle", "subtitle")

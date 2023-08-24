@@ -3,7 +3,6 @@ package com.oxygenupdater.repositories
 import androidx.collection.ArrayMap
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.PurchaseType
@@ -12,7 +11,6 @@ import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.performServerRequest
 
@@ -24,10 +22,12 @@ class ServerRepository constructor(
     localAppDb: LocalAppDb,
 ) {
 
-    private var serverStatus: ServerStatus? = null
-
     private val newsItemDao by lazy(LazyThreadSafetyMode.NONE) {
         localAppDb.newsItemDao()
+    }
+
+    private val updateDataDao by lazy(LazyThreadSafetyMode.NONE) {
+        localAppDb.updateDataDao()
     }
 
     suspend fun fetchFaq() = performServerRequest { serverApi.fetchFaq() }
@@ -38,24 +38,14 @@ class ServerRepository constructor(
         serverApi.fetchDevices(filter.value)
     }
 
-    fun fetchUpdateDataFromPrefs() = if (PrefManager.checkIfOfflineUpdateDataIsAvailable()) {
-        UpdateData(
-            id = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_ID, -1L),
-            versionNumber = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_NAME, null),
-            description = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_UPDATE_DESCRIPTION, null),
-            downloadUrl = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_DOWNLOAD_URL, null),
-            downloadSize = PrefManager.getLong(PrefManager.PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE, 0L),
-            filename = PrefManager.getString(PrefManager.PROPERTY_OFFLINE_FILE_NAME, null),
-            updateInformationAvailable = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE, false),
-            systemIsUpToDate = PrefManager.getBoolean(PrefManager.PROPERTY_OFFLINE_IS_UP_TO_DATE, false)
-        )
-    } else null
+    val updateDataFlow
+        get() = updateDataDao.getFlow()
 
-    suspend fun fetchUpdateData(): UpdateData? {
+    suspend fun fetchUpdateData() {
         val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
         val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
 
-        return performServerRequest {
+        val data = performServerRequest {
             serverApi.fetchUpdateData(
                 deviceId,
                 updateMethodId,
@@ -67,19 +57,15 @@ class ServerRepository constructor(
                 BuildConfig.VERSION_NAME
             )
         }.let {
-            if (it?.information != null
-                && it.information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD
-                && it.isUpdateInformationAvailable
-                && it.systemIsUpToDate
-            ) performServerRequest {
+            if (it?.shouldFetchMostRecent == true) performServerRequest {
                 serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId)
-            } else if (!Utils.checkNetworkConnection()) fetchUpdateDataFromPrefs() else it
+            } else it
         }
+
+        if (data != null) updateDataDao.refresh(data)
     }
 
-    suspend fun fetchServerStatus(useCache: Boolean = false) = if (useCache && serverStatus != null) {
-        serverStatus!!
-    } else performServerRequest { serverApi.fetchServerStatus() }.let { status ->
+    suspend fun fetchServerStatus() = performServerRequest { serverApi.fetchServerStatus() }.let { status ->
         val automaticInstallationEnabled = false
         val pushNotificationsDelaySeconds = PrefManager.getInt(
             PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
@@ -103,7 +89,7 @@ class ServerRepository constructor(
             response.pushNotificationDelaySeconds
         )
 
-        response.also { serverStatus = it }
+        response
     }
 
     suspend fun fetchServerMessages() = performServerRequest {

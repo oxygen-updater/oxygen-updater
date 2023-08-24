@@ -17,10 +17,11 @@ data class Device(
 ) : SelectableModel {
 
     @JsonIgnore
+    @JvmField
     val productNames = productNamesCsv?.trim()?.split(",")?.map { it.trim() } ?: listOf()
 
     companion object {
-        private val IMAGE_URL_PREFIX = buildString(38) {
+        private val IMAGE_URL_PREFIX = buildString(37) {
             append("https://")
             if (BuildConfig.DEBUG) append("test.")
             append("oxygenupdater.com/img/device/")

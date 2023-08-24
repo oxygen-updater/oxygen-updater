@@ -28,16 +28,16 @@ data class NewsItem(
     val subtitle: String?,
     val text: String?,
 
-    @ColumnInfo(name = "image_url")
+    @ColumnInfo("image_url")
     val imageUrl: String?,
 
-    @ColumnInfo(name = "date_published")
+    @ColumnInfo("date_published")
     val datePublished: String?,
 
-    @ColumnInfo(name = "date_last_edited")
+    @ColumnInfo("date_last_edited")
     val dateLastEdited: String?,
 
-    @ColumnInfo(name = "author_name")
+    @ColumnInfo("author_name")
     val authorName: String?,
 
     @ColumnInfo(defaultValue = "0")
@@ -57,15 +57,18 @@ data class NewsItem(
 
     @IgnoredOnParcel
     @Ignore
+    @JvmField
     val apiUrl = "${BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE}news-content/$id/" +
             (if (Locale.current.language == "nl") "NL" else "EN") + "/"
 
     @IgnoredOnParcel
     @Ignore
+    @JvmField
     val webUrl = "${BuildConfig.SERVER_DOMAIN}article/$id/"
 
     @IgnoredOnParcel
     @Ignore
+    @JvmField
     val epochMilli = (dateLastEdited ?: datePublished)?.let {
         LocalDateTime.parse(it.replace(" ", "T"))
             .atZone(Utils.SERVER_TIME_ZONE)

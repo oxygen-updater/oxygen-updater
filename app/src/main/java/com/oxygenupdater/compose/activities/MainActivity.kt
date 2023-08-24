@@ -405,7 +405,7 @@ class MainActivity : ComposeBaseActivity() {
         }
 
         // TODO(compose/update): restore savedState when re-visiting this screen
-        val state by updateViewModel.state.collectAsStateWithLifecycle()
+        val state = updateViewModel.state.collectAsStateWithLifecycle(null).value ?: return@composable
         val workInfoWithStatus by viewModel.workInfoWithStatus.collectAsStateWithLifecycle()
 
         UpdateScreen(state, workInfoWithStatus, downloadErrorMessage != null, rememberCallback {

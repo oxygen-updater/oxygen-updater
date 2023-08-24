@@ -85,7 +85,7 @@ fun NewsItemScreen(
     onLoadFinished: (NewsItem) -> Unit,
 ) {
     val (refreshing, data) = state
-    val item = data?.let { rememberSaveable { it } } ?: return
+    val item = rememberSaveable(data ?: return) { data }
 
     Column(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) {
         val adLoaded = remember { mutableStateOf(false) }

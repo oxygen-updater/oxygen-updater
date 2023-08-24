@@ -30,7 +30,7 @@ import com.oxygenupdater.models.ServerMessage.ServerMessagePriority
 @Composable
 fun ServerMessagesSheet(list: List<ServerMessage>) {
     @Suppress("NAME_SHADOWING")
-    val list = if (list.isNotEmpty()) rememberSaveable { list } else return
+    val list = if (list.isNotEmpty()) rememberSaveable(list) { list } else return
 
     SheetHeader(R.string.settings_push_from_server)
 

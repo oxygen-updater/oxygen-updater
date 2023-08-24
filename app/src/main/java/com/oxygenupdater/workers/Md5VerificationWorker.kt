@@ -43,7 +43,7 @@ class Md5VerificationWorker(
         val inputData = parameters.inputData
 
         filename = inputData.getString("filename")
-        md5 = inputData.getString("md5")
+        md5 = inputData.getString("md5sum")
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {

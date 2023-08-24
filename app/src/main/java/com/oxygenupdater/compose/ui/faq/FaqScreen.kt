@@ -39,7 +39,7 @@ import com.oxygenupdater.models.InAppFaq
 @Composable
 fun FaqScreen(state: RefreshAwareState<List<InAppFaq>>) {
     val (refreshing, data) = state
-    val list = if (!refreshing) rememberSaveable { data } else data
+    val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
 
     LazyColumn(Modifier.fillMaxHeight()) {

@@ -353,7 +353,7 @@ class DownloadWorker(
         val verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
             .setInputData(Data.Builder().apply {
                 putString("filename", updateData!!.filename!!)
-                putString("mD5Sum", updateData.mD5Sum)
+                putString("md5sum", updateData.md5sum)
             }.build())
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,

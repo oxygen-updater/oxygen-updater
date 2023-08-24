@@ -1,126 +1,213 @@
 {
-  "formatVersion": 1,
-  "database": {
-    "version": 2,
-    "identityHash": "3fde40aa2a6f266a6442be9a01ec1bcb",
-    "entities": [
-      {
-        "tableName": "news_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `title` TEXT, `subtitle` TEXT, `text` TEXT, `image_url` TEXT, `date_published` TEXT, `date_last_edited` TEXT, `author_name` TEXT, `read` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`id`))",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "title",
-            "columnName": "title",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "subtitle",
-            "columnName": "subtitle",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "text",
-            "columnName": "text",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "imageUrl",
-            "columnName": "image_url",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "datePublished",
-            "columnName": "date_published",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dateLastEdited",
-            "columnName": "date_last_edited",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "authorName",
-            "columnName": "author_name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "read",
-            "columnName": "read",
-            "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "0"
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "submitted_update_file",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `date_submitted` TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "dateSubmitted",
-            "columnName": "date_submitted",
-            "affinity": "TEXT",
-            "notNull": true,
-            "defaultValue": "CURRENT_TIMESTAMP"
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [
-          {
-            "name": "index_submitted_update_file_name",
-            "unique": false,
-            "columnNames": [
-              "name"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_submitted_update_file_name` ON `${TABLE_NAME}` (`name`)"
-          }
-        ],
-        "foreignKeys": []
-      }
-    ],
-    "views": [],
-    "setupQueries": [
-      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3fde40aa2a6f266a6442be9a01ec1bcb')"
-    ]
-  }
+	"formatVersion": 1,
+	"database": {
+		"version": 2,
+		"identityHash": "a9a7ae36fb9c504bd02b0bf7103f46f9",
+		"entities": [
+			{
+				"tableName": "news_item",
+				"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `title` TEXT, `subtitle` TEXT, `text` TEXT, `image_url` TEXT, `date_published` TEXT, `date_last_edited` TEXT, `author_name` TEXT, `read` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`id`))",
+				"fields": [
+					{
+						"fieldPath": "id",
+						"columnName": "id",
+						"affinity": "INTEGER",
+						"notNull": false
+					},
+					{
+						"fieldPath": "title",
+						"columnName": "title",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "subtitle",
+						"columnName": "subtitle",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "text",
+						"columnName": "text",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "imageUrl",
+						"columnName": "image_url",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "datePublished",
+						"columnName": "date_published",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "dateLastEdited",
+						"columnName": "date_last_edited",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "authorName",
+						"columnName": "author_name",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "read",
+						"columnName": "read",
+						"affinity": "INTEGER",
+						"notNull": true,
+						"defaultValue": "0"
+					}
+				],
+				"primaryKey": {
+					"autoGenerate": false,
+					"columnNames": [
+						"id"
+					]
+				},
+				"indices": [],
+				"foreignKeys": []
+			},
+			{
+				"tableName": "submitted_update_file",
+				"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `date_submitted` TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)",
+				"fields": [
+					{
+						"fieldPath": "id",
+						"columnName": "id",
+						"affinity": "INTEGER",
+						"notNull": true
+					},
+					{
+						"fieldPath": "name",
+						"columnName": "name",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "dateSubmitted",
+						"columnName": "date_submitted",
+						"affinity": "TEXT",
+						"notNull": true,
+						"defaultValue": "CURRENT_TIMESTAMP"
+					}
+				],
+				"primaryKey": {
+					"autoGenerate": true,
+					"columnNames": [
+						"id"
+					]
+				},
+				"indices": [
+					{
+						"name": "index_submitted_update_file_name",
+						"unique": false,
+						"columnNames": [
+							"name"
+						],
+						"orders": [],
+						"createSql": "CREATE INDEX IF NOT EXISTS `index_submitted_update_file_name` ON `${TABLE_NAME}` (`name`)"
+					}
+				],
+				"foreignKeys": []
+			},
+			{
+				"tableName": "update_data",
+				"createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `version_number` TEXT, `ota_version_number` TEXT, `changelog` TEXT, `description` TEXT, `download_url` TEXT, `download_size` INTEGER NOT NULL, `filename` TEXT, `md5sum` TEXT, `information` TEXT, `update_information_available` INTEGER NOT NULL, `system_is_up_to_date` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY(`id`))",
+				"fields": [
+					{
+						"fieldPath": "id",
+						"columnName": "id",
+						"affinity": "INTEGER",
+						"notNull": false
+					},
+					{
+						"fieldPath": "versionNumber",
+						"columnName": "version_number",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "otaVersionNumber",
+						"columnName": "ota_version_number",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "changelog",
+						"columnName": "changelog",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "description",
+						"columnName": "description",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "downloadUrl",
+						"columnName": "download_url",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "downloadSize",
+						"columnName": "download_size",
+						"affinity": "INTEGER",
+						"notNull": true
+					},
+					{
+						"fieldPath": "filename",
+						"columnName": "filename",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "md5sum",
+						"columnName": "md5sum",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "information",
+						"columnName": "information",
+						"affinity": "TEXT",
+						"notNull": false
+					},
+					{
+						"fieldPath": "updateInformationAvailable",
+						"columnName": "update_information_available",
+						"affinity": "INTEGER",
+						"notNull": true
+					},
+					{
+						"fieldPath": "systemIsUpToDate",
+						"columnName": "system_is_up_to_date",
+						"affinity": "INTEGER",
+						"notNull": true,
+						"defaultValue": "0"
+					}
+				],
+				"primaryKey": {
+					"autoGenerate": false,
+					"columnNames": [
+						"id"
+					]
+				},
+				"indices": [],
+				"foreignKeys": []
+			}
+		],
+		"views": [],
+		"setupQueries": [
+			"CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+			"INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a9a7ae36fb9c504bd02b0bf7103f46f9')"
+		]
+	}
 }

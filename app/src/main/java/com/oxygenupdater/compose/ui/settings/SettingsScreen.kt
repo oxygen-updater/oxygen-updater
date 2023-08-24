@@ -366,8 +366,8 @@ private fun Item(
     onClick: () -> Unit,
 ) = Row(
     Modifier
-        .alpha(if (enabled) 1f else 0.38f)
         .fillMaxWidth()
+        .alpha(if (enabled) 1f else 0.38f)
         .animatedClickable(enabled, onClick)
         .padding(16.dp), // must be after `clickable`
     verticalAlignment = Alignment.CenterVertically

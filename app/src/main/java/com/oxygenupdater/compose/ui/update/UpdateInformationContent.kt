@@ -71,6 +71,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -218,7 +219,7 @@ fun UpdateAvailable(
         // Needs to be a separate container to avoid losing Column context
         SelectionContainer(Modifier.padding(start = 16.dp, end = 8.dp)) {
             Text(
-                stringResource(R.string.update_information_md5, updateData.mD5Sum ?: Build.UNKNOWN),
+                stringResource(R.string.update_information_md5, updateData.md5sum ?: Build.UNKNOWN),
                 Modifier.withPlaceholder(refreshing),
                 MaterialTheme.colorScheme.onSurfaceVariant,
                 style = caption
@@ -634,6 +635,7 @@ fun UpToDate(
             Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 16.dp),
+            Modifier.withPlaceholder(refreshing),
             icon = Icons.Rounded.CheckCircleOutline,
             text = stringResource(R.string.update_information_system_is_up_to_date),
             iconTint = positive,
@@ -659,9 +661,9 @@ fun UpToDate(
     IconText(
         Modifier
             .fillMaxWidth()
-            .animatedClickable(expandEnabled) { expanded = !expanded }
-            .padding(16.dp) // must be after `clickable`
-            .withPlaceholder(refreshing),
+            .alpha(if (!refreshing) 1f else 0.38f)
+            .animatedClickable(!refreshing && expandEnabled) { expanded = !expanded }
+            .padding(16.dp), // must be after `clickable`
         icon = if (!expandEnabled) Icons.Rounded.ErrorOutline else if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
         text = stringResource(
             if (!expandEnabled) R.string.update_information_no_update_data_available
@@ -669,6 +671,8 @@ fun UpToDate(
         ),
         style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
     )
+
+    if (refreshing) LinearProgressIndicator(Modifier.fillMaxWidth())
 
     AnimatedVisibility(
         expanded,
@@ -897,7 +901,7 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
                 downloadUrl = "https://gauss-componentotacostmanual-in.allawnofs.com/remove-a7779e2dc9b4b40458be6db38b226089/component-ota/23/03/15/4b70c7244ce7411994c97313e8ceb82d.zip",
                 downloadSize = 4777312256,
                 filename = "4b70c7244ce7411994c97313e8ceb82d.zip",
-                mD5Sum = "0dc48e34ca895ae5653a32ef4daf2933",
+                md5sum = "0dc48e34ca895ae5653a32ef4daf2933",
                 updateInformationAvailable = false,
                 systemIsUpToDate = true,
             )
@@ -935,7 +939,7 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
                 downloadUrl = "https://gauss-componentotacostmanual-in.allawnofs.com/remove-a7779e2dc9b4b40458be6db38b226089/component-ota/23/03/15/4b70c7244ce7411994c97313e8ceb82d.zip",
                 downloadSize = 4777312256,
                 filename = "4b70c7244ce7411994c97313e8ceb82d.zip",
-                mD5Sum = "0dc48e34ca895ae5653a32ef4daf2933",
+                md5sum = "0dc48e34ca895ae5653a32ef4daf2933",
                 updateInformationAvailable = true,
                 systemIsUpToDate = false,
             )
