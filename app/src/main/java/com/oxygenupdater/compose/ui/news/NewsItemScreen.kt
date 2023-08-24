@@ -126,10 +126,7 @@ fun NewsItemScreen(
             }
         }
 
-        if (showAds) {
-            ItemDivider()
-            BannerAd(BuildConfig.AD_BANNER_NEWS_ID, adLoaded, bannerAdInit)
-        }
+        if (showAds) BannerAd(BuildConfig.AD_BANNER_NEWS_ID, adLoaded, bannerAdInit)
     }
 }
 

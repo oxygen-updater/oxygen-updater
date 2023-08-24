@@ -7,7 +7,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -20,13 +20,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.ads.AdView
+import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.compose.ui.RefreshAwareState
+import com.oxygenupdater.compose.ui.common.BannerAd
 import com.oxygenupdater.compose.ui.common.IconText
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.RichText
@@ -37,12 +41,17 @@ import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.models.InAppFaq
 
 @Composable
-fun FaqScreen(state: RefreshAwareState<List<InAppFaq>>) {
+fun FaqScreen(
+    state: RefreshAwareState<List<InAppFaq>>,
+    showAds: Boolean,
+    bannerAdInit: (AdView) -> Unit,
+) = Column {
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
+    val adLoaded = remember { mutableStateOf(false) }
 
-    LazyColumn(Modifier.fillMaxHeight()) {
+    LazyColumn(Modifier.weight(1f)) {
         itemsIndexed(
             list,
             // Since the server flattens categories and items into a single JSON
@@ -52,9 +61,11 @@ fun FaqScreen(state: RefreshAwareState<List<InAppFaq>>) {
             },
             contentType = { _, it -> it.type },
         ) { index, it ->
-            FaqItem(refreshing, it, index == lastIndex)
+            FaqItem(refreshing, it, index == lastIndex, adLoaded.value)
         }
     }
+
+    if (showAds) BannerAd(BuildConfig.AD_BANNER_INSTALL_ID, adLoaded, bannerAdInit)
 }
 
 @Composable
@@ -62,6 +73,7 @@ private fun FaqItem(
     refreshing: Boolean,
     item: InAppFaq,
     last: Boolean,
+    adLoaded: Boolean,
 ) {
     if (item.type == TypeCategory) Text(
         item.title ?: "",
@@ -83,7 +95,10 @@ private fun FaqItem(
 
         AnimatedVisibility(
             expanded,
-            if (last) Modifier.navigationBarsPadding() else Modifier,
+            if (last) {
+                // Don't re-consume navigation bar insets
+                if (adLoaded) Modifier else Modifier.navigationBarsPadding()
+            } else Modifier,
             enter = remember {
                 expandVertically(
                     spring(visibilityThreshold = IntSize.VisibilityThreshold)
@@ -127,7 +142,9 @@ fun PreviewFaqScreen() = PreviewAppTheme {
                     type = TypeItem,
                 ),
             )
-        )
+        ),
+        showAds = true,
+        bannerAdInit = {},
     )
 }
 

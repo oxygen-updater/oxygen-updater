@@ -58,7 +58,6 @@ import com.oxygenupdater.compose.ui.RefreshAwareState
 import com.oxygenupdater.compose.ui.TopAppBar
 import com.oxygenupdater.compose.ui.about.AboutScreen
 import com.oxygenupdater.compose.ui.common.BannerAd
-import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.TransparentSystemBars
 import com.oxygenupdater.compose.ui.common.rememberCallback
 import com.oxygenupdater.compose.ui.common.rememberTypedCallback
@@ -368,10 +367,7 @@ class MainActivity : ComposeBaseActivity() {
                     val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
                         PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
                     ).value
-                    if (showAds) {
-                        ItemDivider()
-                        BannerAd(BuildConfig.AD_BANNER_MAIN_ID) { bannerAdView = it }
-                    }
+                    if (showAds) BannerAd(BuildConfig.AD_BANNER_MAIN_ID) { bannerAdView = it }
                 }
 
                 // This must be defined on the same level as NavHost, otherwise it won't work
