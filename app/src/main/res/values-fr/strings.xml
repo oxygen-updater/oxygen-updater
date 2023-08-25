@@ -31,7 +31,7 @@
 	<!-- New app version message strings -->
 	<string name="new_app_version">Une mise à jour de l\'application (%1$s) est disponible.\nAppuyez ici pour ouvrir le Play Store et mettre à jour l\'application.</string>
 	<string name="new_app_version_inapp_downloaded">La mise à jour de l\'application a été téléchargée</string>
-	<string name="new_app_version_inapp_failed">La mise à jour de l\'\application n\'a pas pu être installée. Appuyez ici pour ouvrir le Play Store et mettre à jour l\'application.</string>
+	<string name="new_app_version_inapp_failed">La mise à jour de l\'application n\'a pas pu être installée. Appuyez ici pour ouvrir le Play Store et mettre à jour l\'application.</string>
 
 	<!-- Downloader strings -->
 	<!-- TODO: translate this string below -->

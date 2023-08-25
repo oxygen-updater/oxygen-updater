@@ -7,7 +7,7 @@
 	<string name="update_information_description_not_available">沒有關於此更新的新功能資訊的官方訊息。一般情況下，此類更新會為您的裝置提供錯誤修復，效能改進或關鍵安全性更新。</string>
 	<string name="update_information_file_name">檔案名稱： %1$s</string>
 	<string name="update_information_md5">MD5: %1$s</string>
-	<string name="update_information_download_link">由於下載發生錯誤，可能需要您重新下載。您也可以透過下面的連結在瀏覽器中自行下載，但必須將下載的檔案從 \"Downloads\" 目錄移動到它的上層目錄。這個是 OnePlus 官方的 OTA 連結，本應用程式也是使用這個連結的資源 \n%1$s</string>
+	<string name="update_information_download_link">由於下載發生錯誤，可能需要您重新下載。您也可以透過下面的連結在瀏覽器中自行下載，但必須將下載的檔案從 \"Downloads\" 目錄移動到它的上層目錄。這個是 OnePlus 官方的 OTA 連結，本應用程式也是使用這個連結的資源\n%1$s</string>
 	<string name="update_information_header">更新</string>
 	<string name="update_information_error_title">無法搜尋最新的更新訊息</string>
 	<string name="update_information_banner_server">點選此處以檢視重要訊息</string>
@@ -239,7 +239,7 @@
 	<string name="news_empty_state_none_available_header">暫時沒有文章</string>
 	<string name="news_empty_state_all_read_header">全部讀完了</string>
 	<string name="news_empty_state_none_available_text">暫時沒有可讀的文章，請稍候再試</string>
-	<string name="news_empty_state_all_read_text">所有文章都已閱讀完畢，做的真好！\n希望您喜歡我們的文章，並能夠從中了解到新的訊息。\n\n 再次點選横幅即可顯示所有新聞文章。</string>
+	<string name="news_empty_state_all_read_text">所有文章都已閱讀完畢，做的真好！\n希望您喜歡我們的文章，並能夠從中了解到新的訊息。\n\n再次點選横幅即可顯示所有新聞文章。</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">參與共研</string>

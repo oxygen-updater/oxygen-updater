@@ -127,7 +127,7 @@ spare batteri</string>
 
 	<string name="settings_device">Enhet</string>
 	<string name="settings_entered_incorrectly">Feil ved lagring av innstillingene. Gå tilbake og velg din enhet / oppdateringsmetode igjen.</string>
-	<string name="settings_explanation_incremental_full_update">En inkrementell oppdatering kan installeres fra hvilken som helst versjon (bortsett fra hvis du har en ulåst oppstartslaster; du bør alltid velge full oppdatering som oppdateringsmetode). \n\n En betaoppdatering av OxygenOS kan alltid installeres, også når du er på en stabil versjon. For å bytte fra stabil til beta, må du aktivere den avanserte modusen i innstillingene. For betas fungerer de fulle og trinnvise oppdateringsmetodene på samme måte som på stabile versjoner.</string>
+	<string name="settings_explanation_incremental_full_update">En inkrementell oppdatering kan installeres fra hvilken som helst versjon (bortsett fra hvis du har en ulåst oppstartslaster; du bør alltid velge full oppdatering som oppdateringsmetode).\n\nEn betaoppdatering av OxygenOS kan alltid installeres, også når du er på en stabil versjon. For å bytte fra stabil til beta, må du aktivere den avanserte modusen i innstillingene. For betas fungerer de fulle og trinnvise oppdateringsmetodene på samme måte som på stabile versjoner.</string>
 
 	<string name="settings_push_from_server">Informasjons- og advarselsmeldinger</string>
 

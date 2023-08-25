@@ -282,7 +282,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="device_warning_checkbox_title">Nu mai arăta acest avertisment</string>
 
 	<!-- Purchasing strings -->
-	<string name="purchase_error_pending_payment">Achiziția se află în stadiul de \"procesare a plății"\. Odată ce plata este efectuată, veți avea parte de toate beneficiile oferite dumneavoastră.</string>
+	<string name="purchase_error_pending_payment">Achiziția se află în stadiul de \"procesare a plății\". Odată ce plata este efectuată, veți avea parte de toate beneficiile oferite dumneavoastră.</string>
 	<string name="purchase_error_after_payment">Achiziția nu a avut loc din cauza unei erori interne. Vă rugăm să încercați din nou în câteva minute. Dacă ați efectuat deja plata, vă rugăm să contactați asistența Google Play pentru detalii.</string>
 
 	<!-- Other strings-->

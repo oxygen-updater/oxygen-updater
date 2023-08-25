@@ -164,7 +164,7 @@ Esto puede ser útil si quieres:"</string>
 	<string name="onboarding_page_2_title">Elige tu dispositivo</string>
 	<string name="onboarding_page_2_caption">Tu dispositivo suele seleccionarse automáticamente. Si no es así, selecciona tu dispositivo arriba.</string>
 	<string name="onboarding_page_3_title">Elige el método para actualizar</string>
-	<string name="onboarding_page_3_caption">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas.\n\Sin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa.\n\nSi tienes una versión beta de OxygenOS, elige (uno de los) método(s) de actualización de la beta abierta.</string>
+	<string name="onboarding_page_3_caption">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas.\n\nSin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa.\n\nSi tienes una versión beta de OxygenOS, elige (uno de los) método(s) de actualización de la beta abierta.</string>
 	<string name="onboarding_page_4_title">¡Ya estás listo para comenzar!</string>
 	<string name="onboarding_page_4_text">¡Disfruta esta app! Siempre podrás cambiar las preferencias más tarde.</string>
 
