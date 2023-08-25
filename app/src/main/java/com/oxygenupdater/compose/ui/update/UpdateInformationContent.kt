@@ -98,7 +98,6 @@ import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.oxygenupdater.R
-import com.oxygenupdater.compose.activities.InstallGuideActivity
 import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Info
 import com.oxygenupdater.compose.ui.common.IconText
@@ -131,7 +130,7 @@ import com.oxygenupdater.compose.ui.update.DownloadStatus.VERIFICATION_COMPLETED
 import com.oxygenupdater.compose.ui.update.DownloadStatus.VERIFICATION_FAILED
 import com.oxygenupdater.compose.ui.update.DownloadStatus.VERIFYING
 import com.oxygenupdater.extensions.formatFileSize
-import com.oxygenupdater.extensions.startActivity
+import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
@@ -307,7 +306,7 @@ fun UpdateAvailable(
     if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
         when (sheetType) {
             SheetType.AlreadyDownloaded -> AlreadyDownloadedSheet(hide) {
-                if (it) context.startActivity<InstallGuideActivity>()
+                if (it) context.startInstallActivity(false)
                 else if (hasDownloadPermissions) downloadAction(DownloadAction.Delete)
                 else requestDownloadPermissions()
             }
@@ -504,7 +503,7 @@ fun UpdateAvailable(
 
             // Open install guide automatically, but only after the normal download flow completes
             LaunchedEffect(Unit) {
-                if (previousProgress != null) context.startActivity<InstallGuideActivity>()
+                if (previousProgress != null) context.startInstallActivity(false)
             }
         }
 
@@ -583,7 +582,7 @@ fun UpdateAvailable(
             actionButtonConfig?.let { (forCancel, icon, tint) ->
                 IconButton({
                     if (forCancel) downloadAction(DownloadAction.Cancel)
-                    else context.startActivity<InstallGuideActivity>()
+                    else context.startInstallActivity(false)
                 }, Modifier.requiredSize(56.dp)) {
                     Icon(icon, iconContentDescription, tint = tint)
                 }

@@ -173,6 +173,7 @@ Esto puede ser útil si quieres:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Guía de instalación</string>
+	<string name="install_guide_download_instructions">&#8226; Pulsa el botón Descargar para empezar a descargar la actualización.\n&#8226; El progreso de la descarga aparecerá en la aplicación y como notificación.\n&#8226; Cuando la descarga haya terminado, verás una notificación diciendo \"Descarga completa\". Si ocurre algún error durante la descarga, abre la app e intenta descargar la actualización de nuevo. Si esto no funciona, asegúrate de que tienes una conexión a internet. De otra manera, contacta con el desarrollador de esta app. Puedes hacer esto visitando la sección \"Mis aplicaciones\" en Google Play Store.</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->
@@ -236,17 +237,6 @@ Esto puede ser útil si quieres:"</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">Recibe una notificación cuando hayas enviado URL de OTA a nuestro equipo.\nPuedes desactivar el envío automático de URL en los ajustes de la aplicación.</string>
-
-	<!-- Help strings -->
-	<string name="help">Ayuda</string>
-	<string name="help_updating_your_device_title">Actualizar tu dispositivo</string>
-	<string name="help_updating_your_device_text">Al abrir la app, verás si hay alguna actualización disponible. Si hay alguna actualización disponible, podrás instalarla.\n\nPara comenzar la instalación, presiona el botón \"Descargar\" (debajo de la descripción de la actualización) para comenzar la descarga. Cuando se haya terminado de descargar, la pantalla de instalación te mostrará un mensaje. Si has salido de la app o no se te ha mostrado el mensaje, presiona el botón \"Instalar\", que se mostrará al lado del botón \"Descargar\".\n\nPrimero se verificará si tu dispositivo tiene acceso root. Si tu dispositivo está rooteado, dale permisos root y elige cómo quieres instalar la actualización. En caso contrario, Sigue las instrucciones para una instalación manual.\n\nInstalación automática:\nSólo tendrás que elegir las opciones para la actualización. Los ajustes recomendados son los que vienen por defecto, excepto cuando tienes que especificar el paquete root tiene que ser (re)instalado. Selecciona un paquete root (archivo zip) usando el botón azul y pulsa en \"Iniciar instalación\" para comenzar la instalación.\n\nInstalación manual:\nVerás un guía de instalación en tu pantalla. Apunta las instrucciones y síguelas al emepzar a instalar la actualización.</string>
-	<string name="help_reading_news_title">Leer las últimas noticias</string>
-	<string name="help_reading_news_text">Las norticias se muestran a la izquierda de la pantalla de actualización. Las más recientes aparece en la parte superior. Simplemente selecciona un noticia y léela.\nPresiona la flecha de retorno o presiona el botón de volver para ver la pantalla de noticias.</string>
-	<string name="help_device_information_title">Ver la información de tu dispositivo</string>
-	<string name="help_device_information_text">Verás algunas especificaciones de tu dispositivo al deslizar a las izquierda desde la pantalla de actualización. Esta información es útil cuando se realiza una solicitud para soporte, en la cual serás preguntado por algunas especificaciones de tu dispositivo.</string>
-	<string name="help_change_settings_title">Cambiar los ajustes</string>
-	<string name="help_change_settings_text">Puedes cambiar los ajustes pulsando los tres puntos en la esquina derecha, segido por una pulsación en Ajustes.\nPuedes cambiar los siguientes ajustes:\n\n• Dispositivo u método de actualización\n• Notificaciones\n• Notificaciones dentro de la app\n• Ajustes de privacidad(subida de registros de errores).\n\nUsa los botones para activar o desactivar las notificaciones / ajustes de privacidad. Selecciona un dispositivo y / o actualiza el método de actualización usando los menús desplegables debajo de los botones. ¿Los menus desplegables no aparecen? Comprueba tu conexión a Internet y abre los Ajustes de nuevo.</string>
 
 	<!-- News strings -->
 	<string name="news">Noticias</string>

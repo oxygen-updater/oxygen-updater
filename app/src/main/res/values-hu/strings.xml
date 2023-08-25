@@ -166,6 +166,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Telepítési útmutató</string>
+	<string name="install_guide_download_instructions">&#8226; A frissítés letöltésének megkezdéséhez nyomd meg a Letöltés gombot.\n&#8226; A letöltési folyamat az alkalmazásban jelenik meg, és értesítésként az értesítési sávban.\n&#8226; Amikor a letöltés befejeződött, egy értesítést fogsz látni, amelynek szövege: \"Letöltés kész\" lesz.\nHa letöltési hiba történt, nyisd meg az alkalmazást, és próbáld meg újra letölteni a frissítést. Ha ez nem működik, ellenőrizd, hogy működőképes-e a kapcsolat. Ellenkező esetben vedd fel a kapcsolatot az alkalmazás fejlesztőjével. Ezt megteheted a Google Play Áruház \"Saját alkalmazások\" szekciójában.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">A készüléked támogatott</string>
@@ -225,17 +226,6 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="device_notification_channel_description">Értesítést kapsz, ha az alkalmazás támogat egy új eszközt</string>
 	<string name="general_notification_channel_description">Általános értesítések, amelyek nem illenek más kategóriákba</string>
 	<string name="url_submitted_notification_channel_description">Értesítést kap, ha sikeresen elküldte OTA URL-jét a csapatunknak.\nAz alkalmazás beállításaiban lemondhat az URL-ek automatikus elküldéséről.</string>
-
-	<!-- Help strings -->
-	<string name="help">Súgó</string>
-	<string name="help_updating_your_device_title">Az eszközöd frissítése</string>
-	<string name="help_updating_your_device_text">Az alkalmazás megnyitásakor megnézheted, hogy elérhető-e rendszerfrissítés. Ha elérhető frissítés, telepítheted azt.\n\nA telepítés megkezdéséhez érintsd meg a \"Letöltés\" gombot (a frissítés leírása alatt) a letöltés megkezdéséhez. Amikor a letöltés befejeződött, megjelenik a telepítési képernyő. Ha elhagytad az alkalmazást, vagy a képernyő nem jelenik meg, koppints a \"Telepítés\" gombra, amely a \"Letöltés\" gomb mellett látható.\n\nA telepítő először ellenőrzi, hogy rootolt-e az eszközöd. Ha rootolt eszközöd van, add meg a root engedélyt, amikor a rendszer kéri, és válaszd ki a frissítés telepítésének módját. Ellenkező esetben kövesd a Kézi telepítés utasításait.\n\nAutomatikus telepítés:\nCsak a telepítési lehetőségeket kell kiválasztanod. Az alapértelmezett beállítások ajánlottak, azzal a különbséggel, hogy meg kell adni a root csomagot, amelyet (újra) telepíteni kell. Válaszd ki a root csomagot (zip fájl) a kék mappa gombbal, és érintsd meg a \"Telepítés indítása\" gombot a telepítés megkezdéséhez.\n\nKézi telepítés:\nLátsz egy telepítési útmutatót a képernyőn. Írd le az utasításokat, és hajtsd végre azokat a frissítés telepítéséhez szükséges módon.</string>
-	<string name="help_reading_news_title">A legújabb hírek elolvasása</string>
-	<string name="help_reading_news_text">A hírek a Frissítés képernyőtől balra jelennek meg. A legújabb elemek a tetején jelennek meg. Csak érints meg egy elemet az elolvasáshoz.\nNyomj a vissza nyílra vagy nyomd meg a vissza gombot, hogy visszatérj a hírek képernyőjére.</string>
-	<string name="help_device_information_title">Eszközinformációk megtekintése</string>
-	<string name="help_device_information_text">A készülék néhány specifikációját a Frissítés képernyőtől jobbra található képernyő segítségével tekintheted meg. Ez hasznos lehet egy támogatási kérelem benyújtásakor, amely során esetleg kérhetik a készüléked egyes műszaki adatait.</string>
-	<string name="help_change_settings_title">Beállítások módosítása</string>
-	<string name="help_change_settings_text">A beállításokat módosíthatod a jobb felső sarokban lévő három pont megérintésével, majd a Beállítások megérintésével.\nA következő beállításokat módosíthatod:\n\n• Eszköz és frissítési módszer\n• Push értesítések\n• Alkalmazáson belüli értesítések\n• Adatvédelmi beállítások (naplófeltöltés).\n\nA kapcsolókkal kapcsolhatod ki és be az értesítési / adatvédelmi beállításokat. Válasssz egy eszközt és / vagy frissítési módszert a kapcsolók felett látható legördülő menük segítségével. A legördülő menük nem láthatók? Ellenőrizd az internetkapcsolatod, és nyisd meg újra a Beállítások képernyőt.</string>
 
 	<!-- News strings -->
 	<string name="news">Hírek</string>

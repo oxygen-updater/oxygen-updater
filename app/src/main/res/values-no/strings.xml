@@ -167,6 +167,7 @@ Dette kan være nyttig hvis du vil:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Installasjonsgveiledning</string>
+	<string name="install_guide_download_instructions">&#8226; Trykk på Last ned-knappen for å begynne å laste ned oppdateringen.\n&#8226; Nedlastingsfremdriften vises i appen, og som et varsel på varslingsskjermen.\n&#8226; Når nedlastingen er fullført, ser du et varsel med teksten \"Nedlasting ferdig\". Hvis det oppstår en nedlastingsfeil, åpner du appen og prøver å laste ned oppdateringen på nytt. Hvis dette ikke fungerer, må du sørge for at du har en fungerende forbindelse. Kontakt ellers utvikleren av appen. Du kan gjøre dette ved å gå til \"Mine apper\" -delen i Google Play Butikk.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Enheten din støttes</string>
@@ -228,17 +229,6 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">Bli varslet når du har sendt inn OTA-URL-er til teamet vårt.\nDu kan velge bort automatisk innsending av nettadresser i appens innstillinger.</string>
-
-	<!-- Help strings -->
-	<string name="help">Hjelp</string>
-	<string name="help_updating_your_device_title">Oppdaterer enheten</string>
-	<string name="help_updating_your_device_text">Når du åpner appen, ser du om en systemoppdatering er tilgjengelig. Hvis en oppdatering er tilgjengelig, kan du installere den.\n\nFor å starte installasjonen, trykk på \"Last ned\" -knappen (under oppdateringsbeskrivelsen) for å starte nedlastingen. Når nedlastingen er ferdig, vises installasjonsskjermen. Hvis du forlot appen eller skjermen ikke dukket opp, trykker du på \"Installer\" -knappen, som nå vises ved siden av \"Last ned\" -knappen.\n\nInstallasjonsskjermen vil først sjekke om du har en rotfestet enhet. Hvis du har en rotenhet, gi rottillatelse når du blir spurt, og velg hvordan du vil installere oppdateringen. Ellers følger du instruksjonene for manuell installasjon.\n\nAutomatisk installasjon:\nDu må bare velge installasjonsalternativer. Standardinnstillingene anbefales, bortsett fra at du må spesifisere rotpakken som må installeres. Velg en rotpakke (zip-fil) ved å bruke den blå mappeknappen og trykk på \"Start installasjon\" for å starte installasjonen.\n\nManuell installasjon:\nDu vil se en installasjonsveiledning på skjermen. Skriv instruksjonene ned og utfør dem som angitt for å installere oppdateringen.</string>
-	<string name="help_reading_news_title">Les siste nytt</string>
-	<string name="help_reading_news_text">Nyheter vises til venstre for oppdateringsskjermen. De siste elementene vises på toppen. Bare trykk på et element for å lese det.\nTrykk på bakpilen eller trykk på tilbake-tasten for å gå tilbake til nyhetsskjermen.</string>
-	<string name="help_device_information_title">Viser informasjon om enheten din</string>
-	<string name="help_device_information_text">Du kan vise noen av spesifikasjonene på enheten din ved hjelp av skjermen til høyre for oppdateringsskjermen. Dette er nyttig når du lager en støtteforespørsel, der du kan bli bedt om noen av spesifikasjonene til enheten din.</string>
-	<string name="help_change_settings_title">Endring av innstillinger</string>
-	<string name="help_change_settings_text">Du kan endre innstillingene dine ved å trykke på de tre punktene øverst til høyre, ved å trykke på Innstillinger.\nDu kan endre følgende innstillinger:\n\n• Enhets- og oppdateringsmetode\n• Push-varsler\n• I appvarsler\n• Personverninnstillinger (loggopplasting).\n\nBruk bryterne for å slå på og av varslings- / personverninnstillinger. Velg en enhet og / eller oppdateringsmetode ved hjelp av rullegardinmenyene som vises over bryterne. Rullegardinmenyer ikke synlige? Kontroller Internett-tilkoblingen din og åpne innstillingsskjermen igjen.</string>
 
 	<!-- News strings -->
 	<string name="news">Nyheter</string>

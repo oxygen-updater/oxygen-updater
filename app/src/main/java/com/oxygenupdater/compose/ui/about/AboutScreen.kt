@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.activities.FaqActivity
-import com.oxygenupdater.compose.activities.HelpActivity
 import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Discord
 import com.oxygenupdater.compose.icons.Faq
@@ -39,6 +38,7 @@ import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.extensions.openEmail
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.startActivity
+import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.extensions.withAppReferrer
 
 @Composable
@@ -90,7 +90,7 @@ private fun Buttons() = with(LocalContext.current) {
         userScrollEnabled = false
     ) {
         item {
-            GridItem(Icons.Rounded.HelpOutline, R.string.help) { startActivity<HelpActivity>() }
+            GridItem(Icons.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) }
         }
 
         item {

@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.ads.AdView
@@ -48,9 +49,25 @@ import com.oxygenupdater.models.InstallGuide
 @Composable
 fun InstallGuideScreen(
     state: RefreshAwareState<List<InstallGuide>>,
+    showDownloadInstructions: Boolean,
     showAds: Boolean,
     bannerAdInit: (AdView) -> Unit,
 ) = Column {
+    if (showDownloadInstructions) {
+        val bodyMedium = MaterialTheme.typography.bodyMedium
+        Text(
+            AnnotatedString(
+                stringResource(R.string.install_guide_download_instructions),
+                bodyMedium.toSpanStyle(),
+                bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
+            ),
+            Modifier.padding(16.dp),
+            MaterialTheme.colorScheme.onSurfaceVariant,
+            style = bodyMedium
+        )
+        ItemDivider()
+    }
+
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
@@ -156,6 +173,7 @@ fun PreviewInstallGuideScreen() = PreviewAppTheme {
                 ),
             )
         ),
+        showDownloadInstructions = true,
         showAds = true,
         bannerAdInit = {},
     )

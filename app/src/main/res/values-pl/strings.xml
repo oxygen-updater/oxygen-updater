@@ -177,6 +177,7 @@ Może to być przydatne, jeśli chcesz:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Poradnik instalacji</string>
+	<string name="install_guide_download_instructions">&#8226; Naciśnij przycisk Pobierz aby zacząć pobieranie aktualizacji.\n&#8226; Postęp pobierania pojawi się w aplikacji, jako powiadomienie na ekranie.\n&#8226; Kiedy pobieranie się zakończy, zobaczysz powiadomienie z komunikatem \"Pobieranie zakończone\". Jeśli nastąpił błąd pobierania, otwórz aplikację i spróbuj pobrać aktualizację ponownie. Jeśli to nie zadziała, upewnij się że masz połączenie z internetem. W przeciwnym wypadku, skontaktuj się z deweloperem aplikacji. Możesz to zrobić odwiedzając sekcję \"Moje aplikacje\" w Sklepie Play.</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->
@@ -240,17 +241,6 @@ Może to być przydatne, jeśli chcesz:"</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">Otrzymuj powiadomienia o pomyślnym przesłaniu adresów URL OTA do naszego zespołu.\nMożesz zrezygnować z automatycznego przesyłania adresów URL w ustawieniach aplikacji.</string>
-
-	<!-- Help strings -->
-	<string name="help">Pomoc</string>
-	<string name="help_updating_your_device_title">Aktualizowanie twoje urządzenia</string>
-	<string name="help_updating_your_device_text">Podczas otwierania aplikacji, zobaczysz czy jest dostępna aktualizacja systemu. Jeśli aktualizacja jest dostępna, możesz ją zainstalować.\n\nAby rozpocząć instalację, naciśnij przycisk \"Download\" (pod opisem aktualizacji) aby rozpocząć pobieranie. Kiedy pobieranie zakończyło się, powinien się pojawić ekran instalacji. Jeśli wyszedłeś z aplikacji albo ekran nie wyskoczył, naciśnij przycisk \"Instaluj\", który jest pokazany obok przycisku \"Pobierz\".\n\nEkran instalacji najpierw sprawdzi, czy twoje urządzenie jest zrootowane. Jeśli posiadasz zrootowane urządzenie, przyznaj uprawnienia roota kiedy zostaniesz o nie poproszony oraz wybierz jak zamierasz zainstalować aktualizację. W przeciwnym wypadku, podążaj za instrukcją dla Manualnej instalacji.\n\nAutomatyczna instalacja:\nMusisz tylko wybrać opcje instalacji. Ustawienia domyślne są rekomendowane, chyba że musisz wybrać paczkę z rootem która musi być (prze)instalowana.Wybierz paczkę z rootem (plik ZIP) używając przycisku niebieskiego folderu i naciśnij na \"Rozpocznij instalację\" aby rozpocząć instalację.\n\nManualna instalacja:\nZobaczysz poradnik instalacji na ekranie. Zapisz instrukcje oraz wykonaj je tak jak powinieneś aby zainstalować aktualizację.</string>
-	<string name="help_reading_news_title">Czytanie najnowszych wiadomości</string>
-	<string name="help_reading_news_text">Wiadomości są wyświetlane na lewo od ekranu Aktualizacji. Najnowsze pozycje są pokazane na górze. Po prostu naciśnij na pozycję aby ją przeczytać.\nNaciśnij strzałkę do tyłu albo naciśnij klawisz powrotu aby powrócić do ekranu pozycji wiadomości.</string>
-	<string name="help_device_information_title">Wyświetlanie informacji o twoim urządzeniu</string>
-	<string name="help_device_information_text">Możesz zobaczyć nieco specyfikacji twojego urządzenia używając ekranu na prawo od ekranu Aktualizacji. To jest pomocne, kiedy tworzysz prośbę o pomoc, podczas której możesz zostać poproszony o niektóre elementy specyfikacji urządzenia.</string>
-	<string name="help_change_settings_title">Zmienianie ustawień</string>
-	<string name="help_change_settings_text">Możesz zmienić ustawienia naciskając na trzy kropki w prawym górnym rogu, a następnie na Ustawienia.\nMożesz zmienić następujące ustawienia:\n\n• Urządzenie i metody aktualizacji\n• Powiadomienia push\n• Powiadomienia w aplikacji\n• Ustawienia prywatności (wysyłanie logów).\n\nUżyj przełączników aby włączyć lub wyłączyć powiadomienia/ustawienia prywatności. Wybierz urządzenie i/oraz metodę aktualizacji używając rozwijanego menu pokazanego nad przełącznikami. Rozwijane menu niewidoczne ? Sprawdź połączenie z internetem i otwórz ekran Ustawień ponownie.</string>
 
 	<!-- News strings -->
 	<string name="news">Wiadomości</string>

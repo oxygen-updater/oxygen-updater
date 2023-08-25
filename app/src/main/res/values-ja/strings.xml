@@ -165,6 +165,7 @@
 
 	<!-- Install guide strings -->
 	<string name="install_guide">インストールガイド</string>
+	<string name="install_guide_download_instructions">&#8226; ダウンロードボタンを押して、更新プログラムのダウンロードを開始します。\n&#8226; ダウンロードの進行状況がアプリに表示され、通知画面に通知として表示されます。\n&#8226; ダウンロードが完了すると、\"ダウンロード完了\"というテキストの通知が表示されます。\nダウンロードエラーが発生した場合は、アプリを開き、更新プログラムのダウンロードを再試行してください。機能しない場合は、接続が機能していることを確認してください。それ以外の場合は、Google Play ストアの\"マイアプリ\"セクションにアクセスし、アプリの開発者に連絡してください。</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">サポートされているデバイス</string>
@@ -225,17 +226,6 @@
 	<string name="device_notification_channel_description">アプリが新しいデバイスをサポートしたときお知らせします</string>
 	<string name="general_notification_channel_description">どのカテゴリにも属さない一般的な通知</string>
 	<string name="url_submitted_notification_channel_description">OTA URLの提出が完了したら、通知を受け取ることができます。\nアプリの設定で、URLの自動送信を停止することができます。</string>
-
-	<!-- Help strings -->
-	<string name="help">ヘルプ</string>
-	<string name="help_updating_your_device_title">デバイスのアップデート</string>
-	<string name="help_updating_your_device_text">アプリを開くと、システムアップデートが利用可能かどうかがわかります。更新プログラムが利用可能な場合は、それをインストールできます。\n\nインストールを開始するには、（更新プログラムの説明の下にある）\"ダウンロード\"ボタンをタップしてダウンロードを開始します。ダウンロードが完了すると、インストール画面が表示されます。アプリを離れた場合、または画面がポップアップしなかった場合は、\"ダウンロード\"ボタンの横に表示される\"インストール\"ボタンをタップします。\n\nインストール画面では、root化済デバイスであるか最初に確認されます。ルート化済デバイスで場合は、確認画面でルート権限を付与し、アップデートのインストール方法を選択します。非ルート化済みデバイスの場合は、手動インストールの手順に従ってください。\n\n自動インストール：\nインストールオプションを選択するだけです。デフォルトの設定が推奨されますが、（再）インストールする必要があるルートパッケージを指定する必要があります。青いフォルダボタンを使用してルートパッケージ（zip ファイル）を選択し、\"インストールを開始\"をタップしてインストールを開始します。\n\n手動インストール：\n画面にインストールガイドが表示されます。指示を書き留め、記載されているとおりに実行して更新プログラムをインストールします。</string>
-	<string name="help_reading_news_title">最新ニュースの購読</string>
-	<string name="help_reading_news_text">ニュースはアップデートスクリーンの左側に表示されます。最新アイテムは最上部に表示されます。項目をタップして読むだけです。\n←矢印をタップするか、戻るキーを押してニュース項目画面に戻ります。</string>
-	<string name="help_device_information_title">デバイス情報の表示</string>
-	<string name="help_device_information_text">更新画面の右側の画面を使用して、デバイスの仕様の一部を表示できます。 これは、デバイスの仕様の一部を尋ねられる可能性のあるサポートリクエストを行うときに役立ちます。</string>
-	<string name="help_change_settings_title">設定の変更</string>
-	<string name="help_change_settings_text">設定を変更するには、右上の 3 つドットをタップし、\"設定\"をタップします。\n次の設定を変更できます。\ n\n•デバイスと更新方法\n•プッシュ通知\n•アプリ通知\n•プライバシー設定（ログのアップロード）。\n\nスイッチを使用して、通知/プライバシー設定をオンまたはオフにします。 スイッチの上に表示されるドロップダウンメニューを使用して、デバイスおよび/または更新方法を選択します。 ドロップダウンメニューは表示されませんか？ インターネット接続を確認し、設定画面を再度開きます。</string>
 
 	<!-- News strings -->
 	<string name="news">ニュース</string>

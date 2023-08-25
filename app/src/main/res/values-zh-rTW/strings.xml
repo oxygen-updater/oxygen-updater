@@ -161,6 +161,7 @@
 
 	<!-- Install guide strings -->
 	<string name="install_guide">安裝教學</string>
+	<string name="install_guide_download_instructions">&#8226; 點選「下載」按鈕以開始下載。\n&#8226; 下載進度會在 App 中顯示，同時，它也會在通知欄裡即時顯示。\n&#8226; 當下載結束時，您將會看到「下載完成」的通知。\n如果下載中出現錯誤，請嘗試前往 App 中重試一遍。如果仍出現錯誤，請您檢查您的網際網路連線。或者您也可以嘗試透過 Google Play 中該應用程式留下的聯絡方式聯絡該應用程式的開發者。</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">您的裝置受支援</string>
@@ -221,17 +222,6 @@
 	<string name="device_notification_channel_description">在更新器支援新裝置時推送通知</string>
 	<string name="general_notification_channel_description">不屬於其他類別的一般通知</string>
 	<string name="url_submitted_notification_channel_description">當您成功向我們的團隊提交 OTA URL 時，您會收到通知。\n您可以在應用程序的設置中選擇退出自動提交 URL。</string>
-
-	<!-- Help strings -->
-	<string name="help">協助</string>
-	<string name="help_updating_your_device_title">更新您的裝置</string>
-	<string name="help_updating_your_device_text">您打開應用程式時，即可看到是否有可用的軟體更新，如果有的話，您就可以方便地安裝了。\n\n要開始安裝，請點選「下載」按鈕（就在更新訊息下方）以開始下載。 下載完成後，將會出現安裝界面。 如果您退出了應用程式或安裝界面沒有跳出，請手動點選「安裝」按鈕，該按鈕一般顯示在「下載」按鈕旁邊。\n\n安裝界面會先檢查您是否有 Root 權限。 如果您的裝置有 Root 權限，請在詢問時授予其 Root 權限，並選擇安裝更新的方式。 否則，請按照手動安裝的說明進行操作。\n\n自動安裝：\n您只需選擇安裝選項即可。 建議使用預設設定，但您必須指定需要安裝的 Root 包。 使用藍色資料夾按鈕選擇 Root 包（支援 ZIP 檔案），然後點選「開始安裝」來開始安裝。\n\n手動安裝：\n您將在螢幕上看到安裝教學。 寫下說明並按照說明執行它們以安裝更新。</string>
-	<string name="help_reading_news_title">閱讀最新通知</string>
-	<string name="help_reading_news_text">新聞顯示在「更新」界面的左侧。 最新的通知顯示在最頂部，只需點選一則新聞即可閱讀。</string>
-	<string name="help_device_information_title">檢視您裝置的基本訊息</string>
-	<string name="help_device_information_text">您可以使用「更新」欄右侧的界面來檢視裝置的資訊。這在提出協助請求時非常有用且方便，因為在尋求協助時，可能會要求您提供裝置的某些規格。</string>
-	<string name="help_change_settings_title">更改設定</string>
-	<string name="help_change_settings_text">您可以輕點右上角的三點圖示後，點選設定來變更設定選項。\n\n您可以調整以下設定：\n\n• 您的裝置的更新方式\n• 何時為您推送通知\n• 何時在 App 中顯示提示\n• 隱私設定與日誌上傳\n\n使用裡面的開關來更改隱私與通知設定，選擇您的裝置與更新方式。下拉列表沒有出現嗎？ 請檢查您的網際網路連線，並再次進入設定。</string>
 
 	<!-- News strings -->
 	<string name="news">新聞</string>

@@ -166,6 +166,8 @@ Det kan være nyttigt, hvis du vil:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Installations guide</string>
+	<!-- TODO: translate this string below -->
+	<string name="install_guide_download_instructions">&#8226; Tryk på Download knappen, for at starte med at downloade opdateringen.\n&#8226; The download progress will appear in the app, and as a notification in your notifications screen.\n&#8226; When the download has finished, you\'ll see a notification with the text \"Download complete\". If a download error occurred, open the app and try to download it again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Din enhed er supporteret</string>
@@ -229,17 +231,6 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<!-- TODO: translate 2 strings below -->
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">Få besked, når du har sendt OTA-URL\'er til vores team.\nDu kan fravælge automatisk indsendelse af URL\'er i appens indstillinger.</string>
-
-	<!-- Help strings -->
-	<string name="help">Hjælp</string>
-	<string name="help_updating_your_device_title">Opdaterer din enhed</string>
-	<string name="help_updating_your_device_text">Når du åbner app\'en, kan du se om der er en system-opdatering tilgængelig. Hvis der er en opdatering tilgængelig - så kan du installere den.\n\nStart installationen ved at trykke på \"Download\" -knappen (under opdaterings-beskrivelsen). Når downlad er færdig, vil installations-skærmen blive vist. Forlod du app\'en, eller blev skærmen ikke vist, klik da på \"Installer\" -knappen, som nu vises ved siden af \"Download\" -knappen.\n\nInstallationsskærmen vil først undersøge om du har en root\'ed enhed. Hvis du har en root\'ed enhed, så giv tilladelse, og angiv hvordan du ønsker at installere opdateringen - ellers følg de anvisninger for manuel installation.\n\nAutomatisk installation:\nDu behøver blot at vælge indstillinger for installation. Standard indstillingen er anebefalet, medmindre du skal specificere rod-pakken, der skal installeret/geninstalleret. Vælg rod-pakke (zip fil) ved at anvende den blå-mappe-knap, opg tryk på: \"Start installation\" for at starte installationen.\n\nManuel installation:\nPå skærmen vildu se en installations-guide. Notér dig alle instruktionerne og udfør dem som anført, for at installere opdateringen.</string>
-	<string name="help_reading_news_title">Læser Sidste Nyt</string>
-	<string name="help_reading_news_text">Nyheder er vist til venste, på opdaterings-skærmen. De mest læste er øverst. Tryk på et, for at læse det.\nTryk på tilbage-pilen eller tryk på tilbage-knappen, for at returnere til skærmen med listen over nyheder.</string>
-	<string name="help_device_information_title">Læser information om din enhed</string>
-	<string name="help_device_information_text">Du kan se nogle af specifikationerne på din enhed device, ved atr bruge skærmen til højre. Dette kan være nyttigt, hvis du vil lave en support-sag, hvilket du kan blive bedt om, med nogle af specifikationerne på din enhed.</string>
-	<string name="help_change_settings_title">Ændre indstillinger</string>
-	<string name="help_change_settings_text">Du kan ændre dine indstillinger ved at trykke på de tre prikke, øverst til højre, efterfølgende med et tryk på Indstillinger.\nDu kan ændre de følgende indstillinger:\n\n• Enhed og opdateringsmetode\n• Push underretninger\n• App meddelelser\n• Privatlivs indstillinger (log uploading).\n\nBrug slå til og fra -switchen, for at slå meddelelser / privatlivsindstillinger til og fra. Vælg en enhed og/eller opdateringsmetode, ved at bruge rullemenuen ovenfor switchene. Vises rullemenuen ikke? Check din internet forbindelse Internet connection og åben skærmen med indstillinger igen.</string>
 
 	<!-- News strings -->
 	<string name="news">Nyheder</string>

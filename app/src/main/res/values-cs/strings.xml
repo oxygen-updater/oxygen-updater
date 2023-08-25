@@ -164,6 +164,7 @@ To může být užitečné, pokud chcete:"</string>
 
 	<!-- Řetězce průvodce instalací -->
 	<string name="install_guide">Průvodce instalací</string>
+	<string name="install_guide_download_instructions">&#8226; Stisknutím tlačítka Stáhnout zahájíte stahování aktualizace.\n&#8226; Průběh stahování se zobrazí v aplikaci a jako oznámení na obrazovce oznámení.\n&#8226; Po dokončení stahování se zobrazí oznámení s textem \"Stahování dokončeno\". Pokud došlo k chybě při stahování, otevřete aplikaci a zkuste stáhnout aktualizaci znovu. Pokud se to nepodaří, zkontrolujte, zda máte funkční připojení. V opačném případě kontaktujte vývojáře aplikace. Můžete tak učinit v sekci \"Moje aplikace\" v obchodě Google Play.</string>
 
 	<!-- Řetězce informací o zařízení -->
 	<string name="device_information_supported_oxygen_os">Vaše zařízení je podporováno</string>
@@ -225,15 +226,6 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="url_submitted_notification_channel_description">Dostávejte upozornění, když našemu týmu úspěšně odešlete adresy URL OTA.\nAutomatické odesílání adres URL můžete zrušit v nastavení aplikace.</string>
 
 	<!-- Nápovědné řetězce -->
-	<string name="help">Nápověda</string>
-	<string name="help_updating_your_device_title">Aktualizace zařízení</string>
-	<string name="help_updating_your_device_text">Při otevření aplikace uvidíte, zda je k dispozici aktualizace systému. Pokud je aktualizace k dispozici, můžete ji nainstalovat.\n\nChcete-li zahájit instalaci, klepněte na tlačítko \"Stáhnout\" (pod popisem aktualizace), čímž zahájíte stahování. Po dokončení stahování se zobrazí obrazovka instalace. Pokud jste aplikaci opustili nebo se obrazovka neobjevila, klepněte na tlačítko \"Instalovat\", které se nyní zobrazuje vedle tlačítka \"Stáhnout\".\n\nInstalační obrazovka nejprve zkontroluje, zda máte zařízení s rootem. Pokud máte zařízení s rootem, udělte na dotaz oprávnění root a vyberte způsob instalace aktualizace. V opačném případě postupujte podle pokynů pro ruční instalaci.\n\nAutomatická instalace:\n\budete muset pouze vybrat možnosti instalace. Výchozí nastavení jsou doporučená, s výjimkou toho, že musíte zadat kořenový balíček, který je třeba (pře)instalovat. Vyberte kořenový balíček (soubor zip) pomocí modrého tlačítka složky a klepnutím na \"Spustit instalaci\" spusťte instalaci.\n\nRuční instalace:\nNa obrazovce se zobrazí průvodce instalací. Zapište si pokyny a proveďte je podle pokynů pro instalaci aktualizace.</string>
-	<string name="help_reading_news_title">Přečtení nejnovějších zpráv</string>
-	<string name="help_reading_news_text">Novinky se zobrazují vlevo na obrazovce aktualizace. Nejnovější položky se zobrazují nahoře. Klepnutím na položku ji přečtete.\nKlepnutím na šipku zpět nebo stisknutím klávesy zpět se vrátíte na obrazovku novinek.</string>
-	<string name="help_device_information_title">Zobrazení informací o vašem zařízení</string>
-	<string name="help_device_information_text">Na obrazovce vpravo od obrazovky Aktualizace si můžete prohlédnout některé specifikace svého zařízení. To se hodí při zadávání požadavku na podporu, během kterého můžete být požádáni o některé specifikace vašeho zařízení.</string>
-	<string name="help_change_settings_title">Změna nastavení</string>
-	<string name="help_change_settings_text">Nastavení můžete změnit klepnutím na tři tečky v pravém horním rohu a následným klepnutím na Nastavení.\nMůžete změnit následující nastavení:\n\n• Způsob zařízení a aktualizace\n• Push oznámení\n• Oznámení v aplikaci\n• Nastavení soukromí (nahrávání záznamů).\n\nPřepínači zapnete a vypnete nastavení oznámení / soukromí. Pomocí rozbalovacích nabídek zobrazených nad přepínači vyberte zařízení a/nebo způsob aktualizace. Rozbalovací nabídky nejsou viditelné? Zkontrolujte připojení k internetu a znovu otevřete obrazovku Nastavení.</string>
 
 	<!-- News strings -->
 	<string name="news">Novinky</string>

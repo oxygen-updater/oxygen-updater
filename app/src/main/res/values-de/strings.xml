@@ -175,6 +175,10 @@ Wische nach links um fortzufahren."</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">"Installationsanleitung"</string>
+	<string name="install_guide_download_instructions">"&#8226; Drücke den Download Button um mit dem Hertunterladen des Updates zu starten
+&#8226; Der Download Fortschritt wird in der App angezeigt und als Benachrichtigung in der Benachrichtigungsleiste.
+&#8226; Wenn der Download abgeschlossen ist, wirst du eine Benachrichtigung mit dem Text \"Download abgeschlossen\" erhalten.
+Falls es einen Download Fehler gibt, öffne die App und versuche das Update erneut zu downloaden. Wenn das nicht funktioniert, kontrolliere ob du eine funktionierende Internet Verbindung hast. Ansonsten kontaktiere den Entwickler dieser App. Du kannst das wenn du auf \"Meine Apps\" im Google Play Store gehst."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Dein Gerät wird unterstützt</string>
@@ -234,32 +238,6 @@ Wische nach links um fortzufahren."</string>
 	<string name="device_notification_channel_description">Werde benachrichtigt wenn wir ein neues Gerät unterstützen</string>
 	<string name="general_notification_channel_description">Allgemeine Nachrichten die in keine andere Kategorie passen</string>
 	<string name="url_submitted_notification_channel_description">Sie werden benachrichtigt, wenn Sie OTA-URLs erfolgreich an unser Team übermittelt haben.\nSie können die automatische Übermittlung von URLs in den Einstellungen der App deaktivieren.</string>
-
-	<!-- Help strings -->
-	<string name="help">"Hilfe"</string>
-	<string name="help_updating_your_device_title">"Dein Gerät wird aktualisiert"</string>
-	<string name="help_updating_your_device_text">"Wenn du die App öffnest, siehst du ob ein System Update verfügbar ist. Wenn eines Verfügbar ist, kannst du es installieren.
-
-Um die Installation zu starten, tippe auf den \"Download\" Button (unter der Update Beschreibung) um den Download zu starten. Wenn der Download abgeschlossen wurde, erscheint der Installations Bildschirm. falls du die App verlassen hast oder der Bildschirm nicht erscheint, tippe auf den \"Installieren\" Button, welcher dann statt dem Download Button angezeigt wird.
-
-Der Installationsbildschirm überprüft als erstes ob du ein gerootetes Gerät hast. Falls du ein gerootetes Gerät hast, dann gewähre Root Berechtigung und wähle aus wie du das Update installieren möchtest. Ansonsten befolge die Anleitung für die Manuelle Installation.
-
-Automatisch Installieren:
-Du musst nur deine Installationsoption wählen."</string>
-	<string name="help_reading_news_title">Lese die neuesten Nachrichten</string>
-	<string name="help_reading_news_text">"Neuigkeiten findest du rechts von der Update Seite. Die neusten Neuigkeiten werden oben angezeigt. Tippe einfach darauf zum Anzeigen.
-Tippe auf die Zurück Taste um zurück zu den Neuigkeiten zu kommen."</string>
-	<string name="help_device_information_title">"Informationen über das Gerät anzeigen"</string>
-	<string name="help_device_information_text">"Sie können einige der Spezifikationen ihres Gerätes anschauen indem Sie die Seite rechts neben der \"Update\" Seite benutzen. Dieser Spezifikationen könnten zum Beispiel nützlich sein wenn Sie eine Supportanfrage einreichen."</string>
-	<string name="help_change_settings_title">"Einstellungen ändern"</string>
-	<string name="help_change_settings_text">"Sie können ihre Einstellungen durch das Menü oben rechts (mit der Option \"Einstellungen\") ändern:
-
-• Gerät und Update Methode
-• Mitteilungen (Push)
-• Mitteilungen (In-App)
-• Privatsphäre Einstellungen (Protokol Übermittlung)
-
-Benutzen sie die Schalter zum Ein-/Ausschalten der Mitteilungs- und Privatsphäreoptionen. Wählen sie ein Gerät oder eine Update Methode aus der Liste aus. Liste nicht verfügbar? Überprüfen sie ihre Verbindung und öffnen Sie die Einstellungen erneut."</string>
 
 	<!-- News strings -->
 	<string name="news">"Neuigkeiten"</string>

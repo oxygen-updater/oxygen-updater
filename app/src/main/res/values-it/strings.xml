@@ -173,7 +173,10 @@ Trascina verso sinistra per continuare."</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">"Guida d'installazione"</string>
-
+	<string name="install_guide_download_instructions">"&#8226; Premi il bottone Download per iniziare a scaricare.
+&#8226; Il progresso apparirà nell'app e come notifica.
+&#8226; Al termine del download, riceverai una notifica con il testo \"Download completato\".
+Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati di avere una connessione internet funzionante."</string>
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Il tuo dispositivo è supportato.</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Dispositivo non supportato, in quanto esclusivo col gestore.</string>
@@ -232,36 +235,6 @@ Trascina verso sinistra per continuare."</string>
 	<string name="device_notification_channel_description">Ricevi una notifica quando l\'app aggiunge il supporto per un nuovo dispositivo</string>
 	<string name="general_notification_channel_description">Notifiche generali che non fanno parte di altre categorie</string>
 	<string name="url_submitted_notification_channel_description">Riceverete una notifica quando avrete inviato con successo gli URL OTA al nostro team.\nÈ possibile disattivare l\'invio automatico degli URL nelle impostazioni dell\'applicazione.</string>
-
-	<!-- Help strings -->
-	<string name="help">"Aiuto"</string>
-	<string name="help_updating_your_device_title">"Aggiornando il tuo dispositivo"</string>
-	<string name="help_updating_your_device_text">"Quando apri l'app, potrai vedere se è disponibile un aggiornamento. Se lo è, puoi installarlo.
-
-Per avviare l'installazione, premi \"Download\". Al completamento del download, la schermata d'installazione si aprirà. Se hai chiuso l'app, premi su \"Installa\" che è ora visibile accanto al bottone \"Download\".
-
-La schermata d'installazione verificherà prima se hai un dispositivo con root. Se si', autorizza l'app quando richiesto e scegli come installare l'aggiornamento. Altrimenti, segui le istruzioni per l'installazione manuale.
-
-Installazione Automatica:
-Devi soltanto scegliere le opzioni d'installazione. Quelle predefinite sono consigliate, eccetto l'impostazione per il pacchetto root nel caso volessi mantenerlo, che va selezionato. Seleziona il paccheto (file zip) usando il bottone blu e premendo su \"Avvia Installazione\" per avviare la installazione.
-
-
-Installazione Manuale:
-Ti verrà mostrata una guida sul tuo schermo. È consigliato scriversi i passi necessari ed effettuarli come scritti per installare l'aggiornamento."</string>
-	<string name="help_reading_news_title">"Leggendo le ultime novità"</string>
-	<string name="help_reading_news_text">"Le novità sono a sinistra della schermata info aggiornamenti. Il più recente è mostrato in alto. Premi su uno di questi per leggerlo."</string>
-	<string name="help_device_information_title">"Visualizzando info dispositivo"</string>
-	<string name="help_device_information_text">"Puoi visualizzare alcune specifiche del tuo dispositivo usando la schermata alla destre di quella di info aggiornamenti. Questo può tornare utile durante un ticket di support, nei quali potresti essere interpellato su alcune specifiche."</string>
-	<string name="help_change_settings_title">"Cambiando impostazioni"</string>
-	<string name="help_change_settings_text">"Puoi cambiare le impostazioni premendo sui 3 puntini in alto a destra seguito dall'opzione Impostazioni.
-Puoi cambiare le seguenti impostazioni:
-
-• Dispositivo e modalità d'aggiornamento
-• Notifiche push
-• Notifiche in-app
-• Impostazioni privacy.
-
-Non riesci a visualizzare le opzioni per i dispositivo e i metodi d'aggiornamento? Verifica di avere una connessione ad internet e riprova."</string>
 
 	<!-- News strings -->
 	<string name="news">"Novità"</string>

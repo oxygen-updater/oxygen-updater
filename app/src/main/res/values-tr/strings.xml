@@ -171,6 +171,7 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Yükleme rehberi</string>
+	<string name="install_guide_download_instructions">&#8226; Güncellemeyi indirmeyi başlatmak için butona basınız.\n&#8226; İndirme işlemi uygulama içinde gözükecektir, ayrıca bildirim olarakta gösterilecektir.\n&#8226; İndirme bittiğinde, Bu bildirimi göreceksiniz \"İndirme tamamlandı\". Eğer indirmede sorun oluşutuysa, Uygulamayı tekrar açın ve indirmeyi birdaha başlatın. Eğer çalışmazsa, internet bağlantınız olduğundan emin olun. Aksi takdirde, uygulama geliştiricileriyle iletişime geçiniz. Google Play\'de \"Uygulamalarım\" bölümünden bakabilirsiniz.</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these 4 strings below -->
@@ -234,17 +235,6 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">OTA URL\'lerini ekibimize başarıyla gönderdiğinizde bildirim alın.\nUygulamanın ayarlarından URL\'lerin otomatik olarak gönderilmesini devre dışı bırakabilirsiniz.</string>
-
-	<!-- Help strings -->
-	<string name="help">Yardım</string>
-	<string name="help_updating_your_device_title">Cihazı güncellemek</string>
-	<string name="help_updating_your_device_text">Uygulamayı açtığınızda, eğer güncelleme varsa bunu göreceksinizdir. Varsa, güncellemeyi indiredebilirsiniz.\n\n İndirmeyi başlatmak için, \"İndir\" butonuna basınız. (Güncelleme detayları altında). İndirme bittiğinde, yükleme ekranı karşınıza çıkacaktır. Herhangi bir şey olmadıysa(indirme sonrası), \"Yükle\" butonuna tıklayınız, Normalde \"İndir\" butonunun yanında bulunmakta.\n\nYükleme ekranı öncelikle cihazınız rootlu mu diye kontrol edecektir. Rootlu cihazınız varsa, sizden root erişimi istendiğinde izin vermeniz gerekecektir. Aksi takdirde, Manuel yükleme rehberini inceleyiniz.\n\nOtomatik yükleme:\n Sadece yükleme ayarlarını seçeceksiniz. Varsayılan ayarlar önerilmektedir, root paketinizi tekrar kurmak için seçmeniz gerekecek bölüm dışında. Root paketi içeren bir ZIP dosyasını "mavi dosya" simgesinden seçiniz ve daha sonra \"Yüklemeyi Başlat\" a tıklayıp başlatınız.\n\nManuel yükleme:\nEkranınızda yükleme rehberini göreceksiniz. Rehberde gözüken adımları not etmeniz önerilir.</string>
-	<string name="help_reading_news_title">Güncel haberleri okumak.</string>
-	<string name="help_reading_news_text">Haberler, güncelleme bölümünün solunda bulunmaktadır. En sonki haberler en üsttedir. Okumak için sadece tıklayın.\n Geri dönmek için ok simgesine tıklayın veya cihazınızdaki geri tuşuna dokunun.</string>
-	<string name="help_device_information_title">Cihaz hakkında bilgileri inceleme</string>
-	<string name="help_device_information_text">Güncelleme bölümünün sağ tarafında bulunmaktadır. Bu bölümden bilgi alabilirsiniz ve bu sayede yardım alırken bu bilgileri kullanabilirsiniz.</string>
-	<string name="help_change_settings_title">Ayarları değiştirme</string>
-	<string name="help_change_settings_text">Sağ üstten ayarlara girerek onları istediğiniz şekilde değiştirebilirsiniz.\nBelirtilen ayarları değiştirebilirsiniz:\n\n• Aygıt ve güncelleme bilgileri\n• Bildirimler\n• Uygulama içi bildirimler\n• Gizlilik ayarları.</string>
 
 	<!-- News strings -->
 	<string name="news">Haberler</string>

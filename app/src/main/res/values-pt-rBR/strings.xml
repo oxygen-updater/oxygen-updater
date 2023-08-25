@@ -165,6 +165,7 @@ Isso pode ser útil se você quiser:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Guia de instalação</string>
+	<string name="install_guide_download_instructions">&#8226; Pressione o botão Download para iniciar o download da atualização.\n&#8226; O andamento do download aparecerá no aplicativo e como uma notificação na tela de notificações.\n&#8226; Quando o download terminar, você verá uma notificação com o texto\"Download finalizado\". Se ocorrer um erro de download, abra o aplicativo e tente baixar a atualização novamente. Se isso não funcionar, verifique se a conexão de rede está funcionando. Caso contrário, entre em contato com o desenvolvedor do aplicativo. Você pode fazer isso visitando o\"Meus Aplicativos\" seção da Google Play Store.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Seu dispositivo é compatível</string>
@@ -223,17 +224,6 @@ Isso pode ser útil se você quiser:"</string>
 	<string name="device_notification_channel_description">Seja notificado quando o aplicativo adicionar suporte para um novo dispositivo</string>
 	<string name="general_notification_channel_description">Notificações gerais que não se enquadram em outras categorias</string>
 	<string name="url_submitted_notification_channel_description">Seja notificado quando enviar URLs de OTAs com sucesso para nossa equipe.\nVocê pode desativar o envio automático de URLs nas configurações do aplicativo.</string>
-
-	<!-- Help strings -->
-	<string name="help">Ajuda</string>
-	<string name="help_updating_your_device_title">Atualizando seu dispositivo</string>
-	<string name="help_updating_your_device_text">Wuando abrir o aplicativo, você verá se uma atualização do sistema está disponível. Se houver uma atualização disponível, você poderá instalá-la.\n\nPara iniciar a instalação, toque no botão \"Download\" (abaixo da descrição da atualização) para iniciar o download. Quando o download terminar, a tela de instalação aparecerá. Se você saiu do aplicativo ou a tela não apareceu, toque no botão \"Instalar\" , que agora é mostrado próximo ao botão \"Download\" .\n\nA tela de instalação verificará primeiro se você tem um dispositivo com acesso root. Se você tiver um dispositivo com acesso root, conceda permissão de root quando solicitado e escolha como deseja instalar a atualização. Caso contrário, siga as instruções para instalação manual.\n\nInstalação automática:\nVocê só terá que escolher suas opções de instalação. As configurações padrão são recomendadas, exceto que você precisa especificar a raiz do instalador que precisa ser (re) instalada. Selecione uma raiz do instalador (arquivo zip) usando o botão de pasta azul e toque em \"Instalar\" para começar a instalação.\n\nInstalação Manual:\nVocê verá um guia de instalação na tela. Anote as instruções e execute-as conforme indicado para instalar a atualização.</string>
-	<string name="help_reading_news_title">Lendo as últimas notícias</string>
-	<string name="help_reading_news_text">Notícias são exibidas à esquerda da tela Atualizar. Os itens mais recentes aparecem no topo. Basta tocar em um item para lê-lo.\nToque na seta para trás ou pressione a tecla Voltar para retornar à tela de itens de notícias.</string>
-	<string name="help_device_information_title">Visualizando informações sobre o seu dispositivo</string>
-	<string name="help_device_information_text">Você pode ver algumas das especificações do seu dispositivo usando a tela à direita da tela Atualizar. Isso é útil ao fazer uma solicitação de suporte, durante a qual você pode ser solicitado a fornecer algumas das especificações do seu dispositivo.</string>
-	<string name="help_change_settings_title">Alterando configurações</string>
-	<string name="help_change_settings_text">Você pode alterar suas configurações tocando nos três pontos no canto superior direito, seguindo um toque em Configurações.\nVocê pode alterar as seguintes configurações:\n\n• Dispositivo e método de atualização\n• Notificações via push\n• Notificações do aplicativo\n• Configurações de privacidade (log de upload).\n\nUse os interruptores para ativar e desativar as configurações de notificação / privacidade. Selecione um dispositivo e / ou método de atualização usando os menus suspensos mostrados acima dos interruptores. Menus suspensos não visíveis? Verifique sua conexão com a Internet e abra a tela Configurações novamente.</string>
 
 	<!-- News strings -->
 	<string name="news">Notícias</string>

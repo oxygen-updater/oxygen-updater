@@ -22,6 +22,10 @@ class InstallGuideActivity : ComposeSupportActionBarActivity(
     private val viewModel by viewModel<InstallGuideViewModel>()
     private val billingViewModel by viewModel<BillingViewModel>()
 
+    private val showDownloadInstructions = intent.let {
+        it == null || it.getBooleanExtra(INTENT_SHOW_DOWNLOAD_INSTRUCTIONS, false)
+    }
+
     @Volatile
     private var bannerAdView: AdView? = null
 
@@ -35,7 +39,7 @@ class InstallGuideActivity : ComposeSupportActionBarActivity(
         ).value
 
         PullRefresh(state, rememberTypedCallback { it.isEmpty() }, rememberCallback(viewModel::refresh)) {
-            InstallGuideScreen(state, showAds, rememberTypedCallback {
+            InstallGuideScreen(state, showDownloadInstructions, showAds, rememberTypedCallback {
                 bannerAdView = it
             })
         }
@@ -51,5 +55,9 @@ class InstallGuideActivity : ComposeSupportActionBarActivity(
 
     override fun onDestroy() = super.onDestroy().also {
         bannerAdView?.destroy()
+    }
+
+    companion object {
+        const val INTENT_SHOW_DOWNLOAD_INSTRUCTIONS = "show_download_instructions"
     }
 }

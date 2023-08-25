@@ -164,6 +164,7 @@ To môže byť užitočné, ak chcete:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Sprievodca inštaláciou</string>
+	<string name="install_guide_download_instructions">&#8226; Stlačením tlačidla Stiahnuť spustíte sťahovanie aktualizácie.\n&#8226; Priebeh sťahovania sa zobrazí v aplikácii a ako upozornenie na obrazovke s upozorneniami.\n&#8226; Po dokončení sťahovania sa zobrazí upozornenie s textom \"Sťahovanie dokončené\". Ak sa vyskytla chyba pri sťahovaní, otvorte aplikáciu a skúste znova stiahnuť aktualizáciu. Ak to nefunguje, skontrolujte funkčnosť vášho pripojenia. V opačnom prípade kontaktujte vývojára aplikácie. Môžete to urobiť tak, že v obchode Google Play navštívite sekciu \"Moje aplikácie\".</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Vaše zariadenie je podporované</string>
@@ -223,17 +224,6 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="device_notification_channel_description">Dostanete upozornenie, keď aplikácia pridá podporu pre nové zariadenie</string>
 	<string name="general_notification_channel_description">Všeobecné oznámenia, ktoré sa nehodia do iných kategórií</string>
 	<string name="url_submitted_notification_channel_description">Dostávajte upozornenia, keď nášmu tímu úspešne odošlete adresy URL OTA.\nAutomatické odosielanie adries URL môžete odmietnuť v nastaveniach aplikácie.</string>
-
-	<!-- Help strings -->
-	<string name="help">Pomoc</string>
-	<string name="help_updating_your_device_title">Aktualizácia vášho zariadenia</string>
-	<string name="help_updating_your_device_text">Po otvorení aplikácie uvidíte, či je k dispozícii aktualizácia systému. Ak je k dispozícii aktualizácia, môžete si ju nainštalovať.\n\nInštaláciu spustíte klepnutím na tlačidlo \"Stiahnuť\" (pod popisom aktualizácie), pre spustenie sťahovania. Po dokončení sťahovania sa zobrazí inštalačná obrazovka. Ak ste aplikáciu opustili alebo sa obrazovka nezobrazila, klepnite na tlačidlo \"Inštalovať\", ktoré sa zobrazí vedľa tlačidla \"Stiahnuť\".\n\nInštalačná obrazovka najskôr skontroluje, či máte rootované zariadenie. Ak máte rootované zariadenie, na požiadanie udeľte povolenie root a vyberte, ako chcete aktualizáciu nainštalovať. V opačnom prípade postupujte podľa pokynov pre manuálnu inštaláciu.\n\nAutomatická inštalácia:\nBudete si musieť zvoliť možnosti inštalácie. Predvolené nastavenia sa odporúčajú, až na to, že musíte určiť root balík, ktorý je potrebné (znovu) nainštalovať. Vyberte root balík (súbor zip) pomocou modrého tlačidla priečinka a klepnutím na \"Začať inštaláciu\" spustíte inštaláciu.\n\nRučná inštalácia:\nNa obrazovke sa zobrazí sprievodca inštaláciou. Zapíšte si pokyny a podľa pokynov ich nainštalujte.</string>
-	<string name="help_reading_news_title">Čítanie najnovších správ</string>
-	<string name="help_reading_news_text">Správy sa zobrazujú naľavo od obrazovky Aktualizácia. Najnovšie položky sa zobrazujú navrchu. Stačí si ťuknúť na položku a prečítať si ju.\nKlepnutím na šípku späť alebo stlačením klávesu Späť sa vrátite na obrazovku so správami.</string>
-	<string name="help_device_information_title">Prezeranie informácií o vašom zariadení</string>
-	<string name="help_device_information_text">Niektoré technické parametre svojho prístroja môžete zobraziť pomocou obrazovky napravo od obrazovky Aktualizácia. To sa hodí pri podávaní žiadosti o podporu, počas ktorej sa od vás môžu vyžadovať niektoré zo špecifikácií vášho zariadenia.</string>
-	<string name="help_change_settings_title">Zmena nastavení</string>
-	<string name="help_change_settings_text">Svoje nastavenia môžete zmeniť klepnutím na tri bodky vpravo hore a klepnutím na Nastavenia.\nMôžete zmeniť nasledujúce nastavenia:\n\n• Zariadenie a spôsob aktualizácie\n• Push notifikácie\n• Notifikácie v aplikácii\n• Nastavenia súkromia (nahrávanie logov).\n\nPomocou prepínačov zapnite a vypnite nastavenia upozornení a súkromia. Vyberte zariadenie alebo spôsob aktualizácie pomocou rozbaľovacích ponúk zobrazených nad prepínačmi. Rozbaľovacie ponuky nie sú viditeľné? Skontrolujte svoje internetové pripojenie a znova otvorte Nastavenia.</string>
 
 	<!-- News strings -->
 	<string name="news">Novinky</string>

@@ -109,12 +109,6 @@
 			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
-			android:name=".compose.activities.HelpActivity"
-			android:label="@string/help"
-			android:parentActivityName=".compose.activities.MainActivity"
-			android:screenOrientation="portrait" />
-
-		<activity
 			android:name=".compose.activities.FaqActivity"
 			android:label="@string/faq"
 			android:parentActivityName=".compose.activities.MainActivity"

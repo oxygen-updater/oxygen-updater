@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.IntRange
+import com.oxygenupdater.compose.activities.InstallGuideActivity
 import com.oxygenupdater.compose.activities.MainActivity
 import com.oxygenupdater.compose.activities.MainActivity.Companion.PAGE_SETTINGS
 import com.oxygenupdater.compose.activities.MainActivity.Companion.PAGE_UPDATE
@@ -36,5 +37,13 @@ inline fun Activity.startMainActivity(
 inline fun Activity.startNewsItemActivity(id: Long) = startActivity(
     Intent(this, NewsItemActivity::class.java).putExtra(
         NewsItemActivity.INTENT_NEWS_ITEM_ID, id
+    )
+)
+
+inline fun Context.startInstallActivity(
+    showDownloadInstructions: Boolean,
+) = startActivity(
+    Intent(this, InstallGuideActivity::class.java).putExtra(
+        InstallGuideActivity.INTENT_SHOW_DOWNLOAD_INSTRUCTIONS, showDownloadInstructions
     )
 )

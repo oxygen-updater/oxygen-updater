@@ -163,6 +163,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Ghid de instalare</string>
+	<string name="install_guide_download_instructions">&#8226; Apăsați butonul Descărcare pentru a începe descărcarea actualizării.\n&#8226; Progresul descărcării va apărea atât în aplicație, cât și ca notificare în panoul de notificări.\n&#8226; Când descărcarea s-a încheiat, veți vedea o notificare cu textul \"Descărcare completă\". Dacă a apărut o eroare de descărcare, deschideți aplicația și încercați să descărcați din nou actualizarea. Dacă acest lucru nu funcționează, asigurați-vă că aveți o conexiune funcțională. În caz contrar, luați legătura cu dezvoltatorul aplicației. Puteți face acest lucru accesând secțiunea \"Aplicațiile mele\" din Magazinul Google Play.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Dispozitivul dumneavoastră este suportat</string>
@@ -222,17 +223,6 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="device_notification_channel_description">Primiți o notificare când este adăugat suport pentru un nou dispozitiv</string>
 	<string name="general_notification_channel_description">Notificări generale care nu se încadrează în alte categorii</string>
 	<string name="url_submitted_notification_channel_description">Primiți o notificare atunci când trimiteți cu succes URL-uri OTA către echipa noastră.\nPuteți renunța la trimiterea automată a URL-urilor în setările aplicației.</string>
-
-	<!-- Help strings -->
-	<string name="help">Ajutor</string>
-	<string name="help_updating_your_device_title">Actualizați dispozitivul</string>
-	<string name="help_updating_your_device_text">La deschiderea aplicației, veți vedea dacă este disponibilă o actualizare de sistem. Dacă este disponibilă o actualizare, atunci o puteți instala.\n\nPentru a începe instalarea, apăsați butonul de \"Descărcare\" (sub descrierea actualizării) pentru a începe descărcarea. Când descărcarea s-a încheiat, veți vedea meniul de instalare. Dacă ați părăsit aplicația sau în cazul în care meniul de instalare nu a apărut, apăsați pe butonul \"Instalare\", care va fi afișat lângă butonul de \"Descărcare\".\n\nProcesul de instalare va verifica mai întâi dacă aveți un dispozitiv rootat. Dacă aveți un dispozitiv rootat, acordați permisiunea de root atunci când vi se solicită și alegeți modul în care doriți să instalați actualizarea. În caz contrar, urmați instrucțiunile pentru instalarea manuală.\n\nInstalarea automată:\nVa trebui doar să alegeți opțiunile pentru instalare. Sunt recomandate setările implicite, cu excepția faptului că trebuie să specificați pachetul root care trebuie (re)instalat. Selectați un pachet root (în format .zip) folosind butonul albastru al directorului și apăsați pe \"Porniți instalarea\" pentru a porni instalarea.\n\nInstalarea manuală:\nVeți vedea un ghid de instalare pe ecran. Notați separat instrucțiunile și efectuați-le în ordinea în care sunt prezentate pentru a instala actualizarea.</string>
-	<string name="help_reading_news_title">Citiți ultimele noutăți</string>
-	<string name="help_reading_news_text">Noutățile și știrile sunt afișate în dreapta panoului de actualizări. Cele mai recente elemente apar în partea de sus. Pur și simplu atingeți un articol pentru a-l citi.\nAtingeți săgeata "înapoi" sau apăsați tasta "înapoi" pentru a reveni la ecranul de știri.</string>
-	<string name="help_device_information_title">Vizualizați informații despre dispozitiv</string>
-	<string name="help_device_information_text">Puteți vizualiza anumite specificații ale dispozitivului utilizând ecranul din dreapta panoului de actualizări. Acest lucru este util atunci când faceți o solicitare de asistență în care există posibilitatea să vi se solicite anumite specificații ale dispozitivului dumneavoastră.</string>
-	<string name="help_change_settings_title">Modificați setările</string>
-	<string name="help_change_settings_text">Puteți modifica setările apăsând pe cele trei puncte din dreapta sus, apoi pe Setări.\nPuteți modifica următoarele setări:\n\n• Dispozitiv și metodă de actualizare\n• Notificări\n• Notificări în aplicație\n• Setări de confidențialitate (încărcare jurnal).\n\nUtilizați comutatoarele pentru a activa și dezactiva setările de notificare / confidențialitate. Selectați un dispozitiv și / sau o metodă de actualizare folosind meniurile dropdown afișate deasupra comutatoarelor. Nu sunt vizibile meniurile dropdown? Verificați conexiunea la internet și deschideți din nou meniul de Setări.</string>
 
 	<!-- News strings -->
 	<string name="news">Noutăți</string>

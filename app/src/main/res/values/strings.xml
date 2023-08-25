@@ -166,6 +166,7 @@ This can be useful if you want to:"</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Install guide</string>
+	<string name="install_guide_download_instructions">&#8226; Press the Download button to start downloading the update.\n&#8226; The download progress will appear in the app, and as a notification in your notifications screen.\n&#8226; When the download has finished, you\'ll see a notification with the text \"Download complete\". If a download error occurred, open the app and try to download it again. If this doesn\'t work, make sure you have a working connection. Otherwise, contact the developer of the app. You can do this by visiting the \"My apps\" section of the Google Play Store.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Your device is supported</string>
@@ -230,17 +231,6 @@ This can be useful if you want to:"</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">Get notified when you\'ve submitted OTA URLs successfully to our team.\nYou can opt-out of automatically submitting URLs in the app\'s settings.</string>
-
-	<!-- Help strings -->
-	<string name="help">Help</string>
-	<string name="help_updating_your_device_title">Updating your device</string>
-	<string name="help_updating_your_device_text">When opening the app, you\'ll see if a system update is available. If an update is available, you can install it.\n\nTo start the installation, tap the \"Download\" button (below the update description) to start the download. When the download has finished, the installation screen pops up. If you left the app or the screen didn\'t pop up, tap the \"Install\" button, which is now shown next to the \"Download\" button.\n\nThe install screen will first check if you have a rooted device. If you have a rooted device, grant root permission when asked and choose how you want to install the update. Otherwise, follow the instructions for Manual install.\n\nAutomatic install:\nYou\'ll only have to choose your install options. The default settings are recommended, except that you have to specify the root package which needs to be (re)installed. Select a root package (zip file) using the blue folder button and tap on \"Start install\" to start the installation.\n\nManual install:\nYou\'ll see an installation guide on your screen. Write the instructions down and perform them as stated to install the update.</string>
-	<string name="help_reading_news_title">Reading the latest news</string>
-	<string name="help_reading_news_text">News is displayed to the left of the Update screen. The most recent items appear on top. Just tap on an item to read it.\nTap the back arrow or press your back key to return to the news items screen.</string>
-	<string name="help_device_information_title">Viewing information about your device</string>
-	<string name="help_device_information_text">You may view some of the specifications of your device using the screen to the right of the Update screen. This comes in handy when making a support request, during which you might be asked for some of the specifications of your device.</string>
-	<string name="help_change_settings_title">Changing settings</string>
-	<string name="help_change_settings_text">You can change your settings by tapping the three dots in the top right, following a tap on Settings.\nYou can change the following settings:\n\n• Device and update method\n• Push notifications\n• In app notifications\n• Privacy settings (log uploading).\n\nUse the switches to turn notification / privacy settings on and off. Select a device and / or update method using the dropdown menus shown above the switches. Dropdown menus not visible? Check your Internet connection and open the Settings screen again.</string>
 
 	<!-- News strings -->
 	<string name="news">News</string>

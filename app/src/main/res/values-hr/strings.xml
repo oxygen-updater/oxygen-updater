@@ -173,6 +173,9 @@ Povuci lijevo da nastaviš."</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">"instalacijski priručnik"</string>
+	<string name="install_guide_download_instructions">"&#8226; Pritisnite dugme za preuzimanje kako bi započeli preuzimanje ažuriranja.
+&#8226; Status preuzimanja biti će prikazan u aplikaciji i kao notifikacija.
+&#8226; Nakon završetka preuzimanja dobiti čete notifikaciju sa tekstom \"Preuzimanje završeno\" , ako se dogodi greška pri preuzimanju otvorite aplikaciju i pokušajte ponovno , ako ni to ne djeluje provjerite jeli imate stabilnu vezu. U suprotnom kontaktirajte stvaratelja aplikacije. To možete učiniti preko \"My apps\" sekcije u Google Play Store-u."</string>
 
 	<!-- Device information strings -->
 	<!-- TODO: translate these lines -->
@@ -237,35 +240,6 @@ Povuci lijevo da nastaviš."</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">Primite obavijest kada uspješno pošaljete OTA URL-ove našem timu.\nMožete isključiti automatsko slanje URL-ova u postavkama aplikacije.</string>
-
-	<!-- Help strings -->
-	<string name="help">"Pomoć"</string>
-	<string name="help_updating_your_device_title">"Ažuriranje vašeg uređaja"</string>
-	<string name="help_updating_your_device_text">"Kada otvorite aplikaciju vidjeti čete ako je ažuriranje dostupno. Ako je ažuriranje dostupno možete ga preuzeti.
-
-Da započnete instalaciju pritisnite \"Preuzmi\" (ispod opisa ažuriranja). Kada je preuzimanje gotovo prozor za instalaciju će se pojaviti. Ako ste izašli iz aplikacije ili se prozor nije pojavio stisnite \"Instaliraj\" dugme pokraj \"Preuzmi\" dugmeta.
-
-Prozor za instalaciju će prvo provjeriti jeli vaš uređaj root-an. Ako imate root-an uređaj dajte root dopuštenja kada su zatražena i izaberite kako želite instalirati ažuriranje. U suprotnom samo slijedite upute za ručnu instalaciju.
-
-Automatska instalacija:
-Jedino što čete biti zatraženi je da odaberete način instalacije. Zadane postavke su preporučene osim ako imate specifičan root paket koji mora biti (re)instaliran. Odaberite root paket (zip fajl) koristeći se plavim folder dugmetom i pritisnite \"Počni instalaciju\" da započnete instalaciju.
-
-Ručna instalacija:
-Vidjeti čete priručnik za instalaciju na vašem ekranu. Zapišite instrukcije na papir i pratite ih tijekom instalaciju ažuriranja."</string>
-	<string name="help_reading_news_title">"Čitanje najnovijih vijesti"</string>
-	<string name="help_reading_news_text">"Vijesti su prikazanje na lijevoj strani stranice sa podacima o ažuriranju. Najnovije vijesti su prikazanje na vrhu. Pritiskom na njih možete ih pročitati.
-Pritiskom na strelicu ili pritiskom tipke na uređaju za unatrag možete se vratiti na početni zaslon"</string>
-	<string name="help_device_information_title">"Pregled informacija o vašem uređaju"</string>
-	<string name="help_device_information_text">"Možete vidjeti neke od specifikacija vašeg uređaja koristeći ekran s desne strane od informacija za ažuriranje. To vam može poslužiti tijekom pisanja molbe za pomoć tijekom koje bi mogli biti pitani neke od specifikacija vašeg uređaja."</string>
-	<string name="help_change_settings_title">"Promjena postavki"</string>
-	<string name="help_change_settings_text">"Možete promijeniti postavke pritiskom na tri točke u gornjem desnom kutu. Pritiskom na tipku za postavke možete promijeniti sljedeće:
-
-• Uređaj i metodu ažuriranja
-• \"Push\" Notifikacije
-• Notifikacije u aplikaciji
-• Postavke o privatnosti (log ažuriranja)
-
-Koristite \"prekidač\" da upalite ili ugasite notifikacije / postavke o privatnosti. Odaberite svoj uređaj i metodu ažuriranja pomoću selektivnog menija. Ne vidite selektivni meni? Provjerite svoju internetsku vezu i otvorite postavke ponovno."</string>
 
 	<!-- News strings -->
 	<string name="news">"Vijesti"</string>

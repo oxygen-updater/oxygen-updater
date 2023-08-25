@@ -175,6 +175,9 @@ Svep vänster för att fortsätta."</string>
 
 	<!-- Install guide strings -->
 	<string name="install_guide">"Installationsguide"</string>
+	<string name="install_guide_download_instructions">"&#8226; Tryck på nedladdningsknappen för att starta nedladdningen av uppdateringen.
+&#8226; Nedladdningens status kommer visas i appen och som en notifikation på din enhet.
+&#8226; När nedladdningen är klar visas en notifikation med texten \"Nedladdning klar\". Om ett nedladdningsfel inträffat öppnar du appen och försöker hämta uppdateringen igen. Om det inte fungerar, se till att du har en fungerande anslutning. Annars kontakta utvecklaren av appen. Du kan göra det genom att besöka sektionen \"Mina appar\" i Google Play Butik."</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Vi har stöd flr din enhet</string>
@@ -236,36 +239,6 @@ Svep vänster för att fortsätta."</string>
 	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
 	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
 	<string name="url_submitted_notification_channel_description">Få ett meddelande när du har skickat in OTA-adresser till vårt team.\nDu kan välja bort att automatiskt skicka in webbadresser i appens inställningar.</string>
-
-	<!-- Help strings -->
-	<string name="help">"Hjälp"</string>
-	<string name="help_updating_your_device_title">"Uppdaterar din enhet"</string>
-	<string name="help_updating_your_device_text">"När du öppnar appen ser du om en systemuppdatering är tillgänglig. Om en uppdatering är tillgänglig kan du installera den.
-
-För att starta installationen, tryck på knappen \"Ladda ner\" (nedanför uppdateringsbeskrivningen) för att starta nedladdningen. När nedladdningen är klar visas installationsskärmen upp. Om du lämnade appen eller skärmen inte kom upp, tryck på \"Installera\" -knappen, som nu visas bredvid knappen \"Ladda ner\".
-
-Installationsskärmen kontrollerar först om du har en rootad enhet. Om du har en rootad enhet, bevilja rootförfrågan när den kommer upp och välj hur du vill installera uppdateringen. Du kan också följa instruktionerna för manuell installation.
-
-Automatisk installation:
-Du behöver bara välja dina installationsalternativ. Standardinställningarna rekommenderas, däremot måste du ange rootpaketet som ska installeras. Välj ett rootpaket (zip-fil) med den blå mappknappen och tryck på \"Starta installation\" för att starta installationen.
-
-Manuell installation:
-Du får se en installationsguide på skärmen. Skriv ner instruktionerna och utför dem enligt guiden för att installera uppdateringen."</string>
-	<string name="help_reading_news_title">"Läser de senaste nyheterna"</string>
-	<string name="help_reading_news_text">"Nyheter visas till vänster om uppdateringsinformationsskärmen. De senaste nyheterna visas på toppen. Klicka bara på en nyhet för att läsa den.
-Tryck på bakåtpilen eller tryck på tillbaka-knappen för att återgå till skärmen för nyheter."</string>
-	<string name="help_device_information_title">"Kollar information om din enhet"</string>
-	<string name="help_device_information_text">"Du kan se några av specifikationerna för din enhet på skärmen till höger om uppdateringsinformationen. Det här är bra att ha när du gör en supportförfrågan, där du kanske blir frågad om några av specifikationerna för din enhet."</string>
-	<string name="help_change_settings_title">"Ändrar inställningar"</string>
-	<string name="help_change_settings_text">"Du kan ändra dina inställningar genom att trycka på de tre prickarna längst upp till höger, klicka därefter på \"inställningar\"
-Du kan ändra inställningar för följande delar:
-
-• Enhet och uppdateringsmetod
-• Pushnotifikationer
-• Interna appnotifikationer
-• Sekretessinställningar (logguppladdning).
-
-Använd knapparna för att aktivera och inaktivera meddelande / sekretessinställningar. Välj en enhet och / eller uppdateringsmetod med hjälp av rullgardinsmenyerna som visas ovanför knapparna. Ser du inte rullgardinsmenyerna? Kontrollera din Internetanslutning och öppna Inställningarna igen."</string>
 
 	<!-- News strings -->
 	<string name="news">"Nyheter"</string>
