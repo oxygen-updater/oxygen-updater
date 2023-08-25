@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -29,7 +30,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +58,8 @@ import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.internal.DeviceInformationData
 import com.oxygenupdater.internal.DeviceInformationData.cpuFrequency
+import com.oxygenupdater.internal.DeviceInformationData.deviceManufacturer
+import com.oxygenupdater.internal.DeviceInformationData.deviceName
 import com.oxygenupdater.internal.DeviceInformationData.serialNumber
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -66,13 +68,7 @@ import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import kotlin.math.roundToLong
 
-@Composable
-@ReadOnlyComposable
-fun defaultDeviceName() = stringResource(
-    R.string.device_information_device_name,
-    DeviceInformationData.deviceManufacturer,
-    DeviceInformationData.deviceName
-)
+fun defaultDeviceName() = "$deviceManufacturer $deviceName"
 
 @Composable
 fun DeviceScreen(
@@ -175,7 +171,7 @@ private fun DeviceHeader(
                 deviceMismatchStatus.third
             ),
             Modifier.padding(16.dp),
-            MaterialTheme.colorScheme.onSurfaceVariant,
+            MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.bodySmall
         )
         ItemDivider()
@@ -262,6 +258,8 @@ private fun DeviceHardwareInfo() {
         R.string.device_information_serial_number,
         serialNumber,
     )
+
+    Spacer(Modifier.height(16.dp))
 }
 
 @Composable

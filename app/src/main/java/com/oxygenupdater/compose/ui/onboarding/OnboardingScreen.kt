@@ -50,6 +50,7 @@ import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.compose.ui.dialogs.SelectableSheet
 import com.oxygenupdater.compose.ui.dialogs.SheetType
 import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
+import com.oxygenupdater.compose.ui.dialogs.rememberSheetType
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.internal.settings.PrefManager
@@ -70,7 +71,7 @@ fun OnboardingScreen(
 ) {
     val sheetState = defaultModalBottomSheetState()
     val listState = rememberLazyListState()
-    var sheetType by remember { mutableStateOf(SheetType.None) }
+    var sheetType by rememberSheetType()
     val hide = rememberCallback { sheetType = SheetType.None }
 
     val (enabledDevices, methodsForDevice) = lists

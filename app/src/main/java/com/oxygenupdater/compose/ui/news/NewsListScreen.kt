@@ -2,6 +2,7 @@ package com.oxygenupdater.compose.ui.news
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -263,9 +264,10 @@ private fun NewsListItem(
                 } ?: authorName,
                 Modifier
                     .padding(start = 16.dp)
+                    .basicMarquee()
                     .withPlaceholder(refreshing),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                overflow = TextOverflow.Ellipsis, maxLines = 1,
+                maxLines = 1,
                 style = MaterialTheme.typography.bodySmall
             )
 

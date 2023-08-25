@@ -13,7 +13,11 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -61,6 +65,20 @@ fun SheetCaption(@StringRes captionResId: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 inline fun defaultModalBottomSheetState() = rememberModalBottomSheetState(true)
+
+/** Allows keeping the sheet open after external config changes, e.g. theme */
+@Suppress("NOTHING_TO_INLINE")
+@Composable
+inline fun rememberSheetType() = rememberSaveable(saver = SheetTypeSaver) {
+    mutableStateOf(SheetType.None)
+}
+
+val SheetTypeSaver = Saver<MutableState<SheetType>, Int>(
+    save = { it.value.value },
+    restore = {
+        mutableStateOf(SheetType.from(it))
+    }
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

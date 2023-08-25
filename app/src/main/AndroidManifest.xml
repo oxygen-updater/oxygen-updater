@@ -35,15 +35,7 @@
 		android:requestLegacyExternalStorage="true"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.OxygenUpdater"
-		android:usesCleartextTraffic="true"
-		tools:ignore="LockedOrientationActivity"
 		tools:targetApi="s">
-
-		<!-- Cleartext traffic is required to fix download errors after targeting API 28 because the Download URLs of OnePlus are not HTTPS.  -->
-		<!-- Fix Google Ads crashing when app targets API 28 or up as per https://developers.google.com/maps/documentation/android-sdk/config#specify_requirement_for_apache_http_legacy_library -->
-		<uses-library
-			android:name="org.apache.http.legacy"
-			android:required="false" />
 
 		<meta-data
 			android:name="asset_statements"
@@ -57,7 +49,6 @@
 		<activity
 			android:name=".activities.SplashActivity"
 			android:exported="true"
-			android:screenOrientation="portrait"
 			android:theme="@style/Theme.OxygenUpdater.Splash">
 
 			<tools:validation testUrl="https://${hostName}/inapp" />
@@ -90,36 +81,41 @@
 		<!-- All screens -->
 		<activity
 			android:name=".compose.activities.MainActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:launchMode="singleTask"
-			android:screenOrientation="portrait"
+			android:resizeableActivity="true"
 			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
 			android:name=".compose.activities.InstallGuideActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:label="@string/install_guide"
 			android:parentActivityName=".compose.activities.MainActivity"
-			android:screenOrientation="portrait"
+			android:resizeableActivity="true"
 			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
 			android:name=".compose.activities.OnboardingActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:label="@string/onboarding"
 			android:launchMode="singleTask"
-			android:screenOrientation="portrait"
+			android:resizeableActivity="true"
 			android:theme="@style/Theme.OxygenUpdater" />
 
 		<activity
 			android:name=".compose.activities.FaqActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:label="@string/faq"
 			android:parentActivityName=".compose.activities.MainActivity"
-			android:screenOrientation="portrait" />
+			android:resizeableActivity="true" />
 
 		<activity
 			android:name=".compose.activities.NewsItemActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:exported="true"
 			android:label="@string/news"
 			android:parentActivityName=".compose.activities.MainActivity"
-			android:screenOrientation="portrait"
+			android:resizeableActivity="true"
 			android:theme="@style/Theme.OxygenUpdater">
 
 			<intent-filter
@@ -164,12 +160,6 @@
 					android:scheme="oxygenupdater" />
 			</intent-filter>
 		</activity>
-
-		<!-- Advertisements -->
-		<activity
-			android:name="com.google.android.gms.ads.AdActivity"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-			android:theme="@android:style/Theme.Translucent" />
 
 		<!-- Push notifications services and receiver, Package updated receiver -->
 		<service

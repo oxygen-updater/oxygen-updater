@@ -9,7 +9,7 @@ import com.oxygenupdater.utils.Logger.logVerbose
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader
-import java.util.*
+import java.util.Scanner
 
 /**
  * Contains some properties of the OS / ROM installed on the device.

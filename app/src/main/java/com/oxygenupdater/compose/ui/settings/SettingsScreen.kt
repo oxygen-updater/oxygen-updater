@@ -69,6 +69,7 @@ import com.oxygenupdater.compose.ui.dialogs.SelectableSheet
 import com.oxygenupdater.compose.ui.dialogs.SheetType
 import com.oxygenupdater.compose.ui.dialogs.ThemeSheet
 import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
+import com.oxygenupdater.compose.ui.dialogs.rememberSheetType
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
@@ -107,7 +108,7 @@ fun SettingsScreen(
 ) {
     val sheetState = defaultModalBottomSheetState()
     val listState = rememberLazyListState()
-    var sheetType by remember { mutableStateOf(SheetType.None) }
+    var sheetType by rememberSheetType()
     val hide = rememberCallback { sheetType = SheetType.None }
     BackHandler(sheetState.isVisible, hide)
 
@@ -357,6 +358,7 @@ private fun Header(@StringRes textResId: Int) {
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Item(
     icon: ImageVector,
@@ -375,7 +377,6 @@ private fun Item(
     Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colorScheme.primary)
 
     Column(Modifier.padding(start = 16.dp)) {
-        @OptIn(ExperimentalFoundationApi::class)
         Text(
             stringResource(titleResId),
             Modifier.basicMarquee(), maxLines = 1,

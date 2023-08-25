@@ -3,7 +3,7 @@ package com.oxygenupdater.models
 import android.os.Build
 import com.oxygenupdater.utils.Utils.checkDeviceOsSpec
 import java.lang.reflect.InvocationTargetException
-import java.util.*
+import java.util.Scanner
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertSame

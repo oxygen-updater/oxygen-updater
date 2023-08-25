@@ -47,5 +47,18 @@ value class SheetType(val value: Int) {
 
         @Stable
         val AlreadyDownloaded = SheetType(8)
+
+        fun from(value: Int) = when (value) {
+            None.value -> None
+            Device.value -> Device
+            Method.value -> Method
+            Contributor.value -> Contributor
+            ServerMessages.value -> ServerMessages
+            Theme.value -> Theme
+            Language.value -> Language
+            AdvancedMode.value -> AdvancedMode
+            AlreadyDownloaded.value -> AlreadyDownloaded
+            else -> None
+        }
     }
 }

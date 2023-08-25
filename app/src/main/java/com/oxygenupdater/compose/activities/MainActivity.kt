@@ -70,6 +70,7 @@ import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.compose.ui.dialogs.ServerMessagesSheet
 import com.oxygenupdater.compose.ui.dialogs.SheetType
 import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
+import com.oxygenupdater.compose.ui.dialogs.rememberSheetType
 import com.oxygenupdater.compose.ui.main.AboutRoute
 import com.oxygenupdater.compose.ui.main.AppUpdateInfo
 import com.oxygenupdater.compose.ui.main.DeviceRoute
@@ -251,7 +252,7 @@ class MainActivity : ComposeBaseActivity() {
         val initialSubtitle = startScreen.subtitle ?: stringResource(startScreen.labelResId)
         var subtitle by remember { mutableStateOf(initialSubtitle) }
         var showMarkAllRead by remember { mutableStateOf(false) }
-        var sheetType by remember { mutableStateOf(SheetType.None) }
+        var sheetType by rememberSheetType()
 
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
         Scaffold(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {

@@ -114,6 +114,7 @@ import com.oxygenupdater.compose.ui.dialogs.AlreadyDownloadedSheet
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.compose.ui.dialogs.SheetType
 import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
+import com.oxygenupdater.compose.ui.dialogs.rememberSheetType
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
@@ -299,19 +300,15 @@ fun UpdateAvailable(
     }
 
     val sheetState = defaultModalBottomSheetState()
-    var sheetType by remember { mutableStateOf(SheetType.None) }
+    var sheetType by rememberSheetType()
     val hide = rememberCallback { sheetType = SheetType.None }
     BackHandler(sheetState.isVisible, hide)
 
-    if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
-        when (sheetType) {
-            SheetType.AlreadyDownloaded -> AlreadyDownloadedSheet(hide) {
-                if (it) context.startInstallActivity(false)
-                else if (hasDownloadPermissions) downloadAction(DownloadAction.Delete)
-                else requestDownloadPermissions()
-            }
-
-            else -> {}
+    if (sheetType == SheetType.AlreadyDownloaded) ModalBottomSheet(hide, sheetState) {
+        AlreadyDownloadedSheet(hide) {
+            if (it) context.startInstallActivity(false)
+            else if (hasDownloadPermissions) downloadAction(DownloadAction.Delete)
+            else requestDownloadPermissions()
         }
     }
 

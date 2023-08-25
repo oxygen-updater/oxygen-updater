@@ -7,7 +7,7 @@ import android.os.LocaleList
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.oxygenupdater.internal.settings.PrefManager
-import java.util.*
+import java.util.Locale
 
 /**
  * This file can't use any Koin-managed singletons, because most functions

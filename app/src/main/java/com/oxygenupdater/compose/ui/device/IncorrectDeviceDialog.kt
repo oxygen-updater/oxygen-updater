@@ -1,7 +1,6 @@
 package com.oxygenupdater.compose.ui.device
 
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -31,9 +30,7 @@ fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
             CheckboxText(
                 ignore,
                 R.string.device_warning_checkbox_title,
-                Modifier
-                    .padding(top = 8.dp)
-                    .offset((-12).dp), // bring in line with Text
+                Modifier.offset((-12).dp), // bring in line with Text
                 textColor = AlertDialogDefaults.textContentColor.copy(alpha = 0.87f),
             )
         },
