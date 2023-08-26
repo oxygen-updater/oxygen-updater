@@ -218,18 +218,17 @@ class MainActivity : BaseActivity() {
         }
 
         val snackbarHostState = remember { SnackbarHostState() }
-        MainSnackbar(snackbarHostState, viewModel.snackbarText, openPlayStorePage = {
-            openPlayStorePage()
-        }, completeAppUpdate = {
-            viewModel.completeAppUpdate()
-        })
+        MainSnackbar(
+            snackbarHostState,
+            viewModel.snackbarText,
+            openPlayStorePage = ::openPlayStorePage,
+            completeAppUpdate = viewModel::completeAppUpdate
+        )
 
         AppUpdateInfo(
             viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
             viewModel.snackbarText,
-            unregisterAppUpdateListener = {
-                viewModel.unregisterAppUpdateListener()
-            },
+            viewModel::unregisterAppUpdateListener,
             requestUpdate = { launcher, info ->
                 viewModel.requestUpdate(launcher, info)
             },
@@ -476,7 +475,7 @@ class MainActivity : BaseActivity() {
             ).show()
         }
 
-        val adFreeConfig by adFreeConfig(adFreeState, markPending, makePurchase = {
+        val adFreeConfig = adFreeConfig(adFreeState, markPending, makePurchase = rememberTypedCallback {
             billingViewModel.makePurchase(this@MainActivity, it)
         })
 
