@@ -164,7 +164,7 @@ object PrefManager {
     const val PROPERTY_UPDATE_METHOD_ID = "update_method_id"
 
     const val PROPERTY_THEME_ID = "theme_id"
-    const val PROPERTY_LANGUAGE_ID = "language_id"
+
     const val PROPERTY_ADVANCED_MODE = "advanced_mode"
     const val PROPERTY_SETUP_DONE = "setup_done"
     const val PROPERTY_SQL_TO_ROOM_MIGRATION_DONE = "sql_to_room_migration_done"

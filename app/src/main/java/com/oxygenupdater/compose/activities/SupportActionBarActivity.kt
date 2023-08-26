@@ -27,7 +27,7 @@ import com.oxygenupdater.extensions.startMainActivity
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @OptIn(ExperimentalMaterial3Api::class)
-abstract class ComposeSupportActionBarActivity(
+abstract class SupportActionBarActivity(
     /**
      * Used in the `onBackPressed` callback, only if this is the task root and
      * we need to reroute to [MainActivity].
@@ -39,7 +39,7 @@ abstract class ComposeSupportActionBarActivity(
     private val startPage: Int,
 
     @StringRes private val subtitleResId: Int,
-) : ComposeBaseActivity() {
+) : BaseActivity() {
 
     protected lateinit var scrollBehavior: TopAppBarScrollBehavior
 

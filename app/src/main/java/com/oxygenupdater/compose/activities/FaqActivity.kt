@@ -14,7 +14,7 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.viewmodels.BillingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FaqActivity : ComposeSupportActionBarActivity(
+class FaqActivity : SupportActionBarActivity(
     MainActivity.PAGE_ABOUT,
     R.string.faq,
 ) {

@@ -28,7 +28,6 @@ import com.oxygenupdater.enums.NotificationType.GENERAL_NOTIFICATION
 import com.oxygenupdater.enums.NotificationType.NEWS
 import com.oxygenupdater.enums.NotificationType.NEW_DEVICE
 import com.oxygenupdater.enums.NotificationType.NEW_VERSION
-import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DEVICE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENERAL_NOTIFICATION_CHANNEL_ID
@@ -46,11 +45,9 @@ import kotlin.random.Random
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class DisplayDelayedNotificationWorker(
-    context: Context,
+    private val context: Context,
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
-
-    private val context = context.attachWithLocale(false)
 
     private val messageContents = parameters.inputData.keyValueMap
         .entries

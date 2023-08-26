@@ -14,7 +14,7 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.viewmodels.BillingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class InstallGuideActivity : ComposeSupportActionBarActivity(
+class InstallGuideActivity : SupportActionBarActivity(
     MainActivity.PAGE_UPDATE,
     R.string.install_guide,
 ) {

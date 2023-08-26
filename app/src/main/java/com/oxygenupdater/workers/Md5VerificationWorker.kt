@@ -6,7 +6,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.oxygenupdater.compose.ui.update.Md5VerificationFailure
-import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
@@ -30,11 +29,9 @@ import java.security.NoSuchAlgorithmException
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class Md5VerificationWorker(
-    context: Context,
+    private val context: Context,
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
-
-    private val context = context.attachWithLocale(false)
 
     private val filename: String?
     private val md5: String?

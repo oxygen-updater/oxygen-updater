@@ -47,7 +47,7 @@ import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.hasRootAccess
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OnboardingActivity : ComposeBaseActivity() {
+class OnboardingActivity : BaseActivity() {
 
     private val viewModel by viewModel<SettingsViewModel>()
 

@@ -170,6 +170,16 @@
 			</intent-filter>
 		</service>
 
+		<!-- https://developer.android.com/guide/topics/resources/app-languages#android12-impl -->
+		<service
+			android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+			android:enabled="true"
+			android:exported="false">
+			<meta-data
+				android:name="autoStoreLocales"
+				android:value="true" />
+		</service>
+
 		<!-- Receiver to auto start RootFileService at device startup or app update -->
 		<receiver
 			android:name="com.oxygenupdater.receivers.DeviceBootOrAppUpdateReceiver"

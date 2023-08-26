@@ -5,6 +5,7 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -53,6 +54,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
@@ -74,10 +76,9 @@ import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
 import com.oxygenupdater.extensions.launch
+import com.oxygenupdater.extensions.openAppLocalePage
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.rememberCustomTabsIntent
-import com.oxygenupdater.extensions.toLanguageCode
-import com.oxygenupdater.extensions.toLocale
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.putBoolean
 import com.oxygenupdater.models.Device
@@ -101,7 +102,6 @@ fun SettingsScreen(
     deviceChanged: (Device) -> Unit,
     initialMethodIndex: Int,
     methodChanged: (UpdateMethod) -> Unit,
-    languageChanged: (String) -> Unit,
     adFreePrice: String?,
     adFreeConfig: Triple<Boolean, Int, (() -> Unit)?>?,
     openAboutScreen: () -> Unit,
@@ -117,10 +117,7 @@ fun SettingsScreen(
     val methodSelectionEnabled = methodsForDevice.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
 
-    var selectedLanguageCode by remember {
-        val defaultLanguageCode = Locale.getDefault().toLanguageCode()
-        mutableStateOf(PrefManager.getString(PrefManager.PROPERTY_LANGUAGE_ID, defaultLanguageCode) ?: defaultLanguageCode)
-    }
+    val selectedLocale = AppCompatDelegate.getApplicationLocales()[0] ?: LocaleListCompat.getDefault()[0] ?: Locale.getDefault()
 
     val advancedMode = remember {
         mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
@@ -148,13 +145,11 @@ fun SettingsScreen(
                 methodChanged
             )
 
-            SheetType.Theme -> ThemeSheet(hide) {
-                PrefManager.theme = it
-            }
-
-            SheetType.Language -> LanguageSheet(hide, selectedLanguageCode) {
-                selectedLanguageCode = it
-                languageChanged(it)
+            SheetType.Theme -> ThemeSheet(hide) { PrefManager.theme = it }
+            SheetType.Language -> {
+                // We're using this only on Android 12 & below
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) return@ModalBottomSheet
+                LanguageSheet(hide, selectedLocale)
             }
 
             SheetType.AdvancedMode -> AdvancedModeSheet(hide) {
@@ -225,13 +220,16 @@ fun SettingsScreen(
             sheetType = SheetType.Theme
         }
 
-        Item(Icons.Outlined.Language, R.string.label_language, remember(selectedLanguageCode) {
-            val locale = selectedLanguageCode.toLocale()
-            locale.displayName.replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(locale) else it.toString()
+        val context = LocalContext.current
+        Item(Icons.Outlined.Language, R.string.label_language, remember(selectedLocale) {
+            selectedLocale.displayName.replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(selectedLocale) else it.toString()
             }
         }) {
-            sheetType = SheetType.Language
+            // Delegate to system API on Android 13+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) context.openAppLocalePage()
+            // Otherwise use our own sheet
+            else sheetType = SheetType.Language
         }
         //endregion
 
@@ -253,7 +251,6 @@ fun SettingsScreen(
         //region About
         Header(R.string.preference_header_about)
 
-        val context = LocalContext.current
         val customTabIntent = rememberCustomTabsIntent()
         Item(Icons.Outlined.Policy, R.string.label_privacy_policy, stringResource(R.string.summary_privacy_policy)) {
             // Use Chrome Custom Tabs to open the privacy policy link
@@ -438,7 +435,6 @@ fun PreviewSettingsScreen() = PreviewAppTheme {
         deviceChanged = {},
         initialMethodIndex = 1,
         methodChanged = {},
-        languageChanged = {},
         adFreePrice = null,
         adFreeConfig = previousAdFreeConfig,
         openAboutScreen = {},

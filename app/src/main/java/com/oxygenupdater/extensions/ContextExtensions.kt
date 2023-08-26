@@ -10,6 +10,7 @@ import android.os.Build
 import android.provider.Settings
 import android.text.format.Formatter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.material3.MaterialTheme
@@ -133,20 +134,23 @@ fun Context.openEmail() {
 <write your query here>"""
 
     startActivity(
-        Intent(Intent.ACTION_SENDTO)
-            .setData("mailto:".toUri())
+        Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
             .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
             .putExtra(Intent.EXTRA_TEXT, emailBody)
     )
 }
 
-fun Context.openAppDetailsPage() {
-    val action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-    try {
-        startActivity(Intent(action, "package:$packageName".toUri()))
-    } catch (e: Exception) {
-        logError("ContextExtensions", "openAppDetailsPage failed", e)
-    }
+fun Context.openAppDetailsPage() = try {
+    startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:$packageName".toUri()))
+} catch (e: Exception) {
+    logError("ContextExtensions", "openAppDetailsPage failed", e)
+}
+
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun Context.openAppLocalePage() = try {
+    startActivity(Intent(Settings.ACTION_APP_LOCALE_SETTINGS, "package:$packageName".toUri()))
+} catch (e: Exception) {
+    logError("ContextExtensions", "openAppLocalePage failed", e)
 }
 
 fun CustomTabsIntent.launch(context: Context, url: String) = apply {

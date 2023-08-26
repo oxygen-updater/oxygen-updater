@@ -3,6 +3,7 @@ package com.oxygenupdater.compose.ui.common
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material3.Icon
@@ -29,7 +30,7 @@ fun IconText(
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     content: @Composable (RowScope.() -> Unit)? = null,
 ) = Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-    Icon(icon, stringResource(R.string.icon), tint = iconTint)
+    Icon(icon, stringResource(R.string.icon), Modifier.requiredSize(24.dp), tint = iconTint)
 
     // Apply padding first
     Text(text, Modifier.padding(start = 16.dp) then textModifier, style = style)

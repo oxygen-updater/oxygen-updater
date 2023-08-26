@@ -96,7 +96,6 @@ import com.oxygenupdater.compose.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.compose.ui.update.UpdateScreen
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.extensions.openPlayStorePage
-import com.oxygenupdater.extensions.setLocale
 import com.oxygenupdater.extensions.startNewsItemActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
 import com.oxygenupdater.internal.settings.PrefManager
@@ -120,7 +119,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Timer
 import kotlin.concurrent.schedule
 
-class MainActivity : ComposeBaseActivity() {
+class MainActivity : BaseActivity() {
 
     private val viewModel by viewModel<MainViewModel>()
     private val updateViewModel by viewModel<UpdateInformationViewModel>()
@@ -523,9 +522,6 @@ class MainActivity : ComposeBaseActivity() {
                 this@MainActivity.getString(R.string.notification_no_notification_support),
                 Toast.LENGTH_LONG
             ).show()
-        }, rememberTypedCallback {
-            setLocale(it)
-            recreate()
         }, adFreePrice, adFreeConfig, openAboutScreen = rememberCallback {
             navController.navigateWithDefaults(AboutRoute)
         })

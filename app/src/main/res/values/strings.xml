@@ -107,8 +107,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="key_language_id" translatable="false">language_id</string>
-
 	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
 	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
 	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device.</string>

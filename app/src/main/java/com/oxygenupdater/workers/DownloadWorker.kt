@@ -22,7 +22,6 @@ import androidx.work.WorkerParameters
 import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.compose.ui.update.DownloadFailure
-import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE
@@ -52,11 +51,9 @@ import kotlin.math.abs
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class DownloadWorker(
-    context: Context,
+    private val context: Context,
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
-
-    private val context = context.attachWithLocale(false)
 
     private var isFirstPublish = true
     private var previousProgressTimestamp = 0L

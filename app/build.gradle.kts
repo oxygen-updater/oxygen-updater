@@ -163,19 +163,11 @@ android {
 
         val languages = fileTree("src/main/res") {
             include("values-*/strings.xml")
-        }.files.map { file: File ->
-            file.parentFile.name.replace(
-                "values-",
-                ""
-            )
-        }.joinToString { str ->
-            "\"$str\""
-        }
+        }.files.map {
+            it.parentFile.name.removePrefix("values-").replace("-r", "-")
+        }.joinToString { "\"$it\"" }
 
-        val billing = loadProperties(
-            "billing",
-            Pair("base64PublicKey", "")
-        )
+        val billing = loadProperties("billing", Pair("base64PublicKey", ""))
 
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
         buildTypes.forEach {
@@ -223,6 +215,11 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
+    }
+
+    androidResources {
+        // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
+        generateLocaleConfig = true
     }
 
     testBuildType = "debug"
@@ -303,16 +300,18 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.8.1")
 
     // https://developer.android.com/jetpack/androidx/releases/compose#versions
-    implementation("androidx.compose.animation:animation:$COMPOSE")
-    implementation("androidx.compose.animation:animation-graphics:$COMPOSE")
-    implementation("androidx.compose.foundation:foundation:$COMPOSE")
-    implementation("androidx.compose.material3:material3:1.2.0-alpha05")
-    implementation("androidx.compose.material:material-icons-extended:$COMPOSE")
-    implementation("androidx.compose.runtime:runtime-livedata:$COMPOSE")
-    implementation("androidx.compose.ui:ui:$COMPOSE")
-    implementation("androidx.compose.ui:ui-text-google-fonts:$COMPOSE")
-    debugImplementation("androidx.compose.ui:ui-tooling:$COMPOSE")
-    implementation("androidx.compose.ui:ui-tooling-preview:$COMPOSE")
+    val compose = "1.6.0-alpha04"
+    val composeM3 = "1.2.0-alpha06"
+    implementation("androidx.compose.animation:animation:$compose")
+    implementation("androidx.compose.animation:animation-graphics:$compose")
+    implementation("androidx.compose.foundation:foundation:$compose")
+    implementation("androidx.compose.material3:material3:$composeM3")
+    implementation("androidx.compose.material:material-icons-extended:$compose")
+    implementation("androidx.compose.runtime:runtime-livedata:$compose")
+    implementation("androidx.compose.ui:ui:$compose")
+    implementation("androidx.compose.ui:ui-text-google-fonts:$compose")
+    debugImplementation("androidx.compose.ui:ui-tooling:$compose")
+    implementation("androidx.compose.ui:ui-tooling-preview:$compose")
 
     // https://developer.android.com/jetpack/androidx/releases/activity
     implementation("androidx.activity:activity-compose:1.7.2")
@@ -322,7 +321,7 @@ dependencies {
 
     // https://github.com/google/accompanist#compose-versions
     // https://github.com/google/accompanist/releases
-    val accompanist = "0.32.0" // keep in sync with Compose version
+    val accompanist = "0.33.1-alpha" // keep in sync with Compose version
     implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanist")
     implementation("com.google.accompanist:accompanist-permissions:$accompanist")
     implementation("com.google.accompanist:accompanist-placeholder-material3:$accompanist")

@@ -55,7 +55,7 @@ import java.util.Timer
 import kotlin.concurrent.schedule
 
 @OptIn(ExperimentalMaterial3Api::class)
-class NewsItemActivity : ComposeSupportActionBarActivity(
+class NewsItemActivity : SupportActionBarActivity(
     MainActivity.PAGE_NEWS,
     R.string.news
 ) {
