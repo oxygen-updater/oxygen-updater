@@ -461,7 +461,7 @@ class MainActivity : BaseActivity() {
             settingsViewModel.fetchEnabledDevices(cachedEnabledDevices)
         }
 
-        val state = settingsViewModel.state.collectAsStateWithLifecycle().value
+        val state by settingsViewModel.state.collectAsStateWithLifecycle()
 
         // TODO(compose/settings): test all this thoroughly
         val adFreePrice by billingViewModel.adFreePrice.collectAsStateWithLifecycle(null)

@@ -9,7 +9,7 @@ import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceRequestFilter
-import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.models.SystemVersionProperties.oxygenDeviceName
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.NotificationTopicSubscriber
@@ -51,28 +51,31 @@ class SettingsViewModel(
     }
 
     private fun setup(enabledDevices: List<Device>) = viewModelScope.launch(Dispatchers.IO) {
+        var selectedDeviceIndex = NOT_SET
         initialDeviceIndex = NOT_SET
         deviceName = null
 
         val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
         for ((index, device) in enabledDevices.withIndex()) {
-            if (initialDeviceIndex != NOT_SET && deviceName != null) break // take first match only
+            if (selectedDeviceIndex != NOT_SET && initialDeviceIndex != NOT_SET && deviceName != null) break // take first match only
 
             var matched: Boolean? = null  // save computation for future use
             if (deviceName == null) { // take first match only
-                matched = device.productNames.contains(SystemVersionProperties.oxygenDeviceName)
+                matched = device.productNames.contains(oxygenDeviceName)
                 if (matched) deviceName = device.name
             }
 
-            if (
-                (deviceId != NOT_SET_L && deviceId == device.id) ||
-                (matched ?: device.productNames.contains(SystemVersionProperties.oxygenDeviceName))
-            ) initialDeviceIndex = index
+            if (deviceId != NOT_SET_L && deviceId == device.id) selectedDeviceIndex = index
+            if (matched ?: device.productNames.contains(oxygenDeviceName)) initialDeviceIndex = index
         }
 
-        if (initialDeviceIndex != NOT_SET && enabledDevices.size > initialDeviceIndex) {
+        // If there's only one device, select it, otherwise fallback to initial index
+        val size = enabledDevices.size
+        if (selectedDeviceIndex == NOT_SET) selectedDeviceIndex = if (size == 1) 0 else initialDeviceIndex
+
+        if (selectedDeviceIndex != NOT_SET && selectedDeviceIndex < size) {
             // Persist only if there's no device saved yet. This call also fetches methods for device.
-            saveSelectedDevice(enabledDevices[initialDeviceIndex], deviceId == NOT_SET_L)
+            saveSelectedDevice(enabledDevices[selectedDeviceIndex], deviceId == NOT_SET_L)
         }
     }
 
