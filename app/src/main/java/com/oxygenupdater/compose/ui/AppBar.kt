@@ -173,7 +173,7 @@ fun CollapsingAppBar(
             val hover = colorScheme.backgroundVariant.copy(alpha = 0.75f)
             val surface = colorScheme.surface
             // Lerp from 75% opacity hover to 100% opacity surface
-            val background by remember {
+            val background by remember(hover, surface) {
                 derivedStateOf(structuralEqualityPolicy()) {
                     lerp(hover, surface, scrollBehavior.state.collapsedFraction)
                 }

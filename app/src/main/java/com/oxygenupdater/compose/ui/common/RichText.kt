@@ -62,7 +62,7 @@ fun RichText(
     val uriHandler = LocalUriHandler.current
     val urlColor = MaterialTheme.colorScheme.primary
     val typography = MaterialTheme.typography
-    val annotated = remember(text, type) {
+    val annotated = remember(contentColor, urlColor, text, type) {
         when (type) {
             RichTextType.Custom -> custom?.invoke(text, contentColor, urlColor) ?: AnnotatedString(text)
             RichTextType.Html -> htmlToAnnotatedString(
