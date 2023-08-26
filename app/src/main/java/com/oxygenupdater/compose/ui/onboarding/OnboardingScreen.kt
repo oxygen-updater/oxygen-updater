@@ -145,7 +145,7 @@ fun OnboardingScreen(
                     bodyMedium.toSpanStyle(),
                     bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
                 ),
-                Modifier.padding(16.dp),
+                Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
                 style = bodyMedium
             )
 

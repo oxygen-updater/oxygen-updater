@@ -85,15 +85,13 @@ class OxygenUpdater : Application() {
         SqliteMigrations.deleteLocalBillingDatabase(this)
     }
 
-    private fun setupKoin() {
-        startKoin {
-            // use AndroidLogger as Koin Logger - default Level.INFO
-            androidLogger(Level.ERROR)
-            // use the Android context given there
-            androidContext(this@OxygenUpdater)
-            // module list
-            modules(allModules)
-        }
+    private fun setupKoin() = startKoin {
+        // use AndroidLogger as Koin Logger - default Level.INFO
+        androidLogger(Level.ERROR)
+        // use the Android context given there
+        androidContext(this@OxygenUpdater)
+        // module list
+        modules(allModules)
     }
 
     private fun setupNetworkCallback() = getSystemService<ConnectivityManager>()?.run {

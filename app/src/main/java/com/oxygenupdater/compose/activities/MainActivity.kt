@@ -58,7 +58,6 @@ import com.oxygenupdater.compose.ui.RefreshAwareState
 import com.oxygenupdater.compose.ui.TopAppBar
 import com.oxygenupdater.compose.ui.about.AboutScreen
 import com.oxygenupdater.compose.ui.common.BannerAd
-import com.oxygenupdater.compose.ui.common.TransparentSystemBars
 import com.oxygenupdater.compose.ui.common.rememberCallback
 import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.device.DeviceScreen
@@ -372,8 +371,8 @@ class MainActivity : BaseActivity() {
 
                 // This must be defined on the same level as NavHost, otherwise it won't work
                 // We can safely put it outside Column because it's an inline composable
-                // TODO(compose): when support for predictive back is added, animate sheet close based on back progress
-                //  Also delegate to NavHost's default implementation if it does nice things with predictive back
+                // TODO(compose): use PredictiveBackHandler (can only be tested on Android 14). Animate sheet close
+                //  based on progress and delegate to NavHost's default implementation if it does nice things with predictive back.
                 //  https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture#opt-predictive
                 //  Adjust all other BackHandlers if required
                 BackHandler {
@@ -571,7 +570,7 @@ class MainActivity : BaseActivity() {
 
         setContent {
             AppTheme {
-                TransparentSystemBars()
+                EdgeToEdge()
                 Content()
             }
         }

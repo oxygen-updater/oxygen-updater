@@ -25,6 +25,7 @@ import com.google.accompanist.placeholder.shimmer
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
 import kotlin.math.ceil
 
+// TODO(compose): switch to https://github.com/fornewid/placeholder
 @Suppress("DEPRECATION")
 fun Modifier.withPlaceholder(refreshing: Boolean) = if (!refreshing) this else composed {
     placeholder(

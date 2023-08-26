@@ -314,10 +314,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:$compose")
 
     // https://developer.android.com/jetpack/androidx/releases/activity
-    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.activity:activity-compose:1.8.0-alpha07")
 
     // https://developer.android.com/jetpack/androidx/releases/navigation#versions
-    implementation("androidx.navigation:navigation-compose:2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.7.1")
 
     // https://github.com/google/accompanist#compose-versions
     // https://github.com/google/accompanist/releases

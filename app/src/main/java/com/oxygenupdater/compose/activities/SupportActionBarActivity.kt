@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import com.oxygenupdater.compose.ui.TopAppBar
-import com.oxygenupdater.compose.ui.common.TransparentSystemBars
 import com.oxygenupdater.compose.ui.theme.AppTheme
 import com.oxygenupdater.extensions.startMainActivity
 
@@ -59,8 +58,7 @@ abstract class SupportActionBarActivity(
             scrollBehavior = scrollBehavior()
 
             AppTheme {
-                TransparentSystemBars()
-
+                EdgeToEdge()
                 Scaffold(
                     Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                     topBar = { TopAppBar() },

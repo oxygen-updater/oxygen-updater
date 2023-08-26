@@ -31,7 +31,6 @@ import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Image
 import com.oxygenupdater.compose.icons.LogoNotification
 import com.oxygenupdater.compose.ui.CollapsingAppBar
-import com.oxygenupdater.compose.ui.common.TransparentSystemBars
 import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.onboarding.OnboardingScreen
@@ -71,7 +70,7 @@ class OnboardingActivity : BaseActivity() {
             }
 
             AppTheme {
-                TransparentSystemBars()
+                EdgeToEdge()
 
                 val context = LocalContext.current
                 val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()

@@ -1,8 +1,13 @@
 package com.oxygenupdater.compose.activities
 
-import android.os.Bundle
+import android.graphics.Color
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
+import com.oxygenupdater.compose.ui.theme.light
 
 /**
  * Single responsibility: enable edge-to-edge.
@@ -13,8 +18,21 @@ import androidx.core.view.WindowCompat
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 abstract class BaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
-        // For edge-to-edge
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+    @Composable
+    @ReadOnlyComposable
+    protected fun EdgeToEdge() {
+        val light = MaterialTheme.colorScheme.light
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { !light },
+            navigationBarStyle = navigationBarStyle
+        )
+    }
+
+    companion object {
+        /**
+         * Force even 3-button nav to be completely transparent on [Android 10+](https://github.com/android/nowinandroid/pull/817#issuecomment-1647079628)
+         */
+        private val navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
     }
 }
