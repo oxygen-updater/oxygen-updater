@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.oxygenupdater.OxygenUpdater
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -60,7 +61,7 @@ data class UpdateData(
     val shouldFetchMostRecent = information != null && information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD && isUpdateInformationAvailable && systemIsUpToDate
 
     fun toWorkData() = Data.Builder().apply {
-        putLong("id", id ?: -1L)
+        putLong("id", id ?: NOT_SET_L)
         putString("versionNumber", versionNumber)
         putString("otaVersionNumber", otaVersionNumber)
         putString("description", description)
@@ -79,12 +80,12 @@ data class UpdateData(
 
         @JsonIgnore
         fun createFromWorkData(inputData: Data?) = if (inputData != null) UpdateData(
-            id = inputData.getLong("id", -1L),
+            id = inputData.getLong("id", NOT_SET_L),
             versionNumber = inputData.getString("versionNumber"),
             otaVersionNumber = inputData.getString("otaVersionNumber"),
             description = inputData.getString("description"),
             downloadUrl = inputData.getString("downloadUrl"),
-            downloadSize = inputData.getLong("downloadSize", -1L),
+            downloadSize = inputData.getLong("downloadSize", NOT_SET_L),
             filename = inputData.getString("filename"),
             md5sum = inputData.getString("md5sum"),
             information = inputData.getString("information"),

@@ -45,6 +45,7 @@ import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
 import com.oxygenupdater.compose.ui.news.ErrorSheet
 import com.oxygenupdater.compose.ui.news.NewsItemScreen
 import com.oxygenupdater.compose.ui.news.NewsItemViewModel
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.utils.Logger.logDebug
@@ -64,7 +65,7 @@ class NewsItemActivity : SupportActionBarActivity(
     private val billingViewModel by viewModel<BillingViewModel>()
 
     private var shouldDelayAdStart = false
-    private var newsItemId = -1L
+    private var newsItemId = NOT_SET_L
 
     private val fullScreenAdContentCallback = if (BuildConfig.DEBUG) object : FullScreenContentCallback() {
         override fun onAdDismissedFullScreenContent() = logDebug(TAG, "Interstitial ad was dismissed")
@@ -194,7 +195,7 @@ class NewsItemActivity : SupportActionBarActivity(
         // we want (NEWS_ITEM_ID) or (DELAY_AD_START) are present.
         intent.hasExtra(INTENT_NEWS_ITEM_ID) || intent.hasExtra(INTENT_DELAY_AD_START) -> {
             shouldDelayAdStart = intent.getBooleanExtra(INTENT_DELAY_AD_START, false)
-            newsItemId = intent.getLongExtra(INTENT_NEWS_ITEM_ID, -1L)
+            newsItemId = intent.getLongExtra(INTENT_NEWS_ITEM_ID, NOT_SET_L)
             newsItemId >= 0L
         }
 
@@ -209,16 +210,16 @@ class NewsItemActivity : SupportActionBarActivity(
                     newsItemId = if (groupValues.size > 1) try {
                         groupValues[1].toLong()
                     } catch (e: NumberFormatException) {
-                        -1L
+                        NOT_SET_L
                     } else return@let false
                     newsItemId >= 0L
                 }
                 // oxygenupdater://news/<id>
                 "oxygenupdater" -> {
                     newsItemId = try {
-                        data.lastPathSegment?.toLong() ?: -1L
+                        data.lastPathSegment?.toLong() ?: NOT_SET_L
                     } catch (e: NumberFormatException) {
-                        -1L
+                        NOT_SET_L
                     }
                     newsItemId >= 0L
                 }

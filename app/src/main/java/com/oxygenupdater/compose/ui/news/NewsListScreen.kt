@@ -73,6 +73,7 @@ import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.PullRefresh
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.main.Screen
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.extensions.copyToClipboard
@@ -137,7 +138,7 @@ fun NewsListScreen(
                     unreadCount += if (it.readState.value) 1 else -1
                 }) {
                     NewsItemActivity.item = it
-                    openItem(it.id ?: -1L)
+                    openItem(it.id ?: NOT_SET_L)
                 }
             }
         }

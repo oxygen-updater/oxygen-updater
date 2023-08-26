@@ -3,6 +3,7 @@ package com.oxygenupdater.utils
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DEVICE_ID
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_NOTIFICATION_TOPIC
@@ -20,8 +21,8 @@ object NotificationTopicSubscriber {
 
     private val topic: String
         get() {
-            val deviceId = PrefManager.getLong(PROPERTY_DEVICE_ID, -1L)
-            val updateMethodId = PrefManager.getLong(PROPERTY_UPDATE_METHOD_ID, -1L)
+            val deviceId = PrefManager.getLong(PROPERTY_DEVICE_ID, NOT_SET_L)
+            val updateMethodId = PrefManager.getLong(PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
 
             return PREFIX + deviceId + UPDATE_METHOD_TOPIC_PREFIX + updateMethodId
         }

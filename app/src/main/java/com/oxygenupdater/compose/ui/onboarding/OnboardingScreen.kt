@@ -87,7 +87,7 @@ fun OnboardingScreen(
                 listState, enabledDevices,
                 initialDeviceIndex,
                 R.string.settings_device, R.string.onboarding_page_2_caption,
-                keyId = PrefManager.PROPERTY_DEVICE_ID, keyName = PrefManager.PROPERTY_DEVICE,
+                keyId = PrefManager.PROPERTY_DEVICE_ID,
             ) {
                 deviceChanged(it)
             }
@@ -97,7 +97,7 @@ fun OnboardingScreen(
                 listState, methodsForDevice,
                 initialMethodIndex,
                 R.string.settings_update_method, R.string.onboarding_page_3_caption,
-                keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID, keyName = PrefManager.PROPERTY_UPDATE_METHOD,
+                keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID,
             ) {
                 methodChanged(it)
             }

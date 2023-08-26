@@ -4,6 +4,7 @@ import androidx.collection.ArrayMap
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.apis.ServerApi
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.settings.PrefManager
@@ -42,8 +43,8 @@ class ServerRepository constructor(
         get() = updateDataDao.getFlow()
 
     suspend fun fetchUpdateData() {
-        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
 
         val data = performServerRequest {
             serverApi.fetchUpdateData(
@@ -94,8 +95,8 @@ class ServerRepository constructor(
 
     suspend fun fetchServerMessages() = performServerRequest {
         serverApi.fetchServerMessages(
-            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L),
-            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L),
+            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
         )
     }
 
@@ -107,8 +108,8 @@ class ServerRepository constructor(
 
     suspend fun fetchNews() = performServerRequest {
         serverApi.fetchNews(
-            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L),
-            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L),
+            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
         )
     }.let {
         if (!it.isNullOrEmpty()) newsItemDao.refreshNewsItems(it)

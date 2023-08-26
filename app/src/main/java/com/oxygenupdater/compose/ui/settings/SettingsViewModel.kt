@@ -82,16 +82,22 @@ class SettingsViewModel(
     private fun fetchMethodsForDevice(deviceId: Long) = viewModelScope.launch(Dispatchers.IO) {
         val methods = serverRepository.fetchUpdateMethodsForDevice(deviceId) ?: listOf()
         val methodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
-        val rooted = Shell.isAppGrantedRoot() == true
-        initialMethodIndex = if (methodId != NOT_SET_L) methods.indexOfFirst {
+        var selectedMethodIndex = if (methodId == NOT_SET_L) NOT_SET else methods.indexOfFirst {
             it.id == methodId
-        } else methods.indexOfLast {
+        }
+
+        val rooted = Shell.isAppGrantedRoot() == true
+        initialMethodIndex = methods.indexOfLast {
             if (rooted) it.recommendedForRootedDevice else it.recommendedForNonRootedDevice
         }
 
-        if (initialMethodIndex != NOT_SET && methods.size > initialMethodIndex) {
+        // If there's only one method, select it, otherwise fallback to initial index
+        val size = methods.size
+        if (selectedMethodIndex == NOT_SET) selectedMethodIndex = if (size == 1) 0 else initialMethodIndex
+
+        if (selectedMethodIndex != NOT_SET && selectedMethodIndex < size) {
             // Persist only if there's no method saved yet
-            saveSelectedMethod(methods[initialMethodIndex], methodId == NOT_SET_L)
+            saveSelectedMethod(methods[selectedMethodIndex], methodId == NOT_SET_L)
         }
 
         methodsForDeviceFlow.emit(methods)
@@ -101,12 +107,16 @@ class SettingsViewModel(
      * Saves device ID & name in [android.content.SharedPreferences].
      * Additionally, refreshes [methodsForDeviceFlow] via [fetchMethodsForDevice].
      */
-    fun saveSelectedDevice(device: Device, persist: Boolean = false) {
+    fun saveSelectedDevice(device: Device, persist: Boolean = true) {
         val id = device.id
 
         // Clear methods if device changed
         val oldId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
-        if (oldId != NOT_SET_L && oldId != id) methodsForDeviceFlow.value = listOf()
+        if (oldId != NOT_SET_L && oldId != id) {
+            methodsForDeviceFlow.value = listOf()
+            PrefManager.remove(PrefManager.PROPERTY_UPDATE_METHOD_ID)
+            PrefManager.remove(PrefManager.PROPERTY_UPDATE_METHOD)
+        }
 
         if (persist) {
             PrefManager.putLong(PrefManager.PROPERTY_DEVICE_ID, id)
@@ -120,7 +130,7 @@ class SettingsViewModel(
      * Saves method ID & name in [android.content.SharedPreferences].
      * Additionally, updates [FirebaseCrashlytics]' user identifier.
      */
-    fun saveSelectedMethod(method: UpdateMethod, persist: Boolean = false) {
+    fun saveSelectedMethod(method: UpdateMethod, persist: Boolean = true) {
         if (persist) {
             PrefManager.putLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, method.id)
             PrefManager.putString(PrefManager.PROPERTY_UPDATE_METHOD, method.name)

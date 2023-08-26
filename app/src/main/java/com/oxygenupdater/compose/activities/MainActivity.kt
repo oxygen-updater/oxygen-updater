@@ -86,6 +86,7 @@ import com.oxygenupdater.compose.ui.main.UpdateRoute
 import com.oxygenupdater.compose.ui.news.NewsListScreen
 import com.oxygenupdater.compose.ui.news.NewsListViewModel
 import com.oxygenupdater.compose.ui.news.previousUnreadCount
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.settings.SettingsScreen
 import com.oxygenupdater.compose.ui.settings.SettingsViewModel
 import com.oxygenupdater.compose.ui.settings.adFreeConfig
@@ -604,10 +605,10 @@ class MainActivity : BaseActivity() {
     private fun NavController.shouldStopNavigateAwayFromSettings() = currentDestination?.route == SettingsRoute && !PrefManager.checkIfSetupScreenHasBeenCompleted()
 
     private fun showSettingsWarning() {
-        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, -1L)
-        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, -1L)
+        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
+        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
 
-        if (deviceId == -1L || updateMethodId == -1L) {
+        if (deviceId == NOT_SET_L || updateMethodId == NOT_SET_L) {
             logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
             Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
         } else {

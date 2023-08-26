@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.edit
 import com.oxygenupdater.compose.ui.Theme
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.Logger
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -62,8 +64,8 @@ object PrefManager {
         if (key == null) return@run defaultValue
         when (typecastValue) {
             null, is String -> PrefManager.getString(key, null)
-            is Int -> PrefManager.getInt(key, -1)
-            is Long -> PrefManager.getLong(key, -1L)
+            is Int -> PrefManager.getInt(key, NOT_SET)
+            is Long -> PrefManager.getLong(key, NOT_SET_L)
             is Float -> PrefManager.getFloat(key, -1f)
             is Boolean -> PrefManager.getBoolean(key, false)
             is Collection<*> -> PrefManager.getStringSet(key, null)
@@ -136,8 +138,8 @@ object PrefManager {
      *
      * @return if the user has chosen a device and an update method.
      */
-    fun checkIfSetupScreenIsFilledIn() = getLong(PROPERTY_DEVICE_ID, -1L) != -1L
-            && getLong(PROPERTY_UPDATE_METHOD_ID, -1L) != -1L
+    fun checkIfSetupScreenIsFilledIn() = getLong(PROPERTY_DEVICE_ID, NOT_SET_L) != NOT_SET_L
+            && getLong(PROPERTY_UPDATE_METHOD_ID, NOT_SET_L) != NOT_SET_L
 
     /**
      * Checks if a user has completed the initial setup screen. This means the user has filled it in

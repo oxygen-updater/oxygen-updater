@@ -29,6 +29,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.animatedClickable
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
@@ -41,16 +43,16 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     listState: LazyListState, list: List<T>,
     initialIndex: Int,
     @StringRes titleResId: Int, @StringRes captionResId: Int,
-    keyId: String, keyName: String,
+    keyId: String,
     onClick: (T) -> Unit,
 ) {
     SheetHeader(titleResId)
 
-    val selectedId = PrefManager.getLong(keyId, list.getOrNull(initialIndex)?.id ?: -1L)
+    val selectedId = PrefManager.getLong(keyId, list.getOrNull(initialIndex)?.id ?: NOT_SET_L)
 
-    var selectedIndex by remember { mutableIntStateOf(-1) }
+    var selectedIndex by remember { mutableIntStateOf(NOT_SET) }
     LaunchedEffect(selectedIndex, listState) {
-        if (selectedIndex != -1) listState.animateScrollToItem(selectedIndex)
+        if (selectedIndex != NOT_SET) listState.animateScrollToItem(selectedIndex)
     }
 
     val colorScheme = MaterialTheme.colorScheme
@@ -59,8 +61,6 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
             Row(
                 Modifier
                     .animatedClickable {
-                        PrefManager.putLong(keyId, item.id)
-                        PrefManager.putString(keyName, item.name)
                         onClick(item)
                         hide()
                     }
@@ -121,7 +121,7 @@ fun PreviewDeviceSheet() = PreviewModalBottomSheet {
         initialIndex = 1,
         titleResId = R.string.onboarding_page_2_title,
         captionResId = R.string.onboarding_page_2_caption,
-        keyId = PrefManager.PROPERTY_DEVICE_ID, keyName = PrefManager.PROPERTY_DEVICE,
+        keyId = PrefManager.PROPERTY_DEVICE_ID,
     ) {}
 }
 
@@ -150,6 +150,6 @@ fun PreviewMethodSheet() = PreviewModalBottomSheet {
         initialIndex = 1,
         titleResId = R.string.onboarding_page_3_title,
         captionResId = R.string.onboarding_page_3_caption,
-        keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID, keyName = PrefManager.PROPERTY_UPDATE_METHOD,
+        keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID,
     ) {}
 }

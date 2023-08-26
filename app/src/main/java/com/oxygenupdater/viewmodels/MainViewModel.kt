@@ -33,6 +33,7 @@ import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_T
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.compose.activities.MainActivity
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.update.DownloadStatus
 import com.oxygenupdater.compose.ui.update.WorkInfoWithStatus
 import com.oxygenupdater.internal.settings.PrefManager
@@ -129,7 +130,7 @@ class MainViewModel(
                 State.ENQUEUED, State.BLOCKED -> DownloadStatus.DOWNLOAD_QUEUED
                 State.RUNNING -> DownloadStatus.DOWNLOADING
                 State.SUCCEEDED -> DownloadStatus.DOWNLOAD_COMPLETED
-                State.FAILED -> if (it.outputData.getInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, -1) != -1) {
+                State.FAILED -> if (it.outputData.getInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, NOT_SET) != NOT_SET) {
                     DownloadStatus.NOT_DOWNLOADING
                 } else DownloadStatus.DOWNLOAD_FAILED
 
@@ -264,7 +265,7 @@ class MainViewModel(
             data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME),
             data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION),
             data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION),
-            data.getInt(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE, -1),
+            data.getInt(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE, NOT_SET),
             data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE)
         )
     }.let {}
