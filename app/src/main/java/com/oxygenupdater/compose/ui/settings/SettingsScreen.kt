@@ -11,7 +11,6 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -371,7 +370,11 @@ private fun Item(
 ) {
     Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colorScheme.primary)
 
-    Column(Modifier.padding(start = 16.dp)) {
+    Column(
+        Modifier
+            .weight(1f)
+            .padding(start = 16.dp, end = if (content != null) 16.dp else 0.dp)
+    ) {
         Text(
             stringResource(titleResId),
             Modifier.basicMarquee(), maxLines = 1,
@@ -387,10 +390,7 @@ private fun Item(
     }
 
     // Extra content if callers want to re-use the same RowScope
-    if (content != null) {
-        Spacer(Modifier.weight(1f))
-        content()
-    }
+    if (content != null) content()
 }
 
 @PreviewThemes
