@@ -64,6 +64,7 @@ import com.oxygenupdater.compose.ui.common.IconText
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.common.withPlaceholder
+import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.compose.ui.theme.light
@@ -120,7 +121,9 @@ fun NewsItemScreen(
             }
 
             // We can't edit CSS in WebViews, so pass theme to backend to style it accordingly
-            val url = item.apiUrl + if (MaterialTheme.colorScheme.light) "Light" else "Dark"
+            val language = if (currentLocale().language == "nl") "NL" else "EN"
+            val theme = if (MaterialTheme.colorScheme.light) "Light" else "Dark"
+            val url = "${item.apiUrl}/$language/$theme"
             RefreshAwareWebView(refreshing, webViewState, navigator, url, showDivider, onError, adLoaded.value) {
                 onLoadFinished(item)
             }

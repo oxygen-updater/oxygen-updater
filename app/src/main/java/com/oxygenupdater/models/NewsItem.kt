@@ -3,7 +3,6 @@ package com.oxygenupdater.models
 import android.os.Parcelable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.intl.Locale
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -58,8 +57,7 @@ data class NewsItem(
     @IgnoredOnParcel
     @Ignore
     @JvmField
-    val apiUrl = "${BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE}news-content/$id/" +
-            (if (Locale.current.language == "nl") "NL" else "EN") + "/"
+    val apiUrl = "${BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE}news-content/$id"
 
     @IgnoredOnParcel
     @Ignore

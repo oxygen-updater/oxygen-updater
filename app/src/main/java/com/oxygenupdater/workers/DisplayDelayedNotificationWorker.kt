@@ -6,7 +6,6 @@ import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import androidx.compose.ui.text.intl.Locale
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.GROUP_ALERT_CHILDREN
 import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
@@ -21,6 +20,7 @@ import coil.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.activities.MainActivity
 import com.oxygenupdater.compose.activities.NewsItemActivity
+import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
@@ -88,7 +88,7 @@ class DisplayDelayedNotificationWorker(
             )
 
             GENERAL_NOTIFICATION -> getGeneralNotificationBuilder(
-                if (Locale.current.language.lowercase() == "nl") {
+                if (currentLocale.language.lowercase() == "nl") {
                     messageContents[NotificationElement.DUTCH_MESSAGE.name]
                 } else {
                     messageContents[NotificationElement.ENGLISH_MESSAGE.name]
@@ -111,7 +111,7 @@ class DisplayDelayedNotificationWorker(
                 }
 
                 getNewsArticleNotificationBuilder(
-                    if (Locale.current.language.lowercase() == "nl") {
+                    if (currentLocale.language.lowercase() == "nl") {
                         messageContents[NotificationElement.DUTCH_MESSAGE.name]
                     } else {
                         messageContents[NotificationElement.ENGLISH_MESSAGE.name]

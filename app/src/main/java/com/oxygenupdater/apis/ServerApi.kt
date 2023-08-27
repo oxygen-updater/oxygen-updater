@@ -1,7 +1,7 @@
 package com.oxygenupdater.apis
 
 import androidx.collection.ArrayMap
-import androidx.compose.ui.text.intl.Locale
+import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuide
@@ -29,12 +29,12 @@ interface ServerApi {
 
     @GET("flattenedFaq")
     suspend fun fetchFaq(
-        @Query("language") language: String = Locale.current.toLanguageTag(),
+        @Query("language") language: String = currentLocale.toLanguageTag(),
     ): Response<List<InAppFaq>>
 
     @GET("installGuide")
     suspend fun fetchInstallGuide(
-        @Query("language") language: String = Locale.current.toLanguageTag(),
+        @Query("language") language: String = currentLocale.toLanguageTag(),
     ): Response<List<InstallGuide>>
 
     @GET("devices/{filter}")
@@ -65,31 +65,31 @@ interface ServerApi {
     suspend fun fetchServerMessages(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
-        @Query("language") language: String = Locale.current.toLanguageTag(),
+        @Query("language") language: String = currentLocale.toLanguageTag(),
     ): Response<List<ServerMessage>>
 
     @GET("updateMethods/{deviceId}")
     suspend fun fetchUpdateMethodsForDevice(
         @Path("deviceId") deviceId: Long,
-        @Query("language") language: String = Locale.current.toLanguageTag(),
+        @Query("language") language: String = currentLocale.toLanguageTag(),
     ): Response<List<UpdateMethod>>
 
     @GET("allUpdateMethods")
     suspend fun fetchAllUpdateMethods(
-        @Query("language") language: String = Locale.current.toLanguageTag(),
+        @Query("language") language: String = currentLocale.toLanguageTag(),
     ): Response<List<UpdateMethod>>
 
     @GET("news/{deviceId}/{updateMethodId}")
     suspend fun fetchNews(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
-        @Query("language") language: String = if (Locale.current.language == "nl") "nl" else "en",
+        @Query("language") language: String = if (currentLocale.language == "nl") "nl" else "en",
     ): Response<List<NewsItem>>
 
     @GET("news-item/{newsItemId}")
     suspend fun fetchNewsItem(
         @Path("newsItemId") newsItemId: Long,
-        @Query("language") language: String = if (Locale.current.language == "nl") "nl" else "en",
+        @Query("language") language: String = if (currentLocale.language == "nl") "nl" else "en",
     ): Response<NewsItem>
 
     @POST("news-read")

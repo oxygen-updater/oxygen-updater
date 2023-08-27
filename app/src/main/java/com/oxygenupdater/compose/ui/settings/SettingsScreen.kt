@@ -5,7 +5,6 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -54,7 +53,6 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.os.LocaleListCompat
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
@@ -63,6 +61,7 @@ import com.oxygenupdater.compose.ui.SettingsListWrapper
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.animatedClickable
 import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.compose.ui.dialogs.AdvancedModeSheet
 import com.oxygenupdater.compose.ui.dialogs.ContributorSheet
 import com.oxygenupdater.compose.ui.dialogs.LanguageSheet
@@ -88,7 +87,6 @@ import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationUtils
-import java.util.Locale
 
 private var previousAdFreeConfig: Triple<Boolean, Int, (() -> Unit)?> = Triple(
     false, R.string.settings_buy_ad_free_label, null
@@ -117,7 +115,7 @@ fun SettingsScreen(
     val methodSelectionEnabled = methodsForDevice.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
 
-    val selectedLocale = AppCompatDelegate.getApplicationLocales()[0] ?: LocaleListCompat.getDefault()[0] ?: Locale.getDefault()
+    val selectedLocale = currentLocale()
 
     val advancedMode = remember {
         mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
