@@ -85,7 +85,6 @@ import com.oxygenupdater.compose.ui.main.SettingsRoute
 import com.oxygenupdater.compose.ui.main.UpdateRoute
 import com.oxygenupdater.compose.ui.news.NewsListScreen
 import com.oxygenupdater.compose.ui.news.NewsListViewModel
-import com.oxygenupdater.compose.ui.news.previousUnreadCount
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.settings.SettingsScreen
 import com.oxygenupdater.compose.ui.settings.SettingsViewModel
@@ -344,12 +343,8 @@ class MainActivity : BaseActivity() {
                     // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
                     val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
                     LaunchedEffect(Unit) { // run only on init
-                        @Suppress("DEPRECATION")
-                        val unreadCount = newsListState.data.count { !it.read }
-                        if (unreadCount != previousUnreadCount) {
-                            Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
-                            previousUnreadCount = unreadCount
-                        }
+                        val unreadCount = newsListViewModel.unreadCount.intValue
+                        Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
                     }
 
                     NavHost(navController, startScreen.route, Modifier.weight(1f)) {
@@ -434,7 +429,7 @@ class MainActivity : BaseActivity() {
             state, rememberCallback {
                 viewModel.fetchServerStatus()
                 newsListViewModel.refresh()
-            },
+            }, newsListViewModel.unreadCount,
             rememberCallback(newsListViewModel::markAllRead),
             rememberTypedCallback(newsListViewModel::toggleRead),
             rememberTypedCallback(::startNewsItemActivity)

@@ -36,6 +36,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -74,7 +76,6 @@ import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.PullRefresh
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.main.Screen
-import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
@@ -86,12 +87,11 @@ import com.oxygenupdater.models.NewsItem
 import java.time.LocalDateTime
 import kotlin.random.Random
 
-var previousUnreadCount = NOT_SET
-
 @Composable
 fun NewsListScreen(
     state: RefreshAwareState<List<NewsItem>>,
     refresh: () -> Unit,
+    unreadCountState: MutableIntState,
     markAllRead: () -> Unit,
     toggleRead: (NewsItem) -> Unit,
     openItem: (Long) -> Unit,
@@ -101,16 +101,13 @@ fun NewsListScreen(
 
     val data = if (onlyUnread) state.data.filterNot { it.readState.value } else state.data
     val list = if (!refreshing) rememberSaveable(onlyUnread) { data } else data
-    var unreadCount by remember(onlyUnread) {
-        mutableIntStateOf(if (onlyUnread) list.size else list.count { !it.readState.value })
+
+    LaunchedEffect(onlyUnread) {
+        unreadCountState.intValue = if (onlyUnread) list.size else list.count { !it.readState.value }
     }
 
-    if (unreadCount != previousUnreadCount) {
-        // Display badge with the number of unread news articles
-        // If there aren't any unread articles, the badge is hidden
-        Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
-        previousUnreadCount = unreadCount
-    }
+    val unreadCount = unreadCountState.intValue
+    Screen.NewsList.badge = unreadCount.let { if (it == 0) null else it.toString() }
 
     Column {
         var showBannerMenu by remember { mutableStateOf(false) }
@@ -126,7 +123,7 @@ fun NewsListScreen(
             onlyUnread = !onlyUnread
         }) {
             markAllRead()
-            unreadCount = 0
+            unreadCountState.intValue = 0
         }
 
         ItemDivider()
@@ -137,7 +134,7 @@ fun NewsListScreen(
             items(list, { it.id ?: Random.nextLong() }) {
                 NewsListItem(refreshing, it, toggleRead = {
                     toggleRead(it)
-                    unreadCount += if (it.readState.value) 1 else -1
+                    unreadCountState.intValue += if (it.readState.value) 1 else -1
                 }) {
                     NewsItemActivity.item = it
                     openItem(it.id ?: NOT_SET_L)
@@ -449,6 +446,7 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
             )
         ),
         refresh = {},
+        unreadCountState = remember { mutableIntStateOf(1) },
         markAllRead = {},
         toggleRead = {},
     ) {}

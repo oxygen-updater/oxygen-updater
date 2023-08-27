@@ -1,8 +1,10 @@
 package com.oxygenupdater.compose.ui.news
 
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.oxygenupdater.compose.ui.RefreshAwareState
+import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +32,9 @@ class NewsListViewModel(private val serverRepository: ServerRepository) : ViewMo
         initialValue = RefreshAwareState(refreshingFlow.value, flow.value)
     )
 
+    @Suppress("DEPRECATION")
+    var unreadCount = mutableIntStateOf(flow.value.count { !it.read })
+
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
         refreshingFlow.emit(true)
         flow.emit(serverRepository.fetchNews())
@@ -40,6 +45,8 @@ class NewsListViewModel(private val serverRepository: ServerRepository) : ViewMo
         serverRepository.markAllReadLocally()
         // Propagate to NewsListScreen
         flow.value.forEach { it.readState.value = true }
+        Screen.NewsList.badge = null
+        unreadCount.intValue = 0
     }
 
     fun toggleRead(
