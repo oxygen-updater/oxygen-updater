@@ -147,28 +147,23 @@ Detta kan vara användbart om du vill:"</string>
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Välkommen"</string>
 	<string name="onboarding_finished_button">Starta appen</string>
-	<string name="onboarding_page_1_title">"Välkommen till Oxygen Updater!"</string>
-	<string name="onboarding_page_1_text">"Denna app kommer låta dig:
+	<string name="onboarding_title">"Välkommen till Oxygen Updater!"</string>
+	<string name="onboarding_app_uses">"Denna app kommer låta dig:
 
 &#8226; Få snabbare tillgång till Android uppdateringar för din enhet med OxygenOS
 &#8226; Enkelt uppdatera en rootad enhet
 &#8226; Ta reda på vad som är nytt i den system mjukvaran du använder just nu
 &#8226; Läsa de senaste nyheterna som relaterar till OnePlus och OXygenOS"</string>
-	<string name="onboarding_page_1_caption">"Detta är inte en officiell OnePlus applikation. Användande av denna app är helt på egen risk. Vare sig OnePlus eller utvecklaren av denna app är ansvariga för dina handlingar, detta inkluderar skada av din enhet som har tillkommit efter användande av denna app. Genom att använda denna app accepterar du de ovanstående villkoren."</string>
-	<string name="onboarding_page_2_title">"Välj din enhet:"</string>
-	<string name="onboarding_page_2_caption">"Din enhet är oftast redan förvald ovan, om inte, välj din enhet ovan.
-
-Dra till vänster för att fortsätta."</string>
-	<string name="onboarding_page_3_title">"Välj din uppdateringsmetod:"</string>
-	<string name="onboarding_page_3_caption">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek.
+	<string name="onboarding_disclaimer">"Detta är inte en officiell OnePlus applikation. Användande av denna app är helt på egen risk. Vare sig OnePlus eller utvecklaren av denna app är ansvariga för dina handlingar, detta inkluderar skada av din enhet som har tillkommit efter användande av denna app. Genom att använda denna app accepterar du de ovanstående villkoren."</string>
+	<string name="onboarding_device_chooser_title">"Välj din enhet:"</string>
+	<string name="onboarding_device_chooser_caption">"Din enhet är oftast redan förvald ovan, om inte, välj din enhet ovan."</string>
+	<string name="onboarding_method_chooser_title">"Välj din uppdateringsmetod:"</string>
+	<string name="onboarding_method_chooser_caption">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek.
 
 Däremot är det inte kompatibelt med rostade enheter. Välj istället en full uppdatering om du har en rootad enhet.
 
-Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetoderna för Open Beta.
-
-Svep vänster för att fortsätta."</string>
-	<string name="onboarding_page_4_title">"Du är redo!"</string>
-	<string name="onboarding_page_4_text">"Hoppas du kommer tycka om appen! Du kan alltid ändra inställningar senare."</string>
+Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetoderna för Open Beta."</string>
+	<string name="onboarding_caption">"Hoppas du kommer tycka om appen! Du kan alltid ändra inställningar senare."</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Installera"</string>

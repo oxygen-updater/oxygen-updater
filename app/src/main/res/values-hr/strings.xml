@@ -145,28 +145,23 @@ Ovo može biti korisno ako želite:"</string>
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Dobrodošli"</string>
 	<string name="onboarding_finished_button">"Pokretanje aplikacije"</string>
-	<string name="onboarding_page_1_title">"Dobrodošli u Oxygen Updater!"</string>
-	<string name="onboarding_page_1_text">"Ova aplikacija vam omogućava:
+	<string name="onboarding_title">"Dobrodošli u Oxygen Updater!"</string>
+	<string name="onboarding_app_uses">"Ova aplikacija vam omogućava:
 
 &#8226; Dobivanje ažuriranje brže na vaše OxygenOS uređaje
 &#8226; Lakše ažuriranje root-anih uređaja
 &#8226; Pregled novih mogućnosti vašeg software-a
 &#8226; Najnovije vijesti o OnePlus-u i OxygenOs-u"</string>
-	<string name="onboarding_page_1_caption">"Ovo nije službena aplikacija OnePlus-a. Koristite ovu aplikaciju na svoj rizik. OnePlus i developer ove aplikacije nisu dogovorni za vaše postupke, uključujući ikakvu štetu koristeči ovu aplikaciju."</string>
-	<string name="onboarding_page_2_title">"Izaberi svoj uređaj:"</string>
-	<string name="onboarding_page_2_caption">"Vaš uređaj je uobičajno već izabran. Ako nije izaberite svoj uređaj gore.
-
-Povuci lijevo da nastaviš."</string>
-	<string name="onboarding_page_3_title">"Izaberi svoju metodu ažuriranja:"</string>
-	<string name="onboarding_page_3_caption">"Uobičajno inkrementalno ažuriranje je pravi odabir ovdje zato što pruža puno brže i manje skidanja.
+	<string name="onboarding_disclaimer">"Ovo nije službena aplikacija OnePlus-a. Koristite ovu aplikaciju na svoj rizik. OnePlus i developer ove aplikacije nisu dogovorni za vaše postupke, uključujući ikakvu štetu koristeči ovu aplikaciju."</string>
+	<string name="onboarding_device_chooser_title">"Izaberi svoj uređaj:"</string>
+	<string name="onboarding_device_chooser_caption">"Vaš uređaj je uobičajno već izabran. Ako nije izaberite svoj uređaj gore."</string>
+	<string name="onboarding_method_chooser_title">"Izaberi svoju metodu ažuriranja:"</string>
+	<string name="onboarding_method_chooser_caption">"Uobičajno inkrementalno ažuriranje je pravi odabir ovdje zato što pruža puno brže i manje skidanja.
 
 Iako ono nije kompatibilno sa rootanim uređajima. Ako je vaš uređaj rootan izaberite puno ažuriranje.
 
-Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranje/a.
-
-Povuci lijevo da nastaviš."</string>
-	<string name="onboarding_page_4_title">"Spreman si da kreneš!"</string>
-	<string name="onboarding_page_4_text">"Uživajte u korištenju aplikacije!"</string>
+Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranje/a."</string>
+	<string name="onboarding_caption">"Uživajte u korištenju aplikacije!"</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Instaliraj"</string>

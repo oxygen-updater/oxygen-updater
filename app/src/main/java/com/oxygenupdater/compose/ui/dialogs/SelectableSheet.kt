@@ -119,8 +119,8 @@ fun PreviewDeviceSheet() = PreviewModalBottomSheet {
             ),
         ),
         initialIndex = 1,
-        titleResId = R.string.onboarding_page_2_title,
-        captionResId = R.string.onboarding_page_2_caption,
+        titleResId = R.string.onboarding_device_chooser_title,
+        captionResId = R.string.onboarding_device_chooser_caption,
         keyId = PrefManager.PROPERTY_DEVICE_ID,
     ) {}
 }
@@ -148,8 +148,8 @@ fun PreviewMethodSheet() = PreviewModalBottomSheet {
             )
         ),
         initialIndex = 1,
-        titleResId = R.string.onboarding_page_3_title,
-        captionResId = R.string.onboarding_page_3_caption,
+        titleResId = R.string.onboarding_method_chooser_title,
+        captionResId = R.string.onboarding_method_chooser_caption,
         keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID,
     ) {}
 }

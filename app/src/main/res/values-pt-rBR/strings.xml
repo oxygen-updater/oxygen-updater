@@ -150,15 +150,14 @@ Isso pode ser útil se você quiser:"</string>
 	<string name="onboarding">Bem-vindo</string>
 	<string name="onboarding_finished_button">Iniciar o aplicativo</string>
 
-	<string name="onboarding_page_1_title">Bem-vindo ao Atualizador Oxygen!</string>
-	<string name="onboarding_page_1_text">Este aplicativo vai te possibilitar:\n\n&#8226; Obtenha acesso mais rápido às últimas atualizações do Android para o seu dispositivo com OxygenOS\n&#8226; Atualize facilmente um dispositivo com acesso root\n&#8226; Veja o que há de novo no software do sistema que você está usando atualmente\n&#8226; Leia as última notícias sobre OxygenOS e OnePlus</string>
-	<string name="onboarding_page_1_caption">Este não é um aplicativo oficial OnePlus. O uso deste aplicativo é totalmente por sua própria conta e risco. Nem a OnePlus nem o desenvolvedor do aplicativo são responsáveis por suas ações, incluindo quaisquer danos causados pelo uso deste aplicativo. Ao usar este aplicativo, você concorda com os termos e condições indicados acima.</string>
-	<string name="onboarding_page_2_title">Escolha seu dispositivo</string>
-	<string name="onboarding_page_2_caption">Normalmente, o seu dispositivo já está selecionado acima. Caso contrário, selecione seu dispositivo acima.</string>
-	<string name="onboarding_page_3_title">Escolha o seu método de atualização</string>
-	<string name="onboarding_page_3_caption">Normalmente, a atualização incremental é a escolha certa aqui, porque oferece downloads muito mais rápidos e menores.\n\nNo entanto, não é compatível com dispositivos com acesso root. Se você tiver um dispositivo com acesso root, escolha a atualização completa.\n\nSe você tiver uma versão beta do OxygenOS, escolha (um dos) canais de atualização do Open Beta.</string>
-	<string name="onboarding_page_4_title">Você está pronto para ir!</string>
-	<string name="onboarding_page_4_text">Aprecie este aplicativo! Você sempre pode alterar suas configurações mais tarde.</string>
+	<string name="onboarding_title">Bem-vindo ao Atualizador Oxygen!</string>
+	<string name="onboarding_app_uses">Este aplicativo vai te possibilitar:\n\n&#8226; Obtenha acesso mais rápido às últimas atualizações do Android para o seu dispositivo com OxygenOS\n&#8226; Atualize facilmente um dispositivo com acesso root\n&#8226; Veja o que há de novo no software do sistema que você está usando atualmente\n&#8226; Leia as última notícias sobre OxygenOS e OnePlus</string>
+	<string name="onboarding_disclaimer">Este não é um aplicativo oficial OnePlus. O uso deste aplicativo é totalmente por sua própria conta e risco. Nem a OnePlus nem o desenvolvedor do aplicativo são responsáveis por suas ações, incluindo quaisquer danos causados pelo uso deste aplicativo. Ao usar este aplicativo, você concorda com os termos e condições indicados acima.</string>
+	<string name="onboarding_device_chooser_title">Escolha seu dispositivo</string>
+	<string name="onboarding_device_chooser_caption">Normalmente, o seu dispositivo já está selecionado acima. Caso contrário, selecione seu dispositivo acima.</string>
+	<string name="onboarding_method_chooser_title">Escolha o seu método de atualização</string>
+	<string name="onboarding_method_chooser_caption">Normalmente, a atualização incremental é a escolha certa aqui, porque oferece downloads muito mais rápidos e menores.\n\nNo entanto, não é compatível com dispositivos com acesso root. Se você tiver um dispositivo com acesso root, escolha a atualização completa.\n\nSe você tiver uma versão beta do OxygenOS, escolha (um dos) canais de atualização do Open Beta.</string>
+	<string name="onboarding_caption">Aprecie este aplicativo! Você sempre pode alterar suas configurações mais tarde.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>

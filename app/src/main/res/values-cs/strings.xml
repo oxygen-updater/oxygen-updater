@@ -149,15 +149,14 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="onboarding">Vítejte</string>
 	<string name="onboarding_finished_button">Spustit aplikaci</string>
 
-	<string name="onboarding_page_1_title">Vítejte v aplikaci Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Tato aplikace vám umožní:\n\n&#8226; Získat rychlejší přístup k nejnovějším aktualizacím systému Android pro vaše zařízení s operačním systémem OxygenOS\n&#8226; Snadno aktualizovat zařízení s rootem\n&#8226; Prohlédnout si novinky o systémovém softwaru, který právě používáte\n&#8226; Přečíst si nejnovější zprávy o společnosti OnePlus a OxygenOS</string>
-	<string name="onboarding_page_1_caption">Nejedná se o oficiální aplikaci společnosti OnePlus. Používání této aplikace je zcela na vaše vlastní riziko. Společnost OnePlus ani vývojář aplikace nenesou odpovědnost za vaše jednání, včetně jakýchkoli škod způsobených používáním této aplikace. Používáním této aplikace souhlasíte s výše uvedenými podmínkami.</string>
-	<string name="onboarding_page_2_title">Vyberte své zařízení</string>
-	<string name="onboarding_page_2_caption">Vaše zařízení je obvykle již vybráno výše. Pokud ne, vyberte jej.</string>
-	<string name="onboarding_page_3_title">Vyberte způsob aktualizace</string>
-	<string name="onboarding_page_3_caption">Obvykle je zde správnou volbou aktualizace typu incremental, protože nabízí mnohem rychlejší a menší objem dat ke stažení.\n\nNení však kompatibilní se zařízeními s rootem. Pokud máte zařízení s rootem, zvolte plnou aktualizaci.\n\nPokud máte beta verzi systému OxygenOS, zvolte jednu z metod aktualizace Open Beta.</string>
-	<string name="onboarding_page_4_title">Jste připraveni!</string>
-	<string name="onboarding_page_4_text">Užívejte si používání této aplikace! Vždy můžete později změnit nastavení.</string>
+	<string name="onboarding_title">Vítejte v aplikaci Oxygen Updater!</string>
+	<string name="onboarding_app_uses">Tato aplikace vám umožní:\n\n&#8226; Získat rychlejší přístup k nejnovějším aktualizacím systému Android pro vaše zařízení s operačním systémem OxygenOS\n&#8226; Snadno aktualizovat zařízení s rootem\n&#8226; Prohlédnout si novinky o systémovém softwaru, který právě používáte\n&#8226; Přečíst si nejnovější zprávy o společnosti OnePlus a OxygenOS</string>
+	<string name="onboarding_disclaimer">Nejedná se o oficiální aplikaci společnosti OnePlus. Používání této aplikace je zcela na vaše vlastní riziko. Společnost OnePlus ani vývojář aplikace nenesou odpovědnost za vaše jednání, včetně jakýchkoli škod způsobených používáním této aplikace. Používáním této aplikace souhlasíte s výše uvedenými podmínkami.</string>
+	<string name="onboarding_device_chooser_title">Vyberte své zařízení</string>
+	<string name="onboarding_device_chooser_caption">Vaše zařízení je obvykle již vybráno výše. Pokud ne, vyberte jej.</string>
+	<string name="onboarding_method_chooser_title">Vyberte způsob aktualizace</string>
+	<string name="onboarding_method_chooser_caption">Obvykle je zde správnou volbou aktualizace typu incremental, protože nabízí mnohem rychlejší a menší objem dat ke stažení.\n\nNení však kompatibilní se zařízeními s rootem. Pokud máte zařízení s rootem, zvolte plnou aktualizaci.\n\nPokud máte beta verzi systému OxygenOS, zvolte jednu z metod aktualizace Open Beta.</string>
+	<string name="onboarding_caption">Užívejte si používání této aplikace! Vždy můžete později změnit nastavení.</string>
 
 	<!-- Řetězce pro automatickou instalaci -->
 	<string name="install">Instalovat</string>

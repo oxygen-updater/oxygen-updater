@@ -86,7 +86,7 @@ fun OnboardingScreen(
                 hide,
                 listState, enabledDevices,
                 initialDeviceIndex,
-                R.string.settings_device, R.string.onboarding_page_2_caption,
+                R.string.settings_device, R.string.onboarding_device_chooser_caption,
                 keyId = PrefManager.PROPERTY_DEVICE_ID,
             ) {
                 deviceChanged(it)
@@ -96,7 +96,7 @@ fun OnboardingScreen(
                 hide,
                 listState, methodsForDevice,
                 initialMethodIndex,
-                R.string.settings_update_method, R.string.onboarding_page_3_caption,
+                R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
                 keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID,
             ) {
                 methodChanged(it)
@@ -141,7 +141,7 @@ fun OnboardingScreen(
             val bodyMedium = typography.bodyMedium
             Text(
                 AnnotatedString(
-                    stringResource(R.string.onboarding_page_1_text),
+                    stringResource(R.string.onboarding_app_uses),
                     bodyMedium.toSpanStyle(),
                     bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
                 ),
@@ -150,7 +150,7 @@ fun OnboardingScreen(
             )
 
             Text(
-                stringResource(R.string.onboarding_page_4_text),
+                stringResource(R.string.onboarding_caption),
                 Modifier.padding(16.dp),
                 style = bodyMedium
             )
@@ -158,7 +158,7 @@ fun OnboardingScreen(
 
         ItemDivider()
         Text(
-            stringResource(R.string.onboarding_page_1_caption),
+            stringResource(R.string.onboarding_disclaimer),
             Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
             MaterialTheme.colorScheme.onSurfaceVariant,
             style = typography.bodySmall

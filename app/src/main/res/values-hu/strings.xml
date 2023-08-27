@@ -151,15 +151,14 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="onboarding">Üdvözölünk</string>
 	<string name="onboarding_finished_button">Alkalmazás elindítása</string>
 
-	<string name="onboarding_page_1_title">Üdvözlünk az Oxygen Updater-ben!</string>
-	<string name="onboarding_page_1_text">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n&#8226; Rootolt eszközök egyszerű frissítését\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban</string>
-	<string name="onboarding_page_1_caption">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is. Az alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
-	<string name="onboarding_page_2_title">Válaszd ki a készüléked</string>
-	<string name="onboarding_page_2_caption">A készüléked általában már feljebb ki van választva. Ha nem, válaszd ki a készüléket feljebb.</string>
-	<string name="onboarding_page_3_title">Válaszd ki a frissítési módszered</string>
-	<string name="onboarding_page_3_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál.\n\nAzonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget.\n\nHa OxygenOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
-	<string name="onboarding_page_4_title">Készen állsz!</string>
-	<string name="onboarding_page_4_text">Reméljük élvezni fogod az alkalmazás használatát! A beállításokat később bármikor megváltoztathatod.</string>
+	<string name="onboarding_title">Üdvözlünk az Oxygen Updater-ben!</string>
+	<string name="onboarding_app_uses">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n&#8226; Rootolt eszközök egyszerű frissítését\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban</string>
+	<string name="onboarding_disclaimer">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is. Az alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
+	<string name="onboarding_device_chooser_title">Válaszd ki a készüléked</string>
+	<string name="onboarding_device_chooser_caption">A készüléked általában már feljebb ki van választva. Ha nem, válaszd ki a készüléket feljebb.</string>
+	<string name="onboarding_method_chooser_title">Válaszd ki a frissítési módszered</string>
+	<string name="onboarding_method_chooser_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál.\n\nAzonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget.\n\nHa OxygenOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
+	<string name="onboarding_caption">Reméljük élvezni fogod az alkalmazás használatát! A beállításokat később bármikor megváltoztathatod.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Telepítés</string>

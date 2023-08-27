@@ -150,15 +150,14 @@
 	<string name="onboarding">ようこそ</string>
 	<string name="onboarding_finished_button">アプリの開始</string>
 
-	<string name="onboarding_page_1_title">Oxygen Updater にようこそ!</string>
-	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n&#8226; ルート化済デバイスを簡単に更新\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n&#8226; OnePlus と OxygenOS に関する最新ニュースを読む</string>
-	<string name="onboarding_page_1_caption">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。 このアプリを使用すると、上記の利用規約に同意したことになります。</string>
-	<string name="onboarding_page_2_title">あなたのデバイスを選択</string>
-	<string name="onboarding_page_2_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
-	<string name="onboarding_page_3_title">アップデート方法を選択</string>
-	<string name="onboarding_page_3_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。\n\nただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。\n\nOxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
-	<string name="onboarding_page_4_title">準備が出来ました!</string>
-	<string name="onboarding_page_4_text">アプリの使用をお楽しみください！後からいつでも設定を変更できます。</string>
+	<string name="onboarding_title">Oxygen Updater にようこそ!</string>
+	<string name="onboarding_app_uses">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n&#8226; ルート化済デバイスを簡単に更新\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n&#8226; OnePlus と OxygenOS に関する最新ニュースを読む</string>
+	<string name="onboarding_disclaimer">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。 このアプリを使用すると、上記の利用規約に同意したことになります。</string>
+	<string name="onboarding_device_chooser_title">あなたのデバイスを選択</string>
+	<string name="onboarding_device_chooser_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
+	<string name="onboarding_method_chooser_title">アップデート方法を選択</string>
+	<string name="onboarding_method_chooser_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。\n\nただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。\n\nOxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
+	<string name="onboarding_caption">アプリの使用をお楽しみください！後からいつでも設定を変更できます。</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">インストール</string>

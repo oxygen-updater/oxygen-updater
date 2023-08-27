@@ -152,15 +152,14 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="onboarding">Velkommen</string>
 	<string name="onboarding_finished_button">Start app</string>
 
-	<string name="onboarding_page_1_title">Velkommen til Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Denne appen lar deg få raskere tilgang til:\n\n&#8226; de siste Android-oppdateringene for din OxygenOS-drevne enhet\n&#8226; Oppdater enkelt en forankret enhet\n&#8226; Se hva som er nytt i systemprogramvaren du bruker for øyeblikket\n&#8226; Les de siste nyhetene om OnePlus og OxygenOS</string>
-	<string name="onboarding_page_1_caption">Dette er ikke en offisiell OnePlus-applikasjon. Bruk av denne appen er helt på egen risiko. Verken OnePlus eller utvikleren av appen er ansvarlig for handlingene dine, inkludert skader forårsaket av bruk av denne appen. Gjennom å bruke denne appen, godtar du vilkårene og betingelsene som nevnt ovenfor.</string>
-	<string name="onboarding_page_2_title">Velg enheten din</string>
-	<string name="onboarding_page_2_caption">Enheten er vanligvis allerede valgt ovenfor. Hvis ikke, velg enheten ovenfor.</string>
-	<string name="onboarding_page_3_title">Velg din oppdateringsmetode</string>
-	<string name="onboarding_page_3_caption">Vanligvis er den inkrementelle oppdateringen det riktige valget her, fordi den tilbyr mye raskere og mindre nedlastinger.\n\nMen den er ikke kompatibel med forankrede enheter. Hvis du har en forankret enhet, velger du Full oppdatering.\n\nHvis du har en beta-versjon av OxygenOS, velger du (en av) Open Beta-oppdateringsmetoden (e).</string>
-	<string name="onboarding_page_4_title">Du er klar til å dra!</string>
-	<string name="onboarding_page_4_text">Gled deg over å bruke denne appen! Du kan alltid endre innstillingene senere.</string>
+	<string name="onboarding_title">Velkommen til Oxygen Updater!</string>
+	<string name="onboarding_app_uses">Denne appen lar deg få raskere tilgang til:\n\n&#8226; de siste Android-oppdateringene for din OxygenOS-drevne enhet\n&#8226; Oppdater enkelt en forankret enhet\n&#8226; Se hva som er nytt i systemprogramvaren du bruker for øyeblikket\n&#8226; Les de siste nyhetene om OnePlus og OxygenOS</string>
+	<string name="onboarding_disclaimer">Dette er ikke en offisiell OnePlus-applikasjon. Bruk av denne appen er helt på egen risiko. Verken OnePlus eller utvikleren av appen er ansvarlig for handlingene dine, inkludert skader forårsaket av bruk av denne appen. Gjennom å bruke denne appen, godtar du vilkårene og betingelsene som nevnt ovenfor.</string>
+	<string name="onboarding_device_chooser_title">Velg enheten din</string>
+	<string name="onboarding_device_chooser_caption">Enheten er vanligvis allerede valgt ovenfor. Hvis ikke, velg enheten ovenfor.</string>
+	<string name="onboarding_method_chooser_title">Velg din oppdateringsmetode</string>
+	<string name="onboarding_method_chooser_caption">Vanligvis er den inkrementelle oppdateringen det riktige valget her, fordi den tilbyr mye raskere og mindre nedlastinger.\n\nMen den er ikke kompatibel med forankrede enheter. Hvis du har en forankret enhet, velger du Full oppdatering.\n\nHvis du har en beta-versjon av OxygenOS, velger du (en av) Open Beta-oppdateringsmetoden (e).</string>
+	<string name="onboarding_caption">Gled deg over å bruke denne appen! Du kan alltid endre innstillingene senere.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Installer</string>

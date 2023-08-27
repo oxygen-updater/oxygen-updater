@@ -148,28 +148,23 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Tervetuloa"</string>
 	<string name="onboarding_finished_button">"Käynnistä sovellus"</string>
-	<string name="onboarding_page_1_title">"Tervetuloa Oxygen Updateriin!"</string>
-	<string name="onboarding_page_1_text">"Tämä sovellus mahdollistaa sinulle:
+	<string name="onboarding_title">"Tervetuloa Oxygen Updateriin!"</string>
+	<string name="onboarding_app_uses">"Tämä sovellus mahdollistaa sinulle:
 
 &#8226; Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS laitteellesi
 &#8226; Rootatun laitteen päivittämisen helposti
 &#8226; Katsoa mitkä ovat uudistukset käytössäsi olevassa järjestelmäversiossa
 &#8226; Lukea viimeisimpiä uutisia koskien OnePlussaa ja OxygeOS"</string>
-	<string name="onboarding_page_1_caption">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu. Käyttämällä sovellusta hyväksyt yllä olevat käyttöehdot."</string>
-	<string name="onboarding_page_2_title">"Valitse laitteesi:"</string>
-	<string name="onboarding_page_2_caption">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta.
-
-Pyyhkäise vasemmalle jatkaaksesi."</string>
-	<string name="onboarding_page_3_title">"Valitse päivitystapasi"</string>
-	<string name="onboarding_page_3_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot
+	<string name="onboarding_disclaimer">"Tämä ei ole virallinen OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu. Käyttämällä sovellusta hyväksyt yllä olevat käyttöehdot."</string>
+	<string name="onboarding_device_chooser_title">"Valitse laitteesi:"</string>
+	<string name="onboarding_device_chooser_caption">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta."</string>
+	<string name="onboarding_method_chooser_title">"Valitse päivitystapasi"</string>
+	<string name="onboarding_method_chooser_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot
 
 Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys.
 
-Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoista.
-
-Pyyhkäise vasemmalle jatkaaksesi."</string>
-	<string name="onboarding_page_4_title">"Olet valmis!"</string>
-	<string name="onboarding_page_4_text">"Nauti sovelluksesta! Voit aina muuttaa asetuksia myöhemmin."</string>
+Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoista."</string>
+	<string name="onboarding_caption">"Nauti sovelluksesta! Voit aina muuttaa asetuksia myöhemmin."</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Asenna"</string>

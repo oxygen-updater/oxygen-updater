@@ -156,15 +156,14 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="onboarding">Hoşgelidiniz</string>
 	<string name="onboarding_finished_button">Uygulamayı başlat</string>
 
-	<string name="onboarding_page_1_title">Oxygen Updatera hoşgeldiniz!</string>
-	<string name="onboarding_page_1_text">Bu uygulama size:\n\n&#8226; En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n&#8226; Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n&#8226; Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n&#8226; OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.</string>
-	<string name="onboarding_page_1_caption">Orijinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir. Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
-	<string name="onboarding_page_2_title">Cihazınızı seçin</string>
-	<string name="onboarding_page_2_caption">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.</string>
-	<string name="onboarding_page_3_title">Güncelleme metodunuzu seçiniz</string>
-	<string name="onboarding_page_3_caption">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır.\n\nAncak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz.\n\nEğer OxygenOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.</string>
-	<string name="onboarding_page_4_title">Başlamak için hazırsınız!</string>
-	<string name="onboarding_page_4_text">Uygulamayı güle kullanın! Her zaman ayarlarınızı daha sonra değiştirebilirsiniz.</string>
+	<string name="onboarding_title">Oxygen Updatera hoşgeldiniz!</string>
+	<string name="onboarding_app_uses">Bu uygulama size:\n\n&#8226; En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n&#8226; Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n&#8226; Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n&#8226; OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.</string>
+	<string name="onboarding_disclaimer">Orijinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir. Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
+	<string name="onboarding_device_chooser_title">Cihazınızı seçin</string>
+	<string name="onboarding_device_chooser_caption">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.</string>
+	<string name="onboarding_method_chooser_title">Güncelleme metodunuzu seçiniz</string>
+	<string name="onboarding_method_chooser_caption">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır.\n\nAncak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz.\n\nEğer OxygenOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.</string>
+	<string name="onboarding_caption">Uygulamayı güle kullanın! Her zaman ayarlarınızı daha sonra değiştirebilirsiniz.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Yükle</string>

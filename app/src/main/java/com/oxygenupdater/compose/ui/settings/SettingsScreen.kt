@@ -128,7 +128,7 @@ fun SettingsScreen(
                 hide,
                 rememberLazyListState(), enabledDevices,
                 initialDeviceIndex,
-                R.string.settings_device, R.string.onboarding_page_2_caption,
+                R.string.settings_device, R.string.onboarding_device_chooser_caption,
                 keyId = PrefManager.PROPERTY_DEVICE_ID,
                 deviceChanged
             )
@@ -137,7 +137,7 @@ fun SettingsScreen(
                 hide,
                 listState, methodsForDevice,
                 initialMethodIndex,
-                R.string.settings_update_method, R.string.onboarding_page_3_caption,
+                R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
                 keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID,
                 methodChanged
             )

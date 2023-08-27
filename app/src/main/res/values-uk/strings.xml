@@ -150,15 +150,14 @@
 	<string name="onboarding">Вітання</string>
 	<string name="onboarding_finished_button">розпочати</string>
 
-	<string name="onboarding_page_1_title">Ласкаво просимо до Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Цей застосунок дозволить вам:\n\n&#8226; Отримувати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n&#8226; Легко оновлювати пристрій з рутом\n&#8226; Переглядати, що нового на встановленій прошивці\n&#8226; Читати останні новини про OnePlus і OxygenOS</string>
-	<string name="onboarding_page_1_caption">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком. Використовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
-	<string name="onboarding_page_2_title">Виберіть ваш пристрій</string>
-	<string name="onboarding_page_2_caption">Зазвичай пристрій визначається автоматично. Якщо ні, тоді виберіть його зі списку.</string>
-	<string name="onboarding_page_3_title">Виберіть спосіб оновлення</string>
-	<string name="onboarding_page_3_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що під час нього завантажується менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open Beta).</string>
-	<string name="onboarding_page_4_title">Ви готові до оновлення!</string>
-	<string name="onboarding_page_4_text">Сподіваємося, вам буде приємно користуватися цим застосунком! Ви завжди можете змінити налаштування.</string>
+	<string name="onboarding_title">Ласкаво просимо до Oxygen Updater!</string>
+	<string name="onboarding_app_uses">Цей застосунок дозволить вам:\n\n&#8226; Отримувати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n&#8226; Легко оновлювати пристрій з рутом\n&#8226; Переглядати, що нового на встановленій прошивці\n&#8226; Читати останні новини про OnePlus і OxygenOS</string>
+	<string name="onboarding_disclaimer">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком. Використовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
+	<string name="onboarding_device_chooser_title">Виберіть ваш пристрій</string>
+	<string name="onboarding_device_chooser_caption">Зазвичай пристрій визначається автоматично. Якщо ні, тоді виберіть його зі списку.</string>
+	<string name="onboarding_method_chooser_title">Виберіть спосіб оновлення</string>
+	<string name="onboarding_method_chooser_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що під час нього завантажується менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open Beta).</string>
+	<string name="onboarding_caption">Сподіваємося, вам буде приємно користуватися цим застосунком! Ви завжди можете змінити налаштування.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Встановлення</string>

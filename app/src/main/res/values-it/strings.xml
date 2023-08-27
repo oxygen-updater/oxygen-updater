@@ -145,28 +145,23 @@ Questo può essere utile se si desidera:"</string>
 	<!-- First-time setup strings -->
 	<string name="onboarding">"Benvenuto"</string>
 	<string name="onboarding_finished_button">"Avvia app"</string>
-	<string name="onboarding_page_1_title">"Benvenuto su Oxygen Updater!"</string>
-	<string name="onboarding_page_1_text">"Questa app ti permetterà di:
+	<string name="onboarding_title">"Benvenuto su Oxygen Updater!"</string>
+	<string name="onboarding_app_uses">"Questa app ti permetterà di:
 
 &#8226; Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OnePlus con OxygenOS
 &#8226; Facilmente aggiornare un dispositivo rootato
 &#8226; Visualizzare le notivate in aggiornamenti
 &#8226; Leggere le novità su OnePlus e OxygenOS"</string>
-	<string name="onboarding_page_1_caption">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app. Usando l'app consenti ai termini e condizioni citati sopra."</string>
-	<string name="onboarding_page_2_title">"Seleziona il tuo dispositivo:"</string>
-	<string name="onboarding_page_2_caption">"Il tuo dovrebbe già essere selezionato, se non lo è, selezionalo sopra.
-
-Trascina verso sinistra per continuare"</string>
-	<string name="onboarding_page_3_title">"Seleziona il tuo metodo d'aggiornamento."</string>
-	<string name="onboarding_page_3_caption">"Di solito, l'aggiornamento progressivo è la scelta corretta, perché offre download molto più facili e piccoli.
+	<string name="onboarding_disclaimer">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app. Usando l'app consenti ai termini e condizioni citati sopra."</string>
+	<string name="onboarding_device_chooser_title">"Seleziona il tuo dispositivo:"</string>
+	<string name="onboarding_device_chooser_caption">"Il tuo dovrebbe già essere selezionato, se non lo è, selezionalo sopra."</string>
+	<string name="onboarding_method_chooser_title">"Seleziona il tuo metodo d'aggiornamento."</string>
+	<string name="onboarding_method_chooser_caption">"Di solito, l'aggiornamento progressivo è la scelta corretta, perché offre download molto più facili e piccoli.
 
 Però, non completamente comnpatibili con dispositivi rootati. Se hai un dispositivo con root, seleziona l'aggiornamento completo.
 
-Se hai una versione beta, seleziona una delle opzioni Open Beta.
-
-Trascina verso sinistra per continuare."</string>
-	<string name="onboarding_page_4_title">"Sei pronto per continuare!"</string>
-	<string name="onboarding_page_4_text">"Goditi l'app! Puoi cambiare le tue impostazioni in qualsiasi momento."</string>
+Se hai una versione beta, seleziona una delle opzioni Open Beta."</string>
+	<string name="onboarding_caption">"Goditi l'app! Puoi cambiare le tue impostazioni in qualsiasi momento."</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Installa"</string>

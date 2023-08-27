@@ -157,15 +157,14 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="onboarding">ยินดีต้อนรับ</string>
 	<string name="onboarding_finished_button">เริ่มใช้งาน</string>
 
-	<string name="onboarding_page_1_title">ยินดีต้อนรับสู่ Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">แอพนนี้จะทำให้คุณสามารถ:\n\n&#8226; ติดตั้ง OxygenOS เวอร์ชั่นใหม่ได้ก่อน\n&#8226; ง่ายต่อเครื่องที่ผ่านการรูท\n&#8226; และสามารถดูข้อมูลการอัพเดทต่างๆของระบบเวอร์ชั่นปัจจุบันที่คุณกำลังใช้อยู่\n&#8226; อ่านข่าวล่าสุดเกี่ยวกับ OnePlus และ OxygenOS</string>
-	<string name="onboarding_page_1_caption">นี้ไม่ใช่แอพพลิเคชั่นอย่างทางการของ OnePlus ใช้แอพพลิเคชั่นนี้ด้วยความเสี่ยงของคุณเอง OnePlus หรือผู้พัฒนาแอปจะไม่รับผิดชอบต่อการกระทำของคุณร่วมถึงความเสียหายทีเกิดขี้นจากแอพนี้ โดยการใช้แอพนี้คุณยอมรับข้อกำหนดและเงื่อนไขตามที่ระบุไว้ข้างต้น</string>
-	<string name="onboarding_page_2_title">เลือกอุปกรณ์ของคุณ</string>
-	<string name="onboarding_page_2_caption">โดยปกติอุปกรณ์ของคุณจะถูกเลือกไว้ด้านบน หากไม่ คุณสามารถเลือกอุปกรณ์ของคุณด้านบน</string>
-	<string name="onboarding_page_3_title">เลือกวิธีการอัพเดทของคุณ</string>
-	<string name="onboarding_page_3_caption">โดยปกติแล้วการอัปเดตธรรมดาจะเป็นตัวเลือกที่เหมาะสมเนื่องจากมีการดาวน์โหลดที่เร็วกว่าและเล็กกว่ามาก\n\nอย่างไรก็ตามมันเข้ากันไม่ได้กับอุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้เลือกการอัพเดทแบบเต็มรูปแบบ\n\nหากคุณมี OxygenOS รุ่นเบต้าให้เลือก (หนึ่งใน) วิธีการอัปเดต Open Beta</string>
-	<string name="onboarding_page_4_title">คุณพร้อมแล้ว!</string>
-	<string name="onboarding_page_4_text">ขอสนุกกับการใช้แอพนี้! คุณสามารถเปลี่ยนการตั้งค่าได้ในภายหลัง.</string>
+	<string name="onboarding_title">ยินดีต้อนรับสู่ Oxygen Updater!</string>
+	<string name="onboarding_app_uses">แอพนนี้จะทำให้คุณสามารถ:\n\n&#8226; ติดตั้ง OxygenOS เวอร์ชั่นใหม่ได้ก่อน\n&#8226; ง่ายต่อเครื่องที่ผ่านการรูท\n&#8226; และสามารถดูข้อมูลการอัพเดทต่างๆของระบบเวอร์ชั่นปัจจุบันที่คุณกำลังใช้อยู่\n&#8226; อ่านข่าวล่าสุดเกี่ยวกับ OnePlus และ OxygenOS</string>
+	<string name="onboarding_disclaimer">นี้ไม่ใช่แอพพลิเคชั่นอย่างทางการของ OnePlus ใช้แอพพลิเคชั่นนี้ด้วยความเสี่ยงของคุณเอง OnePlus หรือผู้พัฒนาแอปจะไม่รับผิดชอบต่อการกระทำของคุณร่วมถึงความเสียหายทีเกิดขี้นจากแอพนี้ โดยการใช้แอพนี้คุณยอมรับข้อกำหนดและเงื่อนไขตามที่ระบุไว้ข้างต้น</string>
+	<string name="onboarding_device_chooser_title">เลือกอุปกรณ์ของคุณ</string>
+	<string name="onboarding_device_chooser_caption">โดยปกติอุปกรณ์ของคุณจะถูกเลือกไว้ด้านบน หากไม่ คุณสามารถเลือกอุปกรณ์ของคุณด้านบน</string>
+	<string name="onboarding_method_chooser_title">เลือกวิธีการอัพเดทของคุณ</string>
+	<string name="onboarding_method_chooser_caption">โดยปกติแล้วการอัปเดตธรรมดาจะเป็นตัวเลือกที่เหมาะสมเนื่องจากมีการดาวน์โหลดที่เร็วกว่าและเล็กกว่ามาก\n\nอย่างไรก็ตามมันเข้ากันไม่ได้กับอุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้เลือกการอัพเดทแบบเต็มรูปแบบ\n\nหากคุณมี OxygenOS รุ่นเบต้าให้เลือก (หนึ่งใน) วิธีการอัปเดต Open Beta</string>
+	<string name="onboarding_caption">ขอสนุกกับการใช้แอพนี้! คุณสามารถเปลี่ยนการตั้งค่าได้ในภายหลัง.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">ติดตั้ง</string>

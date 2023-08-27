@@ -92,7 +92,7 @@ class OnboardingActivity : BaseActivity() {
                             contentScale = ContentScale.Crop,
                             colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
                         )
-                    }, title = stringResource(R.string.onboarding_page_1_title))
+                    }, title = stringResource(R.string.onboarding_title))
                 }) { innerPadding ->
                     HorizontalDivider()
                     Box(Modifier.padding(innerPadding)) {

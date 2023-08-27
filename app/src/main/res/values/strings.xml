@@ -149,15 +149,14 @@ This can be useful if you want to:"</string>
 	<string name="onboarding">Welcome</string>
 	<string name="onboarding_finished_button">Start app</string>
 
-	<string name="onboarding_page_1_title">Welcome to Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS powered device\n&#8226; Easily update a rooted device\n&#8226; View what\'s new in the system software you are currently using\n&#8226; Read the latest news about OnePlus and OxygenOS</string>
-	<string name="onboarding_page_1_caption">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app. By using this app, you agree to the terms and conditions as stated above.</string>
-	<string name="onboarding_page_2_title">Choose your device</string>
-	<string name="onboarding_page_2_caption">Your device is usually already selected above. If not, select your device above.</string>
-	<string name="onboarding_page_3_title">Choose your update method</string>
-	<string name="onboarding_page_3_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
-	<string name="onboarding_page_4_title">You are ready to go!</string>
-	<string name="onboarding_page_4_text">Enjoy using this app! You can always change your settings later on.</string>
+	<string name="onboarding_title">Welcome to Oxygen Updater!</string>
+	<string name="onboarding_app_uses">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS powered device\n&#8226; Easily update a rooted device\n&#8226; View what\'s new in the system software you are currently using\n&#8226; Read the latest news about OnePlus and OxygenOS</string>
+	<string name="onboarding_disclaimer">This is not an official OnePlus application. Usage of this app is completely at your own risk. Neither OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app. By using this app, you agree to the terms and conditions as stated above.</string>
+	<string name="onboarding_device_chooser_title">Choose your device</string>
+	<string name="onboarding_device_chooser_caption">Your device is usually already selected above. If not, select your device above.</string>
+	<string name="onboarding_method_chooser_title">Choose your update method</string>
+	<string name="onboarding_method_chooser_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
+	<string name="onboarding_caption">Enjoy using this app! You can always change your settings later on.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Install</string>
