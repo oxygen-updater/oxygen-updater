@@ -210,7 +210,7 @@ private fun RefreshAwareWebView(
     adLoaded: Boolean,
     onLoadFinished: () -> Unit,
 ) {
-    LaunchedEffect(navigator) {
+    LaunchedEffect(navigator, url) {
         // null viewState => first load
         if (webViewState.viewState == null) navigator.loadUrl(url)
     }
