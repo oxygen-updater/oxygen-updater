@@ -47,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.RenderVectorGroup
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
@@ -73,6 +74,7 @@ import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.PullRefresh
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.main.Screen
+import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
@@ -84,7 +86,7 @@ import com.oxygenupdater.models.NewsItem
 import java.time.LocalDateTime
 import kotlin.random.Random
 
-var previousUnreadCount = 0
+var previousUnreadCount = NOT_SET
 
 @Composable
 fun NewsListScreen(
@@ -203,7 +205,12 @@ private fun NewsListItem(
                 ) {
                     Text(
                         item.title ?: "Unknown title",
-                        Modifier.withPlaceholder(refreshing),
+                        Modifier
+                            .withPlaceholder(refreshing)
+                            .graphicsLayer {
+                                if (refreshing) return@graphicsLayer
+                                alpha = if (item.readState.value) 0.7f else 1f
+                            },
                         overflow = TextOverflow.Ellipsis, maxLines = 2,
                         style = MaterialTheme.typography.titleMedium
                     )
@@ -241,7 +248,11 @@ private fun NewsListItem(
                     Modifier
                         .clip(RoundedCornerShape(8.dp))
                         .requiredSize(80.dp)
-                        .withPlaceholder(refreshing),
+                        .withPlaceholder(refreshing)
+                        .graphicsLayer {
+                            if (refreshing) return@graphicsLayer
+                            alpha = if (item.readState.value) 0.87f else 1f
+                        },
                     placeholder = defaultImage,
                     error = defaultImage,
                     contentScale = ContentScale.Crop,
@@ -422,7 +433,7 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
                     datePublished = now.minusDays(1).toString(),
                     dateLastEdited = now.minusHours(4).toString(),
                     authorName = "Author",
-                    read = false,
+                    read = true,
                 ),
                 NewsItem(
                     2,
