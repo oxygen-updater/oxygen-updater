@@ -313,7 +313,7 @@ class MainActivity : BaseActivity() {
             SnackbarHost(snackbarHostState)
         }) { innerPadding ->
             // TODO(compose/perf): this causes children to recompose every single time on scroll (if scrollBehaviour is used)
-            //  Consider implementing this whole layout without using Scaffold.
+            //  Consider implementing this whole layout without using Scaffold and remove remember*Callback stuff.
             Box(Modifier.padding(innerPadding)) {
                 val hide = rememberCallback { sheetType = SheetType.None }
 

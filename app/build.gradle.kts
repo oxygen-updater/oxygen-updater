@@ -300,7 +300,7 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.8.1")
 
     // https://developer.android.com/jetpack/androidx/releases/compose#versions
-    val compose = "1.6.0-alpha04"
+    val compose = "1.6.0-alpha04" // keep in sync with Kotlin & accompanist version
     val composeM3 = "1.2.0-alpha06"
     implementation("androidx.compose.animation:animation:$compose")
     implementation("androidx.compose.animation:animation-graphics:$compose")

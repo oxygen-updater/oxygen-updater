@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
+import com.oxygenupdater.compose.ui.theme.backgroundVariant
 
 @Composable
 fun GridItem(
@@ -23,7 +24,7 @@ fun GridItem(
 ) = IconText(
     Modifier
         .clickable(onClick = onClick)
-        .borderExceptTop()
+        .borderExceptTop(MaterialTheme.colorScheme.backgroundVariant)
         .padding(16.dp),
     icon = icon, text = stringResource(textResId),
     style = MaterialTheme.typography.titleSmall

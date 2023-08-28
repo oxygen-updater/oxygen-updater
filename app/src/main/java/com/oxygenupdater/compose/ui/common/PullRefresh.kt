@@ -23,8 +23,8 @@ fun <T> PullRefresh(
     onRefresh: () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    val (refreshing, data) = state
-    if (refreshing && shouldShowProgressIndicator(data)) Box(Modifier.fillMaxSize(), Alignment.Center) {
+    val refreshing = state.refreshing
+    if (refreshing && shouldShowProgressIndicator(state.data)) Box(Modifier.fillMaxSize(), Alignment.Center) {
         CircularProgressIndicator(Modifier.size(64.dp), strokeWidth = 6.dp)
     } else rememberPullRefreshState(refreshing, onRefresh).let {
         Box(Modifier.pullRefresh(it)) {
